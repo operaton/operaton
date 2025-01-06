@@ -421,7 +421,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   public void testNonExistingLocalVariable() {
     String variableKey = "aVariableKey";
 
-    when(taskServiceMock.getVariableLocal(eq(EXAMPLE_TASK_ID), eq(variableKey))).thenReturn(null);
+    when(taskServiceMock.getVariableLocal(EXAMPLE_TASK_ID, variableKey)).thenReturn(null);
 
     given().pathParam("id", EXAMPLE_TASK_ID).pathParam("varId", variableKey)
       .header("accept", MediaType.APPLICATION_JSON)
@@ -1003,8 +1003,8 @@ public class TaskVariableLocalRestResourceInteractionTest extends
     .when()
       .post(SINGLE_TASK_SINGLE_BINARY_VARIABLE_URL);
 
-    verify(taskServiceMock, never()).setVariableLocal(eq(EXAMPLE_TASK_ID), eq(variableKey),
-        eq(serializable));
+    verify(taskServiceMock, never()).setVariableLocal(EXAMPLE_TASK_ID, variableKey,
+        serializable);
   }
 
   @Test
@@ -1183,7 +1183,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
       .then().expect().statusCode(Status.NO_CONTENT.getStatusCode())
       .when().delete(SINGLE_TASK_DELETE_SINGLE_VARIABLE_URL);
 
-    verify(taskServiceMock).removeVariableLocal(eq(EXAMPLE_TASK_ID), eq(variableKey));
+    verify(taskServiceMock).removeVariableLocal(EXAMPLE_TASK_ID, variableKey);
   }
 
   @Test
@@ -1191,7 +1191,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
     String variableKey = "aVariableKey";
 
     doThrow(new ProcessEngineException("Cannot find task with id " + NON_EXISTING_ID))
-      .when(taskServiceMock).removeVariableLocal(eq(NON_EXISTING_ID), eq(variableKey));
+      .when(taskServiceMock).removeVariableLocal(NON_EXISTING_ID, variableKey);
 
     given().pathParam("id", NON_EXISTING_ID).pathParam("varId", variableKey)
       .header("accept", MediaType.APPLICATION_JSON)

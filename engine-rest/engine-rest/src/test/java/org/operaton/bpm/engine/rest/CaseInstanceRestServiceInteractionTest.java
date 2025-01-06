@@ -291,8 +291,8 @@ public class CaseInstanceRestServiceInteractionTest extends AbstractRestServiceT
     expectedModifications.put(variableKey, variableValue);
 
     verify(caseServiceMock).withCaseExecution(MockProvider.EXAMPLE_CASE_INSTANCE_ID);
-    verify(caseExecutionCommandBuilderMock).setVariables(eq(expectedModifications));
-    verify(caseExecutionCommandBuilderMock).removeVariables(eq(deletions));
+    verify(caseExecutionCommandBuilderMock).setVariables(expectedModifications);
+    verify(caseExecutionCommandBuilderMock).removeVariables(deletions);
     verify(caseExecutionCommandBuilderMock).execute();
 
   }
@@ -458,7 +458,7 @@ public class CaseInstanceRestServiceInteractionTest extends AbstractRestServiceT
   public void testNonExistingVariable() {
     String variableKey = "aVariableKey";
 
-    when(caseServiceMock.getVariableTyped(eq(MockProvider.EXAMPLE_CASE_INSTANCE_ID), eq(variableKey), eq(true))).thenReturn(null);
+    when(caseServiceMock.getVariableTyped(MockProvider.EXAMPLE_CASE_INSTANCE_ID, variableKey, true)).thenReturn(null);
 
     given().pathParam("id", MockProvider.EXAMPLE_CASE_INSTANCE_ID).pathParam("varId", variableKey)
       .then().expect().statusCode(Status.NOT_FOUND.getStatusCode())
@@ -577,7 +577,7 @@ public class CaseInstanceRestServiceInteractionTest extends AbstractRestServiceT
   public void testGetVariableForNonExistingInstance() {
     String variableKey = "aVariableKey";
 
-    when(caseServiceMock.getVariableTyped(eq(MockProvider.EXAMPLE_CASE_INSTANCE_ID), eq(variableKey), eq(true)))
+    when(caseServiceMock.getVariableTyped(MockProvider.EXAMPLE_CASE_INSTANCE_ID, variableKey, true))
       .thenThrow(new ProcessEngineException("expected exception"));
 
     given().pathParam("id", MockProvider.EXAMPLE_CASE_INSTANCE_ID).pathParam("varId", variableKey)

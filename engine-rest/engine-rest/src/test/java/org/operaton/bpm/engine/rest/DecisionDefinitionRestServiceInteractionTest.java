@@ -24,7 +24,6 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Mockito.anyMap;
 import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -109,8 +108,8 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
     repositoryServiceMock = mock(RepositoryService.class);
 
     when(processEngine.getRepositoryService()).thenReturn(repositoryServiceMock);
-    when(repositoryServiceMock.getDecisionDefinition(eq(MockProvider.EXAMPLE_DECISION_DEFINITION_ID))).thenReturn(mockDecisionDefinition);
-    when(repositoryServiceMock.getDecisionModel(eq(MockProvider.EXAMPLE_DECISION_DEFINITION_ID))).thenReturn(createMockDecisionDefinitionDmnXml());
+    when(repositoryServiceMock.getDecisionDefinition(MockProvider.EXAMPLE_DECISION_DEFINITION_ID)).thenReturn(mockDecisionDefinition);
+    when(repositoryServiceMock.getDecisionModel(MockProvider.EXAMPLE_DECISION_DEFINITION_ID)).thenReturn(createMockDecisionDefinitionDmnXml());
 
     decisionDefinitionQueryMock = mock(DecisionDefinitionQuery.class);
     when(decisionDefinitionQueryMock.decisionDefinitionKey(MockProvider.EXAMPLE_DECISION_DEFINITION_KEY)).thenReturn(decisionDefinitionQueryMock);
@@ -749,7 +748,7 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
 
     doThrow(new BadUserRequestException(expectedMessage))
         .when(repositoryServiceMock)
-        .updateDecisionDefinitionHistoryTimeToLive(eq(MockProvider.EXAMPLE_DECISION_DEFINITION_ID), eq(-1));
+        .updateDecisionDefinitionHistoryTimeToLive(MockProvider.EXAMPLE_DECISION_DEFINITION_ID, -1);
 
     given()
         .pathParam("id", MockProvider.EXAMPLE_DECISION_DEFINITION_ID)
@@ -771,7 +770,7 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
 
     doThrow(new AuthorizationException(expectedMessage))
         .when(repositoryServiceMock)
-        .updateDecisionDefinitionHistoryTimeToLive(eq(MockProvider.EXAMPLE_DECISION_DEFINITION_ID), eq(5));
+        .updateDecisionDefinitionHistoryTimeToLive(MockProvider.EXAMPLE_DECISION_DEFINITION_ID, 5);
 
     given()
         .pathParam("id", MockProvider.EXAMPLE_DECISION_DEFINITION_ID)

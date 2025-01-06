@@ -22,7 +22,6 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -111,7 +110,7 @@ public class DecisionRequirementsDefinitionRestServiceInteractionTest extends Ab
   public void nonExistingDecisionRequirementsDefinitionRetrieval() {
     String nonExistingId = "aNonExistingDefinitionId";
 
-    when(repositoryServiceMock.getDecisionRequirementsDefinition(eq(nonExistingId))).thenThrow(new ProcessEngineException("No matching decision requirements definition"));
+    when(repositoryServiceMock.getDecisionRequirementsDefinition(nonExistingId)).thenThrow(new ProcessEngineException("No matching decision requirements definition"));
 
     given()
       .pathParam("id", "aNonExistingDefinitionId")
@@ -253,8 +252,8 @@ public class DecisionRequirementsDefinitionRestServiceInteractionTest extends Ab
     repositoryServiceMock = mock(RepositoryService.class);
 
     when(processEngine.getRepositoryService()).thenReturn(repositoryServiceMock);
-    when(repositoryServiceMock.getDecisionRequirementsDefinition(eq(MockProvider.EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_ID))).thenReturn(mockDecisionRequirementsDefinition);
-    when(repositoryServiceMock.getDecisionRequirementsModel(eq(MockProvider.EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_ID))).thenReturn(createMockDecisionRequirementsDefinitionDmnXml());
+    when(repositoryServiceMock.getDecisionRequirementsDefinition(MockProvider.EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_ID)).thenReturn(mockDecisionRequirementsDefinition);
+    when(repositoryServiceMock.getDecisionRequirementsModel(MockProvider.EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_ID)).thenReturn(createMockDecisionRequirementsDefinitionDmnXml());
     when(repositoryServiceMock.getDecisionRequirementsDiagram(MockProvider.EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_ID)).thenReturn(createMockDecisionRequirementsDiagram());
 
     decisionRequirementsDefinitionQueryMock = mock(DecisionRequirementsDefinitionQuery.class);

@@ -65,7 +65,7 @@ public class CustomJacksonDateFormatTest extends AbstractRestServiceTest {
   public void setUpRuntimeData() {
     runtimeServiceMock = mock(RuntimeServiceImpl.class);
 
-    when(runtimeServiceMock.getVariableTyped(eq(EXAMPLE_PROCESS_INSTANCE_ID), eq(EXAMPLE_VARIABLE_KEY), eq(true)))
+    when(runtimeServiceMock.getVariableTyped(EXAMPLE_PROCESS_INSTANCE_ID, EXAMPLE_VARIABLE_KEY, true))
       .thenReturn(Variables.dateValue(testDate));
 
     when(processEngine.getRuntimeService()).thenReturn(runtimeServiceMock);

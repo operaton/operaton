@@ -23,7 +23,6 @@ import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -76,10 +75,10 @@ public class FilterRestServiceQueryTest extends AbstractRestServiceTest {
     FilterService filterService = processEngine.getFilterService();
 
     when(filterService.createFilterQuery()).thenReturn(mockedQuery);
-    when(filterService.getFilter(eq(MockProvider.EXAMPLE_FILTER_ID))).thenReturn(mockedFilter);
-    when(filterService.count(eq(MockProvider.EXAMPLE_FILTER_ID))).thenReturn((long) mockedFilterItemCount);
-    when(filterService.getFilter(eq(MockProvider.ANOTHER_EXAMPLE_FILTER_ID))).thenReturn(anotherMockedFilter);
-    when(filterService.count(eq(MockProvider.ANOTHER_EXAMPLE_FILTER_ID))).thenReturn((long) anotherMockedFilterItemCount);
+    when(filterService.getFilter(MockProvider.EXAMPLE_FILTER_ID)).thenReturn(mockedFilter);
+    when(filterService.count(MockProvider.EXAMPLE_FILTER_ID)).thenReturn((long) mockedFilterItemCount);
+    when(filterService.getFilter(MockProvider.ANOTHER_EXAMPLE_FILTER_ID)).thenReturn(anotherMockedFilter);
+    when(filterService.count(MockProvider.ANOTHER_EXAMPLE_FILTER_ID)).thenReturn((long) anotherMockedFilterItemCount);
   }
 
   @Test

@@ -23,7 +23,6 @@ import static org.operaton.bpm.engine.rest.util.JsonPathUtil.from;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
@@ -67,7 +66,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
     Batch batchMock = MockProvider.createMockBatch();
 
     queryMock = mock(BatchQuery.class);
-    when(queryMock.batchId(eq(MockProvider.EXAMPLE_BATCH_ID))).thenReturn(queryMock);
+    when(queryMock.batchId(MockProvider.EXAMPLE_BATCH_ID)).thenReturn(queryMock);
     when(queryMock.singleResult()).thenReturn(batchMock);
 
     managementServiceMock = mock(ManagementService.class);
@@ -120,7 +119,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
     .when()
       .delete(SINGLE_BATCH_RESOURCE_URL);
 
-    verify(managementServiceMock).deleteBatch(eq(MockProvider.EXAMPLE_BATCH_ID), eq(false));
+    verify(managementServiceMock).deleteBatch(MockProvider.EXAMPLE_BATCH_ID, false);
     verifyNoMoreInteractions(managementServiceMock);
   }
 
@@ -134,7 +133,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
     .when()
       .delete(SINGLE_BATCH_RESOURCE_URL);
 
-    verify(managementServiceMock).deleteBatch(eq(MockProvider.EXAMPLE_BATCH_ID), eq(false));
+    verify(managementServiceMock).deleteBatch(MockProvider.EXAMPLE_BATCH_ID, false);
     verifyNoMoreInteractions(managementServiceMock);
   }
 
@@ -148,7 +147,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
     .when()
       .delete(SINGLE_BATCH_RESOURCE_URL);
 
-    verify(managementServiceMock).deleteBatch(eq(MockProvider.EXAMPLE_BATCH_ID), eq(true));
+    verify(managementServiceMock).deleteBatch(MockProvider.EXAMPLE_BATCH_ID, true);
     verifyNoMoreInteractions(managementServiceMock);
   }
 
@@ -157,7 +156,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
     String nonExistingId = MockProvider.NON_EXISTING_ID;
 
     doThrow(new BadUserRequestException("Batch for id '" + nonExistingId + "' cannot be found"))
-      .when(managementServiceMock).deleteBatch(eq(nonExistingId), eq(false));
+      .when(managementServiceMock).deleteBatch(nonExistingId, false);
 
     given()
       .pathParam("id", nonExistingId)
@@ -174,7 +173,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
     String nonExistingId = MockProvider.NON_EXISTING_ID;
 
     doThrow(new BadUserRequestException("Batch for id '" + nonExistingId + "' cannot be found"))
-      .when(managementServiceMock).deleteBatch(eq(nonExistingId), eq(false));
+      .when(managementServiceMock).deleteBatch(nonExistingId, false);
 
     given()
       .pathParam("id", nonExistingId)
@@ -192,7 +191,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
     String nonExistingId = MockProvider.NON_EXISTING_ID;
 
     doThrow(new BadUserRequestException("Batch for id '" + nonExistingId + "' cannot be found"))
-      .when(managementServiceMock).deleteBatch(eq(nonExistingId), eq(true));
+      .when(managementServiceMock).deleteBatch(nonExistingId, true);
 
     given()
       .pathParam("id", nonExistingId)
@@ -216,7 +215,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
     .when()
       .put(SUSPENDED_BATCH_RESOURCE_URL);
 
-    verify(managementServiceMock).suspendBatchById(eq(MockProvider.EXAMPLE_BATCH_ID));
+    verify(managementServiceMock).suspendBatchById(MockProvider.EXAMPLE_BATCH_ID);
     verifyNoMoreInteractions(managementServiceMock);
   }
 
@@ -225,7 +224,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
     String nonExistingId = MockProvider.NON_EXISTING_ID;
 
     doThrow(new BadUserRequestException("Batch for id '" + nonExistingId + "' cannot be found"))
-      .when(managementServiceMock).suspendBatchById(eq(nonExistingId));
+      .when(managementServiceMock).suspendBatchById(nonExistingId);
 
     given()
       .pathParam("id", nonExistingId)
@@ -245,7 +244,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
     String expectedMessage = "The user with id 'userId' does not have 'UPDATE' permission on resource '" + batchId + "' of type 'Batch'.";
 
     doThrow(new AuthorizationException(expectedMessage))
-      .when(managementServiceMock).suspendBatchById(eq(batchId));
+      .when(managementServiceMock).suspendBatchById(batchId);
 
     given()
       .pathParam("id", batchId)
@@ -271,7 +270,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
     .when()
       .put(SUSPENDED_BATCH_RESOURCE_URL);
 
-    verify(managementServiceMock).activateBatchById(eq(MockProvider.EXAMPLE_BATCH_ID));
+    verify(managementServiceMock).activateBatchById(MockProvider.EXAMPLE_BATCH_ID);
     verifyNoMoreInteractions(managementServiceMock);
   }
 
@@ -280,7 +279,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
     String nonExistingId = MockProvider.NON_EXISTING_ID;
 
     doThrow(new BadUserRequestException("Batch for id '" + nonExistingId + "' cannot be found"))
-      .when(managementServiceMock).activateBatchById(eq(nonExistingId));
+      .when(managementServiceMock).activateBatchById(nonExistingId);
 
     given()
       .pathParam("id", nonExistingId)
@@ -300,7 +299,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
     String expectedMessage = "The user with id 'userId' does not have 'UPDATE' permission on resource '" + batchId + "' of type 'Batch'.";
 
     doThrow(new AuthorizationException(expectedMessage))
-      .when(managementServiceMock).activateBatchById(eq(batchId));
+      .when(managementServiceMock).activateBatchById(batchId);
 
     given()
       .pathParam("id", batchId)

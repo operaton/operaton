@@ -126,7 +126,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
       .instruction(ANOTHER_EXAMPLE_ACTIVITY_ID, EXAMPLE_ACTIVITY_ID)
       .builder();
 
-    when(runtimeServiceMock.createMigrationPlan(eq(EXAMPLE_PROCESS_DEFINITION_ID), eq(ANOTHER_EXAMPLE_PROCESS_DEFINITION_ID)))
+    when(runtimeServiceMock.createMigrationPlan(EXAMPLE_PROCESS_DEFINITION_ID, ANOTHER_EXAMPLE_PROCESS_DEFINITION_ID))
       .thenReturn(migrationPlanBuilderMock);
 
     migrationPlanExecutionBuilderMock = mock(MigrationPlanExecutionBuilder.class);
@@ -325,7 +325,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
     .when()
       .post(GENERATE_MIGRATION_URL);
 
-    verify(runtimeServiceMock).createMigrationPlan(eq(EXAMPLE_PROCESS_DEFINITION_ID), eq(ANOTHER_EXAMPLE_PROCESS_DEFINITION_ID));
+    verify(runtimeServiceMock).createMigrationPlan(EXAMPLE_PROCESS_DEFINITION_ID, ANOTHER_EXAMPLE_PROCESS_DEFINITION_ID);
 
     InOrder inOrder = Mockito.inOrder(migrationPlanBuilderMock);
 
@@ -401,7 +401,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
     .when()
       .post(GENERATE_MIGRATION_URL);
 
-    verify(runtimeServiceMock).createMigrationPlan(eq(EXAMPLE_PROCESS_DEFINITION_ID), eq(ANOTHER_EXAMPLE_PROCESS_DEFINITION_ID));
+    verify(runtimeServiceMock).createMigrationPlan(EXAMPLE_PROCESS_DEFINITION_ID, ANOTHER_EXAMPLE_PROCESS_DEFINITION_ID);
 
     InOrder inOrder = Mockito.inOrder(migrationPlanBuilderMock);
 
@@ -1519,8 +1519,8 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   protected void verifyGenerateMigrationPlanInteraction(MigrationPlanBuilder migrationPlanBuilderMock, Map<String, Object> initialMigrationPlan) {
-    verify(runtimeServiceMock).createMigrationPlan(eq(initialMigrationPlan.get(MigrationPlanDtoBuilder.PROP_SOURCE_PROCESS_DEFINITION_ID).toString()),
-                                                   eq(initialMigrationPlan.get(MigrationPlanDtoBuilder.PROP_TARGET_PROCESS_DEFINITION_ID).toString()));
+    verify(runtimeServiceMock).createMigrationPlan(initialMigrationPlan.get(MigrationPlanDtoBuilder.PROP_SOURCE_PROCESS_DEFINITION_ID).toString(),
+                                                   initialMigrationPlan.get(MigrationPlanDtoBuilder.PROP_TARGET_PROCESS_DEFINITION_ID).toString());
     // the map equal activities method should be called
     verify(migrationPlanBuilderMock).mapEqualActivities();
     // other instructions are ignored

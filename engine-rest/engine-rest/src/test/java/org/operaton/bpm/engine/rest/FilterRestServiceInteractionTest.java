@@ -165,17 +165,17 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
     filterMock = MockProvider.createMockFilter();
 
     when(filterServiceMock.newTaskFilter()).thenReturn(filterMock);
-    when(filterServiceMock.saveFilter(eq(filterMock))).thenReturn(filterMock);
-    when(filterServiceMock.getFilter(eq(EXAMPLE_FILTER_ID))).thenReturn(filterMock);
-    when(filterServiceMock.getFilter(eq(MockProvider.NON_EXISTING_ID))).thenReturn(null);
+    when(filterServiceMock.saveFilter(filterMock)).thenReturn(filterMock);
+    when(filterServiceMock.getFilter(EXAMPLE_FILTER_ID)).thenReturn(filterMock);
+    when(filterServiceMock.getFilter(MockProvider.NON_EXISTING_ID)).thenReturn(null);
 
     List<Object> mockTasks = Collections.singletonList(new TaskEntity());
 
-    when(filterServiceMock.singleResult(eq(EXAMPLE_FILTER_ID)))
+    when(filterServiceMock.singleResult(EXAMPLE_FILTER_ID))
       .thenReturn(mockTasks.get(0));
     when(filterServiceMock.singleResult(eq(EXAMPLE_FILTER_ID), any()))
       .thenReturn(mockTasks.get(0));
-    when(filterServiceMock.list(eq(EXAMPLE_FILTER_ID)))
+    when(filterServiceMock.list(EXAMPLE_FILTER_ID))
       .thenReturn(mockTasks);
     when(filterServiceMock.list(eq(EXAMPLE_FILTER_ID), any()))
       .thenReturn(mockTasks);
@@ -183,17 +183,17 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
       .thenReturn(mockTasks);
     when(filterServiceMock.listPage(eq(EXAMPLE_FILTER_ID), any(), anyInt(), anyInt()))
       .thenReturn(mockTasks);
-    when(filterServiceMock.count(eq(EXAMPLE_FILTER_ID)))
+    when(filterServiceMock.count(EXAMPLE_FILTER_ID))
       .thenReturn((long) 1);
     when(filterServiceMock.count(eq(EXAMPLE_FILTER_ID), any()))
       .thenReturn((long) 1);
 
     doThrow(new NullValueException("No filter found with given id"))
-      .when(filterServiceMock).singleResult(eq(MockProvider.NON_EXISTING_ID));
+      .when(filterServiceMock).singleResult(MockProvider.NON_EXISTING_ID);
     doThrow(new NullValueException("No filter found with given id"))
       .when(filterServiceMock).singleResult(eq(MockProvider.NON_EXISTING_ID), any());
     doThrow(new NullValueException("No filter found with given id"))
-      .when(filterServiceMock).list(eq(MockProvider.NON_EXISTING_ID));
+      .when(filterServiceMock).list(MockProvider.NON_EXISTING_ID);
     doThrow(new NullValueException("No filter found with given id"))
       .when(filterServiceMock).list(eq(MockProvider.NON_EXISTING_ID), any());
     doThrow(new NullValueException("No filter found with given id"))
@@ -201,11 +201,11 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
     doThrow(new NullValueException("No filter found with given id"))
       .when(filterServiceMock).listPage(eq(MockProvider.NON_EXISTING_ID), any(), anyInt(), anyInt());
     doThrow(new NullValueException("No filter found with given id"))
-      .when(filterServiceMock).count(eq(MockProvider.NON_EXISTING_ID));
+      .when(filterServiceMock).count(MockProvider.NON_EXISTING_ID);
     doThrow(new NullValueException("No filter found with given id"))
       .when(filterServiceMock).count(eq(MockProvider.NON_EXISTING_ID), any());
     doThrow(new NullValueException("No filter found with given id"))
-      .when(filterServiceMock).deleteFilter(eq(MockProvider.NON_EXISTING_ID));
+      .when(filterServiceMock).deleteFilter(MockProvider.NON_EXISTING_ID);
 
     authorizationServiceMock = mock(AuthorizationServiceImpl.class);
     identityServiceMock = mock(IdentityServiceImpl.class);
@@ -239,7 +239,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
     .when()
       .get(SINGLE_FILTER_URL);
 
-    verify(filterServiceMock).getFilter(eq(EXAMPLE_FILTER_ID));
+    verify(filterServiceMock).getFilter(EXAMPLE_FILTER_ID);
   }
 
   @Test
@@ -251,7 +251,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
     .when()
       .get(SINGLE_FILTER_URL);
 
-    verify(filterServiceMock).getFilter(eq(MockProvider.NON_EXISTING_ID));
+    verify(filterServiceMock).getFilter(MockProvider.NON_EXISTING_ID);
   }
 
   @Test
@@ -680,7 +680,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
       .post(CREATE_FILTER_URL);
 
     verify(filterServiceMock).newTaskFilter();
-    verify(filterServiceMock).saveFilter(eq(filterMock));
+    verify(filterServiceMock).saveFilter(filterMock);
   }
 
   @Test
@@ -707,8 +707,8 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
     .when()
       .put(SINGLE_FILTER_URL);
 
-    verify(filterServiceMock).getFilter(eq(EXAMPLE_FILTER_ID));
-    verify(filterServiceMock).saveFilter(eq(filterMock));
+    verify(filterServiceMock).getFilter(EXAMPLE_FILTER_ID);
+    verify(filterServiceMock).saveFilter(filterMock);
   }
 
   @Test
@@ -774,7 +774,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
     .when()
       .delete(SINGLE_FILTER_URL);
 
-    verify(filterServiceMock).deleteFilter(eq(EXAMPLE_FILTER_ID));
+    verify(filterServiceMock).deleteFilter(EXAMPLE_FILTER_ID);
   }
 
   @Test
@@ -1532,7 +1532,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
     Map<String, Object> properties = new HashMap<>();
     properties.put("variables", "foo");
     Filter filter =  mockFilter().properties(properties).build();
-    when(filterServiceMock.getFilter(eq(EXAMPLE_FILTER_ID))).thenReturn(filter);
+    when(filterServiceMock.getFilter(EXAMPLE_FILTER_ID)).thenReturn(filter);
 
     given()
       .pathParam("id", EXAMPLE_FILTER_ID)
@@ -1542,7 +1542,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
     .when()
       .get(EXECUTE_SINGLE_RESULT_FILTER_URL);
 
-    verify(filterServiceMock, times(1)).getFilter(eq(EXAMPLE_FILTER_ID));
+    verify(filterServiceMock, times(1)).getFilter(EXAMPLE_FILTER_ID);
     verify(variableInstanceQueryMock, never()).variableScopeIdIn(any());
     verify(variableInstanceQueryMock, never()).variableNameIn(any());
     verify(variableInstanceQueryMock, never()).list();
@@ -1555,7 +1555,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
     Map<String, Object> properties = new HashMap<>();
     properties.put("variables", Collections.emptyList());
     Filter filter =  mockFilter().properties(properties).build();
-    when(filterServiceMock.getFilter(eq(EXAMPLE_FILTER_ID))).thenReturn(filter);
+    when(filterServiceMock.getFilter(EXAMPLE_FILTER_ID)).thenReturn(filter);
 
     given()
       .pathParam("id", EXAMPLE_FILTER_ID)
@@ -1566,7 +1566,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
     .when()
       .get(EXECUTE_SINGLE_RESULT_FILTER_URL);
 
-    verify(filterServiceMock, times(1)).getFilter(eq(EXAMPLE_FILTER_ID));
+    verify(filterServiceMock, times(1)).getFilter(EXAMPLE_FILTER_ID);
     verify(variableInstanceQueryMock, never()).variableScopeIdIn(any());
     verify(variableInstanceQueryMock, never()).variableNameIn(any());
     verify(variableInstanceQueryMock, never()).list();
@@ -1600,7 +1600,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
     .when()
       .get(EXECUTE_SINGLE_RESULT_FILTER_URL);
 
-    verify(filterServiceMock, times(1)).getFilter(eq(EXAMPLE_FILTER_ID));
+    verify(filterServiceMock, times(1)).getFilter(EXAMPLE_FILTER_ID);
     verify(variableInstanceQueryMock, times(1)).variableScopeIdIn(any(String[].class));
     verify(variableInstanceQueryMock).variableScopeIdIn(TASK_A_ID, EXECUTION_A_ID, PROCESS_INSTANCE_A_ID);
     verify(variableInstanceQueryMock, times(1)).variableNameIn(any(String[].class));
@@ -1642,7 +1642,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
     .when()
       .get(EXECUTE_SINGLE_RESULT_FILTER_URL);
 
-    verify(filterServiceMock, times(1)).getFilter(eq(EXAMPLE_FILTER_ID));
+    verify(filterServiceMock, times(1)).getFilter(EXAMPLE_FILTER_ID);
     verify(variableInstanceQueryMock, times(1)).variableScopeIdIn(any(String[].class));
     verify(variableInstanceQueryMock).variableScopeIdIn(TASK_A_ID, EXECUTION_A_ID, PROCESS_INSTANCE_A_ID, CASE_EXECUTION_A_ID, CASE_INSTANCE_A_ID);
     verify(variableInstanceQueryMock, times(1)).variableNameIn(any(String[].class));
@@ -1712,7 +1712,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
     .when()
       .get(EXECUTE_LIST_FILTER_URL);
 
-    verify(filterServiceMock, times(1)).getFilter(eq(EXAMPLE_FILTER_ID));
+    verify(filterServiceMock, times(1)).getFilter(EXAMPLE_FILTER_ID);
     verify(variableInstanceQueryMock, times(1)).variableScopeIdIn(any(String[].class));
     verify(variableInstanceQueryMock).variableScopeIdIn(TASK_A_ID, EXECUTION_A_ID, PROCESS_INSTANCE_A_ID, TASK_B_ID, EXECUTION_B_ID, TASK_C_ID, CASE_EXECUTION_A_ID, CASE_INSTANCE_A_ID);
     verify(variableInstanceQueryMock, times(1)).variableNameIn(any(String[].class));
@@ -1831,7 +1831,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
     properties.put("variables", variables);
 
     Filter filter = mockFilter().properties(properties).build();
-    when(filterServiceMock.getFilter(eq(EXAMPLE_FILTER_ID))).thenReturn(filter);
+    when(filterServiceMock.getFilter(EXAMPLE_FILTER_ID)).thenReturn(filter);
 
     return filter;
   }

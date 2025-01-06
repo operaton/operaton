@@ -321,7 +321,7 @@ public class HistoricDecisionInstanceRestServiceInteractionTest extends Abstract
 
     verifyBatchJson(response.asString());
 
-    verify(historyServiceMock, times(1)).deleteHistoricDecisionInstancesAsync(eq(ids), eq((HistoricDecisionInstanceQuery) null), eq("a-delete-reason"));
+    verify(historyServiceMock, times(1)).deleteHistoricDecisionInstancesAsync(ids, (HistoricDecisionInstanceQuery) null, "a-delete-reason");
   }
 
   @Test

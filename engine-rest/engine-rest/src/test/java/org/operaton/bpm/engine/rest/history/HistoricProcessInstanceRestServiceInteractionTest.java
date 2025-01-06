@@ -223,7 +223,7 @@ public class HistoricProcessInstanceRestServiceInteractionTest extends AbstractR
     verifyBatchJson(response.asString());
 
     verify(historyServiceMock, times(1)).deleteHistoricProcessInstancesAsync(
-        eq(ids), eq((HistoricProcessInstanceQuery) null), eq(TEST_DELETE_REASON));
+        ids, (HistoricProcessInstanceQuery) null, TEST_DELETE_REASON);
   }
 
   @Test

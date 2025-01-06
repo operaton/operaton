@@ -66,7 +66,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -168,8 +167,8 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
     Map<String, Object> expectedVariablesToTriggeredScope = new HashMap<>();
     expectedVariablesToTriggeredScope.put("aKeyToTriggeredScope", "aValueToTriggeredScope");
 
-    verify(runtimeServiceMock).createMessageCorrelation(eq(messageName));
-    verify(messageCorrelationBuilderMock).processInstanceBusinessKey(eq(businessKey));
+    verify(runtimeServiceMock).createMessageCorrelation(messageName);
+    verify(messageCorrelationBuilderMock).processInstanceBusinessKey(businessKey);
     verify(messageCorrelationBuilderMock).setVariables(argThat(new EqualsMap(expectedVariables)));
     verify(messageCorrelationBuilderMock).setVariablesLocal(argThat(new EqualsMap(expectedVariablesLocal)));
     verify(messageCorrelationBuilderMock).setVariablesToTriggeredScope(argThat(new EqualsMap(expectedVariablesToTriggeredScope)));
@@ -213,7 +212,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
     assertTrue(!content.isEmpty());
     checkExecutionResult(content, 0);
 
-    verify(runtimeServiceMock).createMessageCorrelation(eq(messageName));
+    verify(runtimeServiceMock).createMessageCorrelation(messageName);
     verify(messageCorrelationBuilderMock).correlateWithResult();
   }
 
@@ -251,7 +250,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
     assertTrue(!content.isEmpty());
     checkProcessInstanceResult(content, 0);
 
-    verify(runtimeServiceMock).createMessageCorrelation(eq(messageName));
+    verify(runtimeServiceMock).createMessageCorrelation(messageName);
     verify(messageCorrelationBuilderMock).correlateWithResult();
   }
 
@@ -315,8 +314,8 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
     Map<String, Object> expectedVariablesToTriggeredScope = new HashMap<>();
     expectedVariablesToTriggeredScope.put("aKeyToTriggeredScope", "aValueToTriggeredScope");
 
-    verify(runtimeServiceMock).createMessageCorrelation(eq(messageName));
-    verify(messageCorrelationBuilderMock).processInstanceBusinessKey(eq(businessKey));
+    verify(runtimeServiceMock).createMessageCorrelation(messageName);
+    verify(messageCorrelationBuilderMock).processInstanceBusinessKey(businessKey);
     verify(messageCorrelationBuilderMock).setVariables(argThat(new EqualsMap(expectedVariables)));
     verify(messageCorrelationBuilderMock).setVariablesLocal(argThat(new EqualsMap(expectedVariablesLocal)));
     verify(messageCorrelationBuilderMock).setVariablesToTriggeredScope(argThat(new EqualsMap(expectedVariablesToTriggeredScope)));
@@ -366,7 +365,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
       checkExecutionResult(content, i);
     }
 
-    verify(runtimeServiceMock).createMessageCorrelation(eq(messageName));
+    verify(runtimeServiceMock).createMessageCorrelation(messageName);
     verify(messageCorrelationBuilderMock).correlateAllWithResult();
   }
 
@@ -400,7 +399,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
       checkProcessInstanceResult(content, i);
     }
 
-    verify(runtimeServiceMock).createMessageCorrelation(eq(messageName));
+    verify(runtimeServiceMock).createMessageCorrelation(messageName);
     verify(messageCorrelationBuilderMock).correlateAllWithResult();
   }
 
@@ -440,7 +439,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
       }
     }
 
-    verify(runtimeServiceMock).createMessageCorrelation(eq(messageName));
+    verify(runtimeServiceMock).createMessageCorrelation(messageName);
     verify(messageCorrelationBuilderMock).correlateAllWithResult();
   }
 
@@ -467,7 +466,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
     String content = response.asString();
     assertTrue(content.isEmpty());
 
-    verify(runtimeServiceMock).createMessageCorrelation(eq(messageName));
+    verify(runtimeServiceMock).createMessageCorrelation(messageName);
     verify(messageCorrelationBuilderMock).correlateAllWithResult();
   }
 
@@ -482,7 +481,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
       .then().expect().statusCode(Status.NO_CONTENT.getStatusCode())
       .when().post(MESSAGE_URL);
 
-    verify(runtimeServiceMock).createMessageCorrelation(eq(messageName));
+    verify(runtimeServiceMock).createMessageCorrelation(messageName);
     verify(messageCorrelationBuilderMock).correlateWithResult();
     verifyNoMoreInteractions(messageCorrelationBuilderMock);
   }
@@ -500,8 +499,8 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
       .then().expect().statusCode(Status.NO_CONTENT.getStatusCode())
       .when().post(MESSAGE_URL);
 
-    verify(runtimeServiceMock).createMessageCorrelation(eq(messageName));
-    verify(messageCorrelationBuilderMock).processInstanceBusinessKey(eq(businessKey));
+    verify(runtimeServiceMock).createMessageCorrelation(messageName);
+    verify(messageCorrelationBuilderMock).processInstanceBusinessKey(businessKey);
     verify(messageCorrelationBuilderMock).correlateWithResult();
     verifyNoMoreInteractions(messageCorrelationBuilderMock);
 
@@ -521,8 +520,8 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
       .then().expect().statusCode(Status.NO_CONTENT.getStatusCode())
       .when().post(MESSAGE_URL);
 
-    verify(runtimeServiceMock).createMessageCorrelation(eq(messageName));
-    verify(messageCorrelationBuilderMock).processInstanceBusinessKey(eq(businessKey));
+    verify(runtimeServiceMock).createMessageCorrelation(messageName);
+    verify(messageCorrelationBuilderMock).processInstanceBusinessKey(businessKey);
     verify(messageCorrelationBuilderMock).correlateAllWithResult();
     verifyNoMoreInteractions(messageCorrelationBuilderMock);
 
@@ -582,7 +581,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
       .then().expect().statusCode(Status.NO_CONTENT.getStatusCode())
       .when().post(MESSAGE_URL);
 
-    verify(runtimeServiceMock).createMessageCorrelation(eq(messageName));
+    verify(runtimeServiceMock).createMessageCorrelation(messageName);
     verify(messageCorrelationBuilderMock).tenantId(MockProvider.EXAMPLE_TENANT_ID);
     verify(messageCorrelationBuilderMock).correlateWithResult();
     verifyNoMoreInteractions(messageCorrelationBuilderMock);
@@ -600,7 +599,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
       .then().expect().statusCode(Status.NO_CONTENT.getStatusCode())
       .when().post(MESSAGE_URL);
 
-    verify(runtimeServiceMock).createMessageCorrelation(eq(messageName));
+    verify(runtimeServiceMock).createMessageCorrelation(messageName);
     verify(messageCorrelationBuilderMock).withoutTenantId();
     verify(messageCorrelationBuilderMock).correlateWithResult();
     verifyNoMoreInteractions(messageCorrelationBuilderMock);
@@ -1207,8 +1206,8 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
       .expect().statusCode(Status.NO_CONTENT.getStatusCode())
     .when().post(MESSAGE_URL);
 
-    verify(runtimeServiceMock).createMessageCorrelation(eq(messageName));
-    verify(messageCorrelationBuilderMock).processInstanceId(eq(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID));
+    verify(runtimeServiceMock).createMessageCorrelation(messageName);
+    verify(messageCorrelationBuilderMock).processInstanceId(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
 
     verify(messageCorrelationBuilderMock).correlateWithResult();
   }
@@ -1230,7 +1229,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
       .expect().statusCode(Status.NO_CONTENT.getStatusCode())
     .when().post(MESSAGE_URL);
 
-    verify(runtimeServiceMock).createMessageCorrelation(eq(messageName));
+    verify(runtimeServiceMock).createMessageCorrelation(messageName);
 
     verify(messageCorrelationBuilderMock, Mockito.never()).processInstanceBusinessKey(anyString());
     verify(messageCorrelationBuilderMock).correlateWithResult();
@@ -1263,7 +1262,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
     checkVariablesInResult(content, 0);
     checkExecutionResult(content, 0);
 
-    verify(runtimeServiceMock).createMessageCorrelation(eq(messageName));
+    verify(runtimeServiceMock).createMessageCorrelation(messageName);
     verify(messageCorrelationBuilderMock).correlateWithResultAndVariables(false);
   }
 
@@ -1296,7 +1295,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
     assertEquals(1, results.size());
     checkVariablesInResult(content, 0);
 
-    verify(runtimeServiceMock).createMessageCorrelation(eq(messageName));
+    verify(runtimeServiceMock).createMessageCorrelation(messageName);
     verify(messageCorrelationBuilderMock).correlateAllWithResultAndVariables(false);
   }
 

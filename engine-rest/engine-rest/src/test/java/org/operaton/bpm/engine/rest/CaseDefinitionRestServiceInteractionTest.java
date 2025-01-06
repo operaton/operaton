@@ -23,7 +23,6 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.any;
 import static org.mockito.hamcrest.MockitoHamcrest.argThat;
-import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -122,8 +121,8 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
     repositoryServiceMock = mock(RepositoryService.class);
 
     when(processEngine.getRepositoryService()).thenReturn(repositoryServiceMock);
-    when(repositoryServiceMock.getCaseDefinition(eq(MockProvider.EXAMPLE_CASE_DEFINITION_ID))).thenReturn(mockCaseDefinition);
-    when(repositoryServiceMock.getCaseModel(eq(MockProvider.EXAMPLE_CASE_DEFINITION_ID))).thenReturn(createMockCaseDefinitionCmmnXml());
+    when(repositoryServiceMock.getCaseDefinition(MockProvider.EXAMPLE_CASE_DEFINITION_ID)).thenReturn(mockCaseDefinition);
+    when(repositoryServiceMock.getCaseModel(MockProvider.EXAMPLE_CASE_DEFINITION_ID)).thenReturn(createMockCaseDefinitionCmmnXml());
 
     caseDefinitionQueryMock = mock(CaseDefinitionQuery.class);
     when(caseDefinitionQueryMock.caseDefinitionKey(MockProvider.EXAMPLE_CASE_DEFINITION_KEY)).thenReturn(caseDefinitionQueryMock);
@@ -667,7 +666,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
 
     doThrow(new BadUserRequestException(expectedMessage))
         .when(repositoryServiceMock)
-        .updateCaseDefinitionHistoryTimeToLive(eq(MockProvider.EXAMPLE_CASE_DEFINITION_ID), eq(-1));
+        .updateCaseDefinitionHistoryTimeToLive(MockProvider.EXAMPLE_CASE_DEFINITION_ID, -1);
 
     given()
       .pathParam("id", MockProvider.EXAMPLE_CASE_DEFINITION_ID)
@@ -690,7 +689,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
 
     doThrow(new AuthorizationException(expectedMessage))
         .when(repositoryServiceMock)
-        .updateCaseDefinitionHistoryTimeToLive(eq(MockProvider.EXAMPLE_CASE_DEFINITION_ID), eq(5));
+        .updateCaseDefinitionHistoryTimeToLive(MockProvider.EXAMPLE_CASE_DEFINITION_ID, 5);
 
     given()
       .pathParam("id", MockProvider.EXAMPLE_CASE_DEFINITION_ID)

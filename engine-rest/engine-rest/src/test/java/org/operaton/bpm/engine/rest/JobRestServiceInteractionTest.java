@@ -26,7 +26,6 @@ import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
@@ -1524,7 +1523,7 @@ public class JobRestServiceInteractionTest extends AbstractRestServiceTest {
     verifyBatchJson(response.asString());
 
     verify(mockManagementService, times(1)).setJobRetriesByJobsAsync(5);
-    verify(mockSetJobRetriesByJobsAsyncBuilder, times(1)).jobIds(eq(ids));
+    verify(mockSetJobRetriesByJobsAsyncBuilder, times(1)).jobIds(ids);
     verify(mockSetJobRetriesByJobsAsyncBuilder, times(1)).jobQuery(null);
     verify(mockSetJobRetriesByJobsAsyncBuilder, times(1)).executeAsync();
     verifyNoMoreInteractions(mockSetJobRetriesByJobsAsyncBuilder);
@@ -1551,8 +1550,8 @@ public class JobRestServiceInteractionTest extends AbstractRestServiceTest {
 
     verifyBatchJson(response.asString());
 
-    verify(mockManagementService, times(1)).setJobRetriesByJobsAsync(eq(5));
-    verify(mockSetJobRetriesByJobsAsyncBuilder, times(1)).jobIds(eq(ids));
+    verify(mockManagementService, times(1)).setJobRetriesByJobsAsync(5);
+    verify(mockSetJobRetriesByJobsAsyncBuilder, times(1)).jobIds(ids);
     verify(mockSetJobRetriesByJobsAsyncBuilder, times(1)).jobQuery(null);
     verify(mockSetJobRetriesByJobsAsyncBuilder, times(1)).dueDate(newDueDate);
     verify(mockSetJobRetriesByJobsAsyncBuilder, times(1)).executeAsync();
@@ -1579,8 +1578,8 @@ public class JobRestServiceInteractionTest extends AbstractRestServiceTest {
 
     verifyBatchJson(response.asString());
 
-    verify(mockManagementService, times(1)).setJobRetriesByJobsAsync(eq(5));
-    verify(mockSetJobRetriesByJobsAsyncBuilder, times(1)).jobIds(eq(ids));
+    verify(mockManagementService, times(1)).setJobRetriesByJobsAsync(5);
+    verify(mockSetJobRetriesByJobsAsyncBuilder, times(1)).jobIds(ids);
     verify(mockSetJobRetriesByJobsAsyncBuilder, times(1)).jobQuery(null);
     verify(mockSetJobRetriesByJobsAsyncBuilder, times(1)).dueDate(null);
     verify(mockSetJobRetriesByJobsAsyncBuilder, times(1)).executeAsync();
@@ -1669,7 +1668,7 @@ public class JobRestServiceInteractionTest extends AbstractRestServiceTest {
   @Test
   public void testSetRetriesWithBadRequestQuery() {
     doThrow(new BadUserRequestException("job ids are empty"))
-        .when(mockSetJobRetriesByJobsAsyncBuilder).jobQuery(eq((JobQuery) null));
+        .when(mockSetJobRetriesByJobsAsyncBuilder).jobQuery((JobQuery) null);
 
     Map<String, Object> messageBodyJson = new HashMap<>();
     messageBodyJson.put(RETRIES, 5);
@@ -1696,7 +1695,7 @@ public class JobRestServiceInteractionTest extends AbstractRestServiceTest {
   @Test
   public void testSetRetriesWithNegativeRetries() {
     doThrow(new BadUserRequestException("retries are negative"))
-        .when(mockManagementService).setJobRetriesByJobsAsync(eq(MockProvider.EXAMPLE_NEGATIVE_JOB_RETRIES));
+        .when(mockManagementService).setJobRetriesByJobsAsync(MockProvider.EXAMPLE_NEGATIVE_JOB_RETRIES);
 
     Map<String, Object> messageBodyJson = new HashMap<>();
     messageBodyJson.put(RETRIES, MockProvider.EXAMPLE_NEGATIVE_JOB_RETRIES);

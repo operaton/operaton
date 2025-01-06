@@ -117,9 +117,9 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
     EventSubscription mockSubscription = MockProvider.createMockEventSubscription();
     EventSubscriptionQuery mockQuery = mock(EventSubscriptionQuery.class);
     when(runtimeServiceMock.createEventSubscriptionQuery()).thenReturn(mockQuery);
-    when(mockQuery.executionId(eq(MockProvider.EXAMPLE_EXECUTION_ID))).thenReturn(mockQuery);
-    when(mockQuery.eventType(eq(MockProvider.EXAMPLE_EVENT_SUBSCRIPTION_TYPE))).thenReturn(mockQuery);
-    when(mockQuery.eventName(eq(MockProvider.EXAMPLE_EVENT_SUBSCRIPTION_NAME))).thenReturn(mockQuery);
+    when(mockQuery.executionId(MockProvider.EXAMPLE_EXECUTION_ID)).thenReturn(mockQuery);
+    when(mockQuery.eventType(MockProvider.EXAMPLE_EVENT_SUBSCRIPTION_TYPE)).thenReturn(mockQuery);
+    when(mockQuery.eventName(MockProvider.EXAMPLE_EVENT_SUBSCRIPTION_NAME)).thenReturn(mockQuery);
     when(mockQuery.singleResult()).thenReturn(mockSubscription);
   }
 
@@ -622,7 +622,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   public void testNonExistingLocalVariable() {
     String variableKey = "aVariableKey";
 
-    when(runtimeServiceMock.getVariableLocal(eq(MockProvider.EXAMPLE_EXECUTION_ID), eq(variableKey))).thenReturn(null);
+    when(runtimeServiceMock.getVariableLocal(MockProvider.EXAMPLE_EXECUTION_ID, variableKey)).thenReturn(null);
 
     given().pathParam("id", MockProvider.EXAMPLE_EXECUTION_ID).pathParam("varId", variableKey)
       .then().expect().statusCode(Status.NOT_FOUND.getStatusCode())
@@ -635,7 +635,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   public void testGetLocalVariableForNonExistingExecution() {
     String variableKey = "aVariableKey";
 
-    when(runtimeServiceMock.getVariableLocalTyped(eq(MockProvider.EXAMPLE_EXECUTION_ID), eq(variableKey), eq(true)))
+    when(runtimeServiceMock.getVariableLocalTyped(MockProvider.EXAMPLE_EXECUTION_ID, variableKey, true))
       .thenThrow(new ProcessEngineException("expected exception"));
 
     given().pathParam("id", MockProvider.EXAMPLE_EXECUTION_ID).pathParam("varId", variableKey)
@@ -1249,8 +1249,8 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
     .when()
       .post(SINGLE_EXECUTION_LOCAL_BINARY_VARIABLE_URL);
 
-    verify(runtimeServiceMock, never()).setVariableLocal(eq(MockProvider.EXAMPLE_EXECUTION_ID), eq(variableKey),
-        eq(serializable));
+    verify(runtimeServiceMock, never()).setVariableLocal(MockProvider.EXAMPLE_EXECUTION_ID, variableKey,
+        serializable);
   }
 
   @Test
@@ -1379,7 +1379,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
       .then().expect().statusCode(Status.NO_CONTENT.getStatusCode())
       .when().delete(SINGLE_EXECUTION_LOCAL_VARIABLE_URL);
 
-    verify(runtimeServiceMock).removeVariableLocal(eq(MockProvider.EXAMPLE_EXECUTION_ID), eq(variableKey));
+    verify(runtimeServiceMock).removeVariableLocal(MockProvider.EXAMPLE_EXECUTION_ID, variableKey);
   }
 
   @Test
@@ -1490,7 +1490,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
     String variableKey = "aVariableKey";
 
     doThrow(new ProcessEngineException("expected exception"))
-      .when(runtimeServiceMock).removeVariableLocal(eq(MockProvider.EXAMPLE_EXECUTION_ID), eq(variableKey));
+      .when(runtimeServiceMock).removeVariableLocal(MockProvider.EXAMPLE_EXECUTION_ID, variableKey);
 
     given().pathParam("id", MockProvider.EXAMPLE_EXECUTION_ID).pathParam("varId", variableKey)
       .then().expect().statusCode(Status.INTERNAL_SERVER_ERROR.getStatusCode())

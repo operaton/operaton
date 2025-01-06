@@ -25,7 +25,6 @@ import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
@@ -229,7 +228,7 @@ public class ProcessEngineRestServiceTest extends
   private void createProcessDefinitionMock() {
     ProcessDefinition mockDefinition = MockProvider.createMockDefinition();
 
-    when(mockRepoService.getProcessDefinition(eq(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID))).thenReturn(mockDefinition);
+    when(mockRepoService.getProcessDefinition(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)).thenReturn(mockDefinition);
   }
 
 
@@ -267,7 +266,7 @@ public class ProcessEngineRestServiceTest extends
     ProcessInstance mockInstance = MockProvider.createMockInstance();
 
     ProcessInstanceQuery mockInstanceQuery = mock(ProcessInstanceQuery.class);
-    when(mockInstanceQuery.processInstanceId(eq(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID))).thenReturn(mockInstanceQuery);
+    when(mockInstanceQuery.processInstanceId(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID)).thenReturn(mockInstanceQuery);
     when(mockInstanceQuery.singleResult()).thenReturn(mockInstance);
     when(mockRuntimeService.createProcessInstanceQuery()).thenReturn(mockInstanceQuery);
   }
@@ -276,7 +275,7 @@ public class ProcessEngineRestServiceTest extends
     Execution mockExecution = MockProvider.createMockExecution();
 
     ExecutionQuery mockExecutionQuery = mock(ExecutionQuery.class);
-    when(mockExecutionQuery.processInstanceId(eq(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID))).thenReturn(mockExecutionQuery);
+    when(mockExecutionQuery.processInstanceId(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID)).thenReturn(mockExecutionQuery);
     when(mockExecutionQuery.singleResult()).thenReturn(mockExecution);
     when(mockRuntimeService.createExecutionQuery()).thenReturn(mockExecutionQuery);
   }
@@ -285,7 +284,7 @@ public class ProcessEngineRestServiceTest extends
     Task mockTask = MockProvider.createMockTask();
 
     TaskQuery mockTaskQuery = mock(TaskQuery.class);
-    when(mockTaskQuery.taskId(eq(MockProvider.EXAMPLE_TASK_ID))).thenReturn(mockTaskQuery);
+    when(mockTaskQuery.taskId(MockProvider.EXAMPLE_TASK_ID)).thenReturn(mockTaskQuery);
     when(mockTaskQuery.initializeFormKeys()).thenReturn(mockTaskQuery);
     when(mockTaskQuery.singleResult()).thenReturn(mockTask);
     when(mockTaskService.createTaskQuery()).thenReturn(mockTaskQuery);
@@ -485,7 +484,7 @@ public class ProcessEngineRestServiceTest extends
       .statusCode(Status.OK.getStatusCode())
     .when().get(PROCESS_DEFINITION_URL);
 
-    verify(mockRepoService).getProcessDefinition(eq(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID));
+    verify(mockRepoService).getProcessDefinition(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
     verifyNoInteractions(processEngine);
   }
 
@@ -536,7 +535,7 @@ public class ProcessEngineRestServiceTest extends
       .then().expect().statusCode(Status.NO_CONTENT.getStatusCode())
       .when().post(MESSAGE_URL);
 
-    verify(mockRuntimeService).createMessageCorrelation(eq(messageName));
+    verify(mockRuntimeService).createMessageCorrelation(messageName);
     verify(mockMessageCorrelationBuilder).correlateWithResult();
     verifyNoMoreInteractions(mockMessageCorrelationBuilder);
     verifyNoInteractions(processEngine);
@@ -553,7 +552,7 @@ public class ProcessEngineRestServiceTest extends
       .then().expect().contentType(ContentType.JSON).statusCode(Status.OK.getStatusCode())
       .when().post(MESSAGE_URL);
 
-    verify(mockRuntimeService).createMessageCorrelation(eq(messageName));
+    verify(mockRuntimeService).createMessageCorrelation(messageName);
     verify(mockMessageCorrelationBuilder).correlateWithResult();
     verifyNoMoreInteractions(mockMessageCorrelationBuilder);
     verifyNoInteractions(processEngine);

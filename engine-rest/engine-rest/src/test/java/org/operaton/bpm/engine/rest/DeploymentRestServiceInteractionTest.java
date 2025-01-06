@@ -91,11 +91,11 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
     when(mockRepositoryService.createDeploymentQuery()).thenReturn(mockDeploymentQuery);
 
     mockDeploymentResources = MockProvider.createMockDeploymentResources();
-    when(mockRepositoryService.getDeploymentResources(eq(EXAMPLE_DEPLOYMENT_ID))).thenReturn(mockDeploymentResources);
+    when(mockRepositoryService.getDeploymentResources(EXAMPLE_DEPLOYMENT_ID)).thenReturn(mockDeploymentResources);
 
     mockDeploymentResource = MockProvider.createMockDeploymentResource();
 
-    when(mockRepositoryService.getResourceAsStreamById(eq(EXAMPLE_DEPLOYMENT_ID), eq(EXAMPLE_DEPLOYMENT_RESOURCE_ID))).thenReturn(createMockDeploymentResourceBpmnData());
+    when(mockRepositoryService.getResourceAsStreamById(EXAMPLE_DEPLOYMENT_ID, EXAMPLE_DEPLOYMENT_RESOURCE_ID)).thenReturn(createMockDeploymentResourceBpmnData());
 
     mockDeploymentBuilder = mock(DeploymentBuilder.class);
     when(mockRepositoryService.createDeployment()).thenReturn(mockDeploymentBuilder);
@@ -285,8 +285,8 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
     List<Resource> resources = new ArrayList<>();
     resources.add(resource);
 
-    when(mockRepositoryService.getDeploymentResources(eq(EXAMPLE_DEPLOYMENT_ID))).thenReturn(resources);
-    when(mockRepositoryService.getResourceAsStreamById(eq(EXAMPLE_DEPLOYMENT_ID), eq(EXAMPLE_DEPLOYMENT_SVG_RESOURCE_ID))).thenReturn(createMockDeploymentResourceSvgData());
+    when(mockRepositoryService.getDeploymentResources(EXAMPLE_DEPLOYMENT_ID)).thenReturn(resources);
+    when(mockRepositoryService.getResourceAsStreamById(EXAMPLE_DEPLOYMENT_ID, EXAMPLE_DEPLOYMENT_SVG_RESOURCE_ID)).thenReturn(createMockDeploymentResourceSvgData());
 
     Response response = given()
         .pathParam("id", EXAMPLE_DEPLOYMENT_ID)
@@ -313,8 +313,8 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     InputStream input = new ByteArrayInputStream(createMockDeploymentResourceByteData());
 
-    when(mockRepositoryService.getDeploymentResources(eq(EXAMPLE_DEPLOYMENT_ID))).thenReturn(resources);
-    when(mockRepositoryService.getResourceAsStreamById(eq(EXAMPLE_DEPLOYMENT_ID), eq(EXAMPLE_DEPLOYMENT_PNG_RESOURCE_ID))).thenReturn(input);
+    when(mockRepositoryService.getDeploymentResources(EXAMPLE_DEPLOYMENT_ID)).thenReturn(resources);
+    when(mockRepositoryService.getResourceAsStreamById(EXAMPLE_DEPLOYMENT_ID, EXAMPLE_DEPLOYMENT_PNG_RESOURCE_ID)).thenReturn(input);
 
     Response response = given()
         .pathParam("id", EXAMPLE_DEPLOYMENT_ID)
@@ -341,8 +341,8 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     InputStream input = new ByteArrayInputStream(createMockDeploymentResourceByteData());
 
-    when(mockRepositoryService.getDeploymentResources(eq(EXAMPLE_DEPLOYMENT_ID))).thenReturn(resources);
-    when(mockRepositoryService.getResourceAsStreamById(eq(EXAMPLE_DEPLOYMENT_ID), eq(EXAMPLE_DEPLOYMENT_GIF_RESOURCE_ID))).thenReturn(input);
+    when(mockRepositoryService.getDeploymentResources(EXAMPLE_DEPLOYMENT_ID)).thenReturn(resources);
+    when(mockRepositoryService.getResourceAsStreamById(EXAMPLE_DEPLOYMENT_ID, EXAMPLE_DEPLOYMENT_GIF_RESOURCE_ID)).thenReturn(input);
 
     Response response = given()
         .pathParam("id", EXAMPLE_DEPLOYMENT_ID)
@@ -369,8 +369,8 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     InputStream input = new ByteArrayInputStream(createMockDeploymentResourceByteData());
 
-    when(mockRepositoryService.getDeploymentResources(eq(EXAMPLE_DEPLOYMENT_ID))).thenReturn(resources);
-    when(mockRepositoryService.getResourceAsStreamById(eq(EXAMPLE_DEPLOYMENT_ID), eq(EXAMPLE_DEPLOYMENT_JPG_RESOURCE_ID))).thenReturn(input);
+    when(mockRepositoryService.getDeploymentResources(EXAMPLE_DEPLOYMENT_ID)).thenReturn(resources);
+    when(mockRepositoryService.getResourceAsStreamById(EXAMPLE_DEPLOYMENT_ID, EXAMPLE_DEPLOYMENT_JPG_RESOURCE_ID)).thenReturn(input);
 
     Response response = given()
         .pathParam("id", EXAMPLE_DEPLOYMENT_ID)
@@ -397,8 +397,8 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     InputStream input = new ByteArrayInputStream(createMockDeploymentResourceByteData());
 
-    when(mockRepositoryService.getDeploymentResources(eq(EXAMPLE_DEPLOYMENT_ID))).thenReturn(resources);
-    when(mockRepositoryService.getResourceAsStreamById(eq(EXAMPLE_DEPLOYMENT_ID), eq(EXAMPLE_DEPLOYMENT_JPEG_RESOURCE_ID))).thenReturn(input);
+    when(mockRepositoryService.getDeploymentResources(EXAMPLE_DEPLOYMENT_ID)).thenReturn(resources);
+    when(mockRepositoryService.getResourceAsStreamById(EXAMPLE_DEPLOYMENT_ID, EXAMPLE_DEPLOYMENT_JPEG_RESOURCE_ID)).thenReturn(input);
 
     Response response = given()
         .pathParam("id", EXAMPLE_DEPLOYMENT_ID)
@@ -425,8 +425,8 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     InputStream input = new ByteArrayInputStream(createMockDeploymentResourceByteData());
 
-    when(mockRepositoryService.getDeploymentResources(eq(EXAMPLE_DEPLOYMENT_ID))).thenReturn(resources);
-    when(mockRepositoryService.getResourceAsStreamById(eq(EXAMPLE_DEPLOYMENT_ID), eq(EXAMPLE_DEPLOYMENT_JPE_RESOURCE_ID))).thenReturn(input);
+    when(mockRepositoryService.getDeploymentResources(EXAMPLE_DEPLOYMENT_ID)).thenReturn(resources);
+    when(mockRepositoryService.getResourceAsStreamById(EXAMPLE_DEPLOYMENT_ID, EXAMPLE_DEPLOYMENT_JPE_RESOURCE_ID)).thenReturn(input);
 
     Response response = given()
         .pathParam("id", EXAMPLE_DEPLOYMENT_ID)
@@ -453,8 +453,8 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     InputStream input = new ByteArrayInputStream(createMockDeploymentResourceByteData());
 
-    when(mockRepositoryService.getDeploymentResources(eq(EXAMPLE_DEPLOYMENT_ID))).thenReturn(resources);
-    when(mockRepositoryService.getResourceAsStreamById(eq(EXAMPLE_DEPLOYMENT_ID), eq(EXAMPLE_DEPLOYMENT_TIF_RESOURCE_ID))).thenReturn(input);
+    when(mockRepositoryService.getDeploymentResources(EXAMPLE_DEPLOYMENT_ID)).thenReturn(resources);
+    when(mockRepositoryService.getResourceAsStreamById(EXAMPLE_DEPLOYMENT_ID, EXAMPLE_DEPLOYMENT_TIF_RESOURCE_ID)).thenReturn(input);
 
     Response response = given()
         .pathParam("id", EXAMPLE_DEPLOYMENT_ID)
@@ -481,8 +481,8 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     InputStream input = new ByteArrayInputStream(createMockDeploymentResourceByteData());
 
-    when(mockRepositoryService.getDeploymentResources(eq(EXAMPLE_DEPLOYMENT_ID))).thenReturn(resources);
-    when(mockRepositoryService.getResourceAsStreamById(eq(EXAMPLE_DEPLOYMENT_ID), eq(EXAMPLE_DEPLOYMENT_TIFF_RESOURCE_ID))).thenReturn(input);
+    when(mockRepositoryService.getDeploymentResources(EXAMPLE_DEPLOYMENT_ID)).thenReturn(resources);
+    when(mockRepositoryService.getResourceAsStreamById(EXAMPLE_DEPLOYMENT_ID, EXAMPLE_DEPLOYMENT_TIFF_RESOURCE_ID)).thenReturn(input);
 
     Response response = given()
         .pathParam("id", EXAMPLE_DEPLOYMENT_ID)
@@ -507,8 +507,8 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
     List<Resource> resources = new ArrayList<>();
     resources.add(resource);
 
-    when(mockRepositoryService.getDeploymentResources(eq(EXAMPLE_DEPLOYMENT_ID))).thenReturn(resources);
-    when(mockRepositoryService.getResourceAsStreamById(eq(EXAMPLE_DEPLOYMENT_ID), eq(EXAMPLE_DEPLOYMENT_BPMN_RESOURCE_ID))).thenReturn(createMockDeploymentResourceBpmnData());
+    when(mockRepositoryService.getDeploymentResources(EXAMPLE_DEPLOYMENT_ID)).thenReturn(resources);
+    when(mockRepositoryService.getResourceAsStreamById(EXAMPLE_DEPLOYMENT_ID, EXAMPLE_DEPLOYMENT_BPMN_RESOURCE_ID)).thenReturn(createMockDeploymentResourceBpmnData());
 
     Response response = given()
         .pathParam("id", EXAMPLE_DEPLOYMENT_ID)
@@ -533,8 +533,8 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
     List<Resource> resources = new ArrayList<>();
     resources.add(resource);
 
-    when(mockRepositoryService.getDeploymentResources(eq(EXAMPLE_DEPLOYMENT_ID))).thenReturn(resources);
-    when(mockRepositoryService.getResourceAsStreamById(eq(EXAMPLE_DEPLOYMENT_ID), eq(EXAMPLE_DEPLOYMENT_BPMN_XML_RESOURCE_ID))).thenReturn(createMockDeploymentResourceBpmnData());
+    when(mockRepositoryService.getDeploymentResources(EXAMPLE_DEPLOYMENT_ID)).thenReturn(resources);
+    when(mockRepositoryService.getResourceAsStreamById(EXAMPLE_DEPLOYMENT_ID, EXAMPLE_DEPLOYMENT_BPMN_XML_RESOURCE_ID)).thenReturn(createMockDeploymentResourceBpmnData());
 
     Response response = given()
         .pathParam("id", EXAMPLE_DEPLOYMENT_ID)
@@ -561,8 +561,8 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     InputStream input = new ByteArrayInputStream(createMockDeploymentResourceByteData());
 
-    when(mockRepositoryService.getDeploymentResources(eq(EXAMPLE_DEPLOYMENT_ID))).thenReturn(resources);
-    when(mockRepositoryService.getResourceAsStreamById(eq(EXAMPLE_DEPLOYMENT_ID), eq(EXAMPLE_DEPLOYMENT_CMMN_RESOURCE_ID))).thenReturn(input);
+    when(mockRepositoryService.getDeploymentResources(EXAMPLE_DEPLOYMENT_ID)).thenReturn(resources);
+    when(mockRepositoryService.getResourceAsStreamById(EXAMPLE_DEPLOYMENT_ID, EXAMPLE_DEPLOYMENT_CMMN_RESOURCE_ID)).thenReturn(input);
 
     Response response = given()
         .pathParam("id", EXAMPLE_DEPLOYMENT_ID)
@@ -589,8 +589,8 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     InputStream input = new ByteArrayInputStream(createMockDeploymentResourceByteData());
 
-    when(mockRepositoryService.getDeploymentResources(eq(EXAMPLE_DEPLOYMENT_ID))).thenReturn(resources);
-    when(mockRepositoryService.getResourceAsStreamById(eq(EXAMPLE_DEPLOYMENT_ID), eq(EXAMPLE_DEPLOYMENT_CMMN_XML_RESOURCE_ID))).thenReturn(input);
+    when(mockRepositoryService.getDeploymentResources(EXAMPLE_DEPLOYMENT_ID)).thenReturn(resources);
+    when(mockRepositoryService.getResourceAsStreamById(EXAMPLE_DEPLOYMENT_ID, EXAMPLE_DEPLOYMENT_CMMN_XML_RESOURCE_ID)).thenReturn(input);
 
     Response response = given()
         .pathParam("id", EXAMPLE_DEPLOYMENT_ID)
@@ -617,8 +617,8 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     InputStream input = new ByteArrayInputStream(createMockDeploymentResourceByteData());
 
-    when(mockRepositoryService.getDeploymentResources(eq(EXAMPLE_DEPLOYMENT_ID))).thenReturn(resources);
-    when(mockRepositoryService.getResourceAsStreamById(eq(EXAMPLE_DEPLOYMENT_ID), eq(EXAMPLE_DEPLOYMENT_DMN_RESOURCE_ID))).thenReturn(input);
+    when(mockRepositoryService.getDeploymentResources(EXAMPLE_DEPLOYMENT_ID)).thenReturn(resources);
+    when(mockRepositoryService.getResourceAsStreamById(EXAMPLE_DEPLOYMENT_ID, EXAMPLE_DEPLOYMENT_DMN_RESOURCE_ID)).thenReturn(input);
 
     Response response = given()
         .pathParam("id", EXAMPLE_DEPLOYMENT_ID)
@@ -645,8 +645,8 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     InputStream input = new ByteArrayInputStream(createMockDeploymentResourceByteData());
 
-    when(mockRepositoryService.getDeploymentResources(eq(EXAMPLE_DEPLOYMENT_ID))).thenReturn(resources);
-    when(mockRepositoryService.getResourceAsStreamById(eq(EXAMPLE_DEPLOYMENT_ID), eq(EXAMPLE_DEPLOYMENT_DMN_XML_RESOURCE_ID))).thenReturn(input);
+    when(mockRepositoryService.getDeploymentResources(EXAMPLE_DEPLOYMENT_ID)).thenReturn(resources);
+    when(mockRepositoryService.getResourceAsStreamById(EXAMPLE_DEPLOYMENT_ID, EXAMPLE_DEPLOYMENT_DMN_XML_RESOURCE_ID)).thenReturn(input);
 
     Response response = given()
         .pathParam("id", EXAMPLE_DEPLOYMENT_ID)
@@ -673,8 +673,8 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     InputStream input = new ByteArrayInputStream(createMockDeploymentResourceByteData());
 
-    when(mockRepositoryService.getDeploymentResources(eq(EXAMPLE_DEPLOYMENT_ID))).thenReturn(resources);
-    when(mockRepositoryService.getResourceAsStreamById(eq(EXAMPLE_DEPLOYMENT_ID), eq(EXAMPLE_DEPLOYMENT_XML_RESOURCE_ID))).thenReturn(input);
+    when(mockRepositoryService.getDeploymentResources(EXAMPLE_DEPLOYMENT_ID)).thenReturn(resources);
+    when(mockRepositoryService.getResourceAsStreamById(EXAMPLE_DEPLOYMENT_ID, EXAMPLE_DEPLOYMENT_XML_RESOURCE_ID)).thenReturn(input);
 
     Response response = given()
         .pathParam("id", EXAMPLE_DEPLOYMENT_ID)
@@ -701,8 +701,8 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     InputStream input = new ByteArrayInputStream(createMockDeploymentResourceByteData());
 
-    when(mockRepositoryService.getDeploymentResources(eq(EXAMPLE_DEPLOYMENT_ID))).thenReturn(resources);
-    when(mockRepositoryService.getResourceAsStreamById(eq(EXAMPLE_DEPLOYMENT_ID), eq(EXAMPLE_DEPLOYMENT_JSON_RESOURCE_ID))).thenReturn(input);
+    when(mockRepositoryService.getDeploymentResources(EXAMPLE_DEPLOYMENT_ID)).thenReturn(resources);
+    when(mockRepositoryService.getResourceAsStreamById(EXAMPLE_DEPLOYMENT_ID, EXAMPLE_DEPLOYMENT_JSON_RESOURCE_ID)).thenReturn(input);
 
     Response response = given()
         .pathParam("id", EXAMPLE_DEPLOYMENT_ID)
@@ -729,8 +729,8 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     InputStream input = new ByteArrayInputStream(createMockDeploymentResourceByteData());
 
-    when(mockRepositoryService.getDeploymentResources(eq(EXAMPLE_DEPLOYMENT_ID))).thenReturn(resources);
-    when(mockRepositoryService.getResourceAsStreamById(eq(EXAMPLE_DEPLOYMENT_ID), eq(EXAMPLE_DEPLOYMENT_GROOVY_RESOURCE_ID))).thenReturn(input);
+    when(mockRepositoryService.getDeploymentResources(EXAMPLE_DEPLOYMENT_ID)).thenReturn(resources);
+    when(mockRepositoryService.getResourceAsStreamById(EXAMPLE_DEPLOYMENT_ID, EXAMPLE_DEPLOYMENT_GROOVY_RESOURCE_ID)).thenReturn(input);
 
     Response response = given()
         .pathParam("id", EXAMPLE_DEPLOYMENT_ID)
@@ -757,8 +757,8 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     InputStream input = new ByteArrayInputStream(createMockDeploymentResourceByteData());
 
-    when(mockRepositoryService.getDeploymentResources(eq(EXAMPLE_DEPLOYMENT_ID))).thenReturn(resources);
-    when(mockRepositoryService.getResourceAsStreamById(eq(EXAMPLE_DEPLOYMENT_ID), eq(EXAMPLE_DEPLOYMENT_JAVA_RESOURCE_ID))).thenReturn(input);
+    when(mockRepositoryService.getDeploymentResources(EXAMPLE_DEPLOYMENT_ID)).thenReturn(resources);
+    when(mockRepositoryService.getResourceAsStreamById(EXAMPLE_DEPLOYMENT_ID, EXAMPLE_DEPLOYMENT_JAVA_RESOURCE_ID)).thenReturn(input);
 
     Response response = given()
         .pathParam("id", EXAMPLE_DEPLOYMENT_ID)
@@ -785,8 +785,8 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     InputStream input = new ByteArrayInputStream(createMockDeploymentResourceByteData());
 
-    when(mockRepositoryService.getDeploymentResources(eq(EXAMPLE_DEPLOYMENT_ID))).thenReturn(resources);
-    when(mockRepositoryService.getResourceAsStreamById(eq(EXAMPLE_DEPLOYMENT_ID), eq(EXAMPLE_DEPLOYMENT_JS_RESOURCE_ID))).thenReturn(input);
+    when(mockRepositoryService.getDeploymentResources(EXAMPLE_DEPLOYMENT_ID)).thenReturn(resources);
+    when(mockRepositoryService.getResourceAsStreamById(EXAMPLE_DEPLOYMENT_ID, EXAMPLE_DEPLOYMENT_JS_RESOURCE_ID)).thenReturn(input);
 
     Response response = given()
         .pathParam("id", EXAMPLE_DEPLOYMENT_ID)
@@ -813,8 +813,8 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     InputStream input = new ByteArrayInputStream(createMockDeploymentResourceByteData());
 
-    when(mockRepositoryService.getDeploymentResources(eq(EXAMPLE_DEPLOYMENT_ID))).thenReturn(resources);
-    when(mockRepositoryService.getResourceAsStreamById(eq(EXAMPLE_DEPLOYMENT_ID), eq(EXAMPLE_DEPLOYMENT_PYTHON_RESOURCE_ID))).thenReturn(input);
+    when(mockRepositoryService.getDeploymentResources(EXAMPLE_DEPLOYMENT_ID)).thenReturn(resources);
+    when(mockRepositoryService.getResourceAsStreamById(EXAMPLE_DEPLOYMENT_ID, EXAMPLE_DEPLOYMENT_PYTHON_RESOURCE_ID)).thenReturn(input);
 
     Response response = given()
         .pathParam("id", EXAMPLE_DEPLOYMENT_ID)
@@ -841,8 +841,8 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     InputStream input = new ByteArrayInputStream(createMockDeploymentResourceByteData());
 
-    when(mockRepositoryService.getDeploymentResources(eq(EXAMPLE_DEPLOYMENT_ID))).thenReturn(resources);
-    when(mockRepositoryService.getResourceAsStreamById(eq(EXAMPLE_DEPLOYMENT_ID), eq(EXAMPLE_DEPLOYMENT_RUBY_RESOURCE_ID))).thenReturn(input);
+    when(mockRepositoryService.getDeploymentResources(EXAMPLE_DEPLOYMENT_ID)).thenReturn(resources);
+    when(mockRepositoryService.getResourceAsStreamById(EXAMPLE_DEPLOYMENT_ID, EXAMPLE_DEPLOYMENT_RUBY_RESOURCE_ID)).thenReturn(input);
 
     Response response = given()
         .pathParam("id", EXAMPLE_DEPLOYMENT_ID)
@@ -869,8 +869,8 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     InputStream input = new ByteArrayInputStream(createMockDeploymentResourceByteData());
 
-    when(mockRepositoryService.getDeploymentResources(eq(EXAMPLE_DEPLOYMENT_ID))).thenReturn(resources);
-    when(mockRepositoryService.getResourceAsStreamById(eq(EXAMPLE_DEPLOYMENT_ID), eq(EXAMPLE_DEPLOYMENT_PHP_RESOURCE_ID))).thenReturn(input);
+    when(mockRepositoryService.getDeploymentResources(EXAMPLE_DEPLOYMENT_ID)).thenReturn(resources);
+    when(mockRepositoryService.getResourceAsStreamById(EXAMPLE_DEPLOYMENT_ID, EXAMPLE_DEPLOYMENT_PHP_RESOURCE_ID)).thenReturn(input);
 
     Response response = given()
         .pathParam("id", EXAMPLE_DEPLOYMENT_ID)
@@ -897,8 +897,8 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     InputStream input = new ByteArrayInputStream(createMockDeploymentResourceByteData());
 
-    when(mockRepositoryService.getDeploymentResources(eq(EXAMPLE_DEPLOYMENT_ID))).thenReturn(resources);
-    when(mockRepositoryService.getResourceAsStreamById(eq(EXAMPLE_DEPLOYMENT_ID), eq(EXAMPLE_DEPLOYMENT_HTML_RESOURCE_ID))).thenReturn(input);
+    when(mockRepositoryService.getDeploymentResources(EXAMPLE_DEPLOYMENT_ID)).thenReturn(resources);
+    when(mockRepositoryService.getResourceAsStreamById(EXAMPLE_DEPLOYMENT_ID, EXAMPLE_DEPLOYMENT_HTML_RESOURCE_ID)).thenReturn(input);
 
     Response response = given()
         .pathParam("id", EXAMPLE_DEPLOYMENT_ID)
@@ -925,8 +925,8 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     InputStream input = new ByteArrayInputStream(createMockDeploymentResourceByteData());
 
-    when(mockRepositoryService.getDeploymentResources(eq(EXAMPLE_DEPLOYMENT_ID))).thenReturn(resources);
-    when(mockRepositoryService.getResourceAsStreamById(eq(EXAMPLE_DEPLOYMENT_ID), eq(EXAMPLE_DEPLOYMENT_TXT_RESOURCE_ID))).thenReturn(input);
+    when(mockRepositoryService.getDeploymentResources(EXAMPLE_DEPLOYMENT_ID)).thenReturn(resources);
+    when(mockRepositoryService.getResourceAsStreamById(EXAMPLE_DEPLOYMENT_ID, EXAMPLE_DEPLOYMENT_TXT_RESOURCE_ID)).thenReturn(input);
 
     Response response = given()
         .pathParam("id", EXAMPLE_DEPLOYMENT_ID)
@@ -953,8 +953,8 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     InputStream input = new ByteArrayInputStream(createMockDeploymentResourceByteData());
 
-    when(mockRepositoryService.getDeploymentResources(eq(EXAMPLE_DEPLOYMENT_ID))).thenReturn(resources);
-    when(mockRepositoryService.getResourceAsStreamById(eq(EXAMPLE_DEPLOYMENT_ID), eq(EXAMPLE_DEPLOYMENT_CAMFORM_RESOURCE_ID))).thenReturn(input);
+    when(mockRepositoryService.getDeploymentResources(EXAMPLE_DEPLOYMENT_ID)).thenReturn(resources);
+    when(mockRepositoryService.getResourceAsStreamById(EXAMPLE_DEPLOYMENT_ID, EXAMPLE_DEPLOYMENT_CAMFORM_RESOURCE_ID)).thenReturn(input);
 
     Response response = given()
           .pathParam("id", EXAMPLE_DEPLOYMENT_ID)
@@ -981,8 +981,8 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     InputStream input = new ByteArrayInputStream(createMockDeploymentResourceByteData());
 
-    when(mockRepositoryService.getDeploymentResources(eq(EXAMPLE_DEPLOYMENT_ID))).thenReturn(resources);
-    when(mockRepositoryService.getResourceAsStreamById(eq(EXAMPLE_DEPLOYMENT_ID), eq(EXAMPLE_DEPLOYMENT_RESOURCE_FILENAME_ID))).thenReturn(input);
+    when(mockRepositoryService.getDeploymentResources(EXAMPLE_DEPLOYMENT_ID)).thenReturn(resources);
+    when(mockRepositoryService.getResourceAsStreamById(EXAMPLE_DEPLOYMENT_ID, EXAMPLE_DEPLOYMENT_RESOURCE_FILENAME_ID)).thenReturn(input);
 
     Response response = given()
         .pathParam("id", EXAMPLE_DEPLOYMENT_ID)
@@ -1009,8 +1009,8 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     InputStream input = new ByteArrayInputStream(createMockDeploymentResourceByteData());
 
-    when(mockRepositoryService.getDeploymentResources(eq(EXAMPLE_DEPLOYMENT_ID))).thenReturn(resources);
-    when(mockRepositoryService.getResourceAsStreamById(eq(EXAMPLE_DEPLOYMENT_ID), eq(EXAMPLE_DEPLOYMENT_RESOURCE_FILENAME_ID))).thenReturn(input);
+    when(mockRepositoryService.getDeploymentResources(EXAMPLE_DEPLOYMENT_ID)).thenReturn(resources);
+    when(mockRepositoryService.getResourceAsStreamById(EXAMPLE_DEPLOYMENT_ID, EXAMPLE_DEPLOYMENT_RESOURCE_FILENAME_ID)).thenReturn(input);
 
     Response response = given()
         .pathParam("id", EXAMPLE_DEPLOYMENT_ID)
@@ -1643,11 +1643,11 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
       .post(REDEPLOY_DEPLOYMENT_URL);
 
     verify(mockDeploymentBuilder, never()).addDeploymentResources(anyString());
-    verify(mockDeploymentBuilder).nameFromDeployment(eq(MockProvider.EXAMPLE_DEPLOYMENT_ID));
+    verify(mockDeploymentBuilder).nameFromDeployment(MockProvider.EXAMPLE_DEPLOYMENT_ID);
     verify(mockDeploymentBuilder, never()).addDeploymentResourceById(anyString(), anyString());
-    verify(mockDeploymentBuilder).addDeploymentResourcesById(eq(MockProvider.EXAMPLE_DEPLOYMENT_ID), eq(resourceIds));
+    verify(mockDeploymentBuilder).addDeploymentResourcesById(MockProvider.EXAMPLE_DEPLOYMENT_ID, resourceIds);
     verify(mockDeploymentBuilder, never()).addDeploymentResourceByName(anyString(), anyString());
-    verify(mockDeploymentBuilder).addDeploymentResourcesByName(eq(MockProvider.EXAMPLE_DEPLOYMENT_ID), eq(resources));
+    verify(mockDeploymentBuilder).addDeploymentResourcesByName(MockProvider.EXAMPLE_DEPLOYMENT_ID, resources);
     verify(mockDeploymentBuilder).source(MockProvider.EXAMPLE_DEPLOYMENT_SOURCE);
     verify(mockDeploymentBuilder).deployWithResult();
 
@@ -1665,8 +1665,8 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
     .when()
       .post(REDEPLOY_DEPLOYMENT_URL);
 
-    verify(mockDeploymentBuilder).addDeploymentResources(eq(MockProvider.EXAMPLE_DEPLOYMENT_ID));
-    verify(mockDeploymentBuilder).nameFromDeployment(eq(MockProvider.EXAMPLE_DEPLOYMENT_ID));
+    verify(mockDeploymentBuilder).addDeploymentResources(MockProvider.EXAMPLE_DEPLOYMENT_ID);
+    verify(mockDeploymentBuilder).nameFromDeployment(MockProvider.EXAMPLE_DEPLOYMENT_ID);
     verify(mockDeploymentBuilder, never()).addDeploymentResourceById(anyString(), anyString());
     verify(mockDeploymentBuilder, never()).addDeploymentResourcesById(anyString(), anyList());
     verify(mockDeploymentBuilder, never()).addDeploymentResourceByName(anyString(), anyString());
@@ -1689,8 +1689,8 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
     .when()
       .post(REDEPLOY_DEPLOYMENT_URL);
 
-    verify(mockDeploymentBuilder).addDeploymentResources(eq(MockProvider.EXAMPLE_DEPLOYMENT_ID));
-    verify(mockDeploymentBuilder).nameFromDeployment(eq(MockProvider.EXAMPLE_DEPLOYMENT_ID));
+    verify(mockDeploymentBuilder).addDeploymentResources(MockProvider.EXAMPLE_DEPLOYMENT_ID);
+    verify(mockDeploymentBuilder).nameFromDeployment(MockProvider.EXAMPLE_DEPLOYMENT_ID);
     verify(mockDeploymentBuilder, never()).addDeploymentResourceById(anyString(), anyString());
     verify(mockDeploymentBuilder, never()).addDeploymentResourcesById(eq(MockProvider.EXAMPLE_DEPLOYMENT_ID), anyList());
     verify(mockDeploymentBuilder, never()).addDeploymentResourceByName(anyString(), anyString());
@@ -1721,9 +1721,9 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
       .post(REDEPLOY_DEPLOYMENT_URL);
 
     verify(mockDeploymentBuilder, never()).addDeploymentResources(anyString());
-    verify(mockDeploymentBuilder).nameFromDeployment(eq(MockProvider.EXAMPLE_DEPLOYMENT_ID));
+    verify(mockDeploymentBuilder).nameFromDeployment(MockProvider.EXAMPLE_DEPLOYMENT_ID);
     verify(mockDeploymentBuilder, never()).addDeploymentResourceById(anyString(), anyString());
-    verify(mockDeploymentBuilder).addDeploymentResourcesById(eq(MockProvider.EXAMPLE_DEPLOYMENT_ID), eq(resourceIds));
+    verify(mockDeploymentBuilder).addDeploymentResourcesById(MockProvider.EXAMPLE_DEPLOYMENT_ID, resourceIds);
     verify(mockDeploymentBuilder, never()).addDeploymentResourceByName(anyString(), anyString());
     verify(mockDeploymentBuilder, never()).addDeploymentResourcesByName(eq(MockProvider.EXAMPLE_DEPLOYMENT_ID), anyList());
     verify(mockDeploymentBuilder).source(null);
@@ -1752,11 +1752,11 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
       .post(REDEPLOY_DEPLOYMENT_URL);
 
     verify(mockDeploymentBuilder, never()).addDeploymentResources(anyString());
-    verify(mockDeploymentBuilder).nameFromDeployment(eq(MockProvider.EXAMPLE_DEPLOYMENT_ID));
+    verify(mockDeploymentBuilder).nameFromDeployment(MockProvider.EXAMPLE_DEPLOYMENT_ID);
     verify(mockDeploymentBuilder, never()).addDeploymentResourceById(anyString(), anyString());
     verify(mockDeploymentBuilder, never()).addDeploymentResourcesById(eq(MockProvider.EXAMPLE_DEPLOYMENT_ID), anyList());
     verify(mockDeploymentBuilder, never()).addDeploymentResourceByName(anyString(), anyString());
-    verify(mockDeploymentBuilder).addDeploymentResourcesByName(eq(MockProvider.EXAMPLE_DEPLOYMENT_ID), eq(resources));
+    verify(mockDeploymentBuilder).addDeploymentResourcesByName(MockProvider.EXAMPLE_DEPLOYMENT_ID, resources);
     verify(mockDeploymentBuilder).source(null);
     verify(mockDeploymentBuilder).deployWithResult();
 
@@ -1778,13 +1778,13 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
     .when()
       .post(REDEPLOY_DEPLOYMENT_URL);
 
-    verify(mockDeploymentBuilder).addDeploymentResources(eq(MockProvider.EXAMPLE_DEPLOYMENT_ID));
-    verify(mockDeploymentBuilder).nameFromDeployment(eq(MockProvider.EXAMPLE_DEPLOYMENT_ID));
+    verify(mockDeploymentBuilder).addDeploymentResources(MockProvider.EXAMPLE_DEPLOYMENT_ID);
+    verify(mockDeploymentBuilder).nameFromDeployment(MockProvider.EXAMPLE_DEPLOYMENT_ID);
     verify(mockDeploymentBuilder, never()).addDeploymentResourceById(anyString(), anyString());
     verify(mockDeploymentBuilder, never()).addDeploymentResourcesById(anyString(), anyList());
     verify(mockDeploymentBuilder, never()).addDeploymentResourceByName(anyString(), anyString());
     verify(mockDeploymentBuilder, never()).addDeploymentResourcesByName(anyString(), anyList());
-    verify(mockDeploymentBuilder).source(eq(MockProvider.EXAMPLE_DEPLOYMENT_SOURCE));
+    verify(mockDeploymentBuilder).source(MockProvider.EXAMPLE_DEPLOYMENT_SOURCE);
     verify(mockDeploymentBuilder).deployWithResult();
 
     verifyDeployment(mockDeployment, response);
@@ -1803,7 +1803,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
     .when()
       .post(REDEPLOY_DEPLOYMENT_URL);
 
-    verify(mockDeploymentBuilder).addDeploymentResources(eq(MockProvider.EXAMPLE_DEPLOYMENT_ID));
+    verify(mockDeploymentBuilder).addDeploymentResources(MockProvider.EXAMPLE_DEPLOYMENT_ID);
     verify(mockDeploymentBuilder, never()).tenantId(any(String.class));
     verify(mockDeploymentBuilder).deployWithResult();
 
@@ -1823,8 +1823,8 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
     .when()
       .post(REDEPLOY_DEPLOYMENT_URL);
 
-    verify(mockDeploymentBuilder).addDeploymentResources(eq(MockProvider.EXAMPLE_DEPLOYMENT_ID));
-    verify(mockDeploymentBuilder).tenantId(eq(MockProvider.EXAMPLE_TENANT_ID));
+    verify(mockDeploymentBuilder).addDeploymentResources(MockProvider.EXAMPLE_DEPLOYMENT_ID);
+    verify(mockDeploymentBuilder).tenantId(MockProvider.EXAMPLE_TENANT_ID);
     verify(mockDeploymentBuilder).deployWithResult();
 
     verifyDeployment(mockDeployment, response);

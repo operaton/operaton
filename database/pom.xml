@@ -414,7 +414,7 @@
             <artifactId>maven-failsafe-plugin</artifactId>
             <configuration>
               <includes>
-                <include>%regex[.*]</include>
+                <include>%regex[.*Test.class]</include>
               </includes>
               <excludes combine.children="append">
                 <exclude>**/*NashornTest.java</exclude>

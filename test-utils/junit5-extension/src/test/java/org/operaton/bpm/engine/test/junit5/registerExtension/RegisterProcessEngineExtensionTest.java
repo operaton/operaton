@@ -29,7 +29,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 class RegisterProcessEngineExtensionTest {
 
   @RegisterExtension
-  ProcessEngineExtension extension = ProcessEngineExtension.builder().build();
+  static ProcessEngineExtension extension = ProcessEngineExtension.builder().build();
 
   @Test
   @Deployment
@@ -47,7 +47,7 @@ class RegisterProcessEngineExtensionTest {
         .singleResult();
     assertThat(task.getName()).isEqualTo("Test something");
     taskService.complete(task.getId());
-    assertThat(runtimeService.createProcessInstanceQuery().list().size()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().list()).isEmpty();
   }
 
 }

@@ -44,7 +44,7 @@ class ProcessEngineExtensionJunit5Test {
     assertThat(task.getName()).isEqualTo("My Task");
 
     taskService.complete(task.getId());
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
   /**
@@ -52,7 +52,7 @@ class ProcessEngineExtensionJunit5Test {
    */
   @Test
   void testWithoutDeploymentAnnotation() {
-    assertThat("aString").isEqualTo("aString");
+    assertThat(engine).isNotNull();
   }
 
   @Test

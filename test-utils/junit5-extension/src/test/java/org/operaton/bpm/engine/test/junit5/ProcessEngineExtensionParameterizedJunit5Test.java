@@ -50,7 +50,7 @@ public class ProcessEngineExtensionParameterizedJunit5Test {
     assertThat(task.getName()).isEqualTo("My Task");
 
     taskService.complete(task.getId());
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
   @ParameterizedTest
@@ -67,7 +67,7 @@ public class ProcessEngineExtensionParameterizedJunit5Test {
     assertThat(task.getName()).isEqualTo("My Task");
 
     taskService.complete(task.getId());
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
     HistoryService historyService = engine.getHistoryService();
     HistoricVariableInstance variableInstance = historyService.createHistoricVariableInstanceQuery().singleResult();
@@ -80,7 +80,7 @@ public class ProcessEngineExtensionParameterizedJunit5Test {
   @ParameterizedTest
   @EmptySource
   public void testWithoutDeploymentAnnotation(String argument) {
-    assertThat("aString").isEqualTo("aString");
+    assertThat(argument).isEmpty();
   }
 
 }

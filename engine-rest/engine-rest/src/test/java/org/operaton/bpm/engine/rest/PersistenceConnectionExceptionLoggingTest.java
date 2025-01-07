@@ -33,7 +33,6 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.operaton.bpm.engine.ProcessEnginePersistenceException;
 import org.operaton.bpm.engine.identity.UserQuery;

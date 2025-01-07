@@ -52,7 +52,6 @@ import static org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCle
 
 import java.util.*;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 import org.junit.*;
 import org.junit.rules.RuleChain;

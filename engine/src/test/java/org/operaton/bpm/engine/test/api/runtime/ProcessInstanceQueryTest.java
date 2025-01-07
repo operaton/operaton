@@ -38,7 +38,6 @@ import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySo
 
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import org.junit.Assert;
 import org.junit.Before;

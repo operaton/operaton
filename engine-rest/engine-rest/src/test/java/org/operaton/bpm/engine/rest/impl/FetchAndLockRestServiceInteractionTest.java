@@ -39,7 +39,6 @@ import io.restassured.http.ContentType;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.servlet.ServletContextEvent;
 import javax.ws.rs.core.Response.Status;
 import org.operaton.bpm.engine.ExternalTaskService;

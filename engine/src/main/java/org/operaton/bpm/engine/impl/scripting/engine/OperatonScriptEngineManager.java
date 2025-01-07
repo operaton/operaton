@@ -20,7 +20,6 @@ import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static org.operaton.bpm.engine.impl.scripting.engine.ScriptingEngines.GRAAL_JS_SCRIPT_ENGINE_NAME;
 

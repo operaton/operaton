@@ -130,12 +130,12 @@ public class ConfigurationLogger extends ProcessEngineLogger {
   }
 
   public NotValidException logErrorNoTTLConfigured() {
-    return new NotValidException(exceptionMessage("018",
-        "History Time To Live (TTL) cannot be null. "
-        + "TTL is necessary for the History Cleanup to work. The following options are possible:\n"
-        + "* Set historyTimeToLive in the model\n"
-        + "* Set a default historyTimeToLive as a global process engine configuration\n"
-        + "* (Not recommended) Deactivate the enforceTTL config to disable this check"));
+    return new NotValidException(exceptionMessage("018", """
+        History Time To Live (TTL) cannot be null. \
+        TTL is necessary for the History Cleanup to work. The following options are possible:
+        * Set historyTimeToLive in the model
+        * Set a default historyTimeToLive as a global process engine configuration
+        * (Not recommended) Deactivate the enforceTTL config to disable this check"""));
   }
 
   public ProcessEngineException invalidTransactionIsolationLevel(String transactionIsolationLevel) {

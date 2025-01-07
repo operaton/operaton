@@ -259,11 +259,11 @@ public class EnginePersistenceLogger extends ProcessEngineLogger {
 
   public ProcessEngineException invokeSchemaResourceToolException(int length) {
     return new ProcessEngineException(exceptionMessage(
-      "022",
-      "Schema resource tool was invoked with '{}' parameters." +
-      "Schema resource tool must be invoked with exactly 2 parameters:" +
-      "\n - 1st parameter is the process engine configuration file," +
-      "\n - 2nd parameter is the schema resource file name",
+      "022", """
+      Schema resource tool was invoked with '{}' parameters.\
+      Schema resource tool must be invoked with exactly 2 parameters:
+       - 1st parameter is the process engine configuration file," +
+       - 2nd parameter is the schema resource file name""",
       length
     ));
   }

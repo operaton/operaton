@@ -54,6 +54,7 @@
           <appendAssemblyId>false</appendAssemblyId>
           <outputDirectory>target/</outputDirectory>
           <tarLongFileMode>gnu</tarLongFileMode>
+          <finalName>operaton-bpm-${project.version}</finalName>
         </configuration>
         <executions>
           <execution>

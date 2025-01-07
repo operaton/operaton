@@ -31,7 +31,7 @@ import static java.util.Collections.emptyList;
 import static java.util.Collections.emptyMap;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class OperatonBpmRunProcessEnginePluginsHelperTest {
+class OperatonAppProcessEnginePluginsHelperTest {
 
   @Test
   void shouldReportMissingPluginClass() {

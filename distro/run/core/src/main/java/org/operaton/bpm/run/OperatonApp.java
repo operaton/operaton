@@ -20,8 +20,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class OperatonBpmRun {
+public class OperatonApp {
   public static void main(String... args) {
-    SpringApplication.run(OperatonBpmRun.class, args);
+    SpringApplication.run(OperatonApp.class, args);
   }
 }

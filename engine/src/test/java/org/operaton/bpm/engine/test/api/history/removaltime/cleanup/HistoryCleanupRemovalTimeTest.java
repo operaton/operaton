@@ -850,7 +850,8 @@ public class HistoryCleanupRemovalTimeTest {
 
     // when
     runHistoryCleanup();
-    List<String> initialHistoryCleanupJobLog = historyService.createHistoricJobLogQuery().list().stream().map(HistoricJobLog::getId).collect(Collectors.toList());
+    List<String> initialHistoryCleanupJobLog =
+        historyService.createHistoricJobLogQuery().list().stream().map(HistoricJobLog::getId).toList();
     ClockUtil.setCurrentTime(addDays(END_DATE, 5));
     runHistoryCleanup();
 
@@ -868,7 +869,8 @@ public class HistoryCleanupRemovalTimeTest {
 
     // when
     runHistoryCleanup();
-    List<String> initialHistoryCleanupJobLog = historyService.createHistoricJobLogQuery().list().stream().map(HistoricJobLog::getId).collect(Collectors.toList());
+    List<String> initialHistoryCleanupJobLog =
+        historyService.createHistoricJobLogQuery().list().stream().map(HistoricJobLog::getId).toList();
     ClockUtil.setCurrentTime(addDays(END_DATE, 5));
     runHistoryCleanup();
 

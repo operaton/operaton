@@ -549,7 +549,7 @@ public class MultiTenancyJobDefinitionSuspensionStateTest {
   }
 
   protected List<String> getDeploymentIds(JobDefinitionQuery jobDefinitionQuery){
-    return jobDefinitionQuery.list().stream().map(this::getDeploymentId).collect(Collectors.toList());
+    return jobDefinitionQuery.list().stream().map(this::getDeploymentId).toList();
   }
 
   protected String getDeploymentId(JobDefinition jobDefinition) {

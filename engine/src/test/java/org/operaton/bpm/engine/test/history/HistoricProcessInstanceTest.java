@@ -2212,7 +2212,7 @@ public class HistoricProcessInstanceTest {
         .containsExactlyInAnyOrderElementsOf(
             processInstanceList.stream()
                 .map(HistoricProcessInstance::getId)
-                .collect(Collectors.toList()));
+                .toList());
   }
 
   @Test
@@ -2246,7 +2246,7 @@ public class HistoricProcessInstanceTest {
         .containsExactlyInAnyOrderElementsOf(
             processInstanceList.stream()
                 .map(HistoricProcessInstance::getId)
-                .collect(Collectors.toList()));
+                .toList());
   }
 
   @Test

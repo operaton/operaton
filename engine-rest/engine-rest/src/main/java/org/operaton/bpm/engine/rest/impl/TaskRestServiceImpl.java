@@ -99,10 +99,10 @@ public class TaskRestServiceImpl extends AbstractRestProcessEngineAware implemen
 
     List<TaskDto> tasks = new ArrayList<>();
     if (Boolean.TRUE.equals(queryDto.getWithCommentAttachmentInfo())) {
-      tasks = matchingTasks.stream().map(TaskWithAttachmentAndCommentDto::fromEntity).collect(Collectors.toList());
+      tasks = matchingTasks.stream().map(TaskWithAttachmentAndCommentDto::fromEntity).toList();
     }
     else {
-      tasks = matchingTasks.stream().map(TaskDto::fromEntity).collect(Collectors.toList());
+      tasks = matchingTasks.stream().map(TaskDto::fromEntity).toList();
     }
     return tasks;
   }

@@ -268,7 +268,7 @@ public class ExclusiveJobAcquisitionTest {
 
     return jobs.stream()
         .map(Job::getId)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   /**

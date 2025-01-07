@@ -73,7 +73,7 @@ public class PersistenceConnectionExceptionLoggingTest extends AbstractRestServi
 
     return Arrays.stream(values)
         .map(c -> new Object[] {c})
-        .collect(Collectors.toList());
+        .toList();
   }
 
   @Test

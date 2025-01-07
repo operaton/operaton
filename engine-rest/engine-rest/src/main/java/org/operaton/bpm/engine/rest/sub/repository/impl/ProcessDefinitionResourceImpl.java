@@ -389,7 +389,7 @@ public class ProcessDefinitionResourceImpl implements ProcessDefinitionResource 
     try {
       return engine.getRepositoryService().getStaticCalledProcessDefinitions(processDefinitionId).stream()
         .map(CalledProcessDefinitionDto::from)
-        .collect(Collectors.toList());
+        .toList();
     } catch (NotFoundException e) {
       throw new InvalidRequestException(Status.NOT_FOUND, e.getMessage());
     }

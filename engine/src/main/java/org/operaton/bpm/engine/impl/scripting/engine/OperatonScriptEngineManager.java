@@ -57,7 +57,7 @@ public class OperatonScriptEngineManager extends ScriptEngineManager {
 
     return engineFactories.stream()
         .map(ScriptEngineFactory::getEngineName)
-        .collect(Collectors.toList());
+        .toList();
 
   }
 

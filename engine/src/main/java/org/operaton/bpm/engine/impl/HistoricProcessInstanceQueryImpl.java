@@ -466,7 +466,7 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
     return queryVariableNameToValuesMap.values()
         .stream()
         .flatMap(Set::stream)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   public Map<String, Set<QueryVariableValue>> getQueryVariableNameToValuesMap() {

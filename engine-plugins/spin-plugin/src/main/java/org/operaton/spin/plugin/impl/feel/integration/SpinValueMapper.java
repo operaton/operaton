@@ -74,7 +74,7 @@ public class SpinValueMapper extends JavaCustomValueMapper {
     } else if (node.isArray()) {
       List<Val> values = node.elements()
           .stream()
-          .map(e -> spinJsonToVal(e, innerValueMapper)).collect(toList());
+          .map(e -> spinJsonToVal(e, innerValueMapper)).toList();
       return innerValueMapper.apply(values);
 
     } else if (node.isNull()) {

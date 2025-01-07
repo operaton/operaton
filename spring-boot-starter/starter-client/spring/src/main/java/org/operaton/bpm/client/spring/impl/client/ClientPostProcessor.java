@@ -88,7 +88,7 @@ public class ClientPostProcessor implements BeanDefinitionRegistryPostProcessor 
 
     List<String> classBeanNames = Arrays.stream(beanNames)
         .filter(isClassAnnotation(listableBeanFactory))
-        .collect(Collectors.toList());
+        .toList();
 
     int classBeanNameCount = classBeanNames.size();
     if (classBeanNameCount > 1) {

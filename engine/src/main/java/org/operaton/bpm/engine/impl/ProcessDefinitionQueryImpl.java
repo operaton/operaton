@@ -600,7 +600,7 @@ public class ProcessDefinitionQueryImpl extends AbstractQuery<ProcessDefinitionQ
           .createGroupQuery()
           .groupMember(authorizationUserId)
           .list();
-      cachedCandidateGroups = groups.stream().map(Group::getId).collect(Collectors.toList());
+      cachedCandidateGroups = groups.stream().map(Group::getId).toList();
     }
 
     return cachedCandidateGroups;

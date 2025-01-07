@@ -161,9 +161,8 @@ public class CustomHistoryEventHandlerTest {
 
     // then
     List<HistoryEvent> historyEvents = recorderHandler.getEvents().stream()
-        .filter(h -> h instanceof HistoricVariableUpdateEventEntity ||
-            h instanceof HistoricProcessInstanceEventEntity)
-        .collect(Collectors.toList());
+        .filter(h -> h instanceof HistoricVariableUpdateEventEntity || h instanceof HistoricProcessInstanceEventEntity)
+        .toList();
 
     assertThat(historyEvents).hasSize(2);
     HistoryEvent processInstanceEvent = historyEvents.get(0);

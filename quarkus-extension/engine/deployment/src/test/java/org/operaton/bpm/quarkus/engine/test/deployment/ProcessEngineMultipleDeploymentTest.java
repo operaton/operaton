@@ -99,7 +99,7 @@ public class ProcessEngineMultipleDeploymentTest {
 
     List<String> deploymentNames = deployments.stream()
         .map(Deployment::getName)
-        .collect(Collectors.toList());
+        .toList();
     assertThat(deploymentNames).contains("deployment-1", "deployment-2");
   }
 

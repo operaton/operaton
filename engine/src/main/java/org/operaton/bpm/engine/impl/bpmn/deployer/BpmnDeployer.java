@@ -296,7 +296,7 @@ public class BpmnDeployer extends AbstractDefinitionDeployer<ProcessDefinitionEn
     return getEventSubscriptionManager().findStartEventSubscriptionsByConfigurationLike(configurationLike)
         .stream()
         .filter(this::isOrphan)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   protected boolean isOrphan(EventSubscriptionEntity entity) {

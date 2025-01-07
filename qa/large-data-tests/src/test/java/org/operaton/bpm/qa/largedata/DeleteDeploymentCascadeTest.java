@@ -63,7 +63,7 @@ class DeleteDeploymentCascadeTest {
       List<HistoricProcessInstance> processInstances = historyService.createHistoricProcessInstanceQuery()
           .processDefinitionKey(generator.getAutoCompleteProcessKey()).list();
       if (!processInstances.isEmpty()) {
-        List<String> processInstanceIds = processInstances.stream().map(HistoricProcessInstance::getId).collect(Collectors.toList());
+        List<String> processInstanceIds = processInstances.stream().map(HistoricProcessInstance::getId).toList();
         List<List<String>> partitions = CollectionUtil.partition(processInstanceIds, DbSqlSessionFactory.MAXIMUM_NUMBER_PARAMS);
         for (List<String> partition : partitions) {
           historyService.deleteHistoricProcessInstances(partition);

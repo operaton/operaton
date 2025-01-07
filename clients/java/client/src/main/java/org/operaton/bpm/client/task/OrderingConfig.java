@@ -103,7 +103,7 @@ public class OrderingConfig {
   public List<SortingDto> toSortingDtos() {
     return orderingProperties.stream()
         .map(SortingDto::fromOrderingProperty)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   /**

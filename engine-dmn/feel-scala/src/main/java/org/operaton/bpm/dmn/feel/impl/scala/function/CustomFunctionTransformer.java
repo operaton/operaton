@@ -83,7 +83,7 @@ public class CustomFunctionTransformer extends JavaFunctionProvider {
   protected List<Object> unpackVals(List<Val> args) {
     return args.stream()
       .map(this::unpackVal)
-      .collect(Collectors.toList());
+      .toList();
   }
 
   protected Val toVal(Object rawResult) {

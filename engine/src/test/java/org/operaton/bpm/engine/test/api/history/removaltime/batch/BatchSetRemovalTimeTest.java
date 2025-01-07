@@ -247,7 +247,7 @@ public class BatchSetRemovalTimeTest {
     List<String> deploymentIds = engineRule.getRepositoryService().createDeploymentQuery()
         .list().stream()
         .map(org.operaton.bpm.engine.repository.Deployment::getId)
-        .collect(Collectors.toList());
+        .toList();
 
     // when
     Batch batch = historyService.setRemovalTimeToHistoricProcessInstances()
@@ -292,7 +292,7 @@ public class BatchSetRemovalTimeTest {
     List<String> deploymentIds = engineRule.getRepositoryService().createDeploymentQuery()
         .list().stream()
         .map(org.operaton.bpm.engine.repository.Deployment::getId)
-        .collect(Collectors.toList());
+        .toList();
 
     // when
     Batch batch = historyService.setRemovalTimeToHistoricDecisionInstances()

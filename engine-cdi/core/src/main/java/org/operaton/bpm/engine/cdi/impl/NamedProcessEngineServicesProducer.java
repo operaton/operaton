@@ -37,6 +37,7 @@ import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.cdi.annotation.ProcessEngineName;
 
+import static org.springframework.util.ObjectUtils.isEmpty;
 
 /**
  * This bean provides producers for the process engine services such
@@ -56,7 +57,7 @@ public class NamedProcessEngineServicesProducer {
 
     ProcessEngineName annotation = ip.getAnnotated().getAnnotation(ProcessEngineName.class);
     String processEngineName = annotation.value();
-    if(processEngineName == null || processEngineName.length() == 0) {
+    if(isEmpty(processEngineName)) {
      throw new ProcessEngineException("Cannot determine which process engine to inject: @ProcessEngineName must specify the name of a process engine.");
     }
     try {

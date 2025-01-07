@@ -30,6 +30,7 @@ import org.operaton.bpm.engine.impl.persistence.deploy.cache.DeploymentCache;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
+import static org.springframework.util.ObjectUtils.isEmpty;
 
 /**
  * Gives access to a deploy BPMN model instance which can be accessed by
@@ -43,7 +44,7 @@ public class GetDeploymentBpmnModelInstanceCmd implements Command<BpmnModelInsta
   protected String processDefinitionId;
 
   public GetDeploymentBpmnModelInstanceCmd(String processDefinitionId) {
-    if (processDefinitionId == null || processDefinitionId.length() < 1) {
+    if (isEmpty(processDefinitionId)) {
       throw new ProcessEngineException("The process definition id is mandatory, but '" + processDefinitionId + "' has been provided.");
     }
     this.processDefinitionId = processDefinitionId;

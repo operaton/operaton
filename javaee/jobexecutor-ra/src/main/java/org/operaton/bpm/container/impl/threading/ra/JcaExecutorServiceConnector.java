@@ -36,6 +36,7 @@ import org.operaton.bpm.container.impl.threading.ra.inflow.JobExecutionHandler;
 import org.operaton.bpm.container.impl.threading.ra.inflow.JobExecutionHandlerActivation;
 import org.operaton.bpm.container.impl.threading.ra.inflow.JobExecutionHandlerActivationSpec;
 
+import static org.springframework.util.StringUtils.hasText;
 
 /**
  * <p>The {@link ResourceAdapter} responsible for bootstrapping the JcaExecutorService</p>
@@ -118,7 +119,7 @@ public class JcaExecutorServiceConnector implements ResourceAdapter, Serializabl
 
     // initialize the ExecutorService (CommonJ or JCA, depending on configuration)
     if(isUseCommonJWorkManager) {
-      if(commonJWorkManagerName != null & commonJWorkManagerName.length() > 0) {
+      if(hasText(commonJWorkManagerName)) {
         executorServiceWrapper.setExecutorService(new CommonJWorkManagerExecutorService(this, commonJWorkManagerName));
       } else {
         throw new RuntimeException("Resource Adapter configuration property 'isUseCommonJWorkManager' is set to true but 'commonJWorkManagerName' is not provided.");

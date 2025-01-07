@@ -760,7 +760,7 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
           logLines.add(line.substring(2));
         } else if (line.startsWith("-- ")) {
           logLines.add(line.substring(3));
-        } else if (line.length()>0) {
+        } else if (!line.isEmpty()) {
 
           if (line.endsWith(";")) {
             sqlStatement = addSqlStatementPiece(sqlStatement, line.substring(0, line.length()-1));

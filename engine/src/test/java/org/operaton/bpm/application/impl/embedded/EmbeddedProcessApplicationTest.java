@@ -34,10 +34,8 @@ import org.operaton.bpm.engine.repository.ProcessApplicationDeployment;
 import org.operaton.bpm.engine.repository.Resource;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.commons.testing.ProcessEngineLoggingRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+
+import org.junit.*;
 
 /**
  * @author Daniel Meyer

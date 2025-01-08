@@ -17,10 +17,18 @@
 package org.operaton.commons.logging;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mockito;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
+
 import static org.operaton.commons.logging.ExampleLogger.*;
+
+import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * @author Daniel Meyer
@@ -82,52 +90,68 @@ public class BaseLoggerTest {
 
   @Test
   void shouldCallLogTrace() {
-    final ExampleLogger logger = Mockito.spy(LOG);
+    ExampleLogger logger = Mockito.spy(LOG);
     logger.log("TRACE", ID, SOME_MESSAGE);
     Mockito.verify(logger).logTrace(ID, SOME_MESSAGE);
   }
 
   @Test
   void shouldCallLogInfo() {
-    final ExampleLogger logger = Mockito.spy(LOG);
+    ExampleLogger logger = Mockito.spy(LOG);
     logger.log("INFO", ID, SOME_MESSAGE);
     Mockito.verify(logger).logInfo(ID, SOME_MESSAGE);
   }
 
   @Test
   void shouldCallLogDebug() {
-    final ExampleLogger logger = Mockito.spy(LOG);
+    ExampleLogger logger = Mockito.spy(LOG);
     logger.log("DEBUG", ID, SOME_MESSAGE);
     Mockito.verify(logger).logDebug(ID, SOME_MESSAGE);
   }
 
   @Test
   void shouldCallLogError() {
-    final ExampleLogger logger = Mockito.spy(LOG);
+    ExampleLogger logger = Mockito.spy(LOG);
     logger.log("ERROR", ID, SOME_MESSAGE);
     Mockito.verify(logger).logError(ID, SOME_MESSAGE);
   }
 
   @Test
   void shouldCallLogWarn() {
-    final ExampleLogger logger = Mockito.spy(LOG);
+    ExampleLogger logger = Mockito.spy(LOG);
     logger.log(" warn ", ID, SOME_MESSAGE);
     Mockito.verify(logger).logWarn(ID, SOME_MESSAGE);
   }
 
   @Test
   void shouldCallLogDebugWhenNotMatched() {
-    final ExampleLogger logger = Mockito.spy(LOG);
+    ExampleLogger logger = Mockito.spy(LOG);
     logger.log("FATAL", ID, SOME_MESSAGE);
     Mockito.verify(logger).logDebug(ID, SOME_MESSAGE);
   }
 
   @Test
   void shouldCallLogWarnWhenNotMatched() {
-    final ExampleLogger logger = Mockito.spy(LOG);
+    ExampleLogger logger = Mockito.spy(LOG);
     logger.log("FATAL", Level.WARN, ID, SOME_MESSAGE);
     Mockito.verify(logger).logWarn(ID, SOME_MESSAGE);
   }
 
+  @ParameterizedTest
+  @MethodSource("shouldSanitizeParameters_args")
+  void shouldSanitizeParameters(Object[] givenParameters, Object[] expectedParameters) {
+    ExampleLogger logger = Mockito.spy(LOG);
+    Object[] sanitizedParameters = logger.sanitizeParameters(givenParameters);
+    assertThat(sanitizedParameters).isEqualTo(expectedParameters);
+  }
 
+  static Stream<Arguments> shouldSanitizeParameters_args() {
+    return Stream.of(
+      arguments(null, null),
+      arguments(new Object[0], new Object[0]),
+      arguments(new Object[] { "someParameter" }, new Object[] {"someParameter"}),
+      arguments(new Object[] { List.of("XYZ") }, new Object[] {List.of("XYZ")}),
+      arguments(new Object[] { "some\nPara\nme\tter" }, new Object[] {"some_Para_me_ter"})
+      );
+  }
 }

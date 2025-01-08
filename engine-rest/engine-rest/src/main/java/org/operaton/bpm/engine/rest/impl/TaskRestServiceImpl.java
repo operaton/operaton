@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.rest.impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
@@ -99,10 +98,10 @@ public class TaskRestServiceImpl extends AbstractRestProcessEngineAware implemen
 
     List<TaskDto> tasks = new ArrayList<>();
     if (Boolean.TRUE.equals(queryDto.getWithCommentAttachmentInfo())) {
-      tasks = matchingTasks.stream().map(TaskWithAttachmentAndCommentDto::fromEntity).collect(Collectors.toList());
+      tasks = matchingTasks.stream().map(TaskWithAttachmentAndCommentDto::fromEntity).toList();
     }
     else {
-      tasks = matchingTasks.stream().map(TaskDto::fromEntity).collect(Collectors.toList());
+      tasks = matchingTasks.stream().map(TaskDto::fromEntity).toList();
     }
     return tasks;
   }

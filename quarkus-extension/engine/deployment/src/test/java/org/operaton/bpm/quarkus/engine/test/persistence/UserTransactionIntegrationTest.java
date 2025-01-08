@@ -34,7 +34,7 @@ import jakarta.inject.Named;
 import jakarta.transaction.Status;
 import jakarta.transaction.UserTransaction;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -61,7 +61,7 @@ class UserTransactionIntegrationTest {
       String id = runtimeService.startProcessInstanceByKey("testTxSuccess").getId();
 
       // assert that the transaction is in good shape:
-      assertEquals(Status.STATUS_ACTIVE, userTransactionManager.getStatus());
+      assertThat(userTransactionManager.getStatus()).isEqualTo(Status.STATUS_ACTIVE);
 
       // the process instance is visible form our tx:
       ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
@@ -111,7 +111,7 @@ class UserTransactionIntegrationTest {
       }
 
       // assert that now our transaction is marked rollback-only:
-      assertEquals(Status.STATUS_MARKED_ROLLBACK, userTransactionManager.getStatus());
+      assertThat(userTransactionManager.getStatus()).isEqualTo(Status.STATUS_MARKED_ROLLBACK);
 
     } finally {
       // make sure we always rollback
@@ -134,7 +134,7 @@ class UserTransactionIntegrationTest {
       String id = runtimeService.startProcessInstanceByKey("testApplicationFailure").getId();
 
       // assert that the transaction is in good shape:
-      assertEquals(Status.STATUS_ACTIVE, userTransactionManager.getStatus());
+      assertThat(userTransactionManager.getStatus()).isEqualTo(Status.STATUS_ACTIVE);
 
       // now rollback the transaction (simulating an application failure after the process engine is done).
       userTransactionManager.rollback();

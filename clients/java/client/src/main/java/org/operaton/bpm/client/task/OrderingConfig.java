@@ -19,7 +19,6 @@ package org.operaton.bpm.client.task;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.operaton.bpm.client.impl.ExternalTaskClientLogger;
 
 /**
@@ -103,7 +102,7 @@ public class OrderingConfig {
   public List<SortingDto> toSortingDtos() {
     return orderingProperties.stream()
         .map(SortingDto::fromOrderingProperty)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   /**

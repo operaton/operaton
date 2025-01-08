@@ -49,7 +49,6 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -126,7 +125,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertEquals(1, query.count());
     List<Task> foundTasks = query.list();
     assertEquals(1, foundTasks.size());
-    List<String> foundTaskIds = foundTasks.stream().map(Task::getId).collect(Collectors.toList());
+    List<String> foundTaskIds = foundTasks.stream().map(Task::getId).toList();
     assertThat(foundTaskIds).containsOnly(taskId);
   }
 
@@ -138,7 +137,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertEquals(2, query.count());
     List<Task> foundTasks = query.list();
     assertEquals(2, foundTasks.size());
-    List<String> foundTaskIds = foundTasks.stream().map(Task::getId).collect(Collectors.toList());
+    List<String> foundTaskIds = foundTasks.stream().map(Task::getId).toList();
     assertThat(foundTaskIds).containsOnly(task0Id, task1Id);
   }
 

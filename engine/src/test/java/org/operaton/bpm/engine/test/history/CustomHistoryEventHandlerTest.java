@@ -23,7 +23,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.FormService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -161,9 +160,8 @@ public class CustomHistoryEventHandlerTest {
 
     // then
     List<HistoryEvent> historyEvents = recorderHandler.getEvents().stream()
-        .filter(h -> h instanceof HistoricVariableUpdateEventEntity ||
-            h instanceof HistoricProcessInstanceEventEntity)
-        .collect(Collectors.toList());
+        .filter(h -> h instanceof HistoricVariableUpdateEventEntity || h instanceof HistoricProcessInstanceEventEntity)
+        .toList();
 
     assertThat(historyEvents).hasSize(2);
     HistoryEvent processInstanceEvent = historyEvents.get(0);

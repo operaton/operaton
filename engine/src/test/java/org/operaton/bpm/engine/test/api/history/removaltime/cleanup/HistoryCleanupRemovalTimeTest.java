@@ -52,7 +52,6 @@ import static org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCle
 
 import java.util.*;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 import org.junit.*;
 import org.junit.rules.RuleChain;
@@ -850,7 +849,8 @@ public class HistoryCleanupRemovalTimeTest {
 
     // when
     runHistoryCleanup();
-    List<String> initialHistoryCleanupJobLog = historyService.createHistoricJobLogQuery().list().stream().map(HistoricJobLog::getId).collect(Collectors.toList());
+    List<String> initialHistoryCleanupJobLog =
+        historyService.createHistoricJobLogQuery().list().stream().map(HistoricJobLog::getId).toList();
     ClockUtil.setCurrentTime(addDays(END_DATE, 5));
     runHistoryCleanup();
 
@@ -868,7 +868,8 @@ public class HistoryCleanupRemovalTimeTest {
 
     // when
     runHistoryCleanup();
-    List<String> initialHistoryCleanupJobLog = historyService.createHistoricJobLogQuery().list().stream().map(HistoricJobLog::getId).collect(Collectors.toList());
+    List<String> initialHistoryCleanupJobLog =
+        historyService.createHistoricJobLogQuery().list().stream().map(HistoricJobLog::getId).toList();
     ClockUtil.setCurrentTime(addDays(END_DATE, 5));
     runHistoryCleanup();
 

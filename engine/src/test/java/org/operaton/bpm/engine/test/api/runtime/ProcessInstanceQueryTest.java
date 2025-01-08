@@ -38,7 +38,6 @@ import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySo
 
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -138,7 +137,7 @@ public class ProcessInstanceQueryTest {
     String deploymentId = repositoryService.createDeploymentQuery().singleResult().getId();
     ImmutablePair<String, String>[] expectedMappings = processInstanceIds.stream()
         .map(id -> new ImmutablePair<>(deploymentId, id))
-        .collect(Collectors.toList())
+        .toList()
         .toArray(new ImmutablePair[0]);
     // when
     List<ImmutablePair<String, String>> mappings = engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute((c) -> {
@@ -229,7 +228,7 @@ public class ProcessInstanceQueryTest {
     });
     List<ImmutablePair<String, String>> expectedMappings = relevantIds.stream()
         .map(id -> new ImmutablePair<>(deploymentId, id))
-        .collect(Collectors.toList());
+        .toList();
     // when
     List<ImmutablePair<String, String>> mappings = engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute((c) -> {
       ProcessInstanceQuery query = c.getProcessEngineConfiguration().getRuntimeService().createProcessInstanceQuery()

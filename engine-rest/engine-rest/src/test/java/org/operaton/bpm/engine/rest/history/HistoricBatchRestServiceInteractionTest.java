@@ -22,7 +22,6 @@ import static org.operaton.bpm.engine.rest.util.JsonPathUtil.from;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.inOrder;
@@ -78,7 +77,7 @@ public class HistoricBatchRestServiceInteractionTest extends AbstractRestService
     HistoricBatch historicBatchMock = MockProvider.createMockHistoricBatch();
 
     queryMock = mock(HistoricBatchQuery.class);
-    when(queryMock.batchId(eq(MockProvider.EXAMPLE_BATCH_ID))).thenReturn(queryMock);
+    when(queryMock.batchId(MockProvider.EXAMPLE_BATCH_ID)).thenReturn(queryMock);
     when(queryMock.singleResult()).thenReturn(historicBatchMock);
 
     historyServiceMock = mock(HistoryService.class);
@@ -131,7 +130,7 @@ public class HistoricBatchRestServiceInteractionTest extends AbstractRestService
     .when()
       .delete(HISTORIC_SINGLE_BATCH_RESOURCE_URL);
 
-    verify(historyServiceMock).deleteHistoricBatch(eq(MockProvider.EXAMPLE_BATCH_ID));
+    verify(historyServiceMock).deleteHistoricBatch(MockProvider.EXAMPLE_BATCH_ID);
     verifyNoMoreInteractions(historyServiceMock);
   }
 
@@ -140,7 +139,7 @@ public class HistoricBatchRestServiceInteractionTest extends AbstractRestService
     String nonExistingId = MockProvider.NON_EXISTING_ID;
 
     doThrow(new BadUserRequestException("Historic batch for id '" + nonExistingId + "' cannot be found"))
-      .when(historyServiceMock).deleteHistoricBatch(eq(nonExistingId));
+      .when(historyServiceMock).deleteHistoricBatch(nonExistingId);
 
     given()
       .pathParam("id", nonExistingId)

@@ -575,7 +575,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
   protected List<Job> getAllJobs() {
     return managementService.createJobQuery().list().stream()
         .filter(j -> j.getProcessInstanceId() != null)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   protected List<String> startTestProcesses(int numberOfProcesses) {

@@ -33,7 +33,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.junit.After;
 import org.junit.Before;
@@ -549,7 +548,7 @@ public class MultiTenancyJobDefinitionSuspensionStateTest {
   }
 
   protected List<String> getDeploymentIds(JobDefinitionQuery jobDefinitionQuery){
-    return jobDefinitionQuery.list().stream().map(this::getDeploymentId).collect(Collectors.toList());
+    return jobDefinitionQuery.list().stream().map(this::getDeploymentId).toList();
   }
 
   protected String getDeploymentId(JobDefinition jobDefinition) {

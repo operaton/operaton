@@ -23,7 +23,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -131,7 +130,7 @@ public class ConditionRestServiceTest extends AbstractRestServiceTest {
       .post(CONDITION_URL);
 
     verify(runtimeServiceMock).createConditionEvaluation();
-    verify(conditionEvaluationBuilderMock).processDefinitionId(eq(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID));
+    verify(conditionEvaluationBuilderMock).processDefinitionId(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
     verify(conditionEvaluationBuilderMock).evaluateStartConditions();
   }
 
@@ -154,7 +153,7 @@ public class ConditionRestServiceTest extends AbstractRestServiceTest {
       .post(CONDITION_URL);
 
     verify(runtimeServiceMock).createConditionEvaluation();
-    verify(conditionEvaluationBuilderMock).processInstanceBusinessKey(eq(MockProvider.EXAMPLE_PROCESS_INSTANCE_BUSINESS_KEY));
+    verify(conditionEvaluationBuilderMock).processInstanceBusinessKey(MockProvider.EXAMPLE_PROCESS_INSTANCE_BUSINESS_KEY);
   }
 
   @Test

@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
@@ -268,7 +267,7 @@ public class ExclusiveJobAcquisitionTest {
 
     return jobs.stream()
         .map(Job::getId)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   /**

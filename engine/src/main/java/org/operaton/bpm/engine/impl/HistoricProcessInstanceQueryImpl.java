@@ -32,7 +32,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -466,7 +465,7 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
     return queryVariableNameToValuesMap.values()
         .stream()
         .flatMap(Set::stream)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   public Map<String, Set<QueryVariableValue>> getQueryVariableNameToValuesMap() {

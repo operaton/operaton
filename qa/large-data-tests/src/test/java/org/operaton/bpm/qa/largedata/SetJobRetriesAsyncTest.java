@@ -73,7 +73,7 @@ class SetJobRetriesAsyncTest {
         .list();
     List<String> processInstanceIds = processInstances.stream()
         .map(ProcessInstance::getId)
-        .collect(Collectors.toList());
+        .toList();
     int newJobRetriesNumber = 10;
     Batch jobRetriesBatch = managementService
         .setJobRetriesAsync(processInstanceIds, (ProcessInstanceQuery) null, newJobRetriesNumber);

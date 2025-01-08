@@ -445,7 +445,7 @@ public class TaskVariableRestResourceInteractionTest extends
   public void testNonExistingVariable() {
     String variableKey = "aVariableKey";
 
-    when(taskServiceMock.getVariable(eq(EXAMPLE_TASK_ID), eq(variableKey))).thenReturn(null);
+    when(taskServiceMock.getVariable(EXAMPLE_TASK_ID, variableKey)).thenReturn(null);
 
     given().pathParam("id", EXAMPLE_TASK_ID).pathParam("varId", variableKey)
       .header("accept", MediaType.APPLICATION_JSON)
@@ -1028,8 +1028,8 @@ public class TaskVariableRestResourceInteractionTest extends
     .when()
       .post(SINGLE_TASK_SINGLE_BINARY_VARIABLE_URL);
 
-    verify(taskServiceMock, never()).setVariable(eq(EXAMPLE_TASK_ID), eq(variableKey),
-        eq(serializable));
+    verify(taskServiceMock, never()).setVariable(EXAMPLE_TASK_ID, variableKey,
+        serializable);
   }
 
   @Test
@@ -1208,7 +1208,7 @@ public class TaskVariableRestResourceInteractionTest extends
       .then().expect().statusCode(Status.NO_CONTENT.getStatusCode())
       .when().delete(SINGLE_TASK_DELETE_SINGLE_VARIABLE_URL);
 
-    verify(taskServiceMock).removeVariable(eq(EXAMPLE_TASK_ID), eq(variableKey));
+    verify(taskServiceMock).removeVariable(EXAMPLE_TASK_ID, variableKey);
   }
 
   @Test
@@ -1216,7 +1216,7 @@ public class TaskVariableRestResourceInteractionTest extends
     String variableKey = "aVariableKey";
 
     doThrow(new ProcessEngineException("Cannot find task with id " + NON_EXISTING_ID))
-      .when(taskServiceMock).removeVariable(eq(NON_EXISTING_ID), eq(variableKey));
+      .when(taskServiceMock).removeVariable(NON_EXISTING_ID, variableKey);
 
     given().pathParam("id", NON_EXISTING_ID).pathParam("varId", variableKey)
       .header("accept", MediaType.APPLICATION_JSON)

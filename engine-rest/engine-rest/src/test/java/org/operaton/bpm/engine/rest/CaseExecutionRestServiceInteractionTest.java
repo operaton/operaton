@@ -1648,8 +1648,8 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     expectedMap.put(variableKey, variableValue);
 
     verify(caseServiceMock).withCaseExecution(MockProvider.EXAMPLE_CASE_EXECUTION_ID);
-    verify(caseExecutionCommandBuilderMock).removeVariablesLocal(eq(deletions));
-    verify(caseExecutionCommandBuilderMock).setVariablesLocal(eq(expectedMap));
+    verify(caseExecutionCommandBuilderMock).removeVariablesLocal(deletions);
+    verify(caseExecutionCommandBuilderMock).setVariablesLocal(expectedMap);
     verify(caseExecutionCommandBuilderMock).execute();
   }
 
@@ -1681,8 +1681,8 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     expectedMap.put(variableKey, variableValue);
 
     verify(caseServiceMock).withCaseExecution(MockProvider.EXAMPLE_CASE_EXECUTION_ID);
-    verify(caseExecutionCommandBuilderMock).removeVariables(eq(deletions));
-    verify(caseExecutionCommandBuilderMock).setVariables(eq(expectedMap));
+    verify(caseExecutionCommandBuilderMock).removeVariables(deletions);
+    verify(caseExecutionCommandBuilderMock).setVariables(expectedMap);
     verify(caseExecutionCommandBuilderMock).execute();
   }
 
@@ -1722,7 +1722,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
 
     verify(caseServiceMock).withCaseExecution("aNonExistingExecutionId");
     verify(caseExecutionCommandBuilderMock).removeVariablesLocal(null);
-    verify(caseExecutionCommandBuilderMock).setVariablesLocal(eq(expectedMap));
+    verify(caseExecutionCommandBuilderMock).setVariablesLocal(expectedMap);
     verify(caseExecutionCommandBuilderMock).execute();
   }
 
@@ -1762,7 +1762,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
 
     verify(caseServiceMock).withCaseExecution("aNonExistingExecutionId");
     verify(caseExecutionCommandBuilderMock).removeVariables(null);
-    verify(caseExecutionCommandBuilderMock).setVariables(eq(expectedMap));
+    verify(caseExecutionCommandBuilderMock).setVariables(expectedMap);
     verify(caseExecutionCommandBuilderMock).execute();
   }
 
@@ -1941,7 +1941,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
 
   @Test
   public void testNonExistingLocalVariable() {
-    when(caseServiceMock.getVariableLocalTyped(eq(MockProvider.EXAMPLE_CASE_EXECUTION_ID), eq(EXAMPLE_VARIABLE_KEY), eq(true)))
+    when(caseServiceMock.getVariableLocalTyped(MockProvider.EXAMPLE_CASE_EXECUTION_ID, EXAMPLE_VARIABLE_KEY, true))
       .thenReturn(null);
 
     given()
@@ -1958,7 +1958,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
 
   @Test
   public void testNonExistingVariable() {
-    when(caseServiceMock.getVariableTyped(eq(MockProvider.EXAMPLE_CASE_EXECUTION_ID), eq(EXAMPLE_VARIABLE_KEY), eq(true)))
+    when(caseServiceMock.getVariableTyped(MockProvider.EXAMPLE_CASE_EXECUTION_ID, EXAMPLE_VARIABLE_KEY, true))
       .thenReturn(null);
 
     given()
@@ -1975,8 +1975,8 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
 
   @Test
   public void testGetLocalVariableForNonExistingExecution() {
-    when(caseServiceMock.getVariableLocalTyped(eq(MockProvider.EXAMPLE_CASE_EXECUTION_ID),
-        eq(EXAMPLE_VARIABLE_KEY), eq(true)))
+    when(caseServiceMock.getVariableLocalTyped(MockProvider.EXAMPLE_CASE_EXECUTION_ID,
+        EXAMPLE_VARIABLE_KEY, true))
       .thenThrow(new ProcessEngineException("expected exception"));
 
     given()
@@ -1993,7 +1993,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
 
   @Test
   public void testGetVariableForNonExistingExecution() {
-    when(caseServiceMock.getVariableTyped(eq(MockProvider.EXAMPLE_CASE_EXECUTION_ID), eq(EXAMPLE_VARIABLE_KEY), eq(true)))
+    when(caseServiceMock.getVariableTyped(MockProvider.EXAMPLE_CASE_EXECUTION_ID, EXAMPLE_VARIABLE_KEY, true))
       .thenThrow(new ProcessEngineException("expected exception"));
 
     given()

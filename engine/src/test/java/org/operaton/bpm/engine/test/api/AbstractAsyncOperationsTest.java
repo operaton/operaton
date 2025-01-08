@@ -22,7 +22,6 @@ import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
@@ -79,7 +78,7 @@ public abstract class AbstractAsyncOperationsTest {
   }
 
   protected List<String> getJobIdsByDeployment(List<Job> jobs, String deploymentId) {
-    return jobs.stream().filter(j -> deploymentId.equals(j.getDeploymentId())).map(Job::getId).collect(Collectors.toList());
+    return jobs.stream().filter(j -> deploymentId.equals(j.getDeploymentId())).map(Job::getId).toList();
   }
 
   protected void completeSeedJobs(Batch batch) {

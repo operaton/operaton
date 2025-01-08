@@ -77,12 +77,12 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class ProcessDefinitionResourceImpl implements ProcessDefinitionResource {
 
+  public static final String MSG_CANNOT_INSTANTIATE_PROCESS_DEF = "Cannot instantiate process definition %s: %s";
   protected ProcessEngine engine;
   protected String processDefinitionId;
   protected String rootResourcePath;
@@ -106,9 +106,7 @@ public class ProcessDefinitionResourceImpl implements ProcessDefinitionResource 
       throw new InvalidRequestException(Status.NOT_FOUND, e, "No matching definition with id " + processDefinitionId);
     }
 
-    ProcessDefinitionDto result = ProcessDefinitionDto.fromProcessDefinition(definition);
-
-    return result;
+    return ProcessDefinitionDto.fromProcessDefinition(definition);
   }
 
   @Override
@@ -125,18 +123,18 @@ public class ProcessDefinitionResourceImpl implements ProcessDefinitionResource 
 
   @Override
   public ProcessInstanceDto startProcessInstance(UriInfo context, StartProcessInstanceDto parameters) {
-    ProcessInstanceWithVariables instance = null;
+    ProcessInstanceWithVariables instance;
     try {
       instance = startProcessInstanceAtActivities(parameters);
     } catch (AuthorizationException e) {
       throw e;
 
     } catch (ProcessEngineException e) {
-      String errorMessage = String.format("Cannot instantiate process definition %s: %s", processDefinitionId, e.getMessage());
+      String errorMessage = String.format(MSG_CANNOT_INSTANTIATE_PROCESS_DEF, processDefinitionId, e.getMessage());
       throw new RestException(Status.INTERNAL_SERVER_ERROR, e, errorMessage);
 
     } catch (RestException e) {
-      String errorMessage = String.format("Cannot instantiate process definition %s: %s", processDefinitionId, e.getMessage());
+      String errorMessage = String.format(MSG_CANNOT_INSTANTIATE_PROCESS_DEF, processDefinitionId, e.getMessage());
       throw new InvalidRequestException(e.getStatus(), e, errorMessage);
 
     }
@@ -184,7 +182,7 @@ public class ProcessDefinitionResourceImpl implements ProcessDefinitionResource 
   public ProcessInstanceDto submitForm(UriInfo context, StartProcessInstanceDto parameters) {
     FormService formService = engine.getFormService();
 
-    ProcessInstance instance = null;
+    ProcessInstance instance;
     try {
       Map<String, Object> variables = VariableValueDto.toMap(parameters.getVariables(), engine, objectMapper);
       String businessKey = parameters.getBusinessKey();
@@ -193,22 +191,17 @@ public class ProcessDefinitionResourceImpl implements ProcessDefinitionResource 
       } else {
         instance = formService.submitStartForm(processDefinitionId, variables);
       }
-
     } catch (AuthorizationException e) {
       throw e;
-
     } catch (FormFieldValidationException e) {
-      String errorMessage = String.format("Cannot instantiate process definition %s: %s", processDefinitionId, e.getMessage());
+      String errorMessage = String.format(MSG_CANNOT_INSTANTIATE_PROCESS_DEF, processDefinitionId, e.getMessage());
       throw new RestException(Status.BAD_REQUEST, e, errorMessage);
-
     } catch (ProcessEngineException e) {
-      String errorMessage = String.format("Cannot instantiate process definition %s: %s", processDefinitionId, e.getMessage());
+      String errorMessage = String.format(MSG_CANNOT_INSTANTIATE_PROCESS_DEF, processDefinitionId, e.getMessage());
       throw new RestException(Status.INTERNAL_SERVER_ERROR, e, errorMessage);
-
     } catch (RestException e) {
-      String errorMessage = String.format("Cannot instantiate process definition %s: %s", processDefinitionId, e.getMessage());
+      String errorMessage = String.format(MSG_CANNOT_INSTANTIATE_PROCESS_DEF, processDefinitionId, e.getMessage());
       throw new InvalidRequestException(e.getStatus(), e, errorMessage);
-
     }
 
     ProcessInstanceDto result = ProcessInstanceDto.fromProcessInstance(instance);
@@ -324,11 +317,11 @@ public class ProcessDefinitionResourceImpl implements ProcessDefinitionResource 
       throw new InvalidRequestException(Status.BAD_REQUEST, e, "Cannot get start form data for process definition " + processDefinitionId);
     }
     FormDto dto = FormDto.fromFormData(formData);
-    if((dto.getKey() == null || dto.getKey().isEmpty()) && dto.getOperatonFormRef() == null) {
-      if(formData != null && formData.getFormFields() != null && !formData.getFormFields().isEmpty()) {
+    if((dto.getKey() == null || dto.getKey().isEmpty()) && dto.getOperatonFormRef() == null
+        && formData != null && formData.getFormFields() != null && !formData.getFormFields().isEmpty()) {
         dto.setKey("embedded:engine://engine/:engine/process-definition/"+processDefinitionId+"/rendered-form");
       }
-    }
+
     dto.setContextPath(ApplicationContextPathUtil.getApplicationPathByProcessDefinitionId(engine, processDefinitionId));
 
     return dto;
@@ -389,7 +382,7 @@ public class ProcessDefinitionResourceImpl implements ProcessDefinitionResource 
     try {
       return engine.getRepositoryService().getStaticCalledProcessDefinitions(processDefinitionId).stream()
         .map(CalledProcessDefinitionDto::from)
-        .collect(Collectors.toList());
+        .toList();
     } catch (NotFoundException e) {
       throw new InvalidRequestException(Status.NOT_FOUND, e.getMessage());
     }
@@ -406,13 +399,12 @@ public class ProcessDefinitionResourceImpl implements ProcessDefinitionResource 
 
   @Override
   public BatchDto restartProcessInstanceAsync(RestartProcessInstanceDto restartProcessInstanceDto) {
-    Batch batch = null;
     try {
-       batch = createRestartProcessInstanceBuilder(restartProcessInstanceDto).executeAsync();
+      Batch batch = createRestartProcessInstanceBuilder(restartProcessInstanceDto).executeAsync();
+      return BatchDto.fromBatch(batch);
     } catch (BadUserRequestException e) {
       throw new InvalidRequestException(Status.BAD_REQUEST, e.getMessage());
     }
-    return BatchDto.fromBatch(batch);
   }
 
   private RestartProcessInstanceBuilder createRestartProcessInstanceBuilder(RestartProcessInstanceDto restartProcessInstanceDto) {
@@ -454,12 +446,10 @@ public class ProcessDefinitionResourceImpl implements ProcessDefinitionResource 
       return Response.ok(deployedStartForm, getStartFormMediaType(processDefinitionId)).build();
     } catch (NotFoundException e) {
       throw new InvalidRequestException(Status.NOT_FOUND, e.getMessage());
-    } catch (NullValueException e) {
+    } catch (NullValueException | BadUserRequestException e) {
       throw new InvalidRequestException(Status.BAD_REQUEST, e.getMessage());
     } catch (AuthorizationException e) {
       throw new InvalidRequestException(Status.FORBIDDEN, e.getMessage());
-    } catch (BadUserRequestException e) {
-      throw new InvalidRequestException(Status.BAD_REQUEST, e.getMessage());
     }
   }
 

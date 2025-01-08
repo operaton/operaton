@@ -20,7 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.identity.Group;
@@ -65,7 +64,7 @@ public class LdapEnableSortControlSupportTest {
         .list()
         .stream()
         .sorted(Comparator.comparing(User::getFirstName))
-        .collect(Collectors.toList());
+        .toList();
 
     assertThat(orderedUsers).hasSize(manualOrderedUsers.size());
 
@@ -82,7 +81,7 @@ public class LdapEnableSortControlSupportTest {
         .list()
         .stream()
         .sorted(Comparator.comparing(User::getFirstName).reversed())
-        .collect(Collectors.toList());
+        .toList();
 
     assertThat(orderedUsers).hasSize(manualOrderedUsers.size());
 
@@ -102,7 +101,7 @@ public class LdapEnableSortControlSupportTest {
         .list()
         .stream()
         .sorted(Comparator.comparing(User::getLastName))
-        .collect(Collectors.toList());
+        .toList();
 
     assertThat(orderedUsers).hasSize(manualOrderedUsers.size());
 
@@ -119,7 +118,7 @@ public class LdapEnableSortControlSupportTest {
         .list()
         .stream()
         .sorted(Comparator.comparing(User::getLastName).reversed())
-        .collect(Collectors.toList());
+        .toList();
 
     assertThat(orderedUsers).hasSize(manualOrderedUsers.size());
 
@@ -138,7 +137,7 @@ public class LdapEnableSortControlSupportTest {
         .list()
         .stream()
         .sorted(Comparator.comparing(User::getEmail))
-        .collect(Collectors.toList());
+        .toList();
 
     assertThat(orderedUsers).hasSize(manualOrderedUsers.size());
 
@@ -155,7 +154,7 @@ public class LdapEnableSortControlSupportTest {
         .list()
         .stream()
         .sorted(Comparator.comparing(User::getEmail).reversed())
-        .collect(Collectors.toList());
+        .toList();
 
     assertThat(orderedUsers).hasSize(manualOrderedUsers.size());
 
@@ -174,7 +173,7 @@ public class LdapEnableSortControlSupportTest {
         .list()
         .stream()
         .sorted(Comparator.comparing(User::getId))
-        .collect(Collectors.toList());
+        .toList();
 
     assertThat(orderedUsers).hasSize(manualOrderedUsers.size());
 
@@ -191,7 +190,7 @@ public class LdapEnableSortControlSupportTest {
         .list()
         .stream()
         .sorted(Comparator.comparing(User::getId).reversed())
-        .collect(Collectors.toList());
+        .toList();
 
     assertThat(orderedUsers).hasSize(manualOrderedUsers.size());
 
@@ -210,7 +209,7 @@ public class LdapEnableSortControlSupportTest {
         .list()
         .stream()
         .sorted(Comparator.comparing(Group::getId))
-        .collect(Collectors.toList());
+        .toList();
 
     assertThat(orderedGroup).hasSize(manualOrderedGroups.size());
 
@@ -226,7 +225,7 @@ public class LdapEnableSortControlSupportTest {
         .list()
         .stream()
         .sorted(Comparator.comparing(Group::getId).reversed())
-        .collect(Collectors.toList());
+        .toList();
 
     assertThat(orderedGroup).hasSize(manualOrderedGroups.size());
 
@@ -245,7 +244,7 @@ public class LdapEnableSortControlSupportTest {
         .list()
         .stream()
         .sorted(Comparator.comparing(Group::getName))
-        .collect(Collectors.toList());
+        .toList();
 
     assertThat(orderedGroup).hasSize(manualOrderedGroups.size());
 
@@ -261,7 +260,7 @@ public class LdapEnableSortControlSupportTest {
         .list()
         .stream()
         .sorted(Comparator.comparing(Group::getName).reversed())
-        .collect(Collectors.toList());
+        .toList();
 
     assertThat(orderedGroup).hasSize(manualOrderedGroups.size());
 

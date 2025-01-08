@@ -28,7 +28,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.assertj.core.groups.Tuple;
 import org.junit.After;
@@ -1373,7 +1372,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
     assertThat(mappings.stream()
       .filter(def -> def.getId().startsWith("process:1:"))
       .flatMap(def -> def.getCalledFromActivityIds().stream())
-      .collect(Collectors.toList()))
+      .toList())
       .containsExactlyInAnyOrder("deployment_1", "version_1");
 
     assertThat(mappings).extracting("name", "version", "key","calledFromActivityIds", "versionTag", "callingProcessDefinitionId")
@@ -1404,7 +1403,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
         CallableElement spy = Mockito.spy(callableElement);
         ((CallActivityBehavior) activity.getActivityBehavior()).setCallableElement(spy);
         return activity;
-      }).collect(Collectors.toList());
+      }).toList();
 
     //when
     Collection<CalledProcessDefinition> mappings = repositoryService.getStaticCalledProcessDefinitions(processDefinition.getId());
@@ -1457,7 +1456,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
     CalledProcessDefinition calledProcessDefinition = new ArrayList<>(calledProcessDefinitions).get(0);
     assertThat(calledProcessDefinition.getKey()).isEqualTo("failingProcess");
     assertThat(
-        calledProcessDefinition.getCalledFromActivityIds().stream().distinct().collect(Collectors.toList())).hasSize(8);
+        calledProcessDefinition.getCalledFromActivityIds().stream().distinct().toList()).hasSize(8);
   }
 
   @Test
@@ -1493,7 +1492,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
     assertThat(mappings.stream()
       .filter(def -> def.getId().equals(sameTenantProcessOne))
       .flatMap(def -> def.getCalledFromActivityIds().stream())
-      .collect(Collectors.toList()))
+      .toList())
       .containsExactlyInAnyOrder("null_tenant_reference_same_tenant", "explicit_same_tenant_reference");
 
     assertThat(mappings).extracting("id","calledFromActivityIds", "callingProcessDefinitionId")

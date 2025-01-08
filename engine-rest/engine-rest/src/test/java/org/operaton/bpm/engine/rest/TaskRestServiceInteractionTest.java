@@ -266,7 +266,7 @@ public class TaskRestServiceInteractionTest extends
     when(processEngine.getHistoryService()).thenReturn(historyServiceMock);
     historicTaskInstanceQueryMock = mock(HistoricTaskInstanceQuery.class);
     when(historyServiceMock.createHistoricTaskInstanceQuery()).thenReturn(historicTaskInstanceQueryMock);
-    when(historicTaskInstanceQueryMock.taskId(eq(EXAMPLE_TASK_ID))).thenReturn(historicTaskInstanceQueryMock);
+    when(historicTaskInstanceQueryMock.taskId(EXAMPLE_TASK_ID)).thenReturn(historicTaskInstanceQueryMock);
     HistoricTaskInstance historicTaskInstanceMock = createMockHistoricTaskInstance();
     when(historicTaskInstanceQueryMock.singleResult()).thenReturn(historicTaskInstanceMock);
 
@@ -358,9 +358,9 @@ public class TaskRestServiceInteractionTest extends
       MockProvider.mockUser().id(EXAMPLE_TASK_OWNER).build()
     );
     UserQuery sampleUserQuery = mock(UserQuery.class);
-    when(sampleUserQuery.userIdIn(eq(EXAMPLE_TASK_ASSIGNEE_NAME), eq(EXAMPLE_TASK_OWNER))).thenReturn(sampleUserQuery);
-    when(sampleUserQuery.userIdIn(eq(EXAMPLE_TASK_OWNER), eq(EXAMPLE_TASK_ASSIGNEE_NAME))).thenReturn(sampleUserQuery);
-    when(sampleUserQuery.listPage(eq(0), eq(2))).thenReturn(mockUsers);
+    when(sampleUserQuery.userIdIn(EXAMPLE_TASK_ASSIGNEE_NAME, EXAMPLE_TASK_OWNER)).thenReturn(sampleUserQuery);
+    when(sampleUserQuery.userIdIn(EXAMPLE_TASK_OWNER, EXAMPLE_TASK_ASSIGNEE_NAME)).thenReturn(sampleUserQuery);
+    when(sampleUserQuery.listPage(0, 2)).thenReturn(mockUsers);
     when(sampleUserQuery.count()).thenReturn((long) mockUsers.size());
     when(processEngine.getIdentityService().createUserQuery()).thenReturn(sampleUserQuery);
 
@@ -370,9 +370,9 @@ public class TaskRestServiceInteractionTest extends
       MockProvider.mockGroup().id(mockCandidateGroup2IdentityLink.getGroupId()).build()
     );
     GroupQuery sampleGroupQuery = mock(GroupQuery.class);
-    when(sampleGroupQuery.groupIdIn(eq(EXAMPLE_GROUP_ID), eq(EXAMPLE_GROUP_ID2))).thenReturn(sampleGroupQuery);
-    when(sampleGroupQuery.groupIdIn(eq(EXAMPLE_GROUP_ID2), eq(EXAMPLE_GROUP_ID))).thenReturn(sampleGroupQuery);
-    when(sampleGroupQuery.listPage(eq(0), eq(2))).thenReturn(mockGroups);
+    when(sampleGroupQuery.groupIdIn(EXAMPLE_GROUP_ID, EXAMPLE_GROUP_ID2)).thenReturn(sampleGroupQuery);
+    when(sampleGroupQuery.groupIdIn(EXAMPLE_GROUP_ID2, EXAMPLE_GROUP_ID)).thenReturn(sampleGroupQuery);
+    when(sampleGroupQuery.listPage(0, 2)).thenReturn(mockGroups);
     when(sampleGroupQuery.count()).thenReturn((long) mockGroups.size());
     when(processEngine.getIdentityService().createGroupQuery()).thenReturn(sampleGroupQuery);
 
@@ -2390,7 +2390,7 @@ public class TaskRestServiceInteractionTest extends
 
   @Test
   public void testAddCommentToNonExistingTask() {
-    when(historicTaskInstanceQueryMock.taskId(eq(NON_EXISTING_ID))).thenReturn(historicTaskInstanceQueryMock);
+    when(historicTaskInstanceQueryMock.taskId(NON_EXISTING_ID)).thenReturn(historicTaskInstanceQueryMock);
     when(historicTaskInstanceQueryMock.singleResult()).thenReturn(null);
 
     Map<String, Object> json = new HashMap<>();
@@ -2644,7 +2644,7 @@ public class TaskRestServiceInteractionTest extends
 
   @Test
   public void testCreateTaskAttachmentWithContentToNonExistingTask() {
-    when(historicTaskInstanceQueryMock.taskId(eq(NON_EXISTING_ID))).thenReturn(historicTaskInstanceQueryMock);
+    when(historicTaskInstanceQueryMock.taskId(NON_EXISTING_ID)).thenReturn(historicTaskInstanceQueryMock);
     when(historicTaskInstanceQueryMock.singleResult()).thenReturn(null);
 
     given()
@@ -2699,7 +2699,7 @@ public class TaskRestServiceInteractionTest extends
 
   @Test
   public void testCreateTaskAttachmentWithUrlToNonExistingTask() {
-    when(historicTaskInstanceQueryMock.taskId(eq(NON_EXISTING_ID))).thenReturn(historicTaskInstanceQueryMock);
+    when(historicTaskInstanceQueryMock.taskId(NON_EXISTING_ID)).thenReturn(historicTaskInstanceQueryMock);
     when(historicTaskInstanceQueryMock.singleResult()).thenReturn(null);
 
     given()

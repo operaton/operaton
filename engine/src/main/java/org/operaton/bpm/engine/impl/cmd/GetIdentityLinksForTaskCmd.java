@@ -19,8 +19,8 @@ package org.operaton.bpm.engine.impl.cmd;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -55,7 +55,7 @@ public class GetIdentityLinksForTaskCmd implements Command<List<IdentityLink>>, 
 
     checkGetIdentityLink(task, commandContext);
 
-    List<IdentityLink> identityLinks = task.getIdentityLinks().stream().collect(Collectors.toList());
+    List<IdentityLink> identityLinks = new ArrayList<>(task.getIdentityLinks());
 
     // assignee is not part of identity links in the db.
     // so if there is one, we add it here.

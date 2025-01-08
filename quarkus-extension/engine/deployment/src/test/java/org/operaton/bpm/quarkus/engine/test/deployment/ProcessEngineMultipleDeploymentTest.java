@@ -22,7 +22,6 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import io.quarkus.test.QuarkusUnitTest;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -99,7 +98,7 @@ public class ProcessEngineMultipleDeploymentTest {
 
     List<String> deploymentNames = deployments.stream()
         .map(Deployment::getName)
-        .collect(Collectors.toList());
+        .toList();
     assertThat(deploymentNames).contains("deployment-1", "deployment-2");
   }
 

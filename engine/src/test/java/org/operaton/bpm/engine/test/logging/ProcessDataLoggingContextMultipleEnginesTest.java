@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.test.logging;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
@@ -84,9 +83,9 @@ public class ProcessDataLoggingContextMultipleEnginesTest {
 
     // then
     List<ILoggingEvent> filteredLog = loggingRule.getLog();
-    List<String> engineNames = filteredLog.stream().map(log -> log.getMDCPropertyMap().get("engineName")).collect(Collectors.toList());
+    List<String> engineNames = filteredLog.stream().map(log -> log.getMDCPropertyMap().get("engineName")).toList();
     assertThat(engineNames).hasSize(filteredLog.size());
-    assertThat(engineNames.stream().distinct().collect(Collectors.toList())).containsExactly("engine1");
+    assertThat(engineNames.stream().distinct().toList()).containsExactly("engine1");
   }
 
   @Test
@@ -101,20 +100,20 @@ public class ProcessDataLoggingContextMultipleEnginesTest {
 
     // then
     List<ILoggingEvent> log = loggingRule.getFilteredLog(LogEngineNameDelegate.LOG_MESSAGE);
-    List<String> engineNames = log.stream().map(l -> l.getMDCPropertyMap().get("engineName")).collect(Collectors.toList());
+    List<String> engineNames = log.stream().map(l -> l.getMDCPropertyMap().get("engineName")).toList();
     // make sure all log entries have access to the engineName MDC property
     assertThat(engineNames).hasSize(log.size());
-    assertThat(engineNames.stream().distinct().collect(Collectors.toList())).containsExactlyInAnyOrder("engine1", "engine2");
+    assertThat(engineNames.stream().distinct().toList()).containsExactlyInAnyOrder("engine1", "engine2");
 
     List<ILoggingEvent> filteredLogEngine1 = loggingRule.getFilteredLog("engine1");
-    List<String> engineNamesEngine1 = filteredLogEngine1.stream().map(l -> l.getMDCPropertyMap().get("engineName")).collect(Collectors.toList());
+    List<String> engineNamesEngine1 = filteredLogEngine1.stream().map(l -> l.getMDCPropertyMap().get("engineName")).toList();
     assertThat(engineNamesEngine1).hasSameSizeAs(filteredLogEngine1);
-    assertThat(engineNamesEngine1.stream().distinct().collect(Collectors.toList())).containsExactly("engine1");
+    assertThat(engineNamesEngine1.stream().distinct().toList()).containsExactly("engine1");
 
     List<ILoggingEvent> filteredLogEngine2 = loggingRule.getFilteredLog("engine2");
-    List<String> engineNamesEngine2 = filteredLogEngine2.stream().map(l -> l.getMDCPropertyMap().get("engineName")).collect(Collectors.toList());
+    List<String> engineNamesEngine2 = filteredLogEngine2.stream().map(l -> l.getMDCPropertyMap().get("engineName")).toList();
     assertThat(engineNamesEngine2).hasSameSizeAs(filteredLogEngine2);
-    assertThat(engineNamesEngine2.stream().distinct().collect(Collectors.toList())).containsExactly("engine2");
+    assertThat(engineNamesEngine2.stream().distinct().toList()).containsExactly("engine2");
   }
 
   private ProcessEngine createProcessEngine(String name) {

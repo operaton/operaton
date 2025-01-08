@@ -34,7 +34,6 @@ import java.util.List;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -68,7 +67,7 @@ public class HistoricDecisionStatisticsRestServiceQueryTest extends AbstractRest
     historicDecisionInstanceStatisticsQuery =
         mock(HistoricDecisionInstanceStatisticsQueryImpl.class);
     when(processEngine.getHistoryService()
-        .createHistoricDecisionInstanceStatisticsQuery(eq(MockProvider.EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_ID)))
+        .createHistoricDecisionInstanceStatisticsQuery(MockProvider.EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_ID))
     .thenReturn(historicDecisionInstanceStatisticsQuery);
 
     when(historicDecisionInstanceStatisticsQuery.decisionInstanceId(MockProvider.EXAMPLE_DECISION_INSTANCE_ID)).thenReturn(historicDecisionInstanceStatisticsQuery);

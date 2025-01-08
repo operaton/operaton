@@ -25,7 +25,6 @@ import org.operaton.bpm.client.spring.impl.util.LoggerUtil;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.ListableBeanFactory;
@@ -88,7 +87,7 @@ public class ClientPostProcessor implements BeanDefinitionRegistryPostProcessor 
 
     List<String> classBeanNames = Arrays.stream(beanNames)
         .filter(isClassAnnotation(listableBeanFactory))
-        .collect(Collectors.toList());
+        .toList();
 
     int classBeanNameCount = classBeanNames.size();
     if (classBeanNameCount > 1) {

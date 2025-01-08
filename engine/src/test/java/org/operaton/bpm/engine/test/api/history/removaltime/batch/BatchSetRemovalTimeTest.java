@@ -59,7 +59,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -247,7 +246,7 @@ public class BatchSetRemovalTimeTest {
     List<String> deploymentIds = engineRule.getRepositoryService().createDeploymentQuery()
         .list().stream()
         .map(org.operaton.bpm.engine.repository.Deployment::getId)
-        .collect(Collectors.toList());
+        .toList();
 
     // when
     Batch batch = historyService.setRemovalTimeToHistoricProcessInstances()
@@ -292,7 +291,7 @@ public class BatchSetRemovalTimeTest {
     List<String> deploymentIds = engineRule.getRepositoryService().createDeploymentQuery()
         .list().stream()
         .map(org.operaton.bpm.engine.repository.Deployment::getId)
-        .collect(Collectors.toList());
+        .toList();
 
     // when
     Batch batch = historyService.setRemovalTimeToHistoricDecisionInstances()

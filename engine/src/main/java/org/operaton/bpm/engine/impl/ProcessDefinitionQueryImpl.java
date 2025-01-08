@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.identity.Group;
@@ -600,7 +599,7 @@ public class ProcessDefinitionQueryImpl extends AbstractQuery<ProcessDefinitionQ
           .createGroupQuery()
           .groupMember(authorizationUserId)
           .list();
-      cachedCandidateGroups = groups.stream().map(Group::getId).collect(Collectors.toList());
+      cachedCandidateGroups = groups.stream().map(Group::getId).toList();
     }
 
     return cachedCandidateGroups;

@@ -235,7 +235,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
 
     historicProcessInstanceQueryMock = mock(HistoricProcessInstanceQuery.class);
     when(historyServiceMock.createHistoricProcessInstanceQuery()).thenReturn(historicProcessInstanceQueryMock);
-    when(historicProcessInstanceQueryMock.processInstanceId(eq(EXAMPLE_PROCESS_INSTANCE_ID))).thenReturn(historicProcessInstanceQueryMock);
+    when(historicProcessInstanceQueryMock.processInstanceId(EXAMPLE_PROCESS_INSTANCE_ID)).thenReturn(historicProcessInstanceQueryMock);
     HistoricProcessInstance historicProcessInstanceMock = createMockHistoricProcessInstance();
     when(historicProcessInstanceQueryMock.singleResult()).thenReturn(historicProcessInstanceMock);
 
@@ -930,7 +930,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
     mockHistoryFull();
     historicProcessInstanceQueryMock = mock(HistoricProcessInstanceQuery.class);
     when(historyServiceMock.createHistoricProcessInstanceQuery()).thenReturn(historicProcessInstanceQueryMock);
-    when(historicProcessInstanceQueryMock.processInstanceId(eq(NON_EXISTING_ID))).thenReturn(
+    when(historicProcessInstanceQueryMock.processInstanceId(NON_EXISTING_ID)).thenReturn(
         historicProcessInstanceQueryMock);
     when(historicProcessInstanceQueryMock.singleResult()).thenReturn(null);
 
@@ -1008,7 +1008,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
     mockHistoryFull();
     historicProcessInstanceQueryMock = mock(HistoricProcessInstanceQuery.class);
     when(historyServiceMock.createHistoricProcessInstanceQuery()).thenReturn(historicProcessInstanceQueryMock);
-    when(historicProcessInstanceQueryMock.processInstanceId(eq(NON_EXISTING_ID))).thenReturn(
+    when(historicProcessInstanceQueryMock.processInstanceId(NON_EXISTING_ID)).thenReturn(
         historicProcessInstanceQueryMock);
     when(historicProcessInstanceQueryMock.singleResult()).thenReturn(null);
 
@@ -1134,7 +1134,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
     mockHistoryFull();
     historicProcessInstanceQueryMock = mock(HistoricProcessInstanceQuery.class);
     when(historyServiceMock.createHistoricProcessInstanceQuery()).thenReturn(historicProcessInstanceQueryMock);
-    when(historicProcessInstanceQueryMock.processInstanceId(eq(NON_EXISTING_ID))).thenReturn(
+    when(historicProcessInstanceQueryMock.processInstanceId(NON_EXISTING_ID)).thenReturn(
         historicProcessInstanceQueryMock);
     when(historicProcessInstanceQueryMock.singleResult()).thenReturn(null);
 
@@ -1188,7 +1188,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
     String mimeType = "text/plain";
     FileValue variableValue = Variables.fileValue(filename).file(byteContent).mimeType(mimeType).create();
 
-    when(runtimeServiceMock.getVariableTyped(eq(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID), eq(variableKey), eq(true)))
+    when(runtimeServiceMock.getVariableTyped(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, variableKey, true))
     .thenReturn(variableValue);
 
     given()
@@ -1738,7 +1738,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
     String variableKey = "aVariableKey";
     int variableValue = 123;
 
-    when(runtimeServiceMock.getVariableTyped(eq(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID), eq(variableKey), eq(true)))
+    when(runtimeServiceMock.getVariableTyped(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, variableKey, true))
       .thenReturn(Variables.integerValue(variableValue));
 
     given().pathParam("id", MockProvider.EXAMPLE_PROCESS_INSTANCE_ID).pathParam("varId", variableKey)
@@ -1897,7 +1897,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
   public void testGetVariableForNonExistingInstance() {
     String variableKey = "aVariableKey";
 
-    when(runtimeServiceMock.getVariableTyped(eq(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID), eq(variableKey), eq(true)))
+    when(runtimeServiceMock.getVariableTyped(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, variableKey, true))
       .thenThrow(new ProcessEngineException("expected exception"));
 
     given().pathParam("id", MockProvider.EXAMPLE_PROCESS_INSTANCE_ID).pathParam("varId", variableKey)
@@ -2293,8 +2293,8 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
     .when()
       .post(SINGLE_PROCESS_INSTANCE_BINARY_VARIABLE_URL);
 
-    verify(runtimeServiceMock, never()).setVariable(eq(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID), eq(variableKey),
-        eq(serializable));
+    verify(runtimeServiceMock, never()).setVariable(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, variableKey,
+        serializable);
   }
 
   @Test
@@ -2522,7 +2522,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
       .then().expect().statusCode(Status.NO_CONTENT.getStatusCode())
       .when().delete(SINGLE_PROCESS_INSTANCE_VARIABLE_URL);
 
-    verify(runtimeServiceMock).removeVariable(eq(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID), eq(variableKey));
+    verify(runtimeServiceMock).removeVariable(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, variableKey);
   }
 
   @Test
@@ -2530,7 +2530,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
     String variableKey = "aVariableKey";
 
     doThrow(new ProcessEngineException("expected exception"))
-      .when(runtimeServiceMock).removeVariable(eq(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID), eq(variableKey));
+      .when(runtimeServiceMock).removeVariable(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, variableKey);
 
     given().pathParam("id", MockProvider.EXAMPLE_PROCESS_INSTANCE_ID).pathParam("varId", variableKey)
       .then().expect().statusCode(Status.INTERNAL_SERVER_ERROR.getStatusCode())
@@ -3475,7 +3475,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
       .when()
         .post(PROCESS_INSTANCE_MODIFICATION_URL);
 
-    verify(runtimeServiceMock).createProcessInstanceModification(eq(EXAMPLE_PROCESS_INSTANCE_ID));
+    verify(runtimeServiceMock).createProcessInstanceModification(EXAMPLE_PROCESS_INSTANCE_ID);
 
     InOrder inOrder = inOrder(mockModificationBuilder);
     inOrder.verify(mockModificationBuilder).cancelAllForActivity("activityId");
@@ -3531,7 +3531,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
       .when()
         .post(PROCESS_INSTANCE_MODIFICATION_URL);
 
-    verify(runtimeServiceMock).createProcessInstanceModification(eq(EXAMPLE_PROCESS_INSTANCE_ID));
+    verify(runtimeServiceMock).createProcessInstanceModification(EXAMPLE_PROCESS_INSTANCE_ID);
 
     InOrder inOrder = inOrder(mockModificationBuilder);
     inOrder.verify(mockModificationBuilder).startBeforeActivity("activityId");
@@ -3712,7 +3712,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
       .when()
         .post(PROCESS_INSTANCE_MODIFICATION_URL);
 
-    verify(runtimeServiceMock).createProcessInstanceModification(eq(EXAMPLE_PROCESS_INSTANCE_ID));
+    verify(runtimeServiceMock).createProcessInstanceModification(EXAMPLE_PROCESS_INSTANCE_ID);
 
     InOrder inOrder = inOrder(mockModificationBuilder);
     inOrder.verify(mockModificationBuilder).startBeforeActivity("activityId");
@@ -3742,7 +3742,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
 
     verifyBatchJson(response.asString());
 
-    verify(mockManagementService, times(1)).setJobRetriesByProcessAsync(eq(MockProvider.EXAMPLE_JOB_RETRIES));
+    verify(mockManagementService, times(1)).setJobRetriesByProcessAsync(MockProvider.EXAMPLE_JOB_RETRIES);
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).processInstanceIds(Arrays.asList(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID));
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).processInstanceQuery(null);
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).executeAsync();
@@ -3769,10 +3769,10 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
 
     verifyBatchJson(response.asString());
 
-    verify(mockManagementService, times(1)).setJobRetriesByProcessAsync(eq(MockProvider.EXAMPLE_JOB_RETRIES));
+    verify(mockManagementService, times(1)).setJobRetriesByProcessAsync(MockProvider.EXAMPLE_JOB_RETRIES);
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).processInstanceIds(Arrays.asList(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID));
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).processInstanceQuery(null);
-    verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).dueDate(eq(newDueDate));
+    verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).dueDate(newDueDate);
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).executeAsync();
     verifyNoMoreInteractions(mockSetJobRetriesByProcessAsyncBuilder);
   }
@@ -3796,7 +3796,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
 
     verifyBatchJson(response.asString());
 
-    verify(mockManagementService, times(1)).setJobRetriesByProcessAsync(eq(MockProvider.EXAMPLE_JOB_RETRIES));
+    verify(mockManagementService, times(1)).setJobRetriesByProcessAsync(MockProvider.EXAMPLE_JOB_RETRIES);
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).processInstanceIds(Arrays.asList(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID));
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).processInstanceQuery(null);
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).dueDate(null);
@@ -3822,7 +3822,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
 
     verifyBatchJson(response.asString());
 
-    verify(mockManagementService, times(1)).setJobRetriesByProcessAsync(eq(MockProvider.EXAMPLE_JOB_RETRIES));
+    verify(mockManagementService, times(1)).setJobRetriesByProcessAsync(MockProvider.EXAMPLE_JOB_RETRIES);
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).processInstanceIds(null);
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).processInstanceQuery(any(ProcessInstanceQuery.class));
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).dueDate(newDueDate);
@@ -3848,7 +3848,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
 
     verifyBatchJson(response.asString());
 
-    verify(mockManagementService, times(1)).setJobRetriesByProcessAsync(eq(MockProvider.EXAMPLE_JOB_RETRIES));
+    verify(mockManagementService, times(1)).setJobRetriesByProcessAsync(MockProvider.EXAMPLE_JOB_RETRIES);
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).processInstanceIds(null);
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).processInstanceQuery(any(ProcessInstanceQuery.class));
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).executeAsync();
@@ -3869,7 +3869,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
         .statusCode(Status.BAD_REQUEST.getStatusCode())
         .when().post(SET_JOB_RETRIES_ASYNC_URL);
 
-    verify(mockManagementService, times(1)).setJobRetriesByProcessAsync(eq(MockProvider.EXAMPLE_JOB_RETRIES));
+    verify(mockManagementService, times(1)).setJobRetriesByProcessAsync(MockProvider.EXAMPLE_JOB_RETRIES);
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).processInstanceIds(null);
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).processInstanceQuery(null);
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).executeAsync();
@@ -3892,7 +3892,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
   @Test
   public void testSetRetriesByProcessWithNegativeRetries() {
     doThrow(new BadUserRequestException("retries are negative"))
-        .when(mockManagementService).setJobRetriesByProcessAsync(eq(MockProvider.EXAMPLE_NEGATIVE_JOB_RETRIES));
+        .when(mockManagementService).setJobRetriesByProcessAsync(MockProvider.EXAMPLE_NEGATIVE_JOB_RETRIES);
 
     Map<String, Object> messageBodyJson = new HashMap<>();
     messageBodyJson.put(RETRIES, MockProvider.EXAMPLE_NEGATIVE_JOB_RETRIES);
@@ -3907,7 +3907,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
     .when()
       .post(SET_JOB_RETRIES_ASYNC_URL);
 
-    verify(mockManagementService, times(1)).setJobRetriesByProcessAsync(eq(MockProvider.EXAMPLE_NEGATIVE_JOB_RETRIES));
+    verify(mockManagementService, times(1)).setJobRetriesByProcessAsync(MockProvider.EXAMPLE_NEGATIVE_JOB_RETRIES);
     verifyNoMoreInteractions(mockSetJobRetriesByProcessAsyncBuilder);
   }
 
@@ -3931,7 +3931,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
 
     verifyBatchJson(response.asString());
 
-    verify(mockManagementService, times(1)).setJobRetriesByProcessAsync(eq(MockProvider.EXAMPLE_JOB_RETRIES));
+    verify(mockManagementService, times(1)).setJobRetriesByProcessAsync(MockProvider.EXAMPLE_JOB_RETRIES);
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).processInstanceIds(null);
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).historicProcessInstanceQuery(any());
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).executeAsync();
@@ -3961,7 +3961,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
 
     verifyBatchJson(response.asString());
 
-    verify(mockManagementService, times(1)).setJobRetriesByProcessAsync(eq(MockProvider.EXAMPLE_JOB_RETRIES));
+    verify(mockManagementService, times(1)).setJobRetriesByProcessAsync(MockProvider.EXAMPLE_JOB_RETRIES);
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).processInstanceIds(null);
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).historicProcessInstanceQuery(any());
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).dueDate(newDueDate);
@@ -3991,7 +3991,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
 
     verifyBatchJson(response.asString());
 
-    verify(mockManagementService, times(1)).setJobRetriesByProcessAsync(eq(MockProvider.EXAMPLE_JOB_RETRIES));
+    verify(mockManagementService, times(1)).setJobRetriesByProcessAsync(MockProvider.EXAMPLE_JOB_RETRIES);
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).processInstanceIds(null);
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).historicProcessInstanceQuery(any());
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).dueDate(null);
@@ -4011,7 +4011,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
       .statusCode(Status.OK.getStatusCode())
     .when().post(SET_JOB_RETRIES_ASYNC_HIST_QUERY_URL);
 
-    verify(mockManagementService, times(1)).setJobRetriesByProcessAsync(eq(MockProvider.EXAMPLE_JOB_RETRIES));
+    verify(mockManagementService, times(1)).setJobRetriesByProcessAsync(MockProvider.EXAMPLE_JOB_RETRIES);
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).processInstanceIds(Arrays.asList(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID));
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).historicProcessInstanceQuery(null);
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).executeAsync();
@@ -4033,7 +4033,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
     .when()
       .post(SET_JOB_RETRIES_ASYNC_HIST_QUERY_URL);
 
-    verify(mockManagementService, times(1)).setJobRetriesByProcessAsync(eq(MockProvider.EXAMPLE_JOB_RETRIES));
+    verify(mockManagementService, times(1)).setJobRetriesByProcessAsync(MockProvider.EXAMPLE_JOB_RETRIES);
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).processInstanceIds(Arrays.asList(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID));
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).historicProcessInstanceQuery(null);
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).dueDate(newDueDate);
@@ -4059,7 +4059,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
       .statusCode(Status.OK.getStatusCode())
     .when().post(SET_JOB_RETRIES_ASYNC_HIST_QUERY_URL);
 
-    verify(mockManagementService, times(1)).setJobRetriesByProcessAsync(eq(MockProvider.EXAMPLE_JOB_RETRIES));
+    verify(mockManagementService, times(1)).setJobRetriesByProcessAsync(MockProvider.EXAMPLE_JOB_RETRIES);
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).processInstanceIds(Arrays.asList(MockProvider.ANOTHER_EXAMPLE_PROCESS_INSTANCE_ID));
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).historicProcessInstanceQuery(any());
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).executeAsync();
@@ -4080,7 +4080,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
       .statusCode(Status.BAD_REQUEST.getStatusCode())
     .when().post(SET_JOB_RETRIES_ASYNC_HIST_QUERY_URL);
 
-    verify(mockManagementService, times(1)).setJobRetriesByProcessAsync(eq(MockProvider.EXAMPLE_JOB_RETRIES));
+    verify(mockManagementService, times(1)).setJobRetriesByProcessAsync(MockProvider.EXAMPLE_JOB_RETRIES);
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).processInstanceIds(null);
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).historicProcessInstanceQuery(null);
     verify(mockSetJobRetriesByProcessAsyncBuilder, times(1)).executeAsync();
@@ -4090,7 +4090,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
   @Test
   public void testSetRetriesByProcessAsyncHistoricQueryBasedWithNegativeRetries() {
     doThrow(new BadUserRequestException("retries are negative"))
-      .when(mockManagementService).setJobRetriesByProcessAsync(eq(MockProvider.EXAMPLE_NEGATIVE_JOB_RETRIES));
+      .when(mockManagementService).setJobRetriesByProcessAsync(MockProvider.EXAMPLE_NEGATIVE_JOB_RETRIES);
 
     HistoricProcessInstanceQuery mockedHistoricProcessInstanceQuery = mock(HistoricProcessInstanceQuery.class);
     when(historyServiceMock.createHistoricProcessInstanceQuery()).thenReturn(mockedHistoricProcessInstanceQuery);
@@ -4107,7 +4107,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
       .statusCode(Status.BAD_REQUEST.getStatusCode())
     .when().post(SET_JOB_RETRIES_ASYNC_HIST_QUERY_URL);
 
-    verify(mockManagementService, times(1)).setJobRetriesByProcessAsync(eq(MockProvider.EXAMPLE_NEGATIVE_JOB_RETRIES));
+    verify(mockManagementService, times(1)).setJobRetriesByProcessAsync(MockProvider.EXAMPLE_NEGATIVE_JOB_RETRIES);
     verifyNoMoreInteractions(mockSetJobRetriesByProcessAsyncBuilder);
   }
 
@@ -4149,7 +4149,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
       .when()
         .post(PROCESS_INSTANCE_MODIFICATION_ASYNC_URL);
 
-    verify(runtimeServiceMock).createProcessInstanceModification(eq(EXAMPLE_PROCESS_INSTANCE_ID));
+    verify(runtimeServiceMock).createProcessInstanceModification(EXAMPLE_PROCESS_INSTANCE_ID);
 
     InOrder inOrder = inOrder(mockModificationBuilder);
     inOrder.verify(mockModificationBuilder).cancelAllForActivity("activityId");
@@ -4323,7 +4323,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
       .when()
         .post(PROCESS_INSTANCE_MODIFICATION_ASYNC_URL);
 
-    verify(runtimeServiceMock).createProcessInstanceModification(eq(EXAMPLE_PROCESS_INSTANCE_ID));
+    verify(runtimeServiceMock).createProcessInstanceModification(EXAMPLE_PROCESS_INSTANCE_ID);
 
     InOrder inOrder = inOrder(mockModificationBuilder);
     inOrder.verify(mockModificationBuilder).cancelAllForActivity("activityId");
@@ -4553,11 +4553,10 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
         .processDefinitionId("foo");
 
     verify(runtimeServiceMock).setVariablesAsync(
-        eq(null),
-        eq(mockedProcessInstanceQuery),
-        eq(null),
-        eq(null)
-    );
+        null,
+        mockedProcessInstanceQuery,
+        null,
+        null);
 
     verifyBatchJson(response.asString());
   }
@@ -4595,11 +4594,10 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
         .processDefinitionId("foo");
 
     verify(runtimeServiceMock).setVariablesAsync(
-        eq(null),
-        eq(null),
-        eq(mockedHistoricProcessInstanceQuery),
-        eq(null)
-    );
+        null,
+        null,
+        mockedHistoricProcessInstanceQuery,
+        null);
 
     verifyBatchJson(response.asString());
   }
@@ -4627,11 +4625,10 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
 
     // then
     verify(runtimeServiceMock).setVariablesAsync(
-        eq(processInstanceIds),
-        eq(null),
-        eq(null),
-        eq(null)
-    );
+        processInstanceIds,
+        null,
+        null,
+        null);
 
     verifyBatchJson(response.asString());
   }

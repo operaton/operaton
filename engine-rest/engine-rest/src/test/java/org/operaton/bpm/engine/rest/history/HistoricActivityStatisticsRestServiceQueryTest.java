@@ -22,7 +22,6 @@ import static org.operaton.bpm.engine.rest.util.DateTimeUtils.DATE_FORMAT_WITH_T
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -74,7 +73,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
     List<HistoricActivityStatistics> mocks = MockProvider.createMockHistoricActivityStatistics();
 
     historicActivityStatisticsQuery = mock(HistoricActivityStatisticsQueryImpl.class);
-    when(processEngine.getHistoryService().createHistoricActivityStatisticsQuery(eq(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID))).thenReturn(historicActivityStatisticsQuery);
+    when(processEngine.getHistoryService().createHistoricActivityStatisticsQuery(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)).thenReturn(historicActivityStatisticsQuery);
     when(historicActivityStatisticsQuery.unlimitedList()).thenReturn(mocks);
   }
 

@@ -36,7 +36,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.junit.After;
 import org.junit.Before;
@@ -321,7 +320,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTest {
     // when execute the job to suspend the process definitions
     Job job = engineRule.getManagementService().createJobQuery().timers().singleResult();
     assertThat(job).isNotNull();
-    List<String> expectedDeploymentIds = query.active().list().stream().map(ProcessDefinition::getDeploymentId).collect(Collectors.toList());
+    List<String> expectedDeploymentIds = query.active().list().stream().map(ProcessDefinition::getDeploymentId).toList();
     assertThat(expectedDeploymentIds).contains(job.getDeploymentId());
 
     engineRule.getManagementService().executeJob(job.getId());
@@ -409,7 +408,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTest {
     // when execute the job to activate the process definitions
     Job job = engineRule.getManagementService().createJobQuery().timers().singleResult();
     assertThat(job).isNotNull();
-    List<String> expectedDeploymentIds = query.suspended().list().stream().map(ProcessDefinition::getDeploymentId).collect(Collectors.toList());
+    List<String> expectedDeploymentIds = query.suspended().list().stream().map(ProcessDefinition::getDeploymentId).toList();
     assertThat(expectedDeploymentIds).contains(job.getDeploymentId());
 
     engineRule.getManagementService().executeJob(job.getId());

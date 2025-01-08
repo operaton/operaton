@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class CustomFunctionTransformer extends JavaFunctionProvider {
 
@@ -83,7 +82,7 @@ public class CustomFunctionTransformer extends JavaFunctionProvider {
   protected List<Object> unpackVals(List<Val> args) {
     return args.stream()
       .map(this::unpackVal)
-      .collect(Collectors.toList());
+      .toList();
   }
 
   protected Val toVal(Object rawResult) {

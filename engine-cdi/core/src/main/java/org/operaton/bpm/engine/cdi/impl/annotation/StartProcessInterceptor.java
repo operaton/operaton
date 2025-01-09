@@ -34,6 +34,8 @@ import org.operaton.bpm.engine.cdi.annotation.StartProcess;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 
+import static org.springframework.util.ObjectUtils.isEmpty;
+
 /**
  * implementation of the {@link StartProcess} annotation
  *
@@ -92,7 +94,7 @@ public class StartProcessInterceptor implements Serializable {
         fieldName = processStartVariableTyped.value();
       }
 
-      if (fieldName == null || fieldName.length() == 0) {
+      if (isEmpty(fieldName)) {
         fieldName = field.getName();
       }
       Object value = field.get(ctx.getTarget());

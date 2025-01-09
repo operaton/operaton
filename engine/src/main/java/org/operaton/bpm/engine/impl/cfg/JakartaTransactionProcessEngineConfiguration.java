@@ -24,6 +24,8 @@ import org.operaton.bpm.engine.impl.cfg.jta.JakartaTransactionContextFactory;
 import org.operaton.bpm.engine.impl.interceptor.CommandInterceptor;
 import org.operaton.bpm.engine.impl.interceptor.JakartaTransactionInterceptor;
 
+import static org.springframework.util.ObjectUtils.isEmpty;
+
 /**
  * Jakarta Transactions-based implementation of the {@link AbstractTransactionProcessEngineConfiguration}
  */
@@ -41,7 +43,7 @@ public class JakartaTransactionProcessEngineConfiguration extends AbstractTransa
   @Override
   protected void initTransactionManager() {
     if(transactionManager == null){
-      if(transactionManagerJndiName == null || transactionManagerJndiName.length() == 0) {
+      if(isEmpty(transactionManagerJndiName)) {
         throw LOG.invalidConfigTransactionManagerIsNull();
       }
       try {

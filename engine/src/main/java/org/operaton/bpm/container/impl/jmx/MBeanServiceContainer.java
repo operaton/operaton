@@ -52,15 +52,12 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
 
   @Override
   public synchronized <S> void startService(ServiceType serviceType, String localName, PlatformService<S> service) {
-
     String serviceName = composeLocalName(serviceType, localName);
     startService(serviceName, service);
-
   }
 
   @Override
   public synchronized <S> void startService(String name, PlatformService<S> service) {
-
     ObjectName serviceName = getObjectName(name);
 
     if (getService(serviceName) != null) {
@@ -103,12 +100,10 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
   public synchronized void stopService(ServiceType serviceType, String localName) {
     String globalName = composeLocalName(serviceType, localName);
     stopService(globalName);
-
   }
 
   @Override
   public synchronized void stopService(String name) {
-
     final MBeanServer beanServer = getmBeanServer();
 
     ObjectName serviceName = getObjectName(name);
@@ -130,7 +125,6 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
         throw LOG.exceptionWhileUnregisteringService(serviceName.getCanonicalName(), t);
       }
     }
-
   }
 
   @Override
@@ -147,7 +141,6 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
 
   @Override
   public void executeDeploymentOperation(DeploymentOperation operation) {
-
     Stack<DeploymentOperation> currentOperationContext = activeDeploymentOperations.get();
     if(currentOperationContext == null) {
       currentOperationContext = new Stack<>();

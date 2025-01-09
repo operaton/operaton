@@ -25,6 +25,7 @@ import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 
+import static org.springframework.util.ObjectUtils.isEmpty;
 
 /**
  * Gives access to a deployed process model, e.g., a BPMN 2.0 XML file, through
@@ -38,7 +39,7 @@ public class GetDeploymentProcessModelCmd implements Command<InputStream>, Seria
   protected String processDefinitionId;
 
   public GetDeploymentProcessModelCmd(String processDefinitionId) {
-    if (processDefinitionId == null || processDefinitionId.length() < 1) {
+    if (isEmpty(processDefinitionId)) {
       throw new ProcessEngineException("The process definition id is mandatory, but '" + processDefinitionId + "' has been provided.");
     }
     this.processDefinitionId = processDefinitionId;

@@ -31,6 +31,8 @@ import org.operaton.bpm.model.cmmn.instance.CmmnElement;
 
 import static org.operaton.bpm.engine.impl.util.StringUtil.isCompositeExpression;
 
+import static org.springframework.util.StringUtils.hasText;
+
 /**
  * @author Roman Smirnov
  *
@@ -102,7 +104,7 @@ public abstract class CallingTaskItemHandler extends TaskItemHandler {
 
     ExpressionManager expressionManager = context.getExpressionManager();
     String tenantId = getTenantId(element, activity, context);
-    if (tenantId != null && tenantId.length() > 0) {
+    if (hasText(tenantId)) {
       tenantIdProvider = createParameterValueProvider(tenantId, expressionManager);
     }
 

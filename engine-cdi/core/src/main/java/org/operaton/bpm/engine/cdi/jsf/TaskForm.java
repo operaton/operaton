@@ -45,14 +45,21 @@ public class TaskForm implements Serializable {
   protected String processDefinitionId;
   protected String processDefinitionKey;
 
-  @Inject
   protected BusinessProcess businessProcess;
 
-  @Inject
   protected RepositoryService repositoryService;
 
-  @Inject
   protected Instance<Conversation> conversationInstance;
+
+  @Inject
+  public TaskForm(
+    BusinessProcess businessProcess,
+    RepositoryService repositoryService,
+    Instance<Conversation> conversationInstance) {
+    this.businessProcess = businessProcess;
+    this.repositoryService = repositoryService;
+    this.conversationInstance = conversationInstance;
+  }
 
   /**
    * @deprecated use {@link startTaskForm()} instead

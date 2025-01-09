@@ -41,11 +41,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @AutoConfigureAfter(OperatonBpmAutoConfiguration.class)
 public class OperatonBpmWebappAutoConfiguration implements WebMvcConfigurer {
 
-  @Autowired
-  private ResourceLoader resourceLoader;
+  private final ResourceLoader resourceLoader;
+
+  private final OperatonBpmProperties properties;
 
   @Autowired
-  private OperatonBpmProperties properties;
+  public OperatonBpmWebappAutoConfiguration(ResourceLoader resourceLoader, OperatonBpmProperties properties) {
+    this.resourceLoader = resourceLoader;
+    this.properties = properties;
+  }
 
 
   @Bean

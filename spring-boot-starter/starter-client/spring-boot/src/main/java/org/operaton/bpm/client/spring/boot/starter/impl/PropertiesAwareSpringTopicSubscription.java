@@ -28,8 +28,12 @@ import java.util.function.Predicate;
 
 public class PropertiesAwareSpringTopicSubscription extends SpringTopicSubscriptionImpl {
 
-  @Autowired
   protected ClientProperties clientProperties;
+
+  @Autowired
+  public PropertiesAwareSpringTopicSubscription(ClientProperties clientProperties) {
+    this.clientProperties = clientProperties;
+  }
 
   @Override
   public void afterPropertiesSet() {

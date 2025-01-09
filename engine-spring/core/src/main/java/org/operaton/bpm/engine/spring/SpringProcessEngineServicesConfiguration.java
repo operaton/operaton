@@ -42,8 +42,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SpringProcessEngineServicesConfiguration implements ProcessEngineServices {
 
+  private final ProcessEngine processEngine;
+
   @Autowired
-  private ProcessEngine processEngine;
+  public SpringProcessEngineServicesConfiguration(ProcessEngine processEngine) {
+    this.processEngine = processEngine;
+  }
 
   @Bean(name = "runtimeService")
   @Override

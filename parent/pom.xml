@@ -388,7 +388,7 @@
               </execution>
             </executions>
             <configuration>
-              <propertyName>jacoco.argLine</propertyName>
+              <propertyName>${jacoco.argLine}</propertyName>
             </configuration>
           </plugin>
         </plugins>

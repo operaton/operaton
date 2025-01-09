@@ -32,10 +32,6 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  */
 public class ProcessVariableMap extends AbstractVariableMap {
 
-  public ProcessVariableMap(BusinessProcess businessProcess) {
-    super(businessProcess);
-  }
-
   @Override
   protected Object getVariable(String variableName) {
     return businessProcess.getVariable(variableName);

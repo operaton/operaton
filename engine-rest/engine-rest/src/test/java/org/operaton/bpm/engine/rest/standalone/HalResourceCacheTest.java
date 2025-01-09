@@ -44,11 +44,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.mock;
@@ -116,35 +116,24 @@ public class HalResourceCacheTest extends AbstractRestServiceTest {
 
   @Test
   public void testInvalidConfigurationFormat() {
-    try {
-      contextListener.configureCaches("<!xml>");
-      fail("Exception expected");
-    }
-    catch (HalRelationCacheConfigurationException e) {
-      assertTrue(e.getCause() instanceof IOException);
-    }
+    assertThatThrownBy(() -> contextListener.configureCaches("<!xml>"))
+      .isInstanceOf(HalRelationCacheConfigurationException.class)
+      .hasCauseInstanceOf(IOException.class);
   }
 
   @Test
   public void testUnknownCacheImplementationClass() {
-    try {
-      contextListener.configureCaches("{\"" + CONFIG_CACHE_IMPLEMENTATION +"\": \"org.operaton.bpm.UnknownCache\" }");
-      fail("Exception expected");
-    }
-    catch (HalRelationCacheConfigurationException e) {
-      assertTrue(e.getCause() instanceof ClassNotFoundException);
-    }
+    assertThatThrownBy(() -> contextListener.configureCaches("{\"" + CONFIG_CACHE_IMPLEMENTATION +"\": \"org.operaton.bpm.UnknownCache\" }"))
+      .isInstanceOf(HalRelationCacheConfigurationException.class)
+      .hasCauseInstanceOf(ClassNotFoundException.class);
   }
 
   @Test
   public void testCacheImplementationNotImplementingCache() {
-    try {
-      contextListener.configureCaches("{\"" + CONFIG_CACHE_IMPLEMENTATION +"\": \"" + getClass().getName() + "\" }");
-      fail("Exception expected");
-    }
-    catch (HalRelationCacheConfigurationException e) {
-      assertTrue(e.getMessage().contains(Cache.class.getName()));
-    }
+    String contextParameter = "{\"" + CONFIG_CACHE_IMPLEMENTATION + "\": \"" + getClass().getName() + "\" }";
+    assertThatThrownBy(() -> contextListener.configureCaches(contextParameter))
+      .isInstanceOf(HalRelationCacheConfigurationException.class)
+      .hasMessageContaining(Cache.class.getName());
   }
 
   @Test
@@ -172,13 +161,9 @@ public class HalResourceCacheTest extends AbstractRestServiceTest {
     configuration.setCacheImplementationClass(DefaultHalResourceCache.class);
     configuration.addCacheConfiguration(HalUser.class, Collections.<String, Object>singletonMap("unknown", "property"));
 
-    try {
-      contextListener.configureCaches(configuration);
-      fail("Exception expected");
-    }
-    catch (HalRelationCacheConfigurationException e) {
-      assertTrue(e.getMessage().contains("setter"));
-    }
+    assertThatThrownBy(() -> contextListener.configureCaches(configuration))
+      .isInstanceOf(HalRelationCacheConfigurationException.class)
+      .hasMessageContaining("setter");
   }
 
   @Test

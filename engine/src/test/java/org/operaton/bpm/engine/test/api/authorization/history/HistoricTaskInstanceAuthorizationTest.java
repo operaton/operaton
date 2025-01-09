@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.ALL;
 import static org.operaton.bpm.engine.authorization.Permissions.DELETE_HISTORY;
@@ -25,11 +24,13 @@ import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_PROCESS_I
 import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_TASK;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.TASK;
+
+import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.InstanceOfAssertFactories.list;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.List;
 import org.operaton.bpm.engine.AuthorizationException;
@@ -40,11 +41,7 @@ import org.operaton.bpm.engine.authorization.HistoricTaskPermissions;
 import org.operaton.bpm.engine.authorization.MissingAuthorization;
 import org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions;
 import org.operaton.bpm.engine.authorization.TaskPermissions;
-import org.operaton.bpm.engine.history.DurationReportResult;
-import org.operaton.bpm.engine.history.HistoricProcessInstance;
-import org.operaton.bpm.engine.history.HistoricTaskInstance;
-import org.operaton.bpm.engine.history.HistoricTaskInstanceQuery;
-import org.operaton.bpm.engine.history.HistoricTaskInstanceReportResult;
+import org.operaton.bpm.engine.history.*;
 import org.operaton.bpm.engine.query.PeriodUnit;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
@@ -419,18 +416,15 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
 
-    try {
-      // when
-      historyService.deleteHistoricTaskInstance(taskId);
-      fail("Exception expected: It should not be possible to delete the historic task instance");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(DELETE_HISTORY.getName(), message);
-      testRule.assertTextPresent(PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    assertThatThrownBy(() -> historyService.deleteHistoricTaskInstance(taskId))
+      .withFailMessage("Exception expected: It should not be possible to delete the historic task instance")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining(userId)
+      .hasMessageContaining(userId)
+      .hasMessageContaining(DELETE_HISTORY.getName())
+      .hasMessageContaining(PROCESS_KEY)
+      .hasMessageContaining(PROCESS_DEFINITION.resourceName())
+    ;
   }
 
   @Test
@@ -513,22 +507,19 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
     taskService.complete(taskId);
     enableAuthorization();
 
-    try {
-      // when
-      historyService
-              .createHistoricTaskInstanceReport()
-              .duration(PeriodUnit.MONTH);
-      fail("Exception expected: It should not be possible to create a historic task instance report");
-    } catch (AuthorizationException e) {
-      // then
-      List<MissingAuthorization> missingAuthorizations = e.getMissingAuthorizations();
-      assertEquals(1, missingAuthorizations.size());
+    HistoricTaskInstanceReport report = historyService.createHistoricTaskInstanceReport();
 
-      MissingAuthorization missingAuthorization = missingAuthorizations.get(0);
-      assertEquals(READ_HISTORY.toString(), missingAuthorization.getViolatedPermissionName());
-      assertEquals(PROCESS_DEFINITION.resourceName(), missingAuthorization.getResourceType());
-      assertEquals(ANY, missingAuthorization.getResourceId());
-    }
+    assertThatThrownBy(() -> report.duration(PeriodUnit.MONTH))
+        .withFailMessage("Exception expected: It should not be possible to create a historic task instance report")
+        .isInstanceOf(AuthorizationException.class)
+        .extracting("missingAuthorizations", as(list(MissingAuthorization.class)))
+        .hasSize(1)
+        .first()
+        .satisfies(missingAuthorization -> {
+          assertThat(missingAuthorization.getViolatedPermissionName()).isEqualTo(READ_HISTORY.toString());
+          assertThat(missingAuthorization.getResourceType()).isEqualTo(PROCESS_DEFINITION.resourceName());
+          assertThat(missingAuthorization.getResourceId()).isEqualTo(ANY);
+        });
   }
 
   @Test
@@ -560,23 +551,19 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
     taskService.complete(taskId);
     enableAuthorization();
 
-    try {
-      // when
-      historyService
-          .createHistoricTaskInstanceReport()
-          .countByProcessDefinitionKey();
-      fail("Exception expected: It should not be possible " +
-          "to create a historic task instance report");
-    } catch (AuthorizationException e) {
-      // then
-      List<MissingAuthorization> missingAuthorizations = e.getMissingAuthorizations();
-      assertEquals(1, missingAuthorizations.size());
+    HistoricTaskInstanceReport report = historyService.createHistoricTaskInstanceReport();
 
-      MissingAuthorization missingAuthorization = missingAuthorizations.get(0);
-      assertEquals(READ_HISTORY.toString(), missingAuthorization.getViolatedPermissionName());
-      assertEquals(PROCESS_DEFINITION.resourceName(), missingAuthorization.getResourceType());
-      assertEquals(ANY, missingAuthorization.getResourceId());
-    }
+    assertThatThrownBy(report::countByProcessDefinitionKey)
+        .withFailMessage("Exception expected: It should not be possible to create a historic task instance report")
+        .isInstanceOf(AuthorizationException.class)
+        .extracting("missingAuthorizations", as(list(MissingAuthorization.class)))
+        .hasSize(1)
+        .first()
+        .satisfies(missingAuthorization -> {
+          assertThat(missingAuthorization.getViolatedPermissionName()).isEqualTo(READ_HISTORY.toString());
+          assertThat(missingAuthorization.getResourceType()).isEqualTo(PROCESS_DEFINITION.resourceName());
+          assertThat(missingAuthorization.getResourceId()).isEqualTo(ANY);
+        });
   }
 
   @Test
@@ -608,23 +595,19 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
     taskService.complete(taskId);
     enableAuthorization();
 
-    try {
-      // when
-      historyService
-          .createHistoricTaskInstanceReport()
-          .countByTaskName();
-      fail("Exception expected: It should not be possible " +
-          "to create a historic task instance report");
-    } catch (AuthorizationException e) {
-      // then
-      List<MissingAuthorization> missingAuthorizations = e.getMissingAuthorizations();
-      assertEquals(1, missingAuthorizations.size());
+    HistoricTaskInstanceReport report = historyService.createHistoricTaskInstanceReport();
 
-      MissingAuthorization missingAuthorization = missingAuthorizations.get(0);
-      assertEquals(READ_HISTORY.toString(), missingAuthorization.getViolatedPermissionName());
-      assertEquals(PROCESS_DEFINITION.resourceName(), missingAuthorization.getResourceType());
-      assertEquals(ANY, missingAuthorization.getResourceId());
-    }
+    assertThatThrownBy(report::countByTaskName)
+        .withFailMessage("Exception expected: It should not be possible to create a historic task instance report")
+        .isInstanceOf(AuthorizationException.class)
+        .extracting("missingAuthorizations", as(list(MissingAuthorization.class)))
+        .hasSize(1)
+        .first()
+        .satisfies(missingAuthorization -> {
+          assertThat(missingAuthorization.getViolatedPermissionName()).isEqualTo(READ_HISTORY.toString());
+          assertThat(missingAuthorization.getResourceType()).isEqualTo(PROCESS_DEFINITION.resourceName());
+          assertThat(missingAuthorization.getResourceId()).isEqualTo(ANY);
+        });
   }
 
   @Test

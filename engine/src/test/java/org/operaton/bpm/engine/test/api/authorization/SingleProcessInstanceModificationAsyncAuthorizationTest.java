@@ -32,7 +32,6 @@ import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutio
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.List;
 
@@ -47,6 +46,8 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.ExecutionTree;
 import org.junit.After;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class SingleProcessInstanceModificationAsyncAuthorizationTest extends AuthorizationTest {
 
@@ -128,19 +129,17 @@ public class SingleProcessInstanceModificationAsyncAuthorizationTest extends Aut
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("parallelGateway");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    try {
-      // when
-      runtimeService
-        .createProcessInstanceModification(processInstance.getId())
-        .cancelActivityInstance(getInstanceIdForActivity(tree, "task1"))
-        .executeAsync();
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
+    var processInstanceModificationBuilder = runtimeService
+      .createProcessInstanceModification(processInstance.getId())
+      .cancelActivityInstance(getInstanceIdForActivity(tree, "task1"));
+
+    // when
+    assertThatThrownBy(processInstanceModificationBuilder::executeAsync)
       // then
-      assertTrue(e.getMessage().contains("The user with id 'test' does not have"));
-      assertTrue(e.getMessage().contains("'CREATE' permission on resource 'Batch'"));
-      assertTrue(e.getMessage().contains("'CREATE_BATCH_MODIFY_PROCESS_INSTANCES' permission on resource 'Batch'"));
-    }
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("The user with id 'test' does not have")
+      .hasMessageContaining("'CREATE' permission on resource 'Batch'")
+      .hasMessageContaining("'CREATE_BATCH_MODIFY_PROCESS_INSTANCES' permission on resource 'Batch'");
   }
 
   @Deployment(resources = PARALLEL_GATEWAY_PROCESS)
@@ -155,19 +154,17 @@ public class SingleProcessInstanceModificationAsyncAuthorizationTest extends Aut
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("parallelGateway");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    try {
-      // when
-      runtimeService
-        .createProcessInstanceModification(processInstance.getId())
-        .cancelActivityInstance(getInstanceIdForActivity(tree, "task1"))
-        .executeAsync();
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
+    var processInstanceModificationBuilder = runtimeService
+      .createProcessInstanceModification(processInstance.getId())
+      .cancelActivityInstance(getInstanceIdForActivity(tree, "task1"));
+
+    // when
+    assertThatThrownBy(processInstanceModificationBuilder::executeAsync)
       // then
-      assertTrue(e.getMessage().contains("The user with id 'test' does not have"));
-      assertTrue(e.getMessage().contains("'CREATE' permission on resource 'Batch'"));
-      assertTrue(e.getMessage().contains("'CREATE_BATCH_MODIFY_PROCESS_INSTANCES' permission on resource 'Batch'"));
-    }
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("The user with id 'test' does not have")
+      .hasMessageContaining("'CREATE' permission on resource 'Batch'")
+      .hasMessageContaining("'CREATE_BATCH_MODIFY_PROCESS_INSTANCES' permission on resource 'Batch'");
   }
 
   protected String getInstanceIdForActivity(ActivityInstance activityInstance, String activityId) {

@@ -74,14 +74,21 @@ public class SpringBootProcessApplication extends SpringProcessApplication {
 
   protected String contextPath = "/";
 
-  @Autowired
   protected OperatonBpmProperties operatonBpmProperties;
 
-  @Autowired
   protected ProcessEngine processEngine;
 
-  @Autowired
   protected ApplicationEventPublisher eventPublisher;
+
+  @Autowired
+  public SpringBootProcessApplication(
+    OperatonBpmProperties operatonBpmProperties,
+    ProcessEngine processEngine,
+    ApplicationEventPublisher eventPublisher){
+    this.operatonBpmProperties = operatonBpmProperties;
+    this.processEngine = processEngine;
+    this.eventPublisher = eventPublisher;
+  }
 
   @Override
   public void afterPropertiesSet() {

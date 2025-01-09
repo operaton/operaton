@@ -55,8 +55,12 @@ public class OperatonBpmAutoConfiguration {
   @Configuration
   class ProcessEngineConfigurationImplDependingConfiguration {
 
-    @Autowired
     protected ProcessEngineConfigurationImpl processEngineConfigurationImpl;
+
+    @Autowired
+    public ProcessEngineConfigurationImplDependingConfiguration(ProcessEngineConfigurationImpl processEngineConfigurationImpl){
+      this.processEngineConfigurationImpl = processEngineConfigurationImpl;
+    }
 
     @Bean
     public ProcessEngineFactoryBean processEngineFactoryBean() {

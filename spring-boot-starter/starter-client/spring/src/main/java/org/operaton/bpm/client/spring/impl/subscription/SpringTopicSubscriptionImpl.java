@@ -47,15 +47,11 @@ public class SpringTopicSubscriptionImpl
   protected TopicSubscriptionBuilder topicSubscriptionBuilder;
   protected TopicSubscription topicSubscription;
 
+  @Autowired
   protected ExternalTaskClient client;
 
-  protected ApplicationEventPublisher applicationEventPublisher;
-
   @Autowired
-  public SpringTopicSubscriptionImpl(ExternalTaskClient client, ApplicationEventPublisher applicationEventPublisher){
-    this.client = client;
-    this.applicationEventPublisher = applicationEventPublisher;
-  }
+  protected ApplicationEventPublisher applicationEventPublisher;
 
   protected Predicate<ApplicationEvent> isEventThatCanStartSubscription() {
     return event -> event instanceof ContextRefreshedEvent;

@@ -39,8 +39,12 @@ public class Application implements WebMvcConfigurer {
 
   private static final Logger LOG = LoggerFactory.getLogger(Application.class);
 
-  @Autowired
   protected ProcessEngine processEngine;
+
+  @Autowired
+  public Application(ProcessEngine processEngine){
+    this.processEngine = processEngine;
+  }
 
   protected InvoiceProcessApplication invoicePa = new InvoiceProcessApplication();
 

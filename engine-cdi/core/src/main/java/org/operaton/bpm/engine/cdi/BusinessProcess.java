@@ -87,11 +87,21 @@ public class BusinessProcess implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  @Inject private ProcessEngine processEngine;
+  private final ProcessEngine processEngine;
 
-  @Inject private ContextAssociationManager associationManager;
+  private final ContextAssociationManager associationManager;
 
-  @Inject private Instance<Conversation> conversationInstance;
+  private final Instance<Conversation> conversationInstance;
+
+  @Inject
+  public BusinessProcess(
+    ProcessEngine processEngine,
+    ContextAssociationManager associationManager,
+    Instance<Conversation> conversationInstance){
+    this.processEngine = processEngine;
+    this.associationManager = associationManager;
+    this.conversationInstance = conversationInstance;
+  }
 
   public ProcessInstance startProcessById(String processDefinitionId) {
     assertCommandContextNotActive();

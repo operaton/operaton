@@ -45,18 +45,22 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnClass(OperatonBpmRestInitializer.class)
 public class OperatonBpmRunRestConfiguration {
 
-  @Autowired
   OperatonBpmRunProperties operatonBpmRunProperties;
+
+  @Autowired
+  public OperatonBpmRunRestConfiguration(OperatonBpmRunProperties operatonBpmRunProperties){
+    this.operatonBpmRunProperties = operatonBpmRunProperties;
+  }
 
   /*
    * The CORS and Authentication filters need to run before other operaton
    * filters because they potentially block the request and this should be done
    * as early as possible.
-   * 
+   *
    * The default order parameter for spring-boot managed filters is
    * org.springframework.core.Ordered.LOWEST_PRECEDENCE = Integer.MAX_VALUE.
    * Order can range from -Integer.MAX_VALUE to Integer.MAX_VALUE.
-   * 
+   *
    * The CORS filter must run before the Authentication filter because CORS
    * preflight requests must not contain authentication. The CORS filter will
    * not invoke the next filter in the chain for preflight requests.

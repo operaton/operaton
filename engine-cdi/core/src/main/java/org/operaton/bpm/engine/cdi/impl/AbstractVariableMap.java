@@ -29,8 +29,12 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 
 abstract class AbstractVariableMap implements VariableMap {
 
-  @Inject
   protected BusinessProcess businessProcess;
+
+  @Inject
+  public AbstractVariableMap(final BusinessProcess businessProcess) {
+    this.businessProcess = businessProcess;
+  }
 
   protected abstract Object getVariable(String variableName);
   protected abstract <T extends TypedValue> T getVariableTyped(String variableName);

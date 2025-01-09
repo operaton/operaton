@@ -44,9 +44,19 @@ public class ProcessVariables {
 
   private final Logger logger = Logger.getLogger(ProcessVariables.class.getName());
 
-  @Inject private BusinessProcess businessProcess;
-  @Inject private ProcessVariableMap processVariableMap;
-  @Inject private ProcessVariableLocalMap processVariableLocalMap;
+  private final BusinessProcess businessProcess;
+  private final ProcessVariableMap processVariableMap;
+  private final ProcessVariableLocalMap processVariableLocalMap;
+
+  @Inject
+  public ProcessVariables(
+    BusinessProcess businessProcess,
+    ProcessVariableMap processVariableMap,
+    ProcessVariableLocalMap processVariableLocalMap) {
+    this.businessProcess = businessProcess;
+    this.processVariableMap = processVariableMap;
+    this.processVariableLocalMap = processVariableLocalMap;
+  }
 
   protected String getVariableName(InjectionPoint ip) {
     String variableName = ip.getAnnotated().getAnnotation(ProcessVariable.class).value();

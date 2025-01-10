@@ -73,24 +73,16 @@ public class FreeMarkerScriptEngine extends AbstractScriptEngine implements Comp
   }
 
   @Override
-  public ScriptEngineFactory getFactory() {
+  public synchronized ScriptEngineFactory getFactory() {
     if (scriptEngineFactory == null) {
-      synchronized (this) {
-        if (scriptEngineFactory == null) {
-          scriptEngineFactory = new FreeMarkerScriptEngineFactory();
-        }
-      }
+      scriptEngineFactory = new FreeMarkerScriptEngineFactory();
     }
     return scriptEngineFactory;
   }
 
-  public void initConfiguration() {
+  public synchronized void initConfiguration() {
     if (configuration == null) {
-      synchronized (this) {
-        if (configuration == null) {
-          configuration = new Configuration(Configuration.VERSION_2_3_29);
-        }
-      }
+      configuration = new Configuration(Configuration.VERSION_2_3_29);
     }
   }
 

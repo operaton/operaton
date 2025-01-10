@@ -261,13 +261,9 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
     return res;
   }
 
-  public MBeanServer getmBeanServer() {
+  public synchronized MBeanServer getmBeanServer() {
     if (mBeanServer == null) {
-      synchronized (this) {
-        if (mBeanServer == null) {
-          mBeanServer = createOrLookupMbeanServer();
-        }
-      }
+      mBeanServer = createOrLookupMbeanServer();
     }
     return mBeanServer;
   }

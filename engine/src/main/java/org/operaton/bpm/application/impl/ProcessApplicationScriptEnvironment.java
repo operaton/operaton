@@ -55,13 +55,9 @@ public class ProcessApplicationScriptEnvironment {
    *
    * @return a {@link ScriptEngine}
    */
-  public ScriptEngine getScriptEngineForName(String scriptEngineName, boolean cache) {
+  public synchronized ScriptEngine getScriptEngineForName(String scriptEngineName, boolean cache) {
     if(processApplicationScriptEngineResolver == null) {
-      synchronized (this) {
-        if(processApplicationScriptEngineResolver == null) {
-          processApplicationScriptEngineResolver = new DefaultScriptEngineResolver(new ScriptEngineManager(getProcessApplicationClassloader()));
-        }
-      }
+      processApplicationScriptEngineResolver = new DefaultScriptEngineResolver(new ScriptEngineManager(getProcessApplicationClassloader()));
     }
     return processApplicationScriptEngineResolver.getScriptEngine(scriptEngineName, cache);
   }

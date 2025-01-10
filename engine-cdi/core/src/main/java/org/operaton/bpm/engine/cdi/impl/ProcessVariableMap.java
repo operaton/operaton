@@ -27,11 +27,11 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  * {@link BusinessProcess#setVariable(String, Object)} and
  * {@link BusinessProcess#getVariable(String)}, so that they are not flushed
  * prematurely.
- * 
+ *
  * @author Daniel Meyer
  */
 public class ProcessVariableMap extends AbstractVariableMap {
-  
+
   @Override
   protected Object getVariable(String variableName) {
     return businessProcess.getVariable(variableName);

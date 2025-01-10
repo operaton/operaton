@@ -26,8 +26,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class PropertiesAwareClientFactory extends ClientFactory {
 
-  @Autowired
   protected ClientProperties clientProperties;
+
+  @Autowired
+  public PropertiesAwareClientFactory(ClientProperties clientProperties) {
+    this.clientProperties = clientProperties;
+  }
 
   @Override
   public void afterPropertiesSet() {

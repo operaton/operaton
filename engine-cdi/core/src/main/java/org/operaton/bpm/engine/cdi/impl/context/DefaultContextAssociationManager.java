@@ -54,7 +54,12 @@ public class DefaultContextAssociationManager implements ContextAssociationManag
 
   protected static final Logger log = Logger.getLogger(DefaultContextAssociationManager.class.getName());
 
-  @Inject private BeanManager beanManager;
+  private final BeanManager beanManager;
+
+  @Inject
+  public DefaultContextAssociationManager(BeanManager beanManager) {
+    this.beanManager = beanManager;
+  }
 
   protected Class< ? extends ScopedAssociation> getBroadestActiveContext() {
     for (Class< ? extends ScopedAssociation> scopeType : getAvailableScopedAssociationClasses()) {

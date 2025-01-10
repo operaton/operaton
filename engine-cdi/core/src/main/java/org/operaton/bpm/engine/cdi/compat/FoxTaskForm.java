@@ -16,10 +16,15 @@
  */
 package org.operaton.bpm.engine.cdi.compat;
 
+import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.inject.Instance;
 import javax.enterprise.inject.Typed;
+import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.jsf.TaskForm;
 
 @ConversationScoped
@@ -28,4 +33,9 @@ import org.operaton.bpm.engine.cdi.jsf.TaskForm;
 public class FoxTaskForm extends TaskForm {
 
   private static final long serialVersionUID = 9042602064970870095L;
+
+  @Inject
+  public FoxTaskForm(BusinessProcess businessProcess, RepositoryService repositoryService, Instance<Conversation> conversationInstance) {
+    super(businessProcess, repositoryService, conversationInstance);
+  }
 }

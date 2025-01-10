@@ -74,8 +74,8 @@
     <version.jboss-javaee-spec>3.0.2.Final</version.jboss-javaee-spec>
     <version.jakarta-ee-spec>10.0.0</version.jakarta-ee-spec>
 
-    <version.nodejs>20.14.0</version.nodejs>
-    <version.npm>10.7.0</version.npm>
+    <version.nodejs>22.13.0</version.nodejs>
+    <version.npm>11.0.0</version.npm>
     <version.junit5>5.11.3</version.junit5>
 
     <jacoco.argLine/>

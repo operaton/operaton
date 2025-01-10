@@ -57,21 +57,30 @@ public class TransitionImpl extends CoreModelElement implements PvmTransition {
     destination.getIncomingTransitions().add(this);
   }
 
-  @Deprecated
+  /**
+   * @deprecated Use {@link #addListener(ExecutionListener.EVENTNAME_TAKE, executionListener)} instead
+   */
+  @Deprecated(forRemoval = true)
   public void addExecutionListener(ExecutionListener executionListener) {
     super.addListener(ExecutionListener.EVENTNAME_TAKE, executionListener);
   }
 
+  /**
+   * @deprecated Use {@link #getListeners(ExecutionListener.EVENTNAME_TAKE)} instead
+   */
   @SuppressWarnings({ "rawtypes", "unchecked" })
-  @Deprecated
+  @Deprecated(forRemoval=true)
   public List<ExecutionListener> getExecutionListeners() {
     return (List) super.getListeners(ExecutionListener.EVENTNAME_TAKE);
   }
 
-  @Deprecated
+  /**
+   * @deprecated Use {@link #addListener(ExecutionListener.EVENTNAME_TAKE, executionListener)} in a loop instead
+   */
+  @Deprecated(forRemoval=true)
   public void setExecutionListeners(List<ExecutionListener> executionListeners) {
     for (ExecutionListener executionListener : executionListeners) {
-      addExecutionListener(executionListener);
+      addListener(ExecutionListener.EVENTNAME_TAKE, executionListener);
     }
   }
 

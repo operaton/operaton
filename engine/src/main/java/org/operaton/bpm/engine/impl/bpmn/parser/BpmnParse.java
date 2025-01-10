@@ -4354,7 +4354,7 @@ public class BpmnParse extends Parse {
         if (isValidEventNameForScope(eventName, listenerElement, scopeElementId)) {
           ExecutionListener listener = parseExecutionListener(listenerElement, scopeElementId);
           if (listener != null) {
-            scope.addExecutionListener(eventName, listener);
+            scope.addListener(eventName, listener);
           }
         }
       }
@@ -4387,7 +4387,7 @@ public class BpmnParse extends Parse {
         if (listener != null) {
           // Since a transition only fires event 'take', we don't parse the
           // event attribute, it is ignored
-          activity.addExecutionListener(listener);
+          activity.addListener(ExecutionListener.EVENTNAME_TAKE, listener);
         }
       }
     }

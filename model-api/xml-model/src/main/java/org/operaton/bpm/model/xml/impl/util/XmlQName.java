@@ -74,13 +74,9 @@ public class XmlQName {
     return localName;
   }
 
-  public String getPrefixedName() {
+  public synchronized String getPrefixedName() {
     if (prefix == null) {
-      synchronized (this) {
-        if (prefix == null) {
-          this.prefix = determinePrefixAndNamespaceUri();
-        }
-      }
+      this.prefix = determinePrefixAndNamespaceUri();
     }
     return QName.combine(prefix, localName);
   }

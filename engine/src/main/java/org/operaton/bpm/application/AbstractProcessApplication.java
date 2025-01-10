@@ -179,13 +179,9 @@ public abstract class AbstractProcessApplication implements ProcessApplicationIn
   }
 
   @Override
-  public BeanELResolver getBeanElResolver() {
+  public synchronized BeanELResolver getBeanElResolver() {
     if (processApplicationBeanElResolver == null) {
-      synchronized (this) {
-        if (processApplicationBeanElResolver == null) {
-          processApplicationBeanElResolver = new BeanELResolver();
-        }
-      }
+      processApplicationBeanElResolver = new BeanELResolver();
     }
     return processApplicationBeanElResolver;
   }
@@ -230,13 +226,9 @@ public abstract class AbstractProcessApplication implements ProcessApplicationIn
     return getProcessApplicationScriptEnvironment().getEnvironmentScripts();
   }
 
-  protected ProcessApplicationScriptEnvironment getProcessApplicationScriptEnvironment() {
+  protected synchronized ProcessApplicationScriptEnvironment getProcessApplicationScriptEnvironment() {
     if (processApplicationScriptEnvironment == null) {
-      synchronized (this) {
-        if (processApplicationScriptEnvironment == null) {
-          processApplicationScriptEnvironment = new ProcessApplicationScriptEnvironment(this);
-        }
-      }
+      processApplicationScriptEnvironment = new ProcessApplicationScriptEnvironment(this);
     }
     return processApplicationScriptEnvironment;
   }

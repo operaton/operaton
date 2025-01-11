@@ -1685,7 +1685,7 @@ public class BpmnParse extends Parse {
     LegacyBehavior.parseCancelBoundaryEvent(activity);
 
     ActivityImpl transaction = (ActivityImpl) activity.getEventScope();
-    if (transaction.getActivityBehavior() != null && transaction.getActivityBehavior() instanceof MultiInstanceActivityBehavior) {
+    if (transaction.getActivityBehavior() instanceof MultiInstanceActivityBehavior) {
       transaction = transaction.getActivities().get(0);
     }
 

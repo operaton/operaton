@@ -70,7 +70,7 @@ public class DmnDecisionImpl implements DmnDecision {
 
   @Override
   public boolean isDecisionTable() {
-    return decisionLogic != null && decisionLogic instanceof DmnDecisionTableImpl;
+    return decisionLogic instanceof DmnDecisionTableImpl;
   }
 
   @Override

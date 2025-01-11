@@ -280,7 +280,7 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
    */
   protected boolean supportsConcurrentChildInstantiation(ScopeImpl flowScope) {
     CoreActivityBehavior<?> behavior = flowScope.getActivityBehavior();
-    return behavior == null || !(behavior instanceof SequentialMultiInstanceActivityBehavior);
+    return !(behavior instanceof SequentialMultiInstanceActivityBehavior);
   }
 
   protected ExecutionEntity getSingleExecutionForScope(ActivityExecutionTreeMapping mapping, ScopeImpl scope) {

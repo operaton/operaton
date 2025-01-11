@@ -59,7 +59,7 @@ public class PluggableProcessEngineTestCase extends AbstractProcessEngineTestCas
                 .createProcessEngineConfigurationFromResource("operaton.cfg.xml")
                 .buildProcessEngine();
       } catch (RuntimeException ex) {
-        if (ex.getCause() != null && ex.getCause() instanceof FileNotFoundException) {
+        if (ex.getCause() instanceof FileNotFoundException) {
           cachedProcessEngine = ProcessEngineConfiguration
               .createProcessEngineConfigurationFromResource("activiti.cfg.xml")
               .buildProcessEngine();

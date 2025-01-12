@@ -50,6 +50,7 @@ public class ConnectorVariableScope extends AbstractVariableScope {
     this.variableStore = new VariableStore<>();
   }
 
+  @Override
   public String getVariableScopeKey() {
     return "connector";
   }

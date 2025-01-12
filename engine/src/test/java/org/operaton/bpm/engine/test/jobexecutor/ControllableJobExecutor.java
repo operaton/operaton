@@ -94,6 +94,7 @@ public class ControllableJobExecutor extends JobExecutor {
     return this;
   }
 
+  @Override
   protected void ensureInitialization() {
     // already initialized in constructor
   }

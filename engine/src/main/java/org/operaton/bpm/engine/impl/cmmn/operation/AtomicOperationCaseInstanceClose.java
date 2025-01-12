@@ -38,6 +38,7 @@ public class AtomicOperationCaseInstanceClose extends AbstractCmmnEventAtomicOpe
     return CLOSE;
   }
 
+  @Override
   protected CmmnExecution eventNotificationsStarted(CmmnExecution execution) {
     CmmnActivityBehavior behavior = getActivityBehavior(execution);
     behavior.onClose(execution);

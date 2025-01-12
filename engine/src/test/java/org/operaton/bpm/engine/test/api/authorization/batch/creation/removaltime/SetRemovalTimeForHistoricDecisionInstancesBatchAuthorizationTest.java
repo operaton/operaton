@@ -93,6 +93,7 @@ public class SetRemovalTimeForHistoricDecisionInstancesBatchAuthorizationTest ex
     authRule.assertScenario(scenario);
   }
 
+  @Override
   protected List<String> setupHistory() {
     engineRule.getDecisionService()
       .evaluateDecisionTableByKey("dish-decision", Variables.createVariables()

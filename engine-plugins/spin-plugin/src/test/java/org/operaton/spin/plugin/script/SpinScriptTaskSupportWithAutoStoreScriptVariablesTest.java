@@ -40,10 +40,12 @@ public class SpinScriptTaskSupportWithAutoStoreScriptVariablesTest extends Plugg
 
   protected ProcessInstance processInstance;
 
+  @Override
   public void setUp() {
     processEngineConfiguration.setAutoStoreScriptVariables(true);
   }
 
+  @Override
   public void tearDown() {
     processEngineConfiguration.setAutoStoreScriptVariables(false);
   }

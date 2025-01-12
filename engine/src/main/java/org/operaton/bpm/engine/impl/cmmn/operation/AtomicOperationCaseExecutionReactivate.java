@@ -38,6 +38,7 @@ public class AtomicOperationCaseExecutionReactivate extends AbstractCmmnEventAto
     return RE_ACTIVATE;
   }
 
+  @Override
   protected CmmnExecution eventNotificationsStarted(CmmnExecution execution) {
     CmmnActivityBehavior behavior = getActivityBehavior(execution);
     behavior.onReactivation(execution);

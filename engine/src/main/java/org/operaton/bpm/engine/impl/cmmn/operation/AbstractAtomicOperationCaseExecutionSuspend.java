@@ -29,6 +29,7 @@ import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
  */
 public abstract class AbstractAtomicOperationCaseExecutionSuspend extends AbstractCmmnEventAtomicOperation {
 
+  @Override
   protected CmmnExecution eventNotificationsStarted(CmmnExecution execution) {
     execution.setCurrentState(SUSPENDED);
 

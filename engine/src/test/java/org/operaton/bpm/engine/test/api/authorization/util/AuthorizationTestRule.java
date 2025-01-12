@@ -83,6 +83,7 @@ public class AuthorizationTestRule extends AuthorizationTestBaseRule {
     return interceptor.getLastException() != null;
   }
 
+  @Override
   protected void starting(Description description) {
     ProcessEngineConfigurationImpl engineConfiguration =
         (ProcessEngineConfigurationImpl) engineRule.getProcessEngine().getProcessEngineConfiguration();
@@ -94,6 +95,7 @@ public class AuthorizationTestRule extends AuthorizationTestBaseRule {
     super.starting(description);
   }
 
+  @Override
   protected void finished(Description description) {
     super.finished(description);
 

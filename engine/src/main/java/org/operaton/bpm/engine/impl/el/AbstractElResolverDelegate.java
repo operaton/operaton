@@ -88,6 +88,7 @@ public abstract class AbstractElResolverDelegate extends ELResolver {
     }
   }
 
+  @Override
   public Object invoke(ELContext context, Object base, Object method, Class<?>[] paramTypes, Object[] params) {
     context.setPropertyResolved(false);
     ELResolver delegate = getElResolverDelegate();

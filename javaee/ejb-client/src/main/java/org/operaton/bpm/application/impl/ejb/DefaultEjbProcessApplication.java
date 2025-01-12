@@ -53,7 +53,8 @@ public class DefaultEjbProcessApplication extends org.operaton.bpm.application.i
   public void stop() {
     undeploy();
   }
-  
+
+  @Override
   public Map<String, String> getProperties() {
     return properties;
   }

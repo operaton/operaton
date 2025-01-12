@@ -29,6 +29,7 @@ import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
  */
 public abstract class AbstractAtomicOperationCaseExecutionTerminate extends AbstractCmmnEventAtomicOperation {
 
+  @Override
   protected CmmnExecution eventNotificationsStarted(CmmnExecution execution) {
     // set current case execution as "TERMINATED"
     execution.setCurrentState(TERMINATED);

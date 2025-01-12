@@ -79,6 +79,7 @@ public class DmnDisabledTest {
       super(processEngineConfiguration);
     }
 
+    @Override
     protected void executeSchemaOperations() {
       // noop - do not execute create schema operations
     }

@@ -95,6 +95,7 @@ public class DbSchemaPrefixTestHelper implements InitializingBean, DisposableBea
         super(processEngineConfiguration);
       }
 
+      @Override
       protected void executeSchemaOperations() {
         // nop - do not execute create schema operations
       }

@@ -1567,6 +1567,7 @@ public class CaseCallActivityTest extends CmmnTest {
     return runtimeService.startProcessInstanceByKey(processDefinitionKey, businessKey, variables);
   }
 
+  @Override
   protected CaseExecution queryCaseExecutionById(String id) {
     return caseService
         .createCaseExecutionQuery()
@@ -1574,6 +1575,7 @@ public class CaseCallActivityTest extends CmmnTest {
         .singleResult();
   }
 
+  @Override
   protected CaseExecution queryCaseExecutionByActivityId(String activityId) {
     return caseService
         .createCaseExecutionQuery()

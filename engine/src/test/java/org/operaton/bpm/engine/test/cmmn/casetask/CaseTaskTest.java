@@ -1600,10 +1600,12 @@ public class CaseTaskTest extends CmmnTest {
     assertEquals("caseTask", caseTask.getActivityType());
   }
 
+  @Override
   protected CaseInstance createCaseInstanceByKey(String caseDefinitionKey) {
     return createCaseInstanceByKey(caseDefinitionKey, null, null);
   }
 
+  @Override
   protected CaseInstance createCaseInstanceByKey(String caseDefinitionKey, String businessKey) {
     return caseService
         .withCaseDefinitionByKey(caseDefinitionKey)
@@ -1611,6 +1613,7 @@ public class CaseTaskTest extends CmmnTest {
         .create();
   }
 
+  @Override
   protected CaseExecution queryCaseExecutionById(String id) {
     return caseService
         .createCaseExecutionQuery()
@@ -1618,6 +1621,7 @@ public class CaseTaskTest extends CmmnTest {
         .singleResult();
   }
 
+  @Override
   protected CaseExecution queryCaseExecutionByActivityId(String activityId) {
     return caseService
         .createCaseExecutionQuery()

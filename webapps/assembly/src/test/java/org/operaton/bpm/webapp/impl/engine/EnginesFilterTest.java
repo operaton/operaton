@@ -93,6 +93,7 @@ public class EnginesFilterTest {
 
     Cockpit.setCockpitRuntimeDelegate(new DefaultCockpitRuntimeDelegate() {
 
+      @Override
       protected ProcessEngineProvider loadProcessEngineProvider() {
         return null;
       }
@@ -117,6 +118,7 @@ public class EnginesFilterTest {
 
     Cockpit.setCockpitRuntimeDelegate(new DefaultCockpitRuntimeDelegate() {
 
+      @Override
       protected ProcessEngineProvider loadProcessEngineProvider() {
         return null;
       }

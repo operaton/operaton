@@ -126,7 +126,7 @@ public class Connectors {
    */
   public Set<Connector<? extends ConnectorRequest<?>>> getAllAvailableConnectors() {
     ensureConnectorProvidersInitialized();
-    return new HashSet<Connector<?>>(availableConnectors.values());
+    return new HashSet<>(availableConnectors.values());
   }
 
   /**

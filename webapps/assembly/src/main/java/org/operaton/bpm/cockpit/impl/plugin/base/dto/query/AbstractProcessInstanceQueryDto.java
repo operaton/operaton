@@ -194,7 +194,7 @@ public abstract class AbstractProcessInstanceQueryDto<T extends ProcessInstanceD
 
   private List<QueryVariableValue> createQueryVariableValues(VariableSerializers variableTypes, List<VariableQueryParameterDto> variables, String dbType) {
 
-    List<QueryVariableValue> values = new ArrayList<QueryVariableValue>();
+    List<QueryVariableValue> values = new ArrayList<>();
 
     if (variables == null) {
       return values;

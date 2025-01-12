@@ -36,7 +36,7 @@ public class SpinVariableSerializers {
   }
 
   public static List<TypedValueSerializer<?>> createObjectValueSerializers(DataFormats dataFormats) {
-    List<TypedValueSerializer<?>> serializers = new ArrayList<TypedValueSerializer<?>>();
+    List<TypedValueSerializer<?>> serializers = new ArrayList<>();
 
     Set<DataFormat<?>> availableDataFormats = dataFormats.getAllAvailableDataFormats();
     for (DataFormat<?> dataFormat : availableDataFormats) {
@@ -47,7 +47,7 @@ public class SpinVariableSerializers {
   }
 
   public static List<TypedValueSerializer<?>> createSpinValueSerializers(DataFormats dataFormats) {
-    List<TypedValueSerializer<?>> serializers = new ArrayList<TypedValueSerializer<?>>();
+    List<TypedValueSerializer<?>> serializers = new ArrayList<>();
 
     if(dataFormats.getDataFormatByName(DataFormats.JSON_DATAFORMAT_NAME) != null) {
       DataFormat<SpinJsonNode> jsonDataFormat =

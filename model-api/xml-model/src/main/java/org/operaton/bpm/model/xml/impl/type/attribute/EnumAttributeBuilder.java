@@ -25,7 +25,7 @@ import org.operaton.bpm.model.xml.impl.type.ModelElementTypeImpl;
 public class EnumAttributeBuilder<T extends Enum<T>> extends AttributeBuilderImpl<T> {
 
   public EnumAttributeBuilder(String attributeName, ModelElementTypeImpl modelType, Class<T> type) {
-    super(attributeName, modelType, new EnumAttribute<T>(modelType, type));
+    super(attributeName, modelType, new EnumAttribute<>(modelType, type));
   }
 
   @Override

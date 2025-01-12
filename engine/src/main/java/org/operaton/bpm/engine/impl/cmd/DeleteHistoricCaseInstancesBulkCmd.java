@@ -49,7 +49,7 @@ public class DeleteHistoricCaseInstancesBulkCmd implements Command<Void>, Serial
     // Check if case instances are all closed
     commandContext.runWithoutAuthorization((Callable<Void>) () -> {
       ensureEquals(BadUserRequestException.class, "ClosedCaseInstanceIds",
-          new HistoricCaseInstanceQueryImpl().closed().caseInstanceIds(new HashSet<String>(caseInstanceIds)).count(), caseInstanceIds.size());
+          new HistoricCaseInstanceQueryImpl().closed().caseInstanceIds(new HashSet<>(caseInstanceIds)).count(), caseInstanceIds.size());
       return null;
     });
 

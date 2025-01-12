@@ -28,7 +28,7 @@ import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 /**
  * @author Sebastian Menski
  */
-public class OperatonInputParameterTest extends BpmnModelElementInstanceTest {
+class OperatonInputParameterTest extends BpmnModelElementInstanceTest {
 
   @Override
   public TypeAssumption getTypeAssumption() {

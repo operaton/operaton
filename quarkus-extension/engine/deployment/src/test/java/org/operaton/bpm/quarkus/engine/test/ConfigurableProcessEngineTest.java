@@ -30,7 +30,7 @@ import jakarta.inject.Inject;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ConfigurableProcessEngineTest {
+class ConfigurableProcessEngineTest {
 
   @RegisterExtension
   static final QuarkusUnitTest unitTest = new QuarkusUnitTest()

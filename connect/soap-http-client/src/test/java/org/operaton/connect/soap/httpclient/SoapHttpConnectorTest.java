@@ -27,7 +27,7 @@ import org.operaton.connect.httpclient.soap.impl.SoapHttpConnectorImpl;
 import org.operaton.connect.impl.DebugRequestInterceptor;
 import org.operaton.connect.spi.Connector;
 
-public class SoapHttpConnectorTest {
+class SoapHttpConnectorTest {
 
   public SoapHttpConnector connector;
 

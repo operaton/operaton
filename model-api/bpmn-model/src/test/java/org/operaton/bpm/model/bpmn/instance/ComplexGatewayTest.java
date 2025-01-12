@@ -23,7 +23,7 @@ import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ComplexGatewayTest extends AbstractGatewayTest<ComplexGateway> {
+class ComplexGatewayTest extends AbstractGatewayTest<ComplexGateway> {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {

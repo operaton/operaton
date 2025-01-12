@@ -28,7 +28,7 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-public class EmbeddedProcessEngineTest {
+class EmbeddedProcessEngineTest {
 
   @RegisterExtension
   protected static final QuarkusUnitTest unitTest = new ProcessEngineAwareExtension()

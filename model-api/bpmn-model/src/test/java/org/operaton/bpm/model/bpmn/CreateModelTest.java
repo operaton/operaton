@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
 /**
  * @author Sebastian Menski
  */
-public class CreateModelTest {
+class CreateModelTest {
 
   public BpmnModelInstance modelInstance;
   public Definitions definitions;

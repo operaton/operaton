@@ -43,7 +43,7 @@ import org.xml.sax.SAXException;
 /**
  * @author Thorben Lindhauer
  */
-public class TransactionTest extends BpmnModelElementInstanceTest {
+class TransactionTest extends BpmnModelElementInstanceTest {
 
   @Override
   public TypeAssumption getTypeAssumption() {

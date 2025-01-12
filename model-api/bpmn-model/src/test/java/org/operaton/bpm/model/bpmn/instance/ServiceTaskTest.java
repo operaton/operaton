@@ -28,7 +28,7 @@ import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 /**
  * @author Sebastian Menski
  */
-public class ServiceTaskTest extends BpmnModelElementInstanceTest {
+class ServiceTaskTest extends BpmnModelElementInstanceTest {
 
   @Override
   public TypeAssumption getTypeAssumption() {

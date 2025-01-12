@@ -28,7 +28,7 @@ import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 /**
  * @author Sebastian Menski
  */
-public class MessageEventDefinitionTest extends AbstractEventDefinitionTest {
+class MessageEventDefinitionTest extends AbstractEventDefinitionTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {

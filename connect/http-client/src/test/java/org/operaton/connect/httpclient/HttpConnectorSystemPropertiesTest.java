@@ -43,7 +43,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.verify;
  * @author Thorben Lindhauer
  */
 @WireMockTest
-public class HttpConnectorSystemPropertiesTest {
+class HttpConnectorSystemPropertiesTest {
 
   protected Set<String> updatedSystemProperties;
 

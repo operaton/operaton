@@ -41,7 +41,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * @author Ronny Bräunlich
  */
-public class AlternativeNsTest extends TestModelTest {
+class AlternativeNsTest extends TestModelTest {
 
   private static final String MECHANICAL_NS = "http://operaton.org/mechanical";
   private static final String YET_ANOTHER_NS = "http://operaton.org/yans";

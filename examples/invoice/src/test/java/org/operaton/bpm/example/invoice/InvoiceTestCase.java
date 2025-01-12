@@ -42,14 +42,14 @@ import static org.operaton.bpm.engine.impl.test.ProcessEngineAssert.assertProces
 import static org.operaton.bpm.engine.variable.Variables.fileValue;
 
 @ExtendWith(ProcessEngineExtension.class)
-public class InvoiceTestCase {
+class InvoiceTestCase {
    ProcessEngine processEngine;
    RuntimeService runtimeService;
    TaskService taskService;
    ManagementService managementService;
    @Deployment(resources = {"invoice.v1.bpmn", "invoiceBusinessDecisions.dmn"})
    @Test
-   public void testHappyPathV1() {
+   void testHappyPathV1() {
     InputStream invoiceInputStream = InvoiceProcessApplication.class.getClassLoader().getResourceAsStream("invoice.pdf");
     VariableMap variables = Variables.createVariables()
       .putValue("creditor", "Great Pizza for Everyone Inc.")
@@ -93,7 +93,7 @@ public class InvoiceTestCase {
 
    @Deployment(resources = {"invoice.v2.bpmn", "invoiceBusinessDecisions.dmn"})
    @Test
-   public void testHappyPathV2() {
+   void testHappyPathV2() {
     InputStream invoiceInputStream = InvoiceProcessApplication.class.getClassLoader().getResourceAsStream("invoice.pdf");
     VariableMap variables = Variables.createVariables()
       .putValue("creditor", "Great Pizza for Everyone Inc.")
@@ -137,7 +137,7 @@ public class InvoiceTestCase {
 
    @Deployment(resources = {"invoice.v2.bpmn", "invoiceBusinessDecisions.dmn"})
    @Test
-   public void testApproveInvoiceAssignment() {
+   void testApproveInvoiceAssignment() {
     InputStream invoiceInputStream = InvoiceProcessApplication.class.getClassLoader().getResourceAsStream("invoice.pdf");
 
     VariableMap variables = Variables.createVariables()
@@ -182,7 +182,7 @@ public class InvoiceTestCase {
 
    @Deployment(resources = {"invoice.v2.bpmn", "reviewInvoice.bpmn", "invoiceBusinessDecisions.dmn"})
    @Test
-   public void testNonSuccessfulPath() {
+   void testNonSuccessfulPath() {
     InputStream invoiceInputStream = InvoiceProcessApplication.class.getClassLoader().getResourceAsStream("invoice.pdf");
     VariableMap variables = Variables.createVariables()
       .putValue("creditor", "Great Pizza for Everyone Inc.")

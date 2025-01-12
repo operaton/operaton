@@ -26,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author Sebastian Menski
  */
-public class BaseElementTest extends BpmnModelElementInstanceTest {
+class BaseElementTest extends BpmnModelElementInstanceTest {
 
   @Override
   public TypeAssumption getTypeAssumption() {

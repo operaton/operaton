@@ -148,7 +148,7 @@ public class ProcessEngineLoggingRuleTest {
     ILoggingEvent previousLogEntry = null;
     for (ILoggingEvent logEntry : fullLog) {
       if(previousLogEntry != null) {
-        assertThat(previousLogEntry.getTimeStamp() <= logEntry.getTimeStamp()).isTrue();
+        assertThat(previousLogEntry.getTimeStamp()).isLessThanOrEqualTo(logEntry.getTimeStamp());
       }
       previousLogEntry = logEntry;
     }

@@ -64,8 +64,9 @@ public class CompetingLicenseKeyAccessTest extends ConcurrencyTestCase {
     asyncThread.waitUntilDone();
 
     Throwable exception = asyncThread.getException();
-    assertThat(exception).isNotNull();
-    assertThat(exception instanceof OptimisticLockingException).isTrue();
+    assertThat(exception)
+      .isNotNull()
+      .isInstanceOf(OptimisticLockingException.class);
   }
 
   /**
@@ -91,8 +92,9 @@ public class CompetingLicenseKeyAccessTest extends ConcurrencyTestCase {
     asyncThread.waitUntilDone();
 
     Throwable exception = asyncThread.getException();
-    assertThat(exception).isNotNull();
-    assertThat(exception instanceof OptimisticLockingException).isTrue();
+    assertThat(exception)
+      .isNotNull()
+      .isInstanceOf(OptimisticLockingException.class);
   }
 
   private static class FetchAndUpdateLicenseCmd extends ControllableCommand<Long> {

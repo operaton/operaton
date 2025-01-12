@@ -4414,7 +4414,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
         captor.capture()
     );
 
-    Assertions.assertThat(captor.getValue().get("foo")).isEqualTo("bar");
+    Assertions.assertThat(captor.getValue()).containsEntry("foo", "bar");
 
     verifyBatchJson(response.asString());
   }

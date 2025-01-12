@@ -102,7 +102,7 @@ class DmnDecisionEvaluationListenerTest extends DmnEngineTest {
     assertThat(decisionResult.getMatchingRules()).hasSize(1);
     Map<String, DmnEvaluatedOutput> outputEntries = decisionResult.getMatchingRules().get(0).getOutputEntries();
     assertThat(outputEntries).hasSize(1);
-    assertThat(outputEntries.containsKey("desiredDish")).isTrue();
+    assertThat(outputEntries).containsKey("desiredDish");
     assertThat(outputEntries.get("desiredDish").getValue().getValue()).isEqualTo("Light salad");
     assertThat(decisionResult.getExecutedDecisionElements()).isEqualTo(12L);
 

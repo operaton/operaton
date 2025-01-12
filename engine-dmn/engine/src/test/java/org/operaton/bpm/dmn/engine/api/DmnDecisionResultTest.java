@@ -131,7 +131,7 @@ class DmnDecisionResultTest extends DmnEngineTest {
 
     assertThat(decisionResult.getFirstResult()).hasSize(1);
     assertThat((String) decisionResult.getFirstResult().getSingleEntry()).isEqualTo("outputValue");
-    assertThat(decisionResult.getFirstResult().get(null)).isEqualTo("outputValue");
+    assertThat(decisionResult.getFirstResult()).containsEntry(null, "outputValue");
 
     assertThat((String) decisionResult.getSingleEntry()).isEqualTo("outputValue");
   }

@@ -128,7 +128,7 @@ public class TelemetryDynamicDataTest {
                                          "SetExecutionVariablesCmd",
                                          "TaskQueryImpl",
                                          "CompleteTaskCmd"};
-    assertThat(entries.keySet()).contains(expectedExecutedCommands);
+    assertThat(entries).containsOnlyKeys(expectedExecutedCommands);
     for (String commandName : expectedExecutedCommands) {
       assertThat(entries.get(commandName).get()).isEqualTo(1);
     }
@@ -146,7 +146,7 @@ public class TelemetryDynamicDataTest {
     // the class is properly formatted
     Map<String, CommandCounter> commands = configuration.getDiagnosticsRegistry().getCommands();
     String [] expectedExecutedCommands = {"TelemetryDynamicDataTest_InnerClassCmd"};
-    assertThat(commands.keySet()).contains(expectedExecutedCommands);
+    assertThat(commands).containsKeys(expectedExecutedCommands);
     assertThat(commands.get("TelemetryDynamicDataTest_InnerClassCmd").get()).isEqualTo(2L);
   }
 

@@ -835,7 +835,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
     assertThat(definitions).hasSize(1);
 
     String returnedTenantId = from(content).getString("[0].tenantId");
-    assertThat(returnedTenantId).isEqualTo(null);
+    assertThat(returnedTenantId).isNull();
   }
 
   @Test
@@ -865,7 +865,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
     assertThat(definitions).hasSize(1);
 
     String returnedTenantId = from(content).getString("[0].tenantId");
-    assertThat(returnedTenantId).isEqualTo(null);
+    assertThat(returnedTenantId).isNull();
   }
 
   @Test

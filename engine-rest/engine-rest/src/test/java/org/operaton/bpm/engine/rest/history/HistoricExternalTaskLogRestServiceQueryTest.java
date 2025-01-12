@@ -813,7 +813,7 @@ public class HistoricExternalTaskLogRestServiceQueryTest extends AbstractRestSer
     assertThat(definitions).hasSize(1);
 
     String returnedTenantId = from(content).getString("[0].tenantId");
-    assertThat(returnedTenantId).isEqualTo(null);
+    assertThat(returnedTenantId).isNull();
   }
 
   @Test
@@ -840,7 +840,7 @@ public class HistoricExternalTaskLogRestServiceQueryTest extends AbstractRestSer
     assertThat(definitions).hasSize(1);
 
     String returnedTenantId = from(content).getString("[0].tenantId");
-    assertThat(returnedTenantId).isEqualTo(null);
+    assertThat(returnedTenantId).isNull();
   }
 
   private List<HistoricExternalTaskLog> createMockHistoricExternalTaskLogsTwoTenants() {

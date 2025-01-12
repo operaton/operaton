@@ -587,7 +587,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
     // given
     ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceByKey("process");
     createLogEntriesThatShouldNotBeReturned(processInstance.getId());
-    assertThat(engineRule.getHistoryService().createUserOperationLogQuery().count()).isGreaterThan(0L);
+    assertThat(engineRule.getHistoryService().createUserOperationLogQuery().count()).isPositive();
 
     // when
     List<UserOperationLogEntry> userOperationsLog =

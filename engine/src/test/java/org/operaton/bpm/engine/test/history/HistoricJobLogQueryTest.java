@@ -602,7 +602,7 @@ public class HistoricJobLogQueryTest {
 
     assertThat(jobLogs).hasSize(3);
     for (HistoricJobLog log : jobLogs) {
-      assertThat(log.getJobPriority() <= 2).isTrue();
+      assertThat(log.getJobPriority()).isLessThanOrEqualTo(2);
     }
 
     // (2) higher than or equal a given priorty
@@ -614,7 +614,7 @@ public class HistoricJobLogQueryTest {
 
     assertThat(jobLogs).hasSize(2);
     for (HistoricJobLog log : jobLogs) {
-      assertThat(log.getJobPriority() >= 3).isTrue();
+      assertThat(log.getJobPriority()).isGreaterThanOrEqualTo(3);
     }
 
     // (3) lower and higher than or equal

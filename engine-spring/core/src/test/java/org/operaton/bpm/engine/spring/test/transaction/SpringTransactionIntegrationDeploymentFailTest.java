@@ -60,7 +60,7 @@ class SpringTransactionIntegrationDeploymentFailTest extends SpringProcessEngine
 
     //then
     // DeploymentFailListener succeeded to remove registered deployments
-    assertThat(processEngineConfiguration.getRegisteredDeployments().size()).isZero();
+    assertThat(processEngineConfiguration.getRegisteredDeployments()).isEmpty();
   }
 
 }

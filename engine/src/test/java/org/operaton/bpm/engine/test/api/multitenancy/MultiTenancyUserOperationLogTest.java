@@ -536,7 +536,7 @@ public class MultiTenancyUserOperationLogTest {
     // then
     assertThat(list).hasSize(5); // 5 properties
     for (UserOperationLogEntry userOperationLogEntry : list) {
-      assertThat(userOperationLogEntry.getTenantId()).isEqualTo(null);
+      assertThat(userOperationLogEntry.getTenantId()).isNull();
     }
   }
 
@@ -610,7 +610,7 @@ public class MultiTenancyUserOperationLogTest {
         .singleResult();
 
     // then
-    assertThat(singleResult.getTenantId()).isEqualTo(null);
+    assertThat(singleResult.getTenantId()).isNull();
   }
 
 
@@ -629,7 +629,7 @@ public class MultiTenancyUserOperationLogTest {
         .singleResult();
 
     // then
-    assertThat(singleResult.getTenantId()).isEqualTo(null);
+    assertThat(singleResult.getTenantId()).isNull();
   }
 
   @Test
@@ -655,7 +655,7 @@ public class MultiTenancyUserOperationLogTest {
     // then
     assertThat(list).hasSize(3);
     for (UserOperationLogEntry userOperationLogEntry : list) {
-      assertThat(userOperationLogEntry.getTenantId()).isEqualTo(null);
+      assertThat(userOperationLogEntry.getTenantId()).isNull();
     }
   }
 
@@ -678,7 +678,7 @@ public class MultiTenancyUserOperationLogTest {
     // then
     assertThat(list).hasSize(3);
     for (UserOperationLogEntry userOperationLogEntry : list) {
-      assertThat(userOperationLogEntry.getTenantId()).isEqualTo(null);
+      assertThat(userOperationLogEntry.getTenantId()).isNull();
     }
   }
 
@@ -701,7 +701,7 @@ public class MultiTenancyUserOperationLogTest {
     // then
     assertThat(list).hasSize(3);
     for (UserOperationLogEntry userOperationLogEntry : list) {
-      assertThat(userOperationLogEntry.getTenantId()).isEqualTo(null);
+      assertThat(userOperationLogEntry.getTenantId()).isNull();
     }
   }
 
@@ -747,7 +747,7 @@ public class MultiTenancyUserOperationLogTest {
     // then
     assertThat(list).hasSize(4); // 2 properties per log
     for (UserOperationLogEntry userOperationLogEntry : list) {
-      assertThat(userOperationLogEntry.getTenantId()).isEqualTo(null);
+      assertThat(userOperationLogEntry.getTenantId()).isNull();
     }
 
     // finish
@@ -808,7 +808,7 @@ public class MultiTenancyUserOperationLogTest {
     // then
     assertThat(list).hasSize(12); // 6 properties per log
     for (UserOperationLogEntry userOperationLogEntry : list) {
-      assertThat(userOperationLogEntry.getTenantId()).isEqualTo(null);
+      assertThat(userOperationLogEntry.getTenantId()).isNull();
     }
   }
 
@@ -828,7 +828,7 @@ public class MultiTenancyUserOperationLogTest {
     // then
     assertThat(list).hasSize(2);
     for (UserOperationLogEntry userOperationLogEntry : list) {
-      assertThat(userOperationLogEntry.getTenantId()).isEqualTo(null);
+      assertThat(userOperationLogEntry.getTenantId()).isNull();
     }
   }
 }

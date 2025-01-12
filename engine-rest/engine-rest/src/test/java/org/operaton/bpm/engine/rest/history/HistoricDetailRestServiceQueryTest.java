@@ -1222,7 +1222,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
     assertThat(definitions).hasSize(2);
 
     String returnedTenantId = from(content).getString("[0].tenantId");
-    assertThat(returnedTenantId).isEqualTo(null);
+    assertThat(returnedTenantId).isNull();
   }
 
   @Test
@@ -1258,7 +1258,7 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
     assertThat(definitions).hasSize(2);
 
     String returnedTenantId = from(content).getString("[0].tenantId");
-    assertThat(returnedTenantId).isEqualTo(null);
+    assertThat(returnedTenantId).isNull();
   }
 
   private void verifyTenantIdListParameterResponse(Response response) {

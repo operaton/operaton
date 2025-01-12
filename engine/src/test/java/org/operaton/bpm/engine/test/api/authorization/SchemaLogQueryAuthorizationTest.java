@@ -52,6 +52,6 @@ public class SchemaLogQueryAuthorizationTest extends AuthorizationTest {
     identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
     // then
-    assertThat(managementService.createSchemaLogQuery().list().size()).isPositive();
+    assertThat(managementService.createSchemaLogQuery().list()).isNotEmpty();
   }
 }

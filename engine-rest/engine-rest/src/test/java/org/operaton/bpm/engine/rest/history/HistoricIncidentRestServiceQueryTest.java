@@ -705,7 +705,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
     assertThat(definitions).hasSize(1);
 
     String returnedTenantId = from(content).getString("[0].tenantId");
-    assertThat(returnedTenantId).isEqualTo(null);
+    assertThat(returnedTenantId).isNull();
   }
 
   @Test

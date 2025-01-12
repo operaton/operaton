@@ -66,15 +66,15 @@ class StringUtilTest {
     assertThat(join(",", "a", "b", "c")).isEqualTo("a,b,c");
     assertThat(join(", ", "a", "b", "c")).isEqualTo("a, b, c");
     assertThat(join(null, "a", "b", "c")).isEqualTo("abc");
-    assertThat(join(",", "")).isEqualTo("");
+    assertThat(join(",", "")).isEmpty();
     assertThat(join(null, (String[]) null)).isNull();
     assertThat(join("aax", "a", "b", "c")).isEqualTo("aaaxbaaxc");
   }
 
   @Test
   void testDefaultString() {
-    assertThat(defaultString(null)).isEqualTo("");
-    assertThat(defaultString("")).isEqualTo("");
+    assertThat(defaultString(null)).isEmpty();
+    assertThat(defaultString("")).isEmpty();
     assertThat(defaultString("bat")).isEqualTo("bat");
   }
 

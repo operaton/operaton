@@ -96,7 +96,7 @@ public class MultiTenancyUserOperationLogTenantCheckTest {
         .singleResult();
 
     // then
-    assertThat(singleResult.getTenantId()).isEqualTo(null);
+    assertThat(singleResult.getTenantId()).isNull();
   }
 
   @Test
@@ -187,7 +187,7 @@ public class MultiTenancyUserOperationLogTenantCheckTest {
         .singleResult();
 
     // then
-    assertThat(singleResult.getTenantId()).isEqualTo(null);
+    assertThat(singleResult.getTenantId()).isNull();
   }
 
   @Test

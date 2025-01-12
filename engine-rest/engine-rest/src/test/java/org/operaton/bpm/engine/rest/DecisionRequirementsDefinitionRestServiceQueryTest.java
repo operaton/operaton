@@ -317,7 +317,7 @@ public class DecisionRequirementsDefinitionRestServiceQueryTest extends Abstract
     assertThat(returnedVersion).isEqualTo(MockProvider.EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_VERSION);
     assertThat(returnedResource).isEqualTo(MockProvider.EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_RESOURCE_NAME);
     assertThat(returnedDeploymentId).isEqualTo(MockProvider.EXAMPLE_DEPLOYMENT_ID);
-    assertThat(returnedTenantId).isEqualTo(null);
+    assertThat(returnedTenantId).isNull();
   }
 
   @Test
@@ -434,7 +434,7 @@ public class DecisionRequirementsDefinitionRestServiceQueryTest extends Abstract
     assertThat(definitions).hasSize(1);
 
     String returnedTenantId1 = from(content).getString("[0].tenantId");
-    assertThat(returnedTenantId1).isEqualTo(null);
+    assertThat(returnedTenantId1).isNull();
   }
 
   @Test
@@ -463,7 +463,7 @@ public class DecisionRequirementsDefinitionRestServiceQueryTest extends Abstract
     String returnedTenantId1 = from(content).getString("[0].tenantId");
     String returnedTenantId2 = from(content).getString("[1].tenantId");
 
-    assertThat(returnedTenantId1).isEqualTo(null);
+    assertThat(returnedTenantId1).isNull();
     assertThat(returnedTenantId2).isEqualTo(MockProvider.EXAMPLE_TENANT_ID);
   }
 

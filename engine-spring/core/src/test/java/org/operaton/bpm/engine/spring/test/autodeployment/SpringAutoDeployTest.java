@@ -118,7 +118,7 @@ class SpringAutoDeployTest {
 
     List<CaseDefinition> definitions = repositoryService.createCaseDefinitionQuery().list();
 
-    assertThat(definitions.size()).isEqualTo(1);
+    assertThat(definitions).hasSize(1);
   }
 
   @Test

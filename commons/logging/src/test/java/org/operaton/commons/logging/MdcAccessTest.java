@@ -52,7 +52,7 @@ class MdcAccessTest {
     // when
     MdcAccess.put("foo", null);
     // then
-    assertThat(MDC.get("foo")).isEqualTo(null);
+    assertThat(MDC.get("foo")).isNull();
   }
 
   @Test

@@ -90,7 +90,7 @@ public class MultiTenancyUserOperationLogQueryTest {
 
     // then
     assertThat(historyService.createUserOperationLogQuery().entityType(EntityTypes.TASK).count()).isZero();
-    assertThat(singleResult).isEqualTo(null);
+    assertThat(singleResult).isNull();
   }
 
   @Test
@@ -186,7 +186,7 @@ public class MultiTenancyUserOperationLogQueryTest {
     // then
     assertThat(historyService.createUserOperationLogQuery().entityType(EntityTypes.TASK).withoutTenantId().count()).isOne();
     assertThat(list).hasSize(1);
-    assertThat(list.get(0).getTenantId()).isEqualTo(null);
+    assertThat(list.get(0).getTenantId()).isNull();
   }
 
   @Test

@@ -1502,7 +1502,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
     assertThat(definitions).hasSize(1);
 
     String returnedTaskDueDate = from(content).getString("[0].due");
-    assertThat(returnedTaskDueDate).isEqualTo(null);
+    assertThat(returnedTaskDueDate).isNull();
   }
 
   @Test
@@ -1530,7 +1530,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
     assertThat(definitions).hasSize(1);
 
     String returnedTaskDueDate = from(content).getString("[0].due");
-    assertThat(returnedTaskDueDate).isEqualTo(null);
+    assertThat(returnedTaskDueDate).isNull();
   }
 
   @Test
@@ -2387,7 +2387,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
     assertThat(definitions).hasSize(1);
 
     String returnedTenantId = from(content).getString("[0].tenantId");
-    assertThat(returnedTenantId).isEqualTo(null);
+    assertThat(returnedTenantId).isNull();
   }
 
   @Test
@@ -2414,7 +2414,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
     assertThat(definitions).hasSize(1);
 
     String returnedTenantId = from(content).getString("[0].tenantId");
-    assertThat(returnedTenantId).isEqualTo(null);
+    assertThat(returnedTenantId).isNull();
   }
 
   @Test

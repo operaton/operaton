@@ -350,8 +350,9 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
 
     Map<String, Object> variables = caseService.getVariables(caseExecutionId);
 
-    assertThat(variables).isNotNull();
-    assertThat(variables).containsKey(VARIABLE_NAME);
+    assertThat(variables)
+      .isNotNull()
+      .containsKey(VARIABLE_NAME);
   }
 
   @Test
@@ -361,8 +362,9 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
 
     Map<String, Object> variables = caseService.getVariables(caseExecutionId);
 
-    assertThat(variables).isNotNull();
-    assertThat(variables).containsKey(VARIABLE_NAME);
+    assertThat(variables)
+      .isNotNull()
+      .containsKey(VARIABLE_NAME);
   }
 
   @Test
@@ -477,8 +479,9 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
     identityService.clearAuthentication();
 
     Map<String, Object> variables = caseService.getVariables(caseExecutionId);
-    assertThat(variables).isNotNull();
-    assertThat(variables.keySet()).contains(VARIABLE_NAME, "newVar");
+    assertThat(variables)
+      .isNotNull()
+      .containsKeys(VARIABLE_NAME, "newVar");
   }
 
   @Test
@@ -491,8 +494,9 @@ public class MultiTenancyCaseInstanceCmdsTenantCheckTest {
     identityService.clearAuthentication();
 
     Map<String, Object> variables = caseService.getVariables(caseExecutionId);
-    assertThat(variables).isNotNull();
-    assertThat(variables.keySet()).contains(VARIABLE_NAME, "newVar");
+    assertThat(variables)
+      .isNotNull()
+      .containsKeys(VARIABLE_NAME, "newVar");
   }
 
   protected String createCaseInstance(String tenantId) {

@@ -67,7 +67,7 @@ public class LdapGroupLargeQueryTest {
     // ask 3 pages
     for (int firstResult = 2; firstResult < 10; firstResult += 4) {
       List<Group> listPages = identityService.createGroupQuery().listPage(firstResult, 5);
-      assertThat(listPages.size()).as("Maximum 5 results expected").isLessThanOrEqualTo(5);
+      assertThat(listPages).as("Maximum 5 results expected").hasSizeLessThanOrEqualTo(5);
 
       for (int i = 0; i < listPages.size(); i++) {
         assertThat(listPages.get(i).getId()).isEqualTo(listGroups.get(firstResult + i).getId());

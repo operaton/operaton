@@ -638,15 +638,15 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @SuppressWarnings("unchecked")
   protected void assertSorting(Map<String, Object> sorting, String sortBy, String sortOrder, String parametersVariable, ValueType parametersType) {
-    assertThat(sorting.get("sortBy")).isEqualTo(sortBy);
-    assertThat(sorting.get("sortOrder")).isEqualTo(sortOrder);
+    assertThat(sorting).containsEntry("sortBy", sortBy);
+    assertThat(sorting).containsEntry("sortOrder", sortOrder);
     if (parametersVariable == null) {
       assertThat(sorting.containsKey("parameters")).isFalse();
     }
     else {
       Map<String, Object> parameters = (Map<String, Object>) sorting.get("parameters");
-      assertThat(parameters.get("variable")).isEqualTo(parametersVariable);
-      assertThat(parameters.get("type")).isEqualTo(VariableValueDto.toRestApiTypeName(parametersType.getName()));
+      assertThat(parameters).containsEntry("variable", parametersVariable);
+      assertThat(parameters).containsEntry("type", VariableValueDto.toRestApiTypeName(parametersType.getName()));
     }
   }
 
@@ -1894,15 +1894,15 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @SuppressWarnings("unchecked")
   protected void verifyVariableValue(Map<String, Object> variable, String name, String value, String scopeResourcePath, String scopeId, String variablesName) {
-    assertThat(variable.get("name")).isEqualTo(name);
-    assertThat(variable.get("value")).isEqualTo(value);
-    assertThat(variable.get("type")).isEqualTo("String");
-    assertThat(variable.get("valueInfo")).isEqualTo(Collections.emptyMap());
+    assertThat(variable).containsEntry("name", name);
+    assertThat(variable).containsEntry("value", value);
+    assertThat(variable).containsEntry("type", "String");
+    assertThat(variable).containsEntry("valueInfo", Collections.emptyMap());
     assertThat(variable.get("_embedded")).isNull();
     Map<String, Map<String, String>> links = (Map<String, Map<String, String>>) variable.get("_links");
     assertThat(links).hasSize(1);
     assertThat(links.get("self")).hasSize(1);
-    assertThat(links.get("self").get("href")).isEqualTo(scopeResourcePath + "/" + scopeId + "/" + variablesName + "/" + name);
+    assertThat(links.get("self")).containsEntry("href", scopeResourcePath + "/" + scopeId + "/" + variablesName + "/" + name);
   }
 
   protected void verifyNoAuthorizationCheckPerformed() {

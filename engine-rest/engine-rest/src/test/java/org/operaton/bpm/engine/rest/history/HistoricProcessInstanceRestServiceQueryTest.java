@@ -1807,7 +1807,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
     assertThat(definitions).hasSize(1);
 
     String returnedTenantId1 = from(content).getString("[0].tenantId");
-    assertThat(returnedTenantId1).isEqualTo(null);
+    assertThat(returnedTenantId1).isNull();
   }
 
   @Test
@@ -1833,7 +1833,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
     assertThat(definitions).hasSize(1);
 
     String returnedTenantId1 = from(content).getString("[0].tenantId");
-    assertThat(returnedTenantId1).isEqualTo(null);
+    assertThat(returnedTenantId1).isNull();
   }
 
   private List<HistoricProcessInstance> createMockHistoricProcessInstancesTwoTenants() {

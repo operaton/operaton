@@ -35,6 +35,8 @@ import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import static java.lang.Boolean.TRUE;
+
 /**
  * @author Roman Smirnov
  *
@@ -195,27 +197,27 @@ public class CaseExecutionQueryDto extends AbstractQueryDto<CaseExecutionQuery> 
       query.tenantIdIn(tenantIds.toArray(new String[tenantIds.size()]));
     }
 
-    if (required != null && required == true) {
+    if (TRUE.equals(required)) {
       query.required();
     }
 
-    if (active != null && active == true) {
+    if (TRUE.equals(active)) {
       query.active();
     }
 
-    if (enabled != null && enabled == true) {
+    if (TRUE.equals(enabled)) {
       query.enabled();
     }
 
-    if (disabled != null && disabled == true) {
+    if (TRUE.equals(disabled)) {
       query.disabled();
     }
 
-    if(Boolean.TRUE.equals(variableNamesIgnoreCase)) {
+    if(TRUE.equals(variableNamesIgnoreCase)) {
       query.matchVariableNamesIgnoreCase();
     }
 
-    if(Boolean.TRUE.equals(variableValuesIgnoreCase)) {
+    if(TRUE.equals(variableValuesIgnoreCase)) {
       query.matchVariableValuesIgnoreCase();
     }
 

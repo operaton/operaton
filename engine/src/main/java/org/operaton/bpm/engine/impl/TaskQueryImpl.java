@@ -1589,7 +1589,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   }
 
   public boolean isIncludeAssignedTasks() {
-    return includeAssignedTasks != null ? includeAssignedTasks : false;
+    return Boolean.TRUE.equals(includeAssignedTasks);
   }
 
   public Boolean isIncludeAssignedTasksInternal() {

@@ -35,6 +35,8 @@ import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import static java.lang.Boolean.TRUE;
+
 public class ExecutionQueryDto extends AbstractQueryDto<ExecutionQuery> {
 
   private static final String SORT_BY_INSTANCE_ID_VALUE = "instanceId";
@@ -203,10 +205,10 @@ public class ExecutionQueryDto extends AbstractQueryDto<ExecutionQuery> {
     if (messageEventSubscriptionName != null) {
       query.messageEventSubscriptionName(messageEventSubscriptionName);
     }
-    if (active != null && active == true) {
+    if (TRUE.equals(active)) {
       query.active();
     }
-    if (suspended != null && suspended == true) {
+    if (TRUE.equals(suspended)) {
       query.suspended();
     }
     if (incidentId != null) {
@@ -224,10 +226,10 @@ public class ExecutionQueryDto extends AbstractQueryDto<ExecutionQuery> {
     if (tenantIdIn != null && !tenantIdIn.isEmpty()) {
       query.tenantIdIn(tenantIdIn.toArray(new String[tenantIdIn.size()]));
     }
-    if(Boolean.TRUE.equals(variableNamesIgnoreCase)) {
+    if(TRUE.equals(variableNamesIgnoreCase)) {
       query.matchVariableNamesIgnoreCase();
     }
-    if(Boolean.TRUE.equals(variableValuesIgnoreCase)) {
+    if(TRUE.equals(variableValuesIgnoreCase)) {
       query.matchVariableValuesIgnoreCase();
     }
     if (variables != null) {

@@ -227,11 +227,11 @@ public class DomXmlDataFormat implements DataFormat<SpinXmlElement> {
     documentBuilderFactory.setIgnoringElementContentWhitespace(false);
     LOG.documentBuilderFactoryConfiguration("ignoringElementContentWhitespace", "false");
 
-    if ((boolean) configurationProperties.getOrDefault(XXE_PROPERTY, false) == false) {
+    if (!((boolean) configurationProperties.getOrDefault(XXE_PROPERTY, false))) {
       disableXxeProcessing(documentBuilderFactory);
     }
 
-    if ((boolean) configurationProperties.getOrDefault(SP_PROPERTY, true) == true) {
+    if ((boolean) configurationProperties.getOrDefault(SP_PROPERTY, true)) {
       enableSecureProcessing(documentBuilderFactory);
     }
 

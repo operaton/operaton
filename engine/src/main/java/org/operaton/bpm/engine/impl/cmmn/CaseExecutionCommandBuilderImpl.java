@@ -254,9 +254,7 @@ public class CaseExecutionCommandBuilderImpl implements CaseExecutionCommandBuil
     } catch (NullValueException e) {
       throw new NotValidException(e.getMessage(), e);
 
-    } catch (CaseExecutionNotFoundException e) {
-      throw new NotFoundException(e.getMessage(), e);
-    } catch (CaseDefinitionNotFoundException e) {
+    } catch (CaseExecutionNotFoundException | CaseDefinitionNotFoundException e) {
       throw new NotFoundException(e.getMessage(), e);
     } catch (CaseIllegalStateTransitionException e) {
       throw new NotAllowedException(e.getMessage(), e);

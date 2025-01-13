@@ -203,10 +203,7 @@ public abstract class AbstractModelElementInstanceTest {
         modelInstance.newInstance(modelElementType);
         fail("Element type " + modelElementType.getTypeName() + " is abstract.");
       }
-      catch (DOMException e) {
-        // expected exception
-      }
-      catch (ModelTypeException e) {
+      catch (DOMException | ModelTypeException e) {
         // expected exception
       }
       catch (Exception e) {

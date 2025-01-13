@@ -195,9 +195,7 @@ public class SentryHandler extends CmmnElementHandler<Sentry, CmmnSentryDeclarat
 
     try {
       variableTransition = variableOnPart.getVariableEvent();
-    } catch(IllegalArgumentException illegalArgumentexception) {
-      throw LOG.nonMatchingVariableEvents(sentryDeclaration.getId());
-    } catch(NullPointerException nullPointerException) {
+    } catch (IllegalArgumentException | NullPointerException illegalArgumentexception) {
       throw LOG.nonMatchingVariableEvents(sentryDeclaration.getId());
     }
 

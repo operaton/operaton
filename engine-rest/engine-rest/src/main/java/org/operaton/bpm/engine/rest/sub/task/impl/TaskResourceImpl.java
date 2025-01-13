@@ -404,12 +404,10 @@ public class TaskResourceImpl implements TaskResource {
       return Response.ok(deployedTaskForm, getTaskFormMediaType(taskId)).build();
     } catch (NotFoundException e) {
       throw new InvalidRequestException(Status.NOT_FOUND, e.getMessage());
-    } catch (NullValueException e) {
+    } catch (NullValueException | BadUserRequestException e) {
       throw new InvalidRequestException(Status.BAD_REQUEST, e.getMessage());
     } catch (AuthorizationException e) {
       throw new InvalidRequestException(Status.FORBIDDEN, e.getMessage());
-    } catch (BadUserRequestException e) {
-      throw new InvalidRequestException(Status.BAD_REQUEST, e.getMessage());
     }
   }
 

@@ -45,7 +45,7 @@ class ResourceRolesTest {
     Collection<ResourceRole> resourceRoles = userTask.getResourceRoles();
     assertThat(resourceRoles).hasSize(1);
     ResourceRole resourceRole = resourceRoles.iterator().next();
-    assertThat(resourceRole instanceof Performer).isTrue();
+    assertThat(resourceRole).isInstanceOf(Performer.class);
     assertThat(resourceRole.getName()).isEqualTo("Task performer");
   }
 
@@ -55,7 +55,7 @@ class ResourceRolesTest {
     Collection<ResourceRole> resourceRoles = userTask.getResourceRoles();
     assertThat(resourceRoles).hasSize(1);
     ResourceRole resourceRole = resourceRoles.iterator().next();
-    assertThat(resourceRole instanceof HumanPerformer).isTrue();
+    assertThat(resourceRole).isInstanceOf(HumanPerformer.class);
     assertThat(resourceRole.getName()).isEqualTo("Task human performer");
   }
 
@@ -65,7 +65,7 @@ class ResourceRolesTest {
     Collection<ResourceRole> resourceRoles = userTask.getResourceRoles();
     assertThat(resourceRoles).hasSize(1);
     ResourceRole resourceRole = resourceRoles.iterator().next();
-    assertThat(resourceRole instanceof PotentialOwner).isTrue();
+    assertThat(resourceRole).isInstanceOf(PotentialOwner.class);
     assertThat(resourceRole.getName()).isEqualTo("Task potential owner");
   }
 

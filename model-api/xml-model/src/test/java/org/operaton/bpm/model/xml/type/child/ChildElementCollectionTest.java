@@ -187,7 +187,6 @@ public class ChildElementCollectionTest extends TestModelTest {
 
     // directly test collection methods and not use the appropriate assertion methods
     assertThat(flightPartnerRefs).hasSize(2);
-    assertThat(flightPartnerRefs.isEmpty()).isFalse();
     assertThat(flightPartnerRefs.contains(daisyRef));
     assertThat(flightPartnerRefs.toArray()).isEqualTo(new Object[]{daisyRef, pluckyRef});
     assertThat(flightPartnerRefs.toArray(new FlightPartnerRef[1])).isEqualTo(new FlightPartnerRef[]{daisyRef, pluckyRef});
@@ -203,8 +202,8 @@ public class ChildElementCollectionTest extends TestModelTest {
       .containsOnly(birdoRef, pluckyRef);
 
     assertThat(flightPartnerRefs.addAll(flightPartners)).isTrue();
-    assertThat(flightPartnerRefs.containsAll(flightPartners)).isTrue();
     assertThat(flightPartnerRefs)
+      .containsAll(flightPartners)
       .hasSize(3)
       .containsOnly(birdoRef, daisyRef, pluckyRef);
 

@@ -290,7 +290,7 @@ public abstract class XmlDomXPathScriptTest extends ScriptTest {
   public void canQueryNonExistingString() {
     SpinXPathQuery query = script.getVariable("query");
     String value = query.string();
-    assertThat(value).isEqualTo("");
+    assertThat(value).isEmpty();
   }
 
   @Test
@@ -304,7 +304,7 @@ public abstract class XmlDomXPathScriptTest extends ScriptTest {
   public void canQueryStringAsDocument() {
     SpinXPathQuery query = script.getVariable("query");
     String value = query.string();
-    assertThat(value).isEqualTo("");
+    assertThat(value).isEmpty();
   }
 
   @Test

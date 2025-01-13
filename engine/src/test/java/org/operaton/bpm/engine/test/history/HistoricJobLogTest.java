@@ -354,7 +354,7 @@ public class HistoricJobLogTest {
         .createJobQuery()
         .singleResult();
 
-    assertThat(job.getId().equals(anotherJob.getId())).isFalse();
+    assertThat(job.getId()).isNotEqualTo(anotherJob.getId());
 
     HistoricJobLog historicJob = historyService
         .createHistoricJobLogQuery()
@@ -389,7 +389,7 @@ public class HistoricJobLogTest {
       .createJobQuery()
       .singleResult();
 
-    assertThat(job.getId().equals(anotherJob.getId())).isFalse();
+    assertThat(job.getId()).isNotEqualTo(anotherJob.getId());
 
     HistoricJobLog historicJob = historyService
       .createHistoricJobLogQuery()
@@ -1279,7 +1279,7 @@ public class HistoricJobLogTest {
       .containsIgnoringCase(SecondFailingDelegate.SECOND_EXCEPTION_MESSAGE)
       .containsIgnoringCase(SecondFailingDelegate.class.getName());
 
-    assertThat(serviceTask1Stacktrace.equals(serviceTask2Stacktrace)).isFalse();
+    assertThat(serviceTask1Stacktrace).isNotEqualTo(serviceTask2Stacktrace);
   }
 
   @Deployment

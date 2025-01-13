@@ -254,7 +254,7 @@ public class FileValueSerializerTest {
 
     FileValue fileValue = serializer.readValue(valueFields, true, false);
 
-    assertThat(fileValue.getFilename()).isEqualTo("");
+    assertThat(fileValue.getFilename()).isEmpty();
     assertThat(fileValue.getMimeType()).isNull();
     assertThat(fileValue.getValue()).isNull();
   }
@@ -267,7 +267,7 @@ public class FileValueSerializerTest {
 
     FileValue fileValue = serializer.readValue(valueFields, true, false);
 
-    assertThat(fileValue.getFilename()).isEqualTo("");
+    assertThat(fileValue.getFilename()).isEmpty();
     assertThat(fileValue.getMimeType()).isNull();
     assertThat(fileValue.getValue()).isNull();
   }

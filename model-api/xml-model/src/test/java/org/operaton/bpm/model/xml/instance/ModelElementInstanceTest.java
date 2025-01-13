@@ -170,7 +170,7 @@ class ModelElementInstanceTest extends TestModelTest {
   @MethodSource("models")
   void testTextContent(TestModelArgs args) {
     init(args);
-    assertThat(tweety.getTextContent()).isEqualTo("");
+    assertThat(tweety.getTextContent()).isEmpty();
     assertThat(donald.getTextContent()).isEqualTo("some text content");
     assertThat(daisy.getTextContent()).isEqualTo("some text content with outer line breaks");
     assertThat(hedwig.getTextContent()).isEqualTo("some text content with inner\n        line breaks");
@@ -184,7 +184,7 @@ class ModelElementInstanceTest extends TestModelTest {
   @MethodSource("models")
   void testRawTextContent(TestModelArgs args) {
     init(args);
-    assertThat(tweety.getRawTextContent()).isEqualTo("");
+    assertThat(tweety.getRawTextContent()).isEmpty();
     assertThat(donald.getRawTextContent()).isEqualTo("some text content");
     assertThat(daisy.getRawTextContent()).isEqualTo("\n        some text content with outer line breaks\n    ");
     assertThat(hedwig.getRawTextContent()).isEqualTo("\n        some text content with inner\n        line breaks\n    ");

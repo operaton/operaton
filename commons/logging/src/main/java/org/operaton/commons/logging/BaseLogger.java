@@ -96,11 +96,8 @@ public abstract class BaseLogger {
 
       return logger;
 
-    } catch (InstantiationException e) {
-      throw new RuntimeException("Unable to instantiate logger '"+loggerClass.getName()+"'", e);
-
-    } catch (IllegalAccessException e) {
-      throw new RuntimeException("Unable to instantiate logger '"+loggerClass.getName()+"'", e);
+    } catch (InstantiationException | IllegalAccessException e) {
+      throw new RuntimeException("Unable to instantiate logger '" + loggerClass.getName() + "'", e);
 
     }
   }

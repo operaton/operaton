@@ -101,9 +101,7 @@ public class MscExecutorService implements Service<MscExecutorService>, Executor
       
     } catch (InterruptedException e) {
       // the acquisition thread is interrupted, this probably means the app server is turning the lights off -> ignore          
-    } catch (ExecutionTimedOutException e) {
-      rejected = true;
-    } catch (RejectedExecutionException e) {
+    } catch (ExecutionTimedOutException | RejectedExecutionException e) {
       rejected = true;
     } catch (Exception e) {
       // if it fails for some other reason, log a warning message

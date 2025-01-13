@@ -219,12 +219,8 @@ public class DomXmlDataFormat implements DataFormat {
       Document document = documentBuilder.parse(inputSource);
       return document.getDocumentElement();
     }
-    catch (SAXException e) {
+    catch (SAXException | IOException e) {
       throw LOG.unableToParseInput(e);
-    }
-    catch (IOException e) {
-      throw LOG.unableToParseInput(e);
-
     }
     finally{
       IoUtil.closeSilently(bufferedReader);

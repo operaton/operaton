@@ -24,7 +24,6 @@ import com.fasterxml.jackson.databind.node.MissingNode;
 import org.operaton.spin.impl.json.jackson.JacksonJsonLogger;
 import org.operaton.spin.spi.TextBasedDataFormatReader;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -52,9 +51,6 @@ public class JacksonJsonDataFormatReader extends TextBasedDataFormatReader {
         throw new IOException("Input is empty");
       }
       return jsonNode;
-    }
-    catch (JsonProcessingException e) {
-      throw JSON_LOGGER.unableToParseInput(e);
     }
     catch (IOException e) {
       throw JSON_LOGGER.unableToParseInput(e);

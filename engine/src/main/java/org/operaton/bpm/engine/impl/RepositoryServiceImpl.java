@@ -339,16 +339,10 @@ public class RepositoryServiceImpl extends ServiceImpl implements RepositoryServ
   public CmmnModelInstance getCmmnModelInstance(String caseDefinitionId) {
     try {
       return commandExecutor.execute(new GetDeploymentCmmnModelInstanceCmd(caseDefinitionId));
-
     } catch (NullValueException e) {
       throw new NotValidException(e.getMessage(), e);
-
-    } catch (CmmnModelInstanceNotFoundException e) {
+    } catch (CmmnModelInstanceNotFoundException | DeploymentResourceNotFoundException e) {
       throw new NotFoundException(e.getMessage(), e);
-
-    } catch (DeploymentResourceNotFoundException e) {
-      throw new NotFoundException(e.getMessage(), e);
-
     }
   }
 
@@ -356,16 +350,10 @@ public class RepositoryServiceImpl extends ServiceImpl implements RepositoryServ
   public DmnModelInstance getDmnModelInstance(String decisionDefinitionId) {
     try {
       return commandExecutor.execute(new GetDeploymentDmnModelInstanceCmd(decisionDefinitionId));
-
     } catch (NullValueException e) {
       throw new NotValidException(e.getMessage(), e);
-
-    } catch (DmnModelInstanceNotFoundException e) {
+    } catch (DmnModelInstanceNotFoundException | DeploymentResourceNotFoundException e) {
       throw new NotFoundException(e.getMessage(), e);
-
-    } catch (DeploymentResourceNotFoundException e) {
-      throw new NotFoundException(e.getMessage(), e);
-
     }
   }
 
@@ -412,18 +400,11 @@ public class RepositoryServiceImpl extends ServiceImpl implements RepositoryServ
   public InputStream getCaseModel(String caseDefinitionId) {
     try {
       return commandExecutor.execute(new GetDeploymentCaseModelCmd(caseDefinitionId));
-
     } catch (NullValueException e) {
       throw new NotValidException(e.getMessage(), e);
-
-    } catch (CaseDefinitionNotFoundException e) {
+    } catch (CaseDefinitionNotFoundException | DeploymentResourceNotFoundException e) {
       throw new NotFoundException(e.getMessage(), e);
-
-    } catch (DeploymentResourceNotFoundException e) {
-      throw new NotFoundException(e.getMessage(), e);
-
     }
-
   }
 
   @Override
@@ -454,9 +435,7 @@ public class RepositoryServiceImpl extends ServiceImpl implements RepositoryServ
       return commandExecutor.execute(new GetDeploymentDecisionModelCmd(decisionDefinitionId));
     } catch (NullValueException e) {
       throw new NotValidException(e.getMessage(), e);
-    } catch (DecisionDefinitionNotFoundException e) {
-      throw new NotFoundException(e.getMessage(), e);
-    } catch (DeploymentResourceNotFoundException e) {
+    } catch (DecisionDefinitionNotFoundException | DeploymentResourceNotFoundException e) {
       throw new NotFoundException(e.getMessage(), e);
     }
   }
@@ -467,9 +446,7 @@ public class RepositoryServiceImpl extends ServiceImpl implements RepositoryServ
       return commandExecutor.execute(new GetDeploymentDecisionRequirementsModelCmd(decisionRequirementsDefinitionId));
     } catch (NullValueException e) {
       throw new NotValidException(e.getMessage(), e);
-    } catch (DecisionDefinitionNotFoundException e) {
-      throw new NotFoundException(e.getMessage(), e);
-    } catch (DeploymentResourceNotFoundException e) {
+    } catch (DecisionDefinitionNotFoundException | DeploymentResourceNotFoundException e) {
       throw new NotFoundException(e.getMessage(), e);
     }
   }

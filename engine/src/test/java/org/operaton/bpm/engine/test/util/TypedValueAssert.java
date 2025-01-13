@@ -79,10 +79,7 @@ public class TypedValueAssert {
       ObjectInputStream objectInputStream = new ObjectInputStream(new ByteArrayInputStream(decodedObject));
       assertEquals(value, objectInputStream.readObject());
     }
-    catch(IOException e) {
-      throw new RuntimeException(e);
-    }
-    catch(ClassNotFoundException e) {
+    catch (IOException | ClassNotFoundException e) {
       throw new RuntimeException(e);
     }
   }

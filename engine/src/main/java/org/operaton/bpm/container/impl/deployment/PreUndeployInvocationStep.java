@@ -68,10 +68,7 @@ public class PreUndeployInvocationStep extends DeploymentOperationStep {
       // perform the actual invocation
       preUndeployMethod.invoke(processApplication, injections);
     }
-    catch (IllegalArgumentException e) {
-      throw LOG.exceptionWhileInvokingPaLifecycleCallback(CALLBACK_NAME, paName, e);
-    }
-    catch (IllegalAccessException e) {
+    catch (IllegalArgumentException | IllegalAccessException e) {
       throw LOG.exceptionWhileInvokingPaLifecycleCallback(CALLBACK_NAME, paName, e);
     }
     catch (InvocationTargetException e) {

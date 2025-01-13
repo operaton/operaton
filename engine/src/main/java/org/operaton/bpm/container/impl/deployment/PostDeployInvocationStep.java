@@ -69,12 +69,9 @@ public class PostDeployInvocationStep extends DeploymentOperationStep {
       // perform the actual invocation
       postDeployMethod.invoke(processApplication, injections);
     }
-    catch (IllegalArgumentException e) {
+    catch (IllegalArgumentException | IllegalAccessException e) {
       throw LOG.exceptionWhileInvokingPaLifecycleCallback(CALLBACK_NAME, paName, e);
 
-    }
-    catch (IllegalAccessException e) {
-      throw LOG.exceptionWhileInvokingPaLifecycleCallback(CALLBACK_NAME, paName, e);
     }
     catch (InvocationTargetException e) {
       Throwable cause = e.getCause();

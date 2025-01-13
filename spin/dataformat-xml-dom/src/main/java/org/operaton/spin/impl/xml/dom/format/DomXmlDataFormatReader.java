@@ -52,10 +52,7 @@ public class DomXmlDataFormatReader extends TextBasedDataFormatReader {
       LOG.parsingInput();
       return documentBuilder.parse(new InputSource(input)).getDocumentElement();
 
-    } catch (SAXException e) {
-      throw LOG.unableToParseInput(e);
-
-    } catch (IOException e) {
+    } catch (SAXException | IOException e) {
       throw LOG.unableToParseInput(e);
 
     }

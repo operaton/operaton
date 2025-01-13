@@ -137,9 +137,10 @@ public class LdapUserQueryTest {
     List<User> users = identityService.createUserQuery().userIdIn("oscar", "monster", "daniel", "non-existing").list();
 
     // then
-    assertThat(users).isNotNull();
-    assertThat(users).hasSize(3);
-    assertThat(users).extracting("id").containsOnly("oscar", "monster", "daniel");
+    assertThat(users)
+      .isNotNull()
+      .hasSize(3)
+      .extracting("id").containsOnly("oscar", "monster", "daniel");
   }
 
   @Test

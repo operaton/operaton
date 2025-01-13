@@ -173,13 +173,15 @@ class DmnDecisionResultTest extends DmnEngineTest {
     assertThat(entryMapList).hasSize(2);
 
     Map<String, Object> firstResult = entryMapList.get(0);
-    assertThat(firstResult).hasSize(1);
-    assertThat(firstResult).containsEntry("firstOutput", "singleValue");
+    assertThat(firstResult)
+      .hasSize(1)
+      .containsEntry("firstOutput", "singleValue");
 
     Map<String, Object> secondResult = entryMapList.get(1);
-    assertThat(secondResult).hasSize(2);
-    assertThat(secondResult).containsEntry("firstOutput", "multipleValues1");
-    assertThat(secondResult).containsEntry("secondOutput", "multipleValues2");
+    assertThat(secondResult)
+      .hasSize(2)
+      .containsEntry("firstOutput", "multipleValues1")
+      .containsEntry("secondOutput", "multipleValues2");
   }
 
   @Test
@@ -191,9 +193,10 @@ class DmnDecisionResultTest extends DmnEngineTest {
     assertThat(ruleResult).hasSize(2);
 
     Map<String, Object> entryMap = ruleResult.getEntryMap();
-    assertThat(entryMap).hasSize(2);
-    assertThat(entryMap).containsEntry("firstOutput", "multipleValues1");
-    assertThat(entryMap).containsEntry("secondOutput", "multipleValues2");
+    assertThat(entryMap)
+      .hasSize(2)
+      .containsEntry("firstOutput", "multipleValues1")
+      .containsEntry("secondOutput", "multipleValues2");
   }
 
   @Test

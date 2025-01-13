@@ -1083,9 +1083,10 @@ public class OperatonExtensionsTest {
     newValues.add(this.modelInstance.newInstance(OperatonValue.class));
     newValues.add(this.modelInstance.newInstance(OperatonValue.class));
     elements.addAll(newValues);
-    assertThat(elements).hasSize(3);
 
-    assertThat(elements).doesNotContain(this.modelInstance.newInstance(OperatonValue.class));
+    assertThat(elements)
+      .hasSize(3)
+      .doesNotContain(this.modelInstance.newInstance(OperatonValue.class));
     assertThat(elements.containsAll(Arrays.asList(this.modelInstance.newInstance(OperatonValue.class)))).isFalse();
 
     assertThat(elements.remove(this.modelInstance.newInstance(OperatonValue.class))).isFalse();

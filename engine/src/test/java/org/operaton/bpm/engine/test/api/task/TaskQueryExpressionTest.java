@@ -531,10 +531,11 @@ public class TaskQueryExpressionTest {
     // execute query so expression will be evaluated
     taskQuery.count();
 
-    assertThat(queryString).isEqualTo(taskQuery.getAssignee());
-    assertThat(queryString).isEqualTo(taskQuery.getAssigneeLike());
-    assertThat(queryString).isEqualTo(taskQuery.getOwner());
-    assertThat(queryString).isEqualTo(taskQuery.getInvolvedUser());
+    assertThat(queryString)
+      .isEqualTo(taskQuery.getAssignee())
+      .isEqualTo(taskQuery.getAssigneeLike())
+      .isEqualTo(taskQuery.getOwner())
+      .isEqualTo(taskQuery.getInvolvedUser());
     assertThat(taskQuery.getUpdatedAfter()).isEqualTo(queryDate);
     assertThat(taskQuery.getCreateTimeBefore().equals(queryDate));
     assertThat(taskQuery.getCreateTime().equals(queryDate));

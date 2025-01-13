@@ -22,10 +22,7 @@ import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.LIKE_O
 import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.NOT_EQUALS_OPERATOR_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.ProcessDefinitionDto;
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.query.ProcessDefinitionQueryDto;
@@ -97,8 +94,9 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
     ProcessDefinitionQueryDto queryParameter = new ProcessDefinitionQueryDto();
 
     List<ProcessDefinitionDto> result = resource.queryCalledProcessDefinitions(queryParameter);
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(1);
+    assertThat(result)
+      .isNotEmpty()
+      .hasSize(1);
 
     ProcessDefinitionDto dto = result.get(0);
 
@@ -131,8 +129,9 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
     ProcessDefinitionQueryDto queryParameter = new ProcessDefinitionQueryDto();
 
     List<ProcessDefinitionDto> result = resource.queryCalledProcessDefinitions(queryParameter);
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(1);
+    assertThat(result)
+      .isNotEmpty()
+      .hasSize(1);
 
     ProcessDefinitionDto dto = result.get(0);
 
@@ -173,8 +172,9 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
     ProcessDefinitionQueryDto queryParameter1 = new ProcessDefinitionQueryDto();
 
     List<ProcessDefinitionDto> result1 = resource1.queryCalledProcessDefinitions(queryParameter1);
-    assertThat(result1).isNotEmpty();
-    assertThat(result1).hasSize(1);
+    assertThat(result1)
+      .isNotEmpty()
+      .hasSize(1);
 
     ProcessDefinitionDto dto1 = result1.get(0);
 
@@ -197,8 +197,9 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
     ProcessDefinitionQueryDto queryParameter2 = new ProcessDefinitionQueryDto();
 
     List<ProcessDefinitionDto> result2 = resource2.queryCalledProcessDefinitions(queryParameter2);
-    assertThat(result2).isNotEmpty();
-    assertThat(result2).hasSize(1);
+    assertThat(result2)
+      .isNotEmpty()
+      .hasSize(1);
 
     ProcessDefinitionDto dto2 = result2.get(0);
 
@@ -235,8 +236,9 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
     ProcessDefinitionQueryDto queryParameter = new ProcessDefinitionQueryDto();
 
     List<ProcessDefinitionDto> result = resource.queryCalledProcessDefinitions(queryParameter);
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(2);
+    assertThat(result)
+      .isNotEmpty()
+      .hasSize(2);
 
     ProcessDefinition compareWith = null;
     for (ProcessDefinitionDto dto : result) {
@@ -301,8 +303,9 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
     ProcessDefinitionQueryDto queryParameter = new ProcessDefinitionQueryDto();
 
     List<ProcessDefinitionDto> result = resource.queryCalledProcessDefinitions(queryParameter);
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(2);
+    assertThat(result)
+      .isNotEmpty()
+      .hasSize(2);
 
     ProcessDefinition compareWith = null;
     for (ProcessDefinitionDto dto : result) {
@@ -351,8 +354,9 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
     queryParameter.setSuperProcessDefinitionId(processInstance.getProcessDefinitionId());
 
     List<ProcessDefinitionDto> result = resource.queryCalledProcessDefinitions(queryParameter);
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(1);
+    assertThat(result)
+      .isNotEmpty()
+      .hasSize(1);
 
     ProcessDefinitionDto dto = result.get(0);
 
@@ -390,8 +394,9 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
     queryParameter1.setActivityIdIn(activityIds1);
 
     List<ProcessDefinitionDto> result1 = resource.queryCalledProcessDefinitions(queryParameter1);
-    assertThat(result1).isNotEmpty();
-    assertThat(result1).hasSize(1);
+    assertThat(result1)
+      .isNotEmpty()
+      .hasSize(1);
 
     ProcessDefinitionDto dto1 = result1.get(0);
 
@@ -410,8 +415,9 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
     queryParameter2.setActivityIdIn(activityIds2);
 
     List<ProcessDefinitionDto> result2 = resource.queryCalledProcessDefinitions(queryParameter2);
-    assertThat(result2).isNotEmpty();
-    assertThat(result2).hasSize(1);
+    assertThat(result2)
+      .isNotEmpty()
+      .hasSize(1);
 
     ProcessDefinitionDto dto2 = result2.get(0);
 
@@ -430,8 +436,9 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
     queryParameter3.setActivityIdIn(activityIds3);
 
     List<ProcessDefinitionDto> result3 = resource.queryCalledProcessDefinitions(queryParameter3);
-    assertThat(result3).isNotEmpty();
-    assertThat(result3).hasSize(2);
+    assertThat(result3)
+      .isNotEmpty()
+      .hasSize(2);
 
   }
 
@@ -455,15 +462,17 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
     queryParameter1.setBusinessKey("aBusinessKey");
 
     List<ProcessDefinitionDto> result1 = resource.queryCalledProcessDefinitions(queryParameter1);
-    assertThat(result1).isNotEmpty();
-    assertThat(result1).hasSize(2);
+    assertThat(result1)
+      .isNotEmpty()
+      .hasSize(2);
 
     ProcessDefinitionQueryDto queryParameter2 = new ProcessDefinitionQueryDto();
     queryParameter2.setBusinessKey("anotherBusinessKey");
 
     List<ProcessDefinitionDto> result2 = resource.queryCalledProcessDefinitions(queryParameter2);
-    assertThat(result2).isNotEmpty();
-    assertThat(result2).hasSize(2);
+    assertThat(result2)
+      .isNotEmpty()
+      .hasSize(2);
   }
 
   @Test
@@ -486,8 +495,6 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
 
     List<ProcessDefinitionDto> result1 = resource.queryCalledProcessDefinitions(queryParameter1);
     assertThat(result1).isEmpty();
-    assertThat(result1).isEmpty();
-
   }
 
   @Test
@@ -545,8 +552,9 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
 
     // then
     List<ProcessDefinitionDto> results = resource.queryCalledProcessDefinitions(queryParameter);
-    assertThat(results).isNotEmpty();
-    assertThat(results).hasSize(1);
+    assertThat(results)
+      .isNotEmpty()
+      .hasSize(1);
 
     ProcessDefinitionDto dto = results.get(0);
 

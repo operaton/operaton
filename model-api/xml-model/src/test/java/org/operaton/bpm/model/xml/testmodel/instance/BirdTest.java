@@ -377,12 +377,16 @@ public class BirdTest extends TestModelTest {
   void testGetGuards(TestModelArgs args) {
     init(args);
     Collection<Animal> guards = egg1.getGuardians();
-    assertThat(guards).isNotEmpty().hasSize(2);
-    assertThat(guards).contains(hedwig, timmy);
+    assertThat(guards)
+      .isNotEmpty()
+      .hasSize(2)
+      .contains(hedwig, timmy);
 
     guards = egg2.getGuardians();
-    assertThat(guards).isNotEmpty().hasSize(2);
-    assertThat(guards).contains(hedwig, timmy);
+    assertThat(guards)
+      .isNotEmpty()
+      .hasSize(2)
+      .contains(hedwig, timmy);
   }
 
   @ParameterizedTest

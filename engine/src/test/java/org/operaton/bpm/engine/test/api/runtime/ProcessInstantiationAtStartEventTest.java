@@ -86,7 +86,6 @@ public class ProcessInstantiationAtStartEventTest extends PluggableProcessEngine
     ProcessInstance processInstance = runtimeService.createProcessInstanceByKey(PROCESS_DEFINITION_KEY).setVariable("var", "value").execute();
 
     Object variable = runtimeService.getVariable(processInstance.getId(), "var");
-    assertThat(variable).isNotNull();
     assertThat(variable).isEqualTo("value");
   }
 

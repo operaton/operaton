@@ -78,10 +78,11 @@ class JsonTreeCreateTest {
   @Test
   void shouldBeIdempotent() {
     SpinJsonNode json = JSON(EXAMPLE_JSON);
-    assertThat(json).isEqualTo(JSON(json));
-    assertThat(json).isEqualTo(S(json, json()));
-    assertThat(json).isEqualTo(S(json, DataFormats.JSON_DATAFORMAT_NAME));
-    assertThat(json).isEqualTo(S(json));
+    assertThat(json)
+      .isEqualTo(JSON(json))
+      .isEqualTo(S(json, json()))
+      .isEqualTo(S(json, DataFormats.JSON_DATAFORMAT_NAME))
+      .isEqualTo(S(json));
   }
 
   @Test

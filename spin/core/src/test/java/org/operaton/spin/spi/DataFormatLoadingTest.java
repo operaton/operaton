@@ -70,8 +70,9 @@ class DataFormatLoadingTest {
     DataFormat<?> customDataFormat = DataFormats.getDataFormat(CustomDataFormatProvider.NAME);
 
     // then it should be properly returned
-    assertThat(customDataFormat).isNotNull();
-    assertThat(customDataFormat).isSameAs(CustomDataFormatProvider.DATA_FORMAT);
+    assertThat(customDataFormat)
+      .isNotNull()
+      .isSameAs(CustomDataFormatProvider.DATA_FORMAT);
   }
 
 

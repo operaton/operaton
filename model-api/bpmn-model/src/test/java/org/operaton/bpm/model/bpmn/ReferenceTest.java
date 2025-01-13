@@ -111,8 +111,9 @@ class ReferenceTest extends BpmnModelTest {
   @Test
   void testShouldAddMessageEventDefinitionRef() {
     Collection<EventDefinition> eventDefinitionRefs = startEvent.getEventDefinitionRefs();
-    assertThat(eventDefinitionRefs).isNotEmpty();
-    assertThat(eventDefinitionRefs).contains(messageEventDefinition);
+    assertThat(eventDefinitionRefs)
+      .isNotEmpty()
+      .contains(messageEventDefinition);
   }
 
   @Test
@@ -128,7 +129,6 @@ class ReferenceTest extends BpmnModelTest {
   void testShouldRemoveMessageEventDefinitionRefIfMessageEventDefinitionIsRemoved() {
     startEvent.getEventDefinitions().remove(messageEventDefinition);
     Collection<EventDefinition> eventDefinitionRefs = startEvent.getEventDefinitionRefs();
-    assertThat(eventDefinitionRefs).doesNotContain(messageEventDefinition);
     assertThat(eventDefinitionRefs).isEmpty();
   }
 
@@ -139,8 +139,9 @@ class ReferenceTest extends BpmnModelTest {
     Collection<EventDefinition> eventDefinitionRefs = startEvent.getEventDefinitionRefs();
     assertThat(eventDefinitionRefs).contains(messageEventDefinition);
     messageEventDefinition.replaceWithElement(otherMessageEventDefinition);
-    assertThat(eventDefinitionRefs).doesNotContain(messageEventDefinition);
-    assertThat(eventDefinitionRefs).contains(otherMessageEventDefinition);
+    assertThat(eventDefinitionRefs)
+      .doesNotContain(messageEventDefinition)
+      .contains(otherMessageEventDefinition);
   }
 
   @Test
@@ -148,7 +149,6 @@ class ReferenceTest extends BpmnModelTest {
     Collection<EventDefinition> eventDefinitionRefs = startEvent.getEventDefinitionRefs();
     assertThat(eventDefinitionRefs).contains(messageEventDefinition);
     messageEventDefinition.removeAttribute("id");
-    assertThat(eventDefinitionRefs).doesNotContain(messageEventDefinition);
     assertThat(eventDefinitionRefs).isEmpty();
   }
 
@@ -168,19 +168,21 @@ class ReferenceTest extends BpmnModelTest {
 
     StartEvent startEvent = bpmnModelInstance.getModelElementById("start-event");
     Collection<EventDefinition> eventDefinitionRefs = startEvent.getEventDefinitionRefs();
-    assertThat(eventDefinitionRefs).isNotEmpty();
-    assertThat(eventDefinitionRefs).contains(messageEventDefinition);
+    assertThat(eventDefinitionRefs)
+      .isNotEmpty()
+      .contains(messageEventDefinition);
     messageEventDefinition.setId("changed-message-event");
-    assertThat(eventDefinitionRefs).isNotEmpty();
-    assertThat(eventDefinitionRefs).contains(messageEventDefinition);
+    assertThat(eventDefinitionRefs)
+      .isNotEmpty()
+      .contains(messageEventDefinition);
     messageEventDefinition.setAttributeValue("id", "again-changed-message-event", true);
-    assertThat(eventDefinitionRefs).isNotEmpty();
-    assertThat(eventDefinitionRefs).contains(messageEventDefinition);
+    assertThat(eventDefinitionRefs)
+      .isNotEmpty()
+      .contains(messageEventDefinition);
 
     message.removeAttribute("id");
     assertThat(messageEventDefinition.getMessage()).isNull();
     messageEventDefinition.removeAttribute("id");
-    assertThat(eventDefinitionRefs).doesNotContain(messageEventDefinition);
     assertThat(eventDefinitionRefs).isEmpty();
   }
 }

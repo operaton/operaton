@@ -94,8 +94,7 @@ public class ProcessInstanceResourceTenantCheckTest extends AbstractCockpitPlugi
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     List<CalledProcessInstanceDto> result = resource.queryCalledProcessInstances(queryParameter);
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(1);
+    assertThat(result).isNotEmpty().hasSize(1);
 
     CalledProcessInstanceDto dto = result.get(0);
     assertThat(dto.getCallActivityId()).isEqualTo("CallActivity_Tenant1");
@@ -108,8 +107,7 @@ public class ProcessInstanceResourceTenantCheckTest extends AbstractCockpitPlugi
     identityService.setAuthentication("user", null, null);
 
     List<CalledProcessInstanceDto> result = resource.queryCalledProcessInstances(queryParameter);
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(2);
+    assertThat(result).isNotEmpty().hasSize(2);
 
     assertThat(getCalledActivityIds(result)).contains("CallActivity_Tenant1", "CallActivity_Tenant2");
   }
@@ -120,8 +118,7 @@ public class ProcessInstanceResourceTenantCheckTest extends AbstractCockpitPlugi
     identityService.setAuthentication("user", Collections.singletonList(Groups.OPERATON_ADMIN), null);
 
     List<CalledProcessInstanceDto> result = resource.queryCalledProcessInstances(queryParameter);
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(2);
+    assertThat(result).isNotEmpty().hasSize(2);
 
     assertThat(getCalledActivityIds(result)).contains("CallActivity_Tenant1", "CallActivity_Tenant2");
   }
@@ -132,8 +129,7 @@ public class ProcessInstanceResourceTenantCheckTest extends AbstractCockpitPlugi
     identityService.setAuthentication("user", Collections.singletonList(ADMIN_GROUP), null);
 
     List<CalledProcessInstanceDto> result = resource.queryCalledProcessInstances(queryParameter);
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(2);
+    assertThat(result).isNotEmpty().hasSize(2);
 
     assertThat(getCalledActivityIds(result)).contains("CallActivity_Tenant1", "CallActivity_Tenant2");
   }
@@ -144,8 +140,7 @@ public class ProcessInstanceResourceTenantCheckTest extends AbstractCockpitPlugi
     identityService.setAuthentication("adminUser", null, null);
 
     List<CalledProcessInstanceDto> result = resource.queryCalledProcessInstances(queryParameter);
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(2);
+    assertThat(result).isNotEmpty().hasSize(2);
 
     assertThat(getCalledActivityIds(result)).contains("CallActivity_Tenant1", "CallActivity_Tenant2");
   }

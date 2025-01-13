@@ -1194,8 +1194,9 @@ public class HistoricJobLogTest {
         .getId();
 
     String stacktrace = historyService.getHistoricJobLogExceptionStacktrace(failedHistoricJobLogId);
-    assertThat(stacktrace).isNotNull();
-    assertThat(stacktrace).containsIgnoringCase(FailingDelegate.EXCEPTION_MESSAGE);
+    assertThat(stacktrace)
+      .isNotNull()
+      .containsIgnoringCase(FailingDelegate.EXCEPTION_MESSAGE);
   }
 
   @Test
@@ -1245,9 +1246,10 @@ public class HistoricJobLogTest {
     assertThat(serviceTask1FailedHistoricJobLog.getJobExceptionMessage()).isEqualTo(FirstFailingDelegate.FIRST_EXCEPTION_MESSAGE);
 
     String serviceTask1Stacktrace = historyService.getHistoricJobLogExceptionStacktrace(serviceTask1FailedHistoricJobLogId);
-    assertThat(serviceTask1Stacktrace).isNotNull();
-    assertThat(serviceTask1Stacktrace).containsIgnoringCase(FirstFailingDelegate.FIRST_EXCEPTION_MESSAGE);
-    assertThat(serviceTask1Stacktrace).containsIgnoringCase(FirstFailingDelegate.class.getName());
+    assertThat(serviceTask1Stacktrace)
+      .isNotNull()
+      .containsIgnoringCase(FirstFailingDelegate.FIRST_EXCEPTION_MESSAGE)
+      .containsIgnoringCase(FirstFailingDelegate.class.getName());
 
     // when (2)
     runtimeService.setVariable(processInstanceId, "firstFail", false);
@@ -1272,9 +1274,10 @@ public class HistoricJobLogTest {
     assertThat(serviceTask2FailedHistoricJobLog.getJobExceptionMessage()).isEqualTo(SecondFailingDelegate.SECOND_EXCEPTION_MESSAGE);
 
     String serviceTask2Stacktrace = historyService.getHistoricJobLogExceptionStacktrace(serviceTask2FailedHistoricJobLogId);
-    assertThat(serviceTask2Stacktrace).isNotNull();
-    assertThat(serviceTask2Stacktrace).containsIgnoringCase(SecondFailingDelegate.SECOND_EXCEPTION_MESSAGE);
-    assertThat(serviceTask2Stacktrace).containsIgnoringCase(SecondFailingDelegate.class.getName());
+    assertThat(serviceTask2Stacktrace)
+      .isNotNull()
+      .containsIgnoringCase(SecondFailingDelegate.SECOND_EXCEPTION_MESSAGE)
+      .containsIgnoringCase(SecondFailingDelegate.class.getName());
 
     assertThat(serviceTask1Stacktrace.equals(serviceTask2Stacktrace)).isFalse();
   }
@@ -1306,8 +1309,9 @@ public class HistoricJobLogTest {
     assertThat(failedHistoricJobLog.getJobExceptionMessage()).isNull();
 
     String stacktrace = historyService.getHistoricJobLogExceptionStacktrace(failedHistoricJobLogId);
-    assertThat(stacktrace).isNotNull();
-    assertThat(stacktrace).containsIgnoringCase(ThrowExceptionWithoutMessageDelegate.class.getName());
+    assertThat(stacktrace)
+      .isNotNull()
+      .containsIgnoringCase(ThrowExceptionWithoutMessageDelegate.class.getName());
   }
 
   @Deployment

@@ -155,8 +155,9 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
     assertThat(decisionInstances).hasSize(1);
     HistoricDecisionInstance decisionInstance = decisionInstances.get(0);
     List<HistoricDecisionInputInstance> inputs = decisionInstance.getInputs();
-    assertThat(inputs).isNotNull();
-    assertThat(inputs).hasSize(1);
+    assertThat(inputs)
+      .isNotNull()
+      .hasSize(1);
 
     HistoricDecisionInputInstance input = inputs.get(0);
     assertThat(input.getDecisionInstanceId()).isEqualTo(decisionInstance.getId());
@@ -180,8 +181,9 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
     assertThat(decisionInstances).hasSize(1);
     HistoricDecisionInstance decisionInstance = decisionInstances.get(0);
     List<HistoricDecisionOutputInstance> outputs = decisionInstance.getOutputs();
-    assertThat(outputs).isNotNull();
-    assertThat(outputs).hasSize(1);
+    assertThat(outputs)
+      .isNotNull()
+      .hasSize(1);
 
     HistoricDecisionOutputInstance output = outputs.get(0);
     assertThat(output.getDecisionInstanceId()).isEqualTo(decisionInstance.getId());

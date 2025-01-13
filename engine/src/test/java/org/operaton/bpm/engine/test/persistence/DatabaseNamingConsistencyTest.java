@@ -102,7 +102,8 @@ public class DatabaseNamingConsistencyTest {
     }
 
     // then
-    assertThat(errors).containsAll(Arrays.asList(testStringsIncorrect));
-    assertThat(errors).doesNotContainAnyElementsOf(Arrays.asList(testStringsCorrect));
+    assertThat(errors)
+      .containsAll(Arrays.asList(testStringsIncorrect))
+      .doesNotContainAnyElementsOf(Arrays.asList(testStringsCorrect));
   }
 }

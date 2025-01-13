@@ -105,8 +105,7 @@ public class IncidentRestServiceTenantCheckTest extends AbstractCockpitPluginTes
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     List<IncidentDto> result = resource.queryIncidents(queryParameter, null, null);
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(1);
+    assertThat(result).isNotEmpty().hasSize(1);
 
     IncidentDto incident = result.get(0);
     assertThat(incident.getProcessInstanceId()).isEqualTo(processInstanceTenantOne);
@@ -126,8 +125,7 @@ public class IncidentRestServiceTenantCheckTest extends AbstractCockpitPluginTes
       processInstnaceIds.add(incidentDto.getProcessInstanceId());
     }
 
-    assertThat(processInstnaceIds).contains(processInstanceTenantOne);
-    assertThat(processInstnaceIds).contains(processInstanceTenantTwo);
+    assertThat(processInstnaceIds).contains(processInstanceTenantOne, processInstanceTenantTwo);
   }
 
   @Test
@@ -144,8 +142,7 @@ public class IncidentRestServiceTenantCheckTest extends AbstractCockpitPluginTes
       processInstnaceIds.add(incidentDto.getProcessInstanceId());
     }
 
-    assertThat(processInstnaceIds).contains(processInstanceTenantOne);
-    assertThat(processInstnaceIds).contains(processInstanceTenantTwo);
+    assertThat(processInstnaceIds).contains(processInstanceTenantOne, processInstanceTenantTwo);
   }
 
   @Test
@@ -162,8 +159,7 @@ public class IncidentRestServiceTenantCheckTest extends AbstractCockpitPluginTes
       processInstnaceIds.add(incidentDto.getProcessInstanceId());
     }
 
-    assertThat(processInstnaceIds).contains(processInstanceTenantOne);
-    assertThat(processInstnaceIds).contains(processInstanceTenantTwo);
+    assertThat(processInstnaceIds).contains(processInstanceTenantOne, processInstanceTenantTwo);
   }
 
   @Test
@@ -180,8 +176,7 @@ public class IncidentRestServiceTenantCheckTest extends AbstractCockpitPluginTes
       processInstnaceIds.add(incidentDto.getProcessInstanceId());
     }
 
-    assertThat(processInstnaceIds).contains(processInstanceTenantOne);
-    assertThat(processInstnaceIds).contains(processInstanceTenantTwo);
+    assertThat(processInstnaceIds).contains(processInstanceTenantOne, processInstanceTenantTwo);
   }
 
 }

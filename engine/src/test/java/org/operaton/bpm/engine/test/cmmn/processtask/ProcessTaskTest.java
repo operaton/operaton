@@ -1834,7 +1834,6 @@ public class ProcessTaskTest extends CmmnTest {
     taskService.complete(task.getId());
 
     Object variable = caseService.getVariable(caseInstanceId, variableName);
-    assertThat(variable).isNotNull();
     assertThat(variable).isEqualTo(variableValue);
   }
 
@@ -1851,7 +1850,6 @@ public class ProcessTaskTest extends CmmnTest {
     taskService.complete(task.getId());
 
     Object variable = caseService.getVariable(caseInstanceId, variableName);
-    assertThat(variable).isNotNull();
     assertThat(variable).isEqualTo(variableValue);
   }
 

@@ -79,9 +79,10 @@ public class LicenseKeyTest {
 
     // then
     assertThat(licenseKeyLegacyProperty).isNull();
-    assertThat(licenseByteArrayId).isNotNull();
+    assertThat(licenseByteArrayId)
+      .isNotNull()
     // make sure a newly set license is not stored in properties...
-    assertThat(licenseByteArrayId).isNotEqualTo(licenseKey);
+      .isNotEqualTo(licenseKey);
     // ...but in the byte array table, referenced by the property
     assertThat(processEngineConfiguration.getCommandExecutorTxRequired().execute(new GetByteArrayCommand(licenseByteArrayId)).getBytes())
         .isEqualTo(licenseKey.getBytes());

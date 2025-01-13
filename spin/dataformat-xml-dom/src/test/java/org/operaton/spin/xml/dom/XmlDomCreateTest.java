@@ -73,10 +73,11 @@ class XmlDomCreateTest {
   @Test
   void shouldBeIdempotent() {
     SpinXmlElement xml = XML(EXAMPLE_XML);
-    assertThat(xml).isEqualTo(XML(xml));
-    assertThat(xml).isEqualTo(S(xml, xmlDataFormat));
-    assertThat(xml).isEqualTo(S(xml, DataFormats.XML_DATAFORMAT_NAME));
-    assertThat(xml).isEqualTo(S(xml));
+    assertThat(xml)
+      .isEqualTo(XML(xml))
+      .isEqualTo(S(xml, xmlDataFormat))
+      .isEqualTo(S(xml, DataFormats.XML_DATAFORMAT_NAME))
+      .isEqualTo(S(xml));
   }
 
   @Test

@@ -166,8 +166,9 @@ public class CompositeIncidentHandlerTest {
 
     Incident result = compositeIncidentHandler.handleIncident(incidentContext, "Incident message");
 
-    assertThat(result).isNotNull();
-    assertThat(result).isEqualTo(incident);
+    assertThat(result)
+      .isNotNull()
+      .isEqualTo(incident);
 
     verify(mainHandler).handleIncident(eq(incidentContext), eq("Incident message"));
     verify(subHandler, new Times(3)).handleIncident(eq(incidentContext), eq("Incident message"));

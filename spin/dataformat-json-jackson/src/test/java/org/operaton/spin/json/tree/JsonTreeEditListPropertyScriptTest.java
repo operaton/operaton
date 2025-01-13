@@ -273,8 +273,9 @@ public abstract class JsonTreeEditListPropertyScriptTest extends ScriptTest {
 
     // casts to int because ruby returns long instead of int
     assertThat(oldSize.intValue() + 1).isEqualTo(newSize.intValue());
-    assertThat(oldValue).isEqualTo("euro");
-    assertThat(oldValue).isEqualTo(oldValueOnNewPosition);
+    assertThat(oldValue)
+      .isEqualTo("euro")
+      .isEqualTo(oldValueOnNewPosition);
     assertThat(newValue).isEqualTo("Test");
   }
 
@@ -291,8 +292,9 @@ public abstract class JsonTreeEditListPropertyScriptTest extends ScriptTest {
 
     // casts to int because ruby returns long instead of int
     assertThat(oldSize.intValue() + 1).isEqualTo(newSize.intValue());
-    assertThat(oldValue).isEqualTo("dollar");
-    assertThat(oldValue).isEqualTo(oldValueOnNewPosition);
+    assertThat(oldValue)
+      .isEqualTo("dollar")
+      .isEqualTo(oldValueOnNewPosition);
     assertThat(newValue).isEqualTo("Test");
   }
 
@@ -352,8 +354,9 @@ public abstract class JsonTreeEditListPropertyScriptTest extends ScriptTest {
 
     // casts to int because ruby returns long instead of int
     assertThat(oldSize.intValue() + 1).isEqualTo(newSize.intValue());
-    assertThat(oldValue).isEqualTo("dollar");
-    assertThat(oldValue).isEqualTo(oldValueOnNewPosition);
+    assertThat(oldValue)
+      .isEqualTo("dollar")
+      .isEqualTo(oldValueOnNewPosition);
     assertThat(newValue).isEqualTo("Test");
   }
 

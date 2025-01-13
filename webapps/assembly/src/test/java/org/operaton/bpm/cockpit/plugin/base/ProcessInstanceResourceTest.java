@@ -102,8 +102,9 @@ public class ProcessInstanceResourceTest extends AbstractCockpitPluginTest {
     CalledProcessInstanceQueryDto queryParameter = new CalledProcessInstanceQueryDto();
 
     List<CalledProcessInstanceDto> result = resource.queryCalledProcessInstances(queryParameter);
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(2);
+    assertThat(result)
+      .isNotEmpty()
+      .hasSize(2);
 
     ProcessDefinition compareWith = null;
     for (ProcessInstanceDto instance : result) {
@@ -160,24 +161,27 @@ public class ProcessInstanceResourceTest extends AbstractCockpitPluginTest {
     queryParameter1.setActivityInstanceIdIn(activityInstanceIds1);
 
     List<CalledProcessInstanceDto> result1 = resource.queryCalledProcessInstances(queryParameter1);
-    assertThat(result1).isNotEmpty();
-    assertThat(result1).hasSize(1);
+    assertThat(result1)
+      .isNotEmpty()
+      .hasSize(1);
 
     CalledProcessInstanceQueryDto queryParameter2 = new CalledProcessInstanceQueryDto();
     String[] activityInstanceIds2 = {secondActivityInstanceId};
     queryParameter2.setActivityInstanceIdIn(activityInstanceIds2);
 
     List<CalledProcessInstanceDto> result2 = resource.queryCalledProcessInstances(queryParameter2);
-    assertThat(result2).isNotEmpty();
-    assertThat(result2).hasSize(1);
+    assertThat(result2)
+      .isNotEmpty()
+      .hasSize(1);
 
     CalledProcessInstanceQueryDto queryParameter3 = new CalledProcessInstanceQueryDto();
     String[] activityInstanceIds3 = {firstActivityInstanceId, secondActivityInstanceId};
     queryParameter3.setActivityInstanceIdIn(activityInstanceIds3);
 
     List<CalledProcessInstanceDto> result3 = resource.queryCalledProcessInstances(queryParameter3);
-    assertThat(result3).isNotEmpty();
-    assertThat(result3).hasSize(2);
+    assertThat(result3)
+      .isNotEmpty()
+      .hasSize(2);
   }
 
   @Test
@@ -210,12 +214,14 @@ public class ProcessInstanceResourceTest extends AbstractCockpitPluginTest {
     queryParameter1.setProcessDefinitionId(processDefinition1);
 
     List<CalledProcessInstanceDto> callActivityInstances = resource.queryCalledProcessInstances(queryParameter1);
-    assertThat(callActivityInstances).isNotEmpty();
-    assertThat(callActivityInstances).hasSize(1);
+    assertThat(callActivityInstances)
+      .isNotEmpty()
+      .hasSize(1);
 
     List<IncidentStatisticsDto> incidents1 = callActivityInstances.get(0).getIncidents();
-    assertThat(incidents1).isNotEmpty();
-    assertThat(incidents1).hasSize(1);
+    assertThat(incidents1)
+      .isNotEmpty()
+      .hasSize(1);
 
     assertThat(incidents1.get(0).getIncidentCount()).isEqualTo(1);
     assertThat(incidents1.get(0).getIncidentType()).isEqualTo("failedJob");
@@ -224,12 +230,14 @@ public class ProcessInstanceResourceTest extends AbstractCockpitPluginTest {
     queryParameter2.setProcessDefinitionId(processDefinition2);
 
     List<CalledProcessInstanceDto> failingProcessInstance = resource.queryCalledProcessInstances(queryParameter2);
-    assertThat(failingProcessInstance).isNotEmpty();
-    assertThat(failingProcessInstance).hasSize(1);
+    assertThat(failingProcessInstance)
+      .isNotEmpty()
+      .hasSize(1);
 
     List<IncidentStatisticsDto> incidents2 = failingProcessInstance.get(0).getIncidents();
-    assertThat(incidents2).isNotEmpty();
-    assertThat(incidents2).hasSize(1);
+    assertThat(incidents2)
+      .isNotEmpty()
+      .hasSize(1);
 
     assertThat(incidents2.get(0).getIncidentCount()).isEqualTo(1);
     assertThat(incidents2.get(0).getIncidentType()).isEqualTo("failedJob");

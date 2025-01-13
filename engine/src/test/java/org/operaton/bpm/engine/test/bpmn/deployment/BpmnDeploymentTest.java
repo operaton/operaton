@@ -90,8 +90,9 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
     // verify content
     InputStream deploymentInputStream = repositoryService.getResourceAsStream(deploymentId, bpmnResourceName);
     String contentFromDeployment = readInputStreamToString(deploymentInputStream);
-    assertThat(contentFromDeployment).isNotEmpty();
-    assertThat(contentFromDeployment).contains("process id=\"emptyProcess\"");
+    assertThat(contentFromDeployment)
+      .isNotEmpty()
+      .contains("process id=\"emptyProcess\"");
 
     InputStream fileInputStream = ReflectUtil.getResourceAsStream("org/operaton/bpm/engine/test/bpmn/deployment/BpmnDeploymentTest.testGetBpmnXmlFileThroughService.bpmn20.xml");
     String contentFromFile = readInputStreamToString(fileInputStream);

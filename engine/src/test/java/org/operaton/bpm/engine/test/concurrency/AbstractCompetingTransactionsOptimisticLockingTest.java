@@ -84,8 +84,9 @@ public abstract class AbstractCompetingTransactionsOptimisticLockingTest {
     thread1.proceedAndWaitTillDone();
 
     // then
-    assertThat(thread1.exception).isNotNull();
-    assertThat(thread1.exception).isInstanceOf(OptimisticLockingException.class);
+    assertThat(thread1.exception)
+      .isNotNull()
+      .isInstanceOf(OptimisticLockingException.class);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/concurrency/AbstractCompetingTransactionsOptimisticLockingTest.shouldDetectConcurrentDeletionOfExecutionForTaskInsert.bpmn20.xml")

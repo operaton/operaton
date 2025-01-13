@@ -1540,7 +1540,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
         InOrder inOrder = Mockito.inOrder(migrationPlanBuilderMock);
         String sourceActivityId = ((List<String>) migrationInstructionDto.get(MigrationInstructionDtoBuilder.PROP_SOURCE_ACTIVITY_IDS)).get(0);
         String targetActivityId = ((List<String>) migrationInstructionDto.get(MigrationInstructionDtoBuilder.PROP_TARGET_ACTIVITY_IDS)).get(0);
-        inOrder.verify(migrationPlanBuilderMock).mapActivities(eq(sourceActivityId), eq(targetActivityId));
+        inOrder.verify(migrationPlanBuilderMock).mapActivities(sourceActivityId, targetActivityId);
         Boolean updateEventTrigger = (Boolean) migrationInstructionDto.get(MigrationInstructionDtoBuilder.PROP_UPDATE_EVENT_TRIGGER);
         if (Boolean.TRUE.equals(updateEventTrigger)) {
           inOrder.verify(migrationPlanBuilderMock, immediatelyAfter()).updateEventTrigger();
@@ -1574,7 +1574,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
   protected void verifyMigrationExecutionBuilderInteraction(InOrder inOrder, Map<String, Object> migrationExecution) {
     List<String> processInstanceIds = ((List<String>) migrationExecution.get(MigrationExecutionDtoBuilder.PROP_PROCESS_INSTANCE_IDS));
 
-    inOrder.verify(migrationPlanExecutionBuilderMock).processInstanceIds(eq(processInstanceIds));
+    inOrder.verify(migrationPlanExecutionBuilderMock).processInstanceIds(processInstanceIds);
     ProcessInstanceQueryDto processInstanceQuery = (ProcessInstanceQueryDto) migrationExecution.get(MigrationExecutionDtoBuilder.PROP_PROCESS_INSTANCE_QUERY);
     if (processInstanceQuery != null) {
       verifyMigrationPlanExecutionProcessInstanceQuery(inOrder);

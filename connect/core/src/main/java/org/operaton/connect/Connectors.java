@@ -34,7 +34,7 @@ import org.operaton.connect.spi.ConnectorRequest;
  */
 public class Connectors {
 
-  protected static ConnectCoreLogger LOG = ConnectLogger.CORE_LOGGER;
+  protected static final ConnectCoreLogger LOG = ConnectLogger.CORE_LOGGER;
 
   public static String HTTP_CONNECTOR_ID = "http-connector";
   public static String SOAP_HTTP_CONNECTOR_ID = "soap-http-connector";

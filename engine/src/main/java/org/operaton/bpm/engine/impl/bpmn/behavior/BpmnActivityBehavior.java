@@ -39,7 +39,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  */
 public class BpmnActivityBehavior {
 
-  protected static BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
+  protected static final BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
 
   /**
    * Performs the default outgoing BPMN 2.0 behavior, which is having parallel

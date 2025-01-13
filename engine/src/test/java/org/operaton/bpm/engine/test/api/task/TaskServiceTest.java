@@ -729,7 +729,6 @@ public class TaskServiceTest {
 
     List<Comment> updateCommentLst = taskService.getProcessInstanceComments(processInstanceId);
 
-    assertThat(updateCommentLst).isNotEmpty();
     assertThat(updateCommentLst).hasSize(1);
 
     Comment actual = updateCommentLst.get(0);
@@ -749,7 +748,6 @@ public class TaskServiceTest {
 
     List<Comment> updateCommentLst = taskService.getProcessInstanceComments(processInstanceId);
 
-    assertThat(updateCommentLst).isNotEmpty();
     assertThat(updateCommentLst).hasSize(1);
 
     Comment actual = updateCommentLst.get(0);

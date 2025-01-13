@@ -116,8 +116,9 @@ public class SignalEventConcurrencyTest extends ConcurrencyTestHelper {
 
     // sending the signal will fail because it cannot find the execution anymore
     final Throwable exception = signalThread.getException();
-    assertThat(exception).isInstanceOf(NullValueException.class);
-    assertThat(exception).hasMessage(
+    assertThat(exception)
+      .isInstanceOf(NullValueException.class)
+      .hasMessage(
         String.format("Cannot restore state of process instance %s: list of executions is empty",
             mainTask.getProcessInstanceId()));
   }

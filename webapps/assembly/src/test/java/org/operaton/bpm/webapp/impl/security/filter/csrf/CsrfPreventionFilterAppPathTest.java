@@ -80,9 +80,9 @@ public class CsrfPreventionFilterAppPathTest extends CsrfPreventionFilterTest {
     assertThat(headerToken).isNotNull().isNotEmpty();
 
     String regex = CSRF_COOKIE_NAME + "=[A-Z0-9]{32}" + CSRF_PATH_FIELD_NAME + "/;SameSite=Lax";
-    assertThat(cookieToken).matches(regex.replace(";", ";\\s*"));
-
-    assertThat(cookieToken).contains(headerToken);
+    assertThat(cookieToken)
+      .matches(regex.replace(";", ";\\s*"))
+      .contains(headerToken);
   }
 
   @Override

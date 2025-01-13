@@ -1328,7 +1328,6 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     assertThat(task.getName()).isEqualTo("Task after error");
 
     Object variable = runtimeService.getVariable(task.getProcessInstanceId(), variableName);
-    assertThat(variable).isNotNull();
     assertThat(variable).isEqualTo(variableValue);
   }
 
@@ -1353,7 +1352,6 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     assertThat(task.getName()).isEqualTo("Task after error");
 
     Object variable = runtimeService.getVariable(task.getProcessInstanceId(), variableName);
-    assertThat(variable).isNotNull();
     assertThat(variable).isEqualTo(variableValue);
   }
 
@@ -1380,7 +1378,6 @@ public class CallActivityTest extends PluggableProcessEngineTest {
 
     Object variable = runtimeService.getVariable(task.getProcessInstanceId(), variableName);
     //both processes have and out mapping for all, so we want the variable to be propagated to the process with the event handler
-    assertThat(variable).isNotNull();
     assertThat(variable).isEqualTo(variableValue);
   }
 
@@ -1416,10 +1413,8 @@ public class CallActivityTest extends PluggableProcessEngineTest {
 
     //the two subprocess don't pass all their variables, so we check that not all were passed
     Object variable = runtimeService.getVariable(task.getProcessInstanceId(), variableName2);
-    assertThat(variable).isNotNull();
     assertThat(variable).isEqualTo(variableValue);
     variable = runtimeService.getVariable(task.getProcessInstanceId(), variableName3);
-    assertThat(variable).isNotNull();
     assertThat(variable).isEqualTo(variableValue2);
     variable = runtimeService.getVariable(task.getProcessInstanceId(), variableName1);
     assertThat(variable).isNull();

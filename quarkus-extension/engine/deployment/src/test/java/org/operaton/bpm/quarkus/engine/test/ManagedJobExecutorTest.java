@@ -91,8 +91,9 @@ class ManagedJobExecutorTest {
     // then
     // an quarkus managed executor is created
     JobExecutor jobExecutor = processEngineConfiguration.getJobExecutor();
-    assertThat(jobExecutor).isNotNull();
-    assertThat(jobExecutor).isInstanceOf(ManagedJobExecutor.class);
+    assertThat(jobExecutor)
+      .isNotNull()
+      .isInstanceOf(ManagedJobExecutor.class);
   }
 
   @Test

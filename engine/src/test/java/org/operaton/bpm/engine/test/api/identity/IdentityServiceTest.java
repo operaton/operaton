@@ -1088,8 +1088,9 @@ public class IdentityServiceTest {
     String toString = user.toString();
 
     // then
-    assertThat(toString).doesNotContain(salt);
-    assertThat(toString).doesNotContain(hashedPassword);
+    assertThat(toString)
+      .doesNotContain(salt)
+      .doesNotContain(hashedPassword);
 
   }
 

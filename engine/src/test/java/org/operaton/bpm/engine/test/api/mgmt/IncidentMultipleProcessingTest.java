@@ -72,16 +72,18 @@ public class IncidentMultipleProcessingTest {
   public void jobHandlerShouldBeCompositeHandler() {
     IncidentHandler incidentHandler = engineRule.getProcessEngineConfiguration().getIncidentHandler(Incident.FAILED_JOB_HANDLER_TYPE);
 
-    assertThat(incidentHandler).isNotNull();
-    assertThat(incidentHandler).isInstanceOf(CompositeIncidentHandler.class);
+    assertThat(incidentHandler)
+      .isNotNull()
+      .isInstanceOf(CompositeIncidentHandler.class);
   }
 
   @Test
   public void externalTaskHandlerShouldBeCompositeHandler() {
     IncidentHandler incidentHandler = engineRule.getProcessEngineConfiguration().getIncidentHandler(Incident.EXTERNAL_TASK_HANDLER_TYPE);
 
-    assertThat(incidentHandler).isNotNull();
-    assertThat(incidentHandler).isInstanceOf(CompositeIncidentHandler.class);
+    assertThat(incidentHandler)
+      .isNotNull()
+      .isInstanceOf(CompositeIncidentHandler.class);
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn" })

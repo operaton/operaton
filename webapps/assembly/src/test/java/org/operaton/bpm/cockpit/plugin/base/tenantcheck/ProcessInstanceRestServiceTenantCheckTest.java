@@ -138,12 +138,10 @@ public class ProcessInstanceRestServiceTenantCheckTest extends AbstractCockpitPl
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(1);
+    assertThat(result).isNotEmpty().hasSize(1);
 
     List<IncidentStatisticsDto> incidents = result.get(0).getIncidents();
-    assertThat(incidents).isNotEmpty();
-    assertThat(incidents).hasSize(1);
+    assertThat(incidents).isNotEmpty().hasSize(1);
   }
 
   @Test
@@ -153,16 +151,13 @@ public class ProcessInstanceRestServiceTenantCheckTest extends AbstractCockpitPl
     identityService.setAuthentication("user", null, null);
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(2);
+    assertThat(result).isNotEmpty().hasSize(2);
 
     List<IncidentStatisticsDto> incidents = result.get(0).getIncidents();
-    assertThat(incidents).isNotEmpty();
-    assertThat(incidents).hasSize(1);
+    assertThat(incidents).isNotEmpty().hasSize(1);
 
     incidents = result.get(1).getIncidents();
-    assertThat(incidents).isNotEmpty();
-    assertThat(incidents).hasSize(1);
+    assertThat(incidents).isNotEmpty().hasSize(1);
   }
 
   @Test
@@ -171,16 +166,13 @@ public class ProcessInstanceRestServiceTenantCheckTest extends AbstractCockpitPl
     identityService.setAuthentication("user", Collections.singletonList(Groups.OPERATON_ADMIN), null);
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(2);
+    assertThat(result).isNotEmpty().hasSize(2);
 
     List<IncidentStatisticsDto> incidents = result.get(0).getIncidents();
-    assertThat(incidents).isNotEmpty();
-    assertThat(incidents).hasSize(1);
+    assertThat(incidents).isNotEmpty().hasSize(1);
 
     incidents = result.get(1).getIncidents();
-    assertThat(incidents).isNotEmpty();
-    assertThat(incidents).hasSize(1);
+    assertThat(incidents).isNotEmpty().hasSize(1);
   }
 
   @Test
@@ -189,16 +181,13 @@ public class ProcessInstanceRestServiceTenantCheckTest extends AbstractCockpitPl
     identityService.setAuthentication("user", Collections.singletonList(ADMIN_GROUP), null);
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(2);
+    assertThat(result).isNotEmpty().hasSize(2);
 
     List<IncidentStatisticsDto> incidents = result.get(0).getIncidents();
-    assertThat(incidents).isNotEmpty();
-    assertThat(incidents).hasSize(1);
+    assertThat(incidents).isNotEmpty().hasSize(1);
 
     incidents = result.get(1).getIncidents();
-    assertThat(incidents).isNotEmpty();
-    assertThat(incidents).hasSize(1);
+    assertThat(incidents).isNotEmpty().hasSize(1);
   }
 
   @Test
@@ -207,16 +196,13 @@ public class ProcessInstanceRestServiceTenantCheckTest extends AbstractCockpitPl
     identityService.setAuthentication("adminUser", null, null);
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(2);
+    assertThat(result).isNotEmpty().hasSize(2);
 
     List<IncidentStatisticsDto> incidents = result.get(0).getIncidents();
-    assertThat(incidents).isNotEmpty();
-    assertThat(incidents).hasSize(1);
+    assertThat(incidents).isNotEmpty().hasSize(1);
 
     incidents = result.get(1).getIncidents();
-    assertThat(incidents).isNotEmpty();
-    assertThat(incidents).hasSize(1);
+    assertThat(incidents).isNotEmpty().hasSize(1);
   }
 
   private void startProcessInstancesWithTenantId(String processDefinitionKey, String tenantId) {

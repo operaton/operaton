@@ -94,8 +94,9 @@ public class IncidentRestServiceTest extends AbstractCockpitPluginTest {
     queryParameter.setProcessInstanceIdIn(processInstanceIds);
 
     List<IncidentDto> result = resource.queryIncidents(queryParameter, null, null);
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(1);
+    assertThat(result)
+      .isNotEmpty()
+      .hasSize(1);
 
     IncidentDto incident = result.get(0);
 
@@ -140,8 +141,9 @@ public class IncidentRestServiceTest extends AbstractCockpitPluginTest {
     queryParameter.setProcessInstanceIdIn(processInstanceIds);
 
     List<IncidentDto> result = resource.queryIncidents(queryParameter, null, null);
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(2);
+    assertThat(result)
+      .isNotEmpty()
+      .hasSize(2);
   }
 
   @Test
@@ -159,8 +161,9 @@ public class IncidentRestServiceTest extends AbstractCockpitPluginTest {
     queryParameter.setActivityIdIn(activityIds);
 
     List<IncidentDto> result = resource.queryIncidents(queryParameter, null, null);
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(1);
+    assertThat(result)
+      .isNotEmpty()
+      .hasSize(1);
 
     IncidentDto incident = result.get(0);
 
@@ -203,8 +206,9 @@ public class IncidentRestServiceTest extends AbstractCockpitPluginTest {
     queryParameter.setActivityIdIn(activityIds);
 
     List<IncidentDto> result = resource.queryIncidents(queryParameter, null, null);
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(2);
+    assertThat(result)
+      .isNotEmpty()
+      .hasSize(2);
   }
 
   @Test
@@ -224,8 +228,9 @@ public class IncidentRestServiceTest extends AbstractCockpitPluginTest {
     queryParameter.setActivityIdIn(activityIds);
 
     List<IncidentDto> result = resource.queryIncidents(queryParameter, null, null);
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(1);
+    assertThat(result)
+      .isNotEmpty()
+      .hasSize(1);
   }
 
   @Test
@@ -271,8 +276,9 @@ public class IncidentRestServiceTest extends AbstractCockpitPluginTest {
     queryParameter.setProcessInstanceIdIn(processInstanceIds);
 
     List<IncidentDto> result = resource.queryIncidents(queryParameter, null, null);
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(1);
+    assertThat(result)
+      .isNotEmpty()
+      .hasSize(1);
 
     IncidentDto incident = result.get(0);
 
@@ -314,20 +320,23 @@ public class IncidentRestServiceTest extends AbstractCockpitPluginTest {
     IncidentQueryDto queryParameter = new IncidentQueryDto();
 
     List<IncidentDto> result = resource.queryIncidents(queryParameter, 0, 2);
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(2);
+    assertThat(result)
+      .isNotEmpty()
+      .hasSize(2);
 
     result = resource.queryIncidents(queryParameter, 2, 1);
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(1);
+    assertThat(result)
+      .isNotEmpty()
+      .hasSize(1);
 
     result = resource.queryIncidents(queryParameter, 4, null);
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(6);
+    assertThat(result)
+      .isNotEmpty().hasSize(6);
 
     result = resource.queryIncidents(queryParameter, null, 4);
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(4);
+    assertThat(result)
+      .isNotEmpty()
+      .hasSize(4);
   }
 
   @Test
@@ -347,8 +356,9 @@ public class IncidentRestServiceTest extends AbstractCockpitPluginTest {
     queryParameter.setProcessDefinitionIdIn(processDefinitionIds);
 
     List<IncidentDto> result = resource.queryIncidents(queryParameter, null, null);
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(1);
+    assertThat(result)
+      .isNotEmpty()
+      .hasSize(1);
 
     IncidentDto incident = result.get(0);
 
@@ -383,8 +393,9 @@ public class IncidentRestServiceTest extends AbstractCockpitPluginTest {
     queryParameter.setProcessDefinitionIdIn(processDefinitionIds);
 
     List<IncidentDto> result = resource.queryIncidents(queryParameter, null, null);
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(2);
+    assertThat(result)
+      .isNotEmpty()
+      .hasSize(2);
   }
 
   @Test

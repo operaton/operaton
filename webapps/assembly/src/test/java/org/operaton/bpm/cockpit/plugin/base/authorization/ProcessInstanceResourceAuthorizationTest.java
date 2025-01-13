@@ -99,8 +99,7 @@ public class ProcessInstanceResourceAuthorizationTest extends AuthorizationTest 
     List<CalledProcessInstanceDto> calledInstances = resource.queryCalledProcessInstances(queryParameter);
 
     // then
-    assertThat(calledInstances).isNotEmpty();
-    assertThat(calledInstances).hasSize(1);
+    assertThat(calledInstances).isNotEmpty().hasSize(1);
     assertThat(calledInstances.get(0).getId()).isNotEqualTo(processInstanceId);
   }
 
@@ -118,8 +117,7 @@ public class ProcessInstanceResourceAuthorizationTest extends AuthorizationTest 
     List<CalledProcessInstanceDto> calledInstances = resource.queryCalledProcessInstances(queryParameter);
 
     // then
-    assertThat(calledInstances).isNotEmpty();
-    assertThat(calledInstances).hasSize(1);
+    assertThat(calledInstances).isNotEmpty().hasSize(1);
     assertThat(calledInstances.get(0).getId()).isNotEqualTo(processInstanceId);
   }
 
@@ -137,8 +135,7 @@ public class ProcessInstanceResourceAuthorizationTest extends AuthorizationTest 
     List<CalledProcessInstanceDto> calledInstances = resource.queryCalledProcessInstances(queryParameter);
 
     // then
-    assertThat(calledInstances).isNotEmpty();
-    assertThat(calledInstances).hasSize(1);
+    assertThat(calledInstances).isNotEmpty().hasSize(1);
     assertThat(calledInstances.get(0).getId()).isNotEqualTo(processInstanceId);
   }
 
@@ -157,8 +154,7 @@ public class ProcessInstanceResourceAuthorizationTest extends AuthorizationTest 
     List<CalledProcessInstanceDto> calledInstances = resource.queryCalledProcessInstances(queryParameter);
 
     // then
-    assertThat(calledInstances).isNotEmpty();
-    assertThat(calledInstances).hasSize(1);
+    assertThat(calledInstances).isNotEmpty().hasSize(1);
     assertThat(calledInstances.get(0).getId()).isNotEqualTo(processInstanceId);
   }
 
@@ -189,8 +185,7 @@ public class ProcessInstanceResourceAuthorizationTest extends AuthorizationTest 
     List<CalledProcessInstanceDto> calledInstances = executeCalledInstancesQueryWithAuthorization(queryParameter);
 
     // then
-    assertThat(calledInstances).isNotEmpty();
-    assertThat(calledInstances).hasSize(1);
+    assertThat(calledInstances).isNotEmpty().hasSize(1);
     assertThat(calledInstances.get(0).getId()).isNotEqualTo(processInstanceId);
   }
 
@@ -205,8 +200,7 @@ public class ProcessInstanceResourceAuthorizationTest extends AuthorizationTest 
     List<CalledProcessInstanceDto> calledInstances = executeCalledInstancesQueryWithAuthorization(queryParameter);
 
     // then
-    assertThat(calledInstances).isNotEmpty();
-    assertThat(calledInstances).hasSize(3);
+    assertThat(calledInstances).isNotEmpty().hasSize(3);
   }
 
   @Test
@@ -220,8 +214,7 @@ public class ProcessInstanceResourceAuthorizationTest extends AuthorizationTest 
     List<CalledProcessInstanceDto> calledInstances = executeCalledInstancesQueryWithAuthorization(queryParameter);
 
     // then
-    assertThat(calledInstances).isNotEmpty();
-    assertThat(calledInstances).hasSize(3);
+    assertThat(calledInstances).isNotEmpty().hasSize(3);
   }
 
   @Test
@@ -236,8 +229,7 @@ public class ProcessInstanceResourceAuthorizationTest extends AuthorizationTest 
     List<CalledProcessInstanceDto> calledInstances = executeCalledInstancesQueryWithAuthorization(queryParameter);
 
     // then
-    assertThat(calledInstances).isNotEmpty();
-    assertThat(calledInstances).hasSize(3);
+    assertThat(calledInstances).isNotEmpty().hasSize(3);
   }
 
   // helper ////////////////////////////////////////////////////////////////////////////

@@ -101,8 +101,7 @@ public class MultiTenancyStatisticsQueryTest extends PluggableProcessEngineTest 
     assertThat(query.count()).isEqualTo(2L);
 
     Set<String> tenantIds = collectDeploymentTenantIds(query.list());
-    assertThat(tenantIds).hasSize(2);
-    assertThat(tenantIds).contains(null, TENANT_ONE);
+    assertThat(tenantIds).containsExactlyInAnyOrder(null, TENANT_ONE);
   }
 
   @Test
@@ -114,8 +113,7 @@ public class MultiTenancyStatisticsQueryTest extends PluggableProcessEngineTest 
     assertThat(query.count()).isEqualTo(3L);
 
     Set<String> tenantIds = collectDeploymentTenantIds(query.list());
-    assertThat(tenantIds).hasSize(3);
-    assertThat(tenantIds).contains(null, TENANT_ONE, TENANT_TWO);
+    assertThat(tenantIds).containsExactlyInAnyOrder(null, TENANT_ONE, TENANT_TWO);
   }
 
   @Test
@@ -128,8 +126,7 @@ public class MultiTenancyStatisticsQueryTest extends PluggableProcessEngineTest 
     assertThat(query.count()).isEqualTo(3L);
 
     Set<String> tenantIds = collectDeploymentTenantIds(query.list());
-    assertThat(tenantIds).hasSize(3);
-    assertThat(tenantIds).contains(null, TENANT_ONE, TENANT_TWO);
+    assertThat(tenantIds).containsExactlyInAnyOrder(null, TENANT_ONE, TENANT_TWO);
   }
 
   @Test
@@ -153,8 +150,7 @@ public class MultiTenancyStatisticsQueryTest extends PluggableProcessEngineTest 
     assertThat(query.count()).isEqualTo(2L);
 
     Set<String> tenantIds = collectDefinitionTenantIds(query.list());
-    assertThat(tenantIds).hasSize(2);
-    assertThat(tenantIds).contains(null, TENANT_ONE);
+    assertThat(tenantIds).containsExactlyInAnyOrder(null, TENANT_ONE);
   }
 
   @Test
@@ -166,8 +162,7 @@ public class MultiTenancyStatisticsQueryTest extends PluggableProcessEngineTest 
     assertThat(query.count()).isEqualTo(3L);
 
     Set<String> tenantIds = collectDefinitionTenantIds(query.list());
-    assertThat(tenantIds).hasSize(3);
-    assertThat(tenantIds).contains(null, TENANT_ONE, TENANT_TWO);
+    assertThat(tenantIds).containsExactlyInAnyOrder(null, TENANT_ONE, TENANT_TWO);
   }
 
   @Test
@@ -180,8 +175,7 @@ public class MultiTenancyStatisticsQueryTest extends PluggableProcessEngineTest 
     assertThat(query.count()).isEqualTo(3L);
 
     Set<String> tenantIds = collectDefinitionTenantIds(query.list());
-    assertThat(tenantIds).hasSize(3);
-    assertThat(tenantIds).contains(null, TENANT_ONE, TENANT_TWO);
+    assertThat(tenantIds).containsExactlyInAnyOrder(null, TENANT_ONE, TENANT_TWO);
   }
 
   @Test

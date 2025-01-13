@@ -74,8 +74,9 @@ public class EmptyProcessesXmlTest {
     assertEquals(Boolean.FALSE.toString(), isDeployChangedOnly);
 
     String resumePreviousBy = properties.get(ProcessArchiveXml.PROP_RESUME_PREVIOUS_BY);
-    assertThat(resumePreviousBy).isNotNull();
-    assertThat(resumePreviousBy).isSameAs(ResumePreviousBy.RESUME_BY_PROCESS_DEFINITION_KEY);
+    assertThat(resumePreviousBy)
+      .isNotNull()
+      .isSameAs(ResumePreviousBy.RESUME_BY_PROCESS_DEFINITION_KEY);
   }
 
 }

@@ -92,8 +92,7 @@ public class IncidentRestServiceAuthorizationTest extends AuthorizationTest {
     List<IncidentDto> incidents = resource.queryIncidents(queryParameter, null, null);
 
     // then
-    assertThat(incidents).isNotEmpty();
-    assertThat(incidents).hasSize(1);
+    assertThat(incidents).isNotEmpty().hasSize(1);
     assertThat(incidents.get(0).getProcessInstanceId()).isEqualTo(processInstanceId);
   }
 
@@ -108,8 +107,7 @@ public class IncidentRestServiceAuthorizationTest extends AuthorizationTest {
     List<IncidentDto> incidents = resource.queryIncidents(queryParameter, null, null);
 
     // then
-    assertThat(incidents).isNotEmpty();
-    assertThat(incidents).hasSize(3);
+    assertThat(incidents).isNotEmpty().hasSize(3);
   }
 
   @Test
@@ -125,8 +123,7 @@ public class IncidentRestServiceAuthorizationTest extends AuthorizationTest {
     List<IncidentDto> incidents = resource.queryIncidents(queryParameter, null, null);
 
     // then
-    assertThat(incidents).isNotEmpty();
-    assertThat(incidents).hasSize(3);
+    assertThat(incidents).isNotEmpty().hasSize(3);
   }
 
   @Test
@@ -140,8 +137,7 @@ public class IncidentRestServiceAuthorizationTest extends AuthorizationTest {
     List<IncidentDto> incidents = resource.queryIncidents(queryParameter, null, null);
 
     // then
-    assertThat(incidents).isNotEmpty();
-    assertThat(incidents).hasSize(3);
+    assertThat(incidents).isNotEmpty().hasSize(3);
   }
 
 }

@@ -122,7 +122,6 @@ public class DelegateTaskTest {
     String processInstanceId = processInstance.getId();
     Date followUpDate = (Date) runtimeService.getVariable(processInstanceId, "followUp");
 
-    assertThat(followUpDate).isNotNull();
     assertThat(followUpDate).isEqualTo(FOLLOW_UP_DATE);
   }
 
@@ -146,7 +145,6 @@ public class DelegateTaskTest {
     Task task = taskService.createTaskQuery().singleResult();
     Date followUpDate = task.getFollowUpDate();
 
-    assertThat(followUpDate).isNotNull();
     assertThat(followUpDate).isEqualTo(FOLLOW_UP_DATE);
   }
 
@@ -173,8 +171,9 @@ public class DelegateTaskTest {
     // then
 
     Date lastUpdated = (Date) runtimeService.getVariable(processInstanceId, "lastUpdated");
-    assertThat(lastUpdated).isNotNull();
-    assertThat(lastUpdated).isAfter(beforeUpdate);
+    assertThat(lastUpdated)
+      .isNotNull()
+      .isAfter(beforeUpdate);
   }
 
   public static class GetFollowUpDateListener implements TaskListener {

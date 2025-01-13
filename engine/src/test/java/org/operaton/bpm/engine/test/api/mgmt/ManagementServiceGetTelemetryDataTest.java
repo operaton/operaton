@@ -342,8 +342,9 @@ public class ManagementServiceGetTelemetryDataTest {
     Date afterToggleTelemetry = managementService.getTelemetryData().getProduct().getInternals()
         .getDataCollectionStartDate();
 
-    assertThat(beforeToggleTelemetry).isNotNull();
-    assertThat(beforeToggleTelemetry).isEqualTo(afterToggleTelemetry);
+    assertThat(beforeToggleTelemetry)
+      .isNotNull()
+      .isEqualTo(afterToggleTelemetry);
   }
 
 }

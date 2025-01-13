@@ -41,13 +41,14 @@ class ModelTest {
   @Test
   void testGetTypes() {
     Collection<ModelElementType> types = model.getTypes();
-    assertThat(types).isNotEmpty();
-    assertThat(types).contains(
-      model.getType(Animals.class),
-      model.getType(Animal.class),
-      model.getType(FlyingAnimal.class),
-      model.getType(Bird.class),
-      model.getType(RelationshipDefinition.class)
+    assertThat(types)
+      .isNotEmpty()
+      .contains(
+        model.getType(Animals.class),
+        model.getType(Animal.class),
+        model.getType(FlyingAnimal.class),
+        model.getType(Bird.class),
+        model.getType(RelationshipDefinition.class)
       );
   }
 

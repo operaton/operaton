@@ -315,7 +315,6 @@ public class MultiTenancyHistoricExternalTaskLogTest {
     String stacktrace = historyService.getHistoricExternalTaskLogErrorDetails(failedHistoricExternalTaskLogId);
 
     // then
-    assertThat(stacktrace).isNotNull();
     assertThat(stacktrace).isEqualTo(ERROR_DETAILS);
   }
 
@@ -343,9 +342,7 @@ public class MultiTenancyHistoricExternalTaskLogTest {
     String stacktrace2 = historyService.getHistoricExternalTaskLogErrorDetails(logIdTenant2);
 
     // then
-    assertThat(stacktrace1).isNotNull();
     assertThat(stacktrace1).isEqualTo(ERROR_DETAILS);
-    assertThat(stacktrace2).isNotNull();
     assertThat(stacktrace2).isEqualTo(ERROR_DETAILS);
   }
 

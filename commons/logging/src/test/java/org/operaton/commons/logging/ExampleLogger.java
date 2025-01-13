@@ -28,6 +28,6 @@ public class ExampleLogger extends BaseLogger {
 
   public static final String PROJECT_CODE = "TEST";
 
-  public static ExampleLogger LOG = createLogger(ExampleLogger.class, PROJECT_CODE, NAME, COMPONENT_ID);
+  public static final ExampleLogger LOG = createLogger(ExampleLogger.class, PROJECT_CODE, NAME, COMPONENT_ID);
 
 }

@@ -36,7 +36,7 @@ import org.apache.http.impl.client.HttpClients;
 
 public abstract class AbstractHttpConnector<Q extends HttpBaseRequest<Q, R>, R extends HttpResponse> extends AbstractConnector<Q, R> {
 
-  protected static HttpConnectorLogger LOG = HttpLogger.HTTP_LOGGER;
+  protected static final HttpConnectorLogger LOG = HttpLogger.HTTP_LOGGER;
 
   protected CloseableHttpClient httpClient;
   protected final Charset charset;

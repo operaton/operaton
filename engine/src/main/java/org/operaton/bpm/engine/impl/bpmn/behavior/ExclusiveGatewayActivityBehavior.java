@@ -33,7 +33,7 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
  */
 public class ExclusiveGatewayActivityBehavior extends GatewayActivityBehavior {
 
-  protected static BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
+  protected static final BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
 
   /**
    * The default behaviour of BPMN, taking every outgoing sequence flow

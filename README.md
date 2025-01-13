@@ -56,7 +56,7 @@ For a faster build you can add `-DskipTests` to skip test execution and `-Dskip.
 
 Get the latest release from the [Releases page](https://github.com/operaton/operaton/releases).
 
-To get the latest nightly build visit the [Nightly Build actions](https://github.com/operaton/operaton/actions/workflows/nighly-build.yml?query=branch%3Amain+event%3Aschedule+is%3Asuccess++), click on the latest available build and download from the _Artifacts_ section.
+To get the latest stable build visit the [Early Access release page]([https://github.com/operaton/operaton/actions/workflows/nighly-build.yml?query=branch%3Amain+event%3Aschedule+is%3Asuccess++](https://github.com/operaton/operaton/releases/tag/early-access)), click on _Assets_ and download the desired package.
 
 
 ## About Operaton

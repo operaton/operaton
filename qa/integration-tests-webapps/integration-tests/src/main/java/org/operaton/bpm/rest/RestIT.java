@@ -320,7 +320,8 @@ public class RestIT extends AbstractWebIntegrationTest {
 
     if (postSupported) {
       // test POST request
-      response = resource.accept(acceptMediaTypes).entity(Collections.EMPTY_MAP, MediaType.APPLICATION_JSON_TYPE).post(ClientResponse.class);
+      response =
+        resource.accept(acceptMediaTypes).entity(Collections.emptyMap(), MediaType.APPLICATION_JSON_TYPE).post(ClientResponse.class);
       assertMediaType(response, expectedMediaType);
       response.close();
     }

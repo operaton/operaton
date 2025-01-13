@@ -115,7 +115,7 @@ public class HistoricProcessInstanceManager extends AbstractHistoricManager {
       configureQuery(historicProcessInstanceQuery);
       return getDbEntityManager().selectList("selectHistoricProcessInstancesByQueryCriteria", historicProcessInstanceQuery, page);
     }
-    return Collections.EMPTY_LIST;
+    return Collections.emptyList();
   }
 
   @SuppressWarnings("unchecked")

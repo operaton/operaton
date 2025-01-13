@@ -111,7 +111,7 @@ public class HistoricTaskInstanceManager extends AbstractHistoricManager {
       return getDbEntityManager().selectList("selectHistoricTaskInstancesByQueryCriteria", historicTaskInstanceQuery, page);
     }
 
-    return Collections.EMPTY_LIST;
+    return Collections.emptyList();
   }
 
   public HistoricTaskInstanceEntity findHistoricTaskInstanceById(final String taskId) {

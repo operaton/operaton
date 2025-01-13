@@ -175,7 +175,7 @@ public class DbEntityManager implements Session, EntityLoadListener {
   @SuppressWarnings("unchecked")
   public List selectListWithRawParameter(String statement, Object parameter, int firstResult, int maxResults) {
     if(firstResult == -1 ||  maxResults==-1) {
-      return Collections.EMPTY_LIST;
+      return Collections.emptyList();
     }
     List loadedObjects = persistenceSession.selectList(statement, parameter);
     return filterLoadedObjects(loadedObjects);

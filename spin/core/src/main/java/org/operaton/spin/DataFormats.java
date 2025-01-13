@@ -120,12 +120,12 @@ public class DataFormats {
   }
 
   public void registerDataFormats(ClassLoader classloader) {
-    registerDataFormats(classloader, Collections.EMPTY_LIST, Collections.EMPTY_MAP);
+    registerDataFormats(classloader, Collections.emptyList(), Collections.emptyMap());
   }
 
   public void registerDataFormats(ClassLoader classloader,
                                   List<DataFormatConfigurator> configurators) {
-    registerDataFormats(classloader, configurators, Collections.EMPTY_MAP);
+    registerDataFormats(classloader, configurators, Collections.emptyMap());
   }
   public void registerDataFormats(ClassLoader classloader,
                                   List<DataFormatConfigurator> configurators,
@@ -149,7 +149,7 @@ public class DataFormats {
   }
 
   protected void registerCustomDataFormats(Map<String, DataFormat<?>> dataFormats, ClassLoader classloader) {
-    registerCustomDataFormats(dataFormats, classloader, Collections.EMPTY_MAP);
+    registerCustomDataFormats(dataFormats, classloader, Collections.emptyMap());
   }
   
   protected void registerCustomDataFormats(Map<String, DataFormat<?>> dataFormats, 
@@ -166,7 +166,7 @@ public class DataFormats {
 
   protected void registerProvider(Map<String, DataFormat<?>> dataFormats,
                                   DataFormatProvider provider) {
-    registerProvider(dataFormats, provider, Collections.EMPTY_MAP);
+    registerProvider(dataFormats, provider, Collections.emptyMap());
   }
 
   protected void registerProvider(Map<String, DataFormat<?>> dataFormats,
@@ -186,7 +186,7 @@ public class DataFormats {
 
   @SuppressWarnings("rawtypes")
   protected void applyConfigurators(Map<String, DataFormat<?>> dataFormats, ClassLoader classloader) {
-    applyConfigurators(dataFormats, classloader, Collections.EMPTY_LIST);
+    applyConfigurators(dataFormats, classloader, Collections.emptyList());
   }
 
   protected void applyConfigurators(Map<String, DataFormat<?>> dataFormats,
@@ -230,7 +230,7 @@ public class DataFormats {
   }
 
   public static void loadDataFormats(ClassLoader classloader, Map configurationProperties) {
-    INSTANCE.registerDataFormats(classloader, Collections.EMPTY_LIST, configurationProperties);
+    INSTANCE.registerDataFormats(classloader, Collections.emptyList(), configurationProperties);
   }
 
 }

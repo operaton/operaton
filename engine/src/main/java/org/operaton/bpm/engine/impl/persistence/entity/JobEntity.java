@@ -675,7 +675,7 @@ public abstract class JobEntity extends AcquirableJobEntity
       persistedDependentEntities.put(exceptionByteArrayId, ByteArrayEntity.class);
     }
     else {
-      persistedDependentEntities = Collections.EMPTY_MAP;
+      persistedDependentEntities = Collections.emptyMap();
     }
   }
 

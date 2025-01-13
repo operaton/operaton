@@ -22,7 +22,7 @@ import java.util.Map;
 public class OperatonBpmRunProcessEnginePluginProperty {
 
   protected String pluginClass;
-  protected Map<String, Object> pluginParameters = Collections.EMPTY_MAP;
+  protected Map<String, Object> pluginParameters = Collections.emptyMap();
 
   public String getPluginClass() {
     return pluginClass;

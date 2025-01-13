@@ -91,7 +91,7 @@ public class HistoricCaseInstanceManager extends AbstractHistoricManager {
       configureHistoricCaseInstanceQuery(historicCaseInstanceQuery);
       return getDbEntityManager().selectList("selectHistoricCaseInstancesByQueryCriteria", historicCaseInstanceQuery, page);
     }
-    return Collections.EMPTY_LIST;
+    return Collections.emptyList();
   }
 
   @SuppressWarnings("unchecked")

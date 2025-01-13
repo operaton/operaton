@@ -48,7 +48,7 @@ public interface HasDbReferences {
    * <p>Scope: PERSISTED references
    */
   default Map<String, Class> getDependentEntities() {
-    return Collections.EMPTY_MAP;
+    return Collections.emptyMap();
   }
 
 }

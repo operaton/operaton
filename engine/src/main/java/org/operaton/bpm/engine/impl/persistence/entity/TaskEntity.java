@@ -852,7 +852,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     if (execution!=null) {
       return execution.getVariables();
     }
-    return Collections.EMPTY_MAP;
+    return Collections.emptyMap();
   }
 
   public void setExecutionVariables(Map<String, Object> parameters) {

@@ -150,7 +150,7 @@ class HistoryLevelDeterminatorJdbcTemplateImplTest {
   void getHistoryLevelFromTest() {
     HistoryLevelDeterminatorJdbcTemplateImpl determinator = new HistoryLevelDeterminatorJdbcTemplateImpl();
     assertThat(determinator.getHistoryLevelFrom(-1)).isEqualTo(determinator.getDefaultHistoryLevel());
-    assertThat(determinator.historyLevels.isEmpty()).isFalse();
+    assertThat(determinator.historyLevels).isNotEmpty();
     HistoryLevel customHistoryLevel = new HistoryLevel() {
 
       @Override
@@ -170,7 +170,7 @@ class HistoryLevelDeterminatorJdbcTemplateImplTest {
     };
 
     determinator.addCustomHistoryLevels(Collections.singleton(customHistoryLevel));
-    assertThat(determinator.historyLevels.contains(customHistoryLevel)).isTrue();
+    assertThat(determinator.historyLevels).contains(customHistoryLevel);
 
     for (HistoryLevel historyLevel : determinator.historyLevels) {
       assertThat(determinator.getHistoryLevelFrom(historyLevel.getId())).isEqualTo(historyLevel.getName());

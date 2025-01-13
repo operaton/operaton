@@ -54,7 +54,7 @@ public class SchemaLogUpgradeScriptPatternTest extends SchemaLogTestCase {
         // minor update
         assertThat(nameParts[4]).isIn(getPossibleNextVersions(minorVersion));
 
-        assertThat(nameParts.length).isEqualTo(5);
+        assertThat(nameParts).hasSize(5);
       } else if (nameParts[3].equals("patch")) {
         // patch update
         String basePatchVersion = nameParts[4];
@@ -67,7 +67,7 @@ public class SchemaLogUpgradeScriptPatternTest extends SchemaLogTestCase {
           // check that script version is integer only
           Integer.parseInt(nameParts[7]);
         } else {
-          assertThat(nameParts.length).isEqualTo(7);
+          assertThat(nameParts).hasSize(7);
         }
       } else {
         fail("unexpected pattern for file: " + file);

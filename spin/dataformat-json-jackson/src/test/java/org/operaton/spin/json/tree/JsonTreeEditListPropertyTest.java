@@ -176,7 +176,7 @@ class JsonTreeEditListPropertyTest {
     SpinJsonNode newNode = currencies.elements().get(1);
 
     assertThat(oldSize + 1).isEqualTo(newSize);
-    assertThat(newNode.equals(oldNode)).isFalse();
+    assertThat(newNode).isNotEqualTo(oldNode);
     assertThat(newNode.stringValue()).isEqualTo("test1");
     assertThat(oldPosition + 1).isEqualTo(newPosition);
   }
@@ -203,7 +203,7 @@ class JsonTreeEditListPropertyTest {
     SpinJsonNode newNode = currencies.elements().get(0);
 
     assertThat(oldSize + 1).isEqualTo(newSize);
-    assertThat(newNode.equals(oldNode)).isFalse();
+    assertThat(newNode).isNotEqualTo(oldNode);
     assertThat(newNode.stringValue()).isEqualTo("test1");
     assertThat(oldPosition + 1).isEqualTo(newPosition);
   }
@@ -260,7 +260,7 @@ class JsonTreeEditListPropertyTest {
     SpinJsonNode oldNodeNewPosition = currencies.elements().get(1);
     Integer newSize = currencies.elements().size();
 
-    assertThat(oldNode.equals(newNode)).isFalse();
+    assertThat(oldNode).isNotEqualTo(newNode);
     assertThat(newNode.stringValue()).isEqualTo("Test");
     assertThat(oldNode.stringValue()).isEqualTo(oldNodeNewPosition.stringValue());
     assertThat(size).isNotEqualTo(newSize);
@@ -332,7 +332,7 @@ class JsonTreeEditListPropertyTest {
     SpinJsonNode oldNodeNewPosition = currencies.elements().get(1);
     Integer newSize = currencies.elements().size();
 
-    assertThat(oldNode.equals(newNode)).isFalse();
+    assertThat(oldNode).isNotEqualTo(newNode);
     assertThat(oldNode.stringValue()).isEqualTo(oldNodeNewPosition.stringValue());
     assertThat(size).isNotEqualTo(newSize);
   }
@@ -351,7 +351,7 @@ class JsonTreeEditListPropertyTest {
     SpinJsonNode oldNodeNewPosition = currencies.elements().get(0);
     Integer newSize = currencies.elements().size();
 
-    assertThat(oldNode.equals(newNode)).isFalse();
+    assertThat(oldNode).isNotEqualTo(newNode);
     assertThat(oldNode.stringValue()).isEqualTo(oldNodeNewPosition.stringValue());
     assertThat(size).isNotEqualTo(newSize);
   }

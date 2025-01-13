@@ -173,9 +173,10 @@ public class ReferenceTest extends TestModelTest {
     Collection<FlyingAnimal> flightPartners = Arrays.asList(new FlyingAnimal[]{birdo, daffy, daisy, plucky});
 
     // directly test collection methods and not use the	appropriate assertion methods
-    assertThat(referenceTargetElements).hasSize(1);
-    assertThat(referenceTargetElements.isEmpty()).isFalse();
-    assertThat(referenceTargetElements.contains(daffy)).isTrue();
+    assertThat(referenceTargetElements)
+      .isNotEmpty()
+      .hasSize(1)
+      .contains(daffy);
     assertThat(referenceTargetElements.toArray()).isEqualTo(new Object[]{daffy});
     assertThat(referenceTargetElements.toArray(new FlyingAnimal[1])).isEqualTo(new FlyingAnimal[]{daffy});
 
@@ -190,8 +191,8 @@ public class ReferenceTest extends TestModelTest {
       .containsOnly(daffy);
 
     assertThat(referenceTargetElements.addAll(flightPartners)).isTrue();
-    assertThat(referenceTargetElements.containsAll(flightPartners)).isTrue();
     assertThat(referenceTargetElements)
+      .containsAll(flightPartners)
       .hasSize(4)
       .containsOnly(daffy, daisy, plucky, birdo);
 

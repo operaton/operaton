@@ -52,13 +52,13 @@ class OperatonEngineJobExecutorConfigTest {
     // given a custom application.properties file
 
     // then
-    assertThat(config.jobExecutor().genericConfig().get("max-jobs-per-acquisition")).isEqualTo("5");
-    assertThat(config.jobExecutor().genericConfig().get("lock-time-in-millis")).isEqualTo("500000");
-    assertThat(config.jobExecutor().genericConfig().get("wait-time-in-millis")).isEqualTo("7000");
-    assertThat(config.jobExecutor().genericConfig().get("max-wait")).isEqualTo("65000");
-    assertThat(config.jobExecutor().genericConfig().get("backoff-time-in-millis")).isEqualTo("5");
-    assertThat(config.jobExecutor().genericConfig().get("max-backoff")).isEqualTo("5");
-    assertThat(config.jobExecutor().genericConfig().get("backoff-decrease-threshold")).isEqualTo("120");
-    assertThat(config.jobExecutor().genericConfig().get("wait-increase-factor")).isEqualTo("3");
+    assertThat(config.jobExecutor().genericConfig()).containsEntry("max-jobs-per-acquisition", "5");
+    assertThat(config.jobExecutor().genericConfig()).containsEntry("lock-time-in-millis", "500000");
+    assertThat(config.jobExecutor().genericConfig()).containsEntry("wait-time-in-millis", "7000");
+    assertThat(config.jobExecutor().genericConfig()).containsEntry("max-wait", "65000");
+    assertThat(config.jobExecutor().genericConfig()).containsEntry("backoff-time-in-millis", "5");
+    assertThat(config.jobExecutor().genericConfig()).containsEntry("max-backoff", "5");
+    assertThat(config.jobExecutor().genericConfig()).containsEntry("backoff-decrease-threshold", "120");
+    assertThat(config.jobExecutor().genericConfig()).containsEntry("wait-increase-factor", "3");
   }
 }

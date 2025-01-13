@@ -399,7 +399,7 @@ public abstract class JsonTreeEditListPropertyScriptTest extends ScriptTest {
     Number newSize = script.getVariable("newSize");
     String newValue = script.getVariable("newValue");
 
-    assertThat(oldValue.equals(newValue)).isFalse();
+    assertThat(oldValue).isNotEqualTo(newValue);
 
     // Casts to int because ruby returns long instead of int values!
     assertThat(oldSize.intValue() - 1).isEqualTo(newSize.intValue());

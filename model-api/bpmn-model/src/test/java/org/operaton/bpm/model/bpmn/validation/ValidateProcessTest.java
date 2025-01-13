@@ -54,7 +54,7 @@ class ValidateProcessTest {
     assertThat(results).hasSize(1);
 
     Process process = bpmnModelInstance.getDefinitions().getChildElementsByType(Process.class).iterator().next();
-    assertThat(results.containsKey(process)).isTrue();
+    assertThat(results).containsKey(process);
 
     List<ValidationResult> resultsForProcess = results.get(process);
     assertThat(resultsForProcess).hasSize(1);

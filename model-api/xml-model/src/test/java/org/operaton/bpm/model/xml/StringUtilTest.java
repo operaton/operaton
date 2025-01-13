@@ -52,7 +52,7 @@ class StringUtilTest {
   void testStringListJoin() {
     assertThat(joinCommaSeparatedList(null)).isNull();
     List<String> testList = new ArrayList<>();
-    assertThat(joinCommaSeparatedList(testList)).isEqualTo("");
+    assertThat(joinCommaSeparatedList(testList)).isEmpty();
     testList.add("a");
     assertThat(joinCommaSeparatedList(testList)).isEqualTo("a");
     testList.add("b");

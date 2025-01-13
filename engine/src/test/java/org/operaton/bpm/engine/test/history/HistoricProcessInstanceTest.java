@@ -1964,7 +1964,7 @@ public class HistoricProcessInstanceTest {
     // then
     assertThat(queryByInnerServiceActivityId).extracting("id")
           .containsExactlyInAnyOrder(processInstance.getId());
-    assertThat(queryBySubProcessActivityId).hasSize(0);
+    assertThat(queryBySubProcessActivityId).isEmpty();
     assertThat(queryByOuterProcessActivityId).extracting("id")
           .containsExactlyInAnyOrder(processInstance2.getId());
     assertThat(queryByOuterAndInnedActivityId).extracting("id")
@@ -1995,7 +1995,7 @@ public class HistoricProcessInstanceTest {
     // then
     assertThat(queryByInnerServiceActivityId).extracting("id")
           .containsExactlyInAnyOrder(processInstance.getId());
-    assertThat(queryBySubProcessActivityId).hasSize(0);
+    assertThat(queryBySubProcessActivityId).isEmpty();
     assertThat(queryByOuterProcessActivityId).extracting("id")
           .containsExactlyInAnyOrder(processInstance2.getId());
     assertThat(queryByOuterAndInnedActivityId).extracting("id")

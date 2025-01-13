@@ -159,11 +159,11 @@ class XmlDomXPathTest {
 
     // can query not existing string
     value = element.xPath("string(/root/child/@nonExisting)").string();
-    assertThat(value).isEqualTo("");
+    assertThat(value).isEmpty();
 
     // can query string as document
     value = element.xPath("string(/)").string();
-    assertThat(value).isEqualTo("");
+    assertThat(value).isEmpty();
   }
 
   @Test

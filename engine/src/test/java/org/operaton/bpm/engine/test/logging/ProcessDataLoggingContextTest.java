@@ -954,8 +954,8 @@ public class ProcessDataLoggingContextTest {
         // first BPMN stack trace log corresponds to nested service task
         assertThat(mdcPropertyMap.containsKey("businessKey")).isFalse();
         assertThat(mdcPropertyMap).containsEntry("activityId", "failing_task");
-        assertThat(mdcPropertyMap.get("processDefinitionId")).isNotEqualTo(instance.getProcessDefinitionId());
-        assertThat(mdcPropertyMap.get("processInstanceId")).isNotEqualTo(instance.getId());
+        assertThat(mdcPropertyMap).doesNotContainEntry("processDefinitionId", instance.getProcessDefinitionId());
+        assertThat(mdcPropertyMap).doesNotContainEntry("processInstanceId", instance.getId());
         assertThat(instance.getTenantId()).isEqualTo(mdcPropertyMap.get("tenantId"));
       } else {
         // second BPMN stack trace log corresponds to outer service task

@@ -75,12 +75,7 @@ public class CmmnSentryDeclaration implements Serializable {
 
     String sourceId = source.getId();
 
-    List<CmmnOnPartDeclaration> onPartDeclarations = onPartMap.get(sourceId);
-
-    if (onPartDeclarations == null) {
-      onPartDeclarations = new ArrayList<>();
-      onPartMap.put(sourceId, onPartDeclarations);
-    }
+    List<CmmnOnPartDeclaration> onPartDeclarations = onPartMap.computeIfAbsent(sourceId, k -> new ArrayList<>());
 
     for (CmmnOnPartDeclaration onPartDeclaration : onPartDeclarations) {
       if (onPart.getStandardEvent().equals(onPartDeclaration.getStandardEvent())) {

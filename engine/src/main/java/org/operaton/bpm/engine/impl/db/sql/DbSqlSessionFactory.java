@@ -903,12 +903,9 @@ public class DbSqlSessionFactory implements SessionFactory {
   // db specific mappings /////////////////////////////////////////////////////
 
   protected static void addDatabaseSpecificStatement(String databaseType, String activitiStatement, String ibatisStatement) {
-    Map<String, String> specificStatements = databaseSpecificStatements.get(databaseType);
-    if (specificStatements == null) {
-      specificStatements = new HashMap<>();
-      databaseSpecificStatements.put(databaseType, specificStatements);
-    }
-    specificStatements.put(activitiStatement, ibatisStatement);
+    databaseSpecificStatements
+      .computeIfAbsent(databaseType, k -> new HashMap<>())
+      .put(activitiStatement, ibatisStatement);
   }
 
   public String mapStatement(String statement) {

@@ -62,11 +62,11 @@ public abstract class ReferenceWalker<T> {
   }
 
   public T walkWhile() {
-    return walkWhile(new ReferenceWalker.NullCondition<T>());
+    return walkWhile(new ReferenceWalker.NullCondition<>());
   }
 
   public T walkUntil() {
-    return walkUntil(new ReferenceWalker.NullCondition<T>());
+    return walkUntil(new ReferenceWalker.NullCondition<>());
   }
 
   public T walkWhile(ReferenceWalker.WalkCondition<T> condition) {

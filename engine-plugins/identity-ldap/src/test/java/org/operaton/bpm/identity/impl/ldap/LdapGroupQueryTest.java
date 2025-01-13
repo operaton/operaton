@@ -270,6 +270,7 @@ public class LdapGroupQueryTest {
 
     LdapIdentityProviderSession session = new LdapIdentityProviderSession(ldapConfiguration) {
       // mock getDnForUser
+      @Override
       protected String getDnForUser(String userId) {
         return userId+ ", fullDn";
       }

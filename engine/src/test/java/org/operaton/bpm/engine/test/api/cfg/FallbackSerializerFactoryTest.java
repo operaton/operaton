@@ -153,6 +153,7 @@ public class FallbackSerializerFactoryTest {
       return ExampleSerializer.FORMAT;
     }
 
+    @Override
     protected Object deserializeFromByteArray(byte[] bytes, String objectTypeName) {
       // deserialize everything to a constant string
       return DESERIALIZED_VALUE;

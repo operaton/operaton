@@ -1093,7 +1093,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
    * @return true if the next listener can be invoked; false if not
    */
   protected boolean invokeListener(CoreExecution currentExecution, String eventName, TaskListener taskListener) throws Exception {
-    boolean isBpmnTask = currentExecution instanceof ActivityExecution && currentExecution != null;
+    boolean isBpmnTask = currentExecution instanceof ActivityExecution;
     final TaskListenerInvocation listenerInvocation = new TaskListenerInvocation(taskListener, this, currentExecution);
 
     try {

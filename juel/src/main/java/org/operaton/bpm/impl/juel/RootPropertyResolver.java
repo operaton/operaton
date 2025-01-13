@@ -92,7 +92,7 @@ public class RootPropertyResolver extends ELResolver {
 
 	@Override
 	public boolean isReadOnly(ELContext context, Object base, Object property) {
-		return resolve(context, base, property) ? readOnly : false;
+		return resolve(context, base, property) && readOnly;
 	}
 
 	@Override

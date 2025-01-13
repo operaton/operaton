@@ -38,6 +38,7 @@ public class AtomicOperationCaseExecutionManualStart extends AbstractCmmnEventAt
     return MANUAL_START;
   }
 
+  @Override
   protected CmmnExecution eventNotificationsStarted(CmmnExecution execution) {
     CmmnActivityBehavior behavior = getActivityBehavior(execution);
     behavior.onManualStart(execution);

@@ -38,6 +38,7 @@ public class AtomicOperationCaseInstanceCreate extends AbstractCmmnEventAtomicOp
     return CREATE;
   }
 
+  @Override
   protected CmmnExecution eventNotificationsStarted(CmmnExecution execution) {
     // the case instance perform a transition directly
     // to state ACTIVE

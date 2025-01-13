@@ -16,11 +16,8 @@
  */
 package org.operaton.bpm.engine.rest.util;
 
-import org.operaton.bpm.engine.rest.mapper.JacksonConfigurator;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.restassured.path.json.mapper.factory.DefaultJackson2ObjectMapperFactory;
 import io.restassured.path.json.JsonPath;
+import io.restassured.path.json.mapper.factory.DefaultJackson2ObjectMapperFactory;
 
 public final class JsonPathUtil {
 

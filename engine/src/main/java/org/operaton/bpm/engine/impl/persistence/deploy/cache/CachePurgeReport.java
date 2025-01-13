@@ -44,7 +44,7 @@ public class CachePurgeReport implements PurgeReporting<Set<String>> {
 
   @Override
   public void addPurgeInformation(String key, Set<String> value) {
-    deletedCache.put(key, new HashSet<String>(value));
+    deletedCache.put(key, new HashSet<>(value));
   }
 
   @Override

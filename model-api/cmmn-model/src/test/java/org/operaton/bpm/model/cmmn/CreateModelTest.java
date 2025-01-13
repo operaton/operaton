@@ -29,7 +29,7 @@ import org.operaton.bpm.model.cmmn.instance.Stage;
 /**
  * @author Sebastian Menski
  */
-public class CreateModelTest {
+class CreateModelTest {
 
   public CmmnModelInstance modelInstance;
   public Definitions definitions;

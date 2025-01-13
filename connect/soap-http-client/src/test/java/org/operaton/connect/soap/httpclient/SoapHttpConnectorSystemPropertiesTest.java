@@ -44,7 +44,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.verify;
  * @author Thorben Lindhauer
  */
 @WireMockTest
-public class SoapHttpConnectorSystemPropertiesTest {
+class SoapHttpConnectorSystemPropertiesTest {
 
   protected Set<String> updatedSystemProperties;
 

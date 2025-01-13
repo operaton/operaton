@@ -40,7 +40,7 @@ public class JsonQueryOrderingPropertyConverter extends JsonObjectConverter<Quer
       new JsonQueryOrderingPropertyConverter();
 
   protected static JsonArrayConverter<List<QueryOrderingProperty>> ARRAY_CONVERTER =
-      new JsonArrayOfObjectsConverter<QueryOrderingProperty>(INSTANCE);
+      new JsonArrayOfObjectsConverter<>(INSTANCE);
 
   public static final String RELATION = "relation";
   public static final String QUERY_PROPERTY = "queryProperty";

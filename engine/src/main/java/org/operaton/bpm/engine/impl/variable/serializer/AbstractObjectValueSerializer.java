@@ -95,6 +95,7 @@ public abstract class AbstractObjectValueSerializer extends AbstractSerializable
     return valueFields.getTextValue2();
   }
 
+  @Override
   public boolean isMutableValue(ObjectValue typedValue) {
     return typedValue.isDeserialized();
   }

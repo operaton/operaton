@@ -16,10 +16,10 @@
  */
 package org.operaton.connect.plugin.util;
 
-import java.lang.Exception;import java.lang.Object;import java.lang.RuntimeException;import java.lang.String;import java.util.HashMap;
-import java.util.Map;
-
 import org.operaton.connect.impl.AbstractConnector;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Daniel Meyer

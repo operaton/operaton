@@ -48,6 +48,7 @@ public class PvmAtomicOperationProcessStart extends AbstractPvmEventAtomicOperat
     return ExecutionListener.EVENTNAME_START;
   }
 
+  @Override
   protected PvmExecutionImpl eventNotificationsStarted(PvmExecutionImpl execution) {
 
     // restoring the starting flag in case this operation is executed

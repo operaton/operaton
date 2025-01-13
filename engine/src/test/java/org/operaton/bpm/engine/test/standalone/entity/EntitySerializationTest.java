@@ -16,17 +16,6 @@
  */
 package org.operaton.bpm.engine.test.standalone.entity;
 
-import static org.junit.Assert.assertEquals;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.Collections;
-import java.util.Date;
-
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
@@ -35,7 +24,13 @@ import org.operaton.bpm.engine.impl.pvm.process.ProcessDefinitionImpl;
 import org.operaton.bpm.engine.impl.pvm.process.TransitionImpl;
 import org.operaton.bpm.engine.impl.task.TaskDefinition;
 import org.operaton.bpm.engine.task.DelegationState;
+
+import java.io.*;
+import java.util.Date;
+
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class EntitySerializationTest {
 

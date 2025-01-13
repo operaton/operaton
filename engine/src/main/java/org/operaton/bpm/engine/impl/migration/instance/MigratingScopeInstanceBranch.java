@@ -41,7 +41,7 @@ public class MigratingScopeInstanceBranch {
 
   public MigratingScopeInstanceBranch copy() {
     return new MigratingScopeInstanceBranch(
-        new HashMap<ScopeImpl, MigratingScopeInstance>(scopeInstances));
+        new HashMap<>(scopeInstances));
   }
 
   public MigratingScopeInstance getInstance(ScopeImpl scope) {

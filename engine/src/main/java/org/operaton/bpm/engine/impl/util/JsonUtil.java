@@ -512,7 +512,7 @@ public final class JsonUtil {
         LOG.logJsonException(e);
       }
 
-      if (numberValue != null && numberValue instanceof LazilyParsedNumber) {
+      if (numberValue instanceof LazilyParsedNumber) {
         String numberString = numberValue.toString();
         if (numberString != null) {
           rawObject = parseNumber(numberString);

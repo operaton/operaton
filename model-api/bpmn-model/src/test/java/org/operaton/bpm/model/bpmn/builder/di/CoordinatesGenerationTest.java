@@ -38,7 +38,7 @@ import org.operaton.bpm.model.bpmn.instance.bpmndi.BpmnShape;
 import org.operaton.bpm.model.bpmn.instance.dc.Bounds;
 import org.operaton.bpm.model.bpmn.instance.di.Waypoint;
 
-public class CoordinatesGenerationTest {
+class CoordinatesGenerationTest {
 
   private BpmnModelInstance instance;
 

@@ -34,14 +34,14 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 @ExtendWith(ProcessEngineExtension.class)
-public class ProcessEngineExtensionParameterizedJunit5Test {
+class ProcessEngineExtensionParameterizedJunit5Test {
 
   ProcessEngine engine;
 
   @ParameterizedTest
   @ValueSource(ints = {1, 2})
   @Deployment
-  public void extensionUsageExample() {
+  void extensionUsageExample() {
     RuntimeService runtimeService = engine.getRuntimeService();
     runtimeService.startProcessInstanceByKey("extensionUsage");
 
@@ -56,7 +56,7 @@ public class ProcessEngineExtensionParameterizedJunit5Test {
   @ParameterizedTest
   @ValueSource(strings = {"A", "B"})
   @Deployment(resources = "org/operaton/bpm/engine/test/junit5/ProcessEngineExtensionParameterizedJunit5Test.extensionUsageExample.bpmn20.xml")
-  public void extensionUsageExampleWithNamedAnnotation(String value) {
+  void extensionUsageExampleWithNamedAnnotation(String value) {
     Map<String,Object> variables = new HashMap<>();
     variables.put("key", value);
     RuntimeService runtimeService = engine.getRuntimeService();
@@ -79,7 +79,7 @@ public class ProcessEngineExtensionParameterizedJunit5Test {
    */
   @ParameterizedTest
   @EmptySource
-  public void testWithoutDeploymentAnnotation(String argument) {
+  void testWithoutDeploymentAnnotation(String argument) {
     assertThat(argument).isEmpty();
   }
 

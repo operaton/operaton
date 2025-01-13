@@ -70,6 +70,7 @@ public abstract class SpinValueImpl extends AbstractTypedValue<Spin<?>> implemen
     }
   }
 
+  @Override
   public SpinValueType getType() {
     return (SpinValueType) super.getType();
   }

@@ -258,6 +258,7 @@ public class DbOperationsOrderingTest {
     /**
      * Expose this method for test purposes
      */
+    @Override
     public void flushEntityCache() {
       super.flushEntityCache();
     }

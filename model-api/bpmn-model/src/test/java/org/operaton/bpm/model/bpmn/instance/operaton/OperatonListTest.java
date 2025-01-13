@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.bpmn.instance.BpmnModelElementInstanceTest;
 
-public class OperatonListTest extends BpmnModelElementInstanceTest {
+class OperatonListTest extends BpmnModelElementInstanceTest {
 
   @Override
   public TypeAssumption getTypeAssumption() {

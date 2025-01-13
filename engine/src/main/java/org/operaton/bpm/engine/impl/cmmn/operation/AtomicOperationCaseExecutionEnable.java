@@ -38,6 +38,7 @@ public class AtomicOperationCaseExecutionEnable extends AbstractCmmnEventAtomicO
     return ENABLE;
   }
 
+  @Override
   protected CmmnExecution eventNotificationsStarted(CmmnExecution execution) {
     CmmnActivityBehavior behavior = getActivityBehavior(execution);
     behavior.onEnable(execution);

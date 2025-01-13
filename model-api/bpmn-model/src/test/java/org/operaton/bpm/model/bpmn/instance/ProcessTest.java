@@ -31,7 +31,7 @@ import org.operaton.bpm.model.bpmn.impl.instance.Supports;
 /**
  * @author Sebastian Menski
  */
-public class ProcessTest extends BpmnModelElementInstanceTest {
+class ProcessTest extends BpmnModelElementInstanceTest {
 
   @Override
   public TypeAssumption getTypeAssumption() {

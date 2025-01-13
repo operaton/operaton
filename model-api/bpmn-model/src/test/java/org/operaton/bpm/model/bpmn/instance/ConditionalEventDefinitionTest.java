@@ -24,7 +24,7 @@ import java.util.Collection;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 
-public class ConditionalEventDefinitionTest extends AbstractEventDefinitionTest {
+class ConditionalEventDefinitionTest extends AbstractEventDefinitionTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {

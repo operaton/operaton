@@ -23,7 +23,7 @@ import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class InclusiveGatewayTest extends AbstractGatewayTest<InclusiveGateway> {
+class InclusiveGatewayTest extends AbstractGatewayTest<InclusiveGateway> {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {

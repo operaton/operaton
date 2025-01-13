@@ -214,19 +214,19 @@ public class CaseInstanceQueryDto extends AbstractQueryDto<CaseInstanceQuery> {
     if (TRUE.equals(withoutTenantId)) {
       query.withoutTenantId();
     }
-    if (active != null && active == true) {
+    if (TRUE.equals(active)) {
       query.active();
     }
-    if (completed != null && completed == true) {
+    if (TRUE.equals(completed)) {
       query.completed();
     }
-    if (terminated != null && terminated == true) {
+    if (TRUE.equals(terminated)) {
       query.terminated();
     }
-    if(Boolean.TRUE.equals(variableNamesIgnoreCase)) {
+    if(TRUE.equals(variableNamesIgnoreCase)) {
       query.matchVariableNamesIgnoreCase();
     }
-    if(Boolean.TRUE.equals(variableValuesIgnoreCase)) {
+    if(TRUE.equals(variableValuesIgnoreCase)) {
       query.matchVariableValuesIgnoreCase();
     }
     if (variables != null) {
@@ -237,21 +237,15 @@ public class CaseInstanceQueryDto extends AbstractQueryDto<CaseInstanceQuery> {
         String op = variableQueryParam.getOperator();
         Object variableValue = variableQueryParam.resolveValue(objectMapper);
 
-        if (op.equals(EQUALS_OPERATOR_NAME)) {
-          query.variableValueEquals(variableName, variableValue);
-        } else if (op.equals(GREATER_THAN_OPERATOR_NAME)) {
-          query.variableValueGreaterThan(variableName, variableValue);
-        } else if (op.equals(GREATER_THAN_OR_EQUALS_OPERATOR_NAME)) {
-          query.variableValueGreaterThanOrEqual(variableName, variableValue);
-        } else if (op.equals(LESS_THAN_OPERATOR_NAME)) {
-          query.variableValueLessThan(variableName, variableValue);
-        } else if (op.equals(LESS_THAN_OR_EQUALS_OPERATOR_NAME)) {
-          query.variableValueLessThanOrEqual(variableName, variableValue);
-        } else if (op.equals(NOT_EQUALS_OPERATOR_NAME)) {
-          query.variableValueNotEquals(variableName, variableValue);
-        } else if (op.equals(LIKE_OPERATOR_NAME)) {
-          query.variableValueLike(variableName, String.valueOf(variableValue));
-        } else {
+        switch (op) {
+        case EQUALS_OPERATOR_NAME -> query.variableValueEquals(variableName, variableValue);
+        case GREATER_THAN_OPERATOR_NAME -> query.variableValueGreaterThan(variableName, variableValue);
+        case GREATER_THAN_OR_EQUALS_OPERATOR_NAME -> query.variableValueGreaterThanOrEqual(variableName, variableValue);
+        case LESS_THAN_OPERATOR_NAME -> query.variableValueLessThan(variableName, variableValue);
+        case LESS_THAN_OR_EQUALS_OPERATOR_NAME -> query.variableValueLessThanOrEqual(variableName, variableValue);
+        case NOT_EQUALS_OPERATOR_NAME -> query.variableValueNotEquals(variableName, variableValue);
+        case LIKE_OPERATOR_NAME -> query.variableValueLike(variableName, String.valueOf(variableValue));
+        default ->
           throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid variable comparator specified: " + op);
         }
       }
@@ -260,14 +254,11 @@ public class CaseInstanceQueryDto extends AbstractQueryDto<CaseInstanceQuery> {
 
   @Override
   protected void applySortBy(CaseInstanceQuery query, String sortBy, Map<String, Object> parameters, ProcessEngine engine) {
-    if (sortBy.equals(SORT_BY_INSTANCE_ID_VALUE)) {
-      query.orderByCaseInstanceId();
-    } else if (sortBy.equals(SORT_BY_DEFINITION_KEY_VALUE)) {
-      query.orderByCaseDefinitionKey();
-    } else if (sortBy.equals(SORT_BY_DEFINITION_ID_VALUE)) {
-      query.orderByCaseDefinitionId();
-    } else if (sortBy.equals(SORT_BY_TENANT_ID)) {
-      query.orderByTenantId();
+    switch (sortBy) {
+    case SORT_BY_INSTANCE_ID_VALUE -> query.orderByCaseInstanceId();
+    case SORT_BY_DEFINITION_KEY_VALUE -> query.orderByCaseDefinitionKey();
+    case SORT_BY_DEFINITION_ID_VALUE -> query.orderByCaseDefinitionId();
+    case SORT_BY_TENANT_ID -> query.orderByTenantId();
     }
   }
 

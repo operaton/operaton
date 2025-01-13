@@ -25,6 +25,7 @@ import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
  */
 public class TaskWaitState extends TaskActivityBehavior {
 
+  @Override
   protected void performStart(CmmnActivityExecution execution) {
   }
 

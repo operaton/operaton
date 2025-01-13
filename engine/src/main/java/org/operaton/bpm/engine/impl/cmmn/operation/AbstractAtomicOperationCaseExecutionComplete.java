@@ -40,6 +40,7 @@ public abstract class AbstractAtomicOperationCaseExecutionComplete extends Abstr
     return COMPLETE;
   }
 
+  @Override
   protected CmmnExecution eventNotificationsStarted(CmmnExecution execution) {
     CmmnActivityBehavior behavior = getActivityBehavior(execution);
     triggerBehavior(behavior, execution);

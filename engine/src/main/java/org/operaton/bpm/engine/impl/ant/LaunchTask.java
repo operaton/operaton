@@ -36,7 +36,8 @@ public class LaunchTask extends Task {
   String script;
   String msg;
   String args;
-  
+
+  @Override
   public void execute() throws BuildException {
     if (dir==null) {
       throw new BuildException("dir attribute is required with the launch task");

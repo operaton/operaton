@@ -98,6 +98,7 @@ public class JavaObjectSerializer extends AbstractObjectValueSerializer {
       super(in);
     }
 
+    @Override
     protected Class<?> resolveClass(ObjectStreamClass desc) {
       return ReflectUtil.loadClass(desc.getName());
     }

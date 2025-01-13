@@ -238,21 +238,15 @@ public class ExecutionQueryDto extends AbstractQueryDto<ExecutionQuery> {
         String op = variableQueryParam.getOperator();
         Object variableValue = variableQueryParam.resolveValue(objectMapper);
 
-        if (op.equals(EQUALS_OPERATOR_NAME)) {
-          query.variableValueEquals(variableName, variableValue);
-        } else if (op.equals(GREATER_THAN_OPERATOR_NAME)) {
-          query.variableValueGreaterThan(variableName, variableValue);
-        } else if (op.equals(GREATER_THAN_OR_EQUALS_OPERATOR_NAME)) {
-          query.variableValueGreaterThanOrEqual(variableName, variableValue);
-        } else if (op.equals(LESS_THAN_OPERATOR_NAME)) {
-          query.variableValueLessThan(variableName, variableValue);
-        } else if (op.equals(LESS_THAN_OR_EQUALS_OPERATOR_NAME)) {
-          query.variableValueLessThanOrEqual(variableName, variableValue);
-        } else if (op.equals(NOT_EQUALS_OPERATOR_NAME)) {
-          query.variableValueNotEquals(variableName, variableValue);
-        } else if (op.equals(LIKE_OPERATOR_NAME)) {
-          query.variableValueLike(variableName, String.valueOf(variableValue));
-        } else {
+        switch (op) {
+        case EQUALS_OPERATOR_NAME -> query.variableValueEquals(variableName, variableValue);
+        case GREATER_THAN_OPERATOR_NAME -> query.variableValueGreaterThan(variableName, variableValue);
+        case GREATER_THAN_OR_EQUALS_OPERATOR_NAME -> query.variableValueGreaterThanOrEqual(variableName, variableValue);
+        case LESS_THAN_OPERATOR_NAME -> query.variableValueLessThan(variableName, variableValue);
+        case LESS_THAN_OR_EQUALS_OPERATOR_NAME -> query.variableValueLessThanOrEqual(variableName, variableValue);
+        case NOT_EQUALS_OPERATOR_NAME -> query.variableValueNotEquals(variableName, variableValue);
+        case LIKE_OPERATOR_NAME -> query.variableValueLike(variableName, String.valueOf(variableValue));
+        default ->
           throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid variable comparator specified: " + op);
         }
       }
@@ -277,14 +271,11 @@ public class ExecutionQueryDto extends AbstractQueryDto<ExecutionQuery> {
 
   @Override
   protected void applySortBy(ExecutionQuery query, String sortBy, Map<String, Object> parameters, ProcessEngine engine) {
-    if (sortBy.equals(SORT_BY_INSTANCE_ID_VALUE)) {
-      query.orderByProcessInstanceId();
-    } else if (sortBy.equals(SORT_BY_DEFINITION_KEY_VALUE)) {
-      query.orderByProcessDefinitionKey();
-    } else if (sortBy.equals(SORT_BY_DEFINITION_ID_VALUE)) {
-      query.orderByProcessDefinitionId();
-    } else if (sortBy.equals(SORT_BY_TENANT_ID)) {
-      query.orderByTenantId();
+    switch (sortBy) {
+    case SORT_BY_INSTANCE_ID_VALUE -> query.orderByProcessInstanceId();
+    case SORT_BY_DEFINITION_KEY_VALUE -> query.orderByProcessDefinitionKey();
+    case SORT_BY_DEFINITION_ID_VALUE -> query.orderByProcessDefinitionId();
+    case SORT_BY_TENANT_ID -> query.orderByTenantId();
     }
   }
 }

@@ -147,11 +147,7 @@ public class ScriptingEnvironment {
     List<ExecutableScript> envScripts = environment.get(scriptLanguage);
     if(envScripts == null) {
       synchronized (this) {
-        envScripts = environment.get(scriptLanguage);
-        if(envScripts == null) {
-          envScripts = initEnvForLanguage(scriptLanguage);
-          environment.put(scriptLanguage, envScripts);
-        }
+        envScripts = environment.computeIfAbsent(scriptLanguage, this::initEnvForLanguage);
       }
     }
     return envScripts;

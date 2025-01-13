@@ -2482,13 +2482,9 @@ public class BpmnParse extends Parse {
   protected void addJobDeclarationToProcessDefinition(JobDeclaration<?, ?> jobDeclaration, ProcessDefinition processDefinition) {
     String key = processDefinition.getKey();
 
-    List<JobDeclaration<?, ?>> containingJobDeclarations = jobDeclarations.get(key);
-    if (containingJobDeclarations == null) {
-      containingJobDeclarations = new ArrayList<>();
-      jobDeclarations.put(key, containingJobDeclarations);
-    }
-
-    containingJobDeclarations.add(jobDeclaration);
+    jobDeclarations
+      .computeIfAbsent(key, k -> new ArrayList<>())
+      .add(jobDeclaration);
   }
 
   /**

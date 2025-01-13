@@ -96,19 +96,16 @@ public class DeploymentEntity implements Serializable, DeploymentWithDefinitions
 
   // Deployed artifacts manipulation //////////////////////////////////////////
 
+  @SuppressWarnings("unchecked")
   public void addDeployedArtifact(ResourceDefinitionEntity deployedArtifact) {
     if (deployedArtifacts == null) {
       deployedArtifacts = new HashMap<>();
     }
 
     Class<?> clazz = deployedArtifact.getClass();
-    List artifacts = deployedArtifacts.get(clazz);
-    if (artifacts == null) {
-      artifacts = new ArrayList();
-      deployedArtifacts.put(clazz, artifacts);
-    }
-
-    artifacts.add(deployedArtifact);
+    deployedArtifacts
+      .computeIfAbsent(clazz, k -> new ArrayList())
+      .add(deployedArtifact);
   }
 
   public Map<Class<?>, List> getDeployedArtifacts() {

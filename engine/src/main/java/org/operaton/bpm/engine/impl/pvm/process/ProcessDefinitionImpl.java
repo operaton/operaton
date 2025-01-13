@@ -115,6 +115,7 @@ public class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefini
     return getInitialActivityStack(initial);
   }
 
+  @SuppressWarnings("java:S3824")
   public synchronized List<ActivityImpl> getInitialActivityStack(ActivityImpl startActivity) {
     List<ActivityImpl> initialActivityStack = initialActivityStacks.get(startActivity);
     if(initialActivityStack == null) {

@@ -660,16 +660,9 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
       sentries = new HashMap<>();
 
       for (CaseSentryPartEntity sentryPart : caseSentryParts) {
-
         String sentryId = sentryPart.getSentryId();
-        List<CmmnSentryPart> parts = sentries.get(sentryId);
-
-        if (parts == null) {
-          parts = new ArrayList<>();
-          sentries.put(sentryId, parts);
-        }
-
-        parts.add(sentryPart);
+        sentries.computeIfAbsent(sentryId, k -> new ArrayList<>())
+          .add(sentryPart);
       }
     }
   }

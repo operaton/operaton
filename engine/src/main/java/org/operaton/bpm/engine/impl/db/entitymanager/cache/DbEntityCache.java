@@ -191,11 +191,7 @@ public class DbEntityCache {
     Class<? extends DbEntity> type = entityToAdd.getEntity().getClass();
     Class<?> cacheKey = cacheKeyMapping.getEntityCacheKey(type);
 
-    Map<String, CachedDbEntity> map = cachedEntites.get(cacheKey);
-    if(map == null) {
-      map = new HashMap<>();
-      cachedEntites.put(cacheKey, map);
-    }
+    Map<String, CachedDbEntity> map = cachedEntites.computeIfAbsent(cacheKey, k -> new HashMap<>());
 
     // check whether this object is already present in the cache
     CachedDbEntity existingCachedEntity = map.get(entityToAdd.getEntity().getId());

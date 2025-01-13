@@ -82,12 +82,9 @@ public class BatchElementConfiguration {
     });
     // add missing ids to "null" deployment id
     if (missingIds != null && !missingIds.isEmpty()) {
-      Set<String> nullIds = collectedMappings.get(null);
-      if (nullIds == null) {
-        nullIds = new HashSet<>();
-        collectedMappings.put(null, nullIds);
-      }
-      nullIds.addAll(missingIds);
+      collectedMappings
+        .computeIfAbsent(null, k -> new HashSet<>())
+        .addAll(missingIds);
     }
   }
 

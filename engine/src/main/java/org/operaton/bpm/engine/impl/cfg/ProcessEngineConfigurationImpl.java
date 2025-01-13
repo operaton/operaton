@@ -1369,12 +1369,9 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     }
 
     if (batchHandlers != null && batchOperationHistoryTimeToLive != null) {
-
-      for (String batchOperation : batchHandlers.keySet()) {
-        if (!batchOperationsForHistoryCleanup.containsKey(batchOperation)) {
-          batchOperationsForHistoryCleanup.put(batchOperation, batchOperationHistoryTimeToLive);
-        }
-      }
+      batchHandlers.keySet().forEach(batchOperation ->
+        batchOperationsForHistoryCleanup.computeIfAbsent(batchOperation, k -> batchOperationHistoryTimeToLive)
+      );
     }
 
     parsedBatchOperationsForHistoryCleanup = new HashMap<>();

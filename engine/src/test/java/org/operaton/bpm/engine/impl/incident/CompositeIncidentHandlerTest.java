@@ -28,7 +28,6 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -170,8 +169,8 @@ public class CompositeIncidentHandlerTest {
       .isNotNull()
       .isEqualTo(incident);
 
-    verify(mainHandler).handleIncident(eq(incidentContext), eq("Incident message"));
-    verify(subHandler, new Times(3)).handleIncident(eq(incidentContext), eq("Incident message"));
+    verify(mainHandler).handleIncident(incidentContext, "Incident message");
+    verify(subHandler, new Times(3)).handleIncident(incidentContext, "Incident message");
   }
 
   @Test
@@ -192,8 +191,8 @@ public class CompositeIncidentHandlerTest {
 
     compositeIncidentHandler.deleteIncident(incidentContext);
 
-    verify(mainHandler).deleteIncident(eq(incidentContext));
-    verify(subHandler, new Times(3)).deleteIncident(eq(incidentContext));
+    verify(mainHandler).deleteIncident(incidentContext);
+    verify(subHandler, new Times(3)).deleteIncident(incidentContext);
   }
 
   @Test
@@ -216,8 +215,8 @@ public class CompositeIncidentHandlerTest {
 
     compositeIncidentHandler.resolveIncident(incidentContext);
 
-    verify(mainHandler).resolveIncident(eq(incidentContext));
-    verify(subHandler, new Times(3)).resolveIncident(eq(incidentContext));
+    verify(mainHandler).resolveIncident(incidentContext);
+    verify(subHandler, new Times(3)).resolveIncident(incidentContext);
   }
 }
 

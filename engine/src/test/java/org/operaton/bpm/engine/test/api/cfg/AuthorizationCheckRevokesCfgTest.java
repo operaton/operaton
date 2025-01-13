@@ -67,7 +67,7 @@ public class AuthorizationCheckRevokesCfgTest {
     authorizationManager = spy(new AuthorizationManager());
     mockedEntityManager = mock(DbEntityManager.class);
 
-    when(mockedCmdContext.getSession(eq(DbEntityManager.class))).thenReturn(mockedEntityManager);
+    when(mockedCmdContext.getSession(DbEntityManager.class)).thenReturn(mockedEntityManager);
 
     when(authorizationManager.filterAuthenticatedGroupIds(eq(AUTHENTICATED_GROUPS))).thenReturn(AUTHENTICATED_GROUPS);
     when(mockedCmdContext.getAuthentication()).thenReturn(new Authentication(AUTHENTICATED_USER_ID, AUTHENTICATED_GROUPS));
@@ -128,14 +128,14 @@ public class AuthorizationCheckRevokesCfgTest {
 
     // given
     when(mockedConfiguration.getAuthorizationCheckRevokes()).thenReturn(ProcessEngineConfiguration.AUTHORIZATION_CHECK_REVOKE_AUTO);
-    when(mockedEntityManager.selectBoolean(eq("selectRevokeAuthorization"), eq(expectedQueryParams))).thenReturn(true);
+    when(mockedEntityManager.selectBoolean("selectRevokeAuthorization", expectedQueryParams)).thenReturn(true);
 
     // if
     authorizationManager.configureQuery(query);
 
     // then
     assertEquals(true, authCheck.isRevokeAuthorizationCheckEnabled());
-    verify(mockedEntityManager, times(1)).selectBoolean(eq("selectRevokeAuthorization"), eq(expectedQueryParams));
+    verify(mockedEntityManager, times(1)).selectBoolean("selectRevokeAuthorization", expectedQueryParams);
   }
 
   @Test
@@ -149,14 +149,14 @@ public class AuthorizationCheckRevokesCfgTest {
 
     // given
     when(mockedConfiguration.getAuthorizationCheckRevokes()).thenReturn(ProcessEngineConfiguration.AUTHORIZATION_CHECK_REVOKE_AUTO);
-    when(mockedEntityManager.selectBoolean(eq("selectRevokeAuthorization"), eq(expectedQueryParams))).thenReturn(false);
+    when(mockedEntityManager.selectBoolean("selectRevokeAuthorization", expectedQueryParams)).thenReturn(false);
 
     // if
     authorizationManager.configureQuery(query);
 
     // then
     assertEquals(false, authCheck.isRevokeAuthorizationCheckEnabled());
-    verify(mockedEntityManager, times(1)).selectBoolean(eq("selectRevokeAuthorization"), eq(expectedQueryParams));
+    verify(mockedEntityManager, times(1)).selectBoolean("selectRevokeAuthorization", expectedQueryParams);
   }
 
   @Test
@@ -170,14 +170,14 @@ public class AuthorizationCheckRevokesCfgTest {
 
     // given
     when(mockedConfiguration.getAuthorizationCheckRevokes()).thenReturn("AuTo");
-    when(mockedEntityManager.selectBoolean(eq("selectRevokeAuthorization"), eq(expectedQueryParams))).thenReturn(true);
+    when(mockedEntityManager.selectBoolean("selectRevokeAuthorization", expectedQueryParams)).thenReturn(true);
 
     // if
     authorizationManager.configureQuery(query);
 
     // then
     assertEquals(true, authCheck.isRevokeAuthorizationCheckEnabled());
-    verify(mockedEntityManager, times(1)).selectBoolean(eq("selectRevokeAuthorization"), eq(expectedQueryParams));
+    verify(mockedEntityManager, times(1)).selectBoolean("selectRevokeAuthorization", expectedQueryParams);
   }
 
   @Test
@@ -191,7 +191,7 @@ public class AuthorizationCheckRevokesCfgTest {
 
     // given
     when(mockedConfiguration.getAuthorizationCheckRevokes()).thenReturn(ProcessEngineConfiguration.AUTHORIZATION_CHECK_REVOKE_AUTO);
-    when(mockedEntityManager.selectBoolean(eq("selectRevokeAuthorization"), eq(expectedQueryParams))).thenReturn(true);
+    when(mockedEntityManager.selectBoolean("selectRevokeAuthorization", expectedQueryParams)).thenReturn(true);
 
     // if
     authorizationManager.configureQuery(query);
@@ -199,7 +199,7 @@ public class AuthorizationCheckRevokesCfgTest {
 
     // then
     assertEquals(true, authCheck.isRevokeAuthorizationCheckEnabled());
-    verify(mockedEntityManager, times(1)).selectBoolean(eq("selectRevokeAuthorization"), eq(expectedQueryParams));
+    verify(mockedEntityManager, times(1)).selectBoolean("selectRevokeAuthorization", expectedQueryParams);
   }
 
   @Test

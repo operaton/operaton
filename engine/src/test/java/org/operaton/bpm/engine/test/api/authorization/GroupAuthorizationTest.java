@@ -78,8 +78,8 @@ public class GroupAuthorizationTest extends AuthorizationTest {
 
       taskQuery.list();
 
-      verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds(eq(testGroupIds));
-      verify(authCheck).setAuthGroupIds(eq(Collections.<String>emptyList()));
+      verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds(testGroupIds);
+      verify(authCheck).setAuthGroupIds(Collections.<String>emptyList());
 
       return null;
     });
@@ -98,8 +98,8 @@ public class GroupAuthorizationTest extends AuthorizationTest {
 
       taskQuery.list();
 
-      verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds(eq(testGroupIds));
-      verify(authCheck).setAuthGroupIds(eq(testGroupIds.subList(0, 1)));
+      verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds(testGroupIds);
+      verify(authCheck).setAuthGroupIds(testGroupIds.subList(0, 1));
 
       return null;
     });
@@ -120,8 +120,8 @@ public class GroupAuthorizationTest extends AuthorizationTest {
 
       taskQuery.list();
 
-      verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds(eq(testGroupIds));
-      verify(authCheck, atLeastOnce()).setAuthGroupIds(eq(testGroupIds));
+      verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds(testGroupIds);
+      verify(authCheck, atLeastOnce()).setAuthGroupIds(testGroupIds);
       return null;
     });
   }
@@ -139,8 +139,8 @@ public class GroupAuthorizationTest extends AuthorizationTest {
 
       taskQuery.list();
 
-      verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds(eq((List<String>) null));
-      verify(authCheck).setAuthGroupIds(eq(Collections.<String>emptyList()));
+      verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds((List<String>) null);
+      verify(authCheck).setAuthGroupIds(Collections.<String>emptyList());
 
       return null;
     });
@@ -154,7 +154,7 @@ public class GroupAuthorizationTest extends AuthorizationTest {
 
       authorizationService.isUserAuthorized(testUserId, testGroupIds, Permissions.READ, Resources.TASK);
 
-      verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds(eq(testGroupIds));
+      verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds(testGroupIds);
 
       ArgumentCaptor<AuthorizationCheck> authorizationCheckArgument = forClass(AuthorizationCheck.class);
       verify(dbEntityManager).selectBoolean(eq("isUserAuthorizedForResource"), authorizationCheckArgument.capture());
@@ -176,7 +176,7 @@ public class GroupAuthorizationTest extends AuthorizationTest {
 
       authorizationService.isUserAuthorized(testUserId, testGroupIds, Permissions.READ, Resources.TASK);
 
-      verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds(eq(testGroupIds));
+      verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds(testGroupIds);
 
       ArgumentCaptor<AuthorizationCheck> authorizationCheckArgument = forClass(AuthorizationCheck.class);
       verify(dbEntityManager).selectBoolean(eq("isUserAuthorizedForResource"), authorizationCheckArgument.capture());
@@ -200,7 +200,7 @@ public class GroupAuthorizationTest extends AuthorizationTest {
 
       authorizationService.isUserAuthorized(testUserId, testGroupIds, Permissions.READ, Resources.TASK);
 
-      verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds(eq(testGroupIds));
+      verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds(testGroupIds);
 
       ArgumentCaptor<AuthorizationCheck> authorizationCheckArgument = forClass(AuthorizationCheck.class);
       verify(dbEntityManager).selectBoolean(eq("isUserAuthorizedForResource"), authorizationCheckArgument.capture());
@@ -220,7 +220,7 @@ public class GroupAuthorizationTest extends AuthorizationTest {
 
       authorizationService.isUserAuthorized(testUserId, null, Permissions.READ, Resources.TASK);
 
-      verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds(eq((List<String>) null));
+      verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds((List<String>) null);
 
       ArgumentCaptor<AuthorizationCheck> authorizationCheckArgument = forClass(AuthorizationCheck.class);
       verify(dbEntityManager).selectBoolean(eq("isUserAuthorizedForResource"), authorizationCheckArgument.capture());

@@ -32,12 +32,13 @@ import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.TASK;
 import static org.operaton.bpm.engine.authorization.TaskPermissions.UPDATE_VARIABLE;
+
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.Arrays;
 import java.util.List;
@@ -394,17 +395,10 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
   @Test
   public void testNewTaskWithoutAuthorization() {
-    // given
-
-    try {
-      // when
-      taskService.newTask();
-      fail("Exception expected: It should not be possible to create a new task.");
-    } catch (AuthorizationException e) {
-
-      // then
-      testRule.assertTextPresent("The user with id 'test' does not have 'CREATE' permission on resource 'Task'", e.getMessage());
-    }
+    assertThatThrownBy(() -> taskService.newTask())
+      .withFailMessage("Exception expected: It should not be possible to create a new task.")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining("The user with id 'test' does not have 'CREATE' permission on resource 'Task'");
   }
 
   @Test
@@ -426,15 +420,12 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     // given
     TaskEntity task = new TaskEntity();
 
-    try {
-      // when
-      taskService.saveTask(task);
-      fail("Exception expected: It should not be possible to save a task.");
-    } catch (AuthorizationException e) {
-
+    // when
+    assertThatThrownBy(() -> taskService.saveTask(task))
       // then
-      testRule.assertTextPresent("The user with id 'test' does not have 'CREATE' permission on resource 'Task'", e.getMessage());
-    }
+      .withFailMessage("Exception expected: It should not be possible to save a task.")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining("The user with id 'test' does not have 'CREATE' permission on resource 'Task'");
   }
 
   @Test
@@ -491,15 +482,12 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     Task task = selectSingleTask();
 
-    try {
-      // when
-      taskService.saveTask(task);
-      fail("Exception expected: It should not be possible to save a task.");
-    } catch (AuthorizationException e) {
-
+    // when
+    assertThatThrownBy(() -> taskService.saveTask(task))
       // then
-      testRule.assertTextPresent("The user with id 'test' does not have one of the following permissions: 'TASK_ASSIGN'", e.getMessage());
-    }
+      .withFailMessage("Exception expected: It should not be possible to save a task.")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'TASK_ASSIGN'");
 
     deleteTask(taskId, true);
   }
@@ -534,21 +522,17 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     startProcessInstanceByKey(PROCESS_KEY);
     Task task = selectSingleTask();
 
-    try {
-      // when
-      taskService.saveTask(task);
-      fail("Exception expected: It should not be possible to save a task.");
-    } catch (AuthorizationException e) {
-
+    // when
+    assertThatThrownBy(() -> taskService.saveTask(task))
       // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(task.getId(), message);
-      testRule.assertTextPresent(TASK.resourceName(), message);
-      testRule.assertTextPresent(UPDATE_TASK.getName(), message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+      .withFailMessage("Exception expected: It should not be possible to save a task.")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining(userId)
+      .hasMessageContaining(UPDATE.getName())
+      .hasMessageContaining(task.getId())
+      .hasMessageContaining(TASK.resourceName())
+      .hasMessageContaining(UPDATE_TASK.getName())
+      .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -685,14 +669,12 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     String taskId = "myTask";
     createTask(taskId);
 
-    try {
-      // when
-      taskService.deleteTask(taskId);
-      fail("Exception expected: It should not be possible to delete a task.");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.deleteTask(taskId))
       // then
-      testRule.assertTextPresent("The user with id 'test' does not have 'DELETE' permission on resource 'myTask' of type 'Task'", e.getMessage());
-    }
+      .withFailMessage("Exception expected: It should not be possible to delete a task.")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining("The user with id 'test' does not have 'DELETE' permission on resource 'myTask' of type 'Task'");
 
     deleteTask(taskId, true);
   }
@@ -726,17 +708,15 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     String secondTaskId = "myTask2";
     createTask(secondTaskId);
 
-    try {
-      // when
-      taskService.deleteTasks(Arrays.asList(firstTaskId, secondTaskId));
-      fail("Exception expected: It should not be possible to delete tasks.");
-    } catch (AuthorizationException e) {
+    // when
+    var taskIds = List.of(firstTaskId, secondTaskId);
+    assertThatThrownBy(() -> taskService.deleteTasks(taskIds))
       // then
-      testRule.assertTextPresent("The user with id 'test' does not have 'DELETE' permission on resource 'myTask1' of type 'Task'", e.getMessage());
-    }
+      .withFailMessage("Exception expected: It should not be possible to delete tasks.")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining("The user with id 'test' does not have 'DELETE' permission on resource 'myTask1' of type 'Task'");
 
-    deleteTask(firstTaskId, true);
-    deleteTask(secondTaskId, true);
+    taskIds.forEach(taskId -> deleteTask(taskId, true));
   }
 
   @Test
@@ -749,17 +729,15 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     String secondTaskId = "myTask2";
     createTask(secondTaskId);
 
-    try {
-      // when
-      taskService.deleteTasks(Arrays.asList(firstTaskId, secondTaskId));
-      fail("Exception expected: It should not be possible to delete tasks.");
-    } catch (AuthorizationException e) {
+    // when
+    var taskIds = List.of(firstTaskId, secondTaskId);
+    assertThatThrownBy(() -> taskService.deleteTasks(taskIds))
       // then
-      testRule.assertTextPresent("The user with id 'test' does not have 'DELETE' permission on resource 'myTask2' of type 'Task'", e.getMessage());
-    }
+      .withFailMessage("Exception expected: It should not be possible to delete tasks.")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining("The user with id 'test' does not have 'DELETE' permission on resource 'myTask2' of type 'Task'");
 
-    deleteTask(firstTaskId, true);
-    deleteTask(secondTaskId, true);
+    taskIds.forEach(taskId -> deleteTask(taskId, true));
   }
 
   @Test
@@ -792,14 +770,12 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     String taskId = "myTask";
     createTask(taskId);
 
-    try {
-      // when
-      taskService.setAssignee(taskId, "demo");
-      fail("Exception expected: It should not be possible to set an assignee");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.setAssignee(taskId, "demo"))
       // then
-      testRule.assertTextPresent("The user with id 'test' does not have one of the following permissions: 'TASK_ASSIGN", e.getMessage());
-    }
+      .withFailMessage("Exception expected: It should not be possible to set an assignee")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'TASK_ASSIGN");
 
     deleteTask(taskId, true);
   }
@@ -850,20 +826,17 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
 
-    try {
-      // when
-      taskService.setAssignee(taskId, "demo");
-      fail("Exception expected: It should not be possible to set an assignee");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.setAssignee(taskId, "demo"))
       // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(taskId, message);
-      testRule.assertTextPresent(TASK.resourceName(), message);
-      testRule.assertTextPresent(UPDATE_TASK.getName(), message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+      .withFailMessage("Exception expected: It should not be possible to set an assignee")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining(userId)
+      .hasMessageContaining(UPDATE.getName())
+      .hasMessageContaining(taskId)
+      .hasMessageContaining(TASK.resourceName())
+      .hasMessageContaining(UPDATE_TASK.getName())
+      .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -1011,14 +984,12 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     String taskId = "myTask";
     createTask(taskId);
 
-    try {
-      // when
-      taskService.setOwner(taskId, "demo");
-      fail("Exception expected: It should not be possible to set an owner");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.setOwner(taskId, "demo"))
       // then
-      testRule.assertTextPresent("The user with id 'test' does not have one of the following permissions: 'TASK_ASSIGN", e.getMessage());
-    }
+      .withFailMessage("Exception expected: It should not be possible to set an owner")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'TASK_ASSIGN");
 
     deleteTask(taskId, true);
   }
@@ -1069,20 +1040,17 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
 
-    try {
-      // when
-      taskService.setOwner(taskId, "demo");
-      fail("Exception expected: It should not be possible to set an owner");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.setOwner(taskId, "demo"))
       // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(taskId, message);
-      testRule.assertTextPresent(TASK.resourceName(), message);
-      testRule.assertTextPresent(UPDATE_TASK.getName(), message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+      .withFailMessage("Exception expected: It should not be possible to set an owner")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining(userId)
+      .hasMessageContaining(UPDATE.getName())
+      .hasMessageContaining(taskId)
+      .hasMessageContaining(TASK.resourceName())
+      .hasMessageContaining(UPDATE_TASK.getName())
+      .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -1248,14 +1216,12 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     String taskId = "myTask";
     createTask(taskId);
 
-    try {
-      // when
-      taskService.addCandidateUser(taskId, "demo");
-      fail("Exception expected: It should not be possible to add a candidate user");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.addCandidateUser(taskId, "demo"))
       // then
-      testRule.assertTextPresent("The user with id 'test' does not have one of the following permissions: 'TASK_ASSIGN", e.getMessage());
-    }
+      .withFailMessage("Exception expected: It should not be possible to add a candidate user")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'TASK_ASSIGN");
 
     deleteTask(taskId, true);
   }
@@ -1296,20 +1262,17 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
 
-    try {
-      // when
-      taskService.addCandidateUser(taskId, "demo");
-      fail("Exception expected: It should not be possible to add a candidate user");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.addCandidateUser(taskId, "demo"))
       // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(taskId, message);
-      testRule.assertTextPresent(TASK.resourceName(), message);
-      testRule.assertTextPresent(UPDATE_TASK.getName(), message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+      .withFailMessage("Exception expected: It should not be possible to add a candidate user")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining(userId)
+      .hasMessageContaining(UPDATE.getName())
+      .hasMessageContaining(taskId)
+      .hasMessageContaining(TASK.resourceName())
+      .hasMessageContaining(UPDATE_TASK.getName())
+      .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -1347,14 +1310,12 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     createRevokeAuthorization(TASK, taskId, userId, TASK_ASSIGN);
     createGrantAuthorization(TASK, taskId, userId, UPDATE);
 
-    try {
-      // when
-      taskService.addCandidateUser(taskId, "demo");
-      fail("Exception expected: It should not be possible to add an user identity link");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.addCandidateUser(taskId, "demo"))
       // then
-      testRule.assertTextPresent("The user with id 'test' does not have one of the following permissions: 'TASK_ASSIGN", e.getMessage());
-    }
+      .withFailMessage("Exception expected: It should not be possible to add an user identity link")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'TASK_ASSIGN");
   }
 
   @Test
@@ -1575,14 +1536,12 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     String taskId = "myTask";
     createTask(taskId);
 
-    try {
-      // when
-      taskService.addCandidateGroup(taskId, "accounting");
-      fail("Exception expected: It should not be possible to add a candidate group");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.addCandidateGroup(taskId, "accounting"))
       // then
-      testRule.assertTextPresent("The user with id 'test' does not have one of the following permissions: 'TASK_ASSIGN", e.getMessage());
-    }
+      .withFailMessage("Exception expected: It should not be possible to add a candidate group")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'TASK_ASSIGN");
 
     deleteTask(taskId, true);
   }
@@ -1651,20 +1610,17 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
 
-    try {
-      // when
-      taskService.addCandidateGroup(taskId, "accounting");
-      fail("Exception expected: It should not be possible to add a candidate group");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.addCandidateGroup(taskId, "accounting"))
       // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(taskId, message);
-      testRule.assertTextPresent(TASK.resourceName(), message);
-      testRule.assertTextPresent(UPDATE_TASK.getName(), message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+      .withFailMessage("Exception expected: It should not be possible to add a candidate group")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining(userId)
+      .hasMessageContaining(UPDATE.getName())
+      .hasMessageContaining(taskId)
+      .hasMessageContaining(TASK.resourceName())
+      .hasMessageContaining(UPDATE_TASK.getName())
+      .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -1938,14 +1894,12 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     String taskId = "myTask";
     createTask(taskId);
 
-    try {
-      // when
-      taskService.addUserIdentityLink(taskId, "demo", IdentityLinkType.CANDIDATE);
-      fail("Exception expected: It should not be possible to add an user identity link");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.addUserIdentityLink(taskId, "demo", IdentityLinkType.CANDIDATE))
       // then
-      testRule.assertTextPresent("The user with id 'test' does not have one of the following permissions: 'TASK_ASSIGN", e.getMessage());
-    }
+      .withFailMessage("Exception expected: It should not be possible to add an user identity link")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'TASK_ASSIGN");
 
     deleteTask(taskId, true);
   }
@@ -2013,20 +1967,17 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
 
-    try {
-      // when
-      taskService.addUserIdentityLink(taskId, "demo", IdentityLinkType.CANDIDATE);
-      fail("Exception expected: It should not be possible to add an user identity link");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.addUserIdentityLink(taskId, "demo", IdentityLinkType.CANDIDATE))
       // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(taskId, message);
-      testRule.assertTextPresent(TASK.resourceName(), message);
-      testRule.assertTextPresent(UPDATE_TASK.getName(), message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+      .withFailMessage("Exception expected: It should not be possible to add an user identity link")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining(userId)
+      .hasMessageContaining(UPDATE.getName())
+      .hasMessageContaining(taskId)
+      .hasMessageContaining(TASK.resourceName())
+      .hasMessageContaining(UPDATE_TASK.getName())
+      .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -2246,14 +2197,12 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     String taskId = "myTask";
     createTask(taskId);
 
-    try {
-      // when
-      taskService.addGroupIdentityLink(taskId, "accounting", IdentityLinkType.CANDIDATE);
-      fail("Exception expected: It should not be possible to add a group identity link");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.addGroupIdentityLink(taskId, "accounting", IdentityLinkType.CANDIDATE))
       // then
-      testRule.assertTextPresent("The user with id 'test' does not have one of the following permissions: 'TASK_ASSIGN", e.getMessage());
-    }
+      .withFailMessage("Exception expected: It should not be possible to add a group identity link")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'TASK_ASSIGN");
 
     deleteTask(taskId, true);
   }
@@ -2294,20 +2243,17 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
 
-    try {
-      // when
-      taskService.addGroupIdentityLink(taskId, "accounting", IdentityLinkType.CANDIDATE);
-      fail("Exception expected: It should not be possible to add a group identity link");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.addGroupIdentityLink(taskId, "accounting", IdentityLinkType.CANDIDATE))
       // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(taskId, message);
-      testRule.assertTextPresent(TASK.resourceName(), message);
-      testRule.assertTextPresent(UPDATE_TASK.getName(), message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+      .withFailMessage("Exception expected: It should not be possible to add a group identity link")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining(userId)
+      .hasMessageContaining(UPDATE.getName())
+      .hasMessageContaining(taskId)
+      .hasMessageContaining(TASK.resourceName())
+      .hasMessageContaining(UPDATE_TASK.getName())
+      .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -2450,14 +2396,12 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     createTask(taskId);
     addCandidateUser(taskId, "demo");
 
-    try {
-      // when
-      taskService.deleteCandidateUser(taskId, "demo");
-      fail("Exception expected: It should not be possible to delete a candidate user");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.deleteCandidateUser(taskId, "demo"))
       // then
-      testRule.assertTextPresent("The user with id 'test' does not have one of the following permissions: 'TASK_ASSIGN", e.getMessage());
-    }
+      .withFailMessage("Exception expected: It should not be possible to delete a candidate user")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'TASK_ASSIGN");
 
     deleteTask(taskId, true);
   }
@@ -2517,20 +2461,17 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     String taskId = selectSingleTask().getId();
     addCandidateUser(taskId, "demo");
 
-    try {
-      // when
-      taskService.deleteCandidateUser(taskId, "demo");
-      fail("Exception expected: It should not be possible to delete a candidate user");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.deleteCandidateUser(taskId, "demo"))
       // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(taskId, message);
-      testRule.assertTextPresent(TASK.resourceName(), message);
-      testRule.assertTextPresent(UPDATE_TASK.getName(), message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+      .withFailMessage("Exception expected: It should not be possible to delete a candidate user")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining(userId)
+      .hasMessageContaining(UPDATE.getName())
+      .hasMessageContaining(taskId)
+      .hasMessageContaining(TASK.resourceName())
+      .hasMessageContaining(UPDATE_TASK.getName())
+      .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -2711,14 +2652,12 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     createTask(taskId);
     addCandidateGroup(taskId, "accounting");
 
-    try {
-      // when
-      taskService.deleteCandidateGroup(taskId, "accounting");
-      fail("Exception expected: It should not be possible to delete a candidate group");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.deleteCandidateGroup(taskId, "accounting"))
       // then
-      testRule.assertTextPresent("The user with id 'test' does not have one of the following permissions: 'TASK_ASSIGN", e.getMessage());
-    }
+      .withFailMessage("Exception expected: It should not be possible to delete a candidate group")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'TASK_ASSIGN");
 
     deleteTask(taskId, true);
   }
@@ -2778,20 +2717,17 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     String taskId = selectSingleTask().getId();
     addCandidateGroup(taskId, "accounting");
 
-    try {
-      // when
-      taskService.deleteCandidateGroup(taskId, "accounting");
-      fail("Exception expected: It should not be possible to delete a candidate group");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.deleteCandidateGroup(taskId, "accounting"))
       // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(taskId, message);
-      testRule.assertTextPresent(TASK.resourceName(), message);
-      testRule.assertTextPresent(UPDATE_TASK.getName(), message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+      .withFailMessage("Exception expected: It should not be possible to delete a candidate group")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining(userId)
+      .hasMessageContaining(UPDATE.getName())
+      .hasMessageContaining(taskId)
+      .hasMessageContaining(TASK.resourceName())
+      .hasMessageContaining(UPDATE_TASK.getName())
+      .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -2972,14 +2908,12 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     createTask(taskId);
     addCandidateUser(taskId, "demo");
 
-    try {
-      // when
-      taskService.deleteUserIdentityLink(taskId, "demo", IdentityLinkType.CANDIDATE);
-      fail("Exception expected: It should not be possible to delete an user identity link");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.deleteUserIdentityLink(taskId, "demo", IdentityLinkType.CANDIDATE))
       // then
-      testRule.assertTextPresent("The user with id 'test' does not have one of the following permissions: 'TASK_ASSIGN", e.getMessage());
-    }
+      .withFailMessage("Exception expected: It should not be possible to delete an user identity link")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'TASK_ASSIGN");
 
     deleteTask(taskId, true);
   }
@@ -3039,20 +2973,17 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     String taskId = selectSingleTask().getId();
     addCandidateUser(taskId, "demo");
 
-    try {
-      // when
-      taskService.deleteUserIdentityLink(taskId, "demo", IdentityLinkType.CANDIDATE);
-      fail("Exception expected: It should not be possible to delete an user identity link");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.deleteUserIdentityLink(taskId, "demo", IdentityLinkType.CANDIDATE))
       // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(taskId, message);
-      testRule.assertTextPresent(TASK.resourceName(), message);
-      testRule.assertTextPresent(UPDATE_TASK.getName(), message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+      .withFailMessage("Exception expected: It should not be possible to delete an user identity link")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining(userId)
+      .hasMessageContaining(UPDATE.getName())
+      .hasMessageContaining(taskId)
+      .hasMessageContaining(TASK.resourceName())
+      .hasMessageContaining(UPDATE_TASK.getName())
+      .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -3255,14 +3186,12 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     createTask(taskId);
     addCandidateGroup(taskId, "accounting");
 
-    try {
-      // when
-      taskService.deleteGroupIdentityLink(taskId, "accounting", IdentityLinkType.CANDIDATE);
-      fail("Exception expected: It should not be possible to delete a group identity link");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.deleteGroupIdentityLink(taskId, "accounting", IdentityLinkType.CANDIDATE))
       // then
-      testRule.assertTextPresent("The user with id 'test' does not have one of the following permissions: 'TASK_ASSIGN", e.getMessage());
-    }
+      .withFailMessage("Exception expected: It should not be possible to delete a group identity link")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'TASK_ASSIGN");
 
     deleteTask(taskId, true);
   }
@@ -3299,20 +3228,17 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     String taskId = selectSingleTask().getId();
     addCandidateGroup(taskId, "accounting");
 
-    try {
-      // when
-      taskService.deleteGroupIdentityLink(taskId, "accounting", IdentityLinkType.CANDIDATE);
-      fail("Exception expected: It should not be possible to delete a group identity link");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.deleteGroupIdentityLink(taskId, "accounting", IdentityLinkType.CANDIDATE))
       // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(taskId, message);
-      testRule.assertTextPresent(TASK.resourceName(), message);
-      testRule.assertTextPresent(UPDATE_TASK.getName(), message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+      .withFailMessage("Exception expected: It should not be possible to delete a group identity link")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining(userId)
+      .hasMessageContaining(UPDATE.getName())
+      .hasMessageContaining(taskId)
+      .hasMessageContaining(TASK.resourceName())
+      .hasMessageContaining(UPDATE_TASK.getName())
+      .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -3430,14 +3356,12 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     createTask(taskId);
     addCandidateUser(taskId, "demo");
 
-    try {
-      // when
-      taskService.getIdentityLinksForTask(taskId);
-      fail("Exception expected: It should not be possible to get identity links");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.getIdentityLinksForTask(taskId))
       // then
-      testRule.assertTextPresent("The user with id 'test' does not have 'READ' permission on resource 'myTask' of type 'Task'", e.getMessage());
-    }
+      .withFailMessage("Exception expected: It should not be possible to get identity links")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining("The user with id 'test' does not have 'READ' permission on resource 'myTask' of type 'Task'");
 
     deleteTask(taskId, true);
   }
@@ -3470,20 +3394,17 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     String taskId = selectSingleTask().getId();
     addCandidateUser(taskId, "demo");
 
-    try {
-      // when
-      taskService.getIdentityLinksForTask(taskId);
-      fail("Exception expected: It should not be possible to get the identity links");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.getIdentityLinksForTask(taskId))
       // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(READ.getName(), message);
-      testRule.assertTextPresent(taskId, message);
-      testRule.assertTextPresent(TASK.resourceName(), message);
-      testRule.assertTextPresent(READ_TASK.getName(), message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+      .withFailMessage("Exception expected: It should not be possible to get the identity links")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining(userId)
+      .hasMessageContaining(READ.getName())
+      .hasMessageContaining(taskId)
+      .hasMessageContaining(TASK.resourceName())
+      .hasMessageContaining(READ_TASK.getName())
+      .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -3580,14 +3501,12 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     String taskId = "myTask";
     createTask(taskId);
 
-    try {
-      // when
-      taskService.claim(taskId, "demo");
-      fail("Exception expected: It should not be possible to claim the task.");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.claim(taskId, "demo"))
       // then
-      testRule.assertTextPresent("The user with id 'test' does not have one of the following permissions:", e.getMessage());
-    }
+      .withFailMessage("Exception expected: It should not be possible to claim the task.")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining("The user with id 'test' does not have one of the following permissions:");
 
     deleteTask(taskId, true);
   }
@@ -3639,14 +3558,12 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     createRevokeAuthorization(TASK, taskId, userId, TASK_WORK);
     createGrantAuthorization(TASK, taskId, userId, UPDATE);
 
-    try {
-      // when
-      taskService.claim(taskId, "demo");
-      fail("Exception expected: It should not be possible to complete a task");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.claim(taskId, "demo"))
       // then
-      testRule.assertTextPresent("The user with id 'test' does not have one of the following permissions: 'TASK_WORK", e.getMessage());
-    }
+      .withFailMessage("Exception expected: It should not be possible to complete a task")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'TASK_WORK");
 
     deleteTask(taskId, true);
   }
@@ -3659,20 +3576,17 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
 
-    try {
-      // when
-      taskService.claim(taskId, "demo");
-      fail("Exception expected: It should not be possible to claim the task");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.claim(taskId, "demo"))
       // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(taskId, message);
-      testRule.assertTextPresent(TASK.resourceName(), message);
-      testRule.assertTextPresent(UPDATE_TASK.getName(), message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+      .withFailMessage("Exception expected: It should not be possible to claim the task")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining(userId)
+      .hasMessageContaining(UPDATE.getName())
+      .hasMessageContaining(taskId)
+      .hasMessageContaining(TASK.resourceName())
+      .hasMessageContaining(UPDATE_TASK.getName())
+      .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -3736,15 +3650,12 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     createRevokeAuthorization(TASK, taskId, userId, TASK_WORK);
     createGrantAuthorization(TASK, taskId, userId, UPDATE);
 
-    try {
-      // when
-      taskService.complete(taskId);
-      fail("Exception expected: It should not be possible to complete a task");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.complete(taskId))
       // then
-      testRule.assertTextPresent("The user with id 'test' does not have one of the following permissions: 'TASK_WORK", e.getMessage());
-    }
-
+      .withFailMessage("Exception expected: It should not be possible to complete a task")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'TASK_WORK");
   }
 
   @Test
@@ -3770,7 +3681,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
 
-    createGrantAuthorization(TASK, taskId, userId, TASK_WORK);
+    createGrantAuthorization(TASK, ANY, userId, TASK_WORK);
 
     // when
     taskService.claim(taskId, "demo");
@@ -3825,14 +3736,12 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     createRevokeAuthorization(PROCESS_DEFINITION, PROCESS_KEY, userId, TASK_WORK);
     createGrantAuthorization(PROCESS_DEFINITION, PROCESS_KEY, userId, UPDATE_TASK);
 
-    try {
-      // when
-      taskService.complete(taskId);
-      fail("Exception expected: It should not be possible to complete a task");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.complete(taskId))
       // then
-      testRule.assertTextPresent("The user with id 'test' does not have one of the following permissions: 'TASK_WORK", e.getMessage());
-    }
+      .withFailMessage("Exception expected: It should not be possible to complete a task")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'TASK_WORK");
 
   }
 
@@ -3878,14 +3787,12 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     String taskId = "myTask";
     createTask(taskId);
 
-    try {
-      // when
-      taskService.complete(taskId);
-      fail("Exception expected: It should not be possible to complete a task");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.complete(taskId))
       // then
-      testRule.assertTextPresent("The user with id 'test' does not have one of the following permissions: 'TASK_WORK", e.getMessage());
-    }
+      .withFailMessage("Exception expected: It should not be possible to complete a task")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'TASK_WORK");
 
     deleteTask(taskId, true);
   }
@@ -3938,20 +3845,17 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
 
-    try {
-      // when
-      taskService.complete(taskId);
-      fail("Exception expected: It should not be possible to complete a task");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.complete(taskId))
       // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(taskId, message);
-      testRule.assertTextPresent(TASK.resourceName(), message);
-      testRule.assertTextPresent(UPDATE_TASK.getName(), message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+      .withFailMessage("Exception expected: It should not be possible to complete a task")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining(userId)
+      .hasMessageContaining(UPDATE.getName())
+      .hasMessageContaining(taskId)
+      .hasMessageContaining(TASK.resourceName())
+      .hasMessageContaining(UPDATE_TASK.getName())
+      .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -4075,14 +3979,12 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     String taskId = "myTask";
     createTask(taskId);
 
-    try {
-      // when
-      taskService.delegateTask(taskId, "demo");
-      fail("Exception expected: It should not be possible to delegate a task");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.delegateTask(taskId, "demo"))
       // then
-      testRule.assertTextPresent("The user with id 'test' does not have one of the following permissions: 'TASK_ASSIGN", e.getMessage());
-    }
+      .withFailMessage("Exception expected: It should not be possible to delegate a task")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'TASK_ASSIGN");
 
     deleteTask(taskId, true);
   }
@@ -4133,20 +4035,17 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
 
-    try {
-      // when
-      taskService.delegateTask(taskId, "demo");
-      fail("Exception expected: It should not be possible to delegate a task");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.delegateTask(taskId, "demo"))
       // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(taskId, message);
-      testRule.assertTextPresent(TASK.resourceName(), message);
-      testRule.assertTextPresent(UPDATE_TASK.getName(), message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+      .withFailMessage("Exception expected: It should not be possible to delegate a task")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining(userId)
+      .hasMessageContaining(UPDATE.getName())
+      .hasMessageContaining(taskId)
+      .hasMessageContaining(TASK.resourceName())
+      .hasMessageContaining(UPDATE_TASK.getName())
+      .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -4312,14 +4211,12 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     String taskId = "myTask";
     createTask(taskId);
 
-    try {
-      // when
-      taskService.resolveTask(taskId);
-      fail("Exception expected: It should not be possible to resolve a task");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.resolveTask(taskId))
       // then
-      testRule.assertTextPresent("The user with id 'test' does not have one of the following permissions: 'TASK_WORK", e.getMessage());
-    }
+      .withFailMessage("Exception expected: It should not be possible to resolve a task")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'TASK_WORK");
 
     deleteTask(taskId, true);
   }
@@ -4353,20 +4250,17 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
 
-    try {
-      // when
-      taskService.resolveTask(taskId);
-      fail("Exception expected: It should not be possible to resolve a task");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.resolveTask(taskId))
       // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(taskId, message);
-      testRule.assertTextPresent(TASK.resourceName(), message);
-      testRule.assertTextPresent(UPDATE_TASK.getName(), message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+      .withFailMessage("Exception expected: It should not be possible to resolve a task")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining(userId)
+      .hasMessageContaining(UPDATE.getName())
+      .hasMessageContaining(taskId)
+      .hasMessageContaining(TASK.resourceName())
+      .hasMessageContaining(UPDATE_TASK.getName())
+      .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -6253,13 +6147,12 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     Task task = taskService.newTask();
     task.setOwner("*");
 
-    try {
-      taskService.saveTask(task);
-      fail("it should not be possible to save a task with the generic resource id *");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("Cannot create default authorization for owner *: "
-          + "id cannot be *. * is a reserved identifier", e.getMessage());
-    }
+    // when
+    assertThatThrownBy(() -> taskService.saveTask(task))
+      .withFailMessage("it should not be possible to save a task with the generic resource id *")
+      // then
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot create default authorization for owner *: id cannot be *. * is a reserved identifier");
   }
 
   @Test
@@ -6269,15 +6162,14 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     Task task = taskService.newTask();
     taskService.saveTask(task);
 
-    try {
-      taskService.setOwner(task.getId(), "*");
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("Cannot create default authorization for owner *: "
-          + "id cannot be *. * is a reserved identifier", e.getMessage());
-    }
+    // when
+    String taskId = task.getId();
+    assertThatThrownBy(() -> taskService.setOwner(taskId, "*"))
+      // then
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot create default authorization for owner *: id cannot be *. * is a reserved identifier");
 
-    deleteTask(task.getId(), true);
+    deleteTask(taskId, true);
   }
 
   @Test
@@ -6287,13 +6179,12 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     Task task = taskService.newTask();
     task.setAssignee("*");
 
-    try {
-      taskService.saveTask(task);
-      fail("it should not be possible to save a task with the generic resource id *");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("Cannot create default authorization for assignee *: "
-          + "id cannot be *. * is a reserved identifier", e.getMessage());
-    }
+    // when
+    assertThatThrownBy(() -> taskService.saveTask(task))
+      // then
+      .withFailMessage("it should not be possible to save a task with the generic resource id *")
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot create default authorization for assignee *: id cannot be *. * is a reserved identifier");
   }
 
   @Test
@@ -6302,70 +6193,69 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     Task task = taskService.newTask();
     taskService.saveTask(task);
+    String taskId = task.getId();
 
-    try {
-      taskService.setAssignee(task.getId(), "*");
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("Cannot create default authorization for assignee *: "
-          + "id cannot be *. * is a reserved identifier", e.getMessage());
-    }
+    // when
+    assertThatThrownBy(() -> taskService.setAssignee(taskId, "*"))
+      // then
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot create default authorization for assignee *: id cannot be *. * is a reserved identifier");
 
-    deleteTask(task.getId(), true);
+    deleteTask(taskId, true);
   }
 
   @Test
   public void testStandaloneTaskSaveIdentityLinkWithGenericUserId() {
+    // given
     createGrantAuthorization(TASK, ANY, userId, CREATE, UPDATE);
 
     Task task = taskService.newTask();
     taskService.saveTask(task);
+    String taskId = task.getId();
 
-    try {
-      taskService.addUserIdentityLink(task.getId(), "*", "someLink");
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("Cannot grant default authorization for identity link to user *: "
-          + "id cannot be *. * is a reserved identifier.", e.getMessage());
-    }
+    // when
+    assertThatThrownBy(() -> taskService.addUserIdentityLink(taskId, "*", "someLink"))
+      // then
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot grant default authorization for identity link to user *: id cannot be *. * is a reserved identifier.");
 
-    deleteTask(task.getId(), true);
+    deleteTask(taskId, true);
   }
 
   @Test
   public void testStandaloneTaskSaveIdentityLinkWithGenericGroupId() {
+    // given
     createGrantAuthorization(TASK, ANY, userId, CREATE, UPDATE);
 
     Task task = taskService.newTask();
     taskService.saveTask(task);
+    String taskId = task.getId();
 
-    try {
-      taskService.addGroupIdentityLink(task.getId(), "*", "someLink");
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("Cannot grant default authorization for identity link to group *: "
-          + "id cannot be *. * is a reserved identifier.", e.getMessage());
-    }
+    // when
+    assertThatThrownBy(() -> taskService.addGroupIdentityLink(taskId, "*", "someLink"))
+      // then
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot grant default authorization for identity link to group *: id cannot be *. * is a reserved identifier.");
 
-    deleteTask(task.getId(), true);
+    deleteTask(taskId, true);
   }
 
   @Test
   public void testStandaloneTaskSaveIdentityLinkWithGenericGroupIdAndTaskAssignPermission() {
+    // given
     createGrantAuthorization(TASK, ANY, userId, CREATE, TASK_ASSIGN);
 
     Task task = taskService.newTask();
     taskService.saveTask(task);
+    String taskId = task.getId();
 
-    try {
-      taskService.addGroupIdentityLink(task.getId(), "*", "someLink");
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("Cannot grant default authorization for identity link to group *: "
-          + "id cannot be *. * is a reserved identifier.", e.getMessage());
-    }
+    // when
+    assertThatThrownBy(() -> taskService.addGroupIdentityLink(taskId, "*", "someLink"))
+      // then
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot grant default authorization for identity link to group *: id cannot be *. * is a reserved identifier.");
 
-    deleteTask(task.getId(), true);
+    deleteTask(taskId, true);
   }
 
   @Test
@@ -6375,19 +6265,17 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     Task task = taskService.newTask();
     taskService.saveTask(task);
 
-    try {
-      taskService.addUserIdentityLink("*", "aUserId", "someLink");
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("Cannot find task with id *", e.getMessage());
-    }
+    // when
+    assertThatThrownBy(() -> taskService.addUserIdentityLink("*", "aUserId", "someLink"))
+      // then
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot find task with id *");
 
-    try {
-      taskService.addGroupIdentityLink("*", "aGroupId", "someLink");
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("Cannot find task with id *", e.getMessage());
-    }
+    // when
+    assertThatThrownBy(() -> taskService.addGroupIdentityLink("*", "aGroupId", "someLink"))
+      // then
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot find task with id *");
 
     deleteTask(task.getId(), true);
   }
@@ -6399,19 +6287,17 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     Task task = taskService.newTask();
     taskService.saveTask(task);
 
-    try {
-      taskService.addUserIdentityLink("*", "aUserId", "someLink");
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("Cannot find task with id *", e.getMessage());
-    }
+    // when
+    assertThatThrownBy(() -> taskService.addUserIdentityLink("*", "aUserId", "someLink"))
+      // then
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot find task with id *");
 
-    try {
-      taskService.addGroupIdentityLink("*", "aGroupId", "someLink");
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("Cannot find task with id *", e.getMessage());
-    }
+    // when
+    assertThatThrownBy(() -> taskService.addGroupIdentityLink("*", "aGroupId", "someLink"))
+      // then
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot find task with id *");
 
     deleteTask(task.getId(), true);
   }
@@ -6419,21 +6305,19 @@ public class TaskAuthorizationTest extends AuthorizationTest {
   @Deployment
   @Test
   public void testSetGenericResourceIdAssignee() {
+    // given
     createGrantAuthorization(Resources.PROCESS_DEFINITION, Authorization.ANY, userId, CREATE_INSTANCE);
     createGrantAuthorization(Resources.PROCESS_INSTANCE, Authorization.ANY, userId, CREATE);
 
-    try {
-      runtimeService.startProcessInstanceByKey("genericResourceIdAssignmentProcess");
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("Cannot create default authorization for assignee *: "
-          + "id cannot be *. * is a reserved identifier.", e.getMessage());
-    }
+    // when
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("genericResourceIdAssignmentProcess"))
+      // then
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot create default authorization for assignee *: id cannot be *. * is a reserved identifier.");
   }
 
   @Test
   public void testAssignSameAssigneeAndOwnerToTask() {
-
     // given
     createGrantAuthorization(Resources.TASK, Authorization.ANY, userId, Permissions.ALL);
 
@@ -6442,12 +6326,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     newTask.setAssignee("Horst");
     newTask.setOwner("Horst");
 
-    // then
-    try {
-      taskService.saveTask(newTask);
-    } catch (Exception e) {
-      fail("Setting same assignee and owner to user should not fail!");
-    }
+    // when
+    assertThatCode(() -> taskService.saveTask(newTask))
+      // then
+      .withFailMessage("Setting same assignee and owner to user should not fail!")
+      .doesNotThrowAnyException();
 
     taskService.deleteTask(newTask.getId(), true);
   }
@@ -6491,8 +6374,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     List<Authorization> auths = authorizationService.createAuthorizationQuery().userIdIn("horst").list();
-    assertTrue(auths.size() == 1);
-
+    assertThat(auths).hasSize(1);
   }
 
   @Deployment
@@ -6507,7 +6389,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     List<Authorization> auths = authorizationService.createAuthorizationQuery().userIdIn("hans").list();
-    assertTrue(auths.size() == 1);
+    assertThat(auths).hasSize(1);
   }
 
   @Deployment
@@ -6522,7 +6404,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     List<Authorization> auths = authorizationService.createAuthorizationQuery().groupIdIn("abc").list();
-    assertTrue(auths.size() == 1);
+    assertThat(auths).hasSize(1);
   }
 
 

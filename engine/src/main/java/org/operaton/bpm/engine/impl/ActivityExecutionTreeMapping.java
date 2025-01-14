@@ -59,13 +59,7 @@ public class ActivityExecutionTreeMapping {
   }
 
   public Set<ExecutionEntity> getExecutions(ScopeImpl activity) {
-    Set<ExecutionEntity> executionsForActivity = activityExecutionMapping.get(activity);
-    if (executionsForActivity == null) {
-      executionsForActivity = new HashSet<>();
-      activityExecutionMapping.put(activity, executionsForActivity);
-    }
-
-    return executionsForActivity;
+    return activityExecutionMapping.computeIfAbsent(activity, k -> new HashSet<>());
   }
 
   public ExecutionEntity getExecution(ActivityInstance activityInstance) {

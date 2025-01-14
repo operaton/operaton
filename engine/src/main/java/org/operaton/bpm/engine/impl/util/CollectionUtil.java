@@ -68,12 +68,9 @@ public class CollectionUtil {
   }
 
   public static <S, T> void addToMapOfLists(Map<S, List<T>> map, S key, T value) {
-    List<T> list = map.get(key);
-    if (list == null) {
-      list = new ArrayList<>();
-      map.put(key, list);
-    }
-    list.add(value);
+    map
+      .computeIfAbsent(key, k -> new ArrayList<>())
+      .add(value);
   }
 
   public static <S, T> void mergeMapsOfLists(Map<S, List<T>> map, Map<S, List<T>> toAdd) {
@@ -85,12 +82,9 @@ public class CollectionUtil {
   }
 
   public static <S, T> void addToMapOfSets(Map<S, Set<T>> map, S key, T value) {
-    Set<T> set = map.get(key);
-    if (set == null) {
-      set = new HashSet<>();
-      map.put(key, set);
-    }
-    set.add(value);
+    map
+      .computeIfAbsent(key, k -> new HashSet<>())
+      .add(value);
   }
 
   public static <S, T> void addCollectionToMapOfSets(Map<S, Set<T>> map, S key, Collection<T> values) {

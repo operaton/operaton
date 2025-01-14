@@ -47,15 +47,12 @@ public class StandaloneTransactionContext implements TransactionContext {
 
   @Override
   public void addTransactionListener(TransactionState transactionState, TransactionListener transactionListener) {
-    if (stateTransactionListeners==null) {
+    if (stateTransactionListeners == null) {
       stateTransactionListeners = new HashMap<>();
     }
-    List<TransactionListener> transactionListeners = stateTransactionListeners.get(transactionState);
-    if (transactionListeners==null) {
-      transactionListeners = new ArrayList<>();
-      stateTransactionListeners.put(transactionState, transactionListeners);
-    }
-    transactionListeners.add(transactionListener);
+    stateTransactionListeners
+      .computeIfAbsent(transactionState, k -> new ArrayList<>())
+      .add(transactionListener);
   }
 
   @Override

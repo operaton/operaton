@@ -65,13 +65,7 @@ public class ValidationResultsCollectorImpl implements ValidationResultCollector
   }
 
   protected List<ValidationResult> resultsForCurrentElement() {
-    List<ValidationResult> resultsByElement = collectedResults.get(currentElement);
-
-    if(resultsByElement == null) {
-      resultsByElement = new ArrayList<>();
-      collectedResults.put(currentElement, resultsByElement);
-    }
-    return resultsByElement;
+    return collectedResults.computeIfAbsent(currentElement, k -> new ArrayList<>());
   }
 
 }

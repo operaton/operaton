@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.rest;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.anyString;
@@ -52,7 +53,6 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import java.util.ArrayList;
 import java.util.List;
-import junit.framework.Assert;
 import org.operaton.bpm.engine.runtime.MessageCorrelationResult;
 import org.operaton.bpm.engine.runtime.MessageCorrelationResultType;
 import org.operaton.bpm.engine.runtime.MessageCorrelationResultWithVariables;
@@ -257,12 +257,12 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   protected void checkProcessInstanceResult(String content, int idx) {
     //resultType should be set to process definition
     String resultType = from(content).get("[" + idx + "].resultType");
-    Assert.assertEquals(MessageCorrelationResultType.ProcessDefinition.name(), resultType);
+    assertThat(resultType).isEqualTo(MessageCorrelationResultType.ProcessDefinition.name());
 
     //process instance should be filled and execution should be null
-    Assert.assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, from(content).get("[" + idx + "].processInstance.id"));
-    Assert.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, from(content).get("[" + idx + "].processInstance.definitionId"));
-    Assert.assertNull(from(content).get("[" + idx + "].execution"));
+    assertThat(from(content).<String>get("[" + idx + "].processInstance.id")).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
+    assertThat(from(content).<String>get("[" + idx + "].processInstance.definitionId")).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
+    assertThat(from(content).<String>get("[" + idx + "].execution")).isNull();
   }
 
   @Test

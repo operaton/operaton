@@ -1,0 +1,48 @@
+name: Post Release
+
+on:
+  release:
+    types:
+      - published
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'The tag of the release'
+        required: true
+        default: 'early-access'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  outputs:
+    version: ${{ github.event.release.tag_name || steps.version.outputs.version }}
+    snapshot: ${{ github.event.release.tag_name == 'early_access' || github.event.inputs.tag_name == 'early_access' }}
+  prepare:
+    steps:
+      - name: Checkout Code
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Version
+        id: version
+        if: github.event_name == 'workflow_dispatch'
+        shell: bash
+        run: |
+          RELEASE_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout | tail -n 1 | sed -e 's/-SNAPSHOT//')
+
+  docker:
+    name: Notify Docker Repository for Image Creation
+    runs-on: ubuntu-24.04
+    needs:
+      - prepare
+    run: |
+      curl -X POST \
+        -H "Authorization: Bearer ${{ secrets.DOCKER_ACTION_DISPATCH_TOKEN }}" \
+        -H "Accept: application/vnd.github.v3+json" \
+        -H "X-GitHub-Api-Version: 2022-11-28" \
+        -d '{"event_type": "release_published", "client_payload": {"version": "${{ needs.prepare.outputs.version }}","snapshot":"${{ needs.prepare.outputs.snapshot }}"}}' \
+        https://api.github.com/repos/operaton/operaton-docker/dispatches
+      

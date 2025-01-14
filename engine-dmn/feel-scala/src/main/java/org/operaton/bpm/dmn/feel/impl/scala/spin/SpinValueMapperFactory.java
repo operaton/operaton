@@ -44,33 +44,25 @@ public class SpinValueMapperFactory {
 
   protected CustomValueMapper newInstance(Class<?> valueMapperClass) {
     try {
-      return (CustomValueMapper) valueMapperClass.newInstance();
-
+      return (CustomValueMapper) valueMapperClass.getDeclaredConstructor().newInstance();
     } catch (InstantiationException e) {
       throw LOGGER.spinValueMapperInstantiationException(e);
-
     } catch (IllegalAccessException e) {
       throw LOGGER.spinValueMapperAccessException(e);
-
     } catch (ClassCastException e) {
       throw LOGGER.spinValueMapperCastException(e, CustomValueMapper.class.getName());
-
     } catch (Throwable e) {
       throw LOGGER.spinValueMapperException(e);
-
     }
   }
 
   protected Class<?> lookupClass() {
     try {
       return Class.forName(SPIN_VALUE_MAPPER_CLASS_NAME);
-
     } catch (ClassNotFoundException ignored) {
       // engine plugin is not on class path => ignore
-
     } catch (Throwable e) {
       throw LOGGER.spinValueMapperException(e);
-
     }
 
     return null;

@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.rest.security.auth;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -92,10 +93,10 @@ public class ProcessEngineAuthenticationFilter implements Filter {
 
     try {
       Class<?> authenticationProviderClass = Class.forName(authenticationProviderClassName);
-      authenticationProvider = (AuthenticationProvider) authenticationProviderClass.newInstance();
+      authenticationProvider = (AuthenticationProvider) authenticationProviderClass.getDeclaredConstructor().newInstance();
     } catch (ClassNotFoundException e) {
       throw new ServletException("Cannot instantiate authentication filter: authentication provider not found", e);
-    } catch (InstantiationException e) {
+    } catch (InstantiationException | NoSuchMethodException | InvocationTargetException e) {
       throw new ServletException("Cannot instantiate authentication filter: cannot instantiate authentication provider", e);
     } catch (IllegalAccessException e) {
       throw new ServletException("Cannot instantiate authentication filter: constructor not accessible", e);

@@ -361,7 +361,7 @@ public class BpmnParse extends Parse {
         Class<?> wsdlImporterClass;
         try {
           wsdlImporterClass = Class.forName("org.operaton.bpm.engine.impl.webservice.CxfWSDLImporter", true, Thread.currentThread().getContextClassLoader());
-          XMLImporter newInstance = (XMLImporter) wsdlImporterClass.newInstance();
+          XMLImporter newInstance = (XMLImporter) wsdlImporterClass.getDeclaredConstructor().newInstance();
           this.importers.put(importType, newInstance);
           return newInstance;
         } catch (Exception e) {

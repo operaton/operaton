@@ -94,7 +94,7 @@ public class StartJobAcquisitionStep extends DeploymentOperationStep {
 
   protected JobExecutor instantiateJobExecutor(Class<? extends JobExecutor> configurationClass) {
     try {
-      return configurationClass.newInstance();
+      return configurationClass.getDeclaredConstructor().newInstance();
     }
     catch (Exception e) {
       throw LOG.couldNotInstantiateJobExecutorClass(e);

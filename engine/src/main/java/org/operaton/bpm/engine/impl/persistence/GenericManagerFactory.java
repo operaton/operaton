@@ -49,7 +49,7 @@ public class GenericManagerFactory implements SessionFactory {
   @Override
   public Session openSession() {
     try {
-      return managerImplementation.newInstance();
+      return managerImplementation.getDeclaredConstructor().newInstance();
     } catch (Exception e) {
       throw LOG.instantiateSessionException(managerImplementation.getName(), e);
     }

@@ -19,6 +19,7 @@ package org.operaton.bpm.webapp.impl.security.auth;
 import static org.operaton.bpm.engine.rest.security.auth.ProcessEngineAuthenticationFilter.AUTHENTICATION_PROVIDER_PARAM;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -59,10 +60,10 @@ public class ContainerBasedAuthenticationFilter implements Filter {
 
     try {
       Class<?> authenticationProviderClass = Class.forName(authenticationProviderClassName);
-      authenticationProvider = (AuthenticationProvider) authenticationProviderClass.newInstance();
+      authenticationProvider = (AuthenticationProvider) authenticationProviderClass.getDeclaredConstructor().newInstance();
     } catch (ClassNotFoundException e) {
       throw new ServletException("Cannot instantiate authentication filter: authentication provider not found", e);
-    } catch (InstantiationException e) {
+    } catch (InstantiationException | NoSuchMethodException | InvocationTargetException e) {
       throw new ServletException("Cannot instantiate authentication filter: cannot instantiate authentication provider", e);
     } catch (IllegalAccessException e) {
       throw new ServletException("Cannot instantiate authentication filter: constructor not accessible", e);

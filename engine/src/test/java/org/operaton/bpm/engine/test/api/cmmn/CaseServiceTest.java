@@ -35,12 +35,7 @@ import java.util.Map;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.repository.CaseDefinition;
-import org.operaton.bpm.engine.runtime.CaseExecution;
-import org.operaton.bpm.engine.runtime.CaseExecutionCommandBuilder;
-import org.operaton.bpm.engine.runtime.CaseExecutionQuery;
-import org.operaton.bpm.engine.runtime.CaseInstance;
-import org.operaton.bpm.engine.runtime.CaseInstanceQuery;
-import org.operaton.bpm.engine.runtime.VariableInstance;
+import org.operaton.bpm.engine.runtime.*;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.engine.variable.VariableMap;
@@ -48,6 +43,8 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.engine.variable.value.StringValue;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Roman Smirnov
@@ -78,83 +75,52 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
 
   @Test
   public void testManualStartInvalidCaseExecution() {
-    try {
-      caseService
-          .withCaseExecution("invalid")
-          .manualStart();
-      fail();
-    } catch (NotFoundException e) { }
+    CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution("invalid");
+    assertThatThrownBy(commandBuilder::manualStart)
+      .isInstanceOf(NotFoundException.class);
 
-    try {
-      caseService
-        .withCaseExecution(null)
-        .manualStart();
-      fail();
-    } catch (NotValidException e) { }
-
+    CaseExecutionCommandBuilder commandBuilder2 = caseService.withCaseExecution(null);
+    assertThatThrownBy(commandBuilder2::manualStart)
+      .isInstanceOf(NotValidException.class);
   }
 
   @Test
   public void testCompleteInvalidCaseExeuction() {
-    try {
-      caseService
-        .withCaseExecution("invalid")
-        .complete();
-      fail("The case execution should not be found.");
-    } catch (NotFoundException e) {
+    CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution("invalid");
+    assertThatThrownBy(commandBuilder::complete)
+      .withFailMessage("The case execution should not be found.")
+      .isInstanceOf(NotFoundException.class);
 
-    }
-
-    try {
-      caseService
-        .withCaseExecution(null)
-        .complete();
-      fail("The case execution should not be found.");
-    } catch (NotValidException e) {
-
-    }
+    CaseExecutionCommandBuilder commandBuilder2 = caseService.withCaseExecution(null);
+    assertThatThrownBy(commandBuilder2::complete)
+      .withFailMessage("The case execution should not be found.")
+      .isInstanceOf(NotValidException.class);
   }
 
   @Test
   public void testCloseInvalidCaseExeuction() {
-    try {
-      caseService
-        .withCaseExecution("invalid")
-        .close();
-      fail("The case execution should not be found.");
-    } catch (NotFoundException e) {
+    CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution("invalid");
+    assertThatThrownBy(commandBuilder::close)
+      .withFailMessage("The case execution should not be found.")
+      .isInstanceOf(NotFoundException.class);
 
-    }
-
-    try {
-      caseService
-        .withCaseExecution(null)
-        .close();
-      fail("The case execution should not be found.");
-    } catch (NotValidException e) {
-
-    }
+    CaseExecutionCommandBuilder commandBuilder2 = caseService.withCaseExecution(null);
+    assertThatThrownBy(commandBuilder2::close)
+      .withFailMessage("The case execution should not be found.")
+      .isInstanceOf(NotValidException.class);
   }
 
   @Test
   public void testTerminateInvalidCaseExeuction() {
-    try {
-      caseService
-        .withCaseExecution("invalid")
-        .terminate();
-      fail("The case execution should not be found.");
-    } catch (NotFoundException e) {
+    CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution("invalid");
+    assertThatThrownBy(commandBuilder::terminate)
+      .withFailMessage("The case execution should not be found.")
+      .isInstanceOf(NotFoundException.class);
 
-    }
-
-    try {
-      caseService
-        .withCaseExecution(null)
-        .terminate();
-      fail("The case execution should not be found.");
-    } catch (NotValidException e) {
-
-    }
+    CaseExecutionCommandBuilder commandBuilder2 = caseService.withCaseExecution(null);
+    assertThatThrownBy(commandBuilder2::terminate)
+      .withFailMessage("The case execution should not be found.")
+      .isInstanceOf(NotValidException.class);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})

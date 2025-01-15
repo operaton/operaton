@@ -33,7 +33,7 @@ public class DefaultArtifactFactory implements ArtifactFactory {
   @Override
   public <T> T getArtifact(Class<T> clazz) {
     try {
-      return clazz.newInstance();
+      return clazz.getDeclaredConstructor().newInstance();
     } catch (Exception e) {
       throw new ProcessEngineException("couldn't instantiate class " + clazz.getName(), e);
     }

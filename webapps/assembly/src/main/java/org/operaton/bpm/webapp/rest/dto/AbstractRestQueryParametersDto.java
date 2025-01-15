@@ -140,11 +140,11 @@ public abstract class AbstractRestQueryParametersDto<T> extends QueryParameters 
 
       JacksonAwareStringToTypeConverter<?> converter = null;
       try {
-        converter = converterClass.newInstance();
+        converter = converterClass.getDeclaredConstructor().newInstance();
         converter.setObjectMapper(objectMapper);
         Object convertedValue = converter.convertQueryParameterToType(value);
         method.invoke(this, convertedValue);
-      } catch (InstantiationException | IllegalAccessException e) {
+      } catch (InstantiationException | IllegalAccessException | NoSuchMethodException e) {
         throw new RestException(Status.INTERNAL_SERVER_ERROR, e, "Server error.");
       } catch (InvocationTargetException e) {
         throw new InvalidRequestException(Status.BAD_REQUEST, e, "Cannot set query parameter '" + key + "' to value '" + value + "'");

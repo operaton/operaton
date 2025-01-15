@@ -16,6 +16,8 @@
  */
 package org.operaton.commons.logging;
 
+import java.lang.reflect.InvocationTargetException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.helpers.MessageFormatter;
@@ -89,14 +91,14 @@ public abstract class BaseLogger {
    */
   public static <T extends BaseLogger> T createLogger(Class<T> loggerClass, String projectCode, String name, String componentId) {
     try {
-      T logger = loggerClass.newInstance();
+      T logger = loggerClass.getDeclaredConstructor().newInstance();
       logger.projectCode = projectCode;
       logger.componentId = componentId;
       logger.delegateLogger = LoggerFactory.getLogger(name);
 
       return logger;
 
-    } catch (InstantiationException | IllegalAccessException e) {
+    } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
       throw new RuntimeException("Unable to instantiate logger '" + loggerClass.getName() + "'", e);
 
     }

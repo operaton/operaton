@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.test.api.history;
 
 import org.assertj.core.api.Assertions;
-import org.hamcrest.CoreMatchers;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -339,7 +337,7 @@ public class HistoryServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
 
   protected void assertNoHistoryForTasks() {
     if (!testRule.isHistoryLevelNone()) {
-      Assert.assertThat(historyService.createHistoricTaskInstanceQuery().count(), CoreMatchers.is(0L));
+      assertThat(historyService.createHistoricTaskInstanceQuery().count()).isZero();
     }
   }
 

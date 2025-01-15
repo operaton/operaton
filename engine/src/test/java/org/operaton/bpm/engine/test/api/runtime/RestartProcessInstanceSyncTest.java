@@ -20,13 +20,11 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.List;
 
@@ -46,11 +44,7 @@ import org.operaton.bpm.engine.impl.cfg.multitenancy.TenantIdProviderProcessInst
 import org.operaton.bpm.engine.impl.history.event.HistoricVariableUpdateEventEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricProcessInstanceEntity;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
-import org.operaton.bpm.engine.runtime.ActivityInstance;
-import org.operaton.bpm.engine.runtime.Execution;
-import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.runtime.VariableInstance;
+import org.operaton.bpm.engine.runtime.*;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
@@ -586,69 +580,82 @@ public class RestartProcessInstanceSyncTest {
 
   @Test
   public void restartProcessInstanceWithNullProcessDefinitionId() {
-    try {
-      runtimeService.restartProcessInstances(null).execute();
-      fail("exception expected");
-    } catch (BadUserRequestException e) {
-      Assert.assertThat(e.getMessage(), containsString("processDefinitionId is null"));
-    }
+    assertThatThrownBy(() -> runtimeService.restartProcessInstances(null))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("processDefinitionId is null");
   }
 
   @Test
   public void restartProcessInstanceWithoutProcessInstanceIds() {
-    try {
-      runtimeService.restartProcessInstances("foo").startAfterActivity("bar").execute();
-      fail("exception expected");
-    } catch (BadUserRequestException e) {
-      Assert.assertThat(e.getMessage(), containsString("processInstanceIds is empty"));
-    }
+    // given
+    var restartProcessInstanceBuilder = runtimeService
+      .restartProcessInstances("foo")
+      .startAfterActivity("bar");
+    // when
+    assertThatThrownBy(restartProcessInstanceBuilder::execute)
+      // then
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("processInstanceIds is empty");
   }
 
   @Test
   public void restartProcessInstanceWithoutInstructions() {
-    try {
-      runtimeService.restartProcessInstances("foo").processInstanceIds("bar").execute();
-      fail("exception expected");
-    } catch (BadUserRequestException e) {
-      Assert.assertThat(e.getMessage(), containsString("Restart instructions cannot be empty"));
-    }
+    // given
+    var restartProcessInstanceBuilder = runtimeService
+      .restartProcessInstances("foo")
+      .processInstanceIds("bar");
+    // when
+    assertThatThrownBy(restartProcessInstanceBuilder::execute)
+      // then
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Restart instructions cannot be empty");
   }
 
   @Test
   public void restartProcessInstanceWithNullProcessInstanceId() {
+    // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
-    try {
-      runtimeService.restartProcessInstances(processDefinition.getId()).startAfterActivity("bar").processInstanceIds((String) null).execute();
-      fail("exception expected");
-    } catch (BadUserRequestException e) {
-      Assert.assertThat(e.getMessage(), containsString("Process instance ids cannot be null"));
-    }
+    var restartProcessInstanceBuilder = runtimeService
+      .restartProcessInstances(processDefinition.getId())
+      .startAfterActivity("bar")
+      .processInstanceIds((String) null);
+    // when
+    assertThatThrownBy(restartProcessInstanceBuilder::execute)
+      // then
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Process instance ids cannot be null");
   }
 
   @Test
   public void restartNotExistingProcessInstance() {
+    // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
-    try {
-      runtimeService.restartProcessInstances(processDefinition.getId()).startBeforeActivity("bar").processInstanceIds("aaa").execute();
-      fail("exception expected");
-    } catch (BadUserRequestException e) {
-      Assert.assertThat(e.getMessage(), containsString("Historic process instance cannot be found"));
-    }
+    var restartProcessInstanceBuilder = runtimeService
+      .restartProcessInstances(processDefinition.getId())
+      .startBeforeActivity("bar")
+      .processInstanceIds("aaa");
+    // when
+    assertThatThrownBy(restartProcessInstanceBuilder::execute)
+      // then
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Historic process instance cannot be found");
   }
 
   @Test
   public void restartProcessInstanceWithNotMatchingProcessDefinition() {
+    // given
     BpmnModelInstance instance = Bpmn.createExecutableProcess("Process2").startEvent().userTask().endEvent().done();
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     ProcessDefinition processDefinition2 = testRule.deployAndGetDefinition(ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process");
     runtimeService.deleteProcessInstance(processInstance.getId(), null);
-    try {
-      runtimeService.restartProcessInstances(processDefinition.getId()).startBeforeActivity("userTask").processInstanceIds(processInstance.getId()).execute();
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      Assert.assertThat(e.getMessage(), containsString("Its process definition '" + processDefinition2.getId() + "' does not match given process definition '" + processDefinition.getId() +"'" ));
-    }
+    var restartProcessInstanceBuilder = runtimeService.restartProcessInstances(
+      processDefinition.getId()).startBeforeActivity("userTask").processInstanceIds(processInstance.getId());
+    // when
+    assertThatThrownBy(restartProcessInstanceBuilder::execute)
+      // then
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Its process definition '" + processDefinition2.getId() + "' does not match given process definition '" + processDefinition.getId() + "'");
   }
 
   @Test

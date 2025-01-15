@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.api.history;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -56,7 +57,6 @@ import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -806,16 +806,13 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     List<String> ids = prepareHistoricProcesses();
     ids.add("aFake");
 
-    try {
-      //when
-      historyService.deleteHistoricProcessInstances(ids);
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      //expected
-      Assert.assertThat(e.getMessage(), CoreMatchers.containsString("No historic process instance found with id: [aFake]" ));
-    }
+    // when
+    assertThatThrownBy(() -> historyService.deleteHistoricProcessInstances(ids))
+      // then
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("No historic process instance found with id: [aFake]");
 
-    //then expect no instance is deleted
+    // then expect no instance is deleted
     assertEquals(2, historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count());
   }
 

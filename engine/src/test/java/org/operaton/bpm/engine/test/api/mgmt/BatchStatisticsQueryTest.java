@@ -21,6 +21,8 @@ import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.batchSta
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.batchStatisticsByStartTime;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -42,7 +44,6 @@ import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.MigrationTestRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.batch.BatchMigrationHelper;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.hamcrest.CoreMatchers;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -162,15 +163,13 @@ public class BatchStatisticsQueryTest {
 
   @Test
   public void testQueryByNullId() {
-    try {
-      managementService.createBatchStatisticsQuery()
-        .batchId(null)
-        .singleResult();
-      Assert.fail("exception expected");
-    }
-    catch (NullValueException e) {
-      Assert.assertThat(e.getMessage(), CoreMatchers.containsString("Batch id is null"));
-    }
+    // given
+    var batchStatisticsQuery = managementService.createBatchStatisticsQuery();
+    // when
+    assertThatThrownBy(() -> batchStatisticsQuery.batchId(null))
+      // then
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("Batch id is null");
   }
 
   @Test
@@ -205,15 +204,13 @@ public class BatchStatisticsQueryTest {
 
   @Test
   public void testQueryByNullType() {
-    try {
-      managementService.createBatchStatisticsQuery()
-        .type(null)
-        .list();
-      Assert.fail("exception expected");
-    }
-    catch (NullValueException e) {
-      Assert.assertThat(e.getMessage(), CoreMatchers.containsString("Type is null"));
-    }
+    // given
+    var batchStatisticsQuery = managementService.createBatchStatisticsQuery();
+    // when
+    assertThatThrownBy(() -> batchStatisticsQuery.type(null))
+      // then
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("Type is null");
   }
 
   @Test
@@ -297,30 +294,24 @@ public class BatchStatisticsQueryTest {
 
   @Test
   public void testQueryOrderingPropertyWithoutOrder() {
-    try {
-      managementService.createBatchStatisticsQuery()
-        .orderById()
-        .list();
-      Assert.fail("exception expected");
-    }
-    catch (NotValidException e) {
-      Assert.assertThat(e.getMessage(), CoreMatchers.containsString("Invalid query: "
-        + "call asc() or desc() after using orderByXX()"));
-    }
+    // given
+    var batchStatisticsQuery = managementService.createBatchStatisticsQuery().orderById();
+    // when
+    assertThatThrownBy(batchStatisticsQuery::list)
+      // then
+      .isInstanceOf(NotValidException.class)
+      .hasMessageContaining("Invalid query: call asc() or desc() after using orderByXX()");
   }
 
   @Test
   public void testQueryOrderWithoutOrderingProperty() {
-    try {
-      managementService.createBatchStatisticsQuery()
-        .asc()
-        .list();
-      Assert.fail("exception expected");
-    }
-    catch (NotValidException e) {
-      Assert.assertThat(e.getMessage(), CoreMatchers.containsString("You should call any of the orderBy methods "
-        + "first before specifying a direction"));
-    }
+    // given
+    BatchStatisticsQuery batchStatisticsQuery = managementService.createBatchStatisticsQuery();
+    // when
+    assertThatThrownBy(batchStatisticsQuery::asc)
+      // then
+      .isInstanceOf(NotValidException.class)
+      .hasMessageContaining("You should call any of the orderBy methods first before specifying a direction");
   }
 
   @Test

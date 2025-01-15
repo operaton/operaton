@@ -113,7 +113,7 @@ public class UserRestServiceInteractionTest extends AbstractRestServiceTest {
     when(sampleUserQuery.userId(MockProvider.EXAMPLE_USER_ID)).thenReturn(sampleUserQuery);
     when(sampleUserQuery.singleResult()).thenReturn(sampleUser);
 
-    given()
+    var response = given()
         .pathParam("id", MockProvider.EXAMPLE_USER_ID)
     .then()
         .statusCode(Status.OK.getStatusCode())
@@ -123,6 +123,8 @@ public class UserRestServiceInteractionTest extends AbstractRestServiceTest {
         .body("email", equalTo(MockProvider.EXAMPLE_USER_EMAIL))
     .when()
         .get(USER_PROFILE_URL);
+
+    assertThat(response.contentType()).isEqualTo(ContentType.JSON.toString());
   }
 
   @Test

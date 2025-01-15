@@ -50,11 +50,9 @@ public class LoginIT extends AbstractWebappUiIntegrationTest {
 
     wait.until(visibilityOfElementLocated(By.cssSelector("button[type=\"submit\"]")))
         .submit();
-
   }
 
   public void sendKeys(WebElement element, String keys)  {
-
     // fix for CAM-13548
     Arrays.stream(keys.split("")).forEach(element::sendKeys);
   }

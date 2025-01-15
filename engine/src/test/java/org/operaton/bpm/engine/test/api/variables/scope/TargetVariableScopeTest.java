@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.test.api.variables.scope;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.ScriptEvaluationException;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.DelegateTask;
@@ -39,8 +39,12 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.SequenceFlow;
 import org.operaton.bpm.model.bpmn.instance.operaton.OperatonExecutionListener;
+
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * @author Askar Akhmerov
@@ -51,6 +55,13 @@ public class TargetVariableScopeTest {
   public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
   @Rule
   public ProcessEngineTestRule testHelper = new ProcessEngineTestRule(engineRule);
+
+  RuntimeService runtimeService;
+
+  @Before
+  public void setUp() {
+    runtimeService = engineRule.getRuntimeService();
+  }
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/variables/scope/TargetVariableScopeTest.testExecutionWithDelegateProcess.bpmn","org/operaton/bpm/engine/test/api/variables/scope/doer.bpmn"})
@@ -116,8 +127,10 @@ public class TargetVariableScopeTest {
         .done();
 
     ProcessDefinition processDefinition = testHelper.deployAndGetDefinition(instance);
-    VariableMap variables = Variables.createVariables().putValue("orderIds", Arrays.asList(new int[]{1, 2, 3}));
-    engineRule.getRuntimeService().startProcessInstanceById(processDefinition.getId(),variables);
+    String processDefinitionId = processDefinition.getId();
+    VariableMap variables = Variables.createVariables().putValue("orderIds", List.of(new int[] { 1, 2, 3 }));
+    assertThatCode(() -> runtimeService.startProcessInstanceById(processDefinitionId,variables))
+      .doesNotThrowAnyException();
   }
 
   @Test

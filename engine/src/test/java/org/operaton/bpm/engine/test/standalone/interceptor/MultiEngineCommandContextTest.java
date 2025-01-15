@@ -20,9 +20,12 @@ import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Daniel Meyer
@@ -67,8 +70,7 @@ public class MultiEngineCommandContextTest {
   }
 
   @Test
-  public void shouldOpenNewCommandContextWhenInteractingAccrossEngines() {
-
+  public void shouldOpenNewCommandContextWhenInteractingAcrossEngines() {
     BpmnModelInstance process1 = Bpmn.createExecutableProcess("process1")
         .startEvent()
         .serviceTask()
@@ -87,8 +89,14 @@ public class MultiEngineCommandContextTest {
     engine1.getRepositoryService().createDeployment().addModelInstance("process1.bpmn", process1).deploy();
     engine2.getRepositoryService().createDeployment().addModelInstance("process2.bpmn", process2).deploy();
 
-    // if
+    // when
     engine1.getRuntimeService().startProcessInstanceByKey("process1");
+
+    // then
+    var processInstance1 = engine1.getHistoryService().createHistoricProcessInstanceQuery()
+      .processDefinitionKey("process1")
+      .singleResult();
+    assertThat(processInstance1).isNotNull();
   }
 
   @Test
@@ -121,8 +129,14 @@ public class MultiEngineCommandContextTest {
     engine2.getRepositoryService().createDeployment().addModelInstance("process2.bpmn", process2).deploy();
     engine1.getRepositoryService().createDeployment().addModelInstance("process3.bpmn", process3).deploy();
 
-    // if
+    // when
     engine1.getRuntimeService().startProcessInstanceByKey("process1");
+
+    // then
+    var processInstance1 = engine1.getHistoryService().createHistoricProcessInstanceQuery()
+      .processDefinitionKey("process1")
+      .singleResult();
+    assertThat(processInstance1).isNotNull();
   }
 
   private ProcessEngine createProcessEngine(String name) {

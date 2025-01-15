@@ -588,21 +588,28 @@ public class FormServiceTest {
     caseService.createCaseInstanceByKey("oneTaskCase");
 
     Task task = taskService.createTaskQuery().singleResult();
+    String taskId = task.getId();
 
     String stringValue = "some string";
     String serializedValue = "some value";
 
-    ObjectValue serializedObject = serializedObjectValue(serializedValue).objectTypeName(String.class.getName())
-      .serializationDataFormat(Variables.SerializationDataFormats.JAVA)
-      .create();
     VariableMap variableMap = createVariables()
       .putValueTyped("boolean", booleanValue(null))
       .putValueTyped("string", stringValue(stringValue))
-      .putValueTyped("serializedObject", serializedObject)
+      .putValueTyped("serializedObject", serializedObjectValue(serializedValue).objectTypeName(String.class.getName())
+        .serializationDataFormat(Variables.SerializationDataFormats.JAVA)
+        .create())
       .putValueTyped("object", objectValue(serializedValue).create());
 
-    assertThatCode(() -> formService.submitTaskForm(task.getId(), variableMap))
-      .doesNotThrowAnyException();
+    task = taskService.createTaskQuery().taskId(taskId).singleResult();
+    assertThat(task).isNotNull();
+
+    // when
+    formService.submitTaskForm(taskId, variableMap);
+
+    // then
+    task = taskService.createTaskQuery().taskId(taskId).singleResult();
+    assertThat(task).isNull();
   }
 
 

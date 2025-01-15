@@ -16,14 +16,8 @@
  */
 package org.operaton.bpm.engine.test.junit5.deployment;
 
-import static org.junit.platform.engine.discovery.DiscoverySelectors.selectMethod;
-import static org.junit.platform.testkit.engine.EventConditions.event;
-import static org.junit.platform.testkit.engine.EventConditions.finishedWithFailure;
-import static org.junit.platform.testkit.engine.EventConditions.test;
-import static org.junit.platform.testkit.engine.TestExecutionResultConditions.instanceOf;
-import static org.junit.platform.testkit.engine.TestExecutionResultConditions.message;
-
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -32,6 +26,12 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.platform.testkit.engine.EngineExecutionResults;
 import org.junit.platform.testkit.engine.EngineTestKit;
 import org.junit.platform.testkit.engine.Events;
+
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.junit.platform.engine.discovery.DiscoverySelectors.selectMethod;
+import static org.junit.platform.testkit.engine.EventConditions.*;
+import static org.junit.platform.testkit.engine.TestExecutionResultConditions.instanceOf;
+import static org.junit.platform.testkit.engine.TestExecutionResultConditions.message;
 
 public class EnsureDbCleanTest {
 
@@ -87,10 +87,12 @@ public class EnsureDbCleanTest {
     @Test
     void shouldRaiseExceptionIfDbNotClean() {
       // when
-      extension.getRepositoryService()
-          .createDeployment()
-          .addClasspathResource(SUB_PROCESS)
-          .deploy();
+      var deploymentBuilder = extension.getRepositoryService()
+        .createDeployment()
+        .addClasspathResource(SUB_PROCESS);
+
+      assertThatCode(deploymentBuilder::deploy)
+        .doesNotThrowAnyException();
     }
   }
 }

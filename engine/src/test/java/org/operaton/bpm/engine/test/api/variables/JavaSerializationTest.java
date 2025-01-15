@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.variables;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.test.util.TypedValueAssert.assertObjectValueDeserialized;
 import static org.operaton.bpm.engine.test.util.TypedValueAssert.assertObjectValueDeserializedNull;
@@ -145,14 +146,15 @@ public class JavaSerializationTest {
 
     // if
     // I start a process instance in which a Java Delegate reads the value in its deserialized form
-    runtimeService.startProcessInstanceByKey("oneTaskProcess", Variables.createVariables()
-      .putValue("varName", serializedObjectValue(serializedObject)
-        .serializationDataFormat(JAVA_DATA_FORMAT)
+    VariableMap variables = Variables.createVariables()
+      .putValue("varName", serializedObjectValue(serializedObject).serializationDataFormat(JAVA_DATA_FORMAT)
         .objectTypeName(JavaSerializable.class.getName())
-        .create()));
+        .create());
 
     // then
     // it does not fail
+    assertThatCode(() -> runtimeService.startProcessInstanceByKey("oneTaskProcess", variables))
+      .doesNotThrowAnyException();
   }
 
   @Test
@@ -171,7 +173,7 @@ public class JavaSerializationTest {
 
     // which cannot be deserialized
     ObjectInputStream objectInputStream = new ObjectInputStream(new ByteArrayInputStream(serializedObjectBytes));
-    assertThatThrownBy(() -> objectInputStream.readObject())
+    assertThatThrownBy(objectInputStream::readObject)
       .isInstanceOf(RuntimeException.class)
       .hasMessageContaining("Exception while deserializing object");
 

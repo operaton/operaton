@@ -19,9 +19,10 @@ package org.operaton.bpm.model.bpmn;
 import org.operaton.bpm.model.bpmn.instance.Process;
 import org.operaton.bpm.model.bpmn.instance.*;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 /**
  * @author Sebastian Menski
@@ -70,6 +71,8 @@ class CreateModelTest {
     // create flows
     createSequenceFlow(processWithOneTask, startEvent, task1);
     createSequenceFlow(processWithOneTask, task1, endEvent);
+
+    assertThatCode(() -> Bpmn.validateModel(modelInstance)).doesNotThrowAnyException();
   }
 
   @Test
@@ -92,11 +95,7 @@ class CreateModelTest {
     createSequenceFlow(processWithParallelGateway, task1, join);
     createSequenceFlow(processWithParallelGateway, task2, join);
     createSequenceFlow(processWithParallelGateway, join, endEvent);
-  }
 
-  @AfterEach
-  void validateModel() {
-    Bpmn.validateModel(modelInstance);
+    assertThatCode(() -> Bpmn.validateModel(modelInstance)).doesNotThrowAnyException();
   }
-
 }

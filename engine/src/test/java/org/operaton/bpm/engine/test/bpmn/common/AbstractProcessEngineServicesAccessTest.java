@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.common;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
@@ -61,7 +62,7 @@ public abstract class AbstractProcessEngineServicesAccessTest extends PluggableP
     createAndDeployModelForClass(getTestServiceAccessibleClass());
 
     // this would fail if api access was not assured.
-    runtimeService.startProcessInstanceByKey(PROCESS_DEF_KEY);
+    assertThatCode(() -> runtimeService.startProcessInstanceByKey(PROCESS_DEF_KEY)).doesNotThrowAnyException();
   }
 
   @Test
@@ -70,7 +71,7 @@ public abstract class AbstractProcessEngineServicesAccessTest extends PluggableP
     createAndDeployModelForClass(getQueryClass());
 
     // this would fail if api access was not assured.
-    runtimeService.startProcessInstanceByKey(PROCESS_DEF_KEY);
+    assertThatCode(() -> runtimeService.createProcessInstanceQuery().count()).doesNotThrowAnyException();
   }
 
   @Test

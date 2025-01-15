@@ -25,6 +25,8 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
+
 @RunWith(Arquillian.class)
 public class SpringServletPATimerStartEventExpressionTest extends AbstractFoxPlatformIntegrationTest {
 
@@ -42,7 +44,8 @@ public class SpringServletPATimerStartEventExpressionTest extends AbstractFoxPla
 
   @Test
   public void shouldStartProcessInstance() {
-    runtimeService.startProcessInstanceByKey("timer-start-event-process");
+    assertThatCode(() -> runtimeService.startProcessInstanceByKey("timer-start-event-process"))
+      .doesNotThrowAnyException();
   }
 
 }

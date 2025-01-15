@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.task;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -307,7 +306,8 @@ public class TaskServiceTest {
     String taskId = task.getId();
 
     // Deleting non-existing comment should be silently ignored
-    taskService.deleteTaskComment(taskId, "notExistingCommentId");
+    assertThatCode(() -> taskService.deleteTaskComment(taskId, "notExistingCommentId"))
+      .doesNotThrowAnyException();
 
     // Finally, delete task
     taskService.deleteTask(taskId, true);
@@ -380,7 +380,8 @@ public class TaskServiceTest {
     String taskId = task.getId();
 
     // Deleting comments of a task that doesnt have any comments should silently ignored
-    taskService.deleteTaskComments(taskId);
+    assertThatCode(() -> taskService.deleteTaskComments(taskId))
+      .doesNotThrowAnyException();
 
     // Finally, delete task
     taskService.deleteTask(taskId, true);
@@ -543,9 +544,11 @@ public class TaskServiceTest {
   @Test
   public void testDeleteProcessInstanceCommentNotExistingCommentId() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
+    String processInstanceId = processInstance.getId();
 
     // Deleting non-existing comment should be silently ignored
-    taskService.deleteProcessInstanceComment(processInstance.getId(), "notExistingCommentId");
+    assertThatCode(() -> taskService.deleteProcessInstanceComment(processInstanceId, "notExistingCommentId"))
+      .doesNotThrowAnyException();
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
@@ -607,11 +610,12 @@ public class TaskServiceTest {
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
   @Test
   public void testDeleteProcessInstanceCommentsNoComments() {
-
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
+    String processInstanceId = processInstance.getId();
 
     // Deleting comments of a task that doesn't have any comments should silently ignored
-    taskService.deleteProcessInstanceComments(processInstance.getId());
+    assertThatCode(() -> taskService.deleteProcessInstanceComments(processInstanceId))
+      .doesNotThrowAnyException();
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })

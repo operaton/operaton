@@ -40,9 +40,7 @@ public class DecisionDefinitionEntity extends DmnDecisionImpl implements Decisio
 
   protected String id;
   protected int revision = 1;
-  protected String name;
   protected String category;
-  protected String key;
   protected int version;
   protected String deploymentId;
   protected String resourceName;

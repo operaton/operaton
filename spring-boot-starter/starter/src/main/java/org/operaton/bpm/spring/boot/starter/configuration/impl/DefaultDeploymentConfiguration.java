@@ -31,10 +31,11 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static java.util.Collections.EMPTY_SET;
+import static java.util.Collections.emptySet;
 
 public class DefaultDeploymentConfiguration extends AbstractOperatonConfiguration implements OperatonDeploymentConfiguration {
-  private final Logger logger = LoggerFactory.getLogger(DefaultDeploymentConfiguration.class);
+  @SuppressWarnings({"java:S1845", "java:S116"})
+  private final Logger LOGGER = LoggerFactory.getLogger(DefaultDeploymentConfiguration.class);
 
   @Override
   public void preInit(SpringProcessEngineConfiguration configuration) {
@@ -52,19 +53,19 @@ public class DefaultDeploymentConfiguration extends AbstractOperatonConfiguratio
 
     try {
       final String[] resourcePattern = operatonBpmProperties.getDeploymentResourcePattern();
-      logger.debug("resolving deployment resources for pattern {}", (Object[]) resourcePattern);
+      LOGGER.debug("resolving deployment resources for pattern {}", (Object[]) resourcePattern);
       resolver.setValue(resourcePattern);
 
       return Arrays.stream((Resource[])resolver.getValue())
-        .peek(resource -> logger.debug("processing deployment resource {}", resource))
+        .peek(resource -> LOGGER.debug("processing deployment resource {}", resource))
         .filter(this::isFile)
-        .peek(resource -> logger.debug("added deployment resource {}", resource))
+        .peek(resource -> LOGGER.debug("added deployment resource {}", resource))
         .collect(Collectors.toSet());
 
     } catch (final RuntimeException e) {
-      logger.error("unable to resolve resources", e);
+      LOGGER.error("unable to resolve resources", e);
     }
-    return EMPTY_SET;
+    return emptySet();
   }
 
 
@@ -77,17 +78,17 @@ public class DefaultDeploymentConfiguration extends AbstractOperatonConfiguratio
           URL url = resource.getURL();
           return !url.toString().endsWith("/");
         } catch (IOException e) {
-          logger.debug("unable to handle " + resource + " as URL", e);
+          LOGGER.debug("unable to handle " + resource + " as URL", e);
         }
       } else {
         try {
           return !resource.getFile().isDirectory();
         } catch (IOException e) {
-          logger.debug("unable to handle " + resource + " as file", e);
+          LOGGER.debug("unable to handle " + resource + " as file", e);
         }
       }
     }
-    logger.warn("unable to determine if resource {} is a deployable resource", resource);
+    LOGGER.warn("unable to determine if resource {} is a deployable resource", resource);
     return false;
   }
 

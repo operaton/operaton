@@ -26,8 +26,6 @@ import org.operaton.bpm.engine.impl.management.UpdateJobDefinitionSuspensionStat
 import org.operaton.bpm.engine.impl.management.UpdateJobSuspensionStateBuilderImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.*;
 
-import java.util.Date;
-
 /**
  * @author Daniel Meyer
  * @author roman.smirnov
@@ -37,7 +35,6 @@ public abstract class AbstractSetJobDefinitionStateCmd extends AbstractSetStateC
   protected String jobDefinitionId;
   protected String processDefinitionId;
   protected String processDefinitionKey;
-  protected Date executionDate;
 
   protected String processDefinitionTenantId;
   protected boolean isProcessDefinitionTenantIdSet = false;
@@ -64,7 +61,6 @@ public abstract class AbstractSetJobDefinitionStateCmd extends AbstractSetStateC
 
   @Override
   protected void checkAuthorization(CommandContext commandContext) {
-
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       if (jobDefinitionId != null) {
 
@@ -79,19 +75,14 @@ public abstract class AbstractSetJobDefinitionStateCmd extends AbstractSetStateC
             checker.checkUpdateProcessInstanceByProcessDefinitionKey(procDefKey);
           }
         }
-
-      } else
-
-      if (processDefinitionId != null) {
+      } else if (processDefinitionId != null) {
         checker.checkUpdateProcessDefinitionById(processDefinitionId);
 
         if (includeSubResources) {
           checker.checkUpdateProcessInstanceByProcessDefinitionId(processDefinitionId);
         }
 
-      } else
-
-      if (processDefinitionKey != null) {
+      } else if (processDefinitionKey != null) {
         checker.checkUpdateProcessDefinitionByKey(processDefinitionKey);
 
         if (includeSubResources) {

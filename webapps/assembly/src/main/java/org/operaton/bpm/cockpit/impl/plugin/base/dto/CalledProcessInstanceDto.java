@@ -23,7 +23,6 @@ public class CalledProcessInstanceDto extends ProcessInstanceDto {
   protected String processDefinitionId;
   protected String processDefinitionKey;
   protected String processDefinitionName;
-  protected List<IncidentStatisticsDto> incidents;
 
   protected String callActivityInstanceId;
   protected String callActivityId;

@@ -82,13 +82,12 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
   public static final String PROPERTIES_VARIABLES_NAME_KEY = "name";
   public static final List<Variant> VARIANTS = Variant.mediaTypes(MediaType.APPLICATION_JSON_TYPE, Hal.APPLICATION_HAL_JSON_TYPE).add().build();
 
-  protected String relativeRootResourcePath;
   protected FilterService filterService;
   protected Filter dbFilter;
 
   public FilterResourceImpl(String processEngineName, ObjectMapper objectMapper, String filterId, String relativeRootResourcePath) {
     super(processEngineName, FILTER, filterId, objectMapper);
-    this.relativeRootResourcePath = relativeRootResourcePath;
+    setRelativeRootResourceUri(relativeRootResourcePath);
     filterService = getProcessEngine().getFilterService();
   }
 

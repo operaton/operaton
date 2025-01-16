@@ -31,7 +31,6 @@ public class HistoricBatchEntity extends HistoryEvent implements HistoricBatch, 
 
   private static final long serialVersionUID = 1L;
 
-  protected String id;
   protected String type;
 
   protected int totalJobs;

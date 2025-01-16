@@ -95,7 +95,7 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
       fail("exception expected");
     } catch (ParseException e) {
       assertTrue(e.getMessage().contains("Cannot have a message event subscription with an empty or missing name"));
-      assertEquals("theStart", e.getResorceReports().get(0).getErrors().get(0).getMainElementId());
+      assertEquals("theStart", e.getResourceReports().get(0).getErrors().get(0).getMainElementId());
     }
   }
 

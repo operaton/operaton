@@ -154,7 +154,7 @@ public class EventBasedGatewayTest extends PluggableProcessEngineTest {
       fail("exception expected");
     } catch (ParseException e) {
       assertTrue(e.getMessage().contains("Event based gateway can only be connected to elements of type intermediateCatchEvent"));
-      assertThat(e.getResorceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("gw1");
+      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("gw1");
     }
 
   }
@@ -169,7 +169,7 @@ public class EventBasedGatewayTest extends PluggableProcessEngineTest {
       fail("exception expected");
     } catch (ParseException e) {
       assertTrue(e.getMessage().contains("Invalid incoming sequenceflow for intermediateCatchEvent"));
-      assertThat(e.getResorceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("invalidFlow");
+      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("invalidFlow");
     }
 
   }

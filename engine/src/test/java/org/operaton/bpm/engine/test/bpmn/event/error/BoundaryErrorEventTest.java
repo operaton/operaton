@@ -93,7 +93,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
       fail("ProcessEngineException expected");
     } catch (ParseException e) {
       testRule.assertTextPresent("'errorCode' is mandatory on errors referenced by throwing error event definitions", e.getMessage());
-      assertThat(e.getResorceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("theEnd");
+      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("theEnd");
     }
   }
 
@@ -106,7 +106,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
       fail("ProcessEngineException expected");
     } catch (ParseException e) {
       testRule.assertTextPresent("'errorCode' is mandatory on errors referenced by throwing error event definitions", e.getMessage());
-      assertThat(e.getResorceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("theEnd");
+      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("theEnd");
     }
   }
 

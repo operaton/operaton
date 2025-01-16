@@ -192,7 +192,7 @@ public class MessageIntermediateEventTest {
       fail("exception expected");
     } catch (ParseException e) {
       assertTrue(e.getMessage().contains("Cannot have a message event subscription with an empty or missing name"));
-      assertThat(e.getResorceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("messageCatch");
+      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("messageCatch");
     }
   }
 

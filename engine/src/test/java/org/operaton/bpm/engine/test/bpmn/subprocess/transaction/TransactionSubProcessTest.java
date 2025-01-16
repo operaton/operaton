@@ -638,7 +638,7 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
       fail("exception expected");
     } catch (ParseException e) {
       assertThat(e.getMessage()).contains("multiple boundary events with cancelEventDefinition not supported on same transaction");
-      assertThat(e.getResorceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("catchCancelTx2");
+      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("catchCancelTx2");
     }
   }
 
@@ -651,7 +651,7 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
       fail("exception expected");
     } catch (ParseException e) {
       assertThat(e.getMessage()).contains("boundary event with cancelEventDefinition only supported on transaction subprocesses");
-      assertThat(e.getResorceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("catchCancelTx");
+      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("catchCancelTx");
     }
   }
 
@@ -664,7 +664,7 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
       fail("exception expected");
     } catch (ParseException e) {
       assertThat(e.getMessage()).contains("end event with cancelEventDefinition only supported inside transaction subprocess");
-      assertThat(e.getResorceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("failure");
+      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("failure");
     }
   }
 

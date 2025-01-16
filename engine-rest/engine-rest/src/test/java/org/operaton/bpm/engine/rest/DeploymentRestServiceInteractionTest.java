@@ -2164,7 +2164,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
     List<ResourceReport> reports = new ArrayList<>();
     reports.add(report);
 
-    when(mockParseException.getResorceReports()).thenReturn(reports);
+    when(mockParseException.getResourceReports()).thenReturn(reports);
     return mockParseException;
   }
 

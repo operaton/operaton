@@ -63,7 +63,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
       fail("Exception expected");
     } catch (ParseException e) {
       testRule.assertTextPresent("Sequence flow with sourceRef='service' must have an id, activity with id 'service' uses 'asyncAfter'.", e.getMessage());
-      assertThat(e.getResorceReports().get(0).getErrors().get(0).getElementIds()).containsExactly("service");
+      assertThat(e.getResourceReports().get(0).getErrors().get(0).getElementIds()).containsExactly("service");
     }
 
   }

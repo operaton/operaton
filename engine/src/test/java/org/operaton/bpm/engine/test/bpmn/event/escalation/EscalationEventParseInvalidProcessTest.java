@@ -102,7 +102,7 @@ public class EscalationEventParseInvalidProcessTest {
       fail("exception expected: " + expectedErrorMessage);
     } catch (ParseException e) {
       assertExceptionMessageContainsText(e, expectedErrorMessage);
-      List<Problem> errors = e.getResorceReports().get(0).getErrors();
+      List<Problem> errors = e.getResourceReports().get(0).getErrors();
       for (int i = 0; i < bpmnElementIds.length; i++) {
         assertThat(errors.get(i).getMainElementId()).isEqualTo(bpmnElementIds[i]);
       }

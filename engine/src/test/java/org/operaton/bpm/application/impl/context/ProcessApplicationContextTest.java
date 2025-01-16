@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.application.impl.context;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.eq;
@@ -167,20 +168,16 @@ public class ProcessApplicationContextTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testCannotExecuteInUnregisteredPaContext() throws Exception {
+  public void testCannotExecuteInUnregisteredPaContext() {
     String nonExistingName = pa.getName() + pa.getName();
+    Callable<Void> callable = () -> {
+      getCurrentContextApplication();
+      return null;
+    };
 
-    try {
-      ProcessApplicationContext.withProcessApplicationContext((Callable<Void>) () -> {
-        getCurrentContextApplication();
-        return null;
-      }, nonExistingName);
-      fail("should not succeed");
-
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("A process application with name '" + nonExistingName + "' is not registered", e.getMessage());
-    }
-
+    assertThatThrownBy(() -> ProcessApplicationContext.withProcessApplicationContext(callable, nonExistingName))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("A process application with name '" + nonExistingName + "' is not registered");
   }
 
   @SuppressWarnings("unchecked")

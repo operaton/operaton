@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.test.concurrency;
 
 import static org.operaton.bpm.engine.variable.Variables.createVariables;
 import static org.operaton.bpm.model.bpmn.Bpmn.createExecutableProcess;
+
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
@@ -100,9 +102,10 @@ public class CompetingVariableFetchingAndDeletionTest extends ConcurrencyTestCas
     // make the second thread continue
     // => this will a flush the FetchVariableCmd Context.
     // if the flush performs an update to the variable, it will fail with an OLE
-    asyncThread.makeContinue();
-    asyncThread.waitUntilDone();
-
+    assertThatCode(() -> {
+      asyncThread.makeContinue();
+      asyncThread.waitUntilDone();
+    }).doesNotThrowAnyException();
   }
 
   static class FetchVariableCmd extends ControllableCommand<Void> {

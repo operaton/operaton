@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.api.cfg;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -242,7 +243,10 @@ public class DeploymentCacheCfgTest {
 
     // then we should be able to complete the task in process 4
     Task task = taskService.createTaskQuery().singleResult();
-    taskService.complete(task.getId());
+    String taskId = task.getId();
+
+    assertThatCode(() -> taskService.complete(taskId))
+      .doesNotThrowAnyException();
   }
 
   @Test
@@ -266,7 +270,9 @@ public class DeploymentCacheCfgTest {
 
     // then we should be able to complete the task in process 4
     Task task = taskService.createTaskQuery().singleResult();
-    taskService.complete(task.getId());
+    String taskId = task.getId();
+    assertThatCode(() -> taskService.complete(taskId))
+      .doesNotThrowAnyException();
   }
 
   @Test
@@ -285,7 +291,9 @@ public class DeploymentCacheCfgTest {
     managementService.executeJob(job.getId());
 
     // then deleting the deployment should still be possible
-    repositoryService.deleteDeployment(deployment.getId(), true);
+    String deploymentId = deployment.getId();
+    assertThatCode(() -> repositoryService.deleteDeployment(deploymentId, true))
+      .doesNotThrowAnyException();
   }
 
   @Test

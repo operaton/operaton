@@ -36,6 +36,7 @@ import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.openqa.selenium.support.ui.ExpectedConditions.textToBePresentInElementLocated;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
@@ -111,14 +112,16 @@ class LoginIT extends AbstractWebappUiIT {
 
   @MethodSource("commands")
   @ParameterizedTest
-  void shouldLoginToCockpit(String[] commands) throws URISyntaxException {
+  void shouldLoginToCockpit(String[] commands) {
     startContainer(commands);
     initLoginIT(commands);
-    try {
-      loginToCockpit();
-    } catch (WebDriverException e) {
-      loginToCockpit();
-    }
+    assertThatCode(() -> {
+      try {
+        loginToCockpit();
+      } catch (WebDriverException e) {
+        loginToCockpit();
+      }
+    }).doesNotThrowAnyException();
   }
 
   void loginToCockpit() throws URISyntaxException {
@@ -137,11 +140,13 @@ class LoginIT extends AbstractWebappUiIT {
   void shouldLoginToTasklist(String[] commands) {
     startContainer(commands);
     initLoginIT(commands);
-    try {
-      loginToTasklist();
-    } catch (WebDriverException e) {
-      loginToTasklist();
-    }
+    assertThatCode(() -> {
+      try {
+        loginToTasklist();
+      } catch (WebDriverException e) {
+        loginToTasklist();
+      }
+    }).doesNotThrowAnyException();
   }
 
   void loginToTasklist() {
@@ -157,13 +162,15 @@ class LoginIT extends AbstractWebappUiIT {
 
   @MethodSource("commands")
   @ParameterizedTest
-  void shouldLoginToAdmin(String[] commands) throws URISyntaxException {
+  void shouldLoginToAdmin(String[] commands) {
     initLoginIT(commands);
-    try {
-      loginToAdmin();
-    } catch (WebDriverException e) {
-      loginToAdmin();
-    }
+    assertThatCode(() -> {
+      try {
+        loginToAdmin();
+      } catch (WebDriverException e) {
+        loginToAdmin();
+      }
+    }).doesNotThrowAnyException();
   }
 
   void loginToAdmin() throws URISyntaxException {
@@ -179,13 +186,15 @@ class LoginIT extends AbstractWebappUiIT {
 
   @MethodSource("commands")
   @ParameterizedTest
-  void shouldLoginToWelcome(String[] commands) throws URISyntaxException {
+  void shouldLoginToWelcome(String[] commands) {
     initLoginIT(commands);
-    try {
-      loginToWelcome();
-    } catch (WebDriverException e) {
-      loginToWelcome();
-    }
+    assertThatCode(() -> {
+      try {
+        loginToWelcome();
+      } catch (WebDriverException e) {
+        loginToWelcome();
+      }
+    }).doesNotThrowAnyException();
   }
 
   void loginToWelcome() throws URISyntaxException {

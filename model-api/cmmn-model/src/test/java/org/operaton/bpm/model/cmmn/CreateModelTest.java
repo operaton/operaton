@@ -15,16 +15,13 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.cmmn;
-import org.junit.jupiter.api.AfterEach;
+
+import org.operaton.bpm.model.cmmn.instance.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.operaton.bpm.model.cmmn.instance.Case;
-import org.operaton.bpm.model.cmmn.instance.CasePlanModel;
-import org.operaton.bpm.model.cmmn.instance.CmmnModelElementInstance;
-import org.operaton.bpm.model.cmmn.instance.Definitions;
-import org.operaton.bpm.model.cmmn.instance.HumanTask;
-import org.operaton.bpm.model.cmmn.instance.PlanItem;
-import org.operaton.bpm.model.cmmn.instance.Stage;
+
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 /**
  * @author Sebastian Menski
@@ -33,7 +30,6 @@ class CreateModelTest {
 
   public CmmnModelInstance modelInstance;
   public Definitions definitions;
-  public Process process;
 
   @BeforeEach
   void createEmptyModel() {
@@ -66,6 +62,8 @@ class CreateModelTest {
 
     // set definition to human task
     planItem.setDefinition(humanTask);
+
+    assertThatCode(() -> Cmmn.validateModel(modelInstance)).doesNotThrowAnyException();
   }
 
   @Test
@@ -87,11 +85,7 @@ class CreateModelTest {
 
     // set definition to human task
     planItem.setDefinition(humanTask);
-  }
 
-  @AfterEach
-  void validateModel() {
-    Cmmn.validateModel(modelInstance);
+    assertThatCode(() -> Cmmn.validateModel(modelInstance)).doesNotThrowAnyException();
   }
-
 }

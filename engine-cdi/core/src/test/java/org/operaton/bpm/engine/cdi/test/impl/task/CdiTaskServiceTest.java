@@ -18,10 +18,13 @@ package org.operaton.bpm.engine.cdi.test.impl.task;
 
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
 import org.operaton.bpm.engine.task.Task;
+import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.test.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 @RunWith(Arquillian.class)
 public class CdiTaskServiceTest extends CdiProcessEngineTestCase {
@@ -30,8 +33,10 @@ public class CdiTaskServiceTest extends CdiProcessEngineTestCase {
   public void testClaimTask() {
     Task newTask = taskService.newTask();
     taskService.saveTask(newTask);
-    taskService.claim(newTask.getId(), "kermit");
-    taskService.deleteTask(newTask.getId(),true);
+    String taskId = newTask.getId();
+    assertThatCode(() -> taskService.claim(taskId, "kermit"))
+      .doesNotThrowAnyException();
+    taskService.deleteTask(taskId,true);
   }
 
   @Test
@@ -40,11 +45,11 @@ public class CdiTaskServiceTest extends CdiProcessEngineTestCase {
     // given
     runtimeService.startProcessInstanceByKey("taskTest");
     identityService.setAuthenticatedUserId("user");
+    TaskQuery taskQuery = taskService.createTaskQuery().taskAssigneeExpression("${currentUser()}");
 
     // when
-    taskService.createTaskQuery().taskAssigneeExpression("${currentUser()}").list();
-
-    // then no exception is thrown
+    assertThatCode(taskQuery::list)
+      .doesNotThrowAnyException();
   }
 
 }

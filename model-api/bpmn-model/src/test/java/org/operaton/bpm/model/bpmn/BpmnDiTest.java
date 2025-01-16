@@ -30,6 +30,8 @@ import org.operaton.bpm.model.bpmn.instance.di.Waypoint;
 import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+
 import static org.operaton.bpm.model.bpmn.BpmnTestConstants.*;
 
 /**
@@ -243,6 +245,8 @@ class BpmnDiTest {
     endWaypoint.setX(718.0);
     endWaypoint.setY(330.0);
     flowEdge.getWaypoints().add(endWaypoint);
+
+    assertThatCode(() -> Bpmn.validateModel(modelInstance)).doesNotThrowAnyException();
   }
 
   @AfterEach

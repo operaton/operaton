@@ -37,8 +37,8 @@ import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.delegate.TaskListener;
+import org.operaton.bpm.engine.impl.context.BpmnExecutionContext;
 import org.operaton.bpm.engine.impl.context.Context;
-import org.operaton.bpm.engine.impl.context.ExecutionContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
@@ -108,7 +108,7 @@ public abstract class AbstractCdiEventListener implements TaskListener, Executio
   }
 
   protected BusinessProcessEvent createEvent(DelegateTask task) {
-    ExecutionContext executionContext = Context.getBpmnExecutionContext();
+    BpmnExecutionContext executionContext = Context.getBpmnExecutionContext();
     ProcessDefinitionEntity processDefinition = null;
     if (executionContext != null) {
       processDefinition = executionContext.getProcessDefinition();

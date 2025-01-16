@@ -105,7 +105,7 @@ public class MessageBoundaryEventTest extends PluggableProcessEngineTest {
     } catch (ParseException e) {
       testRule.assertTextPresent("Cannot have more than one message event subscription with name 'messageName' for scope 'task'", e.getMessage());
       assertEquals(0, repositoryService.createDeploymentQuery().count());
-      List<Problem> errors = e.getResorceReports().get(0).getErrors();
+      List<Problem> errors = e.getResourceReports().get(0).getErrors();
       assertThat(errors).hasSize(1);
       assertThat(errors.get(0).getMainElementId()).isEqualTo("messageBoundary_2");
     }

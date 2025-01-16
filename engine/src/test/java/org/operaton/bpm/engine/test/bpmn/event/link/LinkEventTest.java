@@ -100,7 +100,7 @@ public class LinkEventTest extends PluggableProcessEngineTest {
     }
     catch (ParseException e) {
       assertTrue(e.getMessage().contains("Multiple Intermediate Catch Events with the same link event name ('LinkA') are not allowed"));
-      assertThat(e.getResorceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("IntermediateCatchEvent_2");
+      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("IntermediateCatchEvent_2");
     }
   }
 
@@ -112,7 +112,7 @@ public class LinkEventTest extends PluggableProcessEngineTest {
     }
     catch (ParseException e) {
       assertTrue(e.getMessage().contains("IntermediateCatchLinkEvent is not allowed after an EventBasedGateway."));
-      assertThat(e.getResorceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("IntermediateCatchEvent_2");
+      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("IntermediateCatchEvent_2");
     }
   }
 }

@@ -117,7 +117,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     } catch (ParseException e) {
       testRule.assertTextPresentIgnoreCase("value 'NOTaNumber' for attribute 'taskPriority' "
           + "is not a valid number", e.getMessage());
-      assertThat(e.getResorceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("externalTaskWithPrio");
+      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("externalTaskWithPrio");
     }
   }
 

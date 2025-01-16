@@ -132,7 +132,7 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
       fail("expected exception");
     } catch (ParseException e) {
       testRule.assertTextPresent("operaton:inputOutput mapping unsupported for element type 'startEvent'", e.getMessage());
-      assertThat(e.getResorceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("start");
+      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("start");
     }
   }
 
@@ -146,7 +146,7 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
       fail("expected exception");
     } catch (ParseException e) {
       testRule.assertTextPresent("operaton:outputParameter not allowed for element type 'endEvent'", e.getMessage());
-      assertThat(e.getResorceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("endMapping");
+      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("endMapping");
     }
   }
 
@@ -262,7 +262,7 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
       fail("expected exception");
     } catch (ParseException e) {
       testRule.assertTextPresent("operaton:inputOutput mapping unsupported for element type 'boundaryEvent'", e.getMessage());
-      assertThat(e.getResorceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("messageBoundary");
+      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("messageBoundary");
     }
   }
 

@@ -35,6 +35,9 @@ public class ParseException extends ProcessEngineException {
     this.resourceReports = reports;
   }
 
+  /**
+   * @deprecated use {@link #getResourceReports()} instead
+   */
   @Deprecated(forRemoval = true)
   public List<ResourceReport> getResorceReports() {
     return resourceReports;

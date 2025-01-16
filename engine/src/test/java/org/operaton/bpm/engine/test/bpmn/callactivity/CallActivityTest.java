@@ -729,7 +729,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
       fail("Exception expected");
     } catch (ParseException e) {
        testRule.assertTextPresent("Missing attribute 'target'", e.getMessage());
-      assertThat(e.getResorceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("callActivity");
+      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("callActivity");
     } finally {
       if (deploymentId != null) {
         repositoryService.deleteDeployment(deploymentId, true);

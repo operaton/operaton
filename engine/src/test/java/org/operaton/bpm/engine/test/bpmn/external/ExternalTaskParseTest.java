@@ -46,8 +46,8 @@ public class ExternalTaskParseTest extends PluggableProcessEngineTest {
       fail("exception expected");
     } catch (ParseException e) {
       testRule.assertTextPresent("External tasks must specify a 'topic' attribute in the operaton namespace", e.getMessage());
-      assertThat(e.getResorceReports().get(0).getErrors()).hasSize(1);
-      assertThat(e.getResorceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("externalTask");
+      assertThat(e.getResourceReports().get(0).getErrors()).hasSize(1);
+      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("externalTask");
     }
   }
 

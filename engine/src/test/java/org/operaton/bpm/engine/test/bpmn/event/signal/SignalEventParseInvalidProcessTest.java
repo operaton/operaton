@@ -86,7 +86,7 @@ public class SignalEventParseInvalidProcessTest {
       fail("exception expected: " + expectedErrorMessage);
     } catch (ParseException e) {
       assertTextPresent(expectedErrorMessage, e.getMessage());
-      assertThat(e.getResorceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo(elementIds);
+      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo(elementIds);
     }
   }
 

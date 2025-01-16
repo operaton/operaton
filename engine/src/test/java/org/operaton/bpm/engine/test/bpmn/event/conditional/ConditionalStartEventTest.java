@@ -467,7 +467,7 @@ public class ConditionalStartEventTest {
     } catch (ParseException e) {
       // then
       assertThat(e.getMessage()).contains("Cannot have more than one conditional event subscription with the same condition '${variable == 1}'");
-      assertThat(e.getResorceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("StartEvent_2");
+      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("StartEvent_2");
       List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
       assertEquals(0, eventSubscriptions.size());
     }

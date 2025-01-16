@@ -840,7 +840,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     } catch (ParseException e) {
       // happy path
       testRule.assertTextPresent("operaton:inputOutput mapping unsupported for element type 'subProcess' with attribute 'triggeredByEvent = true'", e.getMessage());
-      assertThat(e.getResorceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("SubProcess_1");
+      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("SubProcess_1");
     }
   }
 
@@ -1023,7 +1023,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
       fail("Exception expected");
     } catch (ParseException e) {
       testRule.assertTextPresent("operaton:outputParameter not allowed for multi-instance constructs", e.getMessage());
-      assertThat(e.getResorceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("miTask");
+      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("miTask");
     }
 
   }

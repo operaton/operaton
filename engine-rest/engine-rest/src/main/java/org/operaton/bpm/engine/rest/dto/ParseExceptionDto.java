@@ -43,7 +43,7 @@ public class ParseExceptionDto extends ExceptionDto {
     dto.setType(ParseException.class.getSimpleName());
     dto.setMessage(exception.getMessage());
 
-    for (ResourceReport report : exception.getResorceReports()) {
+    for (ResourceReport report : exception.getResourceReports()) {
       List<ProblemDto> errorDtos = new ArrayList<>();
       for (Problem error : report.getErrors()) {
         errorDtos.add(ProblemDto.fromProblem(error));

@@ -215,7 +215,7 @@ public class ExclusiveGatewayTest extends PluggableProcessEngineTest {
     }
     catch (ParseException e) {
       assertTrue(e.getMessage().contains("Exclusive Gateway 'exclusiveGw' has outgoing sequence flow 'flow3' without condition which is not the default flow."));
-      Problem error = e.getResorceReports().get(0).getErrors().get(0);
+      Problem error = e.getResourceReports().get(0).getErrors().get(0);
       assertThat(error.getMainElementId()).isEqualTo("exclusiveGw");
       assertThat(error.getElementIds()).containsExactlyInAnyOrder("exclusiveGw", "flow3");
     }
@@ -247,7 +247,7 @@ public class ExclusiveGatewayTest extends PluggableProcessEngineTest {
     }
     catch (ParseException e) {
       assertTrue(e.getMessage().contains("Exclusive Gateway 'exclusiveGw' has outgoing sequence flow 'flow3' which is the default flow but has a condition too."));
-      Problem error = e.getResorceReports().get(0).getErrors().get(0);
+      Problem error = e.getResourceReports().get(0).getErrors().get(0);
       assertThat(error.getMainElementId()).isEqualTo("exclusiveGw");
       assertThat(error.getElementIds()).containsExactlyInAnyOrder("exclusiveGw", "flow3");
     }
@@ -269,7 +269,7 @@ public class ExclusiveGatewayTest extends PluggableProcessEngineTest {
     }
     catch (ParseException e) {
       assertTrue(e.getMessage().contains("Exclusive Gateway 'exclusiveGw' has no outgoing sequence flows."));
-      assertThat(e.getResorceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("exclusiveGw");
+      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("exclusiveGw");
     }
 
   }

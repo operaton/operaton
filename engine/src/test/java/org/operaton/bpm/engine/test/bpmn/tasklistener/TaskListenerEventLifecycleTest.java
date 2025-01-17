@@ -16,15 +16,12 @@
  */
 package org.operaton.bpm.engine.test.bpmn.tasklistener;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-
+import org.junit.Test;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
@@ -37,9 +34,12 @@ import org.operaton.bpm.engine.test.bpmn.tasklistener.util.RecorderTaskListener;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-import static org.operaton.bpm.engine.delegate.TaskListener.*;
-
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.operaton.bpm.engine.delegate.TaskListener.EVENTNAME_ASSIGNMENT;
+import static org.operaton.bpm.engine.delegate.TaskListener.EVENTNAME_COMPLETE;
+import static org.operaton.bpm.engine.delegate.TaskListener.EVENTNAME_CREATE;
+import static org.operaton.bpm.engine.delegate.TaskListener.EVENTNAME_UPDATE;
 
 public class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest{
   /*
@@ -374,9 +374,9 @@ public class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest{
     // then
     List<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
 
-    assertThat(orderedEvents).hasSize(2);
-    assertThat(orderedEvents).containsExactly(EVENTNAME_CREATE,
-                                              TaskListener.EVENTNAME_DELETE);
+    assertThat(orderedEvents)
+        .hasSize(2)
+        .containsExactly(EVENTNAME_CREATE, TaskListener.EVENTNAME_DELETE);
   }
 
   // COMPLETE phase

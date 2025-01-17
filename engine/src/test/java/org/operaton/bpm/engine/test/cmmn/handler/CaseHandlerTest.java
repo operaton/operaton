@@ -16,11 +16,9 @@
  */
 package org.operaton.bpm.engine.test.cmmn.handler;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnActivityBehavior;
@@ -30,9 +28,11 @@ import org.operaton.bpm.engine.impl.cmmn.handler.CmmnHandlerContext;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * @author Roman Smirnov
@@ -142,7 +142,7 @@ public class CaseHandlerTest extends CmmnElementHandlerTest {
     CaseDefinitionEntity activity = (CaseDefinitionEntity) handler.handleElement(caseDefinition, context);
 
     // then
-    assertEquals(Integer.valueOf(historyTimeToLive), activity.getHistoryTimeToLive());
+    assertEquals(historyTimeToLive, activity.getHistoryTimeToLive());
   }
 
   @Test

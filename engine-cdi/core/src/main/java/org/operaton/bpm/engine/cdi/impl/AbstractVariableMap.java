@@ -19,9 +19,7 @@ package org.operaton.bpm.engine.cdi.impl;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
-
 import javax.inject.Inject;
-
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.context.VariableContext;
@@ -78,7 +76,7 @@ abstract class AbstractVariableMap implements VariableMap {
 
   @Override
   public void putAll(Map< ? extends String, ? extends Object> m) {
-    for (java.util.Map.Entry< ? extends String, ? extends Object> newEntry : m.entrySet()) {
+    for (var newEntry : m.entrySet()) {
       setVariable(newEntry.getKey(), newEntry.getValue());
     }
   }

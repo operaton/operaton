@@ -16,14 +16,12 @@
  */
 package org.operaton.spin.impl.json.jackson.format;
 
-import java.lang.reflect.TypeVariable;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.type.TypeFactory;
 
 /**
  * Collection of helper methods to construct types.
@@ -44,7 +42,7 @@ public class TypeHelper {
     if (erasedType == null) {
       return false;
     }
-    TypeVariable<? extends Class<?>>[] typeParameters = erasedType.getTypeParameters();
+    var typeParameters = erasedType.getTypeParameters();
     if (typeParameters.length == 0) {
       return false;
     }

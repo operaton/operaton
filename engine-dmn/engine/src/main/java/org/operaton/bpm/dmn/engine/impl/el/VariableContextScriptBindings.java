@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import javax.script.Bindings;
-
 import org.operaton.bpm.engine.variable.context.VariableContext;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
@@ -113,7 +112,7 @@ public class VariableContextScriptBindings implements Bindings {
   }
 
   public void putAll(Map< ? extends String, ?> toMerge) {
-    for (Entry<? extends String, ?> entry : toMerge.entrySet()) {
+    for (var entry : toMerge.entrySet()) {
       put(entry.getKey(), entry.getValue());
     }
   }

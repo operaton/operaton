@@ -16,18 +16,10 @@
  */
 package org.operaton.bpm.engine.test.bpmn.scripttask;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
+import org.junit.Test;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.ScriptCompilationException;
 import org.operaton.bpm.engine.ScriptEvaluationException;
@@ -37,7 +29,14 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.model.bpmn.Bpmn;
-import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 /**
  *
@@ -188,33 +187,33 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
   @Test
   public void testGroovyProcessVarVisibility() {
 
-    deployProcess(GROOVY,
-
+    deployProcess(GROOVY, """
         // GIVEN
         // an execution variable 'foo'
-        "execution.setVariable('foo', 'a')\n"
+        execution.setVariable('foo', 'a')
 
         // THEN
         // there should be a script variable defined
-      + "if ( !foo ) {\n"
-      + "  throw new Exception('Variable foo should be defined as script variable.')\n"
-      + "}\n"
+        if ( !foo ) {
+          throw new Exception('Variable foo should be defined as script variable.')
+        }
 
         // GIVEN
         // a script variable with the same name
-      + "foo = 'b'\n"
+        foo = 'b'
 
         // THEN
         // it should not change the value of the execution variable
-      + "if (execution.getVariable('foo') != 'a') {\n"
-      + "  throw new Exception('Execution should contain variable foo')\n"
-      + "}\n"
+        if (execution.getVariable('foo') != 'a') {
+          throw new Exception('Execution should contain variable foo')
+        }
 
         // AND
         // it should override the visibility of the execution variable
-      + "if (foo != 'b') {\n"
-      + "  throw new Exception('Script variable must override the visibiltity of the execution variable.')\n"
-      + "}"
+        if (foo != 'b') {
+          throw new Exception('Script variable must override the visibiltity of the execution variable.')
+        }
+      """
 
     );
 

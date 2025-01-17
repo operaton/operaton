@@ -24,10 +24,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-
-import org.operaton.bpm.engine.variable.context.VariableContext;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
+import org.operaton.bpm.engine.variable.context.VariableContext;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
 /**
@@ -162,7 +161,7 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
         variables.putAll(variableMapImpl.variables);
       }
       else {
-        for (java.util.Map.Entry<? extends String, ? extends Object> entry : m.entrySet()) {
+        for (var entry : m.entrySet()) {
           put(entry.getKey(), entry.getValue());
         }
       }

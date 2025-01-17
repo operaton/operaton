@@ -16,20 +16,18 @@
  */
 package org.operaton.bpm.dmn.engine.delegate;
 
+import java.io.InputStream;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.dmn.engine.DmnDecisionTableResult;
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.test.DecisionResource;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.commons.utils.IoUtil;
-
-import java.io.InputStream;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -101,8 +99,7 @@ class DmnDecisionEvaluationListenerTest extends DmnEngineTest {
 
     assertThat(decisionResult.getMatchingRules()).hasSize(1);
     Map<String, DmnEvaluatedOutput> outputEntries = decisionResult.getMatchingRules().get(0).getOutputEntries();
-    assertThat(outputEntries).hasSize(1);
-    assertThat(outputEntries).containsKey("desiredDish");
+    assertThat(outputEntries).hasSize(1).containsKey("desiredDish");
     assertThat(outputEntries.get("desiredDish").getValue().getValue()).isEqualTo("Light salad");
     assertThat(decisionResult.getExecutedDecisionElements()).isEqualTo(12L);
 

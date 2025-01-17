@@ -16,15 +16,12 @@
  */
 package org.operaton.bpm.engine.test.bpmn.tasklistener;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-
+import org.junit.Test;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
@@ -37,9 +34,12 @@ import org.operaton.bpm.engine.test.bpmn.tasklistener.util.RecorderTaskListener;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-import static org.operaton.bpm.engine.delegate.TaskListener.*;
-
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.operaton.bpm.engine.delegate.TaskListener.EVENTNAME_ASSIGNMENT;
+import static org.operaton.bpm.engine.delegate.TaskListener.EVENTNAME_COMPLETE;
+import static org.operaton.bpm.engine.delegate.TaskListener.EVENTNAME_CREATE;
+import static org.operaton.bpm.engine.delegate.TaskListener.EVENTNAME_UPDATE;
 
 public class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest{
   /*
@@ -111,10 +111,7 @@ public class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest{
     List<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
     assertThat(orderedEvents)
       .hasSize(4)
-      .containsExactly(EVENTNAME_CREATE,
-        EVENTNAME_UPDATE,
-        EVENTNAME_ASSIGNMENT,
-        EVENTNAME_COMPLETE);
+      .containsExactly(EVENTNAME_CREATE, EVENTNAME_UPDATE, EVENTNAME_ASSIGNMENT, EVENTNAME_COMPLETE);
   }
 
   @Test
@@ -374,9 +371,9 @@ public class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest{
     // then
     List<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
 
-    assertThat(orderedEvents).hasSize(2);
-    assertThat(orderedEvents).containsExactly(EVENTNAME_CREATE,
-                                              TaskListener.EVENTNAME_DELETE);
+    assertThat(orderedEvents)
+        .hasSize(2)
+        .containsExactly(EVENTNAME_CREATE, TaskListener.EVENTNAME_DELETE);
   }
 
   // COMPLETE phase
@@ -449,21 +446,17 @@ public class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest{
                                                                                   TaskDeleteTaskListener.class);
     testRule.deploy(model);
     runtimeService.startProcessInstanceByKey("process");
-    Task task = taskService.createTaskQuery().singleResult();
+    String taskId = taskService.createTaskQuery().singleResult().getId();
 
     // when
-    try {
-      // when/then
-      assertThatThrownBy(() -> taskService.complete(task.getId()))
-        .isInstanceOf(ProcessEngineException.class)
-        .hasMessageContaining("The task cannot be deleted because is part of a running process");
-    } finally {
-      // then
-      LinkedList<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
+    assertThatThrownBy(() -> taskService.complete(taskId))
+    // then
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("The task cannot be deleted because is part of a running process");
 
-      assertThat(orderedEvents).hasSize(2);
-      assertThat(orderedEvents.getLast()).isEqualToIgnoringCase(EVENTNAME_COMPLETE);
-    }
+    LinkedList<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
+    assertThat(orderedEvents).hasSize(2);
+    assertThat(orderedEvents.getLast()).isEqualToIgnoringCase(EVENTNAME_COMPLETE);
   }
 
   @Test
@@ -499,21 +492,18 @@ public class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest{
     testRule.deploy(model);
     runtimeService.startProcessInstanceByKey("process");
     Task task = taskService.createTaskQuery().singleResult();
+    String taskId = task.getId();
 
     // when
-    try {
-      // when/then
-      assertThatThrownBy(() -> taskService.complete(task.getId()))
-        .isInstanceOf(ProcessEngineException.class)
-        .hasMessageContaining("invalid task state");
-    } finally {
-      // then
-      LinkedList<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
+    assertThatThrownBy(() -> taskService.complete(taskId))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("invalid task state");
+    // then
+    LinkedList<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
 
-      assertThat(orderedEvents).hasSize(2);
-      assertThat(orderedEvents.getFirst()).isEqualToIgnoringCase(EVENTNAME_CREATE);
-      assertThat(orderedEvents.getLast()).isEqualToIgnoringCase(EVENTNAME_COMPLETE);
-    }
+    assertThat(orderedEvents).hasSize(2);
+    assertThat(orderedEvents.getFirst()).isEqualToIgnoringCase(EVENTNAME_CREATE);
+    assertThat(orderedEvents.getLast()).isEqualToIgnoringCase(EVENTNAME_COMPLETE);
   }
 
   // DELETE phase
@@ -586,21 +576,18 @@ public class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest{
                                                                                   CompletingTaskListener.class);
     testRule.deploy(model);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
+    String processInstanceId = processInstance.getId();
 
     // when
-    try {
-      // when/then
-      assertThatThrownBy(() -> runtimeService.deleteProcessInstance(processInstance.getId(), "Canceled!"))
-        .isInstanceOf(ProcessEngineException.class)
-        .hasMessageContaining("invalid task state");
-    } finally {
-      // then
-      LinkedList<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
+    assertThatThrownBy(() -> runtimeService.deleteProcessInstance(processInstanceId, "Canceled!"))
+    // then
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("invalid task state");
 
-      assertThat(orderedEvents).hasSize(2);
-      assertThat(orderedEvents.getFirst()).isEqualToIgnoringCase(EVENTNAME_CREATE);
-      assertThat(orderedEvents.getLast()).isEqualToIgnoringCase(TaskListener.EVENTNAME_DELETE);
-    }
+    LinkedList<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
+    assertThat(orderedEvents).hasSize(2);
+    assertThat(orderedEvents.getFirst()).isEqualToIgnoringCase(EVENTNAME_CREATE);
+    assertThat(orderedEvents.getLast()).isEqualToIgnoringCase(TaskListener.EVENTNAME_DELETE);
   }
 
   @Test
@@ -611,22 +598,18 @@ public class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest{
                                                                                   TaskListener.EVENTNAME_DELETE,
                                                                                   TaskDeleteTaskListener.class);
     testRule.deploy(model);
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
+    String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
     // when
-    try {
-      // when/then
-      assertThatThrownBy(() -> runtimeService.deleteProcessInstance(processInstance.getId(), "Canceled!"))
-        .isInstanceOf(ProcessEngineException.class)
-        .hasMessageContaining("The task cannot be deleted because is part of a running process");
-    } finally {
+    assertThatThrownBy(() -> runtimeService.deleteProcessInstance(processInstanceId, "Canceled!"))
       // then
-      LinkedList<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("The task cannot be deleted because is part of a running process");
 
-      assertThat(orderedEvents).hasSize(2);
-      assertThat(orderedEvents.getFirst()).isEqualToIgnoringCase(EVENTNAME_CREATE);
-      assertThat(orderedEvents.getLast()).isEqualToIgnoringCase(TaskListener.EVENTNAME_DELETE);
-    }
+    LinkedList<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
+    assertThat(orderedEvents).hasSize(2);
+    assertThat(orderedEvents.getFirst()).isEqualToIgnoringCase(EVENTNAME_CREATE);
+    assertThat(orderedEvents.getLast()).isEqualToIgnoringCase(TaskListener.EVENTNAME_DELETE);
   }
 
   @Test

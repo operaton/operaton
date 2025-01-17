@@ -16,46 +16,47 @@
  */
 package org.operaton.bpm.integrationtest.functional.classloading.jobexecution;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import java.util.List;
-
-import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
-import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.operaton.bpm.engine.runtime.Job;
+import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+import org.operaton.bpm.integrationtest.util.TestContainer;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * See CAM-10258
  */
 @RunWith(Arquillian.class)
 public class ClassloadingDuringJobExecutionTest extends AbstractFoxPlatformIntegrationTest {
-  protected static String process =
-      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" +
-      "<definitions xmlns=\"http://www.omg.org/spec/BPMN/20100524/MODEL\" xmlns:operaton=\"http://operaton.org/schema/1.0/bpmn\" targetNamespace=\"Examples\">\r\n" +
-      "  <process id=\"Process_1\" name=\"ServiceTask_Throw_BMPN_Error\" isExecutable=\"true\" operaton:historyTimeToLive=\"P180D\">\r\n" +
-      "    <startEvent id=\"StartEvent_1\">\r\n" +
-      "    </startEvent>\r\n" +
-      "    <sequenceFlow id=\"SequenceFlow_03wj6bv\" sourceRef=\"StartEvent_1\" targetRef=\"Task_1bkcm2v\" />\r\n" +
-      "    <endEvent id=\"EndEvent_0joyvpc\">\r\n" +
-      "    </endEvent>\r\n" +
-      "    <sequenceFlow id=\"SequenceFlow_0mt1p11\" sourceRef=\"Task_1bkcm2v\" targetRef=\"EndEvent_0joyvpc\" />\r\n" +
-      "    <serviceTask id=\"Task_1bkcm2v\" name=\"Throw BPMN Error\" operaton:asyncBefore=\"true\" operaton:expression=\"${true}\">\r\n" +
-      "      <extensionElements>\r\n" +
-      "        <operaton:inputOutput>\r\n" +
-      "          <operaton:outputParameter name=\"output\">\r\n" +
-      "            <operaton:script scriptFormat=\"Javascript\">throw new org.operaton.bpm.engine.delegate.BpmnError(\"Test error thrown\");</operaton:script>\r\n" +
-      "          </operaton:outputParameter>\r\n" +
-      "        </operaton:inputOutput>\r\n" +
-      "      </extensionElements>\r\n" +
-      "    </serviceTask>\r\n" +
-      "  </process>\r\n" +
-      "</definitions>\r\n";
+  protected static String process = """
+    <?xml version="1.0" encoding="UTF-8"?>
+    <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:operaton="http://operaton.org/schema/1.0/bpmn" targetNamespace="Examples">
+      <process id="Process_1" name="ServiceTask_Throw_BMPN_Error" isExecutable="true" operaton:historyTimeToLive="P180D">
+        <startEvent id="StartEvent_1">
+        </startEvent>
+        <sequenceFlow id="SequenceFlow_03wj6bv" sourceRef="StartEvent_1" targetRef="Task_1bkcm2v" />
+        <endEvent id="EndEvent_0joyvpc">
+        </endEvent>
+        <sequenceFlow id="SequenceFlow_0mt1p11" sourceRef="Task_1bkcm2v" targetRef="EndEvent_0joyvpc" />
+        <serviceTask id="Task_1bkcm2v" name="Throw BPMN Error" operaton:asyncBefore="true" operaton:expression="${true}">
+          <extensionElements>
+            <operaton:inputOutput>
+              <operaton:outputParameter name="output">
+                <operaton:script scriptFormat="Javascript">throw new org.operaton.bpm.engine.delegate.BpmnError("Test error thrown");</operaton:script>
+              </operaton:outputParameter>
+            </operaton:inputOutput>
+          </extensionElements>
+        </serviceTask>
+      </process>
+    </definitions>
+  """;
 
   @Deployment(name="clientDeployment")
   public static WebArchive clientDeployment() {

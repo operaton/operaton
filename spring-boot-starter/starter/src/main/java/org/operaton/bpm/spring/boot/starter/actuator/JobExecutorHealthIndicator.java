@@ -16,15 +16,14 @@
  */
 package org.operaton.bpm.spring.boot.starter.actuator;
 
-import static java.util.Objects.requireNonNull;
-
 import java.util.HashSet;
 import java.util.Set;
-
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 import org.springframework.boot.actuate.health.AbstractHealthIndicator;
 import org.springframework.boot.actuate.health.Health.Builder;
+
+import static java.util.Objects.requireNonNull;
 
 public class JobExecutorHealthIndicator extends AbstractHealthIndicator {
 
@@ -127,7 +126,7 @@ public class JobExecutorHealthIndicator extends AbstractHealthIndicator {
         return this;
       }
 
-      public DetailsBuilder processEngineNames(Set<? extends String> processEngineNames) {
+      public DetailsBuilder processEngineNames(Set<String> processEngineNames) {
         if (this.processEngineNames == null) {
           this.processEngineNames = new HashSet<>();
         }
@@ -135,7 +134,7 @@ public class JobExecutorHealthIndicator extends AbstractHealthIndicator {
         return this;
       }
 
-      public DetailsBuilder clearProcessEngineNames(Set<? extends String> processEngineNames) {
+      public DetailsBuilder clearProcessEngineNames(Set<String> processEngineNames) {
         if (this.processEngineNames != null) {
           this.processEngineNames.clear();
         }

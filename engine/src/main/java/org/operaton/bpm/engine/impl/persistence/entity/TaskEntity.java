@@ -16,6 +16,17 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.ProcessEngineServices;
@@ -68,12 +79,10 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.UserTask;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
+
 import static org.operaton.bpm.engine.delegate.TaskListener.EVENTNAME_DELETE;
 import static org.operaton.bpm.engine.impl.form.handler.DefaultFormHandler.FORM_REF_BINDING_VERSION;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
-import java.io.Serializable;
-import java.util.*;
 
 /**
  * @author Tom Baeyens
@@ -189,7 +198,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
    */
   public TaskEntity() {
     this.lifecycleState = TaskState.STATE_CREATED;
-    this.taskState = TaskState.STATE_CREATED.taskState;
+    this.taskState = TaskState.STATE_CREATED.name;
   }
 
   /**
@@ -198,14 +207,14 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   public TaskEntity(String id) {
     this(TaskState.STATE_INIT);
     this.id = id;
-    this.taskState = TaskState.STATE_INIT.taskState;
+    this.taskState = TaskState.STATE_INIT.name;
   }
 
   protected TaskEntity(TaskState initialState) {
     this.isIdentityLinksInitialized = true;
     this.setCreateTime(ClockUtil.getCurrentTime());
     this.lifecycleState = initialState;
-    this.taskState = this.lifecycleState.taskState;
+    this.taskState = this.lifecycleState.name;
   }
 
   /**
@@ -1168,7 +1177,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
 
   public boolean transitionTo(TaskState state) {
     this.lifecycleState = state;
-    this.taskState = this.lifecycleState.taskState;
+    this.taskState = this.lifecycleState.name;
 
     switch (state) {
     case STATE_CREATED:
@@ -1194,7 +1203,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     if (lifecycleState == TaskState.STATE_CREATED) {
       registerCommandContextCloseListener();
       setLastUpdated(ClockUtil.getCurrentTime());
-      setTaskState(TaskState.STATE_UPDATED.taskState);
+      setTaskState(TaskState.STATE_UPDATED.name);
       return fireEvent(TaskListener.EVENTNAME_UPDATE) && fireAssignmentEvent();
     }
     else {
@@ -1802,10 +1811,10 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     STATE_DELETED ("Deleted"),
     STATE_UPDATED ("Updated");
 
-    private String taskState;
+    private String name;
 
-    private TaskState(String taskState) {
-      this.taskState = taskState;
+    private TaskState(String name) {
+      this.name = name;
     }
   }
 

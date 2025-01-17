@@ -16,10 +16,12 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.List;
-
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.batch.BatchConfiguration;
@@ -33,11 +35,8 @@ import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.MigrationTestRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.batch.BatchMigrationHelper;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+
+import static org.junit.Assert.assertEquals;
 
 public class JobExecutorBatchTest {
 
@@ -129,7 +128,7 @@ public class JobExecutorBatchTest {
     Batch batch = helper.migrateProcessInstancesAsync(4);
     // ... and there are more mappings than ids (simulating an intermediate execution of a SeedJob
     // by an older version that only processes ids but does not update the mappings)
-    engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute((context) -> {
+    engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(context -> {
       BatchEntity batchEntity = context.getBatchManager().findBatchById(batch.getId());
       BatchJobHandler batchJobHandler = context.getProcessEngineConfiguration().getBatchHandlers()
           .get(batchEntity.getType());

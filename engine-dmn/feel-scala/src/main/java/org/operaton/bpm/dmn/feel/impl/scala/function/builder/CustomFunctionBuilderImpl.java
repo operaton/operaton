@@ -16,12 +16,11 @@
  */
 package org.operaton.bpm.dmn.feel.impl.scala.function.builder;
 
-import org.operaton.bpm.dmn.feel.impl.scala.ScalaFeelLogger;
-import org.operaton.bpm.dmn.feel.impl.scala.function.CustomFunction;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
+import org.operaton.bpm.dmn.feel.impl.scala.ScalaFeelLogger;
+import org.operaton.bpm.dmn.feel.impl.scala.function.CustomFunction;
 
 public class CustomFunctionBuilderImpl implements CustomFunctionBuilder {
 
@@ -51,7 +50,7 @@ public class CustomFunctionBuilderImpl implements CustomFunctionBuilder {
   @Override
   public CustomFunctionBuilder setReturnValue(Object returnValue) {
     functionCount++;
-    customFunction.setFunction((args) -> returnValue);
+    customFunction.setFunction(args -> returnValue);
     return this;
   }
 

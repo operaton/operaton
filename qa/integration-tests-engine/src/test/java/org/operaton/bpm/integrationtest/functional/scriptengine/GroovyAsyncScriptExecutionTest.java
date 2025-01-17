@@ -16,12 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.functional.scriptengine;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
-import org.operaton.bpm.integrationtest.util.DeploymentHelper;
-import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -29,28 +23,35 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+import org.operaton.bpm.integrationtest.util.DeploymentHelper;
+import org.operaton.bpm.integrationtest.util.TestContainer;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(Arquillian.class)
 public class GroovyAsyncScriptExecutionTest extends AbstractFoxPlatformIntegrationTest {
 
-  protected static String process =
-      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" +
-      "<definitions id=\"definitions\" \r\n" +
-      "  xmlns=\"http://www.omg.org/spec/BPMN/20100524/MODEL\"\r\n" +
-      "  xmlns:operaton=\"http://operaton.org/schema/1.0/bpmn\"\r\n" +
-      "  targetNamespace=\"Examples\">\r\n" +
-      "  <process id=\"process\" isExecutable=\"true\" operaton:historyTimeToLive=\"P180D\">\r\n" +
-      "    <startEvent id=\"theStart\" />\r\n" +
-      "    <sequenceFlow id=\"flow1\" sourceRef=\"theStart\" targetRef=\"theScriptTask\" />\r\n" +
-      "    <scriptTask id=\"theScriptTask\" name=\"Execute script\" scriptFormat=\"groovy\" operaton:asyncBefore=\"true\">\r\n" +
-      "      <script>execution.setVariable(\"foo\", S(\"&lt;bar /&gt;\").name())</script>\r\n" +
-      "    </scriptTask>\r\n" +
-      "    <sequenceFlow id=\"flow2\" sourceRef=\"theScriptTask\" targetRef=\"theTask\" />\r\n" +
-      "    <userTask id=\"theTask\" name=\"my task\" />\r\n" +
-      "    <sequenceFlow id=\"flow3\" sourceRef=\"theTask\" targetRef=\"theEnd\" />\r\n" +
-      "    <endEvent id=\"theEnd\" />\r\n" +
-      "  </process>\r\n" +
-      "</definitions>";
+  protected static String process = """
+    <?xml version="1.0" encoding="UTF-8"?>
+    <definitions id="definitions" 
+      xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+      xmlns:operaton="http://operaton.org/schema/1.0/bpmn"
+      targetNamespace="Examples">
+      <process id="process" isExecutable="true" operaton:historyTimeToLive="P180D">
+        <startEvent id="theStart" />
+        <sequenceFlow id="flow1" sourceRef="theStart" targetRef="theScriptTask" />
+        <scriptTask id="theScriptTask" name="Execute script" scriptFormat="groovy" operaton:asyncBefore="true">
+          <script>execution.setVariable("foo", S("&lt;bar /&gt;").name())</script>
+        </scriptTask>
+        <sequenceFlow id="flow2" sourceRef="theScriptTask" targetRef="theTask" />
+        <userTask id="theTask" name="my task" />
+        <sequenceFlow id="flow3" sourceRef="theTask" targetRef="theEnd" />
+        <endEvent id="theEnd" />
+      </process>
+    </definitions>
+  """;
 
   @Deployment(name="clientDeployment")
   public static WebArchive clientDeployment() {

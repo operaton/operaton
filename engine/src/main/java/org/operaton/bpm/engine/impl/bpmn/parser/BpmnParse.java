@@ -16,6 +16,19 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.parser;
 
+import java.io.InputStream;
+import java.net.URL;
+import java.text.CharacterIterator;
+import java.text.StringCharacterIterator;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import org.operaton.bpm.engine.ActivityTypes;
 import org.operaton.bpm.engine.BpmnParseException;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -25,7 +38,47 @@ import org.operaton.bpm.engine.delegate.VariableListener;
 import org.operaton.bpm.engine.impl.Condition;
 import org.operaton.bpm.engine.impl.HistoryTimeToLiveParser;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
-import org.operaton.bpm.engine.impl.bpmn.behavior.*;
+import org.operaton.bpm.engine.impl.bpmn.behavior.BoundaryConditionalEventActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.BoundaryEventActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.CallActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.CallableElementActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.CancelBoundaryEventActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.CancelEndEventActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.CaseCallActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.ClassDelegateActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.CompensationEventActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.DmnBusinessRuleTaskActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.ErrorEndEventActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.EventBasedGatewayActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.EventSubProcessActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.EventSubProcessStartConditionalEventActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.EventSubProcessStartEventActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.ExclusiveGatewayActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.ExternalTaskActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.InclusiveGatewayActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.IntermediateCatchEventActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.IntermediateCatchLinkEventActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.IntermediateConditionalEventBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.IntermediateThrowNoneEventActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.MailActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.ManualTaskActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.MultiInstanceActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.NoneEndEventActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.NoneStartEventActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.ParallelGatewayActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.ParallelMultiInstanceActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.ReceiveTaskActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.ScriptTaskActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.SequentialMultiInstanceActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.ServiceTaskDelegateExpressionActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.ServiceTaskExpressionActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.ShellActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.SubProcessActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.TaskActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.TerminateEndEventActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.ThrowEscalationEventActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.ThrowSignalEventActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.UserTaskActivityBehavior;
 import org.operaton.bpm.engine.impl.bpmn.helper.BpmnProperties;
 import org.operaton.bpm.engine.impl.bpmn.listener.ClassDelegateExecutionListener;
 import org.operaton.bpm.engine.impl.bpmn.listener.DelegateExpressionExecutionListener;
@@ -42,16 +95,45 @@ import org.operaton.bpm.engine.impl.core.variable.mapping.value.ConstantValuePro
 import org.operaton.bpm.engine.impl.core.variable.mapping.value.NullValueProvider;
 import org.operaton.bpm.engine.impl.core.variable.mapping.value.ParameterValueProvider;
 import org.operaton.bpm.engine.impl.dmn.result.DecisionResultMapper;
-import org.operaton.bpm.engine.impl.el.*;
+import org.operaton.bpm.engine.impl.el.ElValueProvider;
+import org.operaton.bpm.engine.impl.el.Expression;
+import org.operaton.bpm.engine.impl.el.ExpressionManager;
+import org.operaton.bpm.engine.impl.el.FixedValue;
+import org.operaton.bpm.engine.impl.el.UelExpressionCondition;
 import org.operaton.bpm.engine.impl.event.EventType;
 import org.operaton.bpm.engine.impl.form.FormDefinition;
-import org.operaton.bpm.engine.impl.form.handler.*;
-import org.operaton.bpm.engine.impl.jobexecutor.*;
+import org.operaton.bpm.engine.impl.form.handler.DefaultStartFormHandler;
+import org.operaton.bpm.engine.impl.form.handler.DefaultTaskFormHandler;
+import org.operaton.bpm.engine.impl.form.handler.DelegateStartFormHandler;
+import org.operaton.bpm.engine.impl.form.handler.DelegateTaskFormHandler;
+import org.operaton.bpm.engine.impl.form.handler.StartFormHandler;
+import org.operaton.bpm.engine.impl.form.handler.TaskFormHandler;
+import org.operaton.bpm.engine.impl.jobexecutor.AsyncAfterMessageJobDeclaration;
+import org.operaton.bpm.engine.impl.jobexecutor.AsyncBeforeMessageJobDeclaration;
+import org.operaton.bpm.engine.impl.jobexecutor.EventSubscriptionJobDeclaration;
+import org.operaton.bpm.engine.impl.jobexecutor.JobDeclaration;
+import org.operaton.bpm.engine.impl.jobexecutor.MessageJobDeclaration;
+import org.operaton.bpm.engine.impl.jobexecutor.TimerCatchIntermediateEventJobHandler;
+import org.operaton.bpm.engine.impl.jobexecutor.TimerDeclarationImpl;
+import org.operaton.bpm.engine.impl.jobexecutor.TimerDeclarationType;
+import org.operaton.bpm.engine.impl.jobexecutor.TimerEventJobHandler;
+import org.operaton.bpm.engine.impl.jobexecutor.TimerExecuteNestedActivityJobHandler;
+import org.operaton.bpm.engine.impl.jobexecutor.TimerStartEventJobHandler;
+import org.operaton.bpm.engine.impl.jobexecutor.TimerStartEventSubprocessJobHandler;
+import org.operaton.bpm.engine.impl.jobexecutor.TimerTaskListenerJobHandler;
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.pvm.PvmTransition;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityBehavior;
-import org.operaton.bpm.engine.impl.pvm.process.*;
+import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
+import org.operaton.bpm.engine.impl.pvm.process.ActivityStartBehavior;
+import org.operaton.bpm.engine.impl.pvm.process.HasDIBounds;
+import org.operaton.bpm.engine.impl.pvm.process.Lane;
+import org.operaton.bpm.engine.impl.pvm.process.LaneSet;
+import org.operaton.bpm.engine.impl.pvm.process.ParticipantProcess;
+import org.operaton.bpm.engine.impl.pvm.process.ProcessDefinitionImpl;
+import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
+import org.operaton.bpm.engine.impl.pvm.process.TransitionImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.LegacyBehavior;
 import org.operaton.bpm.engine.impl.scripting.ExecutableScript;
 import org.operaton.bpm.engine.impl.scripting.ScriptCondition;
@@ -71,6 +153,7 @@ import org.operaton.bpm.engine.impl.util.xml.Namespace;
 import org.operaton.bpm.engine.impl.util.xml.Parse;
 import org.operaton.bpm.engine.impl.variable.VariableDeclaration;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
+
 import static org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseUtil.findOperatonExtensionElement;
 import static org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseUtil.parseInputOutput;
 import static org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseUtil.parseOperatonExtensionProperties;
@@ -79,12 +162,6 @@ import static org.operaton.bpm.engine.impl.form.handler.DefaultFormHandler.ALLOW
 import static org.operaton.bpm.engine.impl.form.handler.DefaultFormHandler.FORM_REF_BINDING_VERSION;
 import static org.operaton.bpm.engine.impl.persistence.entity.AcquirableJobEntity.DEFAULT_EXCLUSIVE;
 import static org.operaton.bpm.engine.impl.util.ClassDelegateUtil.instantiateDelegate;
-
-import java.io.InputStream;
-import java.net.URL;
-import java.text.CharacterIterator;
-import java.text.StringCharacterIterator;
-import java.util.*;
 
 /**
  * Specific parsing of one BPMN 2.0 XML file, created by the {@link BpmnParser}.
@@ -1397,7 +1474,7 @@ public class BpmnParse extends Parse {
       }
     } else {
       String defaultSequenceFlow = (String) activity.getProperty("default");
-      boolean hasDefaultFlow = defaultSequenceFlow != null && defaultSequenceFlow.length() > 0;
+      boolean hasDefaultFlow = defaultSequenceFlow != null && !defaultSequenceFlow.isEmpty();
 
       ArrayList<PvmTransition> flowsWithoutCondition = new ArrayList<>();
       for (PvmTransition flow : activity.getOutgoingTransitions()) {
@@ -2199,7 +2276,7 @@ public class BpmnParse extends Parse {
       } else {
         addError("Invalid usage of type attribute on " + elementName + ": '" + type + "'", serviceTaskElement);
       }
-    } else if (className != null && className.trim().length() > 0) {
+    } else if (className != null && !className.trim().isEmpty()) {
       if (resultVariableName != null) {
         addError("'resultVariableName' not supported for " + elementName + " elements using 'class'", serviceTaskElement);
       }
@@ -2212,7 +2289,7 @@ public class BpmnParse extends Parse {
       activity.setActivityBehavior(new ServiceTaskDelegateExpressionActivityBehavior(expressionManager.createExpression(delegateExpression),
           parseFieldDeclarations(serviceTaskElement)));
 
-    } else if (expression != null && expression.trim().length() > 0) {
+    } else if (expression != null && !expression.trim().isEmpty()) {
       activity.setActivityBehavior(new ServiceTaskExpressionActivityBehavior(expressionManager.createExpression(expression), resultVariableName));
 
     }
@@ -2582,7 +2659,7 @@ public class BpmnParse extends Parse {
   protected FieldDeclaration parseExpressionFieldDeclaration(Element fieldDeclarationElement, Element serviceTaskElement, String fieldName) {
     try {
       String expression = getStringValueFromAttributeOrElement(PROPERTYNAME_EXPRESSION, PROPERTYNAME_EXPRESSION, fieldDeclarationElement, serviceTaskElement.attribute("id"));
-      if (expression != null && expression.trim().length() > 0) {
+      if (expression != null && !expression.trim().isEmpty()) {
         return new FieldDeclaration(fieldName, Expression.class.getName(), expressionManager.createExpression(expression));
       }
     } catch (ProcessEngineException ae) {
@@ -2606,13 +2683,13 @@ public class BpmnParse extends Parse {
       addError("Can't use attribute '" + attributeName + "' and element '" + elementName + "' together, only use one", element, ancestorElementId);
     } else if (childElement != null) {
       stringElementText = childElement.getText();
-      if (stringElementText == null || stringElementText.length() == 0) {
+      if (stringElementText == null || stringElementText.isEmpty()) {
         addError("No valid value found in attribute '" + attributeName + "' nor element '" + elementName + "'", element, ancestorElementId);
       } else {
         // Use text of element
         value = stringElementText;
       }
-    } else if (attributeValue != null && attributeValue.length() > 0) {
+    } else if (attributeValue != null && !attributeValue.isEmpty()) {
       // Using attribute
       value = attributeValue;
     }
@@ -3946,7 +4023,7 @@ public class BpmnParse extends Parse {
     ParameterValueProvider tenantIdValueProvider = null;
 
     String tenantId = callingActivityElement.attributeNS(OPERATON_BPMN_EXTENSIONS_NS, attrName);
-    if (tenantId != null && tenantId.length() > 0) {
+    if (tenantId != null && !tenantId.isEmpty()) {
       tenantIdValueProvider = createParameterValueProvider(tenantId, expressionManager);
     }
 
@@ -4366,7 +4443,7 @@ public class BpmnParse extends Parse {
    * added.
    */
   protected boolean isValidEventNameForScope(String eventName, Element listenerElement, String ancestorElementId) {
-    if (eventName != null && eventName.trim().length() > 0) {
+    if (eventName != null && !eventName.trim().isEmpty()) {
       if ("start".equals(eventName) || "end".equals(eventName)) {
         return true;
       } else {

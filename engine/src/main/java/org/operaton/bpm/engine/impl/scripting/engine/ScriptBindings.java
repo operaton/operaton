@@ -23,10 +23,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import javax.script.Bindings;
 import javax.script.ScriptEngine;
-
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -161,7 +159,7 @@ public class ScriptBindings implements Bindings {
 
   @Override
   public void putAll(Map< ? extends String, ? extends Object> toMerge) {
-    for (java.util.Map.Entry<? extends String, ? extends Object> entry : toMerge.entrySet()) {
+    for (var entry : toMerge.entrySet()) {
       put(entry.getKey(), entry.getValue());
     }
   }

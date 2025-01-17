@@ -32,7 +32,7 @@ public class AcquiredJobs {
   protected int numberOfJobsAttemptedToAcquire;
 
   protected List<List<String>> acquiredJobBatches = new ArrayList<>();
-  protected Set<String> acquiredJobs = new HashSet<>();
+  protected Set<String> acquiredJobIds = new HashSet<>();
 
   protected int numberOfJobsFailedToLock = 0;
 
@@ -47,7 +47,7 @@ public class AcquiredJobs {
   public void addJobIdBatch(List<String> jobIds) {
     if (!jobIds.isEmpty()) {
       acquiredJobBatches.add(jobIds);
-      acquiredJobs.addAll(jobIds);
+      acquiredJobIds.addAll(jobIds);
     }
   }
 
@@ -59,17 +59,17 @@ public class AcquiredJobs {
   }
 
   public boolean contains(String jobId) {
-    return acquiredJobs.contains(jobId);
+    return acquiredJobIds.contains(jobId);
   }
 
   public int size() {
-    return acquiredJobs.size();
+    return acquiredJobIds.size();
   }
 
   public void removeJobId(String id) {
     numberOfJobsFailedToLock++;
 
-    acquiredJobs.remove(id);
+    acquiredJobIds.remove(id);
 
     Iterator<List<String>> batchIterator = acquiredJobBatches.iterator();
     while (batchIterator.hasNext()) {

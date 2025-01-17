@@ -236,7 +236,7 @@ public class CronExpression implements Serializable, Cloneable {
         dayMap.put("SAT", 7);
     }
 
-    private String cronExpression = null;
+    private String cronExpressionValue = null;
     private TimeZone timeZone = null;
     protected transient TreeSet<Integer> seconds;
     protected transient TreeSet<Integer> minutes;
@@ -259,20 +259,20 @@ public class CronExpression implements Serializable, Cloneable {
      * Constructs a new <CODE>CronExpression</CODE> based on the specified
      * parameter.
      *
-     * @param cronExpression String representation of the cron expression the
+     * @param cronExpressionValue String representation of the cron expression the
      *                       new object should represent
      * @throws java.text.ParseException
      *         if the string expression cannot be parsed into a valid
      *         <CODE>CronExpression</CODE>
      */
-    public CronExpression(String cronExpression) throws ParseException {
-        if (cronExpression == null) {
+    public CronExpression(String cronExpressionValue) throws ParseException {
+        if (cronExpressionValue == null) {
             throw new IllegalArgumentException("cronExpression cannot be null");
         }
 
-        this.cronExpression = cronExpression.toUpperCase(Locale.US);
+        this.cronExpressionValue = cronExpressionValue.toUpperCase(Locale.US);
 
-        buildExpression(this.cronExpression);
+        buildExpression(this.cronExpressionValue);
     }
 
 
@@ -295,7 +295,7 @@ public class CronExpression implements Serializable, Cloneable {
      * @return a string representation of the <CODE>CronExpression</CODE>
      */
     public String toString() {
-        return cronExpression;
+        return cronExpressionValue;
     }
 
 

@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-24.04
     outputs:
       version: ${{ github.event.release.tag_name || steps.version.outputs.version }}
-      snapshot: ${{ github.event.release.tag_name == 'early_access' || github.event.inputs.tag_name == 'early_access' }}
+      snapshot: ${{ github.event.release.tag_name == 'early-access' || github.event.inputs.tag_name == 'early-access' }}
     steps:
       - name: Checkout Code
         if: github.event_name == 'workflow_dispatch'
@@ -33,6 +33,7 @@ jobs:
         shell: bash
         run: |
           RELEASE_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout | tail -n 1 | sed -e 's/-SNAPSHOT//')
+          echo "version=$RELEASE_VERSION" >> $GITHUB_OUTPUT
 
   docker:
     name: Notify Docker Repository for Image Creation
@@ -46,7 +47,7 @@ jobs:
             -H "Authorization: Bearer ${{ secrets.DOCKER_ACTION_DISPATCH_TOKEN }}" \
             -H "Accept: application/vnd.github.v3+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            -d '{"ref":"${{ needs.prepare.outputs.version }}","inputs":{"version": "${{ needs.prepare.outputs.version }}","snapshot": "${{needs.prepare.outputs.snapshot }}"}' \
+            -d '{"ref":"main","inputs":{"version": "${{ needs.prepare.outputs.version}}","snapshot": "${{needs.prepare.outputs.snapshot }}"}}' \
             https://api.github.com/repos/operaton/operaton-docker/actions/workflows/build-test-and-publish.yml/dispatches)
           if [ "$response" -ne 204 ]; then
             echo "Failed to notify Docker repository. HTTP response code: $response"

@@ -38,11 +38,12 @@ jobs:
     runs-on: ubuntu-24.04
     needs:
       - prepare
-    run: |
-      curl -X POST \
-        -H "Authorization: Bearer ${{ secrets.DOCKER_ACTION_DISPATCH_TOKEN }}" \
-        -H "Accept: application/vnd.github.v3+json" \
-        -H "X-GitHub-Api-Version: 2022-11-28" \
-        -d '{"event_type": "release_published", "client_payload": {"version": "${{ needs.prepare.outputs.version }}","snapshot":"${{ needs.prepare.outputs.snapshot }}"}}' \
-        https://api.github.com/repos/operaton/operaton-docker/dispatches
-      
+    steps:
+      - name: Notify Docker Repository
+      - run: |
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.DOCKER_ACTION_DISPATCH_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            -d '{"event_type": "release_published", "client_payload": {"version": "${{ needs.prepare.outputs.version }}","snapshot":"${{ needs.prepare.outputs.snapshot }}"}}' \
+            https://api.github.com/repos/operaton/operaton-docker/dispatches

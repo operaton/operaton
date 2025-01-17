@@ -16,12 +16,36 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import org.operaton.bpm.engine.*;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.CaseService;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.impl.ProcessInstanceQueryImpl;
 import org.operaton.bpm.engine.impl.util.ImmutablePair;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
-import org.operaton.bpm.engine.runtime.*;
+import org.operaton.bpm.engine.runtime.Execution;
+import org.operaton.bpm.engine.runtime.Incident;
+import org.operaton.bpm.engine.runtime.Job;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
@@ -31,19 +55,6 @@ import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.processInstanceByBusinessKey;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.processInstanceByProcessDefinitionId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.processInstanceByProcessInstanceId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
-
-import java.text.SimpleDateFormat;
-import java.util.*;
-
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
@@ -51,6 +62,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.processInstanceByBusinessKey;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.processInstanceByProcessDefinitionId;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.processInstanceByProcessInstanceId;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
 
 /**
  * @author Joram Barrez
@@ -140,7 +155,7 @@ public class ProcessInstanceQueryTest {
         .toList()
         .toArray(new ImmutablePair[0]);
     // when
-    List<ImmutablePair<String, String>> mappings = engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute((c) -> {
+    List<ImmutablePair<String, String>> mappings = engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(c -> {
       ProcessInstanceQuery query = c.getProcessEngineConfiguration().getRuntimeService().createProcessInstanceQuery();
       return ((ProcessInstanceQueryImpl) query).listDeploymentIdMappings();
     });
@@ -166,7 +181,7 @@ public class ProcessInstanceQueryTest {
         runtimeService.startProcessInstanceByKey(PROCESS_DEFINITION_KEY).getId());
     expectedMappings.add(newMapping);
     // when
-    List<ImmutablePair<String, String>> mappings = engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute((c) -> {
+    List<ImmutablePair<String, String>> mappings = engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(c -> {
       ProcessInstanceQuery query = c.getProcessEngineConfiguration().getRuntimeService().createProcessInstanceQuery();
       return ((ProcessInstanceQueryImpl) query).listDeploymentIdMappings();
     });
@@ -221,7 +236,7 @@ public class ProcessInstanceQueryTest {
   public void testQueryByProcessDefinitionKeyDeploymentIdMappings() {
     // given
     String deploymentId = repositoryService.createDeploymentQuery().singleResult().getId();
-    List<String> relevantIds = engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute((c) -> {
+    List<String> relevantIds = engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(c -> {
       ProcessInstanceQuery query = c.getProcessEngineConfiguration().getRuntimeService().createProcessInstanceQuery()
           .processDefinitionKey(PROCESS_DEFINITION_KEY);
       return ((ProcessInstanceQueryImpl) query).listIds();
@@ -230,7 +245,7 @@ public class ProcessInstanceQueryTest {
         .map(id -> new ImmutablePair<>(deploymentId, id))
         .toList();
     // when
-    List<ImmutablePair<String, String>> mappings = engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute((c) -> {
+    List<ImmutablePair<String, String>> mappings = engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(c -> {
       ProcessInstanceQuery query = c.getProcessEngineConfiguration().getRuntimeService().createProcessInstanceQuery()
           .processDefinitionKey(PROCESS_DEFINITION_KEY);
       return ((ProcessInstanceQueryImpl)query).listDeploymentIdMappings();

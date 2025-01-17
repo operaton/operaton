@@ -88,7 +88,7 @@ public interface SynchronousOperationLogProducer<T> {
       Map<T, List<PropertyChange>> propChangesForOperation = getPropChangesForOperation(results);
       if(propChangesForOperation == null ) {
         // create a map with empty result lists for each result item
-        propChangesForOperation = results.stream().collect(Collectors.toMap(Function.identity(), (result) -> Collections.singletonList(PropertyChange.EMPTY_CHANGE)));
+        propChangesForOperation = results.stream().collect(Collectors.toMap(Function.identity(), result -> Collections.singletonList(PropertyChange.EMPTY_CHANGE)));
       }
       if (logEntriesPerSyncOperationLimit != UNLIMITED_LOG && logEntriesPerSyncOperationLimit < propChangesForOperation.size()) {
         throw new ProcessEngineException(

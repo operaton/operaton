@@ -17,7 +17,19 @@
 package org.operaton.bpm.qa.largedata.util;
 
 import com.google.common.collect.Lists;
-import org.operaton.bpm.engine.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.function.Consumer;
+import java.util.stream.IntStream;
+import org.operaton.bpm.engine.DecisionService;
+import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -29,10 +41,6 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.dmn.DmnModelInstance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.*;
-import java.util.function.Consumer;
-import java.util.stream.IntStream;
 
 import static org.operaton.bpm.qa.largedata.util.DmnHelper.createSimpleDmnModel;
 
@@ -89,7 +97,7 @@ public class EngineDataGenerator {
     final List<Integer> sequenceNumberList = createSequenceNumberList();
     generateInBatches(
       sequenceNumberList,
-      (ignored) -> evaluateDecision()
+      ignored -> evaluateDecision()
     );
     logger.info("Successfully generated decision instance data.");
   }
@@ -106,7 +114,7 @@ public class EngineDataGenerator {
     final List<Integer> sequenceNumberList = createSequenceNumberList();
     generateInBatches(
       sequenceNumberList,
-      (ignored) -> startAutoCompleteProcess()
+      ignored -> startAutoCompleteProcess()
     );
     logger.info("Successfully generated completed process instance data...");
   }
@@ -120,7 +128,7 @@ public class EngineDataGenerator {
     final List<Integer> sequenceNumberList = createSequenceNumberList();
     generateInBatches(
         sequenceNumberList,
-        (ignored) -> startAsyncTaskProcess()
+        ignored -> startAsyncTaskProcess()
     );
     logger.info("Successfully generated async task process instance data...");
   }
@@ -135,7 +143,7 @@ public class EngineDataGenerator {
     final List<Integer> sequenceNumberList = createSequenceNumberList();
     generateInBatches(
       sequenceNumberList,
-      (ignored) -> startUserTaskProcess()
+      ignored -> startUserTaskProcess()
     );
     createUser();
     createGroup();
@@ -183,7 +191,7 @@ public class EngineDataGenerator {
     identityService.setAuthenticatedUserId(getUserId());
     generateInBatches(
       list,
-      (task) -> {
+      task -> {
         taskService.addCandidateUser(task.getId(), getUserId());
         taskService.addCandidateGroup(task.getId(), getGroupId());
       }
@@ -194,7 +202,7 @@ public class EngineDataGenerator {
     List<Task> list = taskService.createTaskQuery().list();
     generateInBatches(
       list,
-      (task) -> {
+      task -> {
         taskService.claim(task.getId(), getUserId());
         taskService.complete(task.getId());
       }

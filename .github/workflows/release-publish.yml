@@ -16,10 +16,11 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  outputs:
-    version: ${{ github.event.release.tag_name || steps.version.outputs.version }}
-    snapshot: ${{ github.event.release.tag_name == 'early_access' || github.event.inputs.tag_name == 'early_access' }}
   prepare:
+    runs-on: ubuntu-24.04
+    outputs:
+      version: ${{ github.event.release.tag_name || steps.version.outputs.version }}
+      snapshot: ${{ github.event.release.tag_name == 'early_access' || github.event.inputs.tag_name == 'early_access' }}
     steps:
       - name: Checkout Code
         if: github.event_name == 'workflow_dispatch'

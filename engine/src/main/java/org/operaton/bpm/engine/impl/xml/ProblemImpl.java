@@ -50,7 +50,7 @@ public class ProblemImpl implements Problem {
     this(errorMessage, element);
     this.mainElementId = elementIds[0];
     for (String elementId : elementIds) {
-      if(elementId != null && elementId.length() > 0) {
+      if(elementId != null && !elementId.isEmpty()) {
         this.elementIds.add(elementId);
       }
     }
@@ -64,7 +64,7 @@ public class ProblemImpl implements Problem {
   public ProblemImpl(BpmnParseException exception, String elementId) {
     this(exception);
     this.mainElementId = elementId;
-    if(elementId != null && elementId.length() > 0) {
+    if(elementId != null && !elementId.isEmpty()) {
       this.elementIds.add(elementId);
     }
   }
@@ -85,7 +85,7 @@ public class ProblemImpl implements Problem {
       this.line = element.getLine();
       this.column = element.getColumn();
       String id = element.attribute("id");
-      if (id != null && id.length() > 0) {
+      if (id != null && !id.isEmpty()) {
         this.mainElementId = id;
         this.elementIds.add(id);
       }

@@ -16,29 +16,18 @@
  */
 package org.operaton.bpm.identity.impl.ldap;
 
-import static org.operaton.bpm.engine.authorization.Permissions.READ;
-import static org.operaton.bpm.engine.authorization.Resources.GROUP;
-import static org.operaton.bpm.engine.authorization.Resources.USER;
-import static org.operaton.bpm.engine.impl.context.Context.getCommandContext;
-import static org.operaton.bpm.engine.impl.context.Context.getProcessEngineConfiguration;
-import static org.operaton.bpm.identity.impl.ldap.LdapConfiguration.DB_QUERY_WILDCARD;
-import static org.operaton.bpm.identity.impl.ldap.LdapConfiguration.LDAP_QUERY_WILDCARD;
-
 import java.io.StringWriter;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
-
 import javax.naming.NamingEnumeration;
 import javax.naming.directory.Attributes;
 import javax.naming.directory.SearchResult;
 import javax.naming.ldap.Control;
 import javax.naming.ldap.LdapContext;
-import javax.naming.ldap.SortKey;
 import javax.naming.ldap.PagedResultsResponseControl;
-
+import javax.naming.ldap.SortKey;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.authorization.Resource;
 import org.operaton.bpm.engine.identity.Group;
@@ -49,18 +38,26 @@ import org.operaton.bpm.engine.identity.TenantQuery;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.identity.UserQuery;
 import org.operaton.bpm.engine.impl.AbstractQuery;
+import org.operaton.bpm.engine.impl.Direction;
+import org.operaton.bpm.engine.impl.GroupQueryProperty;
 import org.operaton.bpm.engine.impl.QueryOrderingProperty;
 import org.operaton.bpm.engine.impl.UserQueryImpl;
 import org.operaton.bpm.engine.impl.UserQueryProperty;
-import org.operaton.bpm.engine.impl.GroupQueryProperty;
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.identity.IdentityProviderException;
 import org.operaton.bpm.engine.impl.identity.ReadOnlyIdentityProvider;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.GroupEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.UserEntity;
-import org.operaton.bpm.engine.impl.Direction;
 import org.operaton.bpm.identity.impl.ldap.util.LdapPluginLogger;
+
+import static org.operaton.bpm.engine.authorization.Permissions.READ;
+import static org.operaton.bpm.engine.authorization.Resources.GROUP;
+import static org.operaton.bpm.engine.authorization.Resources.USER;
+import static org.operaton.bpm.engine.impl.context.Context.getCommandContext;
+import static org.operaton.bpm.engine.impl.context.Context.getProcessEngineConfiguration;
+import static org.operaton.bpm.identity.impl.ldap.LdapConfiguration.DB_QUERY_WILDCARD;
+import static org.operaton.bpm.identity.impl.ldap.LdapConfiguration.LDAP_QUERY_WILDCARD;
 
 /**
  * <p>LDAP {@link ReadOnlyIdentityProvider}.</p>
@@ -547,7 +544,7 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
     StringWriter resultDn = new StringWriter();
     for (String s : parts) {
       String part = s;
-      if (part == null || part.length() == 0) {
+      if (part == null || part.isEmpty()) {
         continue;
       }
       if (part.endsWith(",")) {
@@ -557,7 +554,7 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
         part = part.substring(1);
       }
       String currentDn = resultDn.toString();
-      if (!currentDn.endsWith(",") && currentDn.length() > 0) {
+      if (!currentDn.endsWith(",") && !currentDn.isEmpty()) {
         resultDn.write(",");
       }
       resultDn.write(part);

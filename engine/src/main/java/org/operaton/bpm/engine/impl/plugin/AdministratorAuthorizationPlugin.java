@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.plugin;
 
-import static org.operaton.bpm.engine.authorization.Authorization.ANY;
-import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
-import static org.operaton.bpm.engine.authorization.Permissions.ALL;
-
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.authorization.Resource;
@@ -28,6 +24,10 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.AbstractProcessEnginePlugin;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity;
+
+import static org.operaton.bpm.engine.authorization.Authorization.ANY;
+import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
+import static org.operaton.bpm.engine.authorization.Permissions.ALL;
 
 /**
  * @author Daniel Meyer
@@ -56,10 +56,10 @@ public class AdministratorAuthorizationPlugin extends AbstractProcessEnginePlugi
   @Override
   public void postInit(ProcessEngineConfigurationImpl processEngineConfiguration) {
     authorizationEnabled = processEngineConfiguration.isAuthorizationEnabled();
-    if (administratorGroupName != null && administratorGroupName.length() > 0) {
+    if (administratorGroupName != null && !administratorGroupName.isEmpty()) {
       processEngineConfiguration.getAdminGroups().add(administratorGroupName);
     }
-    if (administratorUserName != null && administratorUserName.length() > 0) {
+    if (administratorUserName != null && !administratorUserName.isEmpty()) {
       processEngineConfiguration.getAdminUsers().add(administratorUserName);
     }
   }
@@ -72,7 +72,7 @@ public class AdministratorAuthorizationPlugin extends AbstractProcessEnginePlugi
 
     final AuthorizationService authorizationService = processEngine.getAuthorizationService();
 
-    if(administratorGroupName != null && administratorGroupName.length()>0) {
+    if(administratorGroupName != null && !administratorGroupName.isEmpty()) {
       // create ADMIN authorizations on all built-in resources for configured group
       for (Resource resource : Resources.values()) {
         if(authorizationService.createAuthorizationQuery().groupIdIn(administratorGroupName).resourceType(resource).resourceId(ANY).count() == 0) {
@@ -88,7 +88,7 @@ public class AdministratorAuthorizationPlugin extends AbstractProcessEnginePlugi
       }
     }
 
-    if(administratorUserName != null && administratorUserName.length()>0) {
+    if(administratorUserName != null && !administratorUserName.isEmpty()) {
       // create ADMIN authorizations on all built-in resources for configured user
       for (Resource resource : Resources.values()) {
         if(authorizationService.createAuthorizationQuery().userIdIn(administratorUserName).resourceType(resource).resourceId(ANY).count() == 0) {

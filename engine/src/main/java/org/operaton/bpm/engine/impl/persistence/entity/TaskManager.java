@@ -16,12 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.TaskQueryImpl;
@@ -31,6 +28,8 @@ import org.operaton.bpm.engine.impl.db.ListQueryParameterObject;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 import org.operaton.bpm.engine.task.Task;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 
 /**
@@ -50,7 +49,7 @@ public class TaskManager extends AbstractManager {
       .processInstanceId(processInstanceId)
       .list();
 
-    String reason = (deleteReason == null || deleteReason.length() == 0) ? TaskEntity.DELETE_REASON_DELETED : deleteReason;
+    String reason = (deleteReason == null || deleteReason.isEmpty()) ? TaskEntity.DELETE_REASON_DELETED : deleteReason;
 
     for (TaskEntity task: tasks) {
       task.delete(reason, cascade, skipCustomListeners);
@@ -64,7 +63,7 @@ public class TaskManager extends AbstractManager {
         .caseInstanceId(caseInstanceId)
         .list();
 
-      String reason = (deleteReason == null || deleteReason.length() == 0) ? TaskEntity.DELETE_REASON_DELETED : deleteReason;
+      String reason = (deleteReason == null || deleteReason.isEmpty()) ? TaskEntity.DELETE_REASON_DELETED : deleteReason;
 
       for (TaskEntity task: tasks) {
         task.delete(reason, cascade, false);

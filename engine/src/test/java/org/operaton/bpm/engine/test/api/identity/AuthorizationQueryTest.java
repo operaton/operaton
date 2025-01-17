@@ -16,19 +16,18 @@
  */
 package org.operaton.bpm.engine.test.api.identity;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
 import java.util.List;
-
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.authorization.Authorization;
-import org.operaton.bpm.engine.authorization.Permission;
-import org.operaton.bpm.engine.authorization.Resource;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.operaton.bpm.engine.authorization.Authorization;
+import org.operaton.bpm.engine.authorization.AuthorizationQuery;
+import org.operaton.bpm.engine.authorization.Permission;
+import org.operaton.bpm.engine.authorization.Resource;
+import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Daniel Meyer
@@ -226,52 +225,45 @@ public class AuthorizationQueryTest extends PluggableProcessEngineTest {
 
   @Test
   public void testInvalidOrderByQueries() {
-    try {
-      authorizationService.createAuthorizationQuery().orderByResourceType().list();
-      fail("Exception expected");
-    } catch(ProcessEngineException e) {
-      testRule.assertTextPresent("Invalid query: call asc() or desc() after using orderByXX()", e.getMessage());
-    }
+    // given
+    var authorizationQuery = authorizationService.createAuthorizationQuery();
+    var query1 = authorizationQuery.orderByResourceType();
+    // when
+    assertThatThrownBy(query1::list)
+    // then
+      .hasMessageContaining("Invalid query: call asc() or desc() after using orderByXX()");
 
-    try {
-      authorizationService.createAuthorizationQuery().orderByResourceId().list();
-      fail("Exception expected");
-    } catch(ProcessEngineException e) {
-      testRule.assertTextPresent("Invalid query: call asc() or desc() after using orderByXX()", e.getMessage());
-    }
+    // given
+    AuthorizationQuery query2 = authorizationQuery.orderByResourceId();
+    // when
+    assertThatThrownBy(query2::list)
+    // then
+      .hasMessageContaining("Invalid query: call asc() or desc() after using orderByXX()");
 
-    try {
-      authorizationService.createAuthorizationQuery().orderByResourceId().orderByResourceType().list();
-      fail("Exception expected");
-    } catch(ProcessEngineException e) {
-      testRule.assertTextPresent("Invalid query: call asc() or desc() after using orderByXX()", e.getMessage());
-    }
+    // given
+    AuthorizationQuery query3 = query2.orderByResourceId().orderByResourceType();
+    // when
+    assertThatThrownBy(query3::list)
+    // then
+      .hasMessageContaining("Invalid query: call asc() or desc() after using orderByXX()");
 
-    try {
-      authorizationService.createAuthorizationQuery().orderByResourceType().orderByResourceId().list();
-      fail("Exception expected");
-    } catch(ProcessEngineException e) {
-      testRule.assertTextPresent("Invalid query: call asc() or desc() after using orderByXX()", e.getMessage());
-    }
+    // given
+    AuthorizationQuery query4 = query2.orderByResourceType().orderByResourceId();
+    // when
+    assertThatThrownBy(query4::list)
+        // then
+        .hasMessageContaining("Invalid query: call asc() or desc() after using orderByXX()");
   }
 
   @Test
   public void testInvalidQueries() {
+    AuthorizationQuery query1 = authorizationService.createAuthorizationQuery().groupIdIn("a").userIdIn("b");
+    assertThatThrownBy(query1::count)
+      .hasMessageContaining("Cannot query for user and group authorizations at the same time.");
 
-    // cannot query for user id and group id at the same time
-
-    try {
-      authorizationService.createAuthorizationQuery().groupIdIn("a").userIdIn("b").count();
-    } catch(ProcessEngineException e) {
-      testRule.assertTextPresent("Cannot query for user and group authorizations at the same time.", e.getMessage());
-    }
-
-    try {
-      authorizationService.createAuthorizationQuery().userIdIn("b").groupIdIn("a").count();
-    } catch(ProcessEngineException e) {
-      testRule.assertTextPresent("Cannot query for user and group authorizations at the same time.", e.getMessage());
-    }
-
+    AuthorizationQuery query2 = authorizationService.createAuthorizationQuery().userIdIn("b").groupIdIn("a");
+    assertThatThrownBy(query2::count)
+      .hasMessageContaining("Cannot query for user and group authorizations at the same time.");
   }
 
   class NonExistingResource implements Resource {

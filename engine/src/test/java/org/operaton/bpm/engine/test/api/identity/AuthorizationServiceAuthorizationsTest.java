@@ -16,21 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.identity;
 
-import static org.operaton.bpm.engine.authorization.Authorization.ANY;
-import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GLOBAL;
-import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
-import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_REVOKE;
-import static org.operaton.bpm.engine.authorization.Permissions.ALL;
-import static org.operaton.bpm.engine.authorization.Permissions.CREATE;
-import static org.operaton.bpm.engine.authorization.Permissions.DELETE;
-import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
-import static org.operaton.bpm.engine.authorization.Resources.AUTHORIZATION;
-import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestUtil.assertExceptionInfo;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
+import org.junit.After;
+import org.junit.Test;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.BadUserRequestException;
@@ -44,8 +31,24 @@ import org.operaton.bpm.engine.authorization.Resource;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.After;
-import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.InstanceOfAssertFactories.type;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.operaton.bpm.engine.authorization.Authorization.ANY;
+import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GLOBAL;
+import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
+import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_REVOKE;
+import static org.operaton.bpm.engine.authorization.Permissions.ALL;
+import static org.operaton.bpm.engine.authorization.Permissions.CREATE;
+import static org.operaton.bpm.engine.authorization.Permissions.DELETE;
+import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
+import static org.operaton.bpm.engine.authorization.Resources.AUTHORIZATION;
+import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestUtil.assertExceptionInfo;
 
 /**
  * <p>Ensures authorizations are properly
@@ -56,7 +59,7 @@ import org.junit.Test;
  */
 public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngineTest {
 
-  private static final String jonny2 = "jonny2";
+  private static final String JONNY2 = "jonny2";
 
   @After
   public void tearDown() {
@@ -78,35 +81,32 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
 
     // now enable authorizations:
     processEngineConfiguration.setAuthorizationEnabled(true);
-    identityService.setAuthenticatedUserId(jonny2);
+    identityService.setAuthenticatedUserId(JONNY2);
 
-    try {
-      // we cannot create another authorization
-      authorizationService.createNewAuthorization(AUTH_TYPE_GLOBAL);
-      fail("exception expected");
-
-    } catch (AuthorizationException e) {
-      assertEquals(1, e.getMissingAuthorizations().size());
-      MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertEquals(jonny2, e.getUserId());
-      assertExceptionInfo(CREATE.getName(), AUTHORIZATION.resourceName(), null, info);
-    }
+    // when
+    assertThatThrownBy(() -> authorizationService.createNewAuthorization(AUTH_TYPE_GLOBAL))
+      // then
+      .withFailMessage("we cannot create another authorization")
+      .asInstanceOf(type(AuthorizationException.class))
+      .satisfies(e -> {
+        var info = e.getMissingAuthorizations().get(0);
+        assertExceptionInfo(CREATE.getName(), AUTHORIZATION.resourceName(), ANY, info);
+      });
 
     // circumvent auth check to get new transient object
     Authorization authorization = new AuthorizationEntity(AUTH_TYPE_REVOKE);
     authorization.setUserId("someUserId");
     authorization.setResource(Resources.APPLICATION);
 
-    try {
-      authorizationService.saveAuthorization(authorization);
-      fail("exception expected");
-
-    } catch (AuthorizationException e) {
-      assertEquals(1, e.getMissingAuthorizations().size());
-      MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertEquals(jonny2, e.getUserId());
-      assertExceptionInfo(CREATE.getName(), AUTHORIZATION.resourceName(), null, info);
-    }
+    // when
+    assertThatThrownBy(() -> authorizationService.saveAuthorization(authorization))
+      // then
+      .asInstanceOf(type(AuthorizationException.class))
+      .satisfies(e -> {
+        assertThat(e.getUserId()).isEqualTo(JONNY2);
+        var info = e.getMissingAuthorizations().get(0);
+        assertExceptionInfo(CREATE.getName(), AUTHORIZATION.resourceName(), null, info);
+      });
   }
 
   @Test
@@ -119,22 +119,22 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
     basePerms.addPermission(ALL);
     basePerms.removePermission(DELETE); // revoke delete
     authorizationService.saveAuthorization(basePerms);
+    String basePermsId = basePerms.getId();
 
     // turn on authorization
     processEngineConfiguration.setAuthorizationEnabled(true);
-    identityService.setAuthenticatedUserId(jonny2);
+    identityService.setAuthenticatedUserId(JONNY2);
 
-    try {
-      // try to delete authorization
-      authorizationService.deleteAuthorization(basePerms.getId());
-      fail("exception expected");
-
-    } catch (AuthorizationException e) {
-      assertEquals(1, e.getMissingAuthorizations().size());
-      MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertEquals(jonny2, e.getUserId());
-      assertExceptionInfo(DELETE.getName(), AUTHORIZATION.resourceName(), basePerms.getId(), info);
-    }
+    // when
+    // try to delete authorization
+    assertThatThrownBy(() -> authorizationService.deleteAuthorization(basePermsId))
+      // then
+      .hasMessageContaining("exception expected")
+      .hasMessageContaining("Missing authorizations")
+      .hasMessageContaining("jonny2")
+      .hasMessageContaining(DELETE.getName())
+      .hasMessageContaining(AUTHORIZATION.resourceName())
+      .hasMessageContaining(basePermsId);
   }
 
   @Test
@@ -150,7 +150,7 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
 
     // turn on authorization
     processEngineConfiguration.setAuthorizationEnabled(true);
-    identityService.setAuthenticatedUserId(jonny2);
+    identityService.setAuthenticatedUserId(JONNY2);
 
     // fetch authhorization
     basePerms = authorizationService.createAuthorizationQuery().singleResult();
@@ -164,7 +164,7 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
     } catch (AuthorizationException e) {
       assertEquals(1, e.getMissingAuthorizations().size());
       MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertEquals(jonny2, e.getUserId());
+      assertEquals(JONNY2, e.getUserId());
       assertExceptionInfo(UPDATE.getName(), AUTHORIZATION.resourceName(), basePerms.getId(), info);
     }
 

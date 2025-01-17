@@ -41,7 +41,7 @@ jobs:
       - prepare
     steps:
       - name: Notify Docker Repository
-      - run: |
+        run: |
           curl -X POST \
             -H "Authorization: Bearer ${{ secrets.DOCKER_ACTION_DISPATCH_TOKEN }}" \
             -H "Accept: application/vnd.github.v3+json" \

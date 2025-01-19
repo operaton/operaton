@@ -83,13 +83,6 @@ jobs:
             **/target/surefire-reports/*.xml
             target/project-reports.zip
           key: ${{ github.run_id }}-build-artifacts
-      - name: Publish Test Report
-        if: ${{ github.event.inputs.skip_tests == 'false' || github.event_name == 'schedule' }}
-        # https://github.com/marketplace/actions/junit-report-action
-        uses: mikepenz/action-junit-report@v4
-        with:
-          report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml
-          require_passed_tests: true
 
   release:
     name: Release
@@ -131,8 +124,8 @@ jobs:
           JRELEASER_PRERELEASE_ENABLED: true
 
       - name: Publish Test Report
-        if: always()
-        #https://github.com/marketplace/actions/junit-report-action
+        if: ${{ github.event_name == 'schedule' || github.event.inputs.skip_tests == 'false'}}
+        # https://github.com/marketplace/actions/junit-report-action
         uses: mikepenz/action-junit-report@v4
         with:
           report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml

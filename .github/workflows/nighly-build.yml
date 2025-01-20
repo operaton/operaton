@@ -152,6 +152,7 @@ jobs:
     needs:
       - build
       - release
+    if: ${{ github.event.inputs.dry_run == 'false' }}
     steps:
       - name: Notify Docker Repository
         run: |

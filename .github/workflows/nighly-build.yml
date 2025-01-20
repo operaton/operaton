@@ -39,6 +39,7 @@ jobs:
     runs-on: ubuntu-24.04
     outputs:
       version: ${{steps.maven-build.outputs.version}}
+      project_version: ${{steps.maven-build.outputs.project_version}}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -55,8 +56,10 @@ jobs:
         shell: bash
         run: |
           .github/scripts/jacoco-create-flag-files.sh
-          RELEASE_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout | tail -n 1)
+          PROJECT_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout | tail -n 1)
+          RELEASE_VERSION=$(echo $PROJECT_VERSION | sed 's/-SNAPSHOT//')
           SKIP_TESTS=${{ github.event.inputs.skip_tests || (github.event_name == 'schedule' && false) }}
+          echo "project_version=$PROJECT_VERSION" >> $GITHUB_OUTPUT
           echo "version=$RELEASE_VERSION" >> $GITHUB_OUTPUT
           echo "skip_tests=$SKIP_TESTS"
           ./mvnw \
@@ -113,7 +116,7 @@ jobs:
       - name: Release with JReleaser
         uses: jreleaser/release-action@v2
         env:
-          JRELEASER_PROJECT_VERSION: ${{needs.build.outputs.version}}
+          JRELEASER_PROJECT_VERSION: ${{needs.build.outputs.project_version}}
           JRELEASER_GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           JRELEASER_GPG_PUBLIC_KEY: ${{secrets.GPG_PUBLIC_KEY}}
           JRELEASER_GPG_SECRET_KEY: ${{secrets.GPG_PRIVATE_KEY}}
@@ -152,6 +155,7 @@ jobs:
     needs:
       - build
       - release
+    if: ${{ github.event.inputs.dry_run == 'false' }}
     steps:
       - name: Notify Docker Repository
         run: |

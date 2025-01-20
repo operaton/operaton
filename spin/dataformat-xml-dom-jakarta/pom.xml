@@ -51,12 +51,6 @@
     </dependency>
 
     <dependency>
-      <groupId>org.apache.groovy</groupId>
-      <artifactId>groovy-xml</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
       <groupId>org.python</groupId>
       <artifactId>jython</artifactId>
       <scope>test</scope>
@@ -67,22 +61,16 @@
       <artifactId>jruby-complete</artifactId>
       <scope>test</scope>
     </dependency>
-    
+
     <dependency>
       <groupId>org.graalvm.js</groupId>
       <artifactId>js</artifactId>
       <scope>test</scope>
     </dependency>
-    
+
     <dependency>
       <groupId>org.graalvm.js</groupId>
       <artifactId>js-scriptengine</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
       <scope>test</scope>
     </dependency>
 

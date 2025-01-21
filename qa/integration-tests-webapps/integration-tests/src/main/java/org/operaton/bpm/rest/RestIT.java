@@ -272,7 +272,7 @@ public class RestIT extends AbstractWebIntegrationTest {
   }
 
   @Test
-  public void testEmptyBodyFilterIsActive() throws JSONException {
+  public void testEmptyBodyFilterIsActive() {
     ClientResponse response = client.resource(appBasePath + FILTER_PATH + "/create").accept(MediaType.APPLICATION_JSON)
       .entity(null, MediaType.APPLICATION_JSON_TYPE)
       .post(ClientResponse.class);

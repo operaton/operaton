@@ -62,7 +62,7 @@ public class HistoricVariableJsonSerializationTest {
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testSelectHistoricVariableInstances() throws JSONException {
+  public void testSelectHistoricVariableInstances() {
     if (processEngineConfiguration.getHistoryLevel().getId() >=
         HistoryLevel.HISTORY_LEVEL_AUDIT.getId()) {
       ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");

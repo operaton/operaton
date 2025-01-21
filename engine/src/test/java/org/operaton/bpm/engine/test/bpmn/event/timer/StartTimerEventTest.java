@@ -1249,7 +1249,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testRecalculateTimeCycleExpressionCurrentDateBased() throws Exception {
+  public void testRecalculateTimeCycleExpressionCurrentDateBased() {
     // given
     Mocks.register("cycle", "R/PT15M");
 
@@ -1295,7 +1295,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testRecalculateTimeCycleExpressionCreationDateBased() throws Exception {
+  public void testRecalculateTimeCycleExpressionCreationDateBased() {
     // given
     Mocks.register("cycle", "R/PT15M");
 
@@ -1513,7 +1513,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testRecalculateNonInterruptingWithUnchangedDurationExpressionInEventSubprocessCurrentDateBased() throws Exception {
+  public void testRecalculateNonInterruptingWithUnchangedDurationExpressionInEventSubprocessCurrentDateBased() {
     // given
     ProcessBuilder processBuilder = Bpmn.createExecutableProcess("process");
 

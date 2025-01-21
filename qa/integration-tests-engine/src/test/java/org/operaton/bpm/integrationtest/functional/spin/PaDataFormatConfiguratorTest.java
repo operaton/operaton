@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.functional.spin;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.operaton.bpm.application.ProcessApplicationContext;
@@ -75,7 +74,7 @@ public class PaDataFormatConfiguratorTest extends AbstractFoxPlatformIntegration
    * the context of it
    */
   @Test
-  public void testPaLocalFormatApplies() throws JsonProcessingException, IOException {
+  public void testPaLocalFormatApplies() throws IOException {
 
     // given a process instance
     final ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
@@ -111,7 +110,7 @@ public class PaDataFormatConfiguratorTest extends AbstractFoxPlatformIntegration
    * of the process application
    */
   @Test
-  public void testPaLocalFormatDoesNotApply() throws JsonProcessingException, IOException {
+  public void testPaLocalFormatDoesNotApply() throws IOException {
 
     // given a process instance
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
@@ -142,7 +141,7 @@ public class PaDataFormatConfiguratorTest extends AbstractFoxPlatformIntegration
    * process application.
    */
   @Test
-  public void testExecutionVariableImplicitObjectValueUpdate() throws JsonProcessingException, IOException {
+  public void testExecutionVariableImplicitObjectValueUpdate() throws IOException {
 
     // given a process instance and a task
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("implicitProcessVariableUpdate");
@@ -193,7 +192,7 @@ public class PaDataFormatConfiguratorTest extends AbstractFoxPlatformIntegration
   }
 
   @Test
-  public void testTaskVariableImplicitObjectValueUpdate() throws JsonProcessingException, IOException {
+  public void testTaskVariableImplicitObjectValueUpdate() throws IOException {
 
     // given a process instance
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("implicitTaskVariableUpdate");

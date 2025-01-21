@@ -23,7 +23,6 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -99,7 +98,7 @@ public class FileValueSerializerTest {
   }
 
   @Test
-  public void testWriteMimetypeFilenameAndBytesValue() throws UnsupportedEncodingException {
+  public void testWriteMimetypeFilenameAndBytesValue() {
     String filename = "test.txt";
     String mimeType = "text/json";
     InputStream is = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/standalone/variables/simpleFile.txt");
@@ -114,7 +113,7 @@ public class FileValueSerializerTest {
   }
 
   @Test
-  public void testWriteMimetypeFilenameBytesValueAndEncoding() throws UnsupportedEncodingException {
+  public void testWriteMimetypeFilenameBytesValueAndEncoding() {
     String filename = "test.txt";
     String mimeType = "text/json";
     Charset encoding = UTF_8;
@@ -130,7 +129,7 @@ public class FileValueSerializerTest {
   }
 
   @Test
-  public void testWriteMimetypeFilenameAndBytesValueWithShortcutMethod() throws URISyntaxException, UnsupportedEncodingException {
+  public void testWriteMimetypeFilenameAndBytesValueWithShortcutMethod() throws URISyntaxException {
     File file = new File(this.getClass().getClassLoader().getResource("org/operaton/bpm/engine/test/standalone/variables/simpleFile.txt").toURI());
     FileValue fileValue = Variables.fileValue(file);
     ValueFields valueFields = new MockValueFields();

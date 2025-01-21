@@ -16,10 +16,8 @@
  */
 package org.operaton.bpm.container.impl.threading.ra.inflow;
 
-
 import javax.resource.ResourceException;
 import javax.resource.spi.endpoint.MessageEndpointFactory;
-
 import org.operaton.bpm.container.impl.threading.ra.JcaExecutorServiceConnector;
 
 /**
@@ -40,7 +38,7 @@ public class JobExecutionHandlerActivation {
     this(null, null, null);
   }
 
-  public JobExecutionHandlerActivation(JcaExecutorServiceConnector ra, MessageEndpointFactory endpointFactory, JobExecutionHandlerActivationSpec spec) throws ResourceException {
+  public JobExecutionHandlerActivation(JcaExecutorServiceConnector ra, MessageEndpointFactory endpointFactory, JobExecutionHandlerActivationSpec spec) {
     this.ra = ra;
     this.endpointFactory = endpointFactory;
     this.spec = spec;

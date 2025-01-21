@@ -40,7 +40,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -238,7 +237,7 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
   }
 
   @Test
-  public void testUserUnlock() throws ParseException {
+  public void testUserUnlock() {
 
     // crate user while still in god-mode:
     String userId = "jonny";

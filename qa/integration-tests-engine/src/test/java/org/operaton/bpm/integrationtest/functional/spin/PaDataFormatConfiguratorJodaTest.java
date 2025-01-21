@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.functional.spin;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.operaton.bpm.application.ProcessApplicationContext;
@@ -67,7 +66,7 @@ public class PaDataFormatConfiguratorJodaTest extends AbstractFoxPlatformIntegra
   }
 
   @Test
-  public void testPaLocalJodaConfiguration() throws JsonProcessingException, IOException {
+  public void testPaLocalJodaConfiguration() throws IOException {
     // given a process instance
     final ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
 

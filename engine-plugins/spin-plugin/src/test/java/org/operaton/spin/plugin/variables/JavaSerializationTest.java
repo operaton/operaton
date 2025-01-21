@@ -24,7 +24,7 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
-import org.json.JSONException;
+
 import static org.operaton.bpm.engine.variable.Variables.objectValue;
 import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
 
@@ -38,7 +38,7 @@ public class JavaSerializationTest extends PluggableProcessEngineTestCase {
   protected static final String ONE_TASK_PROCESS = "org/operaton/spin/plugin/oneTaskProcess.bpmn20.xml";
 
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testSerializationAsJava() throws JSONException {
+  public void testSerializationAsJava() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     JavaSerializable bean = new JavaSerializable("a String", 42, true);
@@ -64,7 +64,7 @@ public class JavaSerializationTest extends PluggableProcessEngineTestCase {
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testJavaSerializedValuesAreProhibited() throws JSONException {
+  public void testJavaSerializedValuesAreProhibited() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     try {
@@ -79,7 +79,7 @@ public class JavaSerializationTest extends PluggableProcessEngineTestCase {
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testJavaSerializedValuesAreProhibitedForTransient() throws JSONException {
+  public void testJavaSerializedValuesAreProhibitedForTransient() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     try {

@@ -289,7 +289,7 @@ public class ProcessEngineTestRule extends TestWatcher {
 
     assertThat(jobsExecuted).describedAs("executed more jobs than expected.").isLessThanOrEqualTo(expectedExecutions);
 
-    if (recursive) {
+    if (Boolean.TRUE.equals(recursive)) {
       executeAvailableJobs(jobsExecuted, expectedExecutions, recursive);
     }
   }

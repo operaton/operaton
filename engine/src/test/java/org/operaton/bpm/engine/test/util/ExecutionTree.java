@@ -75,7 +75,7 @@ public class ExecutionTree implements Execution {
     List<ExecutionTree> executions = new ArrayList<>();
 
     for (ExecutionTree child : children) {
-      if (!child.isEventScope()) {
+      if (Boolean.FALSE.equals(child.isEventScope())) {
         if (child.getActivityId() != null) {
           if (activityId.equals(child.getActivityId())) {
             executions.add(child);

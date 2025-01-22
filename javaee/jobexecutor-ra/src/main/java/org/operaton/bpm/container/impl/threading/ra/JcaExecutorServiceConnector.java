@@ -118,7 +118,7 @@ public class JcaExecutorServiceConnector implements ResourceAdapter, Serializabl
     }
 
     // initialize the ExecutorService (CommonJ or JCA, depending on configuration)
-    if(isUseCommonJWorkManager) {
+    if(Boolean.TRUE.equals(isUseCommonJWorkManager)) {
       if(hasText(commonJWorkManagerName)) {
         executorServiceWrapper.setExecutorService(new CommonJWorkManagerExecutorService(this, commonJWorkManagerName));
       } else {

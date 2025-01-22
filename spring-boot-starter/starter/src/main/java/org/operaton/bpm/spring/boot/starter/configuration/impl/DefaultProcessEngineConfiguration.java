@@ -57,7 +57,7 @@ public class DefaultProcessEngineConfiguration extends AbstractOperatonConfigura
     String processEngineName = StringUtils.trimAllWhitespace(operatonBpmProperties.getProcessEngineName());
     if (!StringUtils.isEmpty(processEngineName) && !processEngineName.contains("-")) {
 
-      if (operatonBpmProperties.getGenerateUniqueProcessEngineName()) {
+      if (Boolean.TRUE.equals(operatonBpmProperties.getGenerateUniqueProcessEngineName())) {
         if (!processEngineName.equals(ProcessEngines.NAME_DEFAULT)) {
           throw new RuntimeException(String.format("A unique processEngineName cannot be generated "
             + "if a custom processEngineName is already set: %s", processEngineName));

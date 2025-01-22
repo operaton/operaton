@@ -488,7 +488,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   @Override
   public TaskQuery includeAssignedTasks() {
     if (candidateUser == null && candidateGroup == null && candidateGroupLike == null && candidateGroups == null
-        && !isWithCandidateGroups() && !isWithoutCandidateGroups() && !isWithCandidateUsers() && !isWithoutCandidateUsers()
+        && Boolean.FALSE.equals(isWithCandidateGroups()) && Boolean.FALSE.equals(isWithoutCandidateGroups()) && Boolean.FALSE.equals(isWithCandidateUsers()) && Boolean.FALSE.equals(isWithoutCandidateUsers())
         && !expressions.containsKey("taskCandidateUser") && !expressions.containsKey("taskCandidateGroup")
         && !expressions.containsKey("taskCandidateGroupIn")) {
       throw new ProcessEngineException("Invalid query usage: candidateUser, candidateGroup, candidateGroupLike, candidateGroupIn, withCandidateGroups, withoutCandidateGroups, withCandidateUsers, withoutCandidateUsers has to be called before 'includeAssignedTasks'.");

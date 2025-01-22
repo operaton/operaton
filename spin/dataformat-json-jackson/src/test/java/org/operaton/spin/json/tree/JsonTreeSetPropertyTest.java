@@ -200,7 +200,7 @@ class JsonTreeSetPropertyTest {
     active = jsonNode.prop("active");
 
     Boolean oldValue = active.boolValue();
-    Boolean value = !oldValue;
+    Boolean value = Boolean.FALSE.equals(oldValue);
 
     assertThat(customers.isArray()).isTrue();
     assertThat(active.isBoolean()).isTrue();

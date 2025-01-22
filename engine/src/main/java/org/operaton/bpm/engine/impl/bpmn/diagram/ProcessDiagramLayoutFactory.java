@@ -242,7 +242,7 @@ public class ProcessDiagramLayoutFactory {
   
     int marginTop = 0;
     for (int row = 0; row < height; row++) {
-      if (rowIsWhite.get(row)) {
+      if (Boolean.TRUE.equals(rowIsWhite.get(row))) {
         ++marginTop;
       } else {
         // Margin Top Found
@@ -252,7 +252,7 @@ public class ProcessDiagramLayoutFactory {
     
     int marginLeft = 0;
     for (int column = 0; column < width; column++) {
-      if (columnIsWhite.get(column)) {
+      if (Boolean.TRUE.equals(columnIsWhite.get(column))) {
         ++marginLeft;
       } else {
         // Margin Left Found
@@ -262,7 +262,7 @@ public class ProcessDiagramLayoutFactory {
     
     int marginRight = 0;
     for (int column = width - 1; column >= 0; column--) {
-      if (columnIsWhite.get(column)) {
+      if (Boolean.TRUE.equals(columnIsWhite.get(column))) {
         ++marginRight;
       } else {
         // Margin Right Found
@@ -272,7 +272,7 @@ public class ProcessDiagramLayoutFactory {
     
     int marginBottom = 0;
     for (int row = height -1; row >= 0; row--) {
-      if (rowIsWhite.get(row)) {
+      if (Boolean.TRUE.equals(rowIsWhite.get(row))) {
         ++marginBottom;
       } else {
         // Margin Bottom Found

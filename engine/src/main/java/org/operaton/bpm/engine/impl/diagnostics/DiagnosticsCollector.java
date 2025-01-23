@@ -71,8 +71,7 @@ public class DiagnosticsCollector {
       internals.setApplicationServer(applicationServer);
     }
 
-    // license key and Webapps data is fed from the outside to the registry but needs to be constantly updated
-    internals.setLicenseKey(diagnosticsRegistry.getLicenseKey());
+    // Webapps data is fed from the outside to the registry but needs to be constantly updated
     internals.setWebapps(diagnosticsRegistry.getWebapps());
   }
 

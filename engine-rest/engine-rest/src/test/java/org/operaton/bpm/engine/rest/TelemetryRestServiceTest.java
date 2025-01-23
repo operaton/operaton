@@ -120,12 +120,6 @@ public class TelemetryRestServiceTest extends AbstractRestServiceTest {
         .body("product.internals.jdk.version", equalTo(MockProvider.EXAMPLE_TELEMETRY_JDK_VERSION))
         .body("product.internals.application-server.vendor", equalTo(MockProvider.EXAMPLE_TELEMETRY_APP_SERVER_VENDOR))
         .body("product.internals.application-server.version", equalTo(MockProvider.EXAMPLE_TELEMETRY_APP_SERVER_VERSION))
-        .body("product.internals.license-key.customer", equalTo(MockProvider.EXAMPLE_TELEMETRY_LICENSE_CUSTOMER_NAME))
-        .body("product.internals.license-key.type", equalTo(MockProvider.EXAMPLE_TELEMETRY_LICENSE_TYPE))
-        .body("product.internals.license-key.features.operatonBPM", equalTo("true"))
-        .body("product.internals.license-key.raw", equalTo(MockProvider.EXAMPLE_TELEMETRY_LICENSE_RAW))
-        .body("product.internals.license-key.unlimited", equalTo(MockProvider.EXAMPLE_TELEMETRY_LICENSE_UNLIMITED))
-        .body("product.internals.license-key.valid-until", equalTo(MockProvider.EXAMPLE_TELEMETRY_LICENSE_VALID_UNTIL))
         .body("product.internals.operaton-integration[0]", equalTo("spring-boot"))
         .body("product.internals.data-collection-start-date", equalTo(MockProvider.EXAMPLE_TELEMETRY_DATA_COLLECTION_START_DATE))
     .when()
@@ -156,7 +150,6 @@ public class TelemetryRestServiceTest extends AbstractRestServiceTest {
     when(internals.getJdk()).thenReturn(mock(Jdk.class));
     when(internals.getMetrics()).thenReturn(new HashMap<>());
     when(internals.getWebapps()).thenReturn(new HashSet<>());
-    // license key may be null and is therefore not mocked
 
     when(managementServiceMock.getTelemetryData()).thenReturn(telemetryData);
 

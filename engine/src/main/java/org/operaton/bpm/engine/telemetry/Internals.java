@@ -45,12 +45,6 @@ public interface Internals {
   public ApplicationServer getApplicationServer();
 
   /**
-   * Information about the Operaton license key issued for enterprise editions of
-   * Operaton. May be null when no license is used.
-   */
-  public LicenseKeyData getLicenseKey();
-
-  /**
    * The date when the engine started to collect dynamic data, such as command executions
    * and metrics. If telemetry sending is enabled, dynamic data resets on sending the data
    * to Operaton.

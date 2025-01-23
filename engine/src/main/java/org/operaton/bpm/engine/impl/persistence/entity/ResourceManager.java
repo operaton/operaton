@@ -16,13 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import org.operaton.bpm.engine.impl.cmd.LicenseCmd;
-import org.operaton.bpm.engine.impl.persistence.AbstractManager;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 
 
 /**
@@ -91,8 +90,4 @@ public class ResourceManager extends AbstractManager {
     return existingResourcesByName;
   }
 
-  public ResourceEntity findLicenseKeyResource() {
-    PropertyEntity licenseProperty = (PropertyEntity) getDbEntityManager().selectOne("selectProperty", LicenseCmd.LICENSE_KEY_BYTE_ARRAY_ID);
-    return licenseProperty == null ? null : (ResourceEntity) getDbEntityManager().selectOne("selectResourceById", licenseProperty.value);
-  }
 }

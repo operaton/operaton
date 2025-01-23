@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.rest.helper;
 
-import static org.operaton.bpm.engine.rest.util.DateTimeUtils.withTimezone;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.operaton.bpm.engine.rest.util.DateTimeUtils.withTimezone;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,6 +35,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 import org.operaton.bpm.application.ProcessApplicationInfo;
 import org.operaton.bpm.dmn.engine.DmnDecisionResult;
 import org.operaton.bpm.engine.EntityTypes;
@@ -92,7 +93,6 @@ import org.operaton.bpm.engine.impl.telemetry.dto.CommandImpl;
 import org.operaton.bpm.engine.impl.telemetry.dto.DatabaseImpl;
 import org.operaton.bpm.engine.impl.telemetry.dto.InternalsImpl;
 import org.operaton.bpm.engine.impl.telemetry.dto.JdkImpl;
-import org.operaton.bpm.engine.impl.telemetry.dto.LicenseKeyDataImpl;
 import org.operaton.bpm.engine.impl.telemetry.dto.MetricImpl;
 import org.operaton.bpm.engine.impl.telemetry.dto.ProductImpl;
 import org.operaton.bpm.engine.impl.telemetry.dto.TelemetryDataImpl;
@@ -1016,12 +1016,9 @@ public abstract class MockProvider {
       EXAMPLE_TELEMETRY_DB_VERSION);
   public static final ApplicationServerImpl EXAMPLE_TELEMETRY_SERVER = new ApplicationServerImpl(
       EXAMPLE_TELEMETRY_APP_SERVER_VENDOR, EXAMPLE_TELEMETRY_APP_SERVER_VERSION);
-  public static final LicenseKeyDataImpl EXAMPLE_TELEMETRY_LICENSE = new LicenseKeyDataImpl(
-      EXAMPLE_TELEMETRY_LICENSE_CUSTOMER_NAME, EXAMPLE_TELEMETRY_LICENSE_TYPE, EXAMPLE_TELEMETRY_LICENSE_VALID_UNTIL,
-      EXAMPLE_TELEMETRY_LICENSE_UNLIMITED, EXAMPLE_TELEMETRY_LICENSE_FEATURES, EXAMPLE_TELEMETRY_LICENSE_RAW);
   public static final JdkImpl EXAMPLE_TELEMETRY_JDK = new JdkImpl(EXAMPLE_TELEMETRY_JDK_VERSION, EXAMPLE_TELEMETRY_JDK_VENDOR);
   public static final InternalsImpl EXAMPLE_TELEMETRY_INTERNALS = new InternalsImpl(EXAMPLE_TELEMETRY_DATABASE,
-      EXAMPLE_TELEMETRY_SERVER, EXAMPLE_TELEMETRY_LICENSE, EXAMPLE_TELEMETRY_JDK);
+      EXAMPLE_TELEMETRY_SERVER, EXAMPLE_TELEMETRY_JDK);
   static {
     EXAMPLE_TELEMETRY_INTERNALS.setOperatonIntegration(
         Stream.of("spring-boot-starter", "operaton-bpm-run").collect(Collectors.toCollection(HashSet::new)));

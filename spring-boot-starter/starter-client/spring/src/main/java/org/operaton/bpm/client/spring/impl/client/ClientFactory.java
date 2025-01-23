@@ -67,7 +67,7 @@ public class ClientFactory
       if (clientConfiguration.getMaxTasks() != null) {
         clientBuilder.maxTasks(clientConfiguration.getMaxTasks());
       }
-      if (clientConfiguration.getUsePriority() != null && Boolean.FALSE.equals(clientConfiguration.getUsePriority())) {
+      if (clientConfiguration.getUsePriority() != null && !clientConfiguration.getUsePriority()) {
         clientBuilder.usePriority(false);
       }
       if (clientConfiguration.getDefaultSerializationFormat() != null) {

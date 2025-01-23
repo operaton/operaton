@@ -61,7 +61,7 @@ public class PublishDelegateParseListener extends AbstractBpmnParseListener {
   public PublishDelegateParseListener(final ApplicationEventPublisher publisher, final EventingProperty property) {
 
     this.skippable = property.isSkippable();
-    if (Boolean.TRUE.equals(property.isTask())) {
+    if (property.isTask()) {
       this.taskListener = delegateTask -> {
         publisher.publishEvent(delegateTask);
         publisher.publishEvent(new TaskEvent(delegateTask));

@@ -3874,10 +3874,10 @@ public class BpmnParse extends Parse {
 
     Boolean isTriggeredByEvent = parseBooleanAttribute(subProcessElement.attribute("triggeredByEvent"), false);
     subProcessActivity.getProperties().set(BpmnProperties.TRIGGERED_BY_EVENT, isTriggeredByEvent);
-    subProcessActivity.setProperty(PROPERTYNAME_CONSUMES_COMPENSATION, Boolean.FALSE.equals(isTriggeredByEvent));
+    subProcessActivity.setProperty(PROPERTYNAME_CONSUMES_COMPENSATION, !isTriggeredByEvent);
 
     subProcessActivity.setScope(true);
-    if (Boolean.TRUE.equals(isTriggeredByEvent)) {
+    if (isTriggeredByEvent) {
       subProcessActivity.setActivityBehavior(new EventSubProcessActivityBehavior());
       subProcessActivity.setEventScope(scope);
     } else {

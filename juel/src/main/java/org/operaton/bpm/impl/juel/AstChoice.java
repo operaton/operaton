@@ -30,7 +30,7 @@ public class AstChoice extends AstRightValue {
 	@Override 
 	public Object eval(Bindings bindings, ELContext context) throws ELException {
 		Boolean value = bindings.convert(question.eval(bindings, context), Boolean.class);
-		return Boolean.TRUE.equals(value) ? yes.eval(bindings, context) : no.eval(bindings, context);
+		return value ? yes.eval(bindings, context) : no.eval(bindings, context);
 	}
 
 	@Override

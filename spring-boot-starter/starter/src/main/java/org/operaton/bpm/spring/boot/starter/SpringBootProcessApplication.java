@@ -96,7 +96,7 @@ public class SpringBootProcessApplication extends SpringProcessApplication {
       .apply(springApplicationName)
       .ifPresent(this::setBeanName);
 
-    if (Boolean.TRUE.equals(operatonBpmProperties.getGenerateUniqueProcessApplicationName())) {
+    if (operatonBpmProperties.getGenerateUniqueProcessApplicationName()) {
       setBeanName(OperatonBpmProperties.getUniqueName(OperatonBpmProperties.UNIQUE_APPLICATION_NAME_PREFIX));
     }
 

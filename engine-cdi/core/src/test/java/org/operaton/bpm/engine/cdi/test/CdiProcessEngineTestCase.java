@@ -194,7 +194,7 @@ public abstract class CdiProcessEngineTestCase {
       try {
         while (conditionIsViolated) {
           Thread.sleep(intervalMillis);
-          conditionIsViolated = Boolean.FALSE.equals(condition.call());
+          conditionIsViolated = !condition.call();
         }
       } catch (InterruptedException e) {
       } catch (Exception e) {

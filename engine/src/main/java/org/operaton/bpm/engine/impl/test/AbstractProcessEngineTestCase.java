@@ -296,7 +296,7 @@ public abstract class AbstractProcessEngineTestCase extends PvmTestCase {
       try {
         while (conditionIsViolated && !task.isTimeLimitExceeded()) {
           Thread.sleep(intervalMillis);
-          conditionIsViolated = Boolean.FALSE.equals(condition.call());
+          conditionIsViolated = !condition.call();
         }
       } catch (InterruptedException e) {
       } catch (Exception e) {

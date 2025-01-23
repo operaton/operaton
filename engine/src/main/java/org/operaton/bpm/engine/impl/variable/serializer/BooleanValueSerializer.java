@@ -58,7 +58,7 @@ public class BooleanValueSerializer extends PrimitiveValueSerializer<BooleanValu
     Boolean boolValue = variableValue.getValue();
 
     if(boolValue != null) {
-      longValue = Boolean.TRUE.equals(boolValue) ? TRUE : FALSE;
+      longValue = boolValue ? TRUE : FALSE;
     }
 
     valueFields.setLongValue(longValue);

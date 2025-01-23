@@ -116,7 +116,7 @@ public class JacksonJsonNode extends SpinJsonNode {
   }
 
   protected int lookupArray(JsonNode searchNode, int direction) {
-    if(Boolean.FALSE.equals(this.isArray())) {
+    if(!this.isArray()) {
       throw LOG.unableToGetIndex(jsonNode.getNodeType().name());
     }
     int i = direction>0 ? 0 : jsonNode.size() - 1;
@@ -332,7 +332,7 @@ public class JacksonJsonNode extends SpinJsonNode {
   public SpinJsonNode insertBefore(Object searchObject, Object insertObject) {
     ensureNotNull("searchObject", searchObject);
     ensureNotNull("insertObject", insertObject);
-    if(Boolean.TRUE.equals(this.isArray())) {
+    if(this.isArray()) {
       Integer i = indexOf(searchObject);
 
       return insertAt(i, insertObject);
@@ -346,7 +346,7 @@ public class JacksonJsonNode extends SpinJsonNode {
   public SpinJsonNode insertAfter(Object searchObject, Object insertObject) {
     ensureNotNull("searchObject", searchObject);
     ensureNotNull("insertObject", insertObject);
-    if(Boolean.TRUE.equals(this.isArray())) {
+    if(this.isArray()) {
       Integer i = indexOf(searchObject);
 
       return insertAt(i + 1, insertObject);
@@ -368,7 +368,7 @@ public class JacksonJsonNode extends SpinJsonNode {
 
   @Override
   public SpinJsonNode removeAt(int index) {
-    if(Boolean.TRUE.equals(this.isArray())) {
+    if(this.isArray()) {
       ArrayNode node = (ArrayNode) jsonNode;
 
       node.remove(getCorrectIndex(index));

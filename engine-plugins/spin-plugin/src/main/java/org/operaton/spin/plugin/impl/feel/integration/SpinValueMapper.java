@@ -71,13 +71,13 @@ public class SpinValueMapper extends JavaCustomValueMapper {
                          field -> spinJsonToVal(node.prop(field), innerValueMapper)));
       return innerValueMapper.apply(pairs);
 
-    } else if (Boolean.TRUE.equals(node.isArray())) {
+    } else if (node.isArray()) {
       List<Val> values = node.elements()
           .stream()
           .map(e -> spinJsonToVal(e, innerValueMapper)).toList();
       return innerValueMapper.apply(values);
 
-    } else if (Boolean.TRUE.equals(node.isNull())) {
+    } else if (node.isNull()) {
       return innerValueMapper.apply(null);
 
     } else {

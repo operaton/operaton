@@ -30,7 +30,7 @@ public class SendMessageDelegate implements JavaDelegate {
     RuntimeService runtimeService = execution.getProcessEngineServices().getRuntimeService();
     Boolean allFlag = (Boolean) execution.getVariable("allFlag");
 
-    if (Boolean.TRUE.equals(allFlag)) {
+    if (allFlag) {
       // 1. message
       Map<String, Object> variablesFirstCall = new HashMap<>();
       variablesFirstCall.put("someVariable", "someValue1");

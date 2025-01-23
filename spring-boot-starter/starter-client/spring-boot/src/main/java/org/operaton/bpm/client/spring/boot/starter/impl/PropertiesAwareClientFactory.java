@@ -63,7 +63,7 @@ public class PropertiesAwareClientFactory extends ClientFactory {
     if (clientConfigurationProps.getMaxTasks() != null) {
       clientConfiguration.setMaxTasks(clientConfigurationProps.getMaxTasks());
     }
-    if (clientConfigurationProps.getUsePriority() != null && Boolean.FALSE.equals(clientConfigurationProps.getUsePriority())) {
+    if (clientConfigurationProps.getUsePriority() != null && !clientConfigurationProps.getUsePriority()) {
       clientConfiguration.setUsePriority(false);
     }
     if (clientConfigurationProps.getDefaultSerializationFormat() != null) {

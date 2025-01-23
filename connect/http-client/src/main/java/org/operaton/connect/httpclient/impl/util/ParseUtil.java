@@ -26,7 +26,7 @@ import org.apache.http.client.config.RequestConfig.Builder;
 
 public class ParseUtil {
 
-  protected static HttpConnectorLogger LOG = HttpLogger.HTTP_LOGGER;
+  protected static final HttpConnectorLogger LOG = HttpLogger.HTTP_LOGGER;
 
   private ParseUtil() {
   }

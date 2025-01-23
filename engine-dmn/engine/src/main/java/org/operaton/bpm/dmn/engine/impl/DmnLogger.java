@@ -25,8 +25,8 @@ public class DmnLogger extends BaseLogger {
  public static final String PROJECT_CODE = "DMN";
  public static final String PROJECT_LOGGER= "org.operaton.bpm.dmn";
 
- public static DmnEngineLogger ENGINE_LOGGER = createLogger(DmnEngineLogger.class, PROJECT_CODE, PROJECT_LOGGER, "01");
- public static DmnTransformLogger TRANSFORM_LOGGER = createLogger(DmnTransformLogger.class, PROJECT_CODE, PROJECT_LOGGER + ".transform", "02");
- public static DmnHitPolicyLogger HIT_POLICY_LOGGER = createLogger(DmnHitPolicyLogger.class, PROJECT_CODE, PROJECT_LOGGER + ".hitPolicy", "03");
+ public static final DmnEngineLogger ENGINE_LOGGER = createLogger(DmnEngineLogger.class, PROJECT_CODE, PROJECT_LOGGER, "01");
+ public static final DmnTransformLogger TRANSFORM_LOGGER = createLogger(DmnTransformLogger.class, PROJECT_CODE, PROJECT_LOGGER + ".transform", "02");
+ public static final DmnHitPolicyLogger HIT_POLICY_LOGGER = createLogger(DmnHitPolicyLogger.class, PROJECT_CODE, PROJECT_LOGGER + ".hitPolicy", "03");
 
 }

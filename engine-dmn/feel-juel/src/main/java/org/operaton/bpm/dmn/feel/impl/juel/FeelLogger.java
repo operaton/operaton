@@ -23,6 +23,6 @@ public class FeelLogger extends BaseLogger {
   public static final String PROJECT_CODE = "FEEL";
   public static final String PROJECT_LOGGER= "org.operaton.bpm.dmn.feel";
 
-  public static FeelEngineLogger ENGINE_LOGGER = createLogger(FeelEngineLogger.class, PROJECT_CODE, PROJECT_LOGGER, "01");
+  public static final FeelEngineLogger ENGINE_LOGGER = createLogger(FeelEngineLogger.class, PROJECT_CODE, PROJECT_LOGGER, "01");
 
 }

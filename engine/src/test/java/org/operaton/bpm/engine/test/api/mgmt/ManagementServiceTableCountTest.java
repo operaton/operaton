@@ -37,11 +37,7 @@ public class ManagementServiceTableCountTest extends PluggableProcessEngineTest 
 
     String tablePrefix = processEngineConfiguration.getDatabaseTablePrefix();
 
-    if(managementService.getLicenseKey() != null) {
-      assertEquals(Long.valueOf(1), tableCount.get(tablePrefix + "ACT_GE_BYTEARRAY"));
-    } else {
-      assertEquals(Long.valueOf(0), tableCount.get(tablePrefix + "ACT_GE_BYTEARRAY"));
-    }
+    assertEquals(Long.valueOf(0), tableCount.get(tablePrefix + "ACT_GE_BYTEARRAY"));
     assertEquals(Long.valueOf(0), tableCount.get(tablePrefix + "ACT_RE_DEPLOYMENT"));
     assertEquals(Long.valueOf(0), tableCount.get(tablePrefix + "ACT_RU_EXECUTION"));
     assertEquals(Long.valueOf(0), tableCount.get(tablePrefix + "ACT_ID_GROUP"));

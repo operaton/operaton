@@ -22,14 +22,16 @@ import static org.operaton.bpm.engine.management.Metrics.EXECUTED_DECISION_ELEME
 import static org.operaton.bpm.engine.management.Metrics.FLOW_NODE_INSTANCES;
 import static org.operaton.bpm.engine.management.Metrics.PROCESS_INSTANCES;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 import org.operaton.bpm.engine.impl.ManagementServiceImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.metrics.MetricsRegistry;
-import org.operaton.bpm.engine.impl.telemetry.dto.LicenseKeyDataImpl;
 import org.operaton.bpm.engine.impl.telemetry.dto.TelemetryDataImpl;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.impl.util.ParseUtil;
@@ -38,10 +40,6 @@ import org.operaton.bpm.engine.telemetry.Metric;
 import org.operaton.bpm.engine.telemetry.TelemetryData;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
 
 public class ManagementServiceGetTelemetryDataTest {
 
@@ -93,35 +91,6 @@ public class ManagementServiceGetTelemetryDataTest {
     // then
     assertThat(telemetryData).isNotNull();
     assertThat(telemetryData.getInstallation()).isNotEmpty();
-  }
-
-  @Test
-  public void shouldReturnLicenseKey() {
-    // given
-    managementService.setLicenseKeyForDiagnostics(new LicenseKeyDataImpl("customer a", "UNIFIED", "2029-09-01", false, Collections.singletonMap("operatonBPM", "true"), "raw license"));
-
-    // when
-    TelemetryData telemetryData = managementService.getTelemetryData();
-
-    // then
-    assertThat(telemetryData.getProduct().getInternals().getLicenseKey().getCustomer()).isEqualTo("customer a");
-    assertThat(telemetryData.getProduct().getInternals().getLicenseKey().getType()).isEqualTo("UNIFIED");
-    assertThat(telemetryData.getProduct().getInternals().getLicenseKey().getValidUntil()).isEqualTo("2029-09-01");
-    assertThat(telemetryData.getProduct().getInternals().getLicenseKey().getFeatures()).isEqualTo(Collections.singletonMap("operatonBPM", "true"));
-    assertThat(telemetryData.getProduct().getInternals().getLicenseKey().getRaw()).isEqualTo("raw license");
-    assertThat(telemetryData.getProduct().getInternals().getLicenseKey().isUnlimited()).isFalse();
-  }
-
-  @Test
-  public void shouldReturnLicenseKeyRaw() {
-    // given
-    managementService.setLicenseKeyForDiagnostics(new LicenseKeyDataImpl(null, null, null, null, null, "test license"));
-
-    // when
-    TelemetryData telemetryData = managementService.getTelemetryData();
-
-    // then
-    assertThat(telemetryData.getProduct().getInternals().getLicenseKey().getRaw()).isEqualTo("test license");
   }
 
   @Test

@@ -16,16 +16,15 @@
  */
 package org.operaton.bpm.spring.boot.starter.util;
 
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.spring.boot.starter.property.GenericProperties;
 import org.operaton.commons.logging.BaseLogger;
 import org.springframework.core.io.Resource;
-
-import java.net.URL;
-import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class SpringBootProcessEngineLogger extends BaseLogger {
   public static final String PROJECT_CODE = "STARTER";
@@ -67,14 +66,6 @@ public class SpringBootProcessEngineLogger extends BaseLogger {
         .collect(Collectors.toSet());
 
     logInfo("021", "Auto-Deploying resources: {}", resourceDescriptions);
-  }
-
-  public void enterLicenseKey(String licenseKeySource) {
-    logInfo("030", "Setting up license key: {}", licenseKeySource);
-  }
-
-  public void enterLicenseKeyFailed(URL licenseKeyFile, Exception e) {
-    logWarn("031", "Failed setting up license key: {}", licenseKeyFile, e);
   }
 
   public void configureJobExecutorPool(Integer corePoolSize, Integer maxPoolSize) {

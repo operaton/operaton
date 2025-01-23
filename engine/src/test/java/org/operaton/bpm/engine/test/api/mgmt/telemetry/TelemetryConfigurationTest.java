@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt.telemetry;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -23,21 +25,14 @@ import org.junit.Test;
 import org.junit.rules.RuleChain;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
-import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
-import org.operaton.bpm.engine.impl.telemetry.dto.LicenseKeyDataImpl;
-import org.operaton.bpm.engine.impl.test.RequiredDatabase;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.commons.testing.ProcessEngineLoggingRule;
 import org.operaton.commons.testing.WatchLogger;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class TelemetryConfigurationTest {
 
@@ -95,29 +90,6 @@ public class TelemetryConfigurationTest {
 
     // then
     assertThat(loggingRule.getFilteredLog(" telemetry ")).isEmpty();
-  }
-
-  @Test
-  @RequiredDatabase(includes = DbSqlSessionFactory.H2) // it's h2-specific test
-  public void shouldStartEngineWithLicenseKeyAlreadyPresent() {
-    // given license key persisted
-    String testLicenseKey = "signature=;my company;unlimited";
-    inMemoryConfiguration = new StandaloneInMemProcessEngineConfiguration();
-    inMemoryConfiguration
-        .setJdbcUrl("jdbc:h2:mem:operaton-test" + getClass().getSimpleName())
-        // keep data alive at process engine close
-        .setDatabaseSchemaUpdate(ProcessEngineConfigurationImpl.DB_SCHEMA_UPDATE_CREATE)
-        .setDbMetricsReporterActivate(false);
-    ProcessEngine processEngine = inMemoryConfiguration.buildProcessEngine();
-    processEngine.getManagementService().setLicenseKey(testLicenseKey);
-    processEngine.close();
-
-    // when
-    inMemoryConfiguration.buildProcessEngine();
-
-    // then the license key is picked up
-    assertThat(inMemoryConfiguration.getDiagnosticsRegistry().getLicenseKey())
-        .isEqualToComparingFieldByField(new LicenseKeyDataImpl(null, null, null, null, null, "my company;unlimited"));
   }
 
 }

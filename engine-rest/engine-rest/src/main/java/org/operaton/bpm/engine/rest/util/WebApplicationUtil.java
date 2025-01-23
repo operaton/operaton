@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.engine.rest.util;
 
+import static org.operaton.bpm.engine.rest.util.EngineUtil.getProcessEngineProvider;
+
 import org.operaton.bpm.engine.impl.ManagementServiceImpl;
 import org.operaton.bpm.engine.impl.diagnostics.PlatformDiagnosticsRegistry;
-import org.operaton.bpm.engine.impl.telemetry.dto.LicenseKeyDataImpl;
 import org.operaton.bpm.engine.rest.spi.ProcessEngineProvider;
-import static org.operaton.bpm.engine.rest.util.EngineUtil.getProcessEngineProvider;
 
 public class WebApplicationUtil {
 
@@ -32,18 +32,6 @@ public class WebApplicationUtil {
       // set the application server info globally for all engines in the container
       if (PlatformDiagnosticsRegistry.getApplicationServer() == null) {
         PlatformDiagnosticsRegistry.setApplicationServer(serverInfo);
-      }
-    }
-  }
-
-  public static void setLicenseKey(LicenseKeyDataImpl licenseKeyData) {
-    if (licenseKeyData != null) {
-      ProcessEngineProvider processEngineProvider = getProcessEngineProvider();
-      for (String engineName : processEngineProvider.getProcessEngineNames()) {
-        if (engineName != null) {
-          ManagementServiceImpl managementService = (ManagementServiceImpl) processEngineProvider.getProcessEngine(engineName).getManagementService();
-          managementService.setLicenseKeyForDiagnostics(licenseKeyData);
-        }
       }
     }
   }

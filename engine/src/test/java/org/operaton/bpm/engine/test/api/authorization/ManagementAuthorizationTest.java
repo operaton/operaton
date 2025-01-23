@@ -16,6 +16,14 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.Assert.assertEquals;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
 import org.junit.After;
 import org.junit.Test;
 import org.operaton.bpm.engine.authorization.Groups;
@@ -28,14 +36,6 @@ import org.operaton.bpm.engine.management.SchemaLogEntry;
 import org.operaton.bpm.engine.management.TableMetaData;
 import org.operaton.bpm.engine.management.TablePage;
 import org.operaton.bpm.engine.telemetry.TelemetryData;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
 
 
 /**
@@ -54,7 +54,6 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   public void tearDown() {
     super.tearDown();
     managementService.deleteProperty(DUMMY_PROPERTY);
-    managementService.deleteLicenseKey();
   }
 
   // get table count //////////////////////////////////////////////
@@ -546,175 +545,6 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
     })
     // then
       .hasMessageContaining(permissionException(Resources.SYSTEM, SystemPermissions.READ));
-  }
-
-  // get license key /////////////////////////////////////
-
-  @Test
-  public void shouldGetLicenseKeyAsOperatonAdmin() {
-    // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
-    managementService.setLicenseKey("testLicenseKey");
-
-    // when
-    String licenseKey = managementService.getLicenseKey();
-
-    // then
-    assertThat(licenseKey).isNotNull();
-  }
-
-  @Test
-  public void shouldGetLicenseKeyWithPermission() {
-    // given
-    createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
-
-    disableAuthorization();
-    managementService.setLicenseKey("testLicenseKey");
-    enableAuthorization();
-
-    // when
-    String licenseKey = managementService.getLicenseKey();
-
-    // then
-    assertThat(licenseKey).isNotNull();
-  }
-
-  @Test
-  public void shouldGetLicenseKeyWithAdminAndPermission() {
-    // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
-    createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
-    managementService.setLicenseKey("testLicenseKey");
-
-    // when
-    String licenseKey = managementService.getLicenseKey();
-
-    // then
-    assertThat(licenseKey).isEqualTo("testLicenseKey");
-  }
-
-  @Test
-  public void shouldNotGetLicenseKeyWithoutAuthorization() {
-    // given
-
-    assertThatThrownBy(() -> {
-      // when
-      managementService.getLicenseKey();
-    })
-        // then
-        .hasMessageContaining(permissionException(Resources.SYSTEM, SystemPermissions.READ));
-  }
-
-  // set license key /////////////////////////////////////
-
-  @Test
-  public void shouldSetLicenseKeyAsOperatonAdmin() {
-    // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
-
-    // when
-    managementService.setLicenseKey("testLicenseKey");
-
-    // then
-    assertThat(managementService.getLicenseKey()).isNotNull();
-  }
-
-  @Test
-  public void shouldSetLicenseKeyWithPermission() {
-    // given
-    createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.SET);
-
-    // when
-    managementService.setLicenseKey("testLicenseKey");
-
-    // then
-    disableAuthorization();
-    assertThat(managementService.getLicenseKey()).isNotNull();
-    enableAuthorization();
-  }
-
-  @Test
-  public void shouldSetLicenseKeyWithAdminAndPermission() {
-    // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
-    createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.SET);
-
-    // when
-    managementService.setLicenseKey("testLicenseKey");
-
-    // then
-    assertThat(managementService.getLicenseKey()).isEqualTo("testLicenseKey");
-  }
-
-  @Test
-  public void shouldNotSetLicenseKeyWithoutAuthorization() {
-    // given
-
-    assertThatThrownBy(() -> {
-      // when
-      managementService.setLicenseKey("testLicenseKey");
-    })
-        // then
-        .hasMessageContaining(permissionException(Resources.SYSTEM, SystemPermissions.SET));
-  }
-
-  // delete license key //////////////////////////////////
-
-  @Test
-  public void shouldDeleteLicenseKeyAsOperatonAdmin() {
-    // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
-    managementService.setLicenseKey("testLicenseKey");
-
-    // when
-    managementService.deleteLicenseKey();
-
-    // then
-    assertThat(managementService.getLicenseKey()).isNull();
-  }
-
-  @Test
-  public void shouldDeleteLicenseKeyWithPermission() {
-    // given
-    createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.DELETE);
-
-    disableAuthorization();
-    managementService.setLicenseKey("testLicenseKey");
-    enableAuthorization();
-
-    // when
-    managementService.deleteLicenseKey();
-
-    // then
-    disableAuthorization();
-    assertThat(managementService.getLicenseKey()).isNull();
-    enableAuthorization();
-  }
-
-  @Test
-  public void shouldDeleteLicenseKeyWithAdminAndPermission() {
-    // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
-    createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.DELETE);
-    managementService.setLicenseKey("testLicenseKey");
-
-    // when
-    managementService.deleteLicenseKey();
-
-    // then
-    assertThat(managementService.getLicenseKey()).isNull();
-  }
-
-  @Test
-  public void shouldNotDeleteLicenseKeyWithoutAuthorization() {
-    // given
-
-    assertThatThrownBy(() -> {
-      // when
-      managementService.deleteLicenseKey();
-    })
-        // then
-        .hasMessageContaining(permissionException(Resources.SYSTEM, SystemPermissions.DELETE));
   }
 
   // delete metrics //////////////////////////////////////

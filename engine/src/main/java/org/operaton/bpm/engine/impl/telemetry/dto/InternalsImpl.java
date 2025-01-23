@@ -38,8 +38,6 @@ public class InternalsImpl implements Internals {
   protected DatabaseImpl database;
   @SerializedName(value = SERIALIZED_APPLICATION_SERVER)
   protected ApplicationServerImpl applicationServer;
-  @SerializedName(value = SERIALIZED_LICENSE_KEY)
-  protected LicenseKeyDataImpl licenseKey;
   @SerializedName(value = SERIALIZED_CAMUNDA_INTEGRATION)
   protected Set<String> operatonIntegration;
   @SerializedName(value = SERIALIZED_DATA_COLLECTION_START_DATE)
@@ -51,20 +49,19 @@ public class InternalsImpl implements Internals {
   protected JdkImpl jdk;
 
   public InternalsImpl() {
-    this(null, null, null, null);
+    this(null, null, null);
   }
 
-  public InternalsImpl(DatabaseImpl database, ApplicationServerImpl server, LicenseKeyDataImpl licenseKey, JdkImpl jdk) {
+  public InternalsImpl(DatabaseImpl database, ApplicationServerImpl server, JdkImpl jdk) {
     this.database = database;
     this.applicationServer = server;
-    this.licenseKey = licenseKey;
     this.commands = new HashMap<>();
     this.jdk = jdk;
     this.operatonIntegration = new HashSet<>();
   }
 
   public InternalsImpl(InternalsImpl internals) {
-    this(internals.database, internals.applicationServer, internals.licenseKey, internals.jdk);
+    this(internals.database, internals.applicationServer, internals.jdk);
     this.operatonIntegration = internals.operatonIntegration == null ? null : new HashSet<>(internals.getOperatonIntegration());
     this.commands = new HashMap<>(internals.getCommands());
     this.metrics = internals.metrics == null ? null : new HashMap<>(internals.getMetrics());
@@ -154,15 +151,6 @@ public class InternalsImpl implements Internals {
 
   public void setOperatonIntegration(Set<String> operatonIntegration) {
     this.operatonIntegration = operatonIntegration;
-  }
-
-  @Override
-  public LicenseKeyDataImpl getLicenseKey() {
-    return licenseKey;
-  }
-
-  public void setLicenseKey(LicenseKeyDataImpl licenseKey) {
-    this.licenseKey = licenseKey;
   }
 
   @Override

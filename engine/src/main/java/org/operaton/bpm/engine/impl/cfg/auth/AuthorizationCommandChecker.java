@@ -910,21 +910,6 @@ public class AuthorizationCommandChecker implements CommandChecker {
   }
 
   @Override
-  public void checkDeleteLicenseKey() {
-    getAuthorizationManager().checkAuthorization(SystemPermissions.DELETE, Resources.SYSTEM);
-  }
-
-  @Override
-  public void checkSetLicenseKey() {
-    getAuthorizationManager().checkAuthorization(SystemPermissions.SET, Resources.SYSTEM);
-  }
-
-  @Override
-  public void checkReadLicenseKey() {
-    getAuthorizationManager().checkAuthorization(SystemPermissions.READ, Resources.SYSTEM);
-  }
-
-  @Override
   public void checkRegisterProcessApplication() {
     getAuthorizationManager().checkAuthorization(SystemPermissions.SET, Resources.SYSTEM);
   }

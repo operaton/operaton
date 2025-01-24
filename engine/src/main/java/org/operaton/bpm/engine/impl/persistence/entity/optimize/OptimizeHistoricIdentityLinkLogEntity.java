@@ -19,16 +19,4 @@ package org.operaton.bpm.engine.impl.persistence.entity.optimize;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricIdentityLinkLogEntity;
 
 public class OptimizeHistoricIdentityLinkLogEntity extends HistoricIdentityLinkLogEntity {
-
-	protected String processInstanceId;
-
-	@Override
-	public String getProcessInstanceId() {
-		return processInstanceId;
-	}
-
-	@Override
-	public void setProcessInstanceId(String processInstanceId) {
-		this.processInstanceId = processInstanceId;
-	}
 }

@@ -40,7 +40,6 @@ public class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefini
 
   private static final long serialVersionUID = 1L;
 
-  protected String name;
   protected String description;
   protected ActivityImpl initial;
   protected Map<ActivityImpl, List<ActivityImpl>> initialActivityStacks = new HashMap<>();

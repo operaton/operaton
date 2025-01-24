@@ -33,7 +33,7 @@ import java.io.IOException;
  */
 public class SsoLogoutSuccessHandler extends OidcClientInitiatedLogoutSuccessHandler {
 
-  private static final Logger logger = LoggerFactory.getLogger(SsoLogoutSuccessHandler.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(SsoLogoutSuccessHandler.class);
 
   public SsoLogoutSuccessHandler(ClientRegistrationRepository clientRegistrationRepository,
                                  OAuth2Properties oAuth2Properties) {
@@ -44,7 +44,7 @@ public class SsoLogoutSuccessHandler extends OidcClientInitiatedLogoutSuccessHan
   @Override
   public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
       throws IOException, ServletException {
-    logger.debug("Initiating SSO logout for '{}'", authentication.getName());
+    LOGGER.debug("Initiating SSO logout for '{}'", authentication.getName());
     super.onLogoutSuccess(request, response, authentication);
   }
 }

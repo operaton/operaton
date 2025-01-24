@@ -34,9 +34,7 @@ public class DecisionRequirementsDefinitionEntity extends DmnDecisionRequirement
 
   protected String id;
   protected int revision = 1;
-  protected String name;
   protected String category;
-  protected String key;
   protected int version;
   protected String deploymentId;
   protected String resourceName;

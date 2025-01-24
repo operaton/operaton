@@ -20,14 +20,13 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
 import org.operaton.bpm.engine.impl.telemetry.dto.ApplicationServerImpl;
-import org.operaton.bpm.engine.impl.telemetry.dto.LicenseKeyDataImpl;
 
 public class DiagnosticsRegistry {
 
   protected Map<String, CommandCounter> commands = new HashMap<>();
   protected ApplicationServerImpl applicationServer;
-  protected LicenseKeyDataImpl licenseKey;
   protected String operatonIntegration;
   protected Set<String> webapps = new HashSet<>();
 
@@ -52,14 +51,6 @@ public class DiagnosticsRegistry {
 
   public void setOperatonIntegration(String operatonIntegration) {
     this.operatonIntegration = operatonIntegration;
-  }
-
-  public LicenseKeyDataImpl getLicenseKey() {
-    return licenseKey;
-  }
-
-  public void setLicenseKey(LicenseKeyDataImpl licenseKey) {
-    this.licenseKey = licenseKey;
   }
 
   public synchronized Set<String> getWebapps() {
@@ -100,7 +91,6 @@ public class DiagnosticsRegistry {
 
   public void clear() {
     commands.clear();
-    licenseKey = null;
     applicationServer = null;
     webapps.clear();
   }

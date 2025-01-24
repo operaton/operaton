@@ -407,21 +407,6 @@ public interface CommandChecker {
   void checkDeleteProperty();
 
   /*
-   * Checks if it is allowed to delete the license key.
-   */
-  void checkDeleteLicenseKey();
-
-  /*
-   * Checks if it is allowed to set the license key.
-   */
-  void checkSetLicenseKey();
-
-  /*
-   * Checks if it is allowed to read the license key.
-   */
-  void checkReadLicenseKey();
-
-  /*
    * Checks if it is allowed to register a process application.
    */
   void checkRegisterProcessApplication();

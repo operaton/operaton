@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.operaton.bpm.engine.telemetry.Internals;
-import org.operaton.bpm.engine.telemetry.LicenseKeyData;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -37,8 +36,6 @@ public class InternalsDto {
   protected DatabaseDto database;
   @JsonProperty(value = SERIALIZED_APPLICATION_SERVER)
   protected ApplicationServerDto applicationServer;
-  @JsonProperty(value = SERIALIZED_LICENSE_KEY)
-  protected LicenseKeyDataDto licenseKey;
   @JsonProperty(value = SERIALIZED_CAMUNDA_INTEGRATION)
   protected Set<String> operatonIntegration;
   @JsonProperty(value = SERIALIZED_TELEMETRY_DATA_COLLECTION_START_DATE)
@@ -49,10 +46,9 @@ public class InternalsDto {
 
   protected JdkDto jdk;
 
-  public InternalsDto(DatabaseDto database, ApplicationServerDto server, LicenseKeyDataDto licenseKey, JdkDto jdk) {
+  public InternalsDto(DatabaseDto database, ApplicationServerDto server, JdkDto jdk) {
     this.database = database;
     this.applicationServer = server;
-    this.licenseKey = licenseKey;
     this.commands = new HashMap<>();
     this.jdk = jdk;
     this.operatonIntegration = new HashSet<>();
@@ -106,14 +102,6 @@ public class InternalsDto {
     this.operatonIntegration = operatonIntegration;
   }
 
-  public LicenseKeyDataDto getLicenseKey() {
-    return licenseKey;
-  }
-
-  public void setLicenseKey(LicenseKeyDataDto licenseKey) {
-    this.licenseKey = licenseKey;
-  }
-
   public Set<String> getWebapps() {
     return webapps;
   }
@@ -132,11 +120,9 @@ public class InternalsDto {
 
   public static InternalsDto fromEngineDto(Internals other) {
 
-    LicenseKeyData licenseKey = other.getLicenseKey();
     InternalsDto dto = new InternalsDto(
         DatabaseDto.fromEngineDto(other.getDatabase()),
         ApplicationServerDto.fromEngineDto(other.getApplicationServer()),
-        licenseKey != null ? LicenseKeyDataDto.fromEngineDto(licenseKey) : null,
         JdkDto.fromEngineDto(other.getJdk()));
 
     dto.dataCollectionStartDate = other.getDataCollectionStartDate();

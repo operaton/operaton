@@ -31,7 +31,6 @@ import org.operaton.bpm.engine.impl.persistence.entity.EverLivingJobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyManager;
 import org.operaton.bpm.engine.impl.telemetry.dto.TelemetryDataImpl;
-import org.operaton.bpm.engine.impl.telemetry.dto.LicenseKeyDataImpl;
 
 /**
  * @author Nikola Koevski
@@ -153,15 +152,6 @@ public class BootstrapEngineCommand implements ProcessEngineBootstrapCommand {
 
     // set installationId in the telemetry data
     telemetryData.setInstallation(installationId);
-
-    // set the persisted license key in the telemetry data and registry
-    ManagementServiceImpl managementService = (ManagementServiceImpl) processEngineConfiguration.getManagementService();
-    String licenseKey = managementService.getLicenseKey();
-    if (licenseKey != null) {
-      LicenseKeyDataImpl licenseKeyData = LicenseKeyDataImpl.fromRawString(licenseKey);
-      managementService.setLicenseKeyForDiagnostics(licenseKeyData);
-      telemetryData.getProduct().getInternals().setLicenseKey(licenseKeyData);
-    }
   }
 
   protected void acquireExclusiveInstallationIdLock(CommandContext commandContext) {

@@ -553,18 +553,6 @@ public class TenantCommandChecker implements CommandChecker {
   }
 
   @Override
-  public void checkDeleteLicenseKey() {
-  }
-
-  @Override
-  public void checkSetLicenseKey() {
-  }
-
-  @Override
-  public void checkReadLicenseKey() {
-  }
-
-  @Override
   public void checkRegisterProcessApplication() {
   }
 

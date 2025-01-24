@@ -38,13 +38,11 @@ import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cmd.ActivateBatchCmd;
 import org.operaton.bpm.engine.impl.cmd.DeleteJobCmd;
-import org.operaton.bpm.engine.impl.cmd.DeleteLicenseKeyCmd;
 import org.operaton.bpm.engine.impl.cmd.DeleteMetricsCmd;
 import org.operaton.bpm.engine.impl.cmd.DeletePropertyCmd;
 import org.operaton.bpm.engine.impl.cmd.DeleteTaskMetricsCmd;
 import org.operaton.bpm.engine.impl.cmd.GetHistoryLevelCmd;
 import org.operaton.bpm.engine.impl.cmd.GetJobExceptionStacktraceCmd;
-import org.operaton.bpm.engine.impl.cmd.GetLicenseKeyCmd;
 import org.operaton.bpm.engine.impl.cmd.GetProcessApplicationForDeploymentCmd;
 import org.operaton.bpm.engine.impl.cmd.GetPropertiesCmd;
 import org.operaton.bpm.engine.impl.cmd.GetTableCountCmd;
@@ -61,7 +59,6 @@ import org.operaton.bpm.engine.impl.cmd.ReportDbMetricsCmd;
 import org.operaton.bpm.engine.impl.cmd.SetJobDefinitionPriorityCmd;
 import org.operaton.bpm.engine.impl.cmd.SetJobDuedateCmd;
 import org.operaton.bpm.engine.impl.cmd.SetJobPriorityCmd;
-import org.operaton.bpm.engine.impl.cmd.SetLicenseKeyCmd;
 import org.operaton.bpm.engine.impl.cmd.SetPropertyCmd;
 import org.operaton.bpm.engine.impl.cmd.SuspendBatchCmd;
 import org.operaton.bpm.engine.impl.cmd.TelemetryConfigureCmd;
@@ -82,7 +79,6 @@ import org.operaton.bpm.engine.impl.management.UpdateJobDefinitionSuspensionStat
 import org.operaton.bpm.engine.impl.management.UpdateJobSuspensionStateBuilderImpl;
 import org.operaton.bpm.engine.impl.metrics.MetricsQueryImpl;
 import org.operaton.bpm.engine.impl.metrics.MetricsRegistry;
-import org.operaton.bpm.engine.impl.telemetry.dto.LicenseKeyDataImpl;
 import org.operaton.bpm.engine.management.ActivityStatisticsQuery;
 import org.operaton.bpm.engine.management.DeploymentStatisticsQuery;
 import org.operaton.bpm.engine.management.JobDefinitionQuery;
@@ -284,21 +280,6 @@ public class ManagementServiceImpl extends ServiceImpl implements ManagementServ
   @Override
   public void deleteProperty(String name) {
     commandExecutor.execute(new DeletePropertyCmd(name));
-  }
-
-  @Override
-  public void setLicenseKey(String licenseKey) {
-    commandExecutor.execute(new SetLicenseKeyCmd(licenseKey));
-  }
-
-  @Override
-  public String getLicenseKey() {
-    return commandExecutor.execute(new GetLicenseKeyCmd());
-  }
-
-  @Override
-  public void deleteLicenseKey() {
-    commandExecutor.execute(new DeleteLicenseKeyCmd(true));
   }
 
   @Override
@@ -702,28 +683,6 @@ public class ManagementServiceImpl extends ServiceImpl implements ManagementServ
     if (telemetryRegistry != null) {
       telemetryRegistry.setApplicationServer(appServerInfo);
     }
-  }
-
-  /**
-   * Sets license key information to the telemetry data of the engine.
-   *
-   * @param licenseKeyData
-   *          a data object containing various pieces of information
-   *          about the installed license
-   */
-  public void setLicenseKeyForDiagnostics(LicenseKeyDataImpl licenseKeyData) {
-    DiagnosticsRegistry diagnosticsRegistry = ((ProcessEngineConfigurationImpl) processEngineConfiguration).getDiagnosticsRegistry();
-    if (diagnosticsRegistry != null) {
-      diagnosticsRegistry.setLicenseKey(licenseKeyData);
-    }
-  }
-
-  public LicenseKeyDataImpl getLicenseKeyFromDiagnostics() {
-    DiagnosticsRegistry diagnosticsRegistry = ((ProcessEngineConfigurationImpl) processEngineConfiguration).getDiagnosticsRegistry();
-    if (diagnosticsRegistry != null) {
-      return diagnosticsRegistry.getLicenseKey();
-    }
-    return null;
   }
 
   public void clearDiagnosticsData() {

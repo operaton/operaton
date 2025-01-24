@@ -58,11 +58,8 @@
     delete from ${prefix}ACT_GE_BYTEARRAY where DEPLOYMENT_ID_ = #{id}
   </delete>
 
-  <delete id="purgeTablePreserveLicenseKey" parameterType="string">
+  <delete id="purgeTable" parameterType="string">
     delete from ${prefix}ACT_GE_BYTEARRAY 
-    where ID_ NOT IN 
-      (select P.VALUE_ from ${prefix}ACT_GE_PROPERTY P 
-      where P.NAME_ = #{license-id})
   </delete>
   
   <!-- RESOURCE RESULTMAP -->

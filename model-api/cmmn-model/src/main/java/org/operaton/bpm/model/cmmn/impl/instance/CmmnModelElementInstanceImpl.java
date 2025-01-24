@@ -26,7 +26,7 @@ import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
  */
 public abstract class CmmnModelElementInstanceImpl extends ModelElementInstanceImpl implements CmmnModelElementInstance {
 
-  public CmmnModelElementInstanceImpl(ModelTypeInstanceContext instanceContext) {
+  protected CmmnModelElementInstanceImpl(ModelTypeInstanceContext instanceContext) {
     super(instanceContext);
   }
 

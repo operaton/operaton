@@ -52,7 +52,7 @@ public abstract class CmmnElementImpl extends CmmnModelElementInstanceImpl imple
   // cmmn 1.1
   protected static ChildElementCollection<Documentation> documentationCollection;
 
-  public CmmnElementImpl(ModelTypeInstanceContext instanceContext) {
+  protected CmmnElementImpl(ModelTypeInstanceContext instanceContext) {
     super(instanceContext);
   }
 

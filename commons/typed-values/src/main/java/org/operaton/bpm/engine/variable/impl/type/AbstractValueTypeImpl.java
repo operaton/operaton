@@ -31,7 +31,7 @@ public abstract class AbstractValueTypeImpl implements ValueType {
   
   protected String name;
 
-  public AbstractValueTypeImpl(String name) {
+  protected AbstractValueTypeImpl(String name) {
     this.name = name;
   }
 

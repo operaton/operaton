@@ -231,7 +231,7 @@ public final class StringUtil {
 
     protected Iterator<? extends T> iterator;
 
-    public StringIterator(Iterator<? extends T> iterator) {
+    protected StringIterator(Iterator<? extends T> iterator) {
       this.iterator = iterator;
     }
 

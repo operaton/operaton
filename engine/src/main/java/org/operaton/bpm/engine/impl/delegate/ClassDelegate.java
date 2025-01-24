@@ -29,12 +29,12 @@ public abstract class ClassDelegate {
   protected String className;
   protected List<FieldDeclaration> fieldDeclarations;
 
-  public ClassDelegate(String className, List<FieldDeclaration> fieldDeclarations) {
+  protected ClassDelegate(String className, List<FieldDeclaration> fieldDeclarations) {
     this.className = className;
     this.fieldDeclarations = fieldDeclarations;
   }
 
-  public ClassDelegate(Class<?> clazz, List<FieldDeclaration> fieldDeclarations) {
+  protected ClassDelegate(Class<?> clazz, List<FieldDeclaration> fieldDeclarations) {
     this(clazz.getName(), fieldDeclarations);
   }
 

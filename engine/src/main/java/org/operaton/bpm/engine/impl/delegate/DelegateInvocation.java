@@ -40,7 +40,7 @@ public abstract class DelegateInvocation {
    *
    * @param contextExecution set to an execution
    */
-  public DelegateInvocation(BaseDelegateExecution contextExecution, ResourceDefinitionEntity contextResource) {
+  protected DelegateInvocation(BaseDelegateExecution contextExecution, ResourceDefinitionEntity contextResource) {
     // This constructor forces sub classes to call it, thereby making it more visible
     // whether a context switch is going to be performed for them.
     this.contextExecution = contextExecution;

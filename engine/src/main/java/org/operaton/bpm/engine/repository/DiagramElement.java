@@ -29,10 +29,10 @@ public abstract class DiagramElement implements Serializable {
   
   protected String id = null;
 
-  public DiagramElement() {
+  protected DiagramElement() {
   }
 
-  public DiagramElement(String id) {
+  protected DiagramElement(String id) {
     this.id = id;
   }
 

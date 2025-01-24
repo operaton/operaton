@@ -40,7 +40,7 @@ public abstract class AbstractResourceProvider<T extends Query<?, U>, U, DTO> {
   protected String id;
   protected ProcessEngine engine;
 
-  public AbstractResourceProvider(String detailId, ProcessEngine engine) {
+  protected AbstractResourceProvider(String detailId, ProcessEngine engine) {
     this.id = detailId;
     this.engine = engine;
   }

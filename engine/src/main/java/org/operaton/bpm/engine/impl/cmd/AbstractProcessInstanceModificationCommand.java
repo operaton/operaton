@@ -43,7 +43,7 @@ public abstract class AbstractProcessInstanceModificationCommand implements Comm
   protected boolean skipIoMappings;
   protected boolean externallyTerminated;
 
-  public AbstractProcessInstanceModificationCommand(String processInstanceId) {
+  protected AbstractProcessInstanceModificationCommand(String processInstanceId) {
     this.processInstanceId = processInstanceId;
   }
 

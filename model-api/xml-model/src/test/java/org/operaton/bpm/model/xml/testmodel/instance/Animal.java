@@ -106,7 +106,7 @@ public abstract class Animal extends ModelElementInstanceImpl {
     typeBuilder.build();
   }
 
-  public Animal(ModelTypeInstanceContext instanceContext) {
+  protected Animal(ModelTypeInstanceContext instanceContext) {
     super(instanceContext);
   }
 

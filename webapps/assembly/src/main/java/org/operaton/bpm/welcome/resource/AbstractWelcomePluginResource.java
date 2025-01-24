@@ -28,7 +28,7 @@ import org.operaton.bpm.welcome.plugin.spi.WelcomePlugin;
  */
 public abstract class AbstractWelcomePluginResource extends AbstractAppPluginResource<WelcomePlugin> {
 
-  public AbstractWelcomePluginResource(String engineName) {
+  protected AbstractWelcomePluginResource(String engineName) {
     super(Welcome.getRuntimeDelegate(), engineName);
   }
 

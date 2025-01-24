@@ -30,7 +30,7 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
  */
 public abstract class ArtifactImpl extends CmmnElementImpl implements Artifact {
 
-  public ArtifactImpl(ModelTypeInstanceContext instanceContext) {
+  protected ArtifactImpl(ModelTypeInstanceContext instanceContext) {
     super(instanceContext);
   }
 

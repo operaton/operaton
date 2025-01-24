@@ -44,10 +44,10 @@ public abstract class AbstractVariableQueryImpl<T extends Query<?,?>, U> extends
   protected Boolean variableNamesIgnoreCase;
   protected Boolean variableValuesIgnoreCase;
 
-  public AbstractVariableQueryImpl() {
+  protected AbstractVariableQueryImpl() {
   }
 
-  public AbstractVariableQueryImpl(CommandExecutor commandExecutor) {
+  protected AbstractVariableQueryImpl(CommandExecutor commandExecutor) {
     super(commandExecutor);
   }
 

@@ -54,7 +54,7 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
   protected VariableMap variablesLocal;
   protected String ancestorActivityInstanceId;
 
-  public AbstractInstantiationCmd(String processInstanceId, String ancestorActivityInstanceId) {
+  protected AbstractInstantiationCmd(String processInstanceId, String ancestorActivityInstanceId) {
     super(processInstanceId);
     this.ancestorActivityInstanceId = ancestorActivityInstanceId;
     this.variables = new VariableMapImpl();

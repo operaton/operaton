@@ -156,7 +156,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
   // sequence counter ////////////////////////////////////////////////////////
   protected long sequenceCounter = 0;
 
-  public PvmExecutionImpl() {
+  protected PvmExecutionImpl() {
   }
 
   // API ////////////////////////////////////////////////

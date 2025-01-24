@@ -48,7 +48,7 @@ public abstract class DeleteIdentityLinkCmd implements Command<Void>, Serializab
 
   protected TaskEntity task;
 
-  public DeleteIdentityLinkCmd(String taskId, String userId, String groupId, String type) {
+  protected DeleteIdentityLinkCmd(String taskId, String userId, String groupId, String type) {
     validateParams(userId, groupId, type, taskId);
     this.taskId = taskId;
     this.userId = userId;

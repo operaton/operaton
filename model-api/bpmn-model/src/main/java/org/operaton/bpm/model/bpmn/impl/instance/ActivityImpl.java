@@ -94,7 +94,7 @@ public abstract class ActivityImpl extends FlowNodeImpl implements Activity {
     typeBuilder.build();
   }
 
-  public ActivityImpl(ModelTypeInstanceContext context) {
+  protected ActivityImpl(ModelTypeInstanceContext context) {
     super(context);
   }
 

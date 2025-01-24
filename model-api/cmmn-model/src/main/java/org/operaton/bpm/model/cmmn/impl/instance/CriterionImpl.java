@@ -39,7 +39,7 @@ public abstract class CriterionImpl extends CmmnElementImpl implements Criterion
   protected static Attribute<String> nameAttribute;
   protected static AttributeReference<Sentry> sentryRefAttribute;
 
-  public CriterionImpl(ModelTypeInstanceContext instanceContext) {
+  protected CriterionImpl(ModelTypeInstanceContext instanceContext) {
     super(instanceContext);
   }
 

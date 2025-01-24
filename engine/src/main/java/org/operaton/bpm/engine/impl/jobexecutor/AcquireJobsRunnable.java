@@ -34,7 +34,7 @@ public abstract class AcquireJobsRunnable implements Runnable {
   protected final Object MONITOR = new Object();
   protected final AtomicBoolean isWaiting = new AtomicBoolean(false);
 
-  public AcquireJobsRunnable(JobExecutor jobExecutor) {
+  protected AcquireJobsRunnable(JobExecutor jobExecutor) {
     this.jobExecutor = jobExecutor;
   }
 

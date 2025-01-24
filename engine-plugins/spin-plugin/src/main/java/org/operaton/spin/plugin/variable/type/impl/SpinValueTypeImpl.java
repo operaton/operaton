@@ -34,7 +34,7 @@ public abstract class SpinValueTypeImpl extends AbstractValueTypeImpl implements
 
   private static final long serialVersionUID = 1L;
 
-  public SpinValueTypeImpl(String name) {
+  protected SpinValueTypeImpl(String name) {
     super(name);
   }
 

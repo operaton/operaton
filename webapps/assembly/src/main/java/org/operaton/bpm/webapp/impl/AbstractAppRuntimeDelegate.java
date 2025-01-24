@@ -42,7 +42,7 @@ public abstract class AbstractAppRuntimeDelegate<T extends AppPlugin> implements
 
   protected List<PluginResourceOverride> resourceOverrides;
 
-  public AbstractAppRuntimeDelegate(Class<T> pluginType) {
+  protected AbstractAppRuntimeDelegate(Class<T> pluginType) {
     pluginRegistry = new DefaultAppPluginRegistry<>(pluginType);
     processEngineProvider = loadProcessEngineProvider();
   }

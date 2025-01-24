@@ -32,12 +32,12 @@ public abstract class AbstractSetVariableCmd extends AbstractVariableCmd {
 
   protected boolean skipJavaSerializationFormatCheck;
 
-  public AbstractSetVariableCmd(String entityId, Map<String, ? extends Object> variables, boolean isLocal) {
+  protected AbstractSetVariableCmd(String entityId, Map<String, ? extends Object> variables, boolean isLocal) {
     super(entityId, isLocal);
     this.variables = variables;
   }
 
-  public AbstractSetVariableCmd(String entityId,
+  protected AbstractSetVariableCmd(String entityId,
                                 Map<String, ? extends Object> variables,
                                 boolean isLocal,
                                 boolean skipJavaSerializationFormatCheck) {

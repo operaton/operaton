@@ -39,7 +39,7 @@ public abstract class PlanItemDefinitionImpl extends CmmnElementImpl implements 
   protected static Attribute<String> nameAttribute;
   protected static ChildElement<DefaultControl> defaultControlChild;
 
-  public PlanItemDefinitionImpl(ModelTypeInstanceContext instanceContext) {
+  protected PlanItemDefinitionImpl(ModelTypeInstanceContext instanceContext) {
     super(instanceContext);
   }
 

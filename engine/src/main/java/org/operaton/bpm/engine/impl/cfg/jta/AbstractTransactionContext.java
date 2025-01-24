@@ -65,7 +65,7 @@ public abstract class AbstractTransactionContext implements TransactionContext {
     protected final TransactionState transactionState;
     private final CommandContext commandContext;
 
-    public TransactionStateSynchronization(TransactionState transactionState, TransactionListener transactionListener, CommandContext commandContext) {
+    protected TransactionStateSynchronization(TransactionState transactionState, TransactionListener transactionListener, CommandContext commandContext) {
       this.transactionState = transactionState;
       this.transactionListener = transactionListener;
       this.commandContext = commandContext;

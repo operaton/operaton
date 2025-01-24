@@ -35,7 +35,7 @@ public abstract class ResourceDefinitionCache<T extends ResourceDefinitionEntity
   protected Cache<String, T> cache;
   protected CacheDeployer cacheDeployer;
 
-  public ResourceDefinitionCache(CacheFactory factory, int cacheCapacity, CacheDeployer cacheDeployer) {
+  protected ResourceDefinitionCache(CacheFactory factory, int cacheCapacity, CacheDeployer cacheDeployer) {
     this.cache = factory.createCache(cacheCapacity);
     this.cacheDeployer = cacheDeployer;
   }

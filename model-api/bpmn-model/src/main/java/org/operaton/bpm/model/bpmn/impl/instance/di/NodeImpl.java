@@ -41,7 +41,7 @@ public abstract class NodeImpl extends DiagramElementImpl implements Node {
     typeBuilder.build();
   }
 
-  public NodeImpl(ModelTypeInstanceContext instanceContext) {
+  protected NodeImpl(ModelTypeInstanceContext instanceContext) {
     super(instanceContext);
   }
 }

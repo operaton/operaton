@@ -40,7 +40,7 @@ public abstract class AbstractRequestInvocation<T> implements ConnectorInvocatio
 
   protected ConnectorRequest<?> request;
 
-  public AbstractRequestInvocation(T target, ConnectorRequest<?> request, List<ConnectorRequestInterceptor> interceptorChain) {
+  protected AbstractRequestInvocation(T target, ConnectorRequest<?> request, List<ConnectorRequestInterceptor> interceptorChain) {
     this.target = target;
     this.request = request;
     this.interceptorChain = interceptorChain;

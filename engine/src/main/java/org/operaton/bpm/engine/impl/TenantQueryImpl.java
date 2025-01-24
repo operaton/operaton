@@ -33,10 +33,10 @@ public abstract class TenantQueryImpl extends AbstractQuery<TenantQuery, Tenant>
   protected String groupId;
   protected boolean includingGroups = false;
 
-  public TenantQueryImpl() {
+  protected TenantQueryImpl() {
   }
 
-  public TenantQueryImpl(CommandExecutor commandExecutor) {
+  protected TenantQueryImpl(CommandExecutor commandExecutor) {
     super(commandExecutor);
   }
 

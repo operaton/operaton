@@ -32,7 +32,7 @@ public abstract class AbstractSerializableValueSerializer<T extends Serializable
 
   protected String serializationDataFormat;
 
-  public AbstractSerializableValueSerializer(SerializableValueType type, String serializationDataFormat) {
+  protected AbstractSerializableValueSerializer(SerializableValueType type, String serializationDataFormat) {
     super(type);
     this.serializationDataFormat = serializationDataFormat;
   }

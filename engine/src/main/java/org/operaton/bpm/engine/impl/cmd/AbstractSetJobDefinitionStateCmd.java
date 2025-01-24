@@ -39,7 +39,7 @@ public abstract class AbstractSetJobDefinitionStateCmd extends AbstractSetStateC
   protected String processDefinitionTenantId;
   protected boolean isProcessDefinitionTenantIdSet = false;
 
-  public AbstractSetJobDefinitionStateCmd(UpdateJobDefinitionSuspensionStateBuilderImpl builder) {
+  protected AbstractSetJobDefinitionStateCmd(UpdateJobDefinitionSuspensionStateBuilderImpl builder) {
     super(
         builder.isIncludeJobs(),
         builder.getExecutionDate());

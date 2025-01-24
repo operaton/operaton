@@ -34,7 +34,7 @@ public abstract class CoreActivity extends CoreModelElement {
 
   protected IoMapping ioMapping;
 
-  public CoreActivity(String id) {
+  protected CoreActivity(String id) {
     super(id);
   }
 

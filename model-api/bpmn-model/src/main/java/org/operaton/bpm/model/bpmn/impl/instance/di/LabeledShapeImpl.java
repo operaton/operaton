@@ -41,7 +41,7 @@ public abstract class LabeledShapeImpl extends ShapeImpl implements LabeledShape
     typeBuilder.build();
   }
 
-  public LabeledShapeImpl(ModelTypeInstanceContext instanceContext) {
+  protected LabeledShapeImpl(ModelTypeInstanceContext instanceContext) {
     super(instanceContext);
   }
 }

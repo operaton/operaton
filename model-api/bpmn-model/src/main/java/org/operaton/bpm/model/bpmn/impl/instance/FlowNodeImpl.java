@@ -94,7 +94,7 @@ public abstract class FlowNodeImpl extends FlowElementImpl implements FlowNode {
     typeBuilder.build();
   }
 
-  public FlowNodeImpl(ModelTypeInstanceContext context) {
+  protected FlowNodeImpl(ModelTypeInstanceContext context) {
     super(context);
   }
 

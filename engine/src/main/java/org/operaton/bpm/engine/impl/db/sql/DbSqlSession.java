@@ -80,13 +80,13 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
   protected String connectionMetadataDefaultCatalog = null;
   protected String connectionMetadataDefaultSchema = null;
 
-  public DbSqlSession(DbSqlSessionFactory dbSqlSessionFactory) {
+  protected DbSqlSession(DbSqlSessionFactory dbSqlSessionFactory) {
     this.dbSqlSessionFactory = dbSqlSessionFactory;
     SqlSessionFactory sqlSessionFactory = dbSqlSessionFactory.getSqlSessionFactory();
     this.sqlSession = ExceptionUtil.doWithExceptionWrapper(sqlSessionFactory::openSession);
   }
 
-  public DbSqlSession(DbSqlSessionFactory dbSqlSessionFactory, Connection connection, String catalog, String schema) {
+  protected DbSqlSession(DbSqlSessionFactory dbSqlSessionFactory, Connection connection, String catalog, String schema) {
     this.dbSqlSessionFactory = dbSqlSessionFactory;
     SqlSessionFactory sqlSessionFactory = dbSqlSessionFactory.getSqlSessionFactory();
     this.sqlSession = ExceptionUtil.doWithExceptionWrapper(() -> sqlSessionFactory.openSession(connection));

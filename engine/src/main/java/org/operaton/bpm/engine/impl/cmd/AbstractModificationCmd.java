@@ -36,7 +36,7 @@ public abstract class AbstractModificationCmd <T> implements Command<T> {
 
   protected ModificationBuilderImpl builder;
 
-  public AbstractModificationCmd(ModificationBuilderImpl modificationBuilderImpl) {
+  protected AbstractModificationCmd(ModificationBuilderImpl modificationBuilderImpl) {
     this.builder = modificationBuilderImpl;
   }
 

@@ -42,7 +42,7 @@ public abstract class AttributeReferenceCollection<T extends ModelElementInstanc
 
   protected String separator = " ";
 
-  public AttributeReferenceCollection(AttributeImpl<String> referenceSourceAttribute) {
+  protected AttributeReferenceCollection(AttributeImpl<String> referenceSourceAttribute) {
     super(referenceSourceAttribute);
   }
 

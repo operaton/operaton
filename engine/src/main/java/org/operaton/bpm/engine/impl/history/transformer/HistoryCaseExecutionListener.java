@@ -31,7 +31,7 @@ public abstract class HistoryCaseExecutionListener implements CaseExecutionListe
   protected CmmnHistoryEventProducer eventProducer;
   protected HistoryLevel historyLevel;
 
-  public HistoryCaseExecutionListener(CmmnHistoryEventProducer historyEventProducer) {
+  protected HistoryCaseExecutionListener(CmmnHistoryEventProducer historyEventProducer) {
     eventProducer = historyEventProducer;
   }
 

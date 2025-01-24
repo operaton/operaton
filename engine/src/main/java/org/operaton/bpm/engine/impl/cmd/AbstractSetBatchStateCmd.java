@@ -34,7 +34,7 @@ public abstract class AbstractSetBatchStateCmd implements Command<Void> {
 
   protected String batchId;
 
-  public AbstractSetBatchStateCmd(String batchId) {
+  protected AbstractSetBatchStateCmd(String batchId) {
     this.batchId = batchId;
   }
 

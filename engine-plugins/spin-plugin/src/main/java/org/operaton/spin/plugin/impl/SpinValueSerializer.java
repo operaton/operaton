@@ -42,7 +42,7 @@ public abstract class SpinValueSerializer extends AbstractSerializableValueSeria
   protected DataFormat<?> dataFormat;
   protected String name;
 
-  public SpinValueSerializer(SerializableValueType type, DataFormat<?> dataFormat, String name) {
+  protected SpinValueSerializer(SerializableValueType type, DataFormat<?> dataFormat, String name) {
     super(type, dataFormat.getName());
     this.dataFormat = dataFormat;
     this.name = name;

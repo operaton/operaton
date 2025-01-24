@@ -42,7 +42,7 @@ public abstract class AbstractMigrationCmd {
 
   protected MigrationPlanExecutionBuilderImpl executionBuilder;
 
-  public AbstractMigrationCmd(MigrationPlanExecutionBuilderImpl executionBuilder) {
+  protected AbstractMigrationCmd(MigrationPlanExecutionBuilderImpl executionBuilder) {
     this.executionBuilder = executionBuilder;
   }
 

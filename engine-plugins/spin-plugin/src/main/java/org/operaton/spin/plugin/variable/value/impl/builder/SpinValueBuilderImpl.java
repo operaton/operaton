@@ -31,7 +31,7 @@ public abstract class SpinValueBuilderImpl<T extends SpinValue> implements SpinV
 
   protected T variableValue;
 
-  public SpinValueBuilderImpl(T value) {
+  protected SpinValueBuilderImpl(T value) {
     variableValue = value;
   }
 

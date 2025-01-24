@@ -76,7 +76,7 @@ public abstract class CatchEventImpl extends EventImpl implements CatchEvent {
   }
 
 
-  public CatchEventImpl(ModelTypeInstanceContext context) {
+  protected CatchEventImpl(ModelTypeInstanceContext context) {
     super(context);
   }
 

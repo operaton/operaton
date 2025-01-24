@@ -39,7 +39,7 @@ public abstract class DmnElementImpl extends DmnModelElementInstanceImpl impleme
   protected static ChildElement<Description> descriptionChild;
   protected static ChildElement<ExtensionElements> extensionElementsChild;
 
-  public DmnElementImpl (ModelTypeInstanceContext instanceContext) {
+  protected DmnElementImpl (ModelTypeInstanceContext instanceContext) {
     super(instanceContext);
   }
 

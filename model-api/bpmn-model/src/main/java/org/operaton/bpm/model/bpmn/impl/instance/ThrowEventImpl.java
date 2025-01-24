@@ -71,7 +71,7 @@ public abstract class ThrowEventImpl extends EventImpl implements ThrowEvent {
   }
 
 
-  public ThrowEventImpl(ModelTypeInstanceContext context) {
+  protected ThrowEventImpl(ModelTypeInstanceContext context) {
     super(context);
   }
 

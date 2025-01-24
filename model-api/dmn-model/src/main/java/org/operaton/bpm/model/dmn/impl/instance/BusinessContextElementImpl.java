@@ -31,7 +31,7 @@ public abstract class BusinessContextElementImpl extends NamedElementImpl implem
 
   protected static Attribute<String> uriAttribute;
 
-  public BusinessContextElementImpl(ModelTypeInstanceContext instanceContext) {
+  protected BusinessContextElementImpl(ModelTypeInstanceContext instanceContext) {
     super(instanceContext);
   }
 

@@ -52,7 +52,7 @@ public abstract class ShapeImpl extends NodeImpl implements Shape {
     typeBuilder.build();
   }
 
-  public ShapeImpl(ModelTypeInstanceContext instanceContext) {
+  protected ShapeImpl(ModelTypeInstanceContext instanceContext) {
     super(instanceContext);
   }
 

@@ -43,11 +43,11 @@ public abstract class AbstractSearchQueryDto {
   protected ObjectMapper objectMapper;
 
   // required for populating via jackson
-  public AbstractSearchQueryDto() {
+  protected AbstractSearchQueryDto() {
 
   }
 
-  public AbstractSearchQueryDto(ObjectMapper objectMapper, MultivaluedMap<String, String> queryParameters) {
+  protected AbstractSearchQueryDto(ObjectMapper objectMapper, MultivaluedMap<String, String> queryParameters) {
     this.objectMapper = objectMapper;
     for (Entry<String, List<String>> param : queryParameters.entrySet()) {
       String key = param.getKey();

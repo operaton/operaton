@@ -74,7 +74,7 @@ public class Parser {
 	public abstract static class ExtensionHandler {
 		private final ExtensionPoint point;
 		
-		public ExtensionHandler(ExtensionPoint point) {
+		protected ExtensionHandler(ExtensionPoint point) {
 			this.point = point;
 		}
 

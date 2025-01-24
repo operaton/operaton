@@ -47,7 +47,7 @@ public abstract class AbstractSetProcessDefinitionStateCmd extends AbstractSetSt
   protected String tenantId;
   protected boolean isTenantIdSet = false;
 
-  public AbstractSetProcessDefinitionStateCmd(UpdateProcessDefinitionSuspensionStateBuilderImpl builder) {
+  protected AbstractSetProcessDefinitionStateCmd(UpdateProcessDefinitionSuspensionStateBuilderImpl builder) {
     super(
         builder.isIncludeProcessInstances(),
         builder.getExecutionDate());

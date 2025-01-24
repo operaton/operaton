@@ -35,7 +35,7 @@ public abstract class ServiceListenerFuture<S, V> implements LifecycleListener, 
 
   protected final S serviceInstance;
 
-  public ServiceListenerFuture(S serviceInstance) {
+  protected ServiceListenerFuture(S serviceInstance) {
     this.serviceInstance = serviceInstance;
   }
 

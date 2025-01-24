@@ -32,7 +32,7 @@ public abstract class AbstractAppPluginResource<T extends AppPlugin> {
   protected AppRuntimeDelegate<T> runtimeDelegate;
   protected String engineName;
 
-  public AbstractAppPluginResource(AppRuntimeDelegate<T> runtimeDelegate, String engineName) {
+  protected AbstractAppPluginResource(AppRuntimeDelegate<T> runtimeDelegate, String engineName) {
     this.runtimeDelegate = runtimeDelegate;
     this.engineName = engineName;
   }

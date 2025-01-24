@@ -41,7 +41,7 @@ public abstract class TableItemImpl extends CmmnElementImpl implements TableItem
   protected static AttributeReferenceCollection<ApplicabilityRule> applicabilityRuleRefCollection;
   protected static AttributeReferenceCollection<Role> authorizedRoleRefCollection;
 
-  public TableItemImpl(ModelTypeInstanceContext instanceContext) {
+  protected TableItemImpl(ModelTypeInstanceContext instanceContext) {
     super(instanceContext);
   }
 

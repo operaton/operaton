@@ -38,7 +38,7 @@ public abstract class DelegateFormHandler {
   protected String deploymentId;
   protected FormHandler formHandler;
 
-  public DelegateFormHandler(FormHandler formHandler, String deploymentId) {
+  protected DelegateFormHandler(FormHandler formHandler, String deploymentId) {
     this.formHandler = formHandler;
     this.deploymentId = deploymentId;
   }

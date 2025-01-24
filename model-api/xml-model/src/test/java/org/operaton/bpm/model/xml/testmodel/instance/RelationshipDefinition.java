@@ -49,7 +49,7 @@ public abstract class RelationshipDefinition extends ModelElementInstanceImpl {
     typeBuilder.build();
   }
 
-  public RelationshipDefinition(ModelTypeInstanceContext instanceContext) {
+  protected RelationshipDefinition(ModelTypeInstanceContext instanceContext) {
     super(instanceContext);
   }
 

@@ -68,7 +68,7 @@ public abstract class PluggableProcessEngineTest implements ProcessEngineProvide
   protected ExternalTaskService externalTaskService;
   protected DecisionService decisionService;
 
-  public PluggableProcessEngineTest() {
+  protected PluggableProcessEngineTest() {
   }
 
   @Before

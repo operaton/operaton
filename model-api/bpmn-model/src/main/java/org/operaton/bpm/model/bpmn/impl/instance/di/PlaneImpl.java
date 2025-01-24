@@ -53,7 +53,7 @@ public abstract class PlaneImpl extends NodeImpl implements Plane {
     typeBuilder.build();
   }
 
-  public PlaneImpl(ModelTypeInstanceContext instanceContext) {
+  protected PlaneImpl(ModelTypeInstanceContext instanceContext) {
     super(instanceContext);
   }
 

@@ -46,7 +46,7 @@ public abstract class InteractionNodeImpl extends BpmnModelElementInstanceImpl i
     typeBuilder.build();
   }
 
-  public InteractionNodeImpl(ModelTypeInstanceContext instanceContext) {
+  protected InteractionNodeImpl(ModelTypeInstanceContext instanceContext) {
     super(instanceContext);
   }
 }

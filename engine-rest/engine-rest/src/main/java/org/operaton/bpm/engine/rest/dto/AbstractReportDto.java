@@ -54,10 +54,10 @@ public abstract class AbstractReportDto<T extends Report> extends AbstractSearch
   }
 
   // required for populating via jackson
-  public AbstractReportDto() {
+  protected AbstractReportDto() {
   }
 
-  public AbstractReportDto(ObjectMapper objectMapper, MultivaluedMap<String, String> queryParameters) {
+  protected AbstractReportDto(ObjectMapper objectMapper, MultivaluedMap<String, String> queryParameters) {
     super(objectMapper, queryParameters);
   }
 

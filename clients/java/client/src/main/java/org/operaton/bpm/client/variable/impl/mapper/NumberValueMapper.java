@@ -22,7 +22,7 @@ import org.operaton.bpm.engine.variable.value.PrimitiveValue;
 
 public abstract class NumberValueMapper<T extends PrimitiveValue<?>> extends PrimitiveValueMapper<T> {
 
-  public NumberValueMapper(PrimitiveValueType valueType) {
+  protected NumberValueMapper(PrimitiveValueType valueType) {
     super(valueType);
   }
 

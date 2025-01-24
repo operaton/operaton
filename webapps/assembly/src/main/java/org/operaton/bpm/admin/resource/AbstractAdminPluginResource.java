@@ -29,7 +29,7 @@ import org.operaton.bpm.webapp.plugin.resource.AbstractAppPluginResource;
  */
 public abstract class AbstractAdminPluginResource extends AbstractAppPluginResource<AdminPlugin> {
 
-  public AbstractAdminPluginResource(String engineName) {
+  protected AbstractAdminPluginResource(String engineName) {
     super(Admin.getRuntimeDelegate(), engineName);
   }
 

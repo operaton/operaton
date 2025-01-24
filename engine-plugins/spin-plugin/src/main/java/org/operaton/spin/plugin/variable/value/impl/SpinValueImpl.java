@@ -37,7 +37,7 @@ public abstract class SpinValueImpl extends AbstractTypedValue<Spin<?>> implemen
   protected boolean isDeserialized;
   protected String dataFormatName;
 
-  public SpinValueImpl(
+  protected SpinValueImpl(
       Spin<?> value,
       String serializedValue,
       String dataFormatName,

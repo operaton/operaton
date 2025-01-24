@@ -62,7 +62,7 @@ public abstract class Parse extends DefaultHandler {
   protected List<Problem> warnings = new ArrayList<>();
   protected String schemaResource;
 
-  public Parse(Parser parser) {
+  protected Parse(Parser parser) {
     this.parser = parser;
   }
 

@@ -33,14 +33,14 @@ public abstract class MigratingJobInstance implements MigratingInstance, Removin
 
   protected List<MigratingInstance> migratingDependentInstances = new ArrayList<>();
 
-  public MigratingJobInstance(JobEntity jobEntity, JobDefinitionEntity jobDefinitionEntity,
+  protected MigratingJobInstance(JobEntity jobEntity, JobDefinitionEntity jobDefinitionEntity,
       ScopeImpl targetScope) {
     this.jobEntity = jobEntity;
     this.targetJobDefinitionEntity = jobDefinitionEntity;
     this.targetScope = targetScope;
   }
 
-  public MigratingJobInstance(JobEntity jobEntity) {
+  protected MigratingJobInstance(JobEntity jobEntity) {
     this(jobEntity, null, null);
   }
 

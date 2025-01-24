@@ -35,7 +35,7 @@ public abstract class ResourceProcessEngineTestCase extends AbstractProcessEngin
 
   protected String engineConfigurationResource;
 
-  public ResourceProcessEngineTestCase(String configurationResource) {
+  protected ResourceProcessEngineTestCase(String configurationResource) {
     this.engineConfigurationResource = configurationResource;
   }
 

@@ -54,7 +54,7 @@ public abstract class AbstractVariablesResource implements VariableResource {
   protected String resourceId;
   protected ObjectMapper objectMapper;
 
-  public AbstractVariablesResource(ProcessEngine engine, String resourceId, ObjectMapper objectMapper) {
+  protected AbstractVariablesResource(ProcessEngine engine, String resourceId, ObjectMapper objectMapper) {
     this.engine = engine;
     this.resourceId = resourceId;
     this.objectMapper = objectMapper;

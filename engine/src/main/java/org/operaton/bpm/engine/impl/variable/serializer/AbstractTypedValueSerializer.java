@@ -36,7 +36,7 @@ public abstract class AbstractTypedValueSerializer<T extends TypedValue> impleme
 
   protected ValueType valueType;
 
-  public AbstractTypedValueSerializer(ValueType type) {
+  protected AbstractTypedValueSerializer(ValueType type) {
     valueType = type;
   }
 

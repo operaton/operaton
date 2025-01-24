@@ -31,7 +31,7 @@ import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
  */
 public abstract class BpmnModelElementInstanceImpl extends ModelElementInstanceImpl implements BpmnModelElementInstance {
 
-  public BpmnModelElementInstanceImpl(ModelTypeInstanceContext instanceContext) {
+  protected BpmnModelElementInstanceImpl(ModelTypeInstanceContext instanceContext) {
     super(instanceContext);
   }
 

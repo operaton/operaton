@@ -67,7 +67,7 @@ public class CompetingSentrySatisfactionTest {
     OptimisticLockingException exception;
     protected StateTransitionCaseExecutionCmd cmd;
 
-    public SingleThread(String caseExecutionId, StateTransitionCaseExecutionCmd cmd) {
+    protected SingleThread(String caseExecutionId, StateTransitionCaseExecutionCmd cmd) {
       this.caseExecutionId = caseExecutionId;
       this.cmd = cmd;
     }

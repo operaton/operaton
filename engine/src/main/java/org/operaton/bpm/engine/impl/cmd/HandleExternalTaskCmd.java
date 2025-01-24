@@ -36,7 +36,7 @@ public abstract class HandleExternalTaskCmd extends ExternalTaskCmd {
    */
   protected String workerId;
 
-  public HandleExternalTaskCmd(String externalTaskId, String workerId) {
+  protected HandleExternalTaskCmd(String externalTaskId, String workerId) {
     super(externalTaskId);
     this.workerId = workerId;
   }

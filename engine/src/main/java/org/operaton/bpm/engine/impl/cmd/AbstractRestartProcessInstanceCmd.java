@@ -39,7 +39,7 @@ public abstract class AbstractRestartProcessInstanceCmd<T> implements Command<T>
   protected CommandExecutor commandExecutor;
   protected RestartProcessInstanceBuilderImpl builder;
 
-  public AbstractRestartProcessInstanceCmd(CommandExecutor commandExecutor, RestartProcessInstanceBuilderImpl builder) {
+  protected AbstractRestartProcessInstanceCmd(CommandExecutor commandExecutor, RestartProcessInstanceBuilderImpl builder) {
     this.commandExecutor = commandExecutor;
     this.builder = builder;
   }

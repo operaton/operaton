@@ -68,7 +68,7 @@ public abstract class BaseElementImpl extends BpmnModelElementInstanceImpl imple
     typeBuilder.build();
   }
 
-  public BaseElementImpl(ModelTypeInstanceContext instanceContext) {
+  protected BaseElementImpl(ModelTypeInstanceContext instanceContext) {
     super(instanceContext);
   }
 

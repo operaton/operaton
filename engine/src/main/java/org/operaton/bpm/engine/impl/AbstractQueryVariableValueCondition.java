@@ -29,7 +29,7 @@ public abstract class AbstractQueryVariableValueCondition {
 
   protected QueryVariableValue wrappedQueryValue;
 
-  public AbstractQueryVariableValueCondition(QueryVariableValue variableValue) {
+  protected AbstractQueryVariableValueCondition(QueryVariableValue variableValue) {
     this.wrappedQueryValue = variableValue;
   }
 

@@ -29,7 +29,7 @@ public abstract class AbstractTransactionInterceptor extends CommandInterceptor 
   protected final boolean requiresNew;
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
 
-  public AbstractTransactionInterceptor(boolean requiresNew,
+  protected AbstractTransactionInterceptor(boolean requiresNew,
       ProcessEngineConfigurationImpl processEngineConfiguration) {
     this.requiresNew = requiresNew;
     this.processEngineConfiguration = processEngineConfiguration;

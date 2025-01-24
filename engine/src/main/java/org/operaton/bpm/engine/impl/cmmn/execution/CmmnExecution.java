@@ -83,7 +83,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
    */
   protected boolean entryCriterionSatisfied = false;
 
-  public CmmnExecution() {
+  protected CmmnExecution() {
   }
 
   // plan items ///////////////////////////////////////////////////////////////

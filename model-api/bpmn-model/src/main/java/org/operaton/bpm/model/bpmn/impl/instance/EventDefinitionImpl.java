@@ -41,7 +41,7 @@ public abstract class EventDefinitionImpl extends RootElementImpl implements Eve
     typeBuilder.build();
   }
 
-  public EventDefinitionImpl(ModelTypeInstanceContext context) {
+  protected EventDefinitionImpl(ModelTypeInstanceContext context) {
     super(context);
   }
 

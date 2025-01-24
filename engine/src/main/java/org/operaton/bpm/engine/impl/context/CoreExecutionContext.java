@@ -27,7 +27,7 @@ public abstract class CoreExecutionContext<T extends CoreExecution> {
 
   protected T execution;
 
-  public CoreExecutionContext(T execution) {
+  protected CoreExecutionContext(T execution) {
     this.execution = execution;
   }
 

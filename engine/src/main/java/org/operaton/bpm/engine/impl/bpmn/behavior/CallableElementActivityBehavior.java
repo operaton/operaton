@@ -58,14 +58,14 @@ public abstract class CallableElementActivityBehavior extends AbstractBpmnActivi
    */
   protected String className;
 
-  public CallableElementActivityBehavior() {
+  protected CallableElementActivityBehavior() {
   }
 
-  public CallableElementActivityBehavior(String className) {
+  protected CallableElementActivityBehavior(String className) {
     this.className = className;
   }
 
-  public CallableElementActivityBehavior(Expression expression) {
+  protected CallableElementActivityBehavior(Expression expression) {
     this.expression = expression;
   }
 

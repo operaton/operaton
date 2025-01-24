@@ -42,12 +42,12 @@ public abstract class ReferenceWalker<T> {
 
   protected abstract Collection<T> nextElements();
 
-  public ReferenceWalker(T initialElement) {
+  protected ReferenceWalker(T initialElement) {
     currentElements = new LinkedList<>();
     currentElements.add(initialElement);
   }
 
-  public ReferenceWalker(List<T> initialElements) {
+  protected ReferenceWalker(List<T> initialElements) {
     currentElements = new LinkedList<>(initialElements);
   }
 

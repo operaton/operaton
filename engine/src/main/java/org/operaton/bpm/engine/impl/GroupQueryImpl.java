@@ -38,10 +38,10 @@ public abstract class GroupQueryImpl extends AbstractQuery<GroupQuery, Group> im
   protected String procDefId;
   protected String tenantId;
 
-  public GroupQueryImpl() {
+  protected GroupQueryImpl() {
   }
 
-  public GroupQueryImpl(CommandExecutor commandExecutor) {
+  protected GroupQueryImpl(CommandExecutor commandExecutor) {
     super(commandExecutor);
   }
 

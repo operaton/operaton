@@ -40,7 +40,7 @@ public abstract class HistoryExecutionListener implements ExecutionListener {
   protected final HistoryEventProducer eventProducer;
   protected HistoryLevel historyLevel;
 
-  public HistoryExecutionListener(HistoryEventProducer historyEventProducer) {
+  protected HistoryExecutionListener(HistoryEventProducer historyEventProducer) {
     this.eventProducer = historyEventProducer;
   }
 

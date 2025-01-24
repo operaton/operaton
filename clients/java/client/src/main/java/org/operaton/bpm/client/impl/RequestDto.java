@@ -23,7 +23,7 @@ public abstract class RequestDto {
 
   protected String workerId;
 
-  public RequestDto(String workerId) {
+  protected RequestDto(String workerId) {
     this.workerId = workerId;
   }
 

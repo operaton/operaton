@@ -26,7 +26,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  */
 public abstract class PrimitiveValueSerializer<T extends PrimitiveValue<?>> extends AbstractTypedValueSerializer<T> {
 
-  public PrimitiveValueSerializer(PrimitiveValueType variableType) {
+  protected PrimitiveValueSerializer(PrimitiveValueType variableType) {
     super(variableType);
   }
 

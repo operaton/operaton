@@ -51,7 +51,7 @@ public abstract class LabelImpl extends NodeImpl implements Label {
     typeBuilder.build();
   }
 
-  public LabelImpl(ModelTypeInstanceContext instanceContext) {
+  protected LabelImpl(ModelTypeInstanceContext instanceContext) {
     super(instanceContext);
   }
 

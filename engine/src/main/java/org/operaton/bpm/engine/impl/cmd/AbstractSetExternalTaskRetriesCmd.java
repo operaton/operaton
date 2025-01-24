@@ -37,7 +37,7 @@ public abstract class AbstractSetExternalTaskRetriesCmd<T> implements Command<T>
 
   protected UpdateExternalTaskRetriesBuilderImpl builder;
 
-  public AbstractSetExternalTaskRetriesCmd(UpdateExternalTaskRetriesBuilderImpl builder) {
+  protected AbstractSetExternalTaskRetriesCmd(UpdateExternalTaskRetriesBuilderImpl builder) {
     this.builder = builder;
   }
 

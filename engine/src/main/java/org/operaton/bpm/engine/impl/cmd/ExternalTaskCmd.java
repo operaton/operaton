@@ -43,7 +43,7 @@ public abstract class ExternalTaskCmd implements Command<Void> {
    */
   protected String externalTaskId;
 
-  public ExternalTaskCmd(String externalTaskId) {
+  protected ExternalTaskCmd(String externalTaskId) {
     this.externalTaskId = externalTaskId;
   }
 

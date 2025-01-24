@@ -42,7 +42,7 @@ public abstract class DeploymentMetadataParse extends Parse {
 
   private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
-  public DeploymentMetadataParse(Parser parser) {
+  protected DeploymentMetadataParse(Parser parser) {
     super(parser);
   }
 

@@ -36,7 +36,7 @@ public abstract class JobRetryCmd implements Command<Object> {
   protected String jobId;
   protected Throwable exception;
 
-  public JobRetryCmd(String jobId, Throwable exception) {
+  protected JobRetryCmd(String jobId, Throwable exception) {
     this.jobId = jobId;
     this.exception = exception;
   }

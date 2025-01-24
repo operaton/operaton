@@ -34,7 +34,7 @@ public abstract class AbstractRestProcessEngineAware {
 
   protected String relativeRootResourcePath = "/";
 
-  public AbstractRestProcessEngineAware(String engineName, final ObjectMapper objectMapper) {
+  protected AbstractRestProcessEngineAware(String engineName, final ObjectMapper objectMapper) {
     this.processEngine = EngineUtil.lookupProcessEngine(engineName);
     this.objectMapper = objectMapper;
   }

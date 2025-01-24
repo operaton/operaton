@@ -31,7 +31,7 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
  */
 public abstract class OnPartImpl extends CmmnElementImpl implements OnPart {
 
-  public OnPartImpl(ModelTypeInstanceContext instanceContext) {
+  protected OnPartImpl(ModelTypeInstanceContext instanceContext) {
     super(instanceContext);
   }
 

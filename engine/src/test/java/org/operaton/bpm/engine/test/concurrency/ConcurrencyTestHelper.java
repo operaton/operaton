@@ -77,11 +77,11 @@ public abstract class ConcurrencyTestHelper {
 
     protected final ThreadControl monitor;
 
-    public ControllableCommand() {
+    protected ControllableCommand() {
       this.monitor = new ThreadControl();
     }
 
-    public ControllableCommand(ThreadControl threadControl) {
+    protected ControllableCommand(ThreadControl threadControl) {
       this.monitor = threadControl;
     }
 

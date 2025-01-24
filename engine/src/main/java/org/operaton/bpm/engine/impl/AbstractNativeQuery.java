@@ -56,7 +56,7 @@ public abstract class AbstractNativeQuery<T extends NativeQuery< ? , ? >, U> imp
     this.commandExecutor = commandExecutor;
   }
 
-  public AbstractNativeQuery(CommandContext commandContext) {
+  protected AbstractNativeQuery(CommandContext commandContext) {
     this.commandContext = commandContext;
   }
 

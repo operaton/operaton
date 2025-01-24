@@ -52,7 +52,7 @@ public abstract class EdgeImpl extends DiagramElementImpl implements Edge {
     typeBuilder.build();
   }
 
-  public EdgeImpl(ModelTypeInstanceContext instanceContext) {
+  protected EdgeImpl(ModelTypeInstanceContext instanceContext) {
     super(instanceContext);
   }
 

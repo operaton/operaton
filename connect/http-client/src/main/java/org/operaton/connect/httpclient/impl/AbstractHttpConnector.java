@@ -41,7 +41,7 @@ public abstract class AbstractHttpConnector<Q extends HttpBaseRequest<Q, R>, R e
   protected CloseableHttpClient httpClient;
   protected final Charset charset;
 
-  public AbstractHttpConnector(String connectorId) {
+  protected AbstractHttpConnector(String connectorId) {
     super(connectorId);
     httpClient = createClient();
     charset = StandardCharsets.UTF_8;

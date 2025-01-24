@@ -41,7 +41,7 @@ public abstract class HalResource<T extends HalResource<?>> {
   // the linker used by this resource
   protected transient HalLinker linker;
 
-  public HalResource() {
+  protected HalResource() {
     this.linker = Hal.getInstance().createLinker(this);
   }
 

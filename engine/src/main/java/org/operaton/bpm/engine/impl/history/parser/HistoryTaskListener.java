@@ -38,7 +38,7 @@ public abstract class HistoryTaskListener implements TaskListener {
   protected final HistoryEventProducer eventProducer;
   protected HistoryLevel historyLevel;
 
-  public HistoryTaskListener(HistoryEventProducer historyEventProducer) {
+  protected HistoryTaskListener(HistoryEventProducer historyEventProducer) {
     this.eventProducer = historyEventProducer;
   }
 

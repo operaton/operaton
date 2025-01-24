@@ -39,7 +39,7 @@ public abstract class ModelInstanceCache<InstanceType extends ModelInstance, Def
   protected Cache<String, InstanceType> instanceCache;
   protected ResourceDefinitionCache<DefinitionType> definitionCache;
 
-  public ModelInstanceCache(CacheFactory factory, int cacheCapacity, ResourceDefinitionCache<DefinitionType> definitionCache) {
+  protected ModelInstanceCache(CacheFactory factory, int cacheCapacity, ResourceDefinitionCache<DefinitionType> definitionCache) {
     this.instanceCache = factory.createCache(cacheCapacity);
     this.definitionCache = definitionCache;
   }

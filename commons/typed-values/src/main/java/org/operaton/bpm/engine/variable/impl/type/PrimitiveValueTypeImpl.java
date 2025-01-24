@@ -52,11 +52,11 @@ public abstract class PrimitiveValueTypeImpl extends AbstractValueTypeImpl imple
 
   protected Class<?> javaType;
 
-  public PrimitiveValueTypeImpl(Class<?> javaType) {
+  protected PrimitiveValueTypeImpl(Class<?> javaType) {
     this(javaType.getSimpleName().toLowerCase(), javaType);
   }
 
-  public PrimitiveValueTypeImpl(String name, Class<?> javaType) {
+  protected PrimitiveValueTypeImpl(String name, Class<?> javaType) {
     super(name);
     this.javaType = javaType;
   }

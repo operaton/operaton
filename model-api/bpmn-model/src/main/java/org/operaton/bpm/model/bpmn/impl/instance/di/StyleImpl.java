@@ -48,7 +48,7 @@ public abstract class StyleImpl extends BpmnModelElementInstanceImpl implements 
     typeBuilder.build();
   }
 
-  public StyleImpl(ModelTypeInstanceContext instanceContext) {
+  protected StyleImpl(ModelTypeInstanceContext instanceContext) {
     super(instanceContext);
   }
 

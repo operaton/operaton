@@ -67,7 +67,7 @@ public abstract class FlowElementImpl extends BaseElementImpl implements FlowEle
     typeBuilder.build();
   }
 
-  public FlowElementImpl(ModelTypeInstanceContext context) {
+  protected FlowElementImpl(ModelTypeInstanceContext context) {
     super(context);
   }
 

@@ -58,9 +58,9 @@ public abstract class AbstractRestQueryParametersDto<T> extends QueryParameters 
   protected ObjectMapper objectMapper;
 
   // required for populating via jackson
-  public AbstractRestQueryParametersDto() { }
+  protected AbstractRestQueryParametersDto() { }
 
-  public AbstractRestQueryParametersDto(ObjectMapper objectMapper, MultivaluedMap<String, String> queryParameters) {
+  protected AbstractRestQueryParametersDto(ObjectMapper objectMapper, MultivaluedMap<String, String> queryParameters) {
     this.objectMapper = objectMapper;
     for (Entry<String, List<String>> param : queryParameters.entrySet()) {
       String key = param.getKey();

@@ -56,7 +56,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
 
   protected ProcessDefinitionImpl processDefinition;
 
-  public ScopeImpl(String id, ProcessDefinitionImpl processDefinition) {
+  protected ScopeImpl(String id, ProcessDefinitionImpl processDefinition) {
     super(id);
     this.processDefinition = processDefinition;
   }

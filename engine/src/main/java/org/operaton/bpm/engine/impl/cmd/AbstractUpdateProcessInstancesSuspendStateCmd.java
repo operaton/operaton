@@ -39,7 +39,7 @@ public abstract class AbstractUpdateProcessInstancesSuspendStateCmd<T> implement
   protected CommandExecutor commandExecutor;
   protected boolean suspending;
 
-  public AbstractUpdateProcessInstancesSuspendStateCmd(CommandExecutor commandExecutor, UpdateProcessInstancesSuspensionStateBuilderImpl builder, boolean suspending) {
+  protected AbstractUpdateProcessInstancesSuspendStateCmd(CommandExecutor commandExecutor, UpdateProcessInstancesSuspensionStateBuilderImpl builder, boolean suspending) {
     this.commandExecutor = commandExecutor;
     this.builder = builder;
     this.suspending = suspending;

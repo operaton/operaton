@@ -37,11 +37,11 @@ public abstract class AbstractExecuteFilterCmd implements Serializable {
   protected String filterId;
   protected Query<?, ?> extendingQuery;
 
-  public AbstractExecuteFilterCmd(String filterId) {
+  protected AbstractExecuteFilterCmd(String filterId) {
     this.filterId = filterId;
   }
 
-  public AbstractExecuteFilterCmd(String filterId, Query<?, ?> extendingQuery) {
+  protected AbstractExecuteFilterCmd(String filterId, Query<?, ?> extendingQuery) {
     this.filterId = filterId;
     this.extendingQuery = extendingQuery;
   }

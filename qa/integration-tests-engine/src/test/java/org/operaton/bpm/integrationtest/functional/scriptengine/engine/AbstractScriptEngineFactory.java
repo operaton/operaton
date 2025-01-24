@@ -39,7 +39,7 @@ public abstract class AbstractScriptEngineFactory implements ScriptEngineFactory
   protected String version;
   protected ScriptEngineBehavior behavior;
 
-  public AbstractScriptEngineFactory(String name, String version, ScriptEngineBehavior behavior) {
+  protected AbstractScriptEngineFactory(String name, String version, ScriptEngineBehavior behavior) {
     this.name = name;
     this.version = version;
     this.behavior = behavior;

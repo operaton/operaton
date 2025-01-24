@@ -41,10 +41,10 @@ public abstract class UserQueryImpl extends AbstractQuery<UserQuery, User> imple
   protected String procDefId;
   protected String tenantId;
 
-  public UserQueryImpl() {
+  protected UserQueryImpl() {
   }
 
-  public UserQueryImpl(CommandExecutor commandExecutor) {
+  protected UserQueryImpl(CommandExecutor commandExecutor) {
     super(commandExecutor);
   }
 

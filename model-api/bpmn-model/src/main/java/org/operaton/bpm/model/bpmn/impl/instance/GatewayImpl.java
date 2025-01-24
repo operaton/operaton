@@ -50,7 +50,7 @@ public abstract class GatewayImpl extends FlowNodeImpl implements Gateway {
     typeBuilder.build();
   }
 
-  public GatewayImpl(ModelTypeInstanceContext context) {
+  protected GatewayImpl(ModelTypeInstanceContext context) {
     super(context);
   }
 

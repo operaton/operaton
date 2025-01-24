@@ -55,7 +55,7 @@ public abstract class ItemAwareElementImpl extends BaseElementImpl implements It
     typeBuilder.build();
   }
 
-  public ItemAwareElementImpl(ModelTypeInstanceContext instanceContext) {
+  protected ItemAwareElementImpl(ModelTypeInstanceContext instanceContext) {
     super(instanceContext);
   }
 

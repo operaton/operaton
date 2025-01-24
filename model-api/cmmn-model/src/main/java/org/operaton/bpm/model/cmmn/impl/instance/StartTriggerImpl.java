@@ -31,7 +31,7 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
  */
 public abstract class StartTriggerImpl extends CmmnElementImpl implements StartTrigger {
 
-  public StartTriggerImpl(ModelTypeInstanceContext instanceContext) {
+  protected StartTriggerImpl(ModelTypeInstanceContext instanceContext) {
     super(instanceContext);
   }
 

@@ -31,7 +31,7 @@ public abstract class NamedElementImpl extends DmnElementImpl implements NamedEl
 
   protected static Attribute<String> nameAttribute;
 
-  public NamedElementImpl(ModelTypeInstanceContext instanceContext) {
+  protected NamedElementImpl(ModelTypeInstanceContext instanceContext) {
     super(instanceContext);
   }
 

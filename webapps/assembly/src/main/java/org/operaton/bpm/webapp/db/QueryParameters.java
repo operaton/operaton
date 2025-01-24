@@ -28,9 +28,9 @@ public abstract class QueryParameters extends ListQueryParameterObject {
   protected boolean historyEnabled = true;
   protected boolean maxResultsLimitEnabled = true;
 
-  public QueryParameters() { }
+  protected QueryParameters() { }
 
-  public QueryParameters(int firstResult, int maxResults) {
+  protected QueryParameters(int firstResult, int maxResults) {
     this.firstResult = firstResult;
     this.maxResults = maxResults;
   }

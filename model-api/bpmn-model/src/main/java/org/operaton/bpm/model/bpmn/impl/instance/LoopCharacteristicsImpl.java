@@ -41,7 +41,7 @@ public abstract class LoopCharacteristicsImpl extends BaseElementImpl implements
     typeBuilder.build();
   }
 
-  public LoopCharacteristicsImpl(ModelTypeInstanceContext instanceContext) {
+  protected LoopCharacteristicsImpl(ModelTypeInstanceContext instanceContext) {
     super(instanceContext);
   }
 }

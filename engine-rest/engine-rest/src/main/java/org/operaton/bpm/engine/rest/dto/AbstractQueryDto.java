@@ -60,11 +60,11 @@ public abstract class AbstractQueryDto<T extends Query<?, ?>>  extends AbstractS
   protected Map<String, String> expressions = new HashMap<>();
 
   // required for populating via jackson
-  public AbstractQueryDto() {
+  protected AbstractQueryDto() {
 
   }
 
-  public AbstractQueryDto(ObjectMapper objectMapper, MultivaluedMap<String, String> queryParameters) {
+  protected AbstractQueryDto(ObjectMapper objectMapper, MultivaluedMap<String, String> queryParameters) {
     super(objectMapper, queryParameters);
   }
 

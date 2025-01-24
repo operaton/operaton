@@ -31,7 +31,7 @@ public abstract class ExpressionImpl extends DmnElementImpl implements Expressio
 
   protected static Attribute<String> typeRefAttribute;
 
-  public ExpressionImpl(ModelTypeInstanceContext instanceContext) {
+  protected ExpressionImpl(ModelTypeInstanceContext instanceContext) {
     super(instanceContext);
   }
 

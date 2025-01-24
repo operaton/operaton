@@ -40,7 +40,7 @@ public abstract class AbstractExecutionListenerSpec {
 
   protected List<FieldSpec> fieldSpecs;
 
-  public AbstractExecutionListenerSpec(String eventName) {
+  protected AbstractExecutionListenerSpec(String eventName) {
     this.eventNameToRegisterOn = eventName;
     this.expectedRegisteredEvents = new HashSet<>();
     this.expectedRegisteredEvents.add(eventName);

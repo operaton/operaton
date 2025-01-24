@@ -57,7 +57,7 @@ public abstract class DiagramElementImpl extends BpmnModelElementInstanceImpl im
     typeBuilder.build();
   }
 
-  public DiagramElementImpl(ModelTypeInstanceContext instanceContext) {
+  protected DiagramElementImpl(ModelTypeInstanceContext instanceContext) {
     super(instanceContext);
   }
 

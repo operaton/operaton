@@ -28,12 +28,12 @@ public abstract class AbstractInstanceCancellationCmd extends AbstractProcessIns
 
   protected String cancellationReason;
 
-  public AbstractInstanceCancellationCmd(String processInstanceId) {
+  protected AbstractInstanceCancellationCmd(String processInstanceId) {
     super(processInstanceId);
     this.cancellationReason = "Cancellation due to process instance modifcation";
   }
 
-  public AbstractInstanceCancellationCmd(String processInstanceId, String cancellationReason) {
+  protected AbstractInstanceCancellationCmd(String processInstanceId, String cancellationReason) {
     super(processInstanceId);
     this.cancellationReason = cancellationReason;
   }

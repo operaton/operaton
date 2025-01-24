@@ -39,7 +39,7 @@ public abstract class AbstractSetStateCmd implements Command<Void> {
   protected boolean isLogUserOperationDisabled;
   protected Date executionDate;
 
-  public AbstractSetStateCmd(boolean includeSubResources, Date executionDate) {
+  protected AbstractSetStateCmd(boolean includeSubResources, Date executionDate) {
     this.includeSubResources = includeSubResources;
     this.executionDate = executionDate;
   }

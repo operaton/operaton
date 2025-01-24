@@ -24,7 +24,7 @@ import java.util.Collections;
  */
 public abstract class SingleReferenceWalker<T> extends ReferenceWalker<T> {
 
-  public SingleReferenceWalker(T initialElement) {
+  protected SingleReferenceWalker(T initialElement) {
     super(initialElement);
   }
 

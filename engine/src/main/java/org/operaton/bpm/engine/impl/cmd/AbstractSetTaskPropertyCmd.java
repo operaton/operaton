@@ -47,7 +47,7 @@ public abstract class AbstractSetTaskPropertyCmd<T> implements Command<Void>, Se
    * @throws NullValueException in case the given taskId or the given value are null
    * @throws NotFoundException  in case the referenced task does not exist
    */
-  public AbstractSetTaskPropertyCmd(String taskId, T value) {
+  protected AbstractSetTaskPropertyCmd(String taskId, T value) {
     this(taskId, value, false);
   }
 

@@ -39,7 +39,7 @@ public abstract class IoParameter {
    */
   protected ParameterValueProvider valueProvider;
 
-  public IoParameter(String name, ParameterValueProvider valueProvider) {
+  protected IoParameter(String name, ParameterValueProvider valueProvider) {
     this.name = name;
     this.valueProvider = valueProvider;
   }

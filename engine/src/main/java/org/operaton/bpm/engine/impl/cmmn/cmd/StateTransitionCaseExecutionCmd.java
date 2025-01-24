@@ -31,12 +31,12 @@ public abstract class StateTransitionCaseExecutionCmd extends CaseExecutionVaria
 
   private static final long serialVersionUID = 1L;
 
-  public StateTransitionCaseExecutionCmd(String caseExecutionId, Map<String, Object> variables, Map<String, Object> variablesLocal,
+  protected StateTransitionCaseExecutionCmd(String caseExecutionId, Map<String, Object> variables, Map<String, Object> variablesLocal,
         Collection<String> variableDeletions, Collection<String> variableLocalDeletions) {
     super(caseExecutionId, variables, variablesLocal, variableDeletions, variableLocalDeletions);
   }
 
-  public StateTransitionCaseExecutionCmd(CaseExecutionCommandBuilderImpl builder) {
+  protected StateTransitionCaseExecutionCmd(CaseExecutionCommandBuilderImpl builder) {
     super(builder);
   }
 

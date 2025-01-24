@@ -35,7 +35,7 @@ public abstract class ParameterImpl extends CmmnElementImpl implements Parameter
 
   protected static Attribute<String> nameAttribute;
 
-  public ParameterImpl(ModelTypeInstanceContext instanceContext) {
+  protected ParameterImpl(ModelTypeInstanceContext instanceContext) {
     super(instanceContext);
   }
 

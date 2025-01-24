@@ -41,7 +41,7 @@ public abstract class LabeledEdgeImpl extends EdgeImpl implements LabeledEdge {
     typeBuilder.build();
   }
 
-  public LabeledEdgeImpl(ModelTypeInstanceContext instanceContext) {
+  protected LabeledEdgeImpl(ModelTypeInstanceContext instanceContext) {
     super(instanceContext);
   }
 }

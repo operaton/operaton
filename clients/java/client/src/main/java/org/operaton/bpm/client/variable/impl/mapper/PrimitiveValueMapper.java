@@ -24,7 +24,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 
 public abstract class PrimitiveValueMapper<T extends PrimitiveValue<?>> extends AbstractTypedValueMapper<T> {
 
-  public PrimitiveValueMapper(PrimitiveValueType variableType) {
+  protected PrimitiveValueMapper(PrimitiveValueType variableType) {
     super(variableType);
   }
 

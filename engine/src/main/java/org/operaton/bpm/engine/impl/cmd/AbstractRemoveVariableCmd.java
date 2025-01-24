@@ -30,7 +30,7 @@ public abstract class AbstractRemoveVariableCmd extends AbstractVariableCmd {
 
   protected final Collection<String> variableNames;
 
-  public AbstractRemoveVariableCmd(String entityId, Collection<String> variableNames, boolean isLocal) {
+  protected AbstractRemoveVariableCmd(String entityId, Collection<String> variableNames, boolean isLocal) {
     super(entityId, isLocal);
     this.variableNames = variableNames;
   }

@@ -55,7 +55,7 @@ public abstract class EventImpl extends FlowNodeImpl implements Event {
     typeBuilder.build();
   }
 
-  public EventImpl(ModelTypeInstanceContext context) {
+  protected EventImpl(ModelTypeInstanceContext context) {
     super(context);
   }
 

@@ -49,7 +49,7 @@ public abstract class CoreModelElement implements Serializable {
   protected Map<String, List<VariableListener<?>>> variableListeners =
       new HashMap<>();
 
-  public CoreModelElement(String id) {
+  protected CoreModelElement(String id) {
     this.id = id;
   }
 

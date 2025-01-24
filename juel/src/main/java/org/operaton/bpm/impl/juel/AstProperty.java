@@ -31,7 +31,7 @@ public abstract class AstProperty extends AstNode {
 	protected final boolean lvalue;
 	protected final boolean strict; // allow null as property value?
 	
-	public AstProperty(AstNode prefix, boolean lvalue, boolean strict) {
+	protected AstProperty(AstNode prefix, boolean lvalue, boolean strict) {
 		this.prefix = prefix;
 		this.lvalue = lvalue;
 		this.strict = strict;

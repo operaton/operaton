@@ -39,7 +39,7 @@ public abstract class AbstractTransactionProcessEngineConfiguration extends Proc
   /** {@link CommandContextFactory} to be used for DbSchemaOperations */
   protected CommandContextFactory dbSchemaOperationsCommandContextFactory;
 
-  public AbstractTransactionProcessEngineConfiguration() {
+  protected AbstractTransactionProcessEngineConfiguration() {
     transactionsExternallyManaged = true;
   }
 

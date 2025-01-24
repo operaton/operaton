@@ -59,7 +59,7 @@ public abstract class SpringProcessEngineTestCase implements ApplicationContextA
   protected ConfigurableApplicationContext applicationContext;
   private String deploymentId;
 
-  public SpringProcessEngineTestCase() {
+  protected SpringProcessEngineTestCase() {
     super();
     this.testContextManager = new TestContextManager(getClass());
 

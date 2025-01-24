@@ -66,7 +66,7 @@ public abstract class ConversationNodeImpl extends BaseElementImpl implements Co
     typeBuilder.build();
   }
 
-  public ConversationNodeImpl(ModelTypeInstanceContext instanceContext) {
+  protected ConversationNodeImpl(ModelTypeInstanceContext instanceContext) {
     super(instanceContext);
   }
 

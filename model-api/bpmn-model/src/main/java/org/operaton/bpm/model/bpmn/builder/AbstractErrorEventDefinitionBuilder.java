@@ -28,7 +28,7 @@ import org.operaton.bpm.model.bpmn.instance.Event;
 
 public abstract class AbstractErrorEventDefinitionBuilder<B extends AbstractErrorEventDefinitionBuilder<B>> extends AbstractRootElementBuilder<B, ErrorEventDefinition>{
 
-  public AbstractErrorEventDefinitionBuilder(BpmnModelInstance modelInstance, ErrorEventDefinition element, Class<?> selfType) {
+  protected AbstractErrorEventDefinitionBuilder(BpmnModelInstance modelInstance, ErrorEventDefinition element, Class<?> selfType) {
     super(modelInstance, element, selfType);
   }
 

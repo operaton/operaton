@@ -39,7 +39,7 @@ public abstract class ArtifactImpl extends BaseElementImpl implements Artifact {
     typeBuilder.build();
   }
 
-  public ArtifactImpl(ModelTypeInstanceContext instanceContext) {
+  protected ArtifactImpl(ModelTypeInstanceContext instanceContext) {
     super(instanceContext);
   }
 }

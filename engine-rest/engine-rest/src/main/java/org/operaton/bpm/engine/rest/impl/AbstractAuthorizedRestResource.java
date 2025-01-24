@@ -33,7 +33,7 @@ public abstract class AbstractAuthorizedRestResource extends AbstractRestProcess
   protected final Resource resource;
   protected final String resourceId;
 
-  public AbstractAuthorizedRestResource(String processEngineName, Resource resource, String resourceId, ObjectMapper objectMapper) {
+  protected AbstractAuthorizedRestResource(String processEngineName, Resource resource, String resourceId, ObjectMapper objectMapper) {
     super(processEngineName, objectMapper);
     this.resource = resource;
     this.resourceId = resourceId;

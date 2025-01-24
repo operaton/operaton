@@ -33,7 +33,7 @@ public abstract class AbstractAddIdentityLinkCmd extends AbstractSetTaskProperty
   protected final String groupId;
   protected final String type;
 
-  public AbstractAddIdentityLinkCmd(String taskId, String userId, String groupId, String type) {
+  protected AbstractAddIdentityLinkCmd(String taskId, String userId, String groupId, String type) {
     super(taskId, null, true);
     validateParameters(type, userId, groupId);
 

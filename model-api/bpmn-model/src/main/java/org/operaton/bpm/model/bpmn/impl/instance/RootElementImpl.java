@@ -42,7 +42,7 @@ public abstract class RootElementImpl extends BaseElementImpl implements RootEle
     typeBuilder.build();
   }
 
-  public RootElementImpl(ModelTypeInstanceContext context) {
+  protected RootElementImpl(ModelTypeInstanceContext context) {
     super(context);
   }
 

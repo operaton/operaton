@@ -22,7 +22,7 @@ import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 
 public abstract class DmnModelElementInstanceImpl extends ModelElementInstanceImpl implements DmnModelElementInstance {
 
-  public DmnModelElementInstanceImpl(ModelTypeInstanceContext instanceContext) {
+  protected DmnModelElementInstanceImpl(ModelTypeInstanceContext instanceContext) {
     super(instanceContext);
   }
 

@@ -27,7 +27,7 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 public abstract class DrgElementImpl extends NamedElementImpl implements DrgElement {
 
-  public DrgElementImpl(ModelTypeInstanceContext instanceContext) {
+  protected DrgElementImpl(ModelTypeInstanceContext instanceContext) {
     super(instanceContext);
   }
 

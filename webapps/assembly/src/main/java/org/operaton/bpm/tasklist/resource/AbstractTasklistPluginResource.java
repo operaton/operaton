@@ -28,7 +28,7 @@ import org.operaton.bpm.webapp.plugin.resource.AbstractAppPluginResource;
  */
 public abstract class AbstractTasklistPluginResource extends AbstractAppPluginResource<TasklistPlugin> {
 
-  public AbstractTasklistPluginResource(String engineName) {
+  protected AbstractTasklistPluginResource(String engineName) {
     super(Tasklist.getRuntimeDelegate(), engineName);
   }
 

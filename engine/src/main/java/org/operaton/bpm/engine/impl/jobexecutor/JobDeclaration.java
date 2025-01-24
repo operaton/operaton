@@ -61,7 +61,7 @@ public abstract class JobDeclaration<S, T extends JobEntity> implements Serializ
 
   protected ParameterValueProvider jobPriorityProvider;
 
-  public JobDeclaration(String jobHandlerType) {
+  protected JobDeclaration(String jobHandlerType) {
     this.jobHandlerType = jobHandlerType;
   }
 

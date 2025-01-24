@@ -25,37 +25,7 @@ import org.operaton.bpm.model.xml.instance.DomElement;
  * @author Sebastian Menski
  *
  */
-public final class ModelTypeInstanceContext {
-
-  private final ModelInstanceImpl model;
-  private final DomElement domElement;
-  private final ModelElementTypeImpl modelType;
-
-  public ModelTypeInstanceContext(DomElement domElement, ModelInstanceImpl model, ModelElementTypeImpl modelType) {
-    this.domElement = domElement;
-    this.model = model;
-    this.modelType = modelType;
-  }
-
-  /**
-   * @return the dom element
-   */
-  public DomElement getDomElement() {
-    return domElement;
-  }
-
-  /**
-   * @return the model
-   */
-  public ModelInstanceImpl getModel() {
-    return model;
-  }
-
-  /**
-   * @return the modelType
-   */
-  public ModelElementTypeImpl getModelType() {
-    return modelType;
-  }
+public record ModelTypeInstanceContext(DomElement domElement, ModelInstanceImpl model,
+		ModelElementTypeImpl modelType) {
 
 }

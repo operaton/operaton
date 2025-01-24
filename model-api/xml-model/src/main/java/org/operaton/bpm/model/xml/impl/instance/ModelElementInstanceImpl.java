@@ -60,9 +60,9 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
   }
 
   public ModelElementInstanceImpl(ModelTypeInstanceContext instanceContext) {
-    this.domElement = instanceContext.getDomElement();
-    this.modelInstance = instanceContext.getModel();
-    this.elementType = instanceContext.getModelType();
+    this.domElement = instanceContext.domElement();
+    this.modelInstance = instanceContext.model();
+    this.elementType = instanceContext.modelType();
   }
 
   @Override

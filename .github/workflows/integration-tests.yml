@@ -1,0 +1,91 @@
+# This workflow builds Operaton, and cache/restore any dependencies to improve the workflow execution time
+name: build
+
+on:
+  workflow_dispatch:        # Allows manual trigger
+    inputs:
+      java_version:
+        description: 'Java version to use'
+        type: choice
+        required: true
+        default: '["17"]'
+        options:
+          - '["17"]'
+          - '["21"]'
+          - '["17", "21"]'
+      test_suite:
+        description: 'Integration test suite to run'
+        type: choice
+        required: true
+        default: '["engine"]'
+        options:
+          - '["engine"]'
+          - '["webapps"]'
+          - '["engine", "webapps"]'
+      container:
+        description: 'Container to use for integration tests'
+        type: choice
+        required: true
+        default: '["tomcat"]'
+        options:
+          - '["tomcat"]'
+          - '["wildfly"]'
+          - '["tomcat", "wildfly"]'
+      database:
+        description: 'Database to use for integration tests'
+        type: choice
+        required: true
+        default: '["h2"]'
+        options:
+          - '["h2"]'
+          - '["postgres"]'
+          - '["h2", "postgres"]'
+
+permissions:
+  contents: read
+  checks: write
+  id-token: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        java: ${{ fromJson(github.event.inputs.java_version || '["17", "21"]') }}
+        test_suite: ${{ fromJson(github.event.inputs.test_suite || '["engine", "webapps"]') }}
+        container: ${{ fromJson(github.event.inputs.container || '["tomcat", "wildfly"]') }}
+        database: ${{ fromJson(github.event.inputs.database || '["h2", "postgres"]') }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: Maven Build
+        id: maven-build
+        shell: bash
+        run: |
+          ./mvnw -P${{ matrix.test_suite }}-integration,${{ matrix.container }},${{ matrix.database }} clean install
+      - name: Publish Test Report
+        if: always()
+        uses: mikepenz/action-junit-report@v4
+        with:
+          report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml
+          require_passed_tests: true
+      - name: Upload Surefire Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports
+          path: ${{ github.workspace }}/**/target/surefire-reports/**
+          retention-days: 30

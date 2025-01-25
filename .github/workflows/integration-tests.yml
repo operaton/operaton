@@ -1,5 +1,5 @@
-# This workflow builds Operaton, and cache/restore any dependencies to improve the workflow execution time
-name: build
+# This workflow performs integration tests for Operaton
+name: Integration Tests
 
 on:
   workflow_dispatch:        # Allows manual trigger
@@ -71,6 +71,11 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: ${{ matrix.java }}
       - name: Maven Build
         id: maven-build
         shell: bash

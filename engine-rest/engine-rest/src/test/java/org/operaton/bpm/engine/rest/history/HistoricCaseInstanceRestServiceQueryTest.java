@@ -39,8 +39,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response.Status;
 
 import org.operaton.bpm.engine.history.HistoricCaseInstance;
 import org.operaton.bpm.engine.history.HistoricCaseInstanceQuery;
@@ -1049,14 +1049,14 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "eq");
-    
+
     List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
-    
+
     Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
     json.put("variableValuesIgnoreCase", true);
-    
+
     given()
     .contentType(POST_JSON_CONTENT_TYPE)
     .body(json)
@@ -1065,7 +1065,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
     .statusCode(Status.OK.getStatusCode())
     .when()
     .post(HISTORIC_CASE_INSTANCE_RESOURCE_URL);
-    
+
     verify(mockedQuery).matchVariableValuesIgnoreCase();
     verify(mockedQuery).variableValueEquals("varName", "varValue");
   }
@@ -1076,14 +1076,14 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "neq");
-    
+
     List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
-    
+
     Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
     json.put("variableValuesIgnoreCase", true);
-    
+
     given()
     .contentType(POST_JSON_CONTENT_TYPE)
     .body(json)
@@ -1092,7 +1092,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
     .statusCode(Status.OK.getStatusCode())
     .when()
     .post(HISTORIC_CASE_INSTANCE_RESOURCE_URL);
-    
+
     verify(mockedQuery).matchVariableValuesIgnoreCase();
     verify(mockedQuery).variableValueNotEquals("varName", "varValue");
   }
@@ -1103,14 +1103,14 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "like");
-    
+
     List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
-    
+
     Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
     json.put("variableValuesIgnoreCase", true);
-    
+
     given()
     .contentType(POST_JSON_CONTENT_TYPE)
     .body(json)
@@ -1119,7 +1119,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
     .statusCode(Status.OK.getStatusCode())
     .when()
     .post(HISTORIC_CASE_INSTANCE_RESOURCE_URL);
-    
+
     verify(mockedQuery).matchVariableValuesIgnoreCase();
     verify(mockedQuery).variableValueLike("varName", "varValue");
   }
@@ -1131,14 +1131,14 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "eq");
-    
+
     List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
-    
+
     Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
     json.put("variableNamesIgnoreCase", true);
-    
+
     given()
     .contentType(POST_JSON_CONTENT_TYPE)
     .body(json)
@@ -1147,7 +1147,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
     .statusCode(Status.OK.getStatusCode())
     .when()
     .post(HISTORIC_CASE_INSTANCE_RESOURCE_URL);
-    
+
     verify(mockedQuery).matchVariableNamesIgnoreCase();
     verify(mockedQuery).variableValueEquals("varName", "varValue");
   }
@@ -1158,14 +1158,14 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "neq");
-    
+
     List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
-    
+
     Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
     json.put("variableNamesIgnoreCase", true);
-    
+
     given()
     .contentType(POST_JSON_CONTENT_TYPE)
     .body(json)
@@ -1174,7 +1174,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
     .statusCode(Status.OK.getStatusCode())
     .when()
     .post(HISTORIC_CASE_INSTANCE_RESOURCE_URL);
-    
+
     verify(mockedQuery).matchVariableNamesIgnoreCase();
     verify(mockedQuery).variableValueNotEquals("varName", "varValue");
   }

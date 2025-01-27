@@ -19,10 +19,10 @@ package org.operaton.bpm.engine.rest.sub.identity;
 import org.operaton.bpm.engine.rest.dto.ResourceOptionsDto;
 import org.operaton.bpm.engine.rest.dto.identity.GroupDto;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.UriInfo;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.UriInfo;
 
 /**
  * @author Daniel Meyer
@@ -41,10 +41,10 @@ public interface GroupResource {
   @PUT
   @Consumes(MediaType.APPLICATION_JSON)
   public void updateGroup(GroupDto Group);
-  
+
   @Path(GroupMembersResource.PATH)
   GroupMembersResource getGroupMembersResource();
-  
+
   @OPTIONS
   @Produces(MediaType.APPLICATION_JSON)
   ResourceOptionsDto availableOperations(@Context UriInfo context);

@@ -66,11 +66,11 @@ import org.operaton.bpm.engine.runtime.ProcessInstantiationBuilder;
 import org.operaton.bpm.engine.runtime.RestartProcessInstanceBuilder;
 import org.operaton.bpm.engine.variable.VariableMap;
 
-import javax.ws.rs.HttpMethod;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
-import javax.ws.rs.core.UriInfo;
+import jakarta.ws.rs.HttpMethod;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.UriInfo;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.net.URI;

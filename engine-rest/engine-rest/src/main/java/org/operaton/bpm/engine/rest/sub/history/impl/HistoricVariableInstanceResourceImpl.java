@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.rest.sub.history.impl;
 
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.exception.NotFoundException;
@@ -75,7 +75,7 @@ public class HistoricVariableInstanceResourceImpl extends
   protected String getResourceNameForErrorMessage() {
     return "Historic variable instance";
   }
-  
+
   @Override
   public Response deleteVariableInstance() {
     try {

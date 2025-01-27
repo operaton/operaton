@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.rest.hal;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.MediaType;
 
 import org.operaton.bpm.engine.rest.CaseDefinitionRestService;
 import org.operaton.bpm.engine.rest.GroupRestService;

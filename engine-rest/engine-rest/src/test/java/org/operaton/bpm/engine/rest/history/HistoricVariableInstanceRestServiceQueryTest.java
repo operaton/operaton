@@ -37,8 +37,8 @@ import org.junit.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response.Status;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -349,7 +349,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   @Test
   public void testVariableNameLikeQueryIgnoreCase() {
     String variableNameLike = "aVariableNameLike";
-    
+
     given()
     .queryParam("variableNameLike", variableNameLike)
     .queryParam("variableNamesIgnoreCase", true)
@@ -358,7 +358,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
     .statusCode(Status.OK.getStatusCode())
     .when()
     .get(HISTORIC_VARIABLE_INSTANCE_RESOURCE_URL);
-    
+
     verify(mockedQuery).variableNameLike(variableNameLike);
     verify(mockedQuery).matchVariableNamesIgnoreCase();
     verify(mockedQuery).list();
@@ -549,7 +549,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   public void testVariableNameAndValueIgnoreCaseQuery() {
     String variableName = MockProvider.EXAMPLE_VARIABLE_INSTANCE_NAME;
     String variableValue = MockProvider.EXAMPLE_PRIMITIVE_VARIABLE_VALUE.getValue();
-    
+
     given()
     .queryParam("variableName", variableName)
     .queryParam("variableNamesIgnoreCase", true)
@@ -564,7 +564,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
     .body("[0].value", equalTo(MockProvider.EXAMPLE_PRIMITIVE_VARIABLE_VALUE.getValue()))
     .when()
     .get(HISTORIC_VARIABLE_INSTANCE_RESOURCE_URL);
-    
+
     verify(mockedQuery).variableValueEquals(variableName, variableValue);
     verify(mockedQuery).matchVariableNamesIgnoreCase();
     verify(mockedQuery).matchVariableValuesIgnoreCase();
@@ -1011,7 +1011,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
     Map<String, Object> json = new HashMap<>();
     json.put("variableNameLike", "aVariableName");
     json.put("variableNamesIgnoreCase", true);
-    
+
     given()
     .contentType(POST_JSON_CONTENT_TYPE)
     .body(json)
@@ -1019,7 +1019,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
     .statusCode(Status.OK.getStatusCode())
     .when()
     .post(HISTORIC_VARIABLE_INSTANCE_RESOURCE_URL);
-    
+
     verify(mockedQuery).matchVariableNamesIgnoreCase();
     verify(mockedQuery).variableNameLike("aVariableName");
   }

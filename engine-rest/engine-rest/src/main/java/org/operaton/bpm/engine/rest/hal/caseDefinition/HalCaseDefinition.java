@@ -26,7 +26,7 @@ import org.operaton.bpm.engine.rest.hal.HalResource;
 import org.operaton.bpm.engine.rest.sub.repository.DeploymentResourcesResource;
 import org.operaton.bpm.engine.rest.util.ApplicationContextPathUtil;
 
-import javax.ws.rs.core.UriBuilder;
+import jakarta.ws.rs.core.UriBuilder;
 
 /**
  * @author Daniel Meyer

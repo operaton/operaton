@@ -22,7 +22,7 @@ import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.task.TaskCountByCandidateGroupResult;
 import org.operaton.bpm.engine.task.TaskReport;
 
-import javax.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response;
 import java.util.List;
 
 /**

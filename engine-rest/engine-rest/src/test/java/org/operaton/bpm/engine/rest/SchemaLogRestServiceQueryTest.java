@@ -28,8 +28,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response.Status;
 
 import org.operaton.bpm.engine.impl.persistence.entity.SchemaLogEntryEntity;
 import org.operaton.bpm.engine.management.SchemaLogEntry;
@@ -47,7 +47,7 @@ import org.mockito.Mockito;
 public class SchemaLogRestServiceQueryTest extends AbstractRestServiceTest {
 
   /**
-   * 
+   *
    */
   private static final String SCHEMA_LOG_URL = TEST_RESOURCE_ROOT_PATH + SchemaLogRestService.PATH;
 
@@ -71,7 +71,7 @@ public class SchemaLogRestServiceQueryTest extends AbstractRestServiceTest {
 
     when(processEngine.getManagementService().createSchemaLogQuery()).thenReturn(mockedQuery);
   }
-  
+
   private List<SchemaLogEntry> createMockedSchemaLogEntries(){
     List<SchemaLogEntry> entries = new ArrayList<>();
     SchemaLogEntryEntity entry = new SchemaLogEntryEntity();
@@ -118,7 +118,7 @@ public class SchemaLogRestServiceQueryTest extends AbstractRestServiceTest {
         .body("[0].version", is(SCHEMA_LOG_ENTRY_MOCK_VERSION))
         .body("[0].timestamp", notNullValue())
       .when().post(SCHEMA_LOG_URL);
-    
+
     verify(mockedQuery).version(SCHEMA_LOG_ENTRY_MOCK_VERSION);
     verify(mockedQuery).orderByTimestamp();
     verify(mockedQuery).list();

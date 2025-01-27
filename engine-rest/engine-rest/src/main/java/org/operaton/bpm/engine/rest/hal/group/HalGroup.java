@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.rest.hal.group;
 
-import javax.ws.rs.core.UriBuilder;
+import jakarta.ws.rs.core.UriBuilder;
 
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.rest.GroupRestService;

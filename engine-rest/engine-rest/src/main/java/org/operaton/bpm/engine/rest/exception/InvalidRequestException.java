@@ -16,23 +16,23 @@
  */
 package org.operaton.bpm.engine.rest.exception;
 
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response.Status;
 
 /**
  * This exception is used for any kind of errors that occur due to malformed
  * parameters in a Http query.
- * 
+ *
  * @author Thorben Lindhauer
- * 
+ *
  */
 public class InvalidRequestException extends RestException {
 
   private static final long serialVersionUID = 1L;
-  
+
   public InvalidRequestException(Status status, String message) {
     super(status, message);
   }
-  
+
   public InvalidRequestException(Status status, Exception cause, String message) {
     super(status, cause, message);
   }

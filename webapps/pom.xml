@@ -16,7 +16,7 @@
   <name>Operaton - Webapp - Root</name>
 
   <properties>
-    <version.jetty>9.4.33.v20201020</version.jetty>
+    <version.jetty>11.0.24</version.jetty>
 
     <web.resources.override>src/main/runtime/default/webapp</web.resources.override>
 
@@ -123,7 +123,7 @@
     <dependency>
       <groupId>org.glassfish.jersey.core</groupId>
       <artifactId>jersey-common</artifactId>
-      <version>${version.jersey2}</version>
+      <version>${version.jersey3}</version>
       <scope>test</scope>
     </dependency>
 

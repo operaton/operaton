@@ -25,7 +25,7 @@ import org.operaton.bpm.engine.task.Task;
 import java.util.ArrayList;
 import java.util.List;
 
-import static javax.ws.rs.core.UriBuilder.fromPath;
+import static jakarta.ws.rs.core.UriBuilder.fromPath;
 
 /**
  * @author Daniel Meyer

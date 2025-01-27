@@ -49,8 +49,8 @@ import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import static org.operaton.bpm.engine.rest.helper.MockProvider.createMockSerializedVariables;
 
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response.Status;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.util.*;

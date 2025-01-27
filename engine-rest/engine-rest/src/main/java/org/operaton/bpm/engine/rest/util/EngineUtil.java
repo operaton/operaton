@@ -20,7 +20,7 @@ import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.rest.exception.RestException;
 import org.operaton.bpm.engine.rest.spi.ProcessEngineProvider;
 
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response.Status;
 import java.util.Iterator;
 import java.util.ServiceLoader;
 

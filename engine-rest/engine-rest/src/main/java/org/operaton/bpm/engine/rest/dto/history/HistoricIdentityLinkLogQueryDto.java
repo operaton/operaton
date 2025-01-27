@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.MultivaluedMap;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.history.HistoricIdentityLinkLogQuery;
@@ -137,7 +137,7 @@ public class HistoricIdentityLinkLogQueryDto extends AbstractQueryDto<HistoricId
   public void setProcessDefinitionKey(String processDefinitionKey) {
     this.processDefinitionKey = processDefinitionKey;
   }
-  
+
   @OperatonQueryParam("operationType")
   public void setOperationType(String operationType) {
     this.operationType = operationType;

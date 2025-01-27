@@ -19,8 +19,8 @@ package org.operaton.bpm.engine.rest.security.auth;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngine;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * A provider to handle the authentication of {@link HttpServletRequest}s.
@@ -34,7 +34,7 @@ public interface AuthenticationProvider {
    * Checks the request for authentication. May not return null, but always an
    * {@link AuthenticationResult} that indicates, whether authentication was
    * successful, and, if true, always provides the authenticated user.
-   * 
+   *
    * The result can only be successful if a valid user id was provided in the
    * request. It is not required to provide the group or tenant id, as they will
    * be resolved via the {@link IdentityService} (e.g.

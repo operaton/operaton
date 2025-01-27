@@ -18,9 +18,9 @@ package org.operaton.bpm.engine.rest.sub.history;
 
 import org.operaton.bpm.engine.rest.dto.history.HistoricCaseActivityInstanceDto;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 
 public interface HistoricCaseActivityInstanceResource {
 

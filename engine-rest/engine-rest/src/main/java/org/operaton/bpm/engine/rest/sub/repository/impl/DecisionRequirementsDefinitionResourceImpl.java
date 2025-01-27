@@ -18,8 +18,8 @@ package org.operaton.bpm.engine.rest.sub.repository.impl;
 
 import java.io.InputStream;
 
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -38,7 +38,7 @@ import org.operaton.bpm.engine.rest.util.URLEncodingUtil;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
- * 
+ *
  * @author Deivarayan Azhagappan
  *
  */
@@ -46,7 +46,7 @@ public class DecisionRequirementsDefinitionResourceImpl implements DecisionRequi
 
   protected ProcessEngine engine;
   protected String decisionRequirementsDefinitionId;
- 
+
   public DecisionRequirementsDefinitionResourceImpl(ProcessEngine engine, String decisionDefinitionId) {
     this.engine = engine;
     this.decisionRequirementsDefinitionId = decisionDefinitionId;

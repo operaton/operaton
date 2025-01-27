@@ -18,10 +18,10 @@ package org.operaton.bpm.engine.rest.mapper;
 
 import java.text.SimpleDateFormat;
 
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.ext.ContextResolver;
-import javax.ws.rs.ext.Provider;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.ext.ContextResolver;
+import jakarta.ws.rs.ext.Provider;
 
 import org.operaton.bpm.engine.rest.hal.Hal;
 
@@ -42,7 +42,7 @@ public class JacksonConfigurator implements ContextResolver<ObjectMapper> {
     mapper.setDateFormat(dateFormat);
     mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-    
+
     mapper.registerModule(new JavaTimeModule());
 
     return mapper;

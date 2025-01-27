@@ -20,7 +20,7 @@ import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.rest.UserRestService;
 import org.operaton.bpm.engine.rest.hal.HalResource;
 
-import javax.ws.rs.core.UriBuilder;
+import jakarta.ws.rs.core.UriBuilder;
 import java.util.ArrayList;
 import java.util.List;
 

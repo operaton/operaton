@@ -20,8 +20,8 @@ import org.operaton.bpm.engine.rest.dto.runtime.CaseExecutionTriggerDto;
 import org.operaton.bpm.engine.rest.dto.runtime.CaseInstanceDto;
 import org.operaton.bpm.engine.rest.sub.VariableResource;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 
 /**
  *
@@ -48,7 +48,7 @@ public interface CaseInstanceResource {
   @Path("/terminate")
   @Consumes(MediaType.APPLICATION_JSON)
   void terminate(CaseExecutionTriggerDto triggerDto);
-  
+
   @Path("/variables")
   VariableResource getVariablesResource();
 

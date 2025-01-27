@@ -19,8 +19,8 @@ package org.operaton.bpm.admin.impl.plugin.resources;
 import org.operaton.bpm.admin.impl.plugin.AdminPlugins;
 import org.operaton.bpm.admin.resource.AbstractAdminPluginRootResource;
 
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 
 /**
  * @author vale

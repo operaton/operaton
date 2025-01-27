@@ -16,29 +16,29 @@
  */
 package org.operaton.bpm.engine.rest.exception;
 
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response.Status;
 
 public class RestException extends RuntimeException {
-  
+
   private static final long serialVersionUID = 1L;
-  
+
   private final Status status;
-  
+
   public RestException(String message) {
     super(message);
     this.status = null;
   }
-  
+
   public RestException(Status status, String message) {
     super(message);
     this.status = status;
   }
-  
+
   public RestException(Status status, Exception cause) {
     super(cause);
     this.status = status;
   }
-  
+
   public RestException(Status status, Exception cause, String message) {
     super(message, cause);
     this.status = status;

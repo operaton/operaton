@@ -23,10 +23,10 @@ import org.operaton.bpm.engine.rest.dto.history.HistoricVariableInstanceQueryDto
 import org.operaton.bpm.engine.rest.sub.VariableResource;
 import org.operaton.bpm.engine.rest.sub.history.HistoricVariableInstanceResource;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.UriInfo;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.UriInfo;
 import java.util.List;
 
 @Path(HistoricVariableInstanceRestService.PATH)

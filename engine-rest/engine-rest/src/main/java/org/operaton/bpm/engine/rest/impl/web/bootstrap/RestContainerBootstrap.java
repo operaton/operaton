@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.rest.impl.web.bootstrap;
 
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
 
 import org.operaton.bpm.engine.rest.util.WebApplicationUtil;
 

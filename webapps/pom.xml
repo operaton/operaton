@@ -213,8 +213,14 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-resources-plugin</artifactId>
-          <version>2.6</version>
-        </plugin>
+          <version>3.3.1</version>
+          <configuration>
+            <nonFilteredFileExtensions>
+              <nonFilteredFileExtension>pdf</nonFilteredFileExtension>
+              <nonFilteredFileExtension>png</nonFilteredFileExtension>
+            </nonFilteredFileExtensions>
+          </configuration>
+		</plugin>
 
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -235,13 +241,13 @@
               <resource>
                 <filtering>true</filtering>
                 <directory>target/webapp</directory>
-                <!-- no filtering for favicon because linux destroys images through carriage return -->
+								<!-- no filtering for favicon because linux destroys images through carriage return -->
                 <includes>
                   <include>**/*.html</include>
                 </includes>
               </resource>
             </webResources>
-            <!-- exclude development resources (task forms etc.) -->
+						<!-- exclude development resources (task forms etc.) -->
             <packagingExcludes>
               develop/**
             </packagingExcludes>

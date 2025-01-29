@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.integrationtest.util;
 
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 

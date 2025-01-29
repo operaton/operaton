@@ -5,6 +5,7 @@ SET EXECUTABLE=%BASEDIR%internal\run.bat
 
 REM Start detached if no arguments
 IF [%~1]==[] GOTO StartDetached
+IF [%~1]==[--version] GOTO Version
 
 REM Collect arguments to pass to the executable
 SET CMD_LINE_ARGS=
@@ -23,5 +24,9 @@ GOTO Done
 
 :StartWithArguments
 call "%EXECUTABLE%" start %CMD_LINE_ARGS%
+GOTO Done
+
+:Version
+ECHO Operaton ${project.version}
 
 :Done

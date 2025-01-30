@@ -54,7 +54,7 @@ public class ProcessEngineFactoryBean implements FactoryBean<ProcessEngine>, Dis
     if (processEngine == null) {
       initializeExpressionManager();
       initializeTransactionExternallyManaged();
-    
+
       processEngine = (ProcessEngineImpl) processEngineConfiguration.buildProcessEngine();
     }
 
@@ -67,12 +67,11 @@ public class ProcessEngineFactoryBean implements FactoryBean<ProcessEngine>, Dis
           new SpringExpressionManager(applicationContext, processEngineConfiguration.getBeans()));
     }
   }
-  
+
   protected void initializeTransactionExternallyManaged() {
-    if (processEngineConfiguration instanceof SpringProcessEngineConfiguration engineConfiguration) { // remark: any config can be injected, so we cannot have SpringConfiguration as member
-      if (engineConfiguration.getTransactionManager() != null) {
-        processEngineConfiguration.setTransactionsExternallyManaged(true);
-      }
+    if (processEngineConfiguration instanceof SpringProcessEngineConfiguration engineConfiguration &&
+            engineConfiguration.getTransactionManager() != null) { // remark: any config can be injected, so we cannot have SpringConfiguration as member
+      processEngineConfiguration.setTransactionsExternallyManaged(true);
     }
   }
 
@@ -87,12 +86,12 @@ public class ProcessEngineFactoryBean implements FactoryBean<ProcessEngine>, Dis
   }
 
   // getters and setters //////////////////////////////////////////////////////
-  
+
   public ProcessEngineConfigurationImpl getProcessEngineConfiguration() {
     return processEngineConfiguration;
   }
 
-  
+
   public void setProcessEngineConfiguration(ProcessEngineConfigurationImpl processEngineConfiguration) {
     this.processEngineConfiguration = processEngineConfiguration;
   }

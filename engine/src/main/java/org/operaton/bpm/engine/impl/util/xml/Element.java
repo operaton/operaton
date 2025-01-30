@@ -82,11 +82,8 @@ public class Element {
   protected List<Element> elementsNS(String nameSpaceUri, String tagName) {
     List<Element> selectedElements = new ArrayList<>();
     for (Element element: elements) {
-      if (tagName.equals(element.getTagName())) {
-        if (nameSpaceUri  == null
-                || ( nameSpaceUri != null && nameSpaceUri.equals(element.getUri()) ) ) {
-          selectedElements.add(element);
-        }
+      if (tagName.equals(element.getTagName()) && (nameSpaceUri == null || nameSpaceUri.equals(element.getUri()))) {
+        selectedElements.add(element);
       }
     }
     return selectedElements;

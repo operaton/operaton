@@ -62,10 +62,8 @@ public class EnumFormType extends SimpleFormFieldType {
   }
 
   protected void validateValue(Object value) {
-    if(value != null) {
-      if(values != null && !values.containsKey(value)) {
-        throw new ProcessEngineException("Invalid value for enum form property: " + value);
-      }
+    if(value != null && (values != null && !values.containsKey(value))) {
+      throw new ProcessEngineException("Invalid value for enum form property: " + value);
     }
   }
 

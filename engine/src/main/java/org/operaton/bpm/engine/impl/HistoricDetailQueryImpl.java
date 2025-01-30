@@ -254,17 +254,13 @@ public class HistoricDetailQueryImpl extends AbstractQuery<HistoricDetailQuery, 
       .findHistoricDetailsByQueryCriteria(this, page);
     if (historicDetails!=null) {
       for (HistoricDetail historicDetail: historicDetails) {
-        if (historicDetail instanceof HistoricDetailVariableInstanceUpdateEntity entity) {
-          if (shouldFetchValue(entity)) {
-            try {
-              entity.getTypedValue(isCustomObjectDeserializationEnabled);
-
-            } catch(Exception t) {
-              // do not fail if one of the variables fails to load
-              LOG.exceptionWhileGettingValueForVariable(t);
-            }
+        if (historicDetail instanceof HistoricDetailVariableInstanceUpdateEntity entity && shouldFetchValue(entity)) {
+          try {
+            entity.getTypedValue(isCustomObjectDeserializationEnabled);
+          } catch(Exception t) {
+            // do not fail if one of the variables fails to load
+            LOG.exceptionWhileGettingValueForVariable(t);
           }
-
         }
       }
     }

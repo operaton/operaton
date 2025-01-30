@@ -170,10 +170,8 @@ public abstract class AbstractSetStateCmd implements Command<Void> {
   protected String getDeploymentIdByJobDefinition(CommandContext commandContext, String jobDefinitionId) {
     JobDefinitionManager jobDefinitionManager = commandContext.getJobDefinitionManager();
     JobDefinitionEntity jobDefinition = jobDefinitionManager.findById(jobDefinitionId);
-    if (jobDefinition != null) {
-      if (jobDefinition.getProcessDefinitionId() != null) {
-        return getDeploymentIdByProcessDefinition(commandContext, jobDefinition.getProcessDefinitionId());
-      }
+    if (jobDefinition != null && jobDefinition.getProcessDefinitionId() != null) {
+      return getDeploymentIdByProcessDefinition(commandContext, jobDefinition.getProcessDefinitionId());
     }
     return null;
   }

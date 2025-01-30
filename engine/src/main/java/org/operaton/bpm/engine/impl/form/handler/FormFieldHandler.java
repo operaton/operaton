@@ -150,10 +150,8 @@ public class FormFieldHandler {
       }
     }
 
-    if (modelValue != null) {
-      if (id != null) {
-        variableScope.setVariable(id, modelValue);
-      }
+    if (modelValue != null && id != null) {
+      variableScope.setVariable(id, modelValue);
     }
   }
 

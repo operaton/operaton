@@ -126,12 +126,10 @@ public class ScriptBindings implements Bindings {
   @Override
   public Object put(String name, Object value) {
 
-    if(autoStoreScriptVariables) {
-      if (!UNSTORED_KEYS.contains(name)) {
-        Object oldValue = variableScope.getVariable(name);
-        variableScope.setVariable(name, value);
-        return oldValue;
-      }
+    if(autoStoreScriptVariables && !UNSTORED_KEYS.contains(name)) {
+      Object oldValue = variableScope.getVariable(name);
+      variableScope.setVariable(name, value);
+      return oldValue;
     }
 
     return wrappedBindings.put(name, value);

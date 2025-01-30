@@ -1700,20 +1700,18 @@ public class BpmnParse extends Parse {
     final String activityRef = compensateEventDefinitionElement.attribute("activityRef");
     boolean waitForCompletion = TRUE.equals(compensateEventDefinitionElement.attribute("waitForCompletion", TRUE));
 
-    if (activityRef != null) {
+    if (activityRef != null && scopeElement.findActivityAtLevelOfSubprocess(activityRef) == null) {
+      Boolean isTriggeredByEvent = scopeElement.getProperties().get(BpmnProperties.TRIGGERED_BY_EVENT);
+      String type = (String) scopeElement.getProperty(PROPERTYNAME_TYPE);
+      if (Boolean.TRUE == isTriggeredByEvent && "subProcess".equals(type)) {
+        scopeElement = scopeElement.getFlowScope();
+      }
       if (scopeElement.findActivityAtLevelOfSubprocess(activityRef) == null) {
-        Boolean isTriggeredByEvent = scopeElement.getProperties().get(BpmnProperties.TRIGGERED_BY_EVENT);
-        String type = (String) scopeElement.getProperty(PROPERTYNAME_TYPE);
-        if (Boolean.TRUE == isTriggeredByEvent && "subProcess".equals(type)) {
-          scopeElement = scopeElement.getFlowScope();
-        }
-        if (scopeElement.findActivityAtLevelOfSubprocess(activityRef) == null) {
-          final String scopeId = scopeElement.getId();
-          scopeElement.addToBacklog(activityRef, () ->
-              addError("Invalid attribute value for 'activityRef': no activity with id '" + activityRef + "' in scope '" + scopeId + "'",
-                  compensateEventDefinitionElement,
-                  parentElementId));
-        }
+        final String scopeId = scopeElement.getId();
+        scopeElement.addToBacklog(activityRef, () ->
+            addError("Invalid attribute value for 'activityRef': no activity with id '" + activityRef + "' in scope '" + scopeId + "'",
+                compensateEventDefinitionElement,
+                parentElementId));
       }
     }
 

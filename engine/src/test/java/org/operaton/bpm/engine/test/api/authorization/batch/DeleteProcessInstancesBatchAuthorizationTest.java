@@ -126,10 +126,8 @@ public class DeleteProcessInstancesBatchAuthorizationTest extends AbstractBatchA
     executeSeedAndBatchJobs();
 
     // then
-    if (authRule.assertScenario(scenario)) {
-      if (testHelper.isHistoryLevelFull()) {
-        assertThat(engineRule.getHistoryService().createUserOperationLogQuery().entityType(EntityTypes.PROCESS_INSTANCE).count()).isEqualTo(BATCH_OPERATIONS);
-      }
+    if (authRule.assertScenario(scenario) && testHelper.isHistoryLevelFull()) {
+      assertThat(engineRule.getHistoryService().createUserOperationLogQuery().entityType(EntityTypes.PROCESS_INSTANCE).count()).isEqualTo(BATCH_OPERATIONS);
     }
   }
 

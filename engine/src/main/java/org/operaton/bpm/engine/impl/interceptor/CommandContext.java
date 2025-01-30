@@ -275,7 +275,7 @@ public class CommandContext {
     }
   }
 
-  @SuppressWarnings({"unchecked"})
+  @SuppressWarnings({"java:S3824", "unchecked"})
   public <T> T getSession(Class<T> sessionClass) {
     Session session = sessions.get(sessionClass);
     if (session == null) {

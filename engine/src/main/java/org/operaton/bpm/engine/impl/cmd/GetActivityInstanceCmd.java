@@ -337,12 +337,9 @@ public class GetActivityInstanceCmd implements Command<ActivityInstance> {
   }
 
   protected <S, T> void putListElement(Map<S, List<T>> mapOfLists, S key, T listElement) {
-    List<T> list = mapOfLists.get(key);
-    if (list == null) {
-      list = new ArrayList<>();
-      mapOfLists.put(key, list);
-    }
-    list.add(listElement);
+    mapOfLists
+      .computeIfAbsent(key, k -> new ArrayList<>())
+      .add(listElement);
   }
 
   protected ExecutionEntity filterProcessInstance(List<ExecutionEntity> executionList) {

@@ -60,14 +60,7 @@ public class DefaultCockpitRuntimeDelegate extends AbstractAppRuntimeDelegate<Co
 
   @Override
   public CommandExecutor getCommandExecutor(String processEngineName) {
-
-    CommandExecutor commandExecutor = commandExecutors.get(processEngineName);
-    if (commandExecutor == null) {
-      commandExecutor = createCommandExecutor(processEngineName);
-      commandExecutors.put(processEngineName, commandExecutor);
-    }
-
-    return commandExecutor;
+    return commandExecutors.computeIfAbsent(processEngineName, this::createCommandExecutor);
   }
 
   /**

@@ -235,16 +235,10 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
     Map<String, List<CmmnSentryPart>> sentries = new HashMap<>();
 
     for (CaseSentryPartImpl sentryPart : getCaseSentryParts()) {
-
       String sentryId = sentryPart.getSentryId();
-      List<CmmnSentryPart> parts = sentries.get(sentryId);
-
-      if (parts == null) {
-        parts = new ArrayList<>();
-        sentries.put(sentryId, parts);
-      }
-
-      parts.add(sentryPart);
+      sentries
+        .computeIfAbsent(sentryId, k -> new ArrayList<>())
+        .add(sentryPart);
     }
 
     return sentries;

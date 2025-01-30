@@ -139,8 +139,9 @@ public class BatchQueryTest {
 
   @Test
   public void testBatchQueryByIdNull() {
+    var batchQuery = managementService.createBatchQuery();
     try {
-      managementService.createBatchQuery().batchId(null).singleResult();
+      batchQuery.batchId(null);
       Assert.fail("exception expected");
     }
     catch (NullValueException e) {
@@ -175,8 +176,9 @@ public class BatchQueryTest {
 
   @Test
   public void testBatchQueryByTypeNull() {
+    var batchQuery = managementService.createBatchQuery();
     try {
-      managementService.createBatchQuery().type(null).singleResult();
+      batchQuery.type(null);
       Assert.fail("exception expected");
     }
     catch (NullValueException e) {
@@ -225,8 +227,9 @@ public class BatchQueryTest {
 
   @Test
   public void testBatchQueryOrderingPropertyWithoutOrder() {
+    var batchQuery = managementService.createBatchQuery().orderById();
     try {
-      managementService.createBatchQuery().orderById().singleResult();
+      batchQuery.singleResult();
       Assert.fail("exception expected");
     }
     catch (NotValidException e) {
@@ -237,8 +240,9 @@ public class BatchQueryTest {
 
   @Test
   public void testBatchQueryOrderWithoutOrderingProperty() {
+    var batchQuery = managementService.createBatchQuery();
     try {
-      managementService.createBatchQuery().asc().singleResult();
+      batchQuery.asc();
       Assert.fail("exception expected");
     }
     catch (NotValidException e) {

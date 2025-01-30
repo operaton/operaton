@@ -1469,11 +1469,11 @@ public class CaseCallActivityTest extends CmmnTest {
     // and executing a call activity in parameter where the source variable is not mapped by an activity
     // input parameter fails
 
-    Task beforeSecondCallActivityTask = taskService.createTaskQuery().singleResult();
     runtimeService.setVariable(processInstance.getId(), "globalVariable", "42");
+    var beforeSecondCallActivityTaskId = taskService.createTaskQuery().singleResult().getId();
 
     try {
-      taskService.complete(beforeSecondCallActivityTask.getId());
+      taskService.complete(beforeSecondCallActivityTaskId);
       fail("expected exception");
     } catch (ProcessEngineException e) {
       testRule.assertTextPresent("Cannot resolve identifier 'globalVariable'", e.getMessage());

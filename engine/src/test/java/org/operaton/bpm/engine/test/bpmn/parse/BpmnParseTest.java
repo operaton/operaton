@@ -98,9 +98,10 @@ public class BpmnParseTest {
 
   @Test
   public void testInvalidSubProcessWithTimerStartEvent() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidSubProcessWithTimerStartEvent");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidSubProcessWithTimerStartEvent");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Exception expected: Process definition could be parsed, although the sub process contains a timer start event.");
     } catch (ParseException e) {
       testRule.assertTextPresent("timerEventDefinition is not allowed on start event within a subprocess", e.getMessage());
@@ -112,9 +113,10 @@ public class BpmnParseTest {
 
   @Test
   public void testInvalidSubProcessWithMessageStartEvent() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidSubProcessWithMessageStartEvent");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidSubProcessWithMessageStartEvent");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Process definition could be parsed, although the sub process contains not a blanco start event.");
     } catch (ParseException e) {
       testRule.assertTextPresent("messageEventDefinition only allowed on start event if subprocess is an event subprocess", e.getMessage());
@@ -126,9 +128,10 @@ public class BpmnParseTest {
 
   @Test
   public void testInvalidSubProcessWithoutStartEvent() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidSubProcessWithoutStartEvent");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidSubProcessWithoutStartEvent");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Process definition could be parsed, although the sub process did not contain a start event.");
     } catch (ParseException e) {
       testRule.assertTextPresent("subProcess must define a startEvent element", e.getMessage());
@@ -138,9 +141,10 @@ public class BpmnParseTest {
 
   @Test
   public void testInvalidSubProcessWithConditionalStartEvent() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidSubProcessWithConditionalStartEvent");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidSubProcessWithConditionalStartEvent");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Exception expected: Process definition could be parsed, although the sub process contains a conditional start event.");
     } catch (ParseException e) {
       testRule.assertTextPresent("The content of element 'bpmn2:conditionalEventDefinition' is not complete.", e.getMessage());
@@ -154,9 +158,10 @@ public class BpmnParseTest {
 
   @Test
   public void testInvalidSubProcessWithSignalStartEvent() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidSubProcessWithSignalStartEvent");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidSubProcessWithSignalStartEvent");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Exception expected: Process definition could be parsed, although the sub process contains a signal start event.");
     } catch (ParseException e) {
       testRule.assertTextPresent("signalEventDefintion only allowed on start event if subprocess is an event subprocess", e.getMessage());
@@ -168,9 +173,10 @@ public class BpmnParseTest {
 
   @Test
   public void testInvalidSubProcessWithErrorStartEvent() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidSubProcessWithErrorStartEvent");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidSubProcessWithErrorStartEvent");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Exception expected: Process definition could be parsed, although the sub process contains a error start event.");
     } catch (ParseException e) {
       testRule.assertTextPresent("errorEventDefinition only allowed on start event if subprocess is an event subprocess", e.getMessage());
@@ -182,9 +188,10 @@ public class BpmnParseTest {
 
   @Test
   public void testInvalidSubProcessWithEscalationStartEvent() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidSubProcessWithEscalationStartEvent");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidSubProcessWithEscalationStartEvent");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Exception expected: Process definition could be parsed, although the sub process contains a escalation start event.");
     } catch (ParseException e) {
       testRule.assertTextPresent("escalationEventDefinition is not allowed on start event within a subprocess", e.getMessage());
@@ -196,9 +203,10 @@ public class BpmnParseTest {
 
   @Test
   public void testInvalidSubProcessWithCompensationStartEvent() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidSubProcessWithCompensationStartEvent");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidSubProcessWithCompensationStartEvent");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Exception expected: Process definition could be parsed, although the sub process contains a compensation start event.");
     } catch (ParseException e) {
       testRule.assertTextPresent("compensateEventDefinition is not allowed on start event within a subprocess", e.getMessage());
@@ -210,9 +218,10 @@ public class BpmnParseTest {
 
   @Test
   public void testInvalidTransactionWithMessageStartEvent() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidTransactionWithMessageStartEvent");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidTransactionWithMessageStartEvent");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Process definition could be parsed, although the sub process contains not a blanco start event.");
     } catch (ParseException e) {
       testRule.assertTextPresent("messageEventDefinition only allowed on start event if subprocess is an event subprocess", e.getMessage());
@@ -224,9 +233,10 @@ public class BpmnParseTest {
 
   @Test
   public void testInvalidTransactionWithTimerStartEvent() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidTransactionWithTimerStartEvent");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidTransactionWithTimerStartEvent");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Exception expected: Process definition could be parsed, although the sub process contains a timer start event.");
     } catch (ParseException e) {
       testRule.assertTextPresent("timerEventDefinition is not allowed on start event within a subprocess", e.getMessage());
@@ -238,9 +248,10 @@ public class BpmnParseTest {
 
   @Test
   public void testInvalidTransactionWithConditionalStartEvent() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidTransactionWithConditionalStartEvent");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidTransactionWithConditionalStartEvent");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Exception expected: Process definition could be parsed, although the sub process contains a conditional start event.");
     } catch (ParseException e) {
       testRule.assertTextPresent("The content of element 'bpmn2:conditionalEventDefinition' is not complete.", e.getMessage());
@@ -254,9 +265,10 @@ public class BpmnParseTest {
 
   @Test
   public void testInvalidTransactionWithSignalStartEvent() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidTransactionWithSignalStartEvent");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidTransactionWithSignalStartEvent");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Exception expected: Process definition could be parsed, although the sub process contains a signal start event.");
     } catch (ParseException e) {
       testRule.assertTextPresent("signalEventDefintion only allowed on start event if subprocess is an event subprocess", e.getMessage());
@@ -268,9 +280,10 @@ public class BpmnParseTest {
 
   @Test
   public void testInvalidTransactionWithErrorStartEvent() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidTransactionWithErrorStartEvent");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidTransactionWithErrorStartEvent");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Exception expected: Process definition could be parsed, although the sub process contains a error start event.");
     } catch (ParseException e) {
       testRule.assertTextPresent("errorEventDefinition only allowed on start event if subprocess is an event subprocess", e.getMessage());
@@ -282,9 +295,10 @@ public class BpmnParseTest {
 
   @Test
   public void testInvalidTransactionWithEscalationStartEvent() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidTransactionWithEscalationStartEvent");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidTransactionWithEscalationStartEvent");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Exception expected: Process definition could be parsed, although the sub process contains a escalation start event.");
     } catch (ParseException e) {
       testRule.assertTextPresent("escalationEventDefinition is not allowed on start event within a subprocess", e.getMessage());
@@ -296,9 +310,10 @@ public class BpmnParseTest {
 
   @Test
   public void testInvalidTransactionWithCompensationStartEvent() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidTransactionWithCompensationStartEvent");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidTransactionWithCompensationStartEvent");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Exception expected: Process definition could be parsed, although the sub process contains a compensation start event.");
     } catch (ParseException e) {
       testRule.assertTextPresent("compensateEventDefinition is not allowed on start event within a subprocess", e.getMessage());
@@ -310,9 +325,10 @@ public class BpmnParseTest {
 
   @Test
   public void testInvalidProcessDefinition() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidProcessDefinition");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidProcessDefinition");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail();
     } catch (ParseException e) {
       testRule.assertTextPresent("cvc-complex-type.3.2.2:", e.getMessage());
@@ -324,9 +340,10 @@ public class BpmnParseTest {
 
   @Test
   public void testExpressionParsingErrors() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testExpressionParsingErrors");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testExpressionParsingErrors");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Exception expected: Process definition could not be parsed, the expression contains an escalation start event.");
     } catch (ProcessEngineException e) {
       testRule.assertTextPresent("Error parsing '${currentUser()': syntax error at position 15, encountered 'null', expected '}'", e.getMessage());
@@ -335,9 +352,10 @@ public class BpmnParseTest {
 
   @Test
   public void testXmlParsingErrors() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testXMLParsingErrors");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testXMLParsingErrors");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Exception expected: Process definition could not be parsed, the XML contains an escalation start event.");
     } catch (ProcessEngineException e) {
       testRule.assertTextPresent("The end-tag for element type \"bpmndi:BPMNLabel\" must end with a '>' delimiter", e.getMessage());
@@ -346,9 +364,10 @@ public class BpmnParseTest {
 
   @Test
   public void testInvalidSequenceFlowInAndOutEventSubProcess() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidSequenceFlowInAndOutEventSubProcess");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidSequenceFlowInAndOutEventSubProcess");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Exception expected: Process definition could be parsed, although the sub process has incoming and outgoing sequence flows");
     } catch (ParseException e) {
       testRule.assertTextPresent("start event of event subprocess must be of type 'error', 'message', 'timer', 'signal', 'compensation' or 'escalation'", e.getMessage());
@@ -364,9 +383,10 @@ public class BpmnParseTest {
 
   @Test
   public void testInvalidProcessWithoutStartEvent() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidProcessWithoutStartEvent");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidProcessWithoutStartEvent");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Process definition could be parsed, although the process did not contain a start event.");
     } catch (ParseException e) {
       testRule.assertTextPresent("process must define a startEvent element", e.getMessage());
@@ -382,9 +402,10 @@ public class BpmnParseTest {
    **/
   @Test
   public void testParseMultipleStartEvent() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseMultipleStartEvent");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseMultipleStartEvent");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail();
     } catch (ParseException e) {
       // fail in "regular" subprocess
@@ -421,9 +442,10 @@ public class BpmnParseTest {
 
   @Test
   public void testInvalidAsyncAfterEventBasedGateway() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidAsyncAfterEventBasedGateway");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testInvalidAsyncAfterEventBasedGateway");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail();
     } catch (ParseException e) {
       // fail on asyncAfter
@@ -772,9 +794,10 @@ public class BpmnParseTest {
 
   @Test
   public void testNoOperatonInSourceThrowsError() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testNoOperatonInSourceThrowsError");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testNoOperatonInSourceThrowsError");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Process operaton:in extension element should contain source!");
     } catch (ParseException e) {
       testRule.assertTextPresent("Missing parameter 'source' or 'sourceExpression' when passing variables", e.getMessage());
@@ -800,9 +823,10 @@ public class BpmnParseTest {
 
   @Test
   public void testEmptyOperatonInSourceThrowsError() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testEmptyOperatonInSourceThrowsError");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testEmptyOperatonInSourceThrowsError");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Process operaton:in extension element should contain source!");
     } catch (ParseException e) {
       testRule.assertTextPresent("Empty attribute 'source' when passing variables", e.getMessage());
@@ -828,9 +852,10 @@ public class BpmnParseTest {
 
   @Test
   public void testNoOperatonInTargetThrowsError() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testNoOperatonInTargetThrowsError");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testNoOperatonInTargetThrowsError");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Process operaton:in extension element should contain target!");
     } catch (ParseException e) {
       testRule.assertTextPresent("Missing attribute 'target' when attribute 'source' or 'sourceExpression' is set", e.getMessage());
@@ -840,11 +865,11 @@ public class BpmnParseTest {
 
   @Test
   public void testNoOperatonInTargetWithoutValidation() {
+    processEngineConfiguration.setDisableStrictCallActivityValidation(true);
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testNoOperatonInTargetThrowsError");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      processEngineConfiguration.setDisableStrictCallActivityValidation(true);
-
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testNoOperatonInTargetThrowsError");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Process operaton:in extension element should contain target!");
     } catch (ParseException e) {
       testRule.assertTextPresent("Missing attribute 'target' when attribute 'source' or 'sourceExpression' is set", e.getMessage());
@@ -856,9 +881,10 @@ public class BpmnParseTest {
 
   @Test
   public void testEmptyOperatonInTargetThrowsError() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testEmptyOperatonInTargetThrowsError");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testEmptyOperatonInTargetThrowsError");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Process operaton:in extension element should contain target!");
     } catch (ParseException e) {
       testRule.assertTextPresent("Empty attribute 'target' when attribute 'source' or 'sourceExpression' is set", e.getMessage());
@@ -880,9 +906,10 @@ public class BpmnParseTest {
 
   @Test
   public void testNoOperatonOutSourceThrowsError() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testNoOperatonOutSourceThrowsError");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testNoOperatonOutSourceThrowsError");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Process operaton:out extension element should contain source!");
     } catch (ParseException e) {
       testRule.assertTextPresent("Missing parameter 'source' or 'sourceExpression' when passing variables", e.getMessage());
@@ -908,9 +935,10 @@ public class BpmnParseTest {
 
   @Test
   public void testEmptyOperatonOutSourceThrowsError() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testEmptyOperatonOutSourceThrowsError");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testEmptyOperatonOutSourceThrowsError");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Process operaton:out extension element should contain source!");
     } catch (ParseException e) {
       testRule.assertTextPresent("Empty attribute 'source' when passing variables", e.getMessage());
@@ -936,9 +964,10 @@ public class BpmnParseTest {
 
   @Test
   public void testNoOperatonOutTargetThrowsError() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testNoOperatonOutTargetThrowsError");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testNoOperatonOutTargetThrowsError");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Process operaton:out extension element should contain target!");
     } catch (ParseException e) {
       testRule.assertTextPresent("Missing attribute 'target' when attribute 'source' or 'sourceExpression' is set", e.getMessage());
@@ -948,11 +977,11 @@ public class BpmnParseTest {
 
   @Test
   public void testNoOperatonOutTargetWithoutValidation() {
+    processEngineConfiguration.setDisableStrictCallActivityValidation(true);
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testNoOperatonOutTargetThrowsError");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      processEngineConfiguration.setDisableStrictCallActivityValidation(true);
-
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testNoOperatonOutTargetThrowsError");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Process operaton:out extension element should contain target!");
     } catch (ParseException e) {
       testRule.assertTextPresent("Missing attribute 'target' when attribute 'source' or 'sourceExpression' is set", e.getMessage());
@@ -964,9 +993,10 @@ public class BpmnParseTest {
 
   @Test
   public void testEmptyOperatonOutTargetThrowsError() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testEmptyOperatonOutTargetThrowsError");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testEmptyOperatonOutTargetThrowsError");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Process operaton:out extension element should contain target!");
     } catch (ParseException e) {
       testRule.assertTextPresent("Empty attribute 'target' when attribute 'source' or 'sourceExpression' is set", e.getMessage());
@@ -1014,9 +1044,10 @@ public class BpmnParseTest {
 
   @Test
   public void testParseProcessDefinitionMalformedStringTtl() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseProcessDefinitionMalformedStringTtl");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseProcessDefinitionMalformedStringTtl");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Exception expected: Process definition historyTimeToLive value can not be parsed.");
     } catch (ParseException e) {
       testRule.assertTextPresent("Cannot parse historyTimeToLive", e.getMessage());
@@ -1067,9 +1098,10 @@ public class BpmnParseTest {
   @Test
   public void testParseProcessDefinitionWithoutTtlWithMalformedConfigDefault() {
     processEngineConfiguration.setHistoryTimeToLive("PP555DDD");
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseProcessDefinitionWithoutTtl");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseProcessDefinitionWithoutTtl");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Exception expected: Process definition historyTimeToLive value can not be parsed.");
     } catch (ParseException e) {
       testRule.assertTextPresent("Cannot parse historyTimeToLive", e.getMessage());
@@ -1081,9 +1113,10 @@ public class BpmnParseTest {
   @Test
   public void testParseProcessDefinitionWithoutTtlWithInvalidConfigDefault() {
     processEngineConfiguration.setHistoryTimeToLive("invalidValue");
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseProcessDefinitionWithoutTtl");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseProcessDefinitionWithoutTtl");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Exception expected: Process definition historyTimeToLive value can not be parsed.");
     } catch (ParseException e) {
       testRule.assertTextPresent("Cannot parse historyTimeToLive", e.getMessage());
@@ -1095,9 +1128,10 @@ public class BpmnParseTest {
   @Test
   public void testParseProcessDefinitionWithoutTtlWithNegativeConfigDefault() {
     processEngineConfiguration.setHistoryTimeToLive("-6");
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseProcessDefinitionWithoutTtl");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseProcessDefinitionWithoutTtl");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Exception expected: Process definition historyTimeToLive value can not be parsed.");
     } catch (ParseException e) {
       testRule.assertTextPresent("Cannot parse historyTimeToLive", e.getMessage());
@@ -1108,9 +1142,10 @@ public class BpmnParseTest {
 
   @Test
   public void testParseProcessDefinitionInvalidTtl() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseProcessDefinitionInvalidTtl");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseProcessDefinitionInvalidTtl");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Exception expected: Process definition historyTimeToLive value can not be parsed.");
     } catch (ParseException e) {
       testRule.assertTextPresent("Cannot parse historyTimeToLive", e.getMessage());
@@ -1119,9 +1154,10 @@ public class BpmnParseTest {
 
   @Test
   public void testParseProcessDefinitionNegativTtl() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseProcessDefinitionNegativeTtl");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseProcessDefinitionNegativeTtl");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Exception expected: Process definition historyTimeToLive value can not be parsed.");
     } catch (ParseException e) {
       testRule.assertTextPresent("Cannot parse historyTimeToLive", e.getMessage());
@@ -1208,9 +1244,10 @@ public class BpmnParseTest {
   public void testFeatureSecureProcessingRejectsDefinitionDueToAttributeLimit() {
     // IBM JDKs do not check on attribute number limits, skip the test there
     Assume.assumeThat(System.getProperty("java.vm.vendor"), not(containsString("IBM")));
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseProcessDefinitionFSP");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseProcessDefinitionFSP");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Exception expected: Attribute Number Limit should have been exceeded while parsing the model!");
     } catch (ProcessEngineException e) {
       testRule.assertTextPresent("JAXP00010002", e.getMessage());
@@ -1278,8 +1315,7 @@ public class BpmnParseTest {
 
   @Test
   public void testTimerWithoutFullDefinition() {
-    try {
-      String timerWithoutDetails = "<?xml version='1.0' encoding='UTF-8'?>" +
+    String timerWithoutDetails = "<?xml version='1.0' encoding='UTF-8'?>" +
           "<definitions xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'" +
           "  xmlns='http://www.omg.org/spec/BPMN/20100524/MODEL'" +
           "  xmlns:operaton='http://operaton.org/schema/1.0/bpmn'" +
@@ -1290,7 +1326,9 @@ public class BpmnParseTest {
           "    </startEvent>" +
           "  </process>" +
           "</definitions>";
-      repositoryService.createDeployment().addString("process.bpmn20.xml", timerWithoutDetails).deploy();
+    var deploymentBuilder = repositoryService.createDeployment().addString("process.bpmn20.xml", timerWithoutDetails);
+    try {
+      deploymentBuilder.deploy();
       fail("Exception expected: Process definition could be parsed, it contains uncomplete timer event definition.");
     } catch (ParseException e) {
       testRule.assertTextPresent("Timer needs configuration (either timeDate, timeCycle or timeDuration is needed).", e.getMessage());
@@ -1302,8 +1340,7 @@ public class BpmnParseTest {
 
   @Test
   public void testSequenceFlowNoIdAndUnexistantDestination() {
-    try {
-      String incorrectSequenceFlow = "<?xml version='1.0' encoding='UTF-8'?>" +
+    String incorrectSequenceFlow = "<?xml version='1.0' encoding='UTF-8'?>" +
           "<definitions xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'" +
           "  xmlns='http://www.omg.org/spec/BPMN/20100524/MODEL'" +
           "  xmlns:operaton='http://operaton.org/schema/1.0/bpmn'" +
@@ -1313,7 +1350,9 @@ public class BpmnParseTest {
           "    <sequenceFlow sourceRef='start' targetRef='eventBasedGateway' />" +
           "  </process>" +
           "</definitions>";
-      repositoryService.createDeployment().addString("process.bpmn20.xml", incorrectSequenceFlow).deploy();
+    var deploymentBuilder = repositoryService.createDeployment().addString("process.bpmn20.xml", incorrectSequenceFlow);
+    try {
+      deploymentBuilder.deploy();
       fail("Exception expected: Unexisting target.");
     } catch (ParseException e) {
       testRule.assertTextPresent("Invalid destination 'eventBasedGateway' of sequence flow 'null'", e.getMessage());
@@ -1326,9 +1365,10 @@ public class BpmnParseTest {
 
   @Test
   public void testMultipleTimerStartEvents() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testMultipleTimerStartEvents");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testMultipleTimerStartEvents");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Exception expected: Process definition could be parsed, it contains multiple multiple none start events or timer start events.");
     } catch (ParseException e) {
       testRule.assertTextPresent("multiple none start events or timer start events not supported on process definition", e.getMessage());

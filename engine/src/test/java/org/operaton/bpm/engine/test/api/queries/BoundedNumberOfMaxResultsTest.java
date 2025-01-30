@@ -53,10 +53,11 @@ public class BoundedNumberOfMaxResultsTest {
   @Rule
   public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testHelper);
 
-  protected HistoryService historyService;
-  protected RuntimeService runtimeService;
-  protected TaskService taskService;
-  protected IdentityService identityService;
+  HistoryService historyService;
+  RuntimeService runtimeService;
+  TaskService taskService;
+  IdentityService identityService;
+  FilterService filterService;
 
   protected BpmnModelInstance simpleProcess = Bpmn.createExecutableProcess("process")
       .startEvent()
@@ -77,6 +78,7 @@ public class BoundedNumberOfMaxResultsTest {
     runtimeService = engineRule.getRuntimeService();
     taskService = engineRule.getTaskService();
     identityService = engineRule.getIdentityService();
+    filterService = engineRule.getFilterService();
   }
 
   @Before
@@ -241,18 +243,18 @@ public class BoundedNumberOfMaxResultsTest {
   @Test
   public void shouldThrowExceptionWhenFilterQueryList_MaxResultsLimitExceeded() {
     // given
-    Filter foo = engineRule.getFilterService().newTaskFilter("foo");
+    Filter foo = filterService.newTaskFilter("foo");
     foo.setQuery(taskService.createTaskQuery());
-    engineRule.getFilterService().saveFilter(foo);
+    filterService.saveFilter(foo);
 
-    String filterId = engineRule.getFilterService()
+    String filterId = filterService
         .createFilterQuery()
         .singleResult()
         .getId();
 
     try {
       // when
-      engineRule.getFilterService().list(filterId);
+      filterService.list(filterId);
       fail("Exception expected!");
     } catch (BadUserRequestException e) {
       // then
@@ -260,24 +262,24 @@ public class BoundedNumberOfMaxResultsTest {
     }
 
     // clear
-    engineRule.getFilterService().deleteFilter(filterId);
+    filterService.deleteFilter(filterId);
   }
 
   @Test
   public void shouldThrowExceptionWhenFilterQueryListPage_MaxResultsLimitExceeded() {
     // given
-    Filter foo = engineRule.getFilterService().newTaskFilter("foo");
+    Filter foo = filterService.newTaskFilter("foo");
     foo.setQuery(taskService.createTaskQuery());
-    engineRule.getFilterService().saveFilter(foo);
+    filterService.saveFilter(foo);
 
-    String filterId = engineRule.getFilterService()
+    String filterId = filterService
         .createFilterQuery()
         .singleResult()
         .getId();
 
     try {
       // when
-      engineRule.getFilterService().listPage(filterId, 0, 11);
+      filterService.listPage(filterId, 0, 11);
       fail("Exception expected!");
     } catch (BadUserRequestException e) {
       // then
@@ -285,18 +287,18 @@ public class BoundedNumberOfMaxResultsTest {
     }
 
     // clear
-    engineRule.getFilterService().deleteFilter(filterId);
+    filterService.deleteFilter(filterId);
   }
 
   @Test
   public void shouldThrowExceptionWhenExtendedFilterQueryList_MaxResultsLimitExceeded() {
     // given
-    Filter foo = engineRule.getFilterService().newTaskFilter("foo");
+    Filter foo = filterService.newTaskFilter("foo");
     foo.setQuery(taskService.createTaskQuery());
 
-    engineRule.getFilterService().saveFilter(foo);
+    filterService.saveFilter(foo);
 
-    String filterId = engineRule.getFilterService()
+    String filterId = filterService
         .createFilterQuery()
         .singleResult()
         .getId();
@@ -306,7 +308,7 @@ public class BoundedNumberOfMaxResultsTest {
 
     try {
       // when
-      engineRule.getFilterService().list(filterId, extendingQuery);
+      filterService.list(filterId, extendingQuery);
       fail("Exception expected!");
     } catch (BadUserRequestException e) {
 
@@ -315,7 +317,7 @@ public class BoundedNumberOfMaxResultsTest {
     }
 
     // clear
-    engineRule.getFilterService().deleteFilter(filterId);
+    filterService.deleteFilter(filterId);
   }
 
   @Test
@@ -328,12 +330,12 @@ public class BoundedNumberOfMaxResultsTest {
     runtimeService.startProcessInstanceByKey("process");
     runtimeService.startProcessInstanceByKey("process");
     runtimeService.startProcessInstanceByKey("process");
+    var externalTaskService = engineRule.getExternalTaskService().updateRetries()
+          .externalTaskQuery(engineRule.getExternalTaskService().createExternalTaskQuery());
 
     try {
       // when
-      engineRule.getExternalTaskService().updateRetries()
-          .externalTaskQuery(engineRule.getExternalTaskService().createExternalTaskQuery())
-          .set(5);
+      externalTaskService.set(5);
       fail("Exception expected!");
     } catch (BadUserRequestException e) {
 
@@ -374,12 +376,12 @@ public class BoundedNumberOfMaxResultsTest {
 
     HistoricProcessInstanceQuery historicProcessInstanceQuery = engineRule.getHistoryService()
         .createHistoricProcessInstanceQuery();
+    var externalTaskService = engineRule.getExternalTaskService().updateRetries()
+          .historicProcessInstanceQuery(historicProcessInstanceQuery);
 
     try {
       // when
-      engineRule.getExternalTaskService().updateRetries()
-          .historicProcessInstanceQuery(historicProcessInstanceQuery)
-          .set(5);
+      externalTaskService.set(5);
       fail("Exception expected!");
     } catch (BadUserRequestException e) {
 
@@ -439,12 +441,12 @@ public class BoundedNumberOfMaxResultsTest {
     runtimeService.startProcessInstanceByKey("process");
     runtimeService.startProcessInstanceByKey("process");
     runtimeService.startProcessInstanceByKey("process");
+    var externalTaskService = engineRule.getExternalTaskService().updateRetries()
+          .processInstanceQuery(engineRule.getRuntimeService().createProcessInstanceQuery());
 
     try {
       // when
-      engineRule.getExternalTaskService().updateRetries()
-          .processInstanceQuery(engineRule.getRuntimeService().createProcessInstanceQuery())
-          .set(5);
+      externalTaskService.set(5);
       fail("Exception expected!");
     } catch (BadUserRequestException e) {
 
@@ -499,12 +501,12 @@ public class BoundedNumberOfMaxResultsTest {
     runtimeService.startProcessInstanceById(source);
     runtimeService.startProcessInstanceById(source);
     runtimeService.startProcessInstanceById(source);
+    var migrationPlanExecutionBuilder = runtimeService.newMigration(plan)
+          .processInstanceQuery(runtimeService.createProcessInstanceQuery());
 
     try {
       // when
-      runtimeService.newMigration(plan)
-          .processInstanceQuery(runtimeService.createProcessInstanceQuery())
-          .execute();
+      migrationPlanExecutionBuilder.execute();
       fail("Exception expected!");
     } catch (BadUserRequestException e) {
 
@@ -566,13 +568,13 @@ public class BoundedNumberOfMaxResultsTest {
     runtimeService.startProcessInstanceByKey("process");
     runtimeService.startProcessInstanceByKey("process");
     runtimeService.startProcessInstanceByKey("process");
+    var modificationBuilder = runtimeService.createModification(processDefinitionId)
+          .startAfterActivity("userTask")
+          .processInstanceQuery(runtimeService.createProcessInstanceQuery());
 
     try {
       // when
-      runtimeService.createModification(processDefinitionId)
-          .startAfterActivity("userTask")
-          .processInstanceQuery(runtimeService.createProcessInstanceQuery())
-          .execute();
+      modificationBuilder.execute();
       fail("Exception expected!");
     } catch (BadUserRequestException e) {
 
@@ -631,13 +633,13 @@ public class BoundedNumberOfMaxResultsTest {
     runtimeService.startProcessInstanceByKey("process");
     runtimeService.startProcessInstanceByKey("process");
     runtimeService.startProcessInstanceByKey("process");
+    var restartProcessInstanceBuilder = runtimeService.restartProcessInstances(processDefinitionId)
+          .historicProcessInstanceQuery(historyService.createHistoricProcessInstanceQuery())
+          .startAfterActivity("startEvent");
 
     try {
       // when
-      runtimeService.restartProcessInstances(processDefinitionId)
-          .historicProcessInstanceQuery(historyService.createHistoricProcessInstanceQuery())
-          .startAfterActivity("startEvent")
-          .execute();
+      restartProcessInstanceBuilder.execute();
       fail("Exception expected!");
     } catch (BadUserRequestException e) {
 
@@ -687,12 +689,12 @@ public class BoundedNumberOfMaxResultsTest {
     runtimeService.startProcessInstanceByKey("process");
     runtimeService.startProcessInstanceByKey("process");
     runtimeService.startProcessInstanceByKey("process");
+    var updateProcessInstanceSuspensionStateSelectBuilder = runtimeService.updateProcessInstanceSuspensionState()
+          .byProcessInstanceQuery(runtimeService.createProcessInstanceQuery());
 
     try {
       // when
-      runtimeService.updateProcessInstanceSuspensionState()
-          .byProcessInstanceQuery(runtimeService.createProcessInstanceQuery())
-          .suspend();
+      updateProcessInstanceSuspensionStateSelectBuilder.suspend();
       fail("Exception expected!");
     } catch (BadUserRequestException e) {
 
@@ -712,12 +714,12 @@ public class BoundedNumberOfMaxResultsTest {
     instanceIds.add(runtimeService.startProcessInstanceByKey("process").getId());
     instanceIds.add(runtimeService.startProcessInstanceByKey("process").getId());
     instanceIds.add(runtimeService.startProcessInstanceByKey("process").getId());
+    var updateProcessInstanceSuspensionStateSelectBuilder = runtimeService.updateProcessInstanceSuspensionState()
+          .byProcessInstanceIds(instanceIds);
 
     try {
       // when
-      runtimeService.updateProcessInstanceSuspensionState()
-          .byProcessInstanceIds(instanceIds)
-          .suspend();
+      updateProcessInstanceSuspensionStateSelectBuilder.suspend();
       fail("Exception expected!");
     } catch (BadUserRequestException e) {
 
@@ -756,12 +758,12 @@ public class BoundedNumberOfMaxResultsTest {
     runtimeService.startProcessInstanceByKey("process");
     runtimeService.startProcessInstanceByKey("process");
     runtimeService.startProcessInstanceByKey("process");
+    var updateProcessInstanceSuspensionStateSelectBuilder = runtimeService.updateProcessInstanceSuspensionState()
+          .byHistoricProcessInstanceQuery(historyService.createHistoricProcessInstanceQuery());
 
     try {
       // when
-      runtimeService.updateProcessInstanceSuspensionState()
-          .byHistoricProcessInstanceQuery(historyService.createHistoricProcessInstanceQuery())
-          .suspend();
+      updateProcessInstanceSuspensionStateSelectBuilder.suspend();
       fail("Exception expected!");
     } catch (BadUserRequestException e) {
 

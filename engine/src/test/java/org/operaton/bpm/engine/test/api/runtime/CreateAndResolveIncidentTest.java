@@ -208,8 +208,9 @@ public class CreateAndResolveIncidentTest {
 
     // then
     Incident incident = runtimeService.createIncidentQuery().processInstanceId(processInstance.getId()).singleResult();
+    var incidentId = incident.getId();
     try {
-      runtimeService.resolveIncident(incident.getId());
+      runtimeService.resolveIncident(incidentId);
       fail("Exception expected");
     } catch (BadUserRequestException e) {
       assertThat(e.getMessage()).contains("Cannot resolve an incident of type failedJob");

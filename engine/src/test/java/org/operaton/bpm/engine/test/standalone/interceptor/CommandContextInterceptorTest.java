@@ -40,8 +40,9 @@ public class CommandContextInterceptorTest extends PluggableProcessEngineTest {
 
   @Test
   public void testCommandContextGetCurrentAfterException() {
+    var commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
     try {
-      processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+      commandExecutor.execute(commandContext -> {
         throw new IllegalStateException("here i come!");
       });
 
@@ -110,8 +111,9 @@ public class CommandContextInterceptorTest extends PluggableProcessEngineTest {
    testRule.deploy(modelInstance);
 
     boolean errorThrown = false;
+    var commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
     try {
-      processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+      commandExecutor.execute(commandContext -> {
 
         runtimeService.startProcessInstanceByKey("processThrowingThrowable");
         return null;

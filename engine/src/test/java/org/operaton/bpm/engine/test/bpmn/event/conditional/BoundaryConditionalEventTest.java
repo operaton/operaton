@@ -1606,10 +1606,11 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
 
     // given suspended process
     ProcessInstance procInst = runtimeService.startProcessInstanceByKey(CONDITIONAL_EVENT_PROCESS_KEY);
-    runtimeService.suspendProcessInstanceById(procInst.getId());
+    var processInstanceId = procInst.getId();
+    runtimeService.suspendProcessInstanceById(processInstanceId);
 
     //when wrong variable is set
-    runtimeService.setVariable(procInst.getId(), VARIABLE_NAME+1, 1);
+    runtimeService.setVariable(processInstanceId, VARIABLE_NAME+1, 1);
 
     //then nothing happens
     assertTrue(runtimeService.createProcessInstanceQuery().singleResult().isSuspended());
@@ -1617,12 +1618,12 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
     //when variable which triggers condition is set
     //then exception is expected
     try {
-      runtimeService.setVariable(procInst.getId(), VARIABLE_NAME, 1);
+      runtimeService.setVariable(processInstanceId, VARIABLE_NAME, 1);
       fail("Should fail!");
     } catch (SuspendedEntityInteractionException seie) {
       //expected
     }
-    runtimeService.activateProcessInstanceById(procInst.getId());
+    runtimeService.activateProcessInstanceById(processInstanceId);
     tasksAfterVariableIsSet = taskService.createTaskQuery().list();
   }
 
@@ -1638,10 +1639,11 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
 
     // given suspended process
     ProcessInstance procInst = runtimeService.startProcessInstanceByKey(CONDITIONAL_EVENT_PROCESS_KEY);
-    runtimeService.suspendProcessInstanceById(procInst.getId());
+    var processInstanceId = procInst.getId();
+    runtimeService.suspendProcessInstanceById(processInstanceId);
 
     //when wrong variable is set
-    runtimeService.setVariable(procInst.getId(), VARIABLE_NAME+1, 1);
+    runtimeService.setVariable(processInstanceId, VARIABLE_NAME+1, 1);
 
     //then nothing happens
     assertTrue(runtimeService.createProcessInstanceQuery().singleResult().isSuspended());
@@ -1649,12 +1651,12 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
     //when variable which triggers condition is set
     //then exception is expected
     try {
-      runtimeService.setVariable(procInst.getId(), VARIABLE_NAME, 1);
+      runtimeService.setVariable(processInstanceId, VARIABLE_NAME, 1);
       fail("Should fail!");
     } catch (SuspendedEntityInteractionException seie) {
       //expected
     }
-    runtimeService.activateProcessInstanceById(procInst.getId());
+    runtimeService.activateProcessInstanceById(processInstanceId);
     tasksAfterVariableIsSet = taskService.createTaskQuery().list();
   }
 }

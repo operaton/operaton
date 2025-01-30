@@ -22,6 +22,8 @@ import static junit.framework.TestCase.fail;
 import java.util.Map;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
@@ -30,6 +32,7 @@ import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
@@ -45,6 +48,14 @@ public class CallActivityDelegateMappingTest {
 
   @Rule
   public RuleChain chain = RuleChain.outerRule(engineRule).around(testHelper);
+  RuntimeService runtimeService;
+  TaskService taskService;
+
+  @Before
+  public void setUp() {
+    runtimeService = engineRule.getRuntimeService();
+    taskService = engineRule.getTaskService();
+  }
 
   @Test
   @Deployment(resources = {
@@ -53,25 +64,25 @@ public class CallActivityDelegateMappingTest {
   })
   public void testCallSubProcessWithDelegatedVariableMapping() {
     //given
-    engineRule.getRuntimeService().startProcessInstanceByKey("callSimpleSubProcess");
-    TaskQuery taskQuery = engineRule.getTaskService().createTaskQuery();
+    runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
+    TaskQuery taskQuery = taskService.createTaskQuery();
 
     //when
     Task taskInSubProcess = taskQuery.singleResult();
     assertEquals("Task in subprocess", taskInSubProcess.getName());
 
     //then check value from input variable
-    Object inputVar = engineRule.getRuntimeService().getVariable(taskInSubProcess.getProcessInstanceId(), "TestInputVar");
+    Object inputVar = runtimeService.getVariable(taskInSubProcess.getProcessInstanceId(), "TestInputVar");
     assertEquals("inValue", inputVar);
 
     //when completing the task in the subprocess, finishes the subprocess
-    engineRule.getTaskService().complete(taskInSubProcess.getId());
+    taskService.complete(taskInSubProcess.getId());
     Task taskAfterSubProcess = taskQuery.singleResult();
     assertEquals("Task after subprocess", taskAfterSubProcess.getName());
 
     //then check value from output variable
-    ProcessInstance processInstance = engineRule.getRuntimeService().createProcessInstanceQuery().singleResult();
-    Object outputVar = engineRule.getRuntimeService().getVariable(processInstance.getId(), "TestOutputVar");
+    ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().singleResult();
+    Object outputVar = runtimeService.getVariable(processInstance.getId(), "TestOutputVar");
     assertEquals("outValue", outputVar);
   }
 
@@ -86,25 +97,25 @@ public class CallActivityDelegateMappingTest {
     Map<Object, Object> vars = engineRule.getProcessEngineConfiguration().getBeans();
     vars.put("expr", new DelegatedVarMapping());
     engineRule.getProcessEngineConfiguration().setBeans(vars);
-    engineRule.getRuntimeService().startProcessInstanceByKey("callSimpleSubProcess");
-    TaskQuery taskQuery = engineRule.getTaskService().createTaskQuery();
+    runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
+    TaskQuery taskQuery = taskService.createTaskQuery();
 
     //when
     Task taskInSubProcess = taskQuery.singleResult();
     assertEquals("Task in subprocess", taskInSubProcess.getName());
 
     //then check if variable mapping was executed - check if input variable exist
-    Object inputVar = engineRule.getRuntimeService().getVariable(taskInSubProcess.getProcessInstanceId(), "TestInputVar");
+    Object inputVar = runtimeService.getVariable(taskInSubProcess.getProcessInstanceId(), "TestInputVar");
     assertEquals("inValue", inputVar);
 
     //when completing the task in the subprocess, finishes the subprocess
-    engineRule.getTaskService().complete(taskInSubProcess.getId());
+    taskService.complete(taskInSubProcess.getId());
     Task taskAfterSubProcess = taskQuery.singleResult();
     assertEquals("Task after subprocess", taskAfterSubProcess.getName());
 
     //then check if variable output mapping was executed - check if output variable exist
-    ProcessInstance processInstance = engineRule.getRuntimeService().createProcessInstanceQuery().singleResult();
-    Object outputVar = engineRule.getRuntimeService().getVariable(processInstance.getId(), "TestOutputVar");
+    ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().singleResult();
+    Object outputVar = runtimeService.getVariable(processInstance.getId(), "TestOutputVar");
     assertEquals("outValue", outputVar);
   }
 
@@ -115,7 +126,7 @@ public class CallActivityDelegateMappingTest {
   })
   public void testCallSubProcessWithDelegatedVariableMappingNotFound() {
     try {
-      engineRule.getRuntimeService().startProcessInstanceByKey("callSimpleSubProcess");
+      runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
       fail("Execption expected!");
     } catch (ProcessEngineException e) {
       //Exception while instantiating class 'org.operaton.bpm.engine.test.bpmn.callactivity.NotFoundMapping'
@@ -131,7 +142,7 @@ public class CallActivityDelegateMappingTest {
   })
   public void testCallSubProcessWithDelegatedVariableMappingeExpressionNotFound() {
     try {
-      engineRule.getRuntimeService().startProcessInstanceByKey("callSimpleSubProcess");
+      runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
       fail("Exception expected!");
     } catch (ProcessEngineException pex) {
       assertEquals(
@@ -142,15 +153,15 @@ public class CallActivityDelegateMappingTest {
 
   private void delegateVariableMappingThrowException() {
     //given
-    engineRule.getRuntimeService().startProcessInstanceByKey("callSimpleSubProcess");
-    TaskQuery taskQuery = engineRule.getTaskService().createTaskQuery();
+    runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
+    TaskQuery taskQuery = taskService.createTaskQuery();
     Task taskBeforeSubProcess = taskQuery.singleResult();
     assertEquals("Task before subprocess", taskBeforeSubProcess.getName());
 
     //when completing the task continues the process which leads to calling the subprocess
     //which throws an exception
     try {
-      engineRule.getTaskService().complete(taskBeforeSubProcess.getId());
+      taskService.complete(taskBeforeSubProcess.getId());
       fail("Exeption expected!");
     } catch (ProcessEngineException pex) { //then
       Assert.assertTrue(pex.getMessage().equalsIgnoreCase("org.operaton.bpm.engine.ProcessEngineException: New process engine exception.")
@@ -209,17 +220,17 @@ public class CallActivityDelegateMappingTest {
 
   private void delegateVariableMappingThrowExceptionOutput() {
     //given
-    engineRule.getRuntimeService().startProcessInstanceByKey("callSimpleSubProcess");
-    TaskQuery taskQuery = engineRule.getTaskService().createTaskQuery();
+    runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
+    TaskQuery taskQuery = taskService.createTaskQuery();
     Task taskBeforeSubProcess = taskQuery.singleResult();
     assertEquals("Task before subprocess", taskBeforeSubProcess.getName());
-    engineRule.getTaskService().complete(taskBeforeSubProcess.getId());
+    taskService.complete(taskBeforeSubProcess.getId());
     Task taskInSubProcess = taskQuery.singleResult();
 
     //when completing the task continues the process which leads to calling the output mapping
     //which throws an exception
     try {
-      engineRule.getTaskService().complete(taskInSubProcess.getId());
+      taskService.complete(taskInSubProcess.getId());
       fail("Exeption expected!");
     } catch (ProcessEngineException pex) { //then
       Assert.assertTrue(pex.getMessage().equalsIgnoreCase("org.operaton.bpm.engine.ProcessEngineException: New process engine exception.")
@@ -284,10 +295,10 @@ public class CallActivityDelegateMappingTest {
   public void testCallFailingSubProcessWithDelegatedVariableMapping() {
     //given starting process instance with call activity
     //when call activity execution fails
-    ProcessInstance procInst = engineRule.getRuntimeService().startProcessInstanceByKey("callSimpleSubProcess");
+    ProcessInstance procInst = runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
 
     //then output mapping should be executed
-    Object outputVar = engineRule.getRuntimeService().getVariable(procInst.getId(), "TestOutputVar");
+    Object outputVar = runtimeService.getVariable(procInst.getId(), "TestOutputVar");
     assertEquals("outValue", outputVar);
   }
 
@@ -298,21 +309,21 @@ public class CallActivityDelegateMappingTest {
   })
   public void testCallSubProcessWithDelegatedVariableMappingAndAsyncServiceTask() {
     //given starting process instance with call activity which has asyn service task
-    ProcessInstance superProcInst = engineRule.getRuntimeService().startProcessInstanceByKey("callSimpleSubProcess");
+    ProcessInstance superProcInst = runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
 
-    ProcessInstance subProcInst = engineRule.getRuntimeService()
+    ProcessInstance subProcInst = runtimeService
             .createProcessInstanceQuery()
             .processDefinitionKey("simpleSubProcessWithAsyncService").singleResult();
 
     //then delegation variable mapping class should also been resolved
     //input mapping should be executed
-    Object inVar = engineRule.getRuntimeService().getVariable(subProcInst.getId(), "TestInputVar");
+    Object inVar = runtimeService.getVariable(subProcInst.getId(), "TestInputVar");
     assertEquals("inValue", inVar);
 
     //and after finish call activity the ouput mapping is executed
     testHelper.executeAvailableJobs();
 
-    Object outputVar = engineRule.getRuntimeService().getVariable(superProcInst.getId(), "TestOutputVar");
+    Object outputVar = runtimeService.getVariable(superProcInst.getId(), "TestOutputVar");
     assertEquals("outValue", outputVar);
   }
 

@@ -123,10 +123,11 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
     // turn on authorization
     processEngineConfiguration.setAuthorizationEnabled(true);
     identityService.setAuthenticatedUserId(jonny2);
+    var basePermsId = basePerms.getId();
 
     try {
       // try to delete authorization
-      authorizationService.deleteAuthorization(basePerms.getId());
+      authorizationService.deleteAuthorization(basePermsId);
       fail("exception expected");
 
     } catch (AuthorizationException e) {

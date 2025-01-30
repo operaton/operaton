@@ -102,10 +102,9 @@ public class UserResourceImpl extends AbstractIdentityResource implements UserRe
     ensureNotReadOnly();
 
     Authentication currentAuthentication = identityService.getCurrentAuthentication();
-    if(currentAuthentication != null && currentAuthentication.getUserId() != null) {
-      if(!identityService.checkPassword(currentAuthentication.getUserId(), account.getAuthenticatedUserPassword())) {
-        throw new InvalidRequestException(Status.BAD_REQUEST, "The given authenticated user password is not valid.");
-      }
+    if((currentAuthentication != null && currentAuthentication.getUserId() != null)
+            && !identityService.checkPassword(currentAuthentication.getUserId(), account.getAuthenticatedUserPassword())) {
+      throw new InvalidRequestException(Status.BAD_REQUEST, "The given authenticated user password is not valid.");
     }
 
     User dbUser = findUserObject();

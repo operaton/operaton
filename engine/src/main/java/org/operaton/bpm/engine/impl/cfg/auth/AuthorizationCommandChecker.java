@@ -610,10 +610,8 @@ public class AuthorizationCommandChecker implements CommandChecker {
   public void checkDeleteHistoricTaskInstance(HistoricTaskInstanceEntity task) {
     // deleting unexisting historic task instance should be silently ignored
     // see javaDoc HistoryService.deleteHistoricTaskInstance
-    if (task != null) {
-      if (task.getProcessDefinitionKey() != null) {
-        getAuthorizationManager().checkAuthorization(DELETE_HISTORY, PROCESS_DEFINITION, task.getProcessDefinitionKey());
-      }
+    if (task != null && task.getProcessDefinitionKey() != null) {
+      getAuthorizationManager().checkAuthorization(DELETE_HISTORY, PROCESS_DEFINITION, task.getProcessDefinitionKey());
     }
   }
 

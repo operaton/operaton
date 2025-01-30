@@ -65,10 +65,9 @@ public class SingleQueryVariableValueCondition extends AbstractQueryVariableValu
     }
     serializer.writeValue(typedValue, this);
     this.type = serializer.getName();
-    if (ValueType.STRING.getName().equals(type) && DbSqlSessionFactory.ORACLE.equals(dbType)) {
-      if ("".equals(textValue) && Arrays.asList(EQUALS, NOT_EQUALS).contains(wrappedQueryValue.getOperator())) {
-        this.findNulledEmptyStrings = true;
-      }
+    if (ValueType.STRING.getName().equals(type) && DbSqlSessionFactory.ORACLE.equals(dbType)
+            && ("".equals(textValue)  && Arrays.asList(EQUALS, NOT_EQUALS).contains(wrappedQueryValue.getOperator()))) {
+      this.findNulledEmptyStrings = true;
     }
   }
 

@@ -52,27 +52,25 @@ public class VariableUtil {
     ProcessEngineConfigurationImpl processEngineConfiguration =
         Context.getProcessEngineConfiguration();
 
-    if (value instanceof SerializableValue serializableValue
-        && !processEngineConfiguration.isJavaSerializationFormatEnabled()) {
+    if ((value instanceof SerializableValue serializableValue
+        && !processEngineConfiguration.isJavaSerializationFormatEnabled())
+        // if Java serialization is prohibited
+        && !serializableValue.isDeserialized()) {
+      String requestedDataFormat = serializableValue.getSerializationDataFormat();
 
-      // if Java serialization is prohibited
-      if (!serializableValue.isDeserialized()) {
-        String requestedDataFormat = serializableValue.getSerializationDataFormat();
+      if (requestedDataFormat == null) {
+        VariableSerializerFactory fallbackSerializerFactory =
+            processEngineConfiguration.getFallbackSerializerFactory();
 
-        if (requestedDataFormat == null) {
-          VariableSerializerFactory fallbackSerializerFactory =
-              processEngineConfiguration.getFallbackSerializerFactory();
-
-          // check if Java serializer will be used
-          TypedValueSerializer serializerForValue = TypedValueField.getSerializers()
-              .findSerializerForValue(serializableValue, fallbackSerializerFactory);
-          if (serializerForValue != null) {
-            requestedDataFormat = serializerForValue.getSerializationDataformat();
-          }
+        // check if Java serializer will be used
+        TypedValueSerializer serializerForValue = TypedValueField.getSerializers()
+            .findSerializerForValue(serializableValue, fallbackSerializerFactory);
+        if (serializerForValue != null) {
+          requestedDataFormat = serializerForValue.getSerializationDataformat();
         }
-
-        return Variables.SerializationDataFormats.JAVA.getName().equals(requestedDataFormat);
       }
+
+      return Variables.SerializationDataFormats.JAVA.getName().equals(requestedDataFormat);
     }
     return false;
   }

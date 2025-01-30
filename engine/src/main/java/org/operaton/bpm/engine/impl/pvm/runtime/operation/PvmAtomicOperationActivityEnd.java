@@ -60,14 +60,12 @@ public class PvmAtomicOperationActivityEnd implements PvmAtomicOperation {
 
     PvmExecutionImpl propagatingExecution = execution;
 
-    if(execution.isScope() && activity.isScope()) {
-      if (!LegacyBehavior.destroySecondNonScope(execution)) {
-        execution.destroy();
-        if(!execution.isConcurrent()) {
-          execution.remove();
-          propagatingExecution = execution.getParent();
-          propagatingExecution.setActivity(execution.getActivity());
-        }
+    if((execution.isScope() && activity.isScope()) && !LegacyBehavior.destroySecondNonScope(execution)) {
+      execution.destroy();
+      if(!execution.isConcurrent()) {
+        execution.remove();
+        propagatingExecution = execution.getParent();
+        propagatingExecution.setActivity(execution.getActivity());
       }
     }
 

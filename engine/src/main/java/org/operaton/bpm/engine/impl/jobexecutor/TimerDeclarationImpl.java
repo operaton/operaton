@@ -46,7 +46,6 @@ public class TimerDeclarationImpl extends JobDeclaration<ExecutionEntity, TimerE
   protected String repeat;
   protected boolean isInterruptingTimer; // For boundary timers
   protected String eventScopeActivityId = null;
-  protected Boolean isParallelMultiInstance;
 
   protected String rawJobHandlerConfiguration;
 
@@ -98,13 +97,13 @@ public class TimerDeclarationImpl extends JobDeclaration<ExecutionEntity, TimerE
   protected void initializeConfiguration(ExecutionEntity context, TimerEntity job) {
     String dueDateString = resolveAndSetDuedate(context, job, false);
 
-    if (type == TimerDeclarationType.CYCLE && !Objects.equals(jobHandlerType, TimerCatchIntermediateEventJobHandler.TYPE)) {
+    if ((type == TimerDeclarationType.CYCLE
+            && !Objects.equals(jobHandlerType, TimerCatchIntermediateEventJobHandler.TYPE))
+            && !isInterruptingTimer) {
 
       // See ACT-1427: A boundary timer with a cancelActivity='true', doesn't need to repeat itself
-      if (!isInterruptingTimer) {
-        String prepared = prepareRepeat(dueDateString);
-        job.setRepeat(prepared);
-      }
+      String prepared = prepareRepeat(dueDateString);
+      job.setRepeat(prepared);
     }
   }
 

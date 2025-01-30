@@ -63,11 +63,9 @@ public class ScopedAssociation {
   @SuppressWarnings("unchecked")
   public <T extends TypedValue> T getVariable(String variableName) {
     TypedValue value = cachedVariables.getValueTyped(variableName);
-    if(value == null) {
-      if(execution != null) {
-        value = runtimeService.getVariableTyped(execution.getId(), variableName);
-        cachedVariables.put(variableName, value);
-      }
+    if(value == null && execution != null) {
+      value = runtimeService.getVariableTyped(execution.getId(), variableName);
+      cachedVariables.put(variableName, value);
     }
     return (T) value;
   }

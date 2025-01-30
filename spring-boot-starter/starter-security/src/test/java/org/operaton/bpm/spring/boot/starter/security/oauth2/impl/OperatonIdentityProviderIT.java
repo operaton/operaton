@@ -25,6 +25,8 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.GroupQuery;
@@ -34,8 +36,6 @@ import org.operaton.bpm.engine.impl.identity.WritableIdentityProvider;
 import org.operaton.bpm.engine.impl.identity.db.DbGroupQueryImpl;
 import org.operaton.bpm.engine.impl.identity.db.DbUserQueryImpl;
 import org.operaton.bpm.spring.boot.starter.security.oauth2.AbstractSpringSecurityIT;
-import org.junit.Before;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -79,7 +79,7 @@ public class OperatonIdentityProviderIT extends AbstractSpringSecurityIT {
     mockIdentityProviderFactory();
   }
 
-  @Before
+  @BeforeEach
   public void setup() throws Exception {
     super.setup();
   }

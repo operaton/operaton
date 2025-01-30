@@ -22,10 +22,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
 import org.operaton.bpm.spring.boot.starter.security.oauth2.AbstractSpringSecurityIT;
-import org.operaton.commons.testing.ProcessEngineLoggingRule;
-import org.junit.Rule;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -40,8 +41,9 @@ public class OAuth2GrantedAuthoritiesMapperIT extends AbstractSpringSecurityIT {
   @Autowired
   private OAuth2GrantedAuthoritiesMapper authoritiesMapper;
 
-  @Rule
-  public ProcessEngineLoggingRule loggingRule = new ProcessEngineLoggingRule().watch(OAuth2GrantedAuthoritiesMapper.class.getCanonicalName());
+  @RegisterExtension
+  ProcessEngineLoggingExtension logger = new ProcessEngineLoggingExtension()
+      .watch(OAuth2GrantedAuthoritiesMapper.class.getCanonicalName());
 
   @Test
   public void testMappingNotOauth2Authorities() {
@@ -62,7 +64,7 @@ public class OAuth2GrantedAuthoritiesMapperIT extends AbstractSpringSecurityIT {
     // then
     assertThat(mappedAuthorities).isEmpty();
     String expectedWarn = "Attribute " + GROUP_NAME_ATTRIBUTE + " is not available";
-    assertThat(loggingRule.getFilteredLog(expectedWarn)).hasSize(1);
+    assertThat(logger.getFilteredLog(expectedWarn)).hasSize(1);
   }
 
   @Test
@@ -99,7 +101,7 @@ public class OAuth2GrantedAuthoritiesMapperIT extends AbstractSpringSecurityIT {
     // then
     assertThat(mappedAuthorities).isEmpty();
     String expectedError = "Could not map granted authorities, unsupported group attribute type: " + object.getClass();
-    assertThat(loggingRule.getFilteredLog(expectedError)).hasSize(1);
+    assertThat(logger.getFilteredLog(expectedError)).hasSize(1);
   }
 
 

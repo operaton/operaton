@@ -31,7 +31,8 @@ if [ $# -eq 0 ]; then
 
   # start Operaton Run in the background
   exec $runScript start --detached
-
+elif [ "$1" = "--version" ]; then
+  echo "Operaton ${project.version}"
 else
   # start Operaton Run with the passed arguments
   exec $runScript start "$@"

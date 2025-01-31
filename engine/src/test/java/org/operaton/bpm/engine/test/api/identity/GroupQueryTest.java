@@ -102,11 +102,14 @@ public class GroupQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidId() {
     GroupQuery query = identityService.createGroupQuery().groupId("invalid");
     verifyQueryResults(query, 0);
+    var groupQuery = identityService.createGroupQuery();
 
     try {
-      identityService.createGroupQuery().groupId(null).list();
+      groupQuery.groupId(null);
       fail();
-    } catch (ProcessEngineException e) {}
+    } catch (ProcessEngineException e) {
+      assertEquals("Provided id is null", e.getMessage());
+    }
   }
 
   @Test
@@ -149,11 +152,14 @@ public class GroupQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidName() {
     GroupQuery query = identityService.createGroupQuery().groupName("invalid");
     verifyQueryResults(query, 0);
+    var groupQuery = identityService.createGroupQuery();
 
     try {
-      identityService.createGroupQuery().groupName(null).list();
+      groupQuery.groupName(null);
       fail();
-    } catch (ProcessEngineException e) {}
+    } catch (ProcessEngineException e) {
+      assertEquals("Provided name is null", e.getMessage());
+    }
   }
 
   @Test
@@ -175,11 +181,14 @@ public class GroupQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidNameLike() {
     GroupQuery query = identityService.createGroupQuery().groupNameLike("%invalid%");
     verifyQueryResults(query, 0);
+    var groupQuery = identityService.createGroupQuery();
 
     try {
-      identityService.createGroupQuery().groupNameLike(null).list();
+      groupQuery.groupNameLike(null);
       fail();
-    } catch (ProcessEngineException e) {}
+    } catch (ProcessEngineException e) {
+      assertEquals("Provided nameLike is null", e.getMessage());
+    }
   }
 
   @Test
@@ -195,11 +204,14 @@ public class GroupQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidType() {
     GroupQuery query = identityService.createGroupQuery().groupType("invalid");
     verifyQueryResults(query, 0);
+    var groupQuery = identityService.createGroupQuery();
 
     try {
-      identityService.createGroupQuery().groupType(null).list();
+      groupQuery.groupType(null);
       fail();
-    } catch (ProcessEngineException e) {}
+    } catch (ProcessEngineException e) {
+      assertEquals("Provided type is null", e.getMessage());
+    }
   }
 
   @Test
@@ -228,11 +240,14 @@ public class GroupQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidMember() {
     GroupQuery query = identityService.createGroupQuery().groupMember("invalid");
     verifyQueryResults(query, 0);
+    var groupQuery = identityService.createGroupQuery();
 
     try {
-      identityService.createGroupQuery().groupMember(null).list();
+      groupQuery.groupMember(null);
       fail();
-    } catch (ProcessEngineException e) {}
+    } catch (ProcessEngineException e) {
+      assertEquals("Provided userId is null", e.getMessage());
+    }
   }
 
   @Test
@@ -277,13 +292,14 @@ public class GroupQueryTest extends PluggableProcessEngineTest {
 
   @Test
   public void testQueryInvalidSortingUsage() {
+    var groupQuery = identityService.createGroupQuery().orderByGroupId().orderByGroupName();
     try {
-      identityService.createGroupQuery().orderByGroupId().list();
+      groupQuery.list();
       fail();
     } catch (ProcessEngineException e) {}
 
     try {
-      identityService.createGroupQuery().orderByGroupId().orderByGroupName().list();
+      groupQuery.list();
       fail();
     } catch (ProcessEngineException e) {}
   }

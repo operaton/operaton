@@ -728,50 +728,56 @@ public class FullHistoryTest {
 
   @Test
   public void testHistoricDetailQueryInvalidSorting() {
+    var historicDetailQuery = historyService.createHistoricDetailQuery();
     try {
-      historyService.createHistoricDetailQuery().asc().list();
+      historicDetailQuery.asc();
       fail();
     } catch (ProcessEngineException e) {
 
     }
 
     try {
-      historyService.createHistoricDetailQuery().desc().list();
+      historicDetailQuery.desc();
       fail();
     } catch (ProcessEngineException e) {
 
     }
 
+    HistoricDetailQuery queryOrderByProcessInstanceId = historicDetailQuery.orderByProcessInstanceId();
     try {
-      historyService.createHistoricDetailQuery().orderByProcessInstanceId().list();
+      queryOrderByProcessInstanceId.list();
       fail();
     } catch (ProcessEngineException e) {
 
     }
 
+    HistoricDetailQuery queryOrderByTime = historicDetailQuery.orderByTime();
     try {
-      historyService.createHistoricDetailQuery().orderByTime().list();
+      queryOrderByTime.list();
       fail();
     } catch (ProcessEngineException e) {
 
     }
 
+    HistoricDetailQuery queryOrderByVariableName = historicDetailQuery.orderByVariableName();
     try {
-      historyService.createHistoricDetailQuery().orderByVariableName().list();
+      queryOrderByVariableName.list();
       fail();
     } catch (ProcessEngineException e) {
 
     }
 
+    HistoricDetailQuery queryOrderByVariableRevision = historicDetailQuery.orderByVariableRevision();
     try {
-      historyService.createHistoricDetailQuery().orderByVariableRevision().list();
+      queryOrderByVariableRevision.list();
       fail();
     } catch (ProcessEngineException e) {
 
     }
 
+    HistoricDetailQuery queryByVariableType = historicDetailQuery.orderByVariableType();
     try {
-      historyService.createHistoricDetailQuery().orderByVariableType().list();
+      queryByVariableType.list();
       fail();
     } catch (ProcessEngineException e) {
 
@@ -873,10 +879,11 @@ public class FullHistoryTest {
   public void testDeleteRunningHistoricProcessInstance() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("HistoricTaskInstanceTest");
     assertNotNull(processInstance);
+    var processInstanceId = processInstance.getId();
 
     try {
       // Delete the historic process-instance, which is still running
-      historyService.deleteHistoricProcessInstance(processInstance.getId());
+      historyService.deleteHistoricProcessInstance(processInstanceId);
       fail("Exception expected when deleting process-instance that is still running");
     } catch(ProcessEngineException ae) {
       // Expected exception

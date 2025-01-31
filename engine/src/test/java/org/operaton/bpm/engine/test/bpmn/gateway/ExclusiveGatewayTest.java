@@ -74,8 +74,9 @@ public class ExclusiveGatewayTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testNoSequenceFlowSelected() {
+    var variables = CollectionUtil.singletonMap("input", 4);
     try {
-      runtimeService.startProcessInstanceByKey("exclusiveGwNoSeqFlowSelected", CollectionUtil.singletonMap("input", 4));
+      runtimeService.startProcessInstanceByKey("exclusiveGwNoSeqFlowSelected", variables);
       fail();
     } catch (ProcessEngineException e) {
       testRule.assertTextPresent("ENGINE-02004 No outgoing sequence flow for the element with id 'exclusiveGw' could be selected for continuing the process.", e.getMessage());
@@ -97,10 +98,10 @@ public class ExclusiveGatewayTest extends PluggableProcessEngineTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/gateway/ExclusiveGatewayTest.testDivergingExclusiveGateway.bpmn20.xml"})
   @Test
   public void testUnknownVariableInExpression() {
+    var variables = CollectionUtil.singletonMap("iinput", 1);
     // Instead of 'input' we're starting a process instance with the name 'iinput' (ie. a typo)
     try {
-      runtimeService.startProcessInstanceByKey(
-            "exclusiveGwDiverging", CollectionUtil.singletonMap("iinput", 1));
+      runtimeService.startProcessInstanceByKey("exclusiveGwDiverging", variables);
       fail();
     } catch (ProcessEngineException e) {
       testRule.assertTextPresent("Unknown property used in expression", e.getMessage());
@@ -159,9 +160,9 @@ public class ExclusiveGatewayTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testInvalidMethodExpression() {
+    var variables = CollectionUtil.singletonMap("order", new ExclusiveGatewayTestOrder(50));
     try {
-      runtimeService.startProcessInstanceByKey("invalidMethodExpression",
-            CollectionUtil.singletonMap("order", new ExclusiveGatewayTestOrder(50)));
+      runtimeService.startProcessInstanceByKey("invalidMethodExpression", variables);
       fail();
     } catch (ProcessEngineException e) {
       testRule.assertTextPresent("Unknown method used in expression", e.getMessage());
@@ -212,8 +213,9 @@ public class ExclusiveGatewayTest extends PluggableProcessEngineTest {
             "    <userTask id='theTask2' name='Default input' /> " +
             "  </process>" +
             "</definitions>";
+    var deploymentBuilder = repositoryService.createDeployment().addString("myprocess.bpmn20.xml", flowWithoutConditionNoDefaultFlow);
     try {
-      repositoryService.createDeployment().addString("myprocess.bpmn20.xml", flowWithoutConditionNoDefaultFlow).deploy();
+      deploymentBuilder.deploy();
       fail("Could deploy a process definition with a sequence flow out of a XOR Gateway without condition with is not the default flow.");
     }
     catch (ParseException e) {
@@ -244,8 +246,9 @@ public class ExclusiveGatewayTest extends PluggableProcessEngineTest {
             "    <userTask id='theTask2' name='Default input' /> " +
             "  </process>" +
             "</definitions>";
+    var deploymentBuilder = repositoryService.createDeployment().addString("myprocess.bpmn20.xml", defaultFlowWithCondition);
     try {
-      repositoryService.createDeployment().addString("myprocess.bpmn20.xml", defaultFlowWithCondition).deploy();
+      deploymentBuilder.deploy();
       fail("Could deploy a process definition with a sequence flow out of a XOR Gateway without condition with is not the default flow.");
     }
     catch (ParseException e) {
@@ -266,8 +269,9 @@ public class ExclusiveGatewayTest extends PluggableProcessEngineTest {
             "    <exclusiveGateway id='exclusiveGw' name='Exclusive Gateway' /> " +
             "  </process>" +
             "</definitions>";
+    var deploymentBuilder = repositoryService.createDeployment().addString("myprocess.bpmn20.xml", noOutgoingFlow);
     try {
-      repositoryService.createDeployment().addString("myprocess.bpmn20.xml", noOutgoingFlow).deploy();
+      deploymentBuilder.deploy();
       fail("Could deploy a process definition with a sequence flow out of a XOR Gateway without condition with is not the default flow.");
     }
     catch (ParseException e) {

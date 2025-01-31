@@ -241,11 +241,13 @@ public class HistoricCaseInstanceTest extends CmmnTest {
     assertCount(2, historicQuery().caseDefinitionKeyNotIn(Arrays.asList("oneTaskCase")));
     assertCount(1, historicQuery().caseDefinitionKeyNotIn(Arrays.asList("oneTaskCase", "twoTaskCase")));
     assertCount(0, historicQuery().caseDefinitionKeyNotIn(Arrays.asList("oneTaskCase")).caseDefinitionKey("oneTaskCase"));
+    var emptyCaseDefinitionKeys = List.of("");
+    var historicCaseInstanceQuery = historicQuery();
 
 
     try {
       // oracle handles empty string like null which seems to lead to undefined behavior of the LIKE comparison
-      historicQuery().caseDefinitionKeyNotIn(Arrays.asList(""));
+      historicCaseInstanceQuery.caseDefinitionKeyNotIn(emptyCaseDefinitionKeys);
       fail("Exception expected");
     }
     catch (NotValidException e) {
@@ -466,28 +468,30 @@ public class HistoricCaseInstanceTest extends CmmnTest {
 
   @Test
   public void testInvalidSorting() {
+    var historicCaseInstanceQuery = historicQuery();
     try {
-      historicQuery().asc();
+      historicCaseInstanceQuery.asc();
       fail("Exception expected");
     }
     catch (ProcessEngineException e) {
-      // expected
+      assertEquals("You should call any of the orderBy methods first before specifying a direction: currentOrderingProperty is null", e.getMessage());
     }
 
     try {
-      historicQuery().desc();
+      historicCaseInstanceQuery.desc();
       fail("Exception expected");
     }
     catch (ProcessEngineException e) {
-      // expected
+      assertEquals("You should call any of the orderBy methods first before specifying a direction: currentOrderingProperty is null", e.getMessage());
     }
 
+    var historicCaseInstanceQuery1 = historicCaseInstanceQuery.orderByCaseInstanceId();
     try {
-      historicQuery().orderByCaseInstanceId().count();
+      historicCaseInstanceQuery1.count();
       fail("Exception expected");
     }
     catch (ProcessEngineException e) {
-      // expected
+      assertEquals("Invalid query: call asc() or desc() after using orderByXX(): direction is null", e.getMessage());
     }
   }
 
@@ -541,10 +545,11 @@ public class HistoricCaseInstanceTest extends CmmnTest {
     String caseInstanceId = caseInstance.getId();
     HistoricCaseInstance historicInstance = queryHistoricCaseInstance(caseInstanceId);
     assertNotNull(historicInstance);
+    var historicInstanceId = historicInstance.getId();
 
     try {
       // should not be able to delete historic case instance cause the case instance is still running
-      historyService.deleteHistoricCaseInstance(historicInstance.getId());
+      historyService.deleteHistoricCaseInstance(historicInstanceId);
       fail("Exception expected");
     }
     catch (NullValueException e) {
@@ -797,9 +802,9 @@ public class HistoricCaseInstanceTest extends CmmnTest {
 
   @Test
   public void testFailQueryByCaseActivityIdNull() {
+    var historicCaseInstanceQuery = historyService.createHistoricCaseInstanceQuery();
     try {
-      historyService.createHistoricCaseInstanceQuery()
-        .caseActivityIdIn((String) null);
+      historicCaseInstanceQuery.caseActivityIdIn((String) null);
 
       fail("expected exception");
     } catch (NullValueException e) {

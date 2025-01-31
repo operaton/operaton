@@ -515,13 +515,13 @@ public class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest 
     enableAuthorization();
 
     createGrantAuthorization(PROCESS_DEFINITION, PROCESS_KEY, userId, READ_HISTORY);
+    var historicProcessInstanceReport = historyService
+        .createHistoricProcessInstanceReport()
+        .processDefinitionIdIn(processInstance1.getProcessDefinitionId(), processInstance2.getProcessDefinitionId());
 
     // when
     try {
-      historyService
-        .createHistoricProcessInstanceReport()
-        .processDefinitionIdIn(processInstance1.getProcessDefinitionId(), processInstance2.getProcessDefinitionId())
-        .duration(PeriodUnit.MONTH);
+      historicProcessInstanceReport.duration(PeriodUnit.MONTH);
 
       // then
       fail("Exception expected: It should not be possible to create a historic process instance report");

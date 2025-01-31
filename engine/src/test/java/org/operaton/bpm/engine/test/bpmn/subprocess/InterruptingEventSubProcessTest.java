@@ -61,9 +61,10 @@ public class InterruptingEventSubProcessTest extends PluggableProcessEngineTest 
     assertEquals("taskAfterMessageStartEvent", task.getTaskDefinitionKey());
 
     assertEquals(0, eventSubscriptionQuery.count());
+    var processInstanceId = pi.getId();
 
     try {
-      runtimeService.signalEventReceived("newSignal", pi.getId());
+      runtimeService.signalEventReceived("newSignal", processInstanceId);
       fail("A ProcessEngineException was expected.");
     } catch (ProcessEngineException e) {
       // expected exception;
@@ -96,9 +97,10 @@ public class InterruptingEventSubProcessTest extends PluggableProcessEngineTest 
     assertEquals("tastAfterSignalStartEvent", task.getTaskDefinitionKey());
 
     assertEquals(0, eventSubscriptionQuery.count());
+    var processInstanceId = pi.getId();
 
     try {
-      runtimeService.messageEventReceived("newMessage", pi.getId());
+      runtimeService.messageEventReceived("newMessage", processInstanceId);
       fail("A ProcessEngineException was expected.");
     } catch (ProcessEngineException e) {
       // expected exception;

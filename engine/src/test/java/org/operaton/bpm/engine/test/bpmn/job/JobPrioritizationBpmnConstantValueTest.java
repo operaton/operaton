@@ -200,11 +200,11 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
 
   @Test
   public void testFailOnMalformedInput() {
-    try {
-      repositoryService
+    var deploymentBuilder = repositoryService
         .createDeployment()
-        .addClasspathResource("org/operaton/bpm/engine/test/bpmn/job/invalidPrioProcess.bpmn20.xml")
-        .deploy();
+        .addClasspathResource("org/operaton/bpm/engine/test/bpmn/job/invalidPrioProcess.bpmn20.xml");
+    try {
+      deploymentBuilder.deploy();
       fail("deploying a process with malformed priority should not succeed");
     } catch (ParseException e) {
       testRule.assertTextPresentIgnoreCase("value 'thisIsNotANumber' for attribute 'jobPriority' "

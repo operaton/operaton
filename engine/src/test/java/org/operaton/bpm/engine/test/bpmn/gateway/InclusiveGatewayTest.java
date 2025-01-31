@@ -130,8 +130,9 @@ public class InclusiveGatewayTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testNoSequenceFlowSelected() {
+    var variables = CollectionUtil.singletonMap("input", 4);
     try {
-      runtimeService.startProcessInstanceByKey("inclusiveGwNoSeqFlowSelected", CollectionUtil.singletonMap("input", 4));
+      runtimeService.startProcessInstanceByKey("inclusiveGwNoSeqFlowSelected", variables);
       fail();
     } catch (ProcessEngineException e) {
        testRule.assertTextPresent("ENGINE-02004 No outgoing sequence flow for the element with id 'inclusiveGw' could be selected for continuing the process.", e.getMessage());
@@ -199,10 +200,11 @@ public class InclusiveGatewayTest extends PluggableProcessEngineTest {
   @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/gateway/InclusiveGatewayTest.testDivergingInclusiveGateway.bpmn20.xml" })
   @Test
   public void testUnknownVariableInExpression() {
+    var variables = CollectionUtil.singletonMap("iinput", 1);
     // Instead of 'input' we're starting a process instance with the name
     // 'iinput' (ie. a typo)
     try {
-      runtimeService.startProcessInstanceByKey("inclusiveGwDiverging", CollectionUtil.singletonMap("iinput", 1));
+      runtimeService.startProcessInstanceByKey("inclusiveGwDiverging", variables);
       fail();
     } catch (ProcessEngineException e) {
        testRule.assertTextPresent("Unknown property used in expression", e.getMessage());
@@ -296,9 +298,10 @@ public class InclusiveGatewayTest extends PluggableProcessEngineTest {
       expectedNames.remove(t.getName());
     }
     assertEquals(0, expectedNames.size());
+    var variables = CollectionUtil.singletonMap("order", new InclusiveGatewayTestOrder(300));
 
     try {
-      runtimeService.startProcessInstanceByKey("inclusiveDecisionBasedOnBeanMethod", CollectionUtil.singletonMap("order", new InclusiveGatewayTestOrder(300)));
+      runtimeService.startProcessInstanceByKey("inclusiveDecisionBasedOnBeanMethod", variables);
       fail();
     } catch (ProcessEngineException e) {
       // Should get an exception indicating that no path could be taken
@@ -309,11 +312,12 @@ public class InclusiveGatewayTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testInvalidMethodExpression() {
+    var variables = CollectionUtil.singletonMap("order", new InclusiveGatewayTestOrder(50));
     try {
-      runtimeService.startProcessInstanceByKey("inclusiveInvalidMethodExpression", CollectionUtil.singletonMap("order", new InclusiveGatewayTestOrder(50)));
+      runtimeService.startProcessInstanceByKey("inclusiveInvalidMethodExpression", variables);
       fail();
     } catch (ProcessEngineException e) {
-       testRule.assertTextPresent("Unknown method used in expression", e.getMessage());
+      testRule.assertTextPresent("Unknown method used in expression", e.getMessage());
     }
   }
 

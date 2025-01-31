@@ -173,10 +173,11 @@ public class JobEntityTest {
 
     runtimeService.startProcessInstanceByKey("process", Variables.createVariables().putValue("fail", true));
     JobEntity job = (JobEntity) managementService.createJobQuery().singleResult();
+    var jobId = job.getId();
 
     // when
     try {
-      managementService.executeJob(job.getId());
+      managementService.executeJob(jobId);
       fail("Exception expected");
     } catch (Exception e) {
       // exception expected
@@ -203,10 +204,11 @@ public class JobEntityTest {
 
     runtimeService.startProcessInstanceByKey("process", Variables.createVariables().putValue("fail", true));
     JobEntity job = (JobEntity) managementService.createJobQuery().singleResult();
+    var jobId = job.getId();
 
     // when
     try {
-      managementService.executeJob(job.getId());
+      managementService.executeJob(jobId);
       fail("Exception expected");
     } catch (Exception e) {
       // exception expected
@@ -235,10 +237,11 @@ public class JobEntityTest {
 
     runtimeService.startProcessInstanceByKey("process", Variables.createVariables().putValue("fail", true));
     JobEntity job = (JobEntity) managementService.createJobQuery().singleResult();
+    var jobId = job.getId();
 
     // when
     try {
-      managementService.executeJob(job.getId());
+      managementService.executeJob(jobId);
       fail("Exception expected");
     } catch (Exception e) {
       // exception expected

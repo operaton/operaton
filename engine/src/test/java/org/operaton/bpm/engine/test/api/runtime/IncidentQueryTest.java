@@ -546,9 +546,9 @@ public class IncidentQueryTest {
 
   @Test
   public void testQueryByNullJobDefinitionId() {
+    var incidentQuery = runtimeService.createIncidentQuery();
     try {
-      runtimeService.createIncidentQuery()
-        .jobDefinitionIdIn((String) null);
+      incidentQuery.jobDefinitionIdIn((String) null);
       fail("Should fail");
     }
     catch (NullValueException e) {
@@ -558,9 +558,9 @@ public class IncidentQueryTest {
 
   @Test
   public void testQueryByNullJobDefinitionIds() {
+    var incidentQuery = runtimeService.createIncidentQuery();
     try {
-      runtimeService.createIncidentQuery()
-        .jobDefinitionIdIn((String[]) null);
+      incidentQuery.jobDefinitionIdIn((String[]) null);
       fail("Should fail");
     }
     catch (NullValueException e) {

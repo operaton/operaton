@@ -130,10 +130,11 @@ public class IncidentTest extends PluggableProcessEngineTest {
     Job job = managementService.createJobQuery().processInstanceId(processInstance.getId()).singleResult();
 
     assertNotNull(job);
+    var jobId = job.getId();
 
     // set job retries to 1 -> should fail again and a second incident should be created
     try {
-      managementService.executeJob(job.getId());
+      managementService.executeJob(jobId);
       fail("Exception was expected.");
     } catch (ProcessEngineException e) {
       // exception expected
@@ -531,10 +532,12 @@ public class IncidentTest extends PluggableProcessEngineTest {
     });
 
     assertEquals(0, job.getRetries());
+    var jobId = job.getJobDefinitionId();
+    var jobDefinitionId = job.getJobDefinitionId();
 
     // retries should still be 0 after execution this job again
     try {
-      managementService.executeJob(job.getId());
+      managementService.executeJob(jobId);
       fail("Exception expected");
     }
     catch (ProcessEngineException e) {
@@ -549,7 +552,7 @@ public class IncidentTest extends PluggableProcessEngineTest {
 
     // it should not be possible to set the retries to a negative number with the management service
     try {
-      managementService.setJobRetries(job.getId(), -200);
+      managementService.setJobRetries(jobId, -200);
       fail("Exception expected");
     }
     catch (ProcessEngineException e) {
@@ -557,7 +560,7 @@ public class IncidentTest extends PluggableProcessEngineTest {
     }
 
     try {
-      managementService.setJobRetriesByJobDefinitionId(job.getJobDefinitionId(), -300);
+      managementService.setJobRetriesByJobDefinitionId(jobDefinitionId, -300);
       fail("Exception expected");
     }
     catch (ProcessEngineException e) {

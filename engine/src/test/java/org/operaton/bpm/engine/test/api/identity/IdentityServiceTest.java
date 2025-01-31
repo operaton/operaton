@@ -919,9 +919,9 @@ public class IdentityServiceTest {
   @Test
   public void testInvalidUserIdOnSave() {
     String invalidId = "john doe";
+    User updatedUser = identityService.newUser("john");
+    updatedUser.setId(invalidId);
     try {
-      User updatedUser = identityService.newUser("john");
-      updatedUser.setId(invalidId);
       identityService.saveUser(updatedUser);
 
       fail("Invalid user id exception expected!");
@@ -945,9 +945,9 @@ public class IdentityServiceTest {
   @Test
   public void testInvalidGroupIdOnSave() {
     String invalidId = "john's group";
+    Group updatedGroup = identityService.newGroup("group");
+    updatedGroup.setId(invalidId);
     try {
-      Group updatedGroup = identityService.newGroup("group");
-      updatedGroup.setId(invalidId);
       identityService.saveGroup(updatedGroup);
 
       fail("Invalid group id exception expected!");

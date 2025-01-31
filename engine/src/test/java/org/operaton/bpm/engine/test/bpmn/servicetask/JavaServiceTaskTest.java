@@ -100,8 +100,9 @@ public class JavaServiceTaskTest extends PluggableProcessEngineTest {
 
   @Test
   public void testIllegalUseOfResultVariableName() {
+    var deploymentBuilder = repositoryService.createDeployment().addClasspathResource("org/operaton/bpm/engine/test/bpmn/servicetask/JavaServiceTaskTest.testIllegalUseOfResultVariableName.bpmn20.xml");
     try {
-      repositoryService.createDeployment().addClasspathResource("org/operaton/bpm/engine/test/bpmn/servicetask/JavaServiceTaskTest.testIllegalUseOfResultVariableName.bpmn20.xml").deploy();
+      deploymentBuilder.deploy();
       fail();
     } catch (ProcessEngineException e) {
       assertTrue(e.getMessage().contains("resultVariable"));

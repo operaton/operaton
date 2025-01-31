@@ -40,9 +40,10 @@ public class ServiceTaskExpressionActivityBehaviorTest extends PluggableProcessE
     Map<Object, Object> beans = processEngineConfiguration.getBeans();
     beans.put("dummyServiceTask", new DummyServiceTask());
     processEngineConfiguration.setBeans(beans);
+    var variables = Collections.<String, Object>singletonMap("count", 0);
 
     try{
-      runtimeService.startProcessInstanceByKey("process", Collections.<String, Object>singletonMap("count", 0));
+      runtimeService.startProcessInstanceByKey("process", variables);
       fail();
       // the EL resolver will wrap the actual exception inside a process engine exception
     }

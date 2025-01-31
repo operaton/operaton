@@ -42,6 +42,7 @@ public class RequiredRuleTest extends PluggableProcessEngineTest {
   public void testRequiredRuleEvaluatesToTrue() {
     CaseInstance caseInstance =
         caseService.createCaseInstanceByKey("case", Collections.<String, Object>singletonMap("required", true));
+    var caseInstanceId = caseInstance.getId();
 
     CaseExecution taskExecution = caseService
         .createCaseExecutionQuery()
@@ -51,7 +52,7 @@ public class RequiredRuleTest extends PluggableProcessEngineTest {
     assertTrue(taskExecution.isRequired());
 
     try {
-      caseService.completeCaseExecution(caseInstance.getId());
+      caseService.completeCaseExecution(caseInstanceId);
       fail("completing the containing stage should not be allowed");
     } catch (NotAllowedException e) {
       // happy path
@@ -81,6 +82,7 @@ public class RequiredRuleTest extends PluggableProcessEngineTest {
   public void testDefaultRequiredRuleEvaluatesToTrue() {
     CaseInstance caseInstance =
         caseService.createCaseInstanceByKey("case", Collections.<String, Object>singletonMap("required", true));
+    var caseInstanceId = caseInstance.getId();
 
     CaseExecution taskExecution = caseService
         .createCaseExecutionQuery()
@@ -91,7 +93,7 @@ public class RequiredRuleTest extends PluggableProcessEngineTest {
     assertTrue(taskExecution.isRequired());
 
     try {
-      caseService.completeCaseExecution(caseInstance.getId());
+      caseService.completeCaseExecution(caseInstanceId);
       fail("completing the containing stage should not be allowed");
     } catch (NotAllowedException e) {
       // happy path

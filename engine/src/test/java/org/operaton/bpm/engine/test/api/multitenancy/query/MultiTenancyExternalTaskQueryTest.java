@@ -96,9 +96,9 @@ public class MultiTenancyExternalTaskQueryTest extends PluggableProcessEngineTes
 
   @Test
   public void testFailQueryByTenantIdNull() {
+    var externalTaskQuery = externalTaskService.createExternalTaskQuery();
     try {
-      externalTaskService.createExternalTaskQuery()
-        .tenantIdIn((String) null);
+      externalTaskQuery.tenantIdIn((String) null);
 
       fail("expected exception");
     } catch (NullValueException e) {

@@ -64,11 +64,11 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/message/MessageStartEventTest.testSingleMessageStartEvent.bpmn20.xml")
         .deploy()
         .getId();
-    try {
-      repositoryService
+    var deploymentBuilder = repositoryService
           .createDeployment()
-          .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/message/otherProcessWithNewInvoiceMessage.bpmn20.xml")
-          .deploy();
+          .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/message/otherProcessWithNewInvoiceMessage.bpmn20.xml");
+    try {
+      deploymentBuilder.deploy();
       fail("exception expected");
     } catch (ProcessEngineException e) {
       assertTrue(e.getMessage().contains("there already is a message event subscription for the message with name"));
@@ -87,11 +87,11 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
   // SEE: https://app.camunda.com/jira/browse/CAM-1448
   @Test
   public void testEmptyMessageNameFails() {
-    try {
-      repositoryService
+    var deploymentBuilder = repositoryService
           .createDeployment()
-          .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/message/MessageStartEventTest.testEmptyMessageNameFails.bpmn20.xml")
-          .deploy();
+          .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/message/MessageStartEventTest.testEmptyMessageNameFails.bpmn20.xml");
+    try {
+      deploymentBuilder.deploy();
       fail("exception expected");
     } catch (ParseException e) {
       assertTrue(e.getMessage().contains("Cannot have a message event subscription with an empty or missing name"));
@@ -101,11 +101,11 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
 
   @Test
   public void testSameMessageNameInSameProcessFails() {
-    try {
-      repositoryService
+    var deploymentBuilder = repositoryService
           .createDeployment()
-          .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/message/testSameMessageNameInSameProcessFails.bpmn20.xml")
-          .deploy();
+          .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/message/testSameMessageNameInSameProcessFails.bpmn20.xml");
+    try {
+      deploymentBuilder.deploy();
       fail("exception expected");
     } catch (ProcessEngineException e) {
       assertTrue(e.getMessage().contains("Cannot have more than one message event subscription with name 'newInvoiceMessage' for scope"));
@@ -355,12 +355,12 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
     String processDefinition =
         "org/operaton/bpm/engine/test/bpmn/event/message/" +
             "MessageStartEventTest.testUsingExpressionWithDollarTagInMessageStartEventNameThrowsException.bpmn20.xml";
+    var deploymentBuilder = repositoryService
+          .createDeployment()
+          .addClasspathResource(processDefinition);
     try {
       // when deploying the process
-      repositoryService
-          .createDeployment()
-          .addClasspathResource(processDefinition)
-          .deploy();
+      deploymentBuilder.deploy();
       fail("exception expected");
     } catch (ProcessEngineException e) {
       // then a process engine exception should be thrown with a certain message
@@ -376,12 +376,12 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
     String processDefinition =
         "org/operaton/bpm/engine/test/bpmn/event/message/" +
             "MessageStartEventTest.testUsingExpressionWithHashTagInMessageStartEventNameThrowsException.bpmn20.xml";
+    var deploymentBuilder = repositoryService
+          .createDeployment()
+          .addClasspathResource(processDefinition);
     try {
       // when deploying the process
-      repositoryService
-          .createDeployment()
-          .addClasspathResource(processDefinition)
-          .deploy();
+      deploymentBuilder.deploy();
       fail("exception expected");
     } catch (ProcessEngineException e) {
       // then a process engine exception should be thrown with a certain message

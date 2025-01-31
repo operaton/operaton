@@ -41,10 +41,11 @@ public class TaskCommentAuthorizationTest extends AuthorizationTest {
     // given
     createTask(TASK_ID);
     Comment createdComment = createComment(TASK_ID, null, "aComment");
+    var createdCommentId = createdComment.getId();
 
     try {
       // when
-      taskService.deleteTaskComment(TASK_ID, createdComment.getId());
+      taskService.deleteTaskComment(TASK_ID, createdCommentId);
       fail("Exception expected: It should not be possible to delete a comment.");
     } catch (AuthorizationException e) {
       // then
@@ -121,10 +122,11 @@ public class TaskCommentAuthorizationTest extends AuthorizationTest {
     // given
     createTask(TASK_ID);
     Comment createdComment = createComment(TASK_ID, null, "originalComment");
+    var createdCommentId = createdComment.getId();
 
     try {
       // when
-      taskService.updateTaskComment(TASK_ID, createdComment.getId(), "updateMessage");
+      taskService.updateTaskComment(TASK_ID, createdCommentId, "updateMessage");
       fail("Exception expected: It should not be possible to delete a comment.");
     } catch (AuthorizationException e) {
       // then
@@ -163,12 +165,12 @@ public class TaskCommentAuthorizationTest extends AuthorizationTest {
   public void testDeleteProcessTaskCommentWithoutAuthorization() {
     // given
     ProcessInstance processInstance = startProcessInstanceByKey(PROCESS_KEY);
-    Task task = selectSingleTask();
-    Comment createdComment = createComment(task.getId(), processInstance.getId(), "aComment");
+    var taskId = selectSingleTask().getId();
+    var createdCommentId = createComment(taskId, processInstance.getId(), "aComment").getId();
 
     try {
       // when
-      taskService.deleteTaskComment(task.getId(), createdComment.getId());
+      taskService.deleteTaskComment(taskId, createdCommentId);
       fail("Exception expected: It should not be possible to delete a comment.");
     } catch (AuthorizationException e) {
       // then
@@ -202,11 +204,12 @@ public class TaskCommentAuthorizationTest extends AuthorizationTest {
     // given
     ProcessInstance processInstance = startProcessInstanceByKey(PROCESS_KEY);
     Task task = selectSingleTask();
-    createComment(task.getId(), processInstance.getId(), "aComment");
+    var taskId = task.getId();
+    createComment(taskId, processInstance.getId(), "aComment");
 
     try {
       // when
-      taskService.deleteTaskComments(task.getId());
+      taskService.deleteTaskComments(taskId);
       fail("Exception expected: It should not be possible to delete a comment.");
     } catch (AuthorizationException e) {
       // then
@@ -240,13 +243,12 @@ public class TaskCommentAuthorizationTest extends AuthorizationTest {
   public void testUpdateProcessTaskCommentWithoutAuthorization() {
     // given
     ProcessInstance processInstance = startProcessInstanceByKey(PROCESS_KEY);
-    Task task = selectSingleTask();
-
-    Comment createdComment = createComment(task.getId(), processInstance.getId(), "originalComment");
+    var taskId = selectSingleTask().getId();
+    var createdCommentId = createComment(taskId, processInstance.getId(), "originalComment").getId();
 
     try {
       // when
-      taskService.updateTaskComment(task.getId(), createdComment.getId(), "updateMessage");
+      taskService.updateTaskComment(taskId, createdCommentId, "updateMessage");
       fail("Exception expected: It should not be possible to delete a comment.");
     } catch (AuthorizationException e) {
       // then

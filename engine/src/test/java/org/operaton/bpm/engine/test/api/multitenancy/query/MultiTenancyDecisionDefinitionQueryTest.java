@@ -254,9 +254,9 @@ public class MultiTenancyDecisionDefinitionQueryTest extends PluggableProcessEng
 
   @Test
   public void testFailQueryByTenantIdNull() {
+    var decisionDefinitionQuery = repositoryService.createDecisionDefinitionQuery();
     try {
-      repositoryService.createDecisionDefinitionQuery()
-        .tenantIdIn((String) null);
+      decisionDefinitionQuery.tenantIdIn((String) null);
 
       fail("expected exception");
     } catch (NullValueException e) {

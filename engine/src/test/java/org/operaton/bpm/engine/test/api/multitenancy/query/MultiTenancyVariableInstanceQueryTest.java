@@ -96,9 +96,9 @@ public class MultiTenancyVariableInstanceQueryTest extends PluggableProcessEngin
 
   @Test
   public void testFailQueryByTenantIdNull() {
+    var variableInstanceQuery = runtimeService.createVariableInstanceQuery();
     try {
-      runtimeService.createVariableInstanceQuery()
-        .tenantIdIn((String) null);
+      variableInstanceQuery.tenantIdIn((String) null);
 
       fail("expected exception");
     } catch (NullValueException e) {

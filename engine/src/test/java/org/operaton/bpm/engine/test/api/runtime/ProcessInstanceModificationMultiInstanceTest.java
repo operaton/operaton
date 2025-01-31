@@ -640,11 +640,11 @@ public class ProcessInstanceModificationMultiInstanceTest extends PluggableProce
 
     // then creating a second inner instance is not possible
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    try {
-      runtimeService
+    var processInstanceModificationBuilder = runtimeService
       .createProcessInstanceModification(processInstance.getId())
-      .startBeforeActivity("miTasks", tree.getActivityInstances("miTasks#multiInstanceBody")[0].getId())
-      .execute();
+      .startBeforeActivity("miTasks", tree.getActivityInstances("miTasks#multiInstanceBody")[0].getId());
+    try {
+      processInstanceModificationBuilder.execute();
       fail("expect exception");
     } catch (ProcessEngineException e) {
       testRule.assertTextPresent(e.getMessage(), "Concurrent instantiation not possible for activities "
@@ -662,11 +662,11 @@ public class ProcessInstanceModificationMultiInstanceTest extends PluggableProce
 
     // when
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    try {
-      runtimeService
+    var processInstanceModificationBuilder = runtimeService
         .createProcessInstanceModification(processInstance.getId())
-        .startBeforeActivity("miSubProcess", tree.getActivityInstances("miSubProcess#multiInstanceBody")[0].getId())
-        .execute();
+        .startBeforeActivity("miSubProcess", tree.getActivityInstances("miSubProcess#multiInstanceBody")[0].getId());
+    try {
+      processInstanceModificationBuilder.execute();
       fail("expect exception");
     } catch (ProcessEngineException e) {
        testRule.assertTextPresent(e.getMessage(), "Concurrent instantiation not possible for activities "

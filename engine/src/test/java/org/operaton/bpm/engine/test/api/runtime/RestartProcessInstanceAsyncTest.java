@@ -51,11 +51,7 @@ import org.operaton.bpm.engine.impl.cfg.multitenancy.TenantIdProviderProcessInst
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricProcessInstanceEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
-import org.operaton.bpm.engine.runtime.ActivityInstance;
-import org.operaton.bpm.engine.runtime.Execution;
-import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.runtime.VariableInstance;
+import org.operaton.bpm.engine.runtime.*;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
@@ -149,8 +145,7 @@ public class RestartProcessInstanceAsyncTest {
   @Test
   public void restartProcessInstanceWithNullProcessDefinitionId() {
     try {
-      runtimeService.restartProcessInstances(null)
-      .executeAsync();
+      runtimeService.restartProcessInstances(null);
       fail("exception expected");
     } catch (BadUserRequestException e) {
       assertThat(e.getMessage()).contains("processDefinitionId is null");
@@ -161,10 +156,10 @@ public class RestartProcessInstanceAsyncTest {
   public void restartProcessInstanceWithoutInstructions() {
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process");
+    var restartProcessInstanceBuilder = runtimeService.restartProcessInstances(processDefinition.getId()).processInstanceIds(processInstance.getId());
 
     try {
-      Batch batch = runtimeService.restartProcessInstances(processDefinition.getId()).processInstanceIds(processInstance.getId()).executeAsync();
-      helper.completeBatch(batch);
+      restartProcessInstanceBuilder.executeAsync();
       fail("exception expected");
     } catch (BadUserRequestException e) {
       assertThat(e.getMessage()).contains("instructions is empty");
@@ -173,8 +168,9 @@ public class RestartProcessInstanceAsyncTest {
 
   @Test
   public void restartProcessInstanceWithoutProcessInstanceIds() {
+    var restartProcessInstanceBuilder = runtimeService.restartProcessInstances("foo").startAfterActivity("bar");
     try {
-      runtimeService.restartProcessInstances("foo").startAfterActivity("bar").executeAsync();
+      restartProcessInstanceBuilder.executeAsync();
       fail("exception expected");
     } catch (BadUserRequestException e) {
       assertThat(e.getMessage()).contains("processInstanceIds is empty");
@@ -183,11 +179,11 @@ public class RestartProcessInstanceAsyncTest {
 
   @Test
   public void restartProcessInstanceWithNullProcessInstanceId() {
-    try {
-      runtimeService.restartProcessInstances("foo")
+    var restartProcessInstanceBuilder = runtimeService.restartProcessInstances("foo")
       .startAfterActivity("bar")
-      .processInstanceIds((String) null)
-      .executeAsync();
+      .processInstanceIds((String) null);
+    try {
+      restartProcessInstanceBuilder.executeAsync();
       fail("exception expected");
     } catch (BadUserRequestException e) {
       assertThat(e.getMessage()).contains("processInstanceIds contains null value");

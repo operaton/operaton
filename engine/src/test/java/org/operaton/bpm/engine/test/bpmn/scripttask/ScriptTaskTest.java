@@ -565,14 +565,15 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
 
   @Test
   public void testShouldNotDeployProcessWithMissingScriptElementAndResource() {
-    try {
-      deployProcess(Bpmn.createExecutableProcess("testProcess")
+    var processBuilder = Bpmn.createExecutableProcess("testProcess")
         .startEvent()
         .scriptTask()
           .scriptFormat(RUBY)
         .userTask()
         .endEvent()
-      .done());
+      .done();
+    try {
+      deployProcess(processBuilder);
 
       fail("this process should not be deployable");
     } catch (ProcessEngineException e) {

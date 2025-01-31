@@ -30,11 +30,7 @@ import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
-import org.operaton.bpm.engine.runtime.ActivityInstance;
-import org.operaton.bpm.engine.runtime.Execution;
-import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.runtime.VariableInstance;
+import org.operaton.bpm.engine.runtime.*;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.bpmn.executionlistener.RecorderExecutionListener;
@@ -184,12 +180,12 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
   public void testStartWithInvalidInitialActivity() {
+    var processInstantiationBuilder = runtimeService
+          .createProcessInstanceByKey("exclusiveGateway")
+          .startBeforeActivity("someNonExistingActivity");
     try {
       // when
-      runtimeService
-          .createProcessInstanceByKey("exclusiveGateway")
-          .startBeforeActivity("someNonExistingActivity")
-          .execute();
+      processInstantiationBuilder.execute();
       fail("should not succeed");
     } catch (NotValidException e) {
       // then
@@ -290,15 +286,17 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
 
   @Test
   public void testStartNonExistingProcessDefinition() {
+    var processInstantiationBuilder1 = runtimeService.createProcessInstanceById("I don't exist").startBeforeActivity("start");
     try {
-      runtimeService.createProcessInstanceById("I don't exist").startBeforeActivity("start").execute();
+      processInstantiationBuilder1.execute();
       fail("exception expected");
     } catch (ProcessEngineException e) {
       testRule.assertTextPresent("no deployed process definition found with id", e.getMessage());
     }
 
+    var processInstantiationBuilder2 = runtimeService.createProcessInstanceByKey("I don't exist either").startBeforeActivity("start");
     try {
-      runtimeService.createProcessInstanceByKey("I don't exist either").startBeforeActivity("start").execute();
+      processInstantiationBuilder2.execute();
       fail("exception expected");
     } catch (ProcessEngineException e) {
       testRule.assertTextPresent("no processes deployed with key", e.getMessage());
@@ -307,15 +305,17 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
 
   @Test
   public void testStartNullProcessDefinition() {
+    var processInstantiationBuilder1 = runtimeService.createProcessInstanceById(null).startBeforeActivity("start");
     try {
-      runtimeService.createProcessInstanceById(null).startBeforeActivity("start").execute();
+      processInstantiationBuilder1.execute();
       fail("exception expected");
     } catch (ProcessEngineException e) {
       // happy path
     }
 
+    var processInstantiationBuilder2 = runtimeService.createProcessInstanceByKey(null).startBeforeActivity("start");
     try {
-      runtimeService.createProcessInstanceByKey(null).startBeforeActivity("start").execute();
+      processInstantiationBuilder2.execute();
       fail("exception expected");
     } catch (ProcessEngineException e) {
       // happy path

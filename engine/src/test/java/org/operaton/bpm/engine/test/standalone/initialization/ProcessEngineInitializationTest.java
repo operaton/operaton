@@ -33,10 +33,10 @@ public class ProcessEngineInitializationTest {
 
   @Test
   public void testNoTables() {
+    var processEngineConfiguration = ProcessEngineConfiguration
+      .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/standalone/initialization/notables.operaton.cfg.xml");
     try {
-      ProcessEngineConfiguration
-      .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/standalone/initialization/notables.operaton.cfg.xml")
-        .buildProcessEngine();
+      processEngineConfiguration.buildProcessEngine();
       fail("expected exception");
     } catch (Exception e) {
       // OK

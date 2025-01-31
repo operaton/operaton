@@ -367,15 +367,15 @@ public class MigrationRemoveSubprocessTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_SUBPROCESS_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_TASK_AND_SUBPROCESS_PROCESS);
-
-    // when
-    try {
-      rule.getRuntimeService()
+    var runtimeService = rule.getRuntimeService()
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("subProcess", "subProcess")
         .mapActivities("userTask1", "userTask1")
-        .mapActivities("userTask2", "userTask2")
-        .build();
+        .mapActivities("userTask2", "userTask2");
+
+    // when
+    try {
+      runtimeService.build();
 
       Assert.fail("should not validate");
     } catch (MigrationPlanValidationException e) {
@@ -551,17 +551,17 @@ public class MigrationRemoveSubprocessTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.TRIPLE_SUBPROCESS_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.TRIPLE_SUBPROCESS_PROCESS);
+    var runtimeService = rule.getRuntimeService()
+        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
+        .mapActivities("subProcess1", "subProcess1")
+        .mapActivities("subProcess3", "subProcess1")
+        .mapActivities("userTask", "userTask");
 
     // when
     try {
       // subProcess2 is not migrated
       // subProcess 3 is moved out of the subProcess1 scope (by becoming a subProcess1 itself)
-      rule.getRuntimeService()
-        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
-        .mapActivities("subProcess1", "subProcess1")
-        .mapActivities("subProcess3", "subProcess1")
-        .mapActivities("userTask", "userTask")
-        .build();
+      runtimeService.build();
 
       Assert.fail("should not validate");
     } catch (MigrationPlanValidationException e) {

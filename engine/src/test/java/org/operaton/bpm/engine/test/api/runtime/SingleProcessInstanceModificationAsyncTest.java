@@ -243,11 +243,10 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
   public void testStartBeforeNonExistingActivity() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
+    Batch modificationBatch = runtimeService.createProcessInstanceModification(instance.getId()).startBeforeActivity("someNonExistingActivity").executeAsync();
+    assertNotNull(modificationBatch);
 
     try {
-      // when
-      Batch modificationBatch = runtimeService.createProcessInstanceModification(instance.getId()).startBeforeActivity("someNonExistingActivity").executeAsync();
-      assertNotNull(modificationBatch);
       executeSeedAndBatchJobs(modificationBatch);
       fail("should not succeed");
     } catch (NotValidException e) {
@@ -359,10 +358,10 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
   public void testStartTransitionInvalidTransitionId() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     String processInstanceId = processInstance.getId();
+    Batch modificationBatch = runtimeService.createProcessInstanceModification(processInstanceId).startTransition("invalidFlowId").executeAsync();
+    assertNotNull(modificationBatch);
 
     try {
-      Batch modificationBatch = runtimeService.createProcessInstanceModification(processInstanceId).startTransition("invalidFlowId").executeAsync();
-      assertNotNull(modificationBatch);
       executeSeedAndBatchJobs(modificationBatch);
 
       fail("should not suceed");
@@ -444,13 +443,13 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
   public void testStartAfterActivityAmbiguousTransitions() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     String processInstanceId = processInstance.getId();
-
-    try {
-      Batch modificationBatch = runtimeService
+    Batch modificationBatch = runtimeService
           .createProcessInstanceModification(processInstanceId)
           .startAfterActivity("fork")
           .executeAsync();
-      assertNotNull(modificationBatch);
+    assertNotNull(modificationBatch);
+
+    try {
       executeSeedAndBatchJobs(modificationBatch);
       fail("should not suceed since 'fork' has more than one outgoing sequence flow");
     } catch (ProcessEngineException e) {
@@ -464,13 +463,13 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
   public void testStartAfterActivityNoOutgoingTransitions() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     String processInstanceId = processInstance.getId();
-
-    try {
-      Batch modificationBatch = runtimeService
+    Batch modificationBatch = runtimeService
           .createProcessInstanceModification(processInstanceId)
           .startAfterActivity("theEnd")
           .executeAsync();
-      assertNotNull(modificationBatch);
+    assertNotNull(modificationBatch);
+
+    try {
       executeSeedAndBatchJobs(modificationBatch);
       fail("should not suceed since 'theEnd' has no outgoing sequence flow");
 
@@ -485,14 +484,13 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
   public void testStartAfterNonExistingActivity() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
-
-    try {
-      // when
-      Batch modificationBatch = runtimeService
+    Batch modificationBatch = runtimeService
           .createProcessInstanceModification(instance.getId())
           .startAfterActivity("someNonExistingActivity")
           .executeAsync();
-      assertNotNull(modificationBatch);
+    assertNotNull(modificationBatch);
+
+    try {
       executeSeedAndBatchJobs(modificationBatch);
       fail("should not succeed");
     } catch (NotValidException e) {
@@ -751,14 +749,14 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
   public void testCancelNonExistingActivityInstance() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
-
-    // when - then throw exception
-    try {
-      Batch modificationBatch = runtimeService
+    Batch modificationBatch = runtimeService
           .createProcessInstanceModification(instance.getId())
           .cancelActivityInstance("nonExistingActivityInstance")
           .executeAsync();
-      assertNotNull(modificationBatch);
+    assertNotNull(modificationBatch);
+
+    // when - then throw exception
+    try {
       executeSeedAndBatchJobs(modificationBatch);
       fail("should not succeed");
     } catch (NotValidException e) {
@@ -773,14 +771,14 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
   public void testCancelNonExistingTranisitionInstance() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
-
-    // when - then throw exception
-    try {
-      Batch modificationBatch = runtimeService
+    Batch modificationBatch = runtimeService
           .createProcessInstanceModification(instance.getId())
           .cancelTransitionInstance("nonExistingActivityInstance")
           .executeAsync();
-      assertNotNull(modificationBatch);
+    assertNotNull(modificationBatch);
+
+    // when - then throw exception
+    try {
       executeSeedAndBatchJobs(modificationBatch);
       fail("should not succeed");
     } catch (NotValidException e) {
@@ -814,12 +812,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
   @Test
   public void testModifyNullProcessInstance() {
     try {
-      Batch modificationBatch = runtimeService
-          .createProcessInstanceModification(null)
-          .startBeforeActivity("someActivity")
-          .executeAsync();
-      assertNotNull(modificationBatch);
-      executeSeedAndBatchJobs(modificationBatch);
+      runtimeService.createProcessInstanceModification(null);
       fail("should not succeed");
     } catch (NotValidException e) {
       testRule.assertTextPresent("processInstanceId is null", e.getMessage());

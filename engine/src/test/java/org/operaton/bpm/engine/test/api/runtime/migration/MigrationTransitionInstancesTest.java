@@ -1091,12 +1091,12 @@ public class MigrationTransitionInstancesTest {
 
     String processInstanceId = rule.getRuntimeService().startProcessInstanceById(sourceProcessDefinition.getId()).getId();
     testHelper.executeAvailableJobs();
+    var runtimeService = rule.getRuntimeService().newMigration(migrationPlan)
+        .processInstanceIds(processInstanceId);
 
     // when
     try {
-      rule.getRuntimeService().newMigration(migrationPlan)
-        .processInstanceIds(processInstanceId)
-        .execute();
+      runtimeService.execute();
 
       Assert.fail("should fail");
     }

@@ -40,8 +40,9 @@ public class ServiceTaskClassDelegateActivityBehaviorTest extends PluggableProce
     Map<Object, Object> beans = processEngineConfiguration.getBeans();
     beans.put("dummyServiceTask", new DummyServiceTask());
     processEngineConfiguration.setBeans(beans);
+    var variables = Collections.<String, Object> singletonMap("count", 0);
     try {
-      runtimeService.startProcessInstanceByKey("process", Collections.<String, Object> singletonMap("count", 0));
+      runtimeService.startProcessInstanceByKey("process", variables);
       fail();
     } // since the NVE extends the ProcessEngineException we have to handle it
       // separately

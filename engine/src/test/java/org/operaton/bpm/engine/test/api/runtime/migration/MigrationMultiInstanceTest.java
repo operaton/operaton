@@ -205,13 +205,13 @@ public class MigrationMultiInstanceTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.PAR_MI_SUBPROCESS_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.PAR_MI_ONE_TASK_PROCESS);
-
-    try {
-      rule.getRuntimeService()
+    var runtimeService = rule.getRuntimeService()
       .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
       .mapActivities(miBodyOf("subProcess"), miBodyOf("userTask"))
-      .mapActivities("userTask", "userTask")
-      .build();
+      .mapActivities("userTask", "userTask");
+
+    try {
+      runtimeService.build();
       fail("Should not succeed");
     }
     catch (MigrationPlanValidationException e) {
@@ -228,13 +228,13 @@ public class MigrationMultiInstanceTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.PAR_MI_ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.PAR_MI_SUBPROCESS_PROCESS);
-
-    try {
-      rule.getRuntimeService()
+    var runtimeService = rule.getRuntimeService()
       .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
       .mapActivities(miBodyOf("userTask"), miBodyOf("subProcess"))
-      .mapActivities("userTask", "userTask")
-      .build();
+      .mapActivities("userTask", "userTask");
+
+    try {
+      runtimeService.build();
       fail("Should not succeed");
     }
     catch (MigrationPlanValidationException e) {
@@ -353,13 +353,13 @@ public class MigrationMultiInstanceTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.SEQ_MI_SUBPROCESS_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.SEQ_MI_ONE_TASK_PROCESS);
-
-    try {
-      rule.getRuntimeService()
+    var runtimeService = rule.getRuntimeService()
       .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
       .mapActivities(miBodyOf("subProcess"), miBodyOf("userTask"))
-      .mapActivities("userTask", "userTask")
-      .build();
+      .mapActivities("userTask", "userTask");
+
+    try {
+      runtimeService.build();
       fail("Should not succeed");
     }
     catch (MigrationPlanValidationException e) {
@@ -376,13 +376,13 @@ public class MigrationMultiInstanceTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.SEQ_MI_ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.SEQ_MI_SUBPROCESS_PROCESS);
-
-    try {
-      rule.getRuntimeService()
+    var runtimeService = rule.getRuntimeService()
       .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
       .mapActivities(miBodyOf("userTask"), miBodyOf("subProcess"))
-      .mapActivities("userTask", "userTask")
-      .build();
+      .mapActivities("userTask", "userTask");
+
+    try {
+      runtimeService.build();
       fail("Should not succeed");
     }
     catch (MigrationPlanValidationException e) {
@@ -398,13 +398,13 @@ public class MigrationMultiInstanceTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.PAR_MI_ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.SEQ_MI_ONE_TASK_PROCESS);
-
-    try {
-      rule.getRuntimeService()
+    var runtimeService = rule.getRuntimeService()
       .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
       .mapActivities(miBodyOf("userTask"), miBodyOf("userTask"))
-      .mapActivities("userTask", "userTask")
-      .build();
+      .mapActivities("userTask", "userTask");
+
+    try {
+      runtimeService.build();
       fail("Should not succeed");
     }
     catch (MigrationPlanValidationException e) {

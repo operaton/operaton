@@ -235,11 +235,11 @@ public class MultiTenancyBusinessRuleTaskTest extends PluggableProcessEngineTest
 
     testRule.deployForTenant(TENANT_ONE, process);
     testRule.deployForTenant(TENANT_TWO, DMN_FILE);
+    var processInstantiationBuilder = runtimeService.createProcessInstanceByKey("process")
+        .processDefinitionTenantId(TENANT_ONE);
 
     try {
-      runtimeService.createProcessInstanceByKey("process")
-        .processDefinitionTenantId(TENANT_ONE)
-        .execute();
+      processInstantiationBuilder.execute();
 
       fail("expected exception");
     } catch (ProcessEngineException e) {
@@ -261,11 +261,11 @@ public class MultiTenancyBusinessRuleTaskTest extends PluggableProcessEngineTest
 
     testRule.deployForTenant(TENANT_ONE, process);
     testRule.deployForTenant(TENANT_TWO, DMN_FILE);
+    var processInstantiationBuilder = runtimeService.createProcessInstanceByKey("process")
+        .processDefinitionTenantId(TENANT_ONE);
 
     try {
-      runtimeService.createProcessInstanceByKey("process")
-        .processDefinitionTenantId(TENANT_ONE)
-        .execute();
+      processInstantiationBuilder.execute();
 
       fail("expected exception");
     } catch (ProcessEngineException e) {
@@ -290,11 +290,11 @@ public class MultiTenancyBusinessRuleTaskTest extends PluggableProcessEngineTest
 
     testRule.deployForTenant(TENANT_TWO, DMN_FILE);
     testRule.deployForTenant(TENANT_TWO, DMN_FILE);
+    var processInstantiationBuilder = runtimeService.createProcessInstanceByKey("process")
+        .processDefinitionTenantId(TENANT_ONE);
 
     try {
-      runtimeService.createProcessInstanceByKey("process")
-        .processDefinitionTenantId(TENANT_ONE)
-        .execute();
+      processInstantiationBuilder.execute();
 
       fail("expected exception");
     } catch (ProcessEngineException e) {
@@ -320,12 +320,12 @@ public class MultiTenancyBusinessRuleTaskTest extends PluggableProcessEngineTest
     testRule.deployForTenant(TENANT_ONE, process);
 
     testRule.deployForTenant(TENANT_TWO, DMN_FILE_VERSION_TAG);
+    var processInstantiationBuilder = runtimeService.createProcessInstanceByKey("process")
+        .processDefinitionTenantId(TENANT_ONE);
 
     try {
       // when
-      runtimeService.createProcessInstanceByKey("process")
-        .processDefinitionTenantId(TENANT_ONE)
-        .execute();
+      processInstantiationBuilder.execute();
 
       fail("expected exception");
     } catch (ProcessEngineException e) {

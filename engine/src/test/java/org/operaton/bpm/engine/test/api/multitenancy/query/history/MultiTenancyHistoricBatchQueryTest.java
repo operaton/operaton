@@ -161,10 +161,11 @@ public class MultiTenancyHistoricBatchQueryTest {
   public void testDeleteHistoricBatchFailsWithWrongTenant() {
     // given
     identityService.setAuthentication("user", null, singletonList(TENANT_ONE));
+    var tenant2BatchId = tenant2Batch.getId();
 
     // when
     try {
-      historyService.deleteHistoricBatch(tenant2Batch.getId());
+      historyService.deleteHistoricBatch(tenant2BatchId);
       Assert.fail("exception expected");
     }
     catch (ProcessEngineException e) {
@@ -216,8 +217,9 @@ public class MultiTenancyHistoricBatchQueryTest {
   public void testBatchQueryFailOnNullTenantIdCase1() {
 
     String[] tenantIds = null;
+    var historicBatchQuery = historyService.createHistoricBatchQuery();
     try {
-      historyService.createHistoricBatchQuery().tenantIdIn(tenantIds);
+      historicBatchQuery.tenantIdIn(tenantIds);
       Assert.fail("exception expected");
     }
     catch (NullValueException e) {
@@ -229,8 +231,9 @@ public class MultiTenancyHistoricBatchQueryTest {
   public void testBatchQueryFailOnNullTenantIdCase2() {
 
     String[] tenantIds = new String[]{ null };
+    var historicBatchQuery = historyService.createHistoricBatchQuery();
     try {
-      historyService.createHistoricBatchQuery().tenantIdIn(tenantIds);
+      historicBatchQuery.tenantIdIn(tenantIds);
       Assert.fail("exception expected");
     }
     catch (NullValueException e) {

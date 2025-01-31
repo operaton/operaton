@@ -75,10 +75,11 @@ public class JobRetryCmdWithDefaultPropertyTest {
 
     Job job = managementService.createJobQuery().processInstanceId(pi.getProcessInstanceId()).singleResult();
     assertNotNull(job);
+    var jobId = job.getId();
     assertEquals(pi.getProcessInstanceId(), job.getProcessInstanceId());
 
     try {
-      managementService.executeJob(job.getId());
+      managementService.executeJob(jobId);
       fail("Exception expected!");
     } catch(Exception e) {
       // expected

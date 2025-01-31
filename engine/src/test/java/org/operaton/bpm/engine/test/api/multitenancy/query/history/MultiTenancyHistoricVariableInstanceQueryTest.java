@@ -153,10 +153,10 @@ public class MultiTenancyHistoricVariableInstanceQueryTest {
 
   @Test
   public void shouldFailQueryByTenantIdNull() {
+    var historicVariableInstanceQuery = historyService.createHistoricVariableInstanceQuery();
     try {
       // when
-      historyService.createHistoricVariableInstanceQuery()
-        .tenantIdIn((String) null);
+      historicVariableInstanceQuery.tenantIdIn((String) null);
 
       fail("expected exception");
 

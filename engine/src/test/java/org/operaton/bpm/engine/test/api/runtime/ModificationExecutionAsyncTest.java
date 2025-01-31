@@ -158,9 +158,10 @@ public class ModificationExecutionAsyncTest {
 
   @Test
   public void createModificationWithNullProcessInstanceIdsListAsync() {
+    var modificationBuilder = runtimeService.createModification("processDefinitionId").startAfterActivity("user1").processInstanceIds((List<String>) null);
 
     try {
-      runtimeService.createModification("processDefinitionId").startAfterActivity("user1").processInstanceIds((List<String>) null).executeAsync();
+      modificationBuilder.executeAsync();
       fail("Should not succeed");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).contains("Process instance ids is empty");
@@ -170,8 +171,8 @@ public class ModificationExecutionAsyncTest {
   @Test
   public void createModificationWithNullProcessDefinitionId() {
     try {
-      runtimeService.createModification(null).cancelAllForActivity("activityId").processInstanceIds(Arrays.asList("20", "1--0")).executeAsync();
-      fail("Should not succed");
+      runtimeService.createModification(null);
+      fail("Should not succeed");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).contains("processDefinitionId is null");
     }
@@ -180,9 +181,10 @@ public class ModificationExecutionAsyncTest {
 
   @Test
   public void createModificationUsingProcessInstanceIdsListWithNullValueAsync() {
+    var modificationBuilder = runtimeService.createModification("processDefinitionId").startAfterActivity("user1").processInstanceIds(Arrays.asList("foo", null, "bar"));
 
     try {
-      runtimeService.createModification("processDefinitionId").startAfterActivity("user1").processInstanceIds(Arrays.asList("foo", null, "bar")).executeAsync();
+      modificationBuilder.executeAsync();
       fail("Should not succeed");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).contains("Process instance ids contains null value");
@@ -191,8 +193,9 @@ public class ModificationExecutionAsyncTest {
 
   @Test
   public void createModificationWithEmptyProcessInstanceIdsListAsync() {
+    var modificationBuilder = runtimeService.createModification("processDefinitionId").startAfterActivity("user1").processInstanceIds(Collections.<String> emptyList());
     try {
-      runtimeService.createModification("processDefinitionId").startAfterActivity("user1").processInstanceIds(Collections.<String> emptyList()).executeAsync();
+      modificationBuilder.executeAsync();
       fail("Should not succeed");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).contains("Process instance ids is empty");
@@ -201,9 +204,10 @@ public class ModificationExecutionAsyncTest {
 
   @Test
   public void createModificationWithNullProcessInstanceIdsArrayAsync() {
+    var modificationBuilder = runtimeService.createModification("processDefinitionId").startAfterActivity("user1").processInstanceIds((String[]) null);
 
     try {
-      runtimeService.createModification("processDefinitionId").startAfterActivity("user1").processInstanceIds((String[]) null).executeAsync();
+      modificationBuilder.executeAsync();
       fail("Should not be able to modify");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).contains("Process instance ids is empty");
@@ -212,9 +216,10 @@ public class ModificationExecutionAsyncTest {
 
   @Test
   public void createModificationUsingProcessInstanceIdsArrayWithNullValueAsync() {
+    var modificationBuilder = runtimeService.createModification("processDefinitionId").cancelAllForActivity("user1").processInstanceIds("foo", null, "bar");
 
     try {
-      runtimeService.createModification("processDefinitionId").cancelAllForActivity("user1").processInstanceIds("foo", null, "bar").executeAsync();
+      modificationBuilder.executeAsync();
       fail("Should not be able to modify");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).contains("Process instance ids contains null value");
@@ -223,9 +228,10 @@ public class ModificationExecutionAsyncTest {
 
   @Test
   public void testNullProcessInstanceQueryAsync() {
+    var modificationBuilder = runtimeService.createModification("processDefinitionId").startAfterActivity("user1").processInstanceQuery(null);
 
     try {
-      runtimeService.createModification("processDefinitionId").startAfterActivity("user1").processInstanceQuery(null).executeAsync();
+      modificationBuilder.executeAsync();
       fail("Should not succeed");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).contains("Process instance ids is empty");
@@ -234,9 +240,10 @@ public class ModificationExecutionAsyncTest {
 
   @Test
   public void testNullHistoricProcessInstanceQueryAsync() {
+    var modificationBuilder = runtimeService.createModification("processDefinitionId").startAfterActivity("user1").historicProcessInstanceQuery(null);
 
     try {
-      runtimeService.createModification("processDefinitionId").startAfterActivity("user1").historicProcessInstanceQuery(null).executeAsync();
+      modificationBuilder.executeAsync();
       fail("Should not succeed");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).contains("Process instance ids is empty");
@@ -249,8 +256,9 @@ public class ModificationExecutionAsyncTest {
     deployment.getDeployedProcessDefinitions().get(0);
 
     List<String> processInstanceIds = helper.startInstances("process1", 2);
+    var modificationBuilder = runtimeService.createModification("foo").cancelAllForActivity("activityId").processInstanceIds(processInstanceIds);
     try {
-      runtimeService.createModification("foo").cancelAllForActivity("activityId").processInstanceIds(processInstanceIds).executeAsync();
+      modificationBuilder.executeAsync();
       fail("Should not succed");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).contains("processDefinition is null");

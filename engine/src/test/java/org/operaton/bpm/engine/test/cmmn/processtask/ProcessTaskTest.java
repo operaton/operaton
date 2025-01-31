@@ -906,12 +906,12 @@ public class ProcessTaskTest extends CmmnTest {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
+    var caseExecutionCommandBuilder = caseService
+        .withCaseExecution(processTaskId);
 
     try {
       // when
-      caseService
-        .withCaseExecution(processTaskId)
-        .manualStart();
+      caseExecutionCommandBuilder.manualStart();
       fail("It should not be possible to start a process instance.");
     } catch (ProcessEngineException e) {}
 
@@ -1459,12 +1459,12 @@ public class ProcessTaskTest extends CmmnTest {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
+    var caseExecutionCommandBuilder = caseService
+        .withCaseExecution(processTaskId);
 
     try {
       // when
-      caseService
-        .withCaseExecution(processTaskId)
-        .complete();
+      caseExecutionCommandBuilder.complete();
       fail("It should not be possible to complete a process task, while the process instance is running.");
     } catch (NotAllowedException e) {}
 
@@ -1498,12 +1498,12 @@ public class ProcessTaskTest extends CmmnTest {
 
     ProcessInstance processInstance = queryProcessInstance();
     assertNull(processInstance);
+    var caseExecutionCommandBuilder = caseService
+        .withCaseExecution(processTaskId);
 
     try {
       // when
-      caseService
-        .withCaseExecution(processTaskId)
-        .complete();
+      caseExecutionCommandBuilder.complete();
       fail("It should not be possible to complete a process task");
     } catch (Exception e) {}
 

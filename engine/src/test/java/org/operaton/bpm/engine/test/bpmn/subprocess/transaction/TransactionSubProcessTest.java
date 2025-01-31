@@ -631,10 +631,10 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
 
   @Test
   public void testMultipleCancelBoundaryFails() {
+    var deploymentBuilder = repositoryService.createDeployment()
+        .addClasspathResource("org/operaton/bpm/engine/test/bpmn/subprocess/transaction/TransactionSubProcessTest.testMultipleCancelBoundaryFails.bpmn20.xml");
     try {
-      repositoryService.createDeployment()
-        .addClasspathResource("org/operaton/bpm/engine/test/bpmn/subprocess/transaction/TransactionSubProcessTest.testMultipleCancelBoundaryFails.bpmn20.xml")
-        .deploy();
+      deploymentBuilder.deploy();
       fail("exception expected");
     } catch (ParseException e) {
       assertThat(e.getMessage()).contains("multiple boundary events with cancelEventDefinition not supported on same transaction");
@@ -644,10 +644,10 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
 
   @Test
   public void testCancelBoundaryNoTransactionFails() {
+    var deploymentBuilder = repositoryService.createDeployment()
+        .addClasspathResource("org/operaton/bpm/engine/test/bpmn/subprocess/transaction/TransactionSubProcessTest.testCancelBoundaryNoTransactionFails.bpmn20.xml");
     try {
-      repositoryService.createDeployment()
-        .addClasspathResource("org/operaton/bpm/engine/test/bpmn/subprocess/transaction/TransactionSubProcessTest.testCancelBoundaryNoTransactionFails.bpmn20.xml")
-        .deploy();
+      deploymentBuilder.deploy();
       fail("exception expected");
     } catch (ParseException e) {
       assertThat(e.getMessage()).contains("boundary event with cancelEventDefinition only supported on transaction subprocesses");
@@ -657,10 +657,10 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
 
   @Test
   public void testCancelEndNoTransactionFails() {
+    var deploymentBuilder = repositoryService.createDeployment()
+        .addClasspathResource("org/operaton/bpm/engine/test/bpmn/subprocess/transaction/TransactionSubProcessTest.testCancelEndNoTransactionFails.bpmn20.xml");
     try {
-      repositoryService.createDeployment()
-        .addClasspathResource("org/operaton/bpm/engine/test/bpmn/subprocess/transaction/TransactionSubProcessTest.testCancelEndNoTransactionFails.bpmn20.xml")
-        .deploy();
+      deploymentBuilder.deploy();
       fail("exception expected");
     } catch (ParseException e) {
       assertThat(e.getMessage()).contains("end event with cancelEventDefinition only supported inside transaction subprocess");

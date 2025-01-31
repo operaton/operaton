@@ -322,16 +322,16 @@ public class MigrationCompensationAddSubProcessTest {
           .compensateEventDefinitionDone()
         .endEvent()
         .done());
+    var runtimeService = rule.getRuntimeService().createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
+        .mapActivities("subProcess", "outerSubProcess")
+        .mapActivities("eventSubProcessStart", "eventSubProcessStart")
+        .mapActivities("compensationBoundary", "compensationBoundary")
+        .mapActivities("userTask2", "userTask2");
 
 
     try {
       // when
-      rule.getRuntimeService().createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
-        .mapActivities("subProcess", "outerSubProcess")
-        .mapActivities("eventSubProcessStart", "eventSubProcessStart")
-        .mapActivities("compensationBoundary", "compensationBoundary")
-        .mapActivities("userTask2", "userTask2")
-        .build();
+      runtimeService.build();
       Assert.fail("exception expected");
     } catch (MigrationPlanValidationException e) {
       // then

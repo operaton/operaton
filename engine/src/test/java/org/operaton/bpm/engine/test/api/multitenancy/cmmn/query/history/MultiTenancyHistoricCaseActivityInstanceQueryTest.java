@@ -139,10 +139,10 @@ public class MultiTenancyHistoricCaseActivityInstanceQueryTest {
 
   @Test
   public void shouldFailQueryByTenantIdNull() {
+    var historicCaseActivityInstanceQuery = historyService.createHistoricCaseActivityInstanceQuery();
     try {
       // when
-      historyService.createHistoricCaseActivityInstanceQuery()
-        .tenantIdIn((String) null);
+      historicCaseActivityInstanceQuery.tenantIdIn((String) null);
 
       fail("expected exception");
 

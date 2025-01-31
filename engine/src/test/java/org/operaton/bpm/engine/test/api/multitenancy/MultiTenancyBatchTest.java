@@ -189,11 +189,12 @@ public class MultiTenancyBatchTest {
   public void testDeleteBatchFailsWithWrongTenant() {
     // given
     Batch batch = batchHelper.migrateProcessInstanceAsync(tenant2Definition, tenant2Definition);
+    var batchId = batch.getId();
 
     // when
     identityService.setAuthentication("user", null, singletonList(TENANT_ONE));
     try {
-      managementService.deleteBatch(batch.getId(), true);
+      managementService.deleteBatch(batchId, true);
       Assert.fail("exception expected");
     }
     catch (ProcessEngineException e) {
@@ -225,11 +226,12 @@ public class MultiTenancyBatchTest {
   public void testSuspendBatchFailsWithWrongTenant() {
     // given
     Batch batch = batchHelper.migrateProcessInstanceAsync(tenant2Definition, tenant2Definition);
+    var batchId = batch.getId();
 
     // when
     identityService.setAuthentication("user", null, singletonList(TENANT_ONE));
     try {
-      managementService.suspendBatchById(batch.getId());
+      managementService.suspendBatchById(batchId);
       Assert.fail("exception expected");
     }
     catch (ProcessEngineException e) {
@@ -263,11 +265,12 @@ public class MultiTenancyBatchTest {
     // given
     Batch batch = batchHelper.migrateProcessInstanceAsync(tenant2Definition, tenant2Definition);
     managementService.suspendBatchById(batch.getId());
+    var batchId = batch.getId();
 
     // when
     identityService.setAuthentication("user", null, singletonList(TENANT_ONE));
     try {
-      managementService.activateBatchById(batch.getId());
+      managementService.activateBatchById(batchId);
       Assert.fail("exception expected");
     }
     catch (ProcessEngineException e) {

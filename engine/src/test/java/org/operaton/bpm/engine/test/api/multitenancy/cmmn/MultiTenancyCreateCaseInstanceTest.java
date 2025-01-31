@@ -42,11 +42,11 @@ public class MultiTenancyCreateCaseInstanceTest extends PluggableProcessEngineTe
    testRule.deploy(CMMN_FILE);
 
     CaseDefinition caseDefinition = repositoryService.createCaseDefinitionQuery().singleResult();
+    var caseInstanceBuilder = caseService.withCaseDefinition(caseDefinition.getId())
+          .caseDefinitionWithoutTenantId();
 
     try {
-      caseService.withCaseDefinition(caseDefinition.getId())
-          .caseDefinitionWithoutTenantId()
-          .create();
+      caseInstanceBuilder.create();
       fail("BadUserRequestException exception");
     } catch(BadUserRequestException e) {
       assertThat(e.getMessage()).contains("Cannot specify a tenant-id");
@@ -58,11 +58,11 @@ public class MultiTenancyCreateCaseInstanceTest extends PluggableProcessEngineTe
     testRule.deployForTenant(TENANT_ONE, CMMN_FILE);
 
     CaseDefinition caseDefinition = repositoryService.createCaseDefinitionQuery().singleResult();
+    var caseInstanceBuilder = caseService.withCaseDefinition(caseDefinition.getId())
+          .caseDefinitionTenantId(TENANT_ONE);
 
     try {
-      caseService.withCaseDefinition(caseDefinition.getId())
-          .caseDefinitionTenantId(TENANT_ONE)
-          .create();
+      caseInstanceBuilder.create();
       fail("BadUserRequestException exception");
     } catch(BadUserRequestException e) {
       assertThat(e.getMessage()).contains("Cannot specify a tenant-id");
@@ -73,11 +73,11 @@ public class MultiTenancyCreateCaseInstanceTest extends PluggableProcessEngineTe
   public void testFailToCreateCaseInstanceByKeyForNonExistingTenantID() {
     testRule.deployForTenant(TENANT_ONE, CMMN_FILE);
     testRule.deployForTenant(TENANT_TWO, CMMN_FILE);
+    var caseInstanceBuilder = caseService.withCaseDefinitionByKey(CASE_DEFINITION_KEY)
+          .caseDefinitionTenantId("nonExistingTenantId");
 
     try {
-      caseService.withCaseDefinitionByKey(CASE_DEFINITION_KEY)
-          .caseDefinitionTenantId("nonExistingTenantId")
-          .create();
+      caseInstanceBuilder.create();
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).contains("no case definition deployed with key 'oneTaskCase' and tenant-id 'nonExistingTenantId'");
@@ -88,10 +88,10 @@ public class MultiTenancyCreateCaseInstanceTest extends PluggableProcessEngineTe
   public void testFailToCreateCaseInstanceByKeyForMultipleTenants() {
     testRule.deployForTenant(TENANT_ONE, CMMN_FILE);
     testRule.deployForTenant(TENANT_TWO, CMMN_FILE);
+    var caseInstanceBuilder = caseService.withCaseDefinitionByKey(CASE_DEFINITION_KEY);
 
     try {
-      caseService.withCaseDefinitionByKey(CASE_DEFINITION_KEY)
-          .create();
+      caseInstanceBuilder.create();
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).contains("multiple tenants.");
@@ -153,9 +153,10 @@ public class MultiTenancyCreateCaseInstanceTest extends PluggableProcessEngineTe
     identityService.setAuthentication("user", null, null);
 
     testRule.deployForTenant(TENANT_ONE, CMMN_FILE);
+    var caseInstanceBuilder = caseService.withCaseDefinitionByKey(CASE_DEFINITION_KEY);
 
     try {
-      caseService.withCaseDefinitionByKey(CASE_DEFINITION_KEY).create();
+      caseInstanceBuilder.create();
 
       fail("expected exception");
     } catch (ProcessEngineException e) {
@@ -168,11 +169,11 @@ public class MultiTenancyCreateCaseInstanceTest extends PluggableProcessEngineTe
     identityService.setAuthentication("user", null, null);
 
     testRule.deployForTenant(TENANT_ONE, CMMN_FILE);
+    var caseInstanceBuilder = caseService.withCaseDefinitionByKey(CASE_DEFINITION_KEY)
+        .caseDefinitionTenantId(TENANT_ONE);
 
     try {
-      caseService.withCaseDefinitionByKey(CASE_DEFINITION_KEY)
-        .caseDefinitionTenantId(TENANT_ONE)
-        .create();
+      caseInstanceBuilder.create();
 
       fail("expected exception");
     } catch (ProcessEngineException e) {
@@ -189,9 +190,10 @@ public class MultiTenancyCreateCaseInstanceTest extends PluggableProcessEngineTe
       .singleResult();
 
     identityService.setAuthentication("user", null, null);
+    var caseInstanceBuilder = caseService.withCaseDefinition(caseDefinition.getId());
 
     try {
-      caseService.withCaseDefinition(caseDefinition.getId()).create();
+      caseInstanceBuilder.create();
 
       fail("expected exception");
     } catch (ProcessEngineException e) {

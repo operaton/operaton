@@ -31,10 +31,10 @@ public class NoDbConnectionTest {
 
   @Test
   public void testNoDbConnection() {
+    var processEngineConfiguration = ProcessEngineConfiguration
+        .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/standalone/initialization/nodbconnection.operaton.cfg.xml");
     try {
-      ProcessEngineConfiguration
-        .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/standalone/initialization/nodbconnection.operaton.cfg.xml")
-        .buildProcessEngine();
+      processEngineConfiguration.buildProcessEngine();
       fail("expected exception");
     } catch (RuntimeException e) {
       assertTrue(containsSqlException(e));

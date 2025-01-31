@@ -254,9 +254,9 @@ public class MultiTenancyProcessDefinitionQueryTest extends PluggableProcessEngi
 
   @Test
   public void testFailQueryByTenantIdNull() {
+    var processDefinitionQuery = repositoryService.createProcessDefinitionQuery();
     try {
-      repositoryService.createProcessDefinitionQuery()
-        .tenantIdIn((String) null);
+      processDefinitionQuery.tenantIdIn((String) null);
 
       fail("expected exception");
     } catch (NullValueException e) {

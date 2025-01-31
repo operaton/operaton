@@ -73,7 +73,7 @@ public class Parser {
 	 */
 	public abstract static class ExtensionHandler {
 		private final ExtensionPoint point;
-		
+
 		protected ExtensionHandler(ExtensionPoint point) {
 			this.point = point;
 		}
@@ -84,7 +84,7 @@ public class Parser {
 		public ExtensionPoint getExtensionPoint() {
 			return point;
 		}
-		
+
 		/**
 		 * Called by the parser if it handles a extended token associated with this handler
 		 * at the appropriate extension point.
@@ -99,7 +99,7 @@ public class Parser {
 		Scanner.Symbol.STRING + "|" + Scanner.Symbol.FLOAT + "|" + Scanner.Symbol.INTEGER + "|" + Scanner.Symbol.TRUE + "|" + Scanner.Symbol.FALSE + "|" + Scanner.Symbol.NULL + "|" +
 		Scanner.Symbol.MINUS + "|" + Scanner.Symbol.NOT + "|" + Scanner.Symbol.EMPTY + "|" +
 		Scanner.Symbol.LPAREN;
-	
+
 	protected final Builder context;
 	protected final Scanner scanner;
 
@@ -109,7 +109,7 @@ public class Parser {
 
 	private Scanner.Token token; // current token
 	private int position;// current token's position
-	
+
 	protected Map<Scanner.ExtensionToken, ExtensionHandler> extensions = Collections.emptyMap();
 
 	public Parser(Builder context, String input) {
@@ -127,11 +127,11 @@ public class Parser {
 		}
 		extensions.put(token, extension);
 	}
-	
+
 	protected ExtensionHandler getExtensionHandler(Scanner.Token token) {
 		return extensions.get(token);
 	}
-	
+
 	/**
 	 * Parse an integer literal.
 	 * @param string string to parse
@@ -145,7 +145,7 @@ public class Parser {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Parse a floating point literal.
 	 * @param string string to parse
@@ -163,23 +163,23 @@ public class Parser {
 	protected AstBinary createAstBinary(AstNode left, AstNode right, AstBinary.Operator operator) {
 		return new AstBinary(left, right, operator);
 	}
-	
+
 	protected AstBracket createAstBracket(AstNode base, AstNode property, boolean lvalue, boolean strict) {
 		return new AstBracket(base, property, lvalue, strict);
 	}
-	
+
 	protected AstChoice createAstChoice(AstNode question, AstNode yes, AstNode no) {
 		return new AstChoice(question, yes, no);
 	}
-	
+
 	protected AstComposite createAstComposite(List<AstNode> nodes) {
 		return new AstComposite(nodes);
 	}
-	
+
 	protected AstDot createAstDot(AstNode base, String property, boolean lvalue) {
 		return new AstDot(base, property, lvalue);
 	}
-	
+
 	protected AstFunction createAstFunction(String name, int index, AstParameters params) {
 		return new AstFunction(name, index, params, context.isEnabled(Builder.Feature.VARARGS));
 	}
@@ -187,11 +187,11 @@ public class Parser {
 	protected AstIdentifier createAstIdentifier(String name, int index) {
 		return new AstIdentifier(name, index);
 	}
-	
+
 	protected AstMethod createAstMethod(AstProperty property, AstParameters params) {
 		return new AstMethod(property, params);
 	}
-	
+
 	protected AstUnary createAstUnary(AstNode child, AstUnary.Operator operator) {
 		return new AstUnary(child, operator);
 	}
@@ -199,7 +199,7 @@ public class Parser {
 	protected final List<FunctionNode> getFunctions() {
 		return functions;
 	}
-	
+
 	protected final List<IdentifierNode> getIdentifiers() {
 		return identifiers;
 	}
@@ -262,9 +262,9 @@ public class Parser {
 		}
 		return consumeToken();
 	}
-	
+
 	/**
-	 * tree := text? ((dynamic text?)+ | (deferred text?)+)? 
+	 * tree := text? ((dynamic text?)+ | (deferred text?)+)?
 	 */
 	public Tree tree() throws Scanner.ScanException, ParseException {
 		consumeToken();
@@ -366,12 +366,15 @@ public class Parser {
 	/**
 	 * or := and (&lt;OR&gt; and)*
 	 */
+	//fall-through to default is expected
+	@SuppressWarnings("java:S128")
 	protected AstNode or(boolean required) throws Scanner.ScanException, ParseException {
 		AstNode v = and(required);
 		if (v == null) {
 			return null;
 		}
 		while (true) {
+
 			switch (token.getSymbol()) {
 				case OR:
 					consumeToken();
@@ -391,6 +394,8 @@ public class Parser {
 	/**
 	 * and := eq (&lt;AND&gt; eq)*
 	 */
+	//fall-through to default is expected
+	@SuppressWarnings("java:S128")
 	protected AstNode and(boolean required) throws Scanner.ScanException, ParseException {
 		AstNode v = eq(required);
 		if (v == null) {
@@ -416,6 +421,8 @@ public class Parser {
 	/**
 	 * eq := cmp (&lt;EQ&gt; cmp | &lt;NE&gt; cmp)*
 	 */
+	//fall-through to default is expected
+	@SuppressWarnings("java:S128")
 	protected AstNode eq(boolean required) throws Scanner.ScanException, ParseException {
 		AstNode v = cmp(required);
 		if (v == null) {
@@ -441,10 +448,12 @@ public class Parser {
 			}
 		}
 	}
-	
+
 	/**
 	 * cmp := add (&lt;LT&gt; add | &lt;LE&gt; add | &lt;GE&gt; add | &lt;GT&gt; add)*
 	 */
+	//fall-through to default is expected
+	@SuppressWarnings("java:S128")
 	protected AstNode cmp(boolean required) throws Scanner.ScanException, ParseException {
 		AstNode v = add(required);
 		if (v == null) {
@@ -482,6 +491,8 @@ public class Parser {
 	/**
 	 * add := add (&lt;PLUS&gt; mul | &lt;MINUS&gt; mul)*
 	 */
+	//fall-through to default is expected
+	@SuppressWarnings("java:S128")
 	protected AstNode add(boolean required) throws Scanner.ScanException, ParseException {
 		AstNode v = mul(required);
 		if (v == null) {
@@ -511,6 +522,8 @@ public class Parser {
 	/**
 	 * mul := unary (&lt;MUL&gt; unary | &lt;DIV&gt; unary | &lt;MOD&gt; unary)*
 	 */
+	//fall-through to default is expected
+	@SuppressWarnings("java:S128")
 	protected AstNode mul(boolean required) throws Scanner.ScanException, ParseException {
 		AstNode v = unary(required);
 		if (v == null) {
@@ -544,6 +557,8 @@ public class Parser {
 	/**
 	 * unary := &lt;NOT&gt; unary | &lt;MINUS&gt; unary | &lt;EMPTY&gt; unary | value
 	 */
+	//fall-through to default is expected
+	@SuppressWarnings("java:S128")
 	protected AstNode unary(boolean required) throws Scanner.ScanException, ParseException {
 		AstNode v = null;
 		switch (token.getSymbol()) {
@@ -664,7 +679,7 @@ public class Parser {
 		consumeToken(Scanner.Symbol.RPAREN);
 		return new AstParameters(l);
 	}
-	
+
 	/**
 	 * literal := &lt;TRUE&gt; | &lt;FALSE&gt; | &lt;STRING&gt; | &lt;INTEGER&gt; | &lt;FLOAT&gt; | &lt;NULL&gt;
 	 */
@@ -690,7 +705,7 @@ public class Parser {
 			case FLOAT:
 				v = new AstNumber(parseFloat(token.getImage()));
 				consumeToken();
-				break;			
+				break;
 			case NULL:
 				v = new AstNull();
 				consumeToken();
@@ -712,7 +727,7 @@ public class Parser {
 		functions.add(function);
 		return function;
 	}
-	
+
 	protected final AstIdentifier identifier(String name) {
 		if (identifiers.isEmpty()) {
 			identifiers = new ArrayList<>(4);

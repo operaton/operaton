@@ -295,10 +295,11 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
 
     processEngineConfiguration.setAuthorizationEnabled(true);
     identityService.setAuthentication("admin", null, null);
+    var lockedUserId = lockedUser.getId();
 
     // when
     try {
-      identityService.unlockUser(lockedUser.getId());
+      identityService.unlockUser(lockedUserId);
       fail("expected exception");
     } catch (AuthorizationException e) {
       assertTrue(e.getMessage().contains("ENGINE-03029 Required admin authenticated group or user."));

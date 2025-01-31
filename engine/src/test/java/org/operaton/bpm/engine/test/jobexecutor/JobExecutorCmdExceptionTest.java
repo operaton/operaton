@@ -121,11 +121,12 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
 
     // execute the existing job
     Job job = managementService.createJobQuery().singleResult();
+    var jobId = job.getId();
 
     assertEquals(3, job.getRetries());
 
     try {
-      managementService.executeJob(job.getId());
+      managementService.executeJob(jobId);
       fail("Exception expected");
     } catch (Exception e) {
       // expected

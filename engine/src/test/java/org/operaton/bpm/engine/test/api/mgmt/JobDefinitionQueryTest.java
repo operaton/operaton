@@ -62,9 +62,10 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidJobDefinitionId() {
     JobDefinitionQuery query = managementService.createJobDefinitionQuery().jobDefinitionId("invalid");
     verifyQueryResults(query, 0);
+    var jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
     try {
-      managementService.createJobDefinitionQuery().jobDefinitionId(null);
+      jobDefinitionQuery.jobDefinitionId(null);
       fail("A ProcessEngineExcpetion was expected.");
     } catch (ProcessEngineException e) {}
   }
@@ -90,16 +91,21 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidActivityId() {
     JobDefinitionQuery query = managementService.createJobDefinitionQuery().activityIdIn("invalid");
     verifyQueryResults(query, 0);
+    var jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
     try {
-      managementService.createJobDefinitionQuery().activityIdIn(null);
+      jobDefinitionQuery.activityIdIn(null);
       fail("A ProcessEngineExcpetion was expected.");
-    } catch (ProcessEngineException e) {}
+    } catch (ProcessEngineException e) {
+      assertEquals("Activity ids is null", e.getMessage());
+    }
 
     try {
-      managementService.createJobDefinitionQuery().activityIdIn((String)null);
+      jobDefinitionQuery.activityIdIn((String)null);
       fail("A ProcessEngineExcpetion was expected.");
-    } catch (ProcessEngineException e) {}
+    } catch (ProcessEngineException e) {
+      assertEquals("Activity ids contains null value", e.getMessage());
+    }
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/JobDefinitionQueryTest.testBase.bpmn"})
@@ -116,9 +122,10 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidDefinitionId() {
     JobDefinitionQuery query = managementService.createJobDefinitionQuery().processDefinitionId("invalid");
     verifyQueryResults(query, 0);
+    var jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
     try {
-      managementService.createJobDefinitionQuery().processDefinitionId(null);
+      jobDefinitionQuery.processDefinitionId(null);
       fail("A ProcessEngineExcpetion was expected.");
     } catch (ProcessEngineException e) {}
   }
@@ -137,9 +144,10 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidDefinitionKey() {
     JobDefinitionQuery query = managementService.createJobDefinitionQuery().processDefinitionKey("invalid");
     verifyQueryResults(query, 0);
+    var jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
     try {
-      managementService.createJobDefinitionQuery().processDefinitionKey(null);
+      jobDefinitionQuery.processDefinitionKey(null);
       fail("A ProcessEngineExcpetion was expected.");
     } catch (ProcessEngineException e) {}
   }
@@ -165,9 +173,10 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidJobType() {
     JobDefinitionQuery query = managementService.createJobDefinitionQuery().jobType("invalid");
     verifyQueryResults(query, 0);
+    var jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
     try {
-      managementService.createJobDefinitionQuery().jobType(null);
+      jobDefinitionQuery.jobType(null);
       fail("A ProcessEngineExcpetion was expected.");
     } catch (ProcessEngineException e) {}
   }
@@ -177,9 +186,10 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidJobConfiguration() {
     JobDefinitionQuery query = managementService.createJobDefinitionQuery().jobConfiguration("invalid");
     verifyQueryResults(query, 0);
+    var jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
     try {
-      managementService.createJobDefinitionQuery().jobConfiguration(null);
+      jobDefinitionQuery.jobConfiguration(null);
       fail("A ProcessEngineExcpetion was expected.");
     } catch (ProcessEngineException e) {}
   }
@@ -290,15 +300,17 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
 
   @Test
   public void testQueryInvalidSortingUsage() {
+    var jobDefinitionQuery = managementService.createJobDefinitionQuery().orderByJobDefinitionId();
     try {
-      managementService.createJobDefinitionQuery().orderByJobDefinitionId().list();
+      jobDefinitionQuery.list();
       fail();
     } catch (ProcessEngineException e) {
       testRule.assertTextPresent("call asc() or desc() after using orderByXX()", e.getMessage());
     }
 
+    var jobQuery = managementService.createJobQuery();
     try {
-      managementService.createJobQuery().asc();
+      jobQuery.asc();
       fail();
     } catch (ProcessEngineException e) {
       testRule.assertTextPresent("You should call any of the orderBy methods first before specifying a direction", e.getMessage());

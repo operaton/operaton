@@ -492,11 +492,12 @@ public class IntermediateConditionalEventTest extends AbstractConditionalEventTe
 
     //then nothing happens
     assertTrue(runtimeService.createProcessInstanceQuery().singleResult().isSuspended());
+    var processInstanceId = procInst.getId();
 
     //when variable which triggers condition is set
     //then exception is expected
     try {
-      runtimeService.setVariable(procInst.getId(), VARIABLE_NAME, 1);
+      runtimeService.setVariable(processInstanceId, VARIABLE_NAME, 1);
       fail("Should fail!");
     } catch (SuspendedEntityInteractionException seie) {
       //expected

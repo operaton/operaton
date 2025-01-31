@@ -154,9 +154,9 @@ public class IdentityServiceTenantTest {
   @Test
   public void testInvalidTenantIdOnUpdate() {
     String invalidId = "john's tenant";
+    Tenant updatedTenant = identityService.newTenant("john");
+    updatedTenant.setId(invalidId);
     try {
-      Tenant updatedTenant = identityService.newTenant("john");
-      updatedTenant.setId(invalidId);
       identityService.saveTenant(updatedTenant);
 
       fail("Invalid tenant id exception expected!");
@@ -175,8 +175,9 @@ public class IdentityServiceTenantTest {
     String invalidId = "john's tenant";
 
     Tenant tenant = processEngine.getIdentityService().newTenant(invalidId);
+    var identityService = processEngine.getIdentityService();
     try {
-      processEngine.getIdentityService().saveTenant(tenant);
+      identityService.saveTenant(tenant);
       fail("Invalid tenant id exception expected!");
     } catch (ProcessEngineException ex) {
       assertEquals(String.format(INVALID_ID_MESSAGE, "Tenant", invalidId), ex.getMessage());
@@ -192,11 +193,12 @@ public class IdentityServiceTenantTest {
 
     String validId = "johnsTenant";
     String invalidId = "john!@#$%";
+    Tenant tenant = processEngine.getIdentityService().newTenant(validId);
+    tenant.setId(invalidId);
+    var identityService = processEngine.getIdentityService();
 
     try {
-      Tenant tenant = processEngine.getIdentityService().newTenant(validId);
-      tenant.setId(invalidId);
-      processEngine.getIdentityService().saveTenant(tenant);
+      identityService.saveTenant(tenant);
 
       fail("Invalid tenant id exception expected!");
     } catch (ProcessEngineException ex) {

@@ -114,12 +114,12 @@ public class JobPrioritizationBpmnExpressionValueTest extends PluggableProcessEn
   @Ignore("CAM-4207")
   @Test
   public void testVariableValueExpressionPrioritizationFailsWhenVariableMisses() {
+    var processInstantiationBuilder = runtimeService
+        .createProcessInstanceByKey("jobPrioExpressionProcess")
+        .startBeforeActivity("task1");
     // when
     try {
-      runtimeService
-        .createProcessInstanceByKey("jobPrioExpressionProcess")
-        .startBeforeActivity("task1")
-        .execute();
+      processInstantiationBuilder.execute();
       fail("this should not succeed since the priority variable is not defined");
     } catch (ProcessEngineException e) {
 
@@ -148,13 +148,13 @@ public class JobPrioritizationBpmnExpressionValueTest extends PluggableProcessEn
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/jobPrioExpressionProcess.bpmn20.xml")
   @Test
   public void testExpressionEvaluatesToNull() {
-    // when
-    try {
-      runtimeService
+    var processInstantiationBuilder = runtimeService
         .createProcessInstanceByKey("jobPrioExpressionProcess")
         .startBeforeActivity("task3")
-        .setVariable("priority", null)
-        .execute();
+        .setVariable("priority", null);
+    // when
+    try {
+      processInstantiationBuilder.execute();
       fail("this should not succeed since the priority variable is not defined");
     } catch (ProcessEngineException e) {
       testRule.assertTextPresentIgnoreCase("Priority value is not an Integer", e.getMessage());
@@ -164,13 +164,13 @@ public class JobPrioritizationBpmnExpressionValueTest extends PluggableProcessEn
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/jobPrioExpressionProcess.bpmn20.xml")
   @Test
   public void testExpressionEvaluatesToNonNumericalValue() {
-    // when
-    try {
-      runtimeService
+    var processInstantiationBuilder = runtimeService
         .createProcessInstanceByKey("jobPrioExpressionProcess")
         .startBeforeActivity("task3")
-        .setVariable("priority", "aNonNumericalVariableValue")
-        .execute();
+        .setVariable("priority", "aNonNumericalVariableValue");
+    // when
+    try {
+      processInstantiationBuilder.execute();
       fail("this should not succeed since the priority must be integer");
     } catch (ProcessEngineException e) {
       testRule.assertTextPresentIgnoreCase("Priority value is not an Integer", e.getMessage());
@@ -180,13 +180,13 @@ public class JobPrioritizationBpmnExpressionValueTest extends PluggableProcessEn
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/jobPrioExpressionProcess.bpmn20.xml")
   @Test
   public void testExpressionEvaluatesToNonIntegerValue() {
-    // when
-    try {
-      runtimeService
+    var processInstantiationBuilder = runtimeService
         .createProcessInstanceByKey("jobPrioExpressionProcess")
         .startBeforeActivity("task3")
-        .setVariable("priority", 4.2d)
-        .execute();
+        .setVariable("priority", 4.2d);
+    // when
+    try {
+      processInstantiationBuilder.execute();
       fail("this should not succeed since the priority must be integer");
     } catch (ProcessEngineException e) {
       testRule.assertTextPresentIgnoreCase("Priority value must be either Short, Integer, or Long",
@@ -237,12 +237,12 @@ public class JobPrioritizationBpmnExpressionValueTest extends PluggableProcessEn
   public void testDisableGracefulDegradation() {
     try {
       processEngineConfiguration.setEnableGracefulDegradationOnContextSwitchFailure(false);
+      var processInstantiationBuilder = runtimeService
+          .createProcessInstanceByKey("jobPrioExpressionProcess")
+          .startBeforeActivity("task1");
 
       try {
-        runtimeService
-          .createProcessInstanceByKey("jobPrioExpressionProcess")
-          .startBeforeActivity("task1")
-          .execute();
+        processInstantiationBuilder.execute();
         fail("should not succeed due to missing variable");
       } catch (ProcessEngineException e) {
         testRule.assertTextPresentIgnoreCase("unknown property used in expression", e.getMessage());

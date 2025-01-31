@@ -123,12 +123,12 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
 
   @Test
   public void testMessageStartEvent() {
+    var deploymentBuilder = repositoryService
+        .createDeployment()
+        .addClasspathResource("org/operaton/bpm/engine/test/bpmn/iomapping/InputOutputEventTest.testMessageStartEvent.bpmn20.xml");
 
     try {
-      repositoryService
-        .createDeployment()
-        .addClasspathResource("org/operaton/bpm/engine/test/bpmn/iomapping/InputOutputEventTest.testMessageStartEvent.bpmn20.xml")
-        .deploy();
+      deploymentBuilder.deploy();
       fail("expected exception");
     } catch (ParseException e) {
       testRule.assertTextPresent("operaton:inputOutput mapping unsupported for element type 'startEvent'", e.getMessage());
@@ -138,11 +138,11 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
 
   @Test
   public void testNoneEndEvent() {
-    try {
-      repositoryService
+    var deploymentBuilder = repositoryService
         .createDeployment()
-        .addClasspathResource("org/operaton/bpm/engine/test/bpmn/iomapping/InputOutputEventTest.testNoneEndEvent.bpmn20.xml")
-        .deploy();
+        .addClasspathResource("org/operaton/bpm/engine/test/bpmn/iomapping/InputOutputEventTest.testNoneEndEvent.bpmn20.xml");
+    try {
+      deploymentBuilder.deploy();
       fail("expected exception");
     } catch (ParseException e) {
       testRule.assertTextPresent("operaton:outputParameter not allowed for element type 'endEvent'", e.getMessage());
@@ -254,11 +254,11 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
 
   @Test
   public void testMessageBoundaryEvent() {
-    try {
-      repositoryService
+    var deploymentBuilder = repositoryService
         .createDeployment()
-        .addClasspathResource("org/operaton/bpm/engine/test/bpmn/iomapping/InputOutputEventTest.testMessageBoundaryEvent.bpmn20.xml")
-        .deploy();
+        .addClasspathResource("org/operaton/bpm/engine/test/bpmn/iomapping/InputOutputEventTest.testMessageBoundaryEvent.bpmn20.xml");
+    try {
+      deploymentBuilder.deploy();
       fail("expected exception");
     } catch (ParseException e) {
       testRule.assertTextPresent("operaton:inputOutput mapping unsupported for element type 'boundaryEvent'", e.getMessage());

@@ -831,11 +831,11 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
   @Test
   public void testInterruptingEventSubprocessIoSupport() {
-    try {
-      repositoryService
+    var deploymentBuilder = repositoryService
         .createDeployment()
-        .addClasspathResource("org/operaton/bpm/engine/test/bpmn/iomapping/InputOutputTest.testInterruptingEventSubprocessIoSupport.bpmn")
-        .deploy();
+        .addClasspathResource("org/operaton/bpm/engine/test/bpmn/iomapping/InputOutputTest.testInterruptingEventSubprocessIoSupport.bpmn");
+    try {
+      deploymentBuilder.deploy();
       fail("exception expected");
     } catch (ParseException e) {
       // happy path
@@ -1016,10 +1016,10 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
   @Test
   public void testMIOutputMappingDisallowed() {
+    var deploymentBuilder = repositoryService.createDeployment()
+      .addClasspathResource("org/operaton/bpm/engine/test/bpmn/iomapping/InputOutputTest.testMIOutputMappingDisallowed.bpmn20.xml");
     try {
-      repositoryService.createDeployment()
-      .addClasspathResource("org/operaton/bpm/engine/test/bpmn/iomapping/InputOutputTest.testMIOutputMappingDisallowed.bpmn20.xml")
-      .deploy();
+      deploymentBuilder.deploy();
       fail("Exception expected");
     } catch (ParseException e) {
       testRule.assertTextPresent("operaton:outputParameter not allowed for multi-instance constructs", e.getMessage());

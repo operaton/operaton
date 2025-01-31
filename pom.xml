@@ -505,6 +505,7 @@
         <module>webapps</module>
         <module>engine-plugins</module>
         <module>distro/webjar</module>
+        <module>distro/sql-script</module>
         <module>clients/java</module>
         <module>test-utils/junit5-extension</module>
         <module>test-utils/junit5-extension-dmn</module>

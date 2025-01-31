@@ -148,7 +148,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     runtimeService.startProcessInstanceByKey("mainProc");
     Task task = taskService.createTaskQuery().singleResult();
 
-    Assert.assertEquals(task.getTaskDefinitionKey(), "calledTask");
+    Assert.assertEquals("calledTask", task.getTaskDefinitionKey());
   }
 
   // COMPLETE Task Listener tests
@@ -158,8 +158,8 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
   public void testTaskCompleteListener() {
     TaskDeleteListener.clear();
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("taskListenerProcess");
-    assertEquals(null, runtimeService.getVariable(processInstance.getId(), "greeting"));
-    assertEquals(null, runtimeService.getVariable(processInstance.getId(), "expressionValue"));
+    assertNull(runtimeService.getVariable(processInstance.getId(), "greeting"));
+    assertNull(runtimeService.getVariable(processInstance.getId(), "expressionValue"));
 
     // Completing first task will change the description
     Task task = taskService.createTaskQuery().singleResult();
@@ -289,7 +289,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/tasklistener/TaskListenerTest.bpmn20.xml"})
   public void testTaskListenerWithExpression() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("taskListenerProcess");
-    assertEquals(null, runtimeService.getVariable(processInstance.getId(), "greeting2"));
+    assertNull(runtimeService.getVariable(processInstance.getId(), "greeting2"));
 
     // Completing first task will change the description
     Task task = taskService.createTaskQuery().singleResult();

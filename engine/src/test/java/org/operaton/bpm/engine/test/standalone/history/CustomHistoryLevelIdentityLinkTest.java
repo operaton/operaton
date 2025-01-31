@@ -18,7 +18,7 @@ package org.operaton.bpm.engine.test.standalone.history;
 
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.DB_SCHEMA_UPDATE_CREATE_DROP;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -107,7 +107,7 @@ public class CustomHistoryLevelIdentityLinkTest {
   public void testDeletingIdentityLinkByProcDefId() {
     // Pre test
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertEquals(historicIdentityLinks.size(), 0);
+    assertEquals(0, historicIdentityLinks.size());
 
     // given
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
@@ -119,7 +119,7 @@ public class CustomHistoryLevelIdentityLinkTest {
 
     // assume
     historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertTrue(!historicIdentityLinks.isEmpty());
+    assertFalse(historicIdentityLinks.isEmpty());
 
     // when
     repositoryService.deleteProcessDefinitions()
@@ -136,7 +136,7 @@ public class CustomHistoryLevelIdentityLinkTest {
   public void testDeletingIdentityLinkByTaskId() {
     // Pre test
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertEquals(historicIdentityLinks.size(), 0);
+    assertEquals(0, historicIdentityLinks.size());
 
     // given
     Task task = taskService.newTask();
@@ -149,7 +149,7 @@ public class CustomHistoryLevelIdentityLinkTest {
 
     // assume
     historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertTrue(!historicIdentityLinks.isEmpty());
+    assertFalse(historicIdentityLinks.isEmpty());
 
     // when
     taskService.deleteTask(taskId, true);

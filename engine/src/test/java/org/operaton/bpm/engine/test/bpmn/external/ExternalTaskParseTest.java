@@ -59,7 +59,7 @@ public class ExternalTaskParseTest extends PluggableProcessEngineTest {
 
     runtimeService.startProcessInstanceByKey("oneExternalTaskWithExpressionTopicProcess", variables);
     ExternalTask task = externalTaskService.createExternalTaskQuery().singleResult();
-    assertThat("testTopicExpression").isEqualTo(task.getTopicName());
+    assertThat(task.getTopicName()).isEqualTo("testTopicExpression");
   }
 
   @Deployment
@@ -69,6 +69,6 @@ public class ExternalTaskParseTest extends PluggableProcessEngineTest {
 
     runtimeService.startProcessInstanceByKey("oneExternalTaskWithStringTopicProcess", variables);
     ExternalTask task = externalTaskService.createExternalTaskQuery().singleResult();
-    assertThat("testTopicString").isEqualTo(task.getTopicName());
+    assertThat(task.getTopicName()).isEqualTo("testTopicString");
   }
 }

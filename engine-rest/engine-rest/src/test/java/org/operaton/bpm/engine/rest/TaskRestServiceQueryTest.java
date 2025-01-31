@@ -146,8 +146,8 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
 
     String content = response.asString();
     List<LinkedHashMap<String, String>> instances = from(content).getList("");
-    assertThat(instances).hasSize(1).as("There should be one task returned.");
-    assertThat(instances.get(0)).isNotNull().as("The returned task should not be null.");
+    assertThat(instances).withFailMessage("There should be one task returned.").hasSize(1);
+    assertThat(instances.get(0)).withFailMessage("The returned task should not be null.").isNotNull();
 
     String returnedTaskName = from(content).getString("[0].name");
     String returnedId = from(content).getString("[0].id");
@@ -172,28 +172,28 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
     String returnedFormKey = from(content).getString("[0].formKey");
     String returnedTenantId = from(content).getString("[0].tenantId");
 
-    assertThat(MockProvider.EXAMPLE_TASK_NAME).isEqualTo(returnedTaskName);
-    assertThat(MockProvider.EXAMPLE_TASK_ID).isEqualTo(returnedId);
-    assertThat(MockProvider.EXAMPLE_TASK_ASSIGNEE_NAME).isEqualTo(returendAssignee);
-    assertThat(MockProvider.EXAMPLE_TASK_CREATE_TIME).isEqualTo(returnedCreateTime);
-    assertThat(MockProvider.EXAMPLE_TASK_LAST_UPDATED).isEqualTo(returnedLastUpdated);
-    assertThat(MockProvider.EXAMPLE_TASK_DUE_DATE).isEqualTo(returnedDueDate);
-    assertThat(MockProvider.EXAMPLE_FOLLOW_UP_DATE).isEqualTo(returnedFollowUpDate);
-    assertThat(MockProvider.EXAMPLE_TASK_DELEGATION_STATE).hasToString(returnedDelegationState);
-    assertThat(MockProvider.EXAMPLE_TASK_DESCRIPTION).isEqualTo(returnedDescription);
-    assertThat(MockProvider.EXAMPLE_TASK_EXECUTION_ID).isEqualTo(returnedExecutionId);
-    assertThat(MockProvider.EXAMPLE_TASK_OWNER).isEqualTo(returnedOwner);
-    assertThat(MockProvider.EXAMPLE_TASK_PARENT_TASK_ID).isEqualTo(returnedParentTaskId);
-    assertThat(MockProvider.EXAMPLE_TASK_PRIORITY).isEqualTo(returnedPriority);
-    assertThat(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID).isEqualTo(returnedProcessDefinitionId);
-    assertThat(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID).isEqualTo(returnedProcessInstanceId);
-    assertThat(MockProvider.EXAMPLE_TASK_DEFINITION_KEY).isEqualTo(returnedTaskDefinitionKey);
-    assertThat(MockProvider.EXAMPLE_CASE_DEFINITION_ID).isEqualTo(returnedCaseDefinitionId);
-    assertThat(MockProvider.EXAMPLE_CASE_INSTANCE_ID).isEqualTo(returnedCaseInstanceId);
-    assertThat(MockProvider.EXAMPLE_CASE_EXECUTION_ID).isEqualTo(returnedCaseExecutionId);
-    assertThat(MockProvider.EXAMPLE_TASK_SUSPENSION_STATE).isEqualTo(returnedSuspensionState);
-    assertThat(MockProvider.EXAMPLE_FORM_KEY).isEqualTo(returnedFormKey);
-    assertThat(MockProvider.EXAMPLE_TENANT_ID).isEqualTo(returnedTenantId);
+    assertThat(returnedTaskName).isEqualTo(MockProvider.EXAMPLE_TASK_NAME);
+    assertThat(returnedId).isEqualTo(MockProvider.EXAMPLE_TASK_ID);
+    assertThat(returendAssignee).isEqualTo(MockProvider.EXAMPLE_TASK_ASSIGNEE_NAME);
+    assertThat(returnedCreateTime).isEqualTo(MockProvider.EXAMPLE_TASK_CREATE_TIME);
+    assertThat(returnedLastUpdated).isEqualTo(MockProvider.EXAMPLE_TASK_LAST_UPDATED);
+    assertThat(returnedDueDate).isEqualTo(MockProvider.EXAMPLE_TASK_DUE_DATE);
+    assertThat(returnedFollowUpDate).isEqualTo(MockProvider.EXAMPLE_FOLLOW_UP_DATE);
+    assertThat(returnedDelegationState).isEqualTo(MockProvider.EXAMPLE_TASK_DELEGATION_STATE.name());
+    assertThat(returnedDescription).isEqualTo(MockProvider.EXAMPLE_TASK_DESCRIPTION);
+    assertThat(returnedExecutionId).isEqualTo(MockProvider.EXAMPLE_TASK_EXECUTION_ID);
+    assertThat(returnedOwner).isEqualTo(MockProvider.EXAMPLE_TASK_OWNER);
+    assertThat(returnedParentTaskId).isEqualTo(MockProvider.EXAMPLE_TASK_PARENT_TASK_ID);
+    assertThat(returnedPriority).isEqualTo(MockProvider.EXAMPLE_TASK_PRIORITY);
+    assertThat(returnedProcessDefinitionId).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
+    assertThat(returnedProcessInstanceId).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
+    assertThat(returnedTaskDefinitionKey).isEqualTo(MockProvider.EXAMPLE_TASK_DEFINITION_KEY);
+    assertThat(returnedCaseDefinitionId).isEqualTo(MockProvider.EXAMPLE_CASE_DEFINITION_ID);
+    assertThat(returnedCaseInstanceId).isEqualTo(MockProvider.EXAMPLE_CASE_INSTANCE_ID);
+    assertThat(returnedCaseExecutionId).isEqualTo(MockProvider.EXAMPLE_CASE_EXECUTION_ID);
+    assertThat(returnedSuspensionState).isEqualTo(MockProvider.EXAMPLE_TASK_SUSPENSION_STATE);
+    assertThat(returnedFormKey).isEqualTo(MockProvider.EXAMPLE_FORM_KEY);
+    assertThat(returnedTenantId).isEqualTo(MockProvider.EXAMPLE_TENANT_ID);
 
   }
   @Test
@@ -212,14 +212,14 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
 
     String content = response.asString();
     List<LinkedHashMap<String, String>> instances = from(content).getList("");
-    assertThat(instances).hasSize(1).as("There should be one task returned.");
-    assertThat(instances.get(0)).isNotNull().as("The returned task should not be null.");
+    assertThat(instances).withFailMessage("There should be one task returned.").hasSize(1);
+    assertThat(instances.get(0)).withFailMessage("The returned task should not be null.").isNotNull();
 
     boolean returnedAttachmentsInfo = from(content).getBoolean("[0].attachment");
     boolean returnedCommentsInfo = from(content).getBoolean("[0].comment");
 
-    assertThat(MockProvider.EXAMPLE_TASK_ATTACHMENT_STATE).isEqualTo(returnedAttachmentsInfo);
-    assertThat(MockProvider.EXAMPLE_TASK_COMMENT_STATE).isEqualTo(returnedCommentsInfo);
+    assertThat(returnedAttachmentsInfo).isEqualTo(MockProvider.EXAMPLE_TASK_ATTACHMENT_STATE);
+    assertThat(returnedCommentsInfo).isEqualTo(MockProvider.EXAMPLE_TASK_COMMENT_STATE);
 
   }
 

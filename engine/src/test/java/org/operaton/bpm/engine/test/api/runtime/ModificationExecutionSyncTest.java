@@ -97,7 +97,7 @@ public class ModificationExecutionSyncTest {
 
       List<String> activeActivityIds = runtimeService.getActiveActivityIds(instanceId);
       assertEquals(1, activeActivityIds.size());
-      assertEquals(activeActivityIds.iterator().next(), "user2");
+      assertEquals("user2", activeActivityIds.iterator().next());
     }
   }
 
@@ -114,7 +114,7 @@ public class ModificationExecutionSyncTest {
     for (String instanceId : instances) {
       List<String> activeActivityIds = runtimeService.getActiveActivityIds(instanceId);
       assertEquals(1, activeActivityIds.size());
-      assertEquals(activeActivityIds.iterator().next(), "user2");
+      assertEquals("user2", activeActivityIds.iterator().next());
     }
   }
 
@@ -133,7 +133,7 @@ public class ModificationExecutionSyncTest {
     for (String instanceId : instances) {
       List<String> activeActivityIds = runtimeService.getActiveActivityIds(instanceId);
       assertEquals(1, activeActivityIds.size());
-      assertEquals(activeActivityIds.iterator().next(), "user2");
+      assertEquals("user2", activeActivityIds.iterator().next());
     }
   }
 
@@ -152,7 +152,7 @@ public class ModificationExecutionSyncTest {
     for (String instanceId : instances) {
       List<String> activeActivityIds = runtimeService.getActiveActivityIds(instanceId);
       assertEquals(1, activeActivityIds.size());
-      assertEquals(activeActivityIds.iterator().next(), "user2");
+      assertEquals("user2", activeActivityIds.iterator().next());
     }
   }
 
@@ -170,7 +170,7 @@ public class ModificationExecutionSyncTest {
 
     List<String> activeActivityIds = runtimeService.getActiveActivityIds(instances.get(1));
     assertEquals(1, activeActivityIds.size());
-    assertEquals(activeActivityIds.iterator().next(), "user2");
+    assertEquals("user2", activeActivityIds.iterator().next());
   }
 
   @Test

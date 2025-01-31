@@ -898,7 +898,7 @@ public class HistoryCleanupTest {
 
       //job rescheduled till next batch window start time
       Date nextRun = getNextRunWithinBatchWindow(ClockUtil.getCurrentTime());
-      assertTrue(jobEntity.getDuedate().equals(nextRun));
+      assertEquals(jobEntity.getDuedate(), nextRun);
 
       //countEmptyRuns canceled
       assertEquals(0, configuration.getCountEmptyRuns());
@@ -933,7 +933,7 @@ public class HistoryCleanupTest {
 
       //job rescheduled till next batch window start
       Date nextRun = getNextRunWithinBatchWindow(ClockUtil.getCurrentTime());
-      assertTrue(jobEntity.getDuedate().equals(nextRun));
+      assertEquals(jobEntity.getDuedate(), nextRun);
 
       //countEmptyRuns canceled
       assertEquals(0, configuration.getCountEmptyRuns());
@@ -965,7 +965,7 @@ public class HistoryCleanupTest {
 
     //job rescheduled till next batch window start
     Date nextRun = getNextRunWithinBatchWindow(ClockUtil.getCurrentTime());
-    assertTrue(jobEntity.getDuedate().equals(nextRun));
+    assertEquals(jobEntity.getDuedate(), nextRun);
     assertTrue(nextRun.after(ClockUtil.getCurrentTime()));
 
     //countEmptyRuns canceled
@@ -997,7 +997,7 @@ public class HistoryCleanupTest {
 
     //job rescheduled till next batch window start
     Date nextRun = getNextRunWithinBatchWindow(ClockUtil.getCurrentTime());
-    assertTrue(jobEntity.getDuedate().equals(nextRun));
+    assertEquals(jobEntity.getDuedate(), nextRun);
     assertTrue(nextRun.after(ClockUtil.getCurrentTime()));
 
     //countEmptyRuns cancelled
@@ -1111,7 +1111,7 @@ public class HistoryCleanupTest {
     //job rescheduled till next batch window start
     Date nextRun = getNextRunWithinBatchWindow(ClockUtil.getCurrentTime());
 
-    assertTrue(jobEntity.getDuedate().equals(nextRun));
+    assertEquals(jobEntity.getDuedate(), nextRun);
     assertTrue(nextRun.after(ClockUtil.getCurrentTime()));
 
     //countEmptyRuns canceled
@@ -1196,7 +1196,7 @@ public class HistoryCleanupTest {
 
     processEngineConfiguration.setHistoryCleanupBatchSize(500);
     processEngineConfiguration.initHistoryCleanup();
-    assertEquals(processEngineConfiguration.getHistoryCleanupBatchSize(), 500);
+    assertEquals(500, processEngineConfiguration.getHistoryCleanupBatchSize());
 
     processEngineConfiguration.setHistoryTimeToLive("5");
     processEngineConfiguration.initHistoryCleanup();

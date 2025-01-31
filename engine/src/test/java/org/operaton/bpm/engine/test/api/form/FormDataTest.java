@@ -229,7 +229,7 @@ public class FormDataTest extends PluggableProcessEngineTest {
         assertEquals("validator", e.getName());
         assertEquals("customFieldWithValidationDetails", e.getId());
         FormFieldValidationException exception = (FormFieldValidationException) e.getCause();
-        assertEquals(exception.getDetail(), "EXPIRED");
+        assertEquals("EXPIRED", exception.getDetail());
       });
   }
 

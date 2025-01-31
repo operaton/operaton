@@ -85,9 +85,9 @@ public class TaskFollowUpDateExtensionsTest extends PluggableProcessEngineTest {
     assertNotNull(followUpDate);
 
     Period period = new Period(task.getCreateTime().getTime(), followUpDate.getTime());
-    assertEquals(period.getDays(), 2);
-    assertEquals(period.getHours(), 2);
-    assertEquals(period.getMinutes(), 30);
+    assertEquals(2, period.getDays());
+    assertEquals(2, period.getHours());
+    assertEquals(30, period.getMinutes());
   }
 
 }

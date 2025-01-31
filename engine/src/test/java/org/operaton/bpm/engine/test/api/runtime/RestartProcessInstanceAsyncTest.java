@@ -23,7 +23,6 @@ import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeA
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.Arrays;
@@ -449,9 +448,9 @@ public class RestartProcessInstanceAsyncTest {
     restartedProcessInstance = restartedProcessInstances.get(1);
     VariableInstance variableInstance2 = runtimeService.createVariableInstanceQuery().processInstanceIdIn(restartedProcessInstance.getId()).singleResult();
     assertEquals(variableInstance2.getExecutionId(), restartedProcessInstance.getId());
-    assertTrue(variableInstance1.getName().equals(variableInstance2.getName()));
+    assertEquals(variableInstance1.getName(), variableInstance2.getName());
     assertEquals("var", variableInstance1.getName());
-    assertTrue(variableInstance1.getValue().equals(variableInstance2.getValue()));
+    assertEquals(variableInstance1.getValue(), variableInstance2.getValue());
     assertEquals("foo", variableInstance2.getValue());
   }
 
@@ -1050,7 +1049,7 @@ public class RestartProcessInstanceAsyncTest {
 
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
-    assertEquals(processInstance.getTenantId(), TestTenantIdProvider.TENANT_ID);
+    assertEquals(TestTenantIdProvider.TENANT_ID, processInstance.getTenantId());
     runtimeService.deleteProcessInstance(processInstance.getId(), "test");
 
     // when
@@ -1066,7 +1065,7 @@ public class RestartProcessInstanceAsyncTest {
       .processDefinitionId(processDefinition.getId()).singleResult();
 
     assertNotNull(restartedInstance);
-    assertEquals(restartedInstance.getTenantId(), TestTenantIdProvider.TENANT_ID);
+    assertEquals(TestTenantIdProvider.TENANT_ID, restartedInstance.getTenantId());
   }
 
   @Test
@@ -1077,7 +1076,7 @@ public class RestartProcessInstanceAsyncTest {
 
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
-    assertEquals(processInstance.getTenantId(), TestTenantIdProvider.TENANT_ID);
+    assertEquals(TestTenantIdProvider.TENANT_ID, processInstance.getTenantId());
     runtimeService.deleteProcessInstance(processInstance.getId(), "test");
 
     // set tenant id provider to fail to verify it is not called during instantiation
@@ -1097,7 +1096,7 @@ public class RestartProcessInstanceAsyncTest {
       .processDefinitionId(processDefinition.getId()).singleResult();
 
     assertNotNull(restartedInstance);
-    assertEquals(restartedInstance.getTenantId(), TestTenantIdProvider.TENANT_ID);
+    assertEquals(TestTenantIdProvider.TENANT_ID, restartedInstance.getTenantId());
   }
 
   @Test

@@ -621,7 +621,7 @@ public class JobQueryTest {
     assertNotNull(job);
 
     List<Job> list = managementService.createJobQuery().withException().list();
-    assertEquals(list.size(), 1);
+    assertEquals(1, list.size());
 
     deleteJobInDatabase();
 
@@ -632,7 +632,7 @@ public class JobQueryTest {
     assertNotNull(job);
 
     list = managementService.createJobQuery().withException().list();
-    assertEquals(list.size(), 1);
+    assertEquals(1, list.size());
 
     deleteJobInDatabase();
 

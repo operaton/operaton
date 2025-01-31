@@ -419,7 +419,7 @@ public class MultiTenancyProcessInstantiationTest extends PluggableProcessEngine
         .processDefinitionId(processInstance.getProcessDefinitionId()).singleResult();
 
     assertNotNull(restartedInstance);
-    assertEquals(restartedInstance.getTenantId(), TENANT_ONE);
+    assertEquals(TENANT_ONE, restartedInstance.getTenantId());
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
@@ -443,7 +443,7 @@ public class MultiTenancyProcessInstantiationTest extends PluggableProcessEngine
       .processDefinitionId(processInstance.getProcessDefinitionId()).singleResult();
 
     assertNotNull(restartedInstance);
-    assertEquals(restartedInstance.getTenantId(), TENANT_ONE);
+    assertEquals(TENANT_ONE, restartedInstance.getTenantId());
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
@@ -509,7 +509,7 @@ public class MultiTenancyProcessInstantiationTest extends PluggableProcessEngine
       .processDefinitionId(processInstance.getProcessDefinitionId()).singleResult();
 
     assertNotNull(restartedInstance);
-    assertEquals(restartedInstance.getTenantId(), TENANT_ONE);
+    assertEquals(TENANT_ONE, restartedInstance.getTenantId());
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
@@ -534,7 +534,7 @@ public class MultiTenancyProcessInstantiationTest extends PluggableProcessEngine
       .processDefinitionId(processInstance.getProcessDefinitionId()).singleResult();
 
     assertNotNull(restartedInstance);
-    assertEquals(restartedInstance.getTenantId(), TENANT_ONE);
+    assertEquals(TENANT_ONE, restartedInstance.getTenantId());
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)

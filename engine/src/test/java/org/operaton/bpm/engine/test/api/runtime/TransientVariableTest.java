@@ -352,7 +352,7 @@ public class TransientVariableTest {
     // then
     List<VariableInstance> variables = runtimeService.createVariableInstanceQuery().list();
     assertEquals(1, variables.size());
-    assertEquals(variables.get(0).getValue(), 9L);
+    assertEquals(9L, variables.get(0).getValue());
   }
 
   @Test
@@ -370,7 +370,7 @@ public class TransientVariableTest {
     // then
     List<VariableInstance> variables = runtimeService.createVariableInstanceQuery().list();
     assertEquals(1, variables.size());
-    assertEquals(variables.get(0).getValue(), 9L);
+    assertEquals(9L, variables.get(0).getValue());
   }
 
   @Test

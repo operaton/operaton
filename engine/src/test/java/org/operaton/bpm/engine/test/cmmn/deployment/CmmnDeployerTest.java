@@ -235,7 +235,7 @@ public class CmmnDeployerTest extends PluggableProcessEngineTest {
     CaseDefinition caseDefinition = repositoryService.createCaseDefinitionQuery().singleResult();
     Integer historyTimeToLive = caseDefinition.getHistoryTimeToLive();
     assertNotNull(historyTimeToLive);
-    assertEquals((int) historyTimeToLive, 5);
+    assertEquals(5, (int) historyTimeToLive);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testDeployCaseDefinitionWithStringHistoryTimeToLive.cmmn")
@@ -244,7 +244,7 @@ public class CmmnDeployerTest extends PluggableProcessEngineTest {
     CaseDefinition caseDefinition = repositoryService.createCaseDefinitionQuery().singleResult();
     Integer historyTimeToLive = caseDefinition.getHistoryTimeToLive();
     assertNotNull(historyTimeToLive);
-    assertEquals((int) historyTimeToLive, 5);
+    assertEquals(5, (int) historyTimeToLive);
   }
 
   @Test

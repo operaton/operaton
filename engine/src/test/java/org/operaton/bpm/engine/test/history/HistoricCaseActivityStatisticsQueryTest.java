@@ -71,7 +71,7 @@ public class HistoricCaseActivityStatisticsQueryTest {
       historicCaseActivityStatisticsQuery.list();
       fail("It should not be possible to query for statistics by null.");
     } catch (NullValueException exception) {
-
+      // expected
     }
   }
 
@@ -127,7 +127,7 @@ public class HistoricCaseActivityStatisticsQueryTest {
     // then
     List<HistoricCaseActivityStatistics> statistics = query.list();
     assertThat(statistics).hasSize(6);
-    assertEquals(query.count(), 6);
+    assertEquals(6, query.count());
 
     assertStatisitcs(statistics.get(0), "ACTIVE", 5, 0, 0, 0, 0, 0);
     assertStatisitcs(statistics.get(1), "AVAILABLE", 0, 5, 0, 0, 0, 0);
@@ -176,7 +176,7 @@ public class HistoricCaseActivityStatisticsQueryTest {
     // then
     List<HistoricCaseActivityStatistics> statistics = query.list();
     assertThat(statistics).hasSize(6);
-    assertEquals(query.count(), 6);
+    assertEquals(6, query.count());
 
     assertStatisitcs(statistics.get(0), "ACTIVE", 2, 0, 8, 0, 0, 5);
     assertStatisitcs(statistics.get(1), "AVAILABLE", 0, 7, 3, 0, 0, 5);

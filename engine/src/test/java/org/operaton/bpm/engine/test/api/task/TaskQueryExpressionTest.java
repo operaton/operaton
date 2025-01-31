@@ -192,8 +192,9 @@ public class TaskQueryExpressionTest {
     assertCount(taskQuery().taskCandidateGroupInExpression("${currentUserGroups()}"), 0);
 
     setCurrentUser(userWithoutGroups);
+    var taskQuery = taskQuery().taskCandidateGroupInExpression("${currentUserGroups()}");
     try {
-      taskQuery().taskCandidateGroupInExpression("${currentUserGroups()}").count();
+      taskQuery.count();
       fail("Exception expected");
     }
     catch (ProcessEngineException e) {

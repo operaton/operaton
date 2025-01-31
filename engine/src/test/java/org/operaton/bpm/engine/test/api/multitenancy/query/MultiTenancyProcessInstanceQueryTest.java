@@ -106,9 +106,9 @@ public class MultiTenancyProcessInstanceQueryTest extends PluggableProcessEngine
 
   @Test
   public void testFailQueryByTenantIdNull() {
+    var processInstanceQuery = runtimeService.createProcessInstanceQuery();
     try {
-      runtimeService.createProcessInstanceQuery()
-        .tenantIdIn((String) null);
+      processInstanceQuery.tenantIdIn((String) null);
 
       fail("expected exception");
     } catch (NullValueException e) {

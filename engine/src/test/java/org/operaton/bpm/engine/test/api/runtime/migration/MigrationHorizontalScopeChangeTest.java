@@ -45,16 +45,16 @@ public class MigrationHorizontalScopeChangeTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_SUBPROCESS_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_SUBPROCESS_PROCESS);
-
-    // when
-    try {
-      rule.getRuntimeService()
+    var runtimeService = rule.getRuntimeService()
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("subProcess1", "subProcess1")
         .mapActivities("subProcess2", "subProcess2")
         .mapActivities("userTask1", "userTask2")
-        .mapActivities("userTask2", "userTask1")
-        .build();
+        .mapActivities("userTask2", "userTask1");
+
+    // when
+    try {
+      runtimeService.build();
 
       Assert.fail("should fail");
     }

@@ -900,14 +900,14 @@ public class MigrationCompensationTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.DOUBLE_SUBPROCESS_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.DOUBLE_SUBPROCESS_MODEL);
+    var runtimeService = rule.getRuntimeService()
+        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
+        .mapActivities("outerSubProcess", "innerSubProcess")
+        .mapActivities("innerSubProcess", "outerSubProcess");
 
     try {
       // when
-      rule.getRuntimeService()
-        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
-        .mapActivities("outerSubProcess", "innerSubProcess")
-        .mapActivities("innerSubProcess", "outerSubProcess")
-        .build();
+      runtimeService.build();
       Assert.fail("exception expected");
     } catch (MigrationPlanValidationException e) {
       // then
@@ -931,14 +931,14 @@ public class MigrationCompensationTest {
           .startEvent()
           .endEvent()
         .done());
+    var runtimeService = rule.getRuntimeService()
+        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
+        .mapActivities("subProcess", "addedSubProcess")
+        .mapActivities("compensationBoundary", "compensationBoundary");
 
     try {
       // when
-      rule.getRuntimeService()
-        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
-        .mapActivities("subProcess", "addedSubProcess")
-        .mapActivities("compensationBoundary", "compensationBoundary")
-        .build();
+      runtimeService.build();
       Assert.fail("exception expected");
     } catch (MigrationPlanValidationException e) {
       // then
@@ -955,13 +955,13 @@ public class MigrationCompensationTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_EVENT_SUBPROCESS_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_EVENT_SUBPROCESS_MODEL);
+    var runtimeService = rule.getRuntimeService()
+        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
+        .mapActivities("eventSubProcessStart", "eventSubProcessStart");
 
     try {
       // when
-      rule.getRuntimeService()
-        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
-        .mapActivities("eventSubProcessStart", "eventSubProcessStart")
-        .build();
+      runtimeService.build();
       Assert.fail("exception expected");
     } catch (MigrationPlanValidationException e) {
       // then
@@ -980,13 +980,13 @@ public class MigrationCompensationTest {
 
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(model);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(model);
+    var runtimeService = rule.getRuntimeService()
+        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
+        .mapActivities("eventSubProcessStart", "eventSubProcessStart");
 
     try {
       // when
-      rule.getRuntimeService()
-        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
-        .mapActivities("eventSubProcessStart", "eventSubProcessStart")
-        .build();
+      runtimeService.build();
       Assert.fail("exception expected");
     } catch (MigrationPlanValidationException e) {
       // then

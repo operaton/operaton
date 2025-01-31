@@ -94,8 +94,9 @@ public class LinkEventTest extends PluggableProcessEngineTest {
 
   @Test
   public void testInvalidEventLinkMultipleTargets() {
+    var deploymentBuilder = repositoryService.createDeployment().addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/link/LinkEventTest.testInvalidEventLinkMultipleTargets.bpmn20.xml");
     try {
-      repositoryService.createDeployment().addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/link/LinkEventTest.testInvalidEventLinkMultipleTargets.bpmn20.xml").deploy();
+      deploymentBuilder.deploy();
       fail("process should not deploy because it contains multiple event link targets which is invalid in the BPMN 2.0 spec");
     }
     catch (ParseException e) {
@@ -106,8 +107,9 @@ public class LinkEventTest extends PluggableProcessEngineTest {
 
   @Test
   public void testCatchLinkEventAfterEventBasedGatewayNotAllowed() {
+    var deploymentBuilder = repositoryService.createDeployment().addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/link/LinkEventTest.testCatchLinkEventAfterEventBasedGatewayNotAllowed.bpmn20.xml");
     try {
-      repositoryService.createDeployment().addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/link/LinkEventTest.testCatchLinkEventAfterEventBasedGatewayNotAllowed.bpmn20.xml").deploy();
+      deploymentBuilder.deploy();
       fail("process should not deploy because it contains multiple event link targets which is invalid in the BPMN 2.0 spec");
     }
     catch (ParseException e) {

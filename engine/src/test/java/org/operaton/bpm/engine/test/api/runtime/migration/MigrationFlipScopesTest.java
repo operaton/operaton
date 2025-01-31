@@ -44,15 +44,15 @@ public class MigrationFlipScopesTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.DOUBLE_SUBPROCESS_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.DOUBLE_SUBPROCESS_PROCESS);
-
-    // when
-    try {
-      rule.getRuntimeService()
+    var runtimeService = rule.getRuntimeService()
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("outerSubProcess", "innerSubProcess")
         .mapActivities("innerSubProcess", "outerSubProcess")
-        .mapActivities("userTask", "userTask")
-        .build();
+        .mapActivities("userTask", "userTask");
+
+    // when
+    try {
+      runtimeService.build();
 
       Assert.fail("should not validate");
     } catch (MigrationPlanValidationException e) {

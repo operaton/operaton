@@ -109,19 +109,17 @@ public class ProcessApplicationDeploymentTest {
 
   @Test
   public void testEmptyDeployment() {
+    var deploymentBuilder = repositoryService.createDeployment(processApplication.getReference());
+    var deploymentBuilder2 = repositoryService.createDeployment();
     try {
-      repositoryService
-        .createDeployment(processApplication.getReference())
-        .deploy();
+      deploymentBuilder.deploy();
       fail("it should not be possible to deploy without deployment resources");
     } catch (NotValidException e) {
       // expected
     }
 
     try {
-      repositoryService
-        .createDeployment()
-        .deploy();
+      deploymentBuilder2.deploy();
       fail("it should not be possible to deploy without deployment resources");
     } catch (NotValidException e) {
       // expected

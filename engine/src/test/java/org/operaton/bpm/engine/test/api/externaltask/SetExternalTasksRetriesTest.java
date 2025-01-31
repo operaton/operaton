@@ -191,11 +191,9 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
     }
 
     externalTaskIds.add(null);
-    Batch batch = null;
 
     try {
-      batch = externalTaskService.setRetriesAsync(externalTaskIds, null, 10);
-      executeSeedAndBatchJobs(batch);
+      externalTaskService.setRetriesAsync(externalTaskIds, null, 10);
       fail("exception expected");
     } catch (BadUserRequestException e) {
       assertThat(e.getMessage()).contains("External task id cannot be null");
@@ -230,8 +228,9 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
 
     List<String> externalTaskIds = Arrays.asList("externalTaskId");
 
+    Batch batch = externalTaskService.setRetriesAsync(externalTaskIds, null, -10);
+
     try {
-      Batch batch = externalTaskService.setRetriesAsync(externalTaskIds, null, -10);
       executeSeedAndBatchJobs(batch);
       fail("exception expected");
     } catch (BadUserRequestException e) {

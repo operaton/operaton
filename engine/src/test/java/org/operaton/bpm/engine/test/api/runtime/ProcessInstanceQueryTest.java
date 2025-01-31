@@ -289,10 +289,10 @@ public class ProcessInstanceQueryTest {
 
   @Test
   public void testQueryByOneInvalidProcessDefinitionKeyIn() {
+    var processInstanceQuery = runtimeService.createProcessInstanceQuery();
     try {
       // when
-      runtimeService.createProcessInstanceQuery()
-        .processDefinitionKeyIn((String) null);
+      processInstanceQuery.processDefinitionKeyIn((String) null);
       fail();
     } catch(ProcessEngineException expected) {
       // then Exception is expected
@@ -301,10 +301,10 @@ public class ProcessInstanceQueryTest {
 
   @Test
   public void testQueryByMultipleInvalidProcessDefinitionKeyIn() {
+    var processInstanceQuery = runtimeService.createProcessInstanceQuery();
     try {
       // when
-      runtimeService.createProcessInstanceQuery()
-        .processDefinitionKeyIn(PROCESS_DEFINITION_KEY, null);
+      processInstanceQuery.processDefinitionKeyIn(PROCESS_DEFINITION_KEY, null);
       fail();
     } catch(ProcessEngineException expected) {
       // Exception is expected
@@ -345,10 +345,10 @@ public class ProcessInstanceQueryTest {
 
   @Test
   public void testQueryByOneInvalidProcessDefinitionKeyNotIn() {
+    var processInstanceQuery = runtimeService.createProcessInstanceQuery();
     try {
       // when
-      runtimeService.createProcessInstanceQuery()
-        .processDefinitionKeyNotIn((String) null);
+      processInstanceQuery.processDefinitionKeyNotIn((String) null);
       fail();
     } catch(ProcessEngineException expected) {
       // then Exception is expected
@@ -357,10 +357,10 @@ public class ProcessInstanceQueryTest {
 
   @Test
   public void testQueryByMultipleInvalidProcessDefinitionKeyNotIn() {
+    var processInstanceQuery = runtimeService.createProcessInstanceQuery();
     try {
       // when
-      runtimeService.createProcessInstanceQuery()
-        .processDefinitionKeyNotIn(PROCESS_DEFINITION_KEY, null);
+      processInstanceQuery.processDefinitionKeyNotIn(PROCESS_DEFINITION_KEY, null);
       fail();
     } catch(ProcessEngineException expected) {
       // then Exception is expected
@@ -401,12 +401,13 @@ public class ProcessInstanceQueryTest {
   @Test
   public void testQueryByInvalidBusinessKey() {
     assertEquals(0, runtimeService.createProcessInstanceQuery().processInstanceBusinessKey("invalid").count());
+    var processInstanceQuery = runtimeService.createProcessInstanceQuery();
 
     try {
-      runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(null).count();
+      processInstanceQuery.processInstanceBusinessKey(null);
       fail();
     } catch(ProcessEngineException ignored) {
-
+      assertEquals("Business key is null", ignored.getMessage());
     }
   }
 
@@ -516,8 +517,9 @@ public class ProcessInstanceQueryTest {
 
   @Test
   public void testQueryInvalidSorting() {
+    var processInstanceQuery = runtimeService.createProcessInstanceQuery().orderByProcessDefinitionId();
     try {
-      runtimeService.createProcessInstanceQuery().orderByProcessDefinitionId().list(); // asc - desc not called -> exception
+      processInstanceQuery.list(); // asc - desc not called -> exception
       fail();
     }catch (ProcessEngineException ignored) {}
   }
@@ -1060,31 +1062,32 @@ public class ProcessInstanceQueryTest {
     assertNotNull(instances);
     assertEquals(1, instances.size());
     assertEquals(processInstance1.getId(), instances.get(0).getId());
+    var processInstanceQuery = runtimeService.createProcessInstanceQuery();
 
     // Test unsupported operations
     try {
-      runtimeService.createProcessInstanceQuery().variableValueGreaterThan("booleanVar", true);
+      processInstanceQuery.variableValueGreaterThan("booleanVar", true);
       fail("Excetion expected");
     } catch(ProcessEngineException ae) {
       assertThat(ae.getMessage()).contains("Booleans and null cannot be used in 'greater than' condition");
     }
 
     try {
-      runtimeService.createProcessInstanceQuery().variableValueGreaterThanOrEqual("booleanVar", true);
+      processInstanceQuery.variableValueGreaterThanOrEqual("booleanVar", true);
       fail("Excetion expected");
     } catch(ProcessEngineException ae) {
       assertThat(ae.getMessage()).contains("Booleans and null cannot be used in 'greater than or equal' condition");
     }
 
     try {
-      runtimeService.createProcessInstanceQuery().variableValueLessThan("booleanVar", true);
+      processInstanceQuery.variableValueLessThan("booleanVar", true);
       fail("Excetion expected");
     } catch(ProcessEngineException ae) {
       assertThat(ae.getMessage()).contains("Booleans and null cannot be used in 'less than' condition");
     }
 
     try {
-      runtimeService.createProcessInstanceQuery().variableValueLessThanOrEqual("booleanVar", true);
+      processInstanceQuery.variableValueLessThanOrEqual("booleanVar", true);
       fail("Excetion expected");
     } catch(ProcessEngineException ae) {
       assertThat(ae.getMessage()).contains("Booleans and null cannot be used in 'less than or equal' condition");
@@ -1178,38 +1181,39 @@ public class ProcessInstanceQueryTest {
     Assert.assertEquals(1, runtimeService.createProcessInstanceQuery().variableValueNotEquals("nullVarDouble", null).count());
     // When a byte-array refrence is present, the variable is not considered null
     Assert.assertEquals(1, runtimeService.createProcessInstanceQuery().variableValueNotEquals("nullVarByte", null).count());
+    var processInstanceQuery = runtimeService.createProcessInstanceQuery();
 
     // All other variable queries with null should throw exception
     try {
-      runtimeService.createProcessInstanceQuery().variableValueGreaterThan("nullVar", null);
+      processInstanceQuery.variableValueGreaterThan("nullVar", null);
       fail("Excetion expected");
     } catch(ProcessEngineException ae) {
       assertThat(ae.getMessage()).contains("Booleans and null cannot be used in 'greater than' condition");
     }
 
     try {
-      runtimeService.createProcessInstanceQuery().variableValueGreaterThanOrEqual("nullVar", null);
+      processInstanceQuery.variableValueGreaterThanOrEqual("nullVar", null);
       fail("Excetion expected");
     } catch(ProcessEngineException ae) {
       assertThat(ae.getMessage()).contains("Booleans and null cannot be used in 'greater than or equal' condition");
     }
 
     try {
-      runtimeService.createProcessInstanceQuery().variableValueLessThan("nullVar", null);
+      processInstanceQuery.variableValueLessThan("nullVar", null);
       fail("Excetion expected");
     } catch(ProcessEngineException ae) {
       assertThat(ae.getMessage()).contains("Booleans and null cannot be used in 'less than' condition");
     }
 
     try {
-      runtimeService.createProcessInstanceQuery().variableValueLessThanOrEqual("nullVar", null);
+      processInstanceQuery.variableValueLessThanOrEqual("nullVar", null);
       fail("Excetion expected");
     } catch(ProcessEngineException ae) {
       assertThat(ae.getMessage()).contains("Booleans and null cannot be used in 'less than or equal' condition");
     }
 
     try {
-      runtimeService.createProcessInstanceQuery().variableValueLike("nullVar", null);
+      processInstanceQuery.variableValueLike("nullVar", null);
       fail("Excetion expected");
     } catch(ProcessEngineException ae) {
       assertThat(ae.getMessage()).contains("Booleans and null cannot be used in 'like' condition");
@@ -1226,24 +1230,24 @@ public class ProcessInstanceQueryTest {
   @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   public void testQueryInvalidTypes() {
     Map<String, Object> vars = new HashMap<>();
-    vars.put("bytesVar", "test".getBytes());
-    vars.put("serializableVar",new DummySerializable());
+    byte[] testBytes = "test".getBytes();
+    vars.put("bytesVar", testBytes);
+    DummySerializable dummySerializable = new DummySerializable();
+    vars.put("serializableVar", dummySerializable);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess", vars);
+    var processInstanceQuery = runtimeService.createProcessInstanceQuery().variableValueEquals("bytesVar", testBytes);
 
     try {
-      runtimeService.createProcessInstanceQuery()
-        .variableValueEquals("bytesVar", "test".getBytes())
-        .list();
+      processInstanceQuery.list();
       fail("Expected exception");
     } catch(ProcessEngineException ae) {
       assertThat(ae.getMessage()).contains("Variables of type ByteArray cannot be used to query");
     }
 
+    var processInstanceQuery2 = runtimeService.createProcessInstanceQuery().variableValueEquals("serializableVar", dummySerializable);
     try {
-      runtimeService.createProcessInstanceQuery()
-        .variableValueEquals("serializableVar", new DummySerializable())
-        .list();
+      processInstanceQuery2.list();
       fail("Expected exception");
     } catch(ProcessEngineException ae) {
       assertThat(ae.getMessage()).contains("Object values cannot be used to query");
@@ -1254,44 +1258,45 @@ public class ProcessInstanceQueryTest {
 
   @Test
   public void testQueryVariablesNullNameArgument() {
+    var processInstanceQuery = runtimeService.createProcessInstanceQuery();
     try {
-      runtimeService.createProcessInstanceQuery().variableValueEquals(null, "value");
+      processInstanceQuery.variableValueEquals(null, "value");
       fail("Expected exception");
     } catch(ProcessEngineException ae) {
       assertThat(ae.getMessage()).contains("name is null");
     }
     try {
-      runtimeService.createProcessInstanceQuery().variableValueNotEquals(null, "value");
+      processInstanceQuery.variableValueNotEquals(null, "value");
       fail("Expected exception");
     } catch(ProcessEngineException ae) {
       assertThat(ae.getMessage()).contains("name is null");
     }
     try {
-      runtimeService.createProcessInstanceQuery().variableValueGreaterThan(null, "value");
+      processInstanceQuery.variableValueGreaterThan(null, "value");
       fail("Expected exception");
     } catch(ProcessEngineException ae) {
       assertThat(ae.getMessage()).contains("name is null");
     }
     try {
-      runtimeService.createProcessInstanceQuery().variableValueGreaterThanOrEqual(null, "value");
+      processInstanceQuery.variableValueGreaterThanOrEqual(null, "value");
       fail("Expected exception");
     } catch(ProcessEngineException ae) {
       assertThat(ae.getMessage()).contains("name is null");
     }
     try {
-      runtimeService.createProcessInstanceQuery().variableValueLessThan(null, "value");
+      processInstanceQuery.variableValueLessThan(null, "value");
       fail("Expected exception");
     } catch(ProcessEngineException ae) {
       assertThat(ae.getMessage()).contains("name is null");
     }
     try {
-      runtimeService.createProcessInstanceQuery().variableValueLessThanOrEqual(null, "value");
+      processInstanceQuery.variableValueLessThanOrEqual(null, "value");
       fail("Expected exception");
     } catch(ProcessEngineException ae) {
       assertThat(ae.getMessage()).contains("name is null");
     }
     try {
-      runtimeService.createProcessInstanceQuery().variableValueLike(null, "value");
+      processInstanceQuery.variableValueLike(null, "value");
       fail("Expected exception");
     } catch(ProcessEngineException ae) {
       assertThat(ae.getMessage()).contains("name is null");
@@ -1375,8 +1380,9 @@ public class ProcessInstanceQueryTest {
 
   @Test
   public void testQueryByProcessInstanceIdsEmpty() {
+    var processInstanceQuery = runtimeService.createProcessInstanceQuery();
     try {
-      runtimeService.createProcessInstanceQuery().processInstanceIds(new HashSet<>());
+      processInstanceQuery.processInstanceIds(new HashSet<>());
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException re) {
       assertThat(re.getMessage()).contains("Set of process instance ids is empty");
@@ -1385,8 +1391,9 @@ public class ProcessInstanceQueryTest {
 
   @Test
   public void testQueryByProcessInstanceIdsNull() {
+    var processInstanceQuery = runtimeService.createProcessInstanceQuery();
     try {
-      runtimeService.createProcessInstanceQuery().processInstanceIds(null);
+      processInstanceQuery.processInstanceIds(null);
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException re) {
       assertThat(re.getMessage()).contains("Set of process instance ids is null");
@@ -1983,20 +1990,21 @@ public class ProcessInstanceQueryTest {
   @Test
   public void testQueryByInvalidDeploymentId() {
     assertEquals(0, runtimeService.createProcessInstanceQuery().deploymentId("invalid").count());
+    var processInstanceQuery = runtimeService.createProcessInstanceQuery();
 
     try {
-      runtimeService.createProcessInstanceQuery().deploymentId(null).count();
+      processInstanceQuery.deploymentId(null);
       fail();
     } catch(ProcessEngineException e) {
-      // expected
+      assertEquals("Deployment id is null", e.getMessage());
     }
   }
 
   @Test
   public void testQueryByNullActivityId() {
+    var processInstanceQuery = runtimeService.createProcessInstanceQuery();
     try {
-      runtimeService.createProcessInstanceQuery()
-        .activityIdIn((String) null);
+      processInstanceQuery.activityIdIn((String) null);
       fail("exception expected");
     }
     catch (NullValueException e) {
@@ -2006,9 +2014,9 @@ public class ProcessInstanceQueryTest {
 
   @Test
   public void testQueryByNullActivityIds() {
+    var processInstanceQuery = runtimeService.createProcessInstanceQuery();
     try {
-      runtimeService.createProcessInstanceQuery()
-        .activityIdIn((String[]) null);
+      processInstanceQuery.activityIdIn((String[]) null);
       fail("exception expected");
     }
     catch (NullValueException e) {
@@ -2226,9 +2234,10 @@ public class ProcessInstanceQueryTest {
   @Test
   public void testQueryByRootProcessInstancesAndSuperProcess() {
     // when
+    ProcessInstanceQuery processInstanceQuery1 = runtimeService.createProcessInstanceQuery()
+      .rootProcessInstances();
     try {
-      runtimeService.createProcessInstanceQuery()
-        .rootProcessInstances()
+      processInstanceQuery1
         .superProcessInstanceId("processInstanceId");
 
       fail("expected exception");
@@ -2238,9 +2247,10 @@ public class ProcessInstanceQueryTest {
     }
 
     // when
+    ProcessInstanceQuery processInstanceId2 = runtimeService.createProcessInstanceQuery()
+      .superProcessInstanceId("processInstanceId");
     try {
-      runtimeService.createProcessInstanceQuery()
-        .superProcessInstanceId("processInstanceId")
+      processInstanceId2
         .rootProcessInstances();
 
       fail("expected exception");

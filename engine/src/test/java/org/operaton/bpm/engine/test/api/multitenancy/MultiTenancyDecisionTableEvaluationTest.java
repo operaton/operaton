@@ -48,12 +48,12 @@ public class MultiTenancyDecisionTableEvaluationTest extends PluggableProcessEng
    testRule.deploy(DMN_FILE);
 
     DecisionDefinition decisionDefinition = repositoryService.createDecisionDefinitionQuery().singleResult();
+    var decisionEvaluationBuilder = decisionService.evaluateDecisionTableById(decisionDefinition.getId())
+          .variables(createVariables())
+          .decisionDefinitionWithoutTenantId();
 
     try {
-      decisionService.evaluateDecisionTableById(decisionDefinition.getId())
-          .variables(createVariables())
-          .decisionDefinitionWithoutTenantId()
-          .evaluate();
+      decisionEvaluationBuilder.evaluate();
       fail("BadUserRequestException exception");
     } catch(BadUserRequestException e) {
       assertThat(e.getMessage()).contains("Cannot specify a tenant-id");
@@ -65,12 +65,12 @@ public class MultiTenancyDecisionTableEvaluationTest extends PluggableProcessEng
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
 
     DecisionDefinition decisionDefinition = repositoryService.createDecisionDefinitionQuery().singleResult();
+    var decisionEvaluationBuilder = decisionService.evaluateDecisionTableById(decisionDefinition.getId())
+          .variables(createVariables())
+          .decisionDefinitionTenantId(TENANT_ONE);
 
     try {
-      decisionService.evaluateDecisionTableById(decisionDefinition.getId())
-          .variables(createVariables())
-          .decisionDefinitionTenantId(TENANT_ONE)
-          .evaluate();
+      decisionEvaluationBuilder.evaluate();
       fail("BadUserRequestException exception");
     } catch(BadUserRequestException e) {
       assertThat(e.getMessage()).contains("Cannot specify a tenant-id");
@@ -81,12 +81,12 @@ public class MultiTenancyDecisionTableEvaluationTest extends PluggableProcessEng
   public void testFailToEvaluateDecisionByKeyForNonExistingTenantID() {
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
     testRule.deployForTenant(TENANT_TWO, DMN_FILE);
+    var decisionEvaluationBuilder = decisionService.evaluateDecisionTableByKey(DECISION_DEFINITION_KEY)
+          .variables(createVariables())
+          .decisionDefinitionTenantId("nonExistingTenantId");
 
     try {
-      decisionService.evaluateDecisionTableByKey(DECISION_DEFINITION_KEY)
-          .variables(createVariables())
-          .decisionDefinitionTenantId("nonExistingTenantId")
-          .evaluate();
+      decisionEvaluationBuilder.evaluate();
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).contains("no decision definition deployed with key 'decision' and tenant-id 'nonExistingTenantId'");
@@ -97,11 +97,11 @@ public class MultiTenancyDecisionTableEvaluationTest extends PluggableProcessEng
   public void testFailToEvaluateDecisionByKeyForMultipleTenants() {
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
     testRule.deployForTenant(TENANT_TWO, DMN_FILE);
+    var decisionEvaluationBuilder = decisionService.evaluateDecisionTableByKey(DECISION_DEFINITION_KEY)
+          .variables(createVariables());
 
     try {
-      decisionService.evaluateDecisionTableByKey(DECISION_DEFINITION_KEY)
-          .variables(createVariables())
-          .evaluate();
+      decisionEvaluationBuilder.evaluate();
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).contains("multiple tenants.");
@@ -193,11 +193,11 @@ public class MultiTenancyDecisionTableEvaluationTest extends PluggableProcessEng
     identityService.setAuthentication("user", null, null);
 
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
+    var decisionEvaluationBuilder = decisionService.evaluateDecisionTableByKey(DECISION_DEFINITION_KEY)
+        .variables(createVariables());
 
     try {
-      decisionService.evaluateDecisionTableByKey(DECISION_DEFINITION_KEY)
-        .variables(createVariables())
-        .evaluate();
+      decisionEvaluationBuilder.evaluate();
 
       fail("expected exception");
     } catch (ProcessEngineException e) {
@@ -210,12 +210,12 @@ public class MultiTenancyDecisionTableEvaluationTest extends PluggableProcessEng
     identityService.setAuthentication("user", null, null);
 
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
+    var decisionEvaluationBuilder = decisionService.evaluateDecisionTableByKey(DECISION_DEFINITION_KEY)
+        .decisionDefinitionTenantId(TENANT_ONE)
+        .variables(createVariables());
 
     try {
-      decisionService.evaluateDecisionTableByKey(DECISION_DEFINITION_KEY)
-        .decisionDefinitionTenantId(TENANT_ONE)
-        .variables(createVariables())
-        .evaluate();
+      decisionEvaluationBuilder.evaluate();
 
       fail("expected exception");
     } catch (ProcessEngineException e) {
@@ -232,11 +232,11 @@ public class MultiTenancyDecisionTableEvaluationTest extends PluggableProcessEng
       .singleResult();
 
     identityService.setAuthentication("user", null, null);
+    var decisionEvaluationBuilder = decisionService.evaluateDecisionTableById(decisionDefinition.getId())
+        .variables(createVariables());
 
     try {
-      decisionService.evaluateDecisionTableById(decisionDefinition.getId())
-        .variables(createVariables())
-        .evaluate();
+      decisionEvaluationBuilder.evaluate();
 
       fail("expected exception");
     } catch (ProcessEngineException e) {

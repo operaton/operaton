@@ -244,12 +244,12 @@ public class MigrationGatewayTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.INCLUSIVE_GW);
+    var runtimeService = rule.getRuntimeService()
+        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
+        .mapActivities("join", "join");
 
     try {
-      rule.getRuntimeService()
-        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
-        .mapActivities("join", "join")
-        .build();
+      runtimeService.build();
       Assert.fail("exception expected");
     } catch (MigrationPlanValidationException e) {
       // then
@@ -266,12 +266,12 @@ public class MigrationGatewayTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.INCLUSIVE_GW);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);
+    var runtimeService = rule.getRuntimeService()
+        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
+        .mapActivities("join", "join");
 
     try {
-      rule.getRuntimeService()
-        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
-        .mapActivities("join", "join")
-        .build();
+      runtimeService.build();
       Assert.fail("exception expected");
     } catch (MigrationPlanValidationException e) {
       // then
@@ -293,12 +293,12 @@ public class MigrationGatewayTest {
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(GatewayModels.PARALLEL_GW)
         .removeFlowNode("parallel2"));
+    var runtimeService = rule.getRuntimeService()
+        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
+        .mapActivities("join", "join");
 
     try {
-      rule.getRuntimeService()
-        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
-        .mapActivities("join", "join")
-        .build();
+      runtimeService.build();
       Assert.fail("exception expected");
     } catch (MigrationPlanValidationException e) {
       // then
@@ -361,12 +361,12 @@ public class MigrationGatewayTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW_IN_SUBPROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);
+    var runtimeService = rule.getRuntimeService()
+        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
+        .mapActivities("join", "join");
 
     try {
-      rule.getRuntimeService()
-        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
-        .mapActivities("join", "join")
-        .build();
+      runtimeService.build();
       Assert.fail("exception expected");
     } catch (MigrationPlanValidationException e) {
       // then
@@ -386,13 +386,13 @@ public class MigrationGatewayTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);
-
-    try {
-      rule.getRuntimeService()
+    var runtimeService = rule.getRuntimeService()
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("join", "join")
-        .mapActivities("fork", "join")
-        .build();
+        .mapActivities("fork", "join");
+
+    try {
+      runtimeService.build();
       Assert.fail("exception expected");
     } catch (MigrationPlanValidationException e) {
       // then

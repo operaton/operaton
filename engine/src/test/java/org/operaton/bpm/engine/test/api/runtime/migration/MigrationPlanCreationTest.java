@@ -93,12 +93,12 @@ public class MigrationPlanCreationTest {
   @Test
   public void testMigrateNonExistingSourceDefinition() {
     ProcessDefinition processDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
+    var migrationPlanBuilder = runtimeService
+        .createMigrationPlan("aNonExistingProcDefId", processDefinition.getId())
+        .mapActivities("userTask", "userTask");
 
     try {
-      runtimeService
-        .createMigrationPlan("aNonExistingProcDefId", processDefinition.getId())
-        .mapActivities("userTask", "userTask")
-        .build();
+      migrationPlanBuilder.build();
       fail("Should not succeed");
     } catch (BadUserRequestException e) {
       assertExceptionMessage(e, "Source process definition with id 'aNonExistingProcDefId' does not exist");
@@ -108,12 +108,12 @@ public class MigrationPlanCreationTest {
   @Test
   public void testMigrateNullSourceDefinition() {
     ProcessDefinition processDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
+    var migrationPlanBuilder = runtimeService
+        .createMigrationPlan(null, processDefinition.getId())
+        .mapActivities("userTask", "userTask");
 
     try {
-      runtimeService
-        .createMigrationPlan(null, processDefinition.getId())
-        .mapActivities("userTask", "userTask")
-        .build();
+      migrationPlanBuilder.build();
       fail("Should not succeed");
     } catch (BadUserRequestException e) {
       assertExceptionMessage(e, "Source process definition id is null");
@@ -123,11 +123,11 @@ public class MigrationPlanCreationTest {
   @Test
   public void testMigrateNonExistingTargetDefinition() {
     ProcessDefinition processDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
-    try {
-      runtimeService
+    var migrationPlanBuilder = runtimeService
         .createMigrationPlan(processDefinition.getId(), "aNonExistingProcDefId")
-        .mapActivities("userTask", "userTask")
-        .build();
+        .mapActivities("userTask", "userTask");
+    try {
+      migrationPlanBuilder.build();
       fail("Should not succeed");
     } catch (BadUserRequestException e) {
       assertExceptionMessage(e, "Target process definition with id 'aNonExistingProcDefId' does not exist");
@@ -137,12 +137,12 @@ public class MigrationPlanCreationTest {
   @Test
   public void testMigrateNullTargetDefinition() {
     ProcessDefinition processDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
+    var migrationPlanBuilder = runtimeService
+        .createMigrationPlan(processDefinition.getId(), null)
+        .mapActivities("userTask", "userTask");
 
     try {
-      runtimeService
-        .createMigrationPlan(processDefinition.getId(), null)
-        .mapActivities("userTask", "userTask")
-        .build();
+      migrationPlanBuilder.build();
       fail("Should not succeed");
     } catch (BadUserRequestException e) {
       assertExceptionMessage(e, "Target process definition id is null");
@@ -153,12 +153,12 @@ public class MigrationPlanCreationTest {
   public void testMigrateNonExistingSourceActivityId() {
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
+    var migrationPlanBuilder = runtimeService
+        .createMigrationPlan(sourceDefinition.getId(), targetDefinition.getId())
+        .mapActivities("thisActivityDoesNotExist", "userTask");
 
     try {
-      runtimeService
-        .createMigrationPlan(sourceDefinition.getId(), targetDefinition.getId())
-        .mapActivities("thisActivityDoesNotExist", "userTask")
-        .build();
+      migrationPlanBuilder.build();
       fail("Should not succeed");
     } catch (MigrationPlanValidationException e) {
       assertThat(e.getValidationReport())
@@ -170,12 +170,12 @@ public class MigrationPlanCreationTest {
   public void testMigrateNullSourceActivityId() {
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
+    var migrationPlanBuilder = runtimeService
+        .createMigrationPlan(sourceDefinition.getId(), targetDefinition.getId())
+        .mapActivities(null, "userTask");
 
     try {
-      runtimeService
-        .createMigrationPlan(sourceDefinition.getId(), targetDefinition.getId())
-        .mapActivities(null, "userTask")
-        .build();
+      migrationPlanBuilder.build();
       fail("Should not succeed");
     } catch (MigrationPlanValidationException e) {
       assertThat(e.getValidationReport())
@@ -187,12 +187,12 @@ public class MigrationPlanCreationTest {
   public void testMigrateNonExistingTargetActivityId() {
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
+    var migrationPlanBuilder = runtimeService
+        .createMigrationPlan(sourceDefinition.getId(), targetDefinition.getId())
+        .mapActivities("userTask", "thisActivityDoesNotExist");
 
     try {
-      runtimeService
-        .createMigrationPlan(sourceDefinition.getId(), targetDefinition.getId())
-        .mapActivities("userTask", "thisActivityDoesNotExist")
-        .build();
+      migrationPlanBuilder.build();
       fail("Should not succeed");
     } catch (MigrationPlanValidationException e) {
       assertThat(e.getValidationReport())
@@ -204,12 +204,12 @@ public class MigrationPlanCreationTest {
   public void testMigrateNullTargetActivityId() {
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
+    var migrationPlanBuilder = runtimeService
+        .createMigrationPlan(sourceDefinition.getId(), targetDefinition.getId())
+        .mapActivities("userTask", null);
 
     try {
-      runtimeService
-        .createMigrationPlan(sourceDefinition.getId(), targetDefinition.getId())
-        .mapActivities("userTask", null)
-        .build();
+      migrationPlanBuilder.build();
       fail("Should not succeed");
     } catch (MigrationPlanValidationException e) {
       assertThat(e.getValidationReport())
@@ -240,12 +240,12 @@ public class MigrationPlanCreationTest {
 
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_RECEIVE_TASK_PROCESS);
+    var migrationPlanBuilder = runtimeService
+        .createMigrationPlan(sourceDefinition.getId(), targetDefinition.getId())
+        .mapActivities("userTask", "receiveTask");
 
     try {
-      runtimeService
-        .createMigrationPlan(sourceDefinition.getId(), targetDefinition.getId())
-        .mapActivities("userTask", "receiveTask")
-        .build();
+      migrationPlanBuilder.build();
       fail("Should not succeed");
     } catch (MigrationPlanValidationException e) {
       assertThat(e.getValidationReport())
@@ -261,12 +261,12 @@ public class MigrationPlanCreationTest {
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(modify(ProcessModels.SUBPROCESS_PROCESS)
       .swapElementIds("userTask", "subProcess")
     );
+    var migrationPlanBuilder = runtimeService
+        .createMigrationPlan(sourceDefinition.getId(), targetDefinition.getId())
+        .mapActivities("userTask", "userTask");
 
     try {
-      runtimeService
-        .createMigrationPlan(sourceDefinition.getId(), targetDefinition.getId())
-        .mapActivities("userTask", "userTask")
-        .build();
+      migrationPlanBuilder.build();
       fail("Should not succeed");
     } catch (MigrationPlanValidationException e) {
       assertThat(e.getValidationReport())
@@ -287,13 +287,13 @@ public class MigrationPlanCreationTest {
       .boundaryEvent("boundary").signal(SIGNAL_NAME)
       .done()
     );
-
-    try {
-      runtimeService
+    var migrationPlanBuilder = runtimeService
         .createMigrationPlan(sourceDefinition.getId(), targetDefinition.getId())
         .mapActivities("userTask", "userTask")
-        .mapActivities("boundary", "boundary")
-        .build();
+        .mapActivities("boundary", "boundary");
+
+    try {
+      migrationPlanBuilder.build();
       fail("Should not succeed");
     } catch (MigrationPlanValidationException e) {
       assertThat(e.getValidationReport())
@@ -305,12 +305,12 @@ public class MigrationPlanCreationTest {
   public void testMigrateSubProcessToProcessDefinition() {
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.SUBPROCESS_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
+    var migrationPlanBuilder = runtimeService
+        .createMigrationPlan(sourceDefinition.getId(), targetDefinition.getId())
+        .mapActivities("subProcess", targetDefinition.getId());
 
     try {
-      runtimeService
-        .createMigrationPlan(sourceDefinition.getId(), targetDefinition.getId())
-        .mapActivities("subProcess", targetDefinition.getId())
-        .build();
+      migrationPlanBuilder.build();
       fail("Should not succeed");
     } catch (MigrationPlanValidationException e) {
       assertThat(e.getValidationReport())
@@ -326,13 +326,13 @@ public class MigrationPlanCreationTest {
       .multiInstance().parallel().cardinality("3").multiInstanceDone().done();
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(testProcess);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(testProcess);
+    var migrationPlanBuilder = runtimeService
+        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
+        .mapActivities("userTask", "userTask");
 
     // when
     try {
-      runtimeService
-        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
-        .mapActivities("userTask", "userTask")
-        .build();
+      migrationPlanBuilder.build();
       fail("Should not succeed");
     }
     catch (MigrationPlanValidationException e) {
@@ -436,14 +436,14 @@ public class MigrationPlanCreationTest {
 
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(sourceProcess);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(targetProcess);
-
-    try {
-      runtimeService
+    var migrationPlanBuilder = runtimeService
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("userTask1", "userTask1")
         .mapActivities("userTask2", "userTask2")
-        .mapActivities("boundary", "boundary")
-        .build();
+        .mapActivities("boundary", "boundary");
+
+    try {
+      migrationPlanBuilder.build();
       fail("Should not succeed");
     }
     catch (MigrationPlanValidationException e) {
@@ -525,14 +525,14 @@ public class MigrationPlanCreationTest {
 
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(sourceProcess);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(targetProcess);
-
-    try {
-      runtimeService
+    var migrationPlanBuilder = runtimeService
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("subProcess", "subProcess")
         .mapActivities("userTask", "userTask")
-        .mapActivities("boundary", "boundary")
-        .build();
+        .mapActivities("boundary", "boundary");
+
+    try {
+      migrationPlanBuilder.build();
       fail("Should not succeed");
     }
     catch (MigrationPlanValidationException e) {
@@ -556,14 +556,14 @@ public class MigrationPlanCreationTest {
 
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(sourceProcess);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(targetProcess);
-
-    try {
-      runtimeService
+    var migrationPlanBuilder = runtimeService
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("subProcess", "subProcess")
         .mapActivities("userTask", "userTask")
-        .mapActivities("boundary", "boundary")
-        .build();
+        .mapActivities("boundary", "boundary");
+
+    try {
+      migrationPlanBuilder.build();
 
       fail("Should not succeed");
     }
@@ -716,13 +716,13 @@ public class MigrationPlanCreationTest {
   public void testNotMapActivitiesMoreThanOnce() {
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_PROCESS);
-
-    try {
-      runtimeService
+    var migrationPlanBuilder = runtimeService
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("userTask1", "userTask1")
-        .mapActivities("userTask1", "userTask2")
-        .build();
+        .mapActivities("userTask1", "userTask2");
+
+    try {
+      migrationPlanBuilder.build();
       fail("Should not succeed");
     }
     catch (MigrationPlanValidationException e) {
@@ -739,12 +739,12 @@ public class MigrationPlanCreationTest {
 
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
+    var migrationPlanBuilder = runtimeService
+        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
+        .mapActivities("userTask", "userTask").updateEventTrigger();
 
     try {
-      runtimeService
-        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
-        .mapActivities("userTask", "userTask").updateEventTrigger()
-        .build();
+      migrationPlanBuilder.build();
       fail("Should not succeed");
     }
     catch (MigrationPlanValidationException e) {
@@ -759,12 +759,12 @@ public class MigrationPlanCreationTest {
   public void testCannotUpdateEventTriggerForEventSubProcess() {
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(EventSubProcessModels.TIMER_EVENT_SUBPROCESS_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(EventSubProcessModels.TIMER_EVENT_SUBPROCESS_PROCESS);
+    var migrationPlanBuilder = runtimeService
+        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
+        .mapActivities("eventSubProcess", "eventSubProcess").updateEventTrigger();
 
     try {
-      runtimeService
-        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
-        .mapActivities("eventSubProcess", "eventSubProcess").updateEventTrigger()
-        .build();
+      migrationPlanBuilder.build();
       fail("Should not succeed");
     }
     catch (MigrationPlanValidationException e) {
@@ -999,9 +999,7 @@ public class MigrationPlanCreationTest {
         testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition =
         testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
-
-    try {
-      runtimeService
+    var migrationPlanBuilder = runtimeService
           .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
           .setVariables(
               Variables.putValueTyped("foo",
@@ -1011,8 +1009,10 @@ public class MigrationPlanCreationTest {
                       .serializationDataFormat(Variables.SerializationDataFormats.JAVA.getName())
                       .create())
           )
-          .mapEqualActivities()
-          .build();
+          .mapEqualActivities();
+
+    try {
+      migrationPlanBuilder.build();
       fail("Should not succeed");
     } catch (MigrationPlanValidationException e) {
       assertThat(e.getValidationReport())
@@ -1033,16 +1033,16 @@ public class MigrationPlanCreationTest {
         .objectTypeName(ArrayList.class.getName())
         .serializationDataFormat(Variables.SerializationDataFormats.JAVA.getName())
         .create();
-
-    try {
-      runtimeService
+    var migrationPlanBuilder = runtimeService
           .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
           .setVariables(
               Variables.putValueTyped("foo", objectValue)
               .putValueTyped("bar", objectValue)
           )
-          .mapEqualActivities()
-          .build();
+          .mapEqualActivities();
+
+    try {
+      migrationPlanBuilder.build();
       fail("Should not succeed");
     } catch (MigrationPlanValidationException e) {
       assertThat(e.getValidationReport())
@@ -1065,14 +1065,14 @@ public class MigrationPlanCreationTest {
         .objectTypeName(ArrayList.class.getName())
         .serializationDataFormat(Variables.SerializationDataFormats.JAVA.getName())
         .create();
-
-    try {
-      runtimeService
+    var migrationPlanBuilder = runtimeService
           .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
           .setVariables(Variables.putValueTyped("foo", objectValue))
           .mapActivities("foo", "bar")
-          .mapActivities("bar", "foo")
-          .build();
+          .mapActivities("bar", "foo");
+
+    try {
+      migrationPlanBuilder.build();
       fail("Should not succeed");
     } catch (MigrationPlanValidationException e) {
       assertThat(e.getValidationReport())

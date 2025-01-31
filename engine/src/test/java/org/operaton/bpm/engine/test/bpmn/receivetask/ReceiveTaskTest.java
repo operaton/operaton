@@ -342,10 +342,11 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
     // expect: there are two message event subscriptions
     List<EventSubscription> subscriptions = getEventSubscriptionList();
     assertEquals(2, subscriptions.size());
+    var eventSubscription = subscriptions.get(0).getEventName();
 
     // then: we can not correlate an event
     try {
-      runtimeService.correlateMessage(subscriptions.get(0).getEventName());
+      runtimeService.correlateMessage(eventSubscription);
       fail("should throw a mismatch");
     } catch (MismatchingMessageCorrelationException e) {
       // expected

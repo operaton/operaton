@@ -70,13 +70,13 @@ public class MultiTenancyMigrationTenantProviderTest {
     MigrationPlan migrationPlan = engineRule.getRuntimeService().createMigrationPlan(sharedDefinition.getId(), tenantDefinition.getId())
         .mapEqualActivities()
         .build();
+    var runtimeService = engineRule.getRuntimeService()
+        .newMigration(migrationPlan)
+        .processInstanceIds(Arrays.asList(processInstance.getId()));
 
     // when
     try {
-      engineRule.getRuntimeService()
-        .newMigration(migrationPlan)
-        .processInstanceIds(Arrays.asList(processInstance.getId()))
-        .execute();
+      runtimeService.execute();
       Assert.fail("exception expected");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).contains("Cannot migrate process instance '" + processInstance.getId() + "' "

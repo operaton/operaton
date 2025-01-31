@@ -130,9 +130,9 @@ public class MultiTenancyJobQueryTest extends PluggableProcessEngineTest {
 
   @Test
   public void testFailQueryByTenantIdNull() {
+    var jobQuery = managementService.createJobQuery();
     try {
-      managementService.createJobQuery()
-        .tenantIdIn((String) null);
+      jobQuery.tenantIdIn((String) null);
 
       fail("expected exception");
     } catch (NullValueException e) {

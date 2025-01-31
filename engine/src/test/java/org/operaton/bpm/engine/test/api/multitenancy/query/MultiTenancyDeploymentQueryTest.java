@@ -121,9 +121,9 @@ public class MultiTenancyDeploymentQueryTest extends PluggableProcessEngineTest 
 
   @Test
   public void testFailQueryByTenantIdNull() {
+    var deploymentQuery = repositoryService.createDeploymentQuery();
     try {
-      repositoryService.createDeploymentQuery()
-        .tenantIdIn((String) null);
+      deploymentQuery.tenantIdIn((String) null);
 
       fail("expected exception");
     } catch (NullValueException e) {

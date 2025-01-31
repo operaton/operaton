@@ -266,12 +266,12 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("nestedOneTaskProcess");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
+    var processInstanceModificationBuilder = runtimeService.createProcessInstanceModification(processInstance.getId())
+        .cancelActivityInstance(getChildTransitionInstanceForTargetActivity(tree, "innerTask").getId());
 
     // the the async task is not an activity instance so it cannot be cancelled as follows
     try {
-      runtimeService.createProcessInstanceModification(processInstance.getId())
-        .cancelActivityInstance(getChildTransitionInstanceForTargetActivity(tree, "innerTask").getId())
-        .execute();
+      processInstanceModificationBuilder.execute();
       fail("should not succeed");
     } catch (ProcessEngineException e) {
       testRule.assertTextPresent("activityInstance is null", e.getMessage());
@@ -813,11 +813,11 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
     // this test ensures that the replacedBy link of executions is not followed
     // in case the original execution was actually removed/cancelled
     String transitionInstanceId = transitionInstances[0].getId();
+    var processInstanceModificationBuilder = runtimeService.createProcessInstanceModification(instance.getId())
+        .cancelTransitionInstance(transitionInstanceId)
+        .cancelTransitionInstance(transitionInstanceId);
     try {
-      runtimeService.createProcessInstanceModification(instance.getId())
-        .cancelTransitionInstance(transitionInstanceId)
-        .cancelTransitionInstance(transitionInstanceId)
-        .execute();
+      processInstanceModificationBuilder.execute();
       fail("should not be possible to cancel the first instance twice");
     } catch (NotValidException e) {
       testRule.assertTextPresentIgnoreCase("Cannot perform instruction: Cancel transition instance '" + transitionInstanceId
@@ -843,21 +843,20 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
 
     // when i cancel both transition instances
     TransitionInstance[] transitionInstances = tree.getTransitionInstances("innerTask");
-
-    // this test ensures that the replacedBy link of executions is not followed
-    // in case the original execution was actually removed/cancelled
-
-    try {
-      runtimeService.createProcessInstanceModification(instance.getId())
+    var processInstanceModificationBuilder = runtimeService.createProcessInstanceModification(instance.getId())
         .cancelTransitionInstance(transitionInstances[0].getId()) // compacts the tree;
                                                                   // => execution for transitionInstances[1] is replaced by scope execution
         .startBeforeActivity("innerTask")                         // expand tree again
                                                                   // => scope execution is replaced by a new concurrent execution
         .startBeforeActivity("innerTask")
         .cancelTransitionInstance(transitionInstances[1].getId()) // does not trigger compaction
-        .cancelTransitionInstance(transitionInstances[1].getId()) // should fail
-                                                                  // => execution for transitionInstances[1] should no longer have a replacedBy link
-        .execute();
+        .cancelTransitionInstance(transitionInstances[1].getId());
+
+    // this test ensures that the replacedBy link of executions is not followed
+    // in case the original execution was actually removed/cancelled
+
+    try {
+      processInstanceModificationBuilder.execute();
       fail("should not be possible to cancel the first instance twice");
     } catch (NotValidException e) {
       String transitionInstanceId = transitionInstances[1].getId();

@@ -129,9 +129,9 @@ public class MultiTenancyJobDefinitionQueryTest extends PluggableProcessEngineTe
 
   @Test
   public void testFailQueryByTenantIdNull() {
+    var jobDefinitionQuery = managementService.createJobDefinitionQuery();
     try {
-      managementService.createJobDefinitionQuery()
-        .tenantIdIn((String) null);
+      jobDefinitionQuery.tenantIdIn((String) null);
 
       fail("expected exception");
     } catch (NullValueException e) {

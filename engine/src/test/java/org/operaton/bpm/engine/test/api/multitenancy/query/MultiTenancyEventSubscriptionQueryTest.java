@@ -129,9 +129,9 @@ public class MultiTenancyEventSubscriptionQueryTest extends PluggableProcessEngi
 
   @Test
   public void testFailQueryByTenantIdNull() {
+    var eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery();
     try {
-      runtimeService.createEventSubscriptionQuery()
-        .tenantIdIn((String) null);
+      eventSubscriptionQuery.tenantIdIn((String) null);
 
       fail("expected exception");
     } catch (NullValueException e) {

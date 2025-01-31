@@ -223,8 +223,9 @@ public class MultiTenancyBatchQueryTest {
   public void testBatchQueryFailOnNullTenantIdCase1() {
 
     String[] tenantIds = null;
+    var batchQuery = managementService.createBatchQuery();
     try {
-      managementService.createBatchQuery().tenantIdIn(tenantIds);
+      batchQuery.tenantIdIn(tenantIds);
       Assert.fail("exception expected");
     }
     catch (NullValueException e) {
@@ -236,8 +237,9 @@ public class MultiTenancyBatchQueryTest {
   public void testBatchQueryFailOnNullTenantIdCase2() {
 
     String[] tenantIds = new String[]{ null };
+    var batchQuery = managementService.createBatchQuery();
     try {
-      managementService.createBatchQuery().tenantIdIn(tenantIds);
+      batchQuery.tenantIdIn(tenantIds);
       Assert.fail("exception expected");
     }
     catch (NullValueException e) {
@@ -304,8 +306,9 @@ public class MultiTenancyBatchQueryTest {
   public void testBatchStatisticsQueryFailOnNullTenantIdCase1() {
 
     String[] tenantIds = null;
+    var batchStatisticsQuery = managementService.createBatchStatisticsQuery();
     try {
-      managementService.createBatchStatisticsQuery().tenantIdIn(tenantIds);
+      batchStatisticsQuery.tenantIdIn(tenantIds);
       Assert.fail("exception expected");
     }
     catch (NullValueException e) {
@@ -317,8 +320,9 @@ public class MultiTenancyBatchQueryTest {
   public void testBatchStatisticsQueryFailOnNullTenantIdCase2() {
 
     String[] tenantIds = new String[]{ null };
+    var batchStatisticsQuery = managementService.createBatchStatisticsQuery();
     try {
-      managementService.createBatchStatisticsQuery().tenantIdIn(tenantIds);
+      batchStatisticsQuery.tenantIdIn(tenantIds);
       Assert.fail("exception expected");
     }
     catch (NullValueException e) {

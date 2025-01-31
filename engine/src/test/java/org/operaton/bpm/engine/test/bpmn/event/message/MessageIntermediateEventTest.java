@@ -184,11 +184,11 @@ public class MessageIntermediateEventTest {
 
   @Test
   public void testEmptyMessageNameFails() {
-    try {
-      repositoryService
+    var deploymentBuilder = repositoryService
           .createDeployment()
-          .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/message/MessageIntermediateEventTest.testEmptyMessageNameFails.bpmn20.xml")
-          .deploy();
+          .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/message/MessageIntermediateEventTest.testEmptyMessageNameFails.bpmn20.xml");
+    try {
+      deploymentBuilder.deploy();
       fail("exception expected");
     } catch (ParseException e) {
       assertTrue(e.getMessage().contains("Cannot have a message event subscription with an empty or missing name"));

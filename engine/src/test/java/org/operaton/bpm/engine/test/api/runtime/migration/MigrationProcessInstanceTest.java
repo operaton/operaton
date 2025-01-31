@@ -79,8 +79,9 @@ public class MigrationProcessInstanceTest {
 
   @Test
   public void testNullMigrationPlan() {
+    var migrationPlanExecutionBuilder = runtimeService.newMigration(null).processInstanceIds(Collections.<String>emptyList());
     try {
-      runtimeService.newMigration(null).processInstanceIds(Collections.<String>emptyList()).execute();
+      migrationPlanExecutionBuilder.execute();
       fail("Should not be able to migrate");
     }
     catch (ProcessEngineException e) {
@@ -94,9 +95,10 @@ public class MigrationProcessInstanceTest {
     MigrationPlan migrationPlan = runtimeService.createMigrationPlan(testProcessDefinition.getId(), testProcessDefinition.getId())
       .mapEqualActivities()
       .build();
+    var migrationPlanExecutionBuilder = runtimeService.newMigration(migrationPlan).processInstanceIds((List<String>) null);
 
     try {
-      runtimeService.newMigration(migrationPlan).processInstanceIds((List<String>) null).execute();
+      migrationPlanExecutionBuilder.execute();
       fail("Should not be able to migrate");
     }
     catch (ProcessEngineException e) {
@@ -110,9 +112,10 @@ public class MigrationProcessInstanceTest {
     MigrationPlan migrationPlan = runtimeService.createMigrationPlan(testProcessDefinition.getId(), testProcessDefinition.getId())
       .mapEqualActivities()
       .build();
+    var migrationPlanExecutionBuilder = runtimeService.newMigration(migrationPlan).processInstanceIds(Arrays.asList("foo", null, "bar"));
 
     try {
-      runtimeService.newMigration(migrationPlan).processInstanceIds(Arrays.asList("foo", null, "bar")).execute();
+      migrationPlanExecutionBuilder.execute();
       fail("Should not be able to migrate");
     }
     catch (ProcessEngineException e) {
@@ -126,9 +129,10 @@ public class MigrationProcessInstanceTest {
     MigrationPlan migrationPlan = runtimeService.createMigrationPlan(testProcessDefinition.getId(), testProcessDefinition.getId())
       .mapEqualActivities()
       .build();
+    var migrationPlanExecutionBuilder = runtimeService.newMigration(migrationPlan).processInstanceIds((String[]) null);
 
     try {
-      runtimeService.newMigration(migrationPlan).processInstanceIds((String[]) null).execute();
+      migrationPlanExecutionBuilder.execute();
       fail("Should not be able to migrate");
     }
     catch (ProcessEngineException e) {
@@ -142,9 +146,10 @@ public class MigrationProcessInstanceTest {
     MigrationPlan migrationPlan = runtimeService.createMigrationPlan(testProcessDefinition.getId(), testProcessDefinition.getId())
       .mapEqualActivities()
       .build();
+    var migrationPlanExecutionBuilder = runtimeService.newMigration(migrationPlan).processInstanceIds("foo", null, "bar");
 
     try {
-      runtimeService.newMigration(migrationPlan).processInstanceIds("foo", null, "bar").execute();
+      migrationPlanExecutionBuilder.execute();
       fail("Should not be able to migrate");
     }
     catch (ProcessEngineException e) {
@@ -158,9 +163,10 @@ public class MigrationProcessInstanceTest {
     MigrationPlan migrationPlan = runtimeService.createMigrationPlan(testProcessDefinition.getId(), testProcessDefinition.getId())
       .mapEqualActivities()
       .build();
+    var migrationPlanExecutionBuilder = runtimeService.newMigration(migrationPlan).processInstanceIds(Collections.<String>emptyList());
 
     try {
-      runtimeService.newMigration(migrationPlan).processInstanceIds(Collections.<String>emptyList()).execute();
+      migrationPlanExecutionBuilder.execute();
       fail("Should not be able to migrate");
     }
     catch (ProcessEngineException e) {
@@ -174,9 +180,10 @@ public class MigrationProcessInstanceTest {
     MigrationPlan migrationPlan = runtimeService.createMigrationPlan(testProcessDefinition.getId(), testProcessDefinition.getId())
       .mapEqualActivities()
       .build();
+    var migrationPlanExecutionBuilder = runtimeService.newMigration(migrationPlan).processInstanceIds(new String[]{});
 
     try {
-      runtimeService.newMigration(migrationPlan).processInstanceIds(new String[]{}).execute();
+      migrationPlanExecutionBuilder.execute();
       fail("Should not be able to migrate");
     }
     catch (ProcessEngineException e) {
@@ -195,9 +202,10 @@ public class MigrationProcessInstanceTest {
     MigrationPlan migrationPlan = runtimeService.createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
       .mapEqualActivities()
       .build();
+    var migrationPlanExecutionBuilder = runtimeService.newMigration(migrationPlan).processInstanceIds(Collections.singletonList(processInstance.getId()));
 
     try {
-      runtimeService.newMigration(migrationPlan).processInstanceIds(Collections.singletonList(processInstance.getId())).execute();
+      migrationPlanExecutionBuilder.execute();
       fail("Should not be able to migrate");
     }
     catch (ProcessEngineException e) {
@@ -213,9 +221,10 @@ public class MigrationProcessInstanceTest {
     MigrationPlan migrationPlan = runtimeService.createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
       .mapEqualActivities()
       .build();
+    var migrationPlanExecutionBuilder = runtimeService.newMigration(migrationPlan).processInstanceIds(Collections.singletonList("unknown"));
 
     try {
-      runtimeService.newMigration(migrationPlan).processInstanceIds(Collections.singletonList("unknown")).execute();
+      migrationPlanExecutionBuilder.execute();
       fail("Should not be able to migrate");
     }
     catch (ProcessEngineException e) {
@@ -231,9 +240,10 @@ public class MigrationProcessInstanceTest {
     MigrationPlan migrationPlan = runtimeService.createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
       .mapEqualActivities()
       .build();
+    var migrationPlanExecutionBuilder = runtimeService.newMigration(migrationPlan).processInstanceIds(Collections.<String>singletonList(null));
 
     try {
-      runtimeService.newMigration(migrationPlan).processInstanceIds(Collections.<String>singletonList(null)).execute();
+      migrationPlanExecutionBuilder.execute();
       fail("Should not be able to migrate");
     }
     catch (ProcessEngineException e) {
@@ -277,9 +287,10 @@ public class MigrationProcessInstanceTest {
     MigrationPlan migrationPlan = runtimeService.createMigrationPlan(testProcessDefinition.getId(), testProcessDefinition.getId())
       .mapEqualActivities()
       .build();
+    var migrationPlanExecutionBuilder = runtimeService.newMigration(migrationPlan).processInstanceQuery(null);
 
     try {
-      runtimeService.newMigration(migrationPlan).processInstanceQuery(null).execute();
+      migrationPlanExecutionBuilder.execute();
       fail("Should not be able to migrate");
     }
     catch (ProcessEngineException e) {
@@ -296,9 +307,10 @@ public class MigrationProcessInstanceTest {
 
     ProcessInstanceQuery emptyProcessInstanceQuery = runtimeService.createProcessInstanceQuery();
     assertEquals(0, emptyProcessInstanceQuery.count());
+    var migrationPlanExecutionBuilder = runtimeService.newMigration(migrationPlan).processInstanceQuery(emptyProcessInstanceQuery);
 
     try {
-      runtimeService.newMigration(migrationPlan).processInstanceQuery(emptyProcessInstanceQuery).execute();
+      migrationPlanExecutionBuilder.execute();
       fail("Should not be able to migrate");
     }
     catch (ProcessEngineException e) {
@@ -319,9 +331,10 @@ public class MigrationProcessInstanceTest {
 
     ProcessInstanceQuery wrongProcessInstanceQuery = runtimeService.createProcessInstanceQuery().processDefinitionId(wrongProcessDefinition.getId());
     assertEquals(1, wrongProcessInstanceQuery.count());
+    var migrationPlanExecutionBuilder = runtimeService.newMigration(migrationPlan).processInstanceQuery(wrongProcessInstanceQuery);
 
     try {
-      runtimeService.newMigration(migrationPlan).processInstanceQuery(wrongProcessInstanceQuery).execute();
+      migrationPlanExecutionBuilder.execute();
       fail("Should not be able to migrate");
     }
     catch (ProcessEngineException e) {

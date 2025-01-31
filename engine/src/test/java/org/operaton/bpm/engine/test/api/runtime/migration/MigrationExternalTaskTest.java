@@ -270,12 +270,12 @@ public class MigrationExternalTaskTest {
   public void cannotMigrateFromExternalToClassDelegateServiceTask() {
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ExternalTaskModels.ONE_EXTERNAL_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ServiceTaskModels.oneClassDelegateServiceTask("foo.Bar"));
+    var runtimeService = rule.getRuntimeService()
+        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
+        .mapActivities("externalTask", "serviceTask");
 
     try {
-      rule.getRuntimeService()
-        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
-        .mapActivities("externalTask", "serviceTask")
-        .build();
+      runtimeService.build();
       Assert.fail("exception expected");
     } catch (MigrationPlanValidationException e) {
       // then

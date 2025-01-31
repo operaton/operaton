@@ -410,9 +410,10 @@ public class ProcessDataLoggingContextTest {
     // given
     manageDeployment(modelDelegateFailure());
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
+    var taskQuery = taskService.createTaskQuery().singleResult().getId();
     // when
     try {
-      taskService.complete(taskService.createTaskQuery().singleResult().getId());
+      taskService.complete(taskQuery);
       fail("Exception expected");
     } catch (Exception e) {
       // expected exception in the task listener that is not caught
@@ -435,9 +436,10 @@ public class ProcessDataLoggingContextTest {
         .endEvent("end")
         .done());
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
+    var taskQuery = taskService.createTaskQuery().singleResult().getId();
     // when
     try {
-      taskService.complete(taskService.createTaskQuery().singleResult().getId());
+      taskService.complete(taskQuery);
       fail("Exception expected");
     } catch (Exception e) {
       // expected exception in the task listener that is not caught
@@ -458,9 +460,10 @@ public class ProcessDataLoggingContextTest {
         .endEvent("end")
         .done());
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
+    var taskQuery = taskService.createTaskQuery().singleResult().getId();
     // when
     try {
-      taskService.complete(taskService.createTaskQuery().singleResult().getId());
+      taskService.complete(taskQuery);
       fail("Exception expected");
     } catch (Exception e) {
       // expected exception in the task listener that is not caught
@@ -479,9 +482,10 @@ public class ProcessDataLoggingContextTest {
         .endEvent("end")
         .done());
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
+    var taskQuery = taskService.createTaskQuery().singleResult().getId();
     // when
     try {
-      taskService.setAssignee(taskService.createTaskQuery().singleResult().getId(), "testUser");
+      taskService.setAssignee(taskQuery, "testUser");
       fail("Exception expected");
     } catch (Exception e) {
       // expected exception in the task listener that is not caught
@@ -500,9 +504,10 @@ public class ProcessDataLoggingContextTest {
         .endEvent("end")
         .done());
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
+    var taskQuery = taskService.createTaskQuery().singleResult().getId();
     // when
     try {
-      taskService.complete(taskService.createTaskQuery().singleResult().getId());
+      taskService.complete(taskQuery);
       fail("Exception expected");
     } catch (Exception e) {
       // expected exception in the task listener that is not caught
@@ -521,9 +526,10 @@ public class ProcessDataLoggingContextTest {
         .endEvent("end")
         .done());
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
+    var instanceId = instance.getId();
     // when
     try {
-      runtimeService.deleteProcessInstance(instance.getId(), "cancel it");
+      runtimeService.deleteProcessInstance(instanceId, "cancel it");
       fail("Exception expected");
     } catch (Exception e) {
       // expected exception in the task listener that is not caught
@@ -537,9 +543,10 @@ public class ProcessDataLoggingContextTest {
     // given
     manageDeployment(modelExecutionListenerFailure());
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
+    var taskQuery = taskService.createTaskQuery().singleResult().getId();
     // when
     try {
-      taskService.complete(taskService.createTaskQuery().singleResult().getId());
+      taskService.complete(taskQuery);
       fail("Exception expected");
     } catch (Exception e) {
       // expected exception in the execution listener that is not caught
@@ -584,9 +591,10 @@ public class ProcessDataLoggingContextTest {
           .endEvent("failingEnd")
         .done());
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
+    var taskQuery = taskService.createTaskQuery().singleResult().getId();
     // when
     try {
-      taskService.complete(taskService.createTaskQuery().singleResult().getId());
+      taskService.complete(taskQuery);
       fail("Exception expected");
     } catch (Exception e) {
       // expected exception in the service task that is not caught
@@ -613,9 +621,10 @@ public class ProcessDataLoggingContextTest {
         .endEvent("end")
         .done());
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
+    var taskQuery = taskService.createTaskQuery().singleResult().getId();
     // when
     try {
-      taskService.complete(taskService.createTaskQuery().singleResult().getId());
+      taskService.complete(taskQuery);
       fail("Exception expected");
     } catch (Exception e) {
       // expected exception in the nested delegate that is not caught
@@ -644,9 +653,10 @@ public class ProcessDataLoggingContextTest {
         .endEvent("end")
         .done());
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
+    var taskQuery = taskService.createTaskQuery().singleResult().getId();
     // when
     try {
-      taskService.complete(taskService.createTaskQuery().singleResult().getId());
+      taskService.complete(taskQuery);
       fail("Exception expected");
     } catch (Exception e) {
       // expected exception in the nested delegate that is not caught
@@ -708,9 +718,10 @@ public class ProcessDataLoggingContextTest {
         .endEvent("end")
         .done());
     ProcessInstance pi = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
+    var taskQuery = taskService.createTaskQuery().singleResult().getId();
     // when
     try {
-      taskService.complete(taskService.createTaskQuery().singleResult().getId());
+      taskService.complete(taskQuery);
       fail("Exception expected");
     } catch (Exception e) {
       // expected exception in the delegate resolution that is not caught
@@ -732,9 +743,10 @@ public class ProcessDataLoggingContextTest {
         .endEvent("end")
         .done());
     ProcessInstance pi = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
+    var taskQuery = taskService.createTaskQuery().singleResult().getId();
     // when
     try {
-      taskService.complete(taskService.createTaskQuery().singleResult().getId());
+      taskService.complete(taskQuery);
       fail("Exception expected");
     } catch (Exception e) {
       // expected exception in the delegate resolution that is not caught
@@ -756,9 +768,10 @@ public class ProcessDataLoggingContextTest {
     };
     application.deploy();
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
+    var taskQuery = taskService.createTaskQuery().singleResult().getId();
     // when
     try {
-      taskService.complete(taskService.createTaskQuery().singleResult().getId());
+      taskService.complete(taskQuery);
       fail("Exception expected");
     } catch (Exception e) {
       // expected exception in the task listener that is not caught
@@ -780,9 +793,10 @@ public class ProcessDataLoggingContextTest {
     };
     application.deploy();
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
+    var taskQuery = taskService.createTaskQuery().singleResult().getId();
     // when
     try {
-      taskService.complete(taskService.createTaskQuery().singleResult().getId());
+      taskService.complete(taskQuery);
       fail("Exception expected");
     } catch (Exception e) {
       // expected exception in the execution listener that is not caught

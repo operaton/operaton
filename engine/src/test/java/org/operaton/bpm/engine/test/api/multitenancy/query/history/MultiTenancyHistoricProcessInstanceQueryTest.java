@@ -131,9 +131,9 @@ public class MultiTenancyHistoricProcessInstanceQueryTest {
 
   @Test
   public void shouldFailQueryByTenantIdNull() {
+    var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
     try {
-      historyService.createHistoricProcessInstanceQuery()
-        .tenantIdIn((String) null);
+      historicProcessInstanceQuery.tenantIdIn((String) null);
 
       fail("expected exception");
     } catch (NullValueException e) {

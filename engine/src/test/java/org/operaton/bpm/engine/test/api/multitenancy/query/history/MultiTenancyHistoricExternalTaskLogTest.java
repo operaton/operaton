@@ -163,10 +163,10 @@ public class MultiTenancyHistoricExternalTaskLogTest {
 
   @Test
   public void shouldFailQueryByTenantIdNull() {
+    var historicExternalTaskLogQuery = historyService.createHistoricExternalTaskLogQuery();
     try {
       // when
-      historyService.createHistoricExternalTaskLogQuery()
-        .tenantIdIn((String) null);
+      historicExternalTaskLogQuery.tenantIdIn((String) null);
 
       fail("expected exception");
 

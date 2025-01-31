@@ -130,9 +130,10 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
         .singleResult();
 
     assertNotNull("No job found for process instance", timerJob);
+    var timerJobId = timerJob.getId();
 
     try {
-      managementService.executeJob(timerJob.getId());
+      managementService.executeJob(timerJobId);
       fail("RuntimeException from within the script task expected");
     } catch (RuntimeException re) {
       testRule.assertTextPresent("This is an exception thrown from scriptTask", re.getMessage());
@@ -663,6 +664,7 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("timerOnTask");
     Job timerJob = managementService.createJobQuery().processInstanceId(processInstance.getId()).singleResult();
+    var timerJobId = timerJob.getId();
 
     // We need to move time at least one hour to make the timer executable
     ClockUtil.setCurrentTime(new Date(ClockUtil.getCurrentTime().getTime() + 7200000L));
@@ -676,7 +678,7 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
 
     // Try to delete the job. This should fail.
     try {
-      managementService.deleteJob(timerJob.getId());
+      managementService.deleteJob(timerJobId);
       fail();
     } catch (ProcessEngineException e) {
       // Exception is expected

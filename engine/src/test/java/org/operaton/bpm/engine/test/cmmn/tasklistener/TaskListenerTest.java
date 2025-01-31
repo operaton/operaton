@@ -1299,11 +1299,9 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testDoesNotImplementTaskListenerInterfaceByClass.cmmn"})
   @Test
   public void testDoesNotImplementTaskListenerInterfaceByClass() {
+    var caseInstanceBuilder = caseService.withCaseDefinitionByKey("case");
     try {
-      caseService
-          .withCaseDefinitionByKey("case")
-          .create()
-          .getId();
+      caseInstanceBuilder.create();
       fail("exception expected");
     } catch (Exception e) {
       // then
@@ -1317,12 +1315,11 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testDoesNotImplementTaskListenerInterfaceByDelegateExpression.cmmn"})
   @Test
   public void testDoesNotImplementTaskListenerInterfaceByDelegateExpression() {
-    try {
-      caseService
+    var caseInstanceBuilder = caseService
           .withCaseDefinitionByKey("case")
-          .setVariable("myTaskListener", new NotTaskListener())
-          .create()
-          .getId();
+          .setVariable("myTaskListener", new NotTaskListener());
+    try {
+      caseInstanceBuilder.create();
       fail("exception expected");
     } catch (Exception e) {
       // then
@@ -1336,12 +1333,10 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testTaskListenerDoesNotExist.cmmn"})
   @Test
   public void testTaskListenerDoesNotExist() {
+    var caseInstanceBuilder = caseService.withCaseDefinitionByKey("case");
 
     try {
-      caseService
-          .withCaseDefinitionByKey("case")
-          .create()
-          .getId();
+      caseInstanceBuilder.create();
       fail("exception expected");
     } catch (Exception e) {
       // then

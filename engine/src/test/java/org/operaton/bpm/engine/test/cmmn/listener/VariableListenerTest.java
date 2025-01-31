@@ -459,12 +459,12 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
     CaseExecution taskExecution =
         caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1").singleResult();
     assertNotNull(taskExecution);
+    var caseExecutionCommandBuilder = caseService
+        .withCaseExecution(taskExecution.getId())
+        .setVariableLocal("aTaskVariable", "aTaskValue");
 
     try {
-      caseService
-        .withCaseExecution(taskExecution.getId())
-        .setVariableLocal("aTaskVariable", "aTaskValue")
-        .execute();
+      caseExecutionCommandBuilder.execute();
 
       fail("expected exception during variable listener invocation");
     } catch (ProcessEngineException e) {
@@ -482,12 +482,12 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
     CaseExecution taskExecution =
         caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1").singleResult();
     assertNotNull(taskExecution);
+    var caseExecutionCommandBuilder = caseService
+        .withCaseExecution(taskExecution.getId())
+        .setVariableLocal("aTaskVariable", "aTaskValue");
 
     try {
-      caseService
-        .withCaseExecution(taskExecution.getId())
-        .setVariableLocal("aTaskVariable", "aTaskValue")
-        .execute();
+      caseExecutionCommandBuilder.execute();
 
       fail("expected exception during variable listener invocation");
     } catch (ProcessEngineException e) {

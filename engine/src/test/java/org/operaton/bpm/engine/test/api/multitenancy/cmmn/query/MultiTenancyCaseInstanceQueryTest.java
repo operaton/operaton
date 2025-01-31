@@ -100,9 +100,9 @@ public class MultiTenancyCaseInstanceQueryTest extends PluggableProcessEngineTes
 
   @Test
   public void testFailQueryByTenantIdNull() {
+    var caseInstanceQuery = caseService.createCaseInstanceQuery();
     try {
-      caseService.createCaseInstanceQuery()
-        .tenantIdIn((String) null);
+      caseInstanceQuery.tenantIdIn((String) null);
 
       fail("expected exception");
     } catch (NullValueException e) {

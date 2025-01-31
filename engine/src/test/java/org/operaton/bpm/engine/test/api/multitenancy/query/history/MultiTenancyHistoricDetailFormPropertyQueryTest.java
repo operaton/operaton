@@ -168,11 +168,11 @@ public class MultiTenancyHistoricDetailFormPropertyQueryTest {
 
   @Test
   public void shouldFailQueryByTenantIdNull() {
+    var historicDetailQuery = historyService.createHistoricDetailQuery()
+        .formFields();
     try {
       // when
-      historyService.createHistoricDetailQuery()
-        .formFields()
-        .tenantIdIn((String) null);
+      historicDetailQuery.tenantIdIn((String) null);
 
       fail("expected exception");
 

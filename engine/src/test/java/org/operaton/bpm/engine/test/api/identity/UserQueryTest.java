@@ -99,9 +99,10 @@ public class UserQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidId() {
     UserQuery query = identityService.createUserQuery().userId("invalid");
     verifyQueryResults(query, 0);
+    var userQuery = identityService.createUserQuery();
 
     try {
-      identityService.createUserQuery().userId(null).singleResult();
+      userQuery.userId(null);
       fail();
     } catch (ProcessEngineException e) { }
   }
@@ -119,9 +120,10 @@ public class UserQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidFirstName() {
     UserQuery query = identityService.createUserQuery().userFirstName("invalid");
     verifyQueryResults(query, 0);
+    var userQuery = identityService.createUserQuery().userFirstName(null);
 
     try {
-      identityService.createUserQuery().userFirstName(null).singleResult();
+      userQuery.singleResult();
       fail();
     } catch (ProcessEngineException e) { }
   }
@@ -142,9 +144,10 @@ public class UserQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidFirstNameLike() {
     UserQuery query = identityService.createUserQuery().userFirstNameLike("%mispiggy%");
     verifyQueryResults(query, 0);
+    var userQuery = identityService.createUserQuery();
 
     try {
-      identityService.createUserQuery().userFirstNameLike(null).singleResult();
+      userQuery.userFirstNameLike(null);
       fail();
     } catch (ProcessEngineException e) { }
   }
@@ -162,9 +165,10 @@ public class UserQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidLastName() {
     UserQuery query = identityService.createUserQuery().userLastName("invalid");
     verifyQueryResults(query, 0);
+    var userQuery = identityService.createUserQuery().userLastName(null);
 
     try {
-      identityService.createUserQuery().userLastName(null).singleResult();
+      userQuery.singleResult();
       fail();
     } catch (ProcessEngineException e) { }
   }
@@ -182,9 +186,10 @@ public class UserQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidLastNameLike() {
     UserQuery query = identityService.createUserQuery().userLastNameLike("%invalid%");
     verifyQueryResults(query, 0);
+    var userQuery = identityService.createUserQuery();
 
     try {
-      identityService.createUserQuery().userLastNameLike(null).singleResult();
+      userQuery.userLastNameLike(null);
       fail();
     } catch (ProcessEngineException e) { }
   }
@@ -199,9 +204,10 @@ public class UserQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidEmail() {
     UserQuery query = identityService.createUserQuery().userEmail("invalid");
     verifyQueryResults(query, 0);
+    var userQuery = identityService.createUserQuery().userEmail(null);
 
     try {
-      identityService.createUserQuery().userEmail(null).singleResult();
+      userQuery.singleResult();
       fail();
     } catch (ProcessEngineException e) { }
   }
@@ -219,9 +225,10 @@ public class UserQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidEmailLike() {
     UserQuery query = identityService.createUserQuery().userEmailLike("%invalid%");
     verifyQueryResults(query, 0);
+    var userQuery = identityService.createUserQuery();
 
     try {
-      identityService.createUserQuery().userEmailLike(null).singleResult();
+      userQuery.userEmailLike(null);
       fail();
     } catch (ProcessEngineException e) { }
   }
@@ -250,13 +257,15 @@ public class UserQueryTest extends PluggableProcessEngineTest {
 
   @Test
   public void testQueryInvalidSortingUsage() {
+    var userQuery1 = identityService.createUserQuery().orderByUserId();
     try {
-      identityService.createUserQuery().orderByUserId().list();
+      userQuery1.list();
       fail();
     } catch (ProcessEngineException e) {}
 
+    var userQuery2 = identityService.createUserQuery().orderByUserId().orderByUserEmail();
     try {
-      identityService.createUserQuery().orderByUserId().orderByUserEmail().list();
+      userQuery2.list();
       fail();
     } catch (ProcessEngineException e) {}
   }
@@ -277,9 +286,10 @@ public class UserQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidMemberOfGoup() {
     UserQuery query = identityService.createUserQuery().memberOfGroup("invalid");
     verifyQueryResults(query, 0);
+    var userQuery = identityService.createUserQuery();
 
     try {
-      identityService.createUserQuery().memberOfGroup(null).list();
+      userQuery.memberOfGroup(null);
       fail();
     } catch (ProcessEngineException e) { }
   }

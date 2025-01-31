@@ -34,6 +34,7 @@ import org.operaton.bpm.container.impl.jmx.kernel.util.StartServiceDeploymentOpe
 import org.operaton.bpm.container.impl.jmx.kernel.util.StopServiceDeploymentOperationStep;
 import org.operaton.bpm.container.impl.jmx.kernel.util.TestService;
 import org.operaton.bpm.container.impl.jmx.kernel.util.TestServiceType;
+import org.operaton.bpm.container.impl.spi.DeploymentOperation;
 import org.operaton.bpm.container.impl.spi.PlatformService;
 import org.junit.After;
 import org.junit.Before;
@@ -234,13 +235,13 @@ public class MBeanServiceContainerTest {
 
   @Test
   public void testFailingDeploymentOperation() {
+    var deploymentOperationBuilder = serviceContainer.createDeploymentOperation("test failing op")
+        .addStep(new StartServiceDeploymentOperationStep(service1Name, service1))
+        .addStep(new StartServiceDeploymentOperationStep(service2Name, service2))
+        .addStep(new FailingDeploymentOperationStep());
 
     try {
-      serviceContainer.createDeploymentOperation("test failing op")
-        .addStep(new StartServiceDeploymentOperationStep(service1Name, service1))
-        .addStep(new FailingDeploymentOperationStep())                               // <- this step fails
-        .addStep(new StartServiceDeploymentOperationStep(service2Name, service2))
-        .execute();
+      deploymentOperationBuilder.execute();
 
       fail("Exception expected");
 
@@ -255,12 +256,12 @@ public class MBeanServiceContainerTest {
 
     // different step ordering //////////////////////////////////
 
+    var deploymentOperationBuilder1 = serviceContainer.createDeploymentOperation("test failing op")
+      .addStep(new StartServiceDeploymentOperationStep(service1Name, service1))
+      .addStep(new StartServiceDeploymentOperationStep(service2Name, service2))
+      .addStep(new FailingDeploymentOperationStep());
     try {
-      serviceContainer.createDeploymentOperation("test failing op")
-        .addStep(new StartServiceDeploymentOperationStep(service1Name, service1))
-        .addStep(new StartServiceDeploymentOperationStep(service2Name, service2))
-        .addStep(new FailingDeploymentOperationStep())                               // <- this step fails
-        .execute();
+      deploymentOperationBuilder1.execute();
 
       fail("Exception expected");
 

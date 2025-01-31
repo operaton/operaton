@@ -75,9 +75,10 @@ public class TaskAssignmentExtensionsTest extends PluggableProcessEngineTest {
 
   @Test
   public void testDuplicateAssigneeDeclaration() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testDuplicateAssigneeDeclaration");
+    var deploymentBuilder = repositoryService.createDeployment().addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testDuplicateAssigneeDeclaration");
-      repositoryService.createDeployment().addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Invalid BPMN 2.0 process should not parse, but it gets parsed sucessfully");
     } catch (ProcessEngineException e) {
       // Exception is to be expected

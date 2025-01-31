@@ -52,12 +52,12 @@ public class MultiTenancyMigrationTest {
     // given
     ProcessDefinition tenant1Definition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition tenant2Definition = testHelper.deployForTenantAndGetDefinition(TENANT_TWO, ProcessModels.ONE_TASK_PROCESS);
+    var runtimeService = engineRule.getRuntimeService().createMigrationPlan(tenant1Definition.getId(), tenant2Definition.getId())
+      .mapEqualActivities();
 
     // when
     try {
-      engineRule.getRuntimeService().createMigrationPlan(tenant1Definition.getId(), tenant2Definition.getId())
-      .mapEqualActivities()
-      .build();
+      runtimeService.build();
       Assert.fail("exception expected");
     } catch (ProcessEngineException e) {
       // then
@@ -144,13 +144,13 @@ public class MultiTenancyMigrationTest {
     MigrationPlan migrationPlan = engineRule.getRuntimeService().createMigrationPlan(sourceDefinition.getId(), targetDefinition.getId())
         .mapEqualActivities()
         .build();
+    var runtimeService = engineRule.getRuntimeService()
+        .newMigration(migrationPlan)
+        .processInstanceIds(Arrays.asList(processInstance.getId()));
 
     // when
     try {
-      engineRule.getRuntimeService()
-        .newMigration(migrationPlan)
-        .processInstanceIds(Arrays.asList(processInstance.getId()))
-        .execute();
+      runtimeService.execute();
       Assert.fail("exception expected");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).contains(

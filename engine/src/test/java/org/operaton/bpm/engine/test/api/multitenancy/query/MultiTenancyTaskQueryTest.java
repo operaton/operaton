@@ -116,9 +116,9 @@ public class MultiTenancyTaskQueryTest extends PluggableProcessEngineTest {
 
   @Test
   public void testQueryByTenantIdNullFails() {
+    var taskQuery = taskService.createTaskQuery();
     try {
-      assertEquals(0, taskService.createTaskQuery()
-          .tenantIdIn((String)null));
+      taskQuery.tenantIdIn((String)null);
 
       fail("Exception expected");
     }

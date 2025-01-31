@@ -7,7 +7,7 @@
   <parent>
     <artifactId>operaton-qa</artifactId>
     <groupId>org.operaton.bpm.qa</groupId>
-    <version>1.0.0-beta-3-SNAPSHOT</version>
+    <version>1.0.0-beta-3</version>
   </parent>
 
   <dependencies>

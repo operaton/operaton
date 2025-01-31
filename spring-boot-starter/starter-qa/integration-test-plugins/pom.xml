@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.operaton.bpm.springboot.project</groupId>
     <artifactId>operaton-bpm-spring-boot-starter-qa</artifactId>
-    <version>1.0.0-beta-3-SNAPSHOT</version>
+    <version>1.0.0-beta-3</version>
   </parent>
 
   <packaging>pom</packaging>

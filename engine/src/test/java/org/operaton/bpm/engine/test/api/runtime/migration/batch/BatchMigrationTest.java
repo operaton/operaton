@@ -49,6 +49,7 @@ import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -127,8 +128,9 @@ public class BatchMigrationTest {
 
   @Test
   public void testNullMigrationPlan() {
+    var migrationPlanExecutionBuilder = runtimeService.newMigration(null).processInstanceIds(List.of("process"));
     try {
-      runtimeService.newMigration(null).processInstanceIds(Collections.singletonList("process")).executeAsync();
+      migrationPlanExecutionBuilder.executeAsync();
       fail("Should not succeed");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).contains("migration plan is null");
@@ -141,9 +143,10 @@ public class BatchMigrationTest {
     MigrationPlan migrationPlan = runtimeService.createMigrationPlan(testProcessDefinition.getId(), testProcessDefinition.getId())
       .mapEqualActivities()
       .build();
+    var migrationPlanExecutionBuilder = runtimeService.newMigration(migrationPlan).processInstanceIds((List<String>) null);
 
     try {
-      runtimeService.newMigration(migrationPlan).processInstanceIds((List<String>) null).executeAsync();
+      migrationPlanExecutionBuilder.executeAsync();
       fail("Should not succeed");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).contains("process instance ids is empty");
@@ -156,9 +159,10 @@ public class BatchMigrationTest {
     MigrationPlan migrationPlan = runtimeService.createMigrationPlan(testProcessDefinition.getId(), testProcessDefinition.getId())
       .mapEqualActivities()
       .build();
+    var migrationPlanExecutionBuilder = runtimeService.newMigration(migrationPlan).processInstanceIds(Arrays.asList("foo", null, "bar"));
 
     try {
-      runtimeService.newMigration(migrationPlan).processInstanceIds(Arrays.asList("foo", null, "bar")).executeAsync();
+      migrationPlanExecutionBuilder.executeAsync();
       fail("Should not succeed");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).contains("process instance ids contains null value");
@@ -171,9 +175,10 @@ public class BatchMigrationTest {
     MigrationPlan migrationPlan = runtimeService.createMigrationPlan(testProcessDefinition.getId(), testProcessDefinition.getId())
       .mapEqualActivities()
       .build();
+    var migrationPlanExecutionBuilder = runtimeService.newMigration(migrationPlan).processInstanceIds(emptyList());
 
     try {
-      runtimeService.newMigration(migrationPlan).processInstanceIds(Collections.<String>emptyList()).executeAsync();
+      migrationPlanExecutionBuilder.executeAsync();
       fail("Should not succeed");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).contains("process instance ids is empty");
@@ -186,9 +191,10 @@ public class BatchMigrationTest {
     MigrationPlan migrationPlan = runtimeService.createMigrationPlan(testProcessDefinition.getId(), testProcessDefinition.getId())
       .mapEqualActivities()
       .build();
+    var migrationPlanExecutionBuilder = runtimeService.newMigration(migrationPlan).processInstanceIds((String[]) null);
 
     try {
-      runtimeService.newMigration(migrationPlan).processInstanceIds((String[]) null).executeAsync();
+      migrationPlanExecutionBuilder.executeAsync();
       fail("Should not be able to migrate");
     }
     catch (ProcessEngineException e) {
@@ -202,9 +208,10 @@ public class BatchMigrationTest {
     MigrationPlan migrationPlan = runtimeService.createMigrationPlan(testProcessDefinition.getId(), testProcessDefinition.getId())
       .mapEqualActivities()
       .build();
+    var migrationPlanExecutionBuilder = runtimeService.newMigration(migrationPlan).processInstanceIds("foo", null, "bar");
 
     try {
-      runtimeService.newMigration(migrationPlan).processInstanceIds("foo", null, "bar").executeAsync();
+      migrationPlanExecutionBuilder.executeAsync();
       fail("Should not be able to migrate");
     }
     catch (ProcessEngineException e) {
@@ -218,9 +225,10 @@ public class BatchMigrationTest {
     MigrationPlan migrationPlan = runtimeService.createMigrationPlan(testProcessDefinition.getId(), testProcessDefinition.getId())
       .mapEqualActivities()
       .build();
+    var migrationPlanExecutionBuilder = runtimeService.newMigration(migrationPlan).processInstanceQuery(null);
 
     try {
-      runtimeService.newMigration(migrationPlan).processInstanceQuery(null).executeAsync();
+      migrationPlanExecutionBuilder.executeAsync();
       fail("Should not succeed");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).contains("process instance ids is empty");
@@ -236,9 +244,10 @@ public class BatchMigrationTest {
 
     ProcessInstanceQuery emptyProcessInstanceQuery = runtimeService.createProcessInstanceQuery();
     assertEquals(0, emptyProcessInstanceQuery.count());
+    var migrationPlanExecutionBuilder = runtimeService.newMigration(migrationPlan).processInstanceQuery(emptyProcessInstanceQuery);
 
     try {
-      runtimeService.newMigration(migrationPlan).processInstanceQuery(emptyProcessInstanceQuery).executeAsync();
+      migrationPlanExecutionBuilder.executeAsync();
       fail("Should not succeed");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).contains("process instance ids is empty");

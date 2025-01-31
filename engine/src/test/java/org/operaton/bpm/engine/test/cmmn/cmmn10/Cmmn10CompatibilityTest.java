@@ -43,6 +43,7 @@ public class Cmmn10CompatibilityTest extends CmmnTest {
   public void testRequiredRule() {
     CaseInstance caseInstance =
         createCaseInstanceByKey("case", Variables.createVariables().putValue("required", true));
+    var caseInstanceId = caseInstance.getId();
 
     CaseExecution taskExecution = queryCaseExecutionByActivityId("PI_HumanTask_1");
 
@@ -50,7 +51,7 @@ public class Cmmn10CompatibilityTest extends CmmnTest {
     assertTrue(taskExecution.isRequired());
 
     try {
-      caseService.completeCaseExecution(caseInstance.getId());
+      caseService.completeCaseExecution(caseInstanceId);
       fail("completing the containing stage should not be allowed");
     } catch (NotAllowedException e) {
       // happy path

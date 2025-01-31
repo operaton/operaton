@@ -86,10 +86,10 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
   @Test
   public void testThrowErrorWithoutErrorCode() {
+    var deploymentBuilder = repositoryService.createDeployment()
+        .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testThrowErrorWithoutErrorCode.bpmn20.xml");
     try {
-      repositoryService.createDeployment()
-        .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testThrowErrorWithoutErrorCode.bpmn20.xml")
-        .deploy();
+      deploymentBuilder.deploy();
       fail("ProcessEngineException expected");
     } catch (ParseException e) {
       testRule.assertTextPresent("'errorCode' is mandatory on errors referenced by throwing error event definitions", e.getMessage());
@@ -99,10 +99,10 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
   @Test
   public void testThrowErrorWithEmptyErrorCode() {
+    var deploymentBuilder = repositoryService.createDeployment()
+        .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testThrowErrorWithEmptyErrorCode.bpmn20.xml");
     try {
-      repositoryService.createDeployment()
-        .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testThrowErrorWithEmptyErrorCode.bpmn20.xml")
-        .deploy();
+      deploymentBuilder.deploy();
       fail("ProcessEngineException expected");
     } catch (ParseException e) {
       testRule.assertTextPresent("'errorCode' is mandatory on errors referenced by throwing error event definitions", e.getMessage());
@@ -544,9 +544,9 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testCatchExceptionExpressionThrownByFollowUpTask() {
+    Map<String, Object> vars = throwException();
     try {
-      Map<String, Object> vars = throwException();
-      runtimeService.startProcessInstanceByKey("testProcess", vars).getId();
+      runtimeService.startProcessInstanceByKey("testProcess", vars);
       fail("should fail and not catch the error on the first task");
     } catch (ProcessEngineException e) {
       // happy path
@@ -558,9 +558,9 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testCatchExceptionClassDelegateThrownByFollowUpTask() {
+    Map<String, Object> vars = throwException();
     try {
-      Map<String, Object> vars = throwException();
-      runtimeService.startProcessInstanceByKey("testProcess", vars).getId();
+      runtimeService.startProcessInstanceByKey("testProcess", vars);
       fail("should fail");
     } catch (ProcessEngineException e) {
       // happy path
@@ -572,9 +572,9 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testCatchExceptionExpressionThrownByFollowUpScopeTask() {
+    Map<String, Object> vars = throwException();
     try {
-      Map<String, Object> vars = throwException();
-      runtimeService.startProcessInstanceByKey("testProcess", vars).getId();
+      runtimeService.startProcessInstanceByKey("testProcess", vars);
       fail("should fail and not catch the error on the first task");
     } catch (ProcessEngineException e) {
       // happy path

@@ -527,9 +527,10 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .create();
 
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
+    var caseExecutionQuery = query.variableValueEquals("aByteArrayValue", bytes);
 
     try {
-      query.variableValueEquals("aByteArrayValue", bytes).list();
+      caseExecutionQuery.list();
       fail();
     } catch (ProcessEngineException e) {}
   }
@@ -547,9 +548,10 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .create();
 
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
+    var caseExecutionQuery = query.variableValueEquals("aSerializableValue", serializable);
 
     try {
-      query.variableValueEquals("aSerializableValue", serializable).list();
+      caseExecutionQuery.list();
       fail();
     } catch (ProcessEngineException e) {}
   }
@@ -666,9 +668,10 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .create();
 
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
+    var caseExecutionQuery = query.variableValueNotEquals("aByteArrayValue", bytes);
 
     try {
-      query.variableValueNotEquals("aByteArrayValue", bytes).list();
+      caseExecutionQuery.list();
       fail();
     } catch (ProcessEngineException e) {}
   }
@@ -686,9 +689,10 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .create();
 
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
+    var caseExecutionQuery = query.variableValueNotEquals("aSerializableValue", serializable);
 
     try {
-      query.variableValueNotEquals("aSerializableValue", serializable).list();
+      caseExecutionQuery.list();
       fail();
     } catch (ProcessEngineException e) {}
   }
@@ -699,14 +703,14 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aNullValue", null)
       .create();
-
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
 
     try {
-      query.variableValueGreaterThan("aNullValue", null).list();
+      query.variableValueGreaterThan("aNullValue", null);
       fail();
-    } catch (NotValidException e) {}
-
+    } catch (NotValidException e) {
+      assertEquals("Booleans and null cannot be used in 'greater than' condition", e.getMessage());
+    }
   }
 
   @Test
@@ -730,14 +734,14 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aBooleanValue", true)
       .create();
-
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
 
     try {
-      query.variableValueGreaterThan("aBooleanValue", false).list();
+      query.variableValueGreaterThan("aBooleanValue", false);
       fail();
-    } catch (NotValidException e) {}
-
+    } catch (NotValidException e) {
+      assertEquals("Booleans and null cannot be used in 'greater than' condition", e.getMessage());
+    }
   }
 
   @Test
@@ -829,9 +833,10 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .create();
 
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
+    var caseExecutionQuery = query.variableValueGreaterThan("aByteArrayValue", bytes);
 
     try {
-      query.variableValueGreaterThan("aByteArrayValue", bytes).list();
+      caseExecutionQuery.list();
       fail();
     } catch (ProcessEngineException e) {}
   }
@@ -849,9 +854,10 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .create();
 
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
+    var caseExecutionQuery = query.variableValueGreaterThan("aSerializableValue", serializable);
 
     try {
-      query.variableValueGreaterThan("aSerializableValue", serializable).list();
+      caseExecutionQuery.list();
       fail();
     } catch (ProcessEngineException e) {}
   }
@@ -862,13 +868,14 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aNullValue", null)
       .create();
-
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
 
     try {
-      query.variableValueGreaterThanOrEqual("aNullValue", null).list();
+      query.variableValueGreaterThanOrEqual("aNullValue", null);
       fail();
-    } catch (NotValidException e) {}
+    } catch (NotValidException e) {
+      assertEquals("Booleans and null cannot be used in 'greater than or equal' condition", e.getMessage());
+    }
 
   }
 
@@ -899,13 +906,14 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aBooleanValue", true)
       .create();
-
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
 
     try {
-      query.variableValueGreaterThanOrEqual("aBooleanValue", false).list();
+      query.variableValueGreaterThanOrEqual("aBooleanValue", false);
       fail();
-    } catch (NotValidException e) {}
+    } catch (NotValidException e) {
+      assertEquals("Booleans and null cannot be used in 'greater than or equal' condition", e.getMessage());
+    }
 
   }
 
@@ -1028,9 +1036,10 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .create();
 
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
+    var caseExecutionQuery = query.variableValueGreaterThanOrEqual("aByteArrayValue", bytes);
 
     try {
-      query.variableValueGreaterThanOrEqual("aByteArrayValue", bytes).list();
+      caseExecutionQuery.list();
       fail();
     } catch (ProcessEngineException e) {}
   }
@@ -1048,9 +1057,10 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .create();
 
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
+    var caseExecutionQuery = query.variableValueGreaterThanOrEqual("aSerializableValue", serializable);
 
     try {
-      query.variableValueGreaterThanOrEqual("aSerializableValue", serializable).list();
+      caseExecutionQuery.list();
       fail();
     } catch (ProcessEngineException e) {}
   }
@@ -1061,13 +1071,14 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aNullValue", null)
       .create();
-
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
 
     try {
-      query.variableValueLessThan("aNullValue", null).list();
+      query.variableValueLessThan("aNullValue", null);
       fail();
-    } catch (NotValidException e) {}
+    } catch (NotValidException e) {
+      assertEquals("Booleans and null cannot be used in 'less than' condition", e.getMessage());
+    }
 
   }
 
@@ -1092,13 +1103,14 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aBooleanValue", true)
       .create();
-
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
 
     try {
-      query.variableValueLessThan("aBooleanValue", false).list();
+      query.variableValueLessThan("aBooleanValue", false);
       fail();
-    } catch (NotValidException e) {}
+    } catch (NotValidException e) {
+      assertEquals("Booleans and null cannot be used in 'less than' condition", e.getMessage());
+    }
 
   }
 
@@ -1108,7 +1120,6 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aShortValue", (short) 123)
       .create();
-
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
 
     query.variableValueLessThan("aShortValue", (short) 124);
@@ -1191,9 +1202,10 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .create();
 
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
+    var caseExecutionQuery = query.variableValueLessThan("aByteArrayValue", bytes);
 
     try {
-      query.variableValueLessThan("aByteArrayValue", bytes).list();
+      caseExecutionQuery.list();
       fail();
     } catch (ProcessEngineException e) {}
   }
@@ -1211,9 +1223,10 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .create();
 
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
+    var caseExecutionQuery = query.variableValueLessThan("aSerializableValue", serializable);
 
     try {
-      query.variableValueLessThan("aSerializableValue", serializable).list();
+      caseExecutionQuery.list();
       fail();
     } catch (ProcessEngineException e) {}
   }
@@ -1224,13 +1237,14 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aNullValue", null)
       .create();
-
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
 
     try {
-      query.variableValueLessThanOrEqual("aNullValue", null).list();
+      query.variableValueLessThanOrEqual("aNullValue", null);
       fail();
-    } catch (NotValidException e) {}
+    } catch (NotValidException e) {
+      assertEquals("Booleans and null cannot be used in 'less than or equal' condition", e.getMessage());
+    }
 
   }
 
@@ -1261,13 +1275,14 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aBooleanValue", true)
       .create();
-
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
 
     try {
-      query.variableValueLessThanOrEqual("aBooleanValue", false).list();
+      query.variableValueLessThanOrEqual("aBooleanValue", false);
       fail();
-    } catch (NotValidException e) {}
+    } catch (NotValidException e) {
+      assertEquals("Booleans and null cannot be used in 'less than or equal' condition", e.getMessage());
+    }
 
   }
 
@@ -1390,9 +1405,10 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .create();
 
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
+    var caseExecutionQuery = query.variableValueLessThanOrEqual("aByteArrayValue", bytes);
 
     try {
-      query.variableValueLessThanOrEqual("aByteArrayValue", bytes).list();
+      caseExecutionQuery.list();
       fail();
     } catch (ProcessEngineException e) {}
   }
@@ -1410,9 +1426,10 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .create();
 
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
+    var caseExecutionQuery = query.variableValueLessThanOrEqual("aSerializableValue", serializable);
 
     try {
-      query.variableValueLessThanOrEqual("aSerializableValue", serializable).list();
+      caseExecutionQuery.list();
       fail();
     } catch (ProcessEngineException e) {}
   }
@@ -1427,9 +1444,11 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
 
     try {
-      query.variableValueLike("aNullValue", null).list();
+      query.variableValueLike("aNullValue", null);
       fail();
-    } catch (NotValidException e) {}
+    } catch (NotValidException e) {
+      assertEquals("Booleans and null cannot be used in 'like' condition", e.getMessage());
+    }
 
   }
 
@@ -1582,9 +1601,10 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .create();
 
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
+    var caseExecutionQuery = query.caseInstanceVariableValueEquals("aByteArrayValue", bytes);
 
     try {
-      query.caseInstanceVariableValueEquals("aByteArrayValue", bytes).list();
+      caseExecutionQuery.list();
       fail();
     } catch (ProcessEngineException e) {}
   }
@@ -1602,9 +1622,10 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .create();
 
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
+    var caseExecutionQuery = query.caseInstanceVariableValueEquals("aSerializableValue", serializable);
 
     try {
-      query.caseInstanceVariableValueEquals("aSerializableValue", serializable).list();
+      caseExecutionQuery.list();
       fail();
     } catch (ProcessEngineException e) {}
   }
@@ -1721,9 +1742,10 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .create();
 
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
+    var caseExecutionQuery = query.caseInstanceVariableValueNotEquals("aByteArrayValue", bytes);
 
     try {
-      query.caseInstanceVariableValueNotEquals("aByteArrayValue", bytes).list();
+      caseExecutionQuery.list();
       fail();
     } catch (ProcessEngineException e) {}
   }
@@ -1741,9 +1763,10 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .create();
 
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
+    var caseExecutionQuery = query.caseInstanceVariableValueNotEquals("aSerializableValue", serializable);
 
     try {
-      query.caseInstanceVariableValueNotEquals("aSerializableValue", serializable).list();
+      caseExecutionQuery.list();
       fail();
     } catch (ProcessEngineException e) {}
   }
@@ -1754,13 +1777,14 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aNullValue", null)
       .create();
-
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
 
     try {
-      query.caseInstanceVariableValueGreaterThan("aNullValue", null).list();
+      query.caseInstanceVariableValueGreaterThan("aNullValue", null);
       fail();
-    } catch (NotValidException e) {}
+    } catch (NotValidException e) {
+      assertEquals("Booleans and null cannot be used in 'greater than' condition", e.getMessage());
+    }
 
   }
 
@@ -1785,13 +1809,14 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aBooleanValue", true)
       .create();
-
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
 
     try {
-      query.caseInstanceVariableValueGreaterThan("aBooleanValue", false).list();
+      query.caseInstanceVariableValueGreaterThan("aBooleanValue", false);
       fail();
-    } catch (NotValidException e) {}
+    } catch (NotValidException e) {
+      assertEquals("Booleans and null cannot be used in 'greater than' condition", e.getMessage());
+    }
 
   }
 
@@ -1884,9 +1909,10 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .create();
 
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
+    var caseExecutionQuery = query.caseInstanceVariableValueGreaterThan("aByteArrayValue", bytes);
 
     try {
-      query.caseInstanceVariableValueGreaterThan("aByteArrayValue", bytes).list();
+      caseExecutionQuery.list();
       fail();
     } catch (ProcessEngineException e) {}
   }
@@ -1904,9 +1930,10 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .create();
 
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
+    var caseExecutionQuery = query.caseInstanceVariableValueGreaterThan("aSerializableValue", serializable);
 
     try {
-      query.caseInstanceVariableValueGreaterThan("aSerializableValue", serializable).list();
+      caseExecutionQuery.list();
       fail();
     } catch (ProcessEngineException e) {}
   }
@@ -1917,13 +1944,14 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aNullValue", null)
       .create();
-
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
 
     try {
-      query.caseInstanceVariableValueGreaterThanOrEqual("aNullValue", null).list();
+      query.caseInstanceVariableValueGreaterThanOrEqual("aNullValue", null);
       fail();
-    } catch (NotValidException e) {}
+    } catch (NotValidException e) {
+      assertEquals("Booleans and null cannot be used in 'greater than or equal' condition", e.getMessage());
+    }
 
   }
 
@@ -1958,9 +1986,11 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
 
     try {
-      query.caseInstanceVariableValueGreaterThanOrEqual("aBooleanValue", false).list();
+      query.caseInstanceVariableValueGreaterThanOrEqual("aBooleanValue", false);
       fail();
-    } catch (NotValidException e) {}
+    } catch (NotValidException e) {
+      assertEquals("Booleans and null cannot be used in 'greater than or equal' condition", e.getMessage());
+    }
 
   }
 
@@ -2083,9 +2113,10 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .create();
 
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
+    var caseExecutionQuery = query.caseInstanceVariableValueGreaterThanOrEqual("aByteArrayValue", bytes);
 
     try {
-      query.caseInstanceVariableValueGreaterThanOrEqual("aByteArrayValue", bytes).list();
+      caseExecutionQuery.list();
       fail();
     } catch (ProcessEngineException e) {}
   }
@@ -2103,9 +2134,10 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .create();
 
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
+    var caseExecutionQuery = query.caseInstanceVariableValueGreaterThanOrEqual("aSerializableValue", serializable);
 
     try {
-      query.caseInstanceVariableValueGreaterThanOrEqual("aSerializableValue", serializable).list();
+      caseExecutionQuery.list();
       fail();
     } catch (ProcessEngineException e) {}
   }
@@ -2116,13 +2148,14 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aNullValue", null)
       .create();
-
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
 
     try {
-      query.caseInstanceVariableValueLessThan("aNullValue", null).list();
+      query.caseInstanceVariableValueLessThan("aNullValue", null);
       fail();
-    } catch (NotValidException e) {}
+    } catch (NotValidException e) {
+      assertEquals("Booleans and null cannot be used in 'less than' condition", e.getMessage());
+    }
 
   }
 
@@ -2147,13 +2180,14 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aBooleanValue", true)
       .create();
-
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
 
     try {
-      query.caseInstanceVariableValueLessThan("aBooleanValue", false).list();
+      query.caseInstanceVariableValueLessThan("aBooleanValue", false);
       fail();
-    } catch (NotValidException e) {}
+    } catch (NotValidException e) {
+      assertEquals("Booleans and null cannot be used in 'less than' condition", e.getMessage());
+    }
 
   }
 
@@ -2246,9 +2280,10 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .create();
 
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
+    var caseExecutionQuery = query.caseInstanceVariableValueLessThan("aByteArrayValue", bytes);
 
     try {
-      query.caseInstanceVariableValueLessThan("aByteArrayValue", bytes).list();
+      caseExecutionQuery.list();
       fail();
     } catch (ProcessEngineException e) {}
   }
@@ -2266,9 +2301,10 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .create();
 
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
+    var caseExecutionQuery = query.caseInstanceVariableValueLessThan("aSerializableValue", serializable);
 
     try {
-      query.caseInstanceVariableValueLessThan("aSerializableValue", serializable).list();
+      caseExecutionQuery.list();
       fail();
     } catch (ProcessEngineException e) {}
   }
@@ -2279,13 +2315,14 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aNullValue", null)
       .create();
-
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
 
     try {
-      query.caseInstanceVariableValueLessThanOrEqual("aNullValue", null).list();
+      query.caseInstanceVariableValueLessThanOrEqual("aNullValue", null);
       fail();
-    } catch (NotValidException e) {}
+    } catch (NotValidException e) {
+      assertEquals("Booleans and null cannot be used in 'less than or equal' condition", e.getMessage());
+    }
 
   }
 
@@ -2316,13 +2353,14 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aBooleanValue", true)
       .create();
-
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
 
     try {
-      query.caseInstanceVariableValueLessThanOrEqual("aBooleanValue", false).list();
+      query.caseInstanceVariableValueLessThanOrEqual("aBooleanValue", false);
       fail();
-    } catch (NotValidException e) {}
+    } catch (NotValidException e) {
+      assertEquals("Booleans and null cannot be used in 'less than or equal' condition", e.getMessage());
+    }
 
   }
 
@@ -2445,9 +2483,10 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .create();
 
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
+    var caseExecutionQuery = query.caseInstanceVariableValueLessThanOrEqual("aByteArrayValue", bytes);
 
     try {
-      query.caseInstanceVariableValueLessThanOrEqual("aByteArrayValue", bytes).list();
+      caseExecutionQuery.list();
       fail();
     } catch (ProcessEngineException e) {}
   }
@@ -2465,9 +2504,10 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .create();
 
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
+    var caseExecutionQuery = query.caseInstanceVariableValueLessThanOrEqual("aSerializableValue", serializable);
 
     try {
-      query.caseInstanceVariableValueLessThanOrEqual("aSerializableValue", serializable).list();
+      caseExecutionQuery.list();
       fail();
     } catch (ProcessEngineException e) {}
   }
@@ -2478,13 +2518,14 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aNullValue", null)
       .create();
-
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
 
     try {
-      query.caseInstanceVariableValueLike("aNullValue", null).list();
+      query.caseInstanceVariableValueLike("aNullValue", null);
       fail();
-    } catch (NotValidException e) {}
+    } catch (NotValidException e) {
+      assertEquals("Booleans and null cannot be used in 'like' condition", e.getMessage());
+    }
 
   }
 

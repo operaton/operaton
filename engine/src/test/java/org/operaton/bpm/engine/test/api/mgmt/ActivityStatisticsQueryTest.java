@@ -385,8 +385,9 @@ public class ActivityStatisticsQueryTest extends PluggableProcessEngineTest {
 
   @Test
   public void testNullProcessDefinitionParameter() {
+    var activityStatisticsQuery = managementService.createActivityStatisticsQuery(null);
     try {
-      managementService.createActivityStatisticsQuery(null).list();
+      activityStatisticsQuery.list();
       Assert.fail();
     } catch (ProcessEngineException e) {
       // expected

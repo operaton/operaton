@@ -54,12 +54,12 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
 
   @Test
   public void testTransitionIdRequired() {
+    var deploymentBuilder = repositoryService.createDeployment()
+        .addClasspathResource("org/operaton/bpm/engine/test/bpmn/async/AsyncAfterTest.testTransitionIdRequired.bpmn20.xml");
 
     // if an outgoing sequence flow has no id, we cannot use it in asyncAfter
     try {
-      repositoryService.createDeployment()
-        .addClasspathResource("org/operaton/bpm/engine/test/bpmn/async/AsyncAfterTest.testTransitionIdRequired.bpmn20.xml")
-        .deploy();
+      deploymentBuilder.deploy();
       fail("Exception expected");
     } catch (ParseException e) {
       testRule.assertTextPresent("Sequence flow with sourceRef='service' must have an id, activity with id 'service' uses 'asyncAfter'.", e.getMessage());

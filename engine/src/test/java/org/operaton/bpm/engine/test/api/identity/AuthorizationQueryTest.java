@@ -226,29 +226,30 @@ public class AuthorizationQueryTest extends PluggableProcessEngineTest {
 
   @Test
   public void testInvalidOrderByQueries() {
+    var authorizationQuery = authorizationService.createAuthorizationQuery().orderByResourceType().orderByResourceId();
     try {
-      authorizationService.createAuthorizationQuery().orderByResourceType().list();
+      authorizationQuery.list();
       fail("Exception expected");
     } catch(ProcessEngineException e) {
       testRule.assertTextPresent("Invalid query: call asc() or desc() after using orderByXX()", e.getMessage());
     }
 
     try {
-      authorizationService.createAuthorizationQuery().orderByResourceId().list();
+      authorizationQuery.list();
       fail("Exception expected");
     } catch(ProcessEngineException e) {
       testRule.assertTextPresent("Invalid query: call asc() or desc() after using orderByXX()", e.getMessage());
     }
 
     try {
-      authorizationService.createAuthorizationQuery().orderByResourceId().orderByResourceType().list();
+      authorizationQuery.list();
       fail("Exception expected");
     } catch(ProcessEngineException e) {
       testRule.assertTextPresent("Invalid query: call asc() or desc() after using orderByXX()", e.getMessage());
     }
 
     try {
-      authorizationService.createAuthorizationQuery().orderByResourceType().orderByResourceId().list();
+      authorizationQuery.list();
       fail("Exception expected");
     } catch(ProcessEngineException e) {
       testRule.assertTextPresent("Invalid query: call asc() or desc() after using orderByXX()", e.getMessage());

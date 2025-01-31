@@ -95,10 +95,11 @@ public class AcquirableJobCacheTest {
     testRule.deploy(process);
     runtimeService.startProcessInstanceByKey("startTimer");
     Execution execution = runtimeService.createExecutionQuery().activityId("userTask").singleResult();
+    var executionId = execution.getId();
 
     try {
       // when
-      fetchTimerJobAfterCachedAcquirableJob(execution.getId());
+      fetchTimerJobAfterCachedAcquirableJob(executionId);
       fail("expected exception");
     } catch (Exception e) {
       // then

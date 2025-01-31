@@ -841,12 +841,12 @@ public class CaseTaskTest extends CmmnTest {
     // given
     String superCaseInstanceId = createCaseInstanceByKey(ONE_CASE_TASK_CASE).getId();
     String caseTaskId = queryCaseExecutionByActivityId(CASE_TASK).getId();
+    var caseExecutionCommandBuilder = caseService
+        .withCaseExecution(caseTaskId);
 
     try {
       // when
-      caseService
-        .withCaseExecution(caseTaskId)
-        .manualStart();
+      caseExecutionCommandBuilder.manualStart();
       fail("It should not be possible to start a not existing case instance.");
     } catch (NotFoundException e) {}
 
@@ -1340,12 +1340,12 @@ public class CaseTaskTest extends CmmnTest {
     // given
     String superCaseInstanceId = createCaseInstanceByKey(ONE_CASE_TASK_CASE).getId();
     String caseTaskId = queryCaseExecutionByActivityId(CASE_TASK).getId();
+    var caseExecutionCommandBuilder = caseService
+        .withCaseExecution(caseTaskId);
 
     try {
       // when
-      caseService
-        .withCaseExecution(caseTaskId)
-        .complete();
+      caseExecutionCommandBuilder.complete();
       fail("It should not be possible to complete a case task, while the case instance is active.");
     } catch (NotAllowedException e) {}
 

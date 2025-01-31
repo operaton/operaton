@@ -799,6 +799,6 @@ public class SetVariablesBatchTest {
         batchRule.syncExec(batch);
 
         // then no exception is thrown and the variables are set for the existing process
-        assertThat(runtimeService.getVariables(id2).equals(SINGLE_VARIABLE));
+        assertThat(runtimeService.getVariables(id2)).isEqualTo(SINGLE_VARIABLE);
     }
 }

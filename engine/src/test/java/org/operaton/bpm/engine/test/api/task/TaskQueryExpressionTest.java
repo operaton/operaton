@@ -88,7 +88,7 @@ public class TaskQueryExpressionTest {
     anotherUser = createUser("anotherUser", group3.getId());
     userWithoutGroups = createUser("userWithoutGroups");
 
-    setTime(1427547759000l);
+    setTime(1427547759000L);
     testTask = createTestTask("task");
     // shift time to force distinguishable create times
     adjustTime(2 * 60);
@@ -477,7 +477,7 @@ public class TaskQueryExpressionTest {
     assertEquals(expressionString, taskQuery.getCandidateUser());
 
     setCurrentUser(testUser);
-    List<String> queryList = Arrays.asList("query");
+    List<String> queryList = List.of("query");
     String testGroupsExpression = "${currentUserGroups()}";
 
     taskQuery = (TaskQueryImpl) taskQuery()
@@ -538,15 +538,15 @@ public class TaskQueryExpressionTest {
       .isEqualTo(taskQuery.getOwner())
       .isEqualTo(taskQuery.getInvolvedUser());
     assertThat(taskQuery.getUpdatedAfter()).isEqualTo(queryDate);
-    assertThat(taskQuery.getCreateTimeBefore().equals(queryDate));
-    assertThat(taskQuery.getCreateTime().equals(queryDate));
-    assertThat(taskQuery.getCreateTimeAfter().equals(queryDate));
-    assertThat(taskQuery.getDueBefore().equals(queryDate));
-    assertThat(taskQuery.getDueDate().equals(queryDate));
-    assertThat(taskQuery.getDueAfter().equals(queryDate));
-    assertThat(taskQuery.getFollowUpBefore().equals(queryDate));
-    assertThat(taskQuery.getFollowUpDate().equals(queryDate));
-    assertThat(taskQuery.getFollowUpAfter().equals(queryDate));
+    assertThat(taskQuery.getCreateTimeBefore()).isEqualTo(queryDate);
+    assertThat(taskQuery.getCreateTime()).isEqualTo(queryDate);
+    assertThat(taskQuery.getCreateTimeAfter()).isEqualTo(queryDate);
+    assertThat(taskQuery.getDueBefore()).isEqualTo(queryDate);
+    assertThat(taskQuery.getDueDate()).isEqualTo(queryDate);
+    assertThat(taskQuery.getDueAfter()).isEqualTo(queryDate);
+    assertThat(taskQuery.getFollowUpBefore()).isEqualTo(queryDate);
+    assertThat(taskQuery.getFollowUpDate()).isEqualTo(queryDate);
+    assertThat(taskQuery.getFollowUpAfter()).isEqualTo(queryDate);
 
     // candidates has to be tested separately cause they have to be set exclusively
 
@@ -569,7 +569,7 @@ public class TaskQueryExpressionTest {
     assertThat(queryString).isEqualTo(taskQuery.getCandidateUser());
 
     setCurrentUser(testUser);
-    List<String> queryList = Arrays.asList("query");
+    List<String> queryList = List.of("query");
     String testGroupsExpression = "${currentUserGroups()}";
 
     taskQuery = (TaskQueryImpl) taskQuery()

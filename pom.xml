@@ -3,7 +3,7 @@
 
   <groupId>org.operaton.bpm</groupId>
   <artifactId>operaton-root</artifactId>
-  <version>1.0.0-beta-3</version>
+  <version>1.0.0-beta-4-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Operaton - Root POM</name>
   <inceptionYear>2024</inceptionYear>

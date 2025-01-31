@@ -348,7 +348,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
     externalTaskService.handleBpmnError(taskId, WORKER_ID, "ERROR-OCCURED");
 
     // then
-    assertEquals(taskService.createTaskQuery().singleResult().getTaskDefinitionKey(), "afterBpmnError");
+    assertEquals("afterBpmnError", taskService.createTaskQuery().singleResult().getTaskDefinitionKey());
   }
 
   @Test
@@ -386,7 +386,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
     externalTaskService.handleBpmnError(taskId, WORKER_ID, "ERROR-OCCURED");
 
     // then
-    assertEquals(taskService.createTaskQuery().singleResult().getTaskDefinitionKey(), "afterBpmnError");
+    assertEquals("afterBpmnError", taskService.createTaskQuery().singleResult().getTaskDefinitionKey());
 
   }
 

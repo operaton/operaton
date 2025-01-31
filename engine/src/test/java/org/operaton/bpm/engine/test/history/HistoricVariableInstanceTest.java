@@ -19,12 +19,7 @@ package org.operaton.bpm.engine.test.history;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.tuple;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.io.Serializable;
 import java.text.ParseException;
@@ -361,7 +356,7 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
      * execution id: On which execution it was set
      * activity id: in which activity was the process instance when setting the variable
      */
-      assertFalse(historicActivityInstance2.getExecutionId().equals(update2.getExecutionId()));
+      assertNotEquals(historicActivityInstance2.getExecutionId(), update2.getExecutionId());
     }
   }
 
@@ -581,7 +576,7 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
     // then
     assertEquals(1, query.list().size());
     assertEquals(1, query.count());
-    assertEquals(query.list().get(0).getName(), "stringVar");
+    assertEquals("stringVar", query.list().get(0).getName());
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
@@ -600,7 +595,7 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
     // then
     assertEquals(1, query.list().size());
     assertEquals(1, query.count());
-    assertEquals(query.list().get(0).getName(), "boolVar");
+    assertEquals("boolVar", query.list().get(0).getName());
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
@@ -2136,16 +2131,16 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
 
       // then the history contains one entry for each variable
       HistoricVariableInstanceQuery query = historyService.createHistoricVariableInstanceQuery();
-      assertEquals(query.count(), 2);
+      assertEquals(2, query.count());
 
       HistoricVariableInstance firstVariable = query.variableName("var1").singleResult();
       assertNotNull(firstVariable);
-      assertEquals(firstVariable.getValue(), "foo");
+      assertEquals("foo", firstVariable.getValue());
       assertNotNull(firstVariable.getActivityInstanceId());
 
       HistoricVariableInstance secondVariable = query.variableName("var2").singleResult();
       assertNotNull(secondVariable);
-      assertEquals(secondVariable.getValue(), "bar");
+      assertEquals("bar", secondVariable.getValue());
       assertNotNull(secondVariable.getActivityInstanceId());
     }
   }
@@ -2176,10 +2171,10 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
       // then the history contains only one entry for the latest update (value = "bar")
       // - the entry for the initial value (value = "foo") is lost because of current limitations
       HistoricVariableInstanceQuery query = historyService.createHistoricVariableInstanceQuery();
-      assertEquals(query.count(), 1);
+      assertEquals(1, query.count());
 
       HistoricVariableInstance variable = query.singleResult();
-      assertEquals(variable.getValue(), "bar");
+      assertEquals("bar", variable.getValue());
       assertNotNull(variable.getActivityInstanceId());
     }
   }

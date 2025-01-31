@@ -1169,7 +1169,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
   @Test
   public void testExecutionQueryForSuspendedExecutions() {
     List<Execution> suspendedExecutions = runtimeService.createExecutionQuery().suspended().list();
-    assertEquals(suspendedExecutions.size(), 0);
+    assertEquals(0, suspendedExecutions.size());
 
     for (String instanceId : concurrentProcessInstanceIds) {
       runtimeService.suspendProcessInstanceById(instanceId);

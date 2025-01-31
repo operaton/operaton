@@ -519,10 +519,10 @@ public class DecisionDefinitionDeployerTest {
 
     // then
     List<DecisionDefinition> deployedDecisionDefinitions = deployment.getDeployedDecisionDefinitions();
-    assertEquals(deployedDecisionDefinitions.size(), 1);
+    assertEquals(1, deployedDecisionDefinitions.size());
     Integer historyTimeToLive = deployedDecisionDefinitions.get(0).getHistoryTimeToLive();
     assertNotNull(historyTimeToLive);
-    assertEquals((int) historyTimeToLive, 5);
+    assertEquals(5, (int) historyTimeToLive);
   }
 
   @Test
@@ -532,10 +532,10 @@ public class DecisionDefinitionDeployerTest {
 
     // then
     List<DecisionDefinition> deployedDecisionDefinitions = deployment.getDeployedDecisionDefinitions();
-    assertEquals(deployedDecisionDefinitions.size(), 1);
+    assertEquals(1, deployedDecisionDefinitions.size());
     Integer historyTimeToLive = deployedDecisionDefinitions.get(0).getHistoryTimeToLive();
     assertNotNull(historyTimeToLive);
-    assertEquals((int) historyTimeToLive, 5);
+    assertEquals(5, (int) historyTimeToLive);
   }
 
   @Test
@@ -554,7 +554,7 @@ public class DecisionDefinitionDeployerTest {
 
       // then
       List<DecisionDefinition> deployedDecisionDefinitions = deployment.getDeployedDecisionDefinitions();
-      assertEquals(deployedDecisionDefinitions.size(), 1);
+      assertEquals(1, deployedDecisionDefinitions.size());
       Integer historyTimeToLive = deployedDecisionDefinitions.get(0).getHistoryTimeToLive();
       assertNull(historyTimeToLive);
   }

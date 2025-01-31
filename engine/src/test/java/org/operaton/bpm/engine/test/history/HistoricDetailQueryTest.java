@@ -247,8 +247,8 @@ public class HistoricDetailQueryTest {
     assertEquals(1, query.count());
     HistoricDetail historicDetail = query.list().get(0);
     if (historicDetail instanceof HistoricVariableUpdate variableUpdate) {
-      assertEquals(variableUpdate.getVariableName(), "stringVar");
-      assertEquals(variableUpdate.getTypeName(), "string");
+      assertEquals("stringVar", variableUpdate.getVariableName());
+      assertEquals("string", variableUpdate.getTypeName());
     } else {
       fail("Historic detail should be a variable update!");
     }
@@ -273,8 +273,8 @@ public class HistoricDetailQueryTest {
     assertEquals(1, query.count());
     HistoricDetail historicDetail = query.list().get(0);
     if (historicDetail instanceof HistoricVariableUpdate variableUpdate) {
-      assertEquals(variableUpdate.getVariableName(), "boolVar");
-      assertEquals(variableUpdate.getTypeName(), "boolean");
+      assertEquals("boolVar", variableUpdate.getVariableName());
+      assertEquals("boolean", variableUpdate.getTypeName());
     } else {
       fail("Historic detail should be a variable update!");
     }

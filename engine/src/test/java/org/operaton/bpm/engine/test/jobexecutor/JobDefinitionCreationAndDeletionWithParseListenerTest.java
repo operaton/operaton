@@ -86,9 +86,9 @@ public class JobDefinitionCreationAndDeletionWithParseListenerTest {
     JobDefinitionQuery query = engineRule.getManagementService().createJobDefinitionQuery();
     JobDefinition jobDef = query.singleResult();
     assertNotNull(jobDef);
-    assertEquals(jobDef.getProcessDefinitionKey(), "oneTaskProcess");
-    assertEquals(jobDef.getActivityId(), "servicetask1");
-    assertEquals(jobDef.getJobConfiguration(), MessageJobDeclaration.ASYNC_AFTER);
+    assertEquals("oneTaskProcess", jobDef.getProcessDefinitionKey());
+    assertEquals("servicetask1", jobDef.getActivityId());
+    assertEquals(MessageJobDeclaration.ASYNC_AFTER, jobDef.getJobConfiguration());
   }
 
   @Test
@@ -106,9 +106,9 @@ public class JobDefinitionCreationAndDeletionWithParseListenerTest {
     JobDefinitionQuery query = engineRule.getManagementService().createJobDefinitionQuery();
     JobDefinition jobDef = query.singleResult();
     assertNotNull(jobDef);
-    assertEquals(jobDef.getProcessDefinitionKey(), "oneTaskProcess");
-    assertEquals(jobDef.getActivityId(), "servicetask1");
-    assertEquals(jobDef.getJobConfiguration(), MessageJobDeclaration.ASYNC_AFTER);
+    assertEquals("oneTaskProcess", jobDef.getProcessDefinitionKey());
+    assertEquals("servicetask1", jobDef.getActivityId());
+    assertEquals(MessageJobDeclaration.ASYNC_AFTER, jobDef.getJobConfiguration());
   }
 
   @Test
@@ -126,8 +126,8 @@ public class JobDefinitionCreationAndDeletionWithParseListenerTest {
     JobDefinitionQuery query = engineRule.getManagementService().createJobDefinitionQuery();
     JobDefinition jobDef = query.singleResult();
     assertNotNull(jobDef);
-    assertEquals(jobDef.getProcessDefinitionKey(), "oneTaskProcess");
-    assertEquals(jobDef.getActivityId(), "servicetask1");
-    assertEquals(jobDef.getJobConfiguration(), MessageJobDeclaration.ASYNC_AFTER);
+    assertEquals("oneTaskProcess", jobDef.getProcessDefinitionKey());
+    assertEquals("servicetask1", jobDef.getActivityId());
+    assertEquals(MessageJobDeclaration.ASYNC_AFTER, jobDef.getJobConfiguration());
   }
 }

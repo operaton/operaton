@@ -784,7 +784,7 @@ public class RestartProcessInstanceSyncTest {
 
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
-    assertEquals(processInstance.getTenantId(), TestTenantIdProvider.TENANT_ID);
+    assertEquals(TestTenantIdProvider.TENANT_ID, processInstance.getTenantId());
     runtimeService.deleteProcessInstance(processInstance.getId(), "test");
 
     // when
@@ -798,7 +798,7 @@ public class RestartProcessInstanceSyncTest {
         .processDefinitionId(processDefinition.getId()).singleResult();
 
     assertNotNull(restartedInstance);
-    assertEquals(restartedInstance.getTenantId(), TestTenantIdProvider.TENANT_ID);
+    assertEquals(TestTenantIdProvider.TENANT_ID, restartedInstance.getTenantId());
   }
 
   @Test
@@ -809,7 +809,7 @@ public class RestartProcessInstanceSyncTest {
 
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
-    assertEquals(processInstance.getTenantId(), TestTenantIdProvider.TENANT_ID);
+    assertEquals(TestTenantIdProvider.TENANT_ID, processInstance.getTenantId());
     runtimeService.deleteProcessInstance(processInstance.getId(), "test");
 
     // set tenant id provider to fail to verify it is not called during instantiation
@@ -827,7 +827,7 @@ public class RestartProcessInstanceSyncTest {
       .processDefinitionId(processDefinition.getId()).singleResult();
 
     assertNotNull(restartedInstance);
-    assertEquals(restartedInstance.getTenantId(), TestTenantIdProvider.TENANT_ID);
+    assertEquals(TestTenantIdProvider.TENANT_ID, restartedInstance.getTenantId());
   }
 
   @Test

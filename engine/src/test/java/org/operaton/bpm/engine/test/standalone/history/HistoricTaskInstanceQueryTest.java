@@ -554,7 +554,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
     taskService.addCandidateGroup(taskId, "aGroupId");
 
     // then
-    assertEquals(historyService.createHistoricTaskInstanceQuery().withCandidateGroups().count(), 1);
+    assertEquals(1, historyService.createHistoricTaskInstanceQuery().withCandidateGroups().count());
 
     // cleanup
     taskService.deleteTask("newTask", true);
@@ -574,8 +574,8 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     // then
-    assertEquals(historyService.createHistoricTaskInstanceQuery().count(), 2);
-    assertEquals(historyService.createHistoricTaskInstanceQuery().withoutCandidateGroups().count(), 1);
+    assertEquals(2, historyService.createHistoricTaskInstanceQuery().count());
+    assertEquals(1, historyService.createHistoricTaskInstanceQuery().withoutCandidateGroups().count());
 
     // cleanup
     taskService.deleteTask("newTask", true);
@@ -646,7 +646,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
     List<HistoricTaskInstance> list = historyService.createHistoricTaskInstanceQuery().taskAssigned().list();
 
     // then
-    assertEquals(list.size(), 2);
+    assertEquals(2, list.size());
 
     // cleanup
     taskService.deleteTask("taskOne",true);
@@ -675,7 +675,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
     List<HistoricTaskInstance> list = historyService.createHistoricTaskInstanceQuery().taskUnassigned().list();
 
     // then
-    assertEquals(list.size(), 1);
+    assertEquals(1, list.size());
 
     // cleanup
     taskService.deleteTask("taskOne",true);

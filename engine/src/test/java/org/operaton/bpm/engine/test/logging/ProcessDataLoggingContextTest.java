@@ -974,7 +974,7 @@ public class ProcessDataLoggingContextTest {
       } else {
         // second BPMN stack trace log corresponds to outer service task
         assertThat(mdcPropertyMap).containsKey("businessKey");
-        assertThat("startProcess").isEqualTo(mdcPropertyMap.get("activityId"));
+        assertThat(mdcPropertyMap).containsEntry("activityId", "startProcess");
         assertThat(instance.getBusinessKey()).isEqualTo(mdcPropertyMap.get("businessKey"));
         assertThat(instance.getProcessDefinitionId()).isEqualTo(mdcPropertyMap.get("processDefinitionId"));
         assertThat(instance.getId()).isEqualTo(mdcPropertyMap.get("processInstanceId"));

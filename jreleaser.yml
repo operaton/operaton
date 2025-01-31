@@ -39,7 +39,7 @@ release: # https://jreleaser.org/guide/latest/reference/release/github.html
     owner: operaton
     draft: false
     skipTag: false
-    previousTagName: 1.0.0-beta-2
+    previousTagName: 1.0.0-beta-3
     releaseName: Release {{tagName}}
     prerelease: # TODO Evaluate JRELEASER_PRERELEASE_ENABLED
       enabled: true

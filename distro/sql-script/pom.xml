@@ -10,7 +10,7 @@
 
   <groupId>org.operaton.bpm.distro</groupId>
   <artifactId>operaton-sql-scripts</artifactId>
-  <version>7.23.0</version>
+  <version>${version.operaton.dbscheme}</version>
   <packaging>jar</packaging>
 
   <name>Operaton - SQL scripts</name>

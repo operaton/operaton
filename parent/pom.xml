@@ -17,6 +17,7 @@
   </description>
 
   <properties>
+    <version.operaton.dbscheme>7.23.0</version.operaton.dbscheme>
     <version.spring.framework>5.3.39</version.spring.framework>
     <version.spring.framework6>6.1.15</version.spring.framework6>
     <version.spring-boot>3.4.1</version.spring-boot>

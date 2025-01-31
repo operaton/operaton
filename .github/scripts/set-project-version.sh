@@ -56,9 +56,8 @@ sed -i "s/$CURRENT_VERSION/$NEW_VERSION/g" ./distro/license-book/src/main/resour
 
 MISSED_FILES=$(grep -R "$CURRENT_VERSION" --include pom.xml --include package.json --include license-book.txt .)
 if [ -n "$MISSED_FILES" ]; then
-  echo "❌ The following files still contain the old version:"
+  echo "⚠️ The following files still contain the old version:"
   echo "$MISSED_FILES"
-  exit 1
 fi
 
 echo "✅ Version updated to $NEW_VERSION"

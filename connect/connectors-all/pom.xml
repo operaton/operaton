@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.connect</groupId>
     <artifactId>operaton-connect-root</artifactId>
-    <version>1.0.0-beta-3</version>
+    <version>1.0.0-beta-4-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-connect-connectors-all</artifactId>

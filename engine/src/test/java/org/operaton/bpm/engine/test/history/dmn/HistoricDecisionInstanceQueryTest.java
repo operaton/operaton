@@ -42,6 +42,7 @@ import java.util.Date;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 /**
@@ -106,9 +107,10 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     startProcessInstanceAndEvaluateDecision();
 
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
+    var historicDecisionInstance = query.singleResult();
 
     try {
-      query.singleResult().getOutputs();
+      historicDecisionInstance.getOutputs();
       fail("expected exception: output not fetched");
     } catch (ProcessEngineException e) {
       // should throw exception if output is not fetched
@@ -250,10 +252,10 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
   public void testQueryByInvalidDecisionDefinitionIdIn() {
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
     try {
-      query.decisionDefinitionIdIn("aFake", null).count();
+      query.decisionDefinitionIdIn("aFake", null);
       fail("exception expected");
     } catch (ProcessEngineException e) {
-      //expected
+      assertEquals("decisionDefinitionIdIn contains null value", e.getMessage());
     }
   }
 
@@ -279,10 +281,10 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
   public void testQueryByInvalidDecisionDefinitionKeyIn() {
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
     try {
-      query.decisionDefinitionKeyIn("aFake", null).count();
+      query.decisionDefinitionKeyIn("aFake", null);
       fail("exception expected");
     } catch (ProcessEngineException e) {
-      //expected
+      assertEquals("decisionDefinitionKeyIn contains null value", e.getMessage());
     }
   }
 

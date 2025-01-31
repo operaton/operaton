@@ -582,8 +582,9 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
 
   @Test
   public void testInvalidSorting() {
+    var historicCaseActivityInstanceQuery = historicQuery();
     try {
-      historicQuery().asc();
+      historicCaseActivityInstanceQuery.asc();
       fail("Exception expected");
     }
     catch (ProcessEngineException e) {
@@ -591,15 +592,16 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
     }
 
     try {
-      historicQuery().desc();
+      historicCaseActivityInstanceQuery.desc();
       fail("Exception expected");
     }
     catch (ProcessEngineException e) {
       // expected
     }
 
+    var historicCaseActivityInstanceQuery1 = historicQuery().orderByHistoricCaseActivityInstanceId();
     try {
-      historicQuery().orderByHistoricCaseActivityInstanceId().count();
+      historicCaseActivityInstanceQuery1.count();
       fail("Exception expected");
     }
     catch (ProcessEngineException e) {
@@ -902,14 +904,15 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
 
     // then
     assertCount(0, query);
+    var historicCaseActivityInstanceQuery = historicQuery();
 
     try {
-      historicQuery().caseActivityInstanceIdIn((String[])null);
+      historicCaseActivityInstanceQuery.caseActivityInstanceIdIn((String[])null);
       fail("A NotValidException was expected.");
     } catch (NotValidException e) {}
 
     try {
-      historicQuery().caseActivityInstanceIdIn((String)null);
+      historicCaseActivityInstanceQuery.caseActivityInstanceIdIn((String)null);
       fail("A NotValidException was expected.");
     } catch (NotValidException e) {}
   }
@@ -940,14 +943,15 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
 
     // then
     assertCount(0, query);
+    var historicCaseActivityInstanceQuery = historicQuery();
 
     try {
-      historicQuery().caseActivityIdIn((String[])null);
+      historicCaseActivityInstanceQuery.caseActivityIdIn((String[])null);
       fail("A NotValidException was expected.");
     } catch (NotValidException e) {}
 
     try {
-      historicQuery().caseActivityIdIn((String)null);
+      historicCaseActivityInstanceQuery.caseActivityIdIn((String)null);
       fail("A NotValidException was expected.");
     } catch (NotValidException e) {}
   }

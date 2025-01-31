@@ -62,13 +62,13 @@ public class HistoricCaseActivityStatisticsQueryTest {
 
   @Test
   public void testCaseDefinitionNull() {
+    var historicCaseActivityStatisticsQuery = historyService
+        .createHistoricCaseActivityStatisticsQuery(null);
     // given
 
     // when
     try {
-      historyService
-        .createHistoricCaseActivityStatisticsQuery(null)
-        .list();
+      historicCaseActivityStatisticsQuery.list();
       fail("It should not be possible to query for statistics by null.");
     } catch (NullValueException exception) {
 

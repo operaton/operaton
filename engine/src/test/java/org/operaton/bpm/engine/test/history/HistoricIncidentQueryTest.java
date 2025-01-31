@@ -558,9 +558,10 @@ public class HistoricIncidentQueryTest {
   @Test
   public void testQueryByInvalidOpen() {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
+    var historicIncidentQuery = query.open();
 
     try {
-      query.open().open();
+      historicIncidentQuery.open();
       fail("It was possible to set a the open flag twice.");
     } catch (ProcessEngineException e) { }
   }
@@ -583,9 +584,10 @@ public class HistoricIncidentQueryTest {
   @Test
   public void testQueryByInvalidResolved() {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
+    var historicIncidentQuery = query.resolved();
 
     try {
-      query.resolved().resolved();
+      historicIncidentQuery.resolved();
       fail("It was possible to set a the resolved flag twice.");
     } catch (ProcessEngineException e) { }
   }
@@ -608,9 +610,10 @@ public class HistoricIncidentQueryTest {
   @Test
   public void testQueryByInvalidDeleted() {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
+    var historicIncidentQuery = query.deleted();
 
     try {
-      query.deleted().deleted();
+      historicIncidentQuery.deleted();
       fail("It was possible to set a the deleted flag twice.");
     } catch (ProcessEngineException e) { }
   }
@@ -666,9 +669,9 @@ public class HistoricIncidentQueryTest {
 
   @Test
   public void testQueryByNullJobDefinitionId() {
+    var historicIncidentQuery = historyService.createHistoricIncidentQuery();
     try {
-      historyService.createHistoricIncidentQuery()
-        .jobDefinitionIdIn((String) null);
+      historicIncidentQuery.jobDefinitionIdIn((String) null);
       fail("Should fail");
     }
     catch (NullValueException e) {
@@ -678,9 +681,9 @@ public class HistoricIncidentQueryTest {
 
   @Test
   public void testQueryByNullJobDefinitionIds() {
+    var historicIncidentQuery = historyService.createHistoricIncidentQuery();
     try {
-      historyService.createHistoricIncidentQuery()
-        .jobDefinitionIdIn((String[]) null);
+      historicIncidentQuery.jobDefinitionIdIn((String[]) null);
       fail("Should fail");
     }
     catch (NullValueException e) {

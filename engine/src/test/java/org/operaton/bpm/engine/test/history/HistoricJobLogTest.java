@@ -159,9 +159,10 @@ public class HistoricJobLogTest {
     JobEntity job = (JobEntity) managementService
         .createJobQuery()
         .singleResult();
+    var jobId = job.getId();
 
     try {
-      managementService.executeJob(job.getId());
+      managementService.executeJob(jobId);
       fail("exception expected");
     } catch (Exception e) {
       // expected
@@ -1325,10 +1326,11 @@ public class HistoricJobLogTest {
 
     runtimeService.startProcessInstanceByKey("process", Variables.createVariables().putValue("delegate", delegate));
     Job job = managementService.createJobQuery().singleResult();
+    var jobId = job.getId();
 
     // when
     try {
-      managementService.executeJob(job.getId());
+      managementService.executeJob(jobId);
       fail("exception expected");
     } catch (Exception e) {
       // expected

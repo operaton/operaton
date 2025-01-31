@@ -151,8 +151,9 @@ public class HistoricBatchQueryTest {
 
   @Test
   public void testBatchQueryByIdNull() {
+    var historicBatchQuery = historyService.createHistoricBatchQuery();
     try {
-      historyService.createHistoricBatchQuery().batchId(null).singleResult();
+      historicBatchQuery.batchId(null);
       Assert.fail("exception expected");
     }
     catch (NullValueException e) {
@@ -212,8 +213,9 @@ public class HistoricBatchQueryTest {
 
   @Test
   public void testBatchQueryByTypeNull() {
+    var historicBatchQuery = historyService.createHistoricBatchQuery();
     try {
-      historyService.createHistoricBatchQuery().type(null).singleResult();
+      historicBatchQuery.type(null);
       Assert.fail("exception expected");
     }
     catch (NullValueException e) {
@@ -328,25 +330,25 @@ public class HistoricBatchQueryTest {
 
   @Test
   public void testBatchQueryOrderingPropertyWithoutOrder() {
+    var historicBatchQuery = historyService.createHistoricBatchQuery().orderById();
     try {
-      historyService.createHistoricBatchQuery().orderById().singleResult();
+      historicBatchQuery.singleResult();
       Assert.fail("exception expected");
     }
     catch (NotValidException e) {
-      assertThat(e.getMessage()).contains("Invalid query: "
-          + "call asc() or desc() after using orderByXX()");
+      assertThat(e.getMessage()).contains("Invalid query: call asc() or desc() after using orderByXX()");
     }
   }
 
   @Test
   public void testBatchQueryOrderWithoutOrderingProperty() {
+    var historicBatchQuery = historyService.createHistoricBatchQuery();
     try {
-      historyService.createHistoricBatchQuery().asc().singleResult();
+      historicBatchQuery.asc();
       Assert.fail("exception expected");
     }
     catch (NotValidException e) {
-      assertThat(e.getMessage()).contains("You should call any of the orderBy methods "
-          + "first before specifying a direction");
+      assertThat(e.getMessage()).contains("You should call any of the orderBy methods first before specifying a direction");
     }
   }
 }

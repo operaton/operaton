@@ -201,16 +201,16 @@ public class HistoricProcessInstanceStateTest {
         .endEvent()
         .done();
     ProcessDefinition processDefinition = processEngineTestRule.deployAndGetDefinition(instance);
+    processEngineRule.getRuntimeService().startProcessInstanceById(processDefinition.getId());
 
+    var jobId = processEngineRule.getManagementService().createJobQuery().executable().singleResult().getId();
+    var managementService = processEngineRule.getManagementService();
 
     try {
-      ProcessInstance pi = processEngineRule.getRuntimeService()
-          .startProcessInstanceById(processDefinition.getId());
-      processEngineRule.getManagementService().executeJob(
-          processEngineRule.getManagementService().createJobQuery().executable().singleResult().getId());
+      managementService.executeJob(jobId);
       fail("exception expected");
     } catch (Exception e) {
-      //expected
+      assertThat(e.getMessage()).contains("Unable to evaluate script while executing activity");
     }
 
     assertThat(processEngineRule.getRuntimeService().createProcessInstanceQuery().active().list()).hasSize(1);

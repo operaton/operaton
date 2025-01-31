@@ -55,11 +55,6 @@
       <version>${project.version}</version>
       <scope>runtime</scope>
     </dependency>
-    <dependency>
-      <artifactId>spring-beans</artifactId>
-      <groupId>org.springframework</groupId>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
 
   <build>

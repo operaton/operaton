@@ -11,25 +11,10 @@
   <groupId>org.operaton.bpm.webapp</groupId>
   <artifactId>operaton-webapp-tomcat</artifactId>
   <packaging>war</packaging>
-  
+
   <properties>
     <skip-third-party-bom>false</skip-third-party-bom>
   </properties>
-
-  <dependencies>
-    <dependency>
-      <groupId>org.operaton.bpm.webapp</groupId>
-      <artifactId>operaton-webapp</artifactId>
-      <version>${project.version}</version>
-      <type>war</type>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.jboss.resteasy</groupId>
-      <artifactId>resteasy-jaxrs</artifactId>
-      <version>${version.resteasy}</version>
-    </dependency>
-  </dependencies>
 
   <build>
     <finalName>operaton-webapp</finalName>

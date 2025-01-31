@@ -238,9 +238,10 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
     Job job = managementService.createJobQuery().singleResult();
 
     assertEquals(3, job.getRetries());
+    var jobId = job.getId();
 
     try {
-      managementService.executeJob(job.getId());
+      managementService.executeJob(jobId);
       fail();
     } catch (Exception e) {
       // expected

@@ -1056,10 +1056,11 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
     // given suspended process
     ProcessInstance procInst = runtimeService.startProcessInstanceByKey(CONDITIONAL_EVENT_PROCESS_KEY);
+    var processInstanceId = procInst.getId();
     runtimeService.suspendProcessInstanceById(procInst.getId());
 
     //when wrong variable is set
-    runtimeService.setVariable(procInst.getId(), VARIABLE_NAME+1, 1);
+    runtimeService.setVariable(processInstanceId, VARIABLE_NAME+1, 1);
 
     //then nothing happens
     assertTrue(runtimeService.createProcessInstanceQuery().singleResult().isSuspended());
@@ -1067,12 +1068,12 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
     //when variable which triggers condition is set
     //then exception is expected
     try {
-      runtimeService.setVariable(procInst.getId(), VARIABLE_NAME, 1);
+      runtimeService.setVariable(processInstanceId, VARIABLE_NAME, 1);
       fail("Should fail!");
     } catch (SuspendedEntityInteractionException seie) {
       //expected
     }
-    runtimeService.activateProcessInstanceById(procInst.getId());
+    runtimeService.activateProcessInstanceById(processInstanceId);
     tasksAfterVariableIsSet = taskService.createTaskQuery().list();
   }
 
@@ -1089,10 +1090,11 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
     // given suspended process
     ProcessInstance procInst = runtimeService.startProcessInstanceByKey(CONDITIONAL_EVENT_PROCESS_KEY);
+    var processInstanceId = procInst.getId();
     runtimeService.suspendProcessInstanceById(procInst.getId());
 
     //when wrong variable is set
-    runtimeService.setVariable(procInst.getId(), VARIABLE_NAME+1, 1);
+    runtimeService.setVariable(processInstanceId, VARIABLE_NAME+1, 1);
 
     //then nothing happens
     assertTrue(runtimeService.createProcessInstanceQuery().singleResult().isSuspended());
@@ -1100,12 +1102,12 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
     //when variable which triggers condition is set
     //then exception is expected
     try {
-      runtimeService.setVariable(procInst.getId(), VARIABLE_NAME, 1);
+      runtimeService.setVariable(processInstanceId, VARIABLE_NAME, 1);
       fail("Should fail!");
     } catch (SuspendedEntityInteractionException seie) {
       //expected
     }
-    runtimeService.activateProcessInstanceById(procInst.getId());
+    runtimeService.activateProcessInstanceById(processInstanceId);
     tasksAfterVariableIsSet = taskService.createTaskQuery().list();
   }
 

@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.bpmn.shell;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -54,7 +55,7 @@ public class ShellTaskTest extends PluggableProcessEngineTest {
 
   @Test
   public void testOsDetection() {
-    assertTrue(osType != OsType.UNKOWN);
+    assertNotSame(osType, OsType.UNKOWN);
   }
 
   @Deployment

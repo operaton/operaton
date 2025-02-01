@@ -68,7 +68,7 @@ public class DeploymentStatisticsQueryTest extends PluggableProcessEngineTest {
     cal2.setTime(result.getDeploymentTime());
     cal2.set(Calendar.MILLISECOND, 0);
 
-    Assert.assertTrue(cal1.equals(cal2));
+    assertEquals(cal1, cal2);
 
     repositoryService.deleteDeployment(deployment.getId(), true);
   }

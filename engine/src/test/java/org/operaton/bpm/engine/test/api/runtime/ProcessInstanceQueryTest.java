@@ -58,6 +58,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -1979,7 +1980,7 @@ public class ProcessInstanceQueryTest {
     assertEquals(5, instances.size());
 
     for (ProcessInstance returnedInstance : instances) {
-      assertTrue(!returnedInstance.getId().equals(secondProcessInstance.getId()));
+      assertFalse(returnedInstance.getId().equals(secondProcessInstance.getId()));
     }
 
     // cleanup

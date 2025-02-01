@@ -77,7 +77,7 @@ public class DelegateExecutionHierarchyTest extends PluggableProcessEngineTest {
 
     AssertingJavaDelegate.addAsserts(
         execution -> {
-          assertFalse(execution.equals(execution.getProcessInstance()));
+          assertNotEquals(execution, execution.getProcessInstance());
           assertNull(execution.getSuperExecution());
         }
     );
@@ -102,7 +102,7 @@ public class DelegateExecutionHierarchyTest extends PluggableProcessEngineTest {
 
     AssertingJavaDelegate.addAsserts(
         execution -> {
-          assertFalse(execution.equals(execution.getProcessInstance()));
+          assertNotEquals(execution, execution.getProcessInstance());
           assertNull(execution.getSuperExecution());
         }
     );
@@ -129,7 +129,7 @@ public class DelegateExecutionHierarchyTest extends PluggableProcessEngineTest {
 
     AssertingJavaDelegate.addAsserts(
         execution -> {
-          assertTrue(execution.equals(execution.getProcessInstance()));
+          assertEquals(execution, execution.getProcessInstance());
           assertNotNull(execution.getSuperExecution());
         }
     );

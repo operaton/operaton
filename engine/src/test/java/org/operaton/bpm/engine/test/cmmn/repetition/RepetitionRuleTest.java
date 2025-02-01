@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.cmmn.repetition;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -192,7 +192,7 @@ public class RepetitionRuleTest extends CmmnTest {
 
     assertEquals(1, query.count());
     assertTrue(query.singleResult().isAvailable());
-    assertFalse(milestoneId.equals(query.singleResult().getId()));
+    assertNotEquals(milestoneId, query.singleResult().getId());
   }
 
   @Deployment
@@ -298,7 +298,7 @@ public class RepetitionRuleTest extends CmmnTest {
 
     assertEquals(1, query.count());
     assertTrue(query.singleResult().isAvailable());
-    assertFalse(milestoneId.equals(query.singleResult().getId()));
+    assertNotEquals(milestoneId, query.singleResult().getId());
 
     // when (2)
     reenable(firstHumanTaskId);
@@ -311,7 +311,7 @@ public class RepetitionRuleTest extends CmmnTest {
 
     assertEquals(1, query.count());
     assertTrue(query.singleResult().isAvailable());
-    assertFalse(milestoneId.equals(query.singleResult().getId()));
+    assertNotEquals(milestoneId, query.singleResult().getId());
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/repetition/RepetitionRuleTest.testRepeatTaskWithoutEntryCriteria.cmmn")

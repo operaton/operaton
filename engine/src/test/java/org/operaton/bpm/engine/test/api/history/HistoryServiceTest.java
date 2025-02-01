@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.api.history;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -75,22 +76,22 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   public void testHistoricProcessInstanceQuery() {
     // With a clean ProcessEngine, no instances should be available
-    assertTrue(historyService.createHistoricProcessInstanceQuery().count() == 0);
+    assertEquals(0, historyService.createHistoricProcessInstanceQuery().count());
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
-    assertTrue(historyService.createHistoricProcessInstanceQuery().count() == 1);
+    assertEquals(1, historyService.createHistoricProcessInstanceQuery().count());
 
     // Complete the task and check if the size is count 1
     List<Task> tasks = taskService.createTaskQuery().processInstanceId(processInstance.getId()).list();
     assertEquals(1, tasks.size());
     taskService.complete(tasks.get(0).getId());
-    assertTrue(historyService.createHistoricProcessInstanceQuery().count() == 1);
+    assertEquals(1, historyService.createHistoricProcessInstanceQuery().count());
   }
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   public void testHistoricProcessInstanceQueryOrderBy() {
     // With a clean ProcessEngine, no instances should be available
-    assertTrue(historyService.createHistoricProcessInstanceQuery().count() == 0);
+    assertEquals(0, historyService.createHistoricProcessInstanceQuery().count());
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
 
     List<Task> tasks = taskService.createTaskQuery().processInstanceId(processInstance.getId()).list();
@@ -771,8 +772,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
 
   @Test
   public void testDeleteProcessInstanceIfExistsWithFake() {
-      historyService.deleteHistoricProcessInstanceIfExists("aFake");
-      //don't expect exception
+      assertThatCode(() -> historyService.deleteHistoricProcessInstanceIfExists("aFake")).doesNotThrowAnyException();
   }
 
   @Test

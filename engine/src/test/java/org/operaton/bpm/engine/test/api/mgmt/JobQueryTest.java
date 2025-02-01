@@ -58,6 +58,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
@@ -313,7 +314,7 @@ public class JobQueryTest {
     verifyQueryResults(query, 1);
 
     String anotherJobId = query.singleResult().getId();
-    assertFalse(jobId.equals(anotherJobId));
+    assertNotEquals(jobId, anotherJobId);
   }
 
   @Test
@@ -349,7 +350,7 @@ public class JobQueryTest {
     verifyQueryResults(query, 1);
 
     String anotherJobId = query.singleResult().getId();
-    assertFalse(jobId.equals(anotherJobId));
+    assertNotEquals(jobId, anotherJobId);
   }
 
   @Test

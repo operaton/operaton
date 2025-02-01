@@ -1245,7 +1245,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     assertEquals(1, jobQuery.count());
 
     String anotherJobId = jobQuery.singleResult().getId();
-    assertFalse(jobId.equals(anotherJobId));
+    assertNotEquals(jobId, anotherJobId);
   }
 
   @Test
@@ -1412,7 +1412,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     assertEquals(1, jobQuery.count());
 
     String anotherJobId = jobQuery.singleResult().getId();
-    assertFalse(jobId.equals(anotherJobId));
+    assertNotEquals(jobId, anotherJobId);
   }
 
   @Test
@@ -1590,7 +1590,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     Date newDuedate = jobQuery.singleResult().getDuedate();
     Date expectedDate = LocalDateTime.fromDateFields(jobQuery.singleResult().getCreateTime()).plusMinutes(2).toDate();
     assertTrue(oldDueDate.before(newDuedate));
-    assertTrue(expectedDate.equals(newDuedate));
+    assertEquals(expectedDate, newDuedate);
 
     managementService.executeJob(jobId);
     assertEquals(1, taskService.createTaskQuery().taskName("taskInSubprocess").list().size());

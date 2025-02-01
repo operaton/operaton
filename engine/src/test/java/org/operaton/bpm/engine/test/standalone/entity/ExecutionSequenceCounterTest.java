@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.test.standalone.entity;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
@@ -242,7 +243,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
     ActivitySequenceCounterMap theService3Element = order.get(1);
     assertEquals("theService3", theService3Element.getActivityId());
 
-    assertTrue(theService1Element.getSequenceCounter() == theService3Element.getSequenceCounter());
+    assertEquals(theService1Element.getSequenceCounter(), theService3Element.getSequenceCounter());
 
     // when (2)
     String jobId = jobQuery.activityId("theService4").singleResult().getId();
@@ -303,7 +304,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
     ActivitySequenceCounterMap theService3Element = order.get(1);
     assertEquals("theService3", theService3Element.getActivityId());
 
-    assertTrue(theService1Element.getSequenceCounter() == theService3Element.getSequenceCounter());
+    assertEquals(theService1Element.getSequenceCounter(), theService3Element.getSequenceCounter());
 
     // when (2)
     String jobId = jobQuery.activityId("theService2").singleResult().getId();
@@ -367,8 +368,8 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
     ActivitySequenceCounterMap theService6Element = order.get(2);
     assertEquals("theService6", theService6Element.getActivityId());
 
-    assertTrue(theService1Element.getSequenceCounter() == theService3Element.getSequenceCounter());
-    assertTrue(theService3Element.getSequenceCounter() == theService6Element.getSequenceCounter());
+    assertEquals(theService1Element.getSequenceCounter(), theService3Element.getSequenceCounter());
+    assertEquals(theService3Element.getSequenceCounter(), theService6Element.getSequenceCounter());
 
     // when (2)
     String jobId = jobQuery.activityId("theService2").singleResult().getId();
@@ -552,7 +553,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
     assertEquals("join", theJoin2Element.getActivityId());
     assertTrue(theJoin2Element.getSequenceCounter() > lastSequenceCounter);
 
-    assertFalse(theJoin1Element.getSequenceCounter() == theJoin2Element.getSequenceCounter());
+    assertNotEquals(theJoin1Element.getSequenceCounter(), theJoin2Element.getSequenceCounter());
 
     ActivitySequenceCounterMap theService4Element = order.get(8);
     assertEquals("theService4", theService4Element.getActivityId());
@@ -588,9 +589,9 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
     ActivitySequenceCounterMap theJoin3Element = order.get(2);
     assertEquals("join", theJoin3Element.getActivityId());
 
-    assertFalse(theJoin1Element.getSequenceCounter() == theJoin2Element.getSequenceCounter());
-    assertFalse(theJoin2Element.getSequenceCounter() == theJoin3Element.getSequenceCounter());
-    assertFalse(theJoin3Element.getSequenceCounter() == theJoin1Element.getSequenceCounter());
+    assertNotEquals(theJoin1Element.getSequenceCounter(), theJoin2Element.getSequenceCounter());
+    assertNotEquals(theJoin2Element.getSequenceCounter(), theJoin3Element.getSequenceCounter());
+    assertNotEquals(theJoin3Element.getSequenceCounter(), theJoin1Element.getSequenceCounter());
 
     ActivitySequenceCounterMap theService7Element = order.get(3);
     assertEquals("theService7", theService7Element.getActivityId());

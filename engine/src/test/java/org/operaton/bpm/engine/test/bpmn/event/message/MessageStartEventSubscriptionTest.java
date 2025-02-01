@@ -19,8 +19,8 @@ package org.operaton.bpm.engine.test.bpmn.event.message;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.List;
@@ -105,16 +105,16 @@ public class MessageStartEventSubscriptionTest {
       if (processDefinition.getVersion() == 1) {
         for (EventSubscription subscription : newEventSubscriptions) {
           EventSubscriptionEntity subscriptionEntity = (EventSubscriptionEntity) subscription;
-          assertFalse(subscriptionEntity.getConfiguration().equals(processDefinition.getId()));
+          assertNotEquals(subscriptionEntity.getConfiguration(), processDefinition.getId());
         }
       } else {
         for (EventSubscription subscription : newEventSubscriptions) {
           EventSubscriptionEntity subscriptionEntity = (EventSubscriptionEntity) subscription;
-          assertTrue(subscriptionEntity.getConfiguration().equals(processDefinition.getId()));
+          assertEquals(subscriptionEntity.getConfiguration(), processDefinition.getId());
         }
       }
     }
-    assertFalse(eventSubscriptions.equals(newEventSubscriptions));
+    assertNotEquals(eventSubscriptions, newEventSubscriptions);
   }
 
   @Test
@@ -455,7 +455,6 @@ public class MessageStartEventSubscriptionTest {
   protected String deployModel(BpmnModelInstance model) {
     List<ProcessDefinition> deployedProcessDefinitions = testRule.deploy(model).getDeployedProcessDefinitions();
     assertEquals(1, deployedProcessDefinitions.size());
-    String definitionId2 = deployedProcessDefinitions.get(0).getId();
-    return definitionId2;
+    return deployedProcessDefinitions.get(0).getId();
   }
 }

@@ -17,12 +17,7 @@
 package org.operaton.bpm.engine.test.cmmn.processtask;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.util.List;
 
@@ -546,7 +541,7 @@ public class ProcessTaskTest extends CmmnTest {
     assertEquals(processTaskId, processInstance.getSuperCaseExecutionId());
     // the business key has been set
     assertEquals("myOwnBusinessKey", processInstance.getBusinessKey());
-    assertFalse(businessKey.equals(processInstance.getBusinessKey()));
+    assertNotEquals(businessKey, processInstance.getBusinessKey());
 
     TaskEntity task = (TaskEntity) queryTask();
 
@@ -592,7 +587,7 @@ public class ProcessTaskTest extends CmmnTest {
         .list();
 
     assertEquals(2, variables.size());
-    assertFalse(variables.get(0).getName().equals(variables.get(1).getName()));
+    assertNotEquals(variables.get(0).getName(), variables.get(1).getName());
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -647,7 +642,7 @@ public class ProcessTaskTest extends CmmnTest {
         .list();
 
     assertEquals(2, variables.size());
-    assertFalse(variables.get(0).getName().equals(variables.get(1).getName()));
+    assertNotEquals(variables.get(0).getName(), variables.get(1).getName());
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -694,7 +689,7 @@ public class ProcessTaskTest extends CmmnTest {
         .list();
 
     assertEquals(2, variables.size());
-    assertFalse(variables.get(0).getName().equals(variables.get(1).getName()));
+    assertNotEquals(variables.get(0).getName(), variables.get(1).getName());
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -740,7 +735,7 @@ public class ProcessTaskTest extends CmmnTest {
         .list();
 
     assertEquals(2, variables.size());
-    assertFalse(variables.get(0).getName().equals(variables.get(1).getName()));
+    assertNotEquals(variables.get(0).getName(), variables.get(1).getName());
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -788,7 +783,7 @@ public class ProcessTaskTest extends CmmnTest {
         .list();
 
     assertEquals(2, variables.size());
-    assertFalse(variables.get(0).getName().equals(variables.get(1).getName()));
+    assertNotEquals(variables.get(0).getName(), variables.get(1).getName());
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -873,7 +868,7 @@ public class ProcessTaskTest extends CmmnTest {
         .list();
 
     assertEquals(2, variables.size());
-    assertFalse(variables.get(0).getName().equals(variables.get(1).getName()));
+    assertNotEquals(variables.get(0).getName(), variables.get(1).getName());
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -982,7 +977,7 @@ public class ProcessTaskTest extends CmmnTest {
         .list();
 
     assertEquals(2, variables.size());
-    assertFalse(variables.get(0).getName().equals(variables.get(1).getName()));
+    assertNotEquals(variables.get(0).getName(), variables.get(1).getName());
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -1033,7 +1028,7 @@ public class ProcessTaskTest extends CmmnTest {
         .list();
 
     assertEquals(2, variables.size());
-    assertFalse(variables.get(0).getName().equals(variables.get(1).getName()));
+    assertNotEquals(variables.get(0).getName(), variables.get(1).getName());
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -1081,7 +1076,7 @@ public class ProcessTaskTest extends CmmnTest {
         .list();
 
     assertEquals(2, variables.size());
-    assertFalse(variables.get(0).getName().equals(variables.get(1).getName()));
+    assertNotEquals(variables.get(0).getName(), variables.get(1).getName());
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -1128,7 +1123,7 @@ public class ProcessTaskTest extends CmmnTest {
         .list();
 
     assertEquals(2, variables.size());
-    assertFalse(variables.get(0).getName().equals(variables.get(1).getName()));
+    assertNotEquals(variables.get(0).getName(), variables.get(1).getName());
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -1180,7 +1175,7 @@ public class ProcessTaskTest extends CmmnTest {
         .list();
 
     assertEquals(2, variables.size());
-    assertFalse(variables.get(0).getName().equals(variables.get(1).getName()));
+    assertNotEquals(variables.get(0).getName(), variables.get(1).getName());
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -1232,7 +1227,7 @@ public class ProcessTaskTest extends CmmnTest {
         .list();
 
     assertEquals(2, variables.size());
-    assertFalse(variables.get(0).getName().equals(variables.get(1).getName()));
+    assertNotEquals(variables.get(0).getName(), variables.get(1).getName());
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -1337,7 +1332,7 @@ public class ProcessTaskTest extends CmmnTest {
         .list();
 
     assertEquals(2, variables.size());
-    assertFalse(variables.get(0).getName().equals(variables.get(1).getName()));
+    assertNotEquals(variables.get(0).getName(), variables.get(1).getName());
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();

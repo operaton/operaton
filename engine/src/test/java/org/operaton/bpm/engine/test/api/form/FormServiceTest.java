@@ -16,45 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.form;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.entry;
-import static org.operaton.bpm.engine.test.util.OperatonFormUtils.findAllOperatonFormDefinitionEntities;
-import static org.operaton.bpm.engine.variable.Variables.booleanValue;
-import static org.operaton.bpm.engine.variable.Variables.createVariables;
-import static org.operaton.bpm.engine.variable.Variables.objectValue;
-import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
-import static org.operaton.bpm.engine.variable.Variables.stringValue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import org.operaton.bpm.engine.BadUserRequestException;
-import org.operaton.bpm.engine.CaseService;
-import org.operaton.bpm.engine.FormService;
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.exception.NotFoundException;
@@ -87,12 +49,30 @@ import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.commons.utils.IoUtil;
+import static org.operaton.bpm.engine.test.util.OperatonFormUtils.findAllOperatonFormDefinitionEntities;
+import static org.operaton.bpm.engine.variable.Variables.booleanValue;
+import static org.operaton.bpm.engine.variable.Variables.createVariables;
+import static org.operaton.bpm.engine.variable.Variables.objectValue;
+import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
+import static org.operaton.bpm.engine.variable.Variables.stringValue;
+
+import java.io.InputStream;
+import java.util.*;
+import java.util.Map.Entry;
 
 import org.apache.groovy.util.Maps;
 import org.junit.*;
 import org.junit.rules.RuleChain;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.entry;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * @author Joram Barrez
@@ -1388,7 +1368,7 @@ public class FormServiceTest {
 
     List<VariableInstance> result = runtimeService.createVariableInstanceQuery().list();
     assertEquals(1, result.size());
-    assertTrue(result.get(0).getName().equals("secondParam"));
+    assertEquals("secondParam", result.get(0).getName());
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/form/DeployedFormsProcess.bpmn20.xml",

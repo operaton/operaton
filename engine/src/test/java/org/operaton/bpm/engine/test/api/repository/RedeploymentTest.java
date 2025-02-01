@@ -16,13 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.repository;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -50,6 +43,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
+
+import static org.junit.Assert.*;
 
 
 /**
@@ -372,7 +367,7 @@ public class RedeploymentTest {
     // then
     assertNotNull(deployment2);
     assertNotNull(deployment2.getId());
-    assertFalse(deployment1.getId().equals(deployment2.getId()));
+    assertNotEquals(deployment1.getId(), deployment2.getId());
 
     verifyQueryResults(query, 2);
   }
@@ -443,7 +438,7 @@ public class RedeploymentTest {
 
     // then
     assertNotNull(deployment2);
-    assertFalse(deployment1.getName().equals(deployment2.getName()));
+    assertNotEquals(deployment1.getName(), deployment2.getName());
   }
 
   @Test
@@ -529,7 +524,7 @@ public class RedeploymentTest {
 
     // id
     assertNotNull(resource3.getId());
-    assertFalse(resource1.getId().equals(resource3.getId()));
+    assertNotEquals(resource1.getId(), resource3.getId());
 
     // deployment id
     assertEquals(deployment3.getId(), resource3.getDeploymentId());
@@ -541,7 +536,7 @@ public class RedeploymentTest {
     byte[] bytes1 = resource1.getBytes();
     byte[] bytes2 = resource2.getBytes();
     byte[] bytes3 = resource3.getBytes();
-    assertTrue(Arrays.equals(bytes1, bytes3));
+    assertArrayEquals(bytes1, bytes3);
     assertFalse(Arrays.equals(bytes2, bytes3));
   }
 

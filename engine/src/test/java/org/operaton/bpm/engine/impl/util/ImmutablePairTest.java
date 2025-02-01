@@ -16,17 +16,17 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import java.util.HashMap;
 import java.util.Map.Entry;
 
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class ImmutablePairTest {
 
@@ -54,9 +54,9 @@ public class ImmutablePairTest {
   public void shouldCompareWithLeftFirst() {
     final ImmutablePair<String, String> pair1 = new ImmutablePair<>("A", "D");
     final ImmutablePair<String, String> pair2 = new ImmutablePair<>("B", "C");
-    assertTrue(pair1.compareTo(pair1) == 0);
+    assertEquals(0, pair1.compareTo(pair1));
     assertTrue(pair1.compareTo(pair2) < 0);
-    assertTrue(pair2.compareTo(pair2) == 0);
+    assertEquals(0, pair2.compareTo(pair2));
     assertTrue(pair2.compareTo(pair1) > 0);
   }
 
@@ -64,9 +64,9 @@ public class ImmutablePairTest {
   public void shouldCompareWithRightSecond() {
     final ImmutablePair<String, String> pair1 = new ImmutablePair<>("A", "C");
     final ImmutablePair<String, String> pair2 = new ImmutablePair<>("A", "D");
-    assertTrue(pair1.compareTo(pair1) == 0);
+    assertEquals(0, pair1.compareTo(pair1));
     assertTrue(pair1.compareTo(pair2) < 0);
-    assertTrue(pair2.compareTo(pair2) == 0);
+    assertEquals(0, pair2.compareTo(pair2));
     assertTrue(pair2.compareTo(pair1) > 0);
   }
 
@@ -85,12 +85,12 @@ public class ImmutablePairTest {
   @Test
   public void shouldFulfillEqualityRules() {
     assertEquals(new ImmutablePair<>(null, "foo"), new ImmutablePair<>(null, "foo"));
-    assertFalse(new ImmutablePair<>("foo", 0).equals(new ImmutablePair<>("foo", null)));
-    assertFalse(new ImmutablePair<>("foo", "bar").equals(new ImmutablePair<>("xyz", "bar")));
+    assertNotEquals(new ImmutablePair<>("foo", 0), new ImmutablePair<>("foo", null));
+    assertNotEquals(new ImmutablePair<>("foo", "bar"), new ImmutablePair<>("xyz", "bar"));
 
     final ImmutablePair<String, String> p = new ImmutablePair<>("foo", "bar");
-    assertTrue(p.equals(p));
-    assertFalse(p.equals(new Object()));
+    assertEquals(p, p);
+    assertNotEquals(p, new Object());
   }
 
   @Test

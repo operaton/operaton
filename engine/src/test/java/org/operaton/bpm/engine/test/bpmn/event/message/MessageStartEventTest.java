@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.test.bpmn.event.message;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -141,16 +142,16 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
       if (processDefinition.getVersion() == 1) {
         for (EventSubscription subscription : newEventSubscriptions) {
           EventSubscriptionEntity subscriptionEntity = (EventSubscriptionEntity) subscription;
-          assertFalse(subscriptionEntity.getConfiguration().equals(processDefinition.getId()));
+          assertNotEquals(subscriptionEntity.getConfiguration(), processDefinition.getId());
         }
       } else {
         for (EventSubscription subscription : newEventSubscriptions) {
           EventSubscriptionEntity subscriptionEntity = (EventSubscriptionEntity) subscription;
-          assertTrue(subscriptionEntity.getConfiguration().equals(processDefinition.getId()));
+          assertEquals(subscriptionEntity.getConfiguration(), processDefinition.getId());
         }
       }
     }
-    assertFalse(eventSubscriptions.equals(newEventSubscriptions));
+    assertNotEquals(eventSubscriptions, newEventSubscriptions);
 
     repositoryService.deleteDeployment(deploymentId);
     repositoryService.deleteDeployment(newDeploymentId);

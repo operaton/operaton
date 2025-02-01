@@ -16,18 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
-import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
-import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
-import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
-import java.util.Collections;
-import java.util.List;
-
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.EventSubscription;
@@ -40,7 +28,20 @@ import org.operaton.bpm.engine.test.bpmn.executionlistener.RecorderExecutionList
 import org.operaton.bpm.engine.test.util.ExecutionTree;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.engine.variable.Variables;
+import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
+import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
+import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
+import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
+
+import java.util.Collections;
+import java.util.List;
+
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 /**
  * Tests cancellation of four basic patterns of active activities in a scope:
@@ -138,7 +139,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
     assertNotNull(updatedTree);
     assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
     assertEquals(tree.getId(), updatedTree.getId());
-    assertTrue(!getInstanceIdForActivity(tree, "theTask").equals(getInstanceIdForActivity(updatedTree, "theTask")));
+    assertNotEquals(getInstanceIdForActivity(tree, "theTask"), getInstanceIdForActivity(updatedTree, "theTask"));
 
     assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
@@ -179,7 +180,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     assertNotNull(updatedTree);
     assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
-    assertTrue(!getInstanceIdForActivity(tree, "theTask").equals(getInstanceIdForActivity(updatedTree, "theTask")));
+    assertNotEquals(getInstanceIdForActivity(tree, "theTask"), getInstanceIdForActivity(updatedTree, "theTask"));
 
     assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
@@ -258,7 +259,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     assertNotNull(updatedTree);
     assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
-    assertTrue(!getInstanceIdForActivity(tree, "theTask").equals(getInstanceIdForActivity(updatedTree, "theTask")));
+    assertNotEquals(getInstanceIdForActivity(tree, "theTask"), getInstanceIdForActivity(updatedTree, "theTask"));
 
     assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
@@ -300,7 +301,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     assertNotNull(updatedTree);
     assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
-    assertTrue(!getInstanceIdForActivity(tree, "theTask").equals(getInstanceIdForActivity(updatedTree, "theTask")));
+    assertNotEquals(getInstanceIdForActivity(tree, "theTask"), getInstanceIdForActivity(updatedTree, "theTask"));
 
     assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
@@ -425,7 +426,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     assertNotNull(updatedTree);
     assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
-    assertTrue(!getInstanceIdForActivity(tree, "task1").equals(getInstanceIdForActivity(updatedTree, "task1")));
+    assertNotEquals(getInstanceIdForActivity(tree, "task1"), getInstanceIdForActivity(updatedTree, "task1"));
 
     assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
@@ -472,7 +473,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     assertNotNull(updatedTree);
     assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
-    assertTrue(!getInstanceIdForActivity(tree, "task1").equals(getInstanceIdForActivity(updatedTree, "task1")));
+    assertNotEquals(getInstanceIdForActivity(tree, "task1"), getInstanceIdForActivity(updatedTree, "task1"));
 
     assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
@@ -518,7 +519,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     assertNotNull(updatedTree);
     assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
-    assertTrue(!getInstanceIdForActivity(tree, "task1").equals(getInstanceIdForActivity(updatedTree, "task1")));
+    assertNotEquals(getInstanceIdForActivity(tree, "task1"), getInstanceIdForActivity(updatedTree, "task1"));
 
     assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
@@ -607,7 +608,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     assertNotNull(updatedTree);
     assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
-    assertTrue(!getInstanceIdForActivity(tree, "task1").equals(getInstanceIdForActivity(updatedTree, "task1")));
+    assertNotEquals(getInstanceIdForActivity(tree, "task1"), getInstanceIdForActivity(updatedTree, "task1"));
 
     assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
@@ -656,7 +657,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     assertNotNull(updatedTree);
     assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
-    assertTrue(!getInstanceIdForActivity(tree, "task1").equals(getInstanceIdForActivity(updatedTree, "task1")));
+    assertNotEquals(getInstanceIdForActivity(tree, "task1"), getInstanceIdForActivity(updatedTree, "task1"));
 
     assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
@@ -785,7 +786,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     assertNotNull(updatedTree);
     assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
-    assertTrue(!getInstanceIdForActivity(tree, "innerTask").equals(getInstanceIdForActivity(updatedTree, "innerTask")));
+    assertNotEquals(getInstanceIdForActivity(tree, "innerTask"), getInstanceIdForActivity(updatedTree, "innerTask"));
 
     assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
@@ -835,7 +836,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     assertNotNull(updatedTree);
     assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
-    assertTrue(!getInstanceIdForActivity(tree, "innerTask").equals(getInstanceIdForActivity(updatedTree, "innerTask")));
+    assertNotEquals(getInstanceIdForActivity(tree, "innerTask"), getInstanceIdForActivity(updatedTree, "innerTask"));
 
     assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
@@ -963,7 +964,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     assertNotNull(updatedTree);
     assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
-    assertTrue(!getInstanceIdForActivity(tree, "innerTask").equals(getInstanceIdForActivity(updatedTree, "innerTask")));
+    assertNotEquals(getInstanceIdForActivity(tree, "innerTask"), getInstanceIdForActivity(updatedTree, "innerTask"));
 
     assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
@@ -1014,7 +1015,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     assertNotNull(updatedTree);
     assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
-    assertTrue(!getInstanceIdForActivity(tree, "innerTask").equals(getInstanceIdForActivity(updatedTree, "innerTask")));
+    assertNotEquals(getInstanceIdForActivity(tree, "innerTask"), getInstanceIdForActivity(updatedTree, "innerTask"));
 
     assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
@@ -1152,7 +1153,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     assertNotNull(updatedTree);
     assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
-    assertTrue(!getInstanceIdForActivity(tree, "innerTask1").equals(getInstanceIdForActivity(updatedTree, "innerTask1")));
+    assertNotEquals(getInstanceIdForActivity(tree, "innerTask1"), getInstanceIdForActivity(updatedTree, "innerTask1"));
 
     assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
@@ -1204,7 +1205,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     assertNotNull(updatedTree);
     assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
-    assertTrue(!getInstanceIdForActivity(tree, "innerTask1").equals(getInstanceIdForActivity(updatedTree, "innerTask1")));
+    assertNotEquals(getInstanceIdForActivity(tree, "innerTask1"), getInstanceIdForActivity(updatedTree, "innerTask1"));
 
     assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
@@ -1344,7 +1345,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     assertNotNull(updatedTree);
     assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
-    assertTrue(!getInstanceIdForActivity(tree, "innerTask1").equals(getInstanceIdForActivity(updatedTree, "innerTask1")));
+    assertNotEquals(getInstanceIdForActivity(tree, "innerTask1"), getInstanceIdForActivity(updatedTree, "innerTask1"));
 
     assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
@@ -1399,7 +1400,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     assertNotNull(updatedTree);
     assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
-    assertTrue(!getInstanceIdForActivity(tree, "innerTask1").equals(getInstanceIdForActivity(updatedTree, "innerTask1")));
+    assertNotEquals(getInstanceIdForActivity(tree, "innerTask1"), getInstanceIdForActivity(updatedTree, "innerTask1"));
 
     assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())

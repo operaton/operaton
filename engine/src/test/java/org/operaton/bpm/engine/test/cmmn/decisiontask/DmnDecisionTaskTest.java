@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.decisiontask;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
@@ -200,14 +201,16 @@ public class DmnDecisionTaskTest extends CmmnTest {
     // given
     createCaseInstanceByKey(CASE_KEY);
     String decisionTaskId = queryCaseExecutionByActivityId(DECISION_TASK).getId();
+    var caseExecutionCommandBuilder = caseService
+        .withCaseExecution(decisionTaskId);
 
     try {
       // when
-      caseService
-        .withCaseExecution(decisionTaskId)
-        .manualStart();
+      caseExecutionCommandBuilder.manualStart();
       fail("It should not be possible to evaluate a not existing decision.");
-    } catch (DecisionDefinitionNotFoundException e) {}
+    } catch (DecisionDefinitionNotFoundException e) {
+      assertThat(e.getMessage()).contains("no decision definition deployed with key 'testDecision'");
+    }
   }
 
   @Deployment(resources = {

@@ -172,11 +172,9 @@ public class HistoricTaskDurationReportTest {
 
   @Test
   public void testCompletedAfterWithNullValue() {
+    var historicTaskInstanceReport = historyService.createHistoricTaskInstanceReport();
     try {
-      historyService
-        .createHistoricTaskInstanceReport()
-        .completedAfter(null)
-        .duration(PeriodUnit.MONTH);
+      historicTaskInstanceReport.completedAfter(null);
 
       fail("Expected NotValidException");
     } catch( NotValidException nve) {
@@ -186,11 +184,9 @@ public class HistoricTaskDurationReportTest {
 
   @Test
   public void testCompletedBeforeWithNullValue() {
+    var historicTaskInstanceReport = historyService.createHistoricTaskInstanceReport();
     try {
-      historyService
-        .createHistoricTaskInstanceReport()
-        .completedBefore(null)
-        .duration(PeriodUnit.MONTH);
+      historicTaskInstanceReport.completedBefore(null);
 
       fail("Expected NotValidException");
     } catch( NotValidException nve) {

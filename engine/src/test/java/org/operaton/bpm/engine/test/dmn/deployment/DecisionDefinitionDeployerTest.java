@@ -180,11 +180,11 @@ public class DecisionDefinitionDeployerTest {
     String resourceName2 = "org/operaton/bpm/engine/test/dmn/deployment/DecisionDefinitionDeployerTest.testDuplicateIdInDeployment2.dmn11.xml";
 
     // when/then
-    assertThatThrownBy(() -> repositoryService.createDeployment()
-        .addClasspathResource(resourceName1)
-        .addClasspathResource(resourceName2)
-        .name("duplicateIds")
-        .deploy())
+    DeploymentBuilder deploymentBuilder = repositoryService.createDeployment()
+      .addClasspathResource(resourceName1)
+      .addClasspathResource(resourceName2)
+      .name("duplicateIds");
+    assertThatThrownBy(deploymentBuilder::deploy)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("duplicateDecision");
   }
@@ -304,11 +304,11 @@ public class DecisionDefinitionDeployerTest {
   public void duplicateDrdIdInDeployment() {
 
     // when/then
-    assertThatThrownBy(() -> repositoryService.createDeployment()
-        .addClasspathResource(DRD_SCORE_RESOURCE)
-        .addClasspathResource(DRD_SCORE_V2_RESOURCE)
-        .name("duplicateIds")
-        .deploy())
+    var deploymentBuilder = repositoryService.createDeployment()
+      .addClasspathResource(DRD_SCORE_RESOURCE)
+      .addClasspathResource(DRD_SCORE_V2_RESOURCE)
+      .name("duplicateIds");
+    assertThatThrownBy(deploymentBuilder::deploy)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("definitions");
   }
@@ -372,9 +372,10 @@ public class DecisionDefinitionDeployerTest {
   public void testDeployDmnModelInstanceNegativeHistoryTimeToLive() {
     // given
     DmnModelInstance dmnModelInstance = createDmnModelInstanceNegativeHistoryTimeToLive();
+    var deploymentBuilder = repositoryService.createDeployment().addModelInstance("foo.dmn", dmnModelInstance);
 
     try {
-      testRule.deploy(repositoryService.createDeployment().addModelInstance("foo.dmn", dmnModelInstance));
+      testRule.deploy(deploymentBuilder);
       fail("Exception for negative time to live value is expected.");
     } catch (ProcessEngineException ex) {
       assertTrue(ex.getCause().getMessage().contains("negative value is not allowed"));

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.history;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -132,7 +133,7 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
   @Test
   public void testDeleteHistoricTaskInstance() {
     // deleting unexisting historic task instance should be silently ignored
-    historyService.deleteHistoricTaskInstance("unexistingId");
+    assertThatCode(() -> historyService.deleteHistoricTaskInstance("unexistingId")).doesNotThrowAnyException();
   }
 
   @Deployment
@@ -452,25 +453,27 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
 
   @Test
   public void testInvalidSorting() {
+    HistoricTaskInstanceQuery historicTaskInstanceQuery1 = historyService.createHistoricTaskInstanceQuery();
     try {
-      historyService.createHistoricTaskInstanceQuery().asc();
+      historicTaskInstanceQuery1.asc();
       fail();
     } catch (ProcessEngineException e) {
-
+      assertEquals("You should call any of the orderBy methods first before specifying a direction: currentOrderingProperty is null", e.getMessage());
     }
 
     try {
-      historyService.createHistoricTaskInstanceQuery().desc();
+      historicTaskInstanceQuery1.desc();
       fail();
     } catch (ProcessEngineException e) {
-
+      assertEquals("You should call any of the orderBy methods first before specifying a direction: currentOrderingProperty is null", e.getMessage());
     }
 
+    var historicTaskInstanceQuery2 = historicTaskInstanceQuery1.orderByProcessInstanceId();
     try {
-      historyService.createHistoricTaskInstanceQuery().orderByProcessInstanceId().list();
+      historicTaskInstanceQuery2.list();
       fail();
     } catch (ProcessEngineException e) {
-
+      assertEquals("Invalid query: call asc() or desc() after using orderByXX(): direction is null", e.getMessage());
     }
   }
 
@@ -564,22 +567,28 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
 
     query.activityInstanceIdIn("invalid");
     assertEquals(0, query.count());
+    String[] values = { "a", null, "b" };
 
     try {
       query.activityInstanceIdIn(null);
       fail("A ProcessEngineExcpetion was expected.");
-    } catch (ProcessEngineException e) {}
+    } catch (ProcessEngineException e) {
+      // expected
+    }
 
     try {
       query.activityInstanceIdIn((String)null);
       fail("A ProcessEngineExcpetion was expected.");
-    } catch (ProcessEngineException e) {}
+    } catch (ProcessEngineException e) {
+      // expected
+    }
 
     try {
-      String[] values = { "a", null, "b" };
       query.activityInstanceIdIn(values);
       fail("A ProcessEngineExcpetion was expected.");
-    } catch (ProcessEngineException e) {}
+    } catch (ProcessEngineException e) {
+      // expected
+    }
 
   }
 
@@ -1034,22 +1043,28 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
 
     query.taskDefinitionKeyIn("invalid");
     assertEquals(0, query.count());
+    String[] values = { "a", null, "b" };
 
     try {
       query.taskDefinitionKeyIn(null);
       fail("A ProcessEngineExcpetion was expected.");
-    } catch (NotValidException e) {}
+    } catch (NotValidException e) {
+      // expected
+    }
 
     try {
       query.taskDefinitionKeyIn((String)null);
       fail("A ProcessEngineExcpetion was expected.");
-    } catch (NotValidException e) {}
+    } catch (NotValidException e) {
+      // expected
+    }
 
     try {
-      String[] values = { "a", null, "b" };
       query.taskDefinitionKeyIn(values);
       fail("A ProcessEngineExcpetion was expected.");
-    } catch (NotValidException e) {}
+    } catch (NotValidException e) {
+      // expected
+    }
 
   }
 
@@ -1092,22 +1107,28 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
 
     query.processInstanceBusinessKeyIn("invalid");
     assertEquals(0, query.count());
+    String[] values = { "a", null, "b" };
 
     try {
       query.processInstanceBusinessKeyIn(null);
       fail("A ProcessEngineExcpetion was expected.");
-    } catch (ProcessEngineException e) {}
+    } catch (ProcessEngineException e) {
+      // expected
+    }
 
     try {
       query.processInstanceBusinessKeyIn((String)null);
       fail("A ProcessEngineExcpetion was expected.");
-    } catch (ProcessEngineException e) {}
+    } catch (ProcessEngineException e) {
+      // expected
+    }
 
     try {
-      String[] values = { "a", null, "b" };
       query.processInstanceBusinessKeyIn(values);
       fail("A ProcessEngineExcpetion was expected.");
-    } catch (ProcessEngineException e) {}
+    } catch (ProcessEngineException e) {
+      // expected
+    }
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })

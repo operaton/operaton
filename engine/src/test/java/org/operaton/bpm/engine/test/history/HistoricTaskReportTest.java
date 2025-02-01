@@ -174,11 +174,9 @@ public class HistoricTaskReportTest {
 
   @Test
   public void testCompletedAfterWithNullValue() {
+    var historicTaskInstanceReport = historyService.createHistoricTaskInstanceReport();
     try {
-      historyService
-        .createHistoricTaskInstanceReport()
-        .completedAfter(null)
-        .countByProcessDefinitionKey();
+      historicTaskInstanceReport.completedAfter(null);
 
       fail("Expected NotValidException");
     } catch( NotValidException nve) {
@@ -188,11 +186,9 @@ public class HistoricTaskReportTest {
 
   @Test
   public void testCompletedBeforeWithNullValue() {
+    var historicTaskInstanceReport = historyService.createHistoricTaskInstanceReport();
     try {
-      historyService
-        .createHistoricTaskInstanceReport()
-        .completedBefore(null)
-        .countByProcessDefinitionKey();
+      historicTaskInstanceReport.completedBefore(null);
 
       fail("Expected NotValidException");
     } catch( NotValidException nve) {

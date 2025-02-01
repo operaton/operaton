@@ -140,10 +140,11 @@ public class DeleteProcessDefinitionTest {
                                   .deploy();
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionKey("process").singleResult();
     runtimeService.createProcessInstanceByKey("process").executeWithVariablesInReturn();
+    var processDefinitionId = processDefinition.getId();
 
     //when the corresponding process definition is deleted from the deployment
     try {
-      repositoryService.deleteProcessDefinition(processDefinition.getId());
+      repositoryService.deleteProcessDefinition(processDefinitionId);
       fail("Should fail, since there exists a process instance");
     } catch (ProcessEngineException pex) {
       // then Exception is expected, the deletion should fail since there exist a process instance
@@ -289,10 +290,10 @@ public class DeleteProcessDefinitionTest {
   public void testDeleteProcessDefinitionsByNotExistingKey() {
 
     // when/then
-    assertThatThrownBy(() -> repositoryService.deleteProcessDefinitions()
-        .byKey("no existing key")
-        .withoutTenantId()
-        .delete())
+    var deleteProcessDefinitionsBuilder = repositoryService.deleteProcessDefinitions()
+      .byKey("no existing key")
+      .withoutTenantId();
+    assertThatThrownBy(deleteProcessDefinitionsBuilder::delete)
       .isInstanceOf(NotFoundException.class)
       .hasMessageContaining("No process definition found");
   }
@@ -301,10 +302,10 @@ public class DeleteProcessDefinitionTest {
   public void testDeleteProcessDefinitionsByKeyIsNull() {
 
     // when/then
-    assertThatThrownBy(() -> repositoryService.deleteProcessDefinitions()
-        .byKey(null)
-        .withoutTenantId()
-        .delete())
+    var deleteProcessDefinitionsBuilder = repositoryService.deleteProcessDefinitions()
+      .byKey(null)
+      .withoutTenantId();
+    assertThatThrownBy(deleteProcessDefinitionsBuilder::delete)
       .isInstanceOf(NullValueException.class)
       .hasMessageContaining("cannot be null");
 
@@ -334,12 +335,12 @@ public class DeleteProcessDefinitionTest {
       deployTwoProcessDefinitions();
     }
     runtimeService.startProcessInstanceByKey("processOne");
+    var deleteProcessDefinitionsBuilder = repositoryService.deleteProcessDefinitions()
+      .byKey("processOne")
+      .withoutTenantId();
 
     // when/then
-    assertThatThrownBy(() -> repositoryService.deleteProcessDefinitions()
-        .byKey("processOne")
-        .withoutTenantId()
-        .delete())
+    assertThatThrownBy(deleteProcessDefinitionsBuilder::delete)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Deletion of process definition");
   }
@@ -428,22 +429,24 @@ public class DeleteProcessDefinitionTest {
 
   @Test
   public void testDeleteProcessDefinitionsByNotExistingIds() {
+    // given
+    var deleteProcessDefinitionsBuilder = repositoryService.deleteProcessDefinitions()
+      .byIds("not existing", "also not existing");
 
     // when/then
-    assertThatThrownBy(() -> repositoryService.deleteProcessDefinitions()
-        .byIds("not existing", "also not existing")
-        .delete())
+    assertThatThrownBy(deleteProcessDefinitionsBuilder::delete)
       .isInstanceOf(NotFoundException.class)
       .hasMessageContaining("No process definition found");
   }
 
   @Test
   public void testDeleteProcessDefinitionsByIdIsNull() {
+    // given
+    var deleteProcessDefinitionsBuilder = repositoryService.deleteProcessDefinitions()
+      .byIds(null);
 
     // when/then
-    assertThatThrownBy(() -> repositoryService.deleteProcessDefinitions()
-        .byIds(null)
-        .delete())
+    assertThatThrownBy(deleteProcessDefinitionsBuilder::delete)
       .isInstanceOf(NullValueException.class)
       .hasMessageContaining("cannot be null");
   }
@@ -474,12 +477,11 @@ public class DeleteProcessDefinitionTest {
     }
     String[] processDefinitionIds = findProcessDefinitionIdsByKey("processOne");
     runtimeService.startProcessInstanceByKey("processOne");
-
+    var deleteProcessDefinitionsBuilder = repositoryService.deleteProcessDefinitions()
+      .byIds(processDefinitionIds);
 
     // when/then
-    assertThatThrownBy(() -> repositoryService.deleteProcessDefinitions()
-        .byIds(processDefinitionIds)
-        .delete())
+    assertThatThrownBy(deleteProcessDefinitionsBuilder::delete)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Deletion of process definition");
 

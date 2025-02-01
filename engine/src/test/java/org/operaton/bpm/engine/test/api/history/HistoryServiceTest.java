@@ -295,8 +295,10 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
 
   @Test
   public void testHistoricProcessInstanceQueryByProcessInstanceIdsEmpty() {
+    var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
+    var processInstanceIds = new HashSet<String>();
     try {
-      historyService.createHistoricProcessInstanceQuery().processInstanceIds(new HashSet<>());
+      historicProcessInstanceQuery.processInstanceIds(processInstanceIds);
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException re) {
       testRule.assertTextPresent("Set of process instance ids is empty", re.getMessage());
@@ -305,8 +307,9 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
 
   @Test
   public void testHistoricProcessInstanceQueryByProcessInstanceIdsNull() {
+    var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
     try {
-      historyService.createHistoricProcessInstanceQuery().processInstanceIds(null);
+      historicProcessInstanceQuery.processInstanceIds(null);
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException re) {
       testRule.assertTextPresent("Set of process instance ids is null", re.getMessage());
@@ -347,11 +350,12 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
 
   @Test
   public void testQueryByRootProcessInstancesAndSuperProcess() {
+    var historicProcessInstanceQuery1 = historyService.createHistoricProcessInstanceQuery()
+      .rootProcessInstances();
+
     // when
     try {
-      historyService.createHistoricProcessInstanceQuery()
-        .rootProcessInstances()
-        .superProcessInstanceId("processInstanceId");
+      historicProcessInstanceQuery1.superProcessInstanceId("processInstanceId");
 
       fail("expected exception");
     } catch (BadUserRequestException e) {
@@ -359,11 +363,11 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
       assertTrue(e.getMessage().contains("Invalid query usage: cannot set both rootProcessInstances and superProcessInstanceId"));
     }
 
+    var historicProcessInstanceQuery2 = historyService.createHistoricProcessInstanceQuery()
+      .superProcessInstanceId("processInstanceId");
     // when
     try {
-      historyService.createHistoricProcessInstanceQuery()
-        .superProcessInstanceId("processInstanceId")
-        .rootProcessInstances();
+      historicProcessInstanceQuery2.rootProcessInstances();
 
       fail("expected exception");
     } catch (BadUserRequestException e) {
@@ -752,8 +756,9 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
   public void testDeleteRunningProcessInstance() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
     assertEquals(1, runtimeService.createProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count());
+    var processInstanceId = processInstance.getId();
     try {
-      historyService.deleteHistoricProcessInstance(processInstance.getId());
+      historyService.deleteHistoricProcessInstance(processInstanceId);
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException ae) {
       testRule.assertTextPresent("Process instance is still running, cannot delete historic process instance", ae.getMessage());
@@ -772,7 +777,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
 
   @Test
   public void testDeleteProcessInstanceIfExistsWithFake() {
-      assertThatCode(() -> historyService.deleteHistoricProcessInstanceIfExists("aFake")).doesNotThrowAnyException();
+    assertThatCode(() -> historyService.deleteHistoricProcessInstanceIfExists("aFake")).doesNotThrowAnyException();
   }
 
   @Test

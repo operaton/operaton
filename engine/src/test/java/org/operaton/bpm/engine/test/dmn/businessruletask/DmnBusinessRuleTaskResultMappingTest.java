@@ -182,10 +182,11 @@ public class DmnBusinessRuleTaskResultMappingTest extends PluggableProcessEngine
 
   @Test
   public void testInvalidMapping() {
-    try {
-      testRule.deploy(repositoryService
+    var deploymentBuilder = repositoryService
           .createDeployment()
-          .addClasspathResource(INVALID_MAPPING_BPMN));
+          .addClasspathResource(INVALID_MAPPING_BPMN);
+    try {
+      testRule.deploy(deploymentBuilder);
 
       fail("expect parse exception");
     } catch (ParseException e) {

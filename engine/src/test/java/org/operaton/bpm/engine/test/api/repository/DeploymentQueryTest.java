@@ -81,7 +81,9 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
     try {
       query.singleResult();
       fail();
-    } catch (ProcessEngineException e) {}
+    } catch (ProcessEngineException e) {
+      assertEquals("Query return 2 results instead of max 1", e.getMessage());
+    }
   }
 
   @Test
@@ -98,11 +100,14 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
     assertNull(query.singleResult());
     assertEquals(0, query.list().size());
     assertEquals(0, query.count());
+    var deploymentQuery = repositoryService.createDeploymentQuery();
 
     try {
-      repositoryService.createDeploymentQuery().deploymentId(null);
+      deploymentQuery.deploymentId(null);
       fail();
-    } catch (ProcessEngineException e) {}
+    } catch (ProcessEngineException e) {
+      assertEquals("Deployment id is null", e.getMessage());
+    }
   }
 
   @Test
@@ -119,11 +124,14 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
     assertNull(query.singleResult());
     assertEquals(0, query.list().size());
     assertEquals(0, query.count());
+    var deploymentQuery = repositoryService.createDeploymentQuery();
 
     try {
-      repositoryService.createDeploymentQuery().deploymentName(null);
+      deploymentQuery.deploymentName(null);
       fail();
-    } catch (ProcessEngineException e) {}
+    } catch (ProcessEngineException e) {
+      assertEquals("deploymentName is null", e.getMessage());
+    }
   }
 
   @Test
@@ -144,11 +152,14 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
     assertNull(query.singleResult());
     assertEquals(0, query.list().size());
     assertEquals(0, query.count());
+    var deploymentQuery = repositoryService.createDeploymentQuery();
 
     try {
-      repositoryService.createDeploymentQuery().deploymentNameLike(null);
+      deploymentQuery.deploymentNameLike(null);
       fail();
-    } catch (ProcessEngineException e) {}
+    } catch (ProcessEngineException e) {
+      assertEquals("deploymentNameLike is null", e.getMessage());
+    }
   }
 
   @Test
@@ -161,9 +172,10 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
 
     count = repositoryService.createDeploymentQuery().deploymentBefore(earlier).count();
     assertEquals(0, count);
+    var deploymentQuery = repositoryService.createDeploymentQuery();
 
     try {
-      repositoryService.createDeploymentQuery().deploymentBefore(null);
+      deploymentQuery.deploymentBefore(null);
       fail("Exception expected");
     } catch (NullValueException e) {
       // expected
@@ -180,9 +192,10 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
 
     count = repositoryService.createDeploymentQuery().deploymentAfter(earlier).count();
     assertEquals(2, count);
+    var deploymentQuery = repositoryService.createDeploymentQuery();
 
     try {
-      repositoryService.createDeploymentQuery().deploymentAfter(null);
+      deploymentQuery.deploymentAfter(null);
       fail("Exception expected");
     } catch (NullValueException e) {
       // expected

@@ -304,7 +304,7 @@ public class GetRunningHistoricActivityInstancesForOptimizeTest {
     assertThat(activityInstance.getEndTime()).isNull();
     assertThat(activityInstance.getProcessDefinitionKey()).isEqualTo("process");
     assertThat(activityInstance.getProcessDefinitionId()).isNotNull();
-    assertThat(((HistoryEvent) activityInstance).getSequenceCounter()).isNotNull();
+    assertThat(((HistoryEvent) activityInstance).getSequenceCounter()).isPositive();
   }
 
 }

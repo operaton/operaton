@@ -304,7 +304,7 @@ public class GetCompletedHistoricActivityInstancesForOptimizeTest {
     assertThat(startEvent.getEndTime()).isNotNull();
     assertThat(startEvent.getProcessDefinitionKey()).isEqualTo("process");
     assertThat(startEvent.getProcessDefinitionId()).isNotNull();
-    assertThat(((HistoryEvent) startEvent).getSequenceCounter()).isNotNull();
+    assertThat(((HistoryEvent) startEvent).getSequenceCounter()).isPositive();
 
     assertThat(endEvent).isNotNull();
     assertThat(endEvent.getActivityName()).isEqualTo("end");
@@ -313,7 +313,7 @@ public class GetCompletedHistoricActivityInstancesForOptimizeTest {
     assertThat(endEvent.getEndTime()).isNotNull();
     assertThat(endEvent.getProcessDefinitionKey()).isEqualTo("process");
     assertThat(endEvent.getProcessDefinitionId()).isNotNull();
-    assertThat(((HistoryEvent) endEvent).getSequenceCounter()).isNotNull();
+    assertThat(((HistoryEvent) endEvent).getSequenceCounter()).isPositive();
   }
 
 }

@@ -23,7 +23,7 @@ import org.operaton.bpm.webapp.impl.security.auth.Authentication;
 import org.operaton.bpm.webapp.impl.security.auth.Authentications;
 import org.operaton.bpm.webapp.impl.security.auth.UserAuthentication;
 
-import javax.servlet.ServletException;
+import jakarta.servlet.ServletException;
 import java.io.IOException;
 import java.util.List;
 

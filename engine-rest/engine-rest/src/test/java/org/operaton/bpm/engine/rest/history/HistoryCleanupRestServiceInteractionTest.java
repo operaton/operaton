@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.rest.history;
 
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response.Status;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.jobexecutor.historycleanup.BatchWindowManager;

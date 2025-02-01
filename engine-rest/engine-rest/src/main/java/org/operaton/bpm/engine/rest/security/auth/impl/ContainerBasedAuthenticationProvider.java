@@ -18,8 +18,8 @@ package org.operaton.bpm.engine.rest.security.auth.impl;
 
 import java.security.Principal;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.rest.security.auth.AuthenticationProvider;

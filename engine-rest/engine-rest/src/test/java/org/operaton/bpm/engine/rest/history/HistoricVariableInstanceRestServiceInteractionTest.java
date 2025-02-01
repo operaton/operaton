@@ -32,7 +32,7 @@ import static org.mockito.Mockito.when;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response.Status;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -357,7 +357,7 @@ public class HistoricVariableInstanceRestServiceInteractionTest extends Abstract
     .and().body(is(equalTo(new String())))
     .when().get(VARIABLE_INSTANCE_BINARY_DATA_URL);
   }
-  
+
   @Test
   public void testDeleteSingleVariableInstanceById() {
     given()
@@ -369,12 +369,12 @@ public class HistoricVariableInstanceRestServiceInteractionTest extends Abstract
 
     verify(historyServiceMock).deleteHistoricVariableInstance(MockProvider.EXAMPLE_VARIABLE_INSTANCE_ID);
   }
-  
+
   @Test
   public void testDeleteNonExistingVariableInstanceById() {
     doThrow(new NotFoundException("No historic variable instance found with id: 'NON_EXISTING_ID'"))
     .when(historyServiceMock).deleteHistoricVariableInstance("NON_EXISTING_ID");
-    
+
     given()
       .pathParam("id", "NON_EXISTING_ID")
     .expect()

@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.rest.dto.history;
 import java.util.Date;
 import java.util.Map;
 
-import javax.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.MultivaluedMap;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.history.UserOperationLogQuery;
@@ -225,7 +225,7 @@ public class UserOperationLogQueryDto extends AbstractQueryDto<UserOperationLogQ
   public void setOperationId(String operationId) {
     this.operationId = operationId;
   }
-  
+
   @OperatonQueryParam("externalTaskId")
   public void setExternalTaskId(String externalTaskId) {
     this.externalTaskId = externalTaskId;
@@ -245,7 +245,7 @@ public class UserOperationLogQueryDto extends AbstractQueryDto<UserOperationLogQ
   public void setEntityTypeIn(String[] entityTypes) {
     this.entityTypes = entityTypes;
   }
-  
+
   @OperatonQueryParam("category")
   public void setcategory(String category) {
     this.category = category;
@@ -255,7 +255,7 @@ public class UserOperationLogQueryDto extends AbstractQueryDto<UserOperationLogQ
   public void setCategoryIn(String[] categories) {
     this.categories = categories;
   }
-  
+
   @OperatonQueryParam("property")
   public void setProperty(String property) {
     this.property = property;

@@ -26,8 +26,8 @@ import org.operaton.bpm.engine.rest.dto.converter.*;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.*;
 
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.Response.Status;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

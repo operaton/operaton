@@ -19,7 +19,7 @@ package org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl;
 import org.operaton.bpm.webapp.impl.security.filter.headersec.provider.HeaderSecurityProvider;
 import org.operaton.bpm.webapp.impl.util.ServletFilterUtil;
 
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 import java.util.Base64;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;

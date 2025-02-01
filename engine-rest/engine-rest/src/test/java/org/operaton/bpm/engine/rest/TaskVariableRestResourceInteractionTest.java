@@ -41,8 +41,8 @@ import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_TASK_ID;
 import static org.operaton.bpm.engine.rest.helper.MockProvider.NON_EXISTING_ID;
 import static org.operaton.bpm.engine.rest.util.DateTimeUtils.DATE_FORMAT_WITH_TIMEZONE;
 
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response.Status;
 import java.util.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;

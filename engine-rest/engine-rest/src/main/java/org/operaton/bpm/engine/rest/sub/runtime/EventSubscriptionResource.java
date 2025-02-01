@@ -19,15 +19,15 @@ package org.operaton.bpm.engine.rest.sub.runtime;
 import org.operaton.bpm.engine.rest.dto.runtime.EventSubscriptionDto;
 import org.operaton.bpm.engine.rest.dto.runtime.ExecutionTriggerDto;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 
 public interface EventSubscriptionResource {
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   EventSubscriptionDto getEventSubscription();
-  
+
   @POST
   @Path("/trigger")
   @Consumes(MediaType.APPLICATION_JSON)

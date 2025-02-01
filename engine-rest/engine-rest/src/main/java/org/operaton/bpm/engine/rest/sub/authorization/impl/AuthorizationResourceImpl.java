@@ -26,9 +26,9 @@ import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.impl.AbstractAuthorizedRestResource;
 import org.operaton.bpm.engine.rest.sub.authorization.AuthorizationResource;
 
-import javax.ws.rs.HttpMethod;
-import javax.ws.rs.core.Response.Status;
-import javax.ws.rs.core.UriInfo;
+import jakarta.ws.rs.HttpMethod;
+import jakarta.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.UriInfo;
 import java.net.URI;
 
 import static org.operaton.bpm.engine.authorization.Permissions.DELETE;

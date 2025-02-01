@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.cockpit.impl.plugin.resources;
 
-import javax.ws.rs.Path;
+import jakarta.ws.rs.Path;
 
 import org.operaton.bpm.cockpit.impl.plugin.CockpitPlugins;
 import org.operaton.bpm.cockpit.plugin.resource.AbstractCockpitPluginRootResource;

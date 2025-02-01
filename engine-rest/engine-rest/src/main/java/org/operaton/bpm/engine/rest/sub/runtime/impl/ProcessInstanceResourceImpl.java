@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.rest.sub.runtime.impl;
 
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response.Status;
 
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.BadUserRequestException;
@@ -160,5 +160,5 @@ public class ProcessInstanceResourceImpl implements ProcessInstanceResource {
   public ProcessInstanceCommentResource getProcessInstanceCommentResource() {
     return new ProcessInstanceCommentResourceImpl(engine, processInstanceId);
   }
-  
+
 }

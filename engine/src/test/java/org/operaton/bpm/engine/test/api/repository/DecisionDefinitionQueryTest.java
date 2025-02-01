@@ -137,7 +137,7 @@ public class DecisionDefinitionQueryTest {
 
     assertThat(decisionDefinitions).hasSize(ids.size());
     for (DecisionDefinition decisionDefinition : decisionDefinitions) {
-      assertThat(ids).contains(decisionDefinition.getId()).withFailMessage("Expected to find decision definition " + decisionDefinition);
+      assertThat(ids).withFailMessage("Expected to find decision definition " + decisionDefinition).contains(decisionDefinition.getId());
     }
   }
 

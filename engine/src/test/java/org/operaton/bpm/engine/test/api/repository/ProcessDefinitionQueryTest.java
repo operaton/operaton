@@ -302,7 +302,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
           found = true; break;
         }
       }
-      assertThat(found).withFailMessage("Expected to find process definition " + processDefinition);
+      assertThat(found).withFailMessage("Expected to find process definition " + processDefinition).isTrue();
     }
 
     assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionKey("dummyKey").processDefinitionKeysIn(processDefinitionKeys).count()).isZero();
@@ -661,7 +661,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
           found = true; break;
         }
       }
-      assertThat(found).withFailMessage("Expected to find process definition " + processDefinition);
+      assertThat(found).withFailMessage("Expected to find process definition " + processDefinition).isTrue();
     }
 
     assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionId("dummyId").processDefinitionIdIn(ids).count()).isZero();

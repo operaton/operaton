@@ -119,7 +119,7 @@ public class CaseDefinitionQueryTest extends AbstractDefinitionQueryTest {
 
     assertThat(ids).hasSize(caseDefinitions.size());
     for (CaseDefinition caseDefinition : caseDefinitions) {
-      assertThat(ids).contains(caseDefinition.getId()).withFailMessage("Expected to find case definition " + caseDefinition);
+      assertThat(ids).withFailMessage("Expected to find case definition " + caseDefinition).contains(caseDefinition.getId());
     }
 
     assertThat(repositoryService.createCaseDefinitionQuery()

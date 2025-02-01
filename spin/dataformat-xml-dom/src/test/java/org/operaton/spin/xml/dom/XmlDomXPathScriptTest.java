@@ -35,15 +35,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  */
 public abstract class XmlDomXPathScriptTest extends ScriptTest {
 
-  private static final String xml = "<root><child id=\"child\"><a id=\"a\"/><b id=\"b\"/><a id=\"c\"/></child></root>";
-  private static final String xmlWithNamespace = "<root xmlns:bar=\"http://operaton.org\" xmlns:foo=\"http://operaton.com\"><foo:child id=\"child\"><bar:a id=\"a\"/><foo:b id=\"b\"/><a id=\"c\"/></foo:child></root>";
-  private static final String xmlWithDefaultNamespace = "<root xmlns=\"http://operaton.com/example\" xmlns:bar=\"http://operaton.org\" xmlns:foo=\"http://operaton.com\"><foo:child id=\"child\"><bar:a id=\"a\"/><foo:b id=\"b\"/><a id=\"c\"/></foo:child></root>";
+  private static final String XML = "<root><child id=\"child\"><a id=\"a\"/><b id=\"b\"/><a id=\"c\"/></child></root>";
+  private static final String XML_WITH_NAMESPACE = "<root xmlns:bar=\"http://operaton.org\" xmlns:foo=\"http://operaton.com\"><foo:child id=\"child\"><bar:a id=\"a\"/><foo:b id=\"b\"/><a id=\"c\"/></foo:child></root>";
+  private static final String XML_WITH_DEFAULT_NAMESPACE = "<root xmlns=\"http://operaton.com/example\" xmlns:bar=\"http://operaton.org\" xmlns:foo=\"http://operaton.com\"><foo:child id=\"child\"><bar:a id=\"a\"/><foo:b id=\"b\"/><a id=\"c\"/></foo:child></root>";
 
   @Test
   @Script(
       name = "XmlDomXPathScriptTest.xPath",
       variables = {
-        @ScriptVariable(name = "input", value = xml),
+        @ScriptVariable(name = "input", value = XML),
         @ScriptVariable(name = "expression", value = "/")
       }
     )
@@ -56,7 +56,7 @@ public abstract class XmlDomXPathScriptTest extends ScriptTest {
   @Script(
       name = "XmlDomXPathScriptTest.xPath",
       variables = {
-        @ScriptVariable(name = "input", value = xml),
+        @ScriptVariable(name = "input", value = XML),
         @ScriptVariable(name = "expression", value = "/")
       }
     )
@@ -69,7 +69,7 @@ public abstract class XmlDomXPathScriptTest extends ScriptTest {
   @Script(
       name = "XmlDomXPathScriptTest.xPath",
       variables = {
-        @ScriptVariable(name = "input", value = xml),
+        @ScriptVariable(name = "input", value = XML),
         @ScriptVariable(name = "expression", value = "/")
       }
     )
@@ -82,7 +82,7 @@ public abstract class XmlDomXPathScriptTest extends ScriptTest {
   @Script(
       name = "XmlDomXPathScriptTest.xPath",
       variables = {
-        @ScriptVariable(name = "input", value = xml),
+        @ScriptVariable(name = "input", value = XML),
         @ScriptVariable(name = "expression", value = "/")
       }
     )
@@ -95,7 +95,7 @@ public abstract class XmlDomXPathScriptTest extends ScriptTest {
   @Script(
       name = "XmlDomXPathScriptTest.xPath",
       variables = {
-        @ScriptVariable(name = "input", value = xml),
+        @ScriptVariable(name = "input", value = XML),
         @ScriptVariable(name = "expression", value = "/")
       }
     )
@@ -108,7 +108,7 @@ public abstract class XmlDomXPathScriptTest extends ScriptTest {
   @Script(
       name = "XmlDomXPathScriptTest.xPath",
       variables = {
-        @ScriptVariable(name = "input", value = xml),
+        @ScriptVariable(name = "input", value = XML),
         @ScriptVariable(name = "expression", value = "/")
       }
     )
@@ -121,7 +121,7 @@ public abstract class XmlDomXPathScriptTest extends ScriptTest {
   @Script(
       name = "XmlDomXPathScriptTest.xPath",
       variables = {
-        @ScriptVariable(name = "input", value = xml),
+        @ScriptVariable(name = "input", value = XML),
         @ScriptVariable(name = "expression", value = "/")
       }
     )
@@ -134,7 +134,7 @@ public abstract class XmlDomXPathScriptTest extends ScriptTest {
   @Script(
     name = "XmlDomXPathScriptTest.xPath",
     variables = {
-      @ScriptVariable(name = "input", value = xml),
+      @ScriptVariable(name = "input", value = XML),
       @ScriptVariable(name = "expression", value = "/root/child")
     }
   )
@@ -149,7 +149,7 @@ public abstract class XmlDomXPathScriptTest extends ScriptTest {
   @Script(
       name = "XmlDomXPathScriptTest.xPath",
       variables = {
-        @ScriptVariable(name = "input", value = xml),
+        @ScriptVariable(name = "input", value = XML),
         @ScriptVariable(name = "expression", value = "/root/nonExisting")
       }
     )
@@ -162,7 +162,7 @@ public abstract class XmlDomXPathScriptTest extends ScriptTest {
   @Script(
     name = "XmlDomXPathScriptTest.xPath",
     variables = {
-      @ScriptVariable(name = "input", value = xml),
+      @ScriptVariable(name = "input", value = XML),
       @ScriptVariable(name = "expression", value = "/root/child")
     }
   )
@@ -175,7 +175,7 @@ public abstract class XmlDomXPathScriptTest extends ScriptTest {
   @Script(
     name = "XmlDomXPathScriptTest.xPath",
     variables = {
-      @ScriptVariable(name = "input", value = xml),
+      @ScriptVariable(name = "input", value = XML),
       @ScriptVariable(name = "expression", value = "/root/child/a")
     }
   )
@@ -189,7 +189,7 @@ public abstract class XmlDomXPathScriptTest extends ScriptTest {
   @Script(
       name = "XmlDomXPathScriptTest.xPath",
       variables = {
-        @ScriptVariable(name = "input", value = xml),
+        @ScriptVariable(name = "input", value = XML),
         @ScriptVariable(name = "expression", value = "/root/child/nonExisting")
       }
     )
@@ -202,7 +202,7 @@ public abstract class XmlDomXPathScriptTest extends ScriptTest {
   @Script(
     name = "XmlDomXPathScriptTest.xPath",
     variables = {
-      @ScriptVariable(name = "input", value = xml),
+      @ScriptVariable(name = "input", value = XML),
       @ScriptVariable(name = "expression", value = "/root/child/@id")
     }
   )
@@ -216,7 +216,7 @@ public abstract class XmlDomXPathScriptTest extends ScriptTest {
   @Script(
       name = "XmlDomXPathScriptTest.xPath",
       variables = {
-        @ScriptVariable(name = "input", value = xml),
+        @ScriptVariable(name = "input", value = XML),
         @ScriptVariable(name = "expression", value = "/root/child/@nonExisting")
       }
     )
@@ -229,7 +229,7 @@ public abstract class XmlDomXPathScriptTest extends ScriptTest {
   @Script(
     name = "XmlDomXPathScriptTest.xPath",
     variables = {
-      @ScriptVariable(name = "input", value = xml),
+      @ScriptVariable(name = "input", value = XML),
       @ScriptVariable(name = "expression", value = "/root/child/@id")
     }
   )
@@ -242,7 +242,7 @@ public abstract class XmlDomXPathScriptTest extends ScriptTest {
   @Script(
     name = "XmlDomXPathScriptTest.xPath",
     variables = {
-      @ScriptVariable(name = "input", value = xml),
+      @ScriptVariable(name = "input", value = XML),
       @ScriptVariable(name = "expression", value = "/root/child/a/@id")
     }
   )
@@ -256,7 +256,7 @@ public abstract class XmlDomXPathScriptTest extends ScriptTest {
   @Script(
       name = "XmlDomXPathScriptTest.xPath",
       variables = {
-        @ScriptVariable(name = "input", value = xml),
+        @ScriptVariable(name = "input", value = XML),
         @ScriptVariable(name = "expression", value = "/root/child/a/@nonExisting")
       }
     )
@@ -269,7 +269,7 @@ public abstract class XmlDomXPathScriptTest extends ScriptTest {
   @Script(
     name = "XmlDomXPathScriptTest.xPath",
     variables = {
-      @ScriptVariable(name = "input", value = xml),
+      @ScriptVariable(name = "input", value = XML),
       @ScriptVariable(name = "expression", value = "string(/root/child/@id)")
     }
   )
@@ -283,7 +283,7 @@ public abstract class XmlDomXPathScriptTest extends ScriptTest {
   @Script(
     name = "XmlDomXPathScriptTest.xPath",
     variables = {
-      @ScriptVariable(name = "input", value = xml),
+      @ScriptVariable(name = "input", value = XML),
       @ScriptVariable(name = "expression", value = "string(/root/child/@nonExisting)")
     }
   )
@@ -297,7 +297,7 @@ public abstract class XmlDomXPathScriptTest extends ScriptTest {
   @Script(
     name = "XmlDomXPathScriptTest.xPath",
     variables = {
-      @ScriptVariable(name = "input", value = xml),
+      @ScriptVariable(name = "input", value = XML),
       @ScriptVariable(name = "expression", value = "string(/)")
     }
   )
@@ -311,7 +311,7 @@ public abstract class XmlDomXPathScriptTest extends ScriptTest {
   @Script(
     name = "XmlDomXPathScriptTest.xPath",
     variables = {
-      @ScriptVariable(name = "input", value = xml),
+      @ScriptVariable(name = "input", value = XML),
       @ScriptVariable(name = "expression", value = "count(/root/child/a)")
     }
   )
@@ -325,7 +325,7 @@ public abstract class XmlDomXPathScriptTest extends ScriptTest {
   @Script(
     name = "XmlDomXPathScriptTest.xPath",
     variables = {
-      @ScriptVariable(name = "input", value = xml),
+      @ScriptVariable(name = "input", value = XML),
       @ScriptVariable(name = "expression", value = "count(/root/child/nonExisting)")
     }
   )
@@ -339,7 +339,7 @@ public abstract class XmlDomXPathScriptTest extends ScriptTest {
   @Script(
     name = "XmlDomXPathScriptTest.xPath",
     variables = {
-      @ScriptVariable(name = "input", value = xml),
+      @ScriptVariable(name = "input", value = XML),
       @ScriptVariable(name = "expression", value = "count(/)")
     }
   )
@@ -353,7 +353,7 @@ public abstract class XmlDomXPathScriptTest extends ScriptTest {
   @Script(
     name = "XmlDomXPathScriptTest.xPath",
     variables = {
-      @ScriptVariable(name = "input", value = xml),
+      @ScriptVariable(name = "input", value = XML),
       @ScriptVariable(name = "expression", value = "boolean(/root/child)")
     }
   )
@@ -367,7 +367,7 @@ public abstract class XmlDomXPathScriptTest extends ScriptTest {
   @Script(
     name = "XmlDomXPathScriptTest.xPath",
     variables = {
-      @ScriptVariable(name = "input", value = xml),
+      @ScriptVariable(name = "input", value = XML),
       @ScriptVariable(name = "expression", value = "boolean(/root/nonExisting)")
     }
   )
@@ -381,7 +381,7 @@ public abstract class XmlDomXPathScriptTest extends ScriptTest {
   @Script(
     name = "XmlDomXPathScriptTest.xPath",
     variables = {
-      @ScriptVariable(name = "input", value = xml),
+      @ScriptVariable(name = "input", value = XML),
       @ScriptVariable(name = "expression", value = "boolean(/)")
     }
   )
@@ -395,7 +395,7 @@ public abstract class XmlDomXPathScriptTest extends ScriptTest {
   @Script(
     name = "XmlDomXPathScriptTest.canQueryElementWithNamespace",
     variables = {
-      @ScriptVariable(name = "input", value = xmlWithNamespace),
+      @ScriptVariable(name = "input", value = XML_WITH_NAMESPACE),
       @ScriptVariable(name = "expression", value = "/root/a:child")
     }
   )
@@ -411,7 +411,7 @@ public abstract class XmlDomXPathScriptTest extends ScriptTest {
   @Test
   @Script(
     variables = {
-      @ScriptVariable(name = "input", value = xmlWithNamespace),
+      @ScriptVariable(name = "input", value = XML_WITH_NAMESPACE),
       @ScriptVariable(name = "expression", value = "/root/a:child")
     }
   )
@@ -428,7 +428,7 @@ public abstract class XmlDomXPathScriptTest extends ScriptTest {
   @Script(
     name = "XmlDomXPathScriptTest.canQueryElementWithNamespace",
     variables = {
-      @ScriptVariable(name = "input", value = xmlWithDefaultNamespace),
+      @ScriptVariable(name = "input", value = XML_WITH_DEFAULT_NAMESPACE),
       @ScriptVariable(name = "expression", value = "/:root/a:child")
     }
   )

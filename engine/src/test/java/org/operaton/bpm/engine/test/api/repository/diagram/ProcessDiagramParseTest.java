@@ -38,7 +38,7 @@ import org.junit.Test;
  */
 public class ProcessDiagramParseTest {
 
-  private static final String resourcePath = "src/test/resources/org/operaton/bpm/engine/test/api/repository/diagram/testXxeParsingIsDisabled";
+  private static final String RESOURCE_PATH = "src/test/resources/org/operaton/bpm/engine/test/api/repository/diagram/testXxeParsingIsDisabled";
 
   @Rule
   public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
@@ -60,8 +60,8 @@ public class ProcessDiagramParseTest {
   @Test
   public void testXxeParsingIsDisabled() {
     processEngineConfiguration.setEnableXxeProcessing(false);
-    final InputStream bpmnXmlStream = getResourceInputStream(resourcePath + ".bpmn20.xml");
-    final InputStream imageStream = getResourceInputStream(resourcePath + ".png");
+    final InputStream bpmnXmlStream = getResourceInputStream(RESOURCE_PATH + ".bpmn20.xml");
+    final InputStream imageStream = getResourceInputStream(RESOURCE_PATH + ".png");
     assertNotNull(bpmnXmlStream);
     var processEngineConfigurationImpl = engineRule.getProcessEngineConfiguration()
         .getCommandExecutorTxRequired();
@@ -81,8 +81,8 @@ public class ProcessDiagramParseTest {
   @Test
   public void testXxeParsingIsEnabled() {
     processEngineConfiguration.setEnableXxeProcessing(true);
-    final InputStream bpmnXmlStream = getResourceInputStream(resourcePath + ".bpmn20.xml");
-    final InputStream imageStream = getResourceInputStream(resourcePath + ".png");
+    final InputStream bpmnXmlStream = getResourceInputStream(RESOURCE_PATH + ".bpmn20.xml");
+    final InputStream imageStream = getResourceInputStream(RESOURCE_PATH + ".png");
     assertNotNull(bpmnXmlStream);
     var processEngineConfigurationImpl = engineRule.getProcessEngineConfiguration()
         .getCommandExecutorTxRequired();

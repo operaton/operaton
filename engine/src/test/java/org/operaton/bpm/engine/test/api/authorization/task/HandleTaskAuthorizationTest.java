@@ -75,7 +75,7 @@ public class HandleTaskAuthorizationTest {
   protected RuntimeService runtimeService;
   protected RepositoryService repositoryService;
 
-  protected static final String userId = "userId";
+  protected static final String USER_ID = "userId";
   protected String deploymentId;
 
   protected static final String BPMN_BEHAVIOR_LOGGER = "org.operaton.bpm.engine.bpmn.behavior";
@@ -88,22 +88,22 @@ public class HandleTaskAuthorizationTest {
       scenario()
         .withoutAuthorizations()
         .failsDueToRequired(
-          grant(TASK, "taskId", userId, TASK_WORK),
-          grant(PROCESS_DEFINITION, PROCESS_KEY, userId, TASK_WORK),
-          grant(TASK, "taskId", userId, UPDATE),
-          grant(PROCESS_DEFINITION, PROCESS_KEY, userId, UPDATE_TASK)),
+          grant(TASK, "taskId", USER_ID, TASK_WORK),
+          grant(PROCESS_DEFINITION, PROCESS_KEY, USER_ID, TASK_WORK),
+          grant(TASK, "taskId", USER_ID, UPDATE),
+          grant(PROCESS_DEFINITION, PROCESS_KEY, USER_ID, UPDATE_TASK)),
       scenario()
         .withAuthorizations(
-          grant(TASK, "taskId", userId, TASK_WORK)),
+          grant(TASK, "taskId", USER_ID, TASK_WORK)),
       scenario()
         .withAuthorizations(
-          grant(PROCESS_DEFINITION, PROCESS_KEY, userId, TASK_WORK)),
+          grant(PROCESS_DEFINITION, PROCESS_KEY, USER_ID, TASK_WORK)),
       scenario()
         .withAuthorizations(
-          grant(TASK, "taskId", userId, UPDATE)),
+          grant(TASK, "taskId", USER_ID, UPDATE)),
       scenario()
         .withAuthorizations(
-          grant(PROCESS_DEFINITION, PROCESS_KEY, userId, UPDATE_TASK))
+          grant(PROCESS_DEFINITION, PROCESS_KEY, USER_ID, UPDATE_TASK))
         .succeeds()
       );
   }

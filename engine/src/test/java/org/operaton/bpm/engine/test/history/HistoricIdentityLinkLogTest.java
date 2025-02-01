@@ -45,11 +45,11 @@ public class HistoricIdentityLinkLogTest extends PluggableProcessEngineTest {
   private static final String A_USER_ID = "aUserId";
   private static final String B_USER_ID = "bUserId";
   private static final String C_USER_ID = "cUserId";
-  private static final int numberOfUsers = 3;
+  private static final int NUMBER_OF_USERS = 3;
   private static final String A_GROUP_ID = "aGroupId";
   private static final String INVALID_USER_ID = "InvalidUserId";
   private static final String A_ASSIGNER_ID = "aAssignerId";
-  private static String PROCESS_DEFINITION_KEY = "oneTaskProcess";
+  private static final String PROCESS_DEFINITION_KEY = "oneTaskProcess";
   private static final String GROUP_1 = "Group1";
   private static final String USER_1 = "User1";
   private static final String OWNER_1 = "Owner1";
@@ -442,12 +442,12 @@ public class HistoricIdentityLinkLogTest extends PluggableProcessEngineTest {
   }
 
   public void addUserIdentityLinks(String taskId) {
-    for (int userIndex = 1; userIndex <= numberOfUsers; userIndex++)
+    for (int userIndex = 1; userIndex <= NUMBER_OF_USERS; userIndex++)
       taskService.addUserIdentityLink(taskId, A_USER_ID + userIndex, IdentityLinkType.OWNER);
   }
 
   public void deleteUserIdentityLinks(String taskId) {
-    for (int userIndex = 1; userIndex <= numberOfUsers; userIndex++)
+    for (int userIndex = 1; userIndex <= NUMBER_OF_USERS; userIndex++)
       taskService.deleteUserIdentityLink(taskId, A_USER_ID + userIndex, IdentityLinkType.OWNER);
   }
 

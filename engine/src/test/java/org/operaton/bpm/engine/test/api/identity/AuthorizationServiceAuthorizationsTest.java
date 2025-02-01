@@ -56,7 +56,7 @@ import org.junit.Test;
  */
 public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngineTest {
 
-  private static final String jonny2 = "jonny2";
+  private static final String JONNY_2 = "jonny2";
 
   @After
   public void tearDown() {
@@ -78,7 +78,7 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
 
     // now enable authorizations:
     processEngineConfiguration.setAuthorizationEnabled(true);
-    identityService.setAuthenticatedUserId(jonny2);
+    identityService.setAuthenticatedUserId(JONNY_2);
 
     try {
       // we cannot create another authorization
@@ -88,7 +88,7 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
     } catch (AuthorizationException e) {
       assertEquals(1, e.getMissingAuthorizations().size());
       MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertEquals(jonny2, e.getUserId());
+      assertEquals(JONNY_2, e.getUserId());
       assertExceptionInfo(CREATE.getName(), AUTHORIZATION.resourceName(), null, info);
     }
 
@@ -104,7 +104,7 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
     } catch (AuthorizationException e) {
       assertEquals(1, e.getMissingAuthorizations().size());
       MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertEquals(jonny2, e.getUserId());
+      assertEquals(JONNY_2, e.getUserId());
       assertExceptionInfo(CREATE.getName(), AUTHORIZATION.resourceName(), null, info);
     }
   }
@@ -122,7 +122,7 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
 
     // turn on authorization
     processEngineConfiguration.setAuthorizationEnabled(true);
-    identityService.setAuthenticatedUserId(jonny2);
+    identityService.setAuthenticatedUserId(JONNY_2);
     var basePermsId = basePerms.getId();
 
     try {
@@ -133,7 +133,7 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
     } catch (AuthorizationException e) {
       assertEquals(1, e.getMissingAuthorizations().size());
       MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertEquals(jonny2, e.getUserId());
+      assertEquals(JONNY_2, e.getUserId());
       assertExceptionInfo(DELETE.getName(), AUTHORIZATION.resourceName(), basePerms.getId(), info);
     }
   }
@@ -151,7 +151,7 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
 
     // turn on authorization
     processEngineConfiguration.setAuthorizationEnabled(true);
-    identityService.setAuthenticatedUserId(jonny2);
+    identityService.setAuthenticatedUserId(JONNY_2);
 
     // fetch authhorization
     basePerms = authorizationService.createAuthorizationQuery().singleResult();
@@ -165,7 +165,7 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
     } catch (AuthorizationException e) {
       assertEquals(1, e.getMissingAuthorizations().size());
       MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertEquals(jonny2, e.getUserId());
+      assertEquals(JONNY_2, e.getUserId());
       assertExceptionInfo(UPDATE.getName(), AUTHORIZATION.resourceName(), basePerms.getId(), info);
     }
 

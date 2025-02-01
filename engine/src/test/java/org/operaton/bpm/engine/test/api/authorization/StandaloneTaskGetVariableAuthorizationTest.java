@@ -71,7 +71,7 @@ public class StandaloneTaskGetVariableAuthorizationTest {
   protected TaskService taskService;
   protected RuntimeService runtimeService;
 
-  protected static final String userId = "userId";
+  protected static final String USER_ID = "userId";
   protected String taskId = "myTask";
   protected static final String VARIABLE_NAME = "aVariableName";
   protected static final String VARIABLE_VALUE = "aVariableValue";
@@ -84,13 +84,13 @@ public class StandaloneTaskGetVariableAuthorizationTest {
       scenario()
         .withoutAuthorizations()
         .failsDueToRequired(
-          grant(TASK, "taskId", userId, READ_VARIABLE)),
+          grant(TASK, "taskId", USER_ID, READ_VARIABLE)),
       scenario()
         .withAuthorizations(
-          grant(TASK, "taskId", userId, READ_VARIABLE)),
+          grant(TASK, "taskId", USER_ID, READ_VARIABLE)),
       scenario()
         .withAuthorizations(
-          grant(TASK, "*", userId, READ_VARIABLE))
+          grant(TASK, "*", USER_ID, READ_VARIABLE))
         .succeeds()
       );
   }

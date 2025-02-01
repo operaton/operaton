@@ -35,7 +35,7 @@ public class AuthenticationProperties {
 
   public static class CacheProperties {
 
-    public static final long AUTH_CACHE_TIME_TO_LIVE = 1_000 * 60 * 5;
+    public static final long AUTH_CACHE_TIME_TO_LIVE = 1_000L * 60 * 5;
 
     /**
      * Enables authentication time to live.

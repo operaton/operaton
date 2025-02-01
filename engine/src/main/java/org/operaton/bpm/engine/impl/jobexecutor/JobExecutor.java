@@ -59,7 +59,7 @@ public abstract class JobExecutor {
   // waiting when job acquisition is idle
   protected int waitTimeInMillis = 5 * 1000;
   protected float waitIncreaseFactor = 2;
-  protected long maxWait = 60 * 1000;
+  protected long maxWait = 60 * 1000L;
 
   // backoff when job acquisition fails to lock all jobs
   protected int backoffTimeInMillis = 0;

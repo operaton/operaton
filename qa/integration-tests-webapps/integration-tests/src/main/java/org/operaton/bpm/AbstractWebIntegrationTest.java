@@ -162,7 +162,7 @@ public abstract class AbstractWebIntegrationTest {
 
   protected void preventRaceConditions() throws InterruptedException {
     // just wait some seconds before starting because of Wildfly / Cargo race conditions
-    Thread.sleep(5 * 1000);
+    Thread.sleep(5 * 1000L);
   }
 
   protected String getWebappCtxPath() {

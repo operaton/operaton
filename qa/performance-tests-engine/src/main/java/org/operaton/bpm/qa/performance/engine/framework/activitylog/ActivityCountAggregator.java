@@ -175,7 +175,7 @@ public class ActivityCountAggregator extends TabularResultAggregator {
   }
 
   protected int calculateTimeSlot(Date date, long firstTimestamp) {
-    return Math.round((date.getTime() - firstTimestamp) / INTERVAL);
+    return Math.round((float) (date.getTime() - firstTimestamp) / INTERVAL);
   }
 
   static class ActivityCount {

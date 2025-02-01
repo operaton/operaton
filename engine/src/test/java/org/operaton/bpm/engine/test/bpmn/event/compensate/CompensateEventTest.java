@@ -1063,7 +1063,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
     // then there is a message event subscription for the receive task compensation handler
     EventSubscription eventSubscription = runtimeService.createEventSubscriptionQuery().singleResult();
     assertNotNull(eventSubscription);
-    assertEquals(EventType.MESSAGE, eventSubscription.getEventType());
+    assertEquals(EventType.MESSAGE.name(), eventSubscription.getEventType());
 
     // and triggering the message completes compensation
     runtimeService.correlateMessage("Message");

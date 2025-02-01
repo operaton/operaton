@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 
 import org.operaton.bpm.engine.impl.jobexecutor.JobHandlerConfiguration;
 import org.operaton.bpm.engine.impl.jobexecutor.TimerDeclarationImpl;
@@ -159,7 +160,7 @@ public class ActivityInstanceJobHandler implements MigratingDependentInstancePar
 
   protected boolean isNonInterruptingTimerTriggeredAlready(MigratingInstanceParseContext parseContext,
       Map<String, TimerDeclarationImpl> sourceTimerDeclarationsInEventScope, TimerDeclarationImpl targetTimerDeclaration) {
-    if (targetTimerDeclaration.isInterruptingTimer() || targetTimerDeclaration.getJobHandlerType() != TimerExecuteNestedActivityJobHandler.TYPE || sourceTimerDeclarationsInEventScope.values().isEmpty()) {
+    if (targetTimerDeclaration.isInterruptingTimer() || !Objects.equals(targetTimerDeclaration.getJobHandlerType(), TimerExecuteNestedActivityJobHandler.TYPE) || sourceTimerDeclarationsInEventScope.values().isEmpty()) {
       return false;
     }
     for (TimerDeclarationImpl sourceTimerDeclaration : sourceTimerDeclarationsInEventScope.values()) {
@@ -177,7 +178,7 @@ public class ActivityInstanceJobHandler implements MigratingDependentInstancePar
       Map<String, Map<String, TimerDeclarationImpl>> sourceTimeoutListenerDeclarationsInEventScope,
       Entry<String, TimerDeclarationImpl> targetTimerDeclarationEntry) {
     TimerDeclarationImpl targetTimerDeclaration = targetTimerDeclarationEntry.getValue();
-    if (targetTimerDeclaration.isInterruptingTimer() || targetTimerDeclaration.getJobHandlerType() != TimerTaskListenerJobHandler.TYPE || sourceTimeoutListenerDeclarationsInEventScope.values().isEmpty()) {
+    if (targetTimerDeclaration.isInterruptingTimer() || !Objects.equals(targetTimerDeclaration.getJobHandlerType(), TimerTaskListenerJobHandler.TYPE) || sourceTimeoutListenerDeclarationsInEventScope.values().isEmpty()) {
       return false;
     }
     for (Entry<String, Map<String, TimerDeclarationImpl>> sourceTimerDeclarationsEntry : sourceTimeoutListenerDeclarationsInEventScope.entrySet()) {

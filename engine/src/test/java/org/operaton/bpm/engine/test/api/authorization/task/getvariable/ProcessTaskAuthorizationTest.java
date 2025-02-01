@@ -49,7 +49,7 @@ public abstract class ProcessTaskAuthorizationTest {
 
 
   private static final String ONE_TASK_PROCESS = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml";
-  protected static final String userId = "userId";
+  protected static final String USER_ID = "userId";
   public static final String VARIABLE_NAME = "aVariableName";
   public static final String VARIABLE_VALUE = "aVariableValue";
   protected static final String PROCESS_KEY = "oneTaskProcess";

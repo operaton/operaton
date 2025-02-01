@@ -63,7 +63,7 @@ import org.junit.runners.Parameterized.Parameters;
 public class ProcessTaskAuthorizationTest {
 
   private static final String ONE_TASK_PROCESS = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml";
-  protected static final String userId = "userId";
+  protected static final String USER_ID = "userId";
   protected static final String VARIABLE_NAME = "aVariableName";
   protected static final String VARIABLE_VALUE = "aVariableValue";
   protected static final String PROCESS_KEY = "oneTaskProcess";
@@ -90,34 +90,34 @@ public class ProcessTaskAuthorizationTest {
       scenario()
         .withoutAuthorizations()
         .failsDueToRequired(
-          grant(TASK, "taskId", userId, UPDATE),
-          grant(PROCESS_DEFINITION, PROCESS_KEY, userId, UPDATE_TASK),
-          grant(TASK, "taskId", userId, UPDATE_VARIABLE),
-          grant(PROCESS_DEFINITION, PROCESS_KEY, userId, UPDATE_TASK_VARIABLE)),
+          grant(TASK, "taskId", USER_ID, UPDATE),
+          grant(PROCESS_DEFINITION, PROCESS_KEY, USER_ID, UPDATE_TASK),
+          grant(TASK, "taskId", USER_ID, UPDATE_VARIABLE),
+          grant(PROCESS_DEFINITION, PROCESS_KEY, USER_ID, UPDATE_TASK_VARIABLE)),
       scenario()
         .withAuthorizations(
-          grant(TASK, "taskId", userId, UPDATE)),
+          grant(TASK, "taskId", USER_ID, UPDATE)),
       scenario()
         .withAuthorizations(
-          grant(TASK, "*", userId, UPDATE)),
+          grant(TASK, "*", USER_ID, UPDATE)),
       scenario()
         .withAuthorizations(
-          grant(PROCESS_DEFINITION, PROCESS_KEY, userId, UPDATE_TASK)),
+          grant(PROCESS_DEFINITION, PROCESS_KEY, USER_ID, UPDATE_TASK)),
       scenario()
         .withAuthorizations(
-          grant(PROCESS_DEFINITION, "*", userId, UPDATE_TASK)),
+          grant(PROCESS_DEFINITION, "*", USER_ID, UPDATE_TASK)),
       scenario()
         .withAuthorizations(
-          grant(TASK, "taskId", userId, UPDATE_VARIABLE)),
+          grant(TASK, "taskId", USER_ID, UPDATE_VARIABLE)),
       scenario()
         .withAuthorizations(
-          grant(TASK, "*", userId, UPDATE_VARIABLE)),
+          grant(TASK, "*", USER_ID, UPDATE_VARIABLE)),
       scenario()
         .withAuthorizations(
-          grant(PROCESS_DEFINITION, PROCESS_KEY, userId, UPDATE_TASK_VARIABLE)),
+          grant(PROCESS_DEFINITION, PROCESS_KEY, USER_ID, UPDATE_TASK_VARIABLE)),
       scenario()
         .withAuthorizations(
-          grant(PROCESS_DEFINITION, "*", userId, UPDATE_TASK_VARIABLE))
+          grant(PROCESS_DEFINITION, "*", USER_ID, UPDATE_TASK_VARIABLE))
         .succeeds()
       );
   }

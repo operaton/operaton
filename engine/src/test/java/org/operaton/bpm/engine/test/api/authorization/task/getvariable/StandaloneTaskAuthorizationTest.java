@@ -60,7 +60,7 @@ public abstract class StandaloneTaskAuthorizationTest {
   protected TaskService taskService;
   protected RuntimeService runtimeService;
 
-  public static final String userId = "userId";
+  public static final String USER_ID = "userId";
   public String taskId = "myTask";
   public static final String VARIABLE_NAME = "aVariableName";
   public static final String VARIABLE_VALUE = "aVariableValue";

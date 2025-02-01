@@ -47,7 +47,7 @@ import org.junit.Test;
 public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest {
   private static final String A_USER_ID = "aUserId";
   private static final String A_GROUP_ID = "aGroupId";
-  private static final int numberOfUsers = 3;
+  private static final int NUMBER_OF_USERS = 3;
   private static final String A_ASSIGNER_ID = "aAssignerId";
 
   private static final String INVALID_USER_ID = "InvalidUserId";
@@ -60,8 +60,8 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
   private static final String INVALID_PROCESS_DEFINITION_KEY = "InvalidProcessDefinitionKey";
   private static final String GROUP_1 = "Group1";
   private static final String USER_1 = "User1";
-  private static String PROCESS_DEFINITION_KEY = "oneTaskProcess";
-  private static String PROCESS_DEFINITION_KEY_MULTIPLE_CANDIDATE_USER = "oneTaskProcessForHistoricIdentityLinkWithMultipleCanidateUser";
+  private static final String PROCESS_DEFINITION_KEY = "oneTaskProcess";
+  private static final String PROCESS_DEFINITION_KEY_MULTIPLE_CANDIDATE_USER = "oneTaskProcessForHistoricIdentityLinkWithMultipleCanidateUser";
   private static final String IDENTITY_LINK_ADD="add";
   private static final String IDENTITY_LINK_DELETE="delete";
 
@@ -89,7 +89,7 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
     assertNull(historicIdentityLink.getGroupId());
     assertEquals(IDENTITY_LINK_ADD, historicIdentityLink.getOperationType());
     assertEquals(historicIdentityLink.getProcessDefinitionId(), processInstance.getProcessDefinitionId());
-    assertEquals(historicIdentityLink.getProcessDefinitionKey(), PROCESS_DEFINITION_KEY);
+    assertEquals(PROCESS_DEFINITION_KEY, historicIdentityLink.getProcessDefinitionKey());
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml" })
@@ -116,7 +116,7 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
     assertEquals(A_GROUP_ID, historicIdentityLink.getGroupId());
     assertEquals(IDENTITY_LINK_ADD, historicIdentityLink.getOperationType());
     assertEquals(historicIdentityLink.getProcessDefinitionId(), processInstance.getProcessDefinitionId());
-    assertEquals(historicIdentityLink.getProcessDefinitionKey(), PROCESS_DEFINITION_KEY);
+    assertEquals(PROCESS_DEFINITION_KEY, historicIdentityLink.getProcessDefinitionKey());
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml" })
@@ -414,12 +414,12 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
   }
 
   public void addUserIdentityLinks(String taskId) {
-    for (int userIndex = 1; userIndex <= numberOfUsers; userIndex++)
+    for (int userIndex = 1; userIndex <= NUMBER_OF_USERS; userIndex++)
       taskService.addUserIdentityLink(taskId, A_USER_ID + userIndex, IdentityLinkType.ASSIGNEE);
   }
 
   public void deleteUserIdentityLinks(String taskId) {
-    for (int userIndex = 1; userIndex <= numberOfUsers; userIndex++)
+    for (int userIndex = 1; userIndex <= NUMBER_OF_USERS; userIndex++)
       taskService.deleteUserIdentityLink(taskId, A_USER_ID + userIndex, IdentityLinkType.ASSIGNEE);
   }
 

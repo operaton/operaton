@@ -71,12 +71,7 @@ import org.junit.rules.RuleChain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * @author Frederik Heremans
@@ -298,7 +293,7 @@ public class RuntimeServiceTest {
     // if we do not skip the custom listeners,
     runtimeService.deleteProcessInstance(processInstance.getId(), null, false);
     // the custom listener is invoked
-    assertTrue(TestExecutionListener.collectedEvents.size() == 1);
+    assertEquals(1, TestExecutionListener.collectedEvents.size());
     TestExecutionListener.reset();
 
     processInstance = runtimeService.startProcessInstanceByKey("testProcess");
@@ -319,7 +314,7 @@ public class RuntimeServiceTest {
     // if we do not skip the custom listeners,
     runtimeService.deleteProcessInstance(processInstance.getId(), null, false);
     // the custom listener is invoked
-    assertTrue(TestExecutionListener.collectedEvents.size() == 1);
+    assertEquals(1, TestExecutionListener.collectedEvents.size());
     TestExecutionListener.reset();
 
     processInstance = runtimeService.startProcessInstanceByKey("testProcess");
@@ -1502,7 +1497,7 @@ public class RuntimeServiceTest {
     assertEquals(processInstance.getId(), rootActInstance.getProcessInstanceId());
     assertEquals(processInstance.getProcessDefinitionId(), rootActInstance.getProcessDefinitionId());
     assertEquals(processInstance.getId(), rootActInstance.getProcessInstanceId());
-    assertTrue(rootActInstance.getExecutionIds()[0].equals(processInstance.getId()));
+    assertEquals(rootActInstance.getExecutionIds()[0], processInstance.getId());
     assertEquals(rootActInstance.getProcessDefinitionId(), rootActInstance.getActivityId());
     assertNull(rootActInstance.getParentActivityInstanceId());
     assertEquals("processDefinition", rootActInstance.getActivityType());
@@ -1513,7 +1508,7 @@ public class RuntimeServiceTest {
     assertEquals(processInstance.getId(), childActivityInstance.getProcessInstanceId());
     assertEquals(processInstance.getProcessDefinitionId(), childActivityInstance.getProcessDefinitionId());
     assertEquals(processInstance.getId(), childActivityInstance.getProcessInstanceId());
-    assertTrue(childActivityInstance.getExecutionIds()[0].equals(task.getExecutionId()));
+    assertEquals(childActivityInstance.getExecutionIds()[0], task.getExecutionId());
     assertEquals("theTask", childActivityInstance.getActivityId());
     assertEquals(rootActInstance.getId(), childActivityInstance.getParentActivityInstanceId());
     assertEquals("userTask", childActivityInstance.getActivityType());
@@ -1793,7 +1788,7 @@ public class RuntimeServiceTest {
 
     assertEquals("innerTask", asyncBeforeInstances[0].getActivityId());
     assertEquals("innerTask", asyncBeforeInstances[1].getActivityId());
-    assertFalse(asyncBeforeInstances[0].getId().equals(asyncBeforeInstances[1].getId()));
+    assertNotEquals(asyncBeforeInstances[0].getId(), asyncBeforeInstances[1].getId());
 
     TransitionInstance[] asyncEndEventInstances = tree.getTransitionInstances("theSubProcessEnd");
     assertEquals(1, asyncEndEventInstances.length);

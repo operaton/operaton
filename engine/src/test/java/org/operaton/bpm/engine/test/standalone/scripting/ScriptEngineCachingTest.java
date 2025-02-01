@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.standalone.scripting;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 
 import javax.script.ScriptEngine;
@@ -60,7 +60,7 @@ public class ScriptEngineCachingTest extends PluggableProcessEngineTest {
 
     // then
     assertNotNull(engine);
-    assertFalse(engine.equals(getScriptEngine(SCRIPT_LANGUAGE)));
+    assertNotEquals(engine, getScriptEngine(SCRIPT_LANGUAGE));
 
     processEngineConfiguration.setEnableScriptEngineCaching(true);
     getScriptingEngines().setEnableScriptEngineCaching(true);
@@ -89,7 +89,7 @@ public class ScriptEngineCachingTest extends PluggableProcessEngineTest {
 
     // then
     assertNotNull(engine);
-    assertFalse(engine.equals(processApplication.getScriptEngineForName(SCRIPT_LANGUAGE, false)));
+    assertNotEquals(engine, processApplication.getScriptEngineForName(SCRIPT_LANGUAGE, false));
   }
 
   @Test
@@ -131,10 +131,10 @@ public class ScriptEngineCachingTest extends PluggableProcessEngineTest {
 
     // then
     assertNotNull(engine);
-    assertFalse(engine.equals(getScriptEngineFromPa(SCRIPT_LANGUAGE, processApplication)));
+    assertNotEquals(engine, getScriptEngineFromPa(SCRIPT_LANGUAGE, processApplication));
 
     // not cached in pa
-    assertFalse(engine.equals(processApplication.getScriptEngineForName(SCRIPT_LANGUAGE, false)));
+    assertNotEquals(engine, processApplication.getScriptEngineForName(SCRIPT_LANGUAGE, false));
 
     repositoryService.deleteDeployment(deployment.getId(), true);
 
@@ -161,7 +161,7 @@ public class ScriptEngineCachingTest extends PluggableProcessEngineTest {
     assertEquals(engine, getScriptEngineFromPa(SCRIPT_LANGUAGE, processApplication));
 
     // not cached in pa
-    assertFalse(engine.equals(processApplication.getScriptEngineForName(SCRIPT_LANGUAGE, true)));
+    assertNotEquals(engine, processApplication.getScriptEngineForName(SCRIPT_LANGUAGE, true));
 
     repositoryService.deleteDeployment(deployment.getId(), true);
 

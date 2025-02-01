@@ -513,7 +513,7 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
     assertTrue("contains entry for activity <" + activityId + ">", found > 0);
 
     if (expectedCount != -1) {
-      assertTrue("contains <" + expectedCount + "> entries for activity <" + activityId + ">", found == expectedCount);
+      assertEquals("contains <" + expectedCount + "> entries for activity <" + activityId + ">", found, expectedCount);
     }
   }
 
@@ -546,7 +546,7 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
     assertTrue("contains entry for activity <" + activityId + ">", found > 0);
 
     if (expectedCount != -1) {
-      assertTrue("contains <" + expectedCount + "> entries for activity <" + activityId + ">", found == expectedCount);
+      assertEquals("contains <" + expectedCount + "> entries for activity <" + activityId + ">", found, expectedCount);
     }
   }
 

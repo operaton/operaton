@@ -1280,7 +1280,7 @@ public class FullHistoryTest {
      * execution id: On which execution it was set
      * activity id: in which activity was the process instance when setting the variable
      */
-    assertFalse(historicActivityInstance2.getExecutionId().equals(update2.getExecutionId()));
+    assertNotEquals(historicActivityInstance2.getExecutionId(), update2.getExecutionId());
   }
 
   @Test

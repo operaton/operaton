@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.api.runtime;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -73,7 +73,7 @@ public class ProcessInstantiationAtActivitiesHistoryTest extends PluggableProces
     assertNotNull(historicActivityInstance);
     assertEquals("task1", historicActivityInstance.getActivityId());
     assertNotNull(historicActivityInstance.getId());
-    assertFalse(instance.getId().equals(historicActivityInstance.getId()));
+    assertNotEquals(instance.getId(), historicActivityInstance.getId());
     assertNotNull(historicActivityInstance.getStartTime());
     assertNull(historicActivityInstance.getEndTime());
   }
@@ -106,7 +106,7 @@ public class ProcessInstantiationAtActivitiesHistoryTest extends PluggableProces
     assertNotNull(subProcessInstance);
     assertEquals("subProcess", subProcessInstance.getActivityId());
     assertNotNull(subProcessInstance.getId());
-    assertFalse(instance.getId().equals(subProcessInstance.getId()));
+    assertNotEquals(instance.getId(), subProcessInstance.getId());
     assertNotNull(subProcessInstance.getStartTime());
     assertNull(subProcessInstance.getEndTime());
 
@@ -115,7 +115,7 @@ public class ProcessInstantiationAtActivitiesHistoryTest extends PluggableProces
     assertNotNull(startEventInstance);
     assertEquals("theSubProcessStart", startEventInstance.getActivityId());
     assertNotNull(startEventInstance.getId());
-    assertFalse(instance.getId().equals(startEventInstance.getId()));
+    assertNotEquals(instance.getId(), startEventInstance.getId());
     assertNotNull(startEventInstance.getStartTime());
     assertNotNull(startEventInstance.getEndTime());
 
@@ -128,7 +128,7 @@ public class ProcessInstantiationAtActivitiesHistoryTest extends PluggableProces
       assertNotNull(innerTaskInstance);
       assertEquals("innerTask", innerTaskInstance.getActivityId());
       assertNotNull(innerTaskInstance.getId());
-      assertFalse(instance.getId().equals(innerTaskInstance.getId()));
+      assertNotEquals(instance.getId(), innerTaskInstance.getId());
       assertNotNull(innerTaskInstance.getStartTime());
       assertNull(innerTaskInstance.getEndTime());
     }

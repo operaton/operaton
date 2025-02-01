@@ -438,14 +438,14 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
     //on query with name
      metrics = managementService.createMetricsQuery().name(ACTIVTY_INSTANCE_START).limit(1).interval();
     long newValue = metrics.get(0).getValue();
-    Assert.assertTrue(value + 3 == newValue);
+    Assert.assertEquals(value + 3, newValue);
 
     //on query without name also
      metrics = managementService.createMetricsQuery().interval();
      for (MetricIntervalValue intervalValue : metrics) {
        if (intervalValue.getName().equalsIgnoreCase(ACTIVTY_INSTANCE_START)) {
         newValue = intervalValue.getValue();
-        Assert.assertTrue(value + 3 == newValue);
+         Assert.assertEquals(value + 3, newValue);
         break;
        }
      }

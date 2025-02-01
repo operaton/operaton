@@ -126,7 +126,7 @@ public class JobExecutorShutdownTest {
     // but the exclusive follow-up job is not executed and is not locked
     JobEntity secondAsyncJob = (JobEntity) engineRule.getManagementService().createJobQuery().singleResult();
     Assert.assertNotNull(secondAsyncJob);
-    Assert.assertFalse(secondAsyncJob.getId().equals(firstAsyncJob.getId()));
+    Assert.assertNotEquals(secondAsyncJob.getId(), firstAsyncJob.getId());
     Assert.assertNull(secondAsyncJob.getLockOwner());
     Assert.assertNull(secondAsyncJob.getLockExpirationTime());
 

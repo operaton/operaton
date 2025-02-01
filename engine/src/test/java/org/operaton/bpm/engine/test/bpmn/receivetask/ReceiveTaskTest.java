@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.bpmn.receivetask;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
@@ -194,7 +194,7 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
     subscriptionList = getEventSubscriptionList();
     assertEquals(1, subscriptionList.size());
     subscription = subscriptionList.get(0);
-    assertFalse(firstSubscriptionId.equals(subscription.getId()));
+    assertNotEquals(firstSubscriptionId, subscription.getId());
 
     // then: we can signal the second waiting receive task
     runtimeService.signal(getExecutionId(processInstance.getId(), "waitState"));
@@ -230,7 +230,7 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
     subscriptionList = getEventSubscriptionList();
     assertEquals(1, subscriptionList.size());
     subscription = subscriptionList.get(0);
-    assertFalse(firstSubscriptionId.equals(subscription.getId()));
+    assertNotEquals(firstSubscriptionId, subscription.getId());
 
     // then: we can trigger the second event subscription
     runtimeService.messageEventReceived(subscription.getEventName(), subscription.getExecutionId());
@@ -266,7 +266,7 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
     subscriptionList = getEventSubscriptionList();
     assertEquals(1, subscriptionList.size());
     subscription = subscriptionList.get(0);
-    assertFalse(firstSubscriptionId.equals(subscription.getId()));
+    assertNotEquals(firstSubscriptionId, subscription.getId());
 
     // then: we can trigger the second event subscription
     runtimeService.correlateMessage(subscription.getEventName());

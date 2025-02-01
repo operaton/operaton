@@ -23,10 +23,9 @@ import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutio
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -56,11 +55,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
 
   @After
   public void tearDown() {
-    try {
-
-    } finally {
-      TestExecutionListener.reset();
-    }
+    TestExecutionListener.reset();
   }
 
   @Deployment
@@ -763,7 +758,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
         .activityId("eventSubProcessTask")
         .singleResult();
 
-    assertFalse(processInstanceId.equals(((ExecutionEntity) task1Execution).getParentId()));
+    assertNotEquals(processInstanceId, ((ExecutionEntity) task1Execution).getParentId());
 
     // when (2)
     runtimeService.correlateMessage("secondMessage");
@@ -781,7 +776,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
         .activityId("eventSubProcessTask")
         .singleResult();
 
-    assertFalse(processInstanceId.equals(((ExecutionEntity) task1Execution).getParentId()));
+    assertNotEquals(processInstanceId, ((ExecutionEntity) task1Execution).getParentId());
 
     Task task2 = taskService.createTaskQuery()
         .taskDefinitionKey("userTask")
@@ -793,10 +788,10 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
         .activityId("eventSubProcessTask")
         .singleResult();
 
-    assertFalse(processInstanceId.equals(((ExecutionEntity) task2Execution).getParentId()));
+    assertNotEquals(processInstanceId, ((ExecutionEntity) task2Execution).getParentId());
 
     // both have the same parent (but it is not the process instance)
-    assertTrue(((ExecutionEntity) task1Execution).getParentId().equals(((ExecutionEntity) task2Execution).getParentId()));
+    assertEquals(((ExecutionEntity) task1Execution).getParentId(), ((ExecutionEntity) task2Execution).getParentId());
 
     assertEquals(1, runtimeService.createEventSubscriptionQuery().count());
 
@@ -827,7 +822,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
         .activityId("eventSubProcessTask")
         .singleResult();
 
-    assertFalse(processInstanceId.equals(((ExecutionEntity) task1Execution).getParentId()));
+    assertNotEquals(processInstanceId, ((ExecutionEntity) task1Execution).getParentId());
 
     Task task2 = taskService.createTaskQuery()
         .taskDefinitionKey("task")
@@ -839,10 +834,10 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
         .activityId("eventSubProcessTask")
         .singleResult();
 
-    assertFalse(processInstanceId.equals(((ExecutionEntity) task2Execution).getParentId()));
+    assertNotEquals(processInstanceId, ((ExecutionEntity) task2Execution).getParentId());
 
     // both have the same parent (but it is not the process instance)
-    assertTrue(((ExecutionEntity) task1Execution).getParentId().equals(((ExecutionEntity) task2Execution).getParentId()));
+    assertEquals(((ExecutionEntity) task1Execution).getParentId(), ((ExecutionEntity) task2Execution).getParentId());
 
     assertEquals(1, runtimeService.createEventSubscriptionQuery().count());
 

@@ -20,13 +20,6 @@ import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertTha
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.List;
 
@@ -47,6 +40,8 @@ import org.operaton.bpm.engine.test.util.ExecutionTree;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.engine.variable.Variables;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 /**
  * @author Thorben Lindhauer
@@ -373,7 +368,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
 
     // and the async job should be a new one
     Job newAsyncJob = managementService.createJobQuery().singleResult();
-    assertFalse(asyncJob.getId().equals(newAsyncJob.getId()));
+    assertNotEquals(asyncJob.getId(), newAsyncJob.getId());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstance.getId(), processEngine);
 

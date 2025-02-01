@@ -124,7 +124,7 @@ public class ProcessInstantiationWithVariablesInReturnTest {
       serializedVar.getValue();
       Assert.fail("Deserialization should fail!");
     } catch (IllegalStateException ise) {
-      assertTrue(ise.getMessage().equals("Object is not deserialized."));
+      assertEquals("Object is not deserialized.", ise.getMessage());
     }
   }
 

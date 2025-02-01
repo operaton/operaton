@@ -551,7 +551,7 @@ public class ExternalTaskQueryTest extends PluggableProcessEngineTest {
 
     assertEquals(2, tasksWithoutRetries.size());
     for (ExternalTask task : tasksWithoutRetries) {
-      assertTrue(task.getRetries() == 0);
+      assertEquals(0, (int) task.getRetries());
     }
   }
 

@@ -17,12 +17,7 @@
 package org.operaton.bpm.engine.test.bpmn.callactivity;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -545,7 +540,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     assertNull(taskService.getVariable(task.getId(), "subVariable"));
 
     String subProcessInstanceId = task.getProcessInstanceId();
-    assertFalse(processInstanceId.equals(subProcessInstanceId));
+    assertNotEquals(processInstanceId, subProcessInstanceId);
 
     // the variable "subVariable" is set on the sub process instance
     variable = runtimeService
@@ -596,7 +591,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     assertNull(taskService.getVariable(task.getId(), "subVariable"));
 
     String subProcessInstanceId = task.getProcessInstanceId();
-    assertFalse(processInstanceId.equals(subProcessInstanceId));
+    assertNotEquals(processInstanceId, subProcessInstanceId);
 
     // the variable "subVariable" is set on the sub process instance
     variable = runtimeService

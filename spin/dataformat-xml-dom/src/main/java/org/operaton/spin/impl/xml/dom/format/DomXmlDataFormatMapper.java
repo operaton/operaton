@@ -126,17 +126,15 @@ public class DomXmlDataFormatMapper implements DataFormatMapper {
   }
 
   protected void validateType(Class<?> type, DeserializationTypeValidator validator) {
-    if (validator != null) {
-      // validate the outer class
-      if (!type.isPrimitive()) {
-        Class<?> typeToValidate = type;
-        if (type.isArray()) {
-          typeToValidate = type.getComponentType();
-        }
-        String className = typeToValidate.getName();
-        if (!validator.validate(className)) {
-          throw new SpinRuntimeException("The class '" + className + "' is not whitelisted for deserialization.");
-        }
+    // validate the outer class
+    if (validator != null && !type.isPrimitive()) {
+      Class<?> typeToValidate = type;
+      if (type.isArray()) {
+        typeToValidate = type.getComponentType();
+      }
+      String className = typeToValidate.getName();
+      if (!validator.validate(className)) {
+        throw new SpinRuntimeException("The class '" + className + "' is not whitelisted for deserialization.");
       }
     }
   }

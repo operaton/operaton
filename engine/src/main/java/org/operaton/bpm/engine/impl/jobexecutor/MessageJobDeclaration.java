@@ -73,16 +73,14 @@ public class MessageJobDeclaration extends JobDeclaration<AtomicOperationInvocat
 
     ExecutionEntity execution = context.getExecution();
     PvmActivity activity = execution.getActivity();
-    if(activity != null && activity.isAsyncAfter()) {
-      if(execution.getTransition() != null) {
-        // store id of selected transition in case this is async after.
-        // id is not serialized with the execution -> we need to remember it as
-        // job handler configuration.
-        configuration.setTransitionId(execution.getTransition().getId());
-      }
+    if((activity != null && activity.isAsyncAfter()) && execution.getTransition() != null) {
+      // store id of selected transition in case this is async after.
+      // id is not serialized with the execution -> we need to remember it as
+      // job handler configuration.
+      configuration.setTransitionId(execution.getTransition().getId());
     }
 
     return configuration;
   }
-  
+
 }

@@ -526,10 +526,8 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
   public HistoricTaskInstanceQuery taskDueDate(Date dueDate) {
     // The taskDueDate filter can't be used in an AND query with
     // the withoutTaskDueDate filter. They can be combined in an OR query
-    if (!isOrQueryActive) {
-      if (TRUE.equals(isWithoutTaskDueDate)) {
-        throw new ProcessEngineException("Invalid query usage: cannot set both taskDueDate and withoutTaskDueDate filters.");
-      }
+    if (!isOrQueryActive && TRUE.equals(isWithoutTaskDueDate)) {
+      throw new ProcessEngineException("Invalid query usage: cannot set both taskDueDate and withoutTaskDueDate filters.");
     }
 
     this.dueDate = dueDate;
@@ -540,10 +538,8 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
   public HistoricTaskInstanceQuery taskDueAfter(Date dueAfter) {
     // The taskDueAfter filter can't be used in an AND query with
     // the withoutTaskDueDate filter. They can be combined in an OR query
-    if (!isOrQueryActive) {
-      if (TRUE.equals(isWithoutTaskDueDate)) {
-        throw new ProcessEngineException("Invalid query usage: cannot set both taskDueAfter and withoutTaskDueDate filters.");
-      }
+    if (!isOrQueryActive && TRUE.equals(isWithoutTaskDueDate)) {
+      throw new ProcessEngineException("Invalid query usage: cannot set both taskDueAfter and withoutTaskDueDate filters.");
     }
 
     this.dueAfter = dueAfter;
@@ -554,10 +550,8 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
   public HistoricTaskInstanceQuery taskDueBefore(Date dueBefore) {
     // The taskDueBefore filter can't be used in an AND query with
     // the withoutTaskDueDate filter. They can be combined in an OR query
-    if (!isOrQueryActive) {
-      if (TRUE.equals(isWithoutTaskDueDate)) {
-        throw new ProcessEngineException("Invalid query usage: cannot set both taskDueBefore and withoutTaskDueDate filters.");
-      }
+    if (!isOrQueryActive && TRUE.equals(isWithoutTaskDueDate)) {
+      throw new ProcessEngineException("Invalid query usage: cannot set both taskDueBefore and withoutTaskDueDate filters.");
     }
 
     this.dueBefore = dueBefore;
@@ -568,10 +562,8 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
   public HistoricTaskInstanceQuery withoutTaskDueDate() {
     // The due date filters can't be used in an AND query with
     // the withoutTaskDueDate filter. They can be combined in an OR query
-    if (!isOrQueryActive) {
-      if (dueAfter != null || dueBefore != null || dueDate != null) {
-        throw new ProcessEngineException("Invalid query usage: cannot set both task due date (equal to, before, or after) and withoutTaskDueDate filters.");
-      }
+    if (!isOrQueryActive && (dueAfter != null || dueBefore != null || dueDate != null)) {
+      throw new ProcessEngineException("Invalid query usage: cannot set both task due date (equal to, before, or after) and withoutTaskDueDate filters.");
     }
 
     this.isWithoutTaskDueDate = true;

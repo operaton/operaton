@@ -734,35 +734,38 @@ public class CronExpression implements Serializable, Cloneable {
         throws ParseException {
 
         TreeSet<Integer> set = getSet(type);
-
-        if (type == SECOND || type == MINUTE) {
-            if ((val < 0 || val > 59 || end > 59) && (val != ALL_SPEC_INT)) {
-                throw new ParseException(
-                        "Minute and Second values must be between 0 and 59",
-                        -1);
-            }
-        } else if (type == HOUR) {
-            if ((val < 0 || val > 23 || end > 23) && (val != ALL_SPEC_INT)) {
-                throw new ParseException(
-                        "Hour values must be between 0 and 23", -1);
-            }
-        } else if (type == DAY_OF_MONTH) {
-            if ((val < 1 || val > 31 || end > 31) && (val != ALL_SPEC_INT)
-                    && (val != NO_SPEC_INT)) {
-                throw new ParseException(
-                        "Day of month values must be between 1 and 31", -1);
-            }
-        } else if (type == MONTH) {
-            if ((val < 1 || val > 12 || end > 12) && (val != ALL_SPEC_INT)) {
-                throw new ParseException(
-                        "Month values must be between 1 and 12", -1);
-            }
-        } else if (type == DAY_OF_WEEK) {
-            if ((val == 0 || val > 7 || end > 7) && (val != ALL_SPEC_INT)
-                    && (val != NO_SPEC_INT)) {
-                throw new ParseException(
-                        "Day-of-Week values must be between 1 and 7", -1);
-            }
+        switch(type) {
+            case SECOND:
+            case MINUTE:
+                if ((val < 0 || val > 59 || end > 59) && (val != ALL_SPEC_INT)) {
+                    throw new ParseException("Minute and Second values must be between 0 and 59", -1);
+                }
+                break;
+            case HOUR:
+                if ((val < 0 || val > 23 || end > 23) && (val != ALL_SPEC_INT)) {
+                    throw new ParseException("Hour values must be between 0 and 23", -1);
+                }
+                break;
+            case DAY_OF_MONTH:
+                if ((val < 1 || val > 31 || end > 31) && (val != ALL_SPEC_INT)
+                        && (val != NO_SPEC_INT)) {
+                    throw new ParseException(
+                            "Day of month values must be between 1 and 31", -1);
+                }
+                break;
+            case MONTH:
+                if ((val < 1 || val > 12 || end > 12) && (val != ALL_SPEC_INT)) {
+                    throw new ParseException(
+                            "Month values must be between 1 and 12", -1);
+                }
+                break;
+            case DAY_OF_WEEK:
+                if ((val == 0 || val > 7 || end > 7) && (val != ALL_SPEC_INT)
+                        && (val != NO_SPEC_INT)) {
+                    throw new ParseException(
+                            "Day-of-Week values must be between 1 and 7", -1);
+                }
+                break;
         }
 
         if ((incr == 0 || incr == -1) && val != ALL_SPEC_INT) {

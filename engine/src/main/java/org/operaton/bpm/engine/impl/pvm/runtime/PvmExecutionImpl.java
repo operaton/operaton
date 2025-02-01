@@ -842,13 +842,12 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
    */
   protected void setDelayedPayloadToNewScope(PvmActivity activity) {
     String activityType = (String) activity.getProperty(BpmnProperties.TYPE.getName());
-    if (ActivityTypes.START_EVENT_MESSAGE.equals(activityType) // Event subprocess message start event
-        || ActivityTypes.BOUNDARY_MESSAGE.equals(activityType)) {
-      if (getProcessInstance().getPayloadForTriggeredScope() != null) {
-        this.setVariablesLocal(getProcessInstance().getPayloadForTriggeredScope());
-        // clear the process instance
-        getProcessInstance().setPayloadForTriggeredScope(null);
-      }
+    if ((ActivityTypes.START_EVENT_MESSAGE.equals(activityType) // Event subprocess message start event
+        || ActivityTypes.BOUNDARY_MESSAGE.equals(activityType))
+            && getProcessInstance().getPayloadForTriggeredScope() != null) {
+      this.setVariablesLocal(getProcessInstance().getPayloadForTriggeredScope());
+      // clear the process instance
+      getProcessInstance().setPayloadForTriggeredScope(null);
     }
   }
 

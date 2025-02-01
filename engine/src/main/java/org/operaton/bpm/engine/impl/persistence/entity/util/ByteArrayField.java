@@ -74,16 +74,12 @@ public class ByteArrayField {
 
   protected ByteArrayEntity getByteArrayEntity() {
 
-    if (byteArrayValue == null) {
-      if (byteArrayId != null) {
-        // no lazy fetching outside of command context
-        if (Context.getCommandContext() != null) {
-          return byteArrayValue = Context
-              .getCommandContext()
-              .getDbEntityManager()
-              .selectById(ByteArrayEntity.class, byteArrayId);
-        }
-      }
+    // no lazy fetching outside of command context
+    if (byteArrayValue == null && byteArrayId != null && Context.getCommandContext() != null) {
+        return byteArrayValue = Context
+            .getCommandContext()
+            .getDbEntityManager()
+            .selectById(ByteArrayEntity.class, byteArrayId);
     }
 
     return byteArrayValue;

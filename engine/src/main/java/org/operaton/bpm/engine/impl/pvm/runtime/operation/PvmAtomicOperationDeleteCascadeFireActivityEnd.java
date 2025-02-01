@@ -101,14 +101,10 @@ public class PvmAtomicOperationDeleteCascadeFireActivityEnd extends PvmAtomicOpe
           propagatingExecution = propagatingExecution.getParent();
         }
 
-        if (continueRemoval) {
-          if (propagatingExecution != null) {
-            // continue deletion with the next scope execution
-            // set activity on parent in case the parent is an inactive scope execution and activity has been set to 'null'.
-            if(propagatingExecution.getActivity() == null && activity != null && activity.getFlowScope() != null) {
-              propagatingExecution.setActivity(getFlowScopeActivity(activity));
-            }
-          }
+        if (continueRemoval && propagatingExecution != null && (propagatingExecution.getActivity() == null && activity != null && activity.getFlowScope() != null)) {
+          // continue deletion with the next scope execution
+          // set activity on parent in case the parent is an inactive scope execution and activity has been set to 'null'.
+          propagatingExecution.setActivity(getFlowScopeActivity(activity));
         }
       }
     }

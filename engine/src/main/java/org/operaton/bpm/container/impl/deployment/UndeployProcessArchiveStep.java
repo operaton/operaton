@@ -68,10 +68,8 @@ public class UndeployProcessArchiveStep extends DeploymentOperationStep {
 
     // delete the deployment if not disabled
     if (PropertyHelper.getBooleanProperty(processArchive.getProperties(), ProcessArchiveXml.PROP_IS_DELETE_UPON_UNDEPLOY, false)) {
-      if (processEngine != null) {
         // always cascade & skip custom listeners
         deleteDeployment(deployedProcessArchive.getPrimaryDeploymentId(), processEngine.getRepositoryService());
-      }
     }
 
   }

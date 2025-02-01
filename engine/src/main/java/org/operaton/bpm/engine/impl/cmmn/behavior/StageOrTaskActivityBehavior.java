@@ -181,11 +181,9 @@ public abstract class StageOrTaskActivityBehavior extends PlanItemDefinitionActi
     ensureTransitionAllowed(execution, SUSPENDED, ACTIVE, "resume");
 
     CmmnActivityExecution parent = execution.getParent();
-    if (parent != null) {
-      if (!parent.isActive()) {
-        String id = execution.getId();
-        throw LOG.resumeInactiveCaseException("resume", id);
-      }
+    if (parent != null && !parent.isActive()) {
+      String id = execution.getId();
+      throw LOG.resumeInactiveCaseException("resume", id);
     }
 
     resuming(execution);
@@ -202,10 +200,8 @@ public abstract class StageOrTaskActivityBehavior extends PlanItemDefinitionActi
     }
 
     CmmnActivityExecution parent = execution.getParent();
-    if (parent != null) {
-      if (!parent.isActive()) {
-        throw LOG.resumeInactiveCaseException("parentResume", id);
-      }
+    if (parent != null && !parent.isActive()) {
+      throw LOG.resumeInactiveCaseException("parentResume", id);
     }
 
     resuming(execution);

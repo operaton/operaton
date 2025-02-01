@@ -95,7 +95,7 @@ public class DecisionTableEvaluationHandler implements DmnDecisionLogicEvaluatio
   }
 
   protected long calculateExecutedDecisionElements(DmnDecisionTableImpl decisionTable) {
-    return (decisionTable.getInputs().size() + decisionTable.getOutputs().size()) * decisionTable.getRules().size();
+    return (decisionTable.getInputs().size() + decisionTable.getOutputs().size()) * (long) decisionTable.getRules().size();
   }
 
   protected void evaluateDecisionTable(DmnDecisionTableImpl decisionTable, VariableContext variableContext, DmnDecisionTableEvaluationEventImpl evaluationResult) {

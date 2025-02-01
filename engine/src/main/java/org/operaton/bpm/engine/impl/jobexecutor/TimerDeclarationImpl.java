@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.jobexecutor;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
+import java.util.Objects;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.Expression;
@@ -97,7 +98,7 @@ public class TimerDeclarationImpl extends JobDeclaration<ExecutionEntity, TimerE
   protected void initializeConfiguration(ExecutionEntity context, TimerEntity job) {
     String dueDateString = resolveAndSetDuedate(context, job, false);
 
-    if (type == TimerDeclarationType.CYCLE && jobHandlerType != TimerCatchIntermediateEventJobHandler.TYPE) {
+    if (type == TimerDeclarationType.CYCLE && !Objects.equals(jobHandlerType, TimerCatchIntermediateEventJobHandler.TYPE)) {
 
       // See ACT-1427: A boundary timer with a cancelActivity='true', doesn't need to repeat itself
       if (!isInterruptingTimer) {

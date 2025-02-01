@@ -48,7 +48,7 @@ public class FeelTypeConverter extends TypeConverterImpl {
       return new BigDecimal(bigIntegerValue);
     }
     else if (value instanceof Number numberValue) {
-      return new BigDecimal(numberValue.doubleValue());
+      return BigDecimal.valueOf(numberValue.doubleValue());
     }
     else {
       throw LOG.unableToConvertValue(value, BigDecimal.class);

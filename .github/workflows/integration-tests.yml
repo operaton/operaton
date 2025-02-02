@@ -38,8 +38,8 @@ on:
         default: '["h2"]'
         options:
           - '["h2"]'
-          - '["postgres"]'
-          - '["h2", "postgres"]'
+          - '["postgresql"]'
+          - '["h2", "postgresql"]'
 
 permissions:
   contents: read

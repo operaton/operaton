@@ -22,6 +22,7 @@ jobs:
     runs-on: ubuntu-24.04
     outputs:
       version: ${{steps.version.outputs.version}}
+      database_version: ${{steps.maven-build.outputs.database_version}}
       is_prerelease: ${{steps.version.outputs.is_prerelease}}
     steps:
       - name: Checkout
@@ -35,6 +36,8 @@ jobs:
         run: |
           RELEASE_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout | tail -n 1 | sed -e 's/-SNAPSHOT//')
           echo "version=$RELEASE_VERSION" >> $GITHUB_OUTPUT
+          DATABASE_VERSION=$(./mvnw help:evaluate -Dexpression=version.operaton.dbscheme -q -DforceStdout -f parent | tail -n 1)
+          echo "database_version=$DATABASE_VERSION" >> $GITHUB_OUTPUT
           if [[ "$RELEASE_VERSION" == *"alpha"* || "$RELEASE_VERSION" == *"beta"* ]]; then
             echo "⚙ Releasing version '$RELEASE_VERSION' (Pre-Release)"
             echo "is_prerelease=true" >> $GITHUB_OUTPUT
@@ -135,6 +138,7 @@ jobs:
           JRELEASER_MAVENCENTRAL_PASSWORD: ${{secrets.OSSRH_PASSWORD}}
           JRELEASER_DRY_RUN: ${{github.event.inputs.dry_run}}
           JRELEASER_PRERELEASE_ENABLED: false
+          OPERATON_DATABASE_VERSION: ${{needs.precheck.outputs.database_version}}
 
       - name: Publish Test Report
         if: always()

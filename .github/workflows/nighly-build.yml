@@ -63,7 +63,7 @@ jobs:
         run: |
           .github/scripts/jacoco-create-flag-files.sh
           PROJECT_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout | tail -n 1)
-          DATABASE_VERSION=$(./mvnw help:evaluate -Dexpression=version.operaton.dbscheme -q -DforceStdout | tail -n 1)
+          DATABASE_VERSION=$(./mvnw help:evaluate -Dexpression=version.operaton.dbscheme -q -DforceStdout -f parent | tail -n 1)
           RELEASE_VERSION=$(echo $PROJECT_VERSION | sed 's/-SNAPSHOT//')
           SKIP_TESTS=${{ github.event.inputs.skip_tests || (github.event_name == 'schedule' && false) }}
           echo "project_version=$PROJECT_VERSION" >> $GITHUB_OUTPUT

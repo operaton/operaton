@@ -29,8 +29,10 @@ on:
         default: '["tomcat"]'
         options:
           - '["tomcat"]'
+          - '["tomcat9"]'
           - '["wildfly"]'
-          - '["tomcat", "wildfly"]'
+          - '["wildfly26"]'
+          - '["tomcat", "tomcat9", "wildfly", "wildfly26"]'
       database:
         description: 'Database to use for integration tests'
         type: choice

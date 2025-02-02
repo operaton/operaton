@@ -18,10 +18,11 @@ project:
     - url: https://avatars.githubusercontent.com/u/185116948?s=200&v=4
       width: 200
       height: 200
-  java:
-    groupId: org.operaton
-    version: '17'
-    multiProject: false
+  languages:
+    java:
+      groupId: org.operaton
+      version: '17'
+      multiProject: false
   tags:
     - 'operaton'
     - 'bpmn'
@@ -200,7 +201,7 @@ files:
     - path: 'distro/tomcat/distro/target/operaton-bpm-tomcat-{{projectVersion}}.zip'
     - path: 'distro/wildfly/distro/target/operaton-bpm-wildfly-{{projectVersion}}.tar.gz'
     - path: 'distro/wildfly/distro/target/operaton-bpm-wildfly-{{projectVersion}}.zip'
-    - path: 'distro/sql-script/target/operaton-sql-scripts-{{projectVersion}}.tar.gz'
+    - path: 'distro/sql-script/target/operaton-sql-scripts-{{OPERATON_DATABASE_VERSION}}.tar.gz'
     - path: 'distro/webjar/target/operaton-webapp-webjar-{{projectVersion}}.jar'
     - path: 'target/project-reports.zip'
 

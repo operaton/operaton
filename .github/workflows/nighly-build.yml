@@ -18,12 +18,12 @@ on:
         description: 'Dry-Run: Skips remote operations when true'
         type: boolean
         required: true
-        default: true
+        default: false
       skip_tests:
         description: 'Skip test execution for faster build'
         type: boolean
         required: true
-        default: false
+        default: true
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

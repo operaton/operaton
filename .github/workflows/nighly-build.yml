@@ -68,7 +68,6 @@ jobs:
           echo "project_version=$PROJECT_VERSION"
           echo "version=$RELEASE_VERSION" >> $GITHUB_OUTPUT
           echo "version=$RELEASE_VERSION"
-          ./mvnw help:evaluate -Dexpression=version.operaton.dbscheme -q -DforceStdout -f parent | tail -n 1
           DATABASE_VERSION=$(grep '<version.operaton.dbscheme>' parent/pom.xml | sed -e 's/.*<version.operaton.dbscheme>\(.*\)<\/version.operaton.dbscheme>.*/\1/')
           echo "database_version=$DATABASE_VERSION" >> $GITHUB_OUTPUT
           echo "database_version=$DATABASE_VERSION"

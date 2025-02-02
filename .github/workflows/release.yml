@@ -36,8 +36,9 @@ jobs:
         run: |
           RELEASE_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout | tail -n 1 | sed -e 's/-SNAPSHOT//')
           echo "version=$RELEASE_VERSION" >> $GITHUB_OUTPUT
-          DATABASE_VERSION=$(./mvnw help:evaluate -Dexpression=version.operaton.dbscheme -q -DforceStdout -f parent | tail -n 1)
+          DATABASE_VERSION=$(grep '<version.operaton.dbscheme>' parent/pom.xml | sed -e 's/.*<version.operaton.dbscheme>\(.*\)<\/version.operaton.dbscheme>.*/\1/')
           echo "database_version=$DATABASE_VERSION" >> $GITHUB_OUTPUT
+          echo "database_version=$DATABASE_VERSION"
           if [[ "$RELEASE_VERSION" == *"alpha"* || "$RELEASE_VERSION" == *"beta"* ]]; then
             echo "⚙ Releasing version '$RELEASE_VERSION' (Pre-Release)"
             echo "is_prerelease=true" >> $GITHUB_OUTPUT

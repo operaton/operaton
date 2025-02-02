@@ -2,7 +2,7 @@
 name: Integration Tests
 
 on:
-  workflow_dispatch:        # Allows manual trigger
+  workflow_dispatch:
     inputs:
       java_version:
         description: 'Java version to use'
@@ -55,6 +55,7 @@ jobs:
     name: Build
     runs-on: ubuntu-24.04
     strategy:
+      fail-fast: false
       matrix:
         java: ${{ fromJson(github.event.inputs.java_version || '["17", "21"]') }}
         test_suite: ${{ fromJson(github.event.inputs.test_suite || '["engine", "webapps"]') }}
@@ -80,7 +81,11 @@ jobs:
         id: maven-build
         shell: bash
         run: |
-          ./mvnw -P${{ matrix.test_suite }}-integration,${{ matrix.container }},${{ matrix.database }} clean install
+          # first build the project and install to local repository
+          ./mvnw clean install -DskipTests
+          # now run the integration tests
+          ./mvnw -P${{ matrix.test_suite }}-integration,${{ matrix.container }},${{ matrix.database }} verify -f qa
+
       - name: Publish Test Report
         if: always()
         uses: mikepenz/action-junit-report@v4

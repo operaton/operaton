@@ -91,6 +91,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: surefire-reports
+          name: surefire-reports-${{ matrix.test_suite }}-${{ matrix.container }}-${{ matrix.database }}
           path: ${{ github.workspace }}/**/target/surefire-reports/**
           retention-days: 30

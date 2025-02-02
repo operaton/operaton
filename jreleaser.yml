@@ -200,7 +200,7 @@ files:
     - path: 'distro/tomcat/distro/target/operaton-bpm-tomcat-{{projectVersion}}.zip'
     - path: 'distro/wildfly/distro/target/operaton-bpm-wildfly-{{projectVersion}}.tar.gz'
     - path: 'distro/wildfly/distro/target/operaton-bpm-wildfly-{{projectVersion}}.zip'
-    - path: 'distro/sql-script/target/operaton-sql-scripts-{{version.operaton.dbscheme}}.tar.gz'
+    - path: 'distro/sql-script/target/operaton-sql-scripts-{{OPERATON_DATABASE_VERSION}}.tar.gz'
     - path: 'distro/webjar/target/operaton-webapp-webjar-{{projectVersion}}.jar'
     - path: 'target/project-reports.zip'
 

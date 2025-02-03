@@ -20,23 +20,23 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 
 public class DeploymentHelper extends AbstractDeploymentHelper {
 
-  protected static final String CAMUNDA_EJB_CLIENT = "org.operaton.bpm.javaee:operaton-ejb-client";
-  protected static final String CAMUNDA_ENGINE_CDI = "org.operaton.bpm:operaton-engine-cdi";
-  protected static final String CAMUNDA_ENGINE_SPRING = "org.operaton.bpm:operaton-engine-spring";
+  protected static final String OPERATON_EJB_CLIENT = "org.operaton.bpm.javaee:operaton-ejb-client";
+  protected static final String OPERATON_ENGINE_CDI = "org.operaton.bpm:operaton-engine-cdi";
+  protected static final String OPERATON_ENGINE_SPRING = "org.operaton.bpm:operaton-engine-spring";
 
   public static JavaArchive getEjbClient() {
-    return getEjbClient(CAMUNDA_EJB_CLIENT);
+    return getEjbClient(OPERATON_EJB_CLIENT);
   }
 
   public static JavaArchive getEngineCdi() {
-    return getEngineCdi(CAMUNDA_ENGINE_CDI);
+    return getEngineCdi(OPERATON_ENGINE_CDI);
   }
 
   public static JavaArchive[] getWeld() {
-    return getWeld(CAMUNDA_ENGINE_CDI);
+    return getWeld(OPERATON_ENGINE_CDI);
   }
 
   public static JavaArchive[] getEngineSpring() {
-    return getEngineSpring(CAMUNDA_ENGINE_SPRING);
+    return getEngineSpring(OPERATON_ENGINE_SPRING);
   }
 }

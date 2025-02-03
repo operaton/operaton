@@ -227,8 +227,8 @@
      <!-- weld for CDI support on tomcat-->
     <dependency>
       <groupId>org.jboss.weld.servlet</groupId>
-      <artifactId>weld-servlet</artifactId>
-      <version>2.4.8.Final</version>
+      <artifactId>weld-servlet-shaded</artifactId>
+      <version>6.0.0.Final</version>
       <scope>test</scope>
     </dependency>
 
@@ -515,8 +515,8 @@
 
         <dependency>
           <groupId>org.jboss.arquillian.container</groupId>
-          <artifactId>arquillian-tomcat-managed-8</artifactId>
-          <version>1.1.0.Final</version>
+          <artifactId>arquillian-tomcat-managed-10</artifactId>
+          <version>1.2.1.Final</version>
           <scope>test</scope>
         </dependency>
       </dependencies>

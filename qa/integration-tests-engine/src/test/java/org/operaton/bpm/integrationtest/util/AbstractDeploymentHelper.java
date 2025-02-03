@@ -81,7 +81,7 @@ public abstract class AbstractDeploymentHelper {
       JavaArchive[] resolvedArchives = Maven.configureResolver()
           .workOffline()
           .loadPomFromFile("pom.xml")
-          .resolve(engineCdiArtifactName, "org.jboss.weld.servlet:weld-servlet")
+          .resolve(engineCdiArtifactName, "org.jboss.weld.servlet:weld-servlet-shaded")
           .withTransitivity()
           .as(JavaArchive.class);
 

@@ -88,11 +88,7 @@ public class CollectionUtil {
   }
 
   public static <S, T> void addCollectionToMapOfSets(Map<S, Set<T>> map, S key, Collection<T> values) {
-    Set<T> set = map.get(key);
-    if (set == null) {
-      set = new HashSet<>();
-      map.put(key, set);
-    }
+    Set<T> set = map.computeIfAbsent(key, k -> new HashSet<>());
     set.addAll(values);
   }
 

@@ -3285,8 +3285,6 @@ public class BpmnParse extends Parse {
       if (attachedActivity == null) {
         addError("Invalid reference in boundary event. Make sure that the referenced activity is defined in the same scope as the boundary event",
             boundaryEventElement);
-
-        continue;
       }
 
       // determine the correct event scope (the scope in which the boundary event catches events)

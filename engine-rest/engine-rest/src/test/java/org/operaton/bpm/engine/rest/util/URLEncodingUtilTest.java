@@ -3,10 +3,10 @@ package org.operaton.bpm.engine.rest.util;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class URLEncodingUtilTest {
+class URLEncodingUtilTest {
 
   @Test
-  public void testEncode() {
+  void testEncode() {
     assertEquals("simple%20text", URLEncodingUtil.encode("simple text"));
     assertEquals("%2Fpath%2Fto%2Fresource", URLEncodingUtil.encode("/path/to/resource"));
     assertEquals("%5Cpath%5Cto%5Cresource", URLEncodingUtil.encode("\\path\\to\\resource"));
@@ -14,7 +14,7 @@ public class URLEncodingUtilTest {
   }
 
   @Test
-  public void testBuildAttachmentValue() {
+  void testBuildAttachmentValue() {
     String fileName = "example file.txt";
     String expected = "attachment; filename=\"example file.txt\"; filename*=UTF-8''example%20file.txt";
     assertEquals(expected, URLEncodingUtil.buildAttachmentValue(fileName));

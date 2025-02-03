@@ -17,7 +17,7 @@
 package org.operaton.bpm.integrationtest.util;
 
 import org.operaton.bpm.application.ProcessApplication;
-import org.operaton.bpm.application.impl.ServletProcessApplication;
+import org.operaton.bpm.application.impl.JakartaServletProcessApplication;
 
 /**
  * @author Daniel Meyer
@@ -25,6 +25,6 @@ import org.operaton.bpm.application.impl.ServletProcessApplication;
  */
 @ProcessApplication
 // Using fully-qualified class name instead of import statement to allow for automatic Jakarta transformation
-public class TestProcessApplication extends org.operaton.bpm.application.impl.ServletProcessApplication {
+public class TestProcessApplication extends org.operaton.bpm.application.impl.JakartaServletProcessApplication {
 
 }

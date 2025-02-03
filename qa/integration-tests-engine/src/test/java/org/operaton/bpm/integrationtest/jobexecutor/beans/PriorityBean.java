@@ -18,8 +18,8 @@ package org.operaton.bpm.integrationtest.jobexecutor.beans;
 
 import java.io.Serializable;
 
-import javax.ejb.Stateless;
-import javax.inject.Named;
+import jakarta.ejb.Stateless;
+import jakarta.inject.Named;
 
 /**
  * @author Thorben Lindhauer

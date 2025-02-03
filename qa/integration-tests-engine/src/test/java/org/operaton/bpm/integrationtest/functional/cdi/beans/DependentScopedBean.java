@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.integrationtest.functional.cdi.beans;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-import javax.enterprise.context.Dependent;
-import javax.inject.Named;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+import jakarta.enterprise.context.Dependent;
+import jakarta.inject.Named;
 import java.util.ArrayList;
 
 /**

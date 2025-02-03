@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.integrationtest.functional.event.beans;
 
-import javax.enterprise.event.Observes;
-import javax.inject.Inject;
+import jakarta.enterprise.event.Observes;
+import jakarta.inject.Inject;
 
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.BusinessProcessEvent;

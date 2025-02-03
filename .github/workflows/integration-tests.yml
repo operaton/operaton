@@ -93,7 +93,9 @@ jobs:
         if: always()
         uses: mikepenz/action-junit-report@v4
         with:
-          report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml
+          report_paths:
+            - ${{ github.workspace }}/**/target/surefire-reports/*.xml
+            - ${{ github.workspace }}/qa/**/target/**/logs/**
           require_passed_tests: true
       - name: Upload Surefire Reports
         if: always()

@@ -83,7 +83,7 @@ jobs:
         id: maven-build
         shell: bash
         run: |
-          ./mvnw -DskipTests -Pdistro,distro-webjar,distro-${{ matrix.container }},h2-in-memory clean install
+          ./mvnw -DskipTests -Pdistro,distro-webjar,distro-${{ matrix.container }},${{ matrix.container }},h2-in-memory clean install
       - name: Execute Integration Tests
         id: maven-integration-tests
         shell: bash

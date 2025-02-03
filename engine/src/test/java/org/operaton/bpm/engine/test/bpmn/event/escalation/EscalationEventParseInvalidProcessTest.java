@@ -27,7 +27,6 @@ import junit.framework.AssertionFailedError;
 import org.operaton.bpm.engine.ParseException;
 import org.operaton.bpm.engine.Problem;
 import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.repository.DeploymentBuilder;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.junit.Before;

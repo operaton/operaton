@@ -21,7 +21,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -34,7 +33,7 @@ import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
 import org.springframework.test.context.TestPropertySource;
 
 @TestPropertySource("/oauth2-mock.properties")
-public class OAuth2GrantedAuthoritiesMapperIT extends AbstractSpringSecurityIT {
+class OAuth2GrantedAuthoritiesMapperIT extends AbstractSpringSecurityIT {
 
   protected static final String GROUP_NAME_ATTRIBUTE = "groupName";
 
@@ -46,7 +45,7 @@ public class OAuth2GrantedAuthoritiesMapperIT extends AbstractSpringSecurityIT {
       .watch(OAuth2GrantedAuthoritiesMapper.class.getCanonicalName());
 
   @Test
-  public void testMappingNotOauth2Authorities() {
+  void testMappingNotOauth2Authorities() {
     // given
     List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("USER"));
     // when
@@ -56,7 +55,7 @@ public class OAuth2GrantedAuthoritiesMapperIT extends AbstractSpringSecurityIT {
   }
 
   @Test
-  public void testMappingGroupNotAvailable() {
+  void testMappingGroupNotAvailable() {
     // given
     List<GrantedAuthority> authorities = List.of(new OAuth2UserAuthority("USER", Map.of("name", "name")));
     // when
@@ -68,7 +67,7 @@ public class OAuth2GrantedAuthoritiesMapperIT extends AbstractSpringSecurityIT {
   }
 
   @Test
-  public void testMappingSingleAuthority() {
+  void testMappingSingleAuthority() {
     // given
     List<GrantedAuthority> authorities = List.of(new OAuth2UserAuthority("USER", Map.of(GROUP_NAME_ATTRIBUTE, "group")));
     // when
@@ -79,20 +78,20 @@ public class OAuth2GrantedAuthoritiesMapperIT extends AbstractSpringSecurityIT {
   }
 
   @Test
-  public void testMappingMultipleAuthorities() {
+  void testMappingMultipleAuthorities() {
     // given
     List<GrantedAuthority> authorities = List.of(new OAuth2UserAuthority("USER", Map.of(GROUP_NAME_ATTRIBUTE, List.of("group1", "group2"))));
     // when
     Collection<? extends GrantedAuthority> mappedAuthorities = authoritiesMapper.mapAuthorities(authorities);
     // then
     assertThat(mappedAuthorities).hasSize(2);
-    List<String> groups = mappedAuthorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
+    List<String> groups = mappedAuthorities.stream().map(GrantedAuthority::getAuthority).toList();
     assertThat(groups).contains("group1", "group2");
   }
 
 
   @Test
-  public void testMappingUnsupportedType() {
+  void testMappingUnsupportedType() {
     // given
     Object object = new Object();
     List<GrantedAuthority> authorities = List.of(new OAuth2UserAuthority("USER", Map.of(GROUP_NAME_ATTRIBUTE, object)));

@@ -34,7 +34,6 @@ import org.operaton.bpm.container.impl.jmx.kernel.util.StartServiceDeploymentOpe
 import org.operaton.bpm.container.impl.jmx.kernel.util.StopServiceDeploymentOperationStep;
 import org.operaton.bpm.container.impl.jmx.kernel.util.TestService;
 import org.operaton.bpm.container.impl.jmx.kernel.util.TestServiceType;
-import org.operaton.bpm.container.impl.spi.DeploymentOperation;
 import org.operaton.bpm.container.impl.spi.PlatformService;
 import org.junit.After;
 import org.junit.Before;

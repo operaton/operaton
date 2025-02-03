@@ -13,7 +13,7 @@ on:
           - '["17"]'
           - '["21"]'
           - '["17", "21"]'
-      test_suite:
+      testsuite:
         description: 'Integration test suite to run'
         type: choice
         required: true
@@ -60,7 +60,7 @@ jobs:
       fail-fast: false
       matrix:
         java: ${{ fromJson(github.event.inputs.java_version || '["17", "21"]') }}
-        test_suite: ${{ fromJson(github.event.inputs.test_suite || '["engine", "webapps"]') }}
+        testsuite: ${{ fromJson(github.event.inputs.testsuite || '["engine", "webapps"]') }}
         container: ${{ fromJson(github.event.inputs.container || '["tomcat", "wildfly"]') }}
         database: ${{ fromJson(github.event.inputs.database || '["h2", "postgres"]') }}
     steps:
@@ -88,19 +88,19 @@ jobs:
         id: maven-integration-tests
         shell: bash
         run: |
-          ./mvnw -P${{ matrix.test_suite }}-integration,${{ matrix.container }},${{ matrix.database }} verify -f qa
+          ./mvnw -P${{ matrix.testsuite }}-integration,${{ matrix.container }},${{ matrix.database }} verify -f qa
       - name: Publish Test Report
         if: always()
         uses: mikepenz/action-junit-report@v4
         with:
-          report_paths:
-            - ${{ github.workspace }}/**/target/surefire-reports/*.xml
-            - ${{ github.workspace }}/qa/**/target/**/logs/**
+          report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml
           require_passed_tests: true
       - name: Upload Surefire Reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: surefire-reports-${{ matrix.test_suite }}-${{ matrix.container }}-${{ matrix.database }}
-          path: ${{ github.workspace }}/**/target/surefire-reports/**
+          name: surefire-reports-${{ matrix.testsuite }}-${{ matrix.container }}-${{ matrix.database }}
+          path: |
+            ${{ github.workspace }}/**/target/surefire-reports/**
+            ${{ github.workspace }}/qa/**/target/**/logs/**
           retention-days: 30

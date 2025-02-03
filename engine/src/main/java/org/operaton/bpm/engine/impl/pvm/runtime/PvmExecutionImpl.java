@@ -1666,9 +1666,6 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
     return getParent();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setVariable(String variableName, Object value, String targetActivityId) {
     String activityId = getActivityId();

@@ -164,19 +164,19 @@ public class RedeploymentProcessApplicationTest {
     // given
     Deployment deployment1 = null;
     Deployment deployment2 = null;
-    try {
-      MyEmbeddedProcessApplication application = new MyEmbeddedProcessApplication();
-      engineRule.getProcessEngineConfiguration().setEnforceHistoryTimeToLive(false);
-
-      // first deployment allows null HTTL
-      deployment1 = repositoryService
+    // given
+    MyEmbeddedProcessApplication application = new MyEmbeddedProcessApplication();
+    // given
+    engineRule.getProcessEngineConfiguration().setEnforceHistoryTimeToLive(false);
+    // given
+    deployment1 = repositoryService
           .createDeployment(application.getReference())
           .name(DEPLOYMENT_NAME)
           .addClasspathResource(resource1)
           .deploy();
-
-      // enforceHistoryTimeToLive=true should prevent deployment2 from getting deployed
-      engineRule.getProcessEngineConfiguration().setEnforceHistoryTimeToLive(true);
+    // given
+    engineRule.getProcessEngineConfiguration().setEnforceHistoryTimeToLive(true);
+    try {
 
       // when - second deployment
       deployment2 = repositoryService

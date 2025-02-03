@@ -58,11 +58,10 @@ public class CommandContextInterceptorTest extends PluggableProcessEngineTest {
   public void testCommandContextNestedFailingCommands() {
     final ExceptionThrowingCmd innerCommand1 = new ExceptionThrowingCmd(new IdentifiableRuntimeException(1));
     final ExceptionThrowingCmd innerCommand2 = new ExceptionThrowingCmd(new IdentifiableRuntimeException(2));
+    var commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
 
     try {
-      processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
-        CommandExecutor commandExecutor = Context.getProcessEngineConfiguration().getCommandExecutorTxRequired();
-
+      commandExecutor.execute(commandContext -> {
         commandExecutor.execute(innerCommand1);
         commandExecutor.execute(innerCommand2);
 

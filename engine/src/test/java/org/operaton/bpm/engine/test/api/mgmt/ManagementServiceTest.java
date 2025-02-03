@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.api.mgmt;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -221,9 +222,10 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
   @Test
   public void shouldThrowExceptionOnSetJobRetriesWithNoJobReference() {
     // given
+    var setJobRetriesBuilder = managementService.setJobRetries(5);
 
     // when/then
-    assertThatThrownBy(() -> managementService.setJobRetries(5).execute())
+    assertThatThrownBy(setJobRetriesBuilder::execute)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("052")
       .hasMessageContaining("You must specify exactly one of jobId, jobIds or jobDefinitionId as parameter.");
@@ -743,8 +745,9 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
 
   @Test
   public void testSetJobDuedateJobIdNull() {
+    Date duedate = new Date();
     try {
-      managementService.setJobDuedate(null, new Date());
+      managementService.setJobDuedate(null, duedate);
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException re) {
       testRule.assertTextPresent("The job id is mandatory, but 'null' has been provided.", re.getMessage());
@@ -753,8 +756,9 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
 
   @Test
   public void testSetJobDuedateEmptyJobId() {
+    Date duedate = new Date();
     try {
-      managementService.setJobDuedate("", new Date());
+      managementService.setJobDuedate("", duedate);
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException re) {
       testRule.assertTextPresent("The job id is mandatory, but '' has been provided.", re.getMessage());
@@ -763,8 +767,9 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
 
   @Test
   public void testSetJobDuedateUnexistingJobId() {
+    Date duedate = new Date();
     try {
-      managementService.setJobDuedate("unexistingjob", new Date());
+      managementService.setJobDuedate("unexistingjob", duedate);
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException re) {
       testRule.assertTextPresent("No job found with id 'unexistingjob'.", re.getMessage());
@@ -822,9 +827,8 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
 
   @Test
   public void testDeleteNonexistingProperty() {
-
-    managementService.deleteProperty("non existing");
-
+    assertThatCode(() -> managementService.deleteProperty("non existing"))
+      .doesNotThrowAnyException();
   }
 
   @Test

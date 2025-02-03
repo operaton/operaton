@@ -18,6 +18,9 @@ package org.operaton.bpm.engine.test.api.history;
 
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.CATEGORY_OPERATOR;
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_DELETE_HISTORY;
+
+import static java.util.Collections.emptyList;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -549,12 +552,15 @@ public class BulkHistoryDeleteTest {
       historyService.deleteHistoricProcessInstancesBulk(null);
       fail("Empty process instance ids exception was expected");
     } catch (BadUserRequestException ex) {
+      assertThat(ex.getMessage()).contains("processInstanceIds is null");
     }
 
+    List<String> emptyPocessInstanceIds = emptyList();
     try {
-      historyService.deleteHistoricProcessInstancesBulk(new ArrayList<>());
+      historyService.deleteHistoricProcessInstancesBulk(emptyPocessInstanceIds);
       fail("Empty process instance ids exception was expected");
     } catch (BadUserRequestException ex) {
+      assertThat(ex.getMessage()).contains("processInstanceIds is empty");
     }
 
   }
@@ -570,6 +576,7 @@ public class BulkHistoryDeleteTest {
       historyService.deleteHistoricProcessInstancesBulk(ids);
       fail("Not all processes are finished exception was expected");
     } catch (BadUserRequestException ex) {
+      assertThat(ex.getMessage()).contains("Process instance is still running, cannot delete historic process instance");
     }
 
   }

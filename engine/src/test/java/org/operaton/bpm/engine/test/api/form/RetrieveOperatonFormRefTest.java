@@ -196,7 +196,8 @@ public class RetrieveOperatonFormRefTest {
     List<Deployment> deployments = repositoryService.createDeploymentQuery().list();
     List<OperatonFormDefinition> definitions = findAllOperatonFormDefinitionEntities(processEngineConfiguration);
     Task task = taskService.createTaskQuery().singleResult();
-    TaskFormData taskFormData = formService.getTaskFormData(task.getId());
+    String taskId = task.getId();
+    TaskFormData taskFormData = formService.getTaskFormData(taskId);
 
     // then
     assertThat(deployments).hasSize(1);
@@ -204,10 +205,9 @@ public class RetrieveOperatonFormRefTest {
 
     assertTaskFormData(taskFormData, "myTaskForm", "latest", null);
 
-    assertThatThrownBy(() -> {
-      formService.getDeployedTaskForm(task.getId());
-    }).isInstanceOf(NotFoundException.class)
-    .hasMessageContaining("No Operaton Form Definition was found for Operaton Form Ref");
+    assertThatThrownBy(() -> formService.getDeployedTaskForm(taskId))
+      .isInstanceOf(NotFoundException.class)
+      .hasMessageContaining("No Operaton Form Definition was found for Operaton Form Ref");
   }
 
   @Test
@@ -220,7 +220,8 @@ public class RetrieveOperatonFormRefTest {
     List<Deployment> deployments = repositoryService.createDeploymentQuery().list();
     List<OperatonFormDefinition> definitions = findAllOperatonFormDefinitionEntities(processEngineConfiguration);
     Task task = taskService.createTaskQuery().singleResult();
-    TaskFormData taskFormData = formService.getTaskFormData(task.getId());
+    String taskId = task.getId();
+    TaskFormData taskFormData = formService.getTaskFormData(taskId);
 
     // then
     assertThat(deployments).hasSize(1);
@@ -228,10 +229,9 @@ public class RetrieveOperatonFormRefTest {
 
     assertTaskFormData(taskFormData, "myTaskForm", "deployment", null);
 
-    assertThatThrownBy(() -> {
-      formService.getDeployedTaskForm(task.getId());
-    }).isInstanceOf(NotFoundException.class)
-    .hasMessageContaining("No Operaton Form Definition was found for Operaton Form Ref");
+    assertThatThrownBy(() -> formService.getDeployedTaskForm(taskId))
+      .isInstanceOf(NotFoundException.class)
+      .hasMessageContaining("No Operaton Form Definition was found for Operaton Form Ref");
   }
 
   @Test
@@ -246,7 +246,8 @@ public class RetrieveOperatonFormRefTest {
     List<Deployment> deployments = repositoryService.createDeploymentQuery().list();
     List<OperatonFormDefinition> definitions = findAllOperatonFormDefinitionEntities(processEngineConfiguration);
     Task task = taskService.createTaskQuery().singleResult();
-    TaskFormData taskFormData = formService.getTaskFormData(task.getId());
+    String taskId = task.getId();
+    TaskFormData taskFormData = formService.getTaskFormData(taskId);
 
     // then
     assertThat(deployments).hasSize(1);
@@ -254,10 +255,9 @@ public class RetrieveOperatonFormRefTest {
 
     assertTaskFormData(taskFormData, "myTaskForm", "version", 2);
 
-    assertThatThrownBy(() -> {
-      formService.getDeployedTaskForm(task.getId());
-    }).isInstanceOf(NotFoundException.class)
-    .hasMessageContaining("No Operaton Form Definition was found for Operaton Form Ref");
+    assertThatThrownBy(() -> formService.getDeployedTaskForm(taskId))
+      .isInstanceOf(NotFoundException.class)
+      .hasMessageContaining("No Operaton Form Definition was found for Operaton Form Ref");
   }
 
   @Test
@@ -406,15 +406,15 @@ public class RetrieveOperatonFormRefTest {
     List<Deployment> deployments = repositoryService.createDeploymentQuery().list();
     List<OperatonFormDefinition> definitions = findAllOperatonFormDefinitionEntities(processEngineConfiguration);
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
+    String processDefinitionId = processDefinition.getId();
 
     // then
     assertThat(deployments).hasSize(1);
     assertThat(definitions).isEmpty();
 
-    assertThatThrownBy(() -> {
-      formService.getDeployedStartForm(processDefinition.getId());
-    }).isInstanceOf(BadUserRequestException.class)
-    .hasMessageContaining("No Operaton Form Definition was found for Operaton Form Ref");
+    assertThatThrownBy(() -> formService.getDeployedStartForm(processDefinitionId))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("No Operaton Form Definition was found for Operaton Form Ref");
   }
 
   @Test
@@ -427,15 +427,15 @@ public class RetrieveOperatonFormRefTest {
     List<Deployment> deployments = repositoryService.createDeploymentQuery().list();
     List<OperatonFormDefinition> definitions = findAllOperatonFormDefinitionEntities(processEngineConfiguration);
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
+    String processDefinitionId = processDefinition.getId();
 
     // then
     assertThat(deployments).hasSize(1);
     assertThat(definitions).isEmpty();
 
-    assertThatThrownBy(() -> {
-      formService.getDeployedStartForm(processDefinition.getId());
-    }).isInstanceOf(BadUserRequestException.class)
-    .hasMessageContaining("No Operaton Form Definition was found for Operaton Form Ref");
+    assertThatThrownBy(() -> formService.getDeployedStartForm(processDefinitionId))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("No Operaton Form Definition was found for Operaton Form Ref");
   }
 
   @Test

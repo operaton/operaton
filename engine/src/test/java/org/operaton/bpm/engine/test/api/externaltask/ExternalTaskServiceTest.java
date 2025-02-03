@@ -2000,10 +2000,11 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .execute();
 
     LockedExternalTask task = externalTasks.get(0);
+    String taskId = task.getId();
 
     // when mapping variable does not exist
     // then output mapping fails due to missing variables
-    assertThatThrownBy(() -> externalTaskService.handleFailure(task.getId(), WORKER_ID, ERROR_MESSAGE, 0, 3000L))
+    assertThatThrownBy(() -> externalTaskService.handleFailure(taskId, WORKER_ID, ERROR_MESSAGE, 0, 3000L))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Propagation of bpmn error errorCode failed.");
   }

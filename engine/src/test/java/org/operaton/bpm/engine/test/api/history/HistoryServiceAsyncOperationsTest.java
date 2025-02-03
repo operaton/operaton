@@ -40,6 +40,7 @@ import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
@@ -189,8 +190,10 @@ public class HistoryServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
 
   @Test
   public void testDeleteHistoryProcessInstancesAsyncWithEmptyList() {
+    // given
+    List<String> processInstanceIds = emptyList();
     // when/then
-    assertThatThrownBy(() -> historyService.deleteHistoricProcessInstancesAsync(new ArrayList<String>(), TEST_REASON))
+    assertThatThrownBy(() -> historyService.deleteHistoricProcessInstancesAsync(processInstanceIds, TEST_REASON))
       .isInstanceOf(ProcessEngineException.class);
   }
 

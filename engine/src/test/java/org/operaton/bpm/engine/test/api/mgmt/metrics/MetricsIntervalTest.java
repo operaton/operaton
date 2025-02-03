@@ -72,10 +72,11 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
   @Test
   public void testMeterQueryIncreaseLimit() {
     //given metric data
+    var metricsQuery = managementService.createMetricsQuery();
 
     // when/then
     // when query metric interval data with max results set to 1000
-    assertThatThrownBy(() -> managementService.createMetricsQuery().limit(1000).interval())
+    assertThatThrownBy(() -> metricsQuery.limit(1000))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Metrics interval query row limit can't be set larger than 200.");
   }

@@ -41,6 +41,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
 
+import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -166,15 +167,19 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
 
   @Test
   public void testSetJobsRetryAsyncWithEmptyJobList() {
+    // given
+    List<String> jobIds = emptyList();
     // when/then
-    assertThatThrownBy(() -> managementService.setJobRetriesAsync(new ArrayList<String>(), RETRIES))
+    assertThatThrownBy(() -> managementService.setJobRetriesAsync(jobIds, RETRIES))
       .isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
   public void testSetJobsRetryAsyncWithEmptyProcessList() {
+    // given
+    List<String> jobIds = emptyList();
     // when/then
-    assertThatThrownBy(() -> managementService.setJobRetriesAsync(new ArrayList<String>(), (ProcessInstanceQuery) null, RETRIES))
+    assertThatThrownBy(() -> managementService.setJobRetriesAsync(jobIds, (ProcessInstanceQuery) null, RETRIES))
       .isInstanceOf(ProcessEngineException.class);
   }
 
@@ -526,9 +531,10 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
   @Test
   public void shouldThrowErrorOnEmptySetRetryByJobsBuilderConfig() {
     // given
+    var setJobRetriesByJobsAsyncBuilder = managementService.setJobRetriesByJobsAsync(RETRIES);
 
     // when/then
-    assertThatThrownBy(() -> managementService.setJobRetriesByJobsAsync(RETRIES).executeAsync())
+    assertThatThrownBy(setJobRetriesByJobsAsyncBuilder::executeAsync)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("050")
       .hasMessageContaining("You must specify at least one of jobIds or jobQuery.");
@@ -537,9 +543,10 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
   @Test
   public void shouldThrowErrorOnEmptySetRetryByProcessBuilderConfig() {
     // given
+    var setJobRetriesByProcessAsyncBuilder = managementService.setJobRetriesByProcessAsync(RETRIES);
 
     // when/then
-    assertThatThrownBy(() -> managementService.setJobRetriesByProcessAsync(RETRIES).executeAsync())
+    assertThatThrownBy(setJobRetriesByProcessAsyncBuilder::executeAsync)
     .isInstanceOf(ProcessEngineException.class)
     .hasMessageContaining("051")
     .hasMessageContaining("You must specify at least one of or one of processInstanceIds, processInstanceQuery, or historicProcessInstanceQuery.");

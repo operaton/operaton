@@ -101,10 +101,7 @@ public class JacksonJsonDataFormat implements DataFormat {
     try {
       return objectMapper.readValue(value, cls);
     }
-    catch (JsonParseException e) {
-      throw LOG.unableToReadValue(value, e);
-    }
-    catch (JsonMappingException e) {
+    catch (JsonParseException | JsonMappingException e) {
       throw LOG.unableToReadValue(value, e);
     }
     catch (IOException e) {
@@ -116,10 +113,7 @@ public class JacksonJsonDataFormat implements DataFormat {
     try {
       return objectMapper.readValue(value, type);
     }
-    catch (JsonParseException e) {
-      throw LOG.unableToReadValue(value, e);
-    }
-    catch (JsonMappingException e) {
+    catch (JsonParseException | JsonMappingException e) {
       throw LOG.unableToReadValue(value, e);
     }
     catch (IOException e) {

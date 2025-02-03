@@ -49,9 +49,7 @@ public class JakartaTransactionInterceptor extends AbstractTransactionIntercepto
   protected void doBegin() {
     try {
       transactionManager.begin();
-    } catch (NotSupportedException e) {
-      throw new TransactionException("Unable to begin transaction", e);
-    } catch (SystemException e) {
+    } catch (NotSupportedException | SystemException e) {
       throw new TransactionException("Unable to begin transaction", e);
     }
   }
@@ -79,9 +77,7 @@ public class JakartaTransactionInterceptor extends AbstractTransactionIntercepto
     if (tx != null) {
       try {
         transactionManager.resume((Transaction) tx);
-      } catch (SystemException e) {
-        throw new TransactionException("Unable to resume transaction", e);
-      } catch (InvalidTransactionException e) {
+      } catch (SystemException | InvalidTransactionException e) {
         throw new TransactionException("Unable to resume transaction", e);
       }
     }
@@ -91,18 +87,11 @@ public class JakartaTransactionInterceptor extends AbstractTransactionIntercepto
   protected void doCommit() {
     try {
       transactionManager.commit();
-    } catch (HeuristicMixedException e) {
-      throw new TransactionException("Unable to commit transaction", e);
-    } catch (HeuristicRollbackException e) {
+    } catch (HeuristicMixedException | HeuristicRollbackException | SystemException e) {
       throw new TransactionException("Unable to commit transaction", e);
     } catch (RollbackException e) {
       handleRollbackException(e);
-    } catch (SystemException e) {
-      throw new TransactionException("Unable to commit transaction", e);
-    } catch (RuntimeException e) {
-      doRollback(true);
-      throw e;
-    } catch (Error e) {
+    } catch (RuntimeException | Error e) {
       doRollback(true);
       throw e;
     }

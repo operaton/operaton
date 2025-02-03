@@ -32,12 +32,7 @@ public class URLEncodingUtil {
    */
   public static String encode(String value) {
     if (value != null) {
-      try {
-        return URLEncoder.encode(value, StandardCharsets.UTF_8.toString()).replaceAll("\\+", "%20");
-      } catch (UnsupportedEncodingException ex) {
-        // should not happen
-        return value;
-      }
+      return URLEncoder.encode(value, StandardCharsets.UTF_8).replace("+", "%20");
     }
 
     return null;

@@ -95,7 +95,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
   protected static final List<VariableInstanceLifecycleListener<CoreVariableInstance>> DEFAULT_VARIABLE_LIFECYCLE_LISTENERS =
-      Arrays.<VariableInstanceLifecycleListener<CoreVariableInstance>>asList(
+      Arrays.asList(
           (VariableInstanceLifecycleListener) VariableInstanceEntityPersistenceListener.INSTANCE,
           (VariableInstanceLifecycleListener) VariableInstanceSequenceCounterListener.INSTANCE,
           (VariableInstanceLifecycleListener) VariableInstanceHistoryListener.INSTANCE
@@ -1803,7 +1803,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     EscalationHandler.propagateEscalation(activityExecution, escalationCode);
   }
 
-  public static enum TaskState {
+  public enum TaskState {
 
     STATE_INIT ("Init"),
     STATE_CREATED ("Created"),
@@ -1813,7 +1813,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
 
     private String name;
 
-    private TaskState(String name) {
+    TaskState(String name) {
       this.name = name;
     }
   }

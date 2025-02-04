@@ -50,8 +50,8 @@ public class TopicSubscriptionManager implements Runnable {
 
   protected static final TopicSubscriptionManagerLogger LOG = ExternalTaskClientLogger.TOPIC_SUBSCRIPTION_MANAGER_LOGGER;
 
-  protected ReentrantLock ACQUISITION_MONITOR = new ReentrantLock(false);
-  protected Condition IS_WAITING = ACQUISITION_MONITOR.newCondition();
+  protected ReentrantLock acquisitionMonitor = new ReentrantLock(false);
+  protected Condition isWaiting = acquisitionMonitor.newCondition();
   protected AtomicBoolean isRunning = new AtomicBoolean(false);
 
   protected ExternalTaskServiceImpl externalTaskService;
@@ -88,7 +88,7 @@ public class TopicSubscriptionManager implements Runnable {
       try {
         acquire();
       }
-      catch (Throwable e) {
+      catch (Exception e) {
         LOG.exceptionWhileAcquiringTasks(e);
       }
     }
@@ -156,7 +156,7 @@ public class TopicSubscriptionManager implements Runnable {
       taskHandler.execute(task, externalTaskService);
     } catch (ExternalTaskClientException e) {
       LOG.exceptionOnExternalTaskServiceMethodInvocation(task.getTopicName(), e);
-    } catch (Throwable e) {
+    } catch (Exception e) {
       LOG.exceptionWhileExecutingExternalTaskHandler(task.getTopicName(), e);
     }
   }
@@ -222,34 +222,34 @@ public class TopicSubscriptionManager implements Runnable {
 
       long waitTime = backoffStrategy.calculateBackoffTime();
       suspend(waitTime);
-    } catch (Throwable e) {
+    } catch (Exception e) {
       LOG.exceptionWhileExecutingBackoffStrategyMethod(e);
     }
   }
 
   protected void suspend(long waitTime) {
     if (waitTime > 0 && isRunning.get()) {
-      ACQUISITION_MONITOR.lock();
+      acquisitionMonitor.lock();
       try {
         if (isRunning.get()) {
-          IS_WAITING.await(waitTime, TimeUnit.MILLISECONDS);
+          isWaiting.await(waitTime, TimeUnit.MILLISECONDS);
         }
       } catch (InterruptedException e) {
         LOG.exceptionWhileExecutingBackoffStrategyMethod(e);
       }
       finally {
-        ACQUISITION_MONITOR.unlock();
+        acquisitionMonitor.unlock();
       }
     }
   }
 
   protected void resume() {
-    ACQUISITION_MONITOR.lock();
+    acquisitionMonitor.lock();
     try {
-      IS_WAITING.signal();
+      isWaiting.signal();
     }
     finally {
-      ACQUISITION_MONITOR.unlock();
+      acquisitionMonitor.unlock();
     }
   }
 

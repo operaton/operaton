@@ -193,6 +193,19 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   public static final String PRIORITY = "priority";
   public static final String CASE_INSTANCE_ID = "caseInstanceId";
 
+  // name references of the rest of properties
+  public static final String EXECUTION_ID = "executionId";
+  public static final String PROCESS_DEFINITION_ID = "processDefinitionId";
+  public static final String CASE_EXECUTION_ID = "caseExecutionId";
+  public static final String CASE_DEFINITION_ID = "caseDefinitionId";
+  public static final String CREATE_TIME = "createTime";
+  public static final String LAST_UPDATED = "lastUpdated";
+  public static final String PARENT_TASK_ID = "parentTaskId";
+  public static final String DELEGATION_STATE = "delegationState";
+  public static final String TENANT_ID = "tenantId";
+  public static final String TASK_STATE = "taskState";
+  public static final String SUSPENSION_STATE = "suspensionState";
+
   /**
    * Mybatis constructor
    */
@@ -404,54 +417,54 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   @Override
   public Object getPersistentState() {
     Map<String, Object> persistentState = new  HashMap<>();
-    persistentState.put("assignee", this.assignee);
-    persistentState.put("owner", this.owner);
-    persistentState.put("name", this.name);
-    persistentState.put("priority", this.priority);
+    persistentState.put(ASSIGNEE, this.assignee);
+    persistentState.put(OWNER, this.owner);
+    persistentState.put(NAME, this.name);
+    persistentState.put(PRIORITY, this.priority);
     if (executionId != null) {
-      persistentState.put("executionId", this.executionId);
+      persistentState.put(EXECUTION_ID, this.executionId);
     }
     if (processDefinitionId != null) {
-      persistentState.put("processDefinitionId", this.processDefinitionId);
+      persistentState.put(PROCESS_DEFINITION_ID, this.processDefinitionId);
     }
     if (caseExecutionId != null) {
-      persistentState.put("caseExecutionId", this.caseExecutionId);
+      persistentState.put(CASE_EXECUTION_ID, this.caseExecutionId);
     }
     if (caseInstanceId != null) {
-      persistentState.put("caseInstanceId", this.caseInstanceId);
+      persistentState.put(CASE_INSTANCE_ID, this.caseInstanceId);
     }
     if (caseDefinitionId != null) {
-      persistentState.put("caseDefinitionId", this.caseDefinitionId);
+      persistentState.put(CASE_DEFINITION_ID, this.caseDefinitionId);
     }
     if (createTime != null) {
-      persistentState.put("createTime", this.createTime);
+      persistentState.put(CREATE_TIME, this.createTime);
     }
     if (lastUpdated != null) {
-      persistentState.put("lastUpdated", this.lastUpdated);
+      persistentState.put(LAST_UPDATED, this.lastUpdated);
     }
     if(description != null) {
-      persistentState.put("description", this.description);
+      persistentState.put(DESCRIPTION, this.description);
     }
     if(dueDate != null) {
-      persistentState.put("dueDate", this.dueDate);
+      persistentState.put(DUE_DATE, this.dueDate);
     }
     if(followUpDate != null) {
-      persistentState.put("followUpDate", this.followUpDate);
+      persistentState.put(FOLLOW_UP_DATE, this.followUpDate);
     }
     if (parentTaskId != null) {
-      persistentState.put("parentTaskId", this.parentTaskId);
+      persistentState.put(PARENT_TASK_ID, this.parentTaskId);
     }
     if (delegationState != null) {
-      persistentState.put("delegationState", this.delegationState);
+      persistentState.put(DELEGATION_STATE, this.delegationState);
     }
     if (tenantId != null) {
-      persistentState.put("tenantId", this.tenantId);
+      persistentState.put(TENANT_ID, this.tenantId);
     }
     if (taskState != null) {
-      persistentState.put("taskState", this.taskState);
+      persistentState.put(TASK_STATE, this.taskState);
     }
 
-    persistentState.put("suspensionState", this.suspensionState);
+    persistentState.put(SUSPENSION_STATE, this.suspensionState);
 
     return persistentState;
   }
@@ -468,7 +481,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
           .getTaskManager()
           .findTaskById(parentTaskId);
 
-      ensureNotNull(NullValueException.class, "Parent task with id '"+parentTaskId+"' does not exist", "parentTask", parentTaskEntity);
+      ensureNotNull(NullValueException.class, "Parent task with id '"+parentTaskId+"' does not exist", PARENT_TASK, parentTaskEntity);
 
       if (parentTaskEntity.suspensionState == SuspensionState.SUSPENDED.getStateCode()) {
         throw LOG.suspendedEntityException("parent task", id);
@@ -1740,8 +1753,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
 
   @Override
   public Set<String> getReferencedEntityIds() {
-    Set<String> referencedEntityIds = new HashSet<>();
-    return referencedEntityIds;
+    return new HashSet<>();
   }
 
   @Override

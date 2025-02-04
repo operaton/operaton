@@ -60,11 +60,13 @@
     </dependency>
 
     <dependency>
-      <groupId>jakarta.ws.rs</groupId>
-      <artifactId>jakarta.ws.rs-api</artifactId>
-      <version>4.0.0</version>
-      <scope>provided</scope>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-core-internal-dependencies</artifactId>
+      <version>${project.version}</version>
+      <scope>import</scope>
+      <type>pom</type>
     </dependency>
+
 
     <!-- rest api -->
     <dependency>
@@ -220,10 +222,6 @@
           <artifactId>resteasy-jaxrs</artifactId>
           <scope>runtime</scope>
         </dependency>
-        <!--<dependency>
-          <groupId>org.jboss.spec.javax.ws.rs</groupId>
-          <artifactId>jboss-jaxrs-api_2.1_spec</artifactId>
-        </dependency>-->
         <dependency>
           <groupId>jakarta.servlet</groupId>
           <artifactId>jakarta.servlet-api</artifactId>

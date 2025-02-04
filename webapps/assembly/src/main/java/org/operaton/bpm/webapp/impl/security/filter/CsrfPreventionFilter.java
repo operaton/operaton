@@ -140,11 +140,7 @@ public class CsrfPreventionFilter implements Filter {
 
     } catch (ClassNotFoundException e) {
       throw new ServletException("Cannot instantiate CSRF Prevention filter: Random class not found.", e);
-    } catch (InstantiationException e) {
-      throw new ServletException("Cannot instantiate CSRF Prevention filter: cannot instantiate provided Random class", e);
-    } catch (InvocationTargetException e) {
-      throw new ServletException("Cannot instantiate CSRF Prevention filter: cannot instantiate provided Random class", e);
-    } catch (NoSuchMethodException e) {
+    } catch (InstantiationException | InvocationTargetException | NoSuchMethodException e) {
       throw new ServletException("Cannot instantiate CSRF Prevention filter: cannot instantiate provided Random class", e);
     } catch (IllegalAccessException e) {
       throw new ServletException("Cannot instantiate CSRF Prevention filter: Random class constructor not accessible", e);

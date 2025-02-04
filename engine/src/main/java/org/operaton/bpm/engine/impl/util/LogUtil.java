@@ -40,7 +40,7 @@ import org.operaton.bpm.engine.impl.pvm.PvmException;
 public class LogUtil {
 
 
-  public static enum ThreadLogMode {
+  public enum ThreadLogMode {
     NONE, INDENT, PRINT_ID;
 
   }

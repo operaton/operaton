@@ -142,7 +142,7 @@ public class SetRemovalTimeToHistoricProcessInstancesBuilderImpl implements SetR
     return chunkSize;
   }
 
-  public static enum Mode
+  public enum Mode
   {
     CALCULATED_REMOVAL_TIME,
     ABSOLUTE_REMOVAL_TIME,

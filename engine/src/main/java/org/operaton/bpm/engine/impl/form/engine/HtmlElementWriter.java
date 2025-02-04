@@ -110,7 +110,7 @@ public class HtmlElementWriter {
   protected String escapeQuotes(String attributeValue){
     String escapedHtmlQuote = "&quot;";
     String escapedJavaQuote = "\"";
-    return attributeValue.replaceAll(escapedJavaQuote, escapedHtmlQuote);
+    return attributeValue.replace(escapedJavaQuote, escapedHtmlQuote);
   }
 
   protected void writeEndLine(HtmlWriteContext context) {

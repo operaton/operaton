@@ -673,12 +673,7 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
     getCaseSentryParts().add(entity);
 
     String sentryId = sentryPart.getSentryId();
-    List<CmmnSentryPart> parts = sentries.get(sentryId);
-
-    if (parts == null) {
-      parts = new ArrayList<>();
-      sentries.put(sentryId, parts);
-    }
+    List<CmmnSentryPart> parts = sentries.computeIfAbsent(sentryId, k -> new ArrayList<>());
 
     parts.add(entity);
   }

@@ -25,7 +25,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.WebApplicationContext;
 
-public class OperatonBpmSampleApplicationIT extends AbstractSpringSecurityIT {
+class OperatonBpmSampleApplicationIT extends AbstractSpringSecurityIT {
 
   @Autowired
   private TestRestTemplate testRestTemplate;
@@ -42,7 +42,7 @@ public class OperatonBpmSampleApplicationIT extends AbstractSpringSecurityIT {
   }
 
   @Test
-  public void testWebappApiIsAvailableAndRequiresAuthorization() {
+  void testWebappApiIsAvailableAndRequiresAuthorization() {
     // given oauth2 client disabled
     // when calling the webapp api
     ResponseEntity<String> entity = testRestTemplate.getForEntity(baseUrl + "/operaton/api/engine/engine/default/user", String.class);

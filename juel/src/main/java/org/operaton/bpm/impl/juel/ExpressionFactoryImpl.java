@@ -75,7 +75,7 @@ public class ExpressionFactoryImpl extends jakarta.el.ExpressionFactory {
 	 *
 	 * @since 2.2
 	 */
-	public static enum Profile {
+	public enum Profile {
 		/**
 		 * JEE5: none
 		 */

@@ -340,22 +340,23 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
 
   @Test
   public void testInvalidSorting() {
+    var historicActivityInstanceQuery = historyService.createHistoricActivityInstanceQuery().orderByHistoricActivityInstanceDuration();
     try {
-      historyService.createHistoricActivityInstanceQuery().asc().list();
+      historicActivityInstanceQuery.list();
       fail();
     } catch (ProcessEngineException e) {
 
     }
 
     try {
-      historyService.createHistoricActivityInstanceQuery().desc().list();
+      historicActivityInstanceQuery.list();
       fail();
     } catch (ProcessEngineException e) {
 
     }
 
     try {
-      historyService.createHistoricActivityInstanceQuery().orderByHistoricActivityInstanceDuration().list();
+      historicActivityInstanceQuery.list();
       fail();
     } catch (ProcessEngineException e) {
 

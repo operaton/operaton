@@ -1234,20 +1234,16 @@ public class HistoryCleanupTest {
 
   @Test
   public void testConfigurationFailureWrongDayOfTheWeekStartTime() {
-
     // when/then
-    assertThatThrownBy(() -> processEngineConfiguration.getHistoryCleanupBatchWindows()
-        .put(Calendar.MONDAY, new BatchWindowConfiguration("23", "01:00")))
+    assertThatThrownBy(() -> new BatchWindowConfiguration("23", "01:00"))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("startTime");
   }
 
   @Test
   public void testConfigurationFailureWrongDayOfTheWeekEndTime() {
-
     // when/then
-    assertThatThrownBy(() -> processEngineConfiguration.getHistoryCleanupBatchWindows()
-        .put(Calendar.MONDAY, new BatchWindowConfiguration("23:00", "01")))
+    assertThatThrownBy(() -> new BatchWindowConfiguration("23:00", "01"))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("endTime");
   }

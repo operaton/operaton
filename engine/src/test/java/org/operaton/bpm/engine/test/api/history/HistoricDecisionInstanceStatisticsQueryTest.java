@@ -241,14 +241,16 @@ public class HistoricDecisionInstanceStatisticsQueryTest {
   @Test
   public void testStatisticThrowsExceptionOnNullConstraintsCount() {
     // when/then
-    assertThatThrownBy(() -> historyService.createHistoricDecisionInstanceStatisticsQuery(null).count())
+    var historicDecisionInstanceStatisticsQuery = historyService.createHistoricDecisionInstanceStatisticsQuery(null);
+    assertThatThrownBy(historicDecisionInstanceStatisticsQuery::count)
       .isInstanceOf(NullValueException.class);
   }
 
   @Test
   public void testStatisticThrowsExceptionOnNullConstraintsList() {
     // when/then
-    assertThatThrownBy(() -> historyService.createHistoricDecisionInstanceStatisticsQuery(null).list())
+    var historicDecisionInstanceStatisticsQuery = historyService.createHistoricDecisionInstanceStatisticsQuery(null);
+    assertThatThrownBy(historicDecisionInstanceStatisticsQuery::list)
       .isInstanceOf(NullValueException.class);
   }
 

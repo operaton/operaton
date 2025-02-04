@@ -152,7 +152,9 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
       var execution = query.singleResult();
       assertThat(execution).isNotNull();
       fail();
-    } catch (ProcessEngineException e) { }
+    } catch (ProcessEngineException e) {
+      // expected
+    }
   }
 
   @Test

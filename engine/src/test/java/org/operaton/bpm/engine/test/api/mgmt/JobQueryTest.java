@@ -726,10 +726,11 @@ public class JobQueryTest {
   @Test
   public void testQueryByJobIdsWithEmptyList() {
     // given
+    var jobQuery = managementService.createJobQuery();
     Set<String> ids = Collections.emptySet();
 
     // when/then
-    assertThatThrownBy(() -> managementService.createJobQuery().jobIds(ids))
+    assertThatThrownBy(() -> jobQuery.jobIds(ids))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Set of job ids is empty");
   }
@@ -737,10 +738,11 @@ public class JobQueryTest {
   @Test
   public void testQueryByJobIdsWithNull() {
     // given
+    var jobQuery = managementService.createJobQuery();
     Set<String> ids = null;
 
     // when/then
-    assertThatThrownBy(() -> managementService.createJobQuery().jobIds(ids))
+    assertThatThrownBy(() -> jobQuery.jobIds(ids))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Set of job ids is null");
   }
@@ -789,10 +791,11 @@ public class JobQueryTest {
   @Test
   public void testQueryByProcessInstanceIdsWithEmptyList() {
     // given
+    var jobQuery = managementService.createJobQuery();
     Set<String> ids = Collections.emptySet();
 
     // when/then
-    assertThatThrownBy(() -> managementService.createJobQuery().processInstanceIds(ids))
+    assertThatThrownBy(() -> jobQuery.processInstanceIds(ids))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Set of process instance ids is empty");
   }
@@ -800,10 +803,11 @@ public class JobQueryTest {
   @Test
   public void testQueryByProcessInstanceIdsWithNull() {
     // given
+    var jobQuery = managementService.createJobQuery();
     Set<String> ids = null;
 
     // when/then
-    assertThatThrownBy(() -> managementService.createJobQuery().processInstanceIds(ids))
+    assertThatThrownBy(() -> jobQuery.processInstanceIds(ids))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Set of process instance ids is null");
   }
@@ -906,9 +910,10 @@ public class JobQueryTest {
       .singleResult();
 
     assertNotNull("No job found for process instance", timerJob);
+    String timerJobId = timerJob.getId();
 
     try {
-      managementService.executeJob(timerJob.getId());
+      managementService.executeJob(timerJobId);
       fail("RuntimeException from within the script task expected");
     } catch(RuntimeException re) {
       assertThat(re.getMessage()).contains(EXCEPTION_MESSAGE);
@@ -944,6 +949,7 @@ public class JobQueryTest {
       query.singleResult();
       fail();
     } catch (ProcessEngineException e) {
+      // expected
     }
   }
 

@@ -16,7 +16,6 @@
   <name>Operaton - Webapp - Root</name>
 
   <properties>
-    <version.jetty>11.0.24</version.jetty>
 
     <web.resources.override>src/main/runtime/default/webapp</web.resources.override>
 

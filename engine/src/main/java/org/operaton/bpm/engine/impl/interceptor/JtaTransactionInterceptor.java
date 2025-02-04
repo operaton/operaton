@@ -79,9 +79,7 @@ public class JtaTransactionInterceptor extends AbstractTransactionInterceptor {
     if (tx != null) {
       try {
         transactionManager.resume((Transaction) tx);
-      } catch (SystemException e) {
-        throw new TransactionException("Unable to resume transaction", e);
-      } catch (InvalidTransactionException e) {
+      } catch (SystemException | InvalidTransactionException e) {
         throw new TransactionException("Unable to resume transaction", e);
       }
     }

@@ -388,13 +388,14 @@ public class MigrationEventSubProcessTest {
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CONDITIONAL_EVENT_SUBPROCESS_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CONDITIONAL_EVENT_SUBPROCESS_PROCESS);
 
+    var migrationInstructionBuilder = rule.getRuntimeService()
+      .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
+      .mapActivities(USER_TASK_ID, USER_TASK_ID)
+      .mapActivities(EVENT_SUB_PROCESS_START_ID, EVENT_SUB_PROCESS_START_ID);
+
     // when conditional event sub process is migrated without update event trigger
-    // then
-    assertThatThrownBy(() -> rule.getRuntimeService()
-        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
-        .mapActivities(USER_TASK_ID, USER_TASK_ID)
-        .mapActivities(EVENT_SUB_PROCESS_START_ID, EVENT_SUB_PROCESS_START_ID)
-        .build())
+    assertThatThrownBy(migrationInstructionBuilder::build)
+      // then
       .isInstanceOf(MigrationPlanValidationException.class)
       .hasMessageContaining(MIGRATION_CONDITIONAL_VALIDATION_ERROR_MSG);
   }
@@ -653,13 +654,13 @@ public class MigrationEventSubProcessTest {
     testHelper.createProcessInstanceAndMigrate(migrationPlan, variables);
 
     // then
-    String resolvedsignalName = "new" + EventSubProcessModels.MESSAGE_NAME + "-foo";
+    String resolvedSignalName = "new" + EventSubProcessModels.MESSAGE_NAME + "-foo";
     testHelper.assertEventSubscriptionMigrated(
       EVENT_SUB_PROCESS_START_ID, EventSubProcessModels.SIGNAL_NAME,
-      EVENT_SUB_PROCESS_START_ID, resolvedsignalName);
+      EVENT_SUB_PROCESS_START_ID, resolvedSignalName);
 
     // and it is possible to successfully complete the migrated instance
-    rule.getRuntimeService().signalEventReceived(resolvedsignalName);
+    rule.getRuntimeService().signalEventReceived(resolvedSignalName);
     testHelper.completeTask(EVENT_SUB_PROCESS_TASK_ID);
     testHelper.assertProcessEnded(testHelper.snapshotBeforeMigration.getProcessInstanceId());
   }

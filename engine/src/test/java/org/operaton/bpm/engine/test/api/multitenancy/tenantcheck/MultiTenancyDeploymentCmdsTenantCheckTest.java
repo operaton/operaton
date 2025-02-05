@@ -21,7 +21,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.List;
 
 import org.operaton.bpm.engine.IdentityService;
@@ -87,7 +86,7 @@ public class MultiTenancyDeploymentCmdsTenantCheckTest {
 
   @Test
   public void createDeploymentWithAuthenticatedTenant() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     repositoryService.createDeployment().addModelInstance("emptyProcess.bpmn", emptyProcess)
       .tenantId(TENANT_ONE).deploy();
@@ -116,11 +115,12 @@ public class MultiTenancyDeploymentCmdsTenantCheckTest {
   @Test
   public void failToDeleteDeploymentNoAuthenticatedTenant() {
     Deployment deployment = testRule.deployForTenant(TENANT_ONE, emptyProcess);
+    String deploymentId = deployment.getId();
 
     identityService.setAuthentication("user", null, null);
 
     // when/then
-    assertThatThrownBy(() -> repositoryService.deleteDeployment(deployment.getId()))
+    assertThatThrownBy(() -> repositoryService.deleteDeployment(deploymentId))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot delete the deployment");
 
@@ -130,7 +130,7 @@ public class MultiTenancyDeploymentCmdsTenantCheckTest {
   public void deleteDeploymentWithAuthenticatedTenant() {
     Deployment deployment = testRule.deployForTenant(TENANT_ONE, emptyProcess);
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     repositoryService.deleteDeployment(deployment.getId());
 
@@ -161,11 +161,12 @@ public class MultiTenancyDeploymentCmdsTenantCheckTest {
   @Test
   public void failToGetDeploymentResourceNamesNoAuthenticatedTenant() {
     Deployment deployment = testRule.deployForTenant(TENANT_ONE, emptyProcess);
+    String deploymentId = deployment.getId();
 
     identityService.setAuthentication("user", null, null);
 
     // when/then
-    assertThatThrownBy(() -> repositoryService.getDeploymentResourceNames(deployment.getId()))
+    assertThatThrownBy(() -> repositoryService.getDeploymentResourceNames(deploymentId))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot get the deployment");
   }
@@ -174,7 +175,7 @@ public class MultiTenancyDeploymentCmdsTenantCheckTest {
   public void getDeploymentResourceNamesWithAuthenticatedTenant() {
     Deployment deployment = testRule.deployForTenant(TENANT_ONE, emptyProcess);
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     List<String> deploymentResourceNames = repositoryService.getDeploymentResourceNames(deployment.getId());
     assertThat(deploymentResourceNames).hasSize(1);
@@ -198,11 +199,12 @@ public class MultiTenancyDeploymentCmdsTenantCheckTest {
   @Test
   public void failToGetDeploymentResourcesNoAuthenticatedTenant() {
     Deployment deployment = testRule.deployForTenant(TENANT_ONE, emptyProcess);
+    String deploymentId = deployment.getId();
 
     identityService.setAuthentication("user", null, null);
 
     // when/then
-    assertThatThrownBy(() -> repositoryService.getDeploymentResources(deployment.getId()))
+    assertThatThrownBy(() -> repositoryService.getDeploymentResources(deploymentId))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot get the deployment");
   }
@@ -211,7 +213,7 @@ public class MultiTenancyDeploymentCmdsTenantCheckTest {
   public void getDeploymentResourcesWithAuthenticatedTenant() {
     Deployment deployment = testRule.deployForTenant(TENANT_ONE, emptyProcess);
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     List<Resource> deploymentResources = repositoryService.getDeploymentResources(deployment.getId());
     assertThat(deploymentResources).hasSize(1);
@@ -235,13 +237,15 @@ public class MultiTenancyDeploymentCmdsTenantCheckTest {
   @Test
   public void failToGetResourceAsStreamNoAuthenticatedTenant() {
     Deployment deployment = testRule.deployForTenant(TENANT_ONE, emptyProcess);
+    String deploymentId = deployment.getId();
 
-    Resource resource = repositoryService.getDeploymentResources(deployment.getId()).get(0);
+    Resource resource = repositoryService.getDeploymentResources(deploymentId).get(0);
+    String resourceName = resource.getName();
 
     identityService.setAuthentication("user", null, null);
 
     // when/then
-    assertThatThrownBy(() -> repositoryService.getResourceAsStream(deployment.getId(), resource.getName()))
+    assertThatThrownBy(() -> repositoryService.getResourceAsStream(deploymentId, resourceName))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot get the deployment");
   }
@@ -252,7 +256,7 @@ public class MultiTenancyDeploymentCmdsTenantCheckTest {
 
     Resource resource = repositoryService.getDeploymentResources(deployment.getId()).get(0);
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     InputStream inputStream = repositoryService.getResourceAsStream(deployment.getId(), resource.getName());
     assertThat(inputStream).isNotNull();
@@ -279,13 +283,15 @@ public class MultiTenancyDeploymentCmdsTenantCheckTest {
   @Test
   public void failToGetResourceAsStreamByIdNoAuthenticatedTenant() {
     Deployment deployment = testRule.deployForTenant(TENANT_ONE, emptyProcess);
+    String deploymentId = deployment.getId();
 
-    Resource resource = repositoryService.getDeploymentResources(deployment.getId()).get(0);
+    Resource resource = repositoryService.getDeploymentResources(deploymentId).get(0);
+    String resourceId = resource.getId();
 
     identityService.setAuthentication("user", null, null);
 
     // when/then
-    assertThatThrownBy(() -> repositoryService.getResourceAsStreamById(deployment.getId(), resource.getId()))
+    assertThatThrownBy(() -> repositoryService.getResourceAsStreamById(deploymentId, resourceId))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot get the deployment");
   }
@@ -296,7 +302,7 @@ public class MultiTenancyDeploymentCmdsTenantCheckTest {
 
     Resource resource = repositoryService.getDeploymentResources(deployment.getId()).get(0);
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     InputStream inputStream = repositoryService.getResourceAsStreamById(deployment.getId(), resource.getId());
     assertThat(inputStream).isNotNull();
@@ -328,13 +334,13 @@ public class MultiTenancyDeploymentCmdsTenantCheckTest {
       .tenantId(TENANT_ONE)
       .deploy();
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_TWO));
+    identityService.setAuthentication("user", null, List.of(TENANT_TWO));
+    var deploymentBuilder = repositoryService.createDeployment()
+      .addDeploymentResources(deploymentOne.getId())
+      .tenantId(TENANT_TWO);
 
     // when/then
-    assertThatThrownBy(() -> repositoryService.createDeployment()
-        .addDeploymentResources(deploymentOne.getId())
-        .tenantId(TENANT_TWO)
-        .deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot get the deployment");
   }
@@ -347,7 +353,7 @@ public class MultiTenancyDeploymentCmdsTenantCheckTest {
       .tenantId(TENANT_ONE)
       .deploy();
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     repositoryService.createDeployment()
         .addDeploymentResources(deploymentOne.getId())

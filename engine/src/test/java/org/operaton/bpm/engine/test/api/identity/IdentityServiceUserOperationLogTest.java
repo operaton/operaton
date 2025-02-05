@@ -109,9 +109,10 @@ public class IdentityServiceUserOperationLogTest {
     identityService.saveUser(identityService.newUser(TEST_USER_ID));
     assertEquals(0, query.count());
     identityService.setAuthenticatedUserId("userId");
+    User newUser = identityService.newUser(TEST_USER_ID);
 
     // when/then
-    assertThatThrownBy(() -> identityService.saveUser(identityService.newUser(TEST_USER_ID)))
+    assertThatThrownBy(() -> identityService.saveUser(newUser))
       .isInstanceOf(ProcessEngineException.class);
 
     // then
@@ -235,9 +236,10 @@ public class IdentityServiceUserOperationLogTest {
     identityService.saveGroup(identityService.newGroup(TEST_GROUP_ID));
     assertEquals(0, query.count());
     identityService.setAuthenticatedUserId("userId");
+    Group newGroup = identityService.newGroup(TEST_GROUP_ID);
 
     // when/then
-    assertThatThrownBy(() -> identityService.saveGroup(identityService.newGroup(TEST_GROUP_ID)))
+    assertThatThrownBy(() -> identityService.saveGroup(newGroup))
       .isInstanceOf(ProcessEngineException.class);
 
     // and
@@ -313,9 +315,10 @@ public class IdentityServiceUserOperationLogTest {
     identityService.saveTenant(identityService.newTenant(TEST_TENANT_ID));
     assertEquals(0, query.count());
     identityService.setAuthenticatedUserId("userId");
+    Tenant newTenant = identityService.newTenant(TEST_TENANT_ID);
 
     // when/then
-    assertThatThrownBy(() -> identityService.saveTenant(identityService.newTenant(TEST_TENANT_ID)))
+    assertThatThrownBy(() -> identityService.saveTenant(newTenant))
       .isInstanceOf(ProcessEngineException.class);
 
     identityService.clearAuthentication();
@@ -385,8 +388,8 @@ public class IdentityServiceUserOperationLogTest {
 
     // then
     assertLogs(UserOperationLogEntry.OPERATION_TYPE_CREATE, EntityTypes.GROUP_MEMBERSHIP,
-        Triple.of("userId", (String) null, TEST_USER_ID),
-        Triple.of("groupId", (String) null, TEST_GROUP_ID));
+        Triple.of("userId", null, TEST_USER_ID),
+        Triple.of("groupId", null, TEST_GROUP_ID));
   }
 
   @Test
@@ -423,8 +426,8 @@ public class IdentityServiceUserOperationLogTest {
 
     // then
     assertLogs(UserOperationLogEntry.OPERATION_TYPE_DELETE, EntityTypes.GROUP_MEMBERSHIP,
-        Triple.of("userId", (String) null, TEST_USER_ID),
-        Triple.of("groupId", (String) null, TEST_GROUP_ID));
+        Triple.of("userId", null, TEST_USER_ID),
+        Triple.of("groupId", null, TEST_GROUP_ID));
   }
 
   @Test
@@ -455,8 +458,8 @@ public class IdentityServiceUserOperationLogTest {
 
     // then
     assertLogs(UserOperationLogEntry.OPERATION_TYPE_CREATE, EntityTypes.TENANT_MEMBERSHIP,
-        Triple.of("userId", (String) null, TEST_USER_ID),
-        Triple.of("tenantId", (String) null, TEST_TENANT_ID));
+        Triple.of("userId", null, TEST_USER_ID),
+        Triple.of("tenantId", null, TEST_TENANT_ID));
   }
 
   @Test
@@ -493,8 +496,8 @@ public class IdentityServiceUserOperationLogTest {
 
     // then
     assertLogs(UserOperationLogEntry.OPERATION_TYPE_DELETE, EntityTypes.TENANT_MEMBERSHIP,
-        Triple.of("userId", (String) null, TEST_USER_ID),
-        Triple.of("tenantId", (String) null, TEST_TENANT_ID));
+        Triple.of("userId", null, TEST_USER_ID),
+        Triple.of("tenantId", null, TEST_TENANT_ID));
   }
 
   @Test
@@ -525,8 +528,8 @@ public class IdentityServiceUserOperationLogTest {
 
     // then
     assertLogs(UserOperationLogEntry.OPERATION_TYPE_CREATE, EntityTypes.TENANT_MEMBERSHIP,
-        Triple.of("groupId", (String) null, TEST_GROUP_ID),
-        Triple.of("tenantId", (String) null, TEST_TENANT_ID));
+        Triple.of("groupId", null, TEST_GROUP_ID),
+        Triple.of("tenantId", null, TEST_TENANT_ID));
   }
 
   @Test
@@ -563,8 +566,8 @@ public class IdentityServiceUserOperationLogTest {
 
     // then
     assertLogs(UserOperationLogEntry.OPERATION_TYPE_DELETE, EntityTypes.TENANT_MEMBERSHIP,
-        Triple.of("groupId", (String) null, TEST_GROUP_ID),
-        Triple.of("tenantId", (String) null, TEST_TENANT_ID));
+        Triple.of("groupId", null, TEST_GROUP_ID),
+        Triple.of("tenantId", null, TEST_TENANT_ID));
   }
 
   @Test

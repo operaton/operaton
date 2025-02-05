@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.test.api.multitenancy.tenantcheck;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.Arrays;
+import java.util.List;
 
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -86,7 +86,7 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
     task = taskService.newTask("newTask");
     task.setTenantId(TENANT_ONE);
 
-    identityService.setAuthentication("aUserId", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
     taskService.saveTask(task);
     // then
@@ -130,7 +130,7 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
   @Test
   public void updateTaskWithAuthenticatedTenant() {
 
-    identityService.setAuthentication("aUserId", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("aUserId", null, List.of(TENANT_ONE));
     task.setAssignee("aUser");
     taskService.saveTask(task);
 
@@ -169,7 +169,7 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
   @Test
   public void claimTaskWithAuthenticatedTenant() {
 
-    identityService.setAuthentication("aUserId", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
     // then
     taskService.claim(task.getId(), "bUser");
@@ -178,14 +178,15 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
 
   @Test
   public void claimTaskWithNoAuthenticatedTenant() {
-
+    // given
+    String taskId = task.getId();
     identityService.setAuthentication("aUserId", null);
 
     // when/then
-    assertThatThrownBy(() -> taskService.claim(task.getId(), "bUser"))
+    assertThatThrownBy(() -> taskService.claim(taskId, "bUser"))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot work on task '"
-          + task.getId() +"' because it belongs to no authenticated tenant.");
+          + taskId +"' because it belongs to no authenticated tenant.");
 
   }
 
@@ -204,7 +205,7 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
   // complete the task test
   @Test
   public void completeTaskWithAuthenticatedTenant() {
-    identityService.setAuthentication("aUserId", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
     // then
     taskService.complete(task.getId());
@@ -213,14 +214,15 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
 
   @Test
   public void completeTaskWithNoAuthenticatedTenant() {
-
+    // given
+    String taskId = task.getId();
     identityService.setAuthentication("aUserId", null);
 
     // when/then
-    assertThatThrownBy(() -> taskService.complete(task.getId()))
+    assertThatThrownBy(() -> taskService.complete(taskId))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot work on task '"
-          + task.getId() +"' because it belongs to no authenticated tenant.");
+          + taskId +"' because it belongs to no authenticated tenant.");
   }
 
   @Test
@@ -238,7 +240,7 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
   @Test
   public void delegateTaskWithAuthenticatedTenant() {
 
-    identityService.setAuthentication("aUserId", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
     taskService.delegateTask(task.getId(), "demo");
 
@@ -247,14 +249,15 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
 
   @Test
   public void delegateTaskWithNoAuthenticatedTenant() {
-
+    // given
+    String taskId = task.getId();
     identityService.setAuthentication("aUserId", null);
 
     // when/then
-    assertThatThrownBy(() -> taskService.delegateTask(task.getId(), "demo"))
+    assertThatThrownBy(() -> taskService.delegateTask(taskId, "demo"))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot assign the task '"
-          + task.getId() +"' because it belongs to no authenticated tenant.");
+          + taskId +"' because it belongs to no authenticated tenant.");
 
   }
 
@@ -273,7 +276,7 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
   @Test
   public void resolveTaskWithAuthenticatedTenant() {
 
-    identityService.setAuthentication("aUserId", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
     taskService.resolveTask(task.getId());
 
@@ -282,14 +285,15 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
 
   @Test
   public void resolveTaskWithNoAuthenticatedTenant() {
-
+    // given
+    String taskId = task.getId();
     identityService.setAuthentication("aUserId", null);
 
     // when/then
-    assertThatThrownBy(() -> taskService.resolveTask(task.getId()))
+    assertThatThrownBy(() -> taskService.resolveTask(taskId))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot work on task '"
-          + task.getId() +"' because it belongs to no authenticated tenant.");
+          + taskId +"' because it belongs to no authenticated tenant.");
 
   }
 
@@ -308,8 +312,8 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
   @Test
   public void deleteTaskWithAuthenticatedTenant() {
 
-    identityService.setAuthentication("aUserId", null, Arrays.asList(TENANT_ONE));
-    task = createTaskforTenant();
+    identityService.setAuthentication("aUserId", null, List.of(TENANT_ONE));
+    task = createTaskForTenant();
     assertThat(taskService.createTaskQuery().taskId(task.getId()).count()).isEqualTo(1L);
 
     // then
@@ -321,14 +325,15 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
   public void deleteTaskWithNoAuthenticatedTenant() {
 
     try {
-      task = createTaskforTenant();
+      task = createTaskForTenant();
+      String taskId = task.getId();
       identityService.setAuthentication("aUserId", null);
 
       // when/then
-      assertThatThrownBy(() -> taskService.deleteTask(task.getId(), true))
+      assertThatThrownBy(() -> taskService.deleteTask(taskId, true))
         .isInstanceOf(ProcessEngineException.class)
         .hasMessageContaining("Cannot delete the task '"
-            + task.getId() +"' because it belongs to no authenticated tenant.");
+            + taskId +"' because it belongs to no authenticated tenant.");
 
     } finally {
       identityService.clearAuthentication();
@@ -345,7 +350,7 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
     identityService.setAuthentication("aUserId", null);
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
 
-    task = createTaskforTenant();
+    task = createTaskForTenant();
     assertThat(taskService.createTaskQuery().taskId(task.getId()).count()).isEqualTo(1L);
 
     // then
@@ -353,7 +358,7 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
     assertThat(taskService.createTaskQuery().taskId(task.getId()).count()).isZero();
   }
 
-  protected Task createTaskforTenant() {
+  protected Task createTaskForTenant() {
     Task newTask = taskService.newTask("newTask");
     newTask.setTenantId(TENANT_ONE);
     taskService.saveTask(newTask);

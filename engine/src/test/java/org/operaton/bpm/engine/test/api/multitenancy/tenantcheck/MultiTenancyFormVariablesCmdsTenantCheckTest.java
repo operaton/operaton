@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.test.api.multitenancy.tenantcheck;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
 
-import java.util.Arrays;
+import java.util.List;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -76,7 +76,7 @@ public class MultiTenancyFormVariablesCmdsTenantCheckTest {
   @Test
   public void testGetStartFormVariablesWithAuthenticatedTenant() {
 
-    engineRule.getIdentityService().setAuthentication("aUserId", null, Arrays.asList(TENANT_ONE));
+    engineRule.getIdentityService().setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
     assertEquals(4, engineRule.getFormService().getStartFormVariables(instance.getProcessDefinitionId()).size());
 
@@ -84,14 +84,15 @@ public class MultiTenancyFormVariablesCmdsTenantCheckTest {
 
   @Test
   public void testGetStartFormVariablesWithNoAuthenticatedTenant() {
-
     engineRule.getIdentityService().setAuthentication("aUserId", null);
+    String processDefinitionId = instance.getProcessDefinitionId();
+    var formService = engineRule.getFormService();
 
     // when/then
-    assertThatThrownBy(() -> engineRule.getFormService().getStartFormVariables(instance.getProcessDefinitionId()))
+    assertThatThrownBy(() -> formService.getStartFormVariables(processDefinitionId))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot get the process definition '"
-          + instance.getProcessDefinitionId() +"' because it belongs to no authenticated tenant.");
+          + processDefinitionId +"' because it belongs to no authenticated tenant.");
 
   }
 
@@ -108,7 +109,7 @@ public class MultiTenancyFormVariablesCmdsTenantCheckTest {
   @Test
   public void testGetTaskFormVariablesWithAuthenticatedTenant() {
 
-    engineRule.getIdentityService().setAuthentication("aUserId", null, Arrays.asList(TENANT_ONE));
+    engineRule.getIdentityService().setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
     Task task = engineRule.getTaskService().createTaskQuery().singleResult();
 
@@ -120,14 +121,16 @@ public class MultiTenancyFormVariablesCmdsTenantCheckTest {
   public void testGetTaskFormVariablesWithNoAuthenticatedTenant() {
 
     Task task = engineRule.getTaskService().createTaskQuery().singleResult();
+    String taskId = task.getId();
 
     engineRule.getIdentityService().setAuthentication("aUserId", null);
+    var formService = engineRule.getFormService();
 
     // when/then
-    assertThatThrownBy(() -> engineRule.getFormService().getTaskFormVariables(task.getId()))
+    assertThatThrownBy(() -> formService.getTaskFormVariables(taskId))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot read the task '"
-          + task.getId() +"' because it belongs to no authenticated tenant.");
+          + taskId +"' because it belongs to no authenticated tenant.");
 
   }
 

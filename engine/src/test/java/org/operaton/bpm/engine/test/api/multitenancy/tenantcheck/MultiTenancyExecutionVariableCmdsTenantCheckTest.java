@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.test.api.multitenancy.tenantcheck;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
 
-import java.util.Arrays;
+import java.util.List;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
@@ -81,7 +81,7 @@ public class MultiTenancyExecutionVariableCmdsTenantCheckTest {
   @Test
   public void getExecutionVariableWithAuthenticatedTenant() {
 
-    engineRule.getIdentityService().setAuthentication("aUserId", null, Arrays.asList(TENANT_ONE));
+    engineRule.getIdentityService().setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
     // then
     assertEquals(VARIABLE_VALUE_1, engineRule.getRuntimeService().getVariable(processInstanceId, VARIABLE_1));
@@ -91,9 +91,10 @@ public class MultiTenancyExecutionVariableCmdsTenantCheckTest {
   public void getExecutionVariableWithNoAuthenticatedTenant() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null);
+    var runtimeService = engineRule.getRuntimeService();
 
     // when/then
-    assertThatThrownBy(() -> engineRule.getRuntimeService().getVariable(processInstanceId, VARIABLE_1))
+    assertThatThrownBy(() -> runtimeService.getVariable(processInstanceId, VARIABLE_1))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot read the process instance '"
           + processInstanceId +"' because it belongs to no authenticated tenant.");
@@ -115,7 +116,7 @@ public class MultiTenancyExecutionVariableCmdsTenantCheckTest {
   @Test
   public void getExecutionVariableTypedWithAuthenticatedTenant() {
 
-    engineRule.getIdentityService().setAuthentication("aUserId", null, Arrays.asList(TENANT_ONE));
+    engineRule.getIdentityService().setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
     // then
     assertEquals(VARIABLE_VALUE_1, engineRule.getRuntimeService().getVariableTyped(processInstanceId, VARIABLE_1).getValue());
@@ -125,9 +126,10 @@ public class MultiTenancyExecutionVariableCmdsTenantCheckTest {
   public void getExecutionVariableTypedWithNoAuthenticatedTenant() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null);
+    var runtimeService = engineRule.getRuntimeService();
 
     // when/then
-    assertThatThrownBy(() -> engineRule.getRuntimeService().getVariableTyped(processInstanceId, VARIABLE_1))
+    assertThatThrownBy(() -> runtimeService.getVariableTyped(processInstanceId, VARIABLE_1))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot read the process instance '"
           + processInstanceId +"' because it belongs to no authenticated tenant.");
@@ -150,7 +152,7 @@ public class MultiTenancyExecutionVariableCmdsTenantCheckTest {
   @Test
   public void getExecutionVariablesWithAuthenticatedTenant() {
 
-    engineRule.getIdentityService().setAuthentication("aUserId", null, Arrays.asList(TENANT_ONE));
+    engineRule.getIdentityService().setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
     // then
     assertEquals(2, engineRule.getRuntimeService().getVariables(processInstanceId).size());
@@ -160,9 +162,10 @@ public class MultiTenancyExecutionVariableCmdsTenantCheckTest {
   public void getExecutionVariablesWithNoAuthenticatedTenant() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null);
+    var runtimeService = engineRule.getRuntimeService();
 
     // when/then
-    assertThatThrownBy(() -> engineRule.getRuntimeService().getVariables(processInstanceId).size())
+    assertThatThrownBy(() -> runtimeService.getVariables(processInstanceId))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot read the process instance '"
           + processInstanceId +"' because it belongs to no authenticated tenant.");
@@ -184,7 +187,7 @@ public class MultiTenancyExecutionVariableCmdsTenantCheckTest {
   @Test
   public void setExecutionVariableWithAuthenticatedTenant() {
 
-    engineRule.getIdentityService().setAuthentication("aUserId", null, Arrays.asList(TENANT_ONE));
+    engineRule.getIdentityService().setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
     // then
     engineRule.getRuntimeService().setVariable(processInstanceId, "newVariable", "newValue");
@@ -195,9 +198,10 @@ public class MultiTenancyExecutionVariableCmdsTenantCheckTest {
   public void setExecutionVariableWithNoAuthenticatedTenant() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null);
+    var runtimeService = engineRule.getRuntimeService();
 
     // when/then
-    assertThatThrownBy(() -> engineRule.getRuntimeService().setVariable(processInstanceId, "newVariable", "newValue"))
+    assertThatThrownBy(() -> runtimeService.setVariable(processInstanceId, "newVariable", "newValue"))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot update the process instance '"
           + processInstanceId +"' because it belongs to no authenticated tenant.");
@@ -217,7 +221,7 @@ public class MultiTenancyExecutionVariableCmdsTenantCheckTest {
   @Test
   public void removeExecutionVariableWithAuthenticatedTenant() {
 
-    engineRule.getIdentityService().setAuthentication("aUserId", null, Arrays.asList(TENANT_ONE));
+    engineRule.getIdentityService().setAuthentication("aUserId", null, List.of(TENANT_ONE));
     engineRule.getRuntimeService().removeVariable(processInstanceId, VARIABLE_1);
 
     // then
@@ -228,9 +232,10 @@ public class MultiTenancyExecutionVariableCmdsTenantCheckTest {
   public void removeExecutionVariableWithNoAuthenticatedTenant() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null);
+    var runtimeService = engineRule.getRuntimeService();
 
     // when/then
-    assertThatThrownBy(() -> engineRule.getRuntimeService().removeVariable(processInstanceId, VARIABLE_1))
+    assertThatThrownBy(() -> runtimeService.removeVariable(processInstanceId, VARIABLE_1))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot update the process instance '"
           + processInstanceId +"' because it belongs to no authenticated tenant.");

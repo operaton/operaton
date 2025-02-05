@@ -17,16 +17,8 @@
 package org.operaton.bpm.engine.test.api.runtime;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -56,13 +48,10 @@ import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
+import static java.util.Collections.emptySet;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
+
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.processInstanceByBusinessKey;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.processInstanceByProcessDefinitionId;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.processInstanceByProcessInstanceId;
@@ -266,14 +255,14 @@ public class ProcessInstanceQueryTest {
     runtimeService.startProcessInstanceById(oneTaskProcessDefinitionId);
 
     // assume
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(7l);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(7L);
 
     // when
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery()
       .processDefinitionKeyIn(PROCESS_DEFINITION_KEY, PROCESS_DEFINITION_KEY_2);
 
     // then
-    assertThat(query.count()).isEqualTo(5l);
+    assertThat(query.count()).isEqualTo(5L);
     assertThat(query.list()).hasSize(5);
   }
 
@@ -322,14 +311,14 @@ public class ProcessInstanceQueryTest {
     runtimeService.startProcessInstanceById(oneTaskProcessDefinitionId);
 
     // assume
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(7l);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(7L);
 
     // when
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery()
       .processDefinitionKeyNotIn(PROCESS_DEFINITION_KEY, PROCESS_DEFINITION_KEY_2);
 
     // then
-    assertThat(query.count()).isEqualTo(2l);
+    assertThat(query.count()).isEqualTo(2L);
     assertThat(query.list()).hasSize(2);
   }
 
@@ -340,7 +329,7 @@ public class ProcessInstanceQueryTest {
       .processDefinitionKeyNotIn("not-existing-key");
 
     // then
-    assertThat(query.count()).isEqualTo(5l);
+    assertThat(query.count()).isEqualTo(5L);
     assertThat(query.list()).hasSize(5);
   }
 
@@ -522,7 +511,9 @@ public class ProcessInstanceQueryTest {
     try {
       processInstanceQuery.list(); // asc - desc not called -> exception
       fail();
-    }catch (ProcessEngineException ignored) {}
+    }catch (ProcessEngineException ignored) {
+      // expected
+    }
   }
 
   @Test
@@ -1382,8 +1373,9 @@ public class ProcessInstanceQueryTest {
   @Test
   public void testQueryByProcessInstanceIdsEmpty() {
     var processInstanceQuery = runtimeService.createProcessInstanceQuery();
+    Set<String> emptyProcessInstanceIds = emptySet();
     try {
-      processInstanceQuery.processInstanceIds(new HashSet<>());
+      processInstanceQuery.processInstanceIds(emptyProcessInstanceIds);
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException re) {
       assertThat(re.getMessage()).contains("Set of process instance ids is empty");
@@ -1492,7 +1484,9 @@ public class ProcessInstanceQueryTest {
     try {
       query.incidentId(null);
       fail();
-    } catch (ProcessEngineException ignored) {}
+    } catch (ProcessEngineException ignored) {
+      // expected
+    }
   }
 
   @Test
@@ -1523,7 +1517,9 @@ public class ProcessInstanceQueryTest {
     try {
       query.incidentType(null);
       fail();
-    } catch (ProcessEngineException ignored) {}
+    } catch (ProcessEngineException ignored) {
+      // expected
+    }
   }
 
   @Test
@@ -1554,7 +1550,9 @@ public class ProcessInstanceQueryTest {
     try {
       query.incidentMessage(null);
       fail();
-    } catch (ProcessEngineException ignored) {}
+    } catch (ProcessEngineException ignored) {
+      // expected
+    }
   }
 
   @Test
@@ -1583,7 +1581,9 @@ public class ProcessInstanceQueryTest {
     try {
       query.incidentMessageLike(null);
       fail();
-    } catch (ProcessEngineException ignored) {}
+    } catch (ProcessEngineException ignored) {
+      // expected
+    }
   }
 
   @Test
@@ -1699,7 +1699,9 @@ public class ProcessInstanceQueryTest {
     try {
       query.caseInstanceId(null);
       fail("The passed case instance should not be null.");
-    } catch (Exception ignored) {}
+    } catch (Exception ignored) {
+      // expected
+    }
 
   }
 
@@ -1737,23 +1739,23 @@ public class ProcessInstanceQueryTest {
   public void testProcessVariableValueEqualsNumber() {
     // long
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", 123L));
+        Map.of("var", 123L));
 
     // non-matching long
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", 12345L));
+        Map.of("var", 12345L));
 
     // short
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", (short) 123));
+        Map.of("var", (short) 123));
 
     // double
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", 123.0d));
+        Map.of("var", 123.0d));
 
     // integer
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", 123));
+        Map.of("var", 123));
 
     // untyped null (should not match)
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
@@ -1761,10 +1763,10 @@ public class ProcessInstanceQueryTest {
 
     // typed null (should not match)
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", Variables.longValue(null)));
+        Map.of("var", Variables.longValue(null)));
 
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", "123"));
+        Map.of("var", "123"));
 
     assertEquals(4, runtimeService.createProcessInstanceQuery().variableValueEquals("var", Variables.numberValue(123)).count());
     assertEquals(4, runtimeService.createProcessInstanceQuery().variableValueEquals("var", Variables.numberValue(123L)).count());
@@ -1779,23 +1781,23 @@ public class ProcessInstanceQueryTest {
   public void testProcessVariableValueNumberComparison() {
     // long
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", 123L));
+        Map.of("var", 123L));
 
     // non-matching long
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", 12345L));
+        Map.of("var", 12345L));
 
     // short
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", (short) 123));
+        Map.of("var", (short) 123));
 
     // double
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", 123.0d));
+        Map.of("var", 123.0d));
 
     // integer
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", 123));
+        Map.of("var", 123));
 
     // untyped null
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
@@ -1803,10 +1805,10 @@ public class ProcessInstanceQueryTest {
 
     // typed null
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", Variables.longValue(null)));
+        Map.of("var", Variables.longValue(null)));
 
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", "123"));
+        Map.of("var", "123"));
 
     assertEquals(4, runtimeService.createProcessInstanceQuery().variableValueNotEquals("var", Variables.numberValue(123)).count());
     assertEquals(1, runtimeService.createProcessInstanceQuery().variableValueGreaterThan("var", Variables.numberValue(123)).count());
@@ -1980,7 +1982,7 @@ public class ProcessInstanceQueryTest {
     assertEquals(5, instances.size());
 
     for (ProcessInstance returnedInstance : instances) {
-      assertFalse(returnedInstance.getId().equals(secondProcessInstance.getId()));
+      assertNotEquals(returnedInstance.getId(), secondProcessInstance.getId());
     }
 
     // cleanup

@@ -18,14 +18,13 @@ package org.operaton.bpm.engine.test.api.runtime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.Assert.*;
+
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.ConditionalModels.CONDITIONAL_PROCESS_KEY;
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.ConditionalModels.CONDITION_ID;
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.ConditionalModels.USER_TASK_ID;
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.ConditionalModels.VARIABLE_NAME;
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.ConditionalModels.VAR_CONDITION;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 import java.io.File;
 import java.net.URISyntaxException;
@@ -228,7 +227,7 @@ public class TransientVariableTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(CONDITIONAL_PROCESS_KEY);
 
     // then
-    assertEquals(true, processInstance.isEnded());
+    assertTrue(processInstance.isEnded());
   }
 
 
@@ -713,9 +712,10 @@ public class TransientVariableTest {
 
     testRule.deploy(model);
 
+    var variables = Variables.putValue("transient1", true).putValue("transient2", false);
+
     // when/then
-    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("process",
-        Variables.putValue("transient1", true).putValue("transient2", false)))
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("process", variables))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot set transient variable with name variable to non-transient variable and vice versa.");
   }
@@ -732,9 +732,10 @@ public class TransientVariableTest {
 
     testRule.deploy(model);
 
+    var variables = Variables.putValue("transient1", false).putValue("transient2", true);
+
     // when/then
-    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("process",
-        Variables.putValue("transient1", false).putValue("transient2", true)))
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("process", variables))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot set transient variable with name variable to non-transient variable and vice versa.");
   }

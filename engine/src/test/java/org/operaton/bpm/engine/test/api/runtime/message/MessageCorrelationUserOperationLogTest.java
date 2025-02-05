@@ -246,8 +246,10 @@ public class MessageCorrelationUserOperationLogTest {
     runtimeService.startProcessInstanceByKey(SINGLE_INTERMEDIATE_MESSAGE_PROCESS).getId();
     identityService.setAuthenticatedUserId(USER_ID);
 
+    var messageCorrelationBuilder = runtimeService.createMessageCorrelation(INTERMEDIATE_MESSAGE_NAME);
+
     // when
-    assertThatThrownBy(() -> runtimeService.createMessageCorrelation(INTERMEDIATE_MESSAGE_NAME).correlateAll())
+    assertThatThrownBy(messageCorrelationBuilder::correlateAll)
 
     // then
     .isInstanceOf(ProcessEngineException.class)

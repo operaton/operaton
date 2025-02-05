@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.test.api.multitenancy.tenantcheck;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.Arrays;
+import java.util.List;
 
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.MismatchingMessageCorrelationException;
@@ -100,7 +100,7 @@ public class MultiTenancyMessageCorrelationCmdTenantCheckTest {
     testRule.deployForTenant(TENANT_ONE, MESSAGE_START_PROCESS);
     testRule.deployForTenant(TENANT_TWO, MESSAGE_START_PROCESS);
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     runtimeService.createMessageCorrelation("message")
       .correlateStartMessage();
@@ -160,7 +160,7 @@ public class MultiTenancyMessageCorrelationCmdTenantCheckTest {
     runtimeService.createProcessInstanceByKey("messageCatch").processDefinitionTenantId(TENANT_ONE).execute();
     runtimeService.createProcessInstanceByKey("messageCatch").processDefinitionTenantId(TENANT_TWO).execute();
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     runtimeService.createMessageCorrelation("message")
       .correlate();
@@ -223,7 +223,7 @@ public class MultiTenancyMessageCorrelationCmdTenantCheckTest {
     runtimeService.createProcessInstanceByKey("messageCatch").processDefinitionTenantId(TENANT_ONE).execute();
     runtimeService.createProcessInstanceByKey("messageCatch").processDefinitionTenantId(TENANT_TWO).execute();
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     runtimeService.createMessageCorrelation("message")
       .correlateAll();
@@ -264,11 +264,11 @@ public class MultiTenancyMessageCorrelationCmdTenantCheckTest {
         .processDefinitionTenantId(TENANT_ONE).execute();
 
     identityService.setAuthentication("user", null, null);
+    var messageCorrelationBuilder = runtimeService.createMessageCorrelation("message")
+      .processInstanceId(processInstance.getId());
 
     // when/then
-    assertThatThrownBy(() -> runtimeService.createMessageCorrelation("message")
-        .processInstanceId(processInstance.getId())
-        .correlate())
+    assertThatThrownBy(messageCorrelationBuilder::correlate)
       .isInstanceOf(MismatchingMessageCorrelationException.class)
       .hasMessageContaining("Cannot correlate message");
   }
@@ -279,7 +279,7 @@ public class MultiTenancyMessageCorrelationCmdTenantCheckTest {
 
     ProcessInstance processInstance = runtimeService.createProcessInstanceByKey("messageCatch").execute();
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     runtimeService.createMessageCorrelation("message")
       .processInstanceId(processInstance.getId())
@@ -300,11 +300,11 @@ public class MultiTenancyMessageCorrelationCmdTenantCheckTest {
         processDefinitionKey("messageStart").tenantIdIn(TENANT_ONE).singleResult();
 
     identityService.setAuthentication("user", null, null);
+    var messageCorrelationBuilder = runtimeService.createMessageCorrelation("message")
+      .processDefinitionId(processDefinition.getId());
 
     // when/then
-    assertThatThrownBy(() -> runtimeService.createMessageCorrelation("message")
-        .processDefinitionId(processDefinition.getId())
-        .correlateStartMessage())
+    assertThatThrownBy(messageCorrelationBuilder::correlateStartMessage)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot create an instance of the process definition");
 
@@ -317,7 +317,7 @@ public class MultiTenancyMessageCorrelationCmdTenantCheckTest {
     ProcessDefinition processDefinition = engineRule.getRepositoryService().createProcessDefinitionQuery().
         processDefinitionKey("messageStart").singleResult();
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     runtimeService.createMessageCorrelation("message")
       .processDefinitionId(processDefinition.getId())

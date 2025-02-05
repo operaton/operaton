@@ -289,15 +289,16 @@ public class ProcessDefinitionSuspensionTest extends PluggableProcessEngineTest 
     var processDefinitionId = processDefinition.getId();
     repositoryService.suspendProcessDefinitionById(processDefinitionId);
 
+    var emptyProperties = new HashMap<String,Object>();
     try {
-      formService.submitStartForm(processDefinitionId, new HashMap<>());
+      formService.submitStartForm(processDefinitionId, emptyProperties);
       fail();
     } catch (ProcessEngineException e) {
       testRule.assertTextPresentIgnoreCase("is suspended", e.getMessage());
     }
 
     try {
-      formService.submitStartForm(processDefinitionId, "someKey", new HashMap<>());
+      formService.submitStartForm(processDefinitionId, "someKey", emptyProperties);
       fail();
     } catch (ProcessEngineException e) {
       testRule.assertTextPresentIgnoreCase("is suspended", e.getMessage());
@@ -557,7 +558,7 @@ public class ProcessDefinitionSuspensionTest extends PluggableProcessEngineTest 
     assertEquals(nrOfProcessDefinitions, repositoryService.createProcessDefinitionQuery().suspended().count());
     assertEquals(1, runtimeService.createProcessInstanceQuery().suspended().count());
 
-    // Activate again in 5 hourse from now
+    // Activate again in 5 hours from now
     repositoryService.activateProcessDefinitionByKey("oneTaskProcess", true, new Date(startTime.getTime() + (5 * hourInMs)));
     assertEquals(nrOfProcessDefinitions, repositoryService.createProcessDefinitionQuery().count());
     assertEquals(0, repositoryService.createProcessDefinitionQuery().active().count());
@@ -588,7 +589,7 @@ public class ProcessDefinitionSuspensionTest extends PluggableProcessEngineTest 
   public void testSuspendById_shouldSuspendJobDefinitionAndRetainJob() {
     // given
 
-    // a process definition with a asynchronous continuation, so that there
+    // a process definition with an asynchronous continuation, so that there
     // exists a job definition
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().singleResult();
@@ -631,7 +632,7 @@ public class ProcessDefinitionSuspensionTest extends PluggableProcessEngineTest 
   public void testSuspendByKey_shouldSuspendJobDefinitionAndRetainJob() {
     // given
 
-    // a process definition with a asynchronous continuation, so that there
+    // a process definition with an asynchronous continuation, so that there
     // exists a job definition
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().singleResult();
@@ -672,7 +673,7 @@ public class ProcessDefinitionSuspensionTest extends PluggableProcessEngineTest 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
   @Test
   public void testSuspendByIdAndIncludeInstancesFlag_shouldSuspendAlsoJobDefinitionAndRetainJob() {
-    // a process definition with a asynchronous continuation, so that there
+    // a process definition with an asynchronous continuation, so that there
     // exists a job definition
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().singleResult();
@@ -713,7 +714,7 @@ public class ProcessDefinitionSuspensionTest extends PluggableProcessEngineTest 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
   @Test
   public void testSuspendByKeyAndIncludeInstancesFlag_shouldSuspendAlsoJobDefinitionAndRetainJob() {
-    // a process definition with a asynchronous continuation, so that there
+    // a process definition with an asynchronous continuation, so that there
     // exists a job definition
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().singleResult();
@@ -754,7 +755,7 @@ public class ProcessDefinitionSuspensionTest extends PluggableProcessEngineTest 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
   @Test
   public void testSuspendByIdAndIncludeInstancesFlag_shouldSuspendJobDefinitionAndJob() {
-    // a process definition with a asynchronous continuation, so that there
+    // a process definition with an asynchronous continuation, so that there
     // exists a job definition
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().singleResult();
@@ -795,7 +796,7 @@ public class ProcessDefinitionSuspensionTest extends PluggableProcessEngineTest 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
   @Test
   public void testSuspendByKeyAndIncludeInstancesFlag_shouldSuspendJobDefinitionAndJob() {
-    // a process definition with a asynchronous continuation, so that there
+    // a process definition with an asynchronous continuation, so that there
     // exists a job definition
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().singleResult();
@@ -840,7 +841,7 @@ public class ProcessDefinitionSuspensionTest extends PluggableProcessEngineTest 
     ClockUtil.setCurrentTime(startTime);
     final long hourInMs = 60 * 60 * 1000;
 
-    // a process definition with a asynchronous continuation, so that there
+    // a process definition with an asynchronous continuation, so that there
     // exists a job definition
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().singleResult();
@@ -907,7 +908,7 @@ public class ProcessDefinitionSuspensionTest extends PluggableProcessEngineTest 
     ClockUtil.setCurrentTime(startTime);
     final long hourInMs = 60 * 60 * 1000;
 
-    // a process definition with a asynchronous continuation, so that there
+    // a process definition with an asynchronous continuation, so that there
     // exists a job definition
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().singleResult();
@@ -975,7 +976,7 @@ public class ProcessDefinitionSuspensionTest extends PluggableProcessEngineTest 
     ClockUtil.setCurrentTime(startTime);
     final long hourInMs = 60 * 60 * 1000;
 
-    // a process definition with a asynchronous continuation, so that there
+    // a process definition with an asynchronous continuation, so that there
     // exists a job definition
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().singleResult();
@@ -1043,7 +1044,7 @@ public class ProcessDefinitionSuspensionTest extends PluggableProcessEngineTest 
     ClockUtil.setCurrentTime(startTime);
     final long hourInMs = 60 * 60 * 1000;
 
-    // a process definition with a asynchronous continuation, so that there
+    // a process definition with an asynchronous continuation, so that there
     // exists a job definition
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().singleResult();
@@ -1349,7 +1350,7 @@ public class ProcessDefinitionSuspensionTest extends PluggableProcessEngineTest 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
   @Test
   public void testActivationById_shouldActivateJobDefinitionAndRetainJob() {
-    // a process definition with a asynchronous continuation, so that there
+    // a process definition with an asynchronous continuation, so that there
     // exists a job definition
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().singleResult();
@@ -1399,7 +1400,7 @@ public class ProcessDefinitionSuspensionTest extends PluggableProcessEngineTest 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
   @Test
   public void testActivationByKey_shouldActivateJobDefinitionAndRetainJob() {
-    // a process definition with a asynchronous continuation, so that there
+    // a process definition with an asynchronous continuation, so that there
     // exists a job definition
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().singleResult();
@@ -1449,7 +1450,7 @@ public class ProcessDefinitionSuspensionTest extends PluggableProcessEngineTest 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
   @Test
   public void testActivationByIdAndIncludeInstancesFlag_shouldActivateAlsoJobDefinitionAndRetainJob() {
-    // a process definition with a asynchronous continuation, so that there
+    // a process definition with an asynchronous continuation, so that there
     // exists a job definition
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().singleResult();
@@ -1499,7 +1500,7 @@ public class ProcessDefinitionSuspensionTest extends PluggableProcessEngineTest 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
   @Test
   public void testActivationByKeyAndIncludeInstancesFlag_shouldActivateAlsoJobDefinitionAndRetainJob() {
-    // a process definition with a asynchronous continuation, so that there
+    // a process definition with an asynchronous continuation, so that there
     // exists a job definition
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().singleResult();
@@ -1549,7 +1550,7 @@ public class ProcessDefinitionSuspensionTest extends PluggableProcessEngineTest 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
   @Test
   public void testActivationByIdAndIncludeInstancesFlag_shouldActivateJobDefinitionAndJob() {
-    // a process definition with a asynchronous continuation, so that there
+    // a process definition with an asynchronous continuation, so that there
     // exists a job definition
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().singleResult();
@@ -1599,7 +1600,7 @@ public class ProcessDefinitionSuspensionTest extends PluggableProcessEngineTest 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/ProcessDefinitionSuspensionTest.testWithOneAsyncServiceTask.bpmn"})
   @Test
   public void testActivationByKeyAndIncludeInstancesFlag_shouldActivateJobDefinitionAndJob() {
-    // a process definition with a asynchronous continuation, so that there
+    // a process definition with an asynchronous continuation, so that there
     // exists a job definition
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().singleResult();
@@ -1653,7 +1654,7 @@ public class ProcessDefinitionSuspensionTest extends PluggableProcessEngineTest 
     ClockUtil.setCurrentTime(startTime);
     final long hourInMs = 60 * 60 * 1000;
 
-    // a process definition with a asynchronous continuation, so that there
+    // a process definition with an asynchronous continuation, so that there
     // exists a job definition
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().singleResult();
@@ -1681,7 +1682,7 @@ public class ProcessDefinitionSuspensionTest extends PluggableProcessEngineTest 
     Job timerToActivateProcessDefinition = managementService.createJobQuery().timers().singleResult();
     assertNotNull(timerToActivateProcessDefinition);
 
-    // the job definition should still suspended
+    // the job definition should still be suspended
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
     assertEquals(0, jobDefinitionQuery.active().count());
@@ -1729,7 +1730,7 @@ public class ProcessDefinitionSuspensionTest extends PluggableProcessEngineTest 
     ClockUtil.setCurrentTime(startTime);
     final long hourInMs = 60 * 60 * 1000;
 
-    // a process definition with a asynchronous continuation, so that there
+    // a process definition with an asynchronous continuation, so that there
     // exists a job definition
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().singleResult();
@@ -1758,7 +1759,7 @@ public class ProcessDefinitionSuspensionTest extends PluggableProcessEngineTest 
     Job timerToActivateProcessDefinition = managementService.createJobQuery().timers().singleResult();
     assertNotNull(timerToActivateProcessDefinition);
 
-    // the job definition should still suspended
+    // the job definition should still be suspended
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
     assertEquals(0, jobDefinitionQuery.active().count());
@@ -1806,7 +1807,7 @@ public class ProcessDefinitionSuspensionTest extends PluggableProcessEngineTest 
     ClockUtil.setCurrentTime(startTime);
     final long hourInMs = 60 * 60 * 1000;
 
-    // a process definition with a asynchronous continuation, so that there
+    // a process definition with an asynchronous continuation, so that there
     // exists a job definition
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().singleResult();
@@ -1835,7 +1836,7 @@ public class ProcessDefinitionSuspensionTest extends PluggableProcessEngineTest 
     Job timerToActivateProcessDefinition = managementService.createJobQuery().timers().singleResult();
     assertNotNull(timerToActivateProcessDefinition);
 
-    // the job definition should still suspended
+    // the job definition should still be suspended
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
     assertEquals(0, jobDefinitionQuery.active().count());
@@ -1883,7 +1884,7 @@ public class ProcessDefinitionSuspensionTest extends PluggableProcessEngineTest 
     ClockUtil.setCurrentTime(startTime);
     final long hourInMs = 60 * 60 * 1000;
 
-    // a process definition with a asynchronous continuation, so that there
+    // a process definition with an asynchronous continuation, so that there
     // exists a job definition
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().singleResult();
@@ -1912,7 +1913,7 @@ public class ProcessDefinitionSuspensionTest extends PluggableProcessEngineTest 
     Job timerToActivateProcessDefinition = managementService.createJobQuery().timers().singleResult();
     assertNotNull(timerToActivateProcessDefinition);
 
-    // the job definition should still suspended
+    // the job definition should still be suspended
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery();
 
     assertEquals(0, jobDefinitionQuery.active().count());
@@ -2039,7 +2040,7 @@ public class ProcessDefinitionSuspensionTest extends PluggableProcessEngineTest 
     assertEquals(5, jobDefinitionQuery.active().count());
     assertEquals(0, jobDefinitionQuery.suspended().count());
 
-    // ...and the corresponding jobs should still suspended
+    // ...and the corresponding jobs should still be suspended
     JobQuery jobQuery = managementService.createJobQuery();
 
     assertEquals(0, jobQuery.active().count());

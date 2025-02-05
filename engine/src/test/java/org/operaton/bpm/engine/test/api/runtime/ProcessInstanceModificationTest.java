@@ -253,9 +253,11 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
     // given two instances of the outer subprocess
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("doubleNestedSubprocess");
     String processInstanceId = processInstance.getId();
+    var processInstanceModificationInstantiationBuilder = runtimeService.createProcessInstanceModification(
+      processInstance.getId()).startBeforeActivity("subProcess", "noValidActivityInstanceId");
 
     try {
-      runtimeService.createProcessInstanceModification(processInstance.getId()).startBeforeActivity("subProcess", "noValidActivityInstanceId").execute();
+      processInstanceModificationInstantiationBuilder.execute();
       fail();
     } catch (NotValidException e) {
       // happy path
@@ -444,9 +446,11 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
     // given two instances of the outer subprocess
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("doubleNestedSubprocess");
     String processInstanceId = processInstance.getId();
+    var processInstanceModificationInstantiationBuilder1 = runtimeService.createProcessInstanceModification(processInstanceId)
+      .startTransition("flow5", "noValidActivityInstanceId");
 
     try {
-      runtimeService.createProcessInstanceModification(processInstance.getId()).startTransition("flow5", "noValidActivityInstanceId").execute();
+      processInstanceModificationInstantiationBuilder1.execute();
       fail();
     } catch (NotValidException e) {
       // happy path
@@ -454,8 +458,9 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
           + "Ancestor activity instance 'noValidActivityInstanceId' does not exist", e.getMessage());
     }
 
+    var processInstanceModificationInstantiationBuilder2 = runtimeService.createProcessInstanceModification(processInstanceId);
     try {
-      runtimeService.createProcessInstanceModification(processInstance.getId()).startTransition("flow5", null).execute();
+      processInstanceModificationInstantiationBuilder2.startTransition("flow5", null);
       fail();
     } catch (NotValidException e) {
       // happy path
@@ -464,9 +469,11 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstanceId);
     String subProcessTaskId = getInstanceIdForActivity(tree, "subProcessTask");
+    var processInstanceModificationInstantiationBuilder3 = runtimeService.createProcessInstanceModification(processInstanceId)
+      .startTransition("flow5", subProcessTaskId);
 
     try {
-      runtimeService.createProcessInstanceModification(processInstance.getId()).startTransition("flow5", subProcessTaskId).execute();
+      processInstanceModificationInstantiationBuilder3.execute();
       fail("should not succeed because subProcessTask is a child of subProcess");
     } catch (NotValidException e) {
       // happy path
@@ -632,10 +639,11 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
     // given two instances of the outer subprocess
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("doubleNestedSubprocess");
     String processInstanceId = processInstance.getId();
+    var processInstanceModificationInstantiationBuilder1 = runtimeService.createProcessInstanceModification(processInstanceId)
+      .startAfterActivity("innerSubProcessStart", "noValidActivityInstanceId");
 
     try {
-      runtimeService.createProcessInstanceModification(processInstance.getId()).startAfterActivity("innerSubProcessStart", "noValidActivityInstanceId")
-          .execute();
+      processInstanceModificationInstantiationBuilder1.execute();
       fail();
     } catch (NotValidException e) {
       // happy path
@@ -645,8 +653,9 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
           e.getMessage());
     }
 
+    var processInstanceModificationInstantiationBuilder2 = runtimeService.createProcessInstanceModification(processInstanceId);
     try {
-      runtimeService.createProcessInstanceModification(processInstance.getId()).startAfterActivity("innerSubProcessStart", null).execute();
+      processInstanceModificationInstantiationBuilder2.startAfterActivity("innerSubProcessStart", null);
       fail();
     } catch (NotValidException e) {
       // happy path
@@ -656,8 +665,10 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstanceId);
     String subProcessTaskId = getInstanceIdForActivity(tree, "subProcessTask");
 
+    var processInstanceModificationInstantiationBuilder3 = runtimeService.createProcessInstanceModification(processInstanceId)
+      .startAfterActivity("innerSubProcessStart", subProcessTaskId);
     try {
-      runtimeService.createProcessInstanceModification(processInstance.getId()).startAfterActivity("innerSubProcessStart", subProcessTaskId).execute();
+      processInstanceModificationInstantiationBuilder3.execute();
       fail("should not succeed because subProcessTask is a child of subProcess");
     } catch (NotValidException e) {
       // happy path
@@ -1473,17 +1484,22 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
   @Test
   public void testStartCompensationBoundary() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
+    String processInstanceId = processInstance.getId();
 
+    var processInstanceModificationInstantiationBuilder1 = runtimeService.createProcessInstanceModification(processInstanceId)
+      .startBeforeActivity("compensateBoundaryEvent");
     try {
-      runtimeService.createProcessInstanceModification(processInstance.getId()).startBeforeActivity("compensateBoundaryEvent").execute();
+      processInstanceModificationInstantiationBuilder1.execute();
 
       fail("should not succeed");
     } catch (ProcessEngineException e) {
       testRule.assertTextPresent("compensation boundary event", e.getMessage());
     }
 
+    var processInstanceModificationInstantiationBuilder2 = runtimeService.createProcessInstanceModification(processInstanceId)
+      .startAfterActivity("compensateBoundaryEvent");
     try {
-      runtimeService.createProcessInstanceModification(processInstance.getId()).startAfterActivity("compensateBoundaryEvent").execute();
+      processInstanceModificationInstantiationBuilder2.execute();
 
       fail("should not succeed");
     } catch (ProcessEngineException e) {

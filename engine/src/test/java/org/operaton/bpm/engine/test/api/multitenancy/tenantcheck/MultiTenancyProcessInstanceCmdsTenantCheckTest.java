@@ -21,9 +21,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-import java.util.Arrays;
+import java.util.List;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
@@ -74,7 +75,7 @@ public class MultiTenancyProcessInstanceCmdsTenantCheckTest {
   @Test
   public void deleteProcessInstanceWithAuthenticatedTenant() {
 
-    engineRule.getIdentityService().setAuthentication("aUserId", null, Arrays.asList(TENANT_ONE));
+    engineRule.getIdentityService().setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
     engineRule.getRuntimeService().deleteProcessInstance(processInstanceId, null);
 
@@ -89,9 +90,10 @@ public class MultiTenancyProcessInstanceCmdsTenantCheckTest {
   public void deleteProcessInstanceWithNoAuthenticatedTenant() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null);
+    RuntimeService runtimeService = engineRule.getRuntimeService();
 
     // when/then
-    assertThatThrownBy(() -> engineRule.getRuntimeService().deleteProcessInstance(processInstanceId, null))
+    assertThatThrownBy(() -> runtimeService.deleteProcessInstance(processInstanceId, null))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot delete the process instance '"
           + processInstanceId +"' because it belongs to no authenticated tenant.");
@@ -120,7 +122,7 @@ public class MultiTenancyProcessInstanceCmdsTenantCheckTest {
 
     assertNotNull(engineRule.getRuntimeService().getActivityInstance(processInstanceId));
 
-    engineRule.getIdentityService().setAuthentication("aUserId", null, Arrays.asList(TENANT_ONE));
+    engineRule.getIdentityService().setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
     // when
     engineRule.getRuntimeService()
@@ -135,12 +137,12 @@ public class MultiTenancyProcessInstanceCmdsTenantCheckTest {
   public void modifyProcessInstanceWithNoAuthenticatedTenant() {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null);
+    var processInstanceModificationBuilder = engineRule.getRuntimeService()
+      .createProcessInstanceModification(processInstanceId)
+      .cancelAllForActivity("task");
 
     // when/then
-    assertThatThrownBy(() -> engineRule.getRuntimeService()
-        .createProcessInstanceModification(processInstanceId)
-        .cancelAllForActivity("task")
-        .execute())
+    assertThatThrownBy(processInstanceModificationBuilder::execute)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot update the process instance '"
           + processInstanceId +"' because it belongs to no authenticated tenant.");
@@ -152,7 +154,7 @@ public class MultiTenancyProcessInstanceCmdsTenantCheckTest {
 
     assertNotNull(engineRule.getRuntimeService().getActivityInstance(processInstanceId));
 
-    engineRule.getIdentityService().setAuthentication("aUserId", null, Arrays.asList(TENANT_ONE));
+    engineRule.getIdentityService().setAuthentication("aUserId", null, List.of(TENANT_ONE));
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
 
     // when

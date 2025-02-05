@@ -450,15 +450,15 @@ public class RetrieveOperatonFormRefTest {
     List<Deployment> deployments = repositoryService.createDeploymentQuery().list();
     List<OperatonFormDefinition> definitions = findAllOperatonFormDefinitionEntities(processEngineConfiguration);
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
+    String processDefinitionId = processDefinition.getId();
 
     // then
     assertThat(deployments).hasSize(1);
     assertThat(definitions).hasSize(1);
 
-    assertThatThrownBy(() -> {
-      formService.getDeployedStartForm(processDefinition.getId());
-    }).isInstanceOf(BadUserRequestException.class)
-    .hasMessageContaining("No Operaton Form Definition was found for Operaton Form Ref");
+    assertThatThrownBy(() -> formService.getDeployedStartForm(processDefinitionId))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("No Operaton Form Definition was found for Operaton Form Ref");
   }
 
   /* HELPER METHODS */

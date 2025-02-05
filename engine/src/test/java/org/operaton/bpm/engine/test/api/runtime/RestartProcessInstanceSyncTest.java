@@ -861,13 +861,14 @@ public class RestartProcessInstanceSyncTest {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
+    var restartProcessInstanceBuilder = runtimeService.restartProcessInstances(
+        processDefinition.getId())
+      .startBeforeActivity("userTask1")
+      .initialSetOfVariables()
+      .processInstanceIds(processInstance.getId());
 
     // when/then
-    assertThatThrownBy(() -> runtimeService.restartProcessInstances(processDefinition.getId())
-        .startBeforeActivity("userTask1")
-        .initialSetOfVariables()
-        .processInstanceIds(processInstance.getId())
-        .execute())
+    assertThatThrownBy(restartProcessInstanceBuilder::execute)
       .isInstanceOf(ProcessEngineException.class);
   }
 

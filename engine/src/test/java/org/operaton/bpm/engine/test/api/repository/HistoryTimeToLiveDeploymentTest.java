@@ -92,11 +92,11 @@ public class HistoryTimeToLiveDeploymentTest {
 
   @Test
   public void processWithoutHTTLShouldFail() {
-    assertThatThrownBy(() -> {
-      // when
-      testRule.deploy(repositoryService.createDeployment()
-          .addClasspathResource("org/operaton/bpm/engine/test/api/repository/version1.bpmn20.xml"));})
-
+    // given
+    var deploymentBuilder = repositoryService.createDeployment()
+      .addClasspathResource("org/operaton/bpm/engine/test/api/repository/version1.bpmn20.xml");
+    // when
+    assertThatThrownBy(() -> testRule.deploy(deploymentBuilder))
         // then
         .isInstanceOf(ParseException.class)
         .hasMessageContaining(EXPECTED_DEFAULT_CONFIG_MSG)
@@ -134,11 +134,11 @@ public class HistoryTimeToLiveDeploymentTest {
 
   @Test
   public void caseWithoutHTTLShouldFail() {
-    assertThatThrownBy(() -> {
-      // when
-      testRule.deploy(repositoryService.createDeployment()
-          .addClasspathResource("org/operaton/bpm/engine/test/api/cmmn/oneTaskCase2.cmmn"));})
-
+    // given
+    var deploymentBuilder = repositoryService.createDeployment()
+      .addClasspathResource("org/operaton/bpm/engine/test/api/cmmn/oneTaskCase2.cmmn");
+    // when
+    assertThatThrownBy(() -> testRule.deploy(deploymentBuilder))
         // then
         .isInstanceOf(ProcessEngineException.class)
         .hasCauseInstanceOf(NotValidException.class)
@@ -160,12 +160,10 @@ public class HistoryTimeToLiveDeploymentTest {
 
   @Test
   public void decisionWithoutHTTLShouldFail() {
-    assertThatThrownBy(() -> {
-      // when
-      testRule.deploy(repositoryService
-          .createDeployment()
-          .addClasspathResource("org/operaton/bpm/engine/test/api/dmn/Another_Example.dmn"));})
-
+    var deploymentBuilder = repositoryService.createDeployment()
+      .addClasspathResource("org/operaton/bpm/engine/test/api/dmn/Another_Example.dmn");
+    // when
+    assertThatThrownBy(() -> testRule.deploy(deploymentBuilder))
         // then
         .isInstanceOf(ProcessEngineException.class)
         .hasCauseInstanceOf(DmnTransformException.class)

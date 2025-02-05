@@ -31,10 +31,7 @@ import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.Deployment;
-import org.operaton.bpm.engine.runtime.ExecutionQuery;
-import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
-import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
+import org.operaton.bpm.engine.runtime.*;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.util.BatchRule;
@@ -265,7 +262,7 @@ public class CorrelateAllMessageBatchTest {
     deployProcessStartMessageOne();
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey(PROCESS_ONE_KEY).getId();
 
-    List<String> processInstances = Arrays.asList(processInstanceIdOne);
+    List<String> processInstances = Collections.singletonList(processInstanceIdOne);
 
     Batch batch = runtimeService.createMessageCorrelationAsync(MESSAGE_ONE_REF)
       .processInstanceIds(processInstances)
@@ -319,19 +316,22 @@ public class CorrelateAllMessageBatchTest {
 
   @Test
   public void shouldThrowException_NoProcessInstancesFound() {
+    // given
+    var messageCorrelationAsyncBuilder = runtimeService.createMessageCorrelationAsync(
+      MESSAGE_ONE_REF).processInstanceIds(Collections.emptyList());
     // when/then
-    assertThatThrownBy(() ->
-      runtimeService.createMessageCorrelationAsync(MESSAGE_ONE_REF)
-        .processInstanceIds(Collections.emptyList())
-        .correlateAllAsync())
+    assertThatThrownBy(messageCorrelationAsyncBuilder::correlateAllAsync)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("process instance ids is empty");
   }
 
   @Test
   public void shouldThrowException_QueriesAndIdsNull() {
+    // given
+    var messageCorrelationAsync = runtimeService.createMessageCorrelationAsync(
+      MESSAGE_ONE_REF);
     // when/then
-    assertThatThrownBy(() -> runtimeService.createMessageCorrelationAsync(MESSAGE_ONE_REF).correlateAllAsync())
+    assertThatThrownBy(messageCorrelationAsync::correlateAllAsync)
       .isInstanceOf(NullValueException.class)
       .hasMessageContaining("No process instances found");
 
@@ -339,44 +339,40 @@ public class CorrelateAllMessageBatchTest {
 
   @Test
   public void shouldThrowException_NullProcessInstanceIds() {
+    // given
+    var messageCorrelationAsyncBuilder = runtimeService.createMessageCorrelationAsync(MESSAGE_ONE_REF);
     // when/then
-    assertThatThrownBy(() ->
-      runtimeService.createMessageCorrelationAsync(MESSAGE_ONE_REF)
-        .processInstanceIds(null)
-        .correlateAllAsync())
+    assertThatThrownBy(() -> messageCorrelationAsyncBuilder.processInstanceIds(null))
       .isInstanceOf(NullValueException.class)
       .hasMessageContaining("processInstanceIds");
   }
 
   @Test
   public void shouldThrowException_NullProcessInstanceQuery() {
+    // given
+    var messageCorrelationAsyncBuilder = runtimeService.createMessageCorrelationAsync(MESSAGE_ONE_REF);
     // when/then
-    assertThatThrownBy(() ->
-      runtimeService.createMessageCorrelationAsync(MESSAGE_ONE_REF)
-        .processInstanceQuery(null)
-        .correlateAllAsync())
+    assertThatThrownBy(() -> messageCorrelationAsyncBuilder.processInstanceQuery(null))
       .isInstanceOf(NullValueException.class)
       .hasMessageContaining("processInstanceQuery");
   }
 
   @Test
   public void shouldThrowException_NullHistoricProcessInstanceQuery() {
+    // given
+    var messageCorrelationAsyncBuilder = runtimeService.createMessageCorrelationAsync(MESSAGE_ONE_REF);
     // when/then
-    assertThatThrownBy(() ->
-      runtimeService.createMessageCorrelationAsync(MESSAGE_ONE_REF)
-        .historicProcessInstanceQuery(null)
-        .correlateAllAsync())
+    assertThatThrownBy(() -> messageCorrelationAsyncBuilder.historicProcessInstanceQuery(null))
       .isInstanceOf(NullValueException.class)
       .hasMessageContaining("historicProcessInstanceQuery");
   }
 
   @Test
   public void shouldThrowException_NullVariableName() {
+    // given
+    var messageCorrelationAsyncBuilder = runtimeService.createMessageCorrelationAsync(MESSAGE_ONE_REF);
     // when/then
-    assertThatThrownBy(() ->
-      runtimeService.createMessageCorrelationAsync(MESSAGE_ONE_REF)
-        .setVariable(null, "bar")
-        .correlateAllAsync())
+    assertThatThrownBy(() -> messageCorrelationAsyncBuilder.setVariable(null, "bar"))
       .isInstanceOf(NullValueException.class)
       .hasMessageContaining("variableName");
   }
@@ -386,18 +382,16 @@ public class CorrelateAllMessageBatchTest {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_ONE_KEY);
     ProcessInstanceQuery runtimeQuery = runtimeService.createProcessInstanceQuery();
+    var messageCorrelationAsyncBuilder = runtimeService.createMessageCorrelationAsync(
+        MESSAGE_ONE_REF)
+      .processInstanceQuery(runtimeQuery)
+      .setVariables(Variables.putValue("foo", Variables.serializedObjectValue()
+        .serializedValue("foo")
+        .serializationDataFormat(Variables.SerializationDataFormats.JAVA)
+        .create()));
 
     // when/then
-    assertThatThrownBy(() ->
-      runtimeService.createMessageCorrelationAsync(MESSAGE_ONE_REF)
-        .processInstanceQuery(runtimeQuery)
-        .setVariables(
-            Variables.putValue("foo",
-                Variables.serializedObjectValue()
-                 .serializedValue("foo")
-                 .serializationDataFormat(Variables.SerializationDataFormats.JAVA)
-                 .create()))
-        .correlateAllAsync())
+    assertThatThrownBy(messageCorrelationAsyncBuilder::correlateAllAsync)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("ENGINE-17007 Cannot set variable with name foo. " +
           "Java serialization format is prohibited");

@@ -18,7 +18,8 @@ package org.operaton.bpm.engine.test.api.multitenancy.tenantcheck;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.migration.MigrationPlan;
@@ -62,10 +63,10 @@ public class MultiTenancyMigrationExecuteTenantCheckTest {
     ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceById(sourceDefinition.getId());
 
     // when
-    engineRule.getIdentityService().setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    engineRule.getIdentityService().setAuthentication("user", null, List.of(TENANT_ONE));
     engineRule.getRuntimeService()
       .newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(Collections.singletonList(processInstance.getId()))
       .execute();
 
     // then
@@ -86,13 +87,13 @@ public class MultiTenancyMigrationExecuteTenantCheckTest {
         .build();
 
     ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceById(sourceDefinition.getId());
-    engineRule.getIdentityService().setAuthentication("user", null, Arrays.asList(TENANT_TWO));
+    engineRule.getIdentityService().setAuthentication("user", null, List.of(TENANT_TWO));
+    var migrationPlanExecutionBuilder = engineRule.getRuntimeService()
+      .newMigration(migrationPlan)
+      .processInstanceIds(Collections.singletonList(processInstance.getId()));
 
     // when/then
-    assertThatThrownBy(() -> engineRule.getRuntimeService()
-        .newMigration(migrationPlan)
-        .processInstanceIds(Arrays.asList(processInstance.getId()))
-        .execute())
+    assertThatThrownBy(migrationPlanExecutionBuilder::execute)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot migrate process instance '" + processInstance.getId()
       + "' because it belongs to no authenticated tenant");
@@ -113,12 +114,12 @@ public class MultiTenancyMigrationExecuteTenantCheckTest {
 
     ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceById(sourceDefinition.getId());
     engineRule.getIdentityService().setAuthentication("user", null, null);
+    var migrationPlanExecutionBuilder = engineRule.getRuntimeService()
+      .newMigration(migrationPlan)
+      .processInstanceIds(Collections.singletonList(processInstance.getId()));
 
     // when/then
-    assertThatThrownBy(() -> engineRule.getRuntimeService()
-        .newMigration(migrationPlan)
-        .processInstanceIds(Arrays.asList(processInstance.getId()))
-        .execute())
+    assertThatThrownBy(migrationPlanExecutionBuilder::execute)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot migrate process instance '" + processInstance.getId()
       + "' because it belongs to no authenticated tenant");
@@ -142,7 +143,7 @@ public class MultiTenancyMigrationExecuteTenantCheckTest {
     engineRule.getIdentityService().setAuthentication("user", null, null);
     engineRule.getRuntimeService()
       .newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(Collections.singletonList(processInstance.getId()))
       .execute();
 
     // then
@@ -169,7 +170,7 @@ public class MultiTenancyMigrationExecuteTenantCheckTest {
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
     engineRule.getRuntimeService()
       .newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(Collections.singletonList(processInstance.getId()))
       .execute();
 
     // then

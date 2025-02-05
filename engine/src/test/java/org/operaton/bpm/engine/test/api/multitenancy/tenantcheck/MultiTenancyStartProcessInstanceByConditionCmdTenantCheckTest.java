@@ -17,11 +17,8 @@
 package org.operaton.bpm.engine.test.api.multitenancy.tenantcheck;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -116,7 +113,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
 
     ensureEventSubscriptions(2);
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     Map<String, Object> variableMap = new HashMap<>();
     variableMap.put("foo", "bar");
@@ -147,7 +144,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
 
     ensureEventSubscriptions(2);
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     Map<String, Object> variableMap = new HashMap<>();
     variableMap.put("foo", "bar");
@@ -204,12 +201,13 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
 
     identityService.setAuthentication("user", null, null);
 
+    var conditionEvaluationBuilder = engineRule.getRuntimeService()
+      .createConditionEvaluation()
+      .setVariable("foo", "bar")
+      .processDefinitionId(processDefinition.getId());
+
     // when/then
-    assertThatThrownBy(() -> engineRule.getRuntimeService()
-        .createConditionEvaluation()
-        .setVariable("foo", "bar")
-        .processDefinitionId(processDefinition.getId())
-        .evaluateStartConditions())
+    assertThatThrownBy(conditionEvaluationBuilder::evaluateStartConditions)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot create an instance of the process definition");
   }
@@ -224,7 +222,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
     ProcessDefinition processDefinition = engineRule.getRepositoryService().createProcessDefinitionQuery().processDefinitionKey("conditionStart").singleResult();
 
     identityService = engineRule.getIdentityService();
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     // when
     List<ProcessInstance> instances = engineRule.getRuntimeService()
@@ -289,7 +287,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
       if (eventSubscriptionEntity.getConfiguration().equals(processDefId2)) {
         assertEquals(TENANT_ONE, eventSubscription.getTenantId());
       } else if (eventSubscriptionEntity.getConfiguration().equals(processDefId6)) {
-        assertEquals(null, eventSubscription.getTenantId());
+        assertNull(eventSubscription.getTenantId());
       } else if (eventSubscriptionEntity.getConfiguration().equals(processDefId7)) {
         assertEquals(TENANT_ONE, eventSubscription.getTenantId());
       } else {

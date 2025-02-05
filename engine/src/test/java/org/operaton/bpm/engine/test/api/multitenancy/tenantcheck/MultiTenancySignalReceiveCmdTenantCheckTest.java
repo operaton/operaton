@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.test.api.multitenancy.tenantcheck;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.Arrays;
+import java.util.List;
 
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -100,7 +100,7 @@ public class MultiTenancySignalReceiveCmdTenantCheckTest {
     testRule.deployForTenant(TENANT_ONE, SIGNAL_START_PROCESS);
     testRule.deployForTenant(TENANT_TWO, SIGNAL_START_PROCESS);
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     runtimeService.createSignalEvent("signal").send();
 
@@ -156,7 +156,7 @@ public class MultiTenancySignalReceiveCmdTenantCheckTest {
     runtimeService.createProcessInstanceByKey("signalCatch").processDefinitionTenantId(TENANT_ONE).execute();
     runtimeService.createProcessInstanceByKey("signalCatch").processDefinitionTenantId(TENANT_TWO).execute();
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     runtimeService.createSignalEvent("signal").send();
 
@@ -215,7 +215,7 @@ public class MultiTenancySignalReceiveCmdTenantCheckTest {
     runtimeService.createProcessInstanceByKey("signalCatch").processDefinitionTenantId(TENANT_ONE).execute();
     runtimeService.createProcessInstanceByKey("signalCatch").processDefinitionTenantId(TENANT_TWO).execute();
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     runtimeService.createSignalEvent("signal").send();
 
@@ -257,7 +257,7 @@ public class MultiTenancySignalReceiveCmdTenantCheckTest {
       .signalEventSubscriptionName("signal")
       .singleResult();
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     runtimeService.createSignalEvent("signal").executionId(execution.getId()).send();
 
@@ -280,9 +280,11 @@ public class MultiTenancySignalReceiveCmdTenantCheckTest {
       .singleResult();
 
     identityService.setAuthentication("user", null, null);
+    var signalEventReceivedBuilder = runtimeService.createSignalEvent("signal")
+      .executionId(execution.getId());
 
     // when/then
-    assertThatThrownBy(() -> runtimeService.createSignalEvent("signal").executionId(execution.getId()).send())
+    assertThatThrownBy(signalEventReceivedBuilder::send)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot update the process instance");
 
@@ -321,7 +323,7 @@ public class MultiTenancySignalReceiveCmdTenantCheckTest {
       .signalEventSubscriptionName("signal")
       .singleResult();
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     runtimeService.signal(execution.getId(), "signal", null, null);
 
@@ -367,11 +369,12 @@ public class MultiTenancySignalReceiveCmdTenantCheckTest {
       .processDefinitionKey("signalCatch")
       .signalEventSubscriptionName("signal")
       .singleResult();
+    String executionId = execution.getId();
 
     identityService.setAuthentication("user", null, null);
 
     // when/then
-    assertThatThrownBy(() -> runtimeService.signal(execution.getId(), "signal", null, null))
+    assertThatThrownBy(() -> runtimeService.signal(executionId, "signal", null, null))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot update the process instance");
   }

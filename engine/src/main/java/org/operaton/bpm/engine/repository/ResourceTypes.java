@@ -50,8 +50,7 @@ public enum ResourceTypes implements ResourceType {
   }
 
   public static ResourceType forName(String name) {
-    ResourceType type = valueOf(name);
-    return type;
+    return valueOf(name);
   }
 
 }

@@ -202,8 +202,7 @@ public abstract class AbstractBaseElementBuilder<B extends AbstractBaseElementBu
   }
 
   protected ErrorEventDefinition createEmptyErrorEventDefinition() {
-    ErrorEventDefinition errorEventDefinition = createInstance(ErrorEventDefinition.class);
-    return errorEventDefinition;
+    return createInstance(ErrorEventDefinition.class);
   }
   
   protected ErrorEventDefinition createErrorEventDefinition(String errorCode) {
@@ -240,8 +239,7 @@ public abstract class AbstractBaseElementBuilder<B extends AbstractBaseElementBu
   }
 
   protected CompensateEventDefinition createCompensateEventDefinition() {
-    CompensateEventDefinition compensateEventDefinition = createInstance(CompensateEventDefinition.class);
-    return compensateEventDefinition;
+    return createInstance(CompensateEventDefinition.class);
   }
 
 

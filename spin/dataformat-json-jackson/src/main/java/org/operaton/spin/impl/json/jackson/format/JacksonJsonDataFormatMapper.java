@@ -86,8 +86,7 @@ public class JacksonJsonDataFormatMapper implements DataFormatMapper {
       return (T) mapInternalToJava(parameter, aClass, validator);
     } catch (ClassNotFoundException e) {
       JavaType javaType = format.constructJavaTypeFromCanonicalString(typeIdentifier);
-      T result = mapInternalToJava(parameter, javaType, validator);
-      return result;
+      return mapInternalToJava(parameter, javaType, validator);
     }
   }
 

@@ -202,9 +202,8 @@ public class TableDataManager extends AbstractManager {
 
   protected long getTableCount(String tableName) {
     LOG.selectTableCountForTable(tableName);
-    Long count = (Long) getDbEntityManager().selectOne("selectTableCount",
+    return (Long) getDbEntityManager().selectOne("selectTableCount",
             Collections.singletonMap("tableName", tableName));
-    return count;
   }
 
   @SuppressWarnings("unchecked")

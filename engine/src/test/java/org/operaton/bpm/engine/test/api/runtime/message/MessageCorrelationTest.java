@@ -2602,7 +2602,7 @@ public class MessageCorrelationTest {
   }
 
   protected BpmnModelInstance createModelWithEventSubprocess(boolean isInterrupting, boolean isAsync) {
-    BpmnModelInstance targetModel = modify(Bpmn.createExecutableProcess("Process_1")
+    return modify(Bpmn.createExecutableProcess("Process_1")
         .startEvent()
         .subProcess("Subprocess_1")
           .embeddedSubProcess()
@@ -2628,7 +2628,6 @@ public class MessageCorrelationTest {
             .userTask("wrongOutcome")
             .endEvent("unhappyEnd")
             .done();
-    return targetModel;
   }
 
   protected BpmnModelInstance createModelWithBoundaryEvent(boolean isInterrupting, boolean isAsync) {

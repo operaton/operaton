@@ -215,18 +215,15 @@ public abstract class AuthorizationTest extends PluggableProcessEngineTest {
   }
 
   protected Authorization createGlobalAuthorization(Resource resource, String resourceId) {
-    Authorization authorization = createAuthorization(AUTH_TYPE_GLOBAL, resource, resourceId);
-    return authorization;
+    return createAuthorization(AUTH_TYPE_GLOBAL, resource, resourceId);
   }
 
   protected Authorization createGrantAuthorization(Resource resource, String resourceId) {
-    Authorization authorization = createAuthorization(AUTH_TYPE_GRANT, resource, resourceId);
-    return authorization;
+    return createAuthorization(AUTH_TYPE_GRANT, resource, resourceId);
   }
 
   protected Authorization createRevokeAuthorization(Resource resource, String resourceId) {
-    Authorization authorization = createAuthorization(AUTH_TYPE_REVOKE, resource, resourceId);
-    return authorization;
+    return createAuthorization(AUTH_TYPE_REVOKE, resource, resourceId);
   }
 
   protected Authorization createAuthorization(int type, Resource resource, String resourceId) {

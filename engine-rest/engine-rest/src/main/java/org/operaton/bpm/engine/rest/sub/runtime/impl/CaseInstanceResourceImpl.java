@@ -68,8 +68,7 @@ public class CaseInstanceResourceImpl implements CaseInstanceResource {
       throw new InvalidRequestException(Status.NOT_FOUND, "Case instance with id " + caseInstanceId + " does not exist.");
     }
 
-    CaseInstanceDto result = CaseInstanceDto.fromCaseInstance(instance);
-    return result;
+    return CaseInstanceDto.fromCaseInstance(instance);
   }
 
   @Override

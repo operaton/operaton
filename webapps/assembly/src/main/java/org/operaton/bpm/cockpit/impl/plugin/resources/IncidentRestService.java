@@ -68,8 +68,7 @@ public class IncidentRestService extends AbstractPluginResource {
 
     paginateQueryParameters(queryParameter, firstResult, maxResults);
     configureExecutionQuery(queryParameter);
-    List<IncidentDto> matchingIncidents = getQueryService().executeQuery("selectIncidentWithCauseAndRootCauseIncidents", queryParameter);
-    return matchingIncidents;
+    return getQueryService().executeQuery("selectIncidentWithCauseAndRootCauseIncidents", queryParameter);
   }
 
   private void paginateQueryParameters(IncidentQueryDto queryParameter, Integer firstResult, Integer maxResults) {

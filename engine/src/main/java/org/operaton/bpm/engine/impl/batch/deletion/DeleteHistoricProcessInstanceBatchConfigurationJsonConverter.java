@@ -49,9 +49,8 @@ public class DeleteHistoricProcessInstanceBatchConfigurationJsonConverter
 
   @Override
   public BatchConfiguration readConfiguration(JsonObject json) {
-    BatchConfiguration configuration = new BatchConfiguration(readProcessInstanceIds(json), readIdMappings(json),
+    return new BatchConfiguration(readProcessInstanceIds(json), readIdMappings(json),
         JsonUtil.getBoolean(json, FAIL_IF_NOT_EXISTS));
-    return configuration;
   }
 
   protected List<String> readProcessInstanceIds(JsonObject jsonObject) {

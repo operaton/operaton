@@ -39,7 +39,7 @@ public class RetryCmdDeployment {
   }
 
   public static BpmnModelInstance prepareSignalEventProcess() {
-    BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(PROCESS_ID)
+    return Bpmn.createExecutableProcess(PROCESS_ID)
         .startEvent()
           .intermediateThrowEvent(FAILING_EVENT)
             .operatonAsyncBefore(true)
@@ -49,7 +49,6 @@ public class RetryCmdDeployment {
             .operatonClass(FailingDelegate.class.getName())
         .endEvent()
         .done();
-    return modelInstance;
   }
 
   public static BpmnModelInstance prepareMessageEventProcess() {

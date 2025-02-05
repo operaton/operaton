@@ -45,11 +45,9 @@ public class TimerRecalculationTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
   public static WebArchive processArchive() {
-    WebArchive archive = initWebArchiveDeployment()
+    return initWebArchiveDeployment()
             .addAsResource("org/operaton/bpm/integrationtest/jobexecutor/TimerRecalculation.bpmn20.xml")
             .addClass(TimerExpressionBean.class);
-
-    return archive;
   }
 
   @Test

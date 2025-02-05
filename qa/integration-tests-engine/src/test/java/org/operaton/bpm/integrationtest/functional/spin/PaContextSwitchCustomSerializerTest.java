@@ -61,14 +61,12 @@ public class PaContextSwitchCustomSerializerTest extends AbstractFoxPlatformInte
 
   @Deployment(name = "pa4")
   public static WebArchive createDeployment2() {
-    WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "pa4.war")
+    return ShrinkWrap.create(WebArchive.class, "pa4.war")
         .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
         .addAsLibraries(DeploymentHelper.getEngineCdi())
         .addAsResource("META-INF/processes.xml")
         .addClass(AbstractFoxPlatformIntegrationTest.class)
         .addClass(ProcessApplication4.class);
-
-    return webArchive;
   }
 
   /**

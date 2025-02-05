@@ -205,8 +205,7 @@ public class ProcessDiagramLayoutFactory {
     } catch (IOException e) {
       throw new ProcessEngineException("Error while reading process diagram image.", e);
     }
-    DiagramNode diagramBoundsImage = getDiagramBoundsFromImage(image, offsetTop, offsetBottom);
-    return diagramBoundsImage;
+    return getDiagramBoundsFromImage(image, offsetTop, offsetBottom);
   }
 
   protected DiagramNode getDiagramBoundsFromImage(BufferedImage image, int offsetTop, int offsetBottom) {

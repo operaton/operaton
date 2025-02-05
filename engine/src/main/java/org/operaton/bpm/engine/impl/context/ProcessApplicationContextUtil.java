@@ -116,9 +116,7 @@ public class ProcessApplicationContextUtil {
     ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
     ProcessApplicationManager processApplicationManager = processEngineConfiguration.getProcessApplicationManager();
 
-    ProcessApplicationReference processApplicationForDeployment = processApplicationManager.getProcessApplicationForDeployment(deploymentId);
-
-    return processApplicationForDeployment;
+    return processApplicationManager.getProcessApplicationForDeployment(deploymentId);
   }
 
   public static boolean areProcessApplicationsRegistered() {

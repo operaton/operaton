@@ -30,8 +30,6 @@ public class VariableTypeHelper {
   public static String toExpectedValueTypeName(ValueType type) {
     String typeName = type.getName();
 
-    String expectedName = typeName.substring(0, 1).toUpperCase() + typeName.substring(1);
-
-    return expectedName;
+    return typeName.substring(0, 1).toUpperCase() + typeName.substring(1);
   }
 }

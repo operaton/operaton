@@ -209,9 +209,7 @@ public class ProcessDataContext {
 
     sections.sealCurrentSection();
 
-    boolean newSectionCreated = numSections != sections.size();
-
-    return newSectionCreated;
+    return numSections != sections.size();
   }
 
   protected boolean hasNoMdcValues() {

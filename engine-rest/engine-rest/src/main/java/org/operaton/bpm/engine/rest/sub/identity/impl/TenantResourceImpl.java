@@ -55,8 +55,7 @@ public class TenantResourceImpl extends AbstractIdentityResource implements Tena
       throw new InvalidRequestException(Status.NOT_FOUND, "Tenant with id " + resourceId + " does not exist");
     }
 
-    TenantDto dto = TenantDto.fromTenant(tenant);
-    return dto;
+    return TenantDto.fromTenant(tenant);
   }
 
   @Override

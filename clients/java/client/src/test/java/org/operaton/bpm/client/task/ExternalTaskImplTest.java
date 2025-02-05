@@ -195,7 +195,6 @@ class ExternalTaskImplTest {
     for (int i = 0; i < valueInfos.length; i++) {
       valueInfoI.put("vi" + (i + 1), valueInfos[i]);
     }
-    TypedValueField typedValueField = new TypedValueField() {{setType(typeI); setValue(valueI); setValueInfo(valueInfoI); }};
-    return typedValueField;
+    return new TypedValueField() {{setType(typeI); setValue(valueI); setValueInfo(valueInfoI); }};
   }
 }

@@ -228,13 +228,12 @@ public class RuntimeByteArrayTest {
     String encoding = "crazy-encoding";
     String mimeType = "martini/dry";
 
-    FileValue fileValue = Variables
+    return Variables
         .fileValue(fileName)
         .file("ABC".getBytes())
         .encoding(encoding)
         .mimeType(mimeType)
         .create();
-    return fileValue;
   }
 
   protected BpmnModelInstance createProcess() {

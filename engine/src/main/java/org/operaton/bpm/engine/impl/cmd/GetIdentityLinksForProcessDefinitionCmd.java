@@ -49,8 +49,7 @@ public class GetIdentityLinksForProcessDefinitionCmd implements Command<List<Ide
 
     ensureNotNull("Cannot find process definition with id " + processDefinitionId, "processDefinition", processDefinition);
 
-    List<IdentityLink> identityLinks = (List) processDefinition.getIdentityLinks();
-    return identityLinks;
+    return (List) processDefinition.getIdentityLinks();
   }
   
 }

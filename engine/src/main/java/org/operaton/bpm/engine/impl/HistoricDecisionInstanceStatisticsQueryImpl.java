@@ -43,22 +43,18 @@ public class HistoricDecisionInstanceStatisticsQueryImpl extends
   public long executeCount(CommandContext commandContext) {
     checkQueryOk();
 
-    long count = commandContext
+    return commandContext
         .getStatisticsManager()
         .getStatisticsCountGroupedByDecisionRequirementsDefinition(this);
-
-    return count;
   }
 
   @Override
   public List<HistoricDecisionInstanceStatistics> executeList(CommandContext commandContext, Page page) {
     checkQueryOk();
 
-    List<HistoricDecisionInstanceStatistics> statisticsList = commandContext
+    return commandContext
         .getStatisticsManager()
         .getStatisticsGroupedByDecisionRequirementsDefinition(this, page);
-
-    return statisticsList;
   }
 
   @Override

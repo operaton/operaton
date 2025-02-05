@@ -35,11 +35,9 @@ public class EjbPALifecycleCallbacksTest extends AbstractFoxPlatformIntegrationT
   @Deployment
   public static WebArchive createDeployment() {
 
-    WebArchive archive = ShrinkWrap.create(WebArchive.class, "test.war")
+    return ShrinkWrap.create(WebArchive.class, "test.war")
         .addClass(CustomEjbProcessApplication.class)
         .addClass(AbstractFoxPlatformIntegrationTest.class);
-
-    return archive;
 
   }
 

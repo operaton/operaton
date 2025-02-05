@@ -3333,8 +3333,7 @@ public class RuntimeServiceTest {
   }
 
   private BpmnModelInstance prepareComplexProcess(String calledProcessA,String calledProcessB,String calledProcessC) {
-    BpmnModelInstance calling =
-        Bpmn.createExecutableProcess("calling")
+    return Bpmn.createExecutableProcess("calling")
           .startEvent()
           .parallelGateway("fork1")
             .subProcess()
@@ -3357,27 +3356,23 @@ public class RuntimeServiceTest {
             .endEvent()
 
         .done();
-    return calling;
   }
 
   private BpmnModelInstance prepareSimpleProcess(String name) {
-    BpmnModelInstance calledA = Bpmn.createExecutableProcess(name)
+    return Bpmn.createExecutableProcess(name)
         .startEvent()
         .userTask("Task" + name)
         .endEvent()
         .done();
-    return calledA;
   }
 
   private BpmnModelInstance prepareCallingProcess(String callingProcess, String calledProcess) {
-    BpmnModelInstance calling =
-        Bpmn.createExecutableProcess(callingProcess)
+    return Bpmn.createExecutableProcess(callingProcess)
           .startEvent()
           .callActivity()
             .calledElement(calledProcess)
           .endEvent()
           .done();
-    return calling;
   }
 
 }

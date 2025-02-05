@@ -173,8 +173,7 @@ public class UserTaskOperatonFormDefinitionParseTest {
     ActivityImpl userTask = findActivityInDeployedProcessDefinition(activityId);
     assertThat(userTask).isNotNull();
 
-    TaskDefinition taskDefinition = ((UserTaskActivityBehavior) userTask.getActivityBehavior()).getTaskDecorator()
+    return ((UserTaskActivityBehavior) userTask.getActivityBehavior()).getTaskDecorator()
         .getTaskDefinition();
-    return taskDefinition;
   }
 }

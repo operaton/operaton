@@ -431,18 +431,17 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
   }
 
   private BpmnModelInstance prepareProcessFailingServiceTask() {
-    BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(PROCESS_ID)
+    return Bpmn.createExecutableProcess(PROCESS_ID)
         .startEvent()
         .serviceTask()
           .operatonClass(FAILING_CLASS)
           .operatonAsyncBefore()
         .endEvent()
         .done();
-    return modelInstance;
   }
 
   private BpmnModelInstance prepareProcessFailingServiceTaskWithRetryCycle(String retryTimeCycle) {
-    BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(PROCESS_ID)
+    return Bpmn.createExecutableProcess(PROCESS_ID)
         .startEvent()
         .serviceTask()
           .operatonClass(FAILING_CLASS)
@@ -450,7 +449,6 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
           .operatonFailedJobRetryTimeCycle(retryTimeCycle)
         .endEvent()
         .done();
-    return modelInstance;
   }
 
 }

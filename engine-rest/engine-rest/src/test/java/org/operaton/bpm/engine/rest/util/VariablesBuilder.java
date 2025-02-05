@@ -46,8 +46,7 @@ public class VariablesBuilder {
   }
 
   public static VariablesBuilder create() {
-    VariablesBuilder builder = new VariablesBuilder();
-    return builder;
+    return new VariablesBuilder();
   }
 
   public VariablesBuilder variable(String name, Object value, String type) {

@@ -66,9 +66,8 @@ public class StartEventOperatonFormDefinitionParseTest {
 
 private ProcessDefinitionEntity getProcessDefinition() {
   ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
-  ProcessDefinitionEntity cachedProcessDefinition = processEngineConfiguration.getDeploymentCache()
+  return processEngineConfiguration.getDeploymentCache()
       .getProcessDefinitionCache().get(processDefinition.getId());
-  return cachedProcessDefinition;
 }
 
   @Test

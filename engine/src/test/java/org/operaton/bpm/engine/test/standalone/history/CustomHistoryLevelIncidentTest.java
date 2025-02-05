@@ -275,16 +275,14 @@ public class CustomHistoryLevelIncidentTest {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(sourceProcessDefinition.getId());
 
-    Batch batch = runtimeService.newMigration(migrationPlan).processInstanceIds(Arrays.asList(processInstance.getId(), "unknownId")).executeAsync();
-    return batch;
+    return runtimeService.newMigration(migrationPlan).processInstanceIds(Arrays.asList(processInstance.getId(), "unknownId")).executeAsync();
   }
 
   protected BpmnModelInstance createModelInstance() {
-    BpmnModelInstance instance = Bpmn.createExecutableProcess("process")
+    return Bpmn.createExecutableProcess("process")
         .startEvent("start")
         .userTask("userTask1")
         .endEvent("end")
         .done();
-    return instance;
   }
 }

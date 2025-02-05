@@ -259,8 +259,7 @@ public class RestartProcessInstancesCmd extends AbstractRestartProcessInstanceCm
 
     ensureNotEmpty("historicActivityInstances", historicActivityInstances);
 
-    HistoricActivityInstance startActivityInstance = historicActivityInstances.get(0);
-    return startActivityInstance;
+    return historicActivityInstances.get(0);
   }
 
 }

@@ -38,8 +38,7 @@ public abstract class LinkableDto {
   }
   
   public AtomLink generateLink(URI linkUri, String method, String relation) {   
-    AtomLink link = new AtomLink(relation, linkUri.toString(), method);
-    return link;
+    return new AtomLink(relation, linkUri.toString(), method);
   }
   
 }

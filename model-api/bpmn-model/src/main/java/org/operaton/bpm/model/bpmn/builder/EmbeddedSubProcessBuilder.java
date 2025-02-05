@@ -78,8 +78,7 @@ public class EmbeddedSubProcessBuilder extends AbstractEmbeddedSubProcessBuilder
     subProcessBuilder.resizeSubProcess(targetBpmnShape);
 
     // Return the eventSubProcessBuilder
-    EventSubProcessBuilder eventSubProcessBuilder = new EventSubProcessBuilder(subProcessBuilder.modelInstance, subProcess);
-    return eventSubProcessBuilder;
+    return new EventSubProcessBuilder(subProcessBuilder.modelInstance, subProcess);
 
   }
 

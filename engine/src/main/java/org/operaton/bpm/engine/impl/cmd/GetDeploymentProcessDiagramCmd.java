@@ -64,10 +64,8 @@ public class GetDeploymentProcessDiagramCmd implements Command<InputStream>, Ser
       return null;
     } else {
 
-      InputStream processDiagramStream = commandContext.runWithoutAuthorization(
+      return commandContext.runWithoutAuthorization(
           new GetDeploymentResourceCmd(deploymentId, resourceName));
-
-      return processDiagramStream;
     }
   }
 

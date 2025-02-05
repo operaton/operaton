@@ -50,8 +50,7 @@ public class StartJobExecutorStep extends DeploymentOperationStep {
 
   private JobExecutorXml getJobExecutorXml(DeploymentOperation operationContext) {
     BpmPlatformXml bpmPlatformXml = operationContext.getAttachment(Attachments.BPM_PLATFORM_XML);
-    JobExecutorXml jobExecutorXml = bpmPlatformXml.getJobExecutor();
-    return jobExecutorXml;
+    return bpmPlatformXml.getJobExecutor();
   }
   
   

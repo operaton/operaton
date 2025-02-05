@@ -193,27 +193,24 @@ public class SetJobRetriesAuthorizationTest {
   // helper /////////////////////////////////////////////////////
 
   protected Job selectJobByProcessInstanceId(String processInstanceId) {
-    Job job = managementService
+    return managementService
         .createJobQuery()
         .processInstanceId(processInstanceId)
         .singleResult();
-    return job;
   }
 
   protected Job selectJobById(String jobId) {
-    Job job = managementService
+    return managementService
         .createJobQuery()
         .jobId(jobId)
         .singleResult();
-    return job;
   }
 
   protected JobDefinition selectJobDefinitionByProcessDefinitionKey(String processDefinitionKey) {
-    JobDefinition jobDefinition = managementService
+    return managementService
         .createJobDefinitionQuery()
         .processDefinitionKey(processDefinitionKey)
         .singleResult();
-    return jobDefinition;
   }
 
 }

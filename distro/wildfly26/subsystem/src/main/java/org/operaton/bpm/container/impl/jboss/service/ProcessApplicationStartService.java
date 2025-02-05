@@ -293,8 +293,7 @@ public class ProcessApplicationStartService implements Service<ProcessApplicatio
 
   protected Class<?> getPaClass(AnnotationInstance annotation) throws ClassNotFoundException {
     String paClassName = ((MethodInfo)annotation.target()).declaringClass().name().toString();
-    Class<?> paClass = paModule.getClassLoader().loadClass(paClassName);
-    return paClass;
+    return paModule.getClassLoader().loadClass(paClassName);
   }
 
   @SuppressWarnings("unchecked")

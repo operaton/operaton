@@ -621,10 +621,9 @@ public class MultiTenancyJobCmdsTenantCheckTest {
   }
 
   protected Job selectJobByProcessInstanceId(String processInstanceId) {
-    Job job = managementService
+    return managementService
         .createJobQuery()
         .processInstanceId(processInstanceId)
         .singleResult();
-    return job;
   }
 }

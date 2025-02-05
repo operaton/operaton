@@ -1740,8 +1740,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
 
   @Override
   public Set<String> getReferencedEntityIds() {
-    Set<String> referencedEntityIds = new HashSet<>();
-    return referencedEntityIds;
+    return new HashSet<>();
   }
 
   @Override

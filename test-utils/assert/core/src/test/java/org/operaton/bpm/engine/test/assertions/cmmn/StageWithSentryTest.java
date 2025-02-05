@@ -71,8 +71,7 @@ public class StageWithSentryTest extends ProcessAssertTestCase {
   }
 
   private CaseInstance givenCaseIsCreated() {
-    CaseInstance caseInstance = caseService().createCaseInstanceByKey("Case_StageWithSentryTests");
-    return caseInstance;
+    return caseService().createCaseInstanceByKey("Case_StageWithSentryTests");
   }
 
 }

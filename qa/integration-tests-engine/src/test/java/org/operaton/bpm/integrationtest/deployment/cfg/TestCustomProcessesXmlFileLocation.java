@@ -39,15 +39,13 @@ public class TestCustomProcessesXmlFileLocation extends AbstractFoxPlatformInteg
   @Deployment
   public static WebArchive processArchive() {    
     
-    WebArchive archive = ShrinkWrap.create(WebArchive.class, "test.war")
+    return ShrinkWrap.create(WebArchive.class, "test.war")
         .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
         .addAsLibraries(DeploymentHelper.getEngineCdi())
         .addAsResource("org/operaton/bpm/integrationtest/deployment/cfg/processes.xml", "my/alternate/location/processes.xml")
         .addClass(AbstractFoxPlatformIntegrationTest.class)
         .addClass(CustomProcessApplication.class)
         .addAsResource("org/operaton/bpm/integrationtest/deployment/cfg/invoice-it.bpmn20.xml");
-    
-    return archive;
     
   }
   

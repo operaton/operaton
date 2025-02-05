@@ -43,14 +43,12 @@ public class EmbeddedEngineRest_WILDFLY {
   @Deployment(managed=false, name = EMBEDDED_ENGINE_REST)
   public static WebArchive createDeployment() {
     JavaArchive[] engineRestClasses = getEngineRestClasses();
-    WebArchive archive = ShrinkWrap.create(WebArchive.class, "embedded-engine-rest.war")
+    return ShrinkWrap.create(WebArchive.class, "embedded-engine-rest.war")
         .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
         .addAsWebInfResource("jboss-deployment-structure.xml")
         .addAsManifestResource("org.operaton.bpm.engine.rest.spi.ProcessEngineProvider", "META-INF/services/org.operaton.bpm.engine.rest.spi.ProcessEngineProvider")
         .addAsLibraries(engineRestClasses)
         .addClasses(CustomRestApplication.class, CustomProcessEngineProvider.class);
-
-    return archive;
   }
 
   @Test

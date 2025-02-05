@@ -132,9 +132,7 @@ public class ProcessEngineAwareExtension extends QuarkusUnitTest {
     Method getMethod = instanceHandle.getClass().getMethod("get");
     getMethod.setAccessible(true);
 
-    Object bean = getMethod.invoke(instanceHandle);
-
-    return bean;
+    return getMethod.invoke(instanceHandle);
   }
 
 }

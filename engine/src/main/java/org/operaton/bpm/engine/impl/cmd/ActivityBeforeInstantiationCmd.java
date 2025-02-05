@@ -71,8 +71,7 @@ public class ActivityBeforeInstantiationCmd extends AbstractInstantiationCmd {
 
   @Override
   protected CoreModelElement getTargetElement(ProcessDefinitionImpl processDefinition) {
-    ActivityImpl activity = processDefinition.findActivity(activityId);
-    return activity;
+    return processDefinition.findActivity(activityId);
   }
 
   @Override

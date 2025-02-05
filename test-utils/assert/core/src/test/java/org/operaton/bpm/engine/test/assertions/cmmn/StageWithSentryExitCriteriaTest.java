@@ -105,8 +105,7 @@ public class StageWithSentryExitCriteriaTest extends ProcessAssertTestCase {
   }
 
   private CaseInstance givenCaseIsCreated() {
-    CaseInstance caseInstance = caseService().createCaseInstanceByKey("Case_StageWithSentryExitCriteriaTest");
-    return caseInstance;
+    return caseService().createCaseInstanceByKey("Case_StageWithSentryExitCriteriaTest");
   }
 
   private CaseInstance givenCaseIsCreatedAndStageSActive() {

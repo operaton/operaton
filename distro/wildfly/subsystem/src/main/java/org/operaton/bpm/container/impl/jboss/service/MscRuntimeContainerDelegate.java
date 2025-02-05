@@ -291,8 +291,7 @@ public class MscRuntimeContainerDelegate implements Service<MscRuntimeContainerD
 
   @SuppressWarnings("unchecked")
   protected ServiceController<ProcessEngine> getProcessEngineServiceController(ServiceName processEngineServiceName) {
-    ServiceController<ProcessEngine> serviceController = (ServiceController<ProcessEngine>) serviceContainer.getRequiredService(processEngineServiceName);
-    return serviceController;
+    return (ServiceController<ProcessEngine>) serviceContainer.getRequiredService(processEngineServiceName);
   }
 
   protected void startTrackingServices() {

@@ -50,8 +50,8 @@ public class TopicSubscriptionManager implements Runnable {
 
   protected static final TopicSubscriptionManagerLogger LOG = ExternalTaskClientLogger.TOPIC_SUBSCRIPTION_MANAGER_LOGGER;
 
-  protected ReentrantLock acquisitionMonitor = new ReentrantLock(false);
-  protected Condition isWaiting = acquisitionMonitor.newCondition();
+  protected ReentrantLock ACQUISITION_MONITOR = new ReentrantLock(false);
+  protected Condition IS_WAITING = ACQUISITION_MONITOR.newCondition();
   protected AtomicBoolean isRunning = new AtomicBoolean(false);
 
   protected ExternalTaskServiceImpl externalTaskService;
@@ -229,27 +229,27 @@ public class TopicSubscriptionManager implements Runnable {
 
   protected void suspend(long waitTime) {
     if (waitTime > 0 && isRunning.get()) {
-      acquisitionMonitor.lock();
+      ACQUISITION_MONITOR.lock();
       try {
         if (isRunning.get()) {
-          isWaiting.await(waitTime, TimeUnit.MILLISECONDS);
+          IS_WAITING.await(waitTime, TimeUnit.MILLISECONDS);
         }
       } catch (InterruptedException e) {
         LOG.exceptionWhileExecutingBackoffStrategyMethod(e);
       }
       finally {
-        acquisitionMonitor.unlock();
+        ACQUISITION_MONITOR.unlock();
       }
     }
   }
 
   protected void resume() {
-    acquisitionMonitor.lock();
+    ACQUISITION_MONITOR.lock();
     try {
-      isWaiting.signal();
+      IS_WAITING.signal();
     }
     finally {
-      acquisitionMonitor.unlock();
+      ACQUISITION_MONITOR.unlock();
     }
   }
 

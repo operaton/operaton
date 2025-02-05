@@ -194,17 +194,17 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   public static final String CASE_INSTANCE_ID = "caseInstanceId";
 
   // name references of the rest of properties
-  public static final String EXECUTION_ID = "executionId";
-  public static final String PROCESS_DEFINITION_ID = "processDefinitionId";
-  public static final String CASE_EXECUTION_ID = "caseExecutionId";
-  public static final String CASE_DEFINITION_ID = "caseDefinitionId";
-  public static final String CREATE_TIME = "createTime";
-  public static final String LAST_UPDATED = "lastUpdated";
-  public static final String PARENT_TASK_ID = "parentTaskId";
-  public static final String DELEGATION_STATE = "delegationState";
-  public static final String TENANT_ID = "tenantId";
-  public static final String TASK_STATE = "taskState";
-  public static final String SUSPENSION_STATE = "suspensionState";
+  private static final String EXECUTION_ID = "executionId";
+  private static final String PROCESS_DEFINITION_ID = "processDefinitionId";
+  private static final String CASE_EXECUTION_ID = "caseExecutionId";
+  private static final String CASE_DEFINITION_ID = "caseDefinitionId";
+  private static final String CREATE_TIME = "createTime";
+  private static final String LAST_UPDATED = "lastUpdated";
+  private static final String PARENT_TASK_ID = "parentTaskId";
+  private static final String DELEGATION_STATE = "delegationState";
+  private static final String TENANT_ID = "tenantId";
+  private static final String TASK_STATE = "taskState";
+  private static final String SUSPENSION_STATE = "suspensionState";
 
   /**
    * Mybatis constructor

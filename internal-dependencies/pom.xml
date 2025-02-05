@@ -18,6 +18,7 @@
   <properties>
     <version.junit5>5.11.3</version.junit5>
     <version.nashorn>15.4</version.nashorn>
+    <version.slf4j>2.0.16</version.slf4j>
   </properties>
 
   <dependencyManagement>
@@ -161,7 +162,7 @@
       <dependency>
         <groupId>ch.qos.logback</groupId>
         <artifactId>logback-classic</artifactId>
-        <version>${version.logback}</version>
+        <version>1.5.16</version>
       </dependency>
       <dependency>
         <groupId>org.slf4j</groupId>

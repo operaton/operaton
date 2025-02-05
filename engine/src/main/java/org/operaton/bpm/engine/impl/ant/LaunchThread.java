@@ -84,9 +84,7 @@ public class LaunchThread extends Thread {
       consoleStream = process.getInputStream();
       BufferedReader consoleReader = new BufferedReader(new InputStreamReader(consoleStream));
       String consoleLine = "";
-      while ( (consoleLine!=null)
-              && (msg==null || !consoleLine.contains(msg))
-            ) {
+      while ( (consoleLine!=null) && (msg==null || !consoleLine.contains(msg))) {
         consoleLine = consoleReader.readLine();
 
         if (consoleLine!=null) {

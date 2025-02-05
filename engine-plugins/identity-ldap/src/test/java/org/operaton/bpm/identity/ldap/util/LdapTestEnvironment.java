@@ -407,7 +407,7 @@ public class LdapTestEnvironment {
     Properties properties = new Properties();
     File file = IoUtil.getFile(configFilePath);
     try (FileInputStream propertiesStream = new FileInputStream(file)) {
-        properties.load(propertiesStream);
+      properties.load(propertiesStream);
     }
     return properties;
   }

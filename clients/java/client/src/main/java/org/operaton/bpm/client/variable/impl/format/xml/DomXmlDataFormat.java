@@ -104,9 +104,9 @@ public class DomXmlDataFormat implements DataFormat {
     Element mappedObject = writeAsElement(value);
     String returnValue = null;
     try (StringWriter writer = new StringWriter()) {
-        StreamResult streamResult = new StreamResult(writer);
-        writeResult(streamResult, mappedObject);
-        returnValue = writer.toString();
+      StreamResult streamResult = new StreamResult(writer);
+      writeResult(streamResult, mappedObject);
+      returnValue = writer.toString();
     } catch (IOException e) {
       // ignore
     }
@@ -206,13 +206,13 @@ public class DomXmlDataFormat implements DataFormat {
     DocumentBuilder documentBuilder = getDocumentBuilder();
 
     try (StringReader stringReader = new StringReader(value); BufferedReader bufferedReader = new BufferedReader(stringReader)) {
-        InputSource inputSource = new InputSource(bufferedReader);
+      InputSource inputSource = new InputSource(bufferedReader);
 
-        LOG.parsingInput();
-        Document document = documentBuilder.parse(inputSource);
-        return document.getDocumentElement();
+      LOG.parsingInput();
+      Document document = documentBuilder.parse(inputSource);
+      return document.getDocumentElement();
     } catch (SAXException | IOException e) {
-        throw LOG.unableToParseInput(e);
+      throw LOG.unableToParseInput(e);
     }
   }
 

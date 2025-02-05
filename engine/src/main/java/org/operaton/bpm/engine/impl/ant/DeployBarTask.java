@@ -83,7 +83,7 @@ public class DeployBarTask extends Task {
           throw new ProcessEngineException(message);
         }
         else
-        	throw new ProcessEngineException("Could not find a process engine with name '" + processEngineName + "', no engines found. " +
+          throw new ProcessEngineException("Could not find a process engine with name '" + processEngineName + "', no engines found. " +
         	        "Make sure an engine configuration is present on the classpath");
       }
       RepositoryService repositoryService = processEngine.getRepositoryService();
@@ -93,12 +93,12 @@ public class DeployBarTask extends Task {
         String path = f.getAbsolutePath();
         log("Handling file " + path);
         try (FileInputStream inputStream = new FileInputStream(f)) {
-            log("deploying bar " + path);
-            repositoryService
-                    .createDeployment()
-                    .name(f.getName())
-                    .addZipInputStream(new ZipInputStream(inputStream))
-                    .deploy();
+          log("deploying bar " + path);
+          repositoryService
+            .createDeployment()
+            .name(f.getName())
+            .addZipInputStream(new ZipInputStream(inputStream))
+            .deploy();
         }
         catch (Exception e) {
           throw new BuildException("couldn't deploy bar "+path+": "+e.getMessage(), e);

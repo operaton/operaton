@@ -66,7 +66,7 @@ public class ResourceLoadingProcessEnginesFilter extends ProcessEnginesFilter im
       InputStream is = resource.getInputStream();
       BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
         StringWriter writer = new StringWriter();
-        String line = null;
+        String line;
 
         while ((line = reader.readLine()) != null) {
           writer.write(line);

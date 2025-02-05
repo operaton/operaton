@@ -654,18 +654,15 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
 
   protected List<String> getTablesPresentInOracleDatabase() throws SQLException {
     List<String> tableNames = new ArrayList<>();
-    Connection connection = null;
-    PreparedStatement prepStat = null;
-    ResultSet tablesRs = null;
     String selectTableNamesFromOracle = "SELECT table_name FROM all_tables WHERE table_name LIKE ? ESCAPE '-'";
     String databaseTablePrefix = getDbSqlSessionFactory().getDatabaseTablePrefix();
 
-    try {
-      connection = Context.getProcessEngineConfiguration().getDataSource().getConnection();
-      prepStat = connection.prepareStatement(selectTableNamesFromOracle);
+    try(Connection connection = Context.getProcessEngineConfiguration().getDataSource().getConnection();
+        PreparedStatement prepStat = connection.prepareStatement(selectTableNamesFromOracle);
+        ResultSet tablesRs = prepStat.executeQuery()) {
+
       prepStat.setString(1, databaseTablePrefix + "ACT-_%");
 
-      tablesRs = prepStat.executeQuery();
       while (tablesRs.next()) {
         String tableName = tablesRs.getString("TABLE_NAME");
         tableName = tableName.toUpperCase();
@@ -673,16 +670,6 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
       }
       LOG.fetchDatabaseTables("oracle all_tables", tableNames);
 
-    } finally {
-      if (tablesRs != null) {
-        tablesRs.close();
-      }
-      if (prepStat != null) {
-        prepStat.close();
-      }
-      if (connection != null) {
-        connection.close();
-      }
     }
 
     return tableNames;

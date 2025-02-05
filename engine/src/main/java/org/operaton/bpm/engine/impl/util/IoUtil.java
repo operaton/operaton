@@ -68,8 +68,6 @@ public class IoUtil {
       throw new ProcessEngineException("resource " + resourceName + " not found");
     }
 
-
-
     int next;
     byte[] result;
     byte[] buffer = new byte[1024];

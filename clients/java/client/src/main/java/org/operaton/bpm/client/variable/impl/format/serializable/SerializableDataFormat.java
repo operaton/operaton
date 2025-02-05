@@ -53,17 +53,15 @@ public class SerializableDataFormat implements DataFormat {
 
   @Override
   public String writeValue(Object value) {
+    try (ByteArrayOutputStream baos = new ByteArrayOutputStream(); ObjectOutputStream ois = new ObjectOutputStream(baos)) {
+      ois.writeObject(value);
+      byte[] deserializedObjectByteArray = baos.toByteArray();
 
-      try (ByteArrayOutputStream baos = new ByteArrayOutputStream(); ObjectOutputStream ois = new ObjectOutputStream(baos)) {
-
-          ois.writeObject(value);
-          byte[] deserializedObjectByteArray = baos.toByteArray();
-
-          Encoder encoder = Base64.getEncoder();
-          return encoder.encodeToString(deserializedObjectByteArray);
-      } catch (IOException e) {
-          throw LOG.unableToWriteValue(value, e);
-      }
+      Encoder encoder = Base64.getEncoder();
+      return encoder.encodeToString(deserializedObjectByteArray);
+    } catch (IOException e) {
+      throw LOG.unableToWriteValue(value, e);
+    }
   }
 
   @Override
@@ -82,11 +80,11 @@ public class SerializableDataFormat implements DataFormat {
     byte[] base64DecodedSerializedValue = decoder.decode(value);
 
     try (InputStream is = new ByteArrayInputStream(base64DecodedSerializedValue); ObjectInputStream ois = new ObjectInputStream(is)) {
-        return (T) ois.readObject();
+      return (T) ois.readObject();
     } catch (ClassNotFoundException e) {
-        throw LOG.classNotFound(e);
+      throw LOG.classNotFound(e);
     } catch (IOException e) {
-        throw LOG.unableToReadValue(value, e);
+      throw LOG.unableToReadValue(value, e);
     }
   }
 

@@ -1843,40 +1843,40 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
       if (sqlSessionFactory == null) {
         try (InputStream inputStream = getMyBatisXmlConfigurationSteam()) {
 
-            // update the jdbc parameters to the configured ones...
-            Environment environment = new Environment("default", transactionFactory, dataSource);
-            Reader reader = new InputStreamReader(inputStream);
+          // update the jdbc parameters to the configured ones...
+          Environment environment = new Environment("default", transactionFactory, dataSource);
+          Reader reader = new InputStreamReader(inputStream);
 
-            Properties properties = new Properties();
+          Properties properties = new Properties();
 
-            if (isUseSharedSqlSessionFactory) {
-                properties.put("prefix", "${@org.operaton.bpm.engine.impl.context.Context@getProcessEngineConfiguration().databaseTablePrefix}");
-            } else {
-                properties.put("prefix", databaseTablePrefix);
-            }
+          if (isUseSharedSqlSessionFactory) {
+            properties.put("prefix", "${@org.operaton.bpm.engine.impl.context.Context@getProcessEngineConfiguration().databaseTablePrefix}");
+          } else {
+            properties.put("prefix", databaseTablePrefix);
+          }
 
-            initSqlSessionFactoryProperties(properties, databaseTablePrefix, databaseType);
+          initSqlSessionFactoryProperties(properties, databaseTablePrefix, databaseType);
 
-            XMLConfigBuilder parser = new XMLConfigBuilder(reader, "", properties);
-            Configuration configuration = parser.getConfiguration();
-            configuration.setEnvironment(environment);
-            configuration = parser.parse();
+          XMLConfigBuilder parser = new XMLConfigBuilder(reader, "", properties);
+          Configuration configuration = parser.getConfiguration();
+          configuration.setEnvironment(environment);
+          configuration = parser.parse();
 
-            configuration.setDefaultStatementTimeout(jdbcStatementTimeout);
+          configuration.setDefaultStatementTimeout(jdbcStatementTimeout);
 
-            if (isJdbcBatchProcessing()) {
-                configuration.setDefaultExecutorType(ExecutorType.BATCH);
-            }
+          if (isJdbcBatchProcessing()) {
+            configuration.setDefaultExecutorType(ExecutorType.BATCH);
+          }
 
-            sqlSessionFactory = new DefaultSqlSessionFactory(configuration);
+          sqlSessionFactory = new DefaultSqlSessionFactory(configuration);
 
-            if (isUseSharedSqlSessionFactory) {
-                cachedSqlSessionFactory = sqlSessionFactory;
-            }
+          if (isUseSharedSqlSessionFactory) {
+            cachedSqlSessionFactory = sqlSessionFactory;
+          }
 
 
         } catch (Exception e) {
-            throw new ProcessEngineException("Error while building ibatis SqlSessionFactory: " + e.getMessage(), e);
+          throw new ProcessEngineException("Error while building ibatis SqlSessionFactory: " + e.getMessage(), e);
         }
       }
     }

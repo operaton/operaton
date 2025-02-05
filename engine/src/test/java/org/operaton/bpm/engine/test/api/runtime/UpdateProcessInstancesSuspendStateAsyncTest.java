@@ -305,10 +305,11 @@ public class UpdateProcessInstancesSuspendStateAsyncTest {
   @Test
   public void testEmptyProcessInstanceListSuspendAsync() {
     // given
-    // nothing
+    var updateProcessInstancesSuspensionStateBuilder = runtimeService.updateProcessInstanceSuspensionState()
+      .byProcessInstanceIds();
 
     // when/then
-    assertThatThrownBy(() -> runtimeService.updateProcessInstanceSuspensionState().byProcessInstanceIds().suspendAsync())
+    assertThatThrownBy(updateProcessInstancesSuspensionStateBuilder::suspendAsync)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("No process instance ids given");
   }
@@ -316,10 +317,11 @@ public class UpdateProcessInstancesSuspendStateAsyncTest {
   @Test
   public void testEmptyProcessInstanceListActivateAsync() {
     // given
-    // nothing
+    var updateProcessInstancesSuspensionStateBuilder = runtimeService.updateProcessInstanceSuspensionState()
+      .byProcessInstanceIds();
 
     // when/then
-    assertThatThrownBy(() -> runtimeService.updateProcessInstanceSuspensionState().byProcessInstanceIds().activateAsync())
+    assertThatThrownBy(updateProcessInstancesSuspensionStateBuilder::activateAsync)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("No process instance ids given");
   }
@@ -332,9 +334,11 @@ public class UpdateProcessInstancesSuspendStateAsyncTest {
     // given
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
+    var updateProcessInstancesSuspensionStateBuilder = runtimeService.updateProcessInstanceSuspensionState()
+      .byProcessInstanceIds(Arrays.asList(processInstance1.getId(), processInstance2.getId(), null));
 
     // when/then
-    assertThatThrownBy(() -> runtimeService.updateProcessInstanceSuspensionState().byProcessInstanceIds(Arrays.asList(processInstance1.getId(), processInstance2.getId(), null)).activateAsync())
+    assertThatThrownBy(updateProcessInstancesSuspensionStateBuilder::activateAsync)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("Cannot be null");
   }
@@ -346,9 +350,11 @@ public class UpdateProcessInstancesSuspendStateAsyncTest {
     // given
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
+    var updateProcessInstancesSuspensionStateBuilder = runtimeService.updateProcessInstanceSuspensionState()
+      .byProcessInstanceIds(Arrays.asList(processInstance1.getId(), processInstance2.getId(), null));
 
     // when/then
-    assertThatThrownBy(() -> runtimeService.updateProcessInstanceSuspensionState().byProcessInstanceIds(Arrays.asList(processInstance1.getId(), processInstance2.getId(), null)).suspendAsync())
+    assertThatThrownBy(updateProcessInstancesSuspensionStateBuilder::suspendAsync)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("Cannot be null");
 

@@ -16,18 +16,15 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
+import static java.util.Collections.emptyMap;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
-import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.SuspendedEntityInteractionException;
 import org.operaton.bpm.engine.externaltask.ExternalTask;
@@ -50,6 +47,8 @@ import org.junit.Test;
  * @author Joram Barrez
  */
 public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
+  private static final Map<String, String> emptyProperties = emptyMap();
+  private static final Map<String, Object> emptyProcessVariables = emptyMap();
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
@@ -601,13 +600,13 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     }
 
     try {
-      runtimeService.setVariables(processInstance.getId(), new HashMap<String, Object>());
+      runtimeService.setVariables(processInstance.getId(), new HashMap<>());
     } catch (ProcessEngineException e) {
       fail("This should be possible");
     }
 
     try {
-      runtimeService.setVariablesLocal(processInstance.getId(), new HashMap<String, Object>());
+      runtimeService.setVariablesLocal(processInstance.getId(), new HashMap<>());
     } catch (ProcessEngineException e) {
       fail("This should be possible");
     }
@@ -658,13 +657,13 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     }
 
     try {
-      runtimeService.setVariables(processInstance.getId(), new HashMap<String, Object>());
+      runtimeService.setVariables(processInstance.getId(), new HashMap<>());
     } catch (ProcessEngineException e) {
       fail("This should be possible");
     }
 
     try {
-      runtimeService.setVariablesLocal(processInstance.getId(), new HashMap<String, Object>());
+      runtimeService.setVariablesLocal(processInstance.getId(), new HashMap<>());
     } catch (ProcessEngineException e) {
       fail("This should be possible");
     }
@@ -714,13 +713,13 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     }
 
     try {
-      runtimeService.setVariables(processInstance.getId(), new HashMap<String, Object>());
+      runtimeService.setVariables(processInstance.getId(), new HashMap<>());
     } catch (ProcessEngineException e) {
       fail("This should be possible");
     }
 
     try {
-      runtimeService.setVariablesLocal(processInstance.getId(), new HashMap<String, Object>());
+      runtimeService.setVariablesLocal(processInstance.getId(), new HashMap<>());
     } catch (ProcessEngineException e) {
       fail("This should be possible");
     }
@@ -735,7 +734,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     var taskQuery = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult().getId();
 
     try {
-      formService.submitTaskFormData(taskQuery, new HashMap<>());
+      formService.submitTaskFormData(taskQuery, emptyProperties);
       fail();
     } catch(SuspendedEntityInteractionException e) {
       // This is expected
@@ -751,7 +750,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     var taskQuery = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult().getId();
 
     try {
-      formService.submitTaskFormData(taskQuery, new HashMap<>());
+      formService.submitTaskFormData(taskQuery, emptyProperties);
       fail();
     } catch(SuspendedEntityInteractionException e) {
       // This is expected
@@ -767,7 +766,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     var taskQuery = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult().getId();
 
     try {
-      formService.submitTaskFormData(taskQuery, new HashMap<>());
+      formService.submitTaskFormData(taskQuery, emptyProperties);
       fail();
     } catch(SuspendedEntityInteractionException e) {
       // This is expected
@@ -790,16 +789,14 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
       testRule.assertTextPresent("is suspended", e.getMessage());
-      assertTrue(e instanceof BadUserRequestException);
     }
 
     try {
-      runtimeService.signal(processInstanceId, new HashMap<>());
+      runtimeService.signal(processInstanceId, emptyProcessVariables);
       fail();
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
       testRule.assertTextPresent("is suspended", e.getMessage());
-      assertTrue(e instanceof BadUserRequestException);
     }
   }
 
@@ -819,16 +816,14 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
       testRule.assertTextPresent("is suspended", e.getMessage());
-      assertTrue(e instanceof BadUserRequestException);
     }
 
     try {
-      runtimeService.signal(processInstanceId, new HashMap<>());
+      runtimeService.signal(processInstanceId, emptyProcessVariables);
       fail();
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
       testRule.assertTextPresent("is suspended", e.getMessage());
-      assertTrue(e instanceof BadUserRequestException);
     }
   }
 
@@ -848,16 +843,14 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
       testRule.assertTextPresent("is suspended", e.getMessage());
-      assertTrue(e instanceof BadUserRequestException);
     }
 
     try {
-      runtimeService.signal(processInstanceId, new HashMap<>());
+      runtimeService.signal(processInstanceId, emptyProcessVariables);
       fail();
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
       testRule.assertTextPresent("is suspended", e.getMessage());
-      assertTrue(e instanceof BadUserRequestException);
     }
   }
 
@@ -879,7 +872,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     }
 
     try {
-      runtimeService.messageEventReceived("someMessage", executionId, new HashMap<>());
+      runtimeService.messageEventReceived("someMessage", executionId, emptyProcessVariables);
       fail();
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
@@ -905,7 +898,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     }
 
     try {
-      runtimeService.messageEventReceived("someMessage", executionId, new HashMap<>());
+      runtimeService.messageEventReceived("someMessage", executionId, emptyProcessVariables);
       fail();
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
@@ -931,7 +924,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     }
 
     try {
-      runtimeService.messageEventReceived("someMessage", executionId, new HashMap<>());
+      runtimeService.messageEventReceived("someMessage", executionId, emptyProcessVariables);
       fail();
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
@@ -970,7 +963,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     }
 
     try {
-      runtimeService.signalEventReceived(signal, executionId, new HashMap<>());
+      runtimeService.signalEventReceived(signal, executionId, emptyProcessVariables);
       fail();
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
@@ -1014,7 +1007,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     }
 
     try {
-      runtimeService.signalEventReceived(signal, executionId, new HashMap<>());
+      runtimeService.signalEventReceived(signal, executionId, emptyProcessVariables);
       fail();
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
@@ -1063,7 +1056,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     }
 
     try {
-      runtimeService.signalEventReceived(signal, executionId, new HashMap<>());
+      runtimeService.signalEventReceived(signal, executionId, emptyProcessVariables);
       fail();
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
@@ -1435,6 +1428,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
       taskService.saveTask(subTask);
       fail("Creating sub tasks for suspended task should not be possible");
     } catch (SuspendedEntityInteractionException e) {
+      // expected
     }
   }
 
@@ -1453,6 +1447,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
       taskService.saveTask(subTask);
       fail("Creating sub tasks for suspended task should not be possible");
     } catch (SuspendedEntityInteractionException e) {
+      // expected
     }
   }
 
@@ -1471,6 +1466,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
       taskService.saveTask(subTask);
       fail("Creating sub tasks for suspended task should not be possible");
     } catch (SuspendedEntityInteractionException e) {
+      // expected
     }
   }
 

@@ -23,7 +23,6 @@ import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.hierarch
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
@@ -149,8 +148,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     assertEquals(4, query.count());
 
     try {
-      var execution = query.singleResult();
-      assertThat(execution).isNotNull();
+      query.singleResult();
       fail();
     } catch (ProcessEngineException e) {
       // expected
@@ -224,7 +222,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
       executionQuery.list();
       fail();
     } catch (ProcessEngineException e) {
-
+      // expected
     }
   }
 
@@ -1216,7 +1214,9 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     try {
       query.incidentId(null);
       fail();
-    } catch (ProcessEngineException e) {}
+    } catch (ProcessEngineException e) {
+      // expected
+    }
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/failingProcessCreateOneIncident.bpmn20.xml"})
@@ -1247,7 +1247,9 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     try {
       query.incidentType(null);
       fail();
-    } catch (ProcessEngineException e) {}
+    } catch (ProcessEngineException e) {
+      // expected
+    }
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/failingProcessCreateOneIncident.bpmn20.xml"})
@@ -1278,7 +1280,9 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     try {
       query.incidentMessage(null);
       fail();
-    } catch (ProcessEngineException e) {}
+    } catch (ProcessEngineException e) {
+      // expected
+    }
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/failingProcessCreateOneIncident.bpmn20.xml"})
@@ -1307,7 +1311,9 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     try {
       query.incidentMessageLike(null);
       fail();
-    } catch (ProcessEngineException e) {}
+    } catch (ProcessEngineException e) {
+      // expected
+    }
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/failingSubProcessCreateOneIncident.bpmn20.xml"})
@@ -1506,34 +1512,34 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
   public void testProcessVariableValueEqualsNumber() {
     // long
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", 123L));
+        Collections.singletonMap("var", 123L));
 
     // non-matching long
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", 12345L));
+        Collections.singletonMap("var", 12345L));
 
     // short
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", (short) 123));
+        Collections.singletonMap("var", (short) 123));
 
     // double
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", 123.0d));
+        Collections.singletonMap("var", 123.0d));
 
     // integer
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", 123));
+        Collections.singletonMap("var", 123));
 
     // untyped null (should not match)
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", null));
+        Collections.singletonMap("var", null));
 
     // typed null (should not match)
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", Variables.longValue(null)));
+        Collections.singletonMap("var", Variables.longValue(null)));
 
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", "123"));
+        Collections.singletonMap("var", "123"));
 
     assertEquals(4, runtimeService.createExecutionQuery().processVariableValueEquals("var", Variables.numberValue(123)).count());
     assertEquals(4, runtimeService.createExecutionQuery().processVariableValueEquals("var", Variables.numberValue(123L)).count());
@@ -1555,34 +1561,34 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
   public void testProcessVariableValueNumberComparison() {
     // long
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", 123L));
+        Collections.singletonMap("var", 123L));
 
     // non-matching long
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", 12345L));
+        Collections.singletonMap("var", 12345L));
 
     // short
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", (short) 123));
+        Collections.singletonMap("var", (short) 123));
 
     // double
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", 123.0d));
+        Collections.singletonMap("var", 123.0d));
 
     // integer
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", 123));
+        Collections.singletonMap("var", 123));
 
     // untyped null
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", null));
+        Collections.singletonMap("var", null));
 
     // typed null
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", Variables.longValue(null)));
+        Collections.singletonMap("var", Variables.longValue(null)));
 
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", "123"));
+        Collections.singletonMap("var", "123"));
 
     assertEquals(4, runtimeService.createExecutionQuery().processVariableValueNotEquals("var", Variables.numberValue(123)).count());
   }

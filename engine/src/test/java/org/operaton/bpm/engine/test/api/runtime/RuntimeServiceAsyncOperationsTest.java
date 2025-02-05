@@ -179,9 +179,11 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
   public void testDeleteProcessInstancesAsyncWithEmptyList() {
+    // given
+    List<String> emptyProcessInstanceIds = new ArrayList<>();
 
     // when/then
-    assertThatThrownBy(() -> runtimeService.deleteProcessInstancesAsync(new ArrayList<String>(), null, TESTING_INSTANCE_DELETE))
+    assertThatThrownBy(() -> runtimeService.deleteProcessInstancesAsync(emptyProcessInstanceIds, null, TESTING_INSTANCE_DELETE))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("processInstanceIds is empty");
 

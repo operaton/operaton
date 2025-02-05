@@ -20,9 +20,11 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.util.Arrays;
+import java.util.List;
 
+import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
@@ -58,6 +60,8 @@ public class MultiTenancyActivityCmdsTenantCheckTest {
 
   @Rule
   public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
+  private IdentityService identityService;
+  private RuntimeService runtimeService;
 
   @Before
   public void init() {
@@ -67,12 +71,15 @@ public class MultiTenancyActivityCmdsTenantCheckTest {
     processInstanceId = engineRule.getRuntimeService()
       .startProcessInstanceByKey(PROCESS_DEFINITION_KEY)
       .getId();
+
+    runtimeService = engineRule.getRuntimeService();
+    identityService = engineRule.getIdentityService();
   }
 
   @Test
   public void getActivityInstanceWithAuthenticatedTenant() {
 
-    engineRule.getIdentityService().setAuthentication("aUserId", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
     // then
     assertNotNull(engineRule.getRuntimeService().getActivityInstance(processInstanceId));
@@ -80,11 +87,10 @@ public class MultiTenancyActivityCmdsTenantCheckTest {
 
   @Test
   public void getActivityInstanceWithNoAuthenticatedTenant() {
-
-    engineRule.getIdentityService().setAuthentication("aUserId", null);
+    identityService.setAuthentication("aUserId", null);
 
     // when/then
-    assertThatThrownBy(() -> engineRule.getRuntimeService().getActivityInstance(processInstanceId))
+    assertThatThrownBy(() -> runtimeService.getActivityInstance(processInstanceId))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot read the process instance '"
           + processInstanceId +"' because it belongs to no authenticated tenant.");
@@ -93,8 +99,7 @@ public class MultiTenancyActivityCmdsTenantCheckTest {
 
   @Test
   public void getActivityInstanceWithDisabledTenantCheck() {
-
-    engineRule.getIdentityService().setAuthentication("aUserId", null);
+    identityService.setAuthentication("aUserId", null);
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
 
     // then
@@ -104,8 +109,7 @@ public class MultiTenancyActivityCmdsTenantCheckTest {
   // get active activity id
   @Test
   public void getActivityIdsWithAuthenticatedTenant() {
-
-    engineRule.getIdentityService().setAuthentication("aUserId", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
     // then
     assertEquals(1, engineRule.getRuntimeService().getActiveActivityIds(processInstanceId).size());
@@ -114,11 +118,10 @@ public class MultiTenancyActivityCmdsTenantCheckTest {
 
   @Test
   public void getActivityIdsWithNoAuthenticatedTenant() {
-
-    engineRule.getIdentityService().setAuthentication("aUserId", null);
+    identityService.setAuthentication("aUserId", null);
 
     // when/then
-    assertThatThrownBy(() -> engineRule.getRuntimeService().getActiveActivityIds(processInstanceId))
+    assertThatThrownBy(() -> runtimeService.getActiveActivityIds(processInstanceId))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot read the process instance '"
           + processInstanceId +"' because it belongs to no authenticated tenant.");
@@ -127,8 +130,7 @@ public class MultiTenancyActivityCmdsTenantCheckTest {
 
   @Test
   public void getActivityIdsWithDisabledTenantCheck() {
-
-    engineRule.getIdentityService().setAuthentication("aUserId", null);
+    identityService.setAuthentication("aUserId", null);
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
 
     // then

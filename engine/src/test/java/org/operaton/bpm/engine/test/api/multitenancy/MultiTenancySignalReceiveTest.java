@@ -260,9 +260,13 @@ public class MultiTenancySignalReceiveTest {
 
   @Test
   public void failToSendSignalWithExecutionIdForTenant() {
+    // given
+    var signalEventReceivedBuilder = runtimeService.createSignalEvent("signal")
+      .executionId("id")
+      .tenantId(TENANT_ONE);
 
     // when/then
-    assertThatThrownBy(() -> runtimeService.createSignalEvent("signal").executionId("id").tenantId(TENANT_ONE).send())
+    assertThatThrownBy(signalEventReceivedBuilder::send)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("Cannot specify a tenant-id when deliver a signal to a single execution.");
   }

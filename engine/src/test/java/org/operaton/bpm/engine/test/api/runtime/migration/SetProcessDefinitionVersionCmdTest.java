@@ -101,9 +101,11 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
 
   @Test
   public void testSetProcessDefinitionVersionNonExistingPI() {
+    // given
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
+    var setProcessDefinitionVersionCmd = new SetProcessDefinitionVersionCmd("42", 23);
     try {
-      commandExecutor.execute(new SetProcessDefinitionVersionCmd("42", 23));
+      commandExecutor.execute(setProcessDefinitionVersionCmd);
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException ae) {
        testRule.assertTextPresent("No process instance found for id = '42'.", ae.getMessage());
@@ -136,8 +138,10 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("receiveTask");
 
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
+    var setProcessDefinitionVersionCmd = new SetProcessDefinitionVersionCmd(pi.getId(), 23);
+
     try {
-      commandExecutor.execute(new SetProcessDefinitionVersionCmd(pi.getId(), 23));
+      commandExecutor.execute(setProcessDefinitionVersionCmd);
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException ae) {
        testRule.assertTextPresent("no processes deployed with key = 'receiveTask', version = '23'", ae.getMessage());
@@ -440,7 +444,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
     commandExecutor.execute(new SetProcessDefinitionVersionCmd(instance.getId(), 2));
 
-    // then the the job should also be migrated
+    // then the job should also be migrated
     Job migratedJob = managementService.createJobQuery().singleResult();
     assertNotNull(migratedJob);
     assertEquals(job.getId(), migratedJob.getId());
@@ -500,7 +504,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
     commandExecutor.execute(new SetProcessDefinitionVersionCmd(asyncBeforeInstance.getId(), 2));
     commandExecutor.execute(new SetProcessDefinitionVersionCmd(asyncAfterInstance.getId(), 2));
 
-    // then the the job's definition reference should also be migrated
+    // then the job's definition reference should also be migrated
     Job migratedAsyncBeforeJob = managementService.createJobQuery()
         .processInstanceId(asyncBeforeInstance.getId()).singleResult();
     assertEquals(asyncBeforeJob.getId(), migratedAsyncBeforeJob.getId());
@@ -544,7 +548,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
     commandExecutor.execute(new SetProcessDefinitionVersionCmd(instance.getId(), 2));
 
-    // then the the incident should also be migrated
+    // then the incident should also be migrated
     Incident migratedIncident = runtimeService.createIncidentQuery().singleResult();
     assertNotNull(migratedIncident);
     assertEquals(newDefinition.getId(), migratedIncident.getProcessDefinitionId());

@@ -607,15 +607,15 @@ public class MigrationBoundaryEventsTest {
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(sourceProcess);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(sourceProcess);
 
+    var migrationInstructionBuilder = rule.getRuntimeService()
+      .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
+      .mapActivities(USER_TASK_ID, USER_TASK_ID)
+      .mapActivities(BOUNDARY_ID, BOUNDARY_ID);
+
     // when conditional boundary event is migrated without update event trigger
-    // then
-    assertThatThrownBy(() -> rule.getRuntimeService()
-        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
-        .mapActivities(USER_TASK_ID, USER_TASK_ID)
-        .mapActivities(BOUNDARY_ID, BOUNDARY_ID)
-        .build())
+    assertThatThrownBy(migrationInstructionBuilder::build)
+      // then
       .isInstanceOf(MigrationPlanValidationException.class)
       .hasMessageContaining(MIGRATION_CONDITIONAL_VALIDATION_ERROR_MSG);
-
   }
 }

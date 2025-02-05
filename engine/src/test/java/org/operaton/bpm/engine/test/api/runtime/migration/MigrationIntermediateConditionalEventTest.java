@@ -92,12 +92,13 @@ public class MigrationIntermediateConditionalEventTest {
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ONE_CONDITION_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ONE_CONDITION_PROCESS);
 
+    var migrationInstructionBuilder = rule.getRuntimeService()
+      .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
+      .mapActivities(CONDITION_ID, CONDITION_ID);
+
     //when conditional event is migrated without update event trigger
-    // then
-    assertThatThrownBy(() -> rule.getRuntimeService()
-        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
-        .mapActivities(CONDITION_ID, CONDITION_ID)
-        .build())
+    assertThatThrownBy(migrationInstructionBuilder::build)
+      // then
       .isInstanceOf(MigrationPlanValidationException.class)
       .hasMessageContaining(MIGRATION_CONDITIONAL_VALIDATION_ERROR_MSG);
   }

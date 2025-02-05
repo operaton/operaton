@@ -28,10 +28,7 @@ import java.util.Map;
 
 import org.operaton.bpm.engine.MismatchingMessageCorrelationException;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
-import org.operaton.bpm.engine.runtime.Execution;
-import org.operaton.bpm.engine.runtime.MessageCorrelationResult;
-import org.operaton.bpm.engine.runtime.MessageCorrelationResultType;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.runtime.*;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
@@ -257,9 +254,13 @@ public class MessageCorrelationByLocalVariablesTest {
     correlationKeys.put("localVar", correlationKey);
     correlationKeys.put("constVar", "someValue");
 
+    var messageCorrelationBuilder = engineRule.getRuntimeService()
+      .createMessageCorrelation(messageName)
+      .localVariablesEqual(correlationKeys)
+      .setVariables(Variables.createVariables().putValue("newVar", "newValue"));
+
     // when/then
-    assertThatThrownBy(() -> engineRule.getRuntimeService().createMessageCorrelation(messageName)
-        .localVariablesEqual(correlationKeys).setVariables(Variables.createVariables().putValue("newVar", "newValue")).correlateWithResult())
+    assertThatThrownBy(messageCorrelationBuilder::correlateWithResult)
       .isInstanceOf(MismatchingMessageCorrelationException.class)
       .hasMessageContaining(String.format("Cannot correlate a message with name '%s' to a single execution", TEST_MESSAGE_NAME));
 

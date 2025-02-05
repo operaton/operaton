@@ -80,7 +80,7 @@ public class UpdateProcessInstancesSuspendStateTest {
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
     "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml"})
-  public void testBatchActivatationById() {
+  public void testBatchActivationById() {
     // given
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
@@ -124,7 +124,7 @@ public class UpdateProcessInstancesSuspendStateTest {
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
     "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml"})
-  public void testBatchActivatationByIdArray() {
+  public void testBatchActivationByIdArray() {
     // given
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
@@ -171,7 +171,7 @@ public class UpdateProcessInstancesSuspendStateTest {
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
     "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml"})
-  public void testBatchActivatationByProcessInstanceQuery() {
+  public void testBatchActivationByProcessInstanceQuery() {
     // given
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
@@ -221,7 +221,7 @@ public class UpdateProcessInstancesSuspendStateTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
     "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml"})
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
-  public void testBatchActivatationByHistoricProcessInstanceQuery() {
+  public void testBatchActivationByHistoricProcessInstanceQuery() {
     // given
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
@@ -248,10 +248,11 @@ public class UpdateProcessInstancesSuspendStateTest {
   @Test
   public void testEmptyProcessInstanceListSuspend() {
     // given
-    // nothing
+    var updateProcessInstancesSuspensionStateBuilder = runtimeService.updateProcessInstanceSuspensionState()
+      .byProcessInstanceIds();
 
     // when/then
-    assertThatThrownBy(() -> runtimeService.updateProcessInstanceSuspensionState().byProcessInstanceIds().suspend())
+    assertThatThrownBy(updateProcessInstancesSuspensionStateBuilder::suspend)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("No process instance ids given");
 
@@ -260,10 +261,11 @@ public class UpdateProcessInstancesSuspendStateTest {
   @Test
   public void testEmptyProcessInstanceListActivateUpdateProcessInstancesSuspendStateAsyncTest() {
     // given
-    // nothing
+    var updateProcessInstancesSuspensionStateBuilder = runtimeService.updateProcessInstanceSuspensionState()
+      .byProcessInstanceIds();
 
     // when/then
-    assertThatThrownBy(() -> runtimeService.updateProcessInstanceSuspensionState().byProcessInstanceIds().activate())
+    assertThatThrownBy(updateProcessInstancesSuspensionStateBuilder::activate)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("No process instance ids given");
 
@@ -277,9 +279,11 @@ public class UpdateProcessInstancesSuspendStateTest {
     // given
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
+    var updateProcessInstancesSuspensionStateBuilder = runtimeService.updateProcessInstanceSuspensionState()
+      .byProcessInstanceIds(Arrays.asList(processInstance1.getId(), processInstance2.getId(), null));
 
     // when/then
-    assertThatThrownBy(() -> runtimeService.updateProcessInstanceSuspensionState().byProcessInstanceIds(Arrays.asList(processInstance1.getId(), processInstance2.getId(), null)).activate())
+    assertThatThrownBy(updateProcessInstancesSuspensionStateBuilder::activate)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("Cannot be null");
 
@@ -292,9 +296,11 @@ public class UpdateProcessInstancesSuspendStateTest {
     // given
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
+    var updateProcessInstancesSuspensionStateBuilder = runtimeService.updateProcessInstanceSuspensionState()
+      .byProcessInstanceIds(Arrays.asList(processInstance1.getId(), processInstance2.getId(), null));
 
     // when/then
-    assertThatThrownBy(() -> runtimeService.updateProcessInstanceSuspensionState().byProcessInstanceIds(Arrays.asList(processInstance1.getId(), processInstance2.getId(), null)).suspend())
+    assertThatThrownBy(updateProcessInstancesSuspensionStateBuilder::suspend)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("Cannot be null");
 

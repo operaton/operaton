@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.test.api.multitenancy.suspensionstate;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.Arrays;
+import java.util.List;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.externaltask.ExternalTaskQuery;
@@ -534,12 +534,12 @@ public class MultiTenancyProcessInstanceSuspensionStateTest {
         .processDefinitionKey(PROCESS_DEFINITION_KEY).tenantIdIn(TENANT_ONE).singleResult();
 
     engineRule.getIdentityService().setAuthentication("user", null, null);
+    var updateProcessInstanceSuspensionStateBuilder = engineRule.getRuntimeService()
+      .updateProcessInstanceSuspensionState()
+      .byProcessDefinitionId(processDefinition.getId());
 
     // when/then
-    assertThatThrownBy(() -> engineRule.getRuntimeService()
-        .updateProcessInstanceSuspensionState()
-        .byProcessDefinitionId(processDefinition.getId())
-        .suspend())
+    assertThatThrownBy(updateProcessInstanceSuspensionStateBuilder::suspend)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot update the process definition '"
           + processDefinition.getId() +"' because it belongs to no authenticated tenant");
@@ -552,7 +552,7 @@ public class MultiTenancyProcessInstanceSuspensionStateTest {
     assertThat(query.active().count()).isEqualTo(3L);
     assertThat(query.suspended().count()).isZero();
 
-    engineRule.getIdentityService().setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    engineRule.getIdentityService().setAuthentication("user", null, List.of(TENANT_ONE));
 
     engineRule.getRuntimeService()
       .updateProcessInstanceSuspensionState()

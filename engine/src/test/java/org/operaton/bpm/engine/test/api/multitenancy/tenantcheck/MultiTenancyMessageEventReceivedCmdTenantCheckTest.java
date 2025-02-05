@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.test.api.multitenancy.tenantcheck;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.Arrays;
+import java.util.List;
 
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -101,7 +101,7 @@ public class MultiTenancyMessageEventReceivedCmdTenantCheckTest {
       .messageEventSubscriptionName("message")
       .singleResult();
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     runtimeService.messageEventReceived("message", execution.getId());
 
@@ -148,11 +148,12 @@ public class MultiTenancyMessageEventReceivedCmdTenantCheckTest {
       .messageEventSubscriptionName("message")
       .tenantIdIn(TENANT_ONE)
       .singleResult();
+    String executionId = execution.getId();
 
     identityService.setAuthentication("user", null, null);
 
     // when/then
-    assertThatThrownBy(() -> runtimeService.messageEventReceived("message", execution.getId()))
+    assertThatThrownBy(() -> runtimeService.messageEventReceived("message", executionId))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot update the process instance");
 

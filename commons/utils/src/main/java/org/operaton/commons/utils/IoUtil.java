@@ -50,18 +50,15 @@ public class IoUtil {
    */
   public static byte[] inputStreamAsByteArray(InputStream inputStream) {
     ByteArrayOutputStream os = new ByteArrayOutputStream();
-    try {
-      byte[] buffer = new byte[16 * 1024];
-      int read;
-      while((read = inputStream.read(buffer)) > 0) {
-        os.write(buffer, 0, read);
-      }
-      return os.toByteArray();
+    try (inputStream) {
+        byte[] buffer = new byte[16 * 1024];
+        int read;
+        while ((read = inputStream.read(buffer)) > 0) {
+            os.write(buffer, 0, read);
+        }
+        return os.toByteArray();
     } catch (IOException e) {
-      throw LOG.unableToReadInputStream(e);
-    }
-    finally {
-      closeSilently(inputStream);
+        throw LOG.unableToReadInputStream(e);
     }
   }
 

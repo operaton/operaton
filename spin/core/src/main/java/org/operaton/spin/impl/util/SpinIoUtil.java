@@ -65,10 +65,9 @@ public class SpinIoUtil extends IoUtil {
    * @throws IOException
    */
   public static String getStringFromInputStream(InputStream inputStream, boolean trim) throws IOException {
-    BufferedReader bufferedReader = null;
+
     StringBuilder stringBuilder = new StringBuilder();
-    try {
-      bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+    try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))) {
       String line;
       while ((line = bufferedReader.readLine()) != null) {
         if (trim) {
@@ -77,8 +76,6 @@ public class SpinIoUtil extends IoUtil {
           stringBuilder.append(line).append("\n");
         }
       }
-    } finally {
-      closeSilently(bufferedReader);
     }
 
     return stringBuilder.toString();
@@ -104,21 +101,18 @@ public class SpinIoUtil extends IoUtil {
    * @throws IOException
    */
   public static String getStringFromReader(Reader reader, boolean trim) throws IOException {
-    BufferedReader bufferedReader = null;
+
     StringBuilder stringBuilder = new StringBuilder();
-    try {
-      bufferedReader = new BufferedReader(reader);
-      String line;
-      while ((line = bufferedReader.readLine()) != null) {
-        if (trim) {
-          stringBuilder.append(line.trim());
-        } else {
-          stringBuilder.append(line).append("\n");
+      try (BufferedReader bufferedReader = new BufferedReader(reader)) {
+        String line;
+        while ((line = bufferedReader.readLine()) != null) {
+          if (trim) {
+            stringBuilder.append(line.trim());
+          } else {
+            stringBuilder.append(line).append("\n");
+          }
         }
       }
-    } finally {
-      closeSilently(bufferedReader);
-    }
 
     return stringBuilder.toString();
   }

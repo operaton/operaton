@@ -35,7 +35,7 @@ public class LaunchThread extends Thread {
   String[] cmd;
   File dir;
   String msg;
-  
+
   public LaunchThread(Task task, String[] cmd, File dir, String msg) {
     this.task = task;
     this.cmd = cmd;
@@ -55,7 +55,7 @@ public class LaunchThread extends Thread {
       throw new BuildException("couldn't launch cmd: "+cmdString(cmd), e);
     }
   }
-  
+
   private static String cmdString(String[] cmd) {
     StringBuilder cmdText = new  StringBuilder();
     for(String cmdPart: cmd) {
@@ -76,19 +76,19 @@ public class LaunchThread extends Thread {
     ProcessBuilder processBuilder = new ProcessBuilder(cmd)
       .redirectErrorStream(true)
       .directory(dir);
-    
+
     InputStream consoleStream = null;
     try {
       Process process = processBuilder.start();
-      
+
       consoleStream = process.getInputStream();
       BufferedReader consoleReader = new BufferedReader(new InputStreamReader(consoleStream));
       String consoleLine = "";
       while ( (consoleLine!=null)
-              && (msg==null || consoleLine.indexOf(msg)==-1)
+              && (msg==null || !consoleLine.contains(msg))
             ) {
         consoleLine = consoleReader.readLine();
-        
+
         if (consoleLine!=null) {
           task.log("  " + consoleLine);
         } else {

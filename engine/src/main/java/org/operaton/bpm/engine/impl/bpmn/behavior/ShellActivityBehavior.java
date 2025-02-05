@@ -144,14 +144,12 @@ public class ShellActivityBehavior extends AbstractBpmnActivityBehavior {
       Writer writer = new StringWriter();
 
       char[] buffer = new char[1024];
-      try {
-        Reader reader = new BufferedReader(new InputStreamReader(is, UTF_8));
-        int n;
-        while ((n = reader.read(buffer)) != -1) {
-          writer.write(buffer, 0, n);
-        }
-      } finally {
-        is.close();
+      try (is) {
+          Reader reader = new BufferedReader(new InputStreamReader(is, UTF_8));
+          int n;
+          while ((n = reader.read(buffer)) != -1) {
+              writer.write(buffer, 0, n);
+          }
       }
       return writer.toString();
     } else {

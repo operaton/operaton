@@ -406,12 +406,8 @@ public class LdapTestEnvironment {
   protected Properties loadTestProperties() throws IOException {
     Properties properties = new Properties();
     File file = IoUtil.getFile(configFilePath);
-    FileInputStream propertiesStream = null;
-    try {
-      propertiesStream = new FileInputStream(file);
-      properties.load(propertiesStream);
-    } finally {
-      IoUtil.closeSilently(propertiesStream);
+    try (FileInputStream propertiesStream = new FileInputStream(file)) {
+        properties.load(propertiesStream);
     }
     return properties;
   }

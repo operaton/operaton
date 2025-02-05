@@ -37,7 +37,7 @@ import org.apache.tools.ant.types.FileSet;
  * @author Tom Baeyens
  */
 public class DeployBarTask extends Task {
-  
+
   String processEngineName = ProcessEngines.NAME_DEFAULT;
   File file;
   List<FileSet> fileSets;
@@ -62,13 +62,13 @@ public class DeployBarTask extends Task {
         }
       }
     }
-    
+
     Thread currentThread = Thread.currentThread();
-    ClassLoader originalClassLoader = currentThread.getContextClassLoader(); 
+    ClassLoader originalClassLoader = currentThread.getContextClassLoader();
     currentThread.setContextClassLoader(DeployBarTask.class.getClassLoader());
-    
+
     LogUtil.readJavaUtilLoggingConfigFromClasspath();
-    
+
     try {
       log("Initializing process engine " + processEngineName);
       ProcessEngines.init();
@@ -92,19 +92,15 @@ public class DeployBarTask extends Task {
       for (File f: files) {
         String path = f.getAbsolutePath();
         log("Handling file " + path);
-        try {
-          FileInputStream inputStream = new FileInputStream(f);
-          try {
-            log("deploying bar "+path);
+        try (FileInputStream inputStream = new FileInputStream(f)) {
+            log("deploying bar " + path);
             repositoryService
-                .createDeployment()
-                .name(f.getName())
-                .addZipInputStream(new ZipInputStream(inputStream))
-                .deploy();
-          } finally {
-            IoUtil.closeSilently(inputStream);
-          }
-        } catch (Exception e) {
+                    .createDeployment()
+                    .name(f.getName())
+                    .addZipInputStream(new ZipInputStream(inputStream))
+                    .deploy();
+        }
+        catch (Exception e) {
           throw new BuildException("couldn't deploy bar "+path+": "+e.getMessage(), e);
         }
       }

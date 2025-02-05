@@ -712,9 +712,7 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
   }
 
   public void executeSchemaResource(String operation, String component, String resourceName, boolean isOptional) {
-    InputStream inputStream = null;
-    try {
-      inputStream = ReflectUtil.getResourceAsStream(resourceName);
+    try (InputStream inputStream = ReflectUtil.getResourceAsStream(resourceName)) {
       if (inputStream == null) {
         if (isOptional) {
           LOG.missingSchemaResource(resourceName, operation);
@@ -724,21 +722,18 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
       } else {
         executeSchemaResource(operation, component, resourceName, inputStream);
       }
-
-    } finally {
-      IoUtil.closeSilently(inputStream);
+    } catch (IOException e) {
+      //ignore
     }
   }
 
   public void executeSchemaResource(String schemaFileResourceName) {
-    FileInputStream inputStream = null;
-    try {
-      inputStream = new FileInputStream(new File(schemaFileResourceName));
+    try (FileInputStream inputStream = new FileInputStream(new File(schemaFileResourceName))) {
       executeSchemaResource("schema operation", "process engine", schemaFileResourceName, inputStream);
     } catch (FileNotFoundException e) {
       throw LOG.missingSchemaResourceFileException(schemaFileResourceName, e);
-    } finally {
-      IoUtil.closeSilently(inputStream);
+    } catch (IOException e) {
+      //ignore
     }
   }
 

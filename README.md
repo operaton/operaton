@@ -3,6 +3,9 @@
 ![build status](https://github.com/operaton/operaton/actions/workflows/build.yml/badge.svg?branch=main)
 [![sonarqube](https://img.shields.io/sonar/tests/operaton_operaton?server=https%3A%2F%2Fsonarcloud.io&logo=sonarcloud)](https://sonarcloud.io/project/overview?id=operaton_operaton)
 [![Maven Central Version](https://img.shields.io/maven-central/v/org.operaton.bpm/operaton-bom-root?color=blue&logo=apachemaven)](https://central.sonatype.com/search?q=org.operaton)
+[![Maven Central Version](https://img.shields.io/maven-central/v/org.operaton.bpm/operaton-bom-root?color=blue&logo=apachemaven)](https://central.sonatype.com/search?q=org.operaton)
+![](https://tokei.rs/b1/github/operaton/operaton?label=Files&category=files)
+![](https://tokei.rs/b1/github/operaton/operaton?label=LOC&category=code)
 
 [![operaton manual latest](https://img.shields.io/badge/manual-latest-brown.svg)](https://docs.operaton.org/)
 [![License](https://img.shields.io/github/license/operaton/operaton?color=blue&logo=apache)](https://github.com/operaton/operaton/blob/main/LICENSE)

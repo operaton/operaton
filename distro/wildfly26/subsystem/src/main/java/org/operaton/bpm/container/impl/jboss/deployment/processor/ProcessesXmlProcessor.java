@@ -171,12 +171,10 @@ public class ProcessesXmlProcessor implements DeploymentUnitProcessor {
 
     final ProcessesXmlParser processesXmlParser = new ProcessesXmlParser();
 
-    ProcessesXml processesXml = processesXmlParser.createParse()
+    return processesXmlParser.createParse()
       .sourceUrl(url)
       .execute()
       .getProcessesXml();
-
-    return processesXml;
 
   }
 

@@ -37,11 +37,9 @@ public class TimerExecutionTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
   public static WebArchive processArchive() {
-    WebArchive archive = initWebArchiveDeployment()
+    return initWebArchiveDeployment()
             .addAsResource("org/operaton/bpm/integrationtest/jobexecutor/TimerExecution.bpmn20.xml")
             .addClass(SampleServiceBean.class);
-
-    return archive;
   }
 
   @Test

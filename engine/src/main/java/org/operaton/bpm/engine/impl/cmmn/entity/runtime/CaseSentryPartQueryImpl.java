@@ -152,11 +152,9 @@ public class CaseSentryPartQueryImpl extends AbstractQuery<CaseSentryPartQueryIm
   @Override
   public List<CaseSentryPartEntity> executeList(CommandContext commandContext, Page page) {
     checkQueryOk();
-    List<CaseSentryPartEntity> result = commandContext
+    return commandContext
       .getCaseSentryPartManager()
       .findCaseSentryPartByQueryCriteria(this, page);
-
-    return result;
   }
 
   // getters /////////////////////////////////////////////

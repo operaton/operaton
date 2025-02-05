@@ -69,8 +69,7 @@ public class CaseExecutionResourceImpl implements CaseExecutionResource {
       throw new InvalidRequestException(Status.NOT_FOUND, "Case execution with id " + caseExecutionId + " does not exist.");
     }
 
-    CaseExecutionDto result = CaseExecutionDto.fromCaseExecution(execution);
-    return result;
+    return CaseExecutionDto.fromCaseExecution(execution);
   }
 
   @Override

@@ -112,9 +112,7 @@ public class TemplateParser {
         .create();
 
     JsonElement json = JsonParser.parseString(jsonString);
-    String formattedJson = gson.toJson(json);
-
-    return formattedJson;
+    return gson.toJson(json);
   }
 
   protected static String createOutputFile(String debugFile) {

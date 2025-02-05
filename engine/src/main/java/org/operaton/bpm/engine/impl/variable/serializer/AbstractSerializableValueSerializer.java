@@ -87,8 +87,7 @@ public abstract class AbstractSerializableValueSerializer<T extends Serializable
           throw new ProcessEngineException("Cannot deserialize object in variable '"+valueFields.getName()+"': "+e.getMessage(), e);
         }
       }
-      T value = createDeserializedValue(deserializedObject, serializedStringValue, valueFields, asTransientValue);
-      return value;
+      return createDeserializedValue(deserializedObject, serializedStringValue, valueFields, asTransientValue);
     }
     else {
       return createSerializedValue(serializedStringValue, valueFields, asTransientValue);

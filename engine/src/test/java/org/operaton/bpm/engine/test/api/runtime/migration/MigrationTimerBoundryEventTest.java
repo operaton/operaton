@@ -387,7 +387,7 @@ public class MigrationTimerBoundryEventTest {
   }
 
   protected BpmnModelInstance createModel(boolean isCancelActivity, String date) {
-    BpmnModelInstance model = Bpmn.createExecutableProcess()
+    return Bpmn.createExecutableProcess()
         .startEvent("startEvent")
         .userTask("userTask").name("User Task")
         .boundaryEvent("timer")
@@ -396,6 +396,5 @@ public class MigrationTimerBoundryEventTest {
         .userTask("afterTimer")
         .endEvent("endEvent")
         .done();
-    return model;
   }
 }

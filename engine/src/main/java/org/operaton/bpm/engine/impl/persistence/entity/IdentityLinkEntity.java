@@ -76,8 +76,7 @@ public class IdentityLinkEntity implements Serializable, IdentityLink, DbEntity,
   }
 
   public static IdentityLinkEntity newIdentityLink() {
-    IdentityLinkEntity identityLinkEntity = new IdentityLinkEntity();
-     return identityLinkEntity;
+    return new IdentityLinkEntity();
   }
 
   public void insert() {
@@ -234,8 +233,7 @@ public class IdentityLinkEntity implements Serializable, IdentityLink, DbEntity,
 
   @Override
   public Set<String> getReferencedEntityIds() {
-    Set<String> referencedEntityIds = new HashSet<>();
-    return referencedEntityIds;
+    return new HashSet<>();
   }
 
   @Override

@@ -34,11 +34,9 @@ public class TimeoutTaskListenerExecutionTest extends AbstractFoxPlatformIntegra
 
   @Deployment
   public static WebArchive processArchive() {
-    WebArchive archive = initWebArchiveDeployment()
+    return initWebArchiveDeployment()
             .addAsResource("org/operaton/bpm/integrationtest/jobexecutor/TimeoutTaskListenerExecution.bpmn20.xml")
             .addClass(SampleTaskListenerBean.class);
-
-    return archive;
   }
 
   @Test

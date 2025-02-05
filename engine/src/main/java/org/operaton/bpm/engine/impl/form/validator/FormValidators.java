@@ -76,8 +76,7 @@ public class FormValidators {
 
       Class<? extends FormFieldValidator> validator = validators.get(name);
       if(validator != null) {
-        FormFieldValidator validatorInstance = createValidatorInstance(validator);
-        return validatorInstance;
+        return createValidatorInstance(validator);
 
       } else {
         bpmnParse.addError("Cannot find validator implementation for name '"+name+"'.", constraint);

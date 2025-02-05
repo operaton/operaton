@@ -58,9 +58,7 @@ public class UserResourceImpl extends AbstractIdentityResource implements UserRe
       throw new InvalidRequestException(Status.NOT_FOUND, "User with id " + resourceId + " does not exist");
     }
 
-    UserProfileDto user = UserProfileDto.fromUser(dbUser);
-
-    return user;
+    return UserProfileDto.fromUser(dbUser);
   }
 
   @Override

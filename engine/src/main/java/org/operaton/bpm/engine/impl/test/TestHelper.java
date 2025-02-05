@@ -604,7 +604,6 @@ public abstract class TestHelper {
 
   public static Object defaultManualActivation() {
     Expression expression = new FixedValue(true);
-    CaseControlRuleImpl caseControlRule = new CaseControlRuleImpl(expression);
-    return caseControlRule;
+    return new CaseControlRuleImpl(expression);
   }
 }

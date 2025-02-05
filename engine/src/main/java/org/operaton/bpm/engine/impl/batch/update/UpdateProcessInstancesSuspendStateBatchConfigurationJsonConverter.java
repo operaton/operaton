@@ -45,11 +45,8 @@ public class UpdateProcessInstancesSuspendStateBatchConfigurationJsonConverter
 
   @Override
   public UpdateProcessInstancesSuspendStateBatchConfiguration readConfiguration(JsonObject json) {
-    UpdateProcessInstancesSuspendStateBatchConfiguration configuration =
-      new UpdateProcessInstancesSuspendStateBatchConfiguration(readProcessInstanceIds(json), readMappings(json),
+    return new UpdateProcessInstancesSuspendStateBatchConfiguration(readProcessInstanceIds(json), readMappings(json),
           JsonUtil.getBoolean(json, SUSPENDING));
-
-    return configuration;
   }
 
   protected List<String> readProcessInstanceIds(JsonObject jsonObject) {

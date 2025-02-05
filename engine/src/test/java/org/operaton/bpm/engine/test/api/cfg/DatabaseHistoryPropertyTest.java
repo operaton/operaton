@@ -142,16 +142,13 @@ public class DatabaseHistoryPropertyTest {
   }
 
   private static ProcessEngineImpl createProcessEngineImpl(String databaseSchemaUpdate, boolean executeSchemaOperations) {
-    ProcessEngineImpl processEngine =
-        (ProcessEngineImpl) new CustomStandaloneInMemProcessEngineConfiguration()
+    return (ProcessEngineImpl) new CustomStandaloneInMemProcessEngineConfiguration()
                .setExecuteSchemaOperations(executeSchemaOperations)
                .setProcessEngineName("database-history-test-engine")
                .setDatabaseSchemaUpdate(databaseSchemaUpdate)
                .setHistory(ProcessEngineConfiguration.HISTORY_FULL)
                .setJdbcUrl("jdbc:h2:mem:DatabaseHistoryPropertyTest")
                .buildProcessEngine();
-
-    return processEngine;
   }
 
 }

@@ -56,8 +56,7 @@ public class EngineUtil {
     Iterator<ProcessEngineProvider> iterator = serviceLoader.iterator();
 
     if (iterator.hasNext()) {
-      ProcessEngineProvider provider = iterator.next();
-      return provider;
+      return iterator.next();
     } else {
       throw new RestException(Status.INTERNAL_SERVER_ERROR, "No process engine provider found");
     }

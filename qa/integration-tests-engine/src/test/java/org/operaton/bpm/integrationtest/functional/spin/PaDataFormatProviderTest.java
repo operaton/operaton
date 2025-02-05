@@ -45,7 +45,7 @@ public class PaDataFormatProviderTest extends AbstractFoxPlatformIntegrationTest
 
   @Deployment
   public static WebArchive createDeployment() {
-    WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "PaDataFormatTest.war")
+    return ShrinkWrap.create(WebArchive.class, "PaDataFormatTest.war")
         .addAsResource("META-INF/processes.xml")
         .addClass(AbstractFoxPlatformIntegrationTest.class)
         .addAsResource("org/operaton/bpm/integrationtest/oneTaskProcess.bpmn")
@@ -55,8 +55,6 @@ public class PaDataFormatProviderTest extends AbstractFoxPlatformIntegrationTest
         .addClass(FooSpin.class)
         .addAsServiceProvider(DataFormatProvider.class, FooDataFormatProvider.class)
         .addClass(ReferenceStoringProcessApplication.class);
-
-    return webArchive;
   }
 
   /**

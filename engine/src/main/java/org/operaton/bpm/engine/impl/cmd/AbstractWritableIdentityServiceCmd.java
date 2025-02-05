@@ -38,8 +38,7 @@ public abstract class AbstractWritableIdentityServiceCmd<T> implements Command<T
       throw new UnsupportedOperationException("This identity service implementation is read-only.");
     }
     
-    T result = executeCmd(commandContext);
-    return result; 
+    return executeCmd(commandContext); 
   }
 
   protected abstract T executeCmd(CommandContext commandContext);

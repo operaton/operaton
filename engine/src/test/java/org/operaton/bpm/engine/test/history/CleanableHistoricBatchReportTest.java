@@ -365,14 +365,13 @@ public class CleanableHistoricBatchReportTest {
   }
 
   private BpmnModelInstance createModelInstance() {
-    BpmnModelInstance instance = Bpmn.createExecutableProcess("process")
+    return Bpmn.createExecutableProcess("process")
         .startEvent("start")
         .userTask("userTask1")
         .sequenceFlowId("seq")
         .userTask("userTask2")
         .endEvent("end")
         .done();
-    return instance;
   }
 
   private List<String> createMigrationBatchList(int migrationCountBatch) {
@@ -386,8 +385,7 @@ public class CleanableHistoricBatchReportTest {
   private Batch createModificationBatch() {
     BpmnModelInstance instance = createModelInstance();
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
-    Batch modificationBatch = modificationHelper.startAfterAsync("process", 1, "userTask1", processDefinition.getId());
-    return modificationBatch;
+    return modificationHelper.startAfterAsync("process", 1, "userTask1", processDefinition.getId());
   }
 
   private List<String> createCancelationBatchList(int cancelationCountBatch) {

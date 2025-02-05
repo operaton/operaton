@@ -56,9 +56,7 @@ public class GroupResourceImpl extends AbstractIdentityResource implements Group
       throw new InvalidRequestException(Status.NOT_FOUND, "Group with id " + resourceId + " does not exist");
     }
 
-    GroupDto group = GroupDto.fromGroup(dbGroup);
-
-    return group;
+    return GroupDto.fromGroup(dbGroup);
   }
 
   @Override

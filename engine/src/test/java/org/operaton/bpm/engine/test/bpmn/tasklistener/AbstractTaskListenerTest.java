@@ -91,10 +91,8 @@ public abstract class AbstractTaskListenerTest {
       userTaskModelBuilder.operatonTaskListenerClass(customListenerEventType, taskListenerClass);
     }
 
-    BpmnModelInstance model = userTaskModelBuilder
+    return userTaskModelBuilder
         .endEvent()
         .done();
-
-    return model;
   }
 }

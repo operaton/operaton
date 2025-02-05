@@ -152,12 +152,10 @@ public class ParseProcessesXmlStep extends DeploymentOperationStep {
 
     final ProcessesXmlParser processesXmlParser = new ProcessesXmlParser();
 
-    ProcessesXml processesXml = processesXmlParser.createParse()
+    return processesXmlParser.createParse()
       .sourceUrl(url)
       .execute()
       .getProcessesXml();
-
-    return processesXml;
 
   }
 

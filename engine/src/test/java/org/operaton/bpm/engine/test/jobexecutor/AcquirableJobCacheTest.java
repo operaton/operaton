@@ -150,8 +150,7 @@ public class AcquirableJobCacheTest {
     return processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(commandContext -> {
       JobManager jobManager = commandContext.getJobManager();
       List<AcquirableJobEntity> acquirableJobs = jobManager.findNextJobsToExecute(new Page(0, 100));
-      JobEntity job = jobManager.findJobById(acquirableJobs.get(0).getId());
-      return job;
+      return jobManager.findJobById(acquirableJobs.get(0).getId());
     });
   }
 

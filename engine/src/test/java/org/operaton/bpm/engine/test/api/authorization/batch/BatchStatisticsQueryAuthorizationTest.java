@@ -214,7 +214,6 @@ public class BatchStatisticsQueryAuthorizationTest {
         .mapEqualActivities()
         .build();
 
-    ProcessInstance pi = engineRule.getRuntimeService().startProcessInstanceById(sourceDefinition.getId());
-    return pi;
+    return engineRule.getRuntimeService().startProcessInstanceById(sourceDefinition.getId());
   }
 }

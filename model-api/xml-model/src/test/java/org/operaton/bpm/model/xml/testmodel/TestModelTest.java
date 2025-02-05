@@ -60,8 +60,7 @@ public abstract class TestModelTest {
   }
 
   public static Egg createEgg(ModelInstance modelInstance, String id) {
-    Egg egg = modelInstance.newInstance(Egg.class, id);
-    return egg;
+    return modelInstance.newInstance(Egg.class, id);
   }
 
   protected void init (TestModelArgs args) {

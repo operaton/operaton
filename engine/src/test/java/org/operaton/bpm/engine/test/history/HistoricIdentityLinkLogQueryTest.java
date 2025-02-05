@@ -432,8 +432,7 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
     calendar.set(Calendar.MINUTE, minutes);
     calendar.set(Calendar.SECOND, 0);
     calendar.set(Calendar.MILLISECOND, 0);
-    Date morning = calendar.getTime();
-    return morning;
+    return calendar.getTime();
   }
 
   public Date newYearNoon(int minutes) {
@@ -445,8 +444,7 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
     calendar.set(Calendar.MINUTE, minutes);
     calendar.set(Calendar.SECOND, 0);
     calendar.set(Calendar.MILLISECOND, 0);
-    Date morning = calendar.getTime();
-    return morning;
+    return calendar.getTime();
   }
 
   public Date newYearEvening() {
@@ -458,8 +456,7 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
     calendar.set(Calendar.MINUTE, 0);
     calendar.set(Calendar.SECOND, 0);
     calendar.set(Calendar.MILLISECOND, 0);
-    Date morning = calendar.getTime();
-    return morning;
+    return calendar.getTime();
   }
 
   protected ProcessInstance startProcessInstance(String key) {

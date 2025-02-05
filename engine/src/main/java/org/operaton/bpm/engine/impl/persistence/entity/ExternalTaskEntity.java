@@ -618,8 +618,7 @@ public class ExternalTaskEntity implements ExternalTask, DbEntity,
 
   @Override
   public Set<String> getReferencedEntityIds() {
-    Set<String> referencedEntityIds = new HashSet<>();
-    return referencedEntityIds;
+    return new HashSet<>();
   }
 
   @Override

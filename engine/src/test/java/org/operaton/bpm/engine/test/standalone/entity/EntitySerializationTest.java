@@ -107,9 +107,7 @@ public class EntitySerializationTest {
   private Object readObject(byte[] data) throws IOException, ClassNotFoundException {
     InputStream buffer = new ByteArrayInputStream(data);
     ObjectInputStream inputStream = new ObjectInputStream(buffer);
-    Object object = inputStream.readObject();
-
-    return object;
+    return inputStream.readObject();
   }
 
 }

@@ -70,8 +70,7 @@ public class TaskWithSentryExitCriteriaTest extends ProcessAssertTestCase {
   }
 
   private CaseInstance givenCaseIsCreated() {
-    CaseInstance caseInstance = caseService().createCaseInstanceByKey("Case_TaskWithSentryExitCriteriaTest");
-    return caseInstance;
+    return caseService().createCaseInstanceByKey("Case_TaskWithSentryExitCriteriaTest");
   }
 
   private CaseInstance givenCaseIsCreatedAndTaskAActive() {

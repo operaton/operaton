@@ -469,8 +469,7 @@ public class BatchEntity implements Batch, DbEntity, HasDbReferences, Nameable, 
 
   @Override
   public Set<String> getReferencedEntityIds() {
-    Set<String> referencedEntityIds = new HashSet<>();
-    return referencedEntityIds;
+    return new HashSet<>();
   }
 
   @Override

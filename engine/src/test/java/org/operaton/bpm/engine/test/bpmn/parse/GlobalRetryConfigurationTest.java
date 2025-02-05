@@ -196,7 +196,7 @@ public class GlobalRetryConfigurationTest {
   }
 
   private BpmnModelInstance prepareSignalEventProcessWithoutRetry() {
-    BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(PROCESS_ID)
+    return Bpmn.createExecutableProcess(PROCESS_ID)
         .startEvent()
           .intermediateThrowEvent(FAILING_EVENT)
             .operatonAsyncBefore(true)
@@ -205,22 +205,20 @@ public class GlobalRetryConfigurationTest {
             .operatonClass(FAILING_CLASS)
         .endEvent()
         .done();
-    return modelInstance;
   }
 
   private BpmnModelInstance prepareFailingServiceTask() {
-    BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(PROCESS_ID)
+    return Bpmn.createExecutableProcess(PROCESS_ID)
         .startEvent()
         .serviceTask()
           .operatonClass(FAILING_CLASS)
           .operatonAsyncBefore()
         .endEvent()
         .done();
-    return modelInstance;
   }
 
   private BpmnModelInstance prepareFailingServiceTaskWithRetryCycle() {
-    BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(PROCESS_ID)
+    return Bpmn.createExecutableProcess(PROCESS_ID)
         .startEvent()
         .serviceTask()
           .operatonClass(FAILING_CLASS)
@@ -228,22 +226,20 @@ public class GlobalRetryConfigurationTest {
           .operatonFailedJobRetryTimeCycle("R10/PT5M")
         .endEvent()
         .done();
-    return modelInstance;
   }
 
   private BpmnModelInstance prepareFailingBusinessRuleTask() {
-    BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(PROCESS_ID)
+    return Bpmn.createExecutableProcess(PROCESS_ID)
         .startEvent()
         .businessRuleTask()
           .operatonClass(FAILING_CLASS)
           .operatonAsyncBefore()
         .endEvent()
         .done();
-    return modelInstance;
   }
 
   private BpmnModelInstance prepareFailingScriptTask() {
-    BpmnModelInstance bpmnModelInstance = Bpmn.createExecutableProcess(PROCESS_ID)
+    return Bpmn.createExecutableProcess(PROCESS_ID)
       .startEvent()
       .scriptTask()
         .scriptFormat("groovy")
@@ -252,11 +248,10 @@ public class GlobalRetryConfigurationTest {
       .userTask()
       .endEvent()
     .done();
-    return bpmnModelInstance;
   }
 
   private BpmnModelInstance prepareFailingSubProcess() {
-    BpmnModelInstance bpmnModelInstance = Bpmn.createExecutableProcess(PROCESS_ID)
+    return Bpmn.createExecutableProcess(PROCESS_ID)
       .startEvent()
       .subProcess()
         .embeddedSubProcess()
@@ -268,6 +263,5 @@ public class GlobalRetryConfigurationTest {
       .subProcessDone()
       .endEvent()
     .done();
-    return bpmnModelInstance;
   }
 }

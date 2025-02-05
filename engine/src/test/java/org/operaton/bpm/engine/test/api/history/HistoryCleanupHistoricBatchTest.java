@@ -360,7 +360,7 @@ public class HistoryCleanupHistoricBatchTest {
   }
 
   private BpmnModelInstance createModelInstance() {
-    BpmnModelInstance instance = Bpmn.createExecutableProcess("process")
+    return Bpmn.createExecutableProcess("process")
         .operatonHistoryTimeToLive(180)
         .startEvent("start")
         .userTask("userTask1")
@@ -368,7 +368,6 @@ public class HistoryCleanupHistoricBatchTest {
         .userTask("userTask2")
         .endEvent("end")
         .done();
-    return instance;
   }
 
   private void prepareHistoricBatches(int batchesCount, int daysInThePast) {
@@ -404,8 +403,7 @@ public class HistoryCleanupHistoricBatchTest {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(sourceProcessDefinition.getId());
 
-    Batch batch = runtimeService.newMigration(migrationPlan).processInstanceIds(Arrays.asList(processInstance.getId(), "unknownId")).executeAsync();
-    return batch;
+    return runtimeService.newMigration(migrationPlan).processInstanceIds(Arrays.asList(processInstance.getId(), "unknownId")).executeAsync();
   }
 
   private List<String> createMigrationBatchList(int migrationCountBatch) {
@@ -419,8 +417,7 @@ public class HistoryCleanupHistoricBatchTest {
   private Batch createModificationBatch() {
     BpmnModelInstance instance = createModelInstance();
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
-    Batch modificationBatch = modificationHelper.startAfterAsync("process", 1, "userTask1", processDefinition.getId());
-    return modificationBatch;
+    return modificationHelper.startAfterAsync("process", 1, "userTask1", processDefinition.getId());
   }
 
   private List<String> createCancelationBatchList(int cancelationCountBatch) {

@@ -50,9 +50,7 @@ public class TransitionInstanceCancellationCmd extends AbstractInstanceCancellat
         "transitionInstance",
         instanceToCancel);
 
-    ExecutionEntity transitionExecution = commandContext.getExecutionManager().findExecutionById(instanceToCancel.getExecutionId());
-
-    return transitionExecution;
+    return commandContext.getExecutionManager().findExecutionById(instanceToCancel.getExecutionId());
   }
 
   @Override

@@ -158,8 +158,7 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
                 ProcessInstance processInstance = Context.getBpmnExecutionContext().getProcessInstance();
                 Method method = methodInvocation.getMethod();
                 Object[] args = methodInvocation.getArguments();
-                Object result = method.invoke(processInstance, args);
-                return result;
+                return method.invoke(processInstance, args);
             }
         });
         return proxyFactoryBean.getProxy(this.classLoader);

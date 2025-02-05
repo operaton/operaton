@@ -45,7 +45,6 @@ public class ConditionHandlerResult {
   }
 
   public static ConditionHandlerResult matchedProcessDefinition(ProcessDefinitionEntity processDefinition, ActivityImpl startActivityId) {
-    ConditionHandlerResult conditionHandlerResult = new ConditionHandlerResult(processDefinition, startActivityId);
-    return conditionHandlerResult;
+    return new ConditionHandlerResult(processDefinition, startActivityId);
   }
 }

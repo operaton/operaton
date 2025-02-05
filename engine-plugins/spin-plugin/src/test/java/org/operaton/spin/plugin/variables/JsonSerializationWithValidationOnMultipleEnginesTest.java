@@ -119,11 +119,10 @@ public class JsonSerializationWithValidationOnMultipleEnginesTest {
   }
 
   protected BpmnModelInstance getOneTaskModel() {
-    BpmnModelInstance oneTaskProcess = Bpmn.createExecutableProcess("oneTaskProcess")
+    return Bpmn.createExecutableProcess("oneTaskProcess")
         .startEvent()
         .userTask()
         .endEvent()
         .done();
-    return oneTaskProcess;
   }
 }

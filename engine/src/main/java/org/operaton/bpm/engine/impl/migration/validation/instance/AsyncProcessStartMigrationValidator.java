@@ -35,7 +35,7 @@ public class AsyncProcessStartMigrationValidator implements MigratingTransitionI
 
     ActivityImpl targetActivity = (ActivityImpl) migratingInstance.getTargetScope();
 
-    if (targetActivity != null && (isProcessStartJob(migratingInstance.getJobInstance().getJobEntity()) && !isTopLevelActivity(targetActivity))) {
+    if (targetActivity != null && isProcessStartJob(migratingInstance.getJobInstance().getJobEntity()) && !isTopLevelActivity(targetActivity)) {
         instanceReport.addFailure("A transition instance that instantiates the process can only be migrated to a process-level flow node");
     }
   }

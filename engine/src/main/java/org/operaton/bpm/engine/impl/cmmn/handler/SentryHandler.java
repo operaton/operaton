@@ -69,7 +69,7 @@ public class SentryHandler extends CmmnElementHandler<Sentry, CmmnSentryDeclarat
         boolean atLeastOneOnPartsValid = false;
 
         for (OnPart onPart : onParts) {
-          if (onPart instanceof PlanItemOnPart planItemOnPart && (planItemOnPart.getSource() != null && planItemOnPart.getStandardEvent() != null)) {
+          if (onPart instanceof PlanItemOnPart planItemOnPart && planItemOnPart.getSource() != null && planItemOnPart.getStandardEvent() != null) {
             atLeastOneOnPartsValid = true;
             break;
           }

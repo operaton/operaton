@@ -246,7 +246,7 @@ public class TenantCommandChecker implements CommandChecker {
     String sourceTenant = processInstance.getTenantId();
     String targetTenant = targetProcessDefinition.getTenantId();
 
-    if (getTenantManager().isTenantCheckEnabled() && (processInstance != null && !getTenantManager().isAuthenticatedTenant(processInstance.getTenantId()))) {
+    if (getTenantManager().isTenantCheckEnabled() && !getTenantManager().isAuthenticatedTenant(processInstance.getTenantId())) {
        throw LOG.exceptionCommandWithUnauthorizedTenant("migrate process instance '" + processInstance.getId() + "'");
     }
 

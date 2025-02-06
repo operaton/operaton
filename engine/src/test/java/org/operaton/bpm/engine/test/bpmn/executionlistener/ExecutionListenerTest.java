@@ -281,7 +281,7 @@ public class ExecutionListenerTest {
       long count = query.count();
       assertEquals(5, count);
 
-      HistoricVariableInstance variableInstance = null;
+      HistoricVariableInstance variableInstance;
       String[] variableNames = new String[]{"start-start", "start-end", "start-take", "end-start", "end-end"};
       for (String variableName : variableNames) {
         variableInstance = query.variableName(variableName).singleResult();
@@ -305,7 +305,7 @@ public class ExecutionListenerTest {
       long count = query.count();
       assertEquals(5, count);
 
-      HistoricVariableInstance variableInstance = null;
+      HistoricVariableInstance variableInstance;
       String[] variableNames = new String[]{"start-start", "start-end", "start-take", "end-start", "end-end"};
       for (String variableName : variableNames) {
         variableInstance = query.variableName(variableName).singleResult();
@@ -547,9 +547,10 @@ public class ExecutionListenerTest {
     testRule.deploy(model);
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     Task task = taskService.createTaskQuery().taskDefinitionKey("userTask1").singleResult();
+    String taskId = task.getId();
 
     // when listeners are invoked
-    assertThatThrownBy(() -> taskService.complete(task.getId()))
+    assertThatThrownBy(() -> taskService.complete(taskId))
     // then
       .isInstanceOf(RuntimeException.class)
       .hasMessage("Intended exception from delegate");
@@ -563,9 +564,10 @@ public class ExecutionListenerTest {
     testRule.deploy(model);
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     Task task = taskService.createTaskQuery().taskDefinitionKey("userTask1").singleResult();
+    String taskId = task.getId();
 
     // when listeners are invoked
-    assertThatThrownBy(() -> taskService.complete(task.getId()))
+    assertThatThrownBy(() -> taskService.complete(taskId))
     // then
       .isInstanceOf(RuntimeException.class)
       .hasMessage("Intended exception from delegate");
@@ -832,7 +834,7 @@ public class ExecutionListenerTest {
     Task afterCatch = taskService.createTaskQuery().singleResult();
     assertNotNull(afterCatch);
     assertEquals("afterCatch", afterCatch.getName());
-    assertEquals(1, ThrowBPMNErrorDelegate.INVOCATIONS);
+    assertEquals(1, ThrowBPMNErrorDelegate.invocations);
 
     // and completing this task ends the process instance
     taskService.complete(afterCatch.getId());
@@ -1129,7 +1131,7 @@ public class ExecutionListenerTest {
     assertEquals(0, runtimeService.createExecutionQuery().count());
 
     // the listener was only called once
-    assertEquals(1, ThrowBPMNErrorDelegate.INVOCATIONS);
+    assertEquals(1, ThrowBPMNErrorDelegate.invocations);
     verifyActivityEnded("throw");
   }
 
@@ -1160,7 +1162,7 @@ public class ExecutionListenerTest {
     assertEquals(0, runtimeService.createExecutionQuery().count());
 
     // the listener was only called once
-    assertEquals(1, ThrowBPMNErrorDelegate.INVOCATIONS);
+    assertEquals(1, ThrowBPMNErrorDelegate.invocations);
     verifyActivityEnded("throw");
   }
 
@@ -1203,7 +1205,7 @@ public class ExecutionListenerTest {
     } catch (Exception e) {
       // then
       assertTrue(e.getMessage().contains("business error"));
-      assertEquals(1, ThrowBPMNErrorDelegate.INVOCATIONS);
+      assertEquals(1, ThrowBPMNErrorDelegate.invocations);
     }
   }
 
@@ -1234,9 +1236,10 @@ public class ExecutionListenerTest {
     ProcessDefinition definition = deployment.getDeployedProcessDefinitions().get(0);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(PROCESS_KEY);
+    var modificationBuilder = runtimeService.createModification(definition.getId()).startBeforeActivity("throw").processInstanceIds(processInstance.getId());
 
     // when/then
-    assertThatThrownBy(() -> runtimeService.createModification(definition.getId()).startBeforeActivity("throw").processInstanceIds(processInstance.getId()).execute())
+    assertThatThrownBy(modificationBuilder::execute)
       .isInstanceOf(BpmnError.class)
       .hasMessageContaining("business error");
   }
@@ -1270,7 +1273,7 @@ public class ExecutionListenerTest {
     } catch (Exception e) {
       // then
       assertTrue(e.getMessage().contains("business error"));
-      assertEquals(1, ThrowBPMNErrorDelegate.INVOCATIONS);
+      assertEquals(1, ThrowBPMNErrorDelegate.invocations);
     }
   }
 
@@ -1301,7 +1304,7 @@ public class ExecutionListenerTest {
       fail("Exception expected");
     } catch (Exception e) {
       assertTrue(e.getMessage().contains("business error"));
-      assertEquals(1, ThrowBPMNErrorDelegate.INVOCATIONS);
+      assertEquals(1, ThrowBPMNErrorDelegate.invocations);
     }
   }
 
@@ -1386,7 +1389,7 @@ public class ExecutionListenerTest {
   protected void verifyErrorGotCaught(boolean useExceptionDelegate) {
     assertEquals(1, taskService.createTaskQuery().list().size());
     assertEquals("afterCatch", taskService.createTaskQuery().singleResult().getName());
-    assertEquals(1, useExceptionDelegate ? ThrowRuntimeExceptionDelegate.INVOCATIONS : ThrowBPMNErrorDelegate.INVOCATIONS);
+    assertEquals(1, useExceptionDelegate ? ThrowRuntimeExceptionDelegate.invocations : ThrowBPMNErrorDelegate.invocations);
   }
 
   protected void verifyActivityCanceled(String activityName) {
@@ -1409,31 +1412,31 @@ public class ExecutionListenerTest {
 
   public static class ThrowBPMNErrorDelegate implements ExecutionListener {
 
-    public static int INVOCATIONS = 0;
+    public static int invocations = 0;
 
     @Override
     public void notify(DelegateExecution execution) throws Exception {
-      INVOCATIONS++;
+      invocations++;
       throw new BpmnError(ERROR_CODE, "business error");
     }
 
     public static void reset() {
-      INVOCATIONS = 0;
+      invocations = 0;
     }
   }
 
   public static class ThrowRuntimeExceptionDelegate implements ExecutionListener {
 
-    public static int INVOCATIONS = 0;
+    public static int invocations = 0;
 
     @Override
     public void notify(DelegateExecution execution) throws Exception {
-      INVOCATIONS++;
+      invocations++;
       throw RUNTIME_EXCEPTION;
     }
 
     public static void reset() {
-      INVOCATIONS = 0;
+      invocations = 0;
     }
   }
 

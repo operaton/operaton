@@ -48,8 +48,8 @@ import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class HistoricExternalTaskLogQueryTest {
 
-  protected final String WORKER_ID = "aWorkerId";
-  protected final long LOCK_DURATION = 5 * 60L * 1000L;
+  protected static final String WORKER_ID = "aWorkerId";
+  protected static final long LOCK_DURATION = 5 * 60L * 1000L;
 
   protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
   protected AuthorizationTestRule authRule = new AuthorizationTestRule(engineRule);
@@ -108,14 +108,12 @@ public class HistoricExternalTaskLogQueryTest {
 
     // given
     startExternalTaskProcess();
+    var historicExternalTaskLogQuery = historyService
+      .createHistoricExternalTaskLogQuery();
 
     // when/then
-    assertThatThrownBy(() -> historyService
-        .createHistoricExternalTaskLogQuery()
-        .logId(null)
-        .singleResult())
+    assertThatThrownBy(() -> historicExternalTaskLogQuery.logId(null))
       .isInstanceOf(NotValidException.class);
-
   }
 
   @Test
@@ -156,14 +154,12 @@ public class HistoricExternalTaskLogQueryTest {
 
     // given
     startExternalTaskProcess();
+    var historicExternalTaskLogQuery = historyService
+      .createHistoricExternalTaskLogQuery();
 
     // when/then
-    assertThatThrownBy(() -> historyService
-        .createHistoricExternalTaskLogQuery()
-        .externalTaskId(null)
-        .singleResult())
+    assertThatThrownBy(() -> historicExternalTaskLogQuery.externalTaskId(null))
       .isInstanceOf(NotValidException.class);
-
   }
 
   @Test
@@ -203,15 +199,13 @@ public class HistoricExternalTaskLogQueryTest {
 
   @Test
   public void testQueryFailsByInvalidTopicName() {
-
     // given
     startExternalTaskProcess();
+    var historicExternalTaskLogQuery = historyService
+      .createHistoricExternalTaskLogQuery();
 
     // when/then
-    assertThatThrownBy(() -> historyService
-        .createHistoricExternalTaskLogQuery()
-        .topicName(null)
-        .singleResult())
+    assertThatThrownBy(() -> historicExternalTaskLogQuery.topicName(null))
       .isInstanceOf(NotValidException.class);
 
   }
@@ -253,18 +247,15 @@ public class HistoricExternalTaskLogQueryTest {
 
   @Test
   public void testQueryFailsByInvalidWorkerId() {
-
     // given
     ExternalTask task = startExternalTaskProcess();
     completeExternalTask(task.getId());
+    var historicExternalTaskLogQuery = historyService
+      .createHistoricExternalTaskLogQuery();
 
     // when/then
-    assertThatThrownBy(() -> historyService
-        .createHistoricExternalTaskLogQuery()
-        .workerId(null)
-        .singleResult())
+    assertThatThrownBy(() -> historicExternalTaskLogQuery.workerId(null))
       .isInstanceOf(NotValidException.class);
-
   }
 
   @Test
@@ -305,15 +296,13 @@ public class HistoricExternalTaskLogQueryTest {
 
   @Test
   public void testQueryFailsByInvalidErrorMessage() {
-
     // given
     startExternalTaskProcess();
+    var historicExternalTaskLogQuery = historyService
+      .createHistoricExternalTaskLogQuery();
 
     // when/then
-    assertThatThrownBy(() -> historyService
-        .createHistoricExternalTaskLogQuery()
-        .errorMessage(null)
-        .singleResult())
+    assertThatThrownBy(() -> historicExternalTaskLogQuery.errorMessage(null))
       .isInstanceOf(NotValidException.class);
 
   }
@@ -353,45 +342,40 @@ public class HistoricExternalTaskLogQueryTest {
 
   @Test
   public void testQueryFailsByActivityIdsIsNull() {
-
     // given
     startExternalTaskProcess();
+    var historicExternalTaskLogQuery = historyService
+      .createHistoricExternalTaskLogQuery();
 
     // when/then
-    assertThatThrownBy(() -> historyService
-        .createHistoricExternalTaskLogQuery()
-        .activityIdIn((String[]) null)
-        .singleResult())
+    assertThatThrownBy(() -> historicExternalTaskLogQuery.activityIdIn((String[]) null))
       .isInstanceOf(NotValidException.class);
   }
 
   @Test
   public void testQueryFailsByActivityIdsContainNull() {
-
     // given
     startExternalTaskProcess();
     String[] activityIdsContainNull = {"a", null, "b"};
+    var historicExternalTaskLogQuery = historyService
+      .createHistoricExternalTaskLogQuery();
 
     // when/then
-    assertThatThrownBy(() -> historyService
-        .createHistoricExternalTaskLogQuery()
-        .activityIdIn(activityIdsContainNull)
-        .singleResult())
+    assertThatThrownBy(() -> historicExternalTaskLogQuery.activityIdIn(activityIdsContainNull))
       .isInstanceOf(NotValidException.class);
   }
 
   @Test
   public void testQueryFailsByActivityIdsContainEmptyString() {
-
     // given
     startExternalTaskProcess();
     String[] activityIdsContainEmptyString = {"a", "", "b"};
+    var historicExternalTaskLogQuery = historyService
+      .createHistoricExternalTaskLogQuery();
 
     // when/then
-    assertThatThrownBy(() -> historyService
-        .createHistoricExternalTaskLogQuery()
-        .activityIdIn(activityIdsContainEmptyString)
-        .singleResult())
+    assertThatThrownBy(() -> historicExternalTaskLogQuery
+        .activityIdIn(activityIdsContainEmptyString))
       .isInstanceOf(NotValidException.class);
 
   }
@@ -435,46 +419,40 @@ public class HistoricExternalTaskLogQueryTest {
 
   @Test
   public void testQueryFailsByActivityInstanceIdsIsNull() {
-
     // given
     startExternalTaskProcess();
+    var historicExternalTaskLogQuery = historyService
+      .createHistoricExternalTaskLogQuery();
 
     // when/then
-    assertThatThrownBy(() -> historyService
-        .createHistoricExternalTaskLogQuery()
-        .activityInstanceIdIn((String[]) null)
-        .singleResult())
+    assertThatThrownBy(() -> historicExternalTaskLogQuery.activityInstanceIdIn((String[]) null))
       .isInstanceOf(NotValidException.class);
   }
 
   @Test
   public void testQueryFailsByActivityInstanceIdsContainNull() {
-
     // given
     startExternalTaskProcess();
     String[] activityIdsContainNull = {"a", null, "b"};
+    var historicExternalTaskLogQuery = historyService
+      .createHistoricExternalTaskLogQuery();
 
     // when/then
-    assertThatThrownBy(() -> historyService
-        .createHistoricExternalTaskLogQuery()
-        .activityInstanceIdIn(activityIdsContainNull)
-        .singleResult())
+    assertThatThrownBy(() -> historicExternalTaskLogQuery.activityInstanceIdIn(activityIdsContainNull))
       .isInstanceOf(NotValidException.class);
 
   }
 
   @Test
   public void testQueryFailsByActivityInstanceIdsContainEmptyString() {
-
     // given
     startExternalTaskProcess();
     String[] activityIdsContainEmptyString = {"a", "", "b"};
+    var historicExternalTaskLogQuery = historyService
+      .createHistoricExternalTaskLogQuery();
 
     // when/then
-    assertThatThrownBy(() -> historyService
-        .createHistoricExternalTaskLogQuery()
-        .activityInstanceIdIn(activityIdsContainEmptyString)
-        .singleResult())
+    assertThatThrownBy(() -> historicExternalTaskLogQuery.activityInstanceIdIn(activityIdsContainEmptyString))
       .isInstanceOf(NotValidException.class);
 
   }
@@ -514,47 +492,41 @@ public class HistoricExternalTaskLogQueryTest {
 
   @Test
   public void testQueryFailsByExecutionIdsIsNull() {
-
     // given
     startExternalTaskProcess();
+    var historicExternalTaskLogQuery = historyService
+      .createHistoricExternalTaskLogQuery();
 
     // when/then
-    assertThatThrownBy(() -> historyService
-        .createHistoricExternalTaskLogQuery()
-        .executionIdIn((String[]) null)
-        .singleResult())
+    assertThatThrownBy(() -> historicExternalTaskLogQuery.executionIdIn((String[]) null))
       .isInstanceOf(NotValidException.class);
 
   }
 
   @Test
   public void testQueryFailsByExecutionIdsContainNull() {
-
     // given
     startExternalTaskProcess();
     String[] activityIdsContainNull = {"a", null, "b"};
+    var historicExternalTaskLogQuery = historyService
+      .createHistoricExternalTaskLogQuery();
 
     // when/then
-    assertThatThrownBy(() -> historyService
-        .createHistoricExternalTaskLogQuery()
-        .executionIdIn(activityIdsContainNull)
-        .singleResult())
+    assertThatThrownBy(() -> historicExternalTaskLogQuery.executionIdIn(activityIdsContainNull))
       .isInstanceOf(NotValidException.class);
 
   }
 
   @Test
   public void testQueryFailsByExecutionIdsContainEmptyString() {
-
     // given
     startExternalTaskProcess();
     String[] activityIdsContainEmptyString = {"a", "", "b"};
+    var historicExternalTaskLogQuery = historyService
+      .createHistoricExternalTaskLogQuery();
 
     // when/then
-    assertThatThrownBy(() -> historyService
-        .createHistoricExternalTaskLogQuery()
-        .executionIdIn(activityIdsContainEmptyString)
-        .singleResult())
+    assertThatThrownBy(() -> historicExternalTaskLogQuery.executionIdIn(activityIdsContainEmptyString))
       .isInstanceOf(NotValidException.class);
 
   }
@@ -594,15 +566,13 @@ public class HistoricExternalTaskLogQueryTest {
 
   @Test
   public void testQueryFailsByInvalidProcessInstanceId() {
-
     // given
     startExternalTaskProcess();
+    var historicExternalTaskLogQuery = historyService
+      .createHistoricExternalTaskLogQuery();
 
     // when/then
-    assertThatThrownBy(() -> historyService
-        .createHistoricExternalTaskLogQuery()
-        .processInstanceId(null)
-        .singleResult())
+    assertThatThrownBy(() -> historicExternalTaskLogQuery.processInstanceId(null))
       .isInstanceOf(NotValidException.class);
   }
 
@@ -641,15 +611,13 @@ public class HistoricExternalTaskLogQueryTest {
 
   @Test
   public void testQueryFailsByInvalidProcessDefinitionId() {
-
     // given
     startExternalTaskProcess();
+    var historicExternalTaskLogQuery = historyService
+      .createHistoricExternalTaskLogQuery();
 
     // when/then
-    assertThatThrownBy(() -> historyService
-        .createHistoricExternalTaskLogQuery()
-        .processDefinitionId(null)
-        .singleResult())
+    assertThatThrownBy(() -> historicExternalTaskLogQuery.processDefinitionId(null))
       .isInstanceOf(NotValidException.class);
 
   }
@@ -689,15 +657,13 @@ public class HistoricExternalTaskLogQueryTest {
 
   @Test
   public void testQueryFailsByInvalidProcessDefinitionKey() {
-
     // given
     startExternalTaskProcess();
+    var historicExternalTaskLogQuery = historyService
+      .createHistoricExternalTaskLogQuery();
 
     // when/then
-    assertThatThrownBy(() -> historyService
-        .createHistoricExternalTaskLogQuery()
-        .processDefinitionKey(null)
-        .singleResult())
+    assertThatThrownBy(() -> historicExternalTaskLogQuery.processDefinitionKey(null))
       .isInstanceOf(NotValidException.class);
 
   }

@@ -73,7 +73,7 @@ private ProcessDefinitionEntity getProcessDefinition() {
   @Test
   @Deployment
   public void shouldParseOperatonFormDefinitionVersionBinding() {
-    // given a deployed process with a StartEvent containing a Operaton Form definition with version binding
+    // given a deployed process with a StartEvent containing an Operaton Form definition with version binding
     // then
     FormDefinition startFormDefinition = getStartFormDefinition();
 
@@ -85,7 +85,7 @@ private ProcessDefinitionEntity getProcessDefinition() {
   @Test
   @Deployment
   public void shouldParseOperatonFormDefinitionLatestBinding() {
-    // given a deployed process with a StartEvent containing a Operaton Form definition with latest binding
+    // given a deployed process with a StartEvent containing an Operaton Form definition with latest binding
     // then
     FormDefinition startFormDefinition = getStartFormDefinition();
 
@@ -96,7 +96,7 @@ private ProcessDefinitionEntity getProcessDefinition() {
   @Test
   @Deployment
   public void shouldParseOperatonFormDefinitionMultipleStartEvents() {
-    // given a deployed process with a StartEvent containing a Operaton Form definition with latest binding and another StartEvent inside a subprocess
+    // given a deployed process with a StartEvent containing an Operaton Form definition with latest binding and another StartEvent inside a subprocess
     // then
     FormDefinition startFormDefinition = getStartFormDefinition();
 
@@ -107,7 +107,7 @@ private ProcessDefinitionEntity getProcessDefinition() {
   @Test
   @Deployment
   public void shouldParseOperatonFormDefinitionDeploymentBinding() {
-    // given a deployed process with a StartEvent containing a Operaton Form definition with deployment binding
+    // given a deployed process with a StartEvent containing an Operaton Form definition with deployment binding
     // then
     FormDefinition startFormDefinition = getStartFormDefinition();
 
@@ -117,21 +117,24 @@ private ProcessDefinitionEntity getProcessDefinition() {
 
   @Test
   public void shouldNotParseOperatonFormDefinitionUnsupportedBinding() {
-    // given a deployed process with a UserTask containing a Operaton Form definition with unsupported binding
+    // given a deployed process with a UserTask containing an Operaton Form definition with unsupported binding
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "shouldNotParseOperatonFormDefinitionUnsupportedBinding");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then expect parse exception
-    assertThatThrownBy(() -> repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
       .isInstanceOf(ParseException.class)
       .hasMessageContaining("Invalid element definition: value for formRefBinding attribute has to be one of [deployment, latest, version] but was unsupported");
   }
 
+  @Test
   public void shouldNotParseOperatonFormDefinitionAndFormKey() {
-    // given a deployed process with a UserTask containing a Operaton Form definition and formKey
+    // given a deployed process with a UserTask containing an Operaton Form definition and formKey
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "shouldNotParseOperatonFormDefinitionAndFormKey");
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then expect parse exception
-    assertThatThrownBy(() -> repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
       .isInstanceOf(ParseException.class)
       .hasMessageContaining("Invalid element definition: only one of the attributes formKey and formRef is allowed.");
   }

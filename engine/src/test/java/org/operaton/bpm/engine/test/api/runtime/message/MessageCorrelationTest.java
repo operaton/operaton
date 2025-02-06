@@ -1446,9 +1446,10 @@ public class MessageCorrelationTest {
 
     Map<String, Object> variables = new HashMap<>();
     variables.put("aKey", "aValue");
+    var processVariables = new HashMap<String, Object>();
 
     try {
-      runtimeService.correlateMessage("newInvoiceMessage", new HashMap<>(), variables);
+      runtimeService.correlateMessage("newInvoiceMessage", processVariables, variables);
       fail("It should not be possible to correlate a message to a suspended process definition.");
     } catch (MismatchingMessageCorrelationException e) {
       // expected

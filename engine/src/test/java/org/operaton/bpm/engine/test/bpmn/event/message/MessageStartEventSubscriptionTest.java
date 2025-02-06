@@ -210,16 +210,16 @@ public class MessageStartEventSubscriptionTest {
 
     // deploy second version of the process
     String deploymentId = testRule.deploy(SINGLE_MESSAGE_START_EVENT_XML).getId();
-    org.operaton.bpm.engine.repository.Deployment deployment = repositoryService.createDeploymentQuery().deploymentId(deploymentId).singleResult();
+    var deployment = repositoryService.createDeploymentQuery().deploymentId(deploymentId).singleResult();
 
     // delete it
     repositoryService.deleteDeployment(deployment.getId(), true);
+    var conditionEvaluationBuilder = runtimeService
+      .createConditionEvaluation()
+      .setVariable("foo", 1);
 
     // when/then
-    assertThatThrownBy(() -> runtimeService
-        .createConditionEvaluation()
-        .setVariable("foo", 1)
-        .evaluateStartConditions())
+    assertThatThrownBy(conditionEvaluationBuilder::evaluateStartConditions)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("No subscriptions were found during evaluation of the conditional start events.");
   }

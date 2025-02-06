@@ -93,10 +93,11 @@ public class UnhandledBpmnErrorTest {
     // After process start, usertask in subprocess should exist
     Task task = taskService.createTaskQuery().singleResult();
     assertEquals("subprocessTask", task.getName());
+    String taskId = task.getId();
 
     // when/then
     // After task completion, error end event is reached which is never caught in the process
-    assertThatThrownBy(() -> taskService.complete(task.getId()))
+    assertThatThrownBy(() -> taskService.complete(taskId))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("no error handler");
   }
@@ -112,11 +113,12 @@ public class UnhandledBpmnErrorTest {
     // assume
     Task task = taskService.createTaskQuery().singleResult();
     assertEquals("Task in subprocess", task.getName());
+    String taskId = task.getId();
 
     // when/then
     // Completing the task will reach the end error event,
     // which is never caught in the process
-    assertThatThrownBy(() -> taskService.complete(task.getId()))
+    assertThatThrownBy(() -> taskService.complete(taskId))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("no error handler");
   }
@@ -131,10 +133,11 @@ public class UnhandledBpmnErrorTest {
     // assume
     Task task = taskService.createTaskQuery().singleResult();
     assertEquals("subprocessTask", task.getName());
+    String taskId = task.getId();
 
     // when/then
     // After task completion, error end event is reached which is never caught in the process
-    assertThatThrownBy(() -> taskService.complete(task.getId()))
+    assertThatThrownBy(() -> taskService.complete(taskId))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("no error handler");
   }

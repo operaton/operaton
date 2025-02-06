@@ -274,7 +274,7 @@ public class RuntimeServiceTest {
     // if we skip the custom listeners,
     runtimeService.deleteProcessInstance(processInstance.getId(), null, true);
 
-    // buit-in listeners are still invoked and thus history is written
+    // built-in listeners are still invoked and thus history is written
     if(!ProcessEngineConfiguration.HISTORY_NONE.equals(processEngineConfiguration.getHistory())) {
       // verify that all historic activity instances are ended
       List<HistoricActivityInstance> hais = historyService.createHistoricActivityInstanceQuery().list();
@@ -339,7 +339,7 @@ public class RuntimeServiceTest {
     // if we do not skip the custom listeners
     runtimeService.deleteProcessInstance(instance.getId(), null, false);
 
-    // then the the custom listener is invoked
+    // then the custom listener is invoked
     assertEquals(1, RecorderTaskListener.getRecordedEvents().size());
     assertEquals(TaskListener.EVENTNAME_DELETE, RecorderTaskListener.getRecordedEvents().get(0).getEvent());
 
@@ -349,7 +349,7 @@ public class RuntimeServiceTest {
 
     runtimeService.deleteProcessInstance(instance.getId(), null, true);
 
-    // then the the custom listener is not invoked
+    // then the custom listener is not invoked
     assertTrue(RecorderTaskListener.getRecordedEvents().isEmpty());
   }
 
@@ -615,7 +615,7 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  public void testFindActiveActivityIdsUnexistingExecututionId() {
+  public void testFindActiveActivityIdsUnexistingExecutionId() {
     try {
       runtimeService.getActiveActivityIds("unexistingExecutionId");
       fail("ProcessEngineException expected");
@@ -625,7 +625,7 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  public void testFindActiveActivityIdsNullExecututionId() {
+  public void testFindActiveActivityIdsNullExecutionId() {
     try {
       runtimeService.getActiveActivityIds(null);
       fail("ProcessEngineException expected");
@@ -716,7 +716,7 @@ public class RuntimeServiceTest {
   }
 
   @Test
-  public void testSignalUnexistingExecututionId() {
+  public void testSignalUnexistingExecutionId() {
     try {
       runtimeService.signal("unexistingExecutionId");
       fail("ProcessEngineException expected");
@@ -763,7 +763,7 @@ public class RuntimeServiceTest {
     processVariables.put("variable", "value");
 
     // signal the execution while passing in the variables
-    runtimeService.signal(processInstance.getId(), "dummySignalName", new String("SignalData"), processVariables);
+    runtimeService.signal(processInstance.getId(), "dummySignalName", "SignalData", processVariables);
 
     Map<String, Object> variables = runtimeService.getVariables(processInstance.getId());
     assertEquals(variables, processVariables);
@@ -931,7 +931,7 @@ public class RuntimeServiceTest {
     // this works
     VariableMap variablesTyped = runtimeService.getVariablesTyped(processInstance.getId(), false);
     assertNotNull(variablesTyped.getValueTyped("broken"));
-    variablesTyped = runtimeService.getVariablesTyped(processInstance.getId(), Arrays.asList("broken"), false);
+    variablesTyped = runtimeService.getVariablesTyped(processInstance.getId(), List.of("broken"), false);
     assertNotNull(variablesTyped.getValueTyped("broken"));
 
     // this does not
@@ -943,7 +943,7 @@ public class RuntimeServiceTest {
 
     // this does not
     try {
-      runtimeService.getVariablesTyped(processInstance.getId(), Arrays.asList("broken"), true);
+      runtimeService.getVariablesTyped(processInstance.getId(), List.of("broken"), true);
     } catch(ProcessEngineException e) {
       testRule.assertTextPresent("Cannot deserialize object", e.getMessage());
     }
@@ -976,7 +976,7 @@ public class RuntimeServiceTest {
     // this works
     VariableMap variablesTyped = runtimeService.getVariablesLocalTyped(processInstance.getId(), false);
     assertNotNull(variablesTyped.getValueTyped("broken"));
-    variablesTyped = runtimeService.getVariablesLocalTyped(processInstance.getId(), Arrays.asList("broken"), false);
+    variablesTyped = runtimeService.getVariablesLocalTyped(processInstance.getId(), List.of("broken"), false);
     assertNotNull(variablesTyped.getValueTyped("broken"));
 
     // this does not
@@ -988,7 +988,7 @@ public class RuntimeServiceTest {
 
     // this does not
     try {
-      runtimeService.getVariablesLocalTyped(processInstance.getId(), Arrays.asList("broken"), true);
+      runtimeService.getVariablesLocalTyped(processInstance.getId(), List.of("broken"), true);
     } catch(ProcessEngineException e) {
       testRule.assertTextPresent("Cannot deserialize object", e.getMessage());
     }
@@ -1025,9 +1025,10 @@ public class RuntimeServiceTest {
     String id = runtimeService.startProcessInstanceByKey("process").getId();
     Task task = engineRule.getTaskService().createTaskQuery().processInstanceId(id).singleResult();
     engineRule.getTaskService().complete(task.getId());
+    VariableMap variables = createVariables().putValue("foo", "bar");
 
     // when setting variables then exception is thrown
-    assertThatThrownBy(() -> runtimeService.setVariables(id, Variables.createVariables().putValue("foo", "bar")))
+    assertThatThrownBy(() -> runtimeService.setVariables(id, variables))
         .isInstanceOf(NullValueException.class)
         .hasMessage("execution " + id + " doesn't exist: execution is null");
   }
@@ -2705,7 +2706,7 @@ public class RuntimeServiceTest {
   //Test for a bug: when the process engine is rebooted the
   // cache is cleaned and the deployed process definition is
   // removed from the process cache. This led to problems because
-  // the id wasnt fetched from the DB after a redeploy.
+  // the id wasn't fetched from the DB after a redeploy.
   @Test
   public void testStartProcessInstanceByIdAfterReboot() {
 
@@ -2872,10 +2873,10 @@ public class RuntimeServiceTest {
     assertEquals((short) 123, variables.get("shortVar"));
     assertEquals(1234, variables.get("integerVar"));
     assertEquals(now, variables.get("dateVar"));
-    assertEquals(null, variables.get("nullVar"));
+    assertNull(variables.get("nullVar"));
     assertEquals(serializable, variables.get("serializableVar"));
-    assertTrue(Arrays.equals(bytes, (byte[]) variables.get("bytesVar")));
-    assertTrue(Arrays.equals(streamBytes, (byte[]) variables.get("byteStreamVar")));
+    assertArrayEquals(bytes, (byte[]) variables.get("bytesVar"));
+    assertArrayEquals(streamBytes, (byte[]) variables.get("byteStreamVar"));
     assertEquals(9, variables.size());
 
     // Set all existing variables values to null
@@ -2890,15 +2891,15 @@ public class RuntimeServiceTest {
     runtimeService.setVariable(processInstance.getId(), "byteStreamVar", null);
 
     variables = runtimeService.getVariables(processInstance.getId());
-    assertEquals(null, variables.get("longVar"));
-    assertEquals(null, variables.get("shortVar"));
-    assertEquals(null, variables.get("integerVar"));
-    assertEquals(null, variables.get("stringVar"));
-    assertEquals(null, variables.get("dateVar"));
-    assertEquals(null, variables.get("nullVar"));
-    assertEquals(null, variables.get("serializableVar"));
-    assertEquals(null, variables.get("bytesVar"));
-    assertEquals(null, variables.get("byteStreamVar"));
+    assertNull(variables.get("longVar"));
+    assertNull(variables.get("shortVar"));
+    assertNull(variables.get("integerVar"));
+    assertNull(variables.get("stringVar"));
+    assertNull(variables.get("dateVar"));
+    assertNull(variables.get("nullVar"));
+    assertNull(variables.get("serializableVar"));
+    assertNull(variables.get("bytesVar"));
+    assertNull(variables.get("byteStreamVar"));
     assertEquals(9, variables.size());
 
     // Update existing variable values again, and add a new variable
@@ -2919,10 +2920,10 @@ public class RuntimeServiceTest {
     assertEquals(4567, variables.get("integerVar"));
     assertEquals("colgate", variables.get("stringVar"));
     assertEquals(now, variables.get("dateVar"));
-    assertEquals(null, variables.get("nullVar"));
+    assertNull(variables.get("nullVar"));
     assertEquals(serializable, variables.get("serializableVar"));
-    assertTrue(Arrays.equals(bytes, (byte[]) variables.get("bytesVar")));
-    assertTrue(Arrays.equals(streamBytes, (byte[]) variables.get("byteStreamVar")));
+    assertArrayEquals(bytes, (byte[]) variables.get("bytesVar"));
+    assertArrayEquals(streamBytes, (byte[]) variables.get("byteStreamVar"));
     assertEquals(10, variables.size());
 
     Collection<String> varFilter = new ArrayList<>(2);
@@ -2999,8 +3000,8 @@ public class RuntimeServiceTest {
 
     Task task = taskService.createTaskQuery().singleResult();
 
-    SerializableVariable var = (SerializableVariable) taskService.getVariable(task.getId(), "variableName");
-    assertNotNull(var);
+    SerializableVariable variable = (SerializableVariable) taskService.getVariable(task.getId(), "variableName");
+    assertNotNull(variable);
 
   }
 
@@ -3042,7 +3043,7 @@ public class RuntimeServiceTest {
   public void testSetVariableInScopeExplicitUpdate() {
     // when a process instance is started and the task after the subprocess reached
     runtimeService.startProcessInstanceByKey("testProcess",
-        Collections.<String, Object>singletonMap("shouldExplicitlyUpdateVariable", true));
+        Collections.singletonMap("shouldExplicitlyUpdateVariable", true));
 
     // then there should be only the "shouldExplicitlyUpdateVariable" variable
     VariableInstance variableInstance = runtimeService.createVariableInstanceQuery().singleResult();
@@ -3055,7 +3056,7 @@ public class RuntimeServiceTest {
   public void testSetVariableInScopeImplicitUpdate() {
     // when a process instance is started and the task after the subprocess reached
     runtimeService.startProcessInstanceByKey("testProcess",
-        Collections.<String, Object>singletonMap("shouldExplicitlyUpdateVariable", true));
+        Collections.singletonMap("shouldExplicitlyUpdateVariable", true));
 
     // then there should be only the "shouldExplicitlyUpdateVariable" variable
     VariableInstance variableInstance = runtimeService.createVariableInstanceQuery().singleResult();
@@ -3068,7 +3069,7 @@ public class RuntimeServiceTest {
   public void testUpdateVariableInProcessWithoutWaitstate() {
     // when a process instance is started
     runtimeService.startProcessInstanceByKey("oneScriptTaskProcess",
-        Collections.<String, Object>singletonMap("var", new SimpleSerializableBean(10)));
+        Collections.singletonMap("var", new SimpleSerializableBean(10)));
 
     // then it should succeeds successfully
     ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().singleResult();
@@ -3080,7 +3081,7 @@ public class RuntimeServiceTest {
   public void testSetUpdateAndDeleteComplexVariable() {
     // when a process instance is started
     runtimeService.startProcessInstanceByKey("oneUserTaskProcess",
-        Collections.<String, Object>singletonMap("var", new SimpleSerializableBean(10)));
+        Collections.singletonMap("var", new SimpleSerializableBean(10)));
 
     // then it should wait at the user task
     ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().singleResult();

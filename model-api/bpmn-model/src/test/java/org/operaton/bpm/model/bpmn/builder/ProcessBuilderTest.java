@@ -420,7 +420,7 @@ public class ProcessBuilderTest {
     assertThat(((EndEvent) modelInstance.getModelElementById("endEvent")).getDocumentations().iterator().next().getTextContent()).isEqualTo("endEventDocumentation");
 
     final Documentation[] startEventDocumentations = ((StartEvent) modelInstance.getModelElementById("startEvent")).getDocumentations().toArray(new Documentation[]{});
-    assertThat(startEventDocumentations.length).isEqualTo(3);
+    assertThat(startEventDocumentations).hasSize(3);
     for (int i = 1; i <=3; i++) {
       assertThat(startEventDocumentations[i - 1].getTextContent()).isEqualTo("startEventDocumentation_" + i);
     }
@@ -1096,25 +1096,18 @@ public class ProcessBuilderTest {
 
   @Test
   void testEventBasedGatewayAsyncAfter() {
+    var eventBasedGatewayBuilder = Bpmn.createProcess()
+      .startEvent()
+      .eventBasedGateway();
     try {
-      modelInstance = Bpmn.createProcess()
-        .startEvent()
-        .eventBasedGateway()
-          .operatonAsyncAfter()
-        .done();
-
+      eventBasedGatewayBuilder.operatonAsyncAfter();
       fail("Expected UnsupportedOperationException");
     } catch(UnsupportedOperationException ex) {
       // happy path
     }
 
     try {
-      modelInstance = Bpmn.createProcess()
-        .startEvent()
-        .eventBasedGateway()
-          .operatonAsyncAfter(true)
-        .endEvent()
-        .done();
+      eventBasedGatewayBuilder.operatonAsyncAfter(true) ;
       fail("Expected UnsupportedOperationException");
     } catch(UnsupportedOperationException ex) {
       // happy ending :D
@@ -1185,7 +1178,7 @@ public class ProcessBuilderTest {
   }
 
   @Test
-  void testMessageEventDefintionEndEvent() {
+  void testMessageEventDefinitionEndEvent() {
     modelInstance = Bpmn.createProcess()
       .startEvent()
       .endEvent("end")
@@ -1248,7 +1241,7 @@ public class ProcessBuilderTest {
   }
 
   @Test
-  void testIntermediateMessageEventDefintionThrowEvent() {
+  void testIntermediateMessageEventDefinitionThrowEvent() {
     modelInstance = Bpmn.createProcess()
       .startEvent()
       .intermediateThrowEvent("throw")
@@ -1276,7 +1269,7 @@ public class ProcessBuilderTest {
 
 
   @Test
-  void testIntermediateMessageEventDefintionThrowEventWithExistingMessage() {
+  void testIntermediateMessageEventDefinitionThrowEventWithExistingMessage() {
     modelInstance = Bpmn.createProcess()
       .startEvent()
       .intermediateThrowEvent("throw1")
@@ -2545,48 +2538,44 @@ public class ProcessBuilderTest {
 
   @Test
   void testOnlyOneCompensateBoundaryEventAllowed() {
-    assertThatThrownBy(() -> {
-      // given
-      UserTaskBuilder builder = Bpmn.createProcess()
-        .startEvent()
-        .userTask("task")
-        .boundaryEvent("boundary")
-        .compensateEventDefinition().compensateEventDefinitionDone()
-        .compensationStart()
-        .userTask("compensate").name("compensate");
-
-      // when
-      builder.userTask();
-    }).isInstanceOf(BpmnModelException.class)
-            .hasMessageContaining("Only single compensation handler allowed. Call compensationDone() to continue main flow.");
+    // given
+    UserTaskBuilder builder = Bpmn.createProcess()
+      .startEvent()
+      .userTask("task")
+      .boundaryEvent("boundary")
+      .compensateEventDefinition().compensateEventDefinitionDone()
+      .compensationStart()
+      .userTask("compensate").name("compensate");
+    // when
+    assertThatThrownBy(builder::userTask)
+      .isInstanceOf(BpmnModelException.class)
+      .hasMessageContaining("Only single compensation handler allowed. Call compensationDone() to continue main flow.");
   }
 
   @Test
   void testInvalidCompensationStartCall() {
-    assertThatThrownBy(() -> {
-      // given
-      StartEventBuilder builder = Bpmn.createProcess().startEvent();
+    // given
+    StartEventBuilder builder = Bpmn.createProcess().startEvent();
 
-      // when
-      builder.compensationStart();
-    }).isInstanceOf(BpmnModelException.class)
-                    .hasMessageContaining("Compensation can only be started on a boundary event with a compensation event definition");
+    // when
+    assertThatThrownBy(builder::compensationStart)
+      .isInstanceOf(BpmnModelException.class)
+      .hasMessageContaining("Compensation can only be started on a boundary event with a compensation event definition");
   }
 
   @Test
   void testInvalidCompensationDoneCall() {
-    assertThatThrownBy(() -> {
-      // given
-      AbstractFlowNodeBuilder builder = Bpmn.createProcess()
-        .startEvent()
-        .userTask("task")
-        .boundaryEvent("boundary")
-        .compensateEventDefinition().compensateEventDefinitionDone();
+    // given
+    var builder = Bpmn.createProcess()
+      .startEvent()
+      .userTask("task")
+      .boundaryEvent("boundary")
+      .compensateEventDefinition().compensateEventDefinitionDone();
 
-      // when
-      builder.compensationDone();
-    }).isInstanceOf(BpmnModelException.class)
-            .hasMessageContaining("No compensation in progress. Call compensationStart() first.");
+    // when
+    assertThatThrownBy(builder::compensationDone)
+      .isInstanceOf(BpmnModelException.class)
+      .hasMessageContaining("No compensation in progress. Call compensationStart() first.");
   }
 
   @Test
@@ -3041,7 +3030,7 @@ public class ProcessBuilderTest {
   }
 
   @Test
-  void testCompensateEventDefintionCatchStartEvent() {
+  void testCompensateEventDefinitionCatchStartEvent() {
     modelInstance = Bpmn.createProcess()
       .startEvent("start")
         .compensateEventDefinition()
@@ -3059,7 +3048,7 @@ public class ProcessBuilderTest {
 
 
   @Test
-  void testCompensateEventDefintionCatchBoundaryEvent() {
+  void testCompensateEventDefinitionCatchBoundaryEvent() {
     modelInstance = Bpmn.createProcess()
       .startEvent()
       .userTask("userTask")
@@ -3077,7 +3066,7 @@ public class ProcessBuilderTest {
   }
 
   @Test
-  void testCompensateEventDefintionCatchBoundaryEventWithId() {
+  void testCompensateEventDefinitionCatchBoundaryEventWithId() {
     modelInstance = Bpmn.createProcess()
       .startEvent()
       .userTask("userTask")
@@ -3093,7 +3082,7 @@ public class ProcessBuilderTest {
   }
 
   @Test
-  void testCompensateEventDefintionThrowEndEvent() {
+  void testCompensateEventDefinitionThrowEndEvent() {
     modelInstance = Bpmn.createProcess()
       .startEvent()
       .userTask("userTask")
@@ -3111,7 +3100,7 @@ public class ProcessBuilderTest {
   }
 
   @Test
-  void testCompensateEventDefintionThrowIntermediateEvent() {
+  void testCompensateEventDefinitionThrowIntermediateEvent() {
     modelInstance = Bpmn.createProcess()
       .startEvent()
       .userTask("userTask")
@@ -3130,7 +3119,7 @@ public class ProcessBuilderTest {
   }
 
   @Test
-  void testCompensateEventDefintionThrowIntermediateEventWithId() {
+  void testCompensateEventDefinitionThrowIntermediateEventWithId() {
     modelInstance = Bpmn.createProcess()
       .startEvent()
       .userTask("userTask")
@@ -3147,7 +3136,7 @@ public class ProcessBuilderTest {
   }
 
   @Test
-  void testCompensateEventDefintionReferencesNonExistingActivity() {
+  void testCompensateEventDefinitionReferencesNonExistingActivity() {
     modelInstance = Bpmn.createProcess()
       .startEvent()
       .userTask("userTask")
@@ -3156,13 +3145,12 @@ public class ProcessBuilderTest {
 
     UserTask userTask = modelInstance.getModelElementById("userTask");
     UserTaskBuilder userTaskBuilder = userTask.builder();
+    var compensateEventDefinitionBuilder = userTaskBuilder
+      .boundaryEvent()
+      .compensateEventDefinition();
 
     try {
-      userTaskBuilder
-        .boundaryEvent()
-        .compensateEventDefinition()
-        .activityRef("nonExistingTask")
-        .done();
+      compensateEventDefinitionBuilder.activityRef("nonExistingTask");
       fail("should fail");
     } catch (BpmnModelException e) {
       assertThat(e).hasMessageContaining("Activity with id 'nonExistingTask' does not exist");
@@ -3170,7 +3158,7 @@ public class ProcessBuilderTest {
   }
 
   @Test
-  void testCompensateEventDefintionReferencesActivityInDifferentScope() {
+  void testCompensateEventDefinitionReferencesActivityInDifferentScope() {
     modelInstance = Bpmn.createProcess()
       .startEvent()
       .userTask("userTask")
@@ -3185,13 +3173,12 @@ public class ProcessBuilderTest {
 
     UserTask userTask = modelInstance.getModelElementById("userTask");
     UserTaskBuilder userTaskBuilder = userTask.builder();
+    var compensateEventDefinitionBuilder = userTaskBuilder
+      .boundaryEvent("boundary")
+      .compensateEventDefinition();
 
     try {
-      userTaskBuilder
-        .boundaryEvent("boundary")
-        .compensateEventDefinition()
-        .activityRef("subProcessTask")
-        .done();
+      compensateEventDefinitionBuilder.activityRef("subProcessTask");
       fail("should fail");
     } catch (BpmnModelException e) {
       assertThat(e).hasMessageContaining("Activity with id 'subProcessTask' must be in the same scope as 'boundary'");

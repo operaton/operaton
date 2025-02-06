@@ -615,12 +615,12 @@ public class BpmnParseTest {
   @Test
   public void testParseAsyncActivityWrappedInMultiInstanceBodyWithAsyncMultiInstance(){
     ActivityImpl innerTask = findActivityInDeployedProcessDefinition("miTask");
-    assertEquals(true, innerTask.isAsyncBefore());
-    assertEquals(false, innerTask.isAsyncAfter());
+    assertTrue(innerTask.isAsyncBefore());
+    assertFalse(innerTask.isAsyncAfter());
 
     ActivityImpl miBody = innerTask.getParentFlowScopeActivity();
-    assertEquals(false, miBody.isAsyncBefore());
-    assertEquals(true, miBody.isAsyncAfter());
+    assertFalse(miBody.isAsyncBefore());
+    assertTrue(miBody.isAsyncAfter());
   }
 
   @Test
@@ -698,9 +698,10 @@ public class BpmnParseTest {
 
 
   public void parseInvalidConditionalEvent(String processDefinitionResource, String elementId) {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), processDefinitionResource);
+    var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), processDefinitionResource);
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      deploymentBuilder.deploy();
       fail("Exception expected: Process definition could be parsed, conditional event definition contains no condition.");
     } catch (ParseException e) {
       testRule.assertTextPresent("The content of element 'bpmn:conditionalEventDefinition' is not complete.", e.getMessage());
@@ -1211,12 +1212,12 @@ public class BpmnParseTest {
     // given
     String resource =
         TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseProcessDefinitionXXE");
+    var deploymentBuilder = repositoryService.createDeployment()
+      .name(resource)
+      .addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> repositoryService.createDeployment()
-        .name(resource)
-        .addClasspathResource(resource)
-        .deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("DOCTYPE is disallowed when the feature " +
           "\"http://apache.org/xml/features/disallow-doctype-decl\" set to true.");
@@ -1226,15 +1227,14 @@ public class BpmnParseTest {
   public void shouldAllowXxeProcessing() {
     // given
     processEngineConfiguration.setEnableXxeProcessing(true);
-
     String resource =
         TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseProcessDefinitionXXE");
+    var deploymentBuilder = repositoryService.createDeployment()
+      .name(resource)
+      .addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> repositoryService.createDeployment()
-        .name(resource)
-        .addClasspathResource(resource)
-        .deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Could not parse")
       .hasMessageContaining("file.txt");

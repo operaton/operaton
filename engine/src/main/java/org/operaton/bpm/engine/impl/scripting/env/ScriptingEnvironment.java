@@ -104,10 +104,8 @@ public class ScriptingEnvironment {
     ProcessApplicationReference processApplication = Context.getCurrentProcessApplication();
 
     Map<String, List<ExecutableScript>> result = null;
-    if (config.isEnableFetchScriptEngineFromProcessApplication()) {
-      if(processApplication != null) {
-        result = getPaEnvScripts(processApplication);
-      }
+    if (config.isEnableFetchScriptEngineFromProcessApplication() && processApplication != null) {
+      result = getPaEnvScripts(processApplication);
     }
 
     return result != null ? result : env;

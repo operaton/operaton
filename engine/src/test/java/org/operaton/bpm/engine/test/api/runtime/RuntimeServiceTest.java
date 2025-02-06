@@ -1042,13 +1042,11 @@ public class RuntimeServiceTest {
         assertTrue(currentHistoricDetail instanceof HistoricDetailVariableInstanceUpdateEntity);
         HistoricDetailVariableInstanceUpdateEntity historicVariableUpdate = (HistoricDetailVariableInstanceUpdateEntity) currentHistoricDetail;
 
-        if (historicVariableUpdate.getName().equals(variableName)) {
-          if (historicVariableUpdate.getValue() == null) {
-            if (deletedVariableUpdateFound) {
-              fail("Mismatch: A HistoricVariableUpdateEntity with a null value already found");
-            } else {
-              deletedVariableUpdateFound = true;
-            }
+        if (historicVariableUpdate.getName().equals(variableName) && historicVariableUpdate.getValue() == null) {
+          if (deletedVariableUpdateFound) {
+            fail("Mismatch: A HistoricVariableUpdateEntity with a null value already found");
+          } else {
+            deletedVariableUpdateFound = true;
           }
         }
       }

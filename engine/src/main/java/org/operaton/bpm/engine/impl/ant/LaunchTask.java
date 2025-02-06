@@ -31,7 +31,7 @@ import org.apache.tools.ant.Task;
 public class LaunchTask extends Task {
 
   private static final String FILESEPARATOR = System.getProperty("file.separator");
-  
+
   File dir;
   String script;
   String msg;
@@ -41,11 +41,11 @@ public class LaunchTask extends Task {
   public void execute() throws BuildException {
     if (dir==null) {
       throw new BuildException("dir attribute is required with the launch task");
-    }    
+    }
     if (script==null) {
       throw new BuildException("script attribute is required with the launch task");
-    }    
-    
+    }
+
     String[] cmd = null;
     String executable = getExecutable();
     if (args!=null) {
@@ -56,11 +56,11 @@ public class LaunchTask extends Task {
         pieces.add(tokenizer.nextToken());
       }
       cmd = pieces.toArray(new String[pieces.size()]);
-      
+
     } else {
       cmd = new String[]{executable};
     }
-    
+
     LaunchThread.launch(this,cmd,dir,msg);
   }
 
@@ -71,8 +71,8 @@ public class LaunchTask extends Task {
     if (exists(base)) {
       return base;
     }
-    
-    if (os.indexOf("windows")!=-1) {
+
+    if (os.contains("windows")) {
       if (exists(base+".exe")) {
         return base+".exe";
       }
@@ -80,13 +80,11 @@ public class LaunchTask extends Task {
         return base+".bat";
       }
     }
-      
-    if (os.indexOf("linux")!=-1 || os.indexOf("mac")!=-1) {
-      if (exists(base+".sh")) {
+
+    if ((os.contains("linux") || os.contains("mac")) && exists(base+".sh")) {
         return base+".sh";
-      }
     }
-  
+
     throw new BuildException("couldn't find executable for script "+base);
   }
 
@@ -98,15 +96,15 @@ public class LaunchTask extends Task {
   public void setDir(File dir) {
     this.dir = dir;
   }
-  
+
   public void setScript(String script) {
     this.script = script;
   }
-  
+
   public void setMsg(String msg) {
     this.msg = msg;
   }
-  
+
   public void setArgs(String args) {
     this.args = args;
   }

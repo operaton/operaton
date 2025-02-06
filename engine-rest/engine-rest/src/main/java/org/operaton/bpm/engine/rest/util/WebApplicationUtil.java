@@ -28,11 +28,10 @@ public class WebApplicationUtil {
   }
 
   public static void setApplicationServer(String serverInfo) {
-    if (serverInfo != null && !serverInfo.isEmpty() ) {
+    if ((serverInfo != null && !serverInfo.isEmpty())
+            && PlatformDiagnosticsRegistry.getApplicationServer() == null) {
       // set the application server info globally for all engines in the container
-      if (PlatformDiagnosticsRegistry.getApplicationServer() == null) {
-        PlatformDiagnosticsRegistry.setApplicationServer(serverInfo);
-      }
+      PlatformDiagnosticsRegistry.setApplicationServer(serverInfo);
     }
   }
 

@@ -92,18 +92,16 @@ public class CookieConfigurator {
   public String getConfig(String currentHeader) {
     StringBuilder stringBuilder = new StringBuilder(currentHeader == null ? "" : currentHeader);
 
-    if (isSameSiteCookieEnabled) {
-      if (currentHeader == null || !CookieConstants.SAME_SITE_FIELD_NAME_REGEX.matcher(currentHeader).find()) {
-        stringBuilder
-          .append(CookieConstants.SAME_SITE_FIELD_NAME)
-          .append(sameSiteCookieValue);
-      }
+    if (isSameSiteCookieEnabled
+            && (currentHeader == null || !CookieConstants.SAME_SITE_FIELD_NAME_REGEX.matcher(currentHeader).find())) {
+      stringBuilder
+        .append(CookieConstants.SAME_SITE_FIELD_NAME)
+        .append(sameSiteCookieValue);
     }
 
-    if (isSecureCookieEnabled) {
-      if (currentHeader == null || !CookieConstants.SECURE_FLAG_NAME_REGEX.matcher(currentHeader).find()) {
-        stringBuilder.append(CookieConstants.SECURE_FLAG_NAME);
-      }
+    if (isSecureCookieEnabled
+            && (currentHeader == null || !CookieConstants.SECURE_FLAG_NAME_REGEX.matcher(currentHeader).find())) {
+      stringBuilder.append(CookieConstants.SECURE_FLAG_NAME);
     }
 
     return stringBuilder.toString();

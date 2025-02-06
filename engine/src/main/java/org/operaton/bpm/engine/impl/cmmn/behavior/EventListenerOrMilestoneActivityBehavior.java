@@ -129,11 +129,9 @@ public abstract class EventListenerOrMilestoneActivityBehavior extends PlanItemD
     ensureTransitionAllowed(execution, SUSPENDED, AVAILABLE, "resume");
 
     CmmnActivityExecution parent = execution.getParent();
-    if (parent != null) {
-      if (!parent.isActive()) {
-        String id = execution.getId();
-        throw LOG.resumeInactiveCaseException("resume", id);
-      }
+    if (parent != null && !parent.isActive()) {
+      String id = execution.getId();
+      throw LOG.resumeInactiveCaseException("resume", id);
     }
 
     resuming(execution);

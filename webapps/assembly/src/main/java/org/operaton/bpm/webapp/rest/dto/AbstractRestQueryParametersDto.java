@@ -158,16 +158,12 @@ public abstract class AbstractRestQueryParametersDto<T> extends QueryParameters 
   private List<Method> findMatchingAnnotatedMethods(String parameterName) {
     List<Method> result = new ArrayList<>();
     Method[] methods = this.getClass().getMethods();
-    for (int i = 0; i < methods.length; i++) {
-      Method method = methods[i];
+    for (Method method : methods) {
       Annotation[] methodAnnotations = method.getAnnotations();
 
-      for (int j = 0; j < methodAnnotations.length; j++) {
-        Annotation annotation = methodAnnotations[j];
-        if (annotation instanceof OperatonQueryParam parameterAnnotation) {
-          if (parameterAnnotation.value().equals(parameterName)) {
+      for (Annotation annotation : methodAnnotations) {
+        if (annotation instanceof OperatonQueryParam parameterAnnotation && parameterAnnotation.value().equals(parameterName)) {
             result.add(method);
-          }
         }
       }
     }

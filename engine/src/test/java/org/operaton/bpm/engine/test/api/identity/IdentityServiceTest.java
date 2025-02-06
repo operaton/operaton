@@ -594,10 +594,11 @@ public class IdentityServiceTest {
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/api/identity/generic.resource.id.whitelist.operaton.cfg.xml")
       .buildProcessEngine();
 
-    User user = processEngine.getIdentityService().newUser("*");
+    User user = identityService.newUser("*");
+    IdentityService identityService1 = processEngine.getIdentityService();
 
     // when/then
-    assertThatThrownBy(() -> processEngine.getIdentityService().saveUser(user))
+    assertThatThrownBy(() -> identityService1.saveUser(user))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("has an invalid id: id cannot be *. * is a reserved identifier.");
   }
@@ -608,10 +609,11 @@ public class IdentityServiceTest {
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/api/identity/generic.resource.id.whitelist.operaton.cfg.xml")
       .buildProcessEngine();
 
-    Group group = processEngine.getIdentityService().newGroup("*");
+    Group group = identityService.newGroup("*");
+    var identityService1 = processEngine.getIdentityService();
 
     // when/then
-    assertThatThrownBy(() -> processEngine.getIdentityService().saveGroup(group))
+    assertThatThrownBy(() -> identityService1.saveGroup(group))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("has an invalid id: id cannot be *. * is a reserved identifier.");
   }

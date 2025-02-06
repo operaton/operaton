@@ -341,8 +341,8 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // now we are the second time in the sub process but passed variables via expressions
     Task taskInSecondSubProcess = taskQuery.singleResult();
     assertEquals("Task in subprocess", taskInSecondSubProcess.getName());
-    assertEquals(10l, runtimeService.getVariable(taskInSecondSubProcess.getProcessInstanceId(), "y"));
-    assertEquals(10l, taskService.getVariable(taskInSecondSubProcess.getId(), "y"));
+    assertEquals(10L, runtimeService.getVariable(taskInSecondSubProcess.getProcessInstanceId(), "y"));
+    assertEquals(10L, taskService.getVariable(taskInSecondSubProcess.getId(), "y"));
 
     // Completing this task ends the subprocess which leads to a task in the super process
     taskService.complete(taskInSecondSubProcess.getId());
@@ -350,8 +350,8 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // one task in the subprocess should be active after starting the process instance
     Task taskAfterSecondSubProcess = taskQuery.singleResult();
     assertEquals("Task in super process", taskAfterSecondSubProcess.getName());
-    assertEquals(15l, runtimeService.getVariable(taskAfterSecondSubProcess.getProcessInstanceId(), "z"));
-    assertEquals(15l, taskService.getVariable(taskAfterSecondSubProcess.getId(), "z"));
+    assertEquals(15L, runtimeService.getVariable(taskAfterSecondSubProcess.getProcessInstanceId(), "z"));
+    assertEquals(15L, taskService.getVariable(taskAfterSecondSubProcess.getId(), "z"));
 
     // and end last task in Super process
     taskService.complete(taskAfterSecondSubProcess.getId());
@@ -718,17 +718,13 @@ public class CallActivityTest extends PluggableProcessEngineTest {
   }
 
   private void deployAndExpectException(BpmnModelInstance modelInstance) {
-    String deploymentId = null;
+    var deploymentBuilder = repositoryService.createDeployment().addModelInstance("process.bpmn", modelInstance);
     try {
-      deploymentId = repositoryService.createDeployment().addModelInstance("process.bpmn", modelInstance).deploy().getId();
+      testRule.deploy(deploymentBuilder);
       fail("Exception expected");
     } catch (ParseException e) {
        testRule.assertTextPresent("Missing attribute 'target'", e.getMessage());
       assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("callActivity");
-    } finally {
-      if (deploymentId != null) {
-        repositoryService.deleteDeployment(deploymentId, true);
-      }
     }
   }
 

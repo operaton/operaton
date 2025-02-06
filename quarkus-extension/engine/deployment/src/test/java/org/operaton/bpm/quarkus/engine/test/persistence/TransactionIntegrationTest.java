@@ -128,11 +128,13 @@ class TransactionIntegrationTest {
           }
         }
 
+        String taskId = taskService.createTaskQuery().singleResult().getId();
         try {
           // when
-          userBean.completeTask(taskService.createTaskQuery().singleResult().getId());
+          userBean.completeTask(taskId);
           Assertions.fail();
         } catch (ProcessEngineException ignored) {
+          // expected
         } catch (RuntimeException e) {
           fail(e.getMessage());
         }

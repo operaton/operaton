@@ -220,11 +220,12 @@ public class ConditionalStartEventTest {
     // delete it
     repositoryService.deleteDeployment(deployment.getId(), true);
 
+    var conditionEvaluationBuilder = runtimeService
+      .createConditionEvaluation()
+      .setVariable("foo", 1);
+
     // when/then
-    assertThatThrownBy(() -> runtimeService
-        .createConditionEvaluation()
-        .setVariable("foo", 1)
-        .evaluateStartConditions())
+    assertThatThrownBy(conditionEvaluationBuilder::evaluateStartConditions)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("No subscriptions were found during evaluation of the conditional start events.");
 
@@ -254,7 +255,7 @@ public class ConditionalStartEventTest {
     String processDefId3 = deployModel(MODEL_WITHOUT_CONDITION); // with the same process definition key
 
     String processDefId4 = deployProcess(TRUE_CONDITION_START_XML);
-    String processDefIа5 = deployProcess(TRUE_CONDITION_START_XML);
+    String processDefId5 = deployProcess(TRUE_CONDITION_START_XML);
     String processDefId6 = deployProcess(TRUE_CONDITION_START_XML);
 
     // two versions of a process without conditional start event
@@ -276,7 +277,7 @@ public class ConditionalStartEventTest {
     for (EventSubscription eventSubscription : list) {
       EventSubscriptionEntity eventSubscriptionEntity = (EventSubscriptionEntity) eventSubscription;
       if (!eventSubscriptionEntity.getConfiguration().equals(processDefId1)
-       && !eventSubscriptionEntity.getConfiguration().equals(processDefIа5)) {
+       && !eventSubscriptionEntity.getConfiguration().equals(processDefId5)) {
         fail("This process definition '" + eventSubscriptionEntity.getConfiguration() + "' and the respective event subscription should not exist.");
       }
     }
@@ -693,12 +694,13 @@ public class ConditionalStartEventTest {
 
     assertEquals(2, eventSubscriptions.size());
 
+    var conditionEvaluationBuilder = runtimeService
+      .createConditionEvaluation()
+      .setVariable("foo", 1)
+      .processDefinitionId("nonExistingId");
+
     // when/then
-    assertThatThrownBy(() -> runtimeService
-        .createConditionEvaluation()
-        .setVariable("foo", 1)
-        .processDefinitionId("nonExistingId")
-        .evaluateStartConditions())
+    assertThatThrownBy(conditionEvaluationBuilder::evaluateStartConditions)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("no deployed process definition found with id 'nonExistingId': processDefinition is null");
   }
@@ -713,11 +715,12 @@ public class ConditionalStartEventTest {
 
     assertEquals(0, eventSubscriptions.size());
 
+    var conditionEvaluationBuilder = runtimeService
+      .createConditionEvaluation()
+      .processDefinitionId(processDefinitionId);
+
     // when/then
-    assertThatThrownBy(() -> runtimeService
-        .createConditionEvaluation()
-        .processDefinitionId(processDefinitionId)
-        .evaluateStartConditions())
+    assertThatThrownBy(conditionEvaluationBuilder::evaluateStartConditions)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Process definition with id '" + processDefinitionId + "' does not declare conditional start event");
   }

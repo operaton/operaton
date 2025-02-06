@@ -154,13 +154,15 @@ public class TimerRecalculationTest extends PluggableProcessEngineTest {
   // helper /////////////////////////////////////////////////////////////////
   
   protected void tryRecalculateUnsupported(Job job, String type) {
+    // given
+    String jobId = job.getId();
     try {
       // when
-      managementService.recalculateJobDuedate(job.getId(), false);
+      managementService.recalculateJobDuedate(jobId, false);
       fail("The recalculation with an unsupported type should not be possible");
     } catch (ProcessEngineException pe) {
       // then
-      testRule.assertTextPresent("Only timer jobs can be recalculated, but the job with id '" + job.getId() + "' is of type '" + type, pe.getMessage());
+      testRule.assertTextPresent("Only timer jobs can be recalculated, but the job with id '" + jobId + "' is of type '" + type, pe.getMessage());
     }
   }
 

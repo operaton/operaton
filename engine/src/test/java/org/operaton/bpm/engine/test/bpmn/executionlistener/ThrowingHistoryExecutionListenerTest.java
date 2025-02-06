@@ -55,9 +55,7 @@ public class ThrowingHistoryExecutionListenerTest {
   protected static final ThrowingHistoryEventProducer HISTORY_PRODUCER = new ThrowingHistoryEventProducer();
 
   @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(config -> {
-    config.setHistoryEventProducer(HISTORY_PRODUCER);
-  });
+  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(config -> config.setHistoryEventProducer(HISTORY_PRODUCER));
   public ProcessEngineRule processEngineRule = new ProvidedProcessEngineRule(bootstrapRule);
   public ProcessEngineTestRule testRule = new ProcessEngineTestRule(processEngineRule);
 
@@ -94,9 +92,10 @@ public class ThrowingHistoryExecutionListenerTest {
     testRule.deploy(model);
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     Task task = taskService.createTaskQuery().taskDefinitionKey("userTask1").singleResult();
+    String taskId = task.getId();
 
     // when listeners are invoked
-    assertThatThrownBy(() -> taskService.complete(task.getId()))
+    assertThatThrownBy(() -> taskService.complete(taskId))
     // then
       .isInstanceOf(RuntimeException.class)
       .hasMessage(EXCEPTION_MESSAGE);
@@ -111,9 +110,10 @@ public class ThrowingHistoryExecutionListenerTest {
     testRule.deploy(model);
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     Task task = taskService.createTaskQuery().taskDefinitionKey("userTask1").singleResult();
+    String taskId = task.getId();
 
     // when listeners are invoked
-    assertThatThrownBy(() -> taskService.complete(task.getId()))
+    assertThatThrownBy(() -> taskService.complete(taskId))
     // then
       .isInstanceOf(RuntimeException.class)
       .hasMessage(EXCEPTION_MESSAGE);
@@ -128,9 +128,10 @@ public class ThrowingHistoryExecutionListenerTest {
     testRule.deploy(model);
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     Task task = taskService.createTaskQuery().taskDefinitionKey("userTask1").singleResult();
+    String taskId = task.getId();
 
     // when listeners are invoked
-    assertThatThrownBy(() -> taskService.complete(task.getId()))
+    assertThatThrownBy(() -> taskService.complete(taskId))
     // then
       .isInstanceOf(RuntimeException.class)
       .hasMessage(EXCEPTION_MESSAGE);
@@ -147,9 +148,10 @@ public class ThrowingHistoryExecutionListenerTest {
     testRule.deploy(model);
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     Task task = taskService.createTaskQuery().taskDefinitionKey("userTask1").singleResult();
+    String taskId = task.getId();
 
     // when listeners are invoked
-    assertThatThrownBy(() -> taskService.complete(task.getId()))
+    assertThatThrownBy(() -> taskService.complete(taskId))
     // then
       .isInstanceOf(RuntimeException.class)
       .hasMessage(EXCEPTION_MESSAGE);
@@ -164,9 +166,10 @@ public class ThrowingHistoryExecutionListenerTest {
     testRule.deploy(model);
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     Task task = taskService.createTaskQuery().taskDefinitionKey("userTask1").singleResult();
+    String taskId = task.getId();
 
     // when listeners are invoked
-    assertThatThrownBy(() -> taskService.complete(task.getId()))
+    assertThatThrownBy(() -> taskService.complete(taskId))
     // then
       .isInstanceOf(RuntimeException.class)
       .hasMessage(EXCEPTION_MESSAGE);
@@ -181,9 +184,10 @@ public class ThrowingHistoryExecutionListenerTest {
     testRule.deploy(model);
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     Task task = taskService.createTaskQuery().taskDefinitionKey("userTask1").singleResult();
+    String taskId = task.getId();
 
     // when listeners are invoked
-    assertThatThrownBy(() -> taskService.complete(task.getId()))
+    assertThatThrownBy(() -> taskService.complete(taskId))
     // then
       .isInstanceOf(RuntimeException.class)
       .hasMessage(EXCEPTION_MESSAGE);
@@ -257,9 +261,10 @@ public class ThrowingHistoryExecutionListenerTest {
     testRule.deploy(model);
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     Task task = taskService.createTaskQuery().taskDefinitionKey("userTask1").singleResult();
+    String taskId = task.getId();
 
     // when listeners are invoked
-    assertThatThrownBy(() -> taskService.complete(task.getId()))
+    assertThatThrownBy(() -> taskService.complete(taskId))
     // then
       .isInstanceOf(BpmnError.class);
     assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1L);
@@ -272,9 +277,10 @@ public class ThrowingHistoryExecutionListenerTest {
     testRule.deploy(model);
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     Task task = taskService.createTaskQuery().taskDefinitionKey("userTask1").singleResult();
+    String taskId = task.getId();
 
     // when listeners are invoked
-    assertThatThrownBy(() -> taskService.complete(task.getId()))
+    assertThatThrownBy(() -> taskService.complete(taskId))
     // then
       .isInstanceOf(BpmnError.class);
     assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1L);
@@ -287,9 +293,10 @@ public class ThrowingHistoryExecutionListenerTest {
     testRule.deploy(model);
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     Task task = taskService.createTaskQuery().taskDefinitionKey("userTask1").singleResult();
+    String taskId = task.getId();
 
     // when listeners are invoked
-    assertThatThrownBy(() -> taskService.complete(task.getId()))
+    assertThatThrownBy(() -> taskService.complete(taskId))
     // then
       .isInstanceOf(BpmnError.class);
     assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1L);

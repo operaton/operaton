@@ -76,135 +76,142 @@ public class HistoricProcessInstanceQueryOrTest {
 
   @Test
   public void shouldThrowExceptionByMissingStartOr() {
+    // given
+    var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery()
+      .or()
+      .endOr();
     // when/then
-    assertThatThrownBy(() -> historyService.createHistoricProcessInstanceQuery()
-        .or()
-        .endOr()
-        .endOr())
+    assertThatThrownBy(historicProcessInstanceQuery::endOr)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Invalid query usage: cannot set endOr() before or()");
   }
 
   @Test
   public void shouldThrowExceptionByNesting() {
+    // given
+    var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery()
+      .or();
     // when/then
-    assertThatThrownBy(() -> historyService.createHistoricProcessInstanceQuery()
-      .or()
-        .or()
-        .endOr()
-      .endOr()
-      .or()
-      .endOr())
+    assertThatThrownBy(historicProcessInstanceQuery::or)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Invalid query usage: cannot set or() within 'or' query");
   }
 
   @Test
   public void shouldThrowExceptionOnOrderByProcessInstanceId() {
+    // given
+    var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery()
+      .or();
     // when/then
-    assertThatThrownBy(() -> historyService.createHistoricProcessInstanceQuery()
-        .or()
-        .orderByProcessInstanceId()
-      .endOr())
+    assertThatThrownBy(historicProcessInstanceQuery::orderByProcessInstanceId)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Invalid query usage: cannot set orderByProcessInstanceId() within 'or' query");
   }
 
   @Test
   public void shouldThrowExceptionOnOrderByProcessDefinitionId() {
+    // given
+    var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery()
+      .or();
     // when/then
-    assertThatThrownBy(() -> historyService.createHistoricProcessInstanceQuery()
-        .or()
-        .orderByProcessDefinitionId()
-      .endOr())
+    assertThatThrownBy(historicProcessInstanceQuery::orderByProcessDefinitionId
+      )
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Invalid query usage: cannot set orderByProcessDefinitionId() within 'or' query");
   }
 
   @Test
   public void shouldThrowExceptionOnOrderByProcessDefinitionKey() {
+    // given
+    var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery()
+      .or();
     // when/then
-    assertThatThrownBy(() -> historyService.createHistoricProcessInstanceQuery()
-        .or()
-        .orderByProcessDefinitionKey()
-      .endOr())
+    assertThatThrownBy(historicProcessInstanceQuery::orderByProcessDefinitionKey
+      )
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Invalid query usage: cannot set orderByProcessDefinitionKey() within 'or' query");
   }
 
   @Test
   public void shouldThrowExceptionOnOrderByTenantId() {
+    // given
+    var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery()
+      .or();
     // when/then
-    assertThatThrownBy(() -> historyService.createHistoricProcessInstanceQuery()
-        .or()
-        .orderByTenantId()
-      .endOr())
+    assertThatThrownBy(historicProcessInstanceQuery::orderByTenantId
+      )
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Invalid query usage: cannot set orderByTenantId() within 'or' query");
   }
 
   @Test
   public void shouldThrowExceptionOnOrderByProcessInstanceDuration() {
+    // given
+    var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery()
+      .or();
     // when/then
-    assertThatThrownBy(() -> historyService.createHistoricProcessInstanceQuery()
-        .or()
-        .orderByProcessInstanceDuration()
-      .endOr())
+    assertThatThrownBy(historicProcessInstanceQuery::orderByProcessInstanceDuration
+      )
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Invalid query usage: cannot set orderByProcessInstanceDuration() within 'or' query");
   }
 
   @Test
   public void shouldThrowExceptionOnOrderByProcessInstanceStartTime() {
+    // given
+    var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery()
+      .or();
     // when/then
-    assertThatThrownBy(() -> historyService.createHistoricProcessInstanceQuery()
-        .or()
-          .orderByProcessInstanceStartTime()
-        .endOr())
+    assertThatThrownBy(historicProcessInstanceQuery::orderByProcessInstanceStartTime
+        )
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Invalid query usage: cannot set orderByProcessInstanceStartTime() within 'or' query");
   }
 
   @Test
   public void shouldThrowExceptionOnOrderByProcessInstanceEndTime() {
+    // given
+    var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery()
+      .or();
     // when/then
-    assertThatThrownBy(() -> historyService.createHistoricProcessInstanceQuery()
-        .or()
-          .orderByProcessInstanceEndTime()
-        .endOr())
+    assertThatThrownBy(historicProcessInstanceQuery::orderByProcessInstanceEndTime
+        )
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Invalid query usage: cannot set orderByProcessInstanceEndTime() within 'or' query");
   }
 
   @Test
   public void shouldThrowExceptionOnOrderByProcessInstanceBusinessKey() {
+    // given
+    var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery()
+      .or();
     // when/then
-    assertThatThrownBy(() -> historyService.createHistoricProcessInstanceQuery()
-        .or()
-          .orderByProcessInstanceBusinessKey()
-        .endOr())
+    assertThatThrownBy(historicProcessInstanceQuery::orderByProcessInstanceBusinessKey
+        )
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Invalid query usage: cannot set orderByProcessInstanceBusinessKey() within 'or' query");
   }
 
   @Test
   public void shouldThrowExceptionOnOrderByProcessDefinitionName() {
+    // given
+    var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery()
+      .or();
     // when/then
-    assertThatThrownBy(() -> historyService.createHistoricProcessInstanceQuery()
-        .or()
-          .orderByProcessDefinitionName()
-        .endOr())
+    assertThatThrownBy(historicProcessInstanceQuery::orderByProcessDefinitionName
+        )
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Invalid query usage: cannot set orderByProcessDefinitionName() within 'or' query");
   }
 
   @Test
   public void shouldThrowExceptionOnOrderByProcessDefinitionVersion() {
+    // given
+    var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery()
+      .or();
     // when/then
-    assertThatThrownBy(() -> historyService.createHistoricProcessInstanceQuery()
-        .or()
-          .orderByProcessDefinitionVersion()
-        .endOr())
+    assertThatThrownBy(historicProcessInstanceQuery::orderByProcessDefinitionVersion
+        )
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Invalid query usage: cannot set orderByProcessDefinitionVersion() within 'or' query");
   }

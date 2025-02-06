@@ -161,11 +161,12 @@ public class OperatonFormDefinitionDeploymentTest {
 
   @Test
   public void shouldFailDeploymentWithMultipleFormsDuplicateId() {
+    // given
+    var deploymentBuilder = createDeploymentBuilder(true).addClasspathResource(SIMPLE_FORM).addClasspathResource(SIMPLE_FORM_DUPLICATE);
     // when
-    assertThatThrownBy(() -> {
-      createDeploymentBuilder(true).addClasspathResource(SIMPLE_FORM).addClasspathResource(SIMPLE_FORM_DUPLICATE).deploy();
-    }).isInstanceOf(ProcessEngineException.class)
-    .hasMessageContaining("The deployment contains definitions with the same key 'simpleForm' (id attribute), this is not allowed");
+    assertThatThrownBy(deploymentBuilder::deploy)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("The deployment contains definitions with the same key 'simpleForm' (id attribute), this is not allowed");
   }
 
   @Test

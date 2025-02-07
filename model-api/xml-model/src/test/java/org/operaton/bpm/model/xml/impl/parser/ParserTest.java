@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.model.xml.impl.parser;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.xml.ModelInstance;
@@ -26,6 +25,7 @@ import org.operaton.bpm.model.xml.testmodel.TestModelParser;
 import java.io.InputStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ParserTest {
 
@@ -46,27 +46,23 @@ class ParserTest {
 
   @Test
   void shouldProhibitExternalSchemaAccessViaSystemProperty() {
-    Assertions.assertThatThrownBy(() -> {
-      // given
-      // the external schema access property is not supported on certain
-      // IBM JDK versions, in which case schema access cannot be restricted
-      Assumptions.assumeTrue(doesJdkSupportExternalSchemaAccessProperty());
+    // given
+    // the external schema access property is not supported on certain
+    // IBM JDK versions, in which case schema access cannot be restricted
+    Assumptions.assumeTrue(doesJdkSupportExternalSchemaAccessProperty());
 
-      System.setProperty(ACCESS_EXTERNAL_SCHEMA_PROP, "");
+    TestModelParser modelParser = new TestModelParser();
+    String testXml = "org/operaton/bpm/model/xml/impl/parser/ExternalSchemaAccess.xml";
+    InputStream testXmlAsStream = this.getClass().getClassLoader().getResourceAsStream(testXml);
+    System.setProperty(ACCESS_EXTERNAL_SCHEMA_PROP, "");
 
-      try {
-        TestModelParser modelParser = new TestModelParser();
-        String testXml = "org/operaton/bpm/model/xml/impl/parser/ExternalSchemaAccess.xml";
-        InputStream testXmlAsStream = this.getClass().getClassLoader().getResourceAsStream(testXml);
+    // when
+    assertThatThrownBy(() -> modelParser.parseModelFromStream(testXmlAsStream))
+      // then
+      .isInstanceOf(ModelParseException.class)
+      .hasMessage("SAXException while parsing input stream");
 
-        // when
-        modelParser.parseModelFromStream(testXmlAsStream);
-      } finally {
-        System.clearProperty(ACCESS_EXTERNAL_SCHEMA_PROP);
-      }
-    }) // then
-            .isInstanceOf(ModelParseException.class)
-            .hasMessage("SAXException while parsing input stream");
+    System.clearProperty(ACCESS_EXTERNAL_SCHEMA_PROP);
 
   }
 

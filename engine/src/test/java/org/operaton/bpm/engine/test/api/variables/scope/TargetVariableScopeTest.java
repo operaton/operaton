@@ -68,7 +68,7 @@ public class TargetVariableScopeTest {
   public void testExecutionWithDelegateProcess() {
     // Given we create a new process instance
     VariableMap variables = Variables.createVariables().putValue("orderIds", List.of(new int[] { 1, 2, 3 }));
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process_MultiInstanceCallAcitivity",variables);
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process_MultiInstanceCallActivity",variables);
 
     // it runs without any problems
     assertThat(processInstance.isEnded()).isTrue();
@@ -79,7 +79,7 @@ public class TargetVariableScopeTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/variables/scope/TargetVariableScopeTest.testExecutionWithScriptTargetScope.bpmn","org/operaton/bpm/engine/test/api/variables/scope/doer.bpmn"})
   public void testExecutionWithScriptTargetScope () {
     VariableMap variables = Variables.createVariables().putValue("orderIds", List.of(new int[] { 1, 2, 3 }));
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process_MultiInstanceCallAcitivity",variables);
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process_MultiInstanceCallActivity",variables);
 
     // it runs without any problems
     assertThat(processInstance.isEnded()).isTrue();
@@ -90,12 +90,12 @@ public class TargetVariableScopeTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/variables/scope/TargetVariableScopeTest.testExecutionWithoutProperTargetScope.bpmn","org/operaton/bpm/engine/test/api/variables/scope/doer.bpmn"})
   public void testExecutionWithoutProperTargetScope () {
     VariableMap variables = Variables.createVariables().putValue("orderIds", List.of(new int[] { 1, 2, 3 }));
-    ProcessDefinition processDefinition = engineRule.getRepositoryService().createProcessDefinitionQuery().processDefinitionKey("Process_MultiInstanceCallAcitivity").singleResult();
+    ProcessDefinition processDefinition = engineRule.getRepositoryService().createProcessDefinitionQuery().processDefinitionKey("Process_MultiInstanceCallActivity").singleResult();
     RuntimeService runtimeService1 = runtimeService;
 
     // when/then
     //fails due to inappropriate variable scope target
-    assertThatThrownBy(() -> runtimeService1.startProcessInstanceByKey("Process_MultiInstanceCallAcitivity",variables))
+    assertThatThrownBy(() -> runtimeService1.startProcessInstanceByKey("Process_MultiInstanceCallActivity",variables))
       .isInstanceOf(ScriptEvaluationException.class)
       .hasMessageContaining("Unable to evaluate script while executing activity 'CallActivity_1' in the process definition with id '"
           + processDefinition.getId() + "': org.operaton.bpm.engine.ProcessEngineException: ENGINE-20011 "

@@ -32,6 +32,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.InputStream;
 
@@ -511,11 +512,9 @@ public class FormAuthorizationTest extends AuthorizationTest {
     createTask(taskId);
     createGrantAuthorization(TASK, taskId, userId, READ);
 
-    try {
-      // when
-      // Standalone task, no TaskFormData available
-      formService.getRenderedTaskForm(taskId);
-    } catch (NullValueException e) {}
+    // when
+    // Standalone task, no TaskFormData available
+    assertThrows(NullValueException.class, () -> formService.getRenderedTaskForm(taskId));
 
     deleteTask(taskId, true);
   }
@@ -528,11 +527,9 @@ public class FormAuthorizationTest extends AuthorizationTest {
     createTask(taskId);
     createGrantAuthorization(TASK, taskId, userId, READ_VARIABLE);
 
-    try {
-      // when
-      // Standalone task, no TaskFormData available
-      formService.getRenderedTaskForm(taskId);
-    } catch (NullValueException e) {}
+    // when
+    // Standalone task, no TaskFormData available
+    assertThrows(NullValueException.class, () -> formService.getRenderedTaskForm(taskId));
 
     deleteTask(taskId, true);
   }

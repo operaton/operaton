@@ -17,6 +17,8 @@
 package org.operaton.bpm.engine.test.api.identity;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.operaton.bpm.engine.IdentityService;
@@ -173,14 +175,14 @@ public class ReadOnlyIdentityServiceTest {
 
   @Test
   public void checkPassword() {
-    identityService.checkPassword("user", "password");
+    assertFalse(identityService.checkPassword("user", "password"));
   }
 
   @Test
   public void createQuery() {
-    identityService.createUserQuery().list();
-    identityService.createGroupQuery().list();
-    identityService.createTenantQuery().list();
+    assertNotNull(identityService.createUserQuery().list());
+    assertNotNull(identityService.createGroupQuery().list());
+    assertNotNull(identityService.createTenantQuery().list());
   }
 
 }

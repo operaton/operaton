@@ -16,12 +16,39 @@
  */
 package org.operaton.bpm.engine.test.api.filter;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
-import org.operaton.bpm.engine.impl.*;
+import org.operaton.bpm.engine.impl.Direction;
+import org.operaton.bpm.engine.impl.QueryEntityRelationCondition;
+import org.operaton.bpm.engine.impl.QueryOperator;
+import org.operaton.bpm.engine.impl.QueryOrderingProperty;
+import org.operaton.bpm.engine.impl.TaskQueryImpl;
+import org.operaton.bpm.engine.impl.TaskQueryProperty;
+import org.operaton.bpm.engine.impl.TaskQueryVariableValue;
+import org.operaton.bpm.engine.impl.VariableOrderProperty;
 import org.operaton.bpm.engine.impl.json.JsonTaskQueryConverter;
 import org.operaton.bpm.engine.impl.persistence.entity.FilterEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.SuspensionState;
@@ -39,22 +66,7 @@ import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-import java.util.*;
-
 import com.google.gson.JsonObject;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 /**
  * @author Sebastian Menski
@@ -1267,7 +1279,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
 
     saveQuery(query);
 
-    long count = filterService.count(testFilter.getId(), (Query) null);
+    long count = filterService.count(testFilter.getId(), (Query<?, ?>) null);
     assertEquals(3, count);
   }
 
@@ -2403,7 +2415,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
 
     // when deserializing the query
     // then there is no exception
-    queryConverter.toObject(jsonObject);
+    assertNotNull(queryConverter.toObject(jsonObject));
   }
 
   protected void saveQuery(TaskQuery query) {

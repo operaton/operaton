@@ -16,14 +16,19 @@
  */
 package org.operaton.bpm.engine.cdi.test.impl.context;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Arrays;
 
-import org.operaton.bpm.engine.cdi.BusinessProcess;
-import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
-import org.operaton.bpm.engine.test.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.operaton.bpm.engine.cdi.BusinessProcess;
+import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
+import org.operaton.bpm.engine.impl.persistence.entity.ProcessInstanceWithVariablesImpl;
+import org.operaton.bpm.engine.test.Deployment;
 
 /**
  * @author Daniel Meyer
@@ -38,7 +43,13 @@ public class MultiInstanceTest extends CdiProcessEngineTestCase {
 
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
     businessProcess.setVariable("list", Arrays.asList("1","2"));
-    businessProcess.startProcessByKey("miParallelScriptTask");
+    var process = (ProcessInstanceWithVariablesImpl) businessProcess.startProcessByKey("miParallelScriptTask");
+    
+    assertFalse(process.isEnded());
+    assertFalse(process.isSuspended());
+    assertTrue(process.getExecutionEntity().isActive());
+    assertEquals(Arrays.asList("1","2"), process.getVariables().get("list"));
+    assertEquals("waitState", process.getExecutionEntity().getCurrentActivityId());
 
   }
 

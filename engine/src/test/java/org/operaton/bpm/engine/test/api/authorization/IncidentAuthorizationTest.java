@@ -37,6 +37,7 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.Test.None;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
@@ -379,7 +380,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
       .hasMessageMatching(getMissingPermissionMessageRegex(UPDATE_INSTANCE, PROCESS_DEFINITION));
   }
 
-  @Test
+  @Test(expected = None.class)
   public void shouldAllowSetAnnotationWithUpdatePermissionOnAnyInstance() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
@@ -395,7 +396,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
     // then no error is thrown
   }
 
-  @Test
+  @Test(expected = None.class)
   public void shouldAllowSetAnnotationWithUpdatePermissionOnInstance() {
     // given
     ProcessInstance instance = startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
@@ -411,7 +412,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
     // then no error is thrown
   }
 
-  @Test
+  @Test(expected = None.class)
   public void shouldAllowSetAnnotationWithUpdateInstancePermissionOnAnyDefinition() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
@@ -427,7 +428,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
     // then no error is thrown
   }
 
-  @Test
+  @Test(expected = None.class)
   public void shouldAllowSetAnnotationWithUpdateInstancePermissionOnOneTaskDefinition() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
@@ -459,7 +460,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
       .hasMessageMatching(getMissingPermissionMessageRegex(UPDATE_INSTANCE, PROCESS_DEFINITION));
   }
 
-  @Test
+  @Test(expected = None.class)
   public void shouldAllowClearAnnotationWithUpdatePermissionOnAnyInstance() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
@@ -475,7 +476,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
     // then no error is thrown
   }
 
-  @Test
+  @Test(expected = None.class)
   public void shouldAllowClearAnnotationWithUpdatePermissionOnInstance() {
     // given
     ProcessInstance instance = startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
@@ -491,7 +492,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
     // then no error is thrown
   }
 
-  @Test
+  @Test(expected = None.class)
   public void shouldAllowClearAnnotationWithUpdateInstancePermissionOnAnyDefinition() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
@@ -507,7 +508,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
     // then no error is thrown
   }
 
-  @Test
+  @Test(expected = None.class)
   public void shouldAllowClearAnnotationWithUpdateInstancePermissionOnOneTaskDefinition() {
     // given
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
@@ -540,7 +541,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
     cleanupStandalonIncident(jobId);
   }
 
-  @Test
+  @Test(expected = None.class)
   public void shouldAllowClearAnnotationOnStandaloneIncidentWithoutAuthorization() {
     // given
     String jobId = createStandaloneIncident();

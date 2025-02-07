@@ -83,7 +83,7 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
 
         ExecutionEntity executionEntity = null;
         try {
-            logger.fine("returning scoped object having beanName '" + name + "' for conversation ID '" + this.getConversationId() + "'. ");
+            logger.fine(() -> "returning scoped object having beanName '" + name + "' for conversation ID '" + this.getConversationId() + "'. ");
 
             ProcessInstance processInstance = Context.getBpmnExecutionContext().getProcessInstance();
             executionEntity = (ExecutionEntity) processInstance;
@@ -102,7 +102,8 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
             logger.warning("couldn't return value from process scope! " + StringUtil.getStackTrace(th));
         } finally {
             if (executionEntity != null) {
-                logger.fine("set variable '" + name + "' on executionEntity# " + executionEntity.getId());
+              String executionEntityId = executionEntity.getId();
+              logger.fine(() -> "set variable '" + name + "' on executionEntity# " + executionEntityId);
             }
         }
         return null;
@@ -110,7 +111,7 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
 
   @Override
   public void registerDestructionCallback(String name, Runnable callback) {
-        logger.fine("no support for registering descruction callbacks implemented currently. registerDestructionCallback('" + name + "',callback) will do nothing.");
+        logger.fine(() -> "no support for registering descruction callbacks implemented currently. registerDestructionCallback('" + name + "',callback) will do nothing.");
     }
 
     private String getExecutionId() {
@@ -120,7 +121,7 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
   @Override
   public Object remove(String name) {
 
-        logger.fine("remove '" + name + "'");
+        logger.fine(() -> "remove '" + name + "'");
         return runtimeService.getVariable(getExecutionId(), name);
     }
 
@@ -150,7 +151,7 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
           public Object invoke(MethodInvocation methodInvocation) throws Throwable {
                 String methodName = methodInvocation.getMethod().getName();
 
-                logger.info("method invocation for " + methodName + ".");
+                logger.info(() -> "method invocation for " + methodName + ".");
                 if (methodName.equals("toString"))
                     return "SharedProcessInstance";
 

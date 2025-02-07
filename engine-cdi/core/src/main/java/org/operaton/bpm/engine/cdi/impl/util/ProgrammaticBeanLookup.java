@@ -133,7 +133,7 @@ public class ProgrammaticBeanLookup {
       commandContext.registerCommandContextListener(new CreationalContextReleaseListener(creationalContext));
 
     } else {
-      LOG.warning("Obtained instance of @Dependent scoped bean "+bean +" outside of process engine command context. "
+      LOG.warning(() -> "Obtained instance of @Dependent scoped bean "+bean +" outside of process engine command context. "
           + "Bean instance will not be destroyed. This is likely to create a memory leak. Please use a normal scope like @ApplicationScoped for this bean.");
 
     }

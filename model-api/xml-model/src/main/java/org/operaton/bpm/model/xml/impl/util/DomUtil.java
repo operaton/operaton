@@ -199,7 +199,7 @@ public final class DomUtil {
 
     @Override
     public void warning(SAXParseException spe) {
-      LOGGER.warning(getParseExceptionInfo(spe));
+      LOGGER.warning(() -> getParseExceptionInfo(spe));
     }
 
     @Override

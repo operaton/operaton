@@ -75,7 +75,7 @@ public class EnsureCleanDbPlugin implements BpmPlatformPlugin {
           if (!cachePurgeReport.isEmpty()) {
             builder.append(CACHE_IS_NOT_CLEAN).append(cachePurgeReport.getPurgeReportAsString());
           }
-          logger.log(Level.INFO, builder.toString());
+          logger.info(builder::toString);
         }
       }
       catch(Throwable e) {

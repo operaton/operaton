@@ -302,9 +302,7 @@ public class ExternalTaskClientBuilderImpl implements ExternalTaskClientBuilder 
 
     // object
     Map<String, DataFormat> dataFormats = lookupDataFormats();
-    dataFormats.forEach((key, format) -> {
-      valueMappers.addMapper(new ObjectValueMapper(key, format));
-    });
+    dataFormats.forEach((key, format) -> valueMappers.addMapper(new ObjectValueMapper(key, format)));
 
     // json/xml
     valueMappers.addMapper(new JsonValueMapper());

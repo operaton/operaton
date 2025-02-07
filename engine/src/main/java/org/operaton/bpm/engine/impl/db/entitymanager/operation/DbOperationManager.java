@@ -256,14 +256,11 @@ public class DbOperationManager {
           Map<String, Class> dependentEntities = hasDbReferences.getDependentEntities();
 
           if (dependentEntities != null) {
-            dependentEntities.forEach((id, type) -> {
-
-              deletes.getOrDefault(type, defaultValue).forEach(o -> {
-                if (id.equals(o.getEntity().getId())) {
-                  o.setDependency(operation);
-                }
-              });
-            });
+            dependentEntities.forEach((id, type) -> deletes.getOrDefault(type, defaultValue).forEach(o -> {
+              if (id.equals(o.getEntity().getId())) {
+                o.setDependency(operation);
+              }
+            }));
           }
 
         }

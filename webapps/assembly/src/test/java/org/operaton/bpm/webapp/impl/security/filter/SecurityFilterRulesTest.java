@@ -489,13 +489,9 @@ public class SecurityFilterRulesTest {
   }
 
   private static List<SecurityFilterRule> loadFilterRules(String appPath) throws IOException {
-    InputStream is = null;
 
-    try {
-      is = new FileInputStream(FILTER_RULES_FILE);
+    try (InputStream is = new FileInputStream(FILTER_RULES_FILE)) {
       return FilterRules.load(is, appPath);
-    } finally {
-      IoUtil.closeSilently(is);
     }
   }
 

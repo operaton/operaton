@@ -326,10 +326,8 @@ public class JavaSerializationTest {
     task.setName("gonzoTask");
     taskService.saveTask(task);
     String taskId = task.getId();
-    try{
-
-      ByteArrayOutputStream baos = new ByteArrayOutputStream();
-      new ObjectOutputStream(baos).writeObject(new String("trumpet"));
+    try (var baos = new ByteArrayOutputStream(); var oos = new ObjectOutputStream(baos)) {
+      oos.writeObject("trumpet");
       String serializedObject = StringUtil.fromBytes(Base64.encodeBase64(baos.toByteArray()), engineRule.getProcessEngine());
 
       taskService.setVariable(taskId, "instrument",

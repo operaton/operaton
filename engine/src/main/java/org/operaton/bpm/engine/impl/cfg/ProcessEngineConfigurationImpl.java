@@ -1841,9 +1841,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
       }
 
       if (sqlSessionFactory == null) {
-        InputStream inputStream = null;
-        try {
-          inputStream = getMyBatisXmlConfigurationSteam();
+        try (InputStream inputStream = getMyBatisXmlConfigurationSteam()) {
 
           // update the jdbc parameters to the configured ones...
           Environment environment = new Environment("default", transactionFactory, dataSource);
@@ -1879,8 +1877,6 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
         } catch (Exception e) {
           throw new ProcessEngineException("Error while building ibatis SqlSessionFactory: " + e.getMessage(), e);
-        } finally {
-          IoUtil.closeSilently(inputStream);
         }
       }
     }

@@ -19,12 +19,7 @@ package org.operaton.bpm.model.cmmn;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN10_NS;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN11_NS;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 
 import org.operaton.bpm.model.cmmn.impl.CmmnParser;
 import org.operaton.bpm.model.cmmn.impl.instance.ApplicabilityRuleImpl;
@@ -239,18 +234,15 @@ public class Cmmn {
   }
 
   protected CmmnModelInstance doReadModelFromFile(File file) {
-    InputStream is = null;
-    try {
-      is = new FileInputStream(file);
-      return doReadModelFromInputStream(is);
-
+    CmmnModelInstance result = null;
+    try (InputStream is = new FileInputStream(file)) {
+      result = doReadModelFromInputStream(is);
     } catch (FileNotFoundException e) {
-      throw new CmmnModelException("Cannot read model from file "+file+": file does not exist.");
-
-    } finally {
-      IoUtil.closeSilently(is);
-
+      throw new CmmnModelException("Cannot read model from file " + file + ": file does not exist.");
+    } catch (IOException e) {
+      throw new CmmnModelException("Cannot read model from file " + file, e);
     }
+    return result;
   }
 
   protected CmmnModelInstance doReadModelFromInputStream(InputStream is) {
@@ -258,15 +250,12 @@ public class Cmmn {
   }
 
   protected void doWriteModelToFile(File file, CmmnModelInstance modelInstance) {
-    OutputStream os = null;
-    try {
-      os = new FileOutputStream(file);
+    try (OutputStream os = new FileOutputStream(file)) {
       doWriteModelToOutputStream(os, modelInstance);
-    }
-    catch (FileNotFoundException e) {
-      throw new CmmnModelException("Cannot write model to file "+file+": file does not exist.");
-    } finally {
-      IoUtil.closeSilently(os);
+    } catch (FileNotFoundException e) {
+      throw new CmmnModelException("Cannot write model to file " + file + ": file does not exist.");
+    } catch (IOException e) {
+      throw new CmmnModelException("Cannot write model to file " + file, e);
     }
   }
 

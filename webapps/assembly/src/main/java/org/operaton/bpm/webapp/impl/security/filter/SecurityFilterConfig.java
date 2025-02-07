@@ -89,7 +89,7 @@ public class SecurityFilterConfig {
       this.authorizer = authorizer;
     }
     public String[] getParsedMethods() {
-      if(methods == null || methods.isEmpty() || methods.equals("*") || methods.toUpperCase().equals("ALL")) {
+      if(methods == null || methods.isEmpty() || methods.equals("*") || methods.equalsIgnoreCase("ALL")) {
         return new String[0];
       } else {
         return methods.split(",");

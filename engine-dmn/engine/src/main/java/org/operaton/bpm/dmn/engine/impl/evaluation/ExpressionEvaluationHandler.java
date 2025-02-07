@@ -157,7 +157,7 @@ public class ExpressionEvaluationHandler {
   public boolean isFeelExpressionLanguage(String expressionLanguage) {
     ensureNotNull("expressionLanguage", expressionLanguage);
     return expressionLanguage.equals(DefaultDmnEngineConfiguration.FEEL_EXPRESSION_LANGUAGE) ||
-      expressionLanguage.toLowerCase().equals(DefaultDmnEngineConfiguration.FEEL_EXPRESSION_LANGUAGE_ALTERNATIVE) ||
+      expressionLanguage.equalsIgnoreCase(DefaultDmnEngineConfiguration.FEEL_EXPRESSION_LANGUAGE_ALTERNATIVE) ||
       expressionLanguage.equals(DefaultDmnEngineConfiguration.FEEL_EXPRESSION_LANGUAGE_DMN12) ||
       expressionLanguage.equals(DefaultDmnEngineConfiguration.FEEL_EXPRESSION_LANGUAGE_DMN13) ||
       expressionLanguage.equals(DefaultDmnEngineConfiguration.FEEL_EXPRESSION_LANGUAGE_DMN14) ||

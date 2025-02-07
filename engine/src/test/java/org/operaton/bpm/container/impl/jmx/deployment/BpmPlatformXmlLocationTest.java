@@ -20,7 +20,6 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -29,7 +28,6 @@ import javax.naming.NamingException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.operaton.bpm.container.impl.tomcat.deployment.TomcatParseBpmPlatformXmlStep;
-import org.springframework.mock.jndi.SimpleNamingContext;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.Assert.assertEquals;
@@ -198,6 +196,7 @@ public class BpmPlatformXmlLocationTest {
   
   private static String getBpmPlatformXmlLocationParentDir() {
     String baseDir = BpmPlatformXmlLocationTest.class.getProtectionDomain().getCodeSource().getLocation().getFile();
+    try {
       // replace escaped whitespaces in path
       baseDir = URLDecoder.decode(baseDir, UTF_8);
     } catch (IllegalArgumentException | NullPointerException e) {

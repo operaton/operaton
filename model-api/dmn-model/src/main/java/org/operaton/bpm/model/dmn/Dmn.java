@@ -237,8 +237,8 @@ public class Dmn {
 
     } catch (FileNotFoundException e) {
       throw new DmnModelException("Cannot read model from file " + file + ": file does not exist.");
-    } catch(IOException e){
-      //ignore
+    } catch (IOException e) {
+      throw new DmnModelException("Cannot read model from file " + file, e);
     }
     return result;
   }
@@ -253,7 +253,7 @@ public class Dmn {
     } catch (FileNotFoundException e) {
       throw new DmnModelException("Cannot write model to file " + file + ": file does not exist.");
     } catch (IOException e) {
-      //ignore
+      throw new DmnModelException("Cannot write model to file " + file, e);
     }
   }
 

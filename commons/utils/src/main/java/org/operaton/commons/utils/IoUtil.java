@@ -49,8 +49,7 @@ public class IoUtil {
    * @return the input stream as byte[].
    */
   public static byte[] inputStreamAsByteArray(InputStream inputStream) {
-    ByteArrayOutputStream os = new ByteArrayOutputStream();
-    try (inputStream) {
+    try (var os = new ByteArrayOutputStream(); inputStream) {
       byte[] buffer = new byte[16 * 1024];
       int read;
       while ((read = inputStream.read(buffer)) > 0) {

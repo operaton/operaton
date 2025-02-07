@@ -669,7 +669,6 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
         tableNames.add(tableName);
       }
       LOG.fetchDatabaseTables("oracle all_tables", tableNames);
-
     }
 
     return tableNames;

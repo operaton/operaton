@@ -102,15 +102,13 @@ public class DomXmlDataFormat implements DataFormat {
   @Override
   public String writeValue(Object value) {
     Element mappedObject = writeAsElement(value);
-    String returnValue = null;
     try (StringWriter writer = new StringWriter()) {
       StreamResult streamResult = new StreamResult(writer);
       writeResult(streamResult, mappedObject);
-      returnValue = writer.toString();
+      return writer.toString();
     } catch (IOException e) {
-      // ignore
+      return null;
     }
-    return returnValue;
   }
 
   @Override

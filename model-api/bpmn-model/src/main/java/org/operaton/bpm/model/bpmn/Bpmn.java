@@ -401,8 +401,8 @@ public class Bpmn {
       result =  doReadModelFromInputStream(is);
     } catch (FileNotFoundException e) {
       throw new BpmnModelException("Cannot read model from file " + file + ": file does not exist.");
-    } catch(IOException e){
-      //ignore
+    } catch(IOException e) {
+      throw new BpmnModelException("Cannot read model from file " + file, e);
     }
     return result;
   }
@@ -417,7 +417,7 @@ public class Bpmn {
     } catch (FileNotFoundException e) {
       throw new BpmnModelException("Cannot write model to file " + file + ": file does not exist.");
     } catch (IOException e) {
-      // ignore
+      throw new BpmnModelException("Cannot write model to file " + file, e);
     }
   }
 

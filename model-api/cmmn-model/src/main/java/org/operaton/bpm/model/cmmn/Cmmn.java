@@ -239,8 +239,8 @@ public class Cmmn {
       result = doReadModelFromInputStream(is);
     } catch (FileNotFoundException e) {
       throw new CmmnModelException("Cannot read model from file " + file + ": file does not exist.");
-    } catch (IOException e){
-      // ignore
+    } catch (IOException e) {
+      throw new CmmnModelException("Cannot read model from file " + file, e);
     }
     return result;
   }
@@ -254,8 +254,8 @@ public class Cmmn {
       doWriteModelToOutputStream(os, modelInstance);
     } catch (FileNotFoundException e) {
       throw new CmmnModelException("Cannot write model to file " + file + ": file does not exist.");
-    } catch (IOException e){
-      //ignore
+    } catch (IOException e) {
+      throw new CmmnModelException("Cannot write model to file " + file, e);
     }
   }
 

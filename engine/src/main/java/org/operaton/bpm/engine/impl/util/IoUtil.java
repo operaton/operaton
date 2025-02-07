@@ -72,9 +72,7 @@ public class IoUtil {
     byte[] result;
     byte[] buffer = new byte[1024];
 
-    try (
-      ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-      BufferedInputStream inputStream = new BufferedInputStream(resourceAsStream)) {
+    try (var outStream = new ByteArrayOutputStream(); var inputStream = new BufferedInputStream(resourceAsStream)) {
         while ((next = inputStream.read(buffer)) >= 0) {
           outStream.write(buffer, 0, next);
         }

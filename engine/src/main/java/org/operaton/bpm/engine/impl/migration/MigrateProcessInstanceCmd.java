@@ -189,11 +189,9 @@ public class MigrateProcessInstanceCmd extends AbstractMigrationCmd implements C
 
       walker.addPreVisitor(visitor);
 
-      walker.walkUntil(element -> {
-        // walk until top of instance tree is reached or until
-        // a node is reached for which we have not yet visited every child
-        return element == null || !visitor.hasVisitedAll(element.getChildScopeInstances());
-      });
+      // walk until top of instance tree is reached or until
+      // a node is reached for which we have not yet visited every child
+      walker.walkUntil(element -> element == null || !visitor.hasVisitedAll(element.getChildScopeInstances()));
     }
   }
 

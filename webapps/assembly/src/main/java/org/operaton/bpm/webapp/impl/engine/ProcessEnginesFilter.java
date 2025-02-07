@@ -28,7 +28,6 @@ import org.operaton.bpm.tasklist.TasklistRuntimeDelegate;
 import org.operaton.bpm.webapp.impl.IllegalWebAppConfigurationException;
 import org.operaton.bpm.webapp.impl.filter.AbstractTemplateFilter;
 import org.operaton.bpm.webapp.impl.security.SecurityActions;
-import org.operaton.bpm.webapp.impl.security.SecurityActions.SecurityAction;
 import org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider;
 import org.operaton.bpm.webapp.impl.util.ServletContextUtil;
 import org.operaton.bpm.webapp.plugin.spi.AppPlugin;
@@ -76,7 +75,7 @@ public class ProcessEnginesFilter extends AbstractTemplateFilter {
   public static final String PLUGIN_PACKAGES_PLACEHOLDER = "$PLUGIN_PACKAGES";
   public static final String CSP_NONCE_PLACEHOLDER = "$CSP_NONCE";
 
-  public static Pattern APP_PREFIX_PATTERN = Pattern.compile("/app/(?:([\\w-]+?)/(?:(index\\.html|[\\w-]+)?/?([^?]*)?)?)?");
+  public static final Pattern APP_PREFIX_PATTERN = Pattern.compile("/app/(?:([\\w-]+?)/(?:(index\\.html|[\\w-]+)?/?([^?]*)?)?)?");
 
   protected final CockpitRuntimeDelegate cockpitRuntimeDelegate;
   protected final AdminRuntimeDelegate adminRuntimeDelegate;
@@ -251,14 +250,8 @@ public class ProcessEnginesFilter extends AbstractTemplateFilter {
 
     } else {
 
-      return SecurityActions.runWithoutAuthentication(new SecurityAction<Boolean>() {
-        @Override
-        public Boolean execute() {
-          return processEngine.getIdentityService()
-              .createUserQuery()
-              .memberOfGroup(Groups.OPERATON_ADMIN).count() == 0;
-        }
-      }, processEngine);
+      return SecurityActions.runWithoutAuthentication(
+        () -> processEngine.getIdentityService().createUserQuery().memberOfGroup(Groups.OPERATON_ADMIN).count() == 0, processEngine);
 
     }
 
@@ -323,7 +316,7 @@ public class ProcessEnginesFilter extends AbstractTemplateFilter {
       builder.append(definition);
     }
 
-    return "[" + builder.toString() + "]";
+    return "[" + builder + "]";
   }
 
   protected <T extends AppPlugin> CharSequence createPluginDependenciesStr(String appName) {
@@ -342,7 +335,7 @@ public class ProcessEnginesFilter extends AbstractTemplateFilter {
       builder.append(definition);
     }
 
-    return "[" + builder.toString() + "]";
+    return "[" + builder + "]";
   }
 
   @SuppressWarnings("unchecked")

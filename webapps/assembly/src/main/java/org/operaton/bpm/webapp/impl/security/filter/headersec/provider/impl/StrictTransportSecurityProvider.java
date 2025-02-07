@@ -45,7 +45,7 @@ public class StrictTransportSecurityProvider extends HeaderSecurityProvider {
     MAX_AGE("hstsMaxAge"),
     INCLUDE_SUBDOMAINS_DISABLED("hstsIncludeSubdomainsDisabled");
 
-    protected String name;
+    private final String name;
 
     Parameters(String name) {
       this.name = name;
@@ -60,9 +60,7 @@ public class StrictTransportSecurityProvider extends HeaderSecurityProvider {
   @Override
   public Map<String, String> initParams() {
 
-    Arrays.asList(Parameters.values()).forEach(parameter -> {
-      initParams.put(parameter.getName(), null);
-    });
+    Arrays.asList(Parameters.values()).forEach(parameter -> initParams.put(parameter.getName(), null));
 
     return initParams;
   }

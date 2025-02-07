@@ -90,8 +90,7 @@ public class DeadlockTest {
   public void shouldProvokeDeadlock() throws InterruptedException {
     String databaseType = engineRule.getProcessEngineConfiguration().getDatabaseType();
     switch (databaseType) {
-    case DbSqlSessionFactory.MARIADB:
-    case DbSqlSessionFactory.MYSQL:
+    case DbSqlSessionFactory.MARIADB,DbSqlSessionFactory.MYSQL:
       provokeDeadlock();
       assertThat(sqlException.getSQLState()).isEqualTo(MARIADB_MYSQL.getSqlState());
       assertThat(sqlException.getErrorCode()).isEqualTo(MARIADB_MYSQL.getErrorCode());

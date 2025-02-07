@@ -83,7 +83,7 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
 
         ExecutionEntity executionEntity = null;
         try {
-            logger.fine(() -> "returning scoped object having beanName '" + name + "' for conversation ID '" + this.getConversationId() + "'. ");
+            logger.fine("returning scoped object having beanName '" + name + "' for conversation ID '" + this.getConversationId() + "'. ");
 
             ProcessInstance processInstance = Context.getBpmnExecutionContext().getProcessInstance();
             executionEntity = (ExecutionEntity) processInstance;
@@ -102,8 +102,7 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
             logger.warning("couldn't return value from process scope! " + StringUtil.getStackTrace(th));
         } finally {
             if (executionEntity != null) {
-              String executionEntityId = executionEntity.getId();
-              logger.fine(() -> "set variable '" + name + "' on executionEntity# " + executionEntityId);
+                logger.fine("set variable '" + name + "' on executionEntity# " + executionEntity.getId());
             }
         }
         return null;

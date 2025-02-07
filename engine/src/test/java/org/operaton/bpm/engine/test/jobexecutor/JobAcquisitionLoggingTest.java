@@ -71,7 +71,7 @@ public class JobAcquisitionLoggingTest {
             + " jobs for the process engine '" + processEngineConfiguration.getProcessEngineName() + "'");
 
     // asserting for a minimum occurrence as acquisition cycle should have started
-    assertThat(filteredLogList.size()).isGreaterThanOrEqualTo(1);
+    assertThat(filteredLogList).isNotEmpty();
   }
 
   @Test
@@ -94,6 +94,6 @@ public class JobAcquisitionLoggingTest {
             + processEngineConfiguration.getProcessEngineName() + "' : ");
 
     // Then observe the log appearing minimum 1 time, considering minimum 1 acquisition cycle
-    assertThat(filteredLogList.size()).isGreaterThanOrEqualTo(1);
+    assertThat(filteredLogList).isNotEmpty();
   }
 }

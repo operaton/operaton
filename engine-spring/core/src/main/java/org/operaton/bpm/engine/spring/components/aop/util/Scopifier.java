@@ -21,7 +21,6 @@ import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.config.BeanDefinitionVisitor;
 import org.springframework.beans.factory.support.BeanDefinitionReaderUtils;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.util.StringValueResolver;
 
 /**
  * this class was copied wholesale from Spring 3.1's RefreshScope, which Dave Syer wrote.
@@ -45,12 +44,7 @@ public class Scopifier extends BeanDefinitionVisitor {
 	}
 
 	public Scopifier(BeanDefinitionRegistry registry, String scope, boolean proxyTargetClass, boolean scoped) {
-		super(new StringValueResolver() {
-      @Override
-      public String resolveStringValue(String value) {
-				return value;
-			}
-		});
+		super(value -> value);
 		this.registry = registry;
 		this.proxyTargetClass = proxyTargetClass;
 		this.scope = scope;

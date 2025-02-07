@@ -62,7 +62,7 @@ public class JobExecutionLoggingTest {
   @Test
   @Deployment(resources = { "org/operaton/bpm/engine/test/jobexecutor/SimpleAsyncDelayProcess.bpmn20.xml" })
   public void shouldLogJobsQueuedForExecution() {
-    // Replace job executor with one that has custom threadpool executor settings
+    // Replace job executor with one that has custom thread pool executor settings
     JobExecutionLoggingTest.TestJobExecutor testJobExecutor = new JobExecutionLoggingTest.TestJobExecutor();
     testJobExecutor.setMaxJobsPerAcquisition(10);
     processEngineConfiguration.setJobExecutor(testJobExecutor);
@@ -84,13 +84,13 @@ public class JobExecutionLoggingTest {
         + ": " + testJobExecutor.queueSize + ")");
 
     // Then minimum one instance of filled queue log will be available.
-    assertThat(filteredLogList.size()).isGreaterThanOrEqualTo(1);
+    assertThat(filteredLogList).isNotEmpty();
   }
 
   @Test
   @Deployment(resources = { "org/operaton/bpm/engine/test/jobexecutor/SimpleAsyncDelayProcess.bpmn20.xml" })
   public void shouldLogJobsInExecution() {
-    // Replace job executor with one that has custom threadpool executor settings
+    // Replace job executor with one that has custom thread pool executor settings
     JobExecutionLoggingTest.TestJobExecutor testJobExecutor = new JobExecutionLoggingTest.TestJobExecutor();
     processEngineConfiguration.setJobExecutor(testJobExecutor);
     testJobExecutor.registerProcessEngine(processEngineConfiguration.getProcessEngine());
@@ -109,13 +109,13 @@ public class JobExecutionLoggingTest {
             + "' : 1");
 
     // Since the execution will be happening for a while the check is made for more than one occurrence of the log.
-    assertThat(filteredLogList.size()).isGreaterThanOrEqualTo(1);
+    assertThat(filteredLogList).isNotEmpty();
   }
 
   @Test
   @Deployment(resources = { "org/operaton/bpm/engine/test/jobexecutor/SimpleAsyncDelayProcess.bpmn20.xml" })
   public void shouldLogAvailableJobExecutionThreads() {
-    // Replace job executor with one that has custom threadpool executor settings
+    // Replace job executor with one that has custom thread pool executor settings
     JobExecutionLoggingTest.TestJobExecutor testJobExecutor = new JobExecutionLoggingTest.TestJobExecutor();
     processEngineConfiguration.setJobExecutor(testJobExecutor);
     testJobExecutor.registerProcessEngine(processEngineConfiguration.getProcessEngine());
@@ -134,7 +134,7 @@ public class JobExecutionLoggingTest {
             + "' : 2");
 
     // Since the execution will be happening for a while the check is made for more than one occurrence of the log.
-    assertThat(filteredLogList.size()).isGreaterThanOrEqualTo(1);
+    assertThat(filteredLogList).isNotEmpty();
   }
 
   @Test
@@ -161,7 +161,7 @@ public class JobExecutionLoggingTest {
             + "' : ");
 
     // Minimum occurrences of the log is three
-    assertThat(filteredLogList.size()).isGreaterThanOrEqualTo(3);
+    assertThat(filteredLogList).hasSizeGreaterThanOrEqualTo(3);
   }
 
   public static class TestJobExecutor extends DefaultJobExecutor {

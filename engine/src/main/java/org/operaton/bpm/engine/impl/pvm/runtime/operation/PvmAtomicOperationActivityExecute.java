@@ -21,7 +21,6 @@ import org.operaton.bpm.engine.impl.pvm.PvmException;
 import org.operaton.bpm.engine.impl.pvm.PvmLogger;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
-import org.operaton.bpm.engine.impl.pvm.runtime.Callback;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 import static org.operaton.bpm.engine.impl.util.ActivityBehaviorUtil.getActivityBehavior;
 
@@ -41,33 +40,26 @@ public class PvmAtomicOperationActivityExecute implements PvmAtomicOperation {
   public void execute(PvmExecutionImpl execution) {
     execution.activityInstanceStarted();
 
-    execution.continueIfExecutionDoesNotAffectNextOperation(new Callback<>() {
-      @Override
-      public Void callback(PvmExecutionImpl execution) {
-        if (execution.getActivity().isScope()) {
-          execution.dispatchEvent(null);
-        }
-        return null;
+    execution.continueIfExecutionDoesNotAffectNextOperation(execution1 -> {
+      if (execution1.getActivity().isScope()) {
+        execution1.dispatchEvent(null);
       }
-    }, new Callback<>() {
+      return null;
+    }, execution2 -> {
 
-      @Override
-      public Void callback(PvmExecutionImpl execution) {
+      ActivityBehavior activityBehavior = getActivityBehavior(execution2);
 
-        ActivityBehavior activityBehavior = getActivityBehavior(execution);
+      ActivityImpl activity = execution2.getActivity();
+      LOG.debugExecutesActivity(execution2, activity, activityBehavior.getClass().getName());
 
-        ActivityImpl activity = execution.getActivity();
-        LOG.debugExecutesActivity(execution, activity, activityBehavior.getClass().getName());
-
-        try {
-          activityBehavior.execute(execution);
-        } catch (RuntimeException e) {
-          throw e;
-        } catch (Exception e) {
-          throw new PvmException("couldn't execute activity <" + activity.getProperty("type") + " id=\"" + activity.getId() + "\" ...>: " + e.getMessage(), e);
-        }
-        return null;
+      try {
+        activityBehavior.execute(execution2);
+      } catch (RuntimeException e) {
+        throw e;
+      } catch (Exception e) {
+        throw new PvmException("couldn't execute activity <" + activity.getProperty("type") + " id=\"" + activity.getId() + "\" ...>: " + e.getMessage(), e);
       }
+      return null;
     }, execution);
   }
 

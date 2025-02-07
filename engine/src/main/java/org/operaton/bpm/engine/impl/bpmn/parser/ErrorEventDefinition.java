@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.parser;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Comparator;
 
@@ -29,13 +30,9 @@ import org.operaton.bpm.engine.ProcessEngineException;
  */
 public class ErrorEventDefinition implements Serializable {
 
-  public static Comparator<ErrorEventDefinition> comparator = new Comparator<>() {
-    @Override
-    public int compare(ErrorEventDefinition o1, ErrorEventDefinition o2) {
-      return o2.getPrecedence().compareTo(o1.getPrecedence());
-    }
-  };
+  public static Comparator<ErrorEventDefinition> comparator = (o1, o2) -> o2.getPrecedence().compareTo(o1.getPrecedence());
 
+  @Serial
   private static final long serialVersionUID = 1L;
 
   protected final String handlerActivityId;

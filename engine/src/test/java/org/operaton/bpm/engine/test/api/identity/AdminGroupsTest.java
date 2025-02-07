@@ -38,6 +38,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.Test.None;
 import org.junit.rules.RuleChain;
 
 public class AdminGroupsTest {
@@ -95,7 +96,7 @@ public class AdminGroupsTest {
       .hasMessageContaining("Required admin authenticated group or user.");
   }
 
-  @Test
+  @Test(expected = None.class)
   public void testWithAdminGroup() {
     processEngineConfiguration.getAdminGroups().add("adminGroup");
 

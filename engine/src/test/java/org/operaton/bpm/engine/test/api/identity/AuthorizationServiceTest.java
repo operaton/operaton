@@ -46,6 +46,7 @@ import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -100,14 +101,19 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
     Authorization grantAuthorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     // I can set userId = null
     grantAuthorization.setUserId(null);
+    assertNull(grantAuthorization.getUserId());
     // I can set userId = ANY
     grantAuthorization.setUserId(ANY);
+    assertEquals(ANY, grantAuthorization.getUserId());
     // I can set anything else:
     grantAuthorization.setUserId("something");
+    assertEquals("something", grantAuthorization.getUserId());
     // I can set groupId = null
     grantAuthorization.setGroupId(null);
+    assertNull(grantAuthorization.getGroupId());
     // I can set anything else:
     grantAuthorization.setGroupId("something");
+    assertEquals("something", grantAuthorization.getGroupId());
   }
 
   @Test
@@ -115,14 +121,19 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
     Authorization revokeAuthorization = authorizationService.createNewAuthorization(AUTH_TYPE_REVOKE);
     // I can set userId = null
     revokeAuthorization.setUserId(null);
+    assertNull(revokeAuthorization.getUserId());
     // I can set userId = ANY
     revokeAuthorization.setUserId(ANY);
+    assertEquals(ANY, revokeAuthorization.getUserId());
     // I can set anything else:
     revokeAuthorization.setUserId("something");
+    assertEquals("something", revokeAuthorization.getUserId());
     // I can set groupId = null
     revokeAuthorization.setGroupId(null);
+    assertNull(revokeAuthorization.getGroupId());
     // I can set anything else:
     revokeAuthorization.setGroupId("something");
+    assertEquals("something", revokeAuthorization.getGroupId());
   }
 
   @Test

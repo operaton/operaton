@@ -33,6 +33,7 @@ import org.apache.ibatis.datasource.pooled.PooledDataSource;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.Test.None;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertTrue;
@@ -61,7 +62,7 @@ public class DatabaseTableSchemaTest {
     connection.close();
   }
 
-  @Test
+  @Test(expected=None.class)
   public void testPerformDatabaseSchemaOperationCreateTwice() throws Exception {
 
     Connection connection = pooledDataSource.getConnection();

@@ -37,6 +37,9 @@ import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.commons.testing.ProcessEngineLoggingRule;
+
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -210,7 +213,7 @@ public class HistoryTimeToLiveDeploymentTest {
     // then
     processEngineConfiguration.setEnforceHistoryTimeToLive(true);
     processEngineConfiguration.getDeploymentCache().purgeCache();
-    repositoryService.getProcessDefinition(definitions.getDeployedProcessDefinitions().get(0).getId());
+    assertNotNull(repositoryService.getProcessDefinition(definitions.getDeployedProcessDefinitions().get(0).getId()));
   }
 
   @Test
@@ -225,7 +228,7 @@ public class HistoryTimeToLiveDeploymentTest {
     // then
     processEngineConfiguration.setEnforceHistoryTimeToLive(true);
     processEngineConfiguration.getDeploymentCache().purgeCache();
-    repositoryService.getDecisionDefinition(definitions.getDeployedDecisionDefinitions().get(0).getId());
+    assertNotNull(repositoryService.getDecisionDefinition(definitions.getDeployedDecisionDefinitions().get(0).getId()));
   }
 
   @Test
@@ -240,7 +243,7 @@ public class HistoryTimeToLiveDeploymentTest {
     // then
     processEngineConfiguration.setEnforceHistoryTimeToLive(true);
     processEngineConfiguration.getDeploymentCache().purgeCache();
-    repositoryService.getCaseDefinition(definitions.getDeployedCaseDefinitions().get(0).getId());
+    assertNotNull(repositoryService.getCaseDefinition(definitions.getDeployedCaseDefinitions().get(0).getId()));
   }
 
   @Test

@@ -17,12 +17,18 @@
 package org.operaton.bpm.application.impl.event;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
 import org.operaton.bpm.application.impl.EmbeddedProcessApplication;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RepositoryService;
@@ -39,11 +45,6 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
 
 /**
  * @author Daniel Meyer
@@ -92,7 +93,9 @@ public class ProcessApplicationEventListenerTest {
     managementService.registerProcessApplication(deploymentId, processApplication.getReference());
     // I can start a process event though the process app does not provide an
     // event listener.
-    runtimeService.startProcessInstanceByKey("startToEnd");
+    ProcessInstance process = runtimeService.startProcessInstanceByKey("startToEnd");
+    
+    assertTrue(process.isEnded());
 
   }
 

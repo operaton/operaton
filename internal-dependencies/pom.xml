@@ -321,11 +321,43 @@
       </dependency>
 
       <dependency>
+        <groupId>jakarta.servlet</groupId>
+        <artifactId>jakarta.servlet-api</artifactId>
+        <version>6.1.0</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-test</artifactId>
+        <version>5.3.39</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
         <groupId>jakarta.ws.rs</groupId>
         <artifactId>jakarta.ws.rs-api</artifactId>
         <version>4.0.0</version>
         <scope>provided</scope>
       </dependency>
+
+      <!--<dependency>
+        <groupId>jakarta.servlet</groupId>
+        <artifactId>jakarta.servlet-api</artifactId>
+        <version>6.1.0</version>
+      </dependency>-->
+
+      <!--<dependency>
+        <groupId>jakarta.xml.bind</groupId>
+        <artifactId>jakarta.xml.bind-api</artifactId>
+        <version>4.0.2</version>
+      </dependency>-->
+
+      <!--<dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-test</artifactId>
+        <version>6.2.1</version>
+        <scope>test</scope>
+      </dependency>-->
 
       <dependency>
         <groupId>org.jboss.spec.javax.servlet</groupId>

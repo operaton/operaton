@@ -25,7 +25,6 @@ import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.util.OrderingBuilder;
 import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
-import static org.operaton.bpm.engine.rest.util.QueryParamUtils.arrayAsCommaSeperatedList;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response.Status;
@@ -635,7 +634,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   @Test
   public void testQueryByProcessInstanceBusinessKeyIn() {
     given()
-        .queryParam("processInstanceBusinessKeyIn", arrayAsCommaSeperatedList("aBusinessKey", "anotherBusinessKey"))
+        .queryParam("processInstanceBusinessKeyIn", String.join(",", "aBusinessKey", "anotherBusinessKey"))
       .then().expect().statusCode(Status.OK.getStatusCode())
       .when().get(HISTORIC_TASK_INSTANCE_RESOURCE_URL);
 

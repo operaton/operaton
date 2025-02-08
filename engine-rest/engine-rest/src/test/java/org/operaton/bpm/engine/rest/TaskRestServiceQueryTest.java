@@ -61,7 +61,6 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.*;
 import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 import static org.operaton.bpm.engine.rest.util.DateTimeUtils.withTimezone;
-import static org.operaton.bpm.engine.rest.util.QueryParamUtils.arrayAsCommaSeperatedList;
 
 public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
 
@@ -412,15 +411,15 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
       .queryParams(stringQueryParameters)
       .queryParams(intQueryParameters)
       .queryParams(booleanQueryParameters)
-      .queryParam("activityInstanceIdIn", arrayAsCommaSeperatedList(arrayQueryParameters.get("activityInstanceIdIn")))
-      .queryParam("taskDefinitionKeyIn", arrayAsCommaSeperatedList(arrayQueryParameters.get("taskDefinitionKeyIn")))
-      .queryParam("taskIdIn", arrayAsCommaSeperatedList(arrayQueryParameters.get("taskIdIn")))
-      .queryParam("processDefinitionKeyIn", arrayAsCommaSeperatedList(arrayQueryParameters.get("processDefinitionKeyIn")))
-      .queryParam("processInstanceBusinessKeyIn", arrayAsCommaSeperatedList(arrayQueryParameters.get("processInstanceBusinessKeyIn")))
-      .queryParam("tenantIdIn", arrayAsCommaSeperatedList(arrayQueryParameters.get("tenantIdIn")))
-      .queryParam("assigneeIn", arrayAsCommaSeperatedList(arrayQueryParameters.get("assigneeIn")))
-      .queryParam("assigneeNotIn", arrayAsCommaSeperatedList(arrayQueryParameters.get("assigneeNotIn")))
-      .queryParam("processInstanceIdIn", arrayAsCommaSeperatedList(arrayQueryParameters.get("processInstanceIdIn")))
+      .queryParam("activityInstanceIdIn", String.join(",", arrayQueryParameters.get("activityInstanceIdIn")))
+      .queryParam("taskDefinitionKeyIn", String.join(",", arrayQueryParameters.get("taskDefinitionKeyIn")))
+      .queryParam("taskIdIn", String.join(",", arrayQueryParameters.get("taskIdIn")))
+      .queryParam("processDefinitionKeyIn", String.join(",", arrayQueryParameters.get("processDefinitionKeyIn")))
+      .queryParam("processInstanceBusinessKeyIn", String.join(",", arrayQueryParameters.get("processInstanceBusinessKeyIn")))
+      .queryParam("tenantIdIn", String.join(",", arrayQueryParameters.get("tenantIdIn")))
+      .queryParam("assigneeIn", String.join(",", arrayQueryParameters.get("assigneeIn")))
+      .queryParam("assigneeNotIn", String.join(",", arrayQueryParameters.get("assigneeNotIn")))
+      .queryParam("processInstanceIdIn", String.join(",", arrayQueryParameters.get("processInstanceIdIn")))
       .header("accept", MediaType.APPLICATION_JSON)
       .expect().statusCode(Status.OK.getStatusCode())
       .when().get(TASK_QUERY_URL);

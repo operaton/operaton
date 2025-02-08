@@ -29,23 +29,23 @@ import org.junit.Test;
 public class ShellTaskTest extends PluggableProcessEngineTest {
 
   enum OsType {
-    LINUX, WINDOWS, MAC, SOLARIS, UNKOWN
+    LINUX, WINDOWS, MAC, SOLARIS, UNKNOWN
   }
 
   OsType osType;
 
   OsType getSystemOsType() {
     String osName = System.getProperty("os.name").toLowerCase();
-    if (osName.indexOf("win") >= 0)
+    if (osName.contains("win"))
       return OsType.WINDOWS;
-    else if (osName.indexOf("mac") >= 0)
+    else if (osName.contains("mac"))
       return OsType.MAC;
-    else if ((osName.indexOf("nix") >= 0) || (osName.indexOf("nux") >= 0))
+    else if ((osName.contains("nix")) || (osName.contains("nux")))
       return OsType.LINUX;
-    else if (osName.indexOf("sunos") >= 0)
+    else if (osName.contains("sunos"))
       return OsType.SOLARIS;
     else
-      return OsType.UNKOWN;
+      return OsType.UNKNOWN;
   }
 
   @Before
@@ -55,7 +55,7 @@ public class ShellTaskTest extends PluggableProcessEngineTest {
 
   @Test
   public void testOsDetection() {
-    assertNotSame(osType, OsType.UNKOWN);
+    assertNotSame(OsType.UNKNOWN, osType);
   }
 
   @Deployment

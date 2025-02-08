@@ -26,7 +26,6 @@ import static org.mockito.Mockito.when;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -71,12 +70,7 @@ public class ProcessInstanceAssertIsStartedTest extends ProcessAssertTestCase {
     // And
     when(processInstance.getId()).thenReturn("someNonExistingId");
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).isStarted();
-      }
-    });
+    expect(() -> assertThat(processInstance).isStarted());
   }
 
 }

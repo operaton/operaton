@@ -27,7 +27,6 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -64,12 +63,7 @@ public class TaskAssertHasDueDateTest extends ProcessAssertTestCase {
     // When
     final Date dueDate = new Date();
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).task().hasDueDate(dueDate);
-      }
-    });
+    expect(() -> assertThat(processInstance).task().hasDueDate(dueDate));
   }
 
   @Test
@@ -81,12 +75,7 @@ public class TaskAssertHasDueDateTest extends ProcessAssertTestCase {
       "TaskAssert-hasDueDate"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).task().hasDueDate(null);
-      }
-    });
+    expect(() -> assertThat(processInstance).task().hasDueDate(null));
   }
 
 }

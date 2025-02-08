@@ -129,9 +129,9 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     ActivityInstance activityInstanceTree = runtimeService().getActivityInstance(actual.getId());
 
     // Collect all children recursively
-    Stream <ActivityInstance> flattendActivityInstances = collectAllDecendentActivities(activityInstanceTree);
+    Stream <ActivityInstance> flattenedActivityInstances = collectAllDecendentActivities(activityInstanceTree);
 
-    Stream<String> decendentActivityIdStream = flattendActivityInstances
+    Stream<String> decendentActivityIdStream = flattenedActivityInstances
         .flatMap(this::getActivityIdAndCollectTransitions);
     List<String> decendentActivityIds = decendentActivityIdStream.filter(
         // remove the root id from the list
@@ -335,17 +335,17 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     return hasVars(null);
   }
 
-  private ProcessInstanceAssert hasVars(final String[] names) {
+  ProcessInstanceAssert hasVars(final String[] names) {
     boolean shouldHaveVariables = names != null;
     boolean shouldHaveSpecificVariables = names != null && names.length > 0;
 
     Map<String, Object> vars = vars();
-    StringBuffer message = new StringBuffer();
+    var message = new StringBuilder();
     message.append("Expecting %s to hold ");
     message.append(shouldHaveVariables ? "process variables"
       + (shouldHaveSpecificVariables ? " %s, " : ", ") : "no variables at all, ");
-    message.append("instead we found it to hold "
-      + (vars.isEmpty() ? "no variables at all." : "the variables %s."));
+    message.append("instead we found it to hold ");
+    message.append(vars.isEmpty() ? "no variables at all." : "the variables %s.");
     if (vars.isEmpty() && getCurrent() == null)
       message.append(" (Please make sure you have set the history " +
         "service of the engine to at least 'audit' or a higher level " +

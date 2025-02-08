@@ -27,7 +27,6 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -93,12 +92,7 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
     // When
     final ProcessInstance processInstance = startProcess();
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).task(taskQuery().taskDefinitionKey("UserTask_2")).isNotNull();
-      }
-    });
+    expect(() -> assertThat(processInstance).task(taskQuery().taskDefinitionKey("UserTask_2")).isNotNull());
   }
 
   @Test
@@ -110,12 +104,7 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
     // When
     complete(taskQuery().singleResult());
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).task(taskQuery().taskDefinitionKey("UserTask_1")).isNotNull();
-      }
-    });
+    expect(() -> assertThat(processInstance).task(taskQuery().taskDefinitionKey("UserTask_1")).isNotNull());
   }
 
   @Test
@@ -131,12 +120,7 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
     // And
     complete(taskQuery().taskDefinitionKey("UserTask_3").singleResult());
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).task(taskQuery().taskDefinitionKey("UserTask_4")).isNotNull();
-      }
-    }, ProcessEngineException.class);
+    expect(() -> assertThat(processInstance).task(taskQuery().taskDefinitionKey("UserTask_4")).isNotNull(), ProcessEngineException.class);
   }
 
   @Test
@@ -166,12 +150,7 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
     // And
     complete(taskQuery().taskDefinitionKey("UserTask_3").singleResult());
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).task("UserTask_4").isNotNull();
-      }
-    }, ProcessEngineException.class);
+    expect(() -> assertThat(processInstance).task("UserTask_4").isNotNull(), ProcessEngineException.class);
   }
 
 
@@ -180,12 +159,7 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
   })
   public void testTask_notWaitingAtTaskDefinitionKey() {
     final ProcessInstance processInstance = startProcess();
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).task("UserTask_2").isNotNull();
-      }
-    });
+    expect(() -> assertThat(processInstance).task("UserTask_2").isNotNull());
   }
 
   private ProcessInstance startProcess() {

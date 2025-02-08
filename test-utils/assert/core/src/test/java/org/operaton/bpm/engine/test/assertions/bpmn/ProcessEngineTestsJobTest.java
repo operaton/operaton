@@ -26,7 +26,6 @@ import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.operaton.bpm.engine.test.mock.Mocks;
 import org.junit.Rule;
@@ -68,12 +67,7 @@ public class ProcessEngineTestsJobTest extends ProcessAssertTestCase {
       "ProcessEngineTests-job"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        job();
-      }
-    }, IllegalStateException.class);
+    expect(BpmnAwareTests::job, IllegalStateException.class);
   }
 
   @Test
@@ -95,12 +89,7 @@ public class ProcessEngineTestsJobTest extends ProcessAssertTestCase {
     // And
     execute(job());
     // When
-    expect(new Failure() {
-      @Override
-      public void when() {
-        job();
-      }
-    }, ProcessEngineException.class);
+    expect(BpmnAwareTests::job, ProcessEngineException.class);
   }
 
   @Test
@@ -158,12 +147,7 @@ public class ProcessEngineTestsJobTest extends ProcessAssertTestCase {
       "ProcessEngineTests-job"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        job("ServiceTask_1");
-      }
-    }, IllegalStateException.class);
+    expect(() -> job("ServiceTask_1"), IllegalStateException.class);
   }
 
   @Test
@@ -197,12 +181,7 @@ public class ProcessEngineTestsJobTest extends ProcessAssertTestCase {
       "ProcessEngineTests-job"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        job(jobQuery());
-      }
-    }, IllegalStateException.class);
+    expect(() -> job(jobQuery()), IllegalStateException.class);
   }
 
   @Test
@@ -224,12 +203,7 @@ public class ProcessEngineTestsJobTest extends ProcessAssertTestCase {
     // And
     execute(job());
     // When
-    expect(new Failure() {
-      @Override
-      public void when() {
-        job(jobQuery());
-      }
-    }, ProcessEngineException.class);
+    expect(() -> job(jobQuery()), ProcessEngineException.class);
   }
 
   @Test
@@ -265,12 +239,7 @@ public class ProcessEngineTestsJobTest extends ProcessAssertTestCase {
     // And
     execute(job(processInstance));
     // When
-    expect(new Failure() {
-      @Override
-      public void when() {
-        job(processInstance);
-      }
-    }, ProcessEngineException.class);
+    expect(() -> job(processInstance), ProcessEngineException.class);
   }
 
   @Test
@@ -344,12 +313,7 @@ public class ProcessEngineTestsJobTest extends ProcessAssertTestCase {
     // And
     execute(job(processInstance));
     // When
-    expect(new Failure() {
-      @Override
-      public void when() {
-        job(jobQuery(), processInstance);
-      }
-    }, ProcessEngineException.class);
+    expect(() -> job(jobQuery(), processInstance), ProcessEngineException.class);
   }
 
 }

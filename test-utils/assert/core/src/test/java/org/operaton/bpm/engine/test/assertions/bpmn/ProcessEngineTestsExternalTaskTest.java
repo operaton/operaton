@@ -27,7 +27,6 @@ import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -59,12 +58,7 @@ public class ProcessEngineTestsExternalTaskTest extends ProcessAssertTestCase {
     // Given
     runtimeService().startProcessInstanceByKey("ProcessEngineTests-externalTask");
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        externalTask();
-      }
-    }, IllegalStateException.class);
+    expect(BpmnAwareTests::externalTask, IllegalStateException.class);
   }
 
   @Test
@@ -92,12 +86,7 @@ public class ProcessEngineTestsExternalTaskTest extends ProcessAssertTestCase {
     // And
     complete(externalTask());
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        externalTask();
-      }
-    }, ProcessEngineException.class);
+    expect(BpmnAwareTests::externalTask, ProcessEngineException.class);
   }
 
   @Test
@@ -119,12 +108,7 @@ public class ProcessEngineTestsExternalTaskTest extends ProcessAssertTestCase {
     // Given
     runtimeService().startProcessInstanceByKey("ProcessEngineTests-externalTask");
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        task(EXTERNAL_TASK_1);
-      }
-    }, IllegalStateException.class);
+    expect(() -> task(EXTERNAL_TASK_1), IllegalStateException.class);
   }
 
   @Test
@@ -162,12 +146,7 @@ public class ProcessEngineTestsExternalTaskTest extends ProcessAssertTestCase {
     // Given
     runtimeService().startProcessInstanceByKey("ProcessEngineTests-externalTask");
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        externalTask(externalTaskQuery());
-      }
-    }, IllegalStateException.class);
+    expect(() -> externalTask(externalTaskQuery()), IllegalStateException.class);
   }
 
   @Test
@@ -198,12 +177,7 @@ public class ProcessEngineTestsExternalTaskTest extends ProcessAssertTestCase {
     // And
     complete(externalTask());
     // When
-    expect(new Failure() {
-      @Override
-      public void when() {
-        externalTask(externalTaskQuery());
-      }
-    }, ProcessEngineException.class);
+    expect(() -> externalTask(externalTaskQuery()), ProcessEngineException.class);
   }
 
   @Test
@@ -227,12 +201,7 @@ public class ProcessEngineTestsExternalTaskTest extends ProcessAssertTestCase {
     // And
     complete(externalTask(processInstance));
     // When
-    expect(new Failure() {
-      @Override
-      public void when() {
-        externalTask(processInstance);
-      }
-    }, ProcessEngineException.class);
+    expect(() -> externalTask(processInstance), ProcessEngineException.class);
   }
 
   @Test
@@ -297,12 +266,7 @@ public class ProcessEngineTestsExternalTaskTest extends ProcessAssertTestCase {
     // And
     complete(externalTask(processInstance));
     // When
-    expect(new Failure() {
-      @Override
-      public void when() {
-        externalTask(externalTaskQuery(), processInstance);
-      }
-    }, ProcessEngineException.class);
+    expect(() -> externalTask(externalTaskQuery(), processInstance), ProcessEngineException.class);
   }
 
 }

@@ -22,7 +22,6 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtim
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -55,12 +54,7 @@ public class ProcessInstanceAssertIsSuspendedTest extends ProcessAssertTestCase 
       "ProcessInstanceAssert-isSuspended"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).isSuspended();
-      }
-    });
+    expect(() -> assertThat(processInstance).isSuspended());
   }
 
   @Test
@@ -76,12 +70,7 @@ public class ProcessInstanceAssertIsSuspendedTest extends ProcessAssertTestCase 
     // And
     runtimeService().activateProcessInstanceById(processInstance.getId());
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).isSuspended();
-      }
-    });
+    expect(() -> assertThat(processInstance).isSuspended());
   }
 
 }

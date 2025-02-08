@@ -28,7 +28,6 @@ import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -41,12 +40,7 @@ public class ProcessEngineTestsProcessDefinitionTest extends ProcessAssertTestCa
   @Test
   public void testProcessDefinition_No_Definition() {
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        processDefinition();
-      }
-    }, IllegalStateException.class);
+    expect(BpmnAwareTests::processDefinition, IllegalStateException.class);
   }
 
   @Test
@@ -64,12 +58,7 @@ public class ProcessEngineTestsProcessDefinitionTest extends ProcessAssertTestCa
       "ProcessEngineTests-processDefinition"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        processDefinition();
-      }
-    }, IllegalStateException.class);
+    expect(BpmnAwareTests::processDefinition, IllegalStateException.class);
     // When
     assertThat(processInstance).isNotNull();
     // Then
@@ -242,12 +231,7 @@ public class ProcessEngineTestsProcessDefinitionTest extends ProcessAssertTestCa
     // And
     assertThat(processDefinition("nonExistingKey")).isNull();
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        processDefinition(processDefinitionQuery());
-      }
-    }, ProcessEngineException.class);
+    expect(() -> processDefinition(processDefinitionQuery()), ProcessEngineException.class);
   }
 
 }

@@ -24,7 +24,6 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.taskQu
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -57,12 +56,7 @@ public class ProcessInstanceAssertHasPassedInOrderTest extends ProcessAssertTest
       "ProcessInstanceAssert-hasPassedInOrder"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).hasPassedInOrder("UserTask_1");
-      }
-    });
+    expect(() -> assertThat(processInstance).hasPassedInOrder("UserTask_1"));
   }
 
   @Test
@@ -98,33 +92,13 @@ public class ProcessInstanceAssertHasPassedInOrderTest extends ProcessAssertTest
     // And
     complete(taskQuery().taskDefinitionKey("UserTask_2").singleResult());
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).hasPassedInOrder("UserTask_3");
-      }
-    });
+    expect(() -> assertThat(processInstance).hasPassedInOrder("UserTask_3"));
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).hasPassedInOrder("UserTask_4");
-      }
-    });
+    expect(() -> assertThat(processInstance).hasPassedInOrder("UserTask_4"));
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).hasPassedInOrder("UserTask_5");
-      }
-    });
+    expect(() -> assertThat(processInstance).hasPassedInOrder("UserTask_5"));
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).hasPassedInOrder("UserTask_2", "UserTask_1");
-      }
-    });
+    expect(() -> assertThat(processInstance).hasPassedInOrder("UserTask_2", "UserTask_1"));
   }
 
   @Test
@@ -176,26 +150,11 @@ public class ProcessInstanceAssertHasPassedInOrderTest extends ProcessAssertTest
     // And
     complete(taskQuery().taskDefinitionKey("UserTask_3").singleResult());
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).hasPassedInOrder("UserTask_4");
-      }
-    });
+    expect(() -> assertThat(processInstance).hasPassedInOrder("UserTask_4"));
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).hasPassedInOrder("UserTask_2", "UserTask_1");
-      }
-    });
+    expect(() -> assertThat(processInstance).hasPassedInOrder("UserTask_2", "UserTask_1"));
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).hasPassedInOrder("UserTask_3", "UserTask_1");
-      }
-    });
+    expect(() -> assertThat(processInstance).hasPassedInOrder("UserTask_3", "UserTask_1"));
   }
 
   @Test
@@ -245,33 +204,13 @@ public class ProcessInstanceAssertHasPassedInOrderTest extends ProcessAssertTest
     // And
     complete(taskQuery().taskDefinitionKey("UserTask_4").singleResult());
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).hasPassedInOrder("UserTask_4", "UserTask_1");
-      }
-    });
+    expect(() -> assertThat(processInstance).hasPassedInOrder("UserTask_4", "UserTask_1"));
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).hasPassedInOrder("UserTask_2", "UserTask_1", "UserTask_3", "UserTask_4");
-      }
-    });
+    expect(() -> assertThat(processInstance).hasPassedInOrder("UserTask_2", "UserTask_1", "UserTask_3", "UserTask_4"));
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).hasPassedInOrder("UserTask_4", "UserTask_3");
-      }
-    });
+    expect(() -> assertThat(processInstance).hasPassedInOrder("UserTask_4", "UserTask_3"));
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).hasPassedInOrder("UserTask_5");
-      }
-    });
+    expect(() -> assertThat(processInstance).hasPassedInOrder("UserTask_5"));
   }
 
   @Test
@@ -283,31 +222,15 @@ public class ProcessInstanceAssertHasPassedInOrderTest extends ProcessAssertTest
       "ProcessInstanceAssert-isWaitingAt"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        String[] passed = null;
-        assertThat(processInstance).hasPassedInOrder(passed);
-      }
+    expect(() -> {
+      String[] passed = null;
+      assertThat(processInstance).hasPassedInOrder(passed);
     });
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).hasPassedInOrder("ok", null);
-      }
-    });
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).hasPassedInOrder(null, "ok");
-      }
-    });
-    expect(new Failure() {
-      @Override
-      public void when() {
-        String[] args = new String[]{};
-        assertThat(processInstance).hasPassedInOrder(args);
-      }
+    expect(() -> assertThat(processInstance).hasPassedInOrder("ok", null));
+    expect(() -> assertThat(processInstance).hasPassedInOrder(null, "ok"));
+    expect(() -> {
+      String[] args = new String[]{};
+      assertThat(processInstance).hasPassedInOrder(args);
     });
   }
 

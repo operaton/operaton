@@ -21,7 +21,6 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.findId
 
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -83,12 +82,7 @@ public class ProcessEngineTestsFindIdTest extends ProcessAssertTestCase {
     // When
     // findId("This should not be found");
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        findId("This should not be found");
-      }
-    }, "doesn't exist");
+    expect(() -> findId("This should not be found"), "doesn't exist");
   }
 
   @Test
@@ -99,12 +93,7 @@ public class ProcessEngineTestsFindIdTest extends ProcessAssertTestCase {
     // When
     // findId(null);
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        findId(null);
-      }
-    }, IllegalArgumentException.class);
+    expect(() -> findId(null), IllegalArgumentException.class);
   }
 
   @Test
@@ -181,47 +170,27 @@ public class ProcessEngineTestsFindIdTest extends ProcessAssertTestCase {
     // When
     // findId("Task one"); findId("Event one"); findId("Gateway one");
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        findId("Task one");
-      }
-    }, "not unique");
+    expect(() -> findId("Task one"), "not unique");
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        findId("Event one");
-      }
-    }, "not unique");
+    expect(() -> findId("Event one"), "not unique");
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        findId("Gateway one");
-      }
-    }, "not unique");
+    expect(() -> findId("Gateway one"), "not unique");
   }
 
   @Test
   @Deployment(resources = "bpmn/ProcessEngineTests-findDuplicateNamesOnTaskAndGateway.bpmn")
-  public void testProcesswithDuplicateNamesOnDifferentElementsTypes() {
+  public void testProcessWithDuplicateNamesOnDifferentElementsTypes() {
     // Given
     // Process model with same name on task and gateway deployed
     // When
     // findId("Element one");
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        findId("Element one");
-      }
-    }, "not unique");
+    expect(() -> findId("Element one"), "not unique");
   }
 
   @Test
   @Deployment(resources = "bpmn/ProcessEngineTests-findDuplicateNamesOnTaskAndGateway.bpmn")
-  public void testProcessWithDuplicateNamesDindTheUniqueOnly() {
+  public void testProcessWithDuplicateNamesBindTheUniqueOnly() {
     // Given
     // Process model with two pools and a mix of duplicate and unique names deployed
     // When

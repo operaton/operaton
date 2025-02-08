@@ -25,7 +25,6 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.withVa
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -60,21 +59,11 @@ public class ProcessInstanceAssertHasNoVariablesTest extends ProcessAssertTestCa
       "ProcessInstanceAssert-hasNoVariables", withVariables("aVariable", "aValue")
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).hasNoVariables();
-      }
-    });
+    expect(() -> assertThat(processInstance).hasNoVariables());
     // When
     complete(task(processInstance));
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).hasNoVariables();
-      }
-    });
+    expect(() -> assertThat(processInstance).hasNoVariables());
   }
 
   @Test
@@ -86,21 +75,11 @@ public class ProcessInstanceAssertHasNoVariablesTest extends ProcessAssertTestCa
       "ProcessInstanceAssert-hasNoVariables", withVariables("firstVariable", "firstValue", "secondVariable", "secondValue")
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).hasNoVariables();
-      }
-    });
+    expect(() -> assertThat(processInstance).hasNoVariables());
     // When
     complete(task(processInstance));
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).hasNoVariables();
-      }
-    });
+    expect(() -> assertThat(processInstance).hasNoVariables());
   }
 
 }

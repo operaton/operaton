@@ -70,14 +70,16 @@ public class ProblemImpl implements Problem {
   }
 
   protected void concatenateErrorMessages(Throwable throwable) {
+    var concatenatedMessage = new StringBuilder();
     while (throwable != null) {
-      if (message == null) {
-        message = throwable.getMessage();
+      if (concatenatedMessage.isEmpty()) {
+        concatenatedMessage.append(throwable.getMessage());
       } else {
-        message += ": " + throwable.getMessage();
+        concatenatedMessage.append(": ").append(throwable.getMessage());
       }
       throwable = throwable.getCause();
     }
+    message = concatenatedMessage.toString();
   }
 
   protected void extractElementDetails(Element element) {
@@ -123,10 +125,10 @@ public class ProblemImpl implements Problem {
   public String toString() {
     StringBuilder string = new StringBuilder(); 
     if (line > 0) {
-      string.append(" | line " + line);
+      string.append(" | line ").append(line);
     }
     if (column > 0) {
-      string.append(" | column " + column);
+      string.append(" | column ").append(column);
     }
 
     return string.toString();

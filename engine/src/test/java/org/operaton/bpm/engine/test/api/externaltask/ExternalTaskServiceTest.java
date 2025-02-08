@@ -2507,10 +2507,11 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       throw cause;
     } catch (RuntimeException e) {
       exceptionStackTrace = ExceptionUtils.getStackTrace(e);
-      errorMessage = e.getMessage();
-      while (errorMessage.length() < 1000) {
-        errorMessage = errorMessage + ":" + e.getMessage();
+      var msg = new StringBuilder(e.getMessage());
+      while (msg.length() < 1000) {
+        msg.append(":").append(e.getMessage());
       }
+      errorMessage = msg.toString();
     }
     assertThat(exceptionStackTrace).isNotNull();
 
@@ -3489,7 +3490,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         tasks.get(4).getId());
 
     // when
-    externalTaskService.updateRetries().externalTaskIds(externalTaskIds.toArray(new String[externalTaskIds.size()])).set(5);
+    externalTaskService.updateRetries().externalTaskIds(externalTaskIds.toArray(new String[0])).set(5);
 
     // then
     tasks = externalTaskService.createExternalTaskQuery().list();
@@ -3525,7 +3526,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     List<String> processInstances = startProcessInstance("oneExternalTaskProcess", 5);
 
     // when
-    externalTaskService.updateRetries().processInstanceIds(processInstances.toArray(new String[processInstances.size()])).set(5);
+    externalTaskService.updateRetries().processInstanceIds(processInstances.toArray(new String[0])).set(5);
 
     // then
     List<ExternalTask> tasks = externalTaskService.createExternalTaskQuery().list();

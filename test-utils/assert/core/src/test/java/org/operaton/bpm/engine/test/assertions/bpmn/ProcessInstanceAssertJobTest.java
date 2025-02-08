@@ -27,7 +27,6 @@ import org.operaton.bpm.engine.runtime.JobQuery;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.operaton.bpm.engine.test.mock.Mocks;
 import org.junit.Rule;
@@ -108,12 +107,7 @@ public class ProcessInstanceAssertJobTest extends ProcessAssertTestCase {
       "ProcessInstanceAssert-job"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).job("ServiceTask_2").isNotNull();
-      }
-    });
+    expect(() -> assertThat(processInstance).job("ServiceTask_2").isNotNull());
   }
 
   @Test
@@ -129,12 +123,7 @@ public class ProcessInstanceAssertJobTest extends ProcessAssertTestCase {
     // When
     execute(jobQuery().singleResult());
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).task("ServiceTask_1").isNotNull();
-      }
-    });
+    expect(() -> assertThat(processInstance).task("ServiceTask_1").isNotNull());
   }
 
   @Test
@@ -149,12 +138,7 @@ public class ProcessInstanceAssertJobTest extends ProcessAssertTestCase {
     Mocks.register("serviceTask_1", "someService");
     execute(jobQuery().singleResult());
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).job(jobQuery().executable()).isNotNull();
-      }
-    }, ProcessEngineException.class);
+    expect(() -> assertThat(processInstance).job(jobQuery().executable()).isNotNull(), ProcessEngineException.class);
   }
 
   @Test
@@ -192,12 +176,7 @@ public class ProcessInstanceAssertJobTest extends ProcessAssertTestCase {
     Mocks.register("serviceTask_3", "someService");
     execute(jobQuery().list().get(0));
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).job("ServiceTask_4").isNotNull();
-      }
-    }, ProcessEngineException.class);
+    expect(() -> assertThat(processInstance).job("ServiceTask_4").isNotNull(), ProcessEngineException.class);
   }
 
   @Test

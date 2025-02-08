@@ -24,7 +24,6 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.taskQu
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -55,12 +54,7 @@ public class ProcessInstanceAssertIsNotWaitingAtTest extends ProcessAssertTestCa
       "ProcessInstanceAssert-isNotWaitingAt"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).isNotWaitingAt("UserTask_1");
-      }
-    });
+    expect(() -> assertThat(processInstance).isNotWaitingAt("UserTask_1"));
   }
 
   @Test
@@ -100,26 +94,11 @@ public class ProcessInstanceAssertIsNotWaitingAtTest extends ProcessAssertTestCa
     // When
     complete(taskQuery().singleResult());
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).isNotWaitingAt("UserTask_2");
-      }
-    });
+    expect(() -> assertThat(processInstance).isNotWaitingAt("UserTask_2"));
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).isNotWaitingAt("UserTask_1", "UserTask_2");
-      }
-    });
+    expect(() -> assertThat(processInstance).isNotWaitingAt("UserTask_1", "UserTask_2"));
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).isNotWaitingAt("UserTask_2", "UserTask_3");
-      }
-    });
+    expect(() -> assertThat(processInstance).isNotWaitingAt("UserTask_2", "UserTask_3"));
   }
 
   @Test
@@ -131,34 +110,18 @@ public class ProcessInstanceAssertIsNotWaitingAtTest extends ProcessAssertTestCa
       "ProcessInstanceAssert-isNotWaitingAt"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        String[] watitingAt = null;
-        assertThat(processInstance).isNotWaitingAt(watitingAt);
-      }
+    expect(() -> {
+      String[] waitingAt = null;
+      assertThat(processInstance).isNotWaitingAt(waitingAt);
     });
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).isNotWaitingAt("ok", null);
-      }
-    });
+    expect(() -> assertThat(processInstance).isNotWaitingAt("ok", null));
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).isNotWaitingAt(null, "ok");
-      }
-    });
+    expect(() -> assertThat(processInstance).isNotWaitingAt(null, "ok"));
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        String[] args = new String[]{};
-        assertThat(processInstance).isNotWaitingAt(args);
-      }
+    expect(() -> {
+      String[] args = new String[]{};
+      assertThat(processInstance).isNotWaitingAt(args);
     });
   }
 

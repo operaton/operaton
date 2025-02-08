@@ -22,7 +22,6 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtim
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -53,12 +52,7 @@ public class TaskAssertHasDefinitionKeyTest extends ProcessAssertTestCase {
       "TaskAssert-hasDefinitionKey"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).task().hasDefinitionKey("otherDefinitionKey");
-      }
-    });
+    expect(() -> assertThat(processInstance).task().hasDefinitionKey("otherDefinitionKey"));
   }
 
   @Test
@@ -70,12 +64,7 @@ public class TaskAssertHasDefinitionKeyTest extends ProcessAssertTestCase {
       "TaskAssert-hasDefinitionKey"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).task().hasDefinitionKey(null);
-      }
-    });
+    expect(() -> assertThat(processInstance).task().hasDefinitionKey(null));
   }
 
 }

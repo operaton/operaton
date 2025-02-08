@@ -24,7 +24,6 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.task;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -120,12 +119,7 @@ public class ProcessInstanceAssertIsWaitingForJoinTest extends ProcessAssertTest
     complete(task("UserTask1"));
 
     // then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).isNotWaitingAt("JoinGateway");
-      }
-    }, "NOT to be waiting at [");
+    expect(() -> assertThat(processInstance).isNotWaitingAt("JoinGateway"), "NOT to be waiting at [");
   }
 
   @Test
@@ -136,12 +130,7 @@ public class ProcessInstanceAssertIsWaitingForJoinTest extends ProcessAssertTest
       "ProcessInstanceAssert-isWaitingForJoinAt");
 
     // then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).isWaitingAt((String[]) null);
-      }
-    }, "Expecting list of activityIds not to be null, not to be empty");
+    expect(() -> assertThat(processInstance).isWaitingAt((String[]) null), "Expecting list of activityIds not to be null, not to be empty");
   }
 
   @Test
@@ -155,12 +144,7 @@ public class ProcessInstanceAssertIsWaitingForJoinTest extends ProcessAssertTest
     complete(task("UserTask1"));
 
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).isWaitingAt("WrongGateway");
-      }
-    }, "is actually waiting at [");
+    expect(() -> assertThat(processInstance).isWaitingAt("WrongGateway"), "is actually waiting at [");
 
   }
 
@@ -176,11 +160,6 @@ public class ProcessInstanceAssertIsWaitingForJoinTest extends ProcessAssertTest
     complete(task("UserTask2"));
 
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).isWaitingAt("JoinGateway");
-      }
-    }, "already finished");
+    expect(() -> assertThat(processInstance).isWaitingAt("JoinGateway"), "already finished");
   }
 }

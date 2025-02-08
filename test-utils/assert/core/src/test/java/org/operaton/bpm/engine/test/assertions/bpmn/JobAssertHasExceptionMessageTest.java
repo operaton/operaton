@@ -25,7 +25,6 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtim
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -47,7 +46,9 @@ public class JobAssertHasExceptionMessageTest extends ProcessAssertTestCase {
     try {
       managementService().executeJob(jobQuery().singleResult().getId());
       fail ("expected ProcessEngineException to be thrown, but did not find any.");
-    } catch (ProcessEngineException t) {}
+    } catch (ProcessEngineException t) {
+      // expected
+    }
     // Then
     assertThat(jobQuery().singleResult()).isNotNull();
     // And
@@ -65,12 +66,7 @@ public class JobAssertHasExceptionMessageTest extends ProcessAssertTestCase {
     // Then
     assertThat(jobQuery().singleResult()).isNotNull();
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(jobQuery().singleResult()).hasExceptionMessage();
-      }
-    });
+    expect(() -> assertThat(jobQuery().singleResult()).hasExceptionMessage());
   }
 
 }

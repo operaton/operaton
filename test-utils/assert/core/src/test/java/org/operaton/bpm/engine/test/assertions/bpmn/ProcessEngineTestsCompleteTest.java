@@ -27,7 +27,6 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -64,12 +63,7 @@ public class ProcessEngineTestsCompleteTest extends ProcessAssertTestCase {
     // When
     complete(task);
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        complete(task);
-      }
-    }, ProcessEngineException.class);
+    expect(() -> complete(task), ProcessEngineException.class);
   }
 
   @Test
@@ -99,12 +93,7 @@ public class ProcessEngineTestsCompleteTest extends ProcessAssertTestCase {
     // When
     complete(task);
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        complete(task, withVariables("a", "b"));
-      }
-    }, ProcessEngineException.class);
+    expect(() -> complete(task, withVariables("a", "b")), ProcessEngineException.class);
   }
 
 }

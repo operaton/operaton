@@ -22,7 +22,6 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtim
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -75,12 +74,7 @@ public class ProcessInstanceAssertIsNotWaitingForTest extends ProcessAssertTestC
     // Then
     assertThat(processInstance).isNotWaitingFor("myMessage");
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).isNotWaitingFor("yourMessage");
-      }
-    });
+    expect(() -> assertThat(processInstance).isNotWaitingFor("yourMessage"));
   }
 
   @Test
@@ -92,12 +86,7 @@ public class ProcessInstanceAssertIsNotWaitingForTest extends ProcessAssertTestC
       "ProcessInstanceAssert-isNotWaitingFor"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).isNotWaitingFor("myMessage");
-      }
-    });
+    expect(() -> assertThat(processInstance).isNotWaitingFor("myMessage"));
   }
 
   @Test
@@ -121,12 +110,7 @@ public class ProcessInstanceAssertIsNotWaitingForTest extends ProcessAssertTestC
       "ProcessInstanceAssert-isNotWaitingFor"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).isNotWaitingFor("myMessage", "yourMessage");
-      }
-    });
+    expect(() -> assertThat(processInstance).isNotWaitingFor("myMessage", "yourMessage"));
   }
 
   @Test
@@ -138,27 +122,14 @@ public class ProcessInstanceAssertIsNotWaitingForTest extends ProcessAssertTestC
       "ProcessInstanceAssert-isNotWaitingFor"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).isNotWaitingFor();
-      }
+    expect(() -> assertThat(processInstance).isNotWaitingFor());
+    // And
+    expect(() -> {
+      String[] waitingFor = null;
+      assertThat(processInstance).isNotWaitingFor(waitingFor);
     });
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        String[] waitingFor = null;
-        assertThat(processInstance).isNotWaitingFor(waitingFor);
-      }
-    });
-    // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).isNotWaitingFor("myMessage", null);
-      }
-    });
+    expect(() -> assertThat(processInstance).isNotWaitingFor("myMessage", null));
   }
 
 }

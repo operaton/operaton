@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.impl.ant;
 
 import org.operaton.bpm.engine.*;
-import org.operaton.bpm.engine.impl.util.IoUtil;
 import org.operaton.bpm.engine.impl.util.LogUtil;
 
 import java.io.File;

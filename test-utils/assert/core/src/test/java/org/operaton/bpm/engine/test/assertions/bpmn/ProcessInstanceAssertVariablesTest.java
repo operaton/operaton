@@ -25,7 +25,6 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.withVa
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -78,35 +77,15 @@ public class ProcessInstanceAssertVariablesTest extends ProcessAssertTestCase {
       "ProcessInstanceAssert-variables", withVariables("aVariable", "aValue")
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).variables().containsKey("anotherVariable");
-      }
-    });
+    expect(() -> assertThat(processInstance).variables().containsKey("anotherVariable"));
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).variables().containsKeys("aVariable", "anotherVariable");
-      }
-    });
+    expect(() -> assertThat(processInstance).variables().containsKeys("aVariable", "anotherVariable"));
     // When
     complete(task(processInstance));
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).variables().containsKey("anotherVariable");
-      }
-    });
+    expect(() -> assertThat(processInstance).variables().containsKey("anotherVariable"));
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).variables().containsKeys("aVariable", "anotherVariable");
-      }
-    });
+    expect(() -> assertThat(processInstance).variables().containsKeys("aVariable", "anotherVariable"));
   }
 
   @Test
@@ -146,63 +125,23 @@ public class ProcessInstanceAssertVariablesTest extends ProcessAssertTestCase {
       "ProcessInstanceAssert-variables", withVariables("firstVariable", "firstValue", "secondVariable", "secondValue")
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).variables().containsKey("anotherVariable");
-      }
-    });
+    expect(() -> assertThat(processInstance).variables().containsKey("anotherVariable"));
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).variables().containsKeys("firstVariable", "anotherVariable");
-      }
-    });
+    expect(() -> assertThat(processInstance).variables().containsKeys("firstVariable", "anotherVariable"));
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).variables().containsKeys("secondVariable", "anotherVariable");
-      }
-    });
+    expect(() -> assertThat(processInstance).variables().containsKeys("secondVariable", "anotherVariable"));
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).variables().containsKeys("firstVariable", "secondVariable", "anotherVariable");
-      }
-    });
+    expect(() -> assertThat(processInstance).variables().containsKeys("firstVariable", "secondVariable", "anotherVariable"));
     // When
     complete(task(processInstance));
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).variables().containsKey("anotherVariable");
-      }
-    });
+    expect(() -> assertThat(processInstance).variables().containsKey("anotherVariable"));
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).variables().containsKeys("firstVariable", "anotherVariable");
-      }
-    });
+    expect(() -> assertThat(processInstance).variables().containsKeys("firstVariable", "anotherVariable"));
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).variables().containsKeys("secondVariable", "anotherVariable");
-      }
-    });
+    expect(() -> assertThat(processInstance).variables().containsKeys("secondVariable", "anotherVariable"));
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).variables().containsKeys("firstVariable", "secondVariable", "anotherVariable");
-      }
-    });
+    expect(() -> assertThat(processInstance).variables().containsKeys("firstVariable", "secondVariable", "anotherVariable"));
   }
 
   @Test
@@ -230,35 +169,15 @@ public class ProcessInstanceAssertVariablesTest extends ProcessAssertTestCase {
       "ProcessInstanceAssert-variables"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).variables().isNotEmpty();
-      }
-    });
+    expect(() -> assertThat(processInstance).variables().isNotEmpty());
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).variables().containsKey("aVariable");
-      }
-    });
+    expect(() -> assertThat(processInstance).variables().containsKey("aVariable"));
     // When
     complete(task(processInstance));
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).variables().isNotEmpty();
-      }
-    });
+    expect(() -> assertThat(processInstance).variables().isNotEmpty());
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).variables().containsKey("aVariable");
-      }
-    });
+    expect(() -> assertThat(processInstance).variables().containsKey("aVariable"));
   }
 
 }

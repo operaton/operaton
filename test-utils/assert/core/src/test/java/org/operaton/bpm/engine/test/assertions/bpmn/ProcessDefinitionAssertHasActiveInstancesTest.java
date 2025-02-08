@@ -26,7 +26,6 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -63,19 +62,9 @@ public class ProcessDefinitionAssertHasActiveInstancesTest extends ProcessAssert
       "ProcessDefinitionAssert-hasActiveInstances"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processDefinition).hasActiveInstances(0);
-      }
-    });
+    expect(() -> assertThat(processDefinition).hasActiveInstances(0));
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processDefinition).hasActiveInstances(2);
-      }
-    });
+    expect(() -> assertThat(processDefinition).hasActiveInstances(2));
   }
 
   @Test
@@ -113,26 +102,11 @@ public class ProcessDefinitionAssertHasActiveInstancesTest extends ProcessAssert
       "ProcessDefinitionAssert-hasActiveInstances"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processDefinition).hasActiveInstances(0);
-      }
-    });
+    expect(() -> assertThat(processDefinition).hasActiveInstances(0));
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processDefinition).hasActiveInstances(1);
-      }
-    });
+    expect(() -> assertThat(processDefinition).hasActiveInstances(1));
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processDefinition).hasActiveInstances(3);
-      }
-    });
+    expect(() -> assertThat(processDefinition).hasActiveInstances(3));
   }
 
   @Test
@@ -174,19 +148,9 @@ public class ProcessDefinitionAssertHasActiveInstancesTest extends ProcessAssert
     // And
     complete(task(processInstance));
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processDefinition).hasActiveInstances(0);
-      }
-    });
+    expect(() -> assertThat(processDefinition).hasActiveInstances(0));
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processDefinition).hasActiveInstances(2);
-      }
-    });
+    expect(() -> assertThat(processDefinition).hasActiveInstances(2));
   }
 
 }

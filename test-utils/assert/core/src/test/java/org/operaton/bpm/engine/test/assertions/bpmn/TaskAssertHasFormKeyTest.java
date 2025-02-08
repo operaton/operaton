@@ -22,7 +22,6 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtim
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -53,12 +52,7 @@ public class TaskAssertHasFormKeyTest extends ProcessAssertTestCase {
       "TaskAssert-hasFormKey"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).task().hasFormKey("otherFormKey");
-      }
-    });
+    expect(() -> assertThat(processInstance).task().hasFormKey("otherFormKey"));
   }
 
   @Test
@@ -70,12 +64,7 @@ public class TaskAssertHasFormKeyTest extends ProcessAssertTestCase {
       "TaskAssert-hasFormKey"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).task().hasFormKey(null);
-      }
-    });
+    expect(() -> assertThat(processInstance).task().hasFormKey(null));
   }
 
 }

@@ -23,7 +23,6 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.taskQu
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -54,12 +53,7 @@ public class TaskAssertHasIdTest extends ProcessAssertTestCase {
       "TaskAssert-hasId"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).task().hasId("otherDefinitionKey");
-      }
-    });
+    expect(() -> assertThat(processInstance).task().hasId("otherDefinitionKey"));
   }
 
   @Test
@@ -71,12 +65,7 @@ public class TaskAssertHasIdTest extends ProcessAssertTestCase {
       "TaskAssert-hasId"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).task().hasId(null);
-      }
-    });
+    expect(() -> assertThat(processInstance).task().hasId(null));
   }
 
 }

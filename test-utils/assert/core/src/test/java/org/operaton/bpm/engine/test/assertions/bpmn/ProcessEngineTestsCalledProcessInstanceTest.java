@@ -27,7 +27,6 @@ import static org.junit.Assert.fail;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -45,12 +44,7 @@ public class ProcessEngineTestsCalledProcessInstanceTest extends ProcessAssertTe
     final String processDefinitionKey = "ProcessEngineTests-calledProcessInstance-superProcess1";
     runtimeService().startProcessInstanceByKey(processDefinitionKey);
     // Then
-    assertFailureOnCalledProcessInstance(new Runnable() {
-      @Override
-      public void run() {
-        calledProcessInstance();
-      }
-    });
+    assertFailureOnCalledProcessInstance(BpmnAwareTests::calledProcessInstance);
   }
 
   @Test
@@ -72,12 +66,7 @@ public class ProcessEngineTestsCalledProcessInstanceTest extends ProcessAssertTe
     final String processDefinitionKey = "ProcessEngineTests-calledProcessInstance-superProcess1";
     runtimeService().startProcessInstanceByKey(processDefinitionKey);
     // Then
-    assertFailureOnCalledProcessInstance(new Runnable() {
-      @Override
-      public void run() {
-        calledProcessInstance(processInstanceQuery());
-      }
-    });
+    assertFailureOnCalledProcessInstance(() -> calledProcessInstance(processInstanceQuery()));
   }
 
   @Test
@@ -88,12 +77,7 @@ public class ProcessEngineTestsCalledProcessInstanceTest extends ProcessAssertTe
     final String processDefinitionKey = "ProcessEngineTests-calledProcessInstance-superProcess1";
     runtimeService().startProcessInstanceByKey(processDefinitionKey);
     // Then
-    assertFailureOnCalledProcessInstance(new Runnable() {
-      @Override
-      public void run() {
-        calledProcessInstance(processDefinitionKey);
-      }
-    });
+    assertFailureOnCalledProcessInstance(() -> calledProcessInstance(processDefinitionKey));
   }
 
   @Test
@@ -217,56 +201,26 @@ public class ProcessEngineTestsCalledProcessInstanceTest extends ProcessAssertTe
     // And
     complete(task("UserTask_1", calledProcessInstance(processInstance)));
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(calledProcessInstance())
-          .isNotNull();
-      }
-    });
+    expect(() -> assertThat(calledProcessInstance())
+      .isNotNull());
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(calledProcessInstance("ProcessEngineTests-calledProcessInstance-subProcess2"))
-          .isNotNull();
-      }
-    });
+    expect(() -> assertThat(calledProcessInstance("ProcessEngineTests-calledProcessInstance-subProcess2"))
+      .isNotNull());
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(calledProcessInstance(processInstanceQuery().processDefinitionKey("ProcessEngineTests-calledProcessInstance-subProcess2")))
-          .isNotNull();
-      }
-    });
+    expect(() -> assertThat(calledProcessInstance(processInstanceQuery().processDefinitionKey("ProcessEngineTests-calledProcessInstance-subProcess2")))
+      .isNotNull());
     // When
     assertThat(processInstance)
       .hasProcessDefinitionKey("ProcessEngineTests-calledProcessInstance-superProcess1");
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(calledProcessInstance())
-          .isNull();
-      }
-    });
+    expect(() -> assertThat(calledProcessInstance())
+      .isNull());
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(calledProcessInstance("ProcessEngineTests-calledProcessInstance-subProcess1"))
-          .isNotNull();
-      }
-    });
+    expect(() -> assertThat(calledProcessInstance("ProcessEngineTests-calledProcessInstance-subProcess1"))
+      .isNotNull());
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(calledProcessInstance(processInstanceQuery().processDefinitionKey("ProcessEngineTests-calledProcessInstance-subProcess1")))
-          .isNotNull();
-      }
-    });
+    expect(() -> assertThat(calledProcessInstance(processInstanceQuery().processDefinitionKey("ProcessEngineTests-calledProcessInstance-subProcess1")))
+      .isNotNull());
   }
 
   @Test
@@ -300,13 +254,8 @@ public class ProcessEngineTestsCalledProcessInstanceTest extends ProcessAssertTe
       "ProcessEngineTests-calledProcessInstance-superProcess2"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(calledProcessInstance("ProcessEngineTests-calledProcessInstance-subProcess3", processInstance))
-          .isNotNull();
-      }
-    });
+    expect(() -> assertThat(calledProcessInstance("ProcessEngineTests-calledProcessInstance-subProcess3", processInstance))
+      .isNotNull());
   }
 
 }

@@ -22,7 +22,6 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtim
 
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -57,12 +56,7 @@ public class JobAssertHasExecutionIdTest extends ProcessAssertTestCase {
     // Then
     assertThat(jobQuery().singleResult()).isNotNull();
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(jobQuery().singleResult()).hasExecutionId("otherExecutionId");
-      }
-    });
+    expect(() -> assertThat(jobQuery().singleResult()).hasExecutionId("otherExecutionId"));
   }
 
   @Test
@@ -76,12 +70,7 @@ public class JobAssertHasExecutionIdTest extends ProcessAssertTestCase {
     // Then
     assertThat(jobQuery().singleResult()).isNotNull();
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(jobQuery().singleResult()).hasExecutionId(null);
-      }
-    });
+    expect(() -> assertThat(jobQuery().singleResult()).hasExecutionId(null));
   }
 
 }

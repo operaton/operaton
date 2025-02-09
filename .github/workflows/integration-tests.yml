@@ -26,13 +26,14 @@ on:
         description: 'Container to use for integration tests'
         type: choice
         required: true
-        default: '["tomcat"]'
+        default: '["tomcat", "wildfly"]'
         options:
           - '["tomcat"]'
           - '["tomcat9"]'
           - '["wildfly"]'
           - '["wildfly26"]'
           - '["tomcat", "tomcat9", "wildfly", "wildfly26"]'
+          - '["tomcat", "wildfly"]'
       database:
         description: 'Database to use for integration tests'
         type: choice

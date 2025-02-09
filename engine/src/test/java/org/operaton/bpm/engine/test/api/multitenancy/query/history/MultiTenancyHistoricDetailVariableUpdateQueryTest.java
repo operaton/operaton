@@ -177,6 +177,7 @@ public class MultiTenancyHistoricDetailVariableUpdateQueryTest {
 
       // then
     } catch (NullValueException e) {
+      // expected
     }
   }
 
@@ -223,7 +224,7 @@ public class MultiTenancyHistoricDetailVariableUpdateQueryTest {
   @Test
   public void shouldQueryAuthenticatedTenant() {
     // given
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     // when
     HistoricDetailQuery query = historyService.createHistoricDetailQuery();
@@ -263,9 +264,9 @@ public class MultiTenancyHistoricDetailVariableUpdateQueryTest {
     assertThat(query.count()).isEqualTo(6L); // null-tenant instances are still included
   }
 
-  protected ProcessInstance startProcessInstanceForTenant(String tenant, String var) {
+  protected ProcessInstance startProcessInstanceForTenant(String tenant, String variableValue) {
     return runtimeService.createProcessInstanceByKey("testProcess")
-        .setVariable(VARIABLE_NAME, var)
+        .setVariable(VARIABLE_NAME, variableValue)
         .processDefinitionTenantId(tenant)
         .execute();
   }

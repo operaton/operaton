@@ -19,9 +19,9 @@ package org.operaton.bpm.engine.impl;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -46,6 +46,7 @@ import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
  */
 public class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl<ProcessInstanceQuery, ProcessInstance> implements ProcessInstanceQuery, Serializable {
 
+  @Serial
   private static final long serialVersionUID = 1L;
   protected String processInstanceId;
   protected String businessKey;
@@ -76,7 +77,7 @@ public class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl<ProcessI
   protected boolean isProcessDefinitionWithoutTenantId = false;
 
   // or query /////////////////////////////
-  protected List<ProcessInstanceQueryImpl> queries = new ArrayList<>(Arrays.asList(this));
+  protected List<ProcessInstanceQueryImpl> queries = new ArrayList<>(List.of(this));
   protected boolean isOrQueryActive = false;
 
   public ProcessInstanceQueryImpl() {
@@ -391,8 +392,8 @@ public class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl<ProcessI
       String dbType = processEngineConfiguration.getDatabaseType();
 
       for (ProcessInstanceQueryImpl orQuery: queries) {
-        for (QueryVariableValue var : orQuery.getQueryVariableValues()) {
-          var.initialize(variableSerializers, dbType);
+        for (var queryVariableValue : orQuery.getQueryVariableValues()) {
+          queryVariableValue.initialize(variableSerializers, dbType);
         }
       }
     }

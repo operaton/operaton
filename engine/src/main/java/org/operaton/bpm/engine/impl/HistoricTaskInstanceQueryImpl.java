@@ -20,7 +20,6 @@ import static java.lang.Boolean.TRUE;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -105,7 +104,7 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
   protected Date startedAfter;
   protected Date startedBefore;
 
-  protected List<HistoricTaskInstanceQueryImpl> queries = new ArrayList<>(Arrays.asList(this));
+  protected List<HistoricTaskInstanceQueryImpl> queries = new ArrayList<>(List.of(this));
   protected boolean isOrQueryActive = false;
 
   public HistoricTaskInstanceQueryImpl() {
@@ -472,14 +471,14 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
     ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
     VariableSerializers variableSerializers = processEngineConfiguration.getVariableSerializers();
     String dbType = processEngineConfiguration.getDatabaseType();
-    for(QueryVariableValue var : variables) {
-      var.initialize(variableSerializers, dbType);
+    for(var queryVariableValue : variables) {
+      queryVariableValue.initialize(variableSerializers, dbType);
     }
 
     if (!queries.isEmpty()) {
       for (HistoricTaskInstanceQueryImpl orQuery: queries) {
-        for (QueryVariableValue var : orQuery.variables) {
-          var.initialize(variableSerializers, dbType);
+        for (var queryVariableValue : orQuery.variables) {
+          queryVariableValue.initialize(variableSerializers, dbType);
         }
       }
     }

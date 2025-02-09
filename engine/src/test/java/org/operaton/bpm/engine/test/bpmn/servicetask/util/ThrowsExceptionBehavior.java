@@ -28,11 +28,11 @@ public class ThrowsExceptionBehavior implements ActivityBehavior {
 
   @Override
   public void execute(ActivityExecution execution) throws Exception {
-    String var = (String) execution.getVariable("var");
+    String variable = (String) execution.getVariable("var");
 
-    PvmTransition transition = null;
+    PvmTransition transition;
     try {
-      executeLogic(var);
+      executeLogic(variable);
       transition = execution.getActivity().findOutgoingTransition("no-exception");
     } catch (Exception e) {
       transition = execution.getActivity().findOutgoingTransition("exception");

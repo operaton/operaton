@@ -152,7 +152,7 @@ public class JobExecutorBatchTest {
 
   public class CountingJobExecutor extends JobExecutor {
 
-    public boolean record = false;
+    public boolean recordStarted = false;
     public long jobsAdded = 0;
 
     @Override
@@ -175,12 +175,12 @@ public class JobExecutorBatchTest {
 
     public void startRecord() {
       resetJobsAdded();
-      record = true;
+      recordStarted = true;
     }
 
     @Override
     public void jobWasAdded() {
-      if (record) {
+      if (recordStarted) {
         jobsAdded++;
       }
     }

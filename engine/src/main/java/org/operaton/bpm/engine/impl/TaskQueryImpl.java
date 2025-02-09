@@ -167,7 +167,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   protected Map<String, List<String>> cachedUserGroups;
 
   // or query /////////////////////////////
-  protected List<TaskQueryImpl> queries = new ArrayList<>(Arrays.asList(this));
+  protected List<TaskQueryImpl> queries = new ArrayList<>(List.of(this));
   protected boolean isOrQueryActive = false;
   protected boolean withCommentAttachmentInfo;
 
@@ -1202,14 +1202,14 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
     ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
     VariableSerializers variableSerializers = processEngineConfiguration.getVariableSerializers();
     String dbType = processEngineConfiguration.getDatabaseType();
-    for(QueryVariableValue var : variables) {
-      var.initialize(variableSerializers, dbType);
+    for(var queryVariableValue : variables) {
+      queryVariableValue.initialize(variableSerializers, dbType);
     }
 
     if (!queries.isEmpty()) {
       for (TaskQueryImpl orQuery: queries) {
-        for (QueryVariableValue var : orQuery.variables) {
-          var.initialize(variableSerializers, dbType);
+        for (var queryVariableValue : orQuery.variables) {
+          queryVariableValue.initialize(variableSerializers, dbType);
         }
       }
     }
@@ -2283,7 +2283,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
 
     mergeOrdering(extendedQuery, extendingQuery);
 
-    extendedQuery.queries = new ArrayList<>(Arrays.asList(extendedQuery));
+    extendedQuery.queries = new ArrayList<>(List.of(extendedQuery));
 
     if (queries.size() > 1) {
       queries.remove(0);

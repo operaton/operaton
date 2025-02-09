@@ -36,8 +36,8 @@ public class ProcessVariableBean {
   protected RuntimeService runtimeService;
 
   public String getNewValue() {
-    Object var = runtimeService.getVariable(processInstance.getId(), "var");
+    Object variable = runtimeService.getVariable(processInstance.getId(), "var");
 
-    return var.toString() + var.toString();
+    return variable.toString() + variable;
   }
 }

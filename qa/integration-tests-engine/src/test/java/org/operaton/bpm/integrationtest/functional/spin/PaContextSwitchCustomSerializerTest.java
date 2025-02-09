@@ -78,27 +78,17 @@ public class PaContextSwitchCustomSerializerTest extends AbstractFoxPlatformInte
   @OperateOnDeployment("pa3")
   public void test() throws Exception {
 
-    final ProcessInstance processInstance = withProcessApplicationContext(new Callable<ProcessInstance>() {
-
-      @Override
-      public ProcessInstance call() throws Exception {
-        final XmlSerializable var = new XmlSerializable();
-        var.setProperty("jonny");
-        return runtimeService.startProcessInstanceByKey("processWithTimer", Variables.createVariables()
-          .putValueTyped("testObject", Variables.objectValue(var).serializationDataFormat(DataFormats.JSON_DATAFORMAT_NAME).create()));
-      }
-
+    final ProcessInstance processInstance = withProcessApplicationContext(() -> {
+      final XmlSerializable variable = new XmlSerializable();
+      variable.setProperty("jonny");
+      return runtimeService.startProcessInstanceByKey("processWithTimer", Variables.createVariables()
+        .putValueTyped("testObject", Variables.objectValue(variable).serializationDataFormat(DataFormats.JSON_DATAFORMAT_NAME).create()));
     }, "pa3");
 
-    withProcessApplicationContext(new Callable<Void>() {
-
-      @Override
-      public Void call() throws Exception {
-        runtimeService.createProcessInstanceModification(processInstance.getProcessInstanceId()).startTransition("flow2")
-          .execute();
-        return null;
-      }
-
+    withProcessApplicationContext((Callable<Void>) () -> {
+      runtimeService.createProcessInstanceModification(processInstance.getProcessInstanceId()).startTransition("flow2")
+        .execute();
+      return null;
     }, "pa4");
 
     assertEquals(1, historyService.createHistoricActivityInstanceQuery().activityId("exclusiveGateway").finished().count());

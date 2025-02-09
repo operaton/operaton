@@ -16,6 +16,7 @@
  */
 package org.operaton.spin.plugin.variables;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
@@ -29,18 +30,17 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  */
 public class UpdateValueDelegate implements JavaDelegate, Serializable {
 
+  @Serial
   private static final long serialVersionUID = 1L;
 
   public static final String STRING_PROPERTY = "a string value";
 
   public void execute(DelegateExecution execution) {
     TypedValue typedValue = execution.getVariableTyped("listVar");
-    List<JsonSerializable> var = (List<JsonSerializable>) typedValue.getValue();
+    List<JsonSerializable> jsonSerializableList = (List<JsonSerializable>) typedValue.getValue();
     JsonSerializable newElement = new JsonSerializable();
     newElement.setStringProperty(STRING_PROPERTY);
     // implicit update of the list, so no execution.setVariable call
-    var.add(newElement);
-
+    jsonSerializableList.add(newElement);
   }
-
 }

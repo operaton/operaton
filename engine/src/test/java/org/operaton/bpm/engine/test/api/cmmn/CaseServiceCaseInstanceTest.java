@@ -168,7 +168,7 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
     assertTrue(caseInstance.isActive());
     assertFalse(caseInstance.isEnabled());
 
-    // get persistend case instance
+    // get persistent case instance
     CaseInstance instance = caseService
       .createCaseInstanceQuery()
       .singleResult();
@@ -208,7 +208,7 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
     assertTrue(caseInstance.isActive());
     assertFalse(caseInstance.isEnabled());
 
-    // get persistend case instance
+    // get persistent case instance
     CaseInstance instance = caseService
       .createCaseInstanceQuery()
       .singleResult();
@@ -630,12 +630,6 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
        .withCaseDefinition(caseDefinitionId)
        .create()
        .getId();
-
-    String caseExecutionId = caseService
-        .createCaseExecutionQuery()
-        .activityId("PI_Stage_1")
-        .singleResult()
-        .getId();
 
     CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution(caseInstanceId);
 

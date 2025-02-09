@@ -208,7 +208,6 @@ public class SignalEventPayloadTest {
     variables.put("payloadVar1", "payloadVal1");
     String localVar1 = "localVar1";
     String localVal1 = "localVal1";
-    String localVar2 = "localVar2";
     String localVal2 = "localVal2";
     ProcessInstance catchingPI = runtimeService.startProcessInstanceByKey("catchIntermediatePayloadSignal");
 
@@ -268,7 +267,7 @@ public class SignalEventPayloadTest {
     variables.put(globalVar1, globalVal1);
     variables.put(globalVar2, globalVal2);
     String localVar1 = "localVar1";
-    String localVal1 = "localVal1";;
+    String localVal1 = "localVal1";
     String localVar2 = "localVar2";
     String localVal2 = "localVal2";
     String businessKey = "aBusinessKey";

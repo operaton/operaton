@@ -47,10 +47,10 @@ import org.junit.Test;
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest {
 
-  protected final String WORKER_ID = "aWorkerId";
-  protected final long LOCK_DURATION = 5 * 60L * 1000L;
-  protected final String ERROR_DETAILS = "These are the error details!";
-  protected final String ANOTHER_PROCESS_KEY = "AnotherProcess";
+  protected static final String WORKER_ID = "aWorkerId";
+  protected static final long LOCK_DURATION = 5 * 60L * 1000L;
+  protected static final String ERROR_DETAILS = "These are the error details!";
+  protected static final String ANOTHER_PROCESS_KEY = "AnotherProcess";
 
   @Override
   @Before
@@ -190,7 +190,7 @@ public class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest 
 
     try {
       // when
-      String stacktrace = historyService.getHistoricExternalTaskLogErrorDetails(failedHistoricExternalTaskLogId);
+      historyService.getHistoricExternalTaskLogErrorDetails(failedHistoricExternalTaskLogId);
       fail("Exception expected: It should not be possible to retrieve the error details");
     } catch (AuthorizationException e) {
       // then

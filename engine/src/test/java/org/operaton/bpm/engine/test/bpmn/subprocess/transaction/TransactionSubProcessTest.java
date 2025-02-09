@@ -615,7 +615,7 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
 	  devices.add("device1");
     devices.add("device2");
     devices.add("fail");
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey( //
+    runtimeService.startProcessInstanceByKey(
 	      "order", //
 	      Variables.putValue("devices", devices));
 

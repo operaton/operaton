@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.cmmn10;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -210,12 +211,11 @@ public class Cmmn10CompatibilityTest extends CmmnTest {
     createCaseInstanceByKey("case");
 
     // when
-    String humanTask = queryCaseExecutionByActivityId("PI_HumanTask_1").getId();
+    var humanTask = queryCaseExecutionByActivityId("PI_HumanTask_1");
+    assertThat(humanTask).isNotNull();
 
     // then
     Task task = taskService.createTaskQuery().singleResult();
     assertEquals("This is a description!", task.getDescription());
-
   }
-
 }

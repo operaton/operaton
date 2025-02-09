@@ -817,6 +817,7 @@ public class CaseExecutionCompletionTest {
 
     // task A as a child of the case instance
     CmmnActivityExecution taskA = caseInstance.findCaseExecution("A");
+    assertThat(taskA).isNotNull();
 
     try {
       // when

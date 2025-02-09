@@ -261,8 +261,7 @@ public class TenantIdProviderTest {
   public void setsTenantId() {
 
     String tenantId = TENANT_ID;
-    StaticTenantIdTestProvider tenantIdProvider = new StaticTenantIdTestProvider(tenantId);
-    TestTenantIdProvider.delegate = tenantIdProvider;
+    TestTenantIdProvider.delegate = new StaticTenantIdTestProvider(tenantId);
 
     testRule.deploy(Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY).startEvent().userTask().done());
 
@@ -278,8 +277,7 @@ public class TenantIdProviderTest {
   public void setNullTenantId() {
 
     String tenantId = null;
-    StaticTenantIdTestProvider tenantIdProvider = new StaticTenantIdTestProvider(tenantId);
-    TestTenantIdProvider.delegate = tenantIdProvider;
+    TestTenantIdProvider.delegate = new StaticTenantIdTestProvider(tenantId);
 
     testRule.deploy(Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY).startEvent().userTask().done());
 
@@ -387,8 +385,7 @@ public class TenantIdProviderTest {
   public void setsTenantId_SubProcessInstance() {
 
     String tenantId = TENANT_ID;
-    SetValueOnSubProcessInstanceTenantIdProvider tenantIdProvider = new SetValueOnSubProcessInstanceTenantIdProvider(tenantId);
-    TestTenantIdProvider.delegate = tenantIdProvider;
+    TestTenantIdProvider.delegate = new SetValueOnSubProcessInstanceTenantIdProvider(tenantId);
 
     testRule.deploy(Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY).startEvent().userTask().done(),
         Bpmn.createExecutableProcess("superProcess").startEvent().callActivity().calledElement(PROCESS_DEFINITION_KEY).done());
@@ -409,8 +406,7 @@ public class TenantIdProviderTest {
   public void setNullTenantId_SubProcessInstance() {
 
     String tenantId = null;
-    SetValueOnSubProcessInstanceTenantIdProvider tenantIdProvider = new SetValueOnSubProcessInstanceTenantIdProvider(tenantId);
-    TestTenantIdProvider.delegate = tenantIdProvider;
+    TestTenantIdProvider.delegate = new SetValueOnSubProcessInstanceTenantIdProvider(tenantId);
 
     testRule.deploy(Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY).startEvent().userTask().done(),
         Bpmn.createExecutableProcess("superProcess").startEvent().callActivity().calledElement(PROCESS_DEFINITION_KEY).done());
@@ -427,8 +423,7 @@ public class TenantIdProviderTest {
   public void tenantIdInheritedFromSuperProcessInstance() {
 
     String tenantId = TENANT_ID;
-    SetValueOnRootProcessInstanceTenantIdProvider tenantIdProvider = new SetValueOnRootProcessInstanceTenantIdProvider(tenantId);
-    TestTenantIdProvider.delegate = tenantIdProvider;
+    TestTenantIdProvider.delegate = new SetValueOnRootProcessInstanceTenantIdProvider(tenantId);
 
     testRule.deploy(Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY).startEvent().userTask().done(),
         Bpmn.createExecutableProcess("superProcess").startEvent().callActivity().calledElement(PROCESS_DEFINITION_KEY).done());
@@ -456,7 +451,7 @@ public class TenantIdProviderTest {
     // if the case is started
     engineRule.getCaseService().createCaseInstanceByKey("testCase");
     CaseExecution caseExecution = engineRule.getCaseService().createCaseExecutionQuery().activityId("PI_ProcessTask_1").singleResult();
-
+    assertThat(caseExecution).isNotNull();
 
     // then the tenant id provider is invoked once for the process instance
     assertThat(tenantIdProvider.parameters).hasSize(1);
@@ -475,6 +470,7 @@ public class TenantIdProviderTest {
     // if the case is started
     engineRule.getCaseService().createCaseInstanceByKey("testCase");
     CaseExecution caseExecution = engineRule.getCaseService().createCaseExecutionQuery().activityId("PI_ProcessTask_1").singleResult();
+    assertThat(caseExecution).isNotNull();
 
     // then the tenant id provider is not invoked
     assertThat(tenantIdProvider.parameters).isEmpty();
@@ -493,6 +489,7 @@ public class TenantIdProviderTest {
     // if the case is started
     engineRule.getCaseService().createCaseInstanceByKey("testCase", Variables.createVariables().putValue("varName", true));
     CaseExecution caseExecution = engineRule.getCaseService().createCaseExecutionQuery().activityId("PI_ProcessTask_1").singleResult();
+    assertThat(caseExecution).isNotNull();
 
     // then the tenant id provider is passed in the variable
     assertThat(tenantIdProvider.parameters).hasSize(1);
@@ -515,6 +512,7 @@ public class TenantIdProviderTest {
     // if the case is started
     engineRule.getCaseService().createCaseInstanceByKey("testCase");
     CaseExecution caseExecution = engineRule.getCaseService().createCaseExecutionQuery().activityId("PI_ProcessTask_1").singleResult();
+    assertThat(caseExecution).isNotNull();
 
     // then the tenant id provider is passed in the process definition
     assertThat(tenantIdProvider.parameters).hasSize(1);
@@ -534,6 +532,7 @@ public class TenantIdProviderTest {
     // if the case is started
     engineRule.getCaseService().createCaseInstanceByKey("testCase");
     CaseExecution caseExecution = engineRule.getCaseService().createCaseExecutionQuery().activityId("PI_ProcessTask_1").singleResult();
+    assertThat(caseExecution).isNotNull();
 
     // then the tenant id provider is handed in the super case execution
     assertThat(tenantIdProvider.parameters).hasSize(1);
@@ -596,8 +595,7 @@ public class TenantIdProviderTest {
   public void setsTenantIdForHistoricDecisionInstance() {
 
     String tenantId = TENANT_ID;
-    StaticTenantIdTestProvider tenantIdProvider = new StaticTenantIdTestProvider(tenantId);
-    TestTenantIdProvider.delegate = tenantIdProvider;
+    TestTenantIdProvider.delegate = new StaticTenantIdTestProvider(tenantId);
 
     testRule.deploy(DMN_FILE);
 
@@ -613,8 +611,7 @@ public class TenantIdProviderTest {
   public void setNullTenantIdForHistoricDecisionInstance() {
 
     String tenantId = null;
-    StaticTenantIdTestProvider tenantIdProvider = new StaticTenantIdTestProvider(tenantId);
-    TestTenantIdProvider.delegate = tenantIdProvider;
+    TestTenantIdProvider.delegate = new StaticTenantIdTestProvider(tenantId);
 
     testRule.deploy(DMN_FILE);
 
@@ -703,8 +700,7 @@ public class TenantIdProviderTest {
   public void setsTenantIdForHistoricDecisionInstance_BusinessRuleTask() {
 
     String tenantId = TENANT_ID;
-    SetValueOnHistoricDecisionInstanceTenantIdProvider tenantIdProvider = new SetValueOnHistoricDecisionInstanceTenantIdProvider(tenantId);
-    TestTenantIdProvider.delegate = tenantIdProvider;
+    TestTenantIdProvider.delegate = new SetValueOnHistoricDecisionInstanceTenantIdProvider(tenantId);
 
     BpmnModelInstance process = Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
         .startEvent()
@@ -728,8 +724,7 @@ public class TenantIdProviderTest {
   public void setNullTenantIdForHistoricDecisionInstance_BusinessRuleTask() {
 
     String tenantId = null;
-    SetValueOnHistoricDecisionInstanceTenantIdProvider tenantIdProvider = new SetValueOnHistoricDecisionInstanceTenantIdProvider(tenantId);
-    TestTenantIdProvider.delegate = tenantIdProvider;
+    TestTenantIdProvider.delegate = new SetValueOnHistoricDecisionInstanceTenantIdProvider(tenantId);
 
     BpmnModelInstance process = Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
         .startEvent()
@@ -825,8 +820,7 @@ public class TenantIdProviderTest {
   public void setsTenantIdForCaseInstance() {
 
     String tenantId = TENANT_ID;
-    StaticTenantIdTestProvider tenantIdProvider = new StaticTenantIdTestProvider(tenantId);
-    TestTenantIdProvider.delegate = tenantIdProvider;
+    TestTenantIdProvider.delegate = new StaticTenantIdTestProvider(tenantId);
 
     testRule.deploy(CMMN_FILE_WITH_MANUAL_ACTIVATION);
 
@@ -842,8 +836,7 @@ public class TenantIdProviderTest {
   public void setNullTenantIdForCaseInstance() {
 
     String tenantId = null;
-    StaticTenantIdTestProvider tenantIdProvider = new StaticTenantIdTestProvider(tenantId);
-    TestTenantIdProvider.delegate = tenantIdProvider;
+    TestTenantIdProvider.delegate = new StaticTenantIdTestProvider(tenantId);
 
     testRule.deploy(CMMN_FILE_WITH_MANUAL_ACTIVATION);
 
@@ -947,8 +940,7 @@ public class TenantIdProviderTest {
   public void setsTenantId_SubCaseInstance() {
 
     String tenantId = TENANT_ID;
-    SetValueOnSubCaseInstanceTenantIdProvider tenantIdProvider = new SetValueOnSubCaseInstanceTenantIdProvider(tenantId);
-    TestTenantIdProvider.delegate = tenantIdProvider;
+    TestTenantIdProvider.delegate = new SetValueOnSubCaseInstanceTenantIdProvider(tenantId);
 
     testRule.deploy(CMMN_SUBPROCESS_FILE, CMMN_FILE);
 
@@ -968,8 +960,7 @@ public class TenantIdProviderTest {
   public void setNullTenantId_SubCaseInstance() {
 
     String tenantId = null;
-    SetValueOnSubCaseInstanceTenantIdProvider tenantIdProvider = new SetValueOnSubCaseInstanceTenantIdProvider(tenantId);
-    TestTenantIdProvider.delegate = tenantIdProvider;
+    TestTenantIdProvider.delegate = new SetValueOnSubCaseInstanceTenantIdProvider(tenantId);
 
     testRule.deploy(CMMN_SUBPROCESS_FILE, CMMN_FILE);
 
@@ -985,15 +976,14 @@ public class TenantIdProviderTest {
   public void tenantIdInheritedFromSuperCaseInstance() {
 
     String tenantId = TENANT_ID;
-    SetValueOnRootCaseInstanceTenantIdProvider tenantIdProvider = new SetValueOnRootCaseInstanceTenantIdProvider(tenantId);
-    TestTenantIdProvider.delegate = tenantIdProvider;
+    TestTenantIdProvider.delegate = new SetValueOnRootCaseInstanceTenantIdProvider(tenantId);
 
     testRule.deploy(CMMN_SUBPROCESS_FILE, CMMN_FILE);
 
     // if a case instance is created
     engineRule.getCaseService().withCaseDefinitionByKey(CASE_DEFINITION_KEY).create();
 
-    // then the tenant id is inherited to the sub case instance even tough it is not set by the provider
+    // then the tenant id is inherited to the subcase instance even tough it is not set by the provider
     CaseInstance caseInstance = engineRule.getCaseService().createCaseInstanceQuery().caseDefinitionKey("oneTaskCase").singleResult();
     assertThat(caseInstance.getTenantId()).isEqualTo(tenantId);
   }
@@ -1030,7 +1020,7 @@ public class TenantIdProviderTest {
     TestTenantIdProvider.delegate = tenantIdProvider;
 
     BpmnModelInstance process = Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
-        .startEvent().operatonFormKey("embedded:app:forms/FORM_NAME.htmls")
+        .startEvent().operatonFormKey("embedded:app:forms/FORM_NAME.html")
         .userTask("UserTask")
         .endEvent()
         .done();
@@ -1043,7 +1033,7 @@ public class TenantIdProviderTest {
     engineRule.getFormService().submitStartForm(procDefId, variableMap);
 
     // then
-    assertThat(tenantIdProvider.retreivedVariableValue).isEqualTo(variableValue);
+    assertThat(tenantIdProvider.retrievedVariableValue).isEqualTo(variableValue);
   }
 
   // query activity instances //////////////////////////////////
@@ -1333,7 +1323,7 @@ public class TenantIdProviderTest {
     }
   }
 
-  //only sets tenant ids on sub case instances
+  //only sets tenant ids on subcase instances
   public static class SetValueOnSubCaseInstanceTenantIdProvider implements TenantIdProvider {
 
     private final String tenantIdToSet;
@@ -1387,7 +1377,7 @@ public class TenantIdProviderTest {
 
     private final String tenantIdToSet;
     private final String variableToAccess;
-    protected Object retreivedVariableValue;
+    protected Object retrievedVariableValue;
 
     public AccessProcessInstanceVariableTenantIdProvider(String tenantIdToSet, String variableToAccess) {
       this.tenantIdToSet = tenantIdToSet;
@@ -1396,7 +1386,7 @@ public class TenantIdProviderTest {
 
     @Override
     public String provideTenantIdForProcessInstance(TenantIdProviderProcessInstanceContext ctx) {
-      retreivedVariableValue = ctx.getVariables().get(variableToAccess);
+      retrievedVariableValue = ctx.getVariables().get(variableToAccess);
       return tenantIdToSet;
     }
 

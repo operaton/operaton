@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.repetition;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
@@ -839,7 +840,7 @@ public class RepetitionRuleTest extends CmmnTest {
     // given
     String caseInstanceId = createCaseInstance().getId();
 
-    String stageId = queryCaseExecutionByActivityId("PI_Stage_1").getId();
+    assertThat(queryCaseExecutionByActivityId("PI_Stage_1")).isNotNull();
 
     // then (1)
     CaseExecutionQuery query = caseService

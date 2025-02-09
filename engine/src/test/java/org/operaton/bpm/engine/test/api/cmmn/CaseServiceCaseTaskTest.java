@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.cmmn;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -33,7 +34,6 @@ import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseExecutionCommandBuilder;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.runtime.VariableInstance;
-import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.engine.variable.Variables;
@@ -576,8 +576,6 @@ public class CaseServiceCaseTaskTest extends PluggableProcessEngineTest {
   public void testCloseCaseInstanceShouldCompleteCaseTask() {
     // given
     createCaseInstance(DEFINITION_KEY);
-    String caseTaskId = queryCaseExecutionByActivityId(CASE_TASK_KEY).getId();
-
     String humanTaskId = queryCaseExecutionByActivityId("PI_HumanTask_1").getId();
 
     caseService
@@ -610,14 +608,13 @@ public class CaseServiceCaseTaskTest extends PluggableProcessEngineTest {
     String caseTaskId = queryCaseExecutionByActivityId(CASE_TASK_KEY).getId();
 
     // when
-
     caseService
       .withCaseExecution(caseTaskId)
       .disable();
 
     // then
     CaseExecution caseTask = queryCaseExecutionByActivityId(CASE_TASK_KEY);
-
+    assertThat(caseTask).isNull();
     // the case instance has been completed
     CaseInstance superCaseInstance = queryCaseInstanceByKey(DEFINITION_KEY);
     assertNotNull(superCaseInstance);
@@ -751,12 +748,6 @@ public class CaseServiceCaseTaskTest extends PluggableProcessEngineTest {
     return caseService
         .createCaseInstanceQuery()
         .caseDefinitionKey(caseDefinitionKey)
-        .singleResult();
-  }
-
-  protected Task queryTask() {
-    return taskService
-        .createTaskQuery()
         .singleResult();
   }
 

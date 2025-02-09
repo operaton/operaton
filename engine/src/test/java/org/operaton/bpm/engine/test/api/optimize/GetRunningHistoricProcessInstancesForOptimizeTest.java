@@ -173,8 +173,7 @@ public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
     testHelper.deploy(simpleDefinition);
     Date now = new Date();
     ClockUtil.setCurrentTime(now);
-    ProcessInstance processInstance =
-      runtimeService.startProcessInstanceByKey("process");
+    runtimeService.startProcessInstanceByKey("process");
     Date nowPlus2Seconds = new Date(now.getTime() + 2000L);
     ClockUtil.setCurrentTime(nowPlus2Seconds);
     runtimeService.startProcessInstanceByKey("process");

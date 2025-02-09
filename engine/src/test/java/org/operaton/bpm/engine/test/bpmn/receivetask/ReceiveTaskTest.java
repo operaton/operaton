@@ -337,7 +337,7 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
   public void testNotSupportsCorrelateMessageOnParallelMultiReceiveTask() {
 
     // given: a process instance waiting in two receive tasks
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
+    runtimeService.startProcessInstanceByKey("testProcess");
 
     // expect: there are two message event subscriptions
     List<EventSubscription> subscriptions = getEventSubscriptionList();

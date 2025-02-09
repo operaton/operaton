@@ -264,7 +264,6 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
       if (DatabaseUtil.checkDatabaseRollsBackTransactionOnError()) {
         return Context.getCommandContext().getProcessEngineConfiguration().isEnableOptimisticLockingOnForeignKeyViolation();
       }
-      DbEntity entity = dbEntityOperation.getEntity();
       for (Map.Entry<String, Class> reference : hasDbReferences.getReferencedEntitiesIdAndClass().entrySet()) {
         DbEntity referencedEntity = selectById(reference.getValue(), reference.getKey());
         if (referencedEntity == null) {

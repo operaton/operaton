@@ -1057,7 +1057,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     String businessKey1 = "testBusinessKey1";
     String businessKey2 = "testBusinessKey2";
 
-    Long lockDuration = 60L * 1000L;
+    long lockDuration = 60L * 1000L;
 
     runtimeService.startProcessInstanceByKey("parallelExternalTaskProcess", businessKey1);
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("parallelExternalTaskProcess", businessKey2);
@@ -1101,7 +1101,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     String businessKey2 = "testBusinessKey2";
     String businessKey3 = "testBusinessKey3";
 
-    Long lockDuration = 60L * 1000L;
+    long lockDuration = 60L * 1000L;
 
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("parallelExternalTaskProcess", businessKey1);
     String processDefinitionId1 = processInstance1.getProcessDefinitionId();
@@ -1238,7 +1238,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     String businessKey2 = "testBusinessKey2";
     String businessKey3 = "testBusinessKey3";
 
-    Long lockDuration = 60L * 1000L;
+    long lockDuration = 60L * 1000L;
 
     runtimeService.startProcessInstanceByKey("parallelExternalTaskProcess", businessKey1);
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("parallelExternalTaskProcess", businessKey2);
@@ -3203,7 +3203,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
   }
 
   /**
-   * Helpher method which reclaims an external task after the lock is expired.
+   * Helper method which reclaims an external task after the lock is expired.
    * @param includeVariables flag showing if pass or not variables
    */
   public void handleBpmnErrorReclaimedLockExpiredTask(boolean includeVariables) {
@@ -3317,7 +3317,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml")
   @Test
-  public void testHandleBpmnErrorPassVariablesBoundryEvent() {
+  public void testHandleBpmnErrorPassVariablesBoundaryEvent() {
     //given
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
 
@@ -3376,7 +3376,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
     BpmnModelInstance targetProcess = modify(subProcess);
 
-    String deploymentId = testRule.deploy(targetProcess).getId();
+    testRule.deploy(targetProcess);
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
@@ -3906,7 +3906,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     String businessKey1 = "testBusinessKey1";
     String businessKey2 = "testBusinessKey2";
 
-    Long lockDuration = 60L * 1000L;
+    long lockDuration = 60L * 1000L;
 
     runtimeService.startProcessInstanceByKey("parallelExternalTaskProcess", businessKey1);
     runtimeService.startProcessInstanceByKey("parallelExternalTaskProcess", businessKey2);
@@ -3951,7 +3951,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     String businessKey1 = "testBusinessKey1";
     String businessKey2 = "testBusinessKey2";
 
-    Long lockDuration = 60L * 1000L;
+    long lockDuration = 60L * 1000L;
 
     runtimeService.startProcessInstanceByKey("parallelExternalTaskProcess", businessKey1);
     runtimeService.startProcessInstanceByKey("parallelExternalTaskProcess", businessKey2);
@@ -3992,7 +3992,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     String businessKey1 = "testBusinessKey1";
     String businessKey2 = "testBusinessKey2";
 
-    Long lockDuration = 60L * 1000L;
+    long lockDuration = 60L * 1000L;
 
     runtimeService.startProcessInstanceByKey("parallelExternalTaskProcess", businessKey1);
     runtimeService.startProcessInstanceByKey("parallelExternalTaskProcess", businessKey2);
@@ -4034,7 +4034,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     String businessKey1 = "testBusinessKey1";
     String businessKey2 = "testBusinessKey2";
 
-    Long lockDuration = 60L * 1000L;
+    long lockDuration = 60L * 1000L;
 
     runtimeService.startProcessInstanceByKey("parallelExternalTaskProcess", businessKey1);
     runtimeService.startProcessInstanceByKey("parallelExternalTaskProcess", businessKey2);
@@ -4086,7 +4086,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
     Map<String, Object> variables = new HashMap<>();
 
-    Long lockDuration = 60L * 1000L;
+    long lockDuration = 60L * 1000L;
 
     //when
     variables.put(variableName, variableValue1);
@@ -4131,7 +4131,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
     Map<String, Object> variables = new HashMap<>();
 
-    Long lockDuration = 60L * 1000L;
+    long lockDuration = 60L * 1000L;
 
     //when
     variables.put(variableName, variableValue1);
@@ -4188,7 +4188,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
     Map<String, Object> variables = new HashMap<>();
 
-    Long lockDuration = 60L * 1000L;
+    long lockDuration = 60L * 1000L;
 
     //when
     variables.put(variableName1, variableValue1);
@@ -4248,7 +4248,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
     Map<String, Object> variables = new HashMap<>();
 
-    Long lockDuration = 60L * 1000L;
+    long lockDuration = 60L * 1000L;
 
     //when
     variables.put(variableName, variableValue1);

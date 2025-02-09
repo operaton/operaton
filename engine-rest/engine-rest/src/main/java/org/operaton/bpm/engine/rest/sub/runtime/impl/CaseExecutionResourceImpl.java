@@ -222,9 +222,10 @@ public class CaseExecutionResourceImpl implements CaseExecutionResource {
   }
 
   protected void initializeCommandWithVariables(CaseExecutionCommandBuilder commandBuilder, Map<String, TriggerVariableValueDto> variables, String transition) {
-    for(String variableName : variables.keySet()) {
+    for(var vars : variables.entrySet()) {
+      String variableName = vars.getKey();
       try {
-        TriggerVariableValueDto variableValue = variables.get(variableName);
+        TriggerVariableValueDto variableValue = vars.getValue();
         TypedValue typedValue = variableValue.toTypedValue(engine, objectMapper);
 
         if (variableValue.isLocal()) {

@@ -41,14 +41,14 @@ public class TypedValues {
     Map<String, TypedValueField> result = new HashMap<>();
 
     if (variables != null) {
-      for (String variableName : variables.keySet()) {
-
-        Object variableValue = null;
+      for (var vars : variables.entrySet()) {
+        String variableName = vars.getKey();
+        Object variableValue;
         if (variables instanceof VariableMap variableMap) {
           variableValue = variableMap.getValueTyped(variableName);
         }
         else {
-          variableValue = variables.get(variableName);
+          variableValue = vars.getValue();
         }
 
         try {

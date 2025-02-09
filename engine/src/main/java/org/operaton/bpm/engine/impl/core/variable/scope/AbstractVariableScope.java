@@ -30,6 +30,7 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.*;
 
@@ -41,6 +42,7 @@ import java.util.*;
  */
 public abstract class AbstractVariableScope implements Serializable, VariableScope, VariableEventDispatcher {
 
+  @Serial
   private static final long serialVersionUID = 1L;
 
   // TODO: move this?
@@ -53,8 +55,9 @@ public abstract class AbstractVariableScope implements Serializable, VariableSco
   public abstract AbstractVariableScope getParentVariableScope();
 
   public void initializeVariableStore(Map<String, Object> variables) {
-    for (String variableName : variables.keySet()) {
-      TypedValue value = Variables.untypedValue(variables.get(variableName));
+    for (var entry : variables.entrySet()) {
+      String variableName = entry.getKey();
+      TypedValue value = Variables.untypedValue(entry.getValue());
       CoreVariableInstance variableValue = getVariableInstanceFactory().build(variableName, value, false);
       getVariableStore().addVariable(variableValue);
     }
@@ -106,10 +109,10 @@ public abstract class AbstractVariableScope implements Serializable, VariableSco
     boolean collectAll = (variableNames == null);
 
     List<CoreVariableInstance> localVariables = getVariableInstancesLocal(variableNames);
-    for (CoreVariableInstance var : localVariables) {
-      if(!resultVariables.containsKey(var.getName())
-         && (collectAll || variableNames.contains(var.getName()))) {
-        resultVariables.put(var.getName(), var.getTypedValue(deserializeValues));
+    for (CoreVariableInstance variableInstance : localVariables) {
+      if(!resultVariables.containsKey(variableInstance.getName())
+         && (collectAll || variableNames.contains(variableInstance.getName()))) {
+        resultVariables.put(variableInstance.getName(), variableInstance.getTypedValue(deserializeValues));
       }
     }
     if(!isLocal) {

@@ -49,6 +49,8 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 import java.util.*;
 
+import org.apache.bcel.generic.LRETURN;
+
 /**
  * @author Roman Smirnov
  *
@@ -269,7 +271,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
     List<String> affectedSentries = collectAffectedSentries(child, transition);
 
     // Step 2: fire force update on all case sentry part
-    // contained by a affected sentry to provoke an
+    // contained by an affected sentry to provoke an
     // OptimisticLockingException
     forceUpdateOnSentries(affectedSentries);
 
@@ -423,11 +425,9 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
   }
 
   protected List<CmmnSentryPart> collectSentryParts(Map<String,List<CmmnSentryPart>> sentries) {
-    List<CmmnSentryPart> sentryParts = new ArrayList<>();
-    for(String sentryId: sentries.keySet()) {
-      sentryParts.addAll(sentries.get(sentryId));
-    }
-    return sentryParts;
+   return sentries.values().stream()
+           .flatMap(Collection::stream)
+           .toList();
   }
 
   protected void forceUpdateOnCaseSentryParts(List<CmmnSentryPart> sentryParts) {
@@ -652,7 +652,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
       ensureNotNull("Case execution '"+id+"': has no declaration for sentry '"+sentryId+"'", "sentryDeclaration", sentryDeclaration);
 
       CmmnIfPartDeclaration ifPartDeclaration = sentryDeclaration.getIfPart();
-      ensureNotNull("Sentry declaration '"+sentryId+"' has no definied ifPart, but there should be one defined for case execution '"+id+"'.", "ifPartDeclaration", ifPartDeclaration);
+      ensureNotNull("Sentry declaration '"+sentryId+"' has no defined ifPart, but there should be one defined for case execution '"+id+"'.", "ifPartDeclaration", ifPartDeclaration);
 
       Expression condition = ifPartDeclaration.getCondition();
       ensureNotNull("A condition was expected for ifPart of Sentry declaration '"+sentryId+"' for case execution '"+id+"'.", "condition", condition);

@@ -84,13 +84,14 @@ public class VariableUtil {
   public static void setVariables(Map<String, ?> variables,
                                   SetVariableFunction setVariableFunction) {
     if (variables != null) {
-      for (String variableName : variables.keySet()) {
+      for (var vars : variables.entrySet()) {
+        String variableName = vars.getKey();
         Object value = null;
         if (variables instanceof VariableMap map) {
           value = map.getValueTyped(variableName);
 
         } else {
-          value = variables.get(variableName);
+          value = vars.getValue();
 
         }
 

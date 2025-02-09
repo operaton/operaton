@@ -80,19 +80,14 @@ public class CaseInstanceResourceImpl implements CaseInstanceResource {
       initializeCommand(commandBuilder, triggerDto, "complete");
 
       commandBuilder.complete();
-
     } catch (NotFoundException e) {
       throw createInvalidRequestException("complete", Status.NOT_FOUND, e);
-
     } catch (NotValidException e) {
       throw createInvalidRequestException("complete", Status.BAD_REQUEST, e);
-
     } catch (NotAllowedException e) {
       throw createInvalidRequestException("complete", Status.FORBIDDEN, e);
-
     } catch (ProcessEngineException e) {
       throw createRestException("complete", Status.INTERNAL_SERVER_ERROR, e);
-
     }
   }
 
@@ -105,21 +100,15 @@ public class CaseInstanceResourceImpl implements CaseInstanceResource {
       initializeCommand(commandBuilder, triggerDto, "close");
 
       commandBuilder.close();
-
     } catch (NotFoundException e) {
       throw createInvalidRequestException("close", Status.NOT_FOUND, e);
-
     } catch (NotValidException e) {
       throw createInvalidRequestException("close", Status.BAD_REQUEST, e);
-
     } catch (NotAllowedException e) {
       throw createInvalidRequestException("close", Status.FORBIDDEN, e);
-
     } catch (ProcessEngineException e) {
       throw createRestException("close", Status.INTERNAL_SERVER_ERROR, e);
-
     }
-
   }
 
   @Override
@@ -131,19 +120,14 @@ public class CaseInstanceResourceImpl implements CaseInstanceResource {
       initializeCommand(commandBuilder, triggerDto, "terminate");
 
       commandBuilder.terminate();
-
     } catch (NotFoundException e) {
       throw createInvalidRequestException("terminate", Status.NOT_FOUND, e);
-
     } catch (NotValidException e) {
       throw createInvalidRequestException("terminate", Status.BAD_REQUEST, e);
-
     } catch (NotAllowedException e) {
       throw createInvalidRequestException("terminate", Status.FORBIDDEN, e);
-
     } catch (ProcessEngineException e) {
       throw createRestException("terminate", Status.INTERNAL_SERVER_ERROR, e);
-
     }
   }
 
@@ -170,21 +154,19 @@ public class CaseInstanceResourceImpl implements CaseInstanceResource {
   }
 
   protected void initializeCommandWithVariables(CaseExecutionCommandBuilder commandBuilder, Map<String, TriggerVariableValueDto> variables, String transition) {
-    for(String variableName : variables.keySet()) {
+    for(var vars : variables.entrySet()) {
+      String variableName = vars.getKey();
       try {
-        TriggerVariableValueDto variableValue = variables.get(variableName);
+        TriggerVariableValueDto variableValue = vars.getValue();
 
         if (variableValue.isLocal()) {
           commandBuilder.setVariableLocal(variableName, variableValue.toTypedValue(engine, objectMapper));
-
         } else {
           commandBuilder.setVariable(variableName, variableValue.toTypedValue(engine, objectMapper));
         }
-
       } catch (RestException e) {
         String errorMessage = String.format("Cannot %s case instance %s due to invalid variable %s: %s", transition, caseInstanceId, variableName, e.getMessage());
         throw new RestException(e.getStatus(), e, errorMessage);
-
       }
     }
   }

@@ -1226,7 +1226,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     if (!HISTORY_REMOVAL_TIME_STRATEGY_START.equals(historyRemovalTimeStrategy) &&
       !HISTORY_REMOVAL_TIME_STRATEGY_END.equals(historyRemovalTimeStrategy) &&
       !HISTORY_REMOVAL_TIME_STRATEGY_NONE.equals(historyRemovalTimeStrategy)) {
-      throw LOG.invalidPropertyValue("historyRemovalTimeStrategy", String.valueOf(historyRemovalTimeStrategy),
+      throw LOG.invalidPropertyValue("historyRemovalTimeStrategy", historyRemovalTimeStrategy,
         String.format("history removal time strategy must be set to '%s', '%s' or '%s'", HISTORY_REMOVAL_TIME_STRATEGY_START, HISTORY_REMOVAL_TIME_STRATEGY_END, HISTORY_REMOVAL_TIME_STRATEGY_NONE));
     }
   }
@@ -1282,13 +1282,13 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
     if (!HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED.equals(historyCleanupStrategy) &&
       !HISTORY_CLEANUP_STRATEGY_END_TIME_BASED.equals(historyCleanupStrategy)) {
-      throw LOG.invalidPropertyValue("historyCleanupStrategy", String.valueOf(historyCleanupStrategy),
+      throw LOG.invalidPropertyValue("historyCleanupStrategy", historyCleanupStrategy,
         String.format("history cleanup strategy must be either set to '%s' or '%s'", HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED, HISTORY_CLEANUP_STRATEGY_END_TIME_BASED));
     }
 
     if (HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED.equals(historyCleanupStrategy) &&
       HISTORY_REMOVAL_TIME_STRATEGY_NONE.equals(historyRemovalTimeStrategy)) {
-      throw LOG.invalidPropertyValue("historyRemovalTimeStrategy", String.valueOf(historyRemovalTimeStrategy),
+      throw LOG.invalidPropertyValue("historyRemovalTimeStrategy", historyRemovalTimeStrategy,
         String.format("history removal time strategy cannot be set to '%s' in conjunction with '%s' history cleanup strategy", HISTORY_REMOVAL_TIME_STRATEGY_NONE, HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED));
     }
   }
@@ -1354,9 +1354,10 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     if (batchOperationsForHistoryCleanup == null) {
       batchOperationsForHistoryCleanup = new HashMap<>();
     } else {
-      for (String batchOperation : batchOperationsForHistoryCleanup.keySet()) {
-        String timeToLive = batchOperationsForHistoryCleanup.get(batchOperation);
-        if (!batchHandlers.keySet().contains(batchOperation)) {
+      for (var batchOperationEntry: batchOperationsForHistoryCleanup.entrySet()) {
+        String batchOperation = batchOperationEntry.getKey();
+        String timeToLive = batchOperationEntry.getValue();
+        if (!batchHandlers.containsKey(batchOperation)) {
           LOG.invalidBatchOperation(batchOperation, timeToLive);
         }
 
@@ -1376,8 +1377,9 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
     parsedBatchOperationsForHistoryCleanup = new HashMap<>();
     if (batchOperationsForHistoryCleanup != null) {
-      for (String operation : batchOperationsForHistoryCleanup.keySet()) {
-        Integer historyTTL = ParseUtil.parseHistoryTimeToLive(batchOperationsForHistoryCleanup.get(operation));
+      for (var batchOperationEntry: batchOperationsForHistoryCleanup.entrySet()) {
+        String operation = batchOperationEntry.getKey();
+        Integer historyTTL = ParseUtil.parseHistoryTimeToLive(batchOperationEntry.getValue());
         parsedBatchOperationsForHistoryCleanup.put(operation, historyTTL);
       }
     }

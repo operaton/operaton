@@ -87,9 +87,8 @@ public class EventSubscriptionInstanceHandler implements MigratingDependentInsta
   }
 
   protected void addEmergingEventSubscriptions(MigratingActivityInstance owningInstance, Map<String, EventSubscriptionDeclaration> targetDeclarations) {
-    for (String key : targetDeclarations.keySet()) {
+    for (var declaration : targetDeclarations.values()) {
       // the event subscription will be created
-      EventSubscriptionDeclaration declaration = targetDeclarations.get(key);
       if (!declaration.isStartEvent()) {
         owningInstance.addEmergingDependentInstance(new MigratingEventSubscriptionInstance(declaration));
       }

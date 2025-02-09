@@ -88,28 +88,32 @@ public class ActivitiStateHandlerRegistry extends ReceiveTaskActivityBehavior im
      * @return all matching options
      */
     public Collection<ActivitiStateHandlerRegistration> findRegistrationsForProcessAndState(
-            String processName, String stateName) {
+      String processName, String stateName) {
         Collection<ActivitiStateHandlerRegistration> registrationCollection = new ArrayList<>();
         String regKeyFull = registrationKey(processName, stateName);
         String regKeyWithJustState = registrationKey(null, stateName);
 
-        for (String k : this.registrations.keySet())
+        for (var reg: this.registrations.entrySet()) {
+            String k = reg.getKey();
             if (k.contains(regKeyFull)) {
-                registrationCollection.add(this.registrations.get(k));
+                registrationCollection.add(reg.getValue());
             }
+        }
 
         if (registrationCollection.isEmpty()) {
-            for (String k : this.registrations.keySet())
+            for (var reg: this.registrations.entrySet()) {
+                String k = reg.getKey();
                 if (k.contains(regKeyWithJustState)) {
-                    registrationCollection.add(this.registrations.get(k));
+                    registrationCollection.add(reg.getValue());
                 }
+            }
         }
 
         return registrationCollection;
     }
 
     /**
-     * this scours the registry looking for candidate registrations that match a given process name and/ or state nanme
+     * this scours the registry looking for candidate registrations that match a given process name and/ or state name
      *
      * @param processName the name of the process
      * @param stateName   the name of the state
@@ -156,7 +160,7 @@ public class ActivitiStateHandlerRegistry extends ReceiveTaskActivityBehavior im
     }
 
   @Override
-  public void afterPropertiesSet() throws Exception {
+  public void afterPropertiesSet() {
         Assert.notNull(this.processEngine, "the 'processEngine' can't be null");
         logger.info("this bean contains a processEngine reference. " + this.processEngine);
         logger.info("starting " + getClass().getName());

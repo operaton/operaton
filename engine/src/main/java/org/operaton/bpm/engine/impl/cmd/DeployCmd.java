@@ -123,13 +123,13 @@ public class DeployCmd implements Command<DeploymentWithDefinitions>, Serializab
 
     checkCreateAndReadDeployments(commandContext, deploymentIds);
 
-    // set deployment name if it should retrieved from an existing deployment
+    // set deployment name if it should be retrieved from an existing deployment
     String nameFromDeployment = deploymentBuilder.getNameFromDeployment();
     setDeploymentName(nameFromDeployment, deploymentBuilder, commandContext);
 
     // get resources to re-deploy
     List<ResourceEntity> resources = getResources(deploymentBuilder, commandContext);
-    // .. and add them the builder
+    // ... and add them the builder
     addResources(resources, deploymentBuilder);
 
     Collection<String> resourceNames = deploymentBuilder.getResourceNames();
@@ -444,8 +444,9 @@ public class DeployCmd implements Command<DeploymentWithDefinitions>, Serializab
 
     ResourceManager resourceManager = commandContext.getResourceManager();
 
-    for (String deploymentId : resourcesById.keySet()) {
-      Set<String> resourceIds = resourcesById.get(deploymentId);
+    for (var resourceEntry : resourcesById.entrySet()) {
+      String deploymentId = resourceEntry.getKey();
+      Set<String> resourceIds = resourceEntry.getValue();
 
       String[] resourceIdArray = resourceIds.toArray(new String[resourceIds.size()]);
       List<ResourceEntity> resources = resourceManager.findResourceByDeploymentIdAndResourceIds(deploymentId, resourceIdArray);

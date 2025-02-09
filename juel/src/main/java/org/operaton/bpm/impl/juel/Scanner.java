@@ -15,8 +15,9 @@
  */ 
 package org.operaton.bpm.impl.juel;
 
+import java.util.EnumMap;
 import java.util.HashMap;
-
+import java.util.Map;
 
 
 /**
@@ -95,10 +96,10 @@ public class Scanner {
 		START_EVAL_DEFERRED("'#{'"), START_EVAL_DYNAMIC("'${'"), END_EVAL("'}'"),
 		EXTENSION; // used in syntax extensions
 		private final String string;
-		private Symbol() {
+		Symbol() {
 			this(null);
 		}
-		private Symbol(String string) {
+		Symbol(String string) {
 			this.string = string;
 		}
 		@Override
@@ -107,8 +108,8 @@ public class Scanner {
 		}
 	}
 
-	private static final HashMap<String, Token> KEYMAP = new HashMap<>();
-	private static final HashMap<Symbol, Token> FIXMAP = new HashMap<>();
+	private static final Map<String, Token> KEYMAP = new HashMap<>();
+	private static final Map<Symbol, Token> FIXMAP = new EnumMap<>(Symbol.class);
 
 	private static void addFixToken(Token token) {
 		FIXMAP.put(token.getSymbol(), token);

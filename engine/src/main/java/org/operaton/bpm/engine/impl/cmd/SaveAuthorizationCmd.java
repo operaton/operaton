@@ -28,12 +28,8 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.AuthorizationManager;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Objects;
-import java.util.Set;
 import java.util.function.Supplier;
 
 /**
@@ -63,7 +59,7 @@ public class SaveAuthorizationCmd implements Command<Authorization> {
 
     provideRemovalTime(commandContext);
 
-    String operationType = null;
+    String operationType;
     AuthorizationEntity previousValues = null;
     if(authorization.getId() == null) {
       authorizationManager.insert(authorization);
@@ -96,7 +92,7 @@ public class SaveAuthorizationCmd implements Command<Authorization> {
 
   protected Set<Entry<Resources, Supplier<HistoryEvent>>> getHistoricInstanceResources(
       CommandContext commandContext) {
-    Map<Resources, Supplier<HistoryEvent>> resources = new HashMap<>();
+    Map<Resources, Supplier<HistoryEvent>> resources = new EnumMap<>(Resources.class);
 
     resources.put(Resources.HISTORIC_PROCESS_INSTANCE, () ->
         getHistoricProcessInstance(commandContext));

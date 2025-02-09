@@ -104,4 +104,5 @@ jobs:
           path: |
             ${{ github.workspace }}/**/target/surefire-reports/**
             ${{ github.workspace }}/qa/**/target/**/logs/**
+            ${{ github.workspace }}/**/target/cargo.log
           retention-days: 30

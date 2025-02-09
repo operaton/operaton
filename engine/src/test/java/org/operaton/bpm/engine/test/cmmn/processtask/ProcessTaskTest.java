@@ -43,8 +43,8 @@ import org.junit.Test;
  */
 public class ProcessTaskTest extends CmmnTest {
 
-  protected final String PROCESS_TASK = "PI_ProcessTask_1";
-  protected final String ONE_PROCESS_TASK_CASE = "oneProcessTaskCase";
+  protected static final String PROCESS_TASK = "PI_ProcessTask_1";
+  protected static final String ONE_PROCESS_TASK_CASE = "oneProcessTaskCase";
 
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCase.cmmn",
@@ -573,7 +573,8 @@ public class ProcessTaskTest extends CmmnTest {
             .putValue("anotherVariable", 999)
             .putValue("aThirdVariable", "def"))
         .getId();
-    String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
+    var processTask = queryCaseExecutionByActivityId(PROCESS_TASK);
+    assertThat(processTask).isNotNull();
 
     // then
 
@@ -675,7 +676,8 @@ public class ProcessTaskTest extends CmmnTest {
   public void testInputSourceNullValue() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
-    String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
+    var processTask = queryCaseExecutionByActivityId(PROCESS_TASK);
+    assertThat(processTask).isNotNull();
 
     // then
 
@@ -721,7 +723,8 @@ public class ProcessTaskTest extends CmmnTest {
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE,
         Variables.createVariables().putValue("aVariable", "abc")
     .putValue("anotherVariable", 999)).getId();
-    String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
+    var processTask = queryCaseExecutionByActivityId(PROCESS_TASK);
+    assertThat(processTask).isNotNull();
 
     // then
 
@@ -769,7 +772,8 @@ public class ProcessTaskTest extends CmmnTest {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE,
         Variables.createVariables().putValue("aVariable", "abc").putValue("anotherVariable", 999)).getId();
-    String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
+    var processTask = queryCaseExecutionByActivityId(PROCESS_TASK);
+    assertThat(processTask).isNotNull();
 
     // then
 
@@ -908,7 +912,9 @@ public class ProcessTaskTest extends CmmnTest {
       // when
       caseExecutionCommandBuilder.manualStart();
       fail("It should not be possible to start a process instance.");
-    } catch (ProcessEngineException e) {}
+    } catch (ProcessEngineException e) {
+      // expected
+    }
 
     // complete //////////////////////////////////////////////////////////
 
@@ -1155,7 +1161,8 @@ public class ProcessTaskTest extends CmmnTest {
   public void testOutputAll() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
-    String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
+    var processTask = queryCaseExecutionByActivityId(PROCESS_TASK);
+    assertThat(processTask).isNotNull();
 
     String processInstanceId = queryProcessInstance().getId();
 
@@ -1207,7 +1214,8 @@ public class ProcessTaskTest extends CmmnTest {
   public void testOutputOverlapping() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
-    String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
+    var processTask = queryCaseExecutionByActivityId(PROCESS_TASK);
+    assertThat(processTask).isNotNull();
 
     String processInstanceId = queryProcessInstance().getId();
 
@@ -1281,7 +1289,7 @@ public class ProcessTaskTest extends CmmnTest {
 
     // then
 
-    // the variables has been deleted
+    // the variables have been deleted
     List<VariableInstance> variables = runtimeService
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId)
@@ -1373,7 +1381,8 @@ public class ProcessTaskTest extends CmmnTest {
         .putValue(variableName, variableValue)
         .putValue(variableName2, variableValue2))
         .getId();
-    String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
+    var processTask = queryCaseExecutionByActivityId(PROCESS_TASK);
+    assertThat(processTask).isNotNull();
 
     String processInstanceId = queryProcessInstance().getId();
 
@@ -1461,7 +1470,9 @@ public class ProcessTaskTest extends CmmnTest {
       // when
       caseExecutionCommandBuilder.complete();
       fail("It should not be possible to complete a process task, while the process instance is running.");
-    } catch (NotAllowedException e) {}
+    } catch (NotAllowedException e) {
+      // expected
+    }
 
     // complete ////////////////////////////////////////////////////////
 
@@ -1500,7 +1511,9 @@ public class ProcessTaskTest extends CmmnTest {
       // when
       caseExecutionCommandBuilder.complete();
       fail("It should not be possible to complete a process task");
-    } catch (Exception e) {}
+    } catch (Exception e) {
+      // expected
+    }
 
     // complete ////////////////////////////////////////////////////////
 
@@ -1618,7 +1631,8 @@ public class ProcessTaskTest extends CmmnTest {
   public void testSuspendSubProcessInstance() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
-    String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
+    var processTask = queryCaseExecutionByActivityId(PROCESS_TASK);
+    assertThat(processTask).isNotNull();
 
     String processInstanceId = queryProcessInstance().getId();
 
@@ -1632,7 +1646,7 @@ public class ProcessTaskTest extends CmmnTest {
 
     // the case execution associated with the process task
     // is still active
-    CaseExecution processTask = queryCaseExecutionByActivityId(PROCESS_TASK);
+    processTask = queryCaseExecutionByActivityId(PROCESS_TASK);
     assertTrue(processTask.isActive());
 
     // complete ////////////////////////////////////////////////////////
@@ -1787,7 +1801,8 @@ public class ProcessTaskTest extends CmmnTest {
   public void testStartProcessInstanceAsync() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
-    String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
+    var processTask = queryCaseExecutionByActivityId(PROCESS_TASK);
+    assertThat(processTask).isNotNull();
 
     // then
     Job job = managementService.createJobQuery().singleResult();

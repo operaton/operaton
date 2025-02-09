@@ -886,7 +886,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   @Test
   public void testQueryByCandidateGroupInAndCandidateGroupNotIntersected() {
-    List<String> groups = Arrays.asList("accountancy");
+    List<String> groups = List.of("accountancy");
     String candidateGroup = "management";
     TaskQuery query = taskService.createTaskQuery().taskCandidateGroupIn(groups).taskCandidateGroup(candidateGroup);
     assertEquals(0, query.count());
@@ -1104,7 +1104,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertEquals(0L, count.longValue());
 
     count = taskService.createTaskQuery().taskDefinitionKey("unexistingKey").taskDefinitionKeyIn("taskKey1").count();
-    assertEquals(0l, count.longValue());
+    assertEquals(0L, count.longValue());
   }
 
   @Deployment(resources="org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
@@ -1768,34 +1768,34 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   public void testProcessVariableValueEqualsNumber() {
     // long
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", 123L));
+        Collections.singletonMap("var", 123L));
 
     // non-matching long
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", 12345L));
+        Collections.singletonMap("var", 12345L));
 
     // short
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", (short) 123));
+        Collections.singletonMap("var", (short) 123));
 
     // double
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", 123.0d));
+        Collections.singletonMap("var", 123.0d));
 
     // integer
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", 123));
+        Collections.singletonMap("var", 123));
 
     // untyped null (should not match)
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", null));
+        Collections.singletonMap("var", null));
 
     // typed null (should not match)
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", Variables.longValue(null)));
+        Collections.singletonMap("var", Variables.longValue(null)));
 
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", "123"));
+        Collections.singletonMap("var", "123"));
 
     assertEquals(4, taskService.createTaskQuery().processVariableValueEquals("var", Variables.numberValue(123)).count());
     assertEquals(4, taskService.createTaskQuery().processVariableValueEquals("var", Variables.numberValue(123L)).count());
@@ -1810,34 +1810,34 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   public void testProcessVariableValueNumberComparison() {
     // long
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", 123L));
+        Collections.singletonMap("var", 123L));
 
     // non-matching long
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", 12345L));
+        Collections.singletonMap("var", 12345L));
 
     // short
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", (short) 123));
+        Collections.singletonMap("var", (short) 123));
 
     // double
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", 123.0d));
+        Collections.singletonMap("var", 123.0d));
 
     // integer
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", 123));
+        Collections.singletonMap("var", 123));
 
     // untyped null
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", null));
+        Collections.singletonMap("var", null));
 
     // typed null
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", Variables.longValue(null)));
+        Collections.singletonMap("var", Variables.longValue(null)));
 
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", "123"));
+        Collections.singletonMap("var", "123"));
 
     assertEquals(4, taskService.createTaskQuery().processVariableValueNotEquals("var", Variables.numberValue(123)).count());
     assertEquals(1, taskService.createTaskQuery().processVariableValueGreaterThan("var", Variables.numberValue(123)).count());
@@ -1881,9 +1881,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   @Test
   public void testVariableEqualsNumberMax() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", MAX_DOUBLE_VALUE));
+        Collections.singletonMap("var", MAX_DOUBLE_VALUE));
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", Long.MAX_VALUE));
+        Collections.singletonMap("var", Long.MAX_VALUE));
 
     assertEquals(1, taskService.createTaskQuery().processVariableValueEquals("var", Variables.numberValue(MAX_DOUBLE_VALUE)).count());
     assertEquals(1, taskService.createTaskQuery().processVariableValueEquals("var", Variables.numberValue(Long.MAX_VALUE)).count());
@@ -1893,11 +1893,11 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   @Test
   public void testVariableEqualsNumberLongValueOverflow() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", MAX_DOUBLE_VALUE));
+        Collections.singletonMap("var", MAX_DOUBLE_VALUE));
 
     // this results in an overflow
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", (long) MAX_DOUBLE_VALUE));
+        Collections.singletonMap("var", (long) MAX_DOUBLE_VALUE));
 
     // the query should not find the long variable
     assertEquals(1, taskService.createTaskQuery().processVariableValueEquals("var", Variables.numberValue(MAX_DOUBLE_VALUE)).count());
@@ -1913,7 +1913,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertEquals(0, taskService.createTaskQuery().processVariableValueEquals("var", Variables.numberValue(42.4d)).count());
 
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", 42.4d));
+        Collections.singletonMap("var", 42.4d));
 
     // querying by 52 should not find the double variable 52.4
     assertEquals(0, taskService.createTaskQuery().processVariableValueEquals("var", Variables.numberValue(52)).count());
@@ -2062,7 +2062,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     long count = taskService.createTaskQuery().processInstanceBusinessKeyIn("BUSINESS-KEY-1").processInstanceBusinessKey("NON-EXISTING-KEY")
         .count();
-    assertEquals(0l, count);
+    assertEquals(0L, count);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
@@ -2431,7 +2431,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     filterService.saveFilter(filter);
 
     List<String> sortedNames = getTaskNamesFromTasks(taskService.createTaskQuery().list());
-    Collections.sort(sortedNames, String.CASE_INSENSITIVE_ORDER);
+    sortedNames.sort(String.CASE_INSENSITIVE_ORDER);
 
     // ascending ordering
     TaskQuery taskQuery = taskService.createTaskQuery().orderByTaskNameCaseInsensitive().asc();
@@ -2732,6 +2732,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
         .activityId("PI_ProcessTask_1")
         .singleResult()
         .getId();
+    assertThat(processTaskId).isNotNull();
 
     // then
 
@@ -4541,11 +4542,11 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   public void testQueryResultOrderingByProcessVariables() {
     // given three tasks with String process instance variables
     ProcessInstance instance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", "bValue"));
+        Collections.singletonMap("var", "bValue"));
     ProcessInstance instance2 = runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", "cValue"));
+        Collections.singletonMap("var", "cValue"));
     ProcessInstance instance3 = runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", "aValue"));
+        Collections.singletonMap("var", "aValue"));
 
     // when I make a task query with ascending variable ordering by String values
     List<Task> tasks = taskService.createTaskQuery()
@@ -4592,11 +4593,11 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   public void testQueryResultOrderingByExecutionVariables() {
     // given three tasks with String process instance variables
     ProcessInstance instance1 = runtimeService.startProcessInstanceByKey("parallelGateway",
-      Collections.<String, Object>singletonMap("var", "aValue"));
+      Collections.singletonMap("var", "aValue"));
     ProcessInstance instance2 = runtimeService.startProcessInstanceByKey("parallelGateway",
-      Collections.<String, Object>singletonMap("var", "bValue"));
+      Collections.singletonMap("var", "bValue"));
     ProcessInstance instance3 = runtimeService.startProcessInstanceByKey("parallelGateway",
-      Collections.<String, Object>singletonMap("var", "cValue"));
+      Collections.singletonMap("var", "cValue"));
 
     // and some local variables on the tasks
     Task task1 = taskService.createTaskQuery().processInstanceId(instance1.getId()).singleResult();
@@ -4627,11 +4628,11 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   public void testQueryResultOrderingByTaskVariables() {
     // given three tasks with String process instance variables
     ProcessInstance instance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess",
-      Collections.<String, Object>singletonMap("var", "aValue"));
+      Collections.singletonMap("var", "aValue"));
     ProcessInstance instance2 = runtimeService.startProcessInstanceByKey("oneTaskProcess",
-      Collections.<String, Object>singletonMap("var", "bValue"));
+      Collections.singletonMap("var", "bValue"));
     ProcessInstance instance3 = runtimeService.startProcessInstanceByKey("oneTaskProcess",
-      Collections.<String, Object>singletonMap("var", "cValue"));
+      Collections.singletonMap("var", "cValue"));
 
     // and some local variables on the tasks
     Task task1 = taskService.createTaskQuery().processInstanceId(instance1.getId()).singleResult();
@@ -4662,11 +4663,11 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   public void testQueryResultOrderingByCaseInstanceVariables() {
     // given three tasks with String case instance variables
     CaseInstance instance1 = caseService.createCaseInstanceByKey("oneTaskCase",
-        Collections.<String, Object>singletonMap("var", "cValue"));
+        Collections.singletonMap("var", "cValue"));
     CaseInstance instance2 = caseService.createCaseInstanceByKey("oneTaskCase",
-        Collections.<String, Object>singletonMap("var", "aValue"));
+        Collections.singletonMap("var", "aValue"));
     CaseInstance instance3 = caseService.createCaseInstanceByKey("oneTaskCase",
-        Collections.<String, Object>singletonMap("var", "bValue"));
+        Collections.singletonMap("var", "bValue"));
 
     // when I make a task query with ascending variable ordering by tasks variables
     List<Task> tasks = taskService.createTaskQuery()
@@ -4687,11 +4688,11 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   public void testQueryResultOrderingByCaseExecutionVariables() {
     // given three tasks with String case instance variables
     CaseInstance instance1 = caseService.createCaseInstanceByKey("oneTaskCase",
-        Collections.<String, Object>singletonMap("var", "cValue"));
+        Collections.singletonMap("var", "cValue"));
     CaseInstance instance2 = caseService.createCaseInstanceByKey("oneTaskCase",
-        Collections.<String, Object>singletonMap("var", "aValue"));
+        Collections.singletonMap("var", "aValue"));
     CaseInstance instance3 = caseService.createCaseInstanceByKey("oneTaskCase",
-        Collections.<String, Object>singletonMap("var", "bValue"));
+        Collections.singletonMap("var", "bValue"));
 
     // and local case execution variables
     CaseExecution caseExecution1 = caseService.createCaseExecutionQuery()
@@ -4743,11 +4744,11 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   public void testQueryResultOrderingByVariablesWithNullValues() {
     // given three tasks with String process instance variables
     ProcessInstance instance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", "bValue"));
+        Collections.singletonMap("var", "bValue"));
     ProcessInstance instance2 = runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", "cValue"));
+        Collections.singletonMap("var", "cValue"));
     ProcessInstance instance3 = runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", "aValue"));
+        Collections.singletonMap("var", "aValue"));
     ProcessInstance instance4 = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     // when I make a task query with variable ordering by String values
@@ -4778,11 +4779,11 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   public void testQueryResultOrderingByVariablesWithMixedTypes() {
     // given three tasks with String and Integer process instance variables
     ProcessInstance instance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", 42));
+        Collections.singletonMap("var", 42));
     ProcessInstance instance2 = runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", "cValue"));
+        Collections.singletonMap("var", "cValue"));
     ProcessInstance instance3 = runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", "aValue"));
+        Collections.singletonMap("var", "aValue"));
 
     // when I make a task query with variable ordering by String values
     List<Task> tasks = taskService.createTaskQuery()
@@ -4810,11 +4811,11 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   public void testQueryResultOrderingByStringVariableWithMixedCase() {
     // given three tasks with String and Integer process instance variables
     ProcessInstance instance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", "a"));
+        Collections.singletonMap("var", "a"));
     ProcessInstance instance2 = runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", "B"));
+        Collections.singletonMap("var", "B"));
     ProcessInstance instance3 = runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", "c"));
+        Collections.singletonMap("var", "c"));
 
     // when I make a task query with variable ordering by String values
     List<Task> tasks = taskService.createTaskQuery()
@@ -4837,19 +4838,19 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   public void testQueryResultOrderingByVariablesOfAllPrimitiveTypes() {
     // given three tasks with String and Integer process instance variables
     ProcessInstance booleanInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", true));
+        Collections.singletonMap("var", true));
     ProcessInstance shortInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", (short) 16));
+        Collections.singletonMap("var", (short) 16));
     ProcessInstance longInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", 500L));
+        Collections.singletonMap("var", 500L));
     ProcessInstance intInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", 400));
+        Collections.singletonMap("var", 400));
     ProcessInstance stringInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", "300"));
+        Collections.singletonMap("var", "300"));
     ProcessInstance dateInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", new Date(1000L)));
+        Collections.singletonMap("var", new Date(1000L)));
     ProcessInstance doubleInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", 42.5d));
+        Collections.singletonMap("var", 42.5d));
 
     // when I make a task query with variable ordering by String values
     List<Task> tasks = taskService.createTaskQuery()
@@ -4975,11 +4976,11 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   public void testQueryResultOrderingByVariablesWithMixedTypesAndSameColumn() {
     // given three tasks with Integer and Long process instance variables
     ProcessInstance instance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", 42));
+        Collections.singletonMap("var", 42));
     ProcessInstance instance2 = runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", 800));
+        Collections.singletonMap("var", 800));
     ProcessInstance instance3 = runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Collections.<String, Object>singletonMap("var", 500L));
+        Collections.singletonMap("var", 500L));
 
     // when I make a task query with variable ordering by String values
     List<Task> tasks = taskService.createTaskQuery()

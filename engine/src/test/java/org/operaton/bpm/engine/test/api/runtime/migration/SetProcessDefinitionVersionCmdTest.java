@@ -226,7 +226,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
         .processInstanceId(pi.getId())
         .singleResult();
 
-//      assertEquals(newProcessDefinition.getId(), historicPI.getProcessDefinitionId());
+      assertEquals(newProcessDefinition.getId(), historicPI.getProcessDefinitionId());
     }
 
     // undeploy "manually" deployed process definition
@@ -470,7 +470,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
     managementService.executeJob(jobId);
     Job asyncAfterJob = managementService.createJobQuery().singleResult();
 
-    // and a process instance with an before after job
+    // and a process instance with a before after job
     ProcessInstance asyncBeforeInstance = runtimeService.startProcessInstanceByKey("twoJobsProcess");
     Job asyncBeforeJob = managementService.createJobQuery()
         .processInstanceId(asyncBeforeInstance.getId()).singleResult();

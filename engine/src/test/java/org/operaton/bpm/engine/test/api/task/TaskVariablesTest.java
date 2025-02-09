@@ -31,6 +31,7 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.engine.variable.value.StringValue;
+
 import org.junit.Test;
 
 
@@ -58,9 +59,7 @@ public class TaskVariablesTest extends PluggableProcessEngineTest {
     String processInstanceId = runtimeService.startProcessInstanceByKey("oneTaskProcess").getId();
 
     StringBuffer longString = new StringBuffer();
-    for (int i = 0; i < 500; i++) {
-      longString.append("tensymbols");
-    }
+    longString.append("tensymbols".repeat(500));
     try {
       runtimeService.setVariable(processInstanceId, "var", longString.toString());
     } catch (Exception ex) {

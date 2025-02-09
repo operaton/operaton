@@ -20,7 +20,6 @@ import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.TaskServiceImpl;
-import org.operaton.bpm.engine.impl.digest._apacheCommonsCodec.Base64;
 import org.operaton.bpm.engine.impl.util.IoUtil;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.exception.RestException;
@@ -271,7 +270,7 @@ public class TaskVariableRestResourceInteractionTest extends
     messageBodyJson.put("modifications", modifications);
 
     TaskServiceImpl taskService = mockTaskServiceImpl();
-    String message = "excpected exception";
+    String message = "expected exception";
     doThrow(new AuthorizationException(message)).when(taskService).updateVariables(any(), any(), any());
 
     given()
@@ -365,7 +364,7 @@ public class TaskVariableRestResourceInteractionTest extends
   }
 
   @Test
-  public void testGetSingleVariabledataNotBinary() {
+  public void testGetSingleVariableDataNotBinary() {
 
     when(taskServiceMock.getVariableTyped(anyString(), eq(EXAMPLE_VARIABLE_KEY), eq(false))).thenReturn(EXAMPLE_VARIABLE_VALUE);
 
@@ -474,7 +473,7 @@ public class TaskVariableRestResourceInteractionTest extends
   public void testGetSingleVariableThrowsAuthorizationException() {
     String variableKey = "aVariableKey";
 
-    String message = "excpected exception";
+    String message = "expected exception";
     when(taskServiceMock.getVariableTyped(anyString(), anyString(), anyBoolean())).thenThrow(new AuthorizationException(message));
 
     given()
@@ -1065,7 +1064,6 @@ public class TaskVariableRestResourceInteractionTest extends
   public void testPostSingleFileVariableWithMimeType() {
 
     byte[] value = "some text".getBytes();
-    String base64 = Base64.encodeBase64String(value);
     String variableKey = "aVariableKey";
     String filename = "test.txt";
     String mimetype = MediaType.TEXT_PLAIN;

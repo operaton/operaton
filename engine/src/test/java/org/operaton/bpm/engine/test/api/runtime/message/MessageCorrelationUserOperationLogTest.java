@@ -175,7 +175,7 @@ public class MessageCorrelationUserOperationLogTest {
     identityService.setAuthenticatedUserId(USER_ID);
 
     // when
-    List<MessageCorrelationResult> correlationResult = runtimeService.createMessageCorrelation(INTERMEDIATE_MESSAGE_NAME).correlateAllWithResult();
+    runtimeService.createMessageCorrelation(INTERMEDIATE_MESSAGE_NAME).correlateAllWithResult();
 
     // then
     String processInstanceId = processInstance.getId();

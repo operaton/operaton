@@ -338,7 +338,7 @@ public class UserOperationLogRestServiceQueryTest extends AbstractRestServiceTes
         .when(historyService)
         .clearAnnotationForOperationLogById(anyString());
 
-    Response response = given()
+    given()
         .pathParam("operationId", EXAMPLE_USER_OPERATION_LOG_ID)
         .expect()
           .statusCode(Status.BAD_REQUEST.getStatusCode())

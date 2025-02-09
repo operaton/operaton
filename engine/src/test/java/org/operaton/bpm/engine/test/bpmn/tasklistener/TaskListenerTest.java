@@ -114,8 +114,8 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
             .userTask()
             .operatonTaskListenerClass(TaskListener.EVENTNAME_CREATE, CompletingTaskListener.class.getName())
             .name("userTask")
-            .operatonCandidateUsers(Arrays.asList(new String[]{"users1", "user2"}))
-            .operatonCandidateGroups(Arrays.asList(new String[]{"group1", "group2"}))
+            .operatonCandidateUsers(Arrays.asList("users1", "user2"))
+            .operatonCandidateGroups(Arrays.asList("group1", "group2"))
             .endEvent().done();
 
     testRule.deploy(modelInstance);
@@ -515,7 +515,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
 
     // then
     // first update event comes from delegating the task,
-    // setting it's delegation state to PENDING
+    // setting its delegation state to PENDING
     assertEquals(2, RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE));
   }
 

@@ -62,7 +62,7 @@ public class UserTaskTest extends PluggableProcessEngineTest {
   public void testTaskPropertiesNotNull() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
-    List<String> activeActivityIds = runtimeService.getActiveActivityIds(processInstance.getId());
+    runtimeService.getActiveActivityIds(processInstance.getId());
 
     Task task = taskService.createTaskQuery().singleResult();
     assertNotNull(task.getId());

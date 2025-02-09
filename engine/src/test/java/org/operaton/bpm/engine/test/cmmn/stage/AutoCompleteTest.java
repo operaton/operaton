@@ -147,10 +147,7 @@ public class AutoCompleteTest extends CmmnTest {
 
     CaseExecutionQuery executionQuery = caseService.createCaseExecutionQuery();
 
-    String stageId = executionQuery
-        .activityId("PI_Stage_1")
-        .singleResult()
-        .getId();
+    assertThat(executionQuery.activityId("PI_Stage_1").singleResult()).isNotNull();
 
     // then (1)
     CaseExecution stage = executionQuery

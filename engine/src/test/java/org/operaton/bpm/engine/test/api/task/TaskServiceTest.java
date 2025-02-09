@@ -999,6 +999,7 @@ public class TaskServiceTest {
 
     // Fetch the task again and update
     task = taskService.createTaskQuery().taskId(taskId).singleResult();
+    assertThat(task).isNotNull();
 
     taskService.delegateTask(taskId, "joesmoe");
 
@@ -1062,7 +1063,8 @@ public class TaskServiceTest {
   @Test
   public void testDeleteTaskUnexistingTaskId() {
     // Deleting unexisting task should be silently ignored
-    taskService.deleteTask("unexistingtaskid");
+    assertThatCode(() -> taskService.deleteTask("unexistingtaskid"))
+      .doesNotThrowAnyException();
   }
 
   @Test
@@ -1509,6 +1511,7 @@ public class TaskServiceTest {
         .activityId("PI_HumanTask_1")
         .singleResult()
         .getId();
+    assertNotNull(caseExecutionId);
 
     Task task = taskService.createTaskQuery().singleResult();
     assertNotNull(task);
@@ -2496,11 +2499,11 @@ public class TaskServiceTest {
        .withCaseDefinition(caseDefinitionId)
        .create();
 
-    String caseExecutionId = caseService
+    var caseExecution = caseService
         .createCaseExecutionQuery()
         .activityId("PI_HumanTask_1")
-        .singleResult()
-        .getId();
+        .singleResult();
+    assertThat(caseExecution).isNotNull();
 
     Task task = taskService.createTaskQuery().singleResult();
     assertNotNull(task);
@@ -2982,8 +2985,7 @@ public class TaskServiceTest {
   "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
   public void testGetVariablesLocalTypedDeserialize() {
-
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
+    runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String taskId = taskService.createTaskQuery().singleResult().getId();
     taskService.setVariablesLocal(taskId, Variables.createVariables()
           .putValue("broken", Variables.serializedObjectValue("broken")
@@ -3018,11 +3020,11 @@ public class TaskServiceTest {
     // given
     caseService.createCaseInstanceByKey("oneTaskCase");
 
-    String humanTaskId = caseService
+    var humanTask = caseService
         .createCaseExecutionQuery()
         .activityId("PI_HumanTask_1")
-        .singleResult()
-        .getId();
+        .singleResult();
+    assertThat(humanTask).isNotNull();
 
     String taskId = taskService.createTaskQuery().singleResult().getId();
 
@@ -3045,11 +3047,11 @@ public class TaskServiceTest {
     // given
     caseService.createCaseInstanceByKey("oneTaskCase");
 
-    String humanTaskId = caseService
+    var humanTask = caseService
         .createCaseExecutionQuery()
         .activityId("PI_HumanTask_1")
-        .singleResult()
-        .getId();
+        .singleResult();
+    assertThat(humanTask).isNotNull();
 
     String variableName = "aVariable";
     String variableValue = "aValue";

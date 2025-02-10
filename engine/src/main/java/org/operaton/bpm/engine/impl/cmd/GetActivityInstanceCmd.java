@@ -168,10 +168,7 @@ public class GetActivityInstanceCmd implements Command<ActivityInstance> {
             .get(scope.getFlowScope())
             .getParentActivityInstanceId();
 
-        if (activityInstances.containsKey(activityInstanceId)) {
-          continue;
-        }
-        else {
+        if (!activityInstances.containsKey(activityInstanceId)) {
           // regardless of the tree structure (compacted or not), the scope's activity instance id
           // is the activity instance id of the parent execution and the parent activity instance id
           // of that is the actual parent activity instance id

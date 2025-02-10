@@ -357,7 +357,6 @@ import org.operaton.bpm.engine.impl.telemetry.dto.JdkImpl;
 import org.operaton.bpm.engine.impl.telemetry.dto.ProductImpl;
 import org.operaton.bpm.engine.impl.telemetry.dto.TelemetryDataImpl;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.operaton.bpm.engine.impl.util.IoUtil;
 import org.operaton.bpm.engine.impl.util.ParseUtil;
 import org.operaton.bpm.engine.impl.util.ProcessEngineDetails;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
@@ -2142,7 +2141,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   protected void ensurePrefixAndSchemaFitToegether(String prefix, String schema) {
     if (schema == null) {
       return;
-    } else if (prefix == null || (prefix != null && !prefix.startsWith(schema + "."))) {
+    }
+    if (prefix == null || !prefix.startsWith(schema + ".")) {
       throw new ProcessEngineException("When setting a schema the prefix has to be schema + '.'. Received schema: " + schema + " prefix: " + prefix);
     }
   }

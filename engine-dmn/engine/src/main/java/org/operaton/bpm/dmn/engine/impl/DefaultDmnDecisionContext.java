@@ -129,7 +129,9 @@ public class DefaultDmnDecisionContext {
 
     if (resultList.isEmpty()) {
       return;
-    } else if (resultList.size() == 1 && !isDecisionTableWithCollectOrRuleOrderHitPolicy(evaluatedDecision)) {
+    }
+
+    if (resultList.size() == 1 && !isDecisionTableWithCollectOrRuleOrderHitPolicy(evaluatedDecision)) {
       variableMap.putAll(evaluatedResult.getSingleResult());
     } else {
       Set<String> outputs = new HashSet<>();

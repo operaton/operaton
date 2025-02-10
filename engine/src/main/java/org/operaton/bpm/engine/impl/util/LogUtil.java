@@ -79,9 +79,8 @@ public class LogUtil {
     }
   }
 
-  private static Format dateFormat = new SimpleDateFormat("HH:mm:ss,SSS");
   public static class LogFormatter extends Formatter {
-
+    private final Format dateFormat = new SimpleDateFormat("HH:mm:ss,SSS");
 
     @Override
     public String format(LogRecord logRecord) {

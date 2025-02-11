@@ -189,9 +189,7 @@ public abstract class TestHelper {
     for (String suffix : RESOURCE_SUFFIXES) {
       String resource = createResourceName(type, name, suffix);
       InputStream inputStream = ReflectUtil.getResourceAsStream(resource);
-      if (inputStream == null) {
-        continue;
-      } else {
+      if (inputStream != null) {
         return resource;
       }
     }

@@ -25,7 +25,7 @@ import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
 import org.operaton.bpm.engine.impl.history.producer.HistoryEventProducer;
 
 /**
- * <p>The {@link HistoryEventProcessor} should be used to process an history event.</p>
+ * <p>The {@link HistoryEventProcessor} should be used to process a history event.</p>
  *
  * <p>The {@link HistoryEvent} will be created with the help of the {@link HistoryEventProducer}
  * from the {@link ProcessEngineConfiguration} and the given implementation of the
@@ -62,7 +62,7 @@ public class HistoryEventProcessor {
     }
 
     public void postHandleSingleHistoryEventCreated(HistoryEvent event) {
-      return;
+      // noop
     }
   }
 

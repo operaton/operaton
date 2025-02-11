@@ -56,14 +56,9 @@ public class VariableStore<T extends CoreVariableInstance> {
    * The variables provider can be exchanged as long as the variables are not yet initialized
    */
   public void setVariablesProvider(VariablesProvider<T> variablesProvider) {
-    if (variables != null) {
-      // already initialized
-      return;
-    }
-    else {
+    if (variables == null) {
       this.variablesProvider = variablesProvider;
     }
-
   }
 
   protected Map<String, T> getVariablesMap() {

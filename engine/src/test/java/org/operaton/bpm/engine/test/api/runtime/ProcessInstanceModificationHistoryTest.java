@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -71,9 +71,9 @@ public class ProcessInstanceModificationHistoryTest extends PluggableProcessEngi
       .singleResult();
 
     assertNotNull(procInstVariable);
-    assertEquals(updatedTree.getId(), procInstVariable.getActivityInstanceId());
-    assertEquals("procInstVar", procInstVariable.getName());
-    assertEquals("procInstValue", procInstVariable.getValue());
+    assertThat(procInstVariable.getActivityInstanceId()).isEqualTo(updatedTree.getId());
+    assertThat(procInstVariable.getName()).isEqualTo("procInstVar");
+    assertThat(procInstVariable.getValue()).isEqualTo("procInstValue");
 
     HistoricDetail procInstanceVarDetail = historyService.createHistoricDetailQuery()
         .variableInstanceId(procInstVariable.getId()).singleResult();
@@ -88,8 +88,8 @@ public class ProcessInstanceModificationHistoryTest extends PluggableProcessEngi
 
     assertNotNull(localVariable);
     assertNull(localVariable.getActivityInstanceId());
-    assertEquals("localVar", localVariable.getName());
-    assertEquals("localValue", localVariable.getValue());
+    assertThat(localVariable.getName()).isEqualTo("localVar");
+    assertThat(localVariable.getValue()).isEqualTo("localValue");
 
     HistoricDetail localInstanceVarDetail = historyService.createHistoricDetailQuery()
         .variableInstanceId(localVariable.getId()).singleResult();
@@ -120,9 +120,9 @@ public class ProcessInstanceModificationHistoryTest extends PluggableProcessEngi
       .singleResult();
 
     assertNotNull(procInstVariable);
-    assertEquals(updatedTree.getId(), procInstVariable.getActivityInstanceId());
-    assertEquals("procInstVar", procInstVariable.getName());
-    assertEquals("procInstValue", procInstVariable.getValue());
+    assertThat(procInstVariable.getActivityInstanceId()).isEqualTo(updatedTree.getId());
+    assertThat(procInstVariable.getName()).isEqualTo("procInstVar");
+    assertThat(procInstVariable.getValue()).isEqualTo("procInstValue");
 
     HistoricDetail procInstanceVarDetail = historyService.createHistoricDetailQuery()
         .variableInstanceId(procInstVariable.getId()).singleResult();
@@ -139,8 +139,8 @@ public class ProcessInstanceModificationHistoryTest extends PluggableProcessEngi
     // the following is null because localVariable is local on a concurrent execution
     // but the concurrent execution does not execute an activity at the time the variable is set
     assertNull(localVariable.getActivityInstanceId());
-    assertEquals("localVar", localVariable.getName());
-    assertEquals("localValue", localVariable.getValue());
+    assertThat(localVariable.getName()).isEqualTo("localVar");
+    assertThat(localVariable.getValue()).isEqualTo("localValue");
 
     HistoricDetail localInstanceVarDetail = historyService.createHistoricDetailQuery()
         .variableInstanceId(localVariable.getId()).singleResult();
@@ -177,9 +177,9 @@ public class ProcessInstanceModificationHistoryTest extends PluggableProcessEngi
       .singleResult();
 
     assertNotNull(procInstVariable);
-    assertEquals(updatedTree.getId(), procInstVariable.getActivityInstanceId());
-    assertEquals("procInstVar", procInstVariable.getName());
-    assertEquals("procInstValue", procInstVariable.getValue());
+    assertThat(procInstVariable.getActivityInstanceId()).isEqualTo(updatedTree.getId());
+    assertThat(procInstVariable.getName()).isEqualTo("procInstVar");
+    assertThat(procInstVariable.getValue()).isEqualTo("procInstValue");
 
     HistoricDetail procInstanceVarDetail = historyService.createHistoricDetailQuery()
         .variableInstanceId(procInstVariable.getId()).singleResult();
@@ -193,9 +193,9 @@ public class ProcessInstanceModificationHistoryTest extends PluggableProcessEngi
       .singleResult();
 
     assertNotNull(localVariable);
-    assertEquals(updatedTree.getActivityInstances("subProcess")[0].getId(), localVariable.getActivityInstanceId());
-    assertEquals("localVar", localVariable.getName());
-    assertEquals("localValue", localVariable.getValue());
+    assertThat(localVariable.getActivityInstanceId()).isEqualTo(updatedTree.getActivityInstances("subProcess")[0].getId());
+    assertThat(localVariable.getName()).isEqualTo("localVar");
+    assertThat(localVariable.getValue()).isEqualTo("localValue");
 
     HistoricDetail localInstanceVarDetail = historyService.createHistoricDetailQuery()
         .variableInstanceId(localVariable.getId()).singleResult();
@@ -223,23 +223,23 @@ public class ProcessInstanceModificationHistoryTest extends PluggableProcessEngi
       .singleResult();
 
     assertNotNull(procInstVariable);
-    assertEquals(updatedTree.getId(), procInstVariable.getActivityInstanceId());
-    assertEquals("procInstVar", procInstVariable.getName());
-    assertEquals("procInstValue", procInstVariable.getValue());
+    assertThat(procInstVariable.getActivityInstanceId()).isEqualTo(updatedTree.getId());
+    assertThat(procInstVariable.getName()).isEqualTo("procInstVar");
+    assertThat(procInstVariable.getValue()).isEqualTo("procInstValue");
 
     HistoricDetail procInstanceVarDetail = historyService.createHistoricDetailQuery()
         .variableInstanceId(procInstVariable.getId()).singleResult();
     assertNotNull(procInstanceVarDetail);
-    assertEquals(updatedTree.getId(), procInstVariable.getActivityInstanceId());
+    assertThat(procInstVariable.getActivityInstanceId()).isEqualTo(updatedTree.getId());
 
     HistoricVariableInstance localVariable = historyService.createHistoricVariableInstanceQuery()
       .variableName("localVar")
       .singleResult();
 
     assertNotNull(localVariable);
-    assertEquals(updatedTree.getId(), procInstVariable.getActivityInstanceId());
-    assertEquals("localVar", localVariable.getName());
-    assertEquals("localValue", localVariable.getValue());
+    assertThat(procInstVariable.getActivityInstanceId()).isEqualTo(updatedTree.getId());
+    assertThat(localVariable.getName()).isEqualTo("localVar");
+    assertThat(localVariable.getValue()).isEqualTo("localValue");
 
     HistoricDetail localInstanceVarDetail = historyService.createHistoricDetailQuery()
         .variableInstanceId(localVariable.getId()).singleResult();
@@ -269,7 +269,7 @@ public class ProcessInstanceModificationHistoryTest extends PluggableProcessEngi
     HistoricProcessInstance instance = historyService.createHistoricProcessInstanceQuery().singleResult();
     assertNotNull(instance);
 
-    assertEquals(processInstanceId, instance.getId());
+    assertThat(instance.getId()).isEqualTo(processInstanceId);
     assertNotNull(instance.getEndTime());
   }
 
@@ -292,8 +292,8 @@ public class ProcessInstanceModificationHistoryTest extends PluggableProcessEngi
         .activityId("task2")
         .singleResult();
     assertNotNull(instance);
-    assertEquals(task.getId(), instance.getTaskId());
-    assertEquals("kermit", instance.getAssignee());
+    assertThat(instance.getTaskId()).isEqualTo(task.getId());
+    assertThat(instance.getAssignee()).isEqualTo("kermit");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneAsyncTaskProcess.bpmn20.xml"})
@@ -313,7 +313,7 @@ public class ProcessInstanceModificationHistoryTest extends PluggableProcessEngi
     // then
     HistoricVariableInstance variable = historyService.createHistoricVariableInstanceQuery().singleResult();
     assertNotNull(variable);
-    assertEquals(processInstance.getId(), variable.getProcessInstanceId());
+    assertThat(variable.getProcessInstanceId()).isEqualTo(processInstance.getId());
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneAsyncTaskProcess.bpmn20.xml"})
@@ -333,7 +333,7 @@ public class ProcessInstanceModificationHistoryTest extends PluggableProcessEngi
     // then
     HistoricVariableInstance variable = historyService.createHistoricVariableInstanceQuery().singleResult();
     assertNotNull(variable);
-    assertEquals(processInstance.getId(), variable.getProcessInstanceId());
+    assertThat(variable.getProcessInstanceId()).isEqualTo(processInstance.getId());
 
     HistoricVariableUpdateEventEntity historicDetail = (HistoricVariableUpdateEventEntity) historyService.createHistoricDetailQuery()
         .processInstanceId(processInstance.getId())
@@ -341,8 +341,8 @@ public class ProcessInstanceModificationHistoryTest extends PluggableProcessEngi
 
     assertNotNull(historicDetail);
     assertFalse(historicDetail.isInitial());
-    assertEquals("var1", historicDetail.getVariableName());
-    assertEquals("value1", historicDetail.getTextValue());
+    assertThat(historicDetail.getVariableName()).isEqualTo("var1");
+    assertThat(historicDetail.getTextValue()).isEqualTo("value1");
   }
 
   protected ActivityInstance getChildInstanceForActivity(ActivityInstance activityInstance, String activityId) {

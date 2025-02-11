@@ -21,7 +21,7 @@ import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_ACT
 import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_IS_BLOCKING;
 import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_MANUAL_ACTIVATION_RULE;
 import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_REQUIRED_RULE;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
@@ -98,7 +98,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertEquals(name, activity.getName());
+    assertThat(activity.getName()).isEqualTo(name);
   }
 
   @Test
@@ -115,7 +115,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     assertNotEquals(humanTaskName, activity.getName());
-    assertEquals(planItemName, activity.getName());
+    assertThat(activity.getName()).isEqualTo(planItemName);
   }
 
   @Test
@@ -127,7 +127,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     String activityType = (String) activity.getProperty(PROPERTY_ACTIVITY_TYPE);
-    assertEquals("decisionTask", activityType);
+    assertThat(activityType).isEqualTo("decisionTask");
   }
 
   @Test
@@ -140,7 +140,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertEquals(description, activity.getProperty(PROPERTY_ACTIVITY_DESCRIPTION));
+    assertThat(activity.getProperty(PROPERTY_ACTIVITY_DESCRIPTION)).isEqualTo(description);
   }
 
   @Test
@@ -153,7 +153,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertEquals(description, activity.getProperty(PROPERTY_ACTIVITY_DESCRIPTION));
+    assertThat(activity.getProperty(PROPERTY_ACTIVITY_DESCRIPTION)).isEqualTo(description);
   }
 
   @Test
@@ -167,7 +167,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertEquals(description, activity.getProperty(PROPERTY_ACTIVITY_DESCRIPTION));
+    assertThat(activity.getProperty(PROPERTY_ACTIVITY_DESCRIPTION)).isEqualTo(description);
   }
 
   @Test
@@ -181,7 +181,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertEquals(description, activity.getProperty(PROPERTY_ACTIVITY_DESCRIPTION));
+    assertThat(activity.getProperty(PROPERTY_ACTIVITY_DESCRIPTION)).isEqualTo(description);
   }
 
   @Test
@@ -250,9 +250,9 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     assertTrue(newActivity.getEntryCriteria().isEmpty());
 
     assertFalse(newActivity.getExitCriteria().isEmpty());
-    assertEquals(1, newActivity.getExitCriteria().size());
+    assertThat(newActivity.getExitCriteria().size()).isEqualTo(1);
 
-    assertEquals(sentryDeclaration, newActivity.getExitCriteria().get(0));
+    assertThat(newActivity.getExitCriteria().get(0)).isEqualTo(sentryDeclaration);
   }
 
   @Test
@@ -296,7 +296,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     assertTrue(newActivity.getEntryCriteria().isEmpty());
 
     assertFalse(newActivity.getExitCriteria().isEmpty());
-    assertEquals(2, newActivity.getExitCriteria().size());
+    assertThat(newActivity.getExitCriteria().size()).isEqualTo(2);
 
     assertTrue(newActivity.getExitCriteria().contains(firstSentryDeclaration));
     assertTrue(newActivity.getExitCriteria().contains(secondSentryDeclaration));
@@ -331,9 +331,9 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     assertTrue(newActivity.getExitCriteria().isEmpty());
 
     assertFalse(newActivity.getEntryCriteria().isEmpty());
-    assertEquals(1, newActivity.getEntryCriteria().size());
+    assertThat(newActivity.getEntryCriteria().size()).isEqualTo(1);
 
-    assertEquals(sentryDeclaration, newActivity.getEntryCriteria().get(0));
+    assertThat(newActivity.getEntryCriteria().get(0)).isEqualTo(sentryDeclaration);
   }
 
   @Test
@@ -377,7 +377,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     assertTrue(newActivity.getExitCriteria().isEmpty());
 
     assertFalse(newActivity.getEntryCriteria().isEmpty());
-    assertEquals(2, newActivity.getEntryCriteria().size());
+    assertThat(newActivity.getEntryCriteria().size()).isEqualTo(2);
 
     assertTrue(newActivity.getEntryCriteria().contains(firstSentryDeclaration));
     assertTrue(newActivity.getEntryCriteria().contains(secondSentryDeclaration));
@@ -412,12 +412,12 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     assertFalse(newActivity.getExitCriteria().isEmpty());
-    assertEquals(1, newActivity.getExitCriteria().size());
-    assertEquals(sentryDeclaration, newActivity.getExitCriteria().get(0));
+    assertThat(newActivity.getExitCriteria().size()).isEqualTo(1);
+    assertThat(newActivity.getExitCriteria().get(0)).isEqualTo(sentryDeclaration);
 
     assertFalse(newActivity.getEntryCriteria().isEmpty());
-    assertEquals(1, newActivity.getEntryCriteria().size());
-    assertEquals(sentryDeclaration, newActivity.getEntryCriteria().get(0));
+    assertThat(newActivity.getEntryCriteria().size()).isEqualTo(1);
+    assertThat(newActivity.getEntryCriteria().get(0)).isEqualTo(sentryDeclaration);
   }
 
   @Test
@@ -512,7 +512,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     // then
     List<String> events = newActivity.getProperties().get(CmmnProperties.REPEAT_ON_STANDARD_EVENTS);
     assertNotNull(events);
-    assertEquals(2, events.size());
+    assertThat(events.size()).isEqualTo(2);
     assertTrue(events.contains(CaseExecutionListener.COMPLETE));
     assertTrue(events.contains(CaseExecutionListener.TERMINATE));
   }
@@ -533,7 +533,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     // then
     List<String> events = newActivity.getProperties().get(CmmnProperties.REPEAT_ON_STANDARD_EVENTS);
     assertNotNull(events);
-    assertEquals(2, events.size());
+    assertThat(events.size()).isEqualTo(2);
     assertTrue(events.contains(CaseExecutionListener.COMPLETE));
     assertTrue(events.contains(CaseExecutionListener.TERMINATE));
   }
@@ -556,7 +556,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     // then
     List<String> events = newActivity.getProperties().get(CmmnProperties.REPEAT_ON_STANDARD_EVENTS);
     assertNotNull(events);
-    assertEquals(1, events.size());
+    assertThat(events.size()).isEqualTo(1);
     assertTrue(events.contains(CaseExecutionListener.DISABLE));
   }
 
@@ -578,7 +578,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     // then
     List<String> events = newActivity.getProperties().get(CmmnProperties.REPEAT_ON_STANDARD_EVENTS);
     assertNotNull(events);
-    assertEquals(1, events.size());
+    assertThat(events.size()).isEqualTo(1);
     assertTrue(events.contains(CaseExecutionListener.DISABLE));
   }
 
@@ -603,7 +603,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertEquals(parent, activity.getParent());
+    assertThat(activity.getParent()).isEqualTo(parent);
     assertTrue(parent.getActivities().contains(activity));
   }
 
@@ -637,7 +637,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     assertTrue(decisionRefValueProvider instanceof ConstantValueProvider);
     ConstantValueProvider valueProvider = (ConstantValueProvider) decisionRefValueProvider;
-    assertEquals(decisionRef, valueProvider.getValue(null));
+    assertThat(valueProvider.getValue(null)).isEqualTo(decisionRef);
   }
 
   @Test
@@ -658,7 +658,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     assertTrue(caseRefValueProvider instanceof ElValueProvider);
     ElValueProvider valueProvider = (ElValueProvider) caseRefValueProvider;
-    assertEquals(decisionRef, valueProvider.getExpression().getExpressionText());
+    assertThat(valueProvider.getExpression().getExpressionText()).isEqualTo(decisionRef);
   }
 
   @Test
@@ -680,7 +680,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     assertTrue(decisionRefValueProvider instanceof ConstantValueProvider);
     ConstantValueProvider valueProvider = (ConstantValueProvider) decisionRefValueProvider;
-    assertEquals(decision, valueProvider.getValue(null));
+    assertThat(valueProvider.getValue(null)).isEqualTo(decision);
   }
 
   @Test
@@ -702,7 +702,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     assertTrue(caseRefValueProvider instanceof ElValueProvider);
     ElValueProvider valueProvider = (ElValueProvider) caseRefValueProvider;
-    assertEquals(decision, valueProvider.getExpression().getExpressionText());
+    assertThat(valueProvider.getExpression().getExpressionText()).isEqualTo(decision);
   }
 
   @Test
@@ -720,7 +720,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     CallableElementBinding binding = callableElement.getBinding();
     assertNotNull(binding);
-    assertEquals(caseBinding, binding);
+    assertThat(binding).isEqualTo(caseBinding);
   }
 
   @Test
@@ -740,7 +740,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     assertNotNull(caseVersionValueProvider);
 
     assertTrue(caseVersionValueProvider instanceof ConstantValueProvider);
-    assertEquals(caseVersion, caseVersionValueProvider.getValue(null));
+    assertThat(caseVersionValueProvider.getValue(null)).isEqualTo(caseVersion);
   }
 
   @Test
@@ -761,7 +761,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     assertTrue(caseVersionValueProvider instanceof ElValueProvider);
     ElValueProvider valueProvider = (ElValueProvider) caseVersionValueProvider;
-    assertEquals(caseVersion, valueProvider.getExpression().getExpressionText());
+    assertThat(valueProvider.getExpression().getExpressionText()).isEqualTo(caseVersion);
   }
 
   @Test
@@ -774,7 +774,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     DecisionTaskActivityBehavior behavior = (DecisionTaskActivityBehavior) activity.getActivityBehavior();
-    assertEquals("aResultVariable", behavior.getResultVariable());
+    assertThat(behavior.getResultVariable()).isEqualTo("aResultVariable");
   }
 
   @Test

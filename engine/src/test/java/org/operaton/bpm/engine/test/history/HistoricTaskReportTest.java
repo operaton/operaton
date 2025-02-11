@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.history;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -97,11 +98,11 @@ public class HistoricTaskReportTest {
       .countByTaskName();
 
     // then
-    assertEquals(2, historicTaskInstanceReportResults.size());
-    assertEquals(2, historicTaskInstanceReportResults.get(0).getCount(), 0);
-    assertEquals(ANOTHER_PROCESS_DEFINITION_KEY, historicTaskInstanceReportResults.get(0).getProcessDefinitionKey());
-    assertEquals("name_" + ANOTHER_PROCESS_DEFINITION_KEY, historicTaskInstanceReportResults.get(0).getProcessDefinitionName());
-    assertEquals(ANOTHER_PROCESS_DEFINITION_KEY + " Task 1", historicTaskInstanceReportResults.get(0).getTaskName());
+    assertThat(historicTaskInstanceReportResults.size()).isEqualTo(2);
+    assertThat(historicTaskInstanceReportResults.get(0).getCount()).isEqualTo(2);
+    assertThat(historicTaskInstanceReportResults.get(0).getProcessDefinitionKey()).isEqualTo(ANOTHER_PROCESS_DEFINITION_KEY);
+    assertThat(historicTaskInstanceReportResults.get(0).getProcessDefinitionName()).isEqualTo("name_" + ANOTHER_PROCESS_DEFINITION_KEY);
+    assertThat(historicTaskInstanceReportResults.get(0).getTaskName()).isEqualTo(ANOTHER_PROCESS_DEFINITION_KEY + " Task 1");
 
     assertTrue(historicTaskInstanceReportResults.get(1).getProcessDefinitionId().contains(":2:"));
   }
@@ -123,11 +124,11 @@ public class HistoricTaskReportTest {
       .countByProcessDefinitionKey();
 
     // then
-    assertEquals(2, historicTaskInstanceReportResults.size());
+    assertThat(historicTaskInstanceReportResults.size()).isEqualTo(2);
     assertTrue(historicTaskInstanceReportResults.get(0).getProcessDefinitionId().contains(":1:"));
-    assertEquals("name_" + ANOTHER_PROCESS_DEFINITION_KEY, historicTaskInstanceReportResults.get(0).getProcessDefinitionName());
+    assertThat(historicTaskInstanceReportResults.get(0).getProcessDefinitionName()).isEqualTo("name_" + ANOTHER_PROCESS_DEFINITION_KEY);
 
-    assertEquals(ANOTHER_PROCESS_DEFINITION_KEY, historicTaskInstanceReportResults.get(0).getProcessDefinitionKey());
+    assertThat(historicTaskInstanceReportResults.get(0).getProcessDefinitionKey()).isEqualTo(ANOTHER_PROCESS_DEFINITION_KEY);
   }
 
   @Test
@@ -147,8 +148,8 @@ public class HistoricTaskReportTest {
       .countByProcessDefinitionKey();
 
     // then
-    assertEquals(1, historicTaskInstanceReportResults.size());
-    assertEquals(1, historicTaskInstanceReportResults.get(0).getCount(), 0);
+    assertThat(historicTaskInstanceReportResults.size()).isEqualTo(1);
+    assertThat(historicTaskInstanceReportResults.get(0).getCount()).isOne();
   }
 
   @Test
@@ -168,8 +169,8 @@ public class HistoricTaskReportTest {
       .countByProcessDefinitionKey();
 
     // then
-    assertEquals(2, historicTaskInstanceReportResults.size());
-    assertEquals(1, historicTaskInstanceReportResults.get(0).getCount(), 0);
+    assertThat(historicTaskInstanceReportResults.size()).isEqualTo(2);
+    assertThat(historicTaskInstanceReportResults.get(0).getCount()).isOne();
   }
 
   @Test
@@ -221,8 +222,8 @@ public class HistoricTaskReportTest {
       .completedBefore(calendar.getTime())
       .countByTaskName();
 
-    assertEquals(1, historicTaskInstanceReportResults.size());
-    assertEquals(1, historicTaskInstanceReportResults.get(0).getCount(), 0);
+    assertThat(historicTaskInstanceReportResults.size()).isEqualTo(1);
+    assertThat(historicTaskInstanceReportResults.get(0).getCount()).isOne();
   }
 
   @Test
@@ -250,8 +251,8 @@ public class HistoricTaskReportTest {
       .completedBefore(calendar.getTime())
       .countByTaskName();
 
-    assertEquals(1, historicTaskInstanceReportResults.size());
-    assertEquals(1, historicTaskInstanceReportResults.get(0).getCount(), 0);
+    assertThat(historicTaskInstanceReportResults.size()).isEqualTo(1);
+    assertThat(historicTaskInstanceReportResults.get(0).getCount()).isOne();
   }
 
   protected BpmnModelInstance createProcessWithUserTask(String key) {

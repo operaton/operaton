@@ -24,7 +24,6 @@ import static org.operaton.bpm.engine.authorization.Permissions.DELETE;
 import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
 import static org.operaton.bpm.engine.authorization.Resources.DEPLOYMENT;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -281,7 +280,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
 
     // then
     assertFalse(names.isEmpty());
-    assertEquals(2, names.size());
+    assertThat(names.size()).isEqualTo(2);
     assertTrue(names.contains(FIRST_RESOURCE));
     assertTrue(names.contains(SECOND_RESOURCE));
   }
@@ -297,7 +296,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
 
     // then
     assertFalse(names.isEmpty());
-    assertEquals(2, names.size());
+    assertThat(names.size()).isEqualTo(2);
     assertTrue(names.contains(FIRST_RESOURCE));
     assertTrue(names.contains(SECOND_RESOURCE));
   }
@@ -328,7 +327,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
 
     // then
     assertFalse(resources.isEmpty());
-    assertEquals(2, resources.size());
+    assertThat(resources.size()).isEqualTo(2);
   }
 
   @Test
@@ -342,7 +341,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
 
     // then
     assertFalse(resources.isEmpty());
-    assertEquals(2, resources.size());
+    assertThat(resources.size()).isEqualTo(2);
   }
 
   // get resource as stream //////////////////////////////////

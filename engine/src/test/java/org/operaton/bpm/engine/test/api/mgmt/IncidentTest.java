@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.mgmt;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
@@ -69,22 +68,22 @@ public class IncidentTest extends PluggableProcessEngineTest {
 
     assertNotNull(incident.getId());
     assertNotNull(incident.getIncidentTimestamp());
-    assertEquals(Incident.FAILED_JOB_HANDLER_TYPE, incident.getIncidentType());
-    assertEquals(AlwaysFailingDelegate.MESSAGE, incident.getIncidentMessage());
-    assertEquals(processInstance.getId(), incident.getExecutionId());
-    assertEquals("theServiceTask", incident.getActivityId());
-    assertEquals("theServiceTask", incident.getFailedActivityId());
-    assertEquals(processInstance.getId(), incident.getProcessInstanceId());
-    assertEquals(processInstance.getProcessDefinitionId(), incident.getProcessDefinitionId());
-    assertEquals(incident.getId(), incident.getCauseIncidentId());
-    assertEquals(incident.getId(), incident.getRootCauseIncidentId());
+    assertThat(incident.getIncidentType()).isEqualTo(Incident.FAILED_JOB_HANDLER_TYPE);
+    assertThat(incident.getIncidentMessage()).isEqualTo(AlwaysFailingDelegate.MESSAGE);
+    assertThat(incident.getExecutionId()).isEqualTo(processInstance.getId());
+    assertThat(incident.getActivityId()).isEqualTo("theServiceTask");
+    assertThat(incident.getFailedActivityId()).isEqualTo("theServiceTask");
+    assertThat(incident.getProcessInstanceId()).isEqualTo(processInstance.getId());
+    assertThat(incident.getProcessDefinitionId()).isEqualTo(processInstance.getProcessDefinitionId());
+    assertThat(incident.getCauseIncidentId()).isEqualTo(incident.getId());
+    assertThat(incident.getRootCauseIncidentId()).isEqualTo(incident.getId());
 
     Job job = managementService.createJobQuery().processInstanceId(processInstance.getId()).singleResult();
 
     assertNotNull(job);
 
-    assertEquals(job.getId(), incident.getConfiguration());
-    assertEquals(job.getJobDefinitionId(), incident.getJobDefinitionId());
+    assertThat(incident.getConfiguration()).isEqualTo(job.getId());
+    assertThat(incident.getJobDefinitionId()).isEqualTo(job.getJobDefinitionId());
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn"})
@@ -97,7 +96,7 @@ public class IncidentTest extends PluggableProcessEngineTest {
     List<Incident> incidents = runtimeService.createIncidentQuery().processInstanceId(processInstance.getId()).list();
 
     assertFalse(incidents.isEmpty());
-    assertEquals(1, incidents.size());
+    assertThat(incidents.size()).isEqualTo(1);
 
     Job job = managementService.createJobQuery().processInstanceId(processInstance.getId()).singleResult();
 
@@ -112,7 +111,7 @@ public class IncidentTest extends PluggableProcessEngineTest {
 
     // There is still one incident
     assertFalse(incidents.isEmpty());
-    assertEquals(1, incidents.size());
+    assertThat(incidents.size()).isEqualTo(1);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn"})
@@ -125,7 +124,7 @@ public class IncidentTest extends PluggableProcessEngineTest {
     List<Incident> incidents = runtimeService.createIncidentQuery().processInstanceId(processInstance.getId()).list();
 
     assertFalse(incidents.isEmpty());
-    assertEquals(1, incidents.size());
+    assertThat(incidents.size()).isEqualTo(1);
 
     Job job = managementService.createJobQuery().processInstanceId(processInstance.getId()).singleResult();
 
@@ -144,7 +143,7 @@ public class IncidentTest extends PluggableProcessEngineTest {
 
     // There is still one incident
     assertFalse(incidents.isEmpty());
-    assertEquals(1, incidents.size());
+    assertThat(incidents.size()).isEqualTo(1);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncidentForNestedExecution.bpmn"})
@@ -166,16 +165,16 @@ public class IncidentTest extends PluggableProcessEngineTest {
 
     assertNotNull(incident.getId());
     assertNotNull(incident.getIncidentTimestamp());
-    assertEquals(Incident.FAILED_JOB_HANDLER_TYPE, incident.getIncidentType());
-    assertEquals(AlwaysFailingDelegate.MESSAGE, incident.getIncidentMessage());
-    assertEquals(executionIdOfNestedFailingExecution, incident.getExecutionId());
-    assertEquals("theServiceTask", incident.getActivityId());
-    assertEquals("theServiceTask", incident.getFailedActivityId());
-    assertEquals(processInstance.getId(), incident.getProcessInstanceId());
-    assertEquals(incident.getId(), incident.getCauseIncidentId());
-    assertEquals(incident.getId(), incident.getRootCauseIncidentId());
-    assertEquals(job.getId(), incident.getConfiguration());
-    assertEquals(job.getJobDefinitionId(), incident.getJobDefinitionId());
+    assertThat(incident.getIncidentType()).isEqualTo(Incident.FAILED_JOB_HANDLER_TYPE);
+    assertThat(incident.getIncidentMessage()).isEqualTo(AlwaysFailingDelegate.MESSAGE);
+    assertThat(incident.getExecutionId()).isEqualTo(executionIdOfNestedFailingExecution);
+    assertThat(incident.getActivityId()).isEqualTo("theServiceTask");
+    assertThat(incident.getFailedActivityId()).isEqualTo("theServiceTask");
+    assertThat(incident.getProcessInstanceId()).isEqualTo(processInstance.getId());
+    assertThat(incident.getCauseIncidentId()).isEqualTo(incident.getId());
+    assertThat(incident.getRootCauseIncidentId()).isEqualTo(incident.getId());
+    assertThat(incident.getConfiguration()).isEqualTo(job.getId());
+    assertThat(incident.getJobDefinitionId()).isEqualTo(job.getJobDefinitionId());
   }
 
   @Test
@@ -231,7 +230,7 @@ public class IncidentTest extends PluggableProcessEngineTest {
 
     List<Incident> incidents = runtimeService.createIncidentQuery().list();
     assertFalse(incidents.isEmpty());
-    assertEquals(2, incidents.size());
+    assertThat(incidents.size()).isEqualTo(2);
 
     ProcessInstance failingProcess = runtimeService.createProcessInstanceQuery().processDefinitionKey("failingProcess").singleResult();
     assertNotNull(failingProcess);
@@ -248,16 +247,16 @@ public class IncidentTest extends PluggableProcessEngineTest {
 
     assertNotNull(causeIncident.getId());
     assertNotNull(causeIncident.getIncidentTimestamp());
-    assertEquals(Incident.FAILED_JOB_HANDLER_TYPE, causeIncident.getIncidentType());
-    assertEquals(AlwaysFailingDelegate.MESSAGE, causeIncident.getIncidentMessage());
-    assertEquals(job.getExecutionId(), causeIncident.getExecutionId());
-    assertEquals("theServiceTask", causeIncident.getActivityId());
-    assertEquals("theServiceTask", causeIncident.getFailedActivityId());
-    assertEquals(failingProcess.getId(), causeIncident.getProcessInstanceId());
-    assertEquals(causeIncident.getId(), causeIncident.getCauseIncidentId());
-    assertEquals(causeIncident.getId(), causeIncident.getRootCauseIncidentId());
-    assertEquals(job.getId(), causeIncident.getConfiguration());
-    assertEquals(job.getJobDefinitionId(), causeIncident.getJobDefinitionId());
+    assertThat(causeIncident.getIncidentType()).isEqualTo(Incident.FAILED_JOB_HANDLER_TYPE);
+    assertThat(causeIncident.getIncidentMessage()).isEqualTo(AlwaysFailingDelegate.MESSAGE);
+    assertThat(causeIncident.getExecutionId()).isEqualTo(job.getExecutionId());
+    assertThat(causeIncident.getActivityId()).isEqualTo("theServiceTask");
+    assertThat(causeIncident.getFailedActivityId()).isEqualTo("theServiceTask");
+    assertThat(causeIncident.getProcessInstanceId()).isEqualTo(failingProcess.getId());
+    assertThat(causeIncident.getCauseIncidentId()).isEqualTo(causeIncident.getId());
+    assertThat(causeIncident.getRootCauseIncidentId()).isEqualTo(causeIncident.getId());
+    assertThat(causeIncident.getConfiguration()).isEqualTo(job.getId());
+    assertThat(causeIncident.getJobDefinitionId()).isEqualTo(job.getJobDefinitionId());
 
     // Recursive created incident
     Incident recursiveCreatedIncident = runtimeService.createIncidentQuery().processDefinitionId(callProcess.getProcessDefinitionId()).singleResult();
@@ -268,14 +267,14 @@ public class IncidentTest extends PluggableProcessEngineTest {
 
     assertNotNull(recursiveCreatedIncident.getId());
     assertNotNull(recursiveCreatedIncident.getIncidentTimestamp());
-    assertEquals(Incident.FAILED_JOB_HANDLER_TYPE, recursiveCreatedIncident.getIncidentType());
+    assertThat(recursiveCreatedIncident.getIncidentType()).isEqualTo(Incident.FAILED_JOB_HANDLER_TYPE);
     assertNull(recursiveCreatedIncident.getIncidentMessage());
-    assertEquals(theCallActivityExecution.getId(), recursiveCreatedIncident.getExecutionId());
-    assertEquals("theCallActivity", recursiveCreatedIncident.getActivityId());
-    assertEquals("theCallActivity", recursiveCreatedIncident.getFailedActivityId());
-    assertEquals(processInstance.getId(), recursiveCreatedIncident.getProcessInstanceId());
-    assertEquals(causeIncident.getId(), recursiveCreatedIncident.getCauseIncidentId());
-    assertEquals(causeIncident.getId(), recursiveCreatedIncident.getRootCauseIncidentId());
+    assertThat(recursiveCreatedIncident.getExecutionId()).isEqualTo(theCallActivityExecution.getId());
+    assertThat(recursiveCreatedIncident.getActivityId()).isEqualTo("theCallActivity");
+    assertThat(recursiveCreatedIncident.getFailedActivityId()).isEqualTo("theCallActivity");
+    assertThat(recursiveCreatedIncident.getProcessInstanceId()).isEqualTo(processInstance.getId());
+    assertThat(recursiveCreatedIncident.getCauseIncidentId()).isEqualTo(causeIncident.getId());
+    assertThat(recursiveCreatedIncident.getRootCauseIncidentId()).isEqualTo(causeIncident.getId());
     assertNull(recursiveCreatedIncident.getConfiguration());
     assertNull(recursiveCreatedIncident.getJobDefinitionId());
   }
@@ -291,7 +290,7 @@ public class IncidentTest extends PluggableProcessEngineTest {
 
     List<Incident> incidents = runtimeService.createIncidentQuery().list();
     assertFalse(incidents.isEmpty());
-    assertEquals(3, incidents.size());
+    assertThat(incidents.size()).isEqualTo(3);
 
     // Root Cause Incident
     ProcessInstance failingProcess = runtimeService.createProcessInstanceQuery().processDefinitionKey("failingProcess").singleResult();
@@ -305,16 +304,16 @@ public class IncidentTest extends PluggableProcessEngineTest {
 
     assertNotNull(rootCauseIncident.getId());
     assertNotNull(rootCauseIncident.getIncidentTimestamp());
-    assertEquals(Incident.FAILED_JOB_HANDLER_TYPE, rootCauseIncident.getIncidentType());
-    assertEquals(AlwaysFailingDelegate.MESSAGE, rootCauseIncident.getIncidentMessage());
-    assertEquals(job.getExecutionId(), rootCauseIncident.getExecutionId());
-    assertEquals("theServiceTask", rootCauseIncident.getActivityId());
-    assertEquals("theServiceTask", rootCauseIncident.getFailedActivityId());
-    assertEquals(failingProcess.getId(), rootCauseIncident.getProcessInstanceId());
-    assertEquals(rootCauseIncident.getId(), rootCauseIncident.getCauseIncidentId());
-    assertEquals(rootCauseIncident.getId(), rootCauseIncident.getRootCauseIncidentId());
-    assertEquals(job.getId(), rootCauseIncident.getConfiguration());
-    assertEquals(job.getJobDefinitionId(), rootCauseIncident.getJobDefinitionId());
+    assertThat(rootCauseIncident.getIncidentType()).isEqualTo(Incident.FAILED_JOB_HANDLER_TYPE);
+    assertThat(rootCauseIncident.getIncidentMessage()).isEqualTo(AlwaysFailingDelegate.MESSAGE);
+    assertThat(rootCauseIncident.getExecutionId()).isEqualTo(job.getExecutionId());
+    assertThat(rootCauseIncident.getActivityId()).isEqualTo("theServiceTask");
+    assertThat(rootCauseIncident.getFailedActivityId()).isEqualTo("theServiceTask");
+    assertThat(rootCauseIncident.getProcessInstanceId()).isEqualTo(failingProcess.getId());
+    assertThat(rootCauseIncident.getCauseIncidentId()).isEqualTo(rootCauseIncident.getId());
+    assertThat(rootCauseIncident.getRootCauseIncidentId()).isEqualTo(rootCauseIncident.getId());
+    assertThat(rootCauseIncident.getConfiguration()).isEqualTo(job.getId());
+    assertThat(rootCauseIncident.getJobDefinitionId()).isEqualTo(job.getJobDefinitionId());
 
     // Cause Incident
     ProcessInstance callFailingProcess = runtimeService.createProcessInstanceQuery().processDefinitionKey("callFailingProcess").singleResult();
@@ -328,14 +327,14 @@ public class IncidentTest extends PluggableProcessEngineTest {
 
     assertNotNull(causeIncident.getId());
     assertNotNull(causeIncident.getIncidentTimestamp());
-    assertEquals(Incident.FAILED_JOB_HANDLER_TYPE, causeIncident.getIncidentType());
+    assertThat(causeIncident.getIncidentType()).isEqualTo(Incident.FAILED_JOB_HANDLER_TYPE);
     assertNull(causeIncident.getIncidentMessage());
-    assertEquals(theCallActivityExecution.getId(), causeIncident.getExecutionId());
-    assertEquals("theCallActivity", causeIncident.getActivityId());
-    assertEquals("theCallActivity", causeIncident.getFailedActivityId());
-    assertEquals(callFailingProcess.getId(), causeIncident.getProcessInstanceId());
-    assertEquals(rootCauseIncident.getId(), causeIncident.getCauseIncidentId());
-    assertEquals(rootCauseIncident.getId(), causeIncident.getRootCauseIncidentId());
+    assertThat(causeIncident.getExecutionId()).isEqualTo(theCallActivityExecution.getId());
+    assertThat(causeIncident.getActivityId()).isEqualTo("theCallActivity");
+    assertThat(causeIncident.getFailedActivityId()).isEqualTo("theCallActivity");
+    assertThat(causeIncident.getProcessInstanceId()).isEqualTo(callFailingProcess.getId());
+    assertThat(causeIncident.getCauseIncidentId()).isEqualTo(rootCauseIncident.getId());
+    assertThat(causeIncident.getRootCauseIncidentId()).isEqualTo(rootCauseIncident.getId());
     assertNull(causeIncident.getConfiguration());
     assertNull(causeIncident.getJobDefinitionId());
 
@@ -348,14 +347,14 @@ public class IncidentTest extends PluggableProcessEngineTest {
 
     assertNotNull(topLevelIncident.getId());
     assertNotNull(topLevelIncident.getIncidentTimestamp());
-    assertEquals(Incident.FAILED_JOB_HANDLER_TYPE, topLevelIncident.getIncidentType());
+    assertThat(topLevelIncident.getIncidentType()).isEqualTo(Incident.FAILED_JOB_HANDLER_TYPE);
     assertNull(topLevelIncident.getIncidentMessage());
-    assertEquals(theCallingCallActivity.getId(), topLevelIncident.getExecutionId());
-    assertEquals("theCallingCallActivity", topLevelIncident.getActivityId());
-    assertEquals("theCallingCallActivity", topLevelIncident.getFailedActivityId());
-    assertEquals(processInstance.getId(), topLevelIncident.getProcessInstanceId());
-    assertEquals(causeIncident.getId(), topLevelIncident.getCauseIncidentId());
-    assertEquals(rootCauseIncident.getId(), topLevelIncident.getRootCauseIncidentId());
+    assertThat(topLevelIncident.getExecutionId()).isEqualTo(theCallingCallActivity.getId());
+    assertThat(topLevelIncident.getActivityId()).isEqualTo("theCallingCallActivity");
+    assertThat(topLevelIncident.getFailedActivityId()).isEqualTo("theCallingCallActivity");
+    assertThat(topLevelIncident.getProcessInstanceId()).isEqualTo(processInstance.getId());
+    assertThat(topLevelIncident.getCauseIncidentId()).isEqualTo(causeIncident.getId());
+    assertThat(topLevelIncident.getRootCauseIncidentId()).isEqualTo(rootCauseIncident.getId());
     assertNull(topLevelIncident.getConfiguration());
     assertNull(topLevelIncident.getJobDefinitionId());
   }
@@ -417,7 +416,7 @@ public class IncidentTest extends PluggableProcessEngineTest {
 
     // should stay in the user task
     ExecutionEntity exec = (ExecutionEntity) processInstance;
-    assertEquals("theUserTask", exec.getActivityId());
+    assertThat(exec.getActivityId()).isEqualTo("theUserTask");
 
     // there does not exist any incident anymore
     incident = runtimeService.createIncidentQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -429,7 +428,7 @@ public class IncidentTest extends PluggableProcessEngineTest {
   public void shouldCreateIncidentOnFailedStartTimerEvent() {
     // After process start, there should be timer created
     JobQuery jobQuery = managementService.createJobQuery();
-    assertEquals(1, jobQuery.count());
+    assertThat(jobQuery.count()).isEqualTo(1);
 
     Job job = jobQuery.singleResult();
     String jobId = job.getId();
@@ -449,7 +448,7 @@ public class IncidentTest extends PluggableProcessEngineTest {
     job = jobQuery.singleResult();
     assertNotNull(job);
 
-    assertEquals(0, job.getRetries());
+    assertThat(job.getRetries()).isEqualTo(0);
 
     // incident was created
     Incident incident = runtimeService.createIncidentQuery().configuration(job.getId()).singleResult();
@@ -477,16 +476,16 @@ public class IncidentTest extends PluggableProcessEngineTest {
 
     // the incident still exists
     Incident tmp = query.singleResult();
-    assertEquals(incident.getId(), tmp.getId());
+    assertThat(tmp.getId()).isEqualTo(incident.getId());
 
     // execute the available job (should fail again)
     testRule.executeAvailableJobs();
 
     // the incident still exists and there
     // should be not a new incident
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
     tmp = query.singleResult();
-    assertEquals(incident.getId(), tmp.getId());
+    assertThat(tmp.getId()).isEqualTo(incident.getId());
   }
 
   @Deployment
@@ -506,7 +505,7 @@ public class IncidentTest extends PluggableProcessEngineTest {
     assertNotNull(incident);
 
     // incident updated with new execution id after execution tree is compacted
-    assertEquals(processInstanceId, incident.getExecutionId());
+    assertThat(incident.getExecutionId()).isEqualTo(processInstanceId);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn"})
@@ -518,9 +517,9 @@ public class IncidentTest extends PluggableProcessEngineTest {
 
     // it exists a job with 0 retries and an incident
     Job job = managementService.createJobQuery().singleResult();
-    assertEquals(0, job.getRetries());
+    assertThat(job.getRetries()).isEqualTo(0);
 
-    assertEquals(1, runtimeService.createIncidentQuery().count());
+    assertThat(runtimeService.createIncidentQuery().count()).isEqualTo(1);
 
     // it should not be possible to set negative retries
     final JobEntity jobEntity = (JobEntity) job;
@@ -531,7 +530,7 @@ public class IncidentTest extends PluggableProcessEngineTest {
       return null;
     });
 
-    assertEquals(0, job.getRetries());
+    assertThat(job.getRetries()).isEqualTo(0);
     var jobId = job.getJobDefinitionId();
     var jobDefinitionId = job.getJobDefinitionId();
 
@@ -545,10 +544,10 @@ public class IncidentTest extends PluggableProcessEngineTest {
     }
 
     job = managementService.createJobQuery().singleResult();
-    assertEquals(0, job.getRetries());
+    assertThat(job.getRetries()).isEqualTo(0);
 
     // also no new incident was created
-    assertEquals(1, runtimeService.createIncidentQuery().count());
+    assertThat(runtimeService.createIncidentQuery().count()).isEqualTo(1);
 
     // it should not be possible to set the retries to a negative number with the management service
     try {
@@ -581,7 +580,7 @@ public class IncidentTest extends PluggableProcessEngineTest {
     assertNotNull(incident);
 
     assertNotNull(incident.getActivityId());
-    assertEquals("theStart", incident.getActivityId());
+    assertThat(incident.getActivityId()).isEqualTo("theStart");
     assertNull(incident.getProcessInstanceId());
     assertNull(incident.getExecutionId());
   }
@@ -611,7 +610,7 @@ public class IncidentTest extends PluggableProcessEngineTest {
      assertNotNull(incident);
 
      assertNotNull(incident.getFailedActivityId());
-     assertEquals("theTask", incident.getFailedActivityId());
+    assertThat(incident.getFailedActivityId()).isEqualTo("theTask");
   }
 
   @Test
@@ -643,7 +642,7 @@ public class IncidentTest extends PluggableProcessEngineTest {
      assertNotNull(incident);
 
      assertNotNull(incident.getFailedActivityId());
-     assertEquals("theTask3", incident.getFailedActivityId());
+    assertThat(incident.getFailedActivityId()).isEqualTo("theTask3");
   }
 
   @Test
@@ -669,7 +668,7 @@ public class IncidentTest extends PluggableProcessEngineTest {
     // then
     Incident incident = runtimeService.createIncidentQuery().singleResult();
     assertNotNull(incident);
-    assertEquals("boundaryEvent", incident.getActivityId());
+    assertThat(incident.getActivityId()).isEqualTo("boundaryEvent");
   }
 
   @Test

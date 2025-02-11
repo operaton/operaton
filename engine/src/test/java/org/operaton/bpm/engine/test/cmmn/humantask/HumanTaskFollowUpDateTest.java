@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.humantask;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 
 import java.text.SimpleDateFormat;
@@ -49,7 +49,7 @@ public class HumanTaskFollowUpDateTest extends PluggableProcessEngineTest {
     Task task = taskService.createTaskQuery().caseInstanceId(caseInstanceId).singleResult();
 
     assertNotNull(task.getFollowUpDate());
-    assertEquals(date, task.getFollowUpDate());
+    assertThat(task.getFollowUpDate()).isEqualTo(date);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/humantask/HumanTaskFollowUpDateTest.testHumanTaskFollowUpDate.cmmn"})
@@ -65,7 +65,7 @@ public class HumanTaskFollowUpDateTest extends PluggableProcessEngineTest {
 
     assertNotNull(task.getFollowUpDate());
     Date date = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse("01-01-2015 12:10:00");
-    assertEquals(date, task.getFollowUpDate());
+    assertThat(task.getFollowUpDate()).isEqualTo(date);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/humantask/HumanTaskFollowUpDateTest.testHumanTaskFollowUpDate.cmmn"})
@@ -82,9 +82,9 @@ public class HumanTaskFollowUpDateTest extends PluggableProcessEngineTest {
     assertNotNull(followUpDate);
 
     Period period = new Period(task.getCreateTime().getTime(), followUpDate.getTime());
-    assertEquals(2, period.getDays());
-    assertEquals(2, period.getHours());
-    assertEquals(30, period.getMinutes());
+    assertThat(period.getDays()).isEqualTo(2);
+    assertThat(period.getHours()).isEqualTo(2);
+    assertThat(period.getMinutes()).isEqualTo(30);
   }
 
 }

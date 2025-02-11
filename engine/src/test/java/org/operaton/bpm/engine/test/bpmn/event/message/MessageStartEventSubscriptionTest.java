@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.message;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
@@ -89,8 +89,8 @@ public class MessageStartEventSubscriptionTest {
     List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
 
-    assertEquals(1, eventSubscriptions.size());
-    assertEquals(1, processDefinitions.size());
+    assertThat(eventSubscriptions.size()).isEqualTo(1);
+    assertThat(processDefinitions.size()).isEqualTo(1);
 
     // when
     testRule.deploy(SINGLE_MESSAGE_START_EVENT_XML);
@@ -99,8 +99,8 @@ public class MessageStartEventSubscriptionTest {
     List<EventSubscription> newEventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
     List<ProcessDefinition> newProcessDefinitions = repositoryService.createProcessDefinitionQuery().list();
 
-    assertEquals(1, newEventSubscriptions.size());
-    assertEquals(2, newProcessDefinitions.size());
+    assertThat(newEventSubscriptions.size()).isEqualTo(1);
+    assertThat(newProcessDefinitions.size()).isEqualTo(2);
     for (ProcessDefinition processDefinition : newProcessDefinitions) {
       if (processDefinition.getVersion() == 1) {
         for (EventSubscription subscription : newEventSubscriptions) {
@@ -110,7 +110,7 @@ public class MessageStartEventSubscriptionTest {
       } else {
         for (EventSubscription subscription : newEventSubscriptions) {
           EventSubscriptionEntity subscriptionEntity = (EventSubscriptionEntity) subscription;
-          assertEquals(subscriptionEntity.getConfiguration(), processDefinition.getId());
+          assertThat(processDefinition.getId()).isEqualTo(subscriptionEntity.getConfiguration());
         }
       }
     }
@@ -132,11 +132,11 @@ public class MessageStartEventSubscriptionTest {
 
     // then
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionKey(MESSAGE_EVENT_PROCESS).singleResult();
-    assertEquals(processDefinitionV1.getId(), processDefinition.getId());
+    assertThat(processDefinition.getId()).isEqualTo(processDefinitionV1.getId());
 
     EventSubscriptionEntity eventSubscription = (EventSubscriptionEntity) runtimeService.createEventSubscriptionQuery().singleResult();
     assertNotNull(eventSubscription);
-    assertEquals(processDefinitionV1.getId(), eventSubscription.getConfiguration());
+    assertThat(eventSubscription.getConfiguration()).isEqualTo(processDefinitionV1.getId());
   }
 
   @Test
@@ -237,7 +237,7 @@ public class MessageStartEventSubscriptionTest {
       .delete();
 
     // then
-    assertEquals(0, runtimeService.createEventSubscriptionQuery().count());
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(0);
   }
 
   @Test
@@ -256,7 +256,7 @@ public class MessageStartEventSubscriptionTest {
     String processDefId32 = deployProcess(ONE_TASK_PROCESS);
 
     // assume
-    assertEquals(1, runtimeService.createEventSubscriptionQuery().count());
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
 
     // when
     repositoryService.deleteProcessDefinitions()
@@ -266,7 +266,7 @@ public class MessageStartEventSubscriptionTest {
 
     // then
     List<EventSubscription> list = runtimeService.createEventSubscriptionQuery().list();
-    assertEquals(2, list.size());
+    assertThat(list.size()).isEqualTo(2);
     for (EventSubscription eventSubscription : list) {
       EventSubscriptionEntity eventSubscriptionEntity = (EventSubscriptionEntity) eventSubscription;
       if (!eventSubscriptionEntity.getConfiguration().equals(processDefId11) && !eventSubscriptionEntity.getConfiguration().equals(processDefId22)) {
@@ -288,7 +288,7 @@ public class MessageStartEventSubscriptionTest {
         .delete();
 
     // then
-    assertEquals(0, runtimeService.createEventSubscriptionQuery().count());
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(0);
   }
 
   @Test
@@ -304,7 +304,7 @@ public class MessageStartEventSubscriptionTest {
         .delete();
 
     // then
-    assertEquals(0, runtimeService.createEventSubscriptionQuery().count());
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(0);
   }
 
   @Test
@@ -320,7 +320,7 @@ public class MessageStartEventSubscriptionTest {
         .delete();
 
     // then
-    assertEquals(0, runtimeService.createEventSubscriptionQuery().count());
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(0);
   }
 
   @Test
@@ -336,7 +336,7 @@ public class MessageStartEventSubscriptionTest {
         .delete();
 
     // then
-    assertEquals(0, runtimeService.createEventSubscriptionQuery().count());
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(0);
   }
 
   @Test
@@ -352,7 +352,7 @@ public class MessageStartEventSubscriptionTest {
         .delete();
 
     // then
-    assertEquals(0, runtimeService.createEventSubscriptionQuery().count());
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(0);
   }
 
   @Test
@@ -368,8 +368,8 @@ public class MessageStartEventSubscriptionTest {
         .delete();
 
     // then
-    assertEquals(0, runtimeService.createEventSubscriptionQuery().count());
-    assertEquals(definitionId1, repositoryService.createProcessDefinitionQuery().singleResult().getId());
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(0);
+    assertThat(repositoryService.createProcessDefinitionQuery().singleResult().getId()).isEqualTo(definitionId1);
   }
 
   @Test
@@ -385,8 +385,8 @@ public class MessageStartEventSubscriptionTest {
         .delete();
 
     // then
-    assertEquals(1, runtimeService.createEventSubscriptionQuery().count());
-    assertEquals(definitionId1, ((EventSubscriptionEntity) runtimeService.createEventSubscriptionQuery().singleResult()).getConfiguration());
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(((EventSubscriptionEntity) runtimeService.createEventSubscriptionQuery().singleResult()).getConfiguration()).isEqualTo(definitionId1);
   }
 
   @Test
@@ -402,8 +402,8 @@ public class MessageStartEventSubscriptionTest {
         .delete();
 
     // then
-    assertEquals(1, runtimeService.createEventSubscriptionQuery().count());
-    assertEquals(definitionId1, ((EventSubscriptionEntity) runtimeService.createEventSubscriptionQuery().singleResult()).getConfiguration());
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(((EventSubscriptionEntity) runtimeService.createEventSubscriptionQuery().singleResult()).getConfiguration()).isEqualTo(definitionId1);
   }
 
   /**
@@ -422,8 +422,8 @@ public class MessageStartEventSubscriptionTest {
       .delete();
 
     // then
-    assertEquals(1, runtimeService.createEventSubscriptionQuery().count());
-    assertEquals(definitionId3, ((EventSubscriptionEntity) runtimeService.createEventSubscriptionQuery().singleResult()).getConfiguration());
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(((EventSubscriptionEntity) runtimeService.createEventSubscriptionQuery().singleResult()).getConfiguration()).isEqualTo(definitionId3);
   }
 
   /**
@@ -442,19 +442,19 @@ public class MessageStartEventSubscriptionTest {
       .delete();
 
     // then
-    assertEquals(1, runtimeService.createEventSubscriptionQuery().count());
-    assertEquals(definitionId1, ((EventSubscriptionEntity) runtimeService.createEventSubscriptionQuery().singleResult()).getConfiguration());
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(((EventSubscriptionEntity) runtimeService.createEventSubscriptionQuery().singleResult()).getConfiguration()).isEqualTo(definitionId1);
   }
 
   protected String deployProcess(String resourcePath) {
     List<ProcessDefinition> deployedProcessDefinitions = testRule.deploy(resourcePath).getDeployedProcessDefinitions();
-    assertEquals(1, deployedProcessDefinitions.size());
+    assertThat(deployedProcessDefinitions.size()).isEqualTo(1);
     return deployedProcessDefinitions.get(0).getId();
   }
 
   protected String deployModel(BpmnModelInstance model) {
     List<ProcessDefinition> deployedProcessDefinitions = testRule.deploy(model).getDeployedProcessDefinitions();
-    assertEquals(1, deployedProcessDefinitions.size());
+    assertThat(deployedProcessDefinitions.size()).isEqualTo(1);
     return deployedProcessDefinitions.get(0).getId();
   }
 }

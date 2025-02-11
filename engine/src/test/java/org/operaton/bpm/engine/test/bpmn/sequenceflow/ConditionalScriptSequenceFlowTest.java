@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.sequenceflow;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.fail;
 
 import java.util.HashMap;
@@ -44,7 +44,7 @@ public class ConditionalScriptSequenceFlowTest extends PluggableProcessEngineTes
       runtimeService.startProcessInstanceByKey("process", variables);
 
       Task task = taskService.createTaskQuery().singleResult();
-      assertEquals(direction, task.getTaskDefinitionKey());
+      assertThat(task.getTaskDefinitionKey()).isEqualTo(direction);
       taskService.complete(task.getId());
     }
 
@@ -75,7 +75,7 @@ public class ConditionalScriptSequenceFlowTest extends PluggableProcessEngineTes
       runtimeService.startProcessInstanceByKey("process", variables);
 
       Task task = taskService.createTaskQuery().singleResult();
-      assertEquals(direction, task.getTaskDefinitionKey());
+      assertThat(task.getTaskDefinitionKey()).isEqualTo(direction);
       taskService.complete(task.getId());
     }
 

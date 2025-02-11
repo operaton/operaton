@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.event.message;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
@@ -53,7 +52,7 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
 
     List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
 
-    assertEquals(1, eventSubscriptions.size());
+    assertThat(eventSubscriptions.size()).isEqualTo(1);
 
     repositoryService.deleteDeployment(deploymentId);
   }
@@ -96,7 +95,7 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
       fail("exception expected");
     } catch (ParseException e) {
       assertTrue(e.getMessage().contains("Cannot have a message event subscription with an empty or missing name"));
-      assertEquals("theStart", e.getResourceReports().get(0).getErrors().get(0).getMainElementId());
+      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("theStart");
     }
   }
 
@@ -124,8 +123,8 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
     List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
 
-    assertEquals(1, eventSubscriptions.size());
-    assertEquals(1, processDefinitions.size());
+    assertThat(eventSubscriptions.size()).isEqualTo(1);
+    assertThat(processDefinitions.size()).isEqualTo(1);
 
     String newDeploymentId = repositoryService
         .createDeployment()
@@ -136,8 +135,8 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
     List<EventSubscription> newEventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
     List<ProcessDefinition> newProcessDefinitions = repositoryService.createProcessDefinitionQuery().list();
 
-    assertEquals(1, newEventSubscriptions.size());
-    assertEquals(2, newProcessDefinitions.size());
+    assertThat(newEventSubscriptions.size()).isEqualTo(1);
+    assertThat(newProcessDefinitions.size()).isEqualTo(2);
     for (ProcessDefinition processDefinition : newProcessDefinitions) {
       if (processDefinition.getVersion() == 1) {
         for (EventSubscription subscription : newEventSubscriptions) {
@@ -147,7 +146,7 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
       } else {
         for (EventSubscription subscription : newEventSubscriptions) {
           EventSubscriptionEntity subscriptionEntity = (EventSubscriptionEntity) subscription;
-          assertEquals(subscriptionEntity.getConfiguration(), processDefinition.getId());
+          assertThat(processDefinition.getId()).isEqualTo(subscriptionEntity.getConfiguration());
         }
       }
     }

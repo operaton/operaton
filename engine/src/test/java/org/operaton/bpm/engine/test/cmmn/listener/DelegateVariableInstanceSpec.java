@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.listener;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.delegate.DelegateCaseVariableInstance;
 import org.operaton.bpm.engine.runtime.CaseExecution;
@@ -41,22 +41,22 @@ public class DelegateVariableInstanceSpec {
   protected CaseExecution expectedSourceExecution;
 
   public void matches(DelegateCaseVariableInstance instance) {
-    assertEquals(expectedEventName, instance.getEventName());
-    assertEquals(expectedVariableName, instance.getName());
-    assertEquals(expectedVariableValue, instance.getValue());
-    assertEquals(expectedProcessInstanceId, instance.getProcessInstanceId());
-    assertEquals(expectedExecutionId, instance.getExecutionId());
-    assertEquals(expectedCaseInstanceId, instance.getCaseInstanceId());
-    assertEquals(expectedCaseExecutionId, instance.getCaseExecutionId());
-    assertEquals(expectedTaskId, instance.getTaskId());
-    assertEquals(expectedActivityInstanceId, instance.getActivityInstanceId());
+    assertThat(instance.getEventName()).isEqualTo(expectedEventName);
+    assertThat(instance.getName()).isEqualTo(expectedVariableName);
+    assertThat(instance.getValue()).isEqualTo(expectedVariableValue);
+    assertThat(instance.getProcessInstanceId()).isEqualTo(expectedProcessInstanceId);
+    assertThat(instance.getExecutionId()).isEqualTo(expectedExecutionId);
+    assertThat(instance.getCaseInstanceId()).isEqualTo(expectedCaseInstanceId);
+    assertThat(instance.getCaseExecutionId()).isEqualTo(expectedCaseExecutionId);
+    assertThat(instance.getTaskId()).isEqualTo(expectedTaskId);
+    assertThat(instance.getActivityInstanceId()).isEqualTo(expectedActivityInstanceId);
 
-    assertEquals(expectedSourceExecution.getId(), instance.getSourceExecution().getId());
-    assertEquals(expectedSourceExecution.getActivityId(), instance.getSourceExecution().getActivityId());
-    assertEquals(expectedSourceExecution.getActivityName(), instance.getSourceExecution().getActivityName());
-    assertEquals(expectedSourceExecution.getCaseDefinitionId(), instance.getSourceExecution().getCaseDefinitionId());
-    assertEquals(expectedSourceExecution.getCaseInstanceId(), instance.getSourceExecution().getCaseInstanceId());
-    assertEquals(expectedSourceExecution.getParentId(), instance.getSourceExecution().getParentId());
+    assertThat(instance.getSourceExecution().getId()).isEqualTo(expectedSourceExecution.getId());
+    assertThat(instance.getSourceExecution().getActivityId()).isEqualTo(expectedSourceExecution.getActivityId());
+    assertThat(instance.getSourceExecution().getActivityName()).isEqualTo(expectedSourceExecution.getActivityName());
+    assertThat(instance.getSourceExecution().getCaseDefinitionId()).isEqualTo(expectedSourceExecution.getCaseDefinitionId());
+    assertThat(instance.getSourceExecution().getCaseInstanceId()).isEqualTo(expectedSourceExecution.getCaseInstanceId());
+    assertThat(instance.getSourceExecution().getParentId()).isEqualTo(expectedSourceExecution.getParentId());
   }
 
   public static DelegateVariableInstanceSpec fromCaseExecution(CaseExecution caseExecution) {

@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.multitenancy;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.util.List;
@@ -55,7 +54,7 @@ public class MultiTenancyTaskServiceTest extends PluggableProcessEngineTest {
     // then
     // when I load it, the tenant id is preserved
     task = taskService.createTaskQuery().taskId(task.getId()).singleResult();
-    assertEquals(TENANT_1, task.getTenantId());
+    assertThat(task.getTenantId()).isEqualTo(TENANT_1);
 
     // Finally, delete task
     deleteTasks(task);
@@ -182,7 +181,7 @@ public class MultiTenancyTaskServiceTest extends PluggableProcessEngineTest {
     // then
     // the parent task's tenant id is propagated to the sub task
     subTask = taskService.createTaskQuery().taskId(subTask.getId()).singleResult();
-    assertEquals(TENANT_1, subTask.getTenantId());
+    assertThat(subTask.getTenantId()).isEqualTo(TENANT_1);
 
     // Finally, delete task
     deleteTasks(subTask, task);
@@ -228,8 +227,8 @@ public class MultiTenancyTaskServiceTest extends PluggableProcessEngineTest {
         .singleResult();
 
     List<IdentityLink> identityLinks = taskService.getIdentityLinksForTask(tenantTask.getId());
-    assertEquals(1, identityLinks.size());
-    assertEquals("tenant", identityLinks.get(0).getTenantId());
+    assertThat(identityLinks.size()).isEqualTo(1);
+    assertThat(identityLinks.get(0).getTenantId()).isEqualTo("tenant");
   }
 
   @Test
@@ -254,8 +253,8 @@ public class MultiTenancyTaskServiceTest extends PluggableProcessEngineTest {
         .singleResult();
 
     List<IdentityLink> identityLinks = taskService.getIdentityLinksForTask(tenantTask.getId());
-    assertEquals(1, identityLinks.size());
-    assertEquals("tenant", identityLinks.get(0).getTenantId());
+    assertThat(identityLinks.size()).isEqualTo(1);
+    assertThat(identityLinks.get(0).getTenantId()).isEqualTo("tenant");
   }
 
   protected void deleteTasks(Task... tasks) {

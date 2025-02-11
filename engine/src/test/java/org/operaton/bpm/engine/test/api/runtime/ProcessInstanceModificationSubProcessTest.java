@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.runtime;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
@@ -112,7 +111,7 @@ public class ProcessInstanceModificationSubProcessTest {
     assertNotNull(historicActivityInstance);
 
     // then
-    assertEquals(historicActivityInstance.getParentActivityInstanceId(), activityInstance.getParentActivityInstanceId());
+    assertThat(activityInstance.getParentActivityInstanceId()).isEqualTo(historicActivityInstance.getParentActivityInstanceId());
   }
 
   @Test
@@ -314,7 +313,7 @@ public class ProcessInstanceModificationSubProcessTest {
     runtimeService.startProcessInstanceByKey("parentProcess");
 
     final List<ProcessInstance> subprocesses = runtimeService.createProcessInstanceQuery().processDefinitionKey("subprocess").list();
-    assertEquals(3, subprocesses.size());
+    assertThat(subprocesses.size()).isEqualTo(3);
 
     // when I do process instance modification
     runtimeService.createModification(subprocessPrDefId)
@@ -354,7 +353,7 @@ public class ProcessInstanceModificationSubProcessTest {
     ProcessInstance parentPI = runtimeService.startProcessInstanceByKey("parentProcess");
 
     final List<ProcessInstance> subprocesses = runtimeService.createProcessInstanceQuery().processDefinitionKey("subprocess").list();
-    assertEquals(3, subprocesses.size());
+    assertThat(subprocesses.size()).isEqualTo(3);
 
     // when I do process instance modification
     runtimeService.createModification(subprocessPrDefId)
@@ -404,7 +403,7 @@ public class ProcessInstanceModificationSubProcessTest {
     runtimeService.startProcessInstanceByKey("parentProcess");
 
     final List<ProcessInstance> subprocesses = runtimeService.createProcessInstanceQuery().processDefinitionKey("subprocess").list();
-    assertEquals(3, subprocesses.size());
+    assertThat(subprocesses.size()).isEqualTo(3);
 
     // when I do process instance modification
     runtimeService.createModification(subprocessPrDefId)
@@ -451,7 +450,7 @@ public class ProcessInstanceModificationSubProcessTest {
     ProcessInstance parentPI = runtimeService.startProcessInstanceByKey("parentProcess");
 
     final List<ProcessInstance> subprocesses = runtimeService.createProcessInstanceQuery().processDefinitionKey("subprocess").list();
-    assertEquals(3, subprocesses.size());
+    assertThat(subprocesses.size()).isEqualTo(3);
 
     // when I do process instance modification
     runtimeService.createModification(subprocessPrDefId)
@@ -500,7 +499,7 @@ public class ProcessInstanceModificationSubProcessTest {
     runtimeService.startProcessInstanceByKey("parentProcess");
 
     final List<ProcessInstance> subprocesses = runtimeService.createProcessInstanceQuery().processDefinitionKey("subprocess").list();
-    assertEquals(3, subprocesses.size());
+    assertThat(subprocesses.size()).isEqualTo(3);
 
     // when I do process instance modification
     runtimeService.createModification(subprocessPrDefId)
@@ -547,7 +546,7 @@ public class ProcessInstanceModificationSubProcessTest {
     ProcessInstance parentPI = runtimeService.startProcessInstanceByKey("parentProcess");
 
     final List<ProcessInstance> subprocesses = runtimeService.createProcessInstanceQuery().processDefinitionKey("subprocess").list();
-    assertEquals(3, subprocesses.size());
+    assertThat(subprocesses.size()).isEqualTo(3);
 
     // when I do process instance modification
     runtimeService.createModification(subprocessPrDefId)
@@ -595,7 +594,7 @@ public class ProcessInstanceModificationSubProcessTest {
     List<ProcessInstance> subProcessInstances = runtimeService.createProcessInstanceQuery()
         .processDefinitionKey("subprocess")
         .list();
-    assertEquals(3, subProcessInstances.size());
+    assertThat(subProcessInstances.size()).isEqualTo(3);
 
     // when
     runtimeService.createModification(subProcessDefinition.getId())
@@ -645,7 +644,7 @@ public class ProcessInstanceModificationSubProcessTest {
     List<ProcessInstance> subProcessInstances = runtimeService.createProcessInstanceQuery()
         .processDefinitionKey("subprocess")
         .list();
-    assertEquals(3, subProcessInstances.size());
+    assertThat(subProcessInstances.size()).isEqualTo(3);
 
     // when
     runtimeService.createModification(subProcessDefinition.getId())

@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.task;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
@@ -67,18 +66,18 @@ public class TaskIdentityLinksTest extends PluggableProcessEngineTest {
     IdentityLink identityLink = identityLinks.get(0);
 
     assertNull(identityLink.getGroupId());
-    assertEquals("kermit", identityLink.getUserId());
-    assertEquals(IdentityLinkType.CANDIDATE, identityLink.getType());
-    assertEquals(taskId, identityLink.getTaskId());
+    assertThat(identityLink.getUserId()).isEqualTo("kermit");
+    assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
+    assertThat(identityLink.getTaskId()).isEqualTo(taskId);
 
-    assertEquals(1, identityLinks.size());
+    assertThat(identityLinks.size()).isEqualTo(1);
 
     identityLinks = taskService.getIdentityLinksForTask(taskId);
-    assertEquals(1, identityLinks.size());
+    assertThat(identityLinks.size()).isEqualTo(1);
 
     taskService.deleteCandidateUser(taskId, "kermit");
 
-    assertEquals(0, taskService.getIdentityLinksForTask(taskId).size());
+    assertThat(taskService.getIdentityLinksForTask(taskId).size()).isEqualTo(0);
   }
 
   @Deployment(resources="org/operaton/bpm/engine/test/api/task/IdentityLinksProcess.bpmn20.xml")
@@ -99,22 +98,22 @@ public class TaskIdentityLinksTest extends PluggableProcessEngineTest {
       List<IdentityLink> identityLinks = taskService.getIdentityLinksForTask(taskId);
       IdentityLink identityLink = identityLinks.get(0);
 
-      assertEquals("muppets", identityLink.getGroupId());
+      assertThat(identityLink.getGroupId()).isEqualTo("muppets");
       assertNull("kermit", identityLink.getUserId());
-      assertEquals(IdentityLinkType.CANDIDATE, identityLink.getType());
-      assertEquals(taskId, identityLink.getTaskId());
+      assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
+      assertThat(identityLink.getTaskId()).isEqualTo(taskId);
 
-      assertEquals(1, identityLinks.size());
+      assertThat(identityLinks.size()).isEqualTo(1);
 
       if (processEngineConfiguration.getHistoryLevel().getId()>= ProcessEngineConfigurationImpl.HISTORYLEVEL_FULL) {
         List<Event> taskEvents = taskService.getTaskEvents(taskId);
-        assertEquals(1, taskEvents.size());
+        assertThat(taskEvents.size()).isEqualTo(1);
         Event taskEvent = taskEvents.get(0);
-        assertEquals(Event.ACTION_ADD_GROUP_LINK, taskEvent.getAction());
+        assertThat(taskEvent.getAction()).isEqualTo(Event.ACTION_ADD_GROUP_LINK);
         List<String> taskEventMessageParts = taskEvent.getMessageParts();
-        assertEquals("muppets", taskEventMessageParts.get(0));
-        assertEquals(IdentityLinkType.CANDIDATE, taskEventMessageParts.get(1));
-        assertEquals(2, taskEventMessageParts.size());
+        assertThat(taskEventMessageParts.get(0)).isEqualTo("muppets");
+        assertThat(taskEventMessageParts.get(1)).isEqualTo(IdentityLinkType.CANDIDATE);
+        assertThat(taskEventMessageParts.size()).isEqualTo(2);
       }
 
       taskService.deleteCandidateGroup(taskId, "muppets");
@@ -122,15 +121,15 @@ public class TaskIdentityLinksTest extends PluggableProcessEngineTest {
       if (processEngineConfiguration.getHistoryLevel().getId()>= ProcessEngineConfigurationImpl.HISTORYLEVEL_FULL) {
         List<Event> taskEvents = taskService.getTaskEvents(taskId);
         Event taskEvent = findTaskEvent(taskEvents, Event.ACTION_DELETE_GROUP_LINK);
-        assertEquals(Event.ACTION_DELETE_GROUP_LINK, taskEvent.getAction());
+        assertThat(taskEvent.getAction()).isEqualTo(Event.ACTION_DELETE_GROUP_LINK);
         List<String> taskEventMessageParts = taskEvent.getMessageParts();
-        assertEquals("muppets", taskEventMessageParts.get(0));
-        assertEquals(IdentityLinkType.CANDIDATE, taskEventMessageParts.get(1));
-        assertEquals(2, taskEventMessageParts.size());
-        assertEquals(2, taskEvents.size());
+        assertThat(taskEventMessageParts.get(0)).isEqualTo("muppets");
+        assertThat(taskEventMessageParts.get(1)).isEqualTo(IdentityLinkType.CANDIDATE);
+        assertThat(taskEventMessageParts.size()).isEqualTo(2);
+        assertThat(taskEvents.size()).isEqualTo(2);
       }
 
-      assertEquals(0, taskService.getIdentityLinksForTask(taskId).size());
+      assertThat(taskService.getIdentityLinksForTask(taskId).size()).isEqualTo(0);
     } finally {
       identityService.clearAuthentication();
     }
@@ -144,16 +143,16 @@ public class TaskIdentityLinksTest extends PluggableProcessEngineTest {
 
     List<IdentityLink> identityLinks = taskService.getIdentityLinksForTask(task.getId());
     assertNotNull(identityLinks);
-    assertEquals(1, identityLinks.size());
+    assertThat(identityLinks.size()).isEqualTo(1);
 
     IdentityLink identityLink = identityLinks.get(0);
-    assertEquals(IdentityLinkType.ASSIGNEE, identityLink.getType());
-    assertEquals("assignee", identityLink.getUserId());
-    assertEquals("task", identityLink.getTaskId());
+    assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.ASSIGNEE);
+    assertThat(identityLink.getUserId()).isEqualTo("assignee");
+    assertThat(identityLink.getTaskId()).isEqualTo("task");
 
     // second call should return the same list size
     identityLinks = taskService.getIdentityLinksForTask(task.getId());
-    assertEquals(1, identityLinks.size());
+    assertThat(identityLinks.size()).isEqualTo(1);
 
     taskService.deleteTask(task.getId(), true);
   }
@@ -166,16 +165,16 @@ public class TaskIdentityLinksTest extends PluggableProcessEngineTest {
 
     List<IdentityLink> identityLinks = taskService.getIdentityLinksForTask(task.getId());
     assertNotNull(identityLinks);
-    assertEquals(1, identityLinks.size());
+    assertThat(identityLinks.size()).isEqualTo(1);
 
     IdentityLink identityLink = identityLinks.get(0);
-    assertEquals(IdentityLinkType.OWNER, identityLink.getType());
-    assertEquals("owner", identityLink.getUserId());
-    assertEquals("task", identityLink.getTaskId());
+    assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.OWNER);
+    assertThat(identityLink.getUserId()).isEqualTo("owner");
+    assertThat(identityLink.getTaskId()).isEqualTo("task");
 
     // second call should return the same list size
     identityLinks = taskService.getIdentityLinksForTask(task.getId());
-    assertEquals(1, identityLinks.size());
+    assertThat(identityLinks.size()).isEqualTo(1);
 
     taskService.deleteTask(task.getId(), true);
   }
@@ -205,15 +204,15 @@ public class TaskIdentityLinksTest extends PluggableProcessEngineTest {
     IdentityLink identityLink = identityLinks.get(0);
 
     assertNull(identityLink.getGroupId());
-    assertEquals("kermit", identityLink.getUserId());
-    assertEquals("interestee", identityLink.getType());
-    assertEquals(taskId, identityLink.getTaskId());
+    assertThat(identityLink.getUserId()).isEqualTo("kermit");
+    assertThat(identityLink.getType()).isEqualTo("interestee");
+    assertThat(identityLink.getTaskId()).isEqualTo(taskId);
 
-    assertEquals(1, identityLinks.size());
+    assertThat(identityLinks.size()).isEqualTo(1);
 
     taskService.deleteUserIdentityLink(taskId, "kermit", "interestee");
 
-    assertEquals(0, taskService.getIdentityLinksForTask(taskId).size());
+    assertThat(taskService.getIdentityLinksForTask(taskId).size()).isEqualTo(0);
   }
 
   @Deployment(resources="org/operaton/bpm/engine/test/api/task/IdentityLinksProcess.bpmn20.xml")
@@ -231,16 +230,16 @@ public class TaskIdentityLinksTest extends PluggableProcessEngineTest {
     List<IdentityLink> identityLinks = taskService.getIdentityLinksForTask(taskId);
     IdentityLink identityLink = identityLinks.get(0);
 
-    assertEquals("muppets", identityLink.getGroupId());
+    assertThat(identityLink.getGroupId()).isEqualTo("muppets");
     assertNull("kermit", identityLink.getUserId());
-    assertEquals("playing", identityLink.getType());
-    assertEquals(taskId, identityLink.getTaskId());
+    assertThat(identityLink.getType()).isEqualTo("playing");
+    assertThat(identityLink.getTaskId()).isEqualTo(taskId);
 
-    assertEquals(1, identityLinks.size());
+    assertThat(identityLinks.size()).isEqualTo(1);
 
     taskService.deleteGroupIdentityLink(taskId, "muppets", "playing");
 
-    assertEquals(0, taskService.getIdentityLinksForTask(taskId).size());
+    assertThat(taskService.getIdentityLinksForTask(taskId).size()).isEqualTo(0);
   }
 
   @Test
@@ -253,7 +252,7 @@ public class TaskIdentityLinksTest extends PluggableProcessEngineTest {
 
     task = taskService.createTaskQuery().taskId(task.getId()).singleResult();
     assertNull(task.getAssignee());
-    assertEquals(0, taskService.getIdentityLinksForTask(task.getId()).size());
+    assertThat(taskService.getIdentityLinksForTask(task.getId()).size()).isEqualTo(0);
 
     // cleanup
     taskService.deleteTask(task.getId(), true);
@@ -269,7 +268,7 @@ public class TaskIdentityLinksTest extends PluggableProcessEngineTest {
 
     task = taskService.createTaskQuery().taskId(task.getId()).singleResult();
     assertNull(task.getOwner());
-    assertEquals(0, taskService.getIdentityLinksForTask(task.getId()).size());
+    assertThat(taskService.getIdentityLinksForTask(task.getId()).size()).isEqualTo(0);
 
     // cleanup
     taskService.deleteTask(task.getId(), true);
@@ -302,8 +301,8 @@ public class TaskIdentityLinksTest extends PluggableProcessEngineTest {
 
     // then no NPE is thrown and there were 2 identity links during the listener execution
     assertThat(loggingRule.getLog()).isEmpty();
-    assertEquals(2, runtimeService.getVariable(processInstanceId, "identityLinksSize"));
-    assertEquals(2, runtimeService.getVariable(processInstanceId, "secondCallidentityLinksSize"));
+    assertThat(runtimeService.getVariable(processInstanceId, "identityLinksSize")).isEqualTo(2);
+    assertThat(runtimeService.getVariable(processInstanceId, "secondCallidentityLinksSize")).isEqualTo(2);
   }
 
   @Test
@@ -333,7 +332,7 @@ public class TaskIdentityLinksTest extends PluggableProcessEngineTest {
 
     // then no NPE is thrown and there were 2 identity links during the listener execution
     assertThat(loggingRule.getLog()).isEmpty();
-    assertEquals(2, runtimeService.getVariable(processInstanceId, "identityLinksSize"));
-    assertEquals(2, runtimeService.getVariable(processInstanceId, "secondCallidentityLinksSize"));
+    assertThat(runtimeService.getVariable(processInstanceId, "identityLinksSize")).isEqualTo(2);
+    assertThat(runtimeService.getVariable(processInstanceId, "secondCallidentityLinksSize")).isEqualTo(2);
   }
 }

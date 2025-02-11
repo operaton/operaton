@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.async;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
@@ -42,14 +42,14 @@ public class AsyncEndEventTest extends PluggableProcessEngineTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("asyncEndEvent");
     long count = runtimeService.createProcessInstanceQuery().processInstanceId(pi.getId()).active().count();
 
-    Assert.assertEquals(1, runtimeService.createExecutionQuery().activityId("endEvent").count());
-    Assert.assertEquals(1, count);
+    assertThat(runtimeService.createExecutionQuery().activityId("endEvent").count()).isEqualTo(1);
+    assertThat(count).isEqualTo(1);
 
     testRule.executeAvailableJobs();
     count = runtimeService.createProcessInstanceQuery().processInstanceId(pi.getId()).count();
 
-    Assert.assertEquals(0, runtimeService.createExecutionQuery().activityId("endEvent").active().count());
-    Assert.assertEquals(0, count);
+    assertThat(runtimeService.createExecutionQuery().activityId("endEvent").active().count()).isEqualTo(0);
+    assertThat(count).isEqualTo(0);
   }
 
   @Deployment
@@ -59,14 +59,14 @@ public class AsyncEndEventTest extends PluggableProcessEngineTest {
     long count = runtimeService.createProcessInstanceQuery().processInstanceId(pi.getId()).active().count();
 
     Assert.assertNull(runtimeService.getVariable(pi.getId(), "listener"));
-    Assert.assertEquals(1, runtimeService.createExecutionQuery().activityId("endEvent").count());
-    Assert.assertEquals(1, count);
+    assertThat(runtimeService.createExecutionQuery().activityId("endEvent").count()).isEqualTo(1);
+    assertThat(count).isEqualTo(1);
 
     // as we are standing at the end event, we execute it.
     testRule.executeAvailableJobs();
 
     count = runtimeService.createProcessInstanceQuery().processInstanceId(pi.getId()).active().count();
-    Assert.assertEquals(0, count);
+    assertThat(count).isEqualTo(0);
 
     if(processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_ACTIVITY) {
 
@@ -75,7 +75,7 @@ public class AsyncEndEventTest extends PluggableProcessEngineTest {
                                                           .processInstanceId(pi.getId())
                                                           .variableName("listener");
       Assert.assertNotNull(name);
-      Assert.assertEquals("listener invoked", name.singleResult().getValue());
+      assertThat(name.singleResult().getValue()).isEqualTo("listener invoked");
     }
   }
 
@@ -83,21 +83,21 @@ public class AsyncEndEventTest extends PluggableProcessEngineTest {
   @Test
   public void testMultipleAsyncEndEvents() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("multipleAsyncEndEvent");
-    assertEquals(1, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
 
     // should stop at both end events
     List<Job> jobs = managementService.createJobQuery().withRetriesLeft().list();
-    assertEquals(2, jobs.size());
+    assertThat(jobs.size()).isEqualTo(2);
 
     // execute one of the end events
     managementService.executeJob(jobs.get(0).getId());
     jobs = managementService.createJobQuery().withRetriesLeft().list();
-    assertEquals(1, jobs.size());
+    assertThat(jobs.size()).isEqualTo(1);
 
     // execute the second one
     managementService.executeJob(jobs.get(0).getId());
     // assert that we have finished our instance now
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
 
     if(processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_ACTIVITY) {
 
@@ -106,7 +106,7 @@ public class AsyncEndEventTest extends PluggableProcessEngineTest {
         .processInstanceId(pi.getId())
         .variableName("message");
       Assert.assertNotNull(name);
-      Assert.assertEquals(true, name.singleResult().getValue());
+      assertThat(name.singleResult().getValue()).isEqualTo(true);
 
     }
   }
@@ -126,7 +126,7 @@ public class AsyncEndEventTest extends PluggableProcessEngineTest {
 
     assertTrue(pi instanceof ExecutionEntity);
 
-    assertEquals("theSubEnd", ((ExecutionEntity)pi).getActivityId());
+    assertThat(((ExecutionEntity) pi).getActivityId()).isEqualTo("theSubEnd");
 
   }
 

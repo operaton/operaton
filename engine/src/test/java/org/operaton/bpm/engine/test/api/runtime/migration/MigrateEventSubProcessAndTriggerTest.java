@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -34,7 +36,6 @@ import org.operaton.bpm.engine.test.api.runtime.migration.util.SignalEventFactor
 import org.operaton.bpm.engine.test.api.runtime.migration.util.TimerEventFactory;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -106,7 +107,7 @@ public class MigrateEventSubProcessAndTriggerTest {
 
     // and it is possible to trigger the event subprocess
     eventTrigger.trigger(processInstance.getId());
-    Assert.assertEquals(1, rule.getTaskService().createTaskQuery().count());
+    assertThat(rule.getTaskService().createTaskQuery().count()).isEqualTo(1);
 
     // and complete the process instance
     testHelper.completeTask("eventSubProcessTask");

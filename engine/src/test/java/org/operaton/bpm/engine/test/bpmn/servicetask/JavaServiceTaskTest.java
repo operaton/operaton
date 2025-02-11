@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.servicetask;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -49,7 +49,7 @@ public class JavaServiceTaskTest extends PluggableProcessEngineTest {
       .processInstanceId(pi.getId())
       .activityId("waitState")
       .singleResult();
-    assertEquals("ACTIVITI BPM ENGINE", runtimeService.getVariable(execution.getId(), "input"));
+    assertThat(runtimeService.getVariable(execution.getId(), "input")).isEqualTo("ACTIVITI BPM ENGINE");
   }
 
   @Deployment
@@ -63,8 +63,8 @@ public class JavaServiceTaskTest extends PluggableProcessEngineTest {
       .activityId("waitState")
       .singleResult();
 
-    assertEquals("HELLO WORLD", runtimeService.getVariable(execution.getId(), "var"));
-    assertEquals("HELLO SETTER", runtimeService.getVariable(execution.getId(), "setterVar"));
+    assertThat(runtimeService.getVariable(execution.getId(), "var")).isEqualTo("HELLO WORLD");
+    assertThat(runtimeService.getVariable(execution.getId(), "setterVar")).isEqualTo("HELLO SETTER");
   }
 
   @Deployment
@@ -81,8 +81,8 @@ public class JavaServiceTaskTest extends PluggableProcessEngineTest {
       .activityId("waitState")
       .singleResult();
 
-    assertEquals("timrek .rM olleH", runtimeService.getVariable(execution.getId(), "var2"));
-    assertEquals("elam :si redneg ruoY", runtimeService.getVariable(execution.getId(), "var1"));
+    assertThat(runtimeService.getVariable(execution.getId(), "var2")).isEqualTo("timrek .rM olleH");
+    assertThat(runtimeService.getVariable(execution.getId(), "var1")).isEqualTo("elam :si redneg ruoY");
   }
 
   @Deployment
@@ -118,7 +118,7 @@ public class JavaServiceTaskTest extends PluggableProcessEngineTest {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", "no-exception");
     runtimeService.startProcessInstanceByKey("exceptionHandling", vars);
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
 
     // If variable value == 'throw-exception', process executes
     // service task, which generates and catches exception,
@@ -126,23 +126,23 @@ public class JavaServiceTaskTest extends PluggableProcessEngineTest {
     vars.put("var", "throw-exception");
     runtimeService.startProcessInstanceByKey("exceptionHandling", vars);
     Task task = taskService.createTaskQuery().singleResult();
-    assertEquals("Fix Exception", task.getName());
+    assertThat(task.getName()).isEqualTo("Fix Exception");
   }
 
   @Deployment
   @Test
   public void testGetBusinessKeyFromDelegateExecution() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("businessKeyProcess", "1234567890");
-    assertEquals(1, runtimeService.createProcessInstanceQuery().processDefinitionKey("businessKeyProcess").count());
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("businessKeyProcess").count()).isEqualTo(1);
 
     // Check if business-key was available from the process
     String key = (String) runtimeService.getVariable(processInstance.getId(), "businessKeySetOnExecution");
     assertNotNull(key);
-    assertEquals("1234567890", key);
+    assertThat(key).isEqualTo("1234567890");
 
     // check if BaseDelegateExecution#getBusinessKey() behaves like DelegateExecution#getProcessBusinessKey()
     String key2 = (String) runtimeService.getVariable(processInstance.getId(), "businessKeyAsProcessBusinessKey");
-    assertEquals(key2, key);
+    assertThat(key).isEqualTo(key2);
   }
 
 }

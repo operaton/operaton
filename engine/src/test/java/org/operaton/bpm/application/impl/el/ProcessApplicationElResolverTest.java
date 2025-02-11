@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.application.impl.el;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 
 import org.operaton.bpm.container.RuntimeContainerDelegate;
@@ -76,7 +76,7 @@ public class ProcessApplicationElResolverTest extends PluggableProcessEngineTest
 
     // then the output mapping should have successfully resolved the expression
     String outVariable = (String) runtimeService.getVariable(instance.getId(), "outVar");
-    assertEquals(CalledProcessApplication.STRING_VARIABLE_VALUE, outVariable);
+    assertThat(outVariable).isEqualTo(CalledProcessApplication.STRING_VARIABLE_VALUE);
   }
 
   /**
@@ -96,7 +96,7 @@ public class ProcessApplicationElResolverTest extends PluggableProcessEngineTest
     // the following task has been reached successfully
     Task afterCallActivityTask = taskService.createTaskQuery().singleResult();
     assertNotNull(afterCallActivityTask);
-    assertEquals("afterCallActivityTask", afterCallActivityTask.getTaskDefinitionKey());
+    assertThat(afterCallActivityTask.getTaskDefinitionKey()).isEqualTo("afterCallActivityTask");
 
   }
 }

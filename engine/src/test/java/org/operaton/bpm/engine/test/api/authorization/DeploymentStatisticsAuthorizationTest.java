@@ -22,7 +22,7 @@ import static org.operaton.bpm.engine.authorization.Permissions.READ_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.DEPLOYMENT;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -796,8 +796,8 @@ public class DeploymentStatisticsAuthorizationTest extends AuthorizationTest {
   // helper ///////////////////////////////////////////////////////////////////////////
 
   protected void verifyStatisticsResult(DeploymentStatistics statistics, int instances, int failedJobs, int incidents) {
-    assertEquals("Instances", instances, statistics.getInstances());
-    assertEquals("Failed Jobs", failedJobs, statistics.getFailedJobs());
+    assertThat(statistics.getInstances()).as("Instances").isEqualTo(instances);
+    assertThat(statistics.getFailedJobs()).as("Failed Jobs").isEqualTo(failedJobs);
 
     List<IncidentStatistics> incidentStatistics = statistics.getIncidentStatistics();
     if (incidents == 0) {
@@ -805,7 +805,7 @@ public class DeploymentStatisticsAuthorizationTest extends AuthorizationTest {
     }
     else {
       // the test does have only one type of incidents
-      assertEquals("Incidents", incidents, incidentStatistics.get(0).getIncidentCount());
+      assertThat(incidentStatistics.get(0).getIncidentCount()).as("Incidents").isEqualTo(incidents);
     }
   }
 

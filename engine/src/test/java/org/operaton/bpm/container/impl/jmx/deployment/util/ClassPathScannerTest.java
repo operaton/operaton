@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.container.impl.jmx.deployment.util;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -85,9 +85,9 @@ public class ClassPathScannerTest {
     assertTrue("'testDeployProcessArchive.bpmn20.xml' not found", contains(scanResult, "testDeployProcessArchive.bpmn20.xml"));
     assertTrue("'testDeployProcessArchive.png' not found", contains(scanResult, "testDeployProcessArchive.png"));
     if(url.contains("TwoDirectories")) {
-      assertEquals(4, scanResult.size());
+      assertThat(scanResult.size()).isEqualTo(4);
     } else {
-      assertEquals(2, scanResult.size());
+      assertThat(scanResult.size()).isEqualTo(2);
     }
   }
   
@@ -101,7 +101,7 @@ public class ClassPathScannerTest {
 
     assertFalse("'testDeployProcessArchive.bpmn20.xml' found", contains(scanResult, "testDeployProcessArchive.bpmn20.xml"));
     assertFalse("'testDeployProcessArchive.png' found", contains(scanResult, "testDeployProcessArchive.png"));
-    assertEquals(0, scanResult.size());
+    assertThat(scanResult.size()).isEqualTo(0);
   }
   
   @Test
@@ -114,7 +114,7 @@ public class ClassPathScannerTest {
     
     assertFalse("'testDeployProcessArchive.bpmn20.xml' found", contains(scanResult, "testDeployProcessArchive.bpmn20.xml"));
     assertFalse("'testDeployProcessArchive.png' found", contains(scanResult, "testDeployProcessArchive.png"));
-    assertEquals(0, scanResult.size());
+    assertThat(scanResult.size()).isEqualTo(0);
   }
 
   @Test
@@ -128,11 +128,11 @@ public class ClassPathScannerTest {
     if(url.contains("Recursive")) {
       assertTrue("'testDeployProcessArchive.bpmn20.xml' not found", contains(scanResult, "testDeployProcessArchive.bpmn20.xml"));
       assertTrue("'testDeployProcessArchive.png' not found", contains(scanResult, "testDeployProcessArchive.png"));
-      assertEquals(2, scanResult.size());      
+      assertThat(scanResult.size()).isEqualTo(2);      
     } else {
       assertFalse("'testDeployProcessArchive.bpmn20.xml' found", contains(scanResult, "testDeployProcessArchive.bpmn20.xml"));
       assertFalse("'testDeployProcessArchive.png' found", contains(scanResult, "testDeployProcessArchive.png"));
-      assertEquals(0, scanResult.size());
+      assertThat(scanResult.size()).isEqualTo(0);
     }
   }
   
@@ -147,11 +147,11 @@ public class ClassPathScannerTest {
     if(url.contains("Recursive")) {
       assertTrue("'testDeployProcessArchive.bpmn20.xml' not found", contains(scanResult, "testDeployProcessArchive.bpmn20.xml"));
       assertTrue("'testDeployProcessArchive.png' not found", contains(scanResult, "testDeployProcessArchive.png"));
-      assertEquals(2, scanResult.size());      
+      assertThat(scanResult.size()).isEqualTo(2);      
     } else {
       assertFalse("'testDeployProcessArchive.bpmn20.xml' found", contains(scanResult, "testDeployProcessArchive.bpmn20.xml"));
       assertFalse("'testDeployProcessArchive.png' found", contains(scanResult, "testDeployProcessArchive.png"));
-      assertEquals(0, scanResult.size());
+      assertThat(scanResult.size()).isEqualTo(0);
     }
   }
 
@@ -164,7 +164,7 @@ public class ClassPathScannerTest {
     Map<String, byte[]> scanResult = scanner.findResources(classLoader, null, new URL(url + "/META-INF/processes.xml"), additionalResourceSuffixes);
 
     if (url.contains("AdditionalResourceSuffixes")) {
-      assertEquals(5, scanResult.size());
+      assertThat(scanResult.size()).isEqualTo(5);
     }
   }
   

@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.standalone.scripting;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -66,7 +66,7 @@ public class EnvScriptCachingTest extends AbstractScriptEnvironmentTest {
 
     assertNotNull(groovyEnvScripts);
     assertFalse(groovyEnvScripts.isEmpty());
-    assertEquals(processEngineConfiguration.getEnvScriptResolvers().size(), groovyEnvScripts.size());
+    assertThat(groovyEnvScripts.size()).isEqualTo(processEngineConfiguration.getEnvScriptResolvers().size());
 
     repositoryService.deleteDeployment(deployment.getId(), true);
   }

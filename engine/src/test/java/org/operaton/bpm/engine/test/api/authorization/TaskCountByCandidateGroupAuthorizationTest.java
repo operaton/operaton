@@ -20,7 +20,7 @@ import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
 import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Resources.TASK;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.fail;
 
 import java.util.List;
@@ -92,7 +92,7 @@ public class TaskCountByCandidateGroupAuthorizationTest {
     authorizationService.deleteAuthorization(authorization.getId());
     identityService.deleteUser(userId);
 
-    assertEquals(0, results.size());
+    assertThat(results.size()).isEqualTo(0);
   }
 
   @Test

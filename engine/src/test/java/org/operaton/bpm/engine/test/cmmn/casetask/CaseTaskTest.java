@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.casetask;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -66,8 +66,8 @@ public class CaseTaskTest extends CmmnTest {
     String superCaseExecutionId = subCaseInstance.getSuperCaseExecutionId();
     CaseExecution superCaseExecution = queryCaseExecutionById(superCaseExecutionId);
 
-    assertEquals(caseTaskId, superCaseExecutionId);
-    assertEquals(superCaseInstanceId, superCaseExecution.getCaseInstanceId());
+    assertThat(superCaseExecutionId).isEqualTo(caseTaskId);
+    assertThat(superCaseExecution.getCaseInstanceId()).isEqualTo(superCaseInstanceId);
 
     // complete ////////////////////////////////////////////////////////
 
@@ -102,8 +102,8 @@ public class CaseTaskTest extends CmmnTest {
     String superCaseExecutionId = subCaseInstance.getSuperCaseExecutionId();
     CaseExecution superCaseExecution = queryCaseExecutionById(superCaseExecutionId);
 
-    assertEquals(caseTaskId, superCaseExecutionId);
-    assertEquals(superCaseInstanceId, superCaseExecution.getCaseInstanceId());
+    assertThat(superCaseExecutionId).isEqualTo(caseTaskId);
+    assertThat(superCaseExecution.getCaseInstanceId()).isEqualTo(superCaseInstanceId);
 
     // complete ////////////////////////////////////////////////////////
 
@@ -137,8 +137,8 @@ public class CaseTaskTest extends CmmnTest {
     String superCaseExecutionId = subCaseInstance.getSuperCaseExecutionId();
     CaseExecution superCaseExecution = queryCaseExecutionById(superCaseExecutionId);
 
-    assertEquals(caseTaskId, superCaseExecutionId);
-    assertEquals(superCaseInstanceId, superCaseExecution.getCaseInstanceId());
+    assertThat(superCaseExecutionId).isEqualTo(caseTaskId);
+    assertThat(superCaseExecution.getCaseInstanceId()).isEqualTo(superCaseInstanceId);
 
     // complete ////////////////////////////////////////////////////////
 
@@ -168,7 +168,7 @@ public class CaseTaskTest extends CmmnTest {
         .deploy()
         .getId();
 
-    assertEquals(3, repositoryService.createCaseDefinitionQuery().count());
+    assertThat(repositoryService.createCaseDefinitionQuery().count()).isEqualTo(3);
 
     String superCaseInstanceId = createCaseInstanceByKey(ONE_CASE_TASK_CASE).getId();
     String caseTaskId = queryCaseExecutionByActivityId(CASE_TASK).getId();
@@ -188,9 +188,9 @@ public class CaseTaskTest extends CmmnTest {
     String superCaseExecutionId = subCaseInstance.getSuperCaseExecutionId();
     CaseExecution superCaseExecution = queryCaseExecutionById(superCaseExecutionId);
 
-    assertEquals(caseTaskId, superCaseExecutionId);
-    assertEquals(superCaseInstanceId, superCaseExecution.getCaseInstanceId());
-    assertEquals(latestCaseDefinitionId, subCaseInstance.getCaseDefinitionId());
+    assertThat(superCaseExecutionId).isEqualTo(caseTaskId);
+    assertThat(superCaseExecution.getCaseInstanceId()).isEqualTo(superCaseInstanceId);
+    assertThat(subCaseInstance.getCaseDefinitionId()).isEqualTo(latestCaseDefinitionId);
 
     // complete ////////////////////////////////////////////////////////
 
@@ -227,7 +227,7 @@ public class CaseTaskTest extends CmmnTest {
             .deploy()
             .getId();
 
-    assertEquals(3, repositoryService.createCaseDefinitionQuery().count());
+    assertThat(repositoryService.createCaseDefinitionQuery().count()).isEqualTo(3);
 
     String superCaseInstanceId = createCaseInstanceByKey(ONE_CASE_TASK_CASE).getId();
     String caseTaskId = queryCaseExecutionByActivityId(CASE_TASK).getId();
@@ -247,9 +247,9 @@ public class CaseTaskTest extends CmmnTest {
     String superCaseExecutionId = subCaseInstance.getSuperCaseExecutionId();
     CaseExecution superCaseExecution = queryCaseExecutionById(superCaseExecutionId);
 
-    assertEquals(caseTaskId, superCaseExecutionId);
-    assertEquals(superCaseInstanceId, superCaseExecution.getCaseInstanceId());
-    assertEquals(caseDefinitionIdInSameDeployment, subCaseInstance.getCaseDefinitionId());
+    assertThat(superCaseExecutionId).isEqualTo(caseTaskId);
+    assertThat(superCaseExecution.getCaseInstanceId()).isEqualTo(superCaseInstanceId);
+    assertThat(subCaseInstance.getCaseDefinitionId()).isEqualTo(caseDefinitionIdInSameDeployment);
 
     // complete ////////////////////////////////////////////////////////
 
@@ -286,7 +286,7 @@ public class CaseTaskTest extends CmmnTest {
           .deploy()
           .getId();
 
-    assertEquals(4, repositoryService.createCaseDefinitionQuery().count());
+    assertThat(repositoryService.createCaseDefinitionQuery().count()).isEqualTo(4);
 
     String superCaseInstanceId = createCaseInstanceByKey(ONE_CASE_TASK_CASE).getId();
     String caseTaskId = queryCaseExecutionByActivityId(CASE_TASK).getId();
@@ -306,9 +306,9 @@ public class CaseTaskTest extends CmmnTest {
     String superCaseExecutionId = subCaseInstance.getSuperCaseExecutionId();
     CaseExecution superCaseExecution = queryCaseExecutionById(superCaseExecutionId);
 
-    assertEquals(caseTaskId, superCaseExecutionId);
-    assertEquals(superCaseInstanceId, superCaseExecution.getCaseInstanceId());
-    assertEquals(caseDefinitionIdInSecondDeployment, subCaseInstance.getCaseDefinitionId());
+    assertThat(superCaseExecutionId).isEqualTo(caseTaskId);
+    assertThat(superCaseExecution.getCaseInstanceId()).isEqualTo(superCaseInstanceId);
+    assertThat(subCaseInstance.getCaseDefinitionId()).isEqualTo(caseDefinitionIdInSecondDeployment);
 
     // complete ////////////////////////////////////////////////////////
 
@@ -344,7 +344,7 @@ public class CaseTaskTest extends CmmnTest {
           .deploy()
           .getId();
 
-    assertEquals(4, repositoryService.createCaseDefinitionQuery().count());
+    assertThat(repositoryService.createCaseDefinitionQuery().count()).isEqualTo(4);
 
     VariableMap vars = new VariableMapImpl();
     vars.putValue("myVersion", 2);
@@ -366,9 +366,9 @@ public class CaseTaskTest extends CmmnTest {
     String superCaseExecutionId = subCaseInstance.getSuperCaseExecutionId();
     CaseExecution superCaseExecution = queryCaseExecutionById(superCaseExecutionId);
 
-    assertEquals(caseTaskId, superCaseExecutionId);
-    assertEquals(superCaseInstanceId, superCaseExecution.getCaseInstanceId());
-    assertEquals(caseDefinitionIdInSecondDeployment, subCaseInstance.getCaseDefinitionId());
+    assertThat(superCaseExecutionId).isEqualTo(caseTaskId);
+    assertThat(superCaseExecution.getCaseInstanceId()).isEqualTo(superCaseInstanceId);
+    assertThat(subCaseInstance.getCaseDefinitionId()).isEqualTo(caseDefinitionIdInSecondDeployment);
 
     // complete ////////////////////////////////////////////////////////
 
@@ -404,7 +404,7 @@ public class CaseTaskTest extends CmmnTest {
           .deploy()
           .getId();
 
-    assertEquals(4, repositoryService.createCaseDefinitionQuery().count());
+    assertThat(repositoryService.createCaseDefinitionQuery().count()).isEqualTo(4);
 
     String superCaseInstanceId = createCaseInstanceByKey(ONE_CASE_TASK_CASE).getId();
     String caseTaskId = queryCaseExecutionByActivityId(CASE_TASK).getId();
@@ -430,9 +430,9 @@ public class CaseTaskTest extends CmmnTest {
     String superCaseExecutionId = subCaseInstance.getSuperCaseExecutionId();
     CaseExecution superCaseExecution = queryCaseExecutionById(superCaseExecutionId);
 
-    assertEquals(caseTaskId, superCaseExecutionId);
-    assertEquals(superCaseInstanceId, superCaseExecution.getCaseInstanceId());
-    assertEquals(caseDefinitionIdInSecondDeployment, subCaseInstance.getCaseDefinitionId());
+    assertThat(superCaseExecutionId).isEqualTo(caseTaskId);
+    assertThat(superCaseExecution.getCaseInstanceId()).isEqualTo(superCaseInstanceId);
+    assertThat(subCaseInstance.getCaseDefinitionId()).isEqualTo(caseDefinitionIdInSecondDeployment);
 
     // complete ////////////////////////////////////////////////////////
 
@@ -470,9 +470,9 @@ public class CaseTaskTest extends CmmnTest {
     String superCaseExecutionId = subCaseInstance.getSuperCaseExecutionId();
     CaseExecution superCaseExecution = queryCaseExecutionById(superCaseExecutionId);
 
-    assertEquals(caseTaskId, superCaseExecutionId);
-    assertEquals(superCaseInstanceId, superCaseExecution.getCaseInstanceId());
-    assertEquals(businessKey, subCaseInstance.getBusinessKey());
+    assertThat(superCaseExecutionId).isEqualTo(caseTaskId);
+    assertThat(superCaseExecution.getCaseInstanceId()).isEqualTo(superCaseInstanceId);
+    assertThat(subCaseInstance.getBusinessKey()).isEqualTo(businessKey);
 
     // complete ////////////////////////////////////////////////////////
 
@@ -514,9 +514,9 @@ public class CaseTaskTest extends CmmnTest {
     String superCaseExecutionId = subCaseInstance.getSuperCaseExecutionId();
     CaseExecution superCaseExecution = queryCaseExecutionById(superCaseExecutionId);
 
-    assertEquals(caseTaskId, superCaseExecutionId);
-    assertEquals(superCaseInstanceId, superCaseExecution.getCaseInstanceId());
-    assertEquals("myOwnBusinessKey", subCaseInstance.getBusinessKey());
+    assertThat(superCaseExecutionId).isEqualTo(caseTaskId);
+    assertThat(superCaseExecution.getCaseInstanceId()).isEqualTo(superCaseInstanceId);
+    assertThat(subCaseInstance.getBusinessKey()).isEqualTo("myOwnBusinessKey");
 
     // complete ////////////////////////////////////////////////////////
 
@@ -562,16 +562,16 @@ public class CaseTaskTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertEquals(2, variables.size());
+    assertThat(variables.size()).isEqualTo(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
       if ("aVariable".equals(name)) {
-        assertEquals("aVariable", name);
-        assertEquals("abc", variable.getValue());
+        assertThat(name).isEqualTo("aVariable");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if ("anotherVariable".equals(name)) {
-        assertEquals("anotherVariable", name);
-        assertEquals(999, variable.getValue());
+        assertThat(name).isEqualTo("anotherVariable");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else {
         fail("Found an unexpected variable: '"+name+"'");
       }
@@ -616,16 +616,16 @@ public class CaseTaskTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertEquals(2, variables.size());
+    assertThat(variables.size()).isEqualTo(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
       if ("myVariable".equals(name)) {
-        assertEquals("myVariable", name);
-        assertEquals("abc", variable.getValue());
+        assertThat(name).isEqualTo("myVariable");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if ("myAnotherVariable".equals(name)) {
-        assertEquals("myAnotherVariable", name);
-        assertEquals(999, variable.getValue());
+        assertThat(name).isEqualTo("myAnotherVariable");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else {
         fail("Found an unexpected variable: '"+name+"'");
       }
@@ -667,15 +667,15 @@ public class CaseTaskTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertEquals(2, variables.size());
+    assertThat(variables.size()).isEqualTo(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
 
       if ("aVariable".equals(name)) {
-        assertEquals("aVariable", name);
+        assertThat(name).isEqualTo("aVariable");
       } else if ("anotherVariable".equals(name)) {
-        assertEquals("anotherVariable", name);
+        assertThat(name).isEqualTo("anotherVariable");
       } else {
         fail("Found an unexpected variable: '"+name+"'");
       }
@@ -721,16 +721,16 @@ public class CaseTaskTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertEquals(2, variables.size());
+    assertThat(variables.size()).isEqualTo(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
       if ("aVariable".equals(name)) {
-        assertEquals("aVariable", name);
-        assertEquals("abc", variable.getValue());
+        assertThat(name).isEqualTo("aVariable");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if ("anotherVariable".equals(name)) {
-        assertEquals("anotherVariable", name);
-        assertEquals((long)1000, variable.getValue());
+        assertThat(name).isEqualTo("anotherVariable");
+        assertThat(variable.getValue()).isEqualTo((long) 1000);
       } else {
         fail("Found an unexpected variable: '"+name+"'");
       }
@@ -771,16 +771,16 @@ public class CaseTaskTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertEquals(2, variables.size());
+    assertThat(variables.size()).isEqualTo(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
       if ("aVariable".equals(name)) {
-        assertEquals("aVariable", name);
-        assertEquals("abc", variable.getValue());
+        assertThat(name).isEqualTo("aVariable");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if ("anotherVariable".equals(name)) {
-        assertEquals("anotherVariable", name);
-        assertEquals(999, variable.getValue());
+        assertThat(name).isEqualTo("anotherVariable");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else {
         fail("Found an unexpected variable: '"+name+"'");
       }
@@ -826,8 +826,8 @@ public class CaseTaskTest extends CmmnTest {
         .caseInstanceIdIn(subCaseInstance.getId())
         .list();
 
-    assertEquals(1, variables.size());
-    assertEquals("aLocalVariable", variables.get(0).getName());
+    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables.get(0).getName()).isEqualTo("aLocalVariable");
   }
 
   /**
@@ -937,16 +937,16 @@ public class CaseTaskTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertEquals(2, variables.size());
+    assertThat(variables.size()).isEqualTo(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
       if ("aVariable".equals(name)) {
-        assertEquals("aVariable", name);
-        assertEquals("abc", variable.getValue());
+        assertThat(name).isEqualTo("aVariable");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if ("anotherVariable".equals(name)) {
-        assertEquals("anotherVariable", name);
-        assertEquals(999, variable.getValue());
+        assertThat(name).isEqualTo("anotherVariable");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else {
         fail("Found an unexpected variable: '"+name+"'");
       }
@@ -997,16 +997,16 @@ public class CaseTaskTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertEquals(2, variables.size());
+    assertThat(variables.size()).isEqualTo(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
       if ("myVariable".equals(name)) {
-        assertEquals("myVariable", name);
-        assertEquals("abc", variable.getValue());
+        assertThat(name).isEqualTo("myVariable");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if ("myAnotherVariable".equals(name)) {
-        assertEquals("myAnotherVariable", name);
-        assertEquals(999, variable.getValue());
+        assertThat(name).isEqualTo("myAnotherVariable");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else {
         fail("Found an unexpected variable: '"+name+"'");
       }
@@ -1050,14 +1050,14 @@ public class CaseTaskTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertEquals(2, variables.size());
+    assertThat(variables.size()).isEqualTo(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
       if ("aVariable".equals(name)) {
-        assertEquals("aVariable", name);
+        assertThat(name).isEqualTo("aVariable");
       } else if ("anotherVariable".equals(name)) {
-        assertEquals("anotherVariable", name);
+        assertThat(name).isEqualTo("anotherVariable");
       } else {
         fail("Found an unexpected variable: '"+name+"'");
       }
@@ -1115,16 +1115,16 @@ public class CaseTaskTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertEquals(2, variables.size());
+    assertThat(variables.size()).isEqualTo(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
       if ("aVariable".equals(name)) {
-        assertEquals("aVariable", name);
-        assertEquals("abc", variable.getValue());
+        assertThat(name).isEqualTo("aVariable");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if ("anotherVariable".equals(name)) {
-        assertEquals("anotherVariable", name);
-        assertEquals((long) 1000, variable.getValue());
+        assertThat(name).isEqualTo("anotherVariable");
+        assertThat(variable.getValue()).isEqualTo((long) 1000);
       } else {
         fail("Found an unexpected variable: '"+name+"'");
       }
@@ -1180,16 +1180,16 @@ public class CaseTaskTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertEquals(2, variables.size());
+    assertThat(variables.size()).isEqualTo(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
       if ("aVariable".equals(name)) {
-        assertEquals("aVariable", name);
-        assertEquals("abc", variable.getValue());
+        assertThat(name).isEqualTo("aVariable");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if ("anotherVariable".equals(name)) {
-        assertEquals("anotherVariable", name);
-        assertEquals(999, variable.getValue());
+        assertThat(name).isEqualTo("anotherVariable");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else {
         fail("Found an unexpected variable: '"+name+"'");
       }
@@ -1306,16 +1306,16 @@ public class CaseTaskTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertEquals(2, variables.size());
+    assertThat(variables.size()).isEqualTo(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
       if ("aVariable".equals(name)) {
-        assertEquals("aVariable", name);
-        assertEquals("abc", variable.getValue());
+        assertThat(name).isEqualTo("aVariable");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if ("anotherVariable".equals(name)) {
-        assertEquals("anotherVariable", name);
-        assertEquals(999, variable.getValue());
+        assertThat(name).isEqualTo("anotherVariable");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else {
         fail("Found an unexpected variable: '"+name+"'");
       }
@@ -1597,7 +1597,7 @@ public class CaseTaskTest extends CmmnTest {
     CaseExecution caseTask = queryCaseExecutionByActivityId(CASE_TASK);
 
     // then
-    assertEquals("caseTask", caseTask.getActivityType());
+    assertThat(caseTask.getActivityType()).isEqualTo("caseTask");
   }
 
   @Override

@@ -22,7 +22,7 @@ import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_DIS
 import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_IS_BLOCKING;
 import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_MANUAL_ACTIVATION_RULE;
 import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_REQUIRED_RULE;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -79,7 +79,7 @@ public class HumanTaskDicretionaryItemHandlerTest extends CmmnElementHandlerTest
     CmmnActivity activity = handler.handleElement(discretionaryItem, context);
 
     // then
-    assertEquals(name, activity.getName());
+    assertThat(activity.getName()).isEqualTo(name);
   }
 
   @Test
@@ -91,7 +91,7 @@ public class HumanTaskDicretionaryItemHandlerTest extends CmmnElementHandlerTest
 
     // then
     String activityType = (String) activity.getProperty(PROPERTY_ACTIVITY_TYPE);
-    assertEquals("humanTask", activityType);
+    assertThat(activityType).isEqualTo("humanTask");
   }
 
   @Test
@@ -104,7 +104,7 @@ public class HumanTaskDicretionaryItemHandlerTest extends CmmnElementHandlerTest
     CmmnActivity activity = handler.handleElement(discretionaryItem, context);
 
     // then
-    assertEquals(description, activity.getProperty(PROPERTY_ACTIVITY_DESCRIPTION));
+    assertThat(activity.getProperty(PROPERTY_ACTIVITY_DESCRIPTION)).isEqualTo(description);
   }
 
   @Test
@@ -117,7 +117,7 @@ public class HumanTaskDicretionaryItemHandlerTest extends CmmnElementHandlerTest
     CmmnActivity activity = handler.handleElement(discretionaryItem, context);
 
     // then
-    assertEquals(description, activity.getProperty(PROPERTY_ACTIVITY_DESCRIPTION));
+    assertThat(activity.getProperty(PROPERTY_ACTIVITY_DESCRIPTION)).isEqualTo(description);
   }
 
   @Test
@@ -198,7 +198,7 @@ public class HumanTaskDicretionaryItemHandlerTest extends CmmnElementHandlerTest
     CmmnActivity activity = handler.handleElement(discretionaryItem, context);
 
     // then
-    assertEquals(parent, activity.getParent());
+    assertThat(activity.getParent()).isEqualTo(parent);
     assertTrue(parent.getActivities().contains(activity));
   }
 

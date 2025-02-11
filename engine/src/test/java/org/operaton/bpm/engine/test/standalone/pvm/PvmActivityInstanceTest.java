@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.standalone.pvm;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -149,7 +149,7 @@ public class PvmActivityInstanceTest {
     PvmProcessInstance processInstance = processDefinition.createProcessInstance();
     processInstance.start();
 
-    assertEquals(new ArrayList<String>(), processInstance.findActiveActivityIds());
+    assertThat(processInstance.findActiveActivityIds()).isEqualTo(new ArrayList<String>());
     assertTrue(processInstance.isEnded());
 
     verifier.assertStartInstanceCount(1, "start");
@@ -517,7 +517,7 @@ public class PvmActivityInstanceTest {
 
     PvmExecution childExecution = processInstance.findExecution("two");
     String parentActivityInstanceId = ((ExecutionImpl)childExecution).getParentActivityInstanceId();
-    assertEquals(((ExecutionImpl)processInstance).getId(), parentActivityInstanceId);
+    assertThat(parentActivityInstanceId).isEqualTo(((ExecutionImpl) processInstance).getId());
 
     childExecution.signal(null, null);
 

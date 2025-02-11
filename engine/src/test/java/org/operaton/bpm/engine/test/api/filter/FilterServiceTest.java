@@ -30,8 +30,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
@@ -105,8 +105,8 @@ public class FilterServiceTest extends PluggableProcessEngineTest {
     assertNull(newFilter.getId());
 
     TaskQueryImpl filterQuery = newFilter.getQuery();
-    assertEquals("newName", filterQuery.getName());
-    assertEquals("newOwner", filterQuery.getOwner());
+    assertThat(filterQuery.getName()).isEqualTo("newName");
+    assertThat(filterQuery.getOwner()).isEqualTo("newOwner");
   }
 
   @Test
@@ -155,7 +155,7 @@ public class FilterServiceTest extends PluggableProcessEngineTest {
   public void testDeleteUnknownFilter() {
     filterService.deleteFilter(filter.getId());
     long count = filterService.createFilterQuery().count();
-    assertEquals(0, count);
+    assertThat(count).isEqualTo(0);
 
     String filterId = filter.getId();
     assertThatThrownBy(() -> filterService.deleteFilter(filterId))
@@ -165,12 +165,12 @@ public class FilterServiceTest extends PluggableProcessEngineTest {
   public static void compareFilter(Filter filter1, Filter filter2) {
     assertNotNull(filter1);
     assertNotNull(filter2);
-    assertEquals(filter1.getId(), filter2.getId());
-    assertEquals(filter1.getResourceType(), filter2.getResourceType());
-    assertEquals(filter1.getName(), filter2.getName());
-    assertEquals(filter1.getOwner(), filter2.getOwner());
-    assertEquals(((FilterEntity) filter1).getQueryInternal(), ((FilterEntity) filter2).getQueryInternal());
-    assertEquals(filter1.getProperties(), filter2.getProperties());
+    assertThat(filter2.getId()).isEqualTo(filter1.getId());
+    assertThat(filter2.getResourceType()).isEqualTo(filter1.getResourceType());
+    assertThat(filter2.getName()).isEqualTo(filter1.getName());
+    assertThat(filter2.getOwner()).isEqualTo(filter1.getOwner());
+    assertThat(((FilterEntity) filter2).getQueryInternal()).isEqualTo(((FilterEntity) filter1).getQueryInternal());
+    assertThat(filter2.getProperties()).isEqualTo(filter1.getProperties());
   }
 
 }

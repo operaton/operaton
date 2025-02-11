@@ -22,6 +22,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.junit.After;
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.*;
 
 /**
@@ -50,7 +51,7 @@ public class DelegateExecutionHierarchyTest extends PluggableProcessEngineTest {
 
     AssertingJavaDelegate.addAsserts(
         execution -> {
-          assertEquals(execution, execution.getProcessInstance());
+          assertThat(execution.getProcessInstance()).isEqualTo(execution);
           assertNull(execution.getSuperExecution());
         }
     );
@@ -129,7 +130,7 @@ public class DelegateExecutionHierarchyTest extends PluggableProcessEngineTest {
 
     AssertingJavaDelegate.addAsserts(
         execution -> {
-          assertEquals(execution, execution.getProcessInstance());
+          assertThat(execution.getProcessInstance()).isEqualTo(execution);
           assertNotNull(execution.getSuperExecution());
         }
     );

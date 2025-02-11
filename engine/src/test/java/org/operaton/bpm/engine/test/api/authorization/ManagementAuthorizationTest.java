@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.authorization;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
 
 import java.util.Collections;
 import java.util.List;
@@ -251,7 +250,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
     int historyLevel = managementService.getHistoryLevel();
 
     // then
-    assertEquals(processEngineConfiguration.getHistoryLevel().getId(), historyLevel);
+    assertThat(historyLevel).isEqualTo(processEngineConfiguration.getHistoryLevel().getId());
   }
 
   @Test
@@ -263,7 +262,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
     int historyLevel = managementService.getHistoryLevel();
 
     // then
-    assertEquals(processEngineConfiguration.getHistoryLevel().getId(), historyLevel);
+    assertThat(historyLevel).isEqualTo(processEngineConfiguration.getHistoryLevel().getId());
   }
 
   @Test
@@ -276,7 +275,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
     int historyLevel = managementService.getHistoryLevel();
 
     // then
-    assertEquals(processEngineConfiguration.getHistoryLevel().getId(), historyLevel);
+    assertThat(historyLevel).isEqualTo(processEngineConfiguration.getHistoryLevel().getId());
   }
 
   @Test

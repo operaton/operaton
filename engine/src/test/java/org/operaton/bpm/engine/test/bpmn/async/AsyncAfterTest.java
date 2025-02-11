@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.async;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -41,7 +40,6 @@ import org.operaton.bpm.engine.test.bpmn.event.error.ThrowBpmnErrorDelegate;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -202,7 +200,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
 
     // there are two async jobs
     List<Job> jobs = managementService.createJobQuery().list();
-    assertEquals(2, jobs.size());
+    assertThat(jobs.size()).isEqualTo(2);
     managementService.executeJob(jobs.get(0).getId());
     managementService.executeJob(jobs.get(1).getId());
 
@@ -425,13 +423,13 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
     assertListenerEndInvoked(pi);
 
     // the process should wait *after* the gateway
-    assertEquals(2, managementService.createJobQuery().active().count());
+    assertThat(managementService.createJobQuery().active().count()).isEqualTo(2);
 
     testRule.executeAvailableJobs();
 
     // if the waiting job is executed there should be 2 user tasks
     TaskQuery taskQuery = taskService.createTaskQuery();
-    assertEquals(2, taskQuery.active().count());
+    assertThat(taskQuery.active().count()).isEqualTo(2);
 
     // finish tasks
     List<Task> tasks = taskQuery.active().list();
@@ -466,7 +464,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
 
     // and we will wait *after* the gateway:
     List<Job> jobs = managementService.createJobQuery().active().list();
-    assertEquals(2, jobs.size());
+    assertThat(jobs.size()).isEqualTo(2);
   }
 
   @Deployment
@@ -483,13 +481,13 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
     assertListenerEndInvoked(pi);
 
     // the process should wait *after* the gateway
-    assertEquals(1, managementService.createJobQuery().active().count());
+    assertThat(managementService.createJobQuery().active().count()).isEqualTo(1);
 
     testRule.executeAvailableJobs();
 
     // if the waiting job is executed there should be 2 user tasks
     TaskQuery taskQuery = taskService.createTaskQuery();
-    assertEquals(1, taskQuery.active().count());
+    assertThat(taskQuery.active().count()).isEqualTo(1);
 
     // finish tasks
     List<Task> tasks = taskQuery.active().list();
@@ -525,7 +523,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
     assertListenerEndInvoked(pi);
 
     // and we will wait *after* the gateway:
-    assertEquals(1, managementService.createJobQuery().active().count());
+    assertThat(managementService.createJobQuery().active().count()).isEqualTo(1);
   }
   /**
    * Test for CAM-2518: Fixes an issue that creates an infinite loop when using
@@ -567,7 +565,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
 
     // there are two jobs
     List<Job> jobs = managementService.createJobQuery().list();
-    assertEquals(2, jobs.size());
+    assertThat(jobs.size()).isEqualTo(2);
     Job jobToExecute = fetchFirstJobByHandlerConfiguration(jobs, config1);
     assertNotNull(jobToExecute);
     managementService.executeJob(jobToExecute.getId());
@@ -577,14 +575,14 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
 
     // there is one left
     jobs = managementService.createJobQuery().list();
-    assertEquals(1, jobs.size());
+    assertThat(jobs.size()).isEqualTo(1);
     jobToExecute = fetchFirstJobByHandlerConfiguration(jobs, config2);
     managementService.executeJob(jobToExecute.getId());
 
     Task task2 = taskService.createTaskQuery().taskDefinitionKey("theTask2").singleResult();
     assertNotNull(task2);
 
-    assertEquals(2, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(2);
   }
 
   @Deployment
@@ -616,7 +614,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
     assertListenerEndInvoked(pi);
 
     // the process should wait *after* execute each service task wrapped in the multi-instance body
-    assertEquals(5L, managementService.createJobQuery().count());
+    assertThat(managementService.createJobQuery().count()).isEqualTo(5L);
     // execute all jobs - one for each service task
     testRule.executeAvailableJobs(5);
 
@@ -635,7 +633,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
     assertListenerEndInvoked(pi);
 
     // the process should wait *after* execute each service task step-by-step
-    assertEquals(1L, managementService.createJobQuery().count());
+    assertThat(managementService.createJobQuery().count()).isEqualTo(1L);
     // execute all jobs - one for each service task wrapped in the multi-instance body
     testRule.executeAvailableJobs(5);
 
@@ -660,14 +658,14 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
 
     // there are three jobs
     List<Job> jobs = managementService.createJobQuery().list();
-    assertEquals(3, jobs.size());
+    assertThat(jobs.size()).isEqualTo(3);
     Job jobToExecute = fetchFirstJobByHandlerConfiguration(jobs, configuration);
     assertNotNull(jobToExecute);
     managementService.executeJob(jobToExecute.getId());
 
     // there are two jobs left
     jobs = managementService.createJobQuery().list();
-    assertEquals(2, jobs.size());
+    assertThat(jobs.size()).isEqualTo(2);
     jobToExecute = fetchFirstJobByHandlerConfiguration(jobs, configuration);
     managementService.executeJob(jobToExecute.getId());
 
@@ -755,7 +753,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
 
     // then
     job = managementService.createJobQuery().singleResult();
-    Assert.assertEquals(9, job.getRetries());
+    assertThat(job.getRetries()).isEqualTo(9);
   }
 
   protected Job fetchFirstJobByHandlerConfiguration(List<Job> jobs, String configuration) {
@@ -789,7 +787,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
   private void assertBehaviorInvoked(ProcessInstance pi, int times) {
     Long behaviorInvoked = (Long) runtimeService.getVariable(pi.getId(), "behaviorInvoked");
     assertNotNull("behavior was not invoked", behaviorInvoked);
-    assertEquals(times , behaviorInvoked.intValue());
+    assertThat(behaviorInvoked.intValue()).isEqualTo(times);
 
   }
 

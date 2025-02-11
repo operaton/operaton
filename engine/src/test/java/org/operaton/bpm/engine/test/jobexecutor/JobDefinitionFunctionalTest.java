@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -113,7 +113,7 @@ public class JobDefinitionFunctionalTest {
 
     // then the new job executor will not acquire the job:
     AcquiredJobs acquiredJobs = acquireJobs();
-    assertEquals(0, acquiredJobs.size());
+    assertThat(acquiredJobs.size()).isEqualTo(0);
 
     // -------------------------
 
@@ -122,7 +122,7 @@ public class JobDefinitionFunctionalTest {
 
     // then the new job executor will not acquire the job:
     acquiredJobs = acquireJobs();
-    assertEquals(1, acquiredJobs.size());
+    assertThat(acquiredJobs.size()).isEqualTo(1);
   }
 
   @Test
@@ -151,11 +151,11 @@ public class JobDefinitionFunctionalTest {
     testRule.waitForJobExecutorToProcessAllJobs(10000);
 
     // then the second task is not executed
-    assertEquals(1, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
     // there is a suspended job instance
     Job job = managementService.createJobQuery()
       .singleResult();
-    assertEquals(job.getJobDefinitionId(), jobDefinition.getId());
+    assertThat(jobDefinition.getId()).isEqualTo(job.getJobDefinitionId());
     assertTrue(job.isSuspended());
 
     // if I unsuspend the job definition, the job is executed:
@@ -163,7 +163,7 @@ public class JobDefinitionFunctionalTest {
 
     testRule.waitForJobExecutorToProcessAllJobs(10000);
 
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
   }
 
   protected AcquiredJobs acquireJobs() {

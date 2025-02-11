@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.runtime;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -117,34 +116,34 @@ public class ModificationUserOperationLogTest {
             .createUserOperationLogQuery()
             .operationType(UserOperationLogEntry.OPERATION_TYPE_MODIFY_PROCESS_INSTANCE)
             .list();
-    Assert.assertEquals(2, opLogEntries.size());
+    assertThat(opLogEntries.size()).isEqualTo(2);
 
     Map<String, UserOperationLogEntry> entries = asMap(opLogEntries);
 
 
     UserOperationLogEntry asyncEntry = entries.get("async");
     Assert.assertNotNull(asyncEntry);
-    Assert.assertEquals("ProcessInstance", asyncEntry.getEntityType());
-    Assert.assertEquals("ModifyProcessInstance", asyncEntry.getOperationType());
-    Assert.assertEquals(processDefinition.getId(), asyncEntry.getProcessDefinitionId());
-    Assert.assertEquals(processDefinition.getKey(), asyncEntry.getProcessDefinitionKey());
+    assertThat(asyncEntry.getEntityType()).isEqualTo("ProcessInstance");
+    assertThat(asyncEntry.getOperationType()).isEqualTo("ModifyProcessInstance");
+    assertThat(asyncEntry.getProcessDefinitionId()).isEqualTo(processDefinition.getId());
+    assertThat(asyncEntry.getProcessDefinitionKey()).isEqualTo(processDefinition.getKey());
     Assert.assertNull(asyncEntry.getProcessInstanceId());
     Assert.assertNull(asyncEntry.getOrgValue());
-    Assert.assertEquals("true", asyncEntry.getNewValue());
-    Assert.assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, asyncEntry.getCategory());
+    assertThat(asyncEntry.getNewValue()).isEqualTo("true");
+    assertThat(asyncEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
     UserOperationLogEntry numInstancesEntry = entries.get("nrOfInstances");
     Assert.assertNotNull(numInstancesEntry);
-    Assert.assertEquals("ProcessInstance", numInstancesEntry.getEntityType());
-    Assert.assertEquals("ModifyProcessInstance", numInstancesEntry.getOperationType());
-    Assert.assertEquals(processDefinition.getId(), numInstancesEntry.getProcessDefinitionId());
-    Assert.assertEquals(processDefinition.getKey(), numInstancesEntry.getProcessDefinitionKey());
+    assertThat(numInstancesEntry.getEntityType()).isEqualTo("ProcessInstance");
+    assertThat(numInstancesEntry.getOperationType()).isEqualTo("ModifyProcessInstance");
+    assertThat(numInstancesEntry.getProcessDefinitionId()).isEqualTo(processDefinition.getId());
+    assertThat(numInstancesEntry.getProcessDefinitionKey()).isEqualTo(processDefinition.getKey());
     Assert.assertNull(numInstancesEntry.getProcessInstanceId());
     Assert.assertNull(numInstancesEntry.getOrgValue());
-    Assert.assertEquals("10", numInstancesEntry.getNewValue());
-    Assert.assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, numInstancesEntry.getCategory());
+    assertThat(numInstancesEntry.getNewValue()).isEqualTo("10");
+    assertThat(numInstancesEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
-    Assert.assertEquals(asyncEntry.getOperationId(), numInstancesEntry.getOperationId());
+    assertThat(numInstancesEntry.getOperationId()).isEqualTo(asyncEntry.getOperationId());
   }
 
   @Test
@@ -167,7 +166,7 @@ public class ModificationUserOperationLogTest {
     identityService.clearAuthentication();
 
     // then
-    Assert.assertEquals(0, historyService.createUserOperationLogQuery().entityType(EntityTypes.PROCESS_INSTANCE).count());
+    assertThat(historyService.createUserOperationLogQuery().entityType(EntityTypes.PROCESS_INSTANCE).count()).isEqualTo(0);
   }
 
   @Test
@@ -186,7 +185,7 @@ public class ModificationUserOperationLogTest {
     testRule.waitForJobExecutorToProcessAllJobs(5000L);
 
     // then
-    Assert.assertEquals(0, historyService.createUserOperationLogQuery().count());
+    assertThat(historyService.createUserOperationLogQuery().count()).isEqualTo(0);
   }
 
   @Test
@@ -212,17 +211,17 @@ public class ModificationUserOperationLogTest {
     List<UserOperationLogEntry> opLogEntries = historyService.createUserOperationLogQuery()
         .operationType(UserOperationLogEntry.OPERATION_TYPE_MODIFY_PROCESS_INSTANCE)
         .list();
-    assertEquals(2, opLogEntries.size());
+    assertThat(opLogEntries.size()).isEqualTo(2);
 
     Map<String, UserOperationLogEntry> entries = asMap(opLogEntries);
 
     UserOperationLogEntry asyncEntry = entries.get("async");
     Assert.assertNotNull(asyncEntry);
-    assertEquals(annotation, asyncEntry.getAnnotation());
+    assertThat(asyncEntry.getAnnotation()).isEqualTo(annotation);
 
     UserOperationLogEntry numInstancesEntry = entries.get("nrOfInstances");
     Assert.assertNotNull(numInstancesEntry);
-    assertEquals(annotation, numInstancesEntry.getAnnotation());
+    assertThat(numInstancesEntry.getAnnotation()).isEqualTo(annotation);
   }
 
   @Test
@@ -248,16 +247,16 @@ public class ModificationUserOperationLogTest {
     List<UserOperationLogEntry> opLogEntries = historyService.createUserOperationLogQuery()
         .operationType(UserOperationLogEntry.OPERATION_TYPE_MODIFY_PROCESS_INSTANCE)
         .list();
-    assertEquals(2, opLogEntries.size());
+    assertThat(opLogEntries.size()).isEqualTo(2);
     Map<String, UserOperationLogEntry> entries = asMap(opLogEntries);
 
     UserOperationLogEntry asyncEntry = entries.get("async");
     Assert.assertNotNull(asyncEntry);
-    assertEquals(annotation, asyncEntry.getAnnotation());
+    assertThat(asyncEntry.getAnnotation()).isEqualTo(annotation);
 
     UserOperationLogEntry numInstancesEntry = entries.get("nrOfInstances");
     Assert.assertNotNull(numInstancesEntry);
-    assertEquals(annotation, numInstancesEntry.getAnnotation());
+    assertThat(numInstancesEntry.getAnnotation()).isEqualTo(annotation);
   }
 
   @Test
@@ -283,9 +282,9 @@ public class ModificationUserOperationLogTest {
     List<UserOperationLogEntry> logs = historyService.createUserOperationLogQuery()
         .operationType(UserOperationLogEntry.OPERATION_TYPE_MODIFY_PROCESS_INSTANCE)
         .list();
-    assertEquals(1, logs.size());
+    assertThat(logs.size()).isEqualTo(1);
 
-    assertEquals(annotation, logs.get(0).getAnnotation());
+    assertThat(logs.get(0).getAnnotation()).isEqualTo(annotation);
   }
 
   @Test
@@ -310,9 +309,9 @@ public class ModificationUserOperationLogTest {
     List<UserOperationLogEntry> logs = historyService.createUserOperationLogQuery()
         .operationType(UserOperationLogEntry.OPERATION_TYPE_MODIFY_PROCESS_INSTANCE)
         .list();
-    assertEquals(1, logs.size());
+    assertThat(logs.size()).isEqualTo(1);
 
-    assertEquals(annotation, logs.get(0).getAnnotation());
+    assertThat(logs.get(0).getAnnotation()).isEqualTo(annotation);
   }
 
 
@@ -333,7 +332,7 @@ public class ModificationUserOperationLogTest {
 
     // then
     List<UserOperationLogEntry> logs = historyService.createUserOperationLogQuery().list();
-    assertEquals(1, logs.size());
+    assertThat(logs.size()).isEqualTo(1);
 
     UserOperationLogEntry userOperationLogEntry = logs.get(0);
     assertThat(userOperationLogEntry.getEntityType()).isEqualTo("ProcessInstance");

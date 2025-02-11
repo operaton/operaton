@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.standalone.initialization;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -52,7 +51,7 @@ public class ProcessEngineInitializationTest {
     ProcessEngineConfiguration configuration = ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/standalone/initialization/defaultretries.operaton.cfg.xml");
 
-    assertEquals(JobEntity.DEFAULT_RETRIES, configuration.getDefaultNumberOfRetries());
+    assertThat(configuration.getDefaultNumberOfRetries()).isEqualTo(JobEntity.DEFAULT_RETRIES);
   }
 
   @Test
@@ -60,7 +59,7 @@ public class ProcessEngineInitializationTest {
     ProcessEngineConfiguration configuration = ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/standalone/initialization/customdefaultretries.operaton.cfg.xml");
 
-    assertEquals(5, configuration.getDefaultNumberOfRetries());
+    assertThat(configuration.getDefaultNumberOfRetries()).isEqualTo(5);
   }
 
 }

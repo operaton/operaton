@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.usertask;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.fail;
 
 import java.util.List;
@@ -69,8 +69,8 @@ public class TaskAssignmentExtensionsTest extends PluggableProcessEngineTest {
       .createTaskQuery()
       .taskAssignee("kermit")
       .list();
-    assertEquals(1, tasks.size());
-    assertEquals("my task", tasks.get(0).getName());
+    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks.get(0).getName()).isEqualTo("my task");
   }
 
   @Test
@@ -90,9 +90,9 @@ public class TaskAssignmentExtensionsTest extends PluggableProcessEngineTest {
   public void testCandidateUsersExtension() {
     runtimeService.startProcessInstanceByKey("candidateUsersExtension");
     List<Task> tasks = taskService.createTaskQuery().taskCandidateUser("kermit").list();
-    assertEquals(1, tasks.size());
+    assertThat(tasks.size()).isEqualTo(1);
     tasks = taskService.createTaskQuery().taskCandidateUser("gonzo").list();
-    assertEquals(1, tasks.size());
+    assertThat(tasks.size()).isEqualTo(1);
   }
 
   @Deployment
@@ -103,17 +103,17 @@ public class TaskAssignmentExtensionsTest extends PluggableProcessEngineTest {
     // Bugfix check: potentially the query could return 2 tasks since
     // kermit is a member of the two candidate groups
     List<Task> tasks = taskService.createTaskQuery().taskCandidateUser("kermit").list();
-    assertEquals(1, tasks.size());
-    assertEquals("make profit", tasks.get(0).getName());
+    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks.get(0).getName()).isEqualTo("make profit");
 
     tasks = taskService.createTaskQuery().taskCandidateUser("fozzie").list();
-    assertEquals(1, tasks.size());
-    assertEquals("make profit", tasks.get(0).getName());
+    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks.get(0).getName()).isEqualTo("make profit");
 
     // Test the task query find-by-candidate-group operation
     TaskQuery query = taskService.createTaskQuery();
-    assertEquals(1, query.taskCandidateGroup("management").count());
-    assertEquals(1, query.taskCandidateGroup("accountancy").count());
+    assertThat(query.taskCandidateGroup("management").count()).isEqualTo(1);
+    assertThat(query.taskCandidateGroup("accountancy").count()).isEqualTo(1);
   }
 
   // Test where the candidate user extension is used together
@@ -124,16 +124,16 @@ public class TaskAssignmentExtensionsTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("mixedCandidateUser");
 
     List<Task> tasks = taskService.createTaskQuery().taskCandidateUser("kermit").list();
-    assertEquals(1, tasks.size());
+    assertThat(tasks.size()).isEqualTo(1);
 
     tasks = taskService.createTaskQuery().taskCandidateUser("fozzie").list();
-    assertEquals(1, tasks.size());
+    assertThat(tasks.size()).isEqualTo(1);
 
     tasks = taskService.createTaskQuery().taskCandidateUser("gonzo").list();
-    assertEquals(1, tasks.size());
+    assertThat(tasks.size()).isEqualTo(1);
 
     tasks = taskService.createTaskQuery().taskCandidateUser("mispiggy").list();
-    assertEquals(0, tasks.size());
+    assertThat(tasks.size()).isEqualTo(0);
   }
 
 }

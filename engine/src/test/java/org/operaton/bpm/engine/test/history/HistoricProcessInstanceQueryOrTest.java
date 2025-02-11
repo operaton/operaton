@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.history;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -233,7 +232,7 @@ public class HistoricProcessInstanceQueryOrTest {
       .list();
 
     // then
-    assertEquals(2, processInstances.size());
+    assertThat(processInstances.size()).isEqualTo(2);
   }
 
   @Test
@@ -257,7 +256,7 @@ public class HistoricProcessInstanceQueryOrTest {
       .list();
 
     // then
-    assertEquals(2, processInstances.size());
+    assertThat(processInstances.size()).isEqualTo(2);
   }
 
   @Test
@@ -429,7 +428,7 @@ public class HistoricProcessInstanceQueryOrTest {
       .list();
 
     // then
-    assertEquals(4, processInstances.size());
+    assertThat(processInstances.size()).isEqualTo(4);
   }
 
   @Test
@@ -466,7 +465,7 @@ public class HistoricProcessInstanceQueryOrTest {
       .list();
 
     // then
-    assertEquals(2, processInstances.size());
+    assertThat(processInstances.size()).isEqualTo(2);
   }
 
   @Test
@@ -531,7 +530,7 @@ public class HistoricProcessInstanceQueryOrTest {
       .list();
 
     // then
-    assertEquals(2, processInstances.size());
+    assertThat(processInstances.size()).isEqualTo(2);
   }
 
   @Test
@@ -552,7 +551,7 @@ public class HistoricProcessInstanceQueryOrTest {
       .list();
 
     // then
-    assertEquals(1, processInstances.size());
+    assertThat(processInstances.size()).isEqualTo(1);
   }
 
   @Test
@@ -579,7 +578,7 @@ public class HistoricProcessInstanceQueryOrTest {
       .endOr();
 
     // then
-    assertEquals(3, query.count());
+    assertThat(query.count()).isEqualTo(3);
   }
 
   @Test
@@ -627,7 +626,7 @@ public class HistoricProcessInstanceQueryOrTest {
       .list();
 
     // then
-    assertEquals(2, processInstances.size());
+    assertThat(processInstances.size()).isEqualTo(2);
   }
 
   @Test
@@ -674,7 +673,7 @@ public class HistoricProcessInstanceQueryOrTest {
       .list();
 
     // then
-    assertEquals(2, processInstances.size());
+    assertThat(processInstances.size()).isEqualTo(2);
   }
 
   @Test
@@ -712,7 +711,7 @@ public class HistoricProcessInstanceQueryOrTest {
       .list();
 
     // then
-    assertEquals(2, tasks.size());
+    assertThat(tasks.size()).isEqualTo(2);
   }
 
   @Test
@@ -743,11 +742,11 @@ public class HistoricProcessInstanceQueryOrTest {
     runtimeService.suspendProcessInstanceById(suspendedProcessInstance.getProcessInstanceId());
 
     // assume
-    assertEquals(2, historyService.createHistoricProcessInstanceQuery().processDefinitionKey("oneTaskProcess").active().count());
-    assertEquals(1, historyService.createHistoricProcessInstanceQuery().processDefinitionKey("oneTaskProcess").suspended().count());
+    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey("oneTaskProcess").active().count()).isEqualTo(2);
+    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey("oneTaskProcess").suspended().count()).isEqualTo(1);
 
     // then
-    assertEquals(3, historyService.createHistoricProcessInstanceQuery().or().active().variableValueEquals("foo", 0).endOr().list().size());
+    assertThat(historyService.createHistoricProcessInstanceQuery().or().active().variableValueEquals("foo", 0).endOr().list().size()).isEqualTo(3);
   }
 
   @Test

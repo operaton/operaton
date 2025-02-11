@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.sentry;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 
@@ -55,16 +55,16 @@ public class SentryInitializationTest extends CmmnTest {
     List<CaseSentryPartEntity> parts = createCaseSentryPartQuery()
       .list();
 
-    assertEquals(1, parts.size());
+    assertThat(parts.size()).isEqualTo(1);
 
     CaseSentryPartEntity part = parts.get(0);
 
-    assertEquals(caseInstanceId, part.getCaseExecutionId());
-    assertEquals(caseInstanceId, part.getCaseInstanceId());
-    assertEquals("Sentry_1", part.getSentryId());
-    assertEquals(CmmnSentryDeclaration.PLAN_ITEM_ON_PART, part.getType());
-    assertEquals("PI_HumanTask_1", part.getSource());
-    assertEquals("complete", part.getStandardEvent());
+    assertThat(part.getCaseExecutionId()).isEqualTo(caseInstanceId);
+    assertThat(part.getCaseInstanceId()).isEqualTo(caseInstanceId);
+    assertThat(part.getSentryId()).isEqualTo("Sentry_1");
+    assertThat(part.getType()).isEqualTo(CmmnSentryDeclaration.PLAN_ITEM_ON_PART);
+    assertThat(part.getSource()).isEqualTo("PI_HumanTask_1");
+    assertThat(part.getStandardEvent()).isEqualTo("complete");
     assertFalse(part.isSatisfied());
   }
 
@@ -87,16 +87,16 @@ public class SentryInitializationTest extends CmmnTest {
     List<CaseSentryPartEntity> parts = createCaseSentryPartQuery()
       .list();
 
-    assertEquals(1, parts.size());
+    assertThat(parts.size()).isEqualTo(1);
 
     CaseSentryPartEntity part = parts.get(0);
 
-    assertEquals(caseInstanceId, part.getCaseExecutionId());
-    assertEquals(caseInstanceId, part.getCaseInstanceId());
-    assertEquals("Sentry_1", part.getSentryId());
-    assertEquals(CmmnSentryDeclaration.VARIABLE_ON_PART, part.getType());
-    assertEquals(VariableTransition.create.name(), part.getVariableEvent());
-    assertEquals("variable_1", part.getVariableName());
+    assertThat(part.getCaseExecutionId()).isEqualTo(caseInstanceId);
+    assertThat(part.getCaseInstanceId()).isEqualTo(caseInstanceId);
+    assertThat(part.getSentryId()).isEqualTo("Sentry_1");
+    assertThat(part.getType()).isEqualTo(CmmnSentryDeclaration.VARIABLE_ON_PART);
+    assertThat(part.getVariableEvent()).isEqualTo(VariableTransition.create.name());
+    assertThat(part.getVariableName()).isEqualTo("variable_1");
     assertFalse(part.isSatisfied());
   }
 
@@ -120,14 +120,14 @@ public class SentryInitializationTest extends CmmnTest {
     List<CaseSentryPartEntity> parts = createCaseSentryPartQuery()
       .list();
 
-    assertEquals(1, parts.size());
+    assertThat(parts.size()).isEqualTo(1);
 
     CaseSentryPartEntity part = parts.get(0);
 
-    assertEquals(caseInstanceId, part.getCaseExecutionId());
-    assertEquals(caseInstanceId, part.getCaseInstanceId());
-    assertEquals("Sentry_1", part.getSentryId());
-    assertEquals(CmmnSentryDeclaration.IF_PART, part.getType());
+    assertThat(part.getCaseExecutionId()).isEqualTo(caseInstanceId);
+    assertThat(part.getCaseInstanceId()).isEqualTo(caseInstanceId);
+    assertThat(part.getSentryId()).isEqualTo("Sentry_1");
+    assertThat(part.getType()).isEqualTo(CmmnSentryDeclaration.IF_PART);
     assertNull(part.getSource());
     assertNull(part.getStandardEvent());
     assertFalse(part.isSatisfied());
@@ -151,16 +151,16 @@ public class SentryInitializationTest extends CmmnTest {
     // then
     CaseSentryPartQueryImpl query = createCaseSentryPartQuery();
 
-    assertEquals(3, query.count());
+    assertThat(query.count()).isEqualTo(3);
 
     CaseSentryPartEntity part = query
         .type(CmmnSentryDeclaration.IF_PART)
         .singleResult();
 
-    assertEquals(caseInstanceId, part.getCaseExecutionId());
-    assertEquals(caseInstanceId, part.getCaseInstanceId());
-    assertEquals("Sentry_1", part.getSentryId());
-    assertEquals(CmmnSentryDeclaration.IF_PART, part.getType());
+    assertThat(part.getCaseExecutionId()).isEqualTo(caseInstanceId);
+    assertThat(part.getCaseInstanceId()).isEqualTo(caseInstanceId);
+    assertThat(part.getSentryId()).isEqualTo("Sentry_1");
+    assertThat(part.getType()).isEqualTo(CmmnSentryDeclaration.IF_PART);
     assertNull(part.getSource());
     assertNull(part.getStandardEvent());
     assertFalse(part.isSatisfied());
@@ -169,22 +169,22 @@ public class SentryInitializationTest extends CmmnTest {
         .type(CmmnSentryDeclaration.PLAN_ITEM_ON_PART)
         .singleResult();
 
-    assertEquals(caseInstanceId, part.getCaseExecutionId());
-    assertEquals(caseInstanceId, part.getCaseInstanceId());
-    assertEquals("Sentry_1", part.getSentryId());
-    assertEquals(CmmnSentryDeclaration.PLAN_ITEM_ON_PART, part.getType());
-    assertEquals("PI_HumanTask_1", part.getSource());
-    assertEquals("complete", part.getStandardEvent());
+    assertThat(part.getCaseExecutionId()).isEqualTo(caseInstanceId);
+    assertThat(part.getCaseInstanceId()).isEqualTo(caseInstanceId);
+    assertThat(part.getSentryId()).isEqualTo("Sentry_1");
+    assertThat(part.getType()).isEqualTo(CmmnSentryDeclaration.PLAN_ITEM_ON_PART);
+    assertThat(part.getSource()).isEqualTo("PI_HumanTask_1");
+    assertThat(part.getStandardEvent()).isEqualTo("complete");
     assertFalse(part.isSatisfied());
 
     part = query.type(CmmnSentryDeclaration.VARIABLE_ON_PART).singleResult();
-    
-    assertEquals(caseInstanceId, part.getCaseExecutionId());
-    assertEquals(caseInstanceId, part.getCaseInstanceId());
-    assertEquals("Sentry_1", part.getSentryId());
-    assertEquals(CmmnSentryDeclaration.VARIABLE_ON_PART, part.getType());
-    assertEquals(VariableTransition.delete.name(), part.getVariableEvent());
-    assertEquals("variable_1", part.getVariableName());
+
+    assertThat(part.getCaseExecutionId()).isEqualTo(caseInstanceId);
+    assertThat(part.getCaseInstanceId()).isEqualTo(caseInstanceId);
+    assertThat(part.getSentryId()).isEqualTo("Sentry_1");
+    assertThat(part.getType()).isEqualTo(CmmnSentryDeclaration.VARIABLE_ON_PART);
+    assertThat(part.getVariableEvent()).isEqualTo(VariableTransition.delete.name());
+    assertThat(part.getVariableName()).isEqualTo("variable_1");
     assertFalse(part.isSatisfied());
   }
 
@@ -207,16 +207,16 @@ public class SentryInitializationTest extends CmmnTest {
     // then
     CaseSentryPartQueryImpl query = createCaseSentryPartQuery();
 
-    assertEquals(2, query.count());
+    assertThat(query.count()).isEqualTo(2);
 
     CaseSentryPartEntity part = query
         .sentryId("Sentry_1")
         .singleResult();
 
-    assertEquals(caseInstanceId, part.getCaseExecutionId());
-    assertEquals(caseInstanceId, part.getCaseInstanceId());
-    assertEquals("Sentry_1", part.getSentryId());
-    assertEquals(CmmnSentryDeclaration.IF_PART, part.getType());
+    assertThat(part.getCaseExecutionId()).isEqualTo(caseInstanceId);
+    assertThat(part.getCaseInstanceId()).isEqualTo(caseInstanceId);
+    assertThat(part.getSentryId()).isEqualTo("Sentry_1");
+    assertThat(part.getType()).isEqualTo(CmmnSentryDeclaration.IF_PART);
     assertNull(part.getSource());
     assertNull(part.getStandardEvent());
     assertFalse(part.isSatisfied());
@@ -225,12 +225,12 @@ public class SentryInitializationTest extends CmmnTest {
         .sentryId("Sentry_2")
         .singleResult();
 
-    assertEquals(caseInstanceId, part.getCaseExecutionId());
-    assertEquals(caseInstanceId, part.getCaseInstanceId());
-    assertEquals("Sentry_2", part.getSentryId());
-    assertEquals(CmmnSentryDeclaration.PLAN_ITEM_ON_PART, part.getType());
-    assertEquals("PI_HumanTask_1", part.getSource());
-    assertEquals("complete", part.getStandardEvent());
+    assertThat(part.getCaseExecutionId()).isEqualTo(caseInstanceId);
+    assertThat(part.getCaseInstanceId()).isEqualTo(caseInstanceId);
+    assertThat(part.getSentryId()).isEqualTo("Sentry_2");
+    assertThat(part.getType()).isEqualTo(CmmnSentryDeclaration.PLAN_ITEM_ON_PART);
+    assertThat(part.getSource()).isEqualTo("PI_HumanTask_1");
+    assertThat(part.getStandardEvent()).isEqualTo("complete");
     assertFalse(part.isSatisfied());
   }
 
@@ -253,7 +253,7 @@ public class SentryInitializationTest extends CmmnTest {
     // then
     CaseSentryPartQueryImpl query = createCaseSentryPartQuery();
 
-    assertEquals(2, query.count());
+    assertThat(query.count()).isEqualTo(2);
 
     // when
     String stageId = caseService
@@ -263,16 +263,16 @@ public class SentryInitializationTest extends CmmnTest {
         .getId();
 
     // then
-    assertEquals(2, query.count());
+    assertThat(query.count()).isEqualTo(2);
 
     CaseSentryPartEntity part = query
         .sentryId("Sentry_1")
         .singleResult();
 
-    assertEquals(caseInstanceId, part.getCaseInstanceId());
-    assertEquals(stageId, part.getCaseExecutionId());
-    assertEquals("Sentry_1", part.getSentryId());
-    assertEquals(CmmnSentryDeclaration.IF_PART, part.getType());
+    assertThat(part.getCaseInstanceId()).isEqualTo(caseInstanceId);
+    assertThat(part.getCaseExecutionId()).isEqualTo(stageId);
+    assertThat(part.getSentryId()).isEqualTo("Sentry_1");
+    assertThat(part.getType()).isEqualTo(CmmnSentryDeclaration.IF_PART);
     assertNull(part.getSource());
     assertNull(part.getStandardEvent());
     assertFalse(part.isSatisfied());
@@ -281,12 +281,12 @@ public class SentryInitializationTest extends CmmnTest {
         .sentryId("Sentry_2")
         .singleResult();
 
-    assertEquals(caseInstanceId, part.getCaseInstanceId());
-    assertEquals(stageId, part.getCaseExecutionId());
-    assertEquals("Sentry_2", part.getSentryId());
-    assertEquals(CmmnSentryDeclaration.PLAN_ITEM_ON_PART, part.getType());
-    assertEquals("PI_HumanTask_1", part.getSource());
-    assertEquals("complete", part.getStandardEvent());
+    assertThat(part.getCaseInstanceId()).isEqualTo(caseInstanceId);
+    assertThat(part.getCaseExecutionId()).isEqualTo(stageId);
+    assertThat(part.getSentryId()).isEqualTo("Sentry_2");
+    assertThat(part.getType()).isEqualTo(CmmnSentryDeclaration.PLAN_ITEM_ON_PART);
+    assertThat(part.getSource()).isEqualTo("PI_HumanTask_1");
+    assertThat(part.getStandardEvent()).isEqualTo("complete");
     assertFalse(part.isSatisfied());
   }
 

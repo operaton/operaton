@@ -34,10 +34,8 @@ import org.operaton.bpm.engine.repository.ProcessApplicationDeployment;
 import org.operaton.bpm.engine.repository.Resource;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.commons.testing.ProcessEngineLoggingRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+
+import org.junit.*;
 
 /**
  * @author Daniel Meyer
@@ -91,7 +89,7 @@ public class EmbeddedProcessApplicationTest extends PluggableProcessEngineTest {
 
     ProcessEngine processEngine = BpmPlatform.getProcessEngineService().getDefaultProcessEngine();
     long deployments = processEngine.getRepositoryService().createDeploymentQuery().count();
-    assertEquals(0, deployments);
+    assertThat(deployments).isEqualTo(0);
 
     processApplication.undeploy();
 
@@ -105,7 +103,7 @@ public class EmbeddedProcessApplicationTest extends PluggableProcessEngineTest {
 
     ProcessEngine processEngine = BpmPlatform.getProcessEngineService().getProcessEngine("embeddedEngine");
     assertNotNull(processEngine);
-    assertEquals("embeddedEngine", processEngine.getName());
+    assertThat(processEngine.getName()).isEqualTo("embeddedEngine");
 
     ProcessEngineConfiguration configuration = ((ProcessEngineImpl) processEngine).getProcessEngineConfiguration();
 
@@ -113,7 +111,7 @@ public class EmbeddedProcessApplicationTest extends PluggableProcessEngineTest {
     assertTrue(configuration.isJobExecutorDeploymentAware());
     assertTrue(configuration.isJobExecutorPreferTimerJobs());
     assertTrue(configuration.isJobExecutorAcquireByDueDate());
-    assertEquals(5, configuration.getJdbcMaxActiveConnections());
+    assertThat(configuration.getJdbcMaxActiveConnections()).isEqualTo(5);
 
     processApplication.undeploy();
 
@@ -127,7 +125,7 @@ public class EmbeddedProcessApplicationTest extends PluggableProcessEngineTest {
 
     ProcessEngine processEngine = BpmPlatform.getProcessEngineService().getProcessEngine("embeddedEngine");
     assertNotNull(processEngine);
-    assertEquals("embeddedEngine", processEngine.getName());
+    assertThat(processEngine.getName()).isEqualTo("embeddedEngine");
 
     ProcessEngineConfigurationImpl configuration = ((ProcessEngineImpl) processEngine).getProcessEngineConfiguration();
 
@@ -135,7 +133,7 @@ public class EmbeddedProcessApplicationTest extends PluggableProcessEngineTest {
     assertTrue(configuration.isJobExecutorDeploymentAware());
     assertTrue(configuration.isJobExecutorPreferTimerJobs());
     assertTrue(configuration.isJobExecutorAcquireByDueDate());
-    assertEquals(5, configuration.getJdbcMaxActiveConnections());
+    assertThat(configuration.getJdbcMaxActiveConnections()).isEqualTo(5);
     assertFalse(configuration.isDmnEnabled());
 
     // when
@@ -166,8 +164,8 @@ public class EmbeddedProcessApplicationTest extends PluggableProcessEngineTest {
       .get(0)
       .getProcessEngineName();
 
-    assertEquals(customEngineName, processApplication.getDefaultDeployToEngineName());
-    assertEquals(customEngineName, deployedToProcessEngineName);
+    assertThat(processApplication.getDefaultDeployToEngineName()).isEqualTo(customEngineName);
+    assertThat(deployedToProcessEngineName).isEqualTo(customEngineName);
 
     processApplication.undeploy();
   }
@@ -180,11 +178,11 @@ public class EmbeddedProcessApplicationTest extends PluggableProcessEngineTest {
     TestApplicationReusingExistingEngine processApplication = new TestApplicationReusingExistingEngine();
     processApplication.deploy();
 
-    assertEquals(1, repositoryService.createDeploymentQuery().count());
+    assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(1);
 
     processApplication.undeploy();
 
-    assertEquals(0, repositoryService.createDeploymentQuery().count());
+    assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(0);
 
   }
 
@@ -201,10 +199,10 @@ public class EmbeddedProcessApplicationTest extends PluggableProcessEngineTest {
     assertNotNull(deployment);
 
     List<Resource> deploymentResources = repositoryService.getDeploymentResources(deployment.getId());
-    assertEquals(4, deploymentResources.size());
+    assertThat(deploymentResources.size()).isEqualTo(4);
 
     processApplication.undeploy();
-    assertEquals(0, repositoryService.createDeploymentQuery().count());
+    assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(0);
   }
 
   @Test
@@ -219,10 +217,10 @@ public class EmbeddedProcessApplicationTest extends PluggableProcessEngineTest {
     assertNotNull(deployment);
 
     List<Resource> deploymentResources = repositoryService.getDeploymentResources(deployment.getId());
-    assertEquals(4, deploymentResources.size());
+    assertThat(deploymentResources.size()).isEqualTo(4);
 
     processApplication.undeploy();
-    assertEquals(0, repositoryService.createDeploymentQuery().count());
+    assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(0);
   }
 
   @Test
@@ -235,7 +233,7 @@ public class EmbeddedProcessApplicationTest extends PluggableProcessEngineTest {
     Deployment deployment = repositoryService.createDeploymentQuery().singleResult();
 
     assertNotNull(deployment);
-    assertEquals(ProcessApplicationDeployment.PROCESS_APPLICATION_DEPLOYMENT_SOURCE, deployment.getSource());
+    assertThat(deployment.getSource()).isEqualTo(ProcessApplicationDeployment.PROCESS_APPLICATION_DEPLOYMENT_SOURCE);
 
     processApplication.undeploy();
   }
@@ -247,7 +245,7 @@ public class EmbeddedProcessApplicationTest extends PluggableProcessEngineTest {
     pa.deploy();
 
     Set<String> deployedPAs = runtimeContainerDelegate.getProcessApplicationService().getProcessApplicationNames();
-    assertEquals(1, deployedPAs.size());
+    assertThat(deployedPAs.size()).isEqualTo(1);
     assertTrue(deployedPAs.contains(TestApplicationWithCustomName.NAME));
 
     pa.undeploy();
@@ -266,9 +264,9 @@ public class EmbeddedProcessApplicationTest extends PluggableProcessEngineTest {
         .asc()
         .list();
 
-    assertEquals(2, deployments.size());
-    assertEquals("tenant1", deployments.get(0).getTenantId());
-    assertEquals("tenant2", deployments.get(1).getTenantId());
+    assertThat(deployments.size()).isEqualTo(2);
+    assertThat(deployments.get(0).getTenantId()).isEqualTo("tenant1");
+    assertThat(deployments.get(1).getTenantId()).isEqualTo("tenant2");
 
     processApplication.undeploy();
   }

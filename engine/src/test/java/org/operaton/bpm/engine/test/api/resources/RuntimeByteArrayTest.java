@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.api.resources;
 
 import static org.operaton.bpm.engine.repository.ResourceTypes.RUNTIME;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
@@ -220,7 +220,7 @@ public class RuntimeByteArrayTest {
   protected void checkBinary(ByteArrayEntity byteArrayEntity) {
     assertNotNull(byteArrayEntity);
     assertNotNull(byteArrayEntity.getCreateTime());
-    assertEquals(RUNTIME.getValue(), byteArrayEntity.getType());
+    assertThat(byteArrayEntity.getType()).isEqualTo(RUNTIME.getValue());
   }
 
   protected FileValue createFile() {

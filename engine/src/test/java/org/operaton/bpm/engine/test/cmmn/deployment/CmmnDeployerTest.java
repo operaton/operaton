@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.deployment;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -59,14 +59,14 @@ public class CmmnDeployerTest extends PluggableProcessEngineTest {
     RepositoryService repositoryService = processEngine.getRepositoryService();
     DeploymentQuery deploymentQuery = repositoryService.createDeploymentQuery();
 
-    assertEquals(1, deploymentQuery.count());
+    assertThat(deploymentQuery.count()).isEqualTo(1);
 
     // there should be one case definition
     CaseDefinitionQuery query = processEngine.getRepositoryService().createCaseDefinitionQuery();
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     CaseDefinition caseDefinition = query.singleResult();
-    assertEquals("Case_1", caseDefinition.getKey());
+    assertThat(caseDefinition.getKey()).isEqualTo("Case_1");
 
     processEngine.getRepositoryService().deleteDeployment(deploymentId);
   }
@@ -84,7 +84,7 @@ public class CmmnDeployerTest extends PluggableProcessEngineTest {
       fail();
     } catch (Exception e) {
       // Verify that nothing is deployed
-      assertEquals(0, repositoryService.createDeploymentQuery().count());
+      assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(0);
     }
   }
 
@@ -95,16 +95,16 @@ public class CmmnDeployerTest extends PluggableProcessEngineTest {
     String deploymentId = repositoryService.createDeploymentQuery().singleResult().getId();
     final CaseDefinition caseDefinition = repositoryService.createCaseDefinitionQuery().singleResult();
 
-    assertEquals("org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testCaseDiagramResource.cmmn", caseDefinition.getResourceName());
-    assertEquals("Case_1", caseDefinition.getKey());
+    assertThat(caseDefinition.getResourceName()).isEqualTo("org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testCaseDiagramResource.cmmn");
+    assertThat(caseDefinition.getKey()).isEqualTo("Case_1");
 
     final String diagramResourceName = caseDefinition.getDiagramResourceName();
-    assertEquals("org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testCaseDiagramResource.png", diagramResourceName);
+    assertThat(diagramResourceName).isEqualTo("org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testCaseDiagramResource.png");
 
     final InputStream diagramStream = repositoryService.getResourceAsStream(deploymentId,
         "org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testCaseDiagramResource.png");
     final byte[] diagramBytes = IoUtil.readInputStream(diagramStream, "diagram stream");
-    assertEquals(2540, diagramBytes.length);
+    assertThat(diagramBytes.length).isEqualTo(2540);
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testMultipleDiagramResourcesProvided.cmmn",
@@ -117,9 +117,9 @@ public class CmmnDeployerTest extends PluggableProcessEngineTest {
     final CaseDefinition caseB = repositoryService.createCaseDefinitionQuery().caseDefinitionKey("b").singleResult();
     final CaseDefinition caseC = repositoryService.createCaseDefinitionQuery().caseDefinitionKey("c").singleResult();
 
-    assertEquals("org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testMultipleDiagramResourcesProvided.a.png", caseA.getDiagramResourceName());
-    assertEquals("org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testMultipleDiagramResourcesProvided.b.png", caseB.getDiagramResourceName());
-    assertEquals("org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testMultipleDiagramResourcesProvided.c.png", caseC.getDiagramResourceName());
+    assertThat(caseA.getDiagramResourceName()).isEqualTo("org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testMultipleDiagramResourcesProvided.a.png");
+    assertThat(caseB.getDiagramResourceName()).isEqualTo("org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testMultipleDiagramResourcesProvided.b.png");
+    assertThat(caseC.getDiagramResourceName()).isEqualTo("org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testMultipleDiagramResourcesProvided.c.png");
   }
 
   @Test
@@ -145,14 +145,14 @@ public class CmmnDeployerTest extends PluggableProcessEngineTest {
     RepositoryService repositoryService = processEngine.getRepositoryService();
     DeploymentQuery deploymentQuery = repositoryService.createDeploymentQuery();
 
-    assertEquals(1, deploymentQuery.count());
+    assertThat(deploymentQuery.count()).isEqualTo(1);
 
     // there should be one case definition
     CaseDefinitionQuery query = processEngine.getRepositoryService().createCaseDefinitionQuery();
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     CaseDefinition caseDefinition = query.singleResult();
-    assertEquals("Case_1", caseDefinition.getKey());
+    assertThat(caseDefinition.getKey()).isEqualTo("Case_1");
 
     processEngine.getRepositoryService().deleteDeployment(deploymentId);
 
@@ -199,14 +199,14 @@ public class CmmnDeployerTest extends PluggableProcessEngineTest {
 
     // then deployment contains deployed case definition
     List<CaseDefinition> deployedCaseDefinitions = deployment.getDeployedCaseDefinitions();
-    assertEquals(1, deployedCaseDefinitions.size());
+    assertThat(deployedCaseDefinitions.size()).isEqualTo(1);
     assertNull(deployment.getDeployedProcessDefinitions());
     assertNull(deployment.getDeployedDecisionDefinitions());
     assertNull(deployment.getDeployedDecisionRequirementsDefinitions());
 
     // and persisted case definition is equal to deployed case definition
     CaseDefinition persistedCaseDefinition = repositoryService.createCaseDefinitionQuery().caseDefinitionResourceName("foo.cmmn").singleResult();
-    assertEquals(persistedCaseDefinition.getId(), deployedCaseDefinitions.get(0).getId());
+    assertThat(deployedCaseDefinitions.get(0).getId()).isEqualTo(persistedCaseDefinition.getId());
   }
 
   @Test
@@ -235,7 +235,7 @@ public class CmmnDeployerTest extends PluggableProcessEngineTest {
     CaseDefinition caseDefinition = repositoryService.createCaseDefinitionQuery().singleResult();
     Integer historyTimeToLive = caseDefinition.getHistoryTimeToLive();
     assertNotNull(historyTimeToLive);
-    assertEquals(5, (int) historyTimeToLive);
+    assertThat((int) historyTimeToLive).isEqualTo(5);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testDeployCaseDefinitionWithStringHistoryTimeToLive.cmmn")
@@ -244,7 +244,7 @@ public class CmmnDeployerTest extends PluggableProcessEngineTest {
     CaseDefinition caseDefinition = repositoryService.createCaseDefinitionQuery().singleResult();
     Integer historyTimeToLive = caseDefinition.getHistoryTimeToLive();
     assertNotNull(historyTimeToLive);
-    assertEquals(5, (int) historyTimeToLive);
+    assertThat((int) historyTimeToLive).isEqualTo(5);
   }
 
   @Test

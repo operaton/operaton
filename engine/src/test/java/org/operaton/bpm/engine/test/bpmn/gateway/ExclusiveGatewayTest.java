@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.bpmn.gateway;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -50,7 +49,7 @@ public class ExclusiveGatewayTest extends PluggableProcessEngineTest {
   public void testDivergingExclusiveGateway() {
     for (int i = 1; i <= 3; i++) {
       ProcessInstance pi = runtimeService.startProcessInstanceByKey("exclusiveGwDiverging", CollectionUtil.singletonMap("input", i));
-      assertEquals("Task " + i, taskService.createTaskQuery().singleResult().getName());
+      assertThat(taskService.createTaskQuery().singleResult().getName()).isEqualTo("Task " + i);
       runtimeService.deleteProcessInstance(pi.getId(), "testing deletion");
     }
   }
@@ -59,7 +58,7 @@ public class ExclusiveGatewayTest extends PluggableProcessEngineTest {
   @Test
   public void testMergingExclusiveGateway() {
     runtimeService.startProcessInstanceByKey("exclusiveGwMerging");
-    assertEquals(3, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(3);
   }
 
   // If there are multiple outgoing seqFlow with valid conditions, the first
@@ -68,7 +67,7 @@ public class ExclusiveGatewayTest extends PluggableProcessEngineTest {
   @Test
   public void testMultipleValidConditions() {
     runtimeService.startProcessInstanceByKey("exclusiveGwMultipleValidConditions", CollectionUtil.singletonMap("input", 5));
-    assertEquals("Task 2", taskService.createTaskQuery().singleResult().getName());
+    assertThat(taskService.createTaskQuery().singleResult().getName()).isEqualTo("Task 2");
   }
 
   @Deployment
@@ -116,7 +115,7 @@ public class ExclusiveGatewayTest extends PluggableProcessEngineTest {
 
     Task task = taskService.createTaskQuery().singleResult();
     assertNotNull(task);
-    assertEquals("Standard service", task.getName());
+    assertThat(task.getName()).isEqualTo("Standard service");
   }
 
   @Deployment
@@ -132,7 +131,7 @@ public class ExclusiveGatewayTest extends PluggableProcessEngineTest {
 
     Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
     assertNotNull(task);
-    assertEquals("Gold Member service", task.getName());
+    assertThat(task.getName()).isEqualTo("Gold Member service");
 
 
     // Arrays are usable in exactly the same way
@@ -143,7 +142,7 @@ public class ExclusiveGatewayTest extends PluggableProcessEngineTest {
 
     task = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
     assertNotNull(task);
-    assertEquals("Basic service", task.getName());
+    assertThat(task.getName()).isEqualTo("Basic service");
   }
 
   @Deployment
@@ -154,7 +153,7 @@ public class ExclusiveGatewayTest extends PluggableProcessEngineTest {
 
     Task task = taskService.createTaskQuery().singleResult();
     assertNotNull(task);
-    assertEquals("Gold Member service", task.getName());
+    assertThat(task.getName()).isEqualTo("Gold Member service");
   }
 
   @Deployment
@@ -177,13 +176,13 @@ public class ExclusiveGatewayTest extends PluggableProcessEngineTest {
     String procId = runtimeService.startProcessInstanceByKey("exclusiveGwDefaultSequenceFlow",
             CollectionUtil.singletonMap("input", 1)).getId();
     Task task = taskService.createTaskQuery().singleResult();
-    assertEquals("Input is one", task.getName());
+    assertThat(task.getName()).isEqualTo("Input is one");
     runtimeService.deleteProcessInstance(procId, null);
 
     procId = runtimeService.startProcessInstanceByKey("exclusiveGwDefaultSequenceFlow",
             CollectionUtil.singletonMap("input", 5)).getId();
     task = taskService.createTaskQuery().singleResult();
-    assertEquals("Default input", task.getName());
+    assertThat(task.getName()).isEqualTo("Default input");
   }
 
   @Deployment
@@ -191,7 +190,7 @@ public class ExclusiveGatewayTest extends PluggableProcessEngineTest {
   public void testNoIdOnSequenceFlow() {
     runtimeService.startProcessInstanceByKey("noIdOnSequenceFlow", CollectionUtil.singletonMap("input", 3));
     Task task = taskService.createTaskQuery().singleResult();
-    assertEquals("Input is more than one", task.getName());
+    assertThat(task.getName()).isEqualTo("Input is more than one");
   }
 
   @Test
@@ -308,19 +307,19 @@ public class ExclusiveGatewayTest extends PluggableProcessEngineTest {
     variables.put("input", 1);
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("exclusiveGateway", variables);
     Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
-    assertEquals("Send e-mail for more information", task.getName());
+    assertThat(task.getName()).isEqualTo("Send e-mail for more information");
 
     // Test with input == 2
     variables.put("input", 2);
     pi = runtimeService.startProcessInstanceByKey("exclusiveGateway", variables);
     task = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
-    assertEquals("Check account balance", task.getName());
+    assertThat(task.getName()).isEqualTo("Check account balance");
 
     // Test with input == 3
     variables.put("input", 3);
     pi = runtimeService.startProcessInstanceByKey("exclusiveGateway", variables);
     task = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
-    assertEquals("Call customer", task.getName());
+    assertThat(task.getName()).isEqualTo("Call customer");
 
     // Test with input == 4
     variables.put("input", 4);

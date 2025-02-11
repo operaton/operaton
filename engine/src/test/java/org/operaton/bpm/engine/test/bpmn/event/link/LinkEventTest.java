@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.event.link;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -45,13 +44,13 @@ public class LinkEventTest extends PluggableProcessEngineTest {
 
     List<String> activeActivities = runtimeService.getActiveActivityIds(pi.getId());
     // assert that now the first receive task is active
-    assertEquals(Arrays.asList(new String []{"waitAfterLink1"}), activeActivities);
+    assertThat(activeActivities).isEqualTo(Arrays.asList(new String []{"waitAfterLink1"}));
 
     runtimeService.signal(pi.getId());
 
     activeActivities = runtimeService.getActiveActivityIds(pi.getId());
     // assert that now the second receive task is active
-    assertEquals(Arrays.asList(new String []{"waitAfterLink2"}), activeActivities);
+    assertThat(activeActivities).isEqualTo(Arrays.asList(new String []{"waitAfterLink2"}));
 
     runtimeService.signal(pi.getId());
     testRule.assertProcessEnded(pi.getId());
@@ -59,11 +58,11 @@ public class LinkEventTest extends PluggableProcessEngineTest {
     // validate history
     if(processEngineConfiguration.getHistoryLevel().getId() >= ProcessEngineConfigurationImpl.HISTORYLEVEL_ACTIVITY) {
       List<HistoricActivityInstance> activities = historyService.createHistoricActivityInstanceQuery().processInstanceId(pi.getId()).orderByActivityId().asc().list();
-      assertEquals(4, activities.size());
-      assertEquals("EndEvent_1", activities.get(0).getActivityId());
-      assertEquals("StartEvent_1", activities.get(1).getActivityId());
-      assertEquals("waitAfterLink1", activities.get(2).getActivityId());
-      assertEquals("waitAfterLink2", activities.get(3).getActivityId());
+      assertThat(activities.size()).isEqualTo(4);
+      assertThat(activities.get(0).getActivityId()).isEqualTo("EndEvent_1");
+      assertThat(activities.get(1).getActivityId()).isEqualTo("StartEvent_1");
+      assertThat(activities.get(2).getActivityId()).isEqualTo("waitAfterLink1");
+      assertThat(activities.get(3).getActivityId()).isEqualTo("waitAfterLink2");
     }
 
   }
@@ -75,19 +74,19 @@ public class LinkEventTest extends PluggableProcessEngineTest {
     List<String> activeActivities = runtimeService.getActiveActivityIds(pi.getId());
 
     // assert that the link event was triggered and that we are
-    assertEquals(Arrays.asList(new String []{"WaitAfterLink", "WaitAfterLink"}), activeActivities);
+    assertThat(activeActivities).isEqualTo(Arrays.asList(new String []{"WaitAfterLink", "WaitAfterLink"}));
 
     runtimeService.deleteProcessInstance(pi.getId(), "test done");
 
     // validate history
     if(processEngineConfiguration.getHistoryLevel().getId() >= ProcessEngineConfigurationImpl.HISTORYLEVEL_ACTIVITY) {
       List<HistoricActivityInstance> activities = historyService.createHistoricActivityInstanceQuery().processInstanceId(pi.getId()).orderByActivityId().asc().list();
-      assertEquals(5, activities.size());
-      assertEquals("ManualTask_1", activities.get(0).getActivityId());
-      assertEquals("ParallelGateway_1", activities.get(1).getActivityId());
-      assertEquals("StartEvent_1", activities.get(2).getActivityId());
-      assertEquals("WaitAfterLink", activities.get(3).getActivityId());
-      assertEquals("WaitAfterLink", activities.get(4).getActivityId());
+      assertThat(activities.size()).isEqualTo(5);
+      assertThat(activities.get(0).getActivityId()).isEqualTo("ManualTask_1");
+      assertThat(activities.get(1).getActivityId()).isEqualTo("ParallelGateway_1");
+      assertThat(activities.get(2).getActivityId()).isEqualTo("StartEvent_1");
+      assertThat(activities.get(3).getActivityId()).isEqualTo("WaitAfterLink");
+      assertThat(activities.get(4).getActivityId()).isEqualTo("WaitAfterLink");
     }
 
   }

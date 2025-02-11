@@ -18,7 +18,7 @@ package org.operaton.bpm.engine.test.history.useroperationlog;
 
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.CATEGORY_OPERATOR;
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_DELETE_HISTORY;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -91,20 +91,20 @@ public class UserOperationLogDeletionTest extends AbstractUserOperationLogTest {
     UserOperationLogQuery query = historyService
         .createUserOperationLogQuery()
         .taskId(taskId);
-    assertEquals(2, query.count());
+    assertThat(query.count()).isEqualTo(2);
 
     // when
     historyService.deleteHistoricTaskInstance(taskId);
 
     // then
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
     UserOperationLogEntry entry = historyService.createUserOperationLogQuery()
       .operationType(OPERATION_TYPE_DELETE_HISTORY)
       .taskId(taskId)
       .property("nrOfInstances")
       .singleResult();
-    assertEquals(CATEGORY_OPERATOR, entry.getCategory());
+    assertThat(entry.getCategory()).isEqualTo(CATEGORY_OPERATOR);
   }
 
   @Test
@@ -120,13 +120,13 @@ public class UserOperationLogDeletionTest extends AbstractUserOperationLogTest {
     UserOperationLogQuery query = historyService
         .createUserOperationLogQuery()
         .taskId(taskId);
-    assertEquals(3, query.count());
+    assertThat(query.count()).isEqualTo(3);
 
     // when
     historyService.deleteHistoricTaskInstance(taskId);
 
     // then
-    assertEquals(5, query.count());
+    assertThat(query.count()).isEqualTo(5);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -150,13 +150,13 @@ public class UserOperationLogDeletionTest extends AbstractUserOperationLogTest {
     UserOperationLogQuery query = historyService
         .createUserOperationLogQuery()
         .taskId(taskId);
-    assertEquals(2, query.count());
+    assertThat(query.count()).isEqualTo(2);
 
     // when
     historyService.deleteHistoricTaskInstance(taskId);
 
     // then
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
   }
 
   @Deployment(resources = PROCESS_PATH)
@@ -174,13 +174,13 @@ public class UserOperationLogDeletionTest extends AbstractUserOperationLogTest {
     UserOperationLogQuery query = historyService
         .createUserOperationLogQuery()
         .processInstanceId(processInstanceId);
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
     // when
     historyService.deleteHistoricProcessInstance(processInstanceId);
 
     // then
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
     UserOperationLogEntry entry = historyService.createUserOperationLogQuery()
       .operationType(OPERATION_TYPE_DELETE_HISTORY)
@@ -188,7 +188,7 @@ public class UserOperationLogDeletionTest extends AbstractUserOperationLogTest {
       .singleResult();
 
     assertNotNull(entry);
-    assertEquals(CATEGORY_OPERATOR, entry.getCategory());
+    assertThat(entry.getCategory()).isEqualTo(CATEGORY_OPERATOR);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -215,20 +215,20 @@ public class UserOperationLogDeletionTest extends AbstractUserOperationLogTest {
         .createUserOperationLogQuery()
         .caseInstanceId(caseInstanceId)
         .entityType(EntityTypes.TASK);
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     // when
     historyService.deleteHistoricCaseInstance(caseInstanceId);
 
     // then
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
     
     UserOperationLogEntry entry = historyService.createUserOperationLogQuery()
         .operationType(OPERATION_TYPE_DELETE_HISTORY)
         .singleResult();
 
     assertNotNull(entry);
-    assertEquals(CATEGORY_OPERATOR, entry.getCategory());
+    assertThat(entry.getCategory()).isEqualTo(CATEGORY_OPERATOR);
   }
 
   @Deployment(resources = PROCESS_PATH)
@@ -247,13 +247,13 @@ public class UserOperationLogDeletionTest extends AbstractUserOperationLogTest {
     UserOperationLogQuery query = historyService
         .createUserOperationLogQuery()
         .processInstanceId(processInstanceId);
-    assertEquals(2, query.count());
+    assertThat(query.count()).isEqualTo(2);
 
     // when
     repositoryService.deleteProcessDefinition(processDefinitionId, true);
 
     // then new log is created and old stays
-    assertEquals(2, query.count());
+    assertThat(query.count()).isEqualTo(2);
   }
 
   @Test
@@ -347,13 +347,13 @@ public class UserOperationLogDeletionTest extends AbstractUserOperationLogTest {
     UserOperationLogQuery query = historyService
         .createUserOperationLogQuery()
         .processDefinitionId(processDefinitionId);
-    assertEquals(2, query.count());
+    assertThat(query.count()).isEqualTo(2);
 
     // when
     repositoryService.deleteDeployment(deploymentId, true);
 
     // then
-    assertEquals(2, query.count());
+    assertThat(query.count()).isEqualTo(2);
   }
 
   @Deployment(resources = { DECISION_SINGLE_OUTPUT_DMN })
@@ -372,11 +372,11 @@ public class UserOperationLogDeletionTest extends AbstractUserOperationLogTest {
       .property("nrOfInstances")
       .list();
 
-    assertEquals(1, userOperationLogEntries.size());
+    assertThat(userOperationLogEntries.size()).isEqualTo(1);
 
     UserOperationLogEntry entry = userOperationLogEntries.get(0);
-    assertEquals("1", entry.getNewValue());
-    assertEquals(CATEGORY_OPERATOR, entry.getCategory());
+    assertThat(entry.getNewValue()).isEqualTo("1");
+    assertThat(entry.getCategory()).isEqualTo(CATEGORY_OPERATOR);
   }
 
   @Deployment(resources = { DECISION_SINGLE_OUTPUT_DMN })
@@ -395,11 +395,11 @@ public class UserOperationLogDeletionTest extends AbstractUserOperationLogTest {
       .property("nrOfInstances")
       .list();
 
-    assertEquals(1, userOperationLogEntries.size());
+    assertThat(userOperationLogEntries.size()).isEqualTo(1);
 
     UserOperationLogEntry entry = userOperationLogEntries.get(0);
-    assertEquals("1", entry.getNewValue());
-    assertEquals(CATEGORY_OPERATOR, entry.getCategory());
+    assertThat(entry.getNewValue()).isEqualTo("1");
+    assertThat(entry.getCategory()).isEqualTo(CATEGORY_OPERATOR);
   }
 
   public void assertUserOperationLogs() {
@@ -411,26 +411,26 @@ public class UserOperationLogDeletionTest extends AbstractUserOperationLogTest {
 
     List<UserOperationLogEntry> userOperationLogs = userOperationLogQuery.list();
 
-    assertEquals(3, userOperationLogs.size());
+    assertThat(userOperationLogs.size()).isEqualTo(3);
 
     for (ProcessDefinition processDefinition: processDefinitions) {
       UserOperationLogEntry userOperationLogEntry = userOperationLogQuery
         .deploymentId(processDefinition.getDeploymentId()).singleResult();
 
-      assertEquals(EntityTypes.PROCESS_DEFINITION, userOperationLogEntry.getEntityType());
-      assertEquals(processDefinition.getId(), userOperationLogEntry.getProcessDefinitionId());
-      assertEquals(processDefinition.getKey(), userOperationLogEntry.getProcessDefinitionKey());
-      assertEquals(processDefinition.getDeploymentId(), userOperationLogEntry.getDeploymentId());
+      assertThat(userOperationLogEntry.getEntityType()).isEqualTo(EntityTypes.PROCESS_DEFINITION);
+      assertThat(userOperationLogEntry.getProcessDefinitionId()).isEqualTo(processDefinition.getId());
+      assertThat(userOperationLogEntry.getProcessDefinitionKey()).isEqualTo(processDefinition.getKey());
+      assertThat(userOperationLogEntry.getDeploymentId()).isEqualTo(processDefinition.getDeploymentId());
 
-      assertEquals(UserOperationLogEntry.OPERATION_TYPE_DELETE, userOperationLogEntry.getOperationType());
+      assertThat(userOperationLogEntry.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_DELETE);
 
-      assertEquals("cascade", userOperationLogEntry.getProperty());
+      assertThat(userOperationLogEntry.getProperty()).isEqualTo("cascade");
       assertFalse(Boolean.parseBoolean(userOperationLogEntry.getOrgValue()));
       assertTrue(Boolean.parseBoolean(userOperationLogEntry.getNewValue()));
 
-      assertEquals(USER_ID, userOperationLogEntry.getUserId());
-      
-      assertEquals(UserOperationLogEntry.CATEGORY_TASK_WORKER, userOperationLogEntry.getCategory());
+      assertThat(userOperationLogEntry.getUserId()).isEqualTo(USER_ID);
+
+      assertThat(userOperationLogEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_TASK_WORKER);
       
       assertNull(userOperationLogEntry.getJobDefinitionId());
       assertNull(userOperationLogEntry.getProcessInstanceId());
@@ -438,7 +438,7 @@ public class UserOperationLogDeletionTest extends AbstractUserOperationLogTest {
       assertNull(userOperationLogEntry.getCaseDefinitionId());
     }
 
-    assertEquals(6, historyService.createUserOperationLogQuery().count());
+    assertThat(historyService.createUserOperationLogQuery().count()).isEqualTo(6);
   }
 
   private String[] findProcessDefinitionIdsByKey(String processDefinitionKey) {

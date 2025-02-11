@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.bpmn.tasklistener;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl.HISTORYLEVEL_AUDIT;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -56,7 +55,6 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.commons.utils.IoUtil;
 import org.joda.time.LocalDateTime;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -81,8 +79,8 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
   public void testTaskCreateListener() {
     runtimeService.startProcessInstanceByKey("taskListenerProcess");
     Task task = taskService.createTaskQuery().singleResult();
-    assertEquals("Schedule meeting", task.getName());
-    assertEquals("TaskCreateListener is listening!", task.getDescription());
+    assertThat(task.getName()).isEqualTo("Schedule meeting");
+    assertThat(task.getDescription()).isEqualTo("TaskCreateListener is listening!");
   }
 
   @Test
@@ -148,7 +146,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     runtimeService.startProcessInstanceByKey("mainProc");
     Task task = taskService.createTaskQuery().singleResult();
 
-    Assert.assertEquals("calledTask", task.getTaskDefinitionKey());
+    assertThat(task.getTaskDefinitionKey()).isEqualTo("calledTask");
   }
 
   // COMPLETE Task Listener tests
@@ -166,12 +164,12 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     taskService.complete(task.getId());
 
     // Check that the completion did not execute the delete listener
-    assertEquals(0, TaskDeleteListener.eventCounter);
+    assertThat(TaskDeleteListener.eventCounter).isEqualTo(0);
     assertNull(TaskDeleteListener.lastTaskDefinitionKey);
     assertNull(TaskDeleteListener.lastDeleteReason);
 
-    assertEquals("Hello from The Process", runtimeService.getVariable(processInstance.getId(), "greeting"));
-    assertEquals("Act", runtimeService.getVariable(processInstance.getId(), "shortName"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "greeting")).isEqualTo("Hello from The Process");
+    assertThat(runtimeService.getVariable(processInstance.getId(), "shortName")).isEqualTo("Act");
   }
 
   // DELETE Task Listener tests
@@ -182,7 +180,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     TaskDeleteListener.clear();
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("taskListenerProcess");
 
-    assertEquals(0, TaskDeleteListener.eventCounter);
+    assertThat(TaskDeleteListener.eventCounter).isEqualTo(0);
     assertNull(TaskDeleteListener.lastTaskDefinitionKey);
     assertNull(TaskDeleteListener.lastDeleteReason);
 
@@ -190,9 +188,9 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     Task task = taskService.createTaskQuery().singleResult();
     runtimeService.deleteProcessInstance(processInstance.getProcessInstanceId(), "test delete task listener");
 
-    assertEquals(1, TaskDeleteListener.eventCounter);
-    assertEquals(task.getTaskDefinitionKey(), TaskDeleteListener.lastTaskDefinitionKey);
-    assertEquals("test delete task listener", TaskDeleteListener.lastDeleteReason);
+    assertThat(TaskDeleteListener.eventCounter).isEqualTo(1);
+    assertThat(TaskDeleteListener.lastTaskDefinitionKey).isEqualTo(task.getTaskDefinitionKey());
+    assertThat(TaskDeleteListener.lastDeleteReason).isEqualTo("test delete task listener");
   }
 
   @Test
@@ -201,7 +199,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     TaskDeleteListener.clear();
     runtimeService.startProcessInstanceByKey("taskListenerProcess");
 
-    assertEquals(0, TaskDeleteListener.eventCounter);
+    assertThat(TaskDeleteListener.eventCounter).isEqualTo(0);
     assertNull(TaskDeleteListener.lastTaskDefinitionKey);
     assertNull(TaskDeleteListener.lastDeleteReason);
 
@@ -209,9 +207,9 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     Task task = taskService.createTaskQuery().singleResult();
     runtimeService.correlateMessage("message");
 
-    assertEquals(1, TaskDeleteListener.eventCounter);
-    assertEquals(task.getTaskDefinitionKey(), TaskDeleteListener.lastTaskDefinitionKey);
-    assertEquals("deleted", TaskDeleteListener.lastDeleteReason);
+    assertThat(TaskDeleteListener.eventCounter).isEqualTo(1);
+    assertThat(TaskDeleteListener.lastTaskDefinitionKey).isEqualTo(task.getTaskDefinitionKey());
+    assertThat(TaskDeleteListener.lastDeleteReason).isEqualTo("deleted");
   }
 
   @Test
@@ -242,11 +240,11 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
 
     // then
     List<RecordedTaskEvent> recordedEvents = RecorderTaskListener.getRecordedEvents();
-    assertEquals(2, recordedEvents.size());
+    assertThat(recordedEvents.size()).isEqualTo(2);
     String createActivityInstanceId = recordedEvents.get(0).getActivityInstanceId();
     String deleteActivityInstanceId = recordedEvents.get(1).getActivityInstanceId();
 
-    assertEquals(createActivityInstanceId, deleteActivityInstanceId);
+    assertThat(deleteActivityInstanceId).isEqualTo(createActivityInstanceId);
   }
 
   @Test
@@ -279,8 +277,8 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     // then
     VariableMap collectedVariables = VariablesCollectingListener.getCollectedVariables();
     assertNotNull(collectedVariables);
-    assertEquals(1, collectedVariables.size());
-    assertEquals("bar", collectedVariables.get("foo"));
+    assertThat(collectedVariables.size()).isEqualTo(1);
+    assertThat(collectedVariables.get("foo")).isEqualTo("bar");
   }
 
   // Expression & Scripts Task Listener tests
@@ -295,7 +293,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     Task task = taskService.createTaskQuery().singleResult();
     taskService.complete(task.getId());
 
-    assertEquals("Write meeting notes", runtimeService.getVariable(processInstance.getId(), "greeting2"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "greeting2")).isEqualTo("Write meeting notes");
   }
 
   @Test
@@ -371,7 +369,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     taskService.setAssignee(task.getId(), "leelo");
 
     // then
-    assertEquals(2, RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE));
+    assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE)).isEqualTo(2);
   }
 
   @Test
@@ -385,7 +383,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     taskService.setOwner(task.getId(), "gonzo");
 
     // then
-    assertEquals(1, RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE));
+    assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE)).isEqualTo(1);
   }
 
   @Test
@@ -399,7 +397,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     taskService.addUserIdentityLink(task.getId(), "gonzo", IdentityLinkType.CANDIDATE);
 
     // then
-    assertEquals(1, RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE));
+    assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE)).isEqualTo(1);
   }
 
   @Test
@@ -414,7 +412,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     taskService.deleteUserIdentityLink(task.getId(), "gonzo", IdentityLinkType.CANDIDATE);
 
     // then
-    assertEquals(2, RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE));
+    assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE)).isEqualTo(2);
   }
 
   @Test
@@ -428,7 +426,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     taskService.addGroupIdentityLink(task.getId(), "admins", IdentityLinkType.CANDIDATE);
 
     // then
-    assertEquals(1, RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE));
+    assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE)).isEqualTo(1);
   }
 
   @Test
@@ -443,7 +441,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     taskService.deleteGroupIdentityLink(task.getId(), "admins", IdentityLinkType.CANDIDATE);
 
     // then
-    assertEquals(2, RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE));
+    assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE)).isEqualTo(2);
   }
 
   @Test
@@ -457,7 +455,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     taskService.resolveTask(task.getId());
 
     // then
-    assertEquals(1, RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE));
+    assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE)).isEqualTo(1);
   }
 
   @Test
@@ -471,7 +469,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     taskService.delegateTask(task.getId(), "gonzo");
 
     // then
-    assertEquals(1, RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE));
+    assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE)).isEqualTo(1);
   }
 
   @Test
@@ -485,7 +483,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     taskService.claim(task.getId(), "test");
 
     // then
-    assertEquals(1, RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE));
+    assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE)).isEqualTo(1);
   }
 
   @Test
@@ -499,7 +497,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     taskService.setPriority(task.getId(), 3000);
 
     // then
-    assertEquals(1, RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE));
+    assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE)).isEqualTo(1);
   }
 
   @Test
@@ -516,7 +514,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     // then
     // first update event comes from delegating the task,
     // setting its delegation state to PENDING
-    assertEquals(2, RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE));
+    assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE)).isEqualTo(2);
   }
 
   @Test
@@ -531,7 +529,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     taskService.saveTask(task);
 
     // then
-    assertEquals(1, RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE));
+    assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE)).isEqualTo(1);
   }
 
   @Test
@@ -548,7 +546,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     taskService.saveTask(task);
 
     // then
-    assertEquals(1, RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE));
+    assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE)).isEqualTo(1);
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
@@ -563,8 +561,8 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     taskService.createComment(task.getId(), null, "new comment");
 
     // then
-    assertEquals(1, RecorderTaskListener.getTotalEventCount());
-    assertEquals(1, RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE));
+    assertThat(RecorderTaskListener.getTotalEventCount()).isEqualTo(1);
+    assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE)).isEqualTo(1);
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
@@ -579,8 +577,8 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     taskService.addComment(task.getId(), null, "new comment");
 
     // then
-    assertEquals(1, RecorderTaskListener.getTotalEventCount());
-    assertEquals(1, RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE));
+    assertThat(RecorderTaskListener.getTotalEventCount()).isEqualTo(1);
+    assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE)).isEqualTo(1);
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
@@ -595,8 +593,8 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     taskService.createAttachment("foo", task.getId(), null, "bar", "baz", IoUtil.stringAsInputStream("foo"));
 
     // then
-    assertEquals(1, RecorderTaskListener.getTotalEventCount());
-    assertEquals(1, RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE));
+    assertThat(RecorderTaskListener.getTotalEventCount()).isEqualTo(1);
+    assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE)).isEqualTo(1);
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
@@ -615,8 +613,8 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     taskService.saveAttachment(attachment);
 
     // then
-    assertEquals(2, RecorderTaskListener.getTotalEventCount());
-    assertEquals(2, RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE)); // create and update attachment
+    assertThat(RecorderTaskListener.getTotalEventCount()).isEqualTo(2);
+    assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE)).isEqualTo(2); // create and update attachment
   }
 
   @Test
@@ -632,8 +630,8 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     taskService.deleteAttachment(attachment.getId());
 
     // then
-    assertEquals(2, RecorderTaskListener.getTotalEventCount());
-    assertEquals(2, RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE)); // create and delete attachment
+    assertThat(RecorderTaskListener.getTotalEventCount()).isEqualTo(2);
+    assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE)).isEqualTo(2); // create and delete attachment
   }
 
   @Test
@@ -649,8 +647,8 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     taskService.deleteTaskAttachment(task.getId(), attachment.getId());
 
     // then
-    assertEquals(2, RecorderTaskListener.getTotalEventCount());
-    assertEquals(2, RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE)); // create and delete attachment
+    assertThat(RecorderTaskListener.getTotalEventCount()).isEqualTo(2);
+    assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE)).isEqualTo(2); // create and delete attachment
   }
 
   @Test
@@ -664,8 +662,8 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     taskService.setVariableLocal(task.getId(), "foo", "bar");
 
     // then
-    assertEquals(1, RecorderTaskListener.getTotalEventCount());
-    assertEquals(1, RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE));
+    assertThat(RecorderTaskListener.getTotalEventCount()).isEqualTo(1);
+    assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE)).isEqualTo(1);
   }
 
   @Test
@@ -684,8 +682,8 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
 
     // then
     // only a single invocation of the listener is triggered
-    assertEquals(1, RecorderTaskListener.getTotalEventCount());
-    assertEquals(1, RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE));
+    assertThat(RecorderTaskListener.getTotalEventCount()).isEqualTo(1);
+    assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE)).isEqualTo(1);
   }
 
   @Test
@@ -700,8 +698,8 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     taskService.setVariable(task.getId(), "foo", "bar");
 
     // then
-    assertEquals(2, RecorderTaskListener.getTotalEventCount());
-    assertEquals(2, RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE)); // local and non-local
+    assertThat(RecorderTaskListener.getTotalEventCount()).isEqualTo(2);
+    assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE)).isEqualTo(2); // local and non-local
   }
 
   @Test
@@ -715,8 +713,8 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     taskService.setVariable(task.getId(), "foo", "bar");
 
     // then
-    assertEquals(0, RecorderTaskListener.getTotalEventCount());
-    assertEquals(0, RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE));
+    assertThat(RecorderTaskListener.getTotalEventCount()).isEqualTo(0);
+    assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE)).isEqualTo(0);
   }
 
   @Test
@@ -763,7 +761,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     taskService.saveTask(task);
 
     // then
-    assertEquals(1, RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_ASSIGNMENT));
+    assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_ASSIGNMENT)).isEqualTo(1);
   }
 
   // TIMEOUT listener tests
@@ -878,7 +876,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
 
     JobQuery jobQuery = managementService.createJobQuery().processInstanceId(pi.getId());
     List<Job> jobs = jobQuery.list();
-    assertEquals(1, jobs.size());
+    assertThat(jobs.size()).isEqualTo(1);
     Job job = jobs.get(0);
     Date oldDate = job.getDuedate();
 
@@ -888,10 +886,10 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
 
     // then
     Job jobUpdated = jobQuery.singleResult();
-    assertEquals(job.getId(), jobUpdated.getId());
+    assertThat(jobUpdated.getId()).isEqualTo(job.getId());
     assertNotEquals(oldDate, jobUpdated.getDuedate());
     assertTrue(oldDate.after(jobUpdated.getDuedate()));
-    assertEquals(LocalDateTime.fromDateFields(jobUpdated.getCreateTime()).plusMinutes(15).toDate(), jobUpdated.getDuedate());
+    assertThat(jobUpdated.getDuedate()).isEqualTo(LocalDateTime.fromDateFields(jobUpdated.getCreateTime()).plusMinutes(15).toDate());
   }
 
   @Test
@@ -902,7 +900,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
 
     JobQuery jobQuery = managementService.createJobQuery().processInstanceId(pi.getId());
     List<Job> jobs = jobQuery.list();
-    assertEquals(1, jobs.size());
+    assertThat(jobs.size()).isEqualTo(1);
     Job job = jobs.get(0);
     Date oldDate = job.getDuedate();
     ClockUtil.offset(2000L);
@@ -912,7 +910,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
 
     // then
     Job jobUpdated = jobQuery.singleResult();
-    assertEquals(job.getId(), jobUpdated.getId());
+    assertThat(jobUpdated.getId()).isEqualTo(job.getId());
     assertNotEquals(oldDate, jobUpdated.getDuedate());
     assertTrue(oldDate.before(jobUpdated.getDuedate()));
   }
@@ -927,7 +925,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
         .processInstanceId(pi.getId())
         .activityId("userTask");
     List<Job> jobs = jobQuery.list();
-    assertEquals(1, jobs.size());
+    assertThat(jobs.size()).isEqualTo(1);
     Job job = jobs.get(0);
     Date oldDate = job.getDuedate();
 
@@ -937,10 +935,10 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
 
     // then
     Job jobUpdated = jobQuery.singleResult();
-    assertEquals(job.getId(), jobUpdated.getId());
+    assertThat(jobUpdated.getId()).isEqualTo(job.getId());
     assertNotEquals(oldDate, jobUpdated.getDuedate());
     assertTrue(oldDate.after(jobUpdated.getDuedate()));
-    assertEquals(LocalDateTime.fromDateFields(jobUpdated.getCreateTime()).plusMinutes(15).toDate(), jobUpdated.getDuedate());
+    assertThat(jobUpdated.getDuedate()).isEqualTo(LocalDateTime.fromDateFields(jobUpdated.getCreateTime()).plusMinutes(15).toDate());
   }
 
   // Helper methods

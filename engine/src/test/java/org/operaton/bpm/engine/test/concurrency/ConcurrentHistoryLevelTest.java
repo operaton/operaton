@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.test.concurrency;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assumptions.assumeThat;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 import java.sql.Connection;
@@ -75,7 +75,7 @@ public class ConcurrentHistoryLevelTest extends ConcurrencyTestCase {
     Throwable thread2Exception = thread2.getException();
     assertNull(thread2Exception);
     HistoryLevel historyLevel = processEngineConfiguration.getHistoryLevel();
-    assertEquals("full", historyLevel.getName());
+    assertThat(historyLevel.getName()).isEqualTo("full");
   }
 
   protected static class ControllableUpdateHistoryLevelCommand extends ControllableCommand<Void> {

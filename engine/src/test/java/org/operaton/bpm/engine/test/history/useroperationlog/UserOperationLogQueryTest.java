@@ -49,11 +49,12 @@ import java.util.stream.Collectors;
 import org.junit.After;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
 /**
  * @author Danny Gräf
  */
@@ -86,51 +87,51 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     createLogEntries();
 
     // expect: all entries can be fetched
-    assertEquals(18, query().count());
+    assertThat(query().count()).isEqualTo(18);
 
     // entity type
-    assertEquals(11, query().entityType(EntityTypes.TASK).count());
-    assertEquals(4, query().entityType(EntityTypes.IDENTITY_LINK).count());
-    assertEquals(2, query().entityType(EntityTypes.ATTACHMENT).count());
-    assertEquals(1, query().entityType(EntityTypes.PROCESS_INSTANCE).count());
-    assertEquals(0, query().entityType("unknown entity type").count());
+    assertThat(query().entityType(EntityTypes.TASK).count()).isEqualTo(11);
+    assertThat(query().entityType(EntityTypes.IDENTITY_LINK).count()).isEqualTo(4);
+    assertThat(query().entityType(EntityTypes.ATTACHMENT).count()).isEqualTo(2);
+    assertThat(query().entityType(EntityTypes.PROCESS_INSTANCE).count()).isEqualTo(1);
+    assertThat(query().entityType("unknown entity type").count()).isEqualTo(0);
 
     // operation type
-    assertEquals(2, query().operationType(OPERATION_TYPE_CREATE).count());
-    assertEquals(1, query().operationType(OPERATION_TYPE_SET_PRIORITY).count());
-    assertEquals(4, query().operationType(OPERATION_TYPE_UPDATE).count());
-    assertEquals(1, query().operationType(OPERATION_TYPE_ADD_USER_LINK).count());
-    assertEquals(1, query().operationType(OPERATION_TYPE_DELETE_USER_LINK).count());
-    assertEquals(1, query().operationType(OPERATION_TYPE_ADD_GROUP_LINK).count());
-    assertEquals(1, query().operationType(OPERATION_TYPE_DELETE_GROUP_LINK).count());
-    assertEquals(1, query().operationType(OPERATION_TYPE_ADD_ATTACHMENT).count());
-    assertEquals(1, query().operationType(OPERATION_TYPE_DELETE_ATTACHMENT).count());
-    
+    assertThat(query().operationType(OPERATION_TYPE_CREATE).count()).isEqualTo(2);
+    assertThat(query().operationType(OPERATION_TYPE_SET_PRIORITY).count()).isEqualTo(1);
+    assertThat(query().operationType(OPERATION_TYPE_UPDATE).count()).isEqualTo(4);
+    assertThat(query().operationType(OPERATION_TYPE_ADD_USER_LINK).count()).isEqualTo(1);
+    assertThat(query().operationType(OPERATION_TYPE_DELETE_USER_LINK).count()).isEqualTo(1);
+    assertThat(query().operationType(OPERATION_TYPE_ADD_GROUP_LINK).count()).isEqualTo(1);
+    assertThat(query().operationType(OPERATION_TYPE_DELETE_GROUP_LINK).count()).isEqualTo(1);
+    assertThat(query().operationType(OPERATION_TYPE_ADD_ATTACHMENT).count()).isEqualTo(1);
+    assertThat(query().operationType(OPERATION_TYPE_DELETE_ATTACHMENT).count()).isEqualTo(1);
+
     // category
-    assertEquals(17, query().categoryIn(UserOperationLogEntry.CATEGORY_TASK_WORKER).count());
-    assertEquals(1, query().categoryIn(UserOperationLogEntry.CATEGORY_OPERATOR).count());// start process instance
+    assertThat(query().categoryIn(UserOperationLogEntry.CATEGORY_TASK_WORKER).count()).isEqualTo(17);
+    assertThat(query().categoryIn(UserOperationLogEntry.CATEGORY_OPERATOR).count()).isEqualTo(1);// start process instance
 
     // process and execution reference
-    assertEquals(12, query().processDefinitionId(process.getProcessDefinitionId()).count());
-    assertEquals(12, query().processInstanceId(process.getId()).count());
-    assertEquals(11, query().executionId(execution.getId()).count());
+    assertThat(query().processDefinitionId(process.getProcessDefinitionId()).count()).isEqualTo(12);
+    assertThat(query().processInstanceId(process.getId()).count()).isEqualTo(12);
+    assertThat(query().executionId(execution.getId()).count()).isEqualTo(11);
 
     // task reference
-    assertEquals(11, query().taskId(processTaskId).count());
-    assertEquals(6, query().taskId(userTask.getId()).count());
+    assertThat(query().taskId(processTaskId).count()).isEqualTo(11);
+    assertThat(query().taskId(userTask.getId()).count()).isEqualTo(6);
 
     // user reference
-    assertEquals(11, query().userId("icke").count()); // not includes the create operation called by the process
-    assertEquals(6, query().userId("er").count());
+    assertThat(query().userId("icke").count()).isEqualTo(11); // not includes the create operation called by the process
+    assertThat(query().userId("er").count()).isEqualTo(6);
 
     // operation ID
     UserOperationLogQuery updates = query().operationType(OPERATION_TYPE_UPDATE);
     String updateOperationId = updates.list().get(0).getOperationId();
-    assertEquals(updates.count(), query().operationId(updateOperationId).count());
+    assertThat(query().operationId(updateOperationId).count()).isEqualTo(updates.count());
 
     // changed properties
-    assertEquals(3, query().property(ASSIGNEE).count());
-    assertEquals(2, query().property(OWNER).count());
+    assertThat(query().property(ASSIGNEE).count()).isEqualTo(3);
+    assertThat(query().property(OWNER).count()).isEqualTo(2);
 
     // ascending order results by time
     List<UserOperationLogEntry> ascLog = query().orderByTimestamp().asc().list();
@@ -157,14 +158,14 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     }
 
     // filter by time, created yesterday
-    assertEquals(5, query().beforeTimestamp(today).count());
+    assertThat(query().beforeTimestamp(today).count()).isEqualTo(5);
     // filter by time, created today and before
-    assertEquals(13, query().beforeTimestamp(tomorrow).count());
+    assertThat(query().beforeTimestamp(tomorrow).count()).isEqualTo(13);
     // filter by time, created today and later
-    assertEquals(13, query().afterTimestamp(yesterday).count());
+    assertThat(query().afterTimestamp(yesterday).count()).isEqualTo(13);
     // filter by time, created tomorrow
-    assertEquals(5, query().afterTimestamp(today).count());
-    assertEquals(0, query().afterTimestamp(today).beforeTimestamp(yesterday).count());
+    assertThat(query().afterTimestamp(today).count()).isEqualTo(5);
+    assertThat(query().afterTimestamp(today).beforeTimestamp(yesterday).count()).isEqualTo(0);
   }
 
   @Deployment(resources = {ONE_TASK_PROCESS})
@@ -173,13 +174,13 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     createLogEntries();
 
     // expect: all entries can be fetched
-    assertEquals(18, query().count());
+    assertThat(query().count()).isEqualTo(18);
 
     // entity type
-    assertEquals(11, query().entityType(ENTITY_TYPE_TASK).count());
-    assertEquals(4, query().entityType(ENTITY_TYPE_IDENTITY_LINK).count());
-    assertEquals(2, query().entityType(ENTITY_TYPE_ATTACHMENT).count());
-    assertEquals(0, query().entityType("unknown entity type").count());
+    assertThat(query().entityType(ENTITY_TYPE_TASK).count()).isEqualTo(11);
+    assertThat(query().entityType(ENTITY_TYPE_IDENTITY_LINK).count()).isEqualTo(4);
+    assertThat(query().entityType(ENTITY_TYPE_ATTACHMENT).count()).isEqualTo(2);
+    assertThat(query().entityType("unknown entity type").count()).isEqualTo(0);
   }
 
   @Deployment(resources = {ONE_TASK_PROCESS})
@@ -196,7 +197,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     runtimeService.deleteProcessInstance(process.getId(), "a delete reason");
 
     // then
-    assertEquals(4, query().entityType(PROCESS_INSTANCE).count());
+    assertThat(query().entityType(PROCESS_INSTANCE).count()).isEqualTo(4);
 
     UserOperationLogEntry deleteEntry = query()
         .entityType(PROCESS_INSTANCE)
@@ -205,11 +206,11 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
         .singleResult();
 
     assertNotNull(deleteEntry);
-    assertEquals(process.getId(), deleteEntry.getProcessInstanceId());
+    assertThat(deleteEntry.getProcessInstanceId()).isEqualTo(process.getId());
     assertNotNull(deleteEntry.getProcessDefinitionId());
-    assertEquals("oneTaskProcess", deleteEntry.getProcessDefinitionKey());
-    assertEquals(deploymentId, deleteEntry.getDeploymentId());
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, deleteEntry.getCategory());
+    assertThat(deleteEntry.getProcessDefinitionKey()).isEqualTo("oneTaskProcess");
+    assertThat(deleteEntry.getDeploymentId()).isEqualTo(deploymentId);
+    assertThat(deleteEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
     UserOperationLogEntry suspendEntry = query()
       .entityType(PROCESS_INSTANCE)
@@ -218,14 +219,14 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
       .singleResult();
 
     assertNotNull(suspendEntry);
-    assertEquals(process.getId(), suspendEntry.getProcessInstanceId());
+    assertThat(suspendEntry.getProcessInstanceId()).isEqualTo(process.getId());
     assertNotNull(suspendEntry.getProcessDefinitionId());
-    assertEquals("oneTaskProcess", suspendEntry.getProcessDefinitionKey());
+    assertThat(suspendEntry.getProcessDefinitionKey()).isEqualTo("oneTaskProcess");
 
-    assertEquals("suspensionState", suspendEntry.getProperty());
-    assertEquals("suspended", suspendEntry.getNewValue());
+    assertThat(suspendEntry.getProperty()).isEqualTo("suspensionState");
+    assertThat(suspendEntry.getNewValue()).isEqualTo("suspended");
     assertNull(suspendEntry.getOrgValue());
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, suspendEntry.getCategory());
+    assertThat(suspendEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
     UserOperationLogEntry activateEntry = query()
         .entityType(PROCESS_INSTANCE)
@@ -234,15 +235,15 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
         .singleResult();
 
     assertNotNull(activateEntry);
-    assertEquals(process.getId(), activateEntry.getProcessInstanceId());
+    assertThat(activateEntry.getProcessInstanceId()).isEqualTo(process.getId());
     assertNotNull(activateEntry.getProcessDefinitionId());
-    assertEquals("oneTaskProcess", activateEntry.getProcessDefinitionKey());
-    assertEquals(deploymentId, activateEntry.getDeploymentId());
+    assertThat(activateEntry.getProcessDefinitionKey()).isEqualTo("oneTaskProcess");
+    assertThat(activateEntry.getDeploymentId()).isEqualTo(deploymentId);
 
-    assertEquals("suspensionState", activateEntry.getProperty());
-    assertEquals("active", activateEntry.getNewValue());
+    assertThat(activateEntry.getProperty()).isEqualTo("suspensionState");
+    assertThat(activateEntry.getNewValue()).isEqualTo("active");
     assertNull(activateEntry.getOrgValue());
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, activateEntry.getCategory());
+    assertThat(activateEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
   }
 
   @Deployment(resources = {ONE_TASK_PROCESS})
@@ -257,7 +258,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     runtimeService.activateProcessInstanceByProcessDefinitionId(process.getProcessDefinitionId());
 
     // then
-    assertEquals(3, query().entityType(PROCESS_INSTANCE).count());
+    assertThat(query().entityType(PROCESS_INSTANCE).count()).isEqualTo(3);
 
     UserOperationLogEntry suspendEntry = query()
         .entityType(PROCESS_INSTANCE)
@@ -266,15 +267,15 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
         .singleResult();
 
     assertNotNull(suspendEntry);
-    assertEquals(process.getProcessDefinitionId(), suspendEntry.getProcessDefinitionId());
+    assertThat(suspendEntry.getProcessDefinitionId()).isEqualTo(process.getProcessDefinitionId());
     assertNull(suspendEntry.getProcessInstanceId());
-    assertEquals("oneTaskProcess", suspendEntry.getProcessDefinitionKey());
-    assertEquals(deploymentId, suspendEntry.getDeploymentId());
+    assertThat(suspendEntry.getProcessDefinitionKey()).isEqualTo("oneTaskProcess");
+    assertThat(suspendEntry.getDeploymentId()).isEqualTo(deploymentId);
 
-    assertEquals("suspensionState", suspendEntry.getProperty());
-    assertEquals("suspended", suspendEntry.getNewValue());
+    assertThat(suspendEntry.getProperty()).isEqualTo("suspensionState");
+    assertThat(suspendEntry.getNewValue()).isEqualTo("suspended");
     assertNull(suspendEntry.getOrgValue());
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, suspendEntry.getCategory());
+    assertThat(suspendEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
     UserOperationLogEntry activateEntry = query()
         .entityType(PROCESS_INSTANCE)
@@ -284,14 +285,14 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
 
     assertNotNull(activateEntry);
     assertNull(activateEntry.getProcessInstanceId());
-    assertEquals("oneTaskProcess", activateEntry.getProcessDefinitionKey());
-    assertEquals(process.getProcessDefinitionId(), activateEntry.getProcessDefinitionId());
-    assertEquals(deploymentId, activateEntry.getDeploymentId());
+    assertThat(activateEntry.getProcessDefinitionKey()).isEqualTo("oneTaskProcess");
+    assertThat(activateEntry.getProcessDefinitionId()).isEqualTo(process.getProcessDefinitionId());
+    assertThat(activateEntry.getDeploymentId()).isEqualTo(deploymentId);
 
-    assertEquals("suspensionState", activateEntry.getProperty());
-    assertEquals("active", activateEntry.getNewValue());
+    assertThat(activateEntry.getProperty()).isEqualTo("suspensionState");
+    assertThat(activateEntry.getNewValue()).isEqualTo("active");
     assertNull(activateEntry.getOrgValue());
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, activateEntry.getCategory());
+    assertThat(activateEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
   }
 
   @Deployment(resources = {ONE_TASK_PROCESS})
@@ -305,7 +306,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     runtimeService.activateProcessInstanceByProcessDefinitionKey("oneTaskProcess");
 
     // then
-    assertEquals(3, query().entityType(PROCESS_INSTANCE).count());
+    assertThat(query().entityType(PROCESS_INSTANCE).count()).isEqualTo(3);
 
     UserOperationLogEntry suspendEntry = query()
         .entityType(PROCESS_INSTANCE)
@@ -316,13 +317,13 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     assertNotNull(suspendEntry);
     assertNull(suspendEntry.getProcessInstanceId());
     assertNull(suspendEntry.getProcessDefinitionId());
-    assertEquals("oneTaskProcess", suspendEntry.getProcessDefinitionKey());
+    assertThat(suspendEntry.getProcessDefinitionKey()).isEqualTo("oneTaskProcess");
     assertNull(suspendEntry.getDeploymentId());
 
-    assertEquals("suspensionState", suspendEntry.getProperty());
-    assertEquals("suspended", suspendEntry.getNewValue());
+    assertThat(suspendEntry.getProperty()).isEqualTo("suspensionState");
+    assertThat(suspendEntry.getNewValue()).isEqualTo("suspended");
     assertNull(suspendEntry.getOrgValue());
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, suspendEntry.getCategory());
+    assertThat(suspendEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
     UserOperationLogEntry activateEntry = query()
         .entityType(PROCESS_INSTANCE)
@@ -333,13 +334,13 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     assertNotNull(activateEntry);
     assertNull(activateEntry.getProcessInstanceId());
     assertNull(activateEntry.getProcessDefinitionId());
-    assertEquals("oneTaskProcess", activateEntry.getProcessDefinitionKey());
+    assertThat(activateEntry.getProcessDefinitionKey()).isEqualTo("oneTaskProcess");
     assertNull(activateEntry.getDeploymentId());
 
-    assertEquals("suspensionState", activateEntry.getProperty());
-    assertEquals("active", activateEntry.getNewValue());
+    assertThat(activateEntry.getProperty()).isEqualTo("suspensionState");
+    assertThat(activateEntry.getNewValue()).isEqualTo("active");
     assertNull(activateEntry.getOrgValue());
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, activateEntry.getCategory());
+    assertThat(activateEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
   }
 
   /**
@@ -357,7 +358,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     repositoryService.activateProcessDefinitionById(process.getProcessDefinitionId(), true, null);
 
     // then
-    assertEquals(2, query().entityType(PROCESS_DEFINITION).property(SUSPENSION_STATE_PROPERTY).count());
+    assertThat(query().entityType(PROCESS_DEFINITION).property(SUSPENSION_STATE_PROPERTY).count()).isEqualTo(2);
 
     // Process Definition Suspension
     UserOperationLogEntry suspendDefinitionEntry = query()
@@ -368,14 +369,14 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
       .singleResult();
 
     assertNotNull(suspendDefinitionEntry);
-    assertEquals(process.getProcessDefinitionId(), suspendDefinitionEntry.getProcessDefinitionId());
-    assertEquals("oneTaskProcess", suspendDefinitionEntry.getProcessDefinitionKey());
-    assertEquals(deploymentId, suspendDefinitionEntry.getDeploymentId());
+    assertThat(suspendDefinitionEntry.getProcessDefinitionId()).isEqualTo(process.getProcessDefinitionId());
+    assertThat(suspendDefinitionEntry.getProcessDefinitionKey()).isEqualTo("oneTaskProcess");
+    assertThat(suspendDefinitionEntry.getDeploymentId()).isEqualTo(deploymentId);
 
-    assertEquals(SUSPENSION_STATE_PROPERTY, suspendDefinitionEntry.getProperty());
-    assertEquals("suspended", suspendDefinitionEntry.getNewValue());
+    assertThat(suspendDefinitionEntry.getProperty()).isEqualTo(SUSPENSION_STATE_PROPERTY);
+    assertThat(suspendDefinitionEntry.getNewValue()).isEqualTo("suspended");
     assertNull(suspendDefinitionEntry.getOrgValue());
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, suspendDefinitionEntry.getCategory());
+    assertThat(suspendDefinitionEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
     UserOperationLogEntry activateDefinitionEntry = query()
       .entityType(PROCESS_DEFINITION)
@@ -385,14 +386,14 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
       .singleResult();
 
     assertNotNull(activateDefinitionEntry);
-    assertEquals(process.getProcessDefinitionId(), activateDefinitionEntry.getProcessDefinitionId());
-    assertEquals("oneTaskProcess", activateDefinitionEntry.getProcessDefinitionKey());
-    assertEquals(deploymentId, activateDefinitionEntry.getDeploymentId());
+    assertThat(activateDefinitionEntry.getProcessDefinitionId()).isEqualTo(process.getProcessDefinitionId());
+    assertThat(activateDefinitionEntry.getProcessDefinitionKey()).isEqualTo("oneTaskProcess");
+    assertThat(activateDefinitionEntry.getDeploymentId()).isEqualTo(deploymentId);
 
-    assertEquals(SUSPENSION_STATE_PROPERTY, activateDefinitionEntry.getProperty());
-    assertEquals("active", activateDefinitionEntry.getNewValue());
+    assertThat(activateDefinitionEntry.getProperty()).isEqualTo(SUSPENSION_STATE_PROPERTY);
+    assertThat(activateDefinitionEntry.getNewValue()).isEqualTo("active");
     assertNull(activateDefinitionEntry.getOrgValue());
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, activateDefinitionEntry.getCategory());
+    assertThat(activateDefinitionEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
   }
 
@@ -410,7 +411,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     repositoryService.activateProcessDefinitionByKey("oneTaskProcess", true, null);
 
     // then
-    assertEquals(2, query().entityType(PROCESS_DEFINITION).property(SUSPENSION_STATE_PROPERTY).count());
+    assertThat(query().entityType(PROCESS_DEFINITION).property(SUSPENSION_STATE_PROPERTY).count()).isEqualTo(2);
 
     UserOperationLogEntry suspendDefinitionEntry = query()
       .entityType(PROCESS_DEFINITION)
@@ -421,13 +422,13 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
 
     assertNotNull(suspendDefinitionEntry);
     assertNull(suspendDefinitionEntry.getProcessDefinitionId());
-    assertEquals("oneTaskProcess", suspendDefinitionEntry.getProcessDefinitionKey());
+    assertThat(suspendDefinitionEntry.getProcessDefinitionKey()).isEqualTo("oneTaskProcess");
     assertNull(suspendDefinitionEntry.getDeploymentId());
 
-    assertEquals(SUSPENSION_STATE_PROPERTY, suspendDefinitionEntry.getProperty());
-    assertEquals("suspended", suspendDefinitionEntry.getNewValue());
+    assertThat(suspendDefinitionEntry.getProperty()).isEqualTo(SUSPENSION_STATE_PROPERTY);
+    assertThat(suspendDefinitionEntry.getNewValue()).isEqualTo("suspended");
     assertNull(suspendDefinitionEntry.getOrgValue());
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, suspendDefinitionEntry.getCategory());
+    assertThat(suspendDefinitionEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
     UserOperationLogEntry activateDefinitionEntry = query()
       .entityType(PROCESS_DEFINITION)
@@ -438,13 +439,13 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
 
     assertNotNull(activateDefinitionEntry);
     assertNull(activateDefinitionEntry.getProcessDefinitionId());
-    assertEquals("oneTaskProcess", activateDefinitionEntry.getProcessDefinitionKey());
+    assertThat(activateDefinitionEntry.getProcessDefinitionKey()).isEqualTo("oneTaskProcess");
     assertNull(activateDefinitionEntry.getDeploymentId());
 
-    assertEquals(SUSPENSION_STATE_PROPERTY, activateDefinitionEntry.getProperty());
-    assertEquals("active", activateDefinitionEntry.getNewValue());
+    assertThat(activateDefinitionEntry.getProperty()).isEqualTo(SUSPENSION_STATE_PROPERTY);
+    assertThat(activateDefinitionEntry.getNewValue()).isEqualTo("active");
     assertNull(activateDefinitionEntry.getOrgValue());
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, activateDefinitionEntry.getCategory());
+    assertThat(activateDefinitionEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
   }
 
   @Deployment(resources = {ONE_TASK_PROCESS})
@@ -458,8 +459,8 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     repositoryService.activateProcessDefinitionById(process.getProcessDefinitionId(), true, null);
 
     // then
-    assertEquals(2, query().entityType(PROCESS_DEFINITION).operationType(OPERATION_TYPE_SUSPEND_PROCESS_DEFINITION).count());
-    assertEquals(2, query().entityType(PROCESS_DEFINITION).operationType(OPERATION_TYPE_ACTIVATE_PROCESS_DEFINITION).count());
+    assertThat(query().entityType(PROCESS_DEFINITION).operationType(OPERATION_TYPE_SUSPEND_PROCESS_DEFINITION).count()).isEqualTo(2);
+    assertThat(query().entityType(PROCESS_DEFINITION).operationType(OPERATION_TYPE_ACTIVATE_PROCESS_DEFINITION).count()).isEqualTo(2);
 
     // Process Definition Suspension
     Set<String> actualProperties = query()
@@ -471,10 +472,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
       .map(UserOperationLogEntry::getProperty)
       .collect(Collectors.toSet());
 
-    assertEquals(
-      actualProperties,
-      new HashSet<>(Arrays.asList(INCLUDE_PROCESS_INSTANCES_PROPERTY, SUSPENSION_STATE_PROPERTY))
-    );
+    assertThat(new HashSet<>(Arrays.asList(INCLUDE_PROCESS_INSTANCES_PROPERTY, SUSPENSION_STATE_PROPERTY))).isEqualTo(actualProperties);
 
     // Process Definition activation
     actualProperties = query()
@@ -486,10 +484,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
       .map(UserOperationLogEntry::getProperty)
       .collect(Collectors.toSet());
 
-    assertEquals(
-      actualProperties,
-      new HashSet<>(Arrays.asList(INCLUDE_PROCESS_INSTANCES_PROPERTY, SUSPENSION_STATE_PROPERTY))
-    );
+    assertThat(new HashSet<>(Arrays.asList(INCLUDE_PROCESS_INSTANCES_PROPERTY, SUSPENSION_STATE_PROPERTY))).isEqualTo(actualProperties);
   }
 
   @Deployment(resources = {ONE_TASK_PROCESS})
@@ -504,7 +499,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     repositoryService.activateProcessDefinitionById(process.getProcessDefinitionId(), true, null);
 
     // then
-    assertEquals(2, query().entityType(PROCESS_DEFINITION).property(INCLUDE_PROCESS_INSTANCES_PROPERTY).count());
+    assertThat(query().entityType(PROCESS_DEFINITION).property(INCLUDE_PROCESS_INSTANCES_PROPERTY).count()).isEqualTo(2);
 
     // Process Definition Suspension
     UserOperationLogEntry suspendDefinitionEntry = query()
@@ -515,14 +510,14 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
       .singleResult();
 
     assertNotNull(suspendDefinitionEntry);
-    assertEquals(process.getProcessDefinitionId(), suspendDefinitionEntry.getProcessDefinitionId());
-    assertEquals("oneTaskProcess", suspendDefinitionEntry.getProcessDefinitionKey());
-    assertEquals(deploymentId, suspendDefinitionEntry.getDeploymentId());
+    assertThat(suspendDefinitionEntry.getProcessDefinitionId()).isEqualTo(process.getProcessDefinitionId());
+    assertThat(suspendDefinitionEntry.getProcessDefinitionKey()).isEqualTo("oneTaskProcess");
+    assertThat(suspendDefinitionEntry.getDeploymentId()).isEqualTo(deploymentId);
 
-    assertEquals(INCLUDE_PROCESS_INSTANCES_PROPERTY, suspendDefinitionEntry.getProperty());
-    assertEquals("true", suspendDefinitionEntry.getNewValue());
+    assertThat(suspendDefinitionEntry.getProperty()).isEqualTo(INCLUDE_PROCESS_INSTANCES_PROPERTY);
+    assertThat(suspendDefinitionEntry.getNewValue()).isEqualTo("true");
     assertNull(suspendDefinitionEntry.getOrgValue());
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, suspendDefinitionEntry.getCategory());
+    assertThat(suspendDefinitionEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
     // Process Definition Activation
     UserOperationLogEntry activeDefinitionEntry = query()
@@ -533,14 +528,14 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
       .singleResult();
 
     assertNotNull(activeDefinitionEntry);
-    assertEquals(process.getProcessDefinitionId(), activeDefinitionEntry.getProcessDefinitionId());
-    assertEquals("oneTaskProcess", activeDefinitionEntry.getProcessDefinitionKey());
-    assertEquals(deploymentId, activeDefinitionEntry.getDeploymentId());
+    assertThat(activeDefinitionEntry.getProcessDefinitionId()).isEqualTo(process.getProcessDefinitionId());
+    assertThat(activeDefinitionEntry.getProcessDefinitionKey()).isEqualTo("oneTaskProcess");
+    assertThat(activeDefinitionEntry.getDeploymentId()).isEqualTo(deploymentId);
 
-    assertEquals(INCLUDE_PROCESS_INSTANCES_PROPERTY, activeDefinitionEntry.getProperty());
-    assertEquals("true", activeDefinitionEntry.getNewValue());
+    assertThat(activeDefinitionEntry.getProperty()).isEqualTo(INCLUDE_PROCESS_INSTANCES_PROPERTY);
+    assertThat(activeDefinitionEntry.getNewValue()).isEqualTo("true");
     assertNull(activeDefinitionEntry.getOrgValue());
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, activeDefinitionEntry.getCategory());
+    assertThat(activeDefinitionEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
   }
 
   @Deployment(resources = {ONE_TASK_PROCESS})
@@ -555,7 +550,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     repositoryService.activateProcessDefinitionById(process.getProcessDefinitionId(), true, null);
 
     // then
-    assertEquals(2, query().entityType(PROCESS_DEFINITION).property(INCLUDE_PROCESS_INSTANCES_PROPERTY).count());
+    assertThat(query().entityType(PROCESS_DEFINITION).property(INCLUDE_PROCESS_INSTANCES_PROPERTY).count()).isEqualTo(2);
 
     // Process Definition Suspension
     UserOperationLogEntry suspendDefinitionEntry = query()
@@ -566,14 +561,14 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
       .singleResult();
 
     assertNotNull(suspendDefinitionEntry);
-    assertEquals(process.getProcessDefinitionId(), suspendDefinitionEntry.getProcessDefinitionId());
-    assertEquals("oneTaskProcess", suspendDefinitionEntry.getProcessDefinitionKey());
-    assertEquals(deploymentId, suspendDefinitionEntry.getDeploymentId());
+    assertThat(suspendDefinitionEntry.getProcessDefinitionId()).isEqualTo(process.getProcessDefinitionId());
+    assertThat(suspendDefinitionEntry.getProcessDefinitionKey()).isEqualTo("oneTaskProcess");
+    assertThat(suspendDefinitionEntry.getDeploymentId()).isEqualTo(deploymentId);
 
-    assertEquals(INCLUDE_PROCESS_INSTANCES_PROPERTY, suspendDefinitionEntry.getProperty());
-    assertEquals("false", suspendDefinitionEntry.getNewValue());
+    assertThat(suspendDefinitionEntry.getProperty()).isEqualTo(INCLUDE_PROCESS_INSTANCES_PROPERTY);
+    assertThat(suspendDefinitionEntry.getNewValue()).isEqualTo("false");
     assertNull(suspendDefinitionEntry.getOrgValue());
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, suspendDefinitionEntry.getCategory());
+    assertThat(suspendDefinitionEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
     // Process Definition Activation
     UserOperationLogEntry activeDefinitionEntry = query()
@@ -584,14 +579,14 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
       .singleResult();
 
     assertNotNull(activeDefinitionEntry);
-    assertEquals(process.getProcessDefinitionId(), activeDefinitionEntry.getProcessDefinitionId());
-    assertEquals("oneTaskProcess", activeDefinitionEntry.getProcessDefinitionKey());
-    assertEquals(deploymentId, activeDefinitionEntry.getDeploymentId());
+    assertThat(activeDefinitionEntry.getProcessDefinitionId()).isEqualTo(process.getProcessDefinitionId());
+    assertThat(activeDefinitionEntry.getProcessDefinitionKey()).isEqualTo("oneTaskProcess");
+    assertThat(activeDefinitionEntry.getDeploymentId()).isEqualTo(deploymentId);
 
-    assertEquals(INCLUDE_PROCESS_INSTANCES_PROPERTY, activeDefinitionEntry.getProperty());
-    assertEquals("true", activeDefinitionEntry.getNewValue());
+    assertThat(activeDefinitionEntry.getProperty()).isEqualTo(INCLUDE_PROCESS_INSTANCES_PROPERTY);
+    assertThat(activeDefinitionEntry.getNewValue()).isEqualTo("true");
     assertNull(activeDefinitionEntry.getOrgValue());
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, activeDefinitionEntry.getCategory());
+    assertThat(activeDefinitionEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
   }
 
   @Deployment(resources = {ONE_TASK_PROCESS})
@@ -605,8 +600,8 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     repositoryService.activateProcessDefinitionByKey("oneTaskProcess", true, null);
 
     // then
-    assertEquals(2, query().entityType(PROCESS_DEFINITION).operationType(OPERATION_TYPE_SUSPEND_PROCESS_DEFINITION).count());
-    assertEquals(2, query().entityType(PROCESS_DEFINITION).operationType(OPERATION_TYPE_ACTIVATE_PROCESS_DEFINITION).count());
+    assertThat(query().entityType(PROCESS_DEFINITION).operationType(OPERATION_TYPE_SUSPEND_PROCESS_DEFINITION).count()).isEqualTo(2);
+    assertThat(query().entityType(PROCESS_DEFINITION).operationType(OPERATION_TYPE_ACTIVATE_PROCESS_DEFINITION).count()).isEqualTo(2);
 
     // Process Definition Suspension
     Set<String> actualProperties = query()
@@ -618,10 +613,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
       .map(UserOperationLogEntry::getProperty)
       .collect(Collectors.toSet());
 
-    assertEquals(
-      actualProperties,
-      new HashSet<>(Arrays.asList(INCLUDE_PROCESS_INSTANCES_PROPERTY, SUSPENSION_STATE_PROPERTY))
-    );
+    assertThat(new HashSet<>(Arrays.asList(INCLUDE_PROCESS_INSTANCES_PROPERTY, SUSPENSION_STATE_PROPERTY))).isEqualTo(actualProperties);
 
     // Process Definition activation
     actualProperties = query()
@@ -633,10 +625,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
       .map(UserOperationLogEntry::getProperty)
       .collect(Collectors.toSet());
 
-    assertEquals(
-      actualProperties,
-      new HashSet<>(Arrays.asList(INCLUDE_PROCESS_INSTANCES_PROPERTY, SUSPENSION_STATE_PROPERTY))
-    );
+    assertThat(new HashSet<>(Arrays.asList(INCLUDE_PROCESS_INSTANCES_PROPERTY, SUSPENSION_STATE_PROPERTY))).isEqualTo(actualProperties);
   }
 
   @Deployment(resources = {ONE_TASK_PROCESS})
@@ -650,7 +639,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     repositoryService.activateProcessDefinitionByKey("oneTaskProcess", true, null);
 
     // then
-    assertEquals(2, query().entityType(PROCESS_DEFINITION).property(INCLUDE_PROCESS_INSTANCES_PROPERTY).count());
+    assertThat(query().entityType(PROCESS_DEFINITION).property(INCLUDE_PROCESS_INSTANCES_PROPERTY).count()).isEqualTo(2);
 
     // Process Definition Suspension
     UserOperationLogEntry suspendDefinitionEntry = query()
@@ -662,13 +651,13 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
 
     assertNotNull(suspendDefinitionEntry);
     assertNull(suspendDefinitionEntry.getProcessDefinitionId());
-    assertEquals("oneTaskProcess", suspendDefinitionEntry.getProcessDefinitionKey());
+    assertThat(suspendDefinitionEntry.getProcessDefinitionKey()).isEqualTo("oneTaskProcess");
     assertNull(suspendDefinitionEntry.getDeploymentId());
 
-    assertEquals(INCLUDE_PROCESS_INSTANCES_PROPERTY, suspendDefinitionEntry.getProperty());
-    assertEquals("true", suspendDefinitionEntry.getNewValue());
+    assertThat(suspendDefinitionEntry.getProperty()).isEqualTo(INCLUDE_PROCESS_INSTANCES_PROPERTY);
+    assertThat(suspendDefinitionEntry.getNewValue()).isEqualTo("true");
     assertNull(suspendDefinitionEntry.getOrgValue());
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, suspendDefinitionEntry.getCategory());
+    assertThat(suspendDefinitionEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
     // Process Definition Activation
     UserOperationLogEntry activeDefinitionEntry = query()
@@ -680,13 +669,13 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
 
     assertNotNull(activeDefinitionEntry);
     assertNull(activeDefinitionEntry.getProcessDefinitionId());
-    assertEquals("oneTaskProcess", activeDefinitionEntry.getProcessDefinitionKey());
+    assertThat(activeDefinitionEntry.getProcessDefinitionKey()).isEqualTo("oneTaskProcess");
     assertNull(activeDefinitionEntry.getDeploymentId());
 
-    assertEquals(INCLUDE_PROCESS_INSTANCES_PROPERTY, activeDefinitionEntry.getProperty());
-    assertEquals("true", activeDefinitionEntry.getNewValue());
+    assertThat(activeDefinitionEntry.getProperty()).isEqualTo(INCLUDE_PROCESS_INSTANCES_PROPERTY);
+    assertThat(activeDefinitionEntry.getNewValue()).isEqualTo("true");
     assertNull(activeDefinitionEntry.getOrgValue());
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, activeDefinitionEntry.getCategory());
+    assertThat(activeDefinitionEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
   }
 
   @Deployment(resources = {ONE_TASK_PROCESS})
@@ -700,7 +689,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     repositoryService.activateProcessDefinitionByKey("oneTaskProcess", false, null);
 
     // then
-    assertEquals(2, query().entityType(PROCESS_DEFINITION).property(INCLUDE_PROCESS_INSTANCES_PROPERTY).count());
+    assertThat(query().entityType(PROCESS_DEFINITION).property(INCLUDE_PROCESS_INSTANCES_PROPERTY).count()).isEqualTo(2);
 
     // Process Definition Suspension
     UserOperationLogEntry suspendDefinitionEntry = query()
@@ -712,13 +701,13 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
 
     assertNotNull(suspendDefinitionEntry);
     assertNull(suspendDefinitionEntry.getProcessDefinitionId());
-    assertEquals("oneTaskProcess", suspendDefinitionEntry.getProcessDefinitionKey());
+    assertThat(suspendDefinitionEntry.getProcessDefinitionKey()).isEqualTo("oneTaskProcess");
     assertNull(suspendDefinitionEntry.getDeploymentId());
 
-    assertEquals(INCLUDE_PROCESS_INSTANCES_PROPERTY, suspendDefinitionEntry.getProperty());
-    assertEquals("false", suspendDefinitionEntry.getNewValue());
+    assertThat(suspendDefinitionEntry.getProperty()).isEqualTo(INCLUDE_PROCESS_INSTANCES_PROPERTY);
+    assertThat(suspendDefinitionEntry.getNewValue()).isEqualTo("false");
     assertNull(suspendDefinitionEntry.getOrgValue());
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, suspendDefinitionEntry.getCategory());
+    assertThat(suspendDefinitionEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
     // Process Definition Activation
     UserOperationLogEntry activeDefinitionEntry = query()
@@ -730,13 +719,13 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
 
     assertNotNull(activeDefinitionEntry);
     assertNull(activeDefinitionEntry.getProcessDefinitionId());
-    assertEquals("oneTaskProcess", activeDefinitionEntry.getProcessDefinitionKey());
+    assertThat(activeDefinitionEntry.getProcessDefinitionKey()).isEqualTo("oneTaskProcess");
     assertNull(activeDefinitionEntry.getDeploymentId());
 
-    assertEquals(INCLUDE_PROCESS_INSTANCES_PROPERTY, activeDefinitionEntry.getProperty());
-    assertEquals("false", activeDefinitionEntry.getNewValue());
+    assertThat(activeDefinitionEntry.getProperty()).isEqualTo(INCLUDE_PROCESS_INSTANCES_PROPERTY);
+    assertThat(activeDefinitionEntry.getNewValue()).isEqualTo("false");
     assertNull(activeDefinitionEntry.getOrgValue());
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, activeDefinitionEntry.getCategory());
+    assertThat(activeDefinitionEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})
@@ -753,8 +742,8 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     managementService.activateJobByProcessInstanceId(process.getId());
 
     // then
-    assertEquals(2, query().entityType(JOB_DEFINITION).count());
-    assertEquals(2, query().entityType(JOB).count());
+    assertThat(query().entityType(JOB_DEFINITION).count()).isEqualTo(2);
+    assertThat(query().entityType(JOB).count()).isEqualTo(2);
 
     // active job definition
     UserOperationLogEntry activeJobDefinitionEntry = query()
@@ -764,13 +753,13 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
       .singleResult();
 
     assertNotNull(activeJobDefinitionEntry);
-    assertEquals(process.getProcessDefinitionId(), activeJobDefinitionEntry.getProcessDefinitionId());
-    assertEquals(deploymentId, activeJobDefinitionEntry.getDeploymentId());
+    assertThat(activeJobDefinitionEntry.getProcessDefinitionId()).isEqualTo(process.getProcessDefinitionId());
+    assertThat(activeJobDefinitionEntry.getDeploymentId()).isEqualTo(deploymentId);
 
-    assertEquals("suspensionState", activeJobDefinitionEntry.getProperty());
-    assertEquals("active", activeJobDefinitionEntry.getNewValue());
+    assertThat(activeJobDefinitionEntry.getProperty()).isEqualTo("suspensionState");
+    assertThat(activeJobDefinitionEntry.getNewValue()).isEqualTo("active");
     assertNull(activeJobDefinitionEntry.getOrgValue());
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, activeJobDefinitionEntry.getCategory());
+    assertThat(activeJobDefinitionEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
     // active job
     UserOperationLogEntry activateJobIdEntry = query()
@@ -780,13 +769,13 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
       .singleResult();
 
     assertNotNull(activateJobIdEntry);
-    assertEquals(process.getProcessInstanceId(), activateJobIdEntry.getProcessInstanceId());
-    assertEquals(deploymentId, activateJobIdEntry.getDeploymentId());
+    assertThat(activateJobIdEntry.getProcessInstanceId()).isEqualTo(process.getProcessInstanceId());
+    assertThat(activateJobIdEntry.getDeploymentId()).isEqualTo(deploymentId);
 
-    assertEquals("suspensionState", activateJobIdEntry.getProperty());
-    assertEquals("active", activateJobIdEntry.getNewValue());
+    assertThat(activateJobIdEntry.getProperty()).isEqualTo("suspensionState");
+    assertThat(activateJobIdEntry.getNewValue()).isEqualTo("active");
     assertNull(activateJobIdEntry.getOrgValue());
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, activateJobIdEntry.getCategory());
+    assertThat(activateJobIdEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
     // suspended job definition
     UserOperationLogEntry suspendJobDefinitionEntry = query()
@@ -796,13 +785,13 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
       .singleResult();
 
     assertNotNull(suspendJobDefinitionEntry);
-    assertEquals(process.getProcessDefinitionId(), suspendJobDefinitionEntry.getProcessDefinitionId());
-    assertEquals(deploymentId, suspendJobDefinitionEntry.getDeploymentId());
+    assertThat(suspendJobDefinitionEntry.getProcessDefinitionId()).isEqualTo(process.getProcessDefinitionId());
+    assertThat(suspendJobDefinitionEntry.getDeploymentId()).isEqualTo(deploymentId);
 
-    assertEquals("suspensionState", suspendJobDefinitionEntry.getProperty());
-    assertEquals("suspended", suspendJobDefinitionEntry.getNewValue());
+    assertThat(suspendJobDefinitionEntry.getProperty()).isEqualTo("suspensionState");
+    assertThat(suspendJobDefinitionEntry.getNewValue()).isEqualTo("suspended");
     assertNull(suspendJobDefinitionEntry.getOrgValue());
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, suspendJobDefinitionEntry.getCategory());
+    assertThat(suspendJobDefinitionEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
     // suspended job
     UserOperationLogEntry suspendedJobEntry = query()
@@ -812,13 +801,13 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
       .singleResult();
 
     assertNotNull(suspendedJobEntry);
-    assertEquals(process.getProcessInstanceId(), suspendedJobEntry.getProcessInstanceId());
-    assertEquals(deploymentId, suspendedJobEntry.getDeploymentId());
+    assertThat(suspendedJobEntry.getProcessInstanceId()).isEqualTo(process.getProcessInstanceId());
+    assertThat(suspendedJobEntry.getDeploymentId()).isEqualTo(deploymentId);
 
-    assertEquals("suspensionState", suspendedJobEntry.getProperty());
-    assertEquals("suspended", suspendedJobEntry.getNewValue());
+    assertThat(suspendedJobEntry.getProperty()).isEqualTo("suspensionState");
+    assertThat(suspendedJobEntry.getNewValue()).isEqualTo("suspended");
     assertNull(suspendedJobEntry.getOrgValue());
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, suspendedJobEntry.getCategory());
+    assertThat(suspendedJobEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedServiceTask.bpmn20.xml" })
@@ -832,7 +821,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     managementService.setJobRetries(job.getId(), 10);
 
     // then
-    assertEquals(1, query().entityType(JOB).operationType(OPERATION_TYPE_SET_JOB_RETRIES).count());
+    assertThat(query().entityType(JOB).operationType(OPERATION_TYPE_SET_JOB_RETRIES).count()).isEqualTo(1);
 
     UserOperationLogEntry jobRetryEntry = query()
       .entityType(JOB)
@@ -841,17 +830,17 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
       .singleResult();
 
     assertNotNull(jobRetryEntry);
-    assertEquals(job.getId(), jobRetryEntry.getJobId());
+    assertThat(jobRetryEntry.getJobId()).isEqualTo(job.getId());
 
-    assertEquals("3", jobRetryEntry.getOrgValue());
-    assertEquals("10", jobRetryEntry.getNewValue());
-    assertEquals("retries", jobRetryEntry.getProperty());
-    assertEquals(job.getJobDefinitionId(), jobRetryEntry.getJobDefinitionId());
-    assertEquals(job.getProcessInstanceId(), jobRetryEntry.getProcessInstanceId());
-    assertEquals(job.getProcessDefinitionKey(), jobRetryEntry.getProcessDefinitionKey());
-    assertEquals(job.getProcessDefinitionId(), jobRetryEntry.getProcessDefinitionId());
-    assertEquals(deploymentId, jobRetryEntry.getDeploymentId());
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, jobRetryEntry.getCategory());
+    assertThat(jobRetryEntry.getOrgValue()).isEqualTo("3");
+    assertThat(jobRetryEntry.getNewValue()).isEqualTo("10");
+    assertThat(jobRetryEntry.getProperty()).isEqualTo("retries");
+    assertThat(jobRetryEntry.getJobDefinitionId()).isEqualTo(job.getJobDefinitionId());
+    assertThat(jobRetryEntry.getProcessInstanceId()).isEqualTo(job.getProcessInstanceId());
+    assertThat(jobRetryEntry.getProcessDefinitionKey()).isEqualTo(job.getProcessDefinitionKey());
+    assertThat(jobRetryEntry.getProcessDefinitionId()).isEqualTo(job.getProcessDefinitionId());
+    assertThat(jobRetryEntry.getDeploymentId()).isEqualTo(deploymentId);
+    assertThat(jobRetryEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
   }
 
   @Deployment(resources = {ONE_TASK_PROCESS})
@@ -884,7 +873,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
       .category(UserOperationLogEntry.CATEGORY_OPERATOR)
       .count();
 
-    assertEquals(1, jobDefinitionEntryCount.longValue());
+    assertThat(jobDefinitionEntryCount.longValue()).isEqualTo(1);
 
     // there exists a job for the delayed activation execution
     JobQuery jobQuery = managementService.createJobQuery();
@@ -902,7 +891,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
       .category(UserOperationLogEntry.CATEGORY_OPERATOR)
       .count();
 
-    assertEquals(1, jobDefinitionEntryCount.longValue());
+    assertThat(jobDefinitionEntryCount.longValue()).isEqualTo(1);
 
     // Clean up db
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
@@ -944,7 +933,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
       .property(SUSPENSION_STATE_PROPERTY)
       .count();
 
-    assertEquals(1, processDefinitionEntryCount.longValue());
+    assertThat(processDefinitionEntryCount.longValue()).isEqualTo(1);
 
     // when
     // execute job
@@ -960,7 +949,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
       .property(SUSPENSION_STATE_PROPERTY)
       .count();
 
-    assertEquals(1, processDefinitionEntryCount.longValue());
+    assertThat(processDefinitionEntryCount.longValue()).isEqualTo(1);
 
     // clean up op log
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
@@ -990,19 +979,19 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
       .entityType(EntityTypes.PROCESS_INSTANCE)
       .operationType(UserOperationLogEntry.OPERATION_TYPE_MODIFY_PROCESS_INSTANCE);
 
-    assertEquals(1, logQuery.count());
+    assertThat(logQuery.count()).isEqualTo(1);
     UserOperationLogEntry logEntry = logQuery.singleResult();
 
-    assertEquals(processInstanceId, logEntry.getProcessInstanceId());
-    assertEquals(processInstance.getProcessDefinitionId(), logEntry.getProcessDefinitionId());
-    assertEquals(definition.getKey(), logEntry.getProcessDefinitionKey());
-    assertEquals(deploymentId, logEntry.getDeploymentId());
-    assertEquals(UserOperationLogEntry.OPERATION_TYPE_MODIFY_PROCESS_INSTANCE, logEntry.getOperationType());
-    assertEquals(EntityTypes.PROCESS_INSTANCE, logEntry.getEntityType());
+    assertThat(logEntry.getProcessInstanceId()).isEqualTo(processInstanceId);
+    assertThat(logEntry.getProcessDefinitionId()).isEqualTo(processInstance.getProcessDefinitionId());
+    assertThat(logEntry.getProcessDefinitionKey()).isEqualTo(definition.getKey());
+    assertThat(logEntry.getDeploymentId()).isEqualTo(deploymentId);
+    assertThat(logEntry.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_MODIFY_PROCESS_INSTANCE);
+    assertThat(logEntry.getEntityType()).isEqualTo(EntityTypes.PROCESS_INSTANCE);
     assertNull(logEntry.getProperty());
     assertNull(logEntry.getOrgValue());
     assertNull(logEntry.getNewValue());
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, logEntry.getCategory());
+    assertThat(logEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
   }
 
   // ----- ADD VARIABLES -----
@@ -1444,10 +1433,10 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     // then
     String operationType = UserOperationLogEntry.OPERATION_TYPE_DELETE_HISTORY;
     UserOperationLogQuery logQuery = query().entityType(EntityTypes.VARIABLE).operationType(operationType);
-    assertEquals(1, logQuery.count());
+    assertThat(logQuery.count()).isEqualTo(1);
 
     UserOperationLogEntry logEntry = logQuery.singleResult();
-    assertEquals(task.getId(), logEntry.getTaskId());
+    assertThat(logEntry.getTaskId()).isEqualTo(task.getId());
     assertNull(logEntry.getDeploymentId());
     verifySingleVariableOperationPropertyChange("name", "testVariable", UserOperationLogEntry.OPERATION_TYPE_DELETE_HISTORY);
 
@@ -1463,7 +1452,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     runtimeService.setVariable(process.getId(), "testVariable", "test2");
     runtimeService.setVariable(process.getId(), "testVariable2", "test");
     runtimeService.setVariable(process.getId(), "testVariable2", "test2");
-    assertEquals(2, historyService.createHistoricVariableInstanceQuery().count());
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(2);
 
     // when
     historyService.deleteHistoricVariableInstancesByProcessInstanceId(process.getId());
@@ -1480,7 +1469,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     runtimeService.setVariable(process.getId(), "testVariable", "test");
     runtimeService.setVariable(process.getId(), "testVariable2", "test");
     runtimeService.deleteProcessInstance(process.getId(), "none");
-    assertEquals(2, historyService.createHistoricVariableInstanceQuery().count());
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(2);
 
     // when
     historyService.deleteHistoricVariableInstancesByProcessInstanceId(process.getId());
@@ -1693,8 +1682,8 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
   }
 
   private void verifyQueryResults(UserOperationLogQuery query, int countExpected) {
-    assertEquals(countExpected, query.list().size());
-    assertEquals(countExpected, query.count());
+    assertThat(query.list().size()).isEqualTo(countExpected);
+    assertThat(query.count()).isEqualTo(countExpected);
 
     if (countExpected == 1) {
       assertNotNull(query.singleResult());
@@ -1731,72 +1720,72 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
   private void verifyVariableOperationAsserts(int countAssertValue, String operationType, String category) {
     String deploymentId = repositoryService.createDeploymentQuery().singleResult().getId();
     UserOperationLogQuery logQuery = query().entityType(EntityTypes.VARIABLE).operationType(operationType);
-    assertEquals(countAssertValue, logQuery.count());
+    assertThat(logQuery.count()).isEqualTo(countAssertValue);
 
     if(countAssertValue > 1) {
       List<UserOperationLogEntry> logEntryList = logQuery.list();
 
       for (UserOperationLogEntry logEntry : logEntryList) {
-        assertEquals(process.getProcessDefinitionId(), logEntry.getProcessDefinitionId());
-        assertEquals(process.getProcessInstanceId(), logEntry.getProcessInstanceId());
-        assertEquals(deploymentId, logEntry.getDeploymentId());
-        assertEquals(category, logEntry.getCategory());
+        assertThat(logEntry.getProcessDefinitionId()).isEqualTo(process.getProcessDefinitionId());
+        assertThat(logEntry.getProcessInstanceId()).isEqualTo(process.getProcessInstanceId());
+        assertThat(logEntry.getDeploymentId()).isEqualTo(deploymentId);
+        assertThat(logEntry.getCategory()).isEqualTo(category);
       }
     } else {
       UserOperationLogEntry logEntry = logQuery.singleResult();
-      assertEquals(process.getProcessDefinitionId(), logEntry.getProcessDefinitionId());
-      assertEquals(process.getProcessInstanceId(), logEntry.getProcessInstanceId());
-      assertEquals(deploymentId, logEntry.getDeploymentId());
-      assertEquals(category, logEntry.getCategory());
+      assertThat(logEntry.getProcessDefinitionId()).isEqualTo(process.getProcessDefinitionId());
+      assertThat(logEntry.getProcessInstanceId()).isEqualTo(process.getProcessInstanceId());
+      assertThat(logEntry.getDeploymentId()).isEqualTo(deploymentId);
+      assertThat(logEntry.getCategory()).isEqualTo(category);
     }
   }
 
   private void verifyHistoricVariableOperationAsserts(int countAssertValue, String operationType) {
     String deploymentId = repositoryService.createDeploymentQuery().singleResult().getId();
     UserOperationLogQuery logQuery = query().entityType(EntityTypes.VARIABLE).operationType(operationType);
-    assertEquals(countAssertValue, logQuery.count());
+    assertThat(logQuery.count()).isEqualTo(countAssertValue);
 
     if(countAssertValue > 1) {
       List<UserOperationLogEntry> logEntryList = logQuery.list();
 
       for (UserOperationLogEntry logEntry : logEntryList) {
-        assertEquals(process.getProcessDefinitionId(), logEntry.getProcessDefinitionId());
-        assertEquals(process.getProcessInstanceId(), logEntry.getProcessInstanceId());
-        assertEquals(deploymentId, logEntry.getDeploymentId());
+        assertThat(logEntry.getProcessDefinitionId()).isEqualTo(process.getProcessDefinitionId());
+        assertThat(logEntry.getProcessInstanceId()).isEqualTo(process.getProcessInstanceId());
+        assertThat(logEntry.getDeploymentId()).isEqualTo(deploymentId);
         assertNull(logEntry.getTaskId());
-        assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, logEntry.getCategory());
+        assertThat(logEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
       }
     } else {
       UserOperationLogEntry logEntry = logQuery.singleResult();
-      assertEquals(process.getProcessDefinitionId(), logEntry.getProcessDefinitionId());
-      assertEquals(process.getProcessInstanceId(), logEntry.getProcessInstanceId());
-      assertEquals(deploymentId, logEntry.getDeploymentId());
+      assertThat(logEntry.getProcessDefinitionId()).isEqualTo(process.getProcessDefinitionId());
+      assertThat(logEntry.getProcessInstanceId()).isEqualTo(process.getProcessInstanceId());
+      assertThat(logEntry.getDeploymentId()).isEqualTo(deploymentId);
       assertNull(logEntry.getTaskId());
-      assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, logEntry.getCategory());
+      assertThat(logEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
     }
   }
 
   private void verifySingleVariableOperationPropertyChange(String property, String newValue, String operationType) {
     UserOperationLogQuery logQuery = query().entityType(EntityTypes.VARIABLE).operationType(operationType);
-    assertEquals(1, logQuery.count());
+    assertThat(logQuery.count()).isEqualTo(1);
     UserOperationLogEntry logEntry = logQuery.singleResult();
-    assertEquals(property, logEntry.getProperty());
-    assertEquals(newValue, logEntry.getNewValue());
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, logEntry.getCategory());
+    assertThat(logEntry.getProperty()).isEqualTo(property);
+    assertThat(logEntry.getNewValue()).isEqualTo(newValue);
+    assertThat(logEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
   }
 
   private void verfiySingleCaseVariableOperationAsserts(CaseInstance caseInstance) {
     String deploymentId = repositoryService.createDeploymentQuery().singleResult().getId();
     String operationType = UserOperationLogEntry.OPERATION_TYPE_DELETE_HISTORY;
     UserOperationLogQuery logQuery = query().entityType(EntityTypes.VARIABLE).operationType(operationType);
-    assertEquals(1, logQuery.count());
+    assertThat(logQuery.count()).isEqualTo(1);
 
     UserOperationLogEntry logEntry = logQuery.singleResult();
-    assertEquals(caseInstance.getCaseDefinitionId(), logEntry.getCaseDefinitionId());
-    assertEquals(caseInstance.getCaseInstanceId(), logEntry.getCaseInstanceId());
-    assertEquals(deploymentId, logEntry.getDeploymentId());
+    assertThat(logEntry.getCaseDefinitionId()).isEqualTo(caseInstance.getCaseDefinitionId());
+    assertThat(logEntry.getCaseInstanceId()).isEqualTo(caseInstance.getCaseInstanceId());
+    assertThat(logEntry.getDeploymentId()).isEqualTo(deploymentId);
     assertNull(logEntry.getTaskId());
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, logEntry.getCategory());
+    assertThat(logEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
   }
 
   private UserOperationLogQuery query() {

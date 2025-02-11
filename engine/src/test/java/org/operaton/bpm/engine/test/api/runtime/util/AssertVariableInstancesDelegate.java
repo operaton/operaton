@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.util;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
@@ -37,9 +37,9 @@ public class AssertVariableInstancesDelegate implements JavaDelegate {
 
     // validate integer variable
     Integer expectedIntValue = 1234;
-    assertEquals(expectedIntValue, execution.getVariable("anIntegerVariable"));
-    assertEquals(expectedIntValue, execution.getVariableTyped("anIntegerVariable").getValue());
-    assertEquals(ValueType.INTEGER, execution.getVariableTyped("anIntegerVariable").getType());
+    assertThat(execution.getVariable("anIntegerVariable")).isEqualTo(expectedIntValue);
+    assertThat(execution.getVariableTyped("anIntegerVariable").getValue()).isEqualTo(expectedIntValue);
+    assertThat(execution.getVariableTyped("anIntegerVariable").getType()).isEqualTo(ValueType.INTEGER);
     assertNull(execution.getVariableLocal("anIntegerVariable"));
     assertNull(execution.getVariableLocalTyped("anIntegerVariable"));
 
@@ -47,26 +47,26 @@ public class AssertVariableInstancesDelegate implements JavaDelegate {
     execution.setVariableLocal("aStringVariable", "aStringValue");
 
     String expectedStringValue = "aStringValue";
-    assertEquals(expectedStringValue, execution.getVariable("aStringVariable"));
-    assertEquals(expectedStringValue, execution.getVariableTyped("aStringVariable").getValue());
-    assertEquals(ValueType.STRING, execution.getVariableTyped("aStringVariable").getType());
-    assertEquals(expectedStringValue, execution.getVariableLocal("aStringVariable"));
-    assertEquals(expectedStringValue, execution.getVariableLocalTyped("aStringVariable").getValue());
-    assertEquals(ValueType.STRING, execution.getVariableLocalTyped("aStringVariable").getType());
+    assertThat(execution.getVariable("aStringVariable")).isEqualTo(expectedStringValue);
+    assertThat(execution.getVariableTyped("aStringVariable").getValue()).isEqualTo(expectedStringValue);
+    assertThat(execution.getVariableTyped("aStringVariable").getType()).isEqualTo(ValueType.STRING);
+    assertThat(execution.getVariableLocal("aStringVariable")).isEqualTo(expectedStringValue);
+    assertThat(execution.getVariableLocalTyped("aStringVariable").getValue()).isEqualTo(expectedStringValue);
+    assertThat(execution.getVariableLocalTyped("aStringVariable").getType()).isEqualTo(ValueType.STRING);
 
     SimpleSerializableBean objectValue = (SimpleSerializableBean) execution.getVariable("anObjectValue");
     assertNotNull(objectValue);
-    assertEquals(10, objectValue.getIntProperty());
+    assertThat(objectValue.getIntProperty()).isEqualTo(10);
     ObjectValue variableTyped = execution.getVariableTyped("anObjectValue");
-    assertEquals(10, variableTyped.getValue(SimpleSerializableBean.class).getIntProperty());
-    assertEquals(Variables.SerializationDataFormats.JAVA.getName(), variableTyped.getSerializationDataFormat());
+    assertThat(variableTyped.getValue(SimpleSerializableBean.class).getIntProperty()).isEqualTo(10);
+    assertThat(variableTyped.getSerializationDataFormat()).isEqualTo(Variables.SerializationDataFormats.JAVA.getName());
 
     objectValue = (SimpleSerializableBean) execution.getVariable("anUntypedObjectValue");
     assertNotNull(objectValue);
-    assertEquals(30, objectValue.getIntProperty());
+    assertThat(objectValue.getIntProperty()).isEqualTo(30);
     variableTyped = execution.getVariableTyped("anUntypedObjectValue");
-    assertEquals(30, variableTyped.getValue(SimpleSerializableBean.class).getIntProperty());
-    assertEquals(Context.getProcessEngineConfiguration().getDefaultSerializationFormat(), variableTyped.getSerializationDataFormat());
+    assertThat(variableTyped.getValue(SimpleSerializableBean.class).getIntProperty()).isEqualTo(30);
+    assertThat(variableTyped.getSerializationDataFormat()).isEqualTo(Context.getProcessEngineConfiguration().getDefaultSerializationFormat());
 
   }
 

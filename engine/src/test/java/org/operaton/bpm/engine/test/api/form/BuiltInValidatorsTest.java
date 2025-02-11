@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.form;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -33,6 +32,7 @@ import org.operaton.bpm.engine.test.api.runtime.util.TestVariableScope;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
@@ -48,12 +48,12 @@ public class BuiltInValidatorsTest extends PluggableProcessEngineTest {
     FormValidators formValidators = ((ProcessEngineImpl) processEngine).getProcessEngineConfiguration().getFormValidators();
 
     Map<String, Class<? extends FormFieldValidator>> validators = formValidators.getValidators();
-    assertEquals(RequiredValidator.class, validators.get("required"));
-    assertEquals(ReadOnlyValidator.class, validators.get("readonly"));
-    assertEquals(MinValidator.class, validators.get("min"));
-    assertEquals(MaxValidator.class, validators.get("max"));
-    assertEquals(MaxLengthValidator.class, validators.get("maxlength"));
-    assertEquals(MinLengthValidator.class, validators.get("minlength"));
+    assertThat(validators.get("required")).isEqualTo(RequiredValidator.class);
+    assertThat(validators.get("readonly")).isEqualTo(ReadOnlyValidator.class);
+    assertThat(validators.get("min")).isEqualTo(MinValidator.class);
+    assertThat(validators.get("max")).isEqualTo(MaxValidator.class);
+    assertThat(validators.get("maxlength")).isEqualTo(MaxLengthValidator.class);
+    assertThat(validators.get("minlength")).isEqualTo(MinLengthValidator.class);
 
   }
 
@@ -79,7 +79,7 @@ public class BuiltInValidatorsTest extends PluggableProcessEngineTest {
     validatorContext = new TestValidatorContext(null, "fieldName");
     validatorContext.getFormFieldHandler().setDefaultValueExpression(new FixedValue("defaultValue"));
     assertTrue(validator.validate(null, validatorContext));
-    assertEquals("defaultValue", validatorContext.getVariableScope().getVariable("fieldName"));
+    assertThat(validatorContext.getVariableScope().getVariable("fieldName")).isEqualTo("defaultValue");
   }
 
   @Test

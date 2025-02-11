@@ -181,10 +181,10 @@ public class MultiTenancyMigrationTest {
   }
 
   protected void assertMigratedTo(ProcessInstance processInstance, ProcessDefinition targetDefinition) {
-    Assert.assertEquals(1, engineRule.getRuntimeService()
-      .createProcessInstanceQuery()
-      .processInstanceId(processInstance.getId())
-      .processDefinitionId(targetDefinition.getId())
-      .count());
+    assertThat(engineRule.getRuntimeService()
+        .createProcessInstanceQuery()
+        .processInstanceId(processInstance.getId())
+        .processDefinitionId(targetDefinition.getId())
+        .count()).isEqualTo(1);
   }
 }

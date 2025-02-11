@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.test.api.runtime.migration;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.List;
@@ -84,7 +84,7 @@ public class MigrationRemoveSubprocessTest {
 
     Task migratedTask = testHelper.snapshotAfterMigration.getTaskForKey("userTask");
     Assert.assertNotNull(migratedTask);
-    assertEquals(targetProcessDefinition.getId(), migratedTask.getProcessDefinitionId());
+    assertThat(migratedTask.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());
 
     // and it is possible to successfully complete the migrated instance
     rule.getTaskService().complete(migratedTask.getId());
@@ -121,7 +121,7 @@ public class MigrationRemoveSubprocessTest {
 
     Task migratedTask = testHelper.snapshotAfterMigration.getTaskForKey("userTask");
     Assert.assertNotNull(migratedTask);
-    assertEquals(targetProcessDefinition.getId(), migratedTask.getProcessDefinitionId());
+    assertThat(migratedTask.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());
 
     // and it is possible to successfully complete the migrated instance
     rule.getTaskService().complete(migratedTask.getId());
@@ -160,9 +160,9 @@ public class MigrationRemoveSubprocessTest {
         .done());
 
     List<Task> migratedTasks = testHelper.snapshotAfterMigration.getTasks();
-    Assert.assertEquals(2, migratedTasks.size());
+    assertThat(migratedTasks.size()).isEqualTo(2);
     for (Task migratedTask : migratedTasks) {
-      assertEquals(targetProcessDefinition.getId(), migratedTask.getProcessDefinitionId());
+      assertThat(migratedTask.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());
     }
 
     // and it is possible to successfully complete the migrated instance
@@ -206,9 +206,9 @@ public class MigrationRemoveSubprocessTest {
         .done());
 
     List<Task> migratedTasks = testHelper.snapshotAfterMigration.getTasks();
-    Assert.assertEquals(2, migratedTasks.size());
+    assertThat(migratedTasks.size()).isEqualTo(2);
     for (Task migratedTask : migratedTasks) {
-      assertEquals(targetProcessDefinition.getId(), migratedTask.getProcessDefinitionId());
+      assertThat(migratedTask.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());
     }
 
     // and it is possible to successfully complete the migrated instance
@@ -251,9 +251,9 @@ public class MigrationRemoveSubprocessTest {
         .done());
 
     List<Task> migratedTasks = testHelper.snapshotAfterMigration.getTasks();
-    Assert.assertEquals(2, migratedTasks.size());
+    assertThat(migratedTasks.size()).isEqualTo(2);
     for (Task migratedTask : migratedTasks) {
-      assertEquals(targetProcessDefinition.getId(), migratedTask.getProcessDefinitionId());
+      assertThat(migratedTask.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());
     }
 
     // and it is possible to successfully complete the migrated instance
@@ -298,9 +298,9 @@ public class MigrationRemoveSubprocessTest {
         .done());
 
     List<Task> migratedTasks = testHelper.snapshotAfterMigration.getTasks();
-    Assert.assertEquals(2, migratedTasks.size());
+    assertThat(migratedTasks.size()).isEqualTo(2);
     for (Task migratedTask : migratedTasks) {
-      assertEquals(targetProcessDefinition.getId(), migratedTask.getProcessDefinitionId());
+      assertThat(migratedTask.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());
     }
 
     // and it is possible to successfully complete the migrated instance
@@ -346,9 +346,9 @@ public class MigrationRemoveSubprocessTest {
         .done());
 
     List<Task> migratedTasks = testHelper.snapshotAfterMigration.getTasks();
-    Assert.assertEquals(2, migratedTasks.size());
+    assertThat(migratedTasks.size()).isEqualTo(2);
     for (Task migratedTask : migratedTasks) {
-      assertEquals(targetProcessDefinition.getId(), migratedTask.getProcessDefinitionId());
+      assertThat(migratedTask.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());
     }
 
     // and it is possible to successfully complete the migrated instance
@@ -415,7 +415,7 @@ public class MigrationRemoveSubprocessTest {
 
     Task migratedTask = testHelper.snapshotAfterMigration.getTaskForKey("userTask");
     Assert.assertNotNull(migratedTask);
-    assertEquals(targetProcessDefinition.getId(), migratedTask.getProcessDefinitionId());
+    assertThat(migratedTask.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());
 
     // and it is possible to successfully complete the migrated instance
     rule.getTaskService().complete(migratedTask.getId());
@@ -445,12 +445,12 @@ public class MigrationRemoveSubprocessTest {
 
     // then
     List<DelegateEvent> recordedEvents = DelegateEvent.getEvents();
-    assertEquals(1, recordedEvents.size());
+    assertThat(recordedEvents.size()).isEqualTo(1);
 
     DelegateEvent event = recordedEvents.get(0);
-    assertEquals(sourceProcessDefinition.getId(), event.getProcessDefinitionId());
-    assertEquals("subProcess", event.getCurrentActivityId());
-    assertEquals(testHelper.getSingleActivityInstanceBeforeMigration("subProcess").getId(), event.getActivityInstanceId());
+    assertThat(event.getProcessDefinitionId()).isEqualTo(sourceProcessDefinition.getId());
+    assertThat(event.getCurrentActivityId()).isEqualTo("subProcess");
+    assertThat(event.getActivityInstanceId()).isEqualTo(testHelper.getSingleActivityInstanceBeforeMigration("subProcess").getId());
 
     DelegateEvent.clearEvents();
   }
@@ -483,7 +483,7 @@ public class MigrationRemoveSubprocessTest {
 
     // then
     List<DelegateEvent> recordedEvents = DelegateEvent.getEvents();
-    assertEquals(0, recordedEvents.size());
+    assertThat(recordedEvents.size()).isEqualTo(0);
 
     DelegateEvent.clearEvents();
   }
@@ -513,9 +513,9 @@ public class MigrationRemoveSubprocessTest {
     // then
     VariableInstance inputVariable = rule.getRuntimeService().createVariableInstanceQuery().singleResult();
     Assert.assertNotNull(inputVariable);
-    assertEquals("foo", inputVariable.getName());
-    assertEquals("bar", inputVariable.getValue());
-    assertEquals(processInstance.getId(), inputVariable.getActivityInstanceId());
+    assertThat(inputVariable.getName()).isEqualTo("foo");
+    assertThat(inputVariable.getValue()).isEqualTo("bar");
+    assertThat(inputVariable.getActivityInstanceId()).isEqualTo(processInstance.getId());
   }
 
   @Test
@@ -542,7 +542,7 @@ public class MigrationRemoveSubprocessTest {
       .execute();
 
     // then
-    assertEquals(0, rule.getRuntimeService().createVariableInstanceQuery().count());
+    assertThat(rule.getRuntimeService().createVariableInstanceQuery().count()).isEqualTo(0);
   }
 
 

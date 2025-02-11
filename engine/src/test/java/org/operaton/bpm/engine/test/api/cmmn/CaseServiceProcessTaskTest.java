@@ -28,14 +28,12 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-
-
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
@@ -62,7 +60,7 @@ public class CaseServiceProcessTaskTest extends PluggableProcessEngineTest {
     processInstance = queryProcessInstance();
 
     assertNotNull(processInstance);
-    assertEquals(caseInstanceId, processInstance.getCaseInstanceId());
+    assertThat(processInstance.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
     CaseExecution processTask = queryCaseExecutionByActivityId(PROCESS_TASK_KEY);
     assertTrue(processTask.isActive());
@@ -71,15 +69,15 @@ public class CaseServiceProcessTaskTest extends PluggableProcessEngineTest {
   protected void verifyVariables(String caseInstanceId, List<VariableInstance> result) {
     for (VariableInstance variable : result) {
 
-      assertEquals(caseInstanceId, variable.getCaseExecutionId());
-      assertEquals(caseInstanceId, variable.getCaseInstanceId());
+      assertThat(variable.getCaseExecutionId()).isEqualTo(caseInstanceId);
+      assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
       if (variable.getName().equals("aVariableName")) {
-        assertEquals("aVariableName", variable.getName());
-        assertEquals("abc", variable.getValue());
+        assertThat(variable.getName()).isEqualTo("aVariableName");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if (variable.getName().equals("anotherVariableName")) {
-        assertEquals("anotherVariableName", variable.getName());
-        assertEquals(999, variable.getValue());
+        assertThat(variable.getName()).isEqualTo("anotherVariableName");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else {
         fail("Unexpected variable: " + variable.getName());
       }
@@ -108,7 +106,7 @@ public class CaseServiceProcessTaskTest extends PluggableProcessEngineTest {
     processInstance = queryProcessInstance();
 
     assertNotNull(processInstance);
-    assertEquals(caseInstanceId, processInstance.getCaseInstanceId());
+    assertThat(processInstance.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
     CaseExecution processTask = queryCaseExecutionByActivityId(PROCESS_TASK_KEY);
     assertTrue(processTask.isActive());
@@ -142,7 +140,7 @@ public class CaseServiceProcessTaskTest extends PluggableProcessEngineTest {
     processInstance = queryProcessInstance();
 
     assertNotNull(processInstance);
-    assertEquals(caseInstanceId, processInstance.getCaseInstanceId());
+    assertThat(processInstance.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
     CaseExecution processTask = queryCaseExecutionByActivityId(PROCESS_TASK_KEY);
     assertTrue(processTask.isActive());
@@ -155,7 +153,7 @@ public class CaseServiceProcessTaskTest extends PluggableProcessEngineTest {
         .list();
 
     assertFalse(result.isEmpty());
-    assertEquals(2, result.size());
+    assertThat(result.size()).isEqualTo(2);
 
     verifyVariables(caseInstanceId, result);
 
@@ -185,7 +183,7 @@ public class CaseServiceProcessTaskTest extends PluggableProcessEngineTest {
     processInstance = queryProcessInstance();
 
     assertNotNull(processInstance);
-    assertEquals(caseInstanceId, processInstance.getCaseInstanceId());
+    assertThat(processInstance.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
     CaseExecution processTask = queryCaseExecutionByActivityId(PROCESS_TASK_KEY);
     assertTrue(processTask.isActive());
@@ -198,19 +196,19 @@ public class CaseServiceProcessTaskTest extends PluggableProcessEngineTest {
         .list();
 
     assertFalse(result.isEmpty());
-    assertEquals(2, result.size());
+    assertThat(result.size()).isEqualTo(2);
 
     for (VariableInstance variable : result) {
 
-      assertEquals(processTaskId, variable.getCaseExecutionId());
-      assertEquals(caseInstanceId, variable.getCaseInstanceId());
+      assertThat(variable.getCaseExecutionId()).isEqualTo(processTaskId);
+      assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
       if (variable.getName().equals("aVariableName")) {
-        assertEquals("aVariableName", variable.getName());
-        assertEquals("abc", variable.getValue());
+        assertThat(variable.getName()).isEqualTo("aVariableName");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if (variable.getName().equals("anotherVariableName")) {
-        assertEquals("anotherVariableName", variable.getName());
-        assertEquals(999, variable.getValue());
+        assertThat(variable.getName()).isEqualTo("anotherVariableName");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else {
         fail("Unexpected variable: " + variable.getName());
       }

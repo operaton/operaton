@@ -23,7 +23,7 @@ import static org.operaton.bpm.engine.authorization.Permissions.READ_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -156,7 +156,7 @@ public class JobAuthorizationTest extends AuthorizationTest {
 
     Job job = query.singleResult();
     assertNull(job.getProcessInstanceId());
-    assertEquals(TIMER_START_PROCESS_KEY, job.getProcessDefinitionKey());
+    assertThat(job.getProcessDefinitionKey()).isEqualTo(TIMER_START_PROCESS_KEY);
   }
 
   @Test
@@ -172,8 +172,8 @@ public class JobAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     Job job = query.singleResult();
-    assertEquals(processInstanceId, job.getProcessInstanceId());
-    assertEquals(TIMER_BOUNDARY_PROCESS_KEY, job.getProcessDefinitionKey());
+    assertThat(job.getProcessInstanceId()).isEqualTo(processInstanceId);
+    assertThat(job.getProcessDefinitionKey()).isEqualTo(TIMER_BOUNDARY_PROCESS_KEY);
   }
 
   @Test
@@ -293,7 +293,7 @@ public class JobAuthorizationTest extends AuthorizationTest {
 
     // then
     Job job = selectJobById(jobId);
-    assertEquals(1, job.getRetries());
+    assertThat(job.getRetries()).isEqualTo(1);
 
     deleteJob(jobId);
   }

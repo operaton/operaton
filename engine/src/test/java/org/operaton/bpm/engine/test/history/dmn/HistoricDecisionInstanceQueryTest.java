@@ -42,7 +42,6 @@ import java.util.Date;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 /**
@@ -255,7 +254,7 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
       query.decisionDefinitionIdIn("aFake", null);
       fail("exception expected");
     } catch (ProcessEngineException e) {
-      assertEquals("decisionDefinitionIdIn contains null value", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("decisionDefinitionIdIn contains null value");
     }
   }
 
@@ -284,7 +283,7 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
       query.decisionDefinitionKeyIn("aFake", null);
       fail("exception expected");
     } catch (ProcessEngineException e) {
-      assertEquals("decisionDefinitionKeyIn contains null value", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("decisionDefinitionKeyIn contains null value");
     }
   }
 

@@ -52,7 +52,6 @@ import static junit.framework.TestCase.assertTrue;
 import static junit.framework.TestCase.fail;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
 
 /**
  *
@@ -128,7 +127,7 @@ public class DeleteProcessDefinitionTest {
     repositoryService.deleteProcessDefinition(processDefinitions.get(0).getId());
 
     //then only one process definition should remain
-    assertEquals(1, repositoryService.createProcessDefinitionQuery().count());
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
   }
 
   @Test
@@ -151,7 +150,7 @@ public class DeleteProcessDefinitionTest {
       // and the cascade flag is per default false
       assertTrue(pex.getMessage().contains("Deletion of process definition without cascading failed."));
     }
-    assertEquals(1, repositoryService.createProcessDefinitionQuery().count());
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
   }
 
   @Test
@@ -168,10 +167,10 @@ public class DeleteProcessDefinitionTest {
     repositoryService.deleteProcessDefinition(processDefinition.getId(), true);
 
     //then exist no process instance and no definition
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
-    assertEquals(0, repositoryService.createProcessDefinitionQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(0);
     if (processEngineConfiguration.getHistoryLevel().getId() >= HistoryLevel.HISTORY_LEVEL_ACTIVITY.getId()) {
-      assertEquals(0, engineRule.getHistoryService().createHistoricActivityInstanceQuery().count());
+      assertThat(engineRule.getHistoryService().createHistoricActivityInstanceQuery().count()).isEqualTo(0);
     }
   }
 
@@ -251,7 +250,7 @@ public class DeleteProcessDefinitionTest {
 
     //then there should exist three process definitions
     //two of the redeployment and the remaining one
-    assertEquals(3, repositoryService.createProcessDefinitionQuery().count());
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(3);
 
     //clean up
     repositoryService.deleteDeployment(deployment2.getId(), true);

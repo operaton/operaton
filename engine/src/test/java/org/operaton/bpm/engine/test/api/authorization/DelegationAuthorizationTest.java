@@ -24,7 +24,7 @@ import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.TASK;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
@@ -78,9 +78,9 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(MyDelegationService.CURRENT_AUTHENTICATION);
-    assertEquals(userId, MyDelegationService.CURRENT_AUTHENTICATION.getUserId());
+    assertThat(MyDelegationService.CURRENT_AUTHENTICATION.getUserId()).isEqualTo(userId);
 
-    assertEquals(Long.valueOf(5), MyDelegationService.INSTANCES_COUNT);
+    assertThat(MyDelegationService.INSTANCES_COUNT).isEqualTo(Long.valueOf(5));
   }
 
   @Deployment
@@ -96,10 +96,10 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(MyDelegationService.CURRENT_AUTHENTICATION);
-    assertEquals(userId, MyDelegationService.CURRENT_AUTHENTICATION.getUserId());
+    assertThat(MyDelegationService.CURRENT_AUTHENTICATION.getUserId()).isEqualTo(userId);
 
     disableAuthorization();
-    assertEquals(2, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(2);
     enableAuthorization();
   }
 
@@ -118,9 +118,9 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(MyDelegationService.CURRENT_AUTHENTICATION);
-    assertEquals(userId, MyDelegationService.CURRENT_AUTHENTICATION.getUserId());
+    assertThat(MyDelegationService.CURRENT_AUTHENTICATION.getUserId()).isEqualTo(userId);
 
-    assertEquals(Long.valueOf(5), MyDelegationService.INSTANCES_COUNT);
+    assertThat(MyDelegationService.INSTANCES_COUNT).isEqualTo(Long.valueOf(5));
   }
 
   @Deployment
@@ -138,10 +138,10 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(MyDelegationService.CURRENT_AUTHENTICATION);
-    assertEquals(userId, MyDelegationService.CURRENT_AUTHENTICATION.getUserId());
+    assertThat(MyDelegationService.CURRENT_AUTHENTICATION.getUserId()).isEqualTo(userId);
 
     disableAuthorization();
-    assertEquals(2, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(2);
     enableAuthorization();
   }
 
@@ -160,9 +160,9 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(MyDelegationService.CURRENT_AUTHENTICATION);
-    assertEquals(userId, MyDelegationService.CURRENT_AUTHENTICATION.getUserId());
+    assertThat(MyDelegationService.CURRENT_AUTHENTICATION.getUserId()).isEqualTo(userId);
 
-    assertEquals(Long.valueOf(5), MyDelegationService.INSTANCES_COUNT);
+    assertThat(MyDelegationService.INSTANCES_COUNT).isEqualTo(Long.valueOf(5));
   }
 
   @Deployment
@@ -180,10 +180,10 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(MyDelegationService.CURRENT_AUTHENTICATION);
-    assertEquals(userId, MyDelegationService.CURRENT_AUTHENTICATION.getUserId());
+    assertThat(MyDelegationService.CURRENT_AUTHENTICATION.getUserId()).isEqualTo(userId);
 
     disableAuthorization();
-    assertEquals(2, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(2);
     enableAuthorization();
   }
 
@@ -200,9 +200,9 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(MyDelegationService.CURRENT_AUTHENTICATION);
-    assertEquals(userId, MyDelegationService.CURRENT_AUTHENTICATION.getUserId());
+    assertThat(MyDelegationService.CURRENT_AUTHENTICATION.getUserId()).isEqualTo(userId);
 
-    assertEquals(Long.valueOf(5), MyDelegationService.INSTANCES_COUNT);
+    assertThat(MyDelegationService.INSTANCES_COUNT).isEqualTo(Long.valueOf(5));
   }
 
   @Deployment
@@ -218,10 +218,10 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(MyDelegationService.CURRENT_AUTHENTICATION);
-    assertEquals(userId, MyDelegationService.CURRENT_AUTHENTICATION.getUserId());
+    assertThat(MyDelegationService.CURRENT_AUTHENTICATION.getUserId()).isEqualTo(userId);
 
     disableAuthorization();
-    assertEquals(2, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(2);
     enableAuthorization();
   }
 
@@ -240,9 +240,9 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(MyDelegationService.CURRENT_AUTHENTICATION);
-    assertEquals(userId, MyDelegationService.CURRENT_AUTHENTICATION.getUserId());
+    assertThat(MyDelegationService.CURRENT_AUTHENTICATION.getUserId()).isEqualTo(userId);
 
-    assertEquals(Long.valueOf(5), MyDelegationService.INSTANCES_COUNT);
+    assertThat(MyDelegationService.INSTANCES_COUNT).isEqualTo(Long.valueOf(5));
   }
 
   @Deployment
@@ -260,10 +260,10 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(MyDelegationService.CURRENT_AUTHENTICATION);
-    assertEquals(userId, MyDelegationService.CURRENT_AUTHENTICATION.getUserId());
+    assertThat(MyDelegationService.CURRENT_AUTHENTICATION.getUserId()).isEqualTo(userId);
 
     disableAuthorization();
-    assertEquals(2, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(2);
     enableAuthorization();
   }
 
@@ -280,9 +280,9 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(MyDelegationService.CURRENT_AUTHENTICATION);
-    assertEquals(userId, MyDelegationService.CURRENT_AUTHENTICATION.getUserId());
+    assertThat(MyDelegationService.CURRENT_AUTHENTICATION.getUserId()).isEqualTo(userId);
 
-    assertEquals(Long.valueOf(5), MyDelegationService.INSTANCES_COUNT);
+    assertThat(MyDelegationService.INSTANCES_COUNT).isEqualTo(Long.valueOf(5));
   }
 
   @Deployment
@@ -300,9 +300,9 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(MyDelegationService.CURRENT_AUTHENTICATION);
-    assertEquals(userId, MyDelegationService.CURRENT_AUTHENTICATION.getUserId());
+    assertThat(MyDelegationService.CURRENT_AUTHENTICATION.getUserId()).isEqualTo(userId);
 
-    assertEquals(Long.valueOf(5), MyDelegationService.INSTANCES_COUNT);
+    assertThat(MyDelegationService.INSTANCES_COUNT).isEqualTo(Long.valueOf(5));
   }
 
   @Deployment
@@ -318,9 +318,9 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(MyDelegationService.CURRENT_AUTHENTICATION);
-    assertEquals(userId, MyDelegationService.CURRENT_AUTHENTICATION.getUserId());
+    assertThat(MyDelegationService.CURRENT_AUTHENTICATION.getUserId()).isEqualTo(userId);
 
-    assertEquals(Long.valueOf(5), MyDelegationService.INSTANCES_COUNT);
+    assertThat(MyDelegationService.INSTANCES_COUNT).isEqualTo(Long.valueOf(5));
   }
 
   @Deployment
@@ -336,10 +336,10 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(MyDelegationService.CURRENT_AUTHENTICATION);
-    assertEquals(userId, MyDelegationService.CURRENT_AUTHENTICATION.getUserId());
+    assertThat(MyDelegationService.CURRENT_AUTHENTICATION.getUserId()).isEqualTo(userId);
 
     disableAuthorization();
-    assertEquals(2, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(2);
     enableAuthorization();
   }
 
@@ -358,9 +358,9 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(MyDelegationService.CURRENT_AUTHENTICATION);
-    assertEquals(userId, MyDelegationService.CURRENT_AUTHENTICATION.getUserId());
+    assertThat(MyDelegationService.CURRENT_AUTHENTICATION.getUserId()).isEqualTo(userId);
 
-    assertEquals(Long.valueOf(5), MyDelegationService.INSTANCES_COUNT);
+    assertThat(MyDelegationService.INSTANCES_COUNT).isEqualTo(Long.valueOf(5));
   }
 
   @Deployment
@@ -378,10 +378,10 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(MyDelegationService.CURRENT_AUTHENTICATION);
-    assertEquals(userId, MyDelegationService.CURRENT_AUTHENTICATION.getUserId());
+    assertThat(MyDelegationService.CURRENT_AUTHENTICATION.getUserId()).isEqualTo(userId);
 
     disableAuthorization();
-    assertEquals(2, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(2);
     enableAuthorization();
   }
 
@@ -400,9 +400,9 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(MyDelegationService.CURRENT_AUTHENTICATION);
-    assertEquals(userId, MyDelegationService.CURRENT_AUTHENTICATION.getUserId());
+    assertThat(MyDelegationService.CURRENT_AUTHENTICATION.getUserId()).isEqualTo(userId);
 
-    assertEquals(Long.valueOf(5), MyDelegationService.INSTANCES_COUNT);
+    assertThat(MyDelegationService.INSTANCES_COUNT).isEqualTo(Long.valueOf(5));
   }
 
   @Deployment
@@ -420,10 +420,10 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(MyDelegationService.CURRENT_AUTHENTICATION);
-    assertEquals(userId, MyDelegationService.CURRENT_AUTHENTICATION.getUserId());
+    assertThat(MyDelegationService.CURRENT_AUTHENTICATION.getUserId()).isEqualTo(userId);
 
     disableAuthorization();
-    assertEquals(2, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(2);
     enableAuthorization();
   }
 
@@ -440,9 +440,9 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(MyDelegationService.CURRENT_AUTHENTICATION);
-    assertEquals(userId, MyDelegationService.CURRENT_AUTHENTICATION.getUserId());
+    assertThat(MyDelegationService.CURRENT_AUTHENTICATION.getUserId()).isEqualTo(userId);
 
-    assertEquals(Long.valueOf(5), MyDelegationService.INSTANCES_COUNT);
+    assertThat(MyDelegationService.INSTANCES_COUNT).isEqualTo(Long.valueOf(5));
   }
 
   @Deployment
@@ -458,10 +458,10 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(MyDelegationService.CURRENT_AUTHENTICATION);
-    assertEquals(userId, MyDelegationService.CURRENT_AUTHENTICATION.getUserId());
+    assertThat(MyDelegationService.CURRENT_AUTHENTICATION.getUserId()).isEqualTo(userId);
 
     disableAuthorization();
-    assertEquals(2, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(2);
     enableAuthorization();
   }
 
@@ -480,9 +480,9 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(MyDelegationService.CURRENT_AUTHENTICATION);
-    assertEquals(userId, MyDelegationService.CURRENT_AUTHENTICATION.getUserId());
+    assertThat(MyDelegationService.CURRENT_AUTHENTICATION.getUserId()).isEqualTo(userId);
 
-    assertEquals(Long.valueOf(5), MyDelegationService.INSTANCES_COUNT);
+    assertThat(MyDelegationService.INSTANCES_COUNT).isEqualTo(Long.valueOf(5));
   }
 
   @Deployment
@@ -500,10 +500,10 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(MyDelegationService.CURRENT_AUTHENTICATION);
-    assertEquals(userId, MyDelegationService.CURRENT_AUTHENTICATION.getUserId());
+    assertThat(MyDelegationService.CURRENT_AUTHENTICATION.getUserId()).isEqualTo(userId);
 
     disableAuthorization();
-    assertEquals(2, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(2);
     enableAuthorization();
   }
 
@@ -522,9 +522,9 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(MyDelegationService.CURRENT_AUTHENTICATION);
-    assertEquals(userId, MyDelegationService.CURRENT_AUTHENTICATION.getUserId());
+    assertThat(MyDelegationService.CURRENT_AUTHENTICATION.getUserId()).isEqualTo(userId);
 
-    assertEquals(Long.valueOf(5), MyDelegationService.INSTANCES_COUNT);
+    assertThat(MyDelegationService.INSTANCES_COUNT).isEqualTo(Long.valueOf(5));
   }
 
   @Deployment
@@ -542,10 +542,10 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(MyDelegationService.CURRENT_AUTHENTICATION);
-    assertEquals(userId, MyDelegationService.CURRENT_AUTHENTICATION.getUserId());
+    assertThat(MyDelegationService.CURRENT_AUTHENTICATION.getUserId()).isEqualTo(userId);
 
     disableAuthorization();
-    assertEquals(2, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(2);
     enableAuthorization();
   }
 
@@ -564,9 +564,9 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(MyDelegationService.CURRENT_AUTHENTICATION);
-    assertEquals(userId, MyDelegationService.CURRENT_AUTHENTICATION.getUserId());
+    assertThat(MyDelegationService.CURRENT_AUTHENTICATION.getUserId()).isEqualTo(userId);
 
-    assertEquals(Long.valueOf(5), MyDelegationService.INSTANCES_COUNT);
+    assertThat(MyDelegationService.INSTANCES_COUNT).isEqualTo(Long.valueOf(5));
   }
 
   @Deployment
@@ -595,13 +595,13 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
         .variableName("userId")
         .singleResult();
     assertNotNull(variableUser);
-    assertEquals(userId, variableUser.getValue());
+    assertThat(variableUser.getValue()).isEqualTo(userId);
 
     VariableInstance variableCount = query
         .variableName("count")
         .singleResult();
     assertNotNull(variableCount);
-    assertEquals(5l, variableCount.getValue());
+    assertThat(variableCount.getValue()).isEqualTo(5l);
 
     enableAuthorization();
   }
@@ -626,9 +626,9 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
         .variableName("userId")
         .singleResult();
     assertNotNull(variableUser);
-    assertEquals(userId, variableUser.getValue());
+    assertThat(variableUser.getValue()).isEqualTo(userId);
 
-    assertEquals(2, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(2);
 
     enableAuthorization();
   }
@@ -659,13 +659,13 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
         .variableName("userId")
         .singleResult();
     assertNotNull(variableUser);
-    assertEquals(userId, variableUser.getValue());
+    assertThat(variableUser.getValue()).isEqualTo(userId);
 
     VariableInstance variableCount = query
         .variableName("count")
         .singleResult();
     assertNotNull(variableCount);
-    assertEquals(5l, variableCount.getValue());
+    assertThat(variableCount.getValue()).isEqualTo(5l);
 
     enableAuthorization();
   }
@@ -690,9 +690,9 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
         .variableName("userId")
         .singleResult();
     assertNotNull(variableUser);
-    assertEquals(userId, variableUser.getValue());
+    assertThat(variableUser.getValue()).isEqualTo(userId);
 
-    assertEquals(2, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(2);
 
     enableAuthorization();
   }
@@ -723,13 +723,13 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
         .variableName("userId")
         .singleResult();
     assertNotNull(variableUser);
-    assertEquals(userId, variableUser.getValue());
+    assertThat(variableUser.getValue()).isEqualTo(userId);
 
     VariableInstance variableCount = query
         .variableName("count")
         .singleResult();
     assertNotNull(variableCount);
-    assertEquals(5l, variableCount.getValue());
+    assertThat(variableCount.getValue()).isEqualTo(5l);
 
     enableAuthorization();
   }
@@ -754,9 +754,9 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
         .variableName("userId")
         .singleResult();
     assertNotNull(variableUser);
-    assertEquals(userId, variableUser.getValue());
+    assertThat(variableUser.getValue()).isEqualTo(userId);
 
-    assertEquals(2, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(2);
 
     enableAuthorization();
   }
@@ -787,13 +787,13 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
         .variableName("userId")
         .singleResult();
     assertNotNull(variableUser);
-    assertEquals(userId, variableUser.getValue());
+    assertThat(variableUser.getValue()).isEqualTo(userId);
 
     VariableInstance variableCount = query
         .variableName("count")
         .singleResult();
     assertNotNull(variableCount);
-    assertEquals(5l, variableCount.getValue());
+    assertThat(variableCount.getValue()).isEqualTo(5l);
 
     enableAuthorization();
   }
@@ -818,9 +818,9 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
         .variableName("userId")
         .singleResult();
     assertNotNull(variableUser);
-    assertEquals(userId, variableUser.getValue());
+    assertThat(variableUser.getValue()).isEqualTo(userId);
 
-    assertEquals(2, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(2);
 
     enableAuthorization();
   }
@@ -851,13 +851,13 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
         .variableName("userId")
         .singleResult();
     assertNotNull(variableUser);
-    assertEquals(userId, variableUser.getValue());
+    assertThat(variableUser.getValue()).isEqualTo(userId);
 
     VariableInstance variableCount = query
         .variableName("count")
         .singleResult();
     assertNotNull(variableCount);
-    assertEquals(5l, variableCount.getValue());
+    assertThat(variableCount.getValue()).isEqualTo(5l);
 
     enableAuthorization();
   }
@@ -884,15 +884,15 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
         .variableName("userId")
         .singleResult();
     assertNotNull(variableUser);
-    assertEquals(userId, variableUser.getValue());
+    assertThat(variableUser.getValue()).isEqualTo(userId);
 
     VariableInstance variableCount = query
         .variableName("count")
         .singleResult();
     assertNotNull(variableCount);
-    assertEquals(1l, variableCount.getValue());
+    assertThat(variableCount.getValue()).isEqualTo(1l);
 
-    assertEquals(2, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(2);
 
     enableAuthorization();
   }
@@ -913,9 +913,9 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
     assertNotNull(startFormData);
 
     assertNotNull(MyDelegationService.CURRENT_AUTHENTICATION);
-    assertEquals(userId, MyDelegationService.CURRENT_AUTHENTICATION.getUserId());
+    assertThat(MyDelegationService.CURRENT_AUTHENTICATION.getUserId()).isEqualTo(userId);
 
-    assertEquals(Long.valueOf(5), MyDelegationService.INSTANCES_COUNT);
+    assertThat(MyDelegationService.INSTANCES_COUNT).isEqualTo(Long.valueOf(5));
   }
 
   @Deployment
@@ -934,9 +934,9 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
     assertNotNull(taskFormData);
 
     assertNotNull(MyDelegationService.CURRENT_AUTHENTICATION);
-    assertEquals(userId, MyDelegationService.CURRENT_AUTHENTICATION.getUserId());
+    assertThat(MyDelegationService.CURRENT_AUTHENTICATION.getUserId()).isEqualTo(userId);
 
-    assertEquals(Long.valueOf(5), MyDelegationService.INSTANCES_COUNT);
+    assertThat(MyDelegationService.INSTANCES_COUNT).isEqualTo(Long.valueOf(5));
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/authorization/DelegationAuthorizationTest.testCustomStartFormHandlerExecutesQuery.bpmn20.xml"})
@@ -954,9 +954,9 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(MyDelegationService.CURRENT_AUTHENTICATION);
-    assertEquals(userId, MyDelegationService.CURRENT_AUTHENTICATION.getUserId());
+    assertThat(MyDelegationService.CURRENT_AUTHENTICATION.getUserId()).isEqualTo(userId);
 
-    assertEquals(Long.valueOf(5), MyDelegationService.INSTANCES_COUNT);
+    assertThat(MyDelegationService.INSTANCES_COUNT).isEqualTo(Long.valueOf(5));
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/authorization/DelegationAuthorizationTest.testCustomTaskFormHandlerExecutesQuery.bpmn20.xml"})
@@ -973,9 +973,9 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(MyDelegationService.CURRENT_AUTHENTICATION);
-    assertEquals(userId, MyDelegationService.CURRENT_AUTHENTICATION.getUserId());
+    assertThat(MyDelegationService.CURRENT_AUTHENTICATION.getUserId()).isEqualTo(userId);
 
-    assertEquals(Long.valueOf(5), MyDelegationService.INSTANCES_COUNT);
+    assertThat(MyDelegationService.INSTANCES_COUNT).isEqualTo(Long.valueOf(5));
   }
 
   @Deployment
@@ -992,9 +992,9 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(MyDelegationService.CURRENT_AUTHENTICATION);
-    assertEquals(userId, MyDelegationService.CURRENT_AUTHENTICATION.getUserId());
+    assertThat(MyDelegationService.CURRENT_AUTHENTICATION.getUserId()).isEqualTo(userId);
 
-    assertEquals(Long.valueOf(5), MyDelegationService.INSTANCES_COUNT);
+    assertThat(MyDelegationService.INSTANCES_COUNT).isEqualTo(Long.valueOf(5));
   }
 
   @Deployment
@@ -1013,9 +1013,9 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(MyDelegationService.CURRENT_AUTHENTICATION);
-    assertEquals(userId, MyDelegationService.CURRENT_AUTHENTICATION.getUserId());
+    assertThat(MyDelegationService.CURRENT_AUTHENTICATION.getUserId()).isEqualTo(userId);
 
-    assertEquals(Long.valueOf(5), MyDelegationService.INSTANCES_COUNT);
+    assertThat(MyDelegationService.INSTANCES_COUNT).isEqualTo(Long.valueOf(5));
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/authorization/DelegationAuthorizationTest.testJavaDelegateExecutesQueryAfterUserCompletesTask.bpmn20.xml"})
@@ -1033,9 +1033,9 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(MyDelegationService.CURRENT_AUTHENTICATION);
-    assertEquals(userId, MyDelegationService.CURRENT_AUTHENTICATION.getUserId());
+    assertThat(MyDelegationService.CURRENT_AUTHENTICATION.getUserId()).isEqualTo(userId);
 
-    assertEquals(Long.valueOf(0), MyDelegationService.INSTANCES_COUNT);
+    assertThat(MyDelegationService.INSTANCES_COUNT).isEqualTo(Long.valueOf(0));
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/authorization/DelegationAuthorizationTest.testJavaDelegateExecutesCommandAfterUserCompletesTask.bpmn20.xml"})
@@ -1057,10 +1057,10 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(MyDelegationService.CURRENT_AUTHENTICATION);
-    assertEquals(userId, MyDelegationService.CURRENT_AUTHENTICATION.getUserId());
+    assertThat(MyDelegationService.CURRENT_AUTHENTICATION.getUserId()).isEqualTo(userId);
 
     disableAuthorization();
-    assertEquals(1, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
     enableAuthorization();
   }
 

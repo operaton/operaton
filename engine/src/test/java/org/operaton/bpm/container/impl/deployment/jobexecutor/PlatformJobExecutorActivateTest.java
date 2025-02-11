@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.container.impl.deployment.jobexecutor;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -62,7 +62,7 @@ public class PlatformJobExecutorActivateTest {
       ProcessEngine processEngine = getProcessEngine(ENGINE_NAME);
       ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
       // then
-      assertEquals(true, processEngineConfiguration.getJobExecutor().isActive());
+      assertThat(processEngineConfiguration.getJobExecutor().isActive()).isEqualTo(true);
     }
     finally {
       undeployPlatform();
@@ -89,7 +89,7 @@ public class PlatformJobExecutorActivateTest {
       ProcessEngine processEngine = getProcessEngine(ENGINE_NAME);
       ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
       // then
-      assertEquals(false, processEngineConfiguration.getJobExecutor().isActive());
+      assertThat(processEngineConfiguration.getJobExecutor().isActive()).isEqualTo(false);
     }
     finally {
       undeployPlatform();

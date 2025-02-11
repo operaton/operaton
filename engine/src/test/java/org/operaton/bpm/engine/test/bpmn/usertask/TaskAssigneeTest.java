@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.usertask;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
@@ -46,10 +46,10 @@ public class TaskAssigneeTest extends PluggableProcessEngineTest {
       .createTaskQuery()
       .taskAssignee("kermit")
       .list();
-    assertEquals(1, tasks.size());
+    assertThat(tasks.size()).isEqualTo(1);
     Task myTask = tasks.get(0);
-    assertEquals("Schedule meeting", myTask.getName());
-    assertEquals("Schedule an engineering meeting for next week with the new hire.", myTask.getDescription());
+    assertThat(myTask.getName()).isEqualTo("Schedule meeting");
+    assertThat(myTask.getDescription()).isEqualTo("Schedule an engineering meeting for next week with the new hire.");
 
     // Complete task. Process is now finished
     taskService.complete(myTask.getId());

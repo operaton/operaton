@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.usertask;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -66,19 +66,19 @@ public class UserTaskTest extends PluggableProcessEngineTest {
 
     Task task = taskService.createTaskQuery().singleResult();
     assertNotNull(task.getId());
-    assertEquals("my task", task.getName());
-    assertEquals("Very important", task.getDescription());
+    assertThat(task.getName()).isEqualTo("my task");
+    assertThat(task.getDescription()).isEqualTo("Very important");
     assertTrue(task.getPriority() > 0);
-    assertEquals("kermit", task.getAssignee());
-    assertEquals(processInstance.getId(), task.getProcessInstanceId());
-    assertEquals(processInstance.getId(), task.getExecutionId());
+    assertThat(task.getAssignee()).isEqualTo("kermit");
+    assertThat(task.getProcessInstanceId()).isEqualTo(processInstance.getId());
+    assertThat(task.getExecutionId()).isEqualTo(processInstance.getId());
     assertNotNull(task.getProcessDefinitionId());
     assertNotNull(task.getTaskDefinitionKey());
     assertNotNull(task.getCreateTime());
 
     // the next test verifies that if an execution creates a task, that no events are created during creation of the task.
     if (processEngineConfiguration.getHistoryLevel().getId() >= ProcessEngineConfigurationImpl.HISTORYLEVEL_ACTIVITY) {
-      assertEquals(0, taskService.getTaskEvents(task.getId()).size());
+      assertThat(taskService.getTaskEvents(task.getId()).size()).isEqualTo(0);
     }
   }
 
@@ -86,7 +86,7 @@ public class UserTaskTest extends PluggableProcessEngineTest {
   @Test
   public void testQuerySortingWithParameter() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
-    assertEquals(1, taskService.createTaskQuery().processInstanceId(processInstance.getId()).list().size());
+    assertThat(taskService.createTaskQuery().processInstanceId(processInstance.getId()).list().size()).isEqualTo(1);
   }
 
   @Deployment
@@ -98,7 +98,7 @@ public class UserTaskTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("ForkProcess");
     List<Task> taskList = taskService.createTaskQuery().list();
     assertNotNull(taskList);
-    assertEquals(2, taskList.size());
+    assertThat(taskList.size()).isEqualTo(2);
 
     // make sure user task exists
     Task task = taskService.createTaskQuery().taskDefinitionKey("SimpleUser").singleResult();
@@ -115,7 +115,7 @@ public class UserTaskTest extends PluggableProcessEngineTest {
 
     List<Task> taskList = taskService.createTaskQuery().list();
     assertNotNull(taskList);
-    assertEquals(13, taskList.size());
+    assertThat(taskList.size()).isEqualTo(13);
 
   }
 
@@ -126,9 +126,9 @@ public class UserTaskTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("financialReport");
 
     List<Task> tasks = taskService.createTaskQuery().taskCandidateUser("fozzie").list();
-    assertEquals(1, tasks.size());
+    assertThat(tasks.size()).isEqualTo(1);
     Task task = tasks.get(0);
-    assertEquals("Write monthly financial report", task.getName());
+    assertThat(task.getName()).isEqualTo("Write monthly financial report");
 
     taskService.claim(task.getId(), "fozzie");
     tasks = taskService
@@ -136,14 +136,14 @@ public class UserTaskTest extends PluggableProcessEngineTest {
       .taskAssignee("fozzie")
       .list();
 
-    assertEquals(1, tasks.size());
+    assertThat(tasks.size()).isEqualTo(1);
     taskService.complete(task.getId());
 
     tasks = taskService.createTaskQuery().taskCandidateUser("fozzie").list();
-    assertEquals(0, tasks.size());
+    assertThat(tasks.size()).isEqualTo(0);
     tasks = taskService.createTaskQuery().taskCandidateUser("kermit").list();
-    assertEquals(1, tasks.size());
-    assertEquals("Verify monthly financial report", tasks.get(0).getName());
+    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks.get(0).getName()).isEqualTo("Verify monthly financial report");
     taskService.complete(tasks.get(0).getId());
 
     testRule.assertProcessEnded(processInstance.getId());

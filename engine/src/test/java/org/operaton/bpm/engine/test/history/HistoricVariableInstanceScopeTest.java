@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.HashMap;
@@ -55,13 +55,13 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("oneTaskProcess", variables);
 
     HistoricVariableInstanceQuery query = historyService.createHistoricVariableInstanceQuery();
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     HistoricVariableInstance variable = query.singleResult();
     assertNotNull(variable);
 
     // the variable is in the process instance scope
-    assertEquals(pi.getId(), variable.getActivityInstanceId());
+    assertThat(variable.getActivityInstanceId()).isEqualTo(pi.getId());
 
     taskService.complete(taskService.createTaskQuery().singleResult().getId());
     testRule.assertProcessEnded(pi.getId());
@@ -82,13 +82,13 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
     assertNotNull(taskExecution);
 
     HistoricVariableInstanceQuery query = historyService.createHistoricVariableInstanceQuery();
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     HistoricVariableInstance variable = query.singleResult();
     assertNotNull(variable);
 
     // the variable is in the task scope
-    assertEquals(taskExecution.getActivityInstanceId(), variable.getActivityInstanceId());
+    assertThat(variable.getActivityInstanceId()).isEqualTo(taskExecution.getActivityInstanceId());
 
     taskService.complete(task.getId());
     testRule.assertProcessEnded(pi.getId());
@@ -109,21 +109,21 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
     assertNotNull(taskExecution);
 
     HistoricVariableInstanceQuery query = historyService.createHistoricVariableInstanceQuery();
-    assertEquals(2, query.count());
+    assertThat(query.count()).isEqualTo(2);
 
     List<HistoricVariableInstance> result = query.list();
 
     HistoricVariableInstance firstVar = result.get(0);
-    assertEquals("testVar", firstVar.getVariableName());
-    assertEquals("testValue", firstVar.getValue());
+    assertThat(firstVar.getVariableName()).isEqualTo("testVar");
+    assertThat(firstVar.getValue()).isEqualTo("testValue");
     // the variable is in the process instance scope
-    assertEquals(pi.getId(), firstVar.getActivityInstanceId());
+    assertThat(firstVar.getActivityInstanceId()).isEqualTo(pi.getId());
 
     HistoricVariableInstance secondVar = result.get(1);
-    assertEquals("testVar", secondVar.getVariableName());
-    assertEquals("anotherTestValue", secondVar.getValue());
+    assertThat(secondVar.getVariableName()).isEqualTo("testVar");
+    assertThat(secondVar.getValue()).isEqualTo("anotherTestValue");
     // the variable is in the task scope
-    assertEquals(taskExecution.getActivityInstanceId(), secondVar.getActivityInstanceId());
+    assertThat(secondVar.getActivityInstanceId()).isEqualTo(taskExecution.getActivityInstanceId());
 
     taskService.complete(task.getId());
     testRule.assertProcessEnded(pi.getId());
@@ -140,11 +140,11 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
     taskService.setVariable(task.getId(), "testVar", "testValue");
 
     HistoricVariableInstanceQuery query = historyService.createHistoricVariableInstanceQuery();
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     HistoricVariableInstance variable = query.singleResult();
     // the variable is in the process instance scope
-    assertEquals(pi.getId(), variable.getActivityInstanceId());
+    assertThat(variable.getActivityInstanceId()).isEqualTo(pi.getId());
 
     taskService.complete(task.getId());
     testRule.assertProcessEnded(pi.getId());
@@ -156,11 +156,11 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
     HistoricVariableInstanceQuery query = historyService.createHistoricVariableInstanceQuery();
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     HistoricVariableInstance variable = query.singleResult();
     // the variable is in the process instance scope
-    assertEquals(pi.getId(), variable.getActivityInstanceId());
+    assertThat(variable.getActivityInstanceId()).isEqualTo(pi.getId());
 
     testRule.assertProcessEnded(pi.getId());
   }
@@ -171,7 +171,7 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
     HistoricVariableInstanceQuery query = historyService.createHistoricVariableInstanceQuery();
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     String activityInstanceId = historyService.createHistoricActivityInstanceQuery()
         .activityId("SubProcess_1")
@@ -180,7 +180,7 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
 
     HistoricVariableInstance variable = query.singleResult();
     // the variable is in the sub process scope
-    assertEquals(activityInstanceId, variable.getActivityInstanceId());
+    assertThat(variable.getActivityInstanceId()).isEqualTo(activityInstanceId);
 
     testRule.assertProcessEnded(pi.getId());
   }
@@ -200,11 +200,11 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
     assertNotNull(taskExecution);
 
     HistoricVariableInstanceQuery query = historyService.createHistoricVariableInstanceQuery();
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     HistoricVariableInstance variable = query.singleResult();
     // the variable is in the user task scope
-    assertEquals(taskExecution.getActivityInstanceId(), variable.getActivityInstanceId());
+    assertThat(variable.getActivityInstanceId()).isEqualTo(taskExecution.getActivityInstanceId());
 
     taskService.complete(task.getId());
 
@@ -222,11 +222,11 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
     taskService.setVariable(task.getId(), "testVar", "testValue");
 
     HistoricVariableInstanceQuery query = historyService.createHistoricVariableInstanceQuery();
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     HistoricVariableInstance variable = query.singleResult();
     // the variable is in the process instance scope
-    assertEquals(pi.getId(), variable.getActivityInstanceId());
+    assertThat(variable.getActivityInstanceId()).isEqualTo(pi.getId());
 
     taskService.complete(task.getId());
 
@@ -239,11 +239,11 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
     HistoricVariableInstanceQuery query = historyService.createHistoricVariableInstanceQuery();
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     HistoricVariableInstance variable = query.singleResult();
     // the variable is in the process instance scope
-    assertEquals(pi.getId(), variable.getActivityInstanceId());
+    assertThat(variable.getActivityInstanceId()).isEqualTo(pi.getId());
 
     testRule.assertProcessEnded(pi.getId());
   }
@@ -259,11 +259,11 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
     assertNotNull(serviceTask);
 
     HistoricVariableInstanceQuery query = historyService.createHistoricVariableInstanceQuery();
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     HistoricVariableInstance variable = query.singleResult();
     // the variable is in the service task scope
-    assertEquals(serviceTask.getId(), variable.getActivityInstanceId());
+    assertThat(variable.getActivityInstanceId()).isEqualTo(serviceTask.getId());
 
     testRule.assertProcessEnded(pi.getId());
   }
@@ -287,18 +287,18 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
     caseService.setVariableLocal(caseExecutionId, "case", "update");
     caseService.setVariableLocal(taskExecutionId, "task", "update");
 
-    assertEquals(3, historyService.createHistoricVariableInstanceQuery().count());
-    assertEquals(3, historyService.createHistoricVariableInstanceQuery().caseInstanceId(caseInstanceId).count());
-    assertEquals(3, historyService.createHistoricVariableInstanceQuery().caseExecutionIdIn(caseExecutionId, taskExecutionId).count());
-    assertEquals(2, historyService.createHistoricVariableInstanceQuery().caseExecutionIdIn(caseExecutionId).count());
-    assertEquals(1, historyService.createHistoricVariableInstanceQuery().caseExecutionIdIn(taskExecutionId).count());
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(3);
+    assertThat(historyService.createHistoricVariableInstanceQuery().caseInstanceId(caseInstanceId).count()).isEqualTo(3);
+    assertThat(historyService.createHistoricVariableInstanceQuery().caseExecutionIdIn(caseExecutionId, taskExecutionId).count()).isEqualTo(3);
+    assertThat(historyService.createHistoricVariableInstanceQuery().caseExecutionIdIn(caseExecutionId).count()).isEqualTo(2);
+    assertThat(historyService.createHistoricVariableInstanceQuery().caseExecutionIdIn(taskExecutionId).count()).isEqualTo(1);
 
     HistoryLevel historyLevel = processEngineConfiguration.getHistoryLevel();
     if (historyLevel.equals(HistoryLevel.HISTORY_LEVEL_FULL)) {
-      assertEquals(5, historyService.createHistoricDetailQuery().count());
-      assertEquals(5, historyService.createHistoricDetailQuery().caseInstanceId(caseInstanceId).count());
-      assertEquals(3, historyService.createHistoricDetailQuery().caseExecutionId(caseExecutionId).count());
-      assertEquals(2, historyService.createHistoricDetailQuery().caseExecutionId(taskExecutionId).count());
+      assertThat(historyService.createHistoricDetailQuery().count()).isEqualTo(5);
+      assertThat(historyService.createHistoricDetailQuery().caseInstanceId(caseInstanceId).count()).isEqualTo(5);
+      assertThat(historyService.createHistoricDetailQuery().caseExecutionId(caseExecutionId).count()).isEqualTo(3);
+      assertThat(historyService.createHistoricDetailQuery().caseExecutionId(taskExecutionId).count()).isEqualTo(2);
     }
   }
 
@@ -323,7 +323,7 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
       .singleResult();
 
     // then (1)
-    assertEquals(theService1Id, firstVariable.getActivityInstanceId());
+    assertThat(firstVariable.getActivityInstanceId()).isEqualTo(theService1Id);
 
     if(processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_AUDIT) {
       HistoricDetail firstVariableDetail = historyService
@@ -331,7 +331,7 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
         .variableUpdates()
         .variableInstanceId(firstVariable.getId())
         .singleResult();
-      assertEquals(theService1Id, firstVariableDetail.getActivityInstanceId());
+      assertThat(firstVariableDetail.getActivityInstanceId()).isEqualTo(theService1Id);
     }
 
     // when (2)
@@ -341,7 +341,7 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
       .singleResult();
 
     // then (2)
-    assertEquals(theService2Id, secondVariable.getActivityInstanceId());
+    assertThat(secondVariable.getActivityInstanceId()).isEqualTo(theService2Id);
 
     if(processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_AUDIT) {
       HistoricDetail secondVariableDetail = historyService
@@ -349,7 +349,7 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
         .variableUpdates()
         .variableInstanceId(secondVariable.getId())
         .singleResult();
-      assertEquals(theService2Id, secondVariableDetail.getActivityInstanceId());
+      assertThat(secondVariableDetail.getActivityInstanceId()).isEqualTo(theService2Id);
     }
 
     // when (3)
@@ -359,7 +359,7 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
       .singleResult();
 
     // then (3)
-    assertEquals(theTaskId, thirdVariable.getActivityInstanceId());
+    assertThat(thirdVariable.getActivityInstanceId()).isEqualTo(theTaskId);
 
     if(processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_AUDIT) {
       HistoricDetail thirdVariableDetail = historyService
@@ -367,7 +367,7 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
         .variableUpdates()
         .variableInstanceId(thirdVariable.getId())
         .singleResult();
-      assertEquals(theTaskId, thirdVariableDetail.getActivityInstanceId());
+      assertThat(thirdVariableDetail.getActivityInstanceId()).isEqualTo(theTaskId);
     }
   }
 
@@ -397,7 +397,7 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
         .singleResult();
 
     assertNotNull(variable);
-    assertEquals(caseInstance.getId(), variable.getActivityInstanceId());
+    assertThat(variable.getActivityInstanceId()).isEqualTo(caseInstance.getId());
 
     if(processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_AUDIT) {
       HistoricDetail variableDetail = historyService
@@ -405,7 +405,7 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
         .variableUpdates()
         .variableInstanceId(variable.getId())
         .singleResult();
-      assertEquals(taskExecutionId, variableDetail.getActivityInstanceId());
+      assertThat(variableDetail.getActivityInstanceId()).isEqualTo(taskExecutionId);
     }
 
   }
@@ -436,7 +436,7 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
         .singleResult();
 
     assertNotNull(variable);
-    assertEquals(taskExecutionId, variable.getActivityInstanceId());
+    assertThat(variable.getActivityInstanceId()).isEqualTo(taskExecutionId);
 
     if(processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_AUDIT) {
       HistoricDetail variableDetail = historyService
@@ -444,7 +444,7 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
         .variableUpdates()
         .variableInstanceId(variable.getId())
         .singleResult();
-      assertEquals(taskExecutionId, variableDetail.getActivityInstanceId());
+      assertThat(variableDetail.getActivityInstanceId()).isEqualTo(taskExecutionId);
     }
 
   }
@@ -476,7 +476,7 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
         .singleResult();
 
     assertNotNull(variable);
-    assertEquals(caseInstance.getId(), variable.getActivityInstanceId());
+    assertThat(variable.getActivityInstanceId()).isEqualTo(caseInstance.getId());
 
     if(processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_AUDIT) {
       HistoricDetail variableDetail = historyService
@@ -484,7 +484,7 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
         .variableUpdates()
         .variableInstanceId(variable.getId())
         .singleResult();
-      assertEquals(taskExecutionId, variableDetail.getActivityInstanceId());
+      assertThat(variableDetail.getActivityInstanceId()).isEqualTo(taskExecutionId);
     }
 
   }

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.standalone.pvm;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +27,8 @@ import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.impl.pvm.PvmProcessInstance;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
+
+import org.assertj.core.api.Assertions;
 import org.junit.Assert;
 
 /**
@@ -102,7 +106,7 @@ public class ActivityInstanceVerification extends Assert implements ExecutionLis
     }
 
     assertNotNull(startInstancesForThisAct);
-    assertEquals(count, startInstancesForThisAct.size());
+    Assertions.assertThat(startInstancesForThisAct.size()).isEqualTo(count);
 
     List<ActivityInstance> endInstancesForThisAct = endedActivityInstances.get(actId);
     assertNotNull(endInstancesForThisAct);
@@ -116,7 +120,7 @@ public class ActivityInstanceVerification extends Assert implements ExecutionLis
       boolean foundMatchingEnd = false;
       for (ActivityInstance endedActInstance : endInstancesForThisAct) {
         if(startedActInstance.id.equals(endedActInstance.id)) {
-          assertEquals(startedActInstance.parentId, endedActInstance.parentId);
+          Assertions.assertThat(endedActInstance.parentId).isEqualTo(startedActInstance.parentId);
           foundMatchingEnd = true;
         }
       }
@@ -134,12 +138,12 @@ public class ActivityInstanceVerification extends Assert implements ExecutionLis
     List<ActivityInstance> actInstanceList = startedActivityInstances.get(actId);
 
     for (ActivityInstance activityInstance : actInstanceList) {
-      assertEquals(actInstId, activityInstance.parentId);
+      Assertions.assertThat(activityInstance.parentId).isEqualTo(actInstId);
     }
 
     actInstanceList = endedActivityInstances.get(actId);
     for (ActivityInstance activityInstance : actInstanceList) {
-      assertEquals(actInstId, activityInstance.parentId);
+      Assertions.assertThat(activityInstance.parentId).isEqualTo(actInstId);
     }
 
   }
@@ -182,11 +186,11 @@ public class ActivityInstanceVerification extends Assert implements ExecutionLis
     assertNotNull(endActivityInstances);
 
     for (ActivityInstance instance : endActivityInstances) {
-      assertEquals(completing, instance.isCompleteScope);
+      Assertions.assertThat(instance.isCompleteScope).isEqualTo(completing);
     }
 
     if (expectedCount != -1) {
-      assertEquals(expectedCount, endActivityInstances.size());
+      Assertions.assertThat(endActivityInstances.size()).isEqualTo(expectedCount);
     }
   }
 

@@ -42,7 +42,6 @@ import org.joda.time.DateTime;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -65,17 +64,17 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
     // expect: one entry for process instance creation,
     //         no entry for the task creation by process engine
     UserOperationLogQuery query = historyService.createUserOperationLogQuery();
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     completeTestProcess();
 
     // expect: one entry for the task completion
     query = queryOperationDetails(OPERATION_TYPE_COMPLETE);
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
     UserOperationLogEntry complete = query.singleResult();
-    assertEquals(DELETE, complete.getProperty());
+    assertThat(complete.getProperty()).isEqualTo(DELETE);
     assertTrue(Boolean.parseBoolean(complete.getNewValue()));
-    assertEquals(UserOperationLogEntry.CATEGORY_TASK_WORKER, complete.getCategory());
+    assertThat(complete.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_TASK_WORKER);
   }
 
   @Test
@@ -88,13 +87,13 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
     // expect: one entry for the task assignment
     UserOperationLogQuery query = queryOperationDetails(OPERATION_TYPE_ASSIGN);
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     // assert: details
     UserOperationLogEntry assign = query.singleResult();
-    assertEquals(ASSIGNEE, assign.getProperty());
-    assertEquals("icke", assign.getNewValue());
-    assertEquals(UserOperationLogEntry.CATEGORY_TASK_WORKER, assign.getCategory());
+    assertThat(assign.getProperty()).isEqualTo(ASSIGNEE);
+    assertThat(assign.getNewValue()).isEqualTo("icke");
+    assertThat(assign.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_TASK_WORKER);
 
     completeTestProcess();
   }
@@ -109,13 +108,13 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
     // expect: one entry for the owner change
     UserOperationLogQuery query = queryOperationDetails(OPERATION_TYPE_SET_OWNER);
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     // assert: details
     UserOperationLogEntry change = query.singleResult();
-    assertEquals(OWNER, change.getProperty());
-    assertEquals("icke", change.getNewValue());
-    assertEquals(UserOperationLogEntry.CATEGORY_TASK_WORKER, change.getCategory());
+    assertThat(change.getProperty()).isEqualTo(OWNER);
+    assertThat(change.getNewValue()).isEqualTo("icke");
+    assertThat(change.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_TASK_WORKER);
 
     completeTestProcess();
   }
@@ -130,16 +129,16 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
     // expect: one entry for the priority update
     UserOperationLogQuery query = queryOperationDetails(OPERATION_TYPE_SET_PRIORITY);
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     // assert: correct priority set
     UserOperationLogEntry userOperationLogEntry = query.singleResult();
-    assertEquals(PRIORITY, userOperationLogEntry.getProperty());
+    assertThat(userOperationLogEntry.getProperty()).isEqualTo(PRIORITY);
     // note: 50 is the default task priority
-    assertEquals(50, Integer.parseInt(userOperationLogEntry.getOrgValue()));
-    assertEquals(10, Integer.parseInt(userOperationLogEntry.getNewValue()));
+    assertThat(Integer.parseInt(userOperationLogEntry.getOrgValue())).isEqualTo(50);
+    assertThat(Integer.parseInt(userOperationLogEntry.getNewValue())).isEqualTo(10);
     // assert: correct category set
-    assertEquals(UserOperationLogEntry.CATEGORY_TASK_WORKER, userOperationLogEntry.getCategory());
+    assertThat(userOperationLogEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_TASK_WORKER);
 
     // move clock by 5 minutes
     Date date = DateTimeUtil.now().plusMinutes(5).toDate();
@@ -150,14 +149,14 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
     // expect: one entry for the priority update
     query = queryOperationDetails(OPERATION_TYPE_SET_PRIORITY);
-    assertEquals(2, query.count());
+    assertThat(query.count()).isEqualTo(2);
 
     // assert: correct priority set
     userOperationLogEntry = query.orderByTimestamp().asc().list().get(1);
-    assertEquals(PRIORITY, userOperationLogEntry.getProperty());
-    assertEquals(10, Integer.parseInt(userOperationLogEntry.getOrgValue()));
-    assertEquals(75, Integer.parseInt(userOperationLogEntry.getNewValue()));
-    assertEquals(UserOperationLogEntry.CATEGORY_TASK_WORKER, userOperationLogEntry.getCategory());
+    assertThat(userOperationLogEntry.getProperty()).isEqualTo(PRIORITY);
+    assertThat(Integer.parseInt(userOperationLogEntry.getOrgValue())).isEqualTo(10);
+    assertThat(Integer.parseInt(userOperationLogEntry.getNewValue())).isEqualTo(75);
+    assertThat(userOperationLogEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_TASK_WORKER);
   }
 
   @Test
@@ -172,7 +171,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
     // then
     UserOperationLogQuery query = queryOperationDetails("SetName");
 
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     UserOperationLogEntry result = query.singleResult();
 
@@ -181,7 +180,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
     assertThat(result.getProperty()).isEqualTo("name");
     assertThat(result.getNewValue()).isEqualTo("the-name");
     assertThat(result.getEntityType()).isEqualTo("Task");
-    assertEquals(UserOperationLogEntry.CATEGORY_TASK_WORKER, result.getCategory());
+    assertThat(result.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_TASK_WORKER);
   }
 
   @Test
@@ -196,7 +195,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
     // then
     UserOperationLogQuery query = queryOperationDetails("SetDescription");
 
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     UserOperationLogEntry result = query.singleResult();
 
@@ -205,7 +204,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
     assertThat(result.getProperty()).isEqualTo("description");
     assertThat(result.getNewValue()).isEqualTo("the-description");
     assertThat(result.getEntityType()).isEqualTo("Task");
-    assertEquals(UserOperationLogEntry.CATEGORY_TASK_WORKER, result.getCategory());
+    assertThat(result.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_TASK_WORKER);
   }
 
   @Test
@@ -222,7 +221,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
     // then
     UserOperationLogQuery query = queryOperationDetails("SetDueDate");
 
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     UserOperationLogEntry result = query.singleResult();
 
@@ -231,7 +230,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
     assertThat(result.getProperty()).isEqualTo("dueDate");
     assertThat(result.getNewValue()).isEqualTo(String.valueOf(newValue.getTime()));
     assertThat(result.getEntityType()).isEqualTo("Task");
-    assertEquals(UserOperationLogEntry.CATEGORY_TASK_WORKER, result.getCategory());
+    assertThat(result.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_TASK_WORKER);
   }
 
   @Test
@@ -247,7 +246,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
     // then
     UserOperationLogQuery query = queryOperationDetails("SetFollowUpDate");
 
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     UserOperationLogEntry result = query.singleResult();
 
@@ -256,7 +255,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
     assertThat(result.getProperty()).isEqualTo("followUpDate");
     assertThat(result.getNewValue()).isEqualTo(String.valueOf(newValue.getTime()));
     assertThat(result.getEntityType()).isEqualTo("Task");
-    assertEquals(UserOperationLogEntry.CATEGORY_TASK_WORKER, result.getCategory());
+    assertThat(result.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_TASK_WORKER);
   }
 
   @Test
@@ -269,13 +268,13 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
     // expect: one entry for the claim
     UserOperationLogQuery query = queryOperationDetails(OPERATION_TYPE_CLAIM);
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     // assert: details
     UserOperationLogEntry claim = query.singleResult();
-    assertEquals(ASSIGNEE, claim.getProperty());
-    assertEquals("icke", claim.getNewValue());
-    assertEquals(UserOperationLogEntry.CATEGORY_TASK_WORKER, claim.getCategory());
+    assertThat(claim.getProperty()).isEqualTo(ASSIGNEE);
+    assertThat(claim.getNewValue()).isEqualTo("icke");
+    assertThat(claim.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_TASK_WORKER);
 
     completeTestProcess();
   }
@@ -291,13 +290,13 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
     // expect: three entries for the delegation
     UserOperationLogQuery query = queryOperationDetails(OPERATION_TYPE_DELEGATE);
-    assertEquals(3, query.count());
+    assertThat(query.count()).isEqualTo(3);
 
     // assert: details
-    assertEquals("icke", queryOperationDetails(OPERATION_TYPE_DELEGATE, OWNER).singleResult().getNewValue());
-    assertEquals("er", queryOperationDetails(OPERATION_TYPE_DELEGATE, ASSIGNEE).singleResult().getNewValue());
-    assertEquals(DelegationState.PENDING.toString(), queryOperationDetails(OPERATION_TYPE_DELEGATE, DELEGATION).singleResult().getNewValue());
-    assertEquals(UserOperationLogEntry.CATEGORY_TASK_WORKER, queryOperationDetails(OPERATION_TYPE_DELEGATE, DELEGATION).singleResult().getCategory());
+    assertThat(queryOperationDetails(OPERATION_TYPE_DELEGATE, OWNER).singleResult().getNewValue()).isEqualTo("icke");
+    assertThat(queryOperationDetails(OPERATION_TYPE_DELEGATE, ASSIGNEE).singleResult().getNewValue()).isEqualTo("er");
+    assertThat(queryOperationDetails(OPERATION_TYPE_DELEGATE, DELEGATION).singleResult().getNewValue()).isEqualTo(DelegationState.PENDING.toString());
+    assertThat(queryOperationDetails(OPERATION_TYPE_DELEGATE, DELEGATION).singleResult().getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_TASK_WORKER);
 
     completeTestProcess();
   }
@@ -312,12 +311,12 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
     // expect: one entry for the resolving
     UserOperationLogQuery query = queryOperationDetails(OPERATION_TYPE_RESOLVE);
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     // assert: details
     UserOperationLogEntry log = query.singleResult();
-    assertEquals(DelegationState.RESOLVED.toString(), log.getNewValue());
-    assertEquals(UserOperationLogEntry.CATEGORY_TASK_WORKER, log.getCategory());
+    assertThat(log.getNewValue()).isEqualTo(DelegationState.RESOLVED.toString());
+    assertThat(log.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_TASK_WORKER);
 
     completeTestProcess();
   }
@@ -331,13 +330,13 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
     // expect: one entry for the completion
     UserOperationLogQuery query = queryOperationDetails(OPERATION_TYPE_COMPLETE);
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     // assert: delete
     UserOperationLogEntry log = query.property("delete").singleResult();
     assertFalse(Boolean.parseBoolean(log.getOrgValue()));
     assertTrue(Boolean.parseBoolean(log.getNewValue()));
-    assertEquals(UserOperationLogEntry.CATEGORY_TASK_WORKER, log.getCategory());
+    assertThat(log.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_TASK_WORKER);
 
     testRule.assertProcessEnded(process.getId());
   }
@@ -353,19 +352,19 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
     // expect: two entries for the resolving (delegation and assignee changed)
     UserOperationLogQuery query = queryOperationDetails(OPERATION_TYPE_RESOLVE);
-    assertEquals(2, query.count());
+    assertThat(query.count()).isEqualTo(2);
 
     // assert: delegation
     UserOperationLogEntry log = query.property("delegation").singleResult();
-    assertEquals(DelegationState.PENDING.toString(), log.getOrgValue());
-    assertEquals(DelegationState.RESOLVED.toString(), log.getNewValue());
-    assertEquals(UserOperationLogEntry.CATEGORY_TASK_WORKER, log.getCategory());
+    assertThat(log.getOrgValue()).isEqualTo(DelegationState.PENDING.toString());
+    assertThat(log.getNewValue()).isEqualTo(DelegationState.RESOLVED.toString());
+    assertThat(log.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_TASK_WORKER);
 
     // assert: assignee
     log = query.property("assignee").singleResult();
-    assertEquals("demo", log.getOrgValue());
-    assertEquals(null, log.getNewValue());
-    assertEquals(UserOperationLogEntry.CATEGORY_TASK_WORKER, log.getCategory());
+    assertThat(log.getOrgValue()).isEqualTo("demo");
+    assertThat(log.getNewValue()).isEqualTo(null);
+    assertThat(log.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_TASK_WORKER);
 
     completeTestProcess();
   }
@@ -381,7 +380,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
     // then
     UserOperationLogQuery query = queryOperationDetails(OPERATION_TYPE_DELETE);
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     // assert: details
     UserOperationLogEntry log = query.singleResult();
@@ -404,7 +403,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
     // then
     UserOperationLogQuery query = queryOperationDetails(OPERATION_TYPE_COMPLETE);
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     // assert: details
     UserOperationLogEntry log = query.singleResult();
@@ -441,20 +440,20 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
     // then
     UserOperationLogQuery query = queryOperationDetails(OPERATION_TYPE_COMPLETE);
 
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     UserOperationLogEntry entry = query.singleResult();
     assertNotNull(entry);
 
-    assertEquals(caseDefinition.getId(), entry.getCaseDefinitionId());
-    assertEquals(caseInstanceId, entry.getCaseInstanceId());
-    assertEquals(humanTaskId, entry.getCaseExecutionId());
-    assertEquals(caseDefinition.getDeploymentId(), entry.getDeploymentId());
+    assertThat(entry.getCaseDefinitionId()).isEqualTo(caseDefinition.getId());
+    assertThat(entry.getCaseInstanceId()).isEqualTo(caseInstanceId);
+    assertThat(entry.getCaseExecutionId()).isEqualTo(humanTaskId);
+    assertThat(entry.getDeploymentId()).isEqualTo(caseDefinition.getDeploymentId());
 
     assertFalse(Boolean.parseBoolean(entry.getOrgValue()));
     assertTrue(Boolean.parseBoolean(entry.getNewValue()));
-    assertEquals(DELETE, entry.getProperty());
-    assertEquals(UserOperationLogEntry.CATEGORY_TASK_WORKER, entry.getCategory());
+    assertThat(entry.getProperty()).isEqualTo(DELETE);
+    assertThat(entry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_TASK_WORKER);
 
   }
 
@@ -476,11 +475,11 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
     // then
     UserOperationLogQuery query = historyService.createUserOperationLogQuery();
-    assertEquals(4, query.count());
-    assertEquals(1, query.operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE).count());
-    assertEquals(1, query.operationType(UserOperationLogEntry.OPERATION_TYPE_SUSPEND).count());
-    assertEquals(1, query.operationType(UserOperationLogEntry.OPERATION_TYPE_RESOLVE).count());
-    assertEquals(1, query.operationType(UserOperationLogEntry.OPERATION_TYPE_DELETE).count());
+    assertThat(query.count()).isEqualTo(4);
+    assertThat(query.operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE).count()).isEqualTo(1);
+    assertThat(query.operationType(UserOperationLogEntry.OPERATION_TYPE_SUSPEND).count()).isEqualTo(1);
+    assertThat(query.operationType(UserOperationLogEntry.OPERATION_TYPE_RESOLVE).count()).isEqualTo(1);
+    assertThat(query.operationType(UserOperationLogEntry.OPERATION_TYPE_DELETE).count()).isEqualTo(1);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
@@ -500,10 +499,10 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
     historyService.deleteUserOperationLogEntry(opLogEntry.getId());
 
     // then it should be removed from the database
-    assertEquals(0, historyService
-            .createUserOperationLogQuery()
-            .entityType(EntityTypes.TASK)
-            .count());
+    assertThat(historyService
+        .createUserOperationLogQuery()
+        .entityType(EntityTypes.TASK)
+        .count()).isEqualTo(0);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
@@ -532,13 +531,13 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
     // an op log instance is created
     taskService.resolveTask(task.getId());
-    assertEquals(2, historyService.createUserOperationLogQuery().count());
+    assertThat(historyService.createUserOperationLogQuery().count()).isEqualTo(2);
 
     // when a non-existing id is used
     historyService.deleteUserOperationLogEntry("a non existing id");
 
     // then no op log entry should have been deleted (process instance creation+ resolve task)
-    assertEquals(2, historyService.createUserOperationLogQuery().count());
+    assertThat(historyService.createUserOperationLogQuery().count()).isEqualTo(2);
   }
 
   @Deployment
@@ -562,15 +561,15 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
             .createUserOperationLogQuery()
             .entityType(EntityTypes.TASK);
 
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     UserOperationLogEntry log = query.singleResult();
-    assertEquals("process", log.getProcessDefinitionKey());
-    assertEquals(processInstanceId, log.getProcessInstanceId());
-    assertEquals(deploymentId, log.getDeploymentId());
-    assertEquals(taskId, log.getTaskId());
-    assertEquals(UserOperationLogEntry.OPERATION_TYPE_COMPLETE, log.getOperationType());
-    assertEquals(UserOperationLogEntry.CATEGORY_TASK_WORKER, log.getCategory());
+    assertThat(log.getProcessDefinitionKey()).isEqualTo("process");
+    assertThat(log.getProcessInstanceId()).isEqualTo(processInstanceId);
+    assertThat(log.getDeploymentId()).isEqualTo(deploymentId);
+    assertThat(log.getTaskId()).isEqualTo(taskId);
+    assertThat(log.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_COMPLETE);
+    assertThat(log.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_TASK_WORKER);
   }
 
   protected void startTestProcess() {

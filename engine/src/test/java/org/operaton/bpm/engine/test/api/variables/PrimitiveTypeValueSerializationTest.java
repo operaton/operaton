@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.variables;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -96,7 +96,7 @@ public class PrimitiveTypeValueSerializationTest {
     runtimeService.setVariable(instance.getId(), VARIABLE_NAME, typedValue);
 
     Object variableValue = runtimeService.getVariable(instance.getId(), VARIABLE_NAME);
-    assertEquals(typedValue.getValue(), variableValue);
+    assertThat(variableValue).isEqualTo(typedValue.getValue());
   }
 
   @Test
@@ -106,8 +106,8 @@ public class PrimitiveTypeValueSerializationTest {
     runtimeService.setVariable(instance.getId(), VARIABLE_NAME, typedValue);
 
     TypedValue typedVariableValue = runtimeService.getVariableTyped(instance.getId(), VARIABLE_NAME);
-    assertEquals(typedValue.getType(), typedVariableValue.getType());
-    assertEquals(typedValue.getValue(), typedVariableValue.getValue());
+    assertThat(typedVariableValue.getType()).isEqualTo(typedValue.getType());
+    assertThat(typedVariableValue.getValue()).isEqualTo(typedValue.getValue());
   }
 
   @Test
@@ -116,11 +116,11 @@ public class PrimitiveTypeValueSerializationTest {
 
     runtimeService.setVariable(instance.getId(), VARIABLE_NAME, nullValue);
 
-    assertEquals(null, runtimeService.getVariable(instance.getId(), VARIABLE_NAME));
+    assertThat(runtimeService.getVariable(instance.getId(), VARIABLE_NAME)).isEqualTo(null);
 
     TypedValue typedVariableValue = runtimeService.getVariableTyped(instance.getId(), VARIABLE_NAME);
-    assertEquals(nullValue.getType(), typedVariableValue.getType());
-    assertEquals(null, typedVariableValue.getValue());
+    assertThat(typedVariableValue.getType()).isEqualTo(nullValue.getType());
+    assertThat(typedVariableValue.getValue()).isEqualTo(null);
   }
 
 }

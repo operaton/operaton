@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.history;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,7 +81,7 @@ public class BulkHistoryDeleteDmnDisabledTest {
     historyService.deleteHistoricProcessInstancesBulk(ids);
 
     //then
-    assertEquals(0, historyService.createHistoricProcessInstanceQuery().processDefinitionKey("someProcess").count());
+    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey("someProcess").count()).isEqualTo(0);
   }
 
   private List<String> prepareHistoricProcesses(String businessKey) {

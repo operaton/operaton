@@ -21,7 +21,6 @@ import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnM
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 import static org.operaton.bpm.engine.test.util.MigratingProcessInstanceValidationReportAssert.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.Date;
@@ -173,7 +172,7 @@ public class MigrationTransitionInstancesTest {
         .transition("userTask")
       .done());
 
-    Assert.assertEquals(2, testHelper.snapshotAfterMigration.getJobs().size());
+    assertThat(testHelper.snapshotAfterMigration.getJobs().size()).isEqualTo(2);
 
     // and it is possible to successfully execute the migrated job
     for (Job job : testHelper.snapshotAfterMigration.getJobs()) {
@@ -553,8 +552,7 @@ public class MigrationTransitionInstancesTest {
 
     // and it is possible to successfully execute the migrated job
     Job job = testHelper.snapshotAfterMigration.getJobs().get(0);
-    Assert.assertEquals("Replace this non-API assert with a proper test case that fails when the wrong atomic operation is used",
-        "process-start", ((JobEntity) job).getJobHandlerConfigurationRaw());
+    assertThat(((JobEntity) job).getJobHandlerConfigurationRaw()).as("Replace this non-API assert with a proper test case that fails when the wrong atomic operation is used").isEqualTo("process-start");
     rule.getManagementService().executeJob(job.getId());
 
     // and complete the task and process instance
@@ -714,7 +712,7 @@ public class MigrationTransitionInstancesTest {
           .transition("userTask")
       .done());
 
-    Assert.assertEquals(2, testHelper.snapshotAfterMigration.getJobs().size());
+    assertThat(testHelper.snapshotAfterMigration.getJobs().size()).isEqualTo(2);
 
     // and it is possible to successfully execute the migrated job
     for (Job job : testHelper.snapshotAfterMigration.getJobs()) {
@@ -753,12 +751,12 @@ public class MigrationTransitionInstancesTest {
 
     assertNotNull(incidentAfterMigration);
     // and it is still the same incident
-    assertEquals(incidentBeforeMigration.getId(), incidentAfterMigration.getId());
-    assertEquals(job.getId(), incidentAfterMigration.getConfiguration());
+    assertThat(incidentAfterMigration.getId()).isEqualTo(incidentBeforeMigration.getId());
+    assertThat(incidentAfterMigration.getConfiguration()).isEqualTo(job.getId());
 
     // and the activity and process definition references were updated
-    assertEquals("newUserTask", incidentAfterMigration.getActivityId());
-    assertEquals(targetProcessDefinition.getId(), incidentAfterMigration.getProcessDefinitionId());
+    assertThat(incidentAfterMigration.getActivityId()).isEqualTo("newUserTask");
+    assertThat(incidentAfterMigration.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());
 
     // and it is possible to successfully execute the migrated job
     rule.getManagementService().executeJob(job.getId());
@@ -790,7 +788,7 @@ public class MigrationTransitionInstancesTest {
 
     // then
     List<Job> jobs = testHelper.snapshotAfterMigration.getJobs();
-    Assert.assertEquals(3, jobs.size());
+    assertThat(jobs.size()).isEqualTo(3);
 
     testHelper.assertJobMigrated(jobs.get(0), "userTask");
     testHelper.assertJobMigrated(jobs.get(1), "userTask");
@@ -834,7 +832,7 @@ public class MigrationTransitionInstancesTest {
 
     // then
     List<Job> jobs = testHelper.snapshotAfterMigration.getJobs();
-    Assert.assertEquals(3, jobs.size());
+    assertThat(jobs.size()).isEqualTo(3);
 
     testHelper.assertJobMigrated(jobs.get(0), "userTask");
     testHelper.assertJobMigrated(jobs.get(1), "userTask");

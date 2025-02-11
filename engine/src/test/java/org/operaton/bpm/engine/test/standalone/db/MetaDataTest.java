@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.standalone.db;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.junit.Test;
@@ -30,7 +30,7 @@ public class MetaDataTest extends PluggableProcessEngineTest {
   @Test
   public void testMariaDbDatabaseType() {
     if (isMariaDbConfigured()) {
-      assertEquals("mariadb",  processEngineConfiguration.getDatabaseType());
+      assertThat(processEngineConfiguration.getDatabaseType()).isEqualTo("mariadb");
     }
   }
 

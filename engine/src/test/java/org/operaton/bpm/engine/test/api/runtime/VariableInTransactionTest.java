@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.impl.db.entitymanager.DbEntityManager;
 import org.operaton.bpm.engine.impl.db.entitymanager.cache.CachedDbEntity;
@@ -51,7 +51,7 @@ public class VariableInTransactionTest extends PluggableProcessEngineTest {
       CachedDbEntity cachedEntity = dbEntityManager.getDbEntityCache().getCachedEntity(ByteArrayEntity.class, byteArrayId);
 
       DbEntityState entityState = cachedEntity.getEntityState();
-      assertEquals(DbEntityState.DELETED_TRANSIENT, entityState);
+      assertThat(entityState).isEqualTo(DbEntityState.DELETED_TRANSIENT);
 
       return null;
     });

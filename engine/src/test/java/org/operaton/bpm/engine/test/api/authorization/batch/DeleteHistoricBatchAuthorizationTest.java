@@ -20,7 +20,7 @@ import static org.operaton.bpm.engine.history.UserOperationLogEntry.CATEGORY_OPE
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_DELETE_HISTORY;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNull;
 
 import java.util.Arrays;
@@ -135,18 +135,18 @@ public class DeleteHistoricBatchAuthorizationTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      assertEquals(0, engineRule.getHistoryService().createHistoricBatchQuery().count());
+      assertThat(engineRule.getHistoryService().createHistoricBatchQuery().count()).isEqualTo(0);
 
       List<UserOperationLogEntry> userOperationLogEntries = engineRule.getHistoryService()
         .createUserOperationLogQuery()
         .operationType(OPERATION_TYPE_DELETE_HISTORY)
         .list();
 
-      assertEquals(1, userOperationLogEntries.size());
+      assertThat(userOperationLogEntries.size()).isEqualTo(1);
 
       UserOperationLogEntry entry = userOperationLogEntries.get(0);
       assertNull(entry.getProperty());
-      assertEquals(CATEGORY_OPERATOR, entry.getCategory());
+      assertThat(entry.getCategory()).isEqualTo(CATEGORY_OPERATOR);
     }
   }
 

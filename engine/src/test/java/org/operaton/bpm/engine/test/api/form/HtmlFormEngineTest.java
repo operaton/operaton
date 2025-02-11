@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.form;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -272,7 +272,7 @@ public class HtmlFormEngineTest extends PluggableProcessEngineTest {
   }
 
   public void assertHtmlEquals(String expected, String actual) {
-    assertEquals(filterWhitespace(expected), filterWhitespace(actual));
+    assertThat(filterWhitespace(actual)).isEqualTo(filterWhitespace(expected));
   }
 
   protected String filterWhitespace(String tofilter) {

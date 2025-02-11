@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.iomapping;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
@@ -61,12 +60,12 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
 
     // input mapping
     Map<String, Object> mappedVariables = VariableLogDelegate.LOCAL_VARIABLES;
-    assertEquals(1, mappedVariables.size());
-    assertEquals("mappedValue", mappedVariables.get("mappedVariable"));
+    assertThat(mappedVariables.size()).isEqualTo(1);
+    assertThat(mappedVariables.get("mappedVariable")).isEqualTo("mappedValue");
 
     // output mapping
     String variable = (String) runtimeService.getVariableLocal(processInstance.getId(), "outVariable");
-    assertEquals("mappedValue", variable);
+    assertThat(variable).isEqualTo("mappedValue");
   }
 
   @Deployment
@@ -77,8 +76,8 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
     Execution messageExecution = runtimeService.createExecutionQuery().activityId("messageCatch").singleResult();
 
     Map<String, Object> localVariables = runtimeService.getVariablesLocal(messageExecution.getId());
-    assertEquals(1, localVariables.size());
-    assertEquals("mappedValue", localVariables.get("mappedVariable"));
+    assertThat(localVariables.size()).isEqualTo(1);
+    assertThat(localVariables.get("mappedVariable")).isEqualTo("mappedValue");
 
     Map<String, Object> variables = new HashMap<>();
     variables.put("messageVariable", "outValue");
@@ -86,7 +85,7 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
 
     // output mapping
     String variable = (String) runtimeService.getVariableLocal(processInstance.getId(), "outVariable");
-    assertEquals("outValue", variable);
+    assertThat(variable).isEqualTo("outValue");
   }
 
   @Deployment
@@ -104,7 +103,7 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
 
   protected void assertDateEquals(Date expected, Date actual) {
     DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-    assertEquals(format.format(expected), format.format(actual));
+    assertThat(format.format(actual)).isEqualTo(format.format(expected));
   }
 
   @Deployment
@@ -113,12 +112,12 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
 
     Map<String, Object> mappedVariables = VariableLogDelegate.LOCAL_VARIABLES;
-    assertEquals(1, mappedVariables.size());
-    assertEquals("mappedValue", mappedVariables.get("mappedVariable"));
+    assertThat(mappedVariables.size()).isEqualTo(1);
+    assertThat(mappedVariables.get("mappedVariable")).isEqualTo("mappedValue");
 
     // output mapping
     String variable = (String) runtimeService.getVariableLocal(processInstance.getId(), "outVariable");
-    assertEquals("mappedValue", variable);
+    assertThat(variable).isEqualTo("mappedValue");
   }
 
   @Test
@@ -155,12 +154,12 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
   public void testMessageEndEvent() {
     runtimeService.startProcessInstanceByKey("testProcess");
 
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
 
     // input mapping
     Map<String, Object> mappedVariables = VariableLogDelegate.LOCAL_VARIABLES;
-    assertEquals(1, mappedVariables.size());
-    assertEquals("mappedValue", mappedVariables.get("mappedVariable"));
+    assertThat(mappedVariables.size()).isEqualTo(1);
+    assertThat(mappedVariables.get("mappedVariable")).isEqualTo("mappedValue");
   }
 
   @Deployment
@@ -181,7 +180,7 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
       .singleResult();
 
     assertNotNull(variableInstance);
-    assertEquals("bar", variableInstance.getValue());
+    assertThat(variableInstance.getValue()).isEqualTo("bar");
   }
 
   @Deployment
@@ -204,7 +203,7 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
       .singleResult();
 
     assertNotNull(variableInstance);
-    assertEquals("bar", variableInstance.getValue());
+    assertThat(variableInstance.getValue()).isEqualTo("bar");
   }
 
   @Deployment
@@ -230,7 +229,7 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
       .singleResult();
 
     assertNotNull(variableInstance);
-    assertEquals("bar", variableInstance.getValue());
+    assertThat(variableInstance.getValue()).isEqualTo("bar");
   }
 
   @Deployment
@@ -249,7 +248,7 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
       .singleResult();
 
     assertNotNull(variableInstance);
-    assertEquals("bar", variableInstance.getValue());
+    assertThat(variableInstance.getValue()).isEqualTo("bar");
   }
 
   @Test

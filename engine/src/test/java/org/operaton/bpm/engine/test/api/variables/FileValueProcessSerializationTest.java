@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.variables;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 import java.util.Scanner;
@@ -117,7 +116,7 @@ public class FileValueProcessSerializationTest extends PluggableProcessEngineTes
         Variables.createVariables().putValue("fileVar", Variables.fileValue("").create()));
 
     FileValue fileVar = runtimeService.getVariableTyped(pi.getId(), "fileVar");
-    assertEquals("", fileVar.getFilename());
+    assertThat(fileVar.getFilename()).isEqualTo("");
   }
 
 }

@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.sequenceflow;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
@@ -49,7 +49,7 @@ public class ConditionalSequenceFlowTest extends PluggableProcessEngineTest {
       .singleResult();
 
     assertNotNull(task);
-    assertEquals("task right", task.getName());
+    assertThat(task.getName()).isEqualTo("task right");
   }
 
   @Deployment
@@ -60,14 +60,14 @@ public class ConditionalSequenceFlowTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("uelExpressions",
             CollectionUtil.singletonMap("order",  order));
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-    assertEquals("Standard service", task.getName());
+    assertThat(task.getName()).isEqualTo("Standard service");
 
     // While an order of 300, gives us a premium service (goes through an UEL method expression)
     order = new ConditionalSequenceFlowTestOrder(300);
     processInstance = runtimeService.startProcessInstanceByKey("uelExpressions",
             CollectionUtil.singletonMap("order",  order));
     task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-    assertEquals("Premium service", task.getName());
+    assertThat(task.getName()).isEqualTo("Premium service");
 
   }
 

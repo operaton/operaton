@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.history.useroperationlog;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -68,18 +68,18 @@ public class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest
     UserOperationLogEntry userOperationLogEntry = historyService.createUserOperationLogQuery().singleResult();
     assertNotNull(userOperationLogEntry);
 
-    assertEquals(EntityTypes.DEPLOYMENT, userOperationLogEntry.getEntityType());
-    assertEquals(deployment.getId(), userOperationLogEntry.getDeploymentId());
+    assertThat(userOperationLogEntry.getEntityType()).isEqualTo(EntityTypes.DEPLOYMENT);
+    assertThat(userOperationLogEntry.getDeploymentId()).isEqualTo(deployment.getId());
 
-    assertEquals(UserOperationLogEntry.OPERATION_TYPE_CREATE, userOperationLogEntry.getOperationType());
+    assertThat(userOperationLogEntry.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_CREATE);
 
-    assertEquals("duplicateFilterEnabled", userOperationLogEntry.getProperty());
+    assertThat(userOperationLogEntry.getProperty()).isEqualTo("duplicateFilterEnabled");
     assertNull(userOperationLogEntry.getOrgValue());
     assertFalse(Boolean.parseBoolean(userOperationLogEntry.getNewValue()));
 
-    assertEquals(USER_ID, userOperationLogEntry.getUserId());
-    
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, userOperationLogEntry.getCategory());
+    assertThat(userOperationLogEntry.getUserId()).isEqualTo(USER_ID);
+
+    assertThat(userOperationLogEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
     assertNull(userOperationLogEntry.getJobDefinitionId());
     assertNull(userOperationLogEntry.getProcessInstanceId());
@@ -105,18 +105,18 @@ public class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest
     UserOperationLogEntry userOperationLogEntry = historyService.createUserOperationLogQuery().singleResult();
     assertNotNull(userOperationLogEntry);
 
-    assertEquals(EntityTypes.DEPLOYMENT, userOperationLogEntry.getEntityType());
-    assertEquals(deployment.getId(), userOperationLogEntry.getDeploymentId());
+    assertThat(userOperationLogEntry.getEntityType()).isEqualTo(EntityTypes.DEPLOYMENT);
+    assertThat(userOperationLogEntry.getDeploymentId()).isEqualTo(deployment.getId());
 
-    assertEquals(UserOperationLogEntry.OPERATION_TYPE_CREATE, userOperationLogEntry.getOperationType());
+    assertThat(userOperationLogEntry.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_CREATE);
 
-    assertEquals("duplicateFilterEnabled", userOperationLogEntry.getProperty());
+    assertThat(userOperationLogEntry.getProperty()).isEqualTo("duplicateFilterEnabled");
     assertNull(userOperationLogEntry.getOrgValue());
     assertFalse(Boolean.parseBoolean(userOperationLogEntry.getNewValue()));
 
-    assertEquals(USER_ID, userOperationLogEntry.getUserId());
-    
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, userOperationLogEntry.getCategory());
+    assertThat(userOperationLogEntry.getUserId()).isEqualTo(USER_ID);
+
+    assertThat(userOperationLogEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
     assertNull(userOperationLogEntry.getJobDefinitionId());
     assertNull(userOperationLogEntry.getProcessInstanceId());
@@ -141,21 +141,21 @@ public class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest
 
     // then
     UserOperationLogQuery query = historyService.createUserOperationLogQuery();
-    assertEquals(2, query.count());
+    assertThat(query.count()).isEqualTo(2);
 
     // (1): duplicate filter enabled property
     UserOperationLogEntry logDuplicateFilterEnabledProperty = query.property("duplicateFilterEnabled").singleResult();
     assertNotNull(logDuplicateFilterEnabledProperty);
 
-    assertEquals(EntityTypes.DEPLOYMENT, logDuplicateFilterEnabledProperty.getEntityType());
-    assertEquals(deployment.getId(), logDuplicateFilterEnabledProperty.getDeploymentId());
-    assertEquals(UserOperationLogEntry.OPERATION_TYPE_CREATE, logDuplicateFilterEnabledProperty.getOperationType());
+    assertThat(logDuplicateFilterEnabledProperty.getEntityType()).isEqualTo(EntityTypes.DEPLOYMENT);
+    assertThat(logDuplicateFilterEnabledProperty.getDeploymentId()).isEqualTo(deployment.getId());
+    assertThat(logDuplicateFilterEnabledProperty.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_CREATE);
 
-    assertEquals(USER_ID, logDuplicateFilterEnabledProperty.getUserId());
-    
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, logDuplicateFilterEnabledProperty.getCategory());
+    assertThat(logDuplicateFilterEnabledProperty.getUserId()).isEqualTo(USER_ID);
 
-    assertEquals("duplicateFilterEnabled", logDuplicateFilterEnabledProperty.getProperty());
+    assertThat(logDuplicateFilterEnabledProperty.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
+
+    assertThat(logDuplicateFilterEnabledProperty.getProperty()).isEqualTo("duplicateFilterEnabled");
     assertNull(logDuplicateFilterEnabledProperty.getOrgValue());
     assertTrue(Boolean.parseBoolean(logDuplicateFilterEnabledProperty.getNewValue()));
 
@@ -163,19 +163,19 @@ public class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest
     UserOperationLogEntry logDeployChangedOnlyProperty = query.property("deployChangedOnly").singleResult();
     assertNotNull(logDeployChangedOnlyProperty);
 
-    assertEquals(EntityTypes.DEPLOYMENT, logDeployChangedOnlyProperty.getEntityType());
-    assertEquals(deployment.getId(), logDeployChangedOnlyProperty.getDeploymentId());
-    assertEquals(UserOperationLogEntry.OPERATION_TYPE_CREATE, logDeployChangedOnlyProperty.getOperationType());
-    assertEquals(USER_ID, logDeployChangedOnlyProperty.getUserId());
-    
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, logDeployChangedOnlyProperty.getCategory());
+    assertThat(logDeployChangedOnlyProperty.getEntityType()).isEqualTo(EntityTypes.DEPLOYMENT);
+    assertThat(logDeployChangedOnlyProperty.getDeploymentId()).isEqualTo(deployment.getId());
+    assertThat(logDeployChangedOnlyProperty.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_CREATE);
+    assertThat(logDeployChangedOnlyProperty.getUserId()).isEqualTo(USER_ID);
 
-    assertEquals("deployChangedOnly", logDeployChangedOnlyProperty.getProperty());
+    assertThat(logDeployChangedOnlyProperty.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
+
+    assertThat(logDeployChangedOnlyProperty.getProperty()).isEqualTo("deployChangedOnly");
     assertNull(logDeployChangedOnlyProperty.getOrgValue());
     assertFalse(Boolean.parseBoolean(logDeployChangedOnlyProperty.getNewValue()));
 
     // (3): operation id
-    assertEquals(logDuplicateFilterEnabledProperty.getOperationId(), logDeployChangedOnlyProperty.getOperationId());
+    assertThat(logDeployChangedOnlyProperty.getOperationId()).isEqualTo(logDuplicateFilterEnabledProperty.getOperationId());
   }
 
   @Test
@@ -193,19 +193,19 @@ public class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest
 
     // then
     UserOperationLogQuery query = historyService.createUserOperationLogQuery();
-    assertEquals(2, query.count());
+    assertThat(query.count()).isEqualTo(2);
 
     // (1): duplicate filter enabled property
     UserOperationLogEntry logDuplicateFilterEnabledProperty = query.property("duplicateFilterEnabled").singleResult();
     assertNotNull(logDuplicateFilterEnabledProperty);
-    assertEquals(EntityTypes.DEPLOYMENT, logDuplicateFilterEnabledProperty.getEntityType());
-    assertEquals(deployment.getId(), logDuplicateFilterEnabledProperty.getDeploymentId());
-    assertEquals(UserOperationLogEntry.OPERATION_TYPE_CREATE, logDuplicateFilterEnabledProperty.getOperationType());
-    assertEquals(USER_ID, logDuplicateFilterEnabledProperty.getUserId());
-    
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, logDuplicateFilterEnabledProperty.getCategory());
+    assertThat(logDuplicateFilterEnabledProperty.getEntityType()).isEqualTo(EntityTypes.DEPLOYMENT);
+    assertThat(logDuplicateFilterEnabledProperty.getDeploymentId()).isEqualTo(deployment.getId());
+    assertThat(logDuplicateFilterEnabledProperty.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_CREATE);
+    assertThat(logDuplicateFilterEnabledProperty.getUserId()).isEqualTo(USER_ID);
 
-    assertEquals("duplicateFilterEnabled", logDuplicateFilterEnabledProperty.getProperty());
+    assertThat(logDuplicateFilterEnabledProperty.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
+
+    assertThat(logDuplicateFilterEnabledProperty.getProperty()).isEqualTo("duplicateFilterEnabled");
     assertNull(logDuplicateFilterEnabledProperty.getOrgValue());
     assertTrue(Boolean.parseBoolean(logDuplicateFilterEnabledProperty.getNewValue()));
 
@@ -213,19 +213,19 @@ public class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest
     UserOperationLogEntry logDeployChangedOnlyProperty = query.property("deployChangedOnly").singleResult();
     assertNotNull(logDeployChangedOnlyProperty);
 
-    assertEquals(EntityTypes.DEPLOYMENT, logDeployChangedOnlyProperty.getEntityType());
-    assertEquals(deployment.getId(), logDeployChangedOnlyProperty.getDeploymentId());
-    assertEquals(UserOperationLogEntry.OPERATION_TYPE_CREATE, logDeployChangedOnlyProperty.getOperationType());
-    assertEquals(USER_ID, logDeployChangedOnlyProperty.getUserId());
-    
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, logDeployChangedOnlyProperty.getCategory());
+    assertThat(logDeployChangedOnlyProperty.getEntityType()).isEqualTo(EntityTypes.DEPLOYMENT);
+    assertThat(logDeployChangedOnlyProperty.getDeploymentId()).isEqualTo(deployment.getId());
+    assertThat(logDeployChangedOnlyProperty.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_CREATE);
+    assertThat(logDeployChangedOnlyProperty.getUserId()).isEqualTo(USER_ID);
 
-    assertEquals("deployChangedOnly", logDeployChangedOnlyProperty.getProperty());
+    assertThat(logDeployChangedOnlyProperty.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
+
+    assertThat(logDeployChangedOnlyProperty.getProperty()).isEqualTo("deployChangedOnly");
     assertNull(logDeployChangedOnlyProperty.getOrgValue());
     assertTrue(Boolean.parseBoolean(logDeployChangedOnlyProperty.getNewValue()));
 
     // (3): operation id
-    assertEquals(logDuplicateFilterEnabledProperty.getOperationId(), logDeployChangedOnlyProperty.getOperationId());
+    assertThat(logDeployChangedOnlyProperty.getOperationId()).isEqualTo(logDuplicateFilterEnabledProperty.getOperationId());
   }
 
   @Test
@@ -241,13 +241,13 @@ public class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest
         .createUserOperationLogQuery()
         .operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE);
 
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     // when
     repositoryService.deleteDeployment(deployment.getId(), true);
 
     // then
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
   }
 
   @Test
@@ -263,13 +263,13 @@ public class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest
         .createUserOperationLogQuery()
         .operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE);
 
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     // when
     repositoryService.deleteDeployment(deployment.getId(), false);
 
     // then
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
   }
 
   @Test
@@ -289,23 +289,23 @@ public class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest
     repositoryService.deleteDeployment(deployment.getId(), false);
 
     // then
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     UserOperationLogEntry log = query.singleResult();
     assertNotNull(log);
 
-    assertEquals(EntityTypes.DEPLOYMENT, log.getEntityType());
-    assertEquals(deployment.getId(), log.getDeploymentId());
+    assertThat(log.getEntityType()).isEqualTo(EntityTypes.DEPLOYMENT);
+    assertThat(log.getDeploymentId()).isEqualTo(deployment.getId());
 
-    assertEquals(UserOperationLogEntry.OPERATION_TYPE_DELETE, log.getOperationType());
+    assertThat(log.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_DELETE);
 
-    assertEquals("cascade", log.getProperty());
+    assertThat(log.getProperty()).isEqualTo("cascade");
     assertNull(log.getOrgValue());
     assertFalse(Boolean.parseBoolean(log.getNewValue()));
 
-    assertEquals(USER_ID, log.getUserId());
-    
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, log.getCategory());
+    assertThat(log.getUserId()).isEqualTo(USER_ID);
+
+    assertThat(log.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
     assertNull(log.getJobDefinitionId());
     assertNull(log.getProcessInstanceId());
@@ -332,23 +332,23 @@ public class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest
     repositoryService.deleteDeployment(deployment.getId(), true);
 
     // then
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     UserOperationLogEntry log = query.singleResult();
     assertNotNull(log);
 
-    assertEquals(EntityTypes.DEPLOYMENT, log.getEntityType());
-    assertEquals(deployment.getId(), log.getDeploymentId());
+    assertThat(log.getEntityType()).isEqualTo(EntityTypes.DEPLOYMENT);
+    assertThat(log.getDeploymentId()).isEqualTo(deployment.getId());
 
-    assertEquals(UserOperationLogEntry.OPERATION_TYPE_DELETE, log.getOperationType());
+    assertThat(log.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_DELETE);
 
-    assertEquals("cascade", log.getProperty());
+    assertThat(log.getProperty()).isEqualTo("cascade");
     assertNull(log.getOrgValue());
     assertTrue(Boolean.parseBoolean(log.getNewValue()));
 
-    assertEquals(USER_ID, log.getUserId());
-    
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, log.getCategory());
+    assertThat(log.getUserId()).isEqualTo(USER_ID);
+
+    assertThat(log.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
     assertNull(log.getJobDefinitionId());
     assertNull(log.getProcessInstanceId());
@@ -375,13 +375,13 @@ public class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest
         .createUserOperationLogQuery()
         .operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE);
 
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     // when
     repositoryService.deleteProcessDefinition(procDef.getId(), true);
 
     // then
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
   }
 
   @Test
@@ -401,13 +401,13 @@ public class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest
         .createUserOperationLogQuery()
         .operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE);
 
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     // when
     repositoryService.deleteProcessDefinition(procDef.getId());
 
     // then
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
   }
 
   @Test
@@ -431,25 +431,25 @@ public class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest
     repositoryService.deleteProcessDefinition(procDef.getId(), false);
 
     // then
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     UserOperationLogEntry log = query.singleResult();
     assertNotNull(log);
 
-    assertEquals(EntityTypes.PROCESS_DEFINITION, log.getEntityType());
-    assertEquals(procDef.getId(), log.getProcessDefinitionId());
-    assertEquals(procDef.getKey(), log.getProcessDefinitionKey());
-    assertEquals(deployment.getId(), log.getDeploymentId());
+    assertThat(log.getEntityType()).isEqualTo(EntityTypes.PROCESS_DEFINITION);
+    assertThat(log.getProcessDefinitionId()).isEqualTo(procDef.getId());
+    assertThat(log.getProcessDefinitionKey()).isEqualTo(procDef.getKey());
+    assertThat(log.getDeploymentId()).isEqualTo(deployment.getId());
 
-    assertEquals(UserOperationLogEntry.OPERATION_TYPE_DELETE, log.getOperationType());
+    assertThat(log.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_DELETE);
 
-    assertEquals("cascade", log.getProperty());
+    assertThat(log.getProperty()).isEqualTo("cascade");
     assertFalse(Boolean.parseBoolean(log.getOrgValue()));
     assertFalse(Boolean.parseBoolean(log.getNewValue()));
 
-    assertEquals(USER_ID, log.getUserId());
-    
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, log.getCategory());
+    assertThat(log.getUserId()).isEqualTo(USER_ID);
+
+    assertThat(log.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
     assertNull(log.getJobDefinitionId());
     assertNull(log.getProcessInstanceId());
@@ -478,25 +478,25 @@ public class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest
     repositoryService.deleteProcessDefinition(procDef.getId(), true);
 
     // then
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     UserOperationLogEntry log = query.singleResult();
     assertNotNull(log);
 
-    assertEquals(EntityTypes.PROCESS_DEFINITION, log.getEntityType());
-    assertEquals(procDef.getId(), log.getProcessDefinitionId());
-    assertEquals(procDef.getKey(), log.getProcessDefinitionKey());
-    assertEquals(deployment.getId(), log.getDeploymentId());
+    assertThat(log.getEntityType()).isEqualTo(EntityTypes.PROCESS_DEFINITION);
+    assertThat(log.getProcessDefinitionId()).isEqualTo(procDef.getId());
+    assertThat(log.getProcessDefinitionKey()).isEqualTo(procDef.getKey());
+    assertThat(log.getDeploymentId()).isEqualTo(deployment.getId());
 
-    assertEquals(UserOperationLogEntry.OPERATION_TYPE_DELETE, log.getOperationType());
+    assertThat(log.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_DELETE);
 
-    assertEquals("cascade", log.getProperty());
+    assertThat(log.getProperty()).isEqualTo("cascade");
     assertFalse(Boolean.parseBoolean(log.getOrgValue()));
     assertTrue(Boolean.parseBoolean(log.getNewValue()));
 
-    assertEquals(USER_ID, log.getUserId());
-    
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, log.getCategory());
+    assertThat(log.getUserId()).isEqualTo(USER_ID);
+
+    assertThat(log.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
     assertNull(log.getJobDefinitionId());
     assertNull(log.getProcessInstanceId());

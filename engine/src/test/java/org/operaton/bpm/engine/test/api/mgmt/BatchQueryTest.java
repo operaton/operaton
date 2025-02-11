@@ -85,7 +85,7 @@ public class BatchQueryTest {
     List<Batch> list = managementService.createBatchQuery().list();
 
     // then
-    Assert.assertEquals(2, list.size());
+    assertThat(list.size()).isEqualTo(2);
 
     List<String> batchIds = new ArrayList<>();
     for (Batch resultBatch : list) {
@@ -108,17 +108,17 @@ public class BatchQueryTest {
     // then
     Assert.assertNotNull(batch);
 
-    Assert.assertEquals(batch.getId(), resultBatch.getId());
-    Assert.assertEquals(batch.getBatchJobDefinitionId(), resultBatch.getBatchJobDefinitionId());
-    Assert.assertEquals(batch.getMonitorJobDefinitionId(), resultBatch.getMonitorJobDefinitionId());
-    Assert.assertEquals(batch.getSeedJobDefinitionId(), resultBatch.getSeedJobDefinitionId());
-    Assert.assertEquals(batch.getTenantId(), resultBatch.getTenantId());
-    Assert.assertEquals(batch.getType(), resultBatch.getType());
-    Assert.assertEquals(batch.getBatchJobsPerSeed(), resultBatch.getBatchJobsPerSeed());
-    Assert.assertEquals(batch.getInvocationsPerBatchJob(), resultBatch.getInvocationsPerBatchJob());
-    Assert.assertEquals(batch.getTotalJobs(), resultBatch.getTotalJobs());
-    Assert.assertEquals(batch.getJobsCreated(), resultBatch.getJobsCreated());
-    Assert.assertEquals(batch.isSuspended(), resultBatch.isSuspended());
+    assertThat(resultBatch.getId()).isEqualTo(batch.getId());
+    assertThat(resultBatch.getBatchJobDefinitionId()).isEqualTo(batch.getBatchJobDefinitionId());
+    assertThat(resultBatch.getMonitorJobDefinitionId()).isEqualTo(batch.getMonitorJobDefinitionId());
+    assertThat(resultBatch.getSeedJobDefinitionId()).isEqualTo(batch.getSeedJobDefinitionId());
+    assertThat(resultBatch.getTenantId()).isEqualTo(batch.getTenantId());
+    assertThat(resultBatch.getType()).isEqualTo(batch.getType());
+    assertThat(resultBatch.getBatchJobsPerSeed()).isEqualTo(batch.getBatchJobsPerSeed());
+    assertThat(resultBatch.getInvocationsPerBatchJob()).isEqualTo(batch.getInvocationsPerBatchJob());
+    assertThat(resultBatch.getTotalJobs()).isEqualTo(batch.getTotalJobs());
+    assertThat(resultBatch.getJobsCreated()).isEqualTo(batch.getJobsCreated());
+    assertThat(resultBatch.isSuspended()).isEqualTo(batch.isSuspended());
     Assertions.assertThat(batch.getStartTime()).isCloseTo(resultBatch.getStartTime(), 1000);
     Assertions.assertThat(batch.getStartTime()).isCloseTo(ClockUtil.getCurrentTime(), 1000);
   }
@@ -134,7 +134,7 @@ public class BatchQueryTest {
 
     // then
     Assert.assertNotNull(resultBatch);
-    Assert.assertEquals(batch1.getId(), resultBatch.getId());
+    assertThat(resultBatch.getId()).isEqualTo(batch1.getId());
   }
 
   @Test
@@ -159,7 +159,7 @@ public class BatchQueryTest {
     long count = managementService.createBatchQuery().type(batch1.getType()).count();
 
     // then
-    Assert.assertEquals(2, count);
+    assertThat(count).isEqualTo(2);
   }
 
   @Test
@@ -171,7 +171,7 @@ public class BatchQueryTest {
     long count = managementService.createBatchQuery().type("foo").count();
 
     // then
-    Assert.assertEquals(0, count);
+    assertThat(count).isEqualTo(0);
   }
 
   @Test
@@ -196,7 +196,7 @@ public class BatchQueryTest {
     long count = managementService.createBatchQuery().count();
 
     // then
-    Assert.assertEquals(2, count);
+    assertThat(count).isEqualTo(2);
   }
 
   @Test
@@ -265,9 +265,9 @@ public class BatchQueryTest {
 
     // then
     BatchQuery query = managementService.createBatchQuery().suspended();
-    Assert.assertEquals(1, query.count());
-    Assert.assertEquals(1, query.list().size());
-    Assert.assertEquals(batch2.getId(), query.singleResult().getId());
+    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.singleResult().getId()).isEqualTo(batch2.getId());
   }
 
   @Test
@@ -284,8 +284,8 @@ public class BatchQueryTest {
 
     // then
     BatchQuery query = managementService.createBatchQuery().active();
-    Assert.assertEquals(2, query.count());
-    Assert.assertEquals(2, query.list().size());
+    assertThat(query.count()).isEqualTo(2);
+    assertThat(query.list().size()).isEqualTo(2);
 
     List<String> foundIds = new ArrayList<>();
     for (Batch batch : query.list()) {

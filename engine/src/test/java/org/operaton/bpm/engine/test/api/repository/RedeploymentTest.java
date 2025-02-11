@@ -39,6 +39,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.*;
 
 
@@ -358,7 +359,7 @@ public class RedeploymentTest {
         .name(DEPLOYMENT_NAME)
         .addModelInstance(RESOURCE_NAME, model));
 
-    assertEquals(DEPLOYMENT_NAME, deployment1.getName());
+    assertThat(deployment1.getName()).isEqualTo(DEPLOYMENT_NAME);
 
     // when
     Deployment deployment2 = testRule.deploy(repositoryService
@@ -368,7 +369,7 @@ public class RedeploymentTest {
 
     // then
     assertNotNull(deployment2);
-    assertEquals(deployment1.getName(), deployment2.getName());
+    assertThat(deployment2.getName()).isEqualTo(deployment1.getName());
   }
 
   @Test
@@ -381,7 +382,7 @@ public class RedeploymentTest {
         .name(DEPLOYMENT_NAME)
         .addModelInstance(RESOURCE_NAME, model));
 
-    assertEquals(DEPLOYMENT_NAME, deployment1.getName());
+    assertThat(deployment1.getName()).isEqualTo(DEPLOYMENT_NAME);
 
     // when
     Deployment deployment2 = testRule.deploy(repositoryService
@@ -405,7 +406,7 @@ public class RedeploymentTest {
         .source("my-deployment-source")
         .addModelInstance(RESOURCE_NAME, model));
 
-    assertEquals("my-deployment-source", deployment1.getSource());
+    assertThat(deployment1.getSource()).isEqualTo("my-deployment-source");
 
     // when
     Deployment deployment2 = testRule.deploy(repositoryService
@@ -429,7 +430,7 @@ public class RedeploymentTest {
         .source("my-deployment-source")
         .addModelInstance(RESOURCE_NAME, model));
 
-    assertEquals("my-deployment-source", deployment1.getSource());
+    assertThat(deployment1.getSource()).isEqualTo("my-deployment-source");
 
     // when
     Deployment deployment2 = testRule.deploy(repositoryService
@@ -440,7 +441,7 @@ public class RedeploymentTest {
 
     // then
     assertNotNull(deployment2);
-    assertEquals("my-another-deployment-source", deployment2.getSource());
+    assertThat(deployment2.getSource()).isEqualTo("my-another-deployment-source");
   }
 
   @Test
@@ -480,10 +481,10 @@ public class RedeploymentTest {
     assertNotEquals(resource1.getId(), resource3.getId());
 
     // deployment id
-    assertEquals(deployment3.getId(), resource3.getDeploymentId());
+    assertThat(resource3.getDeploymentId()).isEqualTo(deployment3.getId());
 
     // name
-    assertEquals(resource1.getName(), resource3.getName());
+    assertThat(resource3.getName()).isEqualTo(resource1.getName());
 
     // bytes
     byte[] bytes1 = resource1.getBytes();
@@ -1042,7 +1043,7 @@ public class RedeploymentTest {
         .name(DEPLOYMENT_NAME + "-1")
         .addModelInstance(RESOURCE_1_NAME, model1));
 
-    assertEquals(1, repositoryService.getDeploymentResources(deployment1.getId()).size());
+    assertThat(repositoryService.getDeploymentResources(deployment1.getId()).size()).isEqualTo(1);
 
     verifyQueryResults(query.processDefinitionKey(PROCESS_1_KEY), 1);
 
@@ -1054,7 +1055,7 @@ public class RedeploymentTest {
         .name(DEPLOYMENT_NAME + "-2")
         .addModelInstance(RESOURCE_2_NAME, model2));
 
-    assertEquals(1, repositoryService.getDeploymentResources(deployment2.getId()).size());
+    assertThat(repositoryService.getDeploymentResources(deployment2.getId()).size()).isEqualTo(1);
 
     verifyQueryResults(query.processDefinitionKey(PROCESS_1_KEY), 1);
     verifyQueryResults(query.processDefinitionKey(PROCESS_2_KEY), 1);
@@ -1066,7 +1067,7 @@ public class RedeploymentTest {
         .addDeploymentResources(deployment1.getId())
         .addDeploymentResources(deployment2.getId()));
 
-    assertEquals(2, repositoryService.getDeploymentResources(deployment3.getId()).size());
+    assertThat(repositoryService.getDeploymentResources(deployment3.getId()).size()).isEqualTo(2);
 
     verifyQueryResults(query.processDefinitionKey(PROCESS_1_KEY), 2);
     verifyQueryResults(query.processDefinitionKey(PROCESS_2_KEY), 2);
@@ -1085,7 +1086,7 @@ public class RedeploymentTest {
         .name(DEPLOYMENT_NAME + "-1")
         .addModelInstance(RESOURCE_1_NAME, model1));
 
-    assertEquals(1, repositoryService.getDeploymentResources(deployment1.getId()).size());
+    assertThat(repositoryService.getDeploymentResources(deployment1.getId()).size()).isEqualTo(1);
     Resource resource1 = getResourceByName(deployment1.getId(), RESOURCE_1_NAME);
 
     verifyQueryResults(query.processDefinitionKey(PROCESS_1_KEY), 1);
@@ -1098,7 +1099,7 @@ public class RedeploymentTest {
         .name(DEPLOYMENT_NAME + "-2")
         .addModelInstance(RESOURCE_2_NAME, model2));
 
-    assertEquals(1, repositoryService.getDeploymentResources(deployment2.getId()).size());
+    assertThat(repositoryService.getDeploymentResources(deployment2.getId()).size()).isEqualTo(1);
     Resource resource2 = getResourceByName(deployment2.getId(), RESOURCE_2_NAME);
 
     verifyQueryResults(query.processDefinitionKey(PROCESS_1_KEY), 1);
@@ -1111,7 +1112,7 @@ public class RedeploymentTest {
         .addDeploymentResourceById(deployment1.getId(), resource1.getId())
         .addDeploymentResourceById(deployment2.getId(), resource2.getId()));
 
-    assertEquals(2, repositoryService.getDeploymentResources(deployment3.getId()).size());
+    assertThat(repositoryService.getDeploymentResources(deployment3.getId()).size()).isEqualTo(2);
 
     verifyQueryResults(query.processDefinitionKey(PROCESS_1_KEY), 2);
     verifyQueryResults(query.processDefinitionKey(PROCESS_2_KEY), 2);
@@ -1130,7 +1131,7 @@ public class RedeploymentTest {
         .name(DEPLOYMENT_NAME + "-1")
         .addModelInstance(RESOURCE_1_NAME, model1));
 
-    assertEquals(1, repositoryService.getDeploymentResources(deployment1.getId()).size());
+    assertThat(repositoryService.getDeploymentResources(deployment1.getId()).size()).isEqualTo(1);
 
     verifyQueryResults(query.processDefinitionKey(PROCESS_1_KEY), 1);
 
@@ -1142,7 +1143,7 @@ public class RedeploymentTest {
         .name(DEPLOYMENT_NAME + "-2")
         .addModelInstance(RESOURCE_2_NAME, model2));
 
-    assertEquals(1, repositoryService.getDeploymentResources(deployment2.getId()).size());
+    assertThat(repositoryService.getDeploymentResources(deployment2.getId()).size()).isEqualTo(1);
 
     verifyQueryResults(query.processDefinitionKey(PROCESS_1_KEY), 1);
     verifyQueryResults(query.processDefinitionKey(PROCESS_2_KEY), 1);
@@ -1154,7 +1155,7 @@ public class RedeploymentTest {
         .addDeploymentResourceByName(deployment1.getId(), RESOURCE_1_NAME)
         .addDeploymentResourceByName(deployment2.getId(), RESOURCE_2_NAME));
 
-    assertEquals(2, repositoryService.getDeploymentResources(deployment3.getId()).size());
+    assertThat(repositoryService.getDeploymentResources(deployment3.getId()).size()).isEqualTo(2);
 
     verifyQueryResults(query.processDefinitionKey(PROCESS_1_KEY), 2);
     verifyQueryResults(query.processDefinitionKey(PROCESS_2_KEY), 2);
@@ -1173,7 +1174,7 @@ public class RedeploymentTest {
         .name(DEPLOYMENT_NAME + "-1")
         .addModelInstance(RESOURCE_1_NAME, model1));
 
-    assertEquals(1, repositoryService.getDeploymentResources(deployment1.getId()).size());
+    assertThat(repositoryService.getDeploymentResources(deployment1.getId()).size()).isEqualTo(1);
     Resource resource1 = getResourceByName(deployment1.getId(), RESOURCE_1_NAME);
 
     verifyQueryResults(query.processDefinitionKey(PROCESS_1_KEY), 1);
@@ -1186,7 +1187,7 @@ public class RedeploymentTest {
         .name(DEPLOYMENT_NAME + "-2")
         .addModelInstance(RESOURCE_2_NAME, model2));
 
-    assertEquals(1, repositoryService.getDeploymentResources(deployment2.getId()).size());
+    assertThat(repositoryService.getDeploymentResources(deployment2.getId()).size()).isEqualTo(1);
 
     verifyQueryResults(query.processDefinitionKey(PROCESS_1_KEY), 1);
     verifyQueryResults(query.processDefinitionKey(PROCESS_2_KEY), 1);
@@ -1198,7 +1199,7 @@ public class RedeploymentTest {
         .addDeploymentResourceById(deployment1.getId(), resource1.getId())
         .addDeploymentResourceByName(deployment2.getId(), RESOURCE_2_NAME));
 
-    assertEquals(2, repositoryService.getDeploymentResources(deployment3.getId()).size());
+    assertThat(repositoryService.getDeploymentResources(deployment3.getId()).size()).isEqualTo(2);
 
     verifyQueryResults(query.processDefinitionKey(PROCESS_1_KEY), 2);
     verifyQueryResults(query.processDefinitionKey(PROCESS_2_KEY), 2);
@@ -1217,7 +1218,7 @@ public class RedeploymentTest {
         .name(DEPLOYMENT_NAME + "-1")
         .addModelInstance(RESOURCE_1_NAME, model1));
 
-    assertEquals(1, repositoryService.getDeploymentResources(deployment1.getId()).size());
+    assertThat(repositoryService.getDeploymentResources(deployment1.getId()).size()).isEqualTo(1);
 
     verifyQueryResults(query.processDefinitionKey(PROCESS_1_KEY), 1);
 
@@ -1229,7 +1230,7 @@ public class RedeploymentTest {
         .name(DEPLOYMENT_NAME + "-2")
         .addModelInstance(RESOURCE_2_NAME, model2));
 
-    assertEquals(1, repositoryService.getDeploymentResources(deployment2.getId()).size());
+    assertThat(repositoryService.getDeploymentResources(deployment2.getId()).size()).isEqualTo(1);
 
     verifyQueryResults(query.processDefinitionKey(PROCESS_1_KEY), 1);
     verifyQueryResults(query.processDefinitionKey(PROCESS_2_KEY), 1);
@@ -1243,7 +1244,7 @@ public class RedeploymentTest {
         .addDeploymentResources(deployment2.getId())
         .addModelInstance(RESOURCE_3_NAME, model3));
 
-    assertEquals(3, repositoryService.getDeploymentResources(deployment3.getId()).size());
+    assertThat(repositoryService.getDeploymentResources(deployment3.getId()).size()).isEqualTo(3);
 
     verifyQueryResults(query.processDefinitionKey(PROCESS_1_KEY), 2);
     verifyQueryResults(query.processDefinitionKey(PROCESS_2_KEY), 2);
@@ -1329,7 +1330,7 @@ public class RedeploymentTest {
         .addDeploymentResources(deployment1.getId())
         .enableDuplicateFiltering(true));
 
-    assertEquals(deployment1.getId(), deployment2.getId());
+    assertThat(deployment2.getId()).isEqualTo(deployment1.getId());
 
     verifyQueryResults(query.processDefinitionKey(PROCESS_1_KEY), 1);
   }
@@ -1360,7 +1361,7 @@ public class RedeploymentTest {
     // registration was performed:
     ProcessApplicationRegistration registration = deployment2.getProcessApplicationRegistration();
     Set<String> deploymentIds = registration.getDeploymentIds();
-    assertEquals(1, deploymentIds.size());
+    assertThat(deploymentIds.size()).isEqualTo(1);
     assertTrue(deploymentIds.contains(deployment2.getId()));
   }
 
@@ -1398,7 +1399,7 @@ public class RedeploymentTest {
     // old deployments was resumed
     ProcessApplicationRegistration registration = deployment3.getProcessApplicationRegistration();
     Set<String> deploymentIds = registration.getDeploymentIds();
-    assertEquals(3, deploymentIds.size());
+    assertThat(deploymentIds.size()).isEqualTo(3);
   }
 
   @Test
@@ -1435,13 +1436,13 @@ public class RedeploymentTest {
     // old deployment was resumed
     ProcessApplicationRegistration registration = deployment3.getProcessApplicationRegistration();
     Set<String> deploymentIds = registration.getDeploymentIds();
-    assertEquals(3, deploymentIds.size());
+    assertThat(deploymentIds.size()).isEqualTo(3);
   }
 
   // helper ///////////////////////////////////////////////////////////
 
   protected void verifyQueryResults(Query<?, ?> query, int countExpected) {
-    assertEquals(countExpected, query.count());
+    assertThat(query.count()).isEqualTo(countExpected);
   }
 
   protected Resource getResourceByName(String deploymentId, String resourceName) {

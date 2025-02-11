@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.handler.specification;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -52,7 +52,7 @@ public class ScriptExecutionListenerSpec extends AbstractExecutionListenerSpec {
     ScriptCaseExecutionListener scriptListener = (ScriptCaseExecutionListener) listener;
     ExecutableScript executableScript = scriptListener.getScript();
     assertNotNull(executableScript);
-    assertEquals(SCRIPT_FORMAT, executableScript.getLanguage());
+    assertThat(executableScript.getLanguage()).isEqualTo(SCRIPT_FORMAT);
   }
 
 }

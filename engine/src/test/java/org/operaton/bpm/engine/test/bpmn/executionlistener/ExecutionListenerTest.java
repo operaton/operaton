@@ -20,7 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl.HISTORYLEVEL_AUDIT;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -127,12 +126,12 @@ public class ExecutionListenerTest {
 
     String varSetInExecutionListener = (String) runtimeService.getVariable(processInstance.getId(), "variableSetInExecutionListener");
     assertNotNull(varSetInExecutionListener);
-    assertEquals("firstValue", varSetInExecutionListener);
+    assertThat(varSetInExecutionListener).isEqualTo("firstValue");
 
     // Check if business key was available in execution listener
     String businessKey = (String) runtimeService.getVariable(processInstance.getId(), "businessKeyInExecution");
     assertNotNull(businessKey);
-    assertEquals("businessKey123", businessKey);
+    assertThat(businessKey).isEqualTo("businessKey123");
 
     // Transition take executionListener will set 2 variables
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -142,7 +141,7 @@ public class ExecutionListenerTest {
     varSetInExecutionListener = (String) runtimeService.getVariable(processInstance.getId(), "variableSetInExecutionListener");
 
     assertNotNull(varSetInExecutionListener);
-    assertEquals("secondValue", varSetInExecutionListener);
+    assertThat(varSetInExecutionListener).isEqualTo("secondValue");
 
     ExampleExecutionListenerPojo myPojo = new ExampleExecutionListenerPojo();
     runtimeService.setVariable(processInstance.getId(), "myPojo", myPojo);
@@ -154,7 +153,7 @@ public class ExecutionListenerTest {
     // First usertask uses a method-expression as executionListener: ${myPojo.myMethod(execution.eventName)}
     ExampleExecutionListenerPojo pojoVariable = (ExampleExecutionListenerPojo) runtimeService.getVariable(processInstance.getId(), "myPojo");
     assertNotNull(pojoVariable.getReceivedEventName());
-    assertEquals("end", pojoVariable.getReceivedEventName());
+    assertThat(pojoVariable.getReceivedEventName()).isEqualTo("end");
 
     task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
     assertNotNull(task);
@@ -172,30 +171,30 @@ public class ExecutionListenerTest {
     testRule.assertProcessEnded(processInstance.getId());
 
     List<RecordedEvent> recordedEvents = RecorderExecutionListener.getRecordedEvents();
-    assertEquals(4, recordedEvents.size());
+    assertThat(recordedEvents.size()).isEqualTo(4);
 
-    assertEquals("theStart", recordedEvents.get(0).getActivityId());
-    assertEquals("Start Event", recordedEvents.get(0).getActivityName());
-    assertEquals("Start Event Listener", recordedEvents.get(0).getParameter());
-    assertEquals("end", recordedEvents.get(0).getEventName());
+    assertThat(recordedEvents.get(0).getActivityId()).isEqualTo("theStart");
+    assertThat(recordedEvents.get(0).getActivityName()).isEqualTo("Start Event");
+    assertThat(recordedEvents.get(0).getParameter()).isEqualTo("Start Event Listener");
+    assertThat(recordedEvents.get(0).getEventName()).isEqualTo("end");
     assertThat(recordedEvents.get(0).isCanceled()).isFalse();
 
-    assertEquals("noneEvent", recordedEvents.get(1).getActivityId());
-    assertEquals("None Event", recordedEvents.get(1).getActivityName());
-    assertEquals("Intermediate Catch Event Listener", recordedEvents.get(1).getParameter());
-    assertEquals("end", recordedEvents.get(1).getEventName());
+    assertThat(recordedEvents.get(1).getActivityId()).isEqualTo("noneEvent");
+    assertThat(recordedEvents.get(1).getActivityName()).isEqualTo("None Event");
+    assertThat(recordedEvents.get(1).getParameter()).isEqualTo("Intermediate Catch Event Listener");
+    assertThat(recordedEvents.get(1).getEventName()).isEqualTo("end");
     assertThat(recordedEvents.get(1).isCanceled()).isFalse();
 
-    assertEquals("signalEvent", recordedEvents.get(2).getActivityId());
-    assertEquals("Signal Event", recordedEvents.get(2).getActivityName());
-    assertEquals("Intermediate Throw Event Listener", recordedEvents.get(2).getParameter());
-    assertEquals("start", recordedEvents.get(2).getEventName());
+    assertThat(recordedEvents.get(2).getActivityId()).isEqualTo("signalEvent");
+    assertThat(recordedEvents.get(2).getActivityName()).isEqualTo("Signal Event");
+    assertThat(recordedEvents.get(2).getParameter()).isEqualTo("Intermediate Throw Event Listener");
+    assertThat(recordedEvents.get(2).getEventName()).isEqualTo("start");
     assertThat(recordedEvents.get(2).isCanceled()).isFalse();
 
-    assertEquals("theEnd", recordedEvents.get(3).getActivityId());
-    assertEquals("End Event", recordedEvents.get(3).getActivityName());
-    assertEquals("End Event Listener", recordedEvents.get(3).getParameter());
-    assertEquals("start", recordedEvents.get(3).getEventName());
+    assertThat(recordedEvents.get(3).getActivityId()).isEqualTo("theEnd");
+    assertThat(recordedEvents.get(3).getActivityName()).isEqualTo("End Event");
+    assertThat(recordedEvents.get(3).getParameter()).isEqualTo("End Event Listener");
+    assertThat(recordedEvents.get(3).getEventName()).isEqualTo("start");
     assertThat(recordedEvents.get(3).isCanceled()).isFalse();
 
   }
@@ -213,7 +212,7 @@ public class ExecutionListenerTest {
     assertTrue(varSetByListener instanceof String);
 
     // Result is a concatenation of fixed injected field and injected expression
-    assertEquals("Yes, I am listening!", varSetByListener);
+    assertThat(varSetByListener).isEqualTo("Yes, I am listening!");
   }
 
   @Test
@@ -226,16 +225,16 @@ public class ExecutionListenerTest {
     testRule.assertProcessEnded(processInstance.getId());
 
     List<CurrentActivity> currentActivities = CurrentActivityExecutionListener.getCurrentActivities();
-    assertEquals(3, currentActivities.size());
+    assertThat(currentActivities.size()).isEqualTo(3);
 
-    assertEquals("theStart", currentActivities.get(0).getActivityId());
-    assertEquals("Start Event", currentActivities.get(0).getActivityName());
+    assertThat(currentActivities.get(0).getActivityId()).isEqualTo("theStart");
+    assertThat(currentActivities.get(0).getActivityName()).isEqualTo("Start Event");
 
-    assertEquals("noneEvent", currentActivities.get(1).getActivityId());
-    assertEquals("None Event", currentActivities.get(1).getActivityName());
+    assertThat(currentActivities.get(1).getActivityId()).isEqualTo("noneEvent");
+    assertThat(currentActivities.get(1).getActivityName()).isEqualTo("None Event");
 
-    assertEquals("theEnd", currentActivities.get(2).getActivityId());
-    assertEquals("End Event", currentActivities.get(2).getActivityName());
+    assertThat(currentActivities.get(2).getActivityId()).isEqualTo("theEnd");
+    assertThat(currentActivities.get(2).getActivityName()).isEqualTo("End Event");
   }
 
   @Test
@@ -256,16 +255,16 @@ public class ExecutionListenerTest {
     testRule.assertProcessEnded(processInstance.getId());
 
     List<RecordedEvent> recordedEvents = RecorderExecutionListener.getRecordedEvents();
-    assertEquals(2, recordedEvents.size());
+    assertThat(recordedEvents.size()).isEqualTo(2);
 
-    assertEquals("timer1", recordedEvents.get(0).getActivityId());
-    assertEquals("start boundary listener", recordedEvents.get(0).getParameter());
-    assertEquals("start", recordedEvents.get(0).getEventName());
+    assertThat(recordedEvents.get(0).getActivityId()).isEqualTo("timer1");
+    assertThat(recordedEvents.get(0).getParameter()).isEqualTo("start boundary listener");
+    assertThat(recordedEvents.get(0).getEventName()).isEqualTo("start");
     assertThat(recordedEvents.get(0).isCanceled()).isFalse();
 
-    assertEquals("timer2", recordedEvents.get(1).getActivityId());
-    assertEquals("end boundary listener", recordedEvents.get(1).getParameter());
-    assertEquals("end", recordedEvents.get(1).getEventName());
+    assertThat(recordedEvents.get(1).getActivityId()).isEqualTo("timer2");
+    assertThat(recordedEvents.get(1).getParameter()).isEqualTo("end boundary listener");
+    assertThat(recordedEvents.get(1).getEventName()).isEqualTo("end");
     assertThat(recordedEvents.get(1).isCanceled()).isFalse();
   }
 
@@ -279,7 +278,7 @@ public class ExecutionListenerTest {
     if (processEngineRule.getProcessEngineConfiguration().getHistoryLevel().getId() >= HISTORYLEVEL_AUDIT) {
       HistoricVariableInstanceQuery query = historyService.createHistoricVariableInstanceQuery();
       long count = query.count();
-      assertEquals(5, count);
+      assertThat(count).isEqualTo(5);
 
       HistoricVariableInstance variableInstance;
       String[] variableNames = new String[]{"start-start", "start-end", "start-take", "end-start", "end-end"};
@@ -303,7 +302,7 @@ public class ExecutionListenerTest {
     if (processEngineRule.getProcessEngineConfiguration().getHistoryLevel().getId() >= HISTORYLEVEL_AUDIT) {
       HistoricVariableInstanceQuery query = historyService.createHistoricVariableInstanceQuery();
       long count = query.count();
-      assertEquals(5, count);
+      assertThat(count).isEqualTo(5);
 
       HistoricVariableInstance variableInstance;
       String[] variableNames = new String[]{"start-start", "start-end", "start-take", "end-start", "end-end"};
@@ -327,10 +326,10 @@ public class ExecutionListenerTest {
 
     List<RecordedEvent> recordedEvents = RecorderExecutionListener.getRecordedEvents();
 
-    assertEquals(2, recordedEvents.size());
+    assertThat(recordedEvents.size()).isEqualTo(2);
 
-    assertEquals("start", recordedEvents.get(0).getEventName());
-    assertEquals("end", recordedEvents.get(1).getEventName());
+    assertThat(recordedEvents.get(0).getEventName()).isEqualTo("start");
+    assertThat(recordedEvents.get(1).getEventName()).isEqualTo("end");
 
   }
 
@@ -350,8 +349,8 @@ public class ExecutionListenerTest {
     List<RecordedEvent> recordedEvents = RecorderExecutionListener.getRecordedEvents();
     assertThat(recordedEvents).hasSize(1);
 
-    assertEquals("UserTask_1", recordedEvents.get(0).getActivityId());
-    assertEquals("end", recordedEvents.get(0).getEventName());
+    assertThat(recordedEvents.get(0).getActivityId()).isEqualTo("UserTask_1");
+    assertThat(recordedEvents.get(0).getEventName()).isEqualTo("end");
     assertThat(recordedEvents.get(0).isCanceled()).isTrue();
   }
 
@@ -381,10 +380,10 @@ public class ExecutionListenerTest {
     Task task = taskService.createTaskQuery().taskDefinitionKey("userTask1").singleResult();
     taskService.complete(task.getId());
 
-    assertEquals(0, taskService.createTaskQuery().list().size());
+    assertThat(taskService.createTaskQuery().list().size()).isEqualTo(0);
     List<RecordedEvent> recordedEvents = RecorderExecutionListener.getRecordedEvents();
-    assertEquals(1, recordedEvents.size());
-    assertEquals("endEvent", recordedEvents.get(0).getActivityId());
+    assertThat(recordedEvents.size()).isEqualTo(1);
+    assertThat(recordedEvents.get(0).getActivityId()).isEqualTo("endEvent");
   }
 
   public static final BpmnModelInstance PROCESS_SERVICE_TASK_WITH_TWO_EXECUTION_START_LISTENER = modify(PROCESS_SERVICE_TASK_WITH_EXECUTION_START_LISTENER)
@@ -399,11 +398,11 @@ public class ExecutionListenerTest {
     Task task = taskService.createTaskQuery().taskDefinitionKey("userTask1").singleResult();
     taskService.complete(task.getId());
 
-    assertEquals(0, taskService.createTaskQuery().list().size());
+    assertThat(taskService.createTaskQuery().list().size()).isEqualTo(0);
     List<RecordedEvent> recordedEvents = RecorderExecutionListener.getRecordedEvents();
-    assertEquals(2, recordedEvents.size());
-    assertEquals("sendTask", recordedEvents.get(0).getActivityId());
-    assertEquals("endEvent", recordedEvents.get(1).getActivityId());
+    assertThat(recordedEvents.size()).isEqualTo(2);
+    assertThat(recordedEvents.get(0).getActivityId()).isEqualTo("sendTask");
+    assertThat(recordedEvents.get(1).getActivityId()).isEqualTo("endEvent");
   }
 
   public static final BpmnModelInstance PROCESS_SERVICE_TASK_WITH_EXECUTION_START_LISTENER_AND_SUB_PROCESS = modify(Bpmn.createExecutableProcess(PROCESS_KEY)
@@ -435,14 +434,14 @@ public class ExecutionListenerTest {
     Task task = taskService.createTaskQuery().taskDefinitionKey("userTask").singleResult();
     taskService.complete(task.getId());
 
-    assertEquals(1, taskService.createTaskQuery().list().size());
+    assertThat(taskService.createTaskQuery().list().size()).isEqualTo(1);
 
     List<RecordedEvent> recordedEvents = RecorderExecutionListener.getRecordedEvents();
-    assertEquals(4, recordedEvents.size());
-    assertEquals("startSubProcess", recordedEvents.get(0).getActivityId());
-    assertEquals("subProcessTask", recordedEvents.get(1).getActivityId());
-    assertEquals("sendTask", recordedEvents.get(2).getActivityId());
-    assertEquals("endEvent", recordedEvents.get(3).getActivityId());
+    assertThat(recordedEvents.size()).isEqualTo(4);
+    assertThat(recordedEvents.get(0).getActivityId()).isEqualTo("startSubProcess");
+    assertThat(recordedEvents.get(1).getActivityId()).isEqualTo("subProcessTask");
+    assertThat(recordedEvents.get(2).getActivityId()).isEqualTo("sendTask");
+    assertThat(recordedEvents.get(3).getActivityId()).isEqualTo("endEvent");
   }
 
   public static class SendMessageDelegate implements JavaDelegate {
@@ -487,7 +486,7 @@ public class ExecutionListenerTest {
 
     //then end listener sets variable and triggers conditional event
     //end listener should called only once
-    assertEquals(1, RecorderExecutionListener.getRecordedEvents().size());
+    assertThat(RecorderExecutionListener.getRecordedEvents().size()).isEqualTo(1);
   }
 
   @Test
@@ -833,13 +832,13 @@ public class ExecutionListenerTest {
     // then
     Task afterCatch = taskService.createTaskQuery().singleResult();
     assertNotNull(afterCatch);
-    assertEquals("afterCatch", afterCatch.getName());
-    assertEquals(1, ThrowBPMNErrorDelegate.invocations);
+    assertThat(afterCatch.getName()).isEqualTo("afterCatch");
+    assertThat(ThrowBPMNErrorDelegate.invocations).isEqualTo(1);
 
     // and completing this task ends the process instance
     taskService.complete(afterCatch.getId());
 
-    assertEquals(0, runtimeService.createExecutionQuery().count());
+    assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(0);
     verifyActivityCanceled("throw");
   }
 
@@ -988,7 +987,7 @@ public class ExecutionListenerTest {
     // then
     verifyErrorGotCaught();
     // end listener is called
-    assertEquals("bar", runtimeService.createVariableInstanceQuery().variableName("foo").singleResult().getValue());
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("foo").singleResult().getValue()).isEqualTo("bar");
     verifyActivityCanceled("throw");
   }
 
@@ -1099,8 +1098,8 @@ public class ExecutionListenerTest {
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
 
     // then
-    assertEquals(1, taskService.createTaskQuery().list().size());
-    assertEquals("afterCatch", taskService.createTaskQuery().singleResult().getName());
+    assertThat(taskService.createTaskQuery().list().size()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().singleResult().getName()).isEqualTo("afterCatch");
     verifyActivityCanceled("task1");
   }
 
@@ -1128,10 +1127,10 @@ public class ExecutionListenerTest {
     // then
 
     // the process has ended, because the error was not caught
-    assertEquals(0, runtimeService.createExecutionQuery().count());
+    assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(0);
 
     // the listener was only called once
-    assertEquals(1, ThrowBPMNErrorDelegate.invocations);
+    assertThat(ThrowBPMNErrorDelegate.invocations).isEqualTo(1);
     verifyActivityEnded("throw");
   }
 
@@ -1159,10 +1158,10 @@ public class ExecutionListenerTest {
     // then
 
     // the process has ended, because the error was not caught
-    assertEquals(0, runtimeService.createExecutionQuery().count());
+    assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(0);
 
     // the listener was only called once
-    assertEquals(1, ThrowBPMNErrorDelegate.invocations);
+    assertThat(ThrowBPMNErrorDelegate.invocations).isEqualTo(1);
     verifyActivityEnded("throw");
   }
 
@@ -1195,8 +1194,8 @@ public class ExecutionListenerTest {
     Task task = taskService.createTaskQuery().taskDefinitionKey("userTask1").singleResult();
     taskService.complete(task.getId());
     // assert
-    assertEquals(1, taskService.createTaskQuery().list().size());
-    assertEquals("taskWithListener", taskService.createTaskQuery().singleResult().getName());
+    assertThat(taskService.createTaskQuery().list().size()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().singleResult().getName()).isEqualTo("taskWithListener");
 
     try {
       // when the listeners are invoked
@@ -1205,7 +1204,7 @@ public class ExecutionListenerTest {
     } catch (Exception e) {
       // then
       assertTrue(e.getMessage().contains("business error"));
-      assertEquals(1, ThrowBPMNErrorDelegate.invocations);
+      assertThat(ThrowBPMNErrorDelegate.invocations).isEqualTo(1);
     }
   }
 
@@ -1273,7 +1272,7 @@ public class ExecutionListenerTest {
     } catch (Exception e) {
       // then
       assertTrue(e.getMessage().contains("business error"));
-      assertEquals(1, ThrowBPMNErrorDelegate.invocations);
+      assertThat(ThrowBPMNErrorDelegate.invocations).isEqualTo(1);
     }
   }
 
@@ -1304,7 +1303,7 @@ public class ExecutionListenerTest {
       fail("Exception expected");
     } catch (Exception e) {
       assertTrue(e.getMessage().contains("business error"));
-      assertEquals(1, ThrowBPMNErrorDelegate.invocations);
+      assertThat(ThrowBPMNErrorDelegate.invocations).isEqualTo(1);
     }
   }
 
@@ -1387,9 +1386,9 @@ public class ExecutionListenerTest {
   }
 
   protected void verifyErrorGotCaught(boolean useExceptionDelegate) {
-    assertEquals(1, taskService.createTaskQuery().list().size());
-    assertEquals("afterCatch", taskService.createTaskQuery().singleResult().getName());
-    assertEquals(1, useExceptionDelegate ? ThrowRuntimeExceptionDelegate.invocations : ThrowBPMNErrorDelegate.invocations);
+    assertThat(taskService.createTaskQuery().list().size()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().singleResult().getName()).isEqualTo("afterCatch");
+    assertThat(useExceptionDelegate ? ThrowRuntimeExceptionDelegate.invocations : ThrowBPMNErrorDelegate.invocations).isEqualTo(1);
   }
 
   protected void verifyActivityCanceled(String activityName) {

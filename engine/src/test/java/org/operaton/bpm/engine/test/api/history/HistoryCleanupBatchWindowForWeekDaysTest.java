@@ -44,7 +44,9 @@ import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 /**
  *
@@ -139,7 +141,7 @@ public class HistoryCleanupBatchWindowForWeekDaysTest {
 
       List<Job> jobs = managementService.createJobQuery().list();
       if (!jobs.isEmpty()) {
-        assertEquals(1, jobs.size());
+        assertThat(jobs.size()).isEqualTo(1);
         String jobId = jobs.get(0).getId();
         commandContext.getJobManager().deleteJob((JobEntity) jobs.get(0));
         commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(jobId);

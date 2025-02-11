@@ -23,7 +23,7 @@ import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Resources.AUTHORIZATION;
 import static org.operaton.bpm.engine.authorization.Resources.GROUP;
 import static org.operaton.bpm.engine.authorization.Resources.USER;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -88,7 +88,7 @@ public class DefaultAuthorizationProviderTest extends PluggableProcessEngineTest
   @Test
   public void testCreateUser() {
     // initially there are no authorizations for jonny2:
-    assertEquals(0, authorizationService.createAuthorizationQuery().userIdIn("jonny2").count());
+    assertThat(authorizationService.createAuthorizationQuery().userIdIn("jonny2").count()).isEqualTo(0);
 
     // create new user
     identityService.saveUser(identityService.newUser("jonny2"));
@@ -96,22 +96,22 @@ public class DefaultAuthorizationProviderTest extends PluggableProcessEngineTest
     // now there is an authorization for jonny2 which grants him ALL permissions on himself
     Authorization authorization = authorizationService.createAuthorizationQuery().userIdIn("jonny2").singleResult();
     assertNotNull(authorization);
-    assertEquals(AUTH_TYPE_GRANT, authorization.getAuthorizationType());
-    assertEquals(USER.resourceType(), authorization.getResourceType());
-    assertEquals("jonny2", authorization.getResourceId());
+    assertThat(authorization.getAuthorizationType()).isEqualTo(AUTH_TYPE_GRANT);
+    assertThat(authorization.getResourceType()).isEqualTo(USER.resourceType());
+    assertThat(authorization.getResourceId()).isEqualTo("jonny2");
     assertTrue(authorization.isPermissionGranted(ALL));
 
     // delete the user
     identityService.deleteUser("jonny2");
 
     // the authorization is deleted as well:
-    assertEquals(0, authorizationService.createAuthorizationQuery().userIdIn("jonny2").count());
+    assertThat(authorizationService.createAuthorizationQuery().userIdIn("jonny2").count()).isEqualTo(0);
   }
 
   @Test
   public void testCreateGroup() {
     // initially there are no authorizations for group "sales":
-    assertEquals(0, authorizationService.createAuthorizationQuery().groupIdIn("sales").count());
+    assertThat(authorizationService.createAuthorizationQuery().groupIdIn("sales").count()).isEqualTo(0);
 
     // create new group
     identityService.saveGroup(identityService.newGroup("sales"));
@@ -119,16 +119,16 @@ public class DefaultAuthorizationProviderTest extends PluggableProcessEngineTest
     // now there is an authorization for sales which grants all members READ permissions
     Authorization authorization = authorizationService.createAuthorizationQuery().groupIdIn("sales").singleResult();
     assertNotNull(authorization);
-    assertEquals(AUTH_TYPE_GRANT, authorization.getAuthorizationType());
-    assertEquals(GROUP.resourceType(), authorization.getResourceType());
-    assertEquals("sales", authorization.getResourceId());
+    assertThat(authorization.getAuthorizationType()).isEqualTo(AUTH_TYPE_GRANT);
+    assertThat(authorization.getResourceType()).isEqualTo(GROUP.resourceType());
+    assertThat(authorization.getResourceId()).isEqualTo("sales");
     assertTrue(authorization.isPermissionGranted(READ));
 
     // delete the group
     identityService.deleteGroup("sales");
 
     // the authorization is deleted as well:
-    assertEquals(0, authorizationService.createAuthorizationQuery().groupIdIn("sales").count());
+    assertThat(authorizationService.createAuthorizationQuery().groupIdIn("sales").count()).isEqualTo(0);
   }
 
 }

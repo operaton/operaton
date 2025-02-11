@@ -23,7 +23,6 @@ import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION
 
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.InstanceOfAssertFactories.list;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
@@ -104,7 +103,7 @@ public class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest 
 
     HistoricProcessInstance instance = query.singleResult();
     assertNotNull(instance);
-    assertEquals(processInstanceId, instance.getId());
+    assertThat(instance.getId()).isEqualTo(processInstanceId);
   }
 
   @Test
@@ -121,7 +120,7 @@ public class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest 
 
     HistoricProcessInstance instance = query.singleResult();
     assertNotNull(instance);
-    assertEquals(processInstanceId, instance.getId());
+    assertThat(instance.getId()).isEqualTo(processInstanceId);
   }
 
   @Test
@@ -295,7 +294,7 @@ public class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest 
         .createHistoricProcessInstanceQuery()
         .processInstanceId(processInstanceId)
         .count();
-    assertEquals(0, count);
+    assertThat(count).isEqualTo(0);
     enableAuthorization();
   }
 
@@ -319,7 +318,7 @@ public class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest 
         .createHistoricProcessInstanceQuery()
         .processInstanceId(processInstanceId)
         .count();
-    assertEquals(0, count);
+    assertThat(count).isEqualTo(0);
     enableAuthorization();
   }
 
@@ -347,7 +346,7 @@ public class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest 
         .createHistoricProcessInstanceQuery()
         .processInstanceId(processInstanceId)
         .count();
-    assertEquals(0, count);
+    assertThat(count).isEqualTo(0);
     enableAuthorization();
   }
 
@@ -394,7 +393,7 @@ public class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest 
         .duration(PeriodUnit.MONTH);
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result.size()).isEqualTo(1);
   }
 
   @Test
@@ -415,7 +414,7 @@ public class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest 
         .duration(PeriodUnit.MONTH);
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result.size()).isEqualTo(1);
   }
 
   @Test
@@ -457,7 +456,7 @@ public class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest 
       .duration(PeriodUnit.MONTH);
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result.size()).isEqualTo(1);
   }
 
   @Test
@@ -501,7 +500,7 @@ public class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest 
       .duration(PeriodUnit.MONTH);
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result.size()).isEqualTo(1);
   }
 
   @Test
@@ -551,7 +550,7 @@ public class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest 
       .duration(PeriodUnit.MONTH);
 
     // then
-    assertEquals(0, result.size());
+    assertThat(result.size()).isEqualTo(0);
   }
 
   @Test
@@ -586,7 +585,7 @@ public class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest 
       .duration(PeriodUnit.MONTH);
 
     // then
-    assertEquals(0, result.size());
+    assertThat(result.size()).isEqualTo(0);
   }
 
   @Test
@@ -600,9 +599,9 @@ public class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest 
     List<CleanableHistoricProcessInstanceReportResult> reportResults = historyService.createCleanableHistoricProcessInstanceReport().list();
 
     // then
-    assertEquals(1, reportResults.size());
-    assertEquals(10, reportResults.get(0).getCleanableProcessInstanceCount());
-    assertEquals(10, reportResults.get(0).getFinishedProcessInstanceCount());
+    assertThat(reportResults.size()).isEqualTo(1);
+    assertThat(reportResults.get(0).getCleanableProcessInstanceCount()).isEqualTo(10);
+    assertThat(reportResults.get(0).getFinishedProcessInstanceCount()).isEqualTo(10);
   }
 
   @Test
@@ -616,7 +615,7 @@ public class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest 
     List<CleanableHistoricProcessInstanceReportResult> reportResults = historyService.createCleanableHistoricProcessInstanceReport().list();
 
     // then
-    assertEquals(0, reportResults.size());
+    assertThat(reportResults.size()).isEqualTo(0);
   }
 
   @Test
@@ -630,7 +629,7 @@ public class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest 
     List<CleanableHistoricProcessInstanceReportResult> reportResults = historyService.createCleanableHistoricProcessInstanceReport().list();
 
     // then
-    assertEquals(0, reportResults.size());
+    assertThat(reportResults.size()).isEqualTo(0);
   }
 
   @Test
@@ -642,7 +641,7 @@ public class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest 
     List<CleanableHistoricProcessInstanceReportResult> reportResults = historyService.createCleanableHistoricProcessInstanceReport().list();
 
     // then
-    assertEquals(0, reportResults.size());
+    assertThat(reportResults.size()).isEqualTo(0);
   }
 
   @Test
@@ -656,10 +655,10 @@ public class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest 
     List<CleanableHistoricProcessInstanceReportResult> reportResults = historyService.createCleanableHistoricProcessInstanceReport().list();
 
     // then
-    assertEquals(1, reportResults.size());
-    assertEquals(MESSAGE_START_PROCESS_KEY, reportResults.get(0).getProcessDefinitionKey());
-    assertEquals(0, reportResults.get(0).getCleanableProcessInstanceCount());
-    assertEquals(0, reportResults.get(0).getFinishedProcessInstanceCount());
+    assertThat(reportResults.size()).isEqualTo(1);
+    assertThat(reportResults.get(0).getProcessDefinitionKey()).isEqualTo(MESSAGE_START_PROCESS_KEY);
+    assertThat(reportResults.get(0).getCleanableProcessInstanceCount()).isEqualTo(0);
+    assertThat(reportResults.get(0).getFinishedProcessInstanceCount()).isEqualTo(0);
   }
 
   @Test

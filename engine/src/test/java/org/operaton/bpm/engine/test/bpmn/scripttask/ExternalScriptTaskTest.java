@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.scripttask;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
@@ -43,7 +43,7 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
 
     String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");
     assertNotNull(greeting);
-    assertEquals("Greetings Operaton speaking", greeting);
+    assertThat(greeting).isEqualTo("Greetings Operaton speaking");
   }
 
   @Deployment
@@ -55,7 +55,7 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
 
     String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");
     assertNotNull(greeting);
-    assertEquals("Greetings Operaton speaking", greeting);
+    assertThat(greeting).isEqualTo("Greetings Operaton speaking");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/scripttask/ExternalScriptTaskTest.testDefaultExternalScriptAsVariable.bpmn20.xml"})
@@ -79,7 +79,7 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
 
     String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");
     assertNotNull(greeting);
-    assertEquals("Greetings Operaton speaking", greeting);
+    assertThat(greeting).isEqualTo("Greetings Operaton speaking");
   }
 
   @Deployment
@@ -89,7 +89,7 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
 
     String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");
     assertNotNull(greeting);
-    assertEquals("Greetings Operaton speaking", greeting);
+    assertThat(greeting).isEqualTo("Greetings Operaton speaking");
   }
 
   @Deployment
@@ -101,7 +101,7 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
 
     String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");
     assertNotNull(greeting);
-    assertEquals("Greetings Operaton speaking", greeting);
+    assertThat(greeting).isEqualTo("Greetings Operaton speaking");
   }
 
   @Deployment
@@ -113,7 +113,7 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
 
     String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");
     assertNotNull(greeting);
-    assertEquals("Greetings Operaton speaking", greeting);
+    assertThat(greeting).isEqualTo("Greetings Operaton speaking");
   }
 
   @Deployment
@@ -138,7 +138,7 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
 
     String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");
     assertNotNull(greeting);
-    assertEquals("Greetings Operaton speaking", greeting);
+    assertThat(greeting).isEqualTo("Greetings Operaton speaking");
   }
 
   @Deployment(resources = {
@@ -153,7 +153,7 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
 
     String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");
     assertNotNull(greeting);
-    assertEquals("Greetings Operaton speaking", greeting);
+    assertThat(greeting).isEqualTo("Greetings Operaton speaking");
   }
 
   @Deployment(resources = {
@@ -168,7 +168,7 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
 
     String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");
     assertNotNull(greeting);
-    assertEquals("Greetings Operaton speaking", greeting);
+    assertThat(greeting).isEqualTo("Greetings Operaton speaking");
   }
 
   @Deployment(resources = {
@@ -183,7 +183,7 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
 
     String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");
     assertNotNull(greeting);
-    assertEquals("Greetings Operaton speaking", greeting);
+    assertThat(greeting).isEqualTo("Greetings Operaton speaking");
   }
 
   @Deployment

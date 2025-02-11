@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.standalone.pvm;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -48,18 +48,18 @@ public class PvmVariablesTest {
     processInstance.setVariable("msg", "hello world");
     processInstance.start();
 
-    assertEquals(500L, processInstance.getVariable("amount"));
-    assertEquals("hello world", processInstance.getVariable("msg"));
+    assertThat(processInstance.getVariable("amount")).isEqualTo(500L);
+    assertThat(processInstance.getVariable("msg")).isEqualTo("hello world");
 
     PvmExecution activityInstance = processInstance.findExecution("a");
-    assertEquals(500L, activityInstance.getVariable("amount"));
-    assertEquals("hello world", activityInstance.getVariable("msg"));
+    assertThat(activityInstance.getVariable("amount")).isEqualTo(500L);
+    assertThat(activityInstance.getVariable("msg")).isEqualTo("hello world");
     
     Map<String, Object> expectedVariables = new HashMap<>();
     expectedVariables.put("amount", 500L);
     expectedVariables.put("msg", "hello world");
 
-    assertEquals(expectedVariables, activityInstance.getVariables());
-    assertEquals(expectedVariables, processInstance.getVariables());
+    assertThat(activityInstance.getVariables()).isEqualTo(expectedVariables);
+    assertThat(processInstance.getVariables()).isEqualTo(expectedVariables);
   }
 }

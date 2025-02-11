@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.identity;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.List;
 
 import org.operaton.bpm.engine.IdentityService;
@@ -57,15 +59,15 @@ public class WriteMultipleEntitiesInOneTransactionTest {
     User user = identityService.createUserQuery().userId("multipleEntities").singleResult();
 
     Assert.assertNotNull(user);
-    Assert.assertEquals("multipleEntities", user.getId());
-    Assert.assertEquals("{SHA}pfdzmt+49nwknTy7xhZd7ZW5suI=", user.getPassword());
+    assertThat(user.getId()).isEqualTo("multipleEntities");
+    assertThat(user.getPassword()).isEqualTo("{SHA}pfdzmt+49nwknTy7xhZd7ZW5suI=");
 
     // It is expected, that the User is in exactly one Group
     List<Group> groups = this.identityService.createGroupQuery().groupMember("multipleEntities").list();
-    Assert.assertEquals(1, groups.size());
+    assertThat(groups.size()).isEqualTo(1);
 
     Group group = groups.get(0);
-    Assert.assertEquals("multipleEntities_group", group.getId());
+    assertThat(group.getId()).isEqualTo("multipleEntities_group");
 
     // clean the Db
     identityService.deleteMembership("multipleEntities", "multipleEntities_group");

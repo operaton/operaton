@@ -26,7 +26,7 @@ import static org.operaton.bpm.engine.authorization.Permissions.DELETE;
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
 import static org.operaton.bpm.engine.authorization.Resources.AUTHORIZATION;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestUtil.assertExceptionInfo;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -86,9 +86,9 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
       fail("exception expected");
 
     } catch (AuthorizationException e) {
-      assertEquals(1, e.getMissingAuthorizations().size());
+      assertThat(e.getMissingAuthorizations().size()).isEqualTo(1);
       MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertEquals(JONNY_2, e.getUserId());
+      assertThat(e.getUserId()).isEqualTo(JONNY_2);
       assertExceptionInfo(CREATE.getName(), AUTHORIZATION.resourceName(), null, info);
     }
 
@@ -102,9 +102,9 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
       fail("exception expected");
 
     } catch (AuthorizationException e) {
-      assertEquals(1, e.getMissingAuthorizations().size());
+      assertThat(e.getMissingAuthorizations().size()).isEqualTo(1);
       MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertEquals(JONNY_2, e.getUserId());
+      assertThat(e.getUserId()).isEqualTo(JONNY_2);
       assertExceptionInfo(CREATE.getName(), AUTHORIZATION.resourceName(), null, info);
     }
   }
@@ -131,9 +131,9 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
       fail("exception expected");
 
     } catch (AuthorizationException e) {
-      assertEquals(1, e.getMissingAuthorizations().size());
+      assertThat(e.getMissingAuthorizations().size()).isEqualTo(1);
       MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertEquals(JONNY_2, e.getUserId());
+      assertThat(e.getUserId()).isEqualTo(JONNY_2);
       assertExceptionInfo(DELETE.getName(), AUTHORIZATION.resourceName(), basePerms.getId(), info);
     }
   }
@@ -163,9 +163,9 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
       fail("exception expected");
 
     } catch (AuthorizationException e) {
-      assertEquals(1, e.getMissingAuthorizations().size());
+      assertThat(e.getMissingAuthorizations().size()).isEqualTo(1);
       MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertEquals(JONNY_2, e.getUserId());
+      assertThat(e.getUserId()).isEqualTo(JONNY_2);
       assertExceptionInfo(UPDATE.getName(), AUTHORIZATION.resourceName(), basePerms.getId(), info);
     }
 
@@ -193,13 +193,13 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
     authorizationService.saveAuthorization(basePerms);
 
     // I can see it
-    assertEquals(1, authorizationService.createAuthorizationQuery().count());
+    assertThat(authorizationService.createAuthorizationQuery().count()).isEqualTo(1);
 
     // now enable checks
     processEngineConfiguration.setAuthorizationEnabled(true);
 
     // I can't see it
-    assertEquals(0, authorizationService.createAuthorizationQuery().count());
+    assertThat(authorizationService.createAuthorizationQuery().count()).isEqualTo(0);
 
   }
 
@@ -371,10 +371,10 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
     processEngineConfiguration.setAuthorizationEnabled(true);
 
     // then
-    assertEquals(true, authorizationService.isUserAuthorized(userId, null, Permissions.ACCESS, Resources.APPLICATION));
-    assertEquals(false, authorizationService.isUserAuthorized(userId, null, BatchPermissions.CREATE_BATCH_MIGRATE_PROCESS_INSTANCES, Resources.BATCH));
-    assertEquals(false, authorizationService.isUserAuthorized(userId, null, ProcessDefinitionPermissions.RETRY_JOB, Resources.PROCESS_DEFINITION));
-    assertEquals(false, authorizationService.isUserAuthorized(userId, null, ProcessInstancePermissions.RETRY_JOB, Resources.PROCESS_INSTANCE));
+    assertThat(authorizationService.isUserAuthorized(userId, null, Permissions.ACCESS, Resources.APPLICATION)).isEqualTo(true);
+    assertThat(authorizationService.isUserAuthorized(userId, null, BatchPermissions.CREATE_BATCH_MIGRATE_PROCESS_INSTANCES, Resources.BATCH)).isEqualTo(false);
+    assertThat(authorizationService.isUserAuthorized(userId, null, ProcessDefinitionPermissions.RETRY_JOB, Resources.PROCESS_DEFINITION)).isEqualTo(false);
+    assertThat(authorizationService.isUserAuthorized(userId, null, ProcessInstancePermissions.RETRY_JOB, Resources.PROCESS_INSTANCE)).isEqualTo(false);
     try {
       authorizationService.isUserAuthorized(userId, null, BatchPermissions.CREATE_BATCH_MIGRATE_PROCESS_INSTANCES, Resources.APPLICATION);
       fail("expected exception");
@@ -414,11 +414,11 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
     processEngineConfiguration.setAuthorizationEnabled(true);
 
     // then
-    assertEquals(true, authorizationService.isUserAuthorized(userId, null, Permissions.READ, Resources.PROCESS_INSTANCE));
-    assertEquals(true, authorizationService.isUserAuthorized(userId, null, ProcessInstancePermissions.RETRY_JOB, Resources.PROCESS_INSTANCE));
-    assertEquals(false, authorizationService.isUserAuthorized(userId, null, BatchPermissions.CREATE_BATCH_MIGRATE_PROCESS_INSTANCES, Resources.BATCH));
-    assertEquals(false, authorizationService.isUserAuthorized(userId, null, ProcessDefinitionPermissions.RETRY_JOB, Resources.PROCESS_DEFINITION));
-    assertEquals(false, authorizationService.isUserAuthorized(userId, null, Permissions.ACCESS, Resources.APPLICATION));
+    assertThat(authorizationService.isUserAuthorized(userId, null, Permissions.READ, Resources.PROCESS_INSTANCE)).isEqualTo(true);
+    assertThat(authorizationService.isUserAuthorized(userId, null, ProcessInstancePermissions.RETRY_JOB, Resources.PROCESS_INSTANCE)).isEqualTo(true);
+    assertThat(authorizationService.isUserAuthorized(userId, null, BatchPermissions.CREATE_BATCH_MIGRATE_PROCESS_INSTANCES, Resources.BATCH)).isEqualTo(false);
+    assertThat(authorizationService.isUserAuthorized(userId, null, ProcessDefinitionPermissions.RETRY_JOB, Resources.PROCESS_DEFINITION)).isEqualTo(false);
+    assertThat(authorizationService.isUserAuthorized(userId, null, Permissions.ACCESS, Resources.APPLICATION)).isEqualTo(false);
     try {
       authorizationService.isUserAuthorized(userId, null, ProcessDefinitionPermissions.RETRY_JOB, Resources.PROCESS_INSTANCE);
       fail("expected exception");
@@ -443,7 +443,7 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
     processEngineConfiguration.setAuthorizationEnabled(true);
 
     // then
-    assertEquals(true, authorizationService.isUserAuthorized(userId, null, Permissions.ACCESS, resource));
+    assertThat(authorizationService.isUserAuthorized(userId, null, Permissions.ACCESS, resource)).isEqualTo(true);
   }
 
   protected void cleanupAfterTest() {

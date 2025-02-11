@@ -30,7 +30,6 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -110,7 +109,7 @@ public class FilterPropertiesTest {
 
     // then
     Map<String, Object> persistentProperties = filter.getProperties();
-    assertEquals(1, persistentProperties.size());
+    assertThat(persistentProperties.size()).isEqualTo(1);
     assertTrue(persistentProperties.containsKey("null"));
     assertNull(persistentProperties.get("null"));
 
@@ -256,11 +255,11 @@ public class FilterPropertiesTest {
     filter = filterService.getFilter(filter.getId());
 
     Map<String, Object> properties = filter.getProperties();
-    assertEquals(5, properties.size());
-    assertEquals("#123456", properties.get("color"));
-    assertEquals(42, properties.get("priority"));
-    assertEquals(true, properties.get("userDefined"));
-    assertEquals(nestedJsonObject, properties.get("object"));
-    assertEquals(nestedJsonArray, properties.get("array"));
+    assertThat(properties.size()).isEqualTo(5);
+    assertThat(properties.get("color")).isEqualTo("#123456");
+    assertThat(properties.get("priority")).isEqualTo(42);
+    assertThat(properties.get("userDefined")).isEqualTo(true);
+    assertThat(properties.get("object")).isEqualTo(nestedJsonObject);
+    assertThat(properties.get("array")).isEqualTo(nestedJsonArray);
   }
 }

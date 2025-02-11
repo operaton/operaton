@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.task;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -71,13 +70,13 @@ public class StandaloneTaskTest extends PluggableProcessEngineTest {
 
     // Retrieve task list for jbarrez
     List<Task> tasks = taskService.createTaskQuery().taskCandidateUser("kermit").list();
-    assertEquals(1, tasks.size());
-    assertEquals("testTask", tasks.get(0).getName());
+    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks.get(0).getName()).isEqualTo("testTask");
 
     // Retrieve task list for tbaeyens
     tasks = taskService.createTaskQuery().taskCandidateUser("gonzo").list();
-    assertEquals(1, tasks.size());
-    assertEquals("testTask", tasks.get(0).getName());
+    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks.get(0).getName()).isEqualTo("testTask");
 
     // Claim task
     taskService.claim(taskId, "kermit");
@@ -122,15 +121,15 @@ public class StandaloneTaskTest extends PluggableProcessEngineTest {
   public void testRevisionUpdatedOnSave() {
     Task task = taskService.newTask();
     taskService.saveTask(task);
-    assertEquals(1, ((TaskEntity) task).getRevision());
+    assertThat(((TaskEntity) task).getRevision()).isEqualTo(1);
 
     task.setDescription("first modification");
     taskService.saveTask(task);
-    assertEquals(2, ((TaskEntity) task).getRevision());
+    assertThat(((TaskEntity) task).getRevision()).isEqualTo(2);
 
     task.setDescription("second modification");
     taskService.saveTask(task);
-    assertEquals(3, ((TaskEntity) task).getRevision());
+    assertThat(((TaskEntity) task).getRevision()).isEqualTo(3);
   }
 
   @Test

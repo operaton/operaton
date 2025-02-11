@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.handler.specification;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -67,11 +67,11 @@ public abstract class AbstractExecutionListenerSpec {
 
   public void verify(CmmnActivity activity) {
 
-    assertEquals(expectedRegisteredEvents.size(), activity.getListeners().size());
+    assertThat(activity.getListeners().size()).isEqualTo(expectedRegisteredEvents.size());
 
     for (String expectedRegisteredEvent : expectedRegisteredEvents) {
       List<DelegateListener<? extends BaseDelegateExecution>> listeners = activity.getListeners(expectedRegisteredEvent);
-      assertEquals(1, listeners.size());
+      assertThat(listeners.size()).isEqualTo(1);
       verifyListener(listeners.get(0));
     }
   }

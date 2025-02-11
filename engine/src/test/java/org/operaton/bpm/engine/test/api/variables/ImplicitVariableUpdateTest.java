@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.variables;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -50,8 +49,8 @@ public class ImplicitVariableUpdateTest extends PluggableProcessEngineTest {
 
     List<String> list = (List<String>) runtimeService.getVariable(instance.getId(), "listVar");
     assertNotNull(list);
-    assertEquals(1, list.size());
-    assertEquals(UpdateValueDelegate.NEW_ELEMENT, list.get(0));
+    assertThat(list.size()).isEqualTo(1);
+    assertThat(list.get(0)).isEqualTo(UpdateValueDelegate.NEW_ELEMENT);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/variables/ImplicitVariableUpdateTest.parallel.bpmn20.xml")
@@ -67,8 +66,8 @@ public class ImplicitVariableUpdateTest extends PluggableProcessEngineTest {
 
     List<String> list = (List<String>) runtimeService.getVariable(instance.getId(), "listVar");
     assertNotNull(list);
-    assertEquals(1, list.size());
-    assertEquals(UpdateValueDelegate.NEW_ELEMENT, list.get(0));
+    assertThat(list.size()).isEqualTo(1);
+    assertThat(list.get(0)).isEqualTo(UpdateValueDelegate.NEW_ELEMENT);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/variables/ImplicitVariableUpdateTest.sequence.bpmn20.xml")

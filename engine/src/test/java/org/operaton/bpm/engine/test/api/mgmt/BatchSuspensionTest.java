@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.mgmt;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.EntityTypes.BATCH;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -238,10 +237,10 @@ public class BatchSuspensionTest {
       .singleResult();
 
     assertNotNull(entry);
-    assertEquals(batch.getId(), entry.getBatchId());
-    assertEquals(AbstractSetBatchStateCmd.SUSPENSION_STATE_PROPERTY, entry.getProperty());
+    assertThat(entry.getBatchId()).isEqualTo(batch.getId());
+    assertThat(entry.getProperty()).isEqualTo(AbstractSetBatchStateCmd.SUSPENSION_STATE_PROPERTY);
     assertNull(entry.getOrgValue());
-    assertEquals(SuspensionState.SUSPENDED.getName(), entry.getNewValue());
+    assertThat(entry.getNewValue()).isEqualTo(SuspensionState.SUSPENDED.getName());
   }
 
   @Test
@@ -389,10 +388,10 @@ public class BatchSuspensionTest {
       .singleResult();
 
     assertNotNull(entry);
-    assertEquals(batch.getId(), entry.getBatchId());
-    assertEquals(AbstractSetBatchStateCmd.SUSPENSION_STATE_PROPERTY, entry.getProperty());
+    assertThat(entry.getBatchId()).isEqualTo(batch.getId());
+    assertThat(entry.getProperty()).isEqualTo(AbstractSetBatchStateCmd.SUSPENSION_STATE_PROPERTY);
     assertNull(entry.getOrgValue());
-    assertEquals(SuspensionState.ACTIVE.getName(), entry.getNewValue());
+    assertThat(entry.getNewValue()).isEqualTo(SuspensionState.ACTIVE.getName());
   }
 
   @Test
@@ -411,8 +410,8 @@ public class BatchSuspensionTest {
 
     // then
     UserOperationLogQuery query = historyService.createUserOperationLogQuery().entityType(BATCH);
-    assertEquals(3, query.count());
-    assertEquals(3, query.list().size());
+    assertThat(query.count()).isEqualTo(3);
+    assertThat(query.list().size()).isEqualTo(3);
   }
 
   @Test
@@ -431,12 +430,12 @@ public class BatchSuspensionTest {
 
     // then
     UserOperationLogQuery query = historyService.createUserOperationLogQuery().batchId(batch1.getId());
-    assertEquals(2, query.count());
-    assertEquals(2, query.list().size());
+    assertThat(query.count()).isEqualTo(2);
+    assertThat(query.list().size()).isEqualTo(2);
 
     query = historyService.createUserOperationLogQuery().batchId(batch2.getId());
-    assertEquals(1, query.count());
-    assertEquals(1, query.list().size());
+    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.list().size()).isEqualTo(1);
   }
 
 }

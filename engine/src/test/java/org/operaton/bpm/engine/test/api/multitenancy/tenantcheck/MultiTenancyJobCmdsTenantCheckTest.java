@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.multitenancy.tenantcheck;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -103,10 +102,10 @@ public class MultiTenancyJobCmdsTenantCheckTest {
     identityService.setAuthentication("aUserId", null, List.of(TENANT_ONE));
     managementService.setJobRetries(timerJob.getId(), 5);
 
-    assertEquals(5, managementService.createJobQuery()
-      .processInstanceId(processInstance.getId())
-      .singleResult()
-      .getRetries());
+    assertThat(managementService.createJobQuery()
+        .processInstanceId(processInstance.getId())
+        .singleResult()
+        .getRetries()).isEqualTo(5);
   }
 
   @Test
@@ -140,10 +139,10 @@ public class MultiTenancyJobCmdsTenantCheckTest {
     managementService.setJobRetries(timerJob.getId(), 5);
 
     // then
-    assertEquals(5, managementService.createJobQuery()
-    .processInstanceId(processInstance.getId())
-    .singleResult()
-    .getRetries());
+    assertThat(managementService.createJobQuery()
+        .processInstanceId(processInstance.getId())
+        .singleResult()
+        .getRetries()).isEqualTo(5);
 
   }
 
@@ -162,8 +161,8 @@ public class MultiTenancyJobCmdsTenantCheckTest {
     managementService.setJobRetriesByJobDefinitionId(jobDefinition.getId(), 1);
 
     // then
-    assertEquals(1, selectJobByProcessInstanceId(processInstance.getId())
-      .getRetries());
+    assertThat(selectJobByProcessInstanceId(processInstance.getId())
+        .getRetries()).isEqualTo(1);
 
   }
 
@@ -198,7 +197,7 @@ public class MultiTenancyJobCmdsTenantCheckTest {
 
     managementService.setJobRetriesByJobDefinitionId(jobDefinition.getId(), 1);
     // then
-    assertEquals(1, selectJobByProcessInstanceId(processInstance.getId()).getRetries());
+    assertThat(selectJobByProcessInstanceId(processInstance.getId()).getRetries()).isEqualTo(1);
 
   }
 
@@ -207,7 +206,7 @@ public class MultiTenancyJobCmdsTenantCheckTest {
   public void testSetJobDueDateWithAuthenticatedTenant() {
     Job timerJob = managementService.createJobQuery().processInstanceId(processInstance.getId()).singleResult();
 
-    assertEquals(0, managementService.createJobQuery().duedateLowerThan(new Date()).count());
+    assertThat(managementService.createJobQuery().duedateLowerThan(new Date()).count()).isEqualTo(0);
 
     Calendar cal = Calendar.getInstance();
     cal.setTime(new Date());
@@ -217,8 +216,8 @@ public class MultiTenancyJobCmdsTenantCheckTest {
     managementService.setJobDuedate(timerJob.getId(), cal.getTime());
 
     // then
-    assertEquals(1, managementService.createJobQuery()
-      .duedateLowerThan(new Date()).count());
+    assertThat(managementService.createJobQuery()
+        .duedateLowerThan(new Date()).count()).isEqualTo(1);
   }
 
   @Test
@@ -250,8 +249,8 @@ public class MultiTenancyJobCmdsTenantCheckTest {
 
     managementService.setJobDuedate(timerJob.getId(), cal.getTime());
     // then
-    assertEquals(1, managementService.createJobQuery()
-      .duedateLowerThan(new Date()).count());
+    assertThat(managementService.createJobQuery()
+        .duedateLowerThan(new Date()).count()).isEqualTo(1);
 
   }
 
@@ -264,7 +263,7 @@ public class MultiTenancyJobCmdsTenantCheckTest {
     managementService.setJobPriority(timerJob.getId(), 5);
 
     // then
-    assertEquals(1, managementService.createJobQuery().priorityHigherThanOrEquals(5).count());
+    assertThat(managementService.createJobQuery().priorityHigherThanOrEquals(5).count()).isEqualTo(1);
   }
 
   @Test
@@ -290,7 +289,7 @@ public class MultiTenancyJobCmdsTenantCheckTest {
 
     managementService.setJobPriority(timerJob.getId(), 5);
     // then
-    assertEquals(1, managementService.createJobQuery().priorityHigherThanOrEquals(5).count());
+    assertThat(managementService.createJobQuery().priorityHigherThanOrEquals(5).count()).isEqualTo(1);
   }
 
   // setOverridingJobPriorityForJobDefinition without cascade
@@ -520,9 +519,9 @@ public class MultiTenancyJobCmdsTenantCheckTest {
     managementService.deleteJob(timerJobId);
 
     // then
-    assertEquals(0, managementService.createJobQuery()
-      .processInstanceId(processInstance.getId())
-      .count());
+    assertThat(managementService.createJobQuery()
+        .processInstanceId(processInstance.getId())
+        .count()).isEqualTo(0);
   }
 
   @Test
@@ -554,9 +553,9 @@ public class MultiTenancyJobCmdsTenantCheckTest {
     managementService.deleteJob(timerJobId);
 
     // then
-    assertEquals(0, managementService.createJobQuery()
-      .processInstanceId(processInstance.getId())
-      .count());
+    assertThat(managementService.createJobQuery()
+        .processInstanceId(processInstance.getId())
+        .count()).isEqualTo(0);
   }
 
   //executeJobs
@@ -571,7 +570,7 @@ public class MultiTenancyJobCmdsTenantCheckTest {
       .createTaskQuery()
       .processInstanceId(noFailProcessInstanceId);
 
-    assertEquals(1, taskQuery.list().size());
+    assertThat(taskQuery.list().size()).isEqualTo(1);
 
     String timerJobId = managementService.createJobQuery()
       .processInstanceId(noFailProcessInstanceId)
@@ -582,7 +581,7 @@ public class MultiTenancyJobCmdsTenantCheckTest {
     managementService.executeJob(timerJobId);
 
     // then
-    assertEquals(0, taskQuery.list().size());
+    assertThat(taskQuery.list().size()).isEqualTo(0);
   }
 
   @Test
@@ -629,7 +628,7 @@ public class MultiTenancyJobCmdsTenantCheckTest {
       .processInstanceId(noFailProcessInstanceId);
 
     // then
-    assertEquals(0, taskQuery.list().size());
+    assertThat(taskQuery.list().size()).isEqualTo(0);
   }
 
   protected Job selectJobByProcessInstanceId(String processInstanceId) {

@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.standalone.history;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -68,12 +68,12 @@ public class CustomHistoryTest {
     runtimeService.setVariable(instance.getId(), "aBytesVariable", value.getBytes());
 
     // then the historic variable instances and their values exist
-    assertEquals(2, historyService.createHistoricVariableInstanceQuery().count());
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(2);
 
     HistoricVariableInstance historicStringVariable =
         historyService.createHistoricVariableInstanceQuery().variableName("aStringVariable").singleResult();
     assertNotNull(historicStringVariable);
-    assertEquals(value, historicStringVariable.getValue());
+    assertThat(historicStringVariable.getValue()).isEqualTo(value);
 
     HistoricVariableInstance historicBytesVariable =
         historyService.createHistoricVariableInstanceQuery().variableName("aBytesVariable").singleResult();
@@ -81,7 +81,7 @@ public class CustomHistoryTest {
     assertTrue(Arrays.equals(value.getBytes(), (byte[]) historicBytesVariable.getValue()));
 
     // then the historic variable updates and their values exist
-    assertEquals(2, historyService.createHistoricDetailQuery().variableUpdates().count());
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().count()).isEqualTo(2);
 
     HistoricVariableUpdate historicStringVariableUpdate =
         (HistoricVariableUpdate) historyService.createHistoricDetailQuery()
@@ -90,7 +90,7 @@ public class CustomHistoryTest {
           .singleResult();
 
     assertNotNull(historicStringVariableUpdate);
-    assertEquals(value, historicStringVariableUpdate.getValue());
+    assertThat(historicStringVariableUpdate.getValue()).isEqualTo(value);
 
     HistoricVariableUpdate historicByteVariableUpdate =
         (HistoricVariableUpdate) historyService.createHistoricDetailQuery()

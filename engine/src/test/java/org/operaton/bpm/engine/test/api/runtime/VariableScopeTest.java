@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.Map;
@@ -49,30 +49,30 @@ public class VariableScopeTest {
   public void testGetVariables() {
     Map<String, Object> variables = variableScope.getVariables();
     assertNotNull(variables);
-    assertEquals(VAR_VALUE_STRING, variables.get(VAR_NAME));
+    assertThat(variables.get(VAR_NAME)).isEqualTo(VAR_VALUE_STRING);
   }
 
   @Test
   public void testGetVariablesTyped() {
     VariableMap variables = variableScope.getVariablesTyped();
     assertNotNull(variables);
-    assertEquals(VAR_VALUE_STRING, variables.get(VAR_NAME));
-    assertEquals(variables, variableScope.getVariablesTyped(true));
+    assertThat(variables.get(VAR_NAME)).isEqualTo(VAR_VALUE_STRING);
+    assertThat(variableScope.getVariablesTyped(true)).isEqualTo(variables);
   }
 
   @Test
   public void testGetVariablesLocal() {
     Map<String, Object> variables = variableScope.getVariablesLocal();
     assertNotNull(variables);
-    assertEquals(VAR_VALUE_STRING, variables.get(VAR_NAME));
+    assertThat(variables.get(VAR_NAME)).isEqualTo(VAR_VALUE_STRING);
   }
 
   @Test
   public void testGetVariablesLocalTyped() {
     Map<String, Object> variables = variableScope.getVariablesLocalTyped();
     assertNotNull(variables);
-    assertEquals(VAR_VALUE_STRING, variables.get(VAR_NAME));
-    assertEquals(variables, variableScope.getVariablesLocalTyped(true));
+    assertThat(variables.get(VAR_NAME)).isEqualTo(VAR_VALUE_STRING);
+    assertThat(variableScope.getVariablesLocalTyped(true)).isEqualTo(variables);
   }
 
 }

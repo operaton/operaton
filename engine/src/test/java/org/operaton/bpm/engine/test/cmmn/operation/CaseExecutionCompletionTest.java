@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.cmmn.operation;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -93,7 +92,7 @@ public class CaseExecutionCompletionTest {
     expectedStateTransitions.add("active --complete(A)--> completed");
     expectedStateTransitions.add("active --complete(Case1)--> completed");
 
-    assertEquals(expectedStateTransitions, stateTransitionCollector.stateTransitions);
+    assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
 
     // task A is completed ...
     assertTrue(taskA.isCompleted());
@@ -155,7 +154,7 @@ public class CaseExecutionCompletionTest {
     expectedStateTransitions.add("active --complete(A)--> completed");
     expectedStateTransitions.add("active --complete(Case1)--> completed");
 
-    assertEquals(expectedStateTransitions, stateTransitionCollector.stateTransitions);
+    assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
 
     // task A is completed ...
     assertTrue(taskA.isCompleted());
@@ -539,7 +538,7 @@ public class CaseExecutionCompletionTest {
     expectedStateTransitions.add("enabled --disable(A)--> disabled");
     expectedStateTransitions.add("active --complete(Case1)--> completed");
 
-    assertEquals(expectedStateTransitions, stateTransitionCollector.stateTransitions);
+    assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
 
     // task A is disabled
     assertTrue(taskA.isDisabled());
@@ -605,7 +604,7 @@ public class CaseExecutionCompletionTest {
     expectedStateTransitions.add("active --terminate(A)--> terminated");
     expectedStateTransitions.add("active --complete(Case1)--> completed");
 
-    assertEquals(expectedStateTransitions, stateTransitionCollector.stateTransitions);
+    assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
 
     // task A is disabled
     assertTrue(taskA.isTerminated());
@@ -722,7 +721,7 @@ public class CaseExecutionCompletionTest {
     // active --complete(Case1)--> completed
     expectedStateTransitions.add("active --complete(Case1)--> completed");
 
-    assertEquals(expectedStateTransitions, stateTransitionCollector.stateTransitions);
+    assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
 
     // the case instance
     assertTrue(caseInstance.isCompleted());
@@ -1008,7 +1007,7 @@ public class CaseExecutionCompletionTest {
     // active --complete(A)--> completed
     expectedStateTransitions.add("active --complete(A)--> completed");
 
-    assertEquals(expectedStateTransitions, stateTransitionCollector.stateTransitions);
+    assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
 
     // clear lists
     expectedStateTransitions.clear();
@@ -1033,10 +1032,10 @@ public class CaseExecutionCompletionTest {
     assertNotNull(caseInstance.findCaseExecution("X"));
 
     // case instance has only one child
-    assertEquals(1, ((CaseExecutionImpl) caseInstance).getCaseExecutions().size());
+    assertThat(((CaseExecutionImpl) caseInstance).getCaseExecutions().size()).isEqualTo(1);
 
     // stage X has two children
-    assertEquals(1, ((CaseExecutionImpl) stageX).getCaseExecutions().size());
+    assertThat(((CaseExecutionImpl) stageX).getCaseExecutions().size()).isEqualTo(1);
 
     // case instance is still active
     assertTrue(caseInstance.isActive());
@@ -1110,7 +1109,7 @@ public class CaseExecutionCompletionTest {
     // active --complete(A)--> completed
     expectedStateTransitions.add("active --complete(A)--> completed");
 
-    assertEquals(expectedStateTransitions, stateTransitionCollector.stateTransitions);
+    assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
 
     // clear lists
     expectedStateTransitions.clear();
@@ -1135,10 +1134,10 @@ public class CaseExecutionCompletionTest {
     assertNotNull(caseInstance.findCaseExecution("X"));
 
     // case instance has only one child
-    assertEquals(1, ((CaseExecutionImpl) caseInstance).getCaseExecutions().size());
+    assertThat(((CaseExecutionImpl) caseInstance).getCaseExecutions().size()).isEqualTo(1);
 
     // stage X has two children
-    assertEquals(1, ((CaseExecutionImpl) stageX).getCaseExecutions().size());
+    assertThat(((CaseExecutionImpl) stageX).getCaseExecutions().size()).isEqualTo(1);
 
     // case instance is still active
     assertTrue(caseInstance.isActive());
@@ -1228,10 +1227,10 @@ public class CaseExecutionCompletionTest {
     assertNotNull(caseInstance.findCaseExecution("X"));
 
     // case instance has only one child
-    assertEquals(1, ((CaseExecutionImpl) caseInstance).getCaseExecutions().size());
+    assertThat(((CaseExecutionImpl) caseInstance).getCaseExecutions().size()).isEqualTo(1);
 
     // stage X has only one child
-    assertEquals(2, ((CaseExecutionImpl) stageX).getCaseExecutions().size());
+    assertThat(((CaseExecutionImpl) stageX).getCaseExecutions().size()).isEqualTo(2);
 
     // case instance is still active
     assertTrue(caseInstance.isActive());
@@ -1320,10 +1319,10 @@ public class CaseExecutionCompletionTest {
     assertNotNull(caseInstance.findCaseExecution("X"));
 
     // case instance has only one child
-    assertEquals(1, ((CaseExecutionImpl) caseInstance).getCaseExecutions().size());
+    assertThat(((CaseExecutionImpl) caseInstance).getCaseExecutions().size()).isEqualTo(1);
 
     // stage X has only one child
-    assertEquals(1, ((CaseExecutionImpl) stageX).getCaseExecutions().size());
+    assertThat(((CaseExecutionImpl) stageX).getCaseExecutions().size()).isEqualTo(1);
 
     // case instance is still active
     assertTrue(caseInstance.isActive());
@@ -1405,7 +1404,7 @@ public class CaseExecutionCompletionTest {
     expectedStateTransitions.add("active --complete(X)--> completed");
     expectedStateTransitions.add("active --complete(Case1)--> completed");
 
-    assertEquals(expectedStateTransitions, stateTransitionCollector.stateTransitions);
+    assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
 
     // clear lists
     expectedStateTransitions.clear();
@@ -1428,7 +1427,7 @@ public class CaseExecutionCompletionTest {
     assertNull(caseInstance.findCaseExecution("X"));
 
     // stage X has only one child
-    assertEquals(0, ((CaseExecutionImpl) caseInstance).getCaseExecutions().size());
+    assertThat(((CaseExecutionImpl) caseInstance).getCaseExecutions().size()).isEqualTo(0);
 
     // case instance is completed
     assertTrue(caseInstance.isCompleted());
@@ -1510,7 +1509,7 @@ public class CaseExecutionCompletionTest {
     expectedStateTransitions.add("active --complete(X)--> completed");
     expectedStateTransitions.add("active --complete(Case1)--> completed");
 
-    assertEquals(expectedStateTransitions, stateTransitionCollector.stateTransitions);
+    assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
 
     // clear lists
     expectedStateTransitions.clear();
@@ -1533,7 +1532,7 @@ public class CaseExecutionCompletionTest {
     assertNull(caseInstance.findCaseExecution("X"));
 
     // stage X has only one child
-    assertEquals(0, ((CaseExecutionImpl) caseInstance).getCaseExecutions().size());
+    assertThat(((CaseExecutionImpl) caseInstance).getCaseExecutions().size()).isEqualTo(0);
 
     // case instance is completed
     assertTrue(caseInstance.isCompleted());
@@ -1613,7 +1612,7 @@ public class CaseExecutionCompletionTest {
     expectedStateTransitions.add("active --complete(X)--> completed");
     expectedStateTransitions.add("active --complete(Case1)--> completed");
 
-    assertEquals(expectedStateTransitions, stateTransitionCollector.stateTransitions);
+    assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
 
     // clear lists
     expectedStateTransitions.clear();
@@ -1636,7 +1635,7 @@ public class CaseExecutionCompletionTest {
     assertNull(caseInstance.findCaseExecution("X"));
 
     // stage X has only one child
-    assertEquals(0, ((CaseExecutionImpl) caseInstance).getCaseExecutions().size());
+    assertThat(((CaseExecutionImpl) caseInstance).getCaseExecutions().size()).isEqualTo(0);
 
     // case instance is completed
     assertTrue(caseInstance.isCompleted());
@@ -1714,7 +1713,7 @@ public class CaseExecutionCompletionTest {
     expectedStateTransitions.add("active --complete(X)--> completed");
     expectedStateTransitions.add("active --complete(Case1)--> completed");
 
-    assertEquals(expectedStateTransitions, stateTransitionCollector.stateTransitions);
+    assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
 
     // clear lists
     expectedStateTransitions.clear();
@@ -1737,7 +1736,7 @@ public class CaseExecutionCompletionTest {
     assertNull(caseInstance.findCaseExecution("X"));
 
     // stage X has only one child
-    assertEquals(0, ((CaseExecutionImpl) caseInstance).getCaseExecutions().size());
+    assertThat(((CaseExecutionImpl) caseInstance).getCaseExecutions().size()).isEqualTo(0);
 
     // case instance is completed
     assertTrue(caseInstance.isCompleted());
@@ -1782,7 +1781,7 @@ public class CaseExecutionCompletionTest {
     // active --complete(Case1)--> completed
     expectedStateTransitions.add("active --complete(Case1)--> completed");
 
-    assertEquals(expectedStateTransitions, stateTransitionCollector.stateTransitions);
+    assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
   }
 
   /**
@@ -1839,7 +1838,7 @@ public class CaseExecutionCompletionTest {
     expectedStateTransitions.add("active --complete(X)--> completed");
     expectedStateTransitions.add("active --complete(Case1)--> completed");
 
-    assertEquals(expectedStateTransitions, stateTransitionCollector.stateTransitions);
+    assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
   }
 
 }

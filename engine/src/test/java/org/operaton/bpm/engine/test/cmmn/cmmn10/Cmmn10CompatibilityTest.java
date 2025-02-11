@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.cmmn.cmmn10;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -96,8 +95,8 @@ public class Cmmn10CompatibilityTest extends CmmnTest {
     CaseExecutionQuery query = caseService
         .createCaseExecutionQuery()
         .activityId("PI_HumanTask_1");
-    assertEquals(2, query.count());
-    assertEquals(1, query.available().count());
+    assertThat(query.count()).isEqualTo(2);
+    assertThat(query.available().count()).isEqualTo(1);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/cmm10/Cmmn10CompatibilityTest.testRepetitionRuleWithoutEntryCriteria.cmmn")
@@ -115,8 +114,8 @@ public class Cmmn10CompatibilityTest extends CmmnTest {
     CaseExecutionQuery query = caseService
         .createCaseExecutionQuery()
         .activityId("PI_HumanTask_1");
-    assertEquals(1, query.count());
-    assertEquals(1, query.active().count());
+    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.active().count()).isEqualTo(1);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/cmm10/Cmmn10CompatibilityTest.testRepetitionRuleCustomStandardEvent.cmmn")
@@ -134,9 +133,9 @@ public class Cmmn10CompatibilityTest extends CmmnTest {
     CaseExecutionQuery query = caseService
         .createCaseExecutionQuery()
         .activityId("PI_HumanTask_1");
-    assertEquals(2, query.count());
-    assertEquals(1, query.enabled().count());
-    assertEquals(1, query.disabled().count());
+    assertThat(query.count()).isEqualTo(2);
+    assertThat(query.enabled().count()).isEqualTo(1);
+    assertThat(query.disabled().count()).isEqualTo(1);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/cmm10/Cmmn10CompatibilityTest.testPlanItemEntryCriterion.cmmn")
@@ -216,6 +215,6 @@ public class Cmmn10CompatibilityTest extends CmmnTest {
 
     // then
     Task task = taskService.createTaskQuery().singleResult();
-    assertEquals("This is a description!", task.getDescription());
+    assertThat(task.getDescription()).isEqualTo("This is a description!");
   }
 }

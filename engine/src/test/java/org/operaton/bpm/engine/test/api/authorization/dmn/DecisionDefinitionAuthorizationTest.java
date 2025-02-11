@@ -20,7 +20,7 @@ import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
 import static org.operaton.bpm.engine.authorization.Resources.DECISION_DEFINITION;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
@@ -87,7 +87,7 @@ public class DecisionDefinitionAuthorizationTest extends AuthorizationTest {
 
     DecisionDefinition definition = query.singleResult();
     assertNotNull(definition);
-    assertEquals(DECISION_DEFINITION_KEY, definition.getKey());
+    assertThat(definition.getKey()).isEqualTo(DECISION_DEFINITION_KEY);
   }
 
   @Test
@@ -257,7 +257,7 @@ public class DecisionDefinitionAuthorizationTest extends AuthorizationTest {
     repositoryService.updateDecisionDefinitionHistoryTimeToLive(decisionDefinitionId, 6);
 
     //then
-    assertEquals(6, selectDecisionDefinitionByKey(DECISION_DEFINITION_KEY).getHistoryTimeToLive().intValue());
+    assertThat(selectDecisionDefinitionByKey(DECISION_DEFINITION_KEY).getHistoryTimeToLive().intValue()).isEqualTo(6);
 
   }
 

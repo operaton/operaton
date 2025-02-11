@@ -21,7 +21,7 @@ import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Permissions.READ_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 
 import org.operaton.bpm.engine.runtime.EventSubscription;
@@ -74,7 +74,7 @@ public class EventSubscriptionAuthorizationTest extends AuthorizationTest {
 
     EventSubscription eventSubscription = query.singleResult();
     assertNotNull(eventSubscription);
-    assertEquals(processInstanceId, eventSubscription.getProcessInstanceId());
+    assertThat(eventSubscription.getProcessInstanceId()).isEqualTo(processInstanceId);
   }
 
   @Test
@@ -91,7 +91,7 @@ public class EventSubscriptionAuthorizationTest extends AuthorizationTest {
 
     EventSubscription eventSubscription = query.singleResult();
     assertNotNull(eventSubscription);
-    assertEquals(processInstanceId, eventSubscription.getProcessInstanceId());
+    assertThat(eventSubscription.getProcessInstanceId()).isEqualTo(processInstanceId);
   }
 
   @Test
@@ -122,7 +122,7 @@ public class EventSubscriptionAuthorizationTest extends AuthorizationTest {
 
     EventSubscription eventSubscription = query.singleResult();
     assertNotNull(eventSubscription);
-    assertEquals(processInstanceId, eventSubscription.getProcessInstanceId());
+    assertThat(eventSubscription.getProcessInstanceId()).isEqualTo(processInstanceId);
   }
 
   @Test
@@ -139,7 +139,7 @@ public class EventSubscriptionAuthorizationTest extends AuthorizationTest {
 
     EventSubscription eventSubscription = query.singleResult();
     assertNotNull(eventSubscription);
-    assertEquals(processInstanceId, eventSubscription.getProcessInstanceId());
+    assertThat(eventSubscription.getProcessInstanceId()).isEqualTo(processInstanceId);
   }
 
   @Test
@@ -183,7 +183,7 @@ public class EventSubscriptionAuthorizationTest extends AuthorizationTest {
 
     EventSubscription eventSubscription = query.singleResult();
     assertNotNull(eventSubscription);
-    assertEquals(processInstanceId, eventSubscription.getProcessInstanceId());
+    assertThat(eventSubscription.getProcessInstanceId()).isEqualTo(processInstanceId);
   }
 
   @Test

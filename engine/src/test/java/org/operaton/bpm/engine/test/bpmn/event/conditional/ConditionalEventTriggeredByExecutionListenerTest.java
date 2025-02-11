@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.bpmn.event.conditional;
 
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
@@ -188,7 +188,7 @@ public class ConditionalEventTriggeredByExecutionListenerTest extends AbstractCo
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
     assertNotNull(task);
-    assertEquals(TASK_BEFORE_CONDITION, task.getName());
+    assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task is completed
     taskService.complete(task.getId());
@@ -223,8 +223,8 @@ public class ConditionalEventTriggeredByExecutionListenerTest extends AbstractCo
     //then start listener sets variable
     //non interrupting boundary event is triggered
     tasksAfterVariableIsSet = taskQuery.list();
-    assertEquals(specifier.expectedTaskCount(), tasksAfterVariableIsSet.size());
-    assertEquals(specifier.expectedSubscriptions(), conditionEventSubscriptionQuery.list().size());
+    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(specifier.expectedTaskCount());
+    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(specifier.expectedSubscriptions());
     specifier.assertTaskNames(tasksAfterVariableIsSet, false, false);
   }
 
@@ -252,7 +252,7 @@ public class ConditionalEventTriggeredByExecutionListenerTest extends AbstractCo
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
     assertNotNull(task);
-    assertEquals(TASK_BEFORE_CONDITION, task.getName());
+    assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task is completed
     taskService.complete(task.getId());
@@ -287,7 +287,7 @@ public class ConditionalEventTriggeredByExecutionListenerTest extends AbstractCo
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
     assertNotNull(task);
-    assertEquals(TASK_BEFORE_CONDITION, task.getName());
+    assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task is completed
     taskService.complete(task.getId());
@@ -295,8 +295,8 @@ public class ConditionalEventTriggeredByExecutionListenerTest extends AbstractCo
     //then take listener sets variable
     //non interrupting boundary event is triggered
     tasksAfterVariableIsSet = taskQuery.list();
-    assertEquals(specifier.expectedTaskCount(), tasksAfterVariableIsSet.size());
-    assertEquals(specifier.expectedSubscriptions(), conditionEventSubscriptionQuery.list().size());
+    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(specifier.expectedTaskCount());
+    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(specifier.expectedSubscriptions());
     specifier.assertTaskNames(tasksAfterVariableIsSet, false, false);
   }
 
@@ -325,7 +325,7 @@ public class ConditionalEventTriggeredByExecutionListenerTest extends AbstractCo
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
     assertNotNull(task);
-    assertEquals(TASK_BEFORE_CONDITION, task.getName());
+    assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task is completed
     taskService.complete(task.getId());
@@ -370,7 +370,7 @@ public class ConditionalEventTriggeredByExecutionListenerTest extends AbstractCo
     //and job was created
     Job job = engine.getManagementService().createJobQuery().singleResult();
     assertNotNull(job);
-    assertEquals(1, conditionEventSubscriptionQuery.list().size());
+    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(1);
 
     //when job is executed task is created
     engine.getManagementService().executeJob(job.getId());
@@ -381,7 +381,7 @@ public class ConditionalEventTriggeredByExecutionListenerTest extends AbstractCo
 
     //then no task exist and process instance is ended
     tasksAfterVariableIsSet = taskQuery.list();
-    assertEquals(0, tasksAfterVariableIsSet.size());
+    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(0);
     assertNull(runtimeService.createProcessInstanceQuery().singleResult());
   }
 
@@ -438,7 +438,7 @@ public class ConditionalEventTriggeredByExecutionListenerTest extends AbstractCo
     //then end listener sets variable
     //non interrupting boundary event is triggered
     tasksAfterVariableIsSet = taskQuery.list();
-    assertEquals(specifier.expectedTaskCount(), tasksAfterVariableIsSet.size());
+    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(specifier.expectedTaskCount());
     specifier.assertTaskNames(tasksAfterVariableIsSet, false, false);
   }
 
@@ -471,7 +471,7 @@ public class ConditionalEventTriggeredByExecutionListenerTest extends AbstractCo
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
     assertNotNull(task);
-    assertEquals(TASK_BEFORE_CONDITION, task.getName());
+    assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task is completed
     taskService.complete(task.getId());
@@ -511,7 +511,7 @@ public class ConditionalEventTriggeredByExecutionListenerTest extends AbstractCo
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
     assertNotNull(task);
-    assertEquals(TASK_BEFORE_CONDITION, task.getName());
+    assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task is completed
     taskService.complete(task.getId());
@@ -547,7 +547,7 @@ public class ConditionalEventTriggeredByExecutionListenerTest extends AbstractCo
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
     assertNotNull(task);
-    assertEquals(TASK_BEFORE_CONDITION, task.getName());
+    assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task is completed
     taskService.complete(task.getId());
@@ -583,7 +583,7 @@ public class ConditionalEventTriggeredByExecutionListenerTest extends AbstractCo
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
     assertNotNull(task);
-    assertEquals(TASK_BEFORE_CONDITION, task.getName());
+    assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task is completed
     taskService.complete(task.getId());
@@ -619,7 +619,7 @@ public class ConditionalEventTriggeredByExecutionListenerTest extends AbstractCo
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
     assertNotNull(task);
-    assertEquals(TASK_BEFORE_CONDITION, task.getName());
+    assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task is completed
     taskService.complete(task.getId());
@@ -655,7 +655,7 @@ public class ConditionalEventTriggeredByExecutionListenerTest extends AbstractCo
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
     assertNotNull(task);
-    assertEquals(TASK_BEFORE_CONDITION, task.getName());
+    assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task is completed
     taskService.complete(task.getId());

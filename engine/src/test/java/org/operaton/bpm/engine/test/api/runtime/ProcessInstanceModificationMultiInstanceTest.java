@@ -20,7 +20,7 @@ import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertTha
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -321,7 +321,7 @@ public class ProcessInstanceModificationMultiInstanceTest extends PluggableProce
 
     // then the mi variables should be correct
     List<Execution> leafExecutions = runtimeService.createExecutionQuery().activityId("miTasks").list();
-    assertEquals(4, leafExecutions.size());
+    assertThat(leafExecutions.size()).isEqualTo(4);
     assertVariableSet(leafExecutions, "loopCounter", Arrays.asList(0, 1, 2, 3));
     for (Execution leafExecution : leafExecutions) {
       assertVariable(leafExecution, "nrOfInstances", 4);
@@ -373,7 +373,7 @@ public class ProcessInstanceModificationMultiInstanceTest extends PluggableProce
 
     // then the mi variables should be correct
     List<Execution> leafExecutions = runtimeService.createExecutionQuery().activityId("subProcessTask").list();
-    assertEquals(4, leafExecutions.size());
+    assertThat(leafExecutions.size()).isEqualTo(4);
     assertVariableSet(leafExecutions, "loopCounter", Arrays.asList(0, 1, 2, 3));
     for (Execution leafExecution : leafExecutions) {
       assertVariable(leafExecution, "nrOfInstances", 4);
@@ -483,15 +483,15 @@ public class ProcessInstanceModificationMultiInstanceTest extends PluggableProce
 
     // then the activity instance statistics are correct
     List<ActivityStatistics> statistics = managementService.createActivityStatisticsQuery(processInstance.getProcessDefinitionId()).list();
-    assertEquals(2, statistics.size());
+    assertThat(statistics.size()).isEqualTo(2);
 
     ActivityStatistics miTasksStatistics = getStatisticsForActivity(statistics, "miTasks");
     assertNotNull(miTasksStatistics);
-    assertEquals(1, miTasksStatistics.getInstances());
+    assertThat(miTasksStatistics.getInstances()).isEqualTo(1);
 
     ActivityStatistics beforeTaskStatistics = getStatisticsForActivity(statistics, "beforeTask");
     assertNotNull(beforeTaskStatistics);
-    assertEquals(1, beforeTaskStatistics.getInstances());
+    assertThat(beforeTaskStatistics.getInstances()).isEqualTo(1);
   }
 
   @Deployment(resources = PARALLEL_MULTI_INSTANCE_SUBPROCESS_PROCESS)
@@ -559,15 +559,15 @@ public class ProcessInstanceModificationMultiInstanceTest extends PluggableProce
 
     // then the activity instance statistics are correct
     List<ActivityStatistics> statistics = managementService.createActivityStatisticsQuery(processInstance.getProcessDefinitionId()).list();
-    assertEquals(2, statistics.size());
+    assertThat(statistics.size()).isEqualTo(2);
 
     ActivityStatistics miTasksStatistics = getStatisticsForActivity(statistics, "subProcessTask");
     assertNotNull(miTasksStatistics);
-    assertEquals(1, miTasksStatistics.getInstances());
+    assertThat(miTasksStatistics.getInstances()).isEqualTo(1);
 
     ActivityStatistics beforeTaskStatistics = getStatisticsForActivity(statistics, "beforeTask");
     assertNotNull(beforeTaskStatistics);
-    assertEquals(1, beforeTaskStatistics.getInstances());
+    assertThat(beforeTaskStatistics.getInstances()).isEqualTo(1);
   }
 
 
@@ -733,15 +733,15 @@ public class ProcessInstanceModificationMultiInstanceTest extends PluggableProce
 
     // then the activity instance statistics are correct
     List<ActivityStatistics> statistics = managementService.createActivityStatisticsQuery(processInstance.getProcessDefinitionId()).list();
-    assertEquals(2, statistics.size());
+    assertThat(statistics.size()).isEqualTo(2);
 
     ActivityStatistics miTasksStatistics = getStatisticsForActivity(statistics, "miTasks");
     assertNotNull(miTasksStatistics);
-    assertEquals(1, miTasksStatistics.getInstances());
+    assertThat(miTasksStatistics.getInstances()).isEqualTo(1);
 
     ActivityStatistics beforeTaskStatistics = getStatisticsForActivity(statistics, "beforeTask");
     assertNotNull(beforeTaskStatistics);
-    assertEquals(1, beforeTaskStatistics.getInstances());
+    assertThat(beforeTaskStatistics.getInstances()).isEqualTo(1);
   }
 
   protected ActivityStatistics getStatisticsForActivity(List<ActivityStatistics> statistics, String activityId) {
@@ -815,15 +815,15 @@ public class ProcessInstanceModificationMultiInstanceTest extends PluggableProce
 
     // then the activity instance statistics are correct
     List<ActivityStatistics> statistics = managementService.createActivityStatisticsQuery(processInstance.getProcessDefinitionId()).list();
-    assertEquals(2, statistics.size());
+    assertThat(statistics.size()).isEqualTo(2);
 
     ActivityStatistics miTasksStatistics = getStatisticsForActivity(statistics, "subProcessTask");
     assertNotNull(miTasksStatistics);
-    assertEquals(1, miTasksStatistics.getInstances());
+    assertThat(miTasksStatistics.getInstances()).isEqualTo(1);
 
     ActivityStatistics beforeTaskStatistics = getStatisticsForActivity(statistics, "beforeTask");
     assertNotNull(beforeTaskStatistics);
-    assertEquals(1, beforeTaskStatistics.getInstances());
+    assertThat(beforeTaskStatistics.getInstances()).isEqualTo(1);
   }
 
   @Deployment(resources = SEQUENTIAL_MULTI_INSTANCE_SUBPROCESS_PROCESS)
@@ -1186,8 +1186,8 @@ public class ProcessInstanceModificationMultiInstanceTest extends PluggableProce
 
   protected void assertVariable(Execution execution, String variableName, Object expectedValue) {
     Object variableValue = runtimeService.getVariable(execution.getId(), variableName);
-    assertEquals("Value for variable '" + variableName + "' and " + execution + " "
-        + "does not match.", expectedValue, variableValue);
+    assertThat(variableValue).as("Value for variable '" + variableName + "' and " + execution + " "
+        + "does not match.").isEqualTo(expectedValue);
   }
 
   protected void assertVariableSet(List<Execution> executions, String variableName, List<?> expectedValues) {

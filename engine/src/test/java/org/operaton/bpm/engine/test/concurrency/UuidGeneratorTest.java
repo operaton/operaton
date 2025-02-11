@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 import com.fasterxml.uuid.EthernetAddress;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import com.fasterxml.uuid.Generators;
 import com.fasterxml.uuid.impl.TimeBasedGenerator;
 import org.junit.Assert;
@@ -62,7 +64,7 @@ public class UuidGeneratorTest {
       thread.join();
     }
 
-    Assert.assertEquals(THREAD_COUNT * LOOP_COUNT, generatedIds.size());
+    assertThat(generatedIds.size()).isEqualTo(THREAD_COUNT * LOOP_COUNT);
     Assert.assertTrue(duplicatedIds.isEmpty());
   }
 }

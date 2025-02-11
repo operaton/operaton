@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.cfg;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
@@ -134,7 +133,7 @@ public class DeploymentCacheCfgTest {
     numberOfProcessesInCache +=
         deploymentCache.getProcessDefinitionCache().get(processDefinitionIdTwo) == null ? 0 : 1;
 
-    assertEquals(2, numberOfProcessesInCache);
+    assertThat(numberOfProcessesInCache).isEqualTo(2);
   }
 
   @Test
@@ -207,7 +206,7 @@ public class DeploymentCacheCfgTest {
 
     // then
     assertNotNull(processDefinition.getDescription());
-    assertEquals("This is a documentation!", processDefinition.getDescription());
+    assertThat(processDefinition.getDescription()).isEqualTo("This is a documentation!");
   }
 
   @Test

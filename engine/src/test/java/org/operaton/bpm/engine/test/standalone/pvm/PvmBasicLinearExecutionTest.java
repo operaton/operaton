@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.standalone.pvm;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -59,7 +59,7 @@ public class PvmBasicLinearExecutionTest {
     PvmProcessInstance processInstance = processDefinition.createProcessInstance();
     processInstance.start();
 
-    assertEquals(new ArrayList<String>(), processInstance.findActiveActivityIds());
+    assertThat(processInstance.findActiveActivityIds()).isEqualTo(new ArrayList<String>());
     assertTrue(processInstance.isEnded());
   }
 
@@ -88,7 +88,7 @@ public class PvmBasicLinearExecutionTest {
     PvmProcessInstance processInstance = processDefinition.createProcessInstance();
     processInstance.start();
 
-    assertEquals(new ArrayList<String>(), processInstance.findActiveActivityIds());
+    assertThat(processInstance.findActiveActivityIds()).isEqualTo(new ArrayList<String>());
     assertTrue(processInstance.isEnded());
   }
 
@@ -122,7 +122,7 @@ public class PvmBasicLinearExecutionTest {
 
     activityInstance.signal(null, null);
 
-    assertEquals(new ArrayList<String>(), processInstance.findActiveActivityIds());
+    assertThat(processInstance.findActiveActivityIds()).isEqualTo(new ArrayList<String>());
     assertTrue(processInstance.isEnded());
   }
 
@@ -171,7 +171,7 @@ public class PvmBasicLinearExecutionTest {
     assertNotNull(activityInstance);
     activityInstance.signal(null, null);
 
-    assertEquals(new ArrayList<String>(), processInstance.findActiveActivityIds());
+    assertThat(processInstance.findActiveActivityIds()).isEqualTo(new ArrayList<String>());
     assertTrue(processInstance.isEnded());
   }
 
@@ -219,7 +219,7 @@ public class PvmBasicLinearExecutionTest {
     PvmProcessInstance processInstance = processDefinition.createProcessInstance();
     processInstance.start();
 
-    assertEquals(new ArrayList<String>(), processInstance.findActiveActivityIds());
+    assertThat(processInstance.findActiveActivityIds()).isEqualTo(new ArrayList<String>());
     assertTrue(processInstance.isEnded());
   }
 

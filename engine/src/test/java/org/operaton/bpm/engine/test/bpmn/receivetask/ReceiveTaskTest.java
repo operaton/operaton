@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.receivetask;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
@@ -65,7 +65,7 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
 
     // expect: there is no message event subscription created for a receive task without a message reference
-    assertEquals(0, getEventSubscriptionList().size());
+    assertThat(getEventSubscriptionList().size()).isEqualTo(0);
 
     // then: we can signal the waiting receive task
     runtimeService.signal(processInstance.getId());
@@ -82,13 +82,13 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
 
     // expect: there is a message event subscription for the task
-    assertEquals(1, getEventSubscriptionList().size());
+    assertThat(getEventSubscriptionList().size()).isEqualTo(1);
 
     // then: we can signal the waiting receive task
     runtimeService.signal(getExecutionId(processInstance.getId(), "waitState"));
 
     // expect: subscription is removed
-    assertEquals(0, getEventSubscriptionList().size());
+    assertThat(getEventSubscriptionList().size()).isEqualTo(0);
 
     // expect: this ends the process instance
     testRule.assertProcessEnded(processInstance.getId());
@@ -103,14 +103,14 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
     // expect: there is a message event subscription for the task
     List<EventSubscription> subscriptionList = getEventSubscriptionList();
-    assertEquals(1, subscriptionList.size());
+    assertThat(subscriptionList.size()).isEqualTo(1);
     EventSubscription subscription = subscriptionList.get(0);
 
     // then: we can trigger the event subscription
     runtimeService.messageEventReceived(subscription.getEventName(), subscription.getExecutionId());
 
     // expect: subscription is removed
-    assertEquals(0, getEventSubscriptionList().size());
+    assertThat(getEventSubscriptionList().size()).isEqualTo(0);
 
     // expect: this ends the process instance
     testRule.assertProcessEnded(processInstance.getId());
@@ -125,14 +125,14 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
     // expect: there is a message event subscription for the task
     List<EventSubscription> subscriptionList = getEventSubscriptionList();
-    assertEquals(1, subscriptionList.size());
+    assertThat(subscriptionList.size()).isEqualTo(1);
     EventSubscription subscription = subscriptionList.get(0);
 
     // then: we can correlate the event subscription
     runtimeService.correlateMessage(subscription.getEventName());
 
     // expect: subscription is removed
-    assertEquals(0, getEventSubscriptionList().size());
+    assertThat(getEventSubscriptionList().size()).isEqualTo(0);
 
     // expect: this ends the process instance
     testRule.assertProcessEnded(processInstance.getId());
@@ -150,25 +150,25 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
     // expect: there is two message event subscriptions for the tasks
     List<EventSubscription> subscriptionList = getEventSubscriptionList();
-    assertEquals(2, subscriptionList.size());
+    assertThat(subscriptionList.size()).isEqualTo(2);
 
     // then: we can correlate the event subscription to one of the process instances
     runtimeService.correlateMessage("newInvoiceMessage", "23");
 
     // expect: one subscription is removed
-    assertEquals(1, getEventSubscriptionList().size());
+    assertThat(getEventSubscriptionList().size()).isEqualTo(1);
 
     // expect: this ends the process instance with business key 23
     testRule.assertProcessEnded(processInstance23.getId());
 
     // expect: other process instance is still running
-    assertEquals(1, runtimeService.createProcessInstanceQuery().processInstanceId(processInstance42.getId()).count());
+    assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(processInstance42.getId()).count()).isEqualTo(1);
 
     // then: we can correlate the event subscription to the other process instance
     runtimeService.correlateMessage("newInvoiceMessage", "42");
 
     // expect: subscription is removed
-    assertEquals(0, getEventSubscriptionList().size());
+    assertThat(getEventSubscriptionList().size()).isEqualTo(0);
 
     // expect: this ends the process instance
     testRule.assertProcessEnded(processInstance42.getId());
@@ -183,7 +183,7 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
     // expect: there is a message event subscription for the first task
     List<EventSubscription> subscriptionList = getEventSubscriptionList();
-    assertEquals(1, subscriptionList.size());
+    assertThat(subscriptionList.size()).isEqualTo(1);
     EventSubscription subscription = subscriptionList.get(0);
     String firstSubscriptionId = subscription.getId();
 
@@ -192,7 +192,7 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
     // expect: there is a new subscription created for the second receive task instance
     subscriptionList = getEventSubscriptionList();
-    assertEquals(1, subscriptionList.size());
+    assertThat(subscriptionList.size()).isEqualTo(1);
     subscription = subscriptionList.get(0);
     assertNotEquals(firstSubscriptionId, subscription.getId());
 
@@ -200,7 +200,7 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
     runtimeService.signal(getExecutionId(processInstance.getId(), "waitState"));
 
     // expect: no event subscription left
-    assertEquals(0, getEventSubscriptionList().size());
+    assertThat(getEventSubscriptionList().size()).isEqualTo(0);
 
     // expect: one user task is created
     Task task = taskService.createTaskQuery().singleResult();
@@ -219,7 +219,7 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
     // expect: there is a message event subscription for the first task
     List<EventSubscription> subscriptionList = getEventSubscriptionList();
-    assertEquals(1, subscriptionList.size());
+    assertThat(subscriptionList.size()).isEqualTo(1);
     EventSubscription subscription = subscriptionList.get(0);
     String firstSubscriptionId = subscription.getId();
 
@@ -228,7 +228,7 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
     // expect: there is a new subscription created for the second receive task instance
     subscriptionList = getEventSubscriptionList();
-    assertEquals(1, subscriptionList.size());
+    assertThat(subscriptionList.size()).isEqualTo(1);
     subscription = subscriptionList.get(0);
     assertNotEquals(firstSubscriptionId, subscription.getId());
 
@@ -236,7 +236,7 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
     runtimeService.messageEventReceived(subscription.getEventName(), subscription.getExecutionId());
 
     // expect: no event subscription left
-    assertEquals(0, getEventSubscriptionList().size());
+    assertThat(getEventSubscriptionList().size()).isEqualTo(0);
 
     // expect: one user task is created
     Task task = taskService.createTaskQuery().singleResult();
@@ -255,7 +255,7 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
     // expect: there is a message event subscription for the first task
     List<EventSubscription> subscriptionList = getEventSubscriptionList();
-    assertEquals(1, subscriptionList.size());
+    assertThat(subscriptionList.size()).isEqualTo(1);
     EventSubscription subscription = subscriptionList.get(0);
     String firstSubscriptionId = subscription.getId();
 
@@ -264,7 +264,7 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
     // expect: there is a new subscription created for the second receive task instance
     subscriptionList = getEventSubscriptionList();
-    assertEquals(1, subscriptionList.size());
+    assertThat(subscriptionList.size()).isEqualTo(1);
     subscription = subscriptionList.get(0);
     assertNotEquals(firstSubscriptionId, subscription.getId());
 
@@ -272,7 +272,7 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
     runtimeService.correlateMessage(subscription.getEventName());
 
     // expect: no event subscription left
-    assertEquals(0, getEventSubscriptionList().size());
+    assertThat(getEventSubscriptionList().size()).isEqualTo(0);
 
     // expect: one user task is created
     Task task = taskService.createTaskQuery().singleResult();
@@ -291,20 +291,20 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
     // expect: there are two message event subscriptions
     List<EventSubscription> subscriptions = getEventSubscriptionList();
-    assertEquals(2, subscriptions.size());
+    assertThat(subscriptions.size()).isEqualTo(2);
 
     // expect: there are two executions
     List<Execution> executions = runtimeService.createExecutionQuery()
         .processInstanceId(processInstance.getId()).activityId("waitState")
         .messageEventSubscriptionName("newInvoiceMessage").list();
-    assertEquals(2, executions.size());
+    assertThat(executions.size()).isEqualTo(2);
 
     // then: we can signal both waiting receive task
     runtimeService.signal(executions.get(0).getId());
     runtimeService.signal(executions.get(1).getId());
 
     // expect: both event subscriptions are removed
-    assertEquals(0, getEventSubscriptionList().size());
+    assertThat(getEventSubscriptionList().size()).isEqualTo(0);
 
     // expect: this ends the process instance
     testRule.assertProcessEnded(processInstance.getId());
@@ -319,14 +319,14 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
     // expect: there are two message event subscriptions
     List<EventSubscription> subscriptions = getEventSubscriptionList();
-    assertEquals(2, subscriptions.size());
+    assertThat(subscriptions.size()).isEqualTo(2);
 
     // then: we can trigger both event subscriptions
     runtimeService.messageEventReceived(subscriptions.get(0).getEventName(), subscriptions.get(0).getExecutionId());
     runtimeService.messageEventReceived(subscriptions.get(1).getEventName(), subscriptions.get(1).getExecutionId());
 
     // expect: both event subscriptions are removed
-    assertEquals(0, getEventSubscriptionList().size());
+    assertThat(getEventSubscriptionList().size()).isEqualTo(0);
 
     // expect: this ends the process instance
     testRule.assertProcessEnded(processInstance.getId());
@@ -341,7 +341,7 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
     // expect: there are two message event subscriptions
     List<EventSubscription> subscriptions = getEventSubscriptionList();
-    assertEquals(2, subscriptions.size());
+    assertThat(subscriptions.size()).isEqualTo(2);
     var eventSubscription = subscriptions.get(0).getEventName();
 
     // then: we can not correlate an event
@@ -362,21 +362,21 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
     // expect: there are two message event subscriptions
     List<EventSubscription> subscriptions = getEventSubscriptionList();
-    assertEquals(2, subscriptions.size());
+    assertThat(subscriptions.size()).isEqualTo(2);
 
     // then: we can trigger the first event subscription
     runtimeService.messageEventReceived(subscriptions.get(0).getEventName(), subscriptions.get(0).getExecutionId());
 
     // expect: after completing the first receive task there is one event subscription for compensation
-    assertEquals(1, runtimeService.createEventSubscriptionQuery()
-        .eventType(EventType.COMPENSATE.name()).count());
+    assertThat(runtimeService.createEventSubscriptionQuery()
+        .eventType(EventType.COMPENSATE.name()).count()).isEqualTo(1);
 
     // then: we can trigger the second event subscription
     runtimeService.messageEventReceived(subscriptions.get(1).getEventName(), subscriptions.get(1).getExecutionId());
 
     // expect: there are three event subscriptions for compensation (two subscriptions for tasks and one for miBody)
-    assertEquals(3, runtimeService.createEventSubscriptionQuery()
-        .eventType(EventType.COMPENSATE.name()).count());
+    assertThat(runtimeService.createEventSubscriptionQuery()
+        .eventType(EventType.COMPENSATE.name()).count()).isEqualTo(3);
 
     // expect: one user task is created
     Task task = taskService.createTaskQuery().singleResult();
@@ -394,18 +394,18 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
 
     // expect: there are three message event subscriptions
-    assertEquals(3, getEventSubscriptionList().size());
+    assertThat(getEventSubscriptionList().size()).isEqualTo(3);
 
     // expect: there are two message event subscriptions for the receive tasks
     List<EventSubscription> subscriptions = getEventSubscriptionList("waitState");
-    assertEquals(2, subscriptions.size());
+    assertThat(subscriptions.size()).isEqualTo(2);
 
     // then: we can trigger both receive task event subscriptions
     runtimeService.messageEventReceived(subscriptions.get(0).getEventName(), subscriptions.get(0).getExecutionId());
     runtimeService.messageEventReceived(subscriptions.get(1).getEventName(), subscriptions.get(1).getExecutionId());
 
     // expect: all subscriptions are removed (boundary subscription is removed too)
-    assertEquals(0, getEventSubscriptionList().size());
+    assertThat(getEventSubscriptionList().size()).isEqualTo(0);
 
     // expect: this ends the process instance
     testRule.assertProcessEnded(processInstance.getId());
@@ -419,18 +419,18 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
 
     // expect: there are three message event subscriptions
-    assertEquals(3, getEventSubscriptionList().size());
+    assertThat(getEventSubscriptionList().size()).isEqualTo(3);
 
     // expect: there is one message event subscription for the boundary event
     List<EventSubscription> subscriptions = getEventSubscriptionList("cancel");
-    assertEquals(1, subscriptions.size());
+    assertThat(subscriptions.size()).isEqualTo(1);
     EventSubscription subscription = subscriptions.get(0);
 
     // then: we can trigger the boundary subscription to cancel both tasks
     runtimeService.messageEventReceived(subscription.getEventName(), subscription.getExecutionId());
 
     // expect: all subscriptions are removed (receive task subscriptions too)
-    assertEquals(0, getEventSubscriptionList().size());
+    assertThat(getEventSubscriptionList().size()).isEqualTo(0);
 
     // expect: this ends the process instance
     testRule.assertProcessEnded(processInstance.getId());
@@ -445,14 +445,14 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
     // expect: there is a message event subscription for the task
     List<EventSubscription> subscriptionList = getEventSubscriptionList();
-    assertEquals(1, subscriptionList.size());
+    assertThat(subscriptionList.size()).isEqualTo(1);
     EventSubscription subscription = subscriptionList.get(0);
 
     // then: we can trigger the event subscription
     runtimeService.messageEventReceived(subscription.getEventName(), subscription.getExecutionId());
 
     // expect: subscription is removed
-    assertEquals(0, getEventSubscriptionList().size());
+    assertThat(getEventSubscriptionList().size()).isEqualTo(0);
 
     // expect: this ends the process instance
     testRule.assertProcessEnded(processInstance.getId());
@@ -467,14 +467,14 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
     // expect: there are two message event subscriptions
     List<EventSubscription> subscriptions = getEventSubscriptionList();
-    assertEquals(2, subscriptions.size());
+    assertThat(subscriptions.size()).isEqualTo(2);
 
     // then: we can trigger both receive task event subscriptions
     runtimeService.messageEventReceived(subscriptions.get(0).getEventName(), subscriptions.get(0).getExecutionId());
     runtimeService.messageEventReceived(subscriptions.get(1).getEventName(), subscriptions.get(1).getExecutionId());
 
     // expect: subscriptions are removed
-    assertEquals(0, getEventSubscriptionList().size());
+    assertThat(getEventSubscriptionList().size()).isEqualTo(0);
 
     // expect: this ends the process instance
     testRule.assertProcessEnded(processInstance.getId());
@@ -489,14 +489,14 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
     // expect: there are two message event subscriptions
     List<EventSubscription> subscriptions = getEventSubscriptionList();
-    assertEquals(2, subscriptions.size());
+    assertThat(subscriptions.size()).isEqualTo(2);
 
     // then: we can trigger both receive task event subscriptions
     runtimeService.messageEventReceived(subscriptions.get(0).getEventName(), subscriptions.get(0).getExecutionId());
     runtimeService.messageEventReceived(subscriptions.get(1).getEventName(), subscriptions.get(1).getExecutionId());
 
     // expect: subscriptions are removed
-    assertEquals(0, getEventSubscriptionList().size());
+    assertThat(getEventSubscriptionList().size()).isEqualTo(0);
 
     // expect: this ends the process instance
     testRule.assertProcessEnded(processInstance.getId());
@@ -511,14 +511,14 @@ public class ReceiveTaskTest extends PluggableProcessEngineTest {
 
     // expect: there are two message event subscriptions
     List<EventSubscription> subscriptions = getEventSubscriptionList();
-    assertEquals(2, subscriptions.size());
+    assertThat(subscriptions.size()).isEqualTo(2);
 
     // then: we can trigger both receive task event subscriptions
     runtimeService.correlateMessage(subscriptions.get(0).getEventName());
     runtimeService.correlateMessage(subscriptions.get(1).getEventName());
 
     // expect: subscriptions are removed
-    assertEquals(0, getEventSubscriptionList().size());
+    assertThat(getEventSubscriptionList().size()).isEqualTo(0);
 
     // expect: this ends the process instance
     testRule.assertProcessEnded(processInstance.getId());

@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.api.runtime;
 
 import static java.util.Collections.emptyMap;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -204,20 +204,20 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
   public void testQueryForActiveAndSuspendedProcessInstances() {
     runtimeService.startProcessInstanceByKey("nestedSubProcessQueryTest");
 
-    assertEquals(5, runtimeService.createProcessInstanceQuery().count());
-    assertEquals(5, runtimeService.createProcessInstanceQuery().active().count());
-    assertEquals(0, runtimeService.createProcessInstanceQuery().suspended().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(5);
+    assertThat(runtimeService.createProcessInstanceQuery().active().count()).isEqualTo(5);
+    assertThat(runtimeService.createProcessInstanceQuery().suspended().count()).isEqualTo(0);
 
     ProcessInstance piToSuspend = runtimeService.createProcessInstanceQuery()
             .processDefinitionKey("nestedSubProcessQueryTest")
             .singleResult();
     runtimeService.suspendProcessInstanceById(piToSuspend.getId());
 
-    assertEquals(5, runtimeService.createProcessInstanceQuery().count());
-    assertEquals(4, runtimeService.createProcessInstanceQuery().active().count());
-    assertEquals(1, runtimeService.createProcessInstanceQuery().suspended().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(5);
+    assertThat(runtimeService.createProcessInstanceQuery().active().count()).isEqualTo(4);
+    assertThat(runtimeService.createProcessInstanceQuery().suspended().count()).isEqualTo(1);
 
-    assertEquals(piToSuspend.getId(), runtimeService.createProcessInstanceQuery().suspended().singleResult().getId());
+    assertThat(runtimeService.createProcessInstanceQuery().suspended().singleResult().getId()).isEqualTo(piToSuspend.getId());
   }
 
   @Deployment(resources={
@@ -234,20 +234,20 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
     runtimeService.startProcessInstanceByKey("nestedSubProcessQueryTest");
 
-    assertEquals(5, runtimeService.createProcessInstanceQuery().count());
-    assertEquals(5, runtimeService.createProcessInstanceQuery().active().count());
-    assertEquals(0, runtimeService.createProcessInstanceQuery().suspended().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(5);
+    assertThat(runtimeService.createProcessInstanceQuery().active().count()).isEqualTo(5);
+    assertThat(runtimeService.createProcessInstanceQuery().suspended().count()).isEqualTo(0);
 
     ProcessInstance piToSuspend = runtimeService.createProcessInstanceQuery()
             .processDefinitionKey("nestedSubProcessQueryTest")
             .singleResult();
     runtimeService.suspendProcessInstanceByProcessDefinitionId(processDefinition.getId());
 
-    assertEquals(5, runtimeService.createProcessInstanceQuery().count());
-    assertEquals(4, runtimeService.createProcessInstanceQuery().active().count());
-    assertEquals(1, runtimeService.createProcessInstanceQuery().suspended().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(5);
+    assertThat(runtimeService.createProcessInstanceQuery().active().count()).isEqualTo(4);
+    assertThat(runtimeService.createProcessInstanceQuery().suspended().count()).isEqualTo(1);
 
-    assertEquals(piToSuspend.getId(), runtimeService.createProcessInstanceQuery().suspended().singleResult().getId());
+    assertThat(runtimeService.createProcessInstanceQuery().suspended().singleResult().getId()).isEqualTo(piToSuspend.getId());
   }
 
   @Deployment(resources={
@@ -264,20 +264,20 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
     runtimeService.startProcessInstanceByKey("nestedSubProcessQueryTest");
 
-    assertEquals(5, runtimeService.createProcessInstanceQuery().count());
-    assertEquals(5, runtimeService.createProcessInstanceQuery().active().count());
-    assertEquals(0, runtimeService.createProcessInstanceQuery().suspended().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(5);
+    assertThat(runtimeService.createProcessInstanceQuery().active().count()).isEqualTo(5);
+    assertThat(runtimeService.createProcessInstanceQuery().suspended().count()).isEqualTo(0);
 
     ProcessInstance piToSuspend = runtimeService.createProcessInstanceQuery()
             .processDefinitionKey("nestedSubProcessQueryTest")
             .singleResult();
     runtimeService.suspendProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
 
-    assertEquals(5, runtimeService.createProcessInstanceQuery().count());
-    assertEquals(4, runtimeService.createProcessInstanceQuery().active().count());
-    assertEquals(1, runtimeService.createProcessInstanceQuery().suspended().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(5);
+    assertThat(runtimeService.createProcessInstanceQuery().active().count()).isEqualTo(4);
+    assertThat(runtimeService.createProcessInstanceQuery().suspended().count()).isEqualTo(1);
 
-    assertEquals(piToSuspend.getId(), runtimeService.createProcessInstanceQuery().suspended().singleResult().getId());
+    assertThat(runtimeService.createProcessInstanceQuery().suspended().singleResult().getId()).isEqualTo(piToSuspend.getId());
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
@@ -329,7 +329,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     assertTrue(task.isSuspended());
 
     // then
-    assertEquals(createTime, task.getCreateTime());
+    assertThat(task.getCreateTime()).isEqualTo(createTime);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
@@ -398,20 +398,20 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
     // Suspend
     runtimeService.suspendProcessInstanceById(processInstance.getId());
-    assertEquals(1, taskService.createTaskQuery().count());
-    assertEquals(1, taskService.createTaskQuery().suspended().count());
-    assertEquals(0, taskService.createTaskQuery().active().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().suspended().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().active().count()).isEqualTo(0);
 
     // Activate
     runtimeService.activateProcessInstanceById(processInstance.getId());
-    assertEquals(1, taskService.createTaskQuery().count());
-    assertEquals(0, taskService.createTaskQuery().suspended().count());
-    assertEquals(1, taskService.createTaskQuery().active().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().suspended().count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().active().count()).isEqualTo(1);
 
     // Completing should end the process instance
     task = taskService.createTaskQuery().singleResult();
     taskService.complete(task.getId());
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -428,20 +428,20 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
     // Suspend
     runtimeService.suspendProcessInstanceByProcessDefinitionId(processDefinition.getId());
-    assertEquals(1, taskService.createTaskQuery().count());
-    assertEquals(1, taskService.createTaskQuery().suspended().count());
-    assertEquals(0, taskService.createTaskQuery().active().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().suspended().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().active().count()).isEqualTo(0);
 
     // Activate
     runtimeService.activateProcessInstanceByProcessDefinitionId(processDefinition.getId());
-    assertEquals(1, taskService.createTaskQuery().count());
-    assertEquals(0, taskService.createTaskQuery().suspended().count());
-    assertEquals(1, taskService.createTaskQuery().active().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().suspended().count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().active().count()).isEqualTo(1);
 
     // Completing should end the process instance
     task = taskService.createTaskQuery().singleResult();
     taskService.complete(task.getId());
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -458,20 +458,20 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
     // Suspend
     runtimeService.suspendProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
-    assertEquals(1, taskService.createTaskQuery().count());
-    assertEquals(1, taskService.createTaskQuery().suspended().count());
-    assertEquals(0, taskService.createTaskQuery().active().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().suspended().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().active().count()).isEqualTo(0);
 
     // Activate
     runtimeService.activateProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
-    assertEquals(1, taskService.createTaskQuery().count());
-    assertEquals(0, taskService.createTaskQuery().suspended().count());
-    assertEquals(1, taskService.createTaskQuery().active().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().suspended().count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().active().count()).isEqualTo(1);
 
     // Completing should end the process instance
     task = taskService.createTaskQuery().singleResult();
     taskService.complete(task.getId());
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
   }
 
   @Deployment
@@ -498,7 +498,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
         taskService.complete(task.getId());
       }
     }
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.testChildExecutionsSuspendedAfterProcessInstanceSuspend.bpmn20.xml"})
@@ -525,7 +525,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
         taskService.complete(task.getId());
       }
     }
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.testChildExecutionsSuspendedAfterProcessInstanceSuspend.bpmn20.xml"})
@@ -552,7 +552,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
         taskService.complete(task.getId());
       }
     }
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -941,16 +941,16 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     // Test if process instance can be completed using the signal
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("signalSuspendedProcessInstance");
     runtimeService.signalEventReceived(signal);
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
 
     // Now test when suspending the process instance: the process instance shouldn't be continued
     processInstance = runtimeService.startProcessInstanceByKey("signalSuspendedProcessInstance");
     runtimeService.suspendProcessInstanceById(processInstance.getId());
     runtimeService.signalEventReceived(signal);
-    assertEquals(1, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
 
     runtimeService.signalEventReceived(signal, new HashMap<>());
-    assertEquals(1, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
 
     EventSubscription subscription = runtimeService.createEventSubscriptionQuery().singleResult();
     var executionId = subscription.getExecutionId();
@@ -973,7 +973,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     // Activate and try again
     runtimeService.activateProcessInstanceById(processInstance.getId());
     runtimeService.signalEventReceived(signal);
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.testSignalEventReceivedAfterProcessInstanceSuspended.bpmn20.xml"})
@@ -985,16 +985,16 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     // Test if process instance can be completed using the signal
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("signalSuspendedProcessInstance");
     runtimeService.signalEventReceived(signal);
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
 
     // Now test when suspending the process instance: the process instance shouldn't be continued
     processInstance = runtimeService.startProcessInstanceByKey("signalSuspendedProcessInstance");
     runtimeService.suspendProcessInstanceByProcessDefinitionId(processInstance.getProcessDefinitionId());
     runtimeService.signalEventReceived(signal);
-    assertEquals(1, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
 
     runtimeService.signalEventReceived(signal, new HashMap<>());
-    assertEquals(1, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
 
     EventSubscription subscription = runtimeService.createEventSubscriptionQuery().singleResult();
     var executionId = subscription.getExecutionId();
@@ -1017,7 +1017,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     // Activate and try again
     runtimeService.activateProcessInstanceById(processInstance.getId());
     runtimeService.signalEventReceived(signal);
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.testSignalEventReceivedAfterProcessInstanceSuspended.bpmn20.xml"})
@@ -1029,7 +1029,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     // Test if process instance can be completed using the signal
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("signalSuspendedProcessInstance");
     runtimeService.signalEventReceived(signal);
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
 
     // Now test when suspending the process instance: the process instance shouldn't be continued
     ProcessDefinition processDefinition = repositoryService
@@ -1040,10 +1040,10 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     processInstance = runtimeService.startProcessInstanceByKey("signalSuspendedProcessInstance");
     runtimeService.suspendProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
     runtimeService.signalEventReceived(signal);
-    assertEquals(1, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
 
     runtimeService.signalEventReceived(signal, new HashMap<>());
-    assertEquals(1, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
 
     EventSubscription subscription = runtimeService.createEventSubscriptionQuery().singleResult();
     var executionId = subscription.getExecutionId();
@@ -1066,7 +1066,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     // Activate and try again
     runtimeService.activateProcessInstanceById(processInstance.getId());
     runtimeService.signalEventReceived(signal);
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -1747,20 +1747,20 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     // Suspending the process instance should also stop the execution of jobs for that process instance
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
-    assertEquals(1, managementService.createJobQuery().count());
+    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
     runtimeService.suspendProcessInstanceById(processInstance.getId());
-    assertEquals(1, managementService.createJobQuery().count());
+    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
 
     // The jobs should not be executed now
     ClockUtil.setCurrentTime(new Date(now.getTime() + (60 * 60 * 1000))); // Timer is set to fire on 5 minutes
-    assertEquals(0, managementService.createJobQuery().executable().count());
+    assertThat(managementService.createJobQuery().executable().count()).isEqualTo(0);
 
     // Activation of the process instance should now allow for job execution
     runtimeService.activateProcessInstanceById(processInstance.getId());
-    assertEquals(1, managementService.createJobQuery().executable().count());
+    assertThat(managementService.createJobQuery().executable().count()).isEqualTo(1);
     managementService.executeJob(managementService.createJobQuery().singleResult().getId());
-    assertEquals(0, managementService.createJobQuery().count());
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(managementService.createJobQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.testJobNotExecutedAfterProcessInstanceSuspend.bpmn20.xml"})
@@ -1773,20 +1773,20 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     // Suspending the process instance should also stop the execution of jobs for that process instance
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     runtimeService.startProcessInstanceById(processDefinition.getId());
-    assertEquals(1, managementService.createJobQuery().count());
+    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
     runtimeService.suspendProcessInstanceByProcessDefinitionId(processDefinition.getId());
-    assertEquals(1, managementService.createJobQuery().count());
+    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
 
     // The jobs should not be executed now
     ClockUtil.setCurrentTime(new Date(now.getTime() + (60 * 60 * 1000))); // Timer is set to fire on 5 minutes
-    assertEquals(0, managementService.createJobQuery().executable().count());
+    assertThat(managementService.createJobQuery().executable().count()).isEqualTo(0);
 
     // Activation of the process instance should now allow for job execution
     runtimeService.activateProcessInstanceByProcessDefinitionId(processDefinition.getId());
-    assertEquals(1, managementService.createJobQuery().executable().count());
+    assertThat(managementService.createJobQuery().executable().count()).isEqualTo(1);
     managementService.executeJob(managementService.createJobQuery().singleResult().getId());
-    assertEquals(0, managementService.createJobQuery().count());
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(managementService.createJobQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.testJobNotExecutedAfterProcessInstanceSuspend.bpmn20.xml"})
@@ -1799,20 +1799,20 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     // Suspending the process instance should also stop the execution of jobs for that process instance
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     runtimeService.startProcessInstanceById(processDefinition.getId());
-    assertEquals(1, managementService.createJobQuery().count());
+    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
     runtimeService.suspendProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
-    assertEquals(1, managementService.createJobQuery().count());
+    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
 
     // The jobs should not be executed now
     ClockUtil.setCurrentTime(new Date(now.getTime() + (60 * 60 * 1000))); // Timer is set to fire on 5 minutes
-    assertEquals(0, managementService.createJobQuery().executable().count());
+    assertThat(managementService.createJobQuery().executable().count()).isEqualTo(0);
 
     // Activation of the process instance should now allow for job execution
     runtimeService.activateProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
-    assertEquals(1, managementService.createJobQuery().executable().count());
+    assertThat(managementService.createJobQuery().executable().count()).isEqualTo(1);
     managementService.executeJob(managementService.createJobQuery().singleResult().getId());
-    assertEquals(0, managementService.createJobQuery().count());
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(managementService.createJobQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.callSimpleProcess.bpmn20.xml",
@@ -1836,7 +1836,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     runtimeService.activateProcessInstanceById(instance.getId());
     taskService.complete(task.getId());
 
-    assertEquals(1, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.callSimpleProcess.bpmn20.xml",
@@ -1860,7 +1860,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     runtimeService.activateProcessInstanceByProcessDefinitionId(instance.getProcessDefinitionId());
     taskService.complete(task.getId());
 
-    assertEquals(1, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.callSimpleProcess.bpmn20.xml",
@@ -1889,7 +1889,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     runtimeService.activateProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
     taskService.complete(task.getId());
 
-    assertEquals(1, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.callMISimpleProcess.bpmn20.xml",
@@ -1924,7 +1924,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     taskService.complete(task1Id);
     taskService.complete(task2Id);
 
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.callMISimpleProcess.bpmn20.xml",
@@ -1959,7 +1959,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     taskService.complete(task1Id);
     taskService.complete(task2Id);
 
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.callMISimpleProcess.bpmn20.xml",
@@ -1998,7 +1998,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     taskService.complete(task1Id);
     taskService.complete(task2Id);
 
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
@@ -2162,8 +2162,8 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
       .suspend();
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
-    assertEquals(0, query.active().count());
-    assertEquals(1, query.suspended().count());
+    assertThat(query.active().count()).isEqualTo(0);
+    assertThat(query.suspended().count()).isEqualTo(1);
 
     //activate
     runtimeService
@@ -2171,8 +2171,8 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
       .byProcessInstanceId(processInstance.getId())
       .activate();
 
-    assertEquals(1, query.active().count());
-    assertEquals(0, query.suspended().count());
+    assertThat(query.active().count()).isEqualTo(1);
+    assertThat(query.suspended().count()).isEqualTo(0);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
@@ -2182,8 +2182,8 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
-    assertEquals(1, query.active().count());
-    assertEquals(0, query.suspended().count());
+    assertThat(query.active().count()).isEqualTo(1);
+    assertThat(query.suspended().count()).isEqualTo(0);
 
     //suspend
     runtimeService
@@ -2191,8 +2191,8 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
       .byProcessDefinitionId(processDefinition.getId())
       .suspend();
 
-    assertEquals(0, query.active().count());
-    assertEquals(1, query.suspended().count());
+    assertThat(query.active().count()).isEqualTo(0);
+    assertThat(query.suspended().count()).isEqualTo(1);
 
     //activate
     runtimeService
@@ -2200,8 +2200,8 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
       .byProcessDefinitionId(processDefinition.getId())
       .activate();
 
-    assertEquals(1, query.active().count());
-    assertEquals(0, query.suspended().count());
+    assertThat(query.active().count()).isEqualTo(1);
+    assertThat(query.suspended().count()).isEqualTo(0);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
@@ -2210,8 +2210,8 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
-    assertEquals(1, query.active().count());
-    assertEquals(0, query.suspended().count());
+    assertThat(query.active().count()).isEqualTo(1);
+    assertThat(query.suspended().count()).isEqualTo(0);
 
     //suspend
     runtimeService
@@ -2219,8 +2219,8 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
       .byProcessDefinitionKey("oneTaskProcess")
       .suspend();
 
-    assertEquals(0, query.active().count());
-    assertEquals(1, query.suspended().count());
+    assertThat(query.active().count()).isEqualTo(0);
+    assertThat(query.suspended().count()).isEqualTo(1);
 
     //activate
     runtimeService
@@ -2228,8 +2228,8 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
       .byProcessDefinitionKey("oneTaskProcess")
       .activate();
 
-    assertEquals(1, query.active().count());
-    assertEquals(0, query.suspended().count());
+    assertThat(query.active().count()).isEqualTo(1);
+    assertThat(query.suspended().count()).isEqualTo(0);
   }
 
   @Deployment

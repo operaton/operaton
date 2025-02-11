@@ -52,7 +52,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
@@ -972,8 +971,8 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
 
     // then only user operation logs of non standalone jobs are visible
     verifyQueryResults(query, 2);
-    assertEquals(ONE_TASK_PROCESS_KEY, query.list().get(0).getProcessDefinitionKey());
-    assertEquals(ONE_TASK_PROCESS_KEY, query.list().get(1).getProcessDefinitionKey());
+    assertThat(query.list().get(0).getProcessDefinitionKey()).isEqualTo(ONE_TASK_PROCESS_KEY);
+    assertThat(query.list().get(1).getProcessDefinitionKey()).isEqualTo(ONE_TASK_PROCESS_KEY);
 
     disableAuthorization();
     managementService.deleteJob(jobId);

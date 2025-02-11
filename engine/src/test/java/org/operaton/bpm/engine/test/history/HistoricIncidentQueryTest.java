@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.history;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.util.Calendar;
@@ -105,18 +104,18 @@ public class HistoricIncidentQueryTest {
     hourFromNow.add(Calendar.HOUR_OF_DAY, 1);
 
     // createTime
-    assertEquals(0, query.createTimeBefore(hourAgo.getTime()).count());
-    assertEquals(2, query.createTimeBefore(hourFromNow.getTime()).count());
-    assertEquals(2, query.createTimeAfter(hourAgo.getTime()).count());
-    assertEquals(0, query.createTimeAfter(hourFromNow.getTime()).count());
-    assertEquals(2, query.createTimeBefore(hourFromNow.getTime()).createTimeAfter(hourAgo.getTime()).count());
+    assertThat(query.createTimeBefore(hourAgo.getTime()).count()).isEqualTo(0);
+    assertThat(query.createTimeBefore(hourFromNow.getTime()).count()).isEqualTo(2);
+    assertThat(query.createTimeAfter(hourAgo.getTime()).count()).isEqualTo(2);
+    assertThat(query.createTimeAfter(hourFromNow.getTime()).count()).isEqualTo(0);
+    assertThat(query.createTimeBefore(hourFromNow.getTime()).createTimeAfter(hourAgo.getTime()).count()).isEqualTo(2);
 
     //endTime
-    assertEquals(0, query.endTimeBefore(hourAgo.getTime()).count());
-    assertEquals(1, query.endTimeBefore(hourFromNow.getTime()).count());
-    assertEquals(1, query.endTimeAfter(hourAgo.getTime()).count());
-    assertEquals(0, query.endTimeAfter(hourFromNow.getTime()).count());
-    assertEquals(1, query.endTimeBefore(hourFromNow.getTime()).endTimeAfter(hourAgo.getTime()).count());
+    assertThat(query.endTimeBefore(hourAgo.getTime()).count()).isEqualTo(0);
+    assertThat(query.endTimeBefore(hourFromNow.getTime()).count()).isEqualTo(1);
+    assertThat(query.endTimeAfter(hourAgo.getTime()).count()).isEqualTo(1);
+    assertThat(query.endTimeAfter(hourFromNow.getTime()).count()).isEqualTo(0);
+    assertThat(query.endTimeBefore(hourFromNow.getTime()).endTimeAfter(hourAgo.getTime()).count()).isEqualTo(1);
   }
 
   @Test
@@ -129,8 +128,8 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery()
         .incidentId(incidentId);
 
-    assertEquals(1, query.list().size());
-    assertEquals(1, query.count());
+    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.count()).isEqualTo(1);
   }
 
   @Test
@@ -140,8 +139,8 @@ public class HistoricIncidentQueryTest {
 
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
-    assertEquals(0, query.incidentId("invalid").list().size());
-    assertEquals(0, query.incidentId("invalid").count());
+    assertThat(query.incidentId("invalid").list().size()).isEqualTo(0);
+    assertThat(query.incidentId("invalid").count()).isEqualTo(0);
 
     try {
       query.incidentId(null);
@@ -157,16 +156,16 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery()
         .incidentType(Incident.FAILED_JOB_HANDLER_TYPE);
 
-    assertEquals(1, query.list().size());
-    assertEquals(1, query.count());
+    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.count()).isEqualTo(1);
   }
 
   @Test
   public void testQueryByInvalidIncidentType() {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
-    assertEquals(0, query.incidentType("invalid").list().size());
-    assertEquals(0, query.incidentType("invalid").count());
+    assertThat(query.incidentType("invalid").list().size()).isEqualTo(0);
+    assertThat(query.incidentType("invalid").count()).isEqualTo(0);
 
     try {
       query.incidentType(null);
@@ -182,16 +181,16 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery()
         .incidentMessage("exception0");
 
-    assertEquals(1, query.list().size());
-    assertEquals(1, query.count());
+    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.count()).isEqualTo(1);
   }
 
   @Test
   public void testQueryByInvalidIncidentMessage() {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
-    assertEquals(0, query.incidentMessage("invalid").list().size());
-    assertEquals(0, query.incidentMessage("invalid").count());
+    assertThat(query.incidentMessage("invalid").list().size()).isEqualTo(0);
+    assertThat(query.incidentMessage("invalid").count()).isEqualTo(0);
 
     try {
       query.incidentMessage(null);
@@ -206,9 +205,9 @@ public class HistoricIncidentQueryTest {
     startProcessInstance(PROCESS_DEFINITION_KEY);
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
-    assertEquals(0, query.incidentMessageLike("exception").list().size());
-    assertEquals(1, query.incidentMessageLike("exception%").list().size());
-    assertEquals(1, query.incidentMessageLike("%xception%").list().size());
+    assertThat(query.incidentMessageLike("exception").list().size()).isEqualTo(0);
+    assertThat(query.incidentMessageLike("exception%").list().size()).isEqualTo(1);
+    assertThat(query.incidentMessageLike("%xception%").list().size()).isEqualTo(1);
   }
 
 
@@ -222,16 +221,16 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery()
         .processDefinitionId(pi.getProcessDefinitionId());
 
-    assertEquals(1, query.list().size());
-    assertEquals(1, query.count());
+    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.count()).isEqualTo(1);
   }
 
   @Test
   public void testQueryByInvalidProcessDefinitionId() {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
-    assertEquals(0, query.processDefinitionId("invalid").list().size());
-    assertEquals(0, query.processDefinitionId("invalid").count());
+    assertThat(query.processDefinitionId("invalid").list().size()).isEqualTo(0);
+    assertThat(query.processDefinitionId("invalid").count()).isEqualTo(0);
 
     try {
       query.processDefinitionId(null);
@@ -267,9 +266,9 @@ public class HistoricIncidentQueryTest {
     assertThat(incidents.get(0).getId()).isEqualTo(incident2.getId());
     assertThat(incidents.get(1).getId()).isEqualTo(incident3.getId());
 
-    assertEquals(0, query.processDefinitionKey("proc").list().size());
-    assertEquals(1, query.processDefinitionKey("proc1").list().size());
-    assertEquals(1, query.processDefinitionKey("proc2").list().size());
+    assertThat(query.processDefinitionKey("proc").list().size()).isEqualTo(0);
+    assertThat(query.processDefinitionKey("proc1").list().size()).isEqualTo(1);
+    assertThat(query.processDefinitionKey("proc2").list().size()).isEqualTo(1);
   }
 
   @Test
@@ -302,16 +301,16 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery()
         .processInstanceId(pi.getId());
 
-    assertEquals(1, query.list().size());
-    assertEquals(1, query.count());
+    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.count()).isEqualTo(1);
   }
 
   @Test
   public void testQueryByInvalidProcessInstanceId() {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
-    assertEquals(0, query.processInstanceId("invalid").list().size());
-    assertEquals(0, query.processInstanceId("invalid").count());
+    assertThat(query.processInstanceId("invalid").list().size()).isEqualTo(0);
+    assertThat(query.processInstanceId("invalid").count()).isEqualTo(0);
 
     try {
       query.processInstanceId(null);
@@ -329,16 +328,16 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery()
         .executionId(pi.getId());
 
-    assertEquals(1, query.list().size());
-    assertEquals(1, query.count());
+    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.count()).isEqualTo(1);
   }
 
   @Test
   public void testQueryByInvalidExecutionId() {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
-    assertEquals(0, query.executionId("invalid").list().size());
-    assertEquals(0, query.executionId("invalid").count());
+    assertThat(query.executionId("invalid").list().size()).isEqualTo(0);
+    assertThat(query.executionId("invalid").count()).isEqualTo(0);
 
     try {
       query.executionId(null);
@@ -354,8 +353,8 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery()
         .activityId("theServiceTask");
 
-    assertEquals(1, query.list().size());
-    assertEquals(1, query.count());
+    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.count()).isEqualTo(1);
   }
 
   @Test
@@ -365,8 +364,8 @@ public class HistoricIncidentQueryTest {
 
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
-    assertEquals(0, query.activityId("invalid").list().size());
-    assertEquals(0, query.activityId("invalid").count());
+    assertThat(query.activityId("invalid").list().size()).isEqualTo(0);
+    assertThat(query.activityId("invalid").count()).isEqualTo(0);
 
     try {
       query.activityId(null);
@@ -382,8 +381,8 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery()
         .failedActivityId("theServiceTask");
 
-    assertEquals(1, query.list().size());
-    assertEquals(1, query.count());
+    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.count()).isEqualTo(1);
   }
 
   @Test
@@ -393,8 +392,8 @@ public class HistoricIncidentQueryTest {
 
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
-    assertEquals(0, query.failedActivityId("invalid").list().size());
-    assertEquals(0, query.failedActivityId("invalid").count());
+    assertThat(query.failedActivityId("invalid").list().size()).isEqualTo(0);
+    assertThat(query.failedActivityId("invalid").count()).isEqualTo(0);
 
     try {
       query.failedActivityId(null);
@@ -420,16 +419,16 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery()
         .causeIncidentId(incident.getId());
 
-    assertEquals(2, query.list().size());
-    assertEquals(2, query.count());
+    assertThat(query.list().size()).isEqualTo(2);
+    assertThat(query.count()).isEqualTo(2);
   }
 
   @Test
   public void testQueryByInvalidCauseIncidentId() {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
-    assertEquals(0, query.causeIncidentId("invalid").list().size());
-    assertEquals(0, query.causeIncidentId("invalid").count());
+    assertThat(query.causeIncidentId("invalid").list().size()).isEqualTo(0);
+    assertThat(query.causeIncidentId("invalid").count()).isEqualTo(0);
 
     try {
       query.causeIncidentId(null);
@@ -455,16 +454,16 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery()
         .rootCauseIncidentId(incident.getId());
 
-    assertEquals(2, query.list().size());
-    assertEquals(2, query.count());
+    assertThat(query.list().size()).isEqualTo(2);
+    assertThat(query.count()).isEqualTo(2);
   }
 
   @Test
   public void testQueryByInvalidRootCauseIncidentId() {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
-    assertEquals(0, query.rootCauseIncidentId("invalid").list().size());
-    assertEquals(0, query.rootCauseIncidentId("invalid").count());
+    assertThat(query.rootCauseIncidentId("invalid").list().size()).isEqualTo(0);
+    assertThat(query.rootCauseIncidentId("invalid").count()).isEqualTo(0);
 
     try {
       query.rootCauseIncidentId(null);
@@ -482,16 +481,16 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery()
         .configuration(configuration);
 
-    assertEquals(1, query.list().size());
-    assertEquals(1, query.count());
+    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.count()).isEqualTo(1);
   }
 
   @Test
   public void testQueryByInvalidConfigurationId() {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
-    assertEquals(0, query.configuration("invalid").list().size());
-    assertEquals(0, query.configuration("invalid").count());
+    assertThat(query.configuration("invalid").list().size()).isEqualTo(0);
+    assertThat(query.configuration("invalid").count()).isEqualTo(0);
 
     try {
       query.configuration(null);
@@ -514,8 +513,8 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery()
         .historyConfiguration(latestJobLogId.toString());
 
-    assertEquals(1, query.list().size());
-    assertEquals(1, query.count());
+    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.count()).isEqualTo(1);
   }
 
   @Test
@@ -526,16 +525,16 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery()
         .historyConfiguration("-1");
 
-    assertEquals(0, query.list().size());
-    assertEquals(0, query.count());
+    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.count()).isEqualTo(0);
   }
 
   @Test
   public void testQueryByInvalidHistoryConfigurationId() {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
-    assertEquals(0, query.historyConfiguration("invalid").list().size());
-    assertEquals(0, query.historyConfiguration("invalid").count());
+    assertThat(query.historyConfiguration("invalid").list().size()).isEqualTo(0);
+    assertThat(query.historyConfiguration("invalid").count()).isEqualTo(0);
 
     try {
       query.historyConfiguration(null);
@@ -551,8 +550,8 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery()
         .open();
 
-    assertEquals(1, query.list().size());
-    assertEquals(1, query.count());
+    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.count()).isEqualTo(1);
   }
 
   @Test
@@ -577,8 +576,8 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery()
         .resolved();
 
-    assertEquals(1, query.list().size());
-    assertEquals(1, query.count());
+    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.count()).isEqualTo(1);
   }
 
   @Test
@@ -603,8 +602,8 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery()
         .deleted();
 
-    assertEquals(1, query.list().size());
-    assertEquals(1, query.count());
+    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.count()).isEqualTo(1);
   }
 
   @Test
@@ -637,20 +636,20 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery()
       .jobDefinitionIdIn(jobDefinitionId1, jobDefinitionId2);
 
-    assertEquals(2, query.list().size());
-    assertEquals(2, query.count());
+    assertThat(query.list().size()).isEqualTo(2);
+    assertThat(query.count()).isEqualTo(2);
 
     query = historyService.createHistoricIncidentQuery()
       .jobDefinitionIdIn(jobDefinitionId1);
 
-    assertEquals(1, query.list().size());
-    assertEquals(1, query.count());
+    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.count()).isEqualTo(1);
 
     query = historyService.createHistoricIncidentQuery()
       .jobDefinitionIdIn(jobDefinitionId2);
 
-    assertEquals(1, query.list().size());
-    assertEquals(1, query.count());
+    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.count()).isEqualTo(1);
   }
 
   @Test
@@ -663,8 +662,8 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery()
       .jobDefinitionIdIn("unknown");
 
-    assertEquals(0, query.list().size());
-    assertEquals(0, query.count());
+    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.count()).isEqualTo(0);
   }
 
   @Test
@@ -698,10 +697,10 @@ public class HistoricIncidentQueryTest {
 
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
-    assertEquals(4, query.listPage(0, 4).size());
-    assertEquals(1, query.listPage(2, 1).size());
-    assertEquals(2, query.listPage(1, 2).size());
-    assertEquals(3, query.listPage(1, 4).size());
+    assertThat(query.listPage(0, 4).size()).isEqualTo(4);
+    assertThat(query.listPage(2, 1).size()).isEqualTo(1);
+    assertThat(query.listPage(1, 2).size()).isEqualTo(2);
+    assertThat(query.listPage(1, 4).size()).isEqualTo(3);
   }
 
   @Test
@@ -709,33 +708,33 @@ public class HistoricIncidentQueryTest {
   public void testQuerySorting() {
     startProcessInstances(PROCESS_DEFINITION_KEY, 4);
 
-    assertEquals(4, historyService.createHistoricIncidentQuery().orderByIncidentId().asc().list().size());
-    assertEquals(4, historyService.createHistoricIncidentQuery().orderByCreateTime().asc().list().size());
-    assertEquals(4, historyService.createHistoricIncidentQuery().orderByEndTime().asc().list().size());
-    assertEquals(4, historyService.createHistoricIncidentQuery().orderByIncidentType().asc().list().size());
-    assertEquals(4, historyService.createHistoricIncidentQuery().orderByExecutionId().asc().list().size());
-    assertEquals(4, historyService.createHistoricIncidentQuery().orderByActivityId().asc().list().size());
-    assertEquals(4, historyService.createHistoricIncidentQuery().orderByProcessInstanceId().asc().list().size());
-    assertEquals(4, historyService.createHistoricIncidentQuery().orderByProcessDefinitionKey().asc().list().size());
-    assertEquals(4, historyService.createHistoricIncidentQuery().orderByProcessDefinitionId().asc().list().size());
-    assertEquals(4, historyService.createHistoricIncidentQuery().orderByCauseIncidentId().asc().list().size());
-    assertEquals(4, historyService.createHistoricIncidentQuery().orderByRootCauseIncidentId().asc().list().size());
-    assertEquals(4, historyService.createHistoricIncidentQuery().orderByConfiguration().asc().list().size());
-    assertEquals(4, historyService.createHistoricIncidentQuery().orderByIncidentState().asc().list().size());
+    assertThat(historyService.createHistoricIncidentQuery().orderByIncidentId().asc().list().size()).isEqualTo(4);
+    assertThat(historyService.createHistoricIncidentQuery().orderByCreateTime().asc().list().size()).isEqualTo(4);
+    assertThat(historyService.createHistoricIncidentQuery().orderByEndTime().asc().list().size()).isEqualTo(4);
+    assertThat(historyService.createHistoricIncidentQuery().orderByIncidentType().asc().list().size()).isEqualTo(4);
+    assertThat(historyService.createHistoricIncidentQuery().orderByExecutionId().asc().list().size()).isEqualTo(4);
+    assertThat(historyService.createHistoricIncidentQuery().orderByActivityId().asc().list().size()).isEqualTo(4);
+    assertThat(historyService.createHistoricIncidentQuery().orderByProcessInstanceId().asc().list().size()).isEqualTo(4);
+    assertThat(historyService.createHistoricIncidentQuery().orderByProcessDefinitionKey().asc().list().size()).isEqualTo(4);
+    assertThat(historyService.createHistoricIncidentQuery().orderByProcessDefinitionId().asc().list().size()).isEqualTo(4);
+    assertThat(historyService.createHistoricIncidentQuery().orderByCauseIncidentId().asc().list().size()).isEqualTo(4);
+    assertThat(historyService.createHistoricIncidentQuery().orderByRootCauseIncidentId().asc().list().size()).isEqualTo(4);
+    assertThat(historyService.createHistoricIncidentQuery().orderByConfiguration().asc().list().size()).isEqualTo(4);
+    assertThat(historyService.createHistoricIncidentQuery().orderByIncidentState().asc().list().size()).isEqualTo(4);
 
-    assertEquals(4, historyService.createHistoricIncidentQuery().orderByIncidentId().desc().list().size());
-    assertEquals(4, historyService.createHistoricIncidentQuery().orderByCreateTime().desc().list().size());
-    assertEquals(4, historyService.createHistoricIncidentQuery().orderByEndTime().desc().list().size());
-    assertEquals(4, historyService.createHistoricIncidentQuery().orderByIncidentType().desc().list().size());
-    assertEquals(4, historyService.createHistoricIncidentQuery().orderByExecutionId().desc().list().size());
-    assertEquals(4, historyService.createHistoricIncidentQuery().orderByActivityId().desc().list().size());
-    assertEquals(4, historyService.createHistoricIncidentQuery().orderByProcessDefinitionKey().desc().list().size());
-    assertEquals(4, historyService.createHistoricIncidentQuery().orderByProcessInstanceId().desc().list().size());
-    assertEquals(4, historyService.createHistoricIncidentQuery().orderByProcessDefinitionId().desc().list().size());
-    assertEquals(4, historyService.createHistoricIncidentQuery().orderByCauseIncidentId().desc().list().size());
-    assertEquals(4, historyService.createHistoricIncidentQuery().orderByRootCauseIncidentId().desc().list().size());
-    assertEquals(4, historyService.createHistoricIncidentQuery().orderByConfiguration().desc().list().size());
-    assertEquals(4, historyService.createHistoricIncidentQuery().orderByIncidentState().desc().list().size());
+    assertThat(historyService.createHistoricIncidentQuery().orderByIncidentId().desc().list().size()).isEqualTo(4);
+    assertThat(historyService.createHistoricIncidentQuery().orderByCreateTime().desc().list().size()).isEqualTo(4);
+    assertThat(historyService.createHistoricIncidentQuery().orderByEndTime().desc().list().size()).isEqualTo(4);
+    assertThat(historyService.createHistoricIncidentQuery().orderByIncidentType().desc().list().size()).isEqualTo(4);
+    assertThat(historyService.createHistoricIncidentQuery().orderByExecutionId().desc().list().size()).isEqualTo(4);
+    assertThat(historyService.createHistoricIncidentQuery().orderByActivityId().desc().list().size()).isEqualTo(4);
+    assertThat(historyService.createHistoricIncidentQuery().orderByProcessDefinitionKey().desc().list().size()).isEqualTo(4);
+    assertThat(historyService.createHistoricIncidentQuery().orderByProcessInstanceId().desc().list().size()).isEqualTo(4);
+    assertThat(historyService.createHistoricIncidentQuery().orderByProcessDefinitionId().desc().list().size()).isEqualTo(4);
+    assertThat(historyService.createHistoricIncidentQuery().orderByCauseIncidentId().desc().list().size()).isEqualTo(4);
+    assertThat(historyService.createHistoricIncidentQuery().orderByRootCauseIncidentId().desc().list().size()).isEqualTo(4);
+    assertThat(historyService.createHistoricIncidentQuery().orderByConfiguration().desc().list().size()).isEqualTo(4);
+    assertThat(historyService.createHistoricIncidentQuery().orderByIncidentState().desc().list().size()).isEqualTo(4);
   }
 
   @Test

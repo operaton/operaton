@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.standalone.testing;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.RuntimeService;
@@ -53,10 +52,10 @@ public class ProcessEngineRuleJunit4Test {
 
     TaskService taskService = engineRule.getTaskService();
     Task task = taskService.createTaskQuery().singleResult();
-    assertEquals("My Task", task.getName());
+    assertThat(task.getName()).isEqualTo("My Task");
 
     taskService.complete(task.getId());
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
   }
 
   /**
@@ -64,7 +63,7 @@ public class ProcessEngineRuleJunit4Test {
    */
   @Test
   public void testWithoutDeploymentAnnotation() {
-    assertEquals("aString", "aString");
+    assertThat("aString").isEqualTo("aString");
   }
 
   @Test

@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.concurrency;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
@@ -102,7 +102,7 @@ public class CompetingProcessCompletionTest {
     runtimeService.startProcessInstanceByKey("CompetingEndProcess");
 
     List<Task> tasks = taskService.createTaskQuery().list();
-    assertEquals(3, tasks.size());
+    assertThat(tasks.size()).isEqualTo(3);
 
     LOG.debug("test thread starts thread one");
     CompleteTaskThread threadOne = new CompleteTaskThread(tasks.get(0).getId());

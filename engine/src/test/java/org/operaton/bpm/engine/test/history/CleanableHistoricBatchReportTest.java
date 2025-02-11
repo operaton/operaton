@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
@@ -154,10 +154,10 @@ public class CleanableHistoricBatchReportTest {
 
     // when
     List<HistoricBatch> historicList = historyService.createHistoricBatchQuery().list();
-    assertEquals(31, historicList.size());
+    assertThat(historicList.size()).isEqualTo(31);
 
     List<CleanableHistoricBatchReportResult> list = historyService.createCleanableHistoricBatchReport().list();
-    assertEquals(3, list.size());
+    assertThat(list.size()).isEqualTo(3);
     for (CleanableHistoricBatchReportResult result : list) {
       if (result.getBatchType().equals("instance-migration")) {
         checkResultNumbers(result, 4, 8, defaultTTL);
@@ -230,10 +230,10 @@ public class CleanableHistoricBatchReportTest {
 
     // when
     List<HistoricBatch> historicList = historyService.createHistoricBatchQuery().list();
-    assertEquals(31, historicList.size());
+    assertThat(historicList.size()).isEqualTo(31);
 
     List<CleanableHistoricBatchReportResult> list = historyService.createCleanableHistoricBatchReport().list();
-    assertEquals(3, list.size());
+    assertThat(list.size()).isEqualTo(3);
     for (CleanableHistoricBatchReportResult result : list) {
       if (result.getBatchType().equals("instance-migration")) {
         checkResultNumbers(result, 0, 8, null);
@@ -275,9 +275,9 @@ public class CleanableHistoricBatchReportTest {
 
     // when
     List<HistoricBatch> historicList = historyService.createHistoricBatchQuery().list();
-    assertEquals(20, historicList.size());
+    assertThat(historicList.size()).isEqualTo(20);
 
-    assertEquals(1, historyService.createCleanableHistoricBatchReport().count());
+    assertThat(historyService.createCleanableHistoricBatchReport().count()).isEqualTo(1);
     checkResultNumbers(historyService.createCleanableHistoricBatchReport().singleResult(), 0, 18, null);
   }
 
@@ -334,7 +334,7 @@ public class CleanableHistoricBatchReportTest {
 
     // assume
     List<HistoricBatch> historicList = historyService.createHistoricBatchQuery().list();
-    assertEquals(31, historicList.size());
+    assertThat(historicList.size()).isEqualTo(31);
 
     // then
     List<CleanableHistoricBatchReportResult> reportResultAsc = historyService
@@ -342,26 +342,26 @@ public class CleanableHistoricBatchReportTest {
         .orderByFinishedBatchOperation()
         .asc()
         .list();
-    assertEquals(3, reportResultAsc.size());
-    assertEquals("instance-modification", reportResultAsc.get(0).getBatchType());
-    assertEquals("instance-migration", reportResultAsc.get(1).getBatchType());
-    assertEquals("instance-deletion", reportResultAsc.get(2).getBatchType());
+    assertThat(reportResultAsc.size()).isEqualTo(3);
+    assertThat(reportResultAsc.get(0).getBatchType()).isEqualTo("instance-modification");
+    assertThat(reportResultAsc.get(1).getBatchType()).isEqualTo("instance-migration");
+    assertThat(reportResultAsc.get(2).getBatchType()).isEqualTo("instance-deletion");
 
     List<CleanableHistoricBatchReportResult> reportResultDesc = historyService
         .createCleanableHistoricBatchReport()
         .orderByFinishedBatchOperation()
         .desc()
         .list();
-    assertEquals(3, reportResultDesc.size());
-    assertEquals("instance-deletion", reportResultDesc.get(0).getBatchType());
-    assertEquals("instance-migration", reportResultDesc.get(1).getBatchType());
-    assertEquals("instance-modification", reportResultDesc.get(2).getBatchType());
+    assertThat(reportResultDesc.size()).isEqualTo(3);
+    assertThat(reportResultDesc.get(0).getBatchType()).isEqualTo("instance-deletion");
+    assertThat(reportResultDesc.get(1).getBatchType()).isEqualTo("instance-migration");
+    assertThat(reportResultDesc.get(2).getBatchType()).isEqualTo("instance-modification");
   }
 
   private void checkResultNumbers(CleanableHistoricBatchReportResult result, int expectedCleanable, int expectedFinished, Integer expectedTTL) {
-    assertEquals(expectedCleanable, result.getCleanableBatchesCount());
-    assertEquals(expectedFinished, result.getFinishedBatchesCount());
-    assertEquals(expectedTTL, result.getHistoryTimeToLive());
+    assertThat(result.getCleanableBatchesCount()).isEqualTo(expectedCleanable);
+    assertThat(result.getFinishedBatchesCount()).isEqualTo(expectedFinished);
+    assertThat(result.getHistoryTimeToLive()).isEqualTo(expectedTTL);
   }
 
   private BpmnModelInstance createModelInstance() {

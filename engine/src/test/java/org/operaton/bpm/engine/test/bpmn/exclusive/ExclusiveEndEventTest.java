@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.exclusive;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -45,7 +45,7 @@ public class ExclusiveEndEventTest extends PluggableProcessEngineTest {
     testRule.waitForJobExecutorToProcessAllJobs(6000L);
 
     // all the jobs are done
-    assertEquals(0, managementService.createJobQuery().count());
+    assertThat(managementService.createJobQuery().count()).isEqualTo(0);
   }
 
   @Deployment
@@ -59,8 +59,8 @@ public class ExclusiveEndEventTest extends PluggableProcessEngineTest {
     assertTrue(((JobEntity)job).isExclusive());
                
     testRule.waitForJobExecutorToProcessAllJobs(6000L);
-    
+
     // all the jobs are done
-    assertEquals(0, managementService.createJobQuery().count());      
+    assertThat(managementService.createJobQuery().count()).isEqualTo(0);      
   }
 }

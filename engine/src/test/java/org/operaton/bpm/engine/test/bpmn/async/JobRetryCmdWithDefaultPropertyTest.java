@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.async;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
@@ -63,8 +63,8 @@ public class JobRetryCmdWithDefaultPropertyTest {
 
     Job job = managementService.createJobQuery().processInstanceId(pi.getProcessInstanceId()).singleResult();
     assertNotNull(job);
-    assertEquals(pi.getProcessInstanceId(), job.getProcessInstanceId());
-    assertEquals(2, job.getRetries());
+    assertThat(job.getProcessInstanceId()).isEqualTo(pi.getProcessInstanceId());
+    assertThat(job.getRetries()).isEqualTo(2);
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedServiceTask.bpmn20.xml" })
@@ -76,7 +76,7 @@ public class JobRetryCmdWithDefaultPropertyTest {
     Job job = managementService.createJobQuery().processInstanceId(pi.getProcessInstanceId()).singleResult();
     assertNotNull(job);
     var jobId = job.getId();
-    assertEquals(pi.getProcessInstanceId(), job.getProcessInstanceId());
+    assertThat(job.getProcessInstanceId()).isEqualTo(pi.getProcessInstanceId());
 
     try {
       managementService.executeJob(jobId);
@@ -86,7 +86,7 @@ public class JobRetryCmdWithDefaultPropertyTest {
     }
 
     job = managementService.createJobQuery().jobId(job.getId()).singleResult();
-    assertEquals(4, job.getRetries());
+    assertThat(job.getRetries()).isEqualTo(4);
 
   }
 }

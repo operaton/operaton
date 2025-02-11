@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.cfg;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.Map;
 
 import org.operaton.bpm.engine.ProcessEngine;
@@ -92,7 +94,7 @@ public class DatabaseHistoryPropertyTest {
     Map<String, String> properties = processEngineImpl.getManagementService().getProperties();
     String historyLevel = properties.get("historyLevel");
     Assert.assertNotNull("historyLevel is null -> not set in database", historyLevel);
-    Assert.assertEquals(ProcessEngineConfigurationImpl.HISTORYLEVEL_FULL, Integer.parseInt(historyLevel));
+    assertThat(Integer.parseInt(historyLevel)).isEqualTo(ProcessEngineConfigurationImpl.HISTORYLEVEL_FULL);
   }
 
 

@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.task;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -90,13 +89,13 @@ public class DelegateTaskTest {
 
     @SuppressWarnings("unchecked")
     Set<String> candidateUsers = (Set<String>) taskService.getVariable(task.getId(), DelegateTaskTestTaskListener.VARNAME_CANDIDATE_USERS);
-    assertEquals(2, candidateUsers.size());
+    assertThat(candidateUsers.size()).isEqualTo(2);
     assertTrue(candidateUsers.contains("kermit"));
     assertTrue(candidateUsers.contains("gonzo"));
 
     @SuppressWarnings("unchecked")
     Set<String> candidateGroups = (Set<String>) taskService.getVariable(task.getId(), DelegateTaskTestTaskListener.VARNAME_CANDIDATE_GROUPS);
-    assertEquals(2, candidateGroups.size());
+    assertThat(candidateGroups.size()).isEqualTo(2);
     assertTrue(candidateGroups.contains("management"));
     assertTrue(candidateGroups.contains("accountancy"));
   }

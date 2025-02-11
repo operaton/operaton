@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.authorization;
 
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 
@@ -29,6 +28,7 @@ import org.operaton.bpm.engine.task.Comment;
 import org.operaton.bpm.engine.test.Deployment;
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class ProcessInstanceCommentAuthorizationTest extends AuthorizationTest {
@@ -68,7 +68,7 @@ public class ProcessInstanceCommentAuthorizationTest extends AuthorizationTest {
 
     // then
     List<Comment> deletedCommentLst = taskService.getProcessInstanceComments(processInstanceId);
-    assertEquals("The comments list should be empty", Collections.emptyList(), deletedCommentLst);
+    assertThat(deletedCommentLst).as("The comments list should be empty").isEqualTo(Collections.emptyList());
 
     // triggers a db clean up
     deleteTask(TASK_ID, true);
@@ -112,7 +112,7 @@ public class ProcessInstanceCommentAuthorizationTest extends AuthorizationTest {
 
     // then
     List<Comment> comments = taskService.getProcessInstanceComments(processInstanceId);
-    assertEquals("The comments list should be empty", Collections.emptyList(), comments);
+    assertThat(comments).as("The comments list should be empty").isEqualTo(Collections.emptyList());
 
     // triggers a db clean up
     deleteTask(TASK_ID, true);
@@ -155,7 +155,7 @@ public class ProcessInstanceCommentAuthorizationTest extends AuthorizationTest {
     // then
     List<Comment> comments = taskService.getProcessInstanceComments(processInstanceId);
     assertFalse("The comments list should not be empty", comments.isEmpty());
-    assertEquals(updatedMessage, comments.get(0).getFullMessage());
+    assertThat(comments.get(0).getFullMessage()).isEqualTo(updatedMessage);
 
     // triggers a db clean up
     deleteTask(taskId, true);
@@ -189,7 +189,7 @@ public class ProcessInstanceCommentAuthorizationTest extends AuthorizationTest {
 
     // then
     List<Comment> deletedCommentLst = taskService.getProcessInstanceComments(processInstanceId);
-    assertEquals("The comments list should be empty", Collections.emptyList(), deletedCommentLst);
+    assertThat(deletedCommentLst).as("The comments list should be empty").isEqualTo(Collections.emptyList());
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
@@ -225,7 +225,7 @@ public class ProcessInstanceCommentAuthorizationTest extends AuthorizationTest {
 
     // then
     List<Comment> comments = taskService.getProcessInstanceComments(processInstanceId);
-    assertEquals("The comments list should be empty", Collections.emptyList(), comments);
+    assertThat(comments).as("The comments list should be empty").isEqualTo(Collections.emptyList());
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
@@ -260,7 +260,7 @@ public class ProcessInstanceCommentAuthorizationTest extends AuthorizationTest {
     // then
     List<Comment> comments = taskService.getProcessInstanceComments(processInstanceId);
     assertFalse("The comments list should not be empty", comments.isEmpty());
-    assertEquals(updatedMessage, comments.get(0).getFullMessage());
+    assertThat(comments.get(0).getFullMessage()).isEqualTo(updatedMessage);
   }
 
 }

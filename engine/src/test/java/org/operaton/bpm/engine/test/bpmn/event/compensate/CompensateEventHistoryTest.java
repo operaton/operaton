@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.compensate;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -64,8 +64,8 @@ public class CompensateEventHistoryTest extends PluggableProcessEngineTest {
         .singleResult();
 
     assertNotNull(historicCompensationHandlerInstance);
-    assertEquals(compensationHandlerActivityInstanceId, historicCompensationHandlerInstance.getId());
-    assertEquals(processInstance.getId(), historicCompensationHandlerInstance.getParentActivityInstanceId());
+    assertThat(historicCompensationHandlerInstance.getId()).isEqualTo(compensationHandlerActivityInstanceId);
+    assertThat(historicCompensationHandlerInstance.getParentActivityInstanceId()).isEqualTo(processInstance.getId());
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/compensate/CompensateEventHistoryTest.testBoundaryCompensationHandlerHistory.bpmn20.xml")
@@ -95,7 +95,7 @@ public class CompensateEventHistoryTest extends PluggableProcessEngineTest {
     HistoricVariableInstance historicVariableInstance = historyService.createHistoricVariableInstanceQuery().singleResult();
 
     assertNotNull(historicVariableInstance);
-    assertEquals(compensationHandlerActivityInstanceId, historicVariableInstance.getActivityInstanceId());
+    assertThat(historicVariableInstance.getActivityInstanceId()).isEqualTo(compensationHandlerActivityInstanceId);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/compensate/CompensateEventHistoryTest.testDefaultCompensationHandlerHistory.bpmn20.xml")
@@ -128,8 +128,8 @@ public class CompensateEventHistoryTest extends PluggableProcessEngineTest {
         .singleResult();
 
     assertNotNull(historicCompensationHandlerInstance);
-    assertEquals(compensationHandlerActivityInstanceId, historicCompensationHandlerInstance.getId());
-    assertEquals(subProcessActivityInstanceId, historicCompensationHandlerInstance.getParentActivityInstanceId());
+    assertThat(historicCompensationHandlerInstance.getId()).isEqualTo(compensationHandlerActivityInstanceId);
+    assertThat(historicCompensationHandlerInstance.getParentActivityInstanceId()).isEqualTo(subProcessActivityInstanceId);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/compensate/CompensateEventHistoryTest.testDefaultCompensationHandlerHistory.bpmn20.xml")
@@ -159,7 +159,7 @@ public class CompensateEventHistoryTest extends PluggableProcessEngineTest {
     HistoricVariableInstance historicVariableInstance = historyService.createHistoricVariableInstanceQuery().singleResult();
 
     assertNotNull(historicVariableInstance);
-    assertEquals(compensationHandlerActivityInstanceId, historicVariableInstance.getActivityInstanceId());
+    assertThat(historicVariableInstance.getActivityInstanceId()).isEqualTo(compensationHandlerActivityInstanceId);
   }
 
 

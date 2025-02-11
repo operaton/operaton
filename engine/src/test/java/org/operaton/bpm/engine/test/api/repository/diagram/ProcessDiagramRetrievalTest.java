@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.repository.diagram;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -225,7 +225,7 @@ public class ProcessDiagramRetrievalTest {
         FileUtils.writeStringToFile(htmlFile, html);
         fail("The assertions of this test only work if ProcessDiagramRetrievalTest#OVERWRITE_EXPECTED_HTML_FILES is set to false.");
       }
-      assertEquals(FileUtils.readFileToString(htmlFile).replace("\r", ""), html); // remove carriage returns in case the files have been fetched via Git on Windows
+      assertThat(html).isEqualTo(FileUtils.readFileToString(htmlFile).replace("\r", "")); // remove carriage returns in case the files have been fetched via Git on Windows
     } catch (IOException e) {
       fail("Could not read or write file: " + e.getMessage());
     }

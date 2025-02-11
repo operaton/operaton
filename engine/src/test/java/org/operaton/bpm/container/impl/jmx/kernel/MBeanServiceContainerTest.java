@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.container.impl.jmx.kernel;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -97,7 +97,7 @@ public class MBeanServiceContainerTest {
     serviceContainer.startService(service1Name, service1);
     // and get it after that
     assertNotNull(serviceContainer.getService(service1ObjectName));
-    assertEquals(service1, serviceContainer.getService(service1ObjectName));
+    assertThat(serviceContainer.<TestService>getService(service1ObjectName)).isEqualTo(service1);
     // as long it is started, I cannot start a second service with the same name:
     try {
       serviceContainer.startService(service1Name, service1);
@@ -142,19 +142,19 @@ public class MBeanServiceContainerTest {
     serviceContainer.startService(service2Name, service2);
 
     List<PlatformService<TestService>> servicesByType1 = serviceContainer.getServicesByType(TestServiceType.TYPE1);
-    assertEquals(2, servicesByType1.size());
+    assertThat(servicesByType1.size()).isEqualTo(2);
 
     List<PlatformService<TestService>> servicesByType2 = serviceContainer.getServicesByType(TestServiceType.TYPE2);
-    assertEquals(0, servicesByType2.size());
+    assertThat(servicesByType2.size()).isEqualTo(0);
 
     serviceContainer.startService(service3Name, service3);
     serviceContainer.startService(service4Name, service4);
 
     servicesByType1 = serviceContainer.getServicesByType(TestServiceType.TYPE1);
-    assertEquals(2, servicesByType1.size());
+    assertThat(servicesByType1.size()).isEqualTo(2);
 
     servicesByType2 = serviceContainer.getServicesByType(TestServiceType.TYPE2);
-    assertEquals(2, servicesByType2.size());
+    assertThat(servicesByType2.size()).isEqualTo(2);
 
   }
 
@@ -166,22 +166,22 @@ public class MBeanServiceContainerTest {
     serviceContainer.startService(service2Name, service2);
 
     List<PlatformService<TestService>> servicesByType1 = serviceContainer.getServiceValuesByType(TestServiceType.TYPE1);
-    assertEquals(2, servicesByType1.size());
+    assertThat(servicesByType1.size()).isEqualTo(2);
     assertTrue(servicesByType1.contains(service1));
     assertTrue(servicesByType1.contains(service2));
 
     List<PlatformService<TestService>> servicesByType2 = serviceContainer.getServicesByType(TestServiceType.TYPE2);
-    assertEquals(0, servicesByType2.size());
+    assertThat(servicesByType2.size()).isEqualTo(0);
 
     // start more services
     serviceContainer.startService(service3Name, service3);
     serviceContainer.startService(service4Name, service4);
 
     servicesByType1 = serviceContainer.getServicesByType(TestServiceType.TYPE1);
-    assertEquals(2, servicesByType1.size());
+    assertThat(servicesByType1.size()).isEqualTo(2);
 
     servicesByType2 = serviceContainer.getServicesByType(TestServiceType.TYPE2);
-    assertEquals(2, servicesByType2.size());
+    assertThat(servicesByType2.size()).isEqualTo(2);
     assertTrue(servicesByType2.contains(service3));
     assertTrue(servicesByType2.contains(service4));
 
@@ -195,24 +195,24 @@ public class MBeanServiceContainerTest {
     serviceContainer.startService(service2Name, service2);
 
     Set<String> serviceNames = serviceContainer.getServiceNames(TestServiceType.TYPE1);
-    assertEquals(2, serviceNames.size());
+    assertThat(serviceNames.size()).isEqualTo(2);
     assertTrue(serviceNames.contains(service1Name));
     assertTrue(serviceNames.contains(service2Name));
 
     serviceNames = serviceContainer.getServiceNames(TestServiceType.TYPE2);
-    assertEquals(0, serviceNames.size());
+    assertThat(serviceNames.size()).isEqualTo(0);
 
     // start more services
     serviceContainer.startService(service3Name, service3);
     serviceContainer.startService(service4Name, service4);
 
     serviceNames = serviceContainer.getServiceNames(TestServiceType.TYPE1);
-    assertEquals(2, serviceNames.size());
+    assertThat(serviceNames.size()).isEqualTo(2);
     assertTrue(serviceNames.contains(service1Name));
     assertTrue(serviceNames.contains(service2Name));
 
     serviceNames = serviceContainer.getServiceNames(TestServiceType.TYPE2);
-    assertEquals(2, serviceNames.size());
+    assertThat(serviceNames.size()).isEqualTo(2);
     assertTrue(serviceNames.contains(service3Name));
     assertTrue(serviceNames.contains(service4Name));
 
@@ -227,8 +227,8 @@ public class MBeanServiceContainerTest {
       .execute();
 
     // both services were registered.
-    assertEquals(service1, serviceContainer.getService(service1ObjectName));
-    assertEquals(service2, serviceContainer.getService(service2ObjectName));
+    assertThat(serviceContainer.<TestService>getService(service1ObjectName)).isEqualTo(service1);
+    assertThat(serviceContainer.<TestService>getService(service2ObjectName)).isEqualTo(service2);
 
   }
 

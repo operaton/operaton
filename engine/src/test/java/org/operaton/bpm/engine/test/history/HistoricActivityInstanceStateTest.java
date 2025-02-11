@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -174,7 +174,7 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
 
     List<HistoricActivityInstance> activityInstances = getEndActivityInstances();
 
-    assertEquals(7, activityInstances.size());
+    assertThat(activityInstances.size()).isEqualTo(7);
 
     List<HistoricActivityInstance> allInstances = getAllActivityInstances();
 
@@ -198,7 +198,7 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
 
     List<HistoricActivityInstance> activityInstances = getEndActivityInstances();
 
-    assertEquals(7, activityInstances.size());
+    assertThat(activityInstances.size()).isEqualTo(7);
 
     List<HistoricActivityInstance> allInstances = getAllActivityInstances();
 
@@ -506,14 +506,14 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
     for (HistoricActivityInstance instance : allInstances) {
       if (instance.getActivityId().equals(activityId)) {
         found++;
-        assertEquals(String.format("expect <%s> to be %scanceled", activityId, (canceled ? "" : "non-")), canceled, instance.isCanceled());
+        assertThat(instance.isCanceled()).as(String.format("expect <%s> to be %scanceled", activityId, (canceled ? "" : "non-"))).isEqualTo(canceled);
       }
     }
 
     assertTrue("contains entry for activity <" + activityId + ">", found > 0);
 
     if (expectedCount != -1) {
-      assertEquals("contains <" + expectedCount + "> entries for activity <" + activityId + ">", found, expectedCount);
+      assertThat(expectedCount).as("contains <" + expectedCount + "> entries for activity <" + activityId + ">").isEqualTo(found);
     }
   }
 
@@ -539,14 +539,14 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
     for (HistoricActivityInstance instance : allInstances) {
       if (instance.getActivityId().equals(activityId)) {
         found++;
-        assertEquals(String.format("expect <%s> to be %scompleting", activityId, (completing ? "" : "non-")), completing, instance.isCompleteScope());
+        assertThat(instance.isCompleteScope()).as(String.format("expect <%s> to be %scompleting", activityId, (completing ? "" : "non-"))).isEqualTo(completing);
       }
     }
 
     assertTrue("contains entry for activity <" + activityId + ">", found > 0);
 
     if (expectedCount != -1) {
-      assertEquals("contains <" + expectedCount + "> entries for activity <" + activityId + ">", found, expectedCount);
+      assertThat(expectedCount).as("contains <" + expectedCount + "> entries for activity <" + activityId + ">").isEqualTo(found);
     }
   }
 

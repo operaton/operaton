@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.task;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -82,8 +82,8 @@ public class TaskQueryDisabledAdhocExpressionsTest extends PluggableProcessEngin
     filterService.saveFilter(filter);
 
     // it is possible to execute the stored query with an expression
-    assertEquals(Long.valueOf(0), filterService.count(filter.getId()));
-    assertEquals(0, filterService.list(filter.getId()).size());
+    assertThat(filterService.count(filter.getId())).isEqualTo(Long.valueOf(0));
+    assertThat(filterService.list(filter.getId()).size()).isEqualTo(0);
 
     // but it is not possible to executed the filter with an extended query that uses expressions
     extendFilterAndValidateFailingQuery(filter, taskService.createTaskQuery().dueAfterExpression(STATE_MANIPULATING_EXPRESSION));
@@ -101,12 +101,12 @@ public class TaskQueryDisabledAdhocExpressionsTest extends PluggableProcessEngin
     filterService.saveFilter(filter);
 
     // it is possible to execute the stored query with an expression
-    assertEquals(Long.valueOf(0), filterService.count(filter.getId()));
-    assertEquals(0, filterService.list(filter.getId()).size());
+    assertThat(filterService.count(filter.getId())).isEqualTo(Long.valueOf(0));
+    assertThat(filterService.list(filter.getId()).size()).isEqualTo(0);
 
     // and it is possible to extend the filter query when not using an expression
-    assertEquals(Long.valueOf(0), filterService.count(filter.getId(), taskService.createTaskQuery().dueAfter(new Date())));
-    assertEquals(0, filterService.list(filter.getId(), taskService.createTaskQuery().dueAfter(new Date())).size());
+    assertThat(filterService.count(filter.getId(), taskService.createTaskQuery().dueAfter(new Date()))).isEqualTo(Long.valueOf(0));
+    assertThat(filterService.list(filter.getId(), taskService.createTaskQuery().dueAfter(new Date())).size()).isEqualTo(0);
 
     // cleanup
     filterService.deleteFilter(filter.getId());

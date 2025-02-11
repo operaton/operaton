@@ -45,7 +45,6 @@ import org.junit.rules.RuleChain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -441,10 +440,10 @@ public class TaskQueryExpressionTest {
     // execute query so expression will be evaluated
     taskQuery.count();
 
-    assertEquals(expressionString, taskQuery.getAssignee());
-    assertEquals(expressionString, taskQuery.getAssigneeLike());
-    assertEquals(expressionString, taskQuery.getOwner());
-    assertEquals(expressionString, taskQuery.getInvolvedUser());
+    assertThat(taskQuery.getAssignee()).isEqualTo(expressionString);
+    assertThat(taskQuery.getAssigneeLike()).isEqualTo(expressionString);
+    assertThat(taskQuery.getOwner()).isEqualTo(expressionString);
+    assertThat(taskQuery.getInvolvedUser()).isEqualTo(expressionString);
     assertTrue(taskQuery.getCreateTimeBefore().after(queryDate));
     assertTrue(taskQuery.getCreateTime().after(queryDate));
     assertTrue(taskQuery.getCreateTimeAfter().after(queryDate));
@@ -464,7 +463,7 @@ public class TaskQueryExpressionTest {
     // execute query so expression will be evaluated
     taskQuery.count();
 
-    assertEquals(expressionString, taskQuery.getCandidateGroup());
+    assertThat(taskQuery.getCandidateGroup()).isEqualTo(expressionString);
 
     taskQuery = (TaskQueryImpl) taskQuery()
       .taskCandidateUser(queryString)
@@ -473,7 +472,7 @@ public class TaskQueryExpressionTest {
     // execute query so expression will be evaluated
     taskQuery.count();
 
-    assertEquals(expressionString, taskQuery.getCandidateUser());
+    assertThat(taskQuery.getCandidateUser()).isEqualTo(expressionString);
 
     setCurrentUser(testUser);
     List<String> queryList = List.of("query");
@@ -486,7 +485,7 @@ public class TaskQueryExpressionTest {
     // execute query so expression will be evaluated
     taskQuery.count();
 
-    assertEquals(2, taskQuery.getCandidateGroups().size());
+    assertThat(taskQuery.getCandidateGroups().size()).isEqualTo(2);
   }
 
   @Test
@@ -621,7 +620,7 @@ public class TaskQueryExpressionTest {
       .list();
 
     // then
-    assertEquals(2, tasks.size());
+    assertThat(tasks.size()).isEqualTo(2);
   }
 
   @Test
@@ -697,7 +696,7 @@ public class TaskQueryExpressionTest {
   }
 
   protected void assertCount(Query query, long count) {
-    assertEquals(count, query.count());
+    assertThat(query.count()).isEqualTo(count);
   }
 
   protected void setCurrentUser(User user) {

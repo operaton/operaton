@@ -22,7 +22,6 @@ import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historic
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicBatchByStartTime;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
-import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -91,7 +90,7 @@ public class HistoricBatchQueryTest {
     List<HistoricBatch> list = historyService.createHistoricBatchQuery().list();
 
     // then
-    assertEquals(2, list.size());
+    assertThat(list.size()).isEqualTo(2);
 
     List<String> batchIds = new ArrayList<>();
     for (HistoricBatch resultBatch : list) {
@@ -122,17 +121,17 @@ public class HistoricBatchQueryTest {
     // then
     Assert.assertNotNull(resultBatch);
 
-    assertEquals(batch.getId(), resultBatch.getId());
-    assertEquals(batch.getBatchJobDefinitionId(), resultBatch.getBatchJobDefinitionId());
-    assertEquals(batch.getMonitorJobDefinitionId(), resultBatch.getMonitorJobDefinitionId());
-    assertEquals(batch.getSeedJobDefinitionId(), resultBatch.getSeedJobDefinitionId());
-    assertEquals(batch.getTenantId(), resultBatch.getTenantId());
-    assertEquals(batch.getType(), resultBatch.getType());
-    assertEquals(batch.getBatchJobsPerSeed(), resultBatch.getBatchJobsPerSeed());
-    assertEquals(batch.getInvocationsPerBatchJob(), resultBatch.getInvocationsPerBatchJob());
-    assertEquals(batch.getTotalJobs(), resultBatch.getTotalJobs());
-    assertEquals(startDate, resultBatch.getStartTime());
-    assertEquals(endDate, resultBatch.getEndTime());
+    assertThat(resultBatch.getId()).isEqualTo(batch.getId());
+    assertThat(resultBatch.getBatchJobDefinitionId()).isEqualTo(batch.getBatchJobDefinitionId());
+    assertThat(resultBatch.getMonitorJobDefinitionId()).isEqualTo(batch.getMonitorJobDefinitionId());
+    assertThat(resultBatch.getSeedJobDefinitionId()).isEqualTo(batch.getSeedJobDefinitionId());
+    assertThat(resultBatch.getTenantId()).isEqualTo(batch.getTenantId());
+    assertThat(resultBatch.getType()).isEqualTo(batch.getType());
+    assertThat(resultBatch.getBatchJobsPerSeed()).isEqualTo(batch.getBatchJobsPerSeed());
+    assertThat(resultBatch.getInvocationsPerBatchJob()).isEqualTo(batch.getInvocationsPerBatchJob());
+    assertThat(resultBatch.getTotalJobs()).isEqualTo(batch.getTotalJobs());
+    assertThat(resultBatch.getStartTime()).isEqualTo(startDate);
+    assertThat(resultBatch.getEndTime()).isEqualTo(endDate);
   }
 
   @Test
@@ -146,7 +145,7 @@ public class HistoricBatchQueryTest {
 
     // then
     Assert.assertNotNull(resultBatch);
-    assertEquals(batch1.getId(), resultBatch.getId());
+    assertThat(resultBatch.getId()).isEqualTo(batch1.getId());
   }
 
   @Test
@@ -171,7 +170,7 @@ public class HistoricBatchQueryTest {
     long count = historyService.createHistoricBatchQuery().type(batch1.getType()).count();
 
     // then
-    assertEquals(2, count);
+    assertThat(count).isEqualTo(2);
   }
 
   @Test
@@ -183,7 +182,7 @@ public class HistoricBatchQueryTest {
     long count = historyService.createHistoricBatchQuery().type("foo").count();
 
     // then
-    assertEquals(0, count);
+    assertThat(count).isEqualTo(0);
   }
 
   @Test
@@ -200,7 +199,7 @@ public class HistoricBatchQueryTest {
       .singleResult();
 
     // then
-    assertEquals(batch1.getId(), historicBatch.getId());
+    assertThat(historicBatch.getId()).isEqualTo(batch1.getId());
 
     // when
     historicBatch = historyService.createHistoricBatchQuery()
@@ -208,7 +207,7 @@ public class HistoricBatchQueryTest {
       .singleResult();
 
     // then
-    assertEquals(batch2.getId(), historicBatch.getId());
+    assertThat(historicBatch.getId()).isEqualTo(batch2.getId());
   }
 
   @Test
@@ -233,7 +232,7 @@ public class HistoricBatchQueryTest {
     long count = historyService.createHistoricBatchQuery().count();
 
     // then
-    assertEquals(2, count);
+    assertThat(count).isEqualTo(2);
   }
 
   @Test

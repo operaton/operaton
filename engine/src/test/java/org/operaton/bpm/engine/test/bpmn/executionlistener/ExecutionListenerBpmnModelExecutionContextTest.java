@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.bpmn.executionlistener;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -171,11 +171,11 @@ public class ExecutionListenerBpmnModelExecutionContextTest extends PluggablePro
 
     Model model = modelInstance.getModel();
     Collection<ModelElementInstance> events = modelInstance.getModelElementsByType(model.getType(Event.class));
-    assertEquals(3, events.size());
+    assertThat(events.size()).isEqualTo(3);
     Collection<ModelElementInstance> gateways = modelInstance.getModelElementsByType(model.getType(Gateway.class));
-    assertEquals(1, gateways.size());
+    assertThat(gateways.size()).isEqualTo(1);
     Collection<ModelElementInstance> tasks = modelInstance.getModelElementsByType(model.getType(Task.class));
-    assertEquals(1, tasks.size());
+    assertThat(tasks.size()).isEqualTo(1);
 
     FlowElement flowElement = ModelExecutionContextExecutionListener.flowElement;
     assertNotNull(flowElement);

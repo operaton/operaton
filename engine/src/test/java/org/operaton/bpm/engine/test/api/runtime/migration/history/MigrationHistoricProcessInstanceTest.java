@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.api.runtime.migration.history;
 
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -89,19 +89,19 @@ public class MigrationHistoricProcessInstanceTest {
 
 
     //when
-    assertEquals(1, sourceHistoryProcessInstanceQuery.count());
-    assertEquals(0, targetHistoryProcessInstanceQuery.count());
+    assertThat(sourceHistoryProcessInstanceQuery.count()).isEqualTo(1);
+    assertThat(targetHistoryProcessInstanceQuery.count()).isEqualTo(0);
     ProcessInstanceQuery sourceProcessInstanceQuery = runtimeService.createProcessInstanceQuery().processDefinitionId(sourceProcessDefinition.getId());
     runtimeService.newMigration(migrationPlan)
       .processInstanceQuery(sourceProcessInstanceQuery)
       .execute();
 
     //then
-    assertEquals(0, sourceHistoryProcessInstanceQuery.count());
-    assertEquals(1, targetHistoryProcessInstanceQuery.count());
+    assertThat(sourceHistoryProcessInstanceQuery.count()).isEqualTo(0);
+    assertThat(targetHistoryProcessInstanceQuery.count()).isEqualTo(1);
 
     HistoricProcessInstance instance = targetHistoryProcessInstanceQuery.singleResult();
-    assertEquals(instance.getProcessDefinitionKey(), targetProcessDefinition.getKey());
+    assertThat(targetProcessDefinition.getKey()).isEqualTo(instance.getProcessDefinitionKey());
   }
 
   @Test
@@ -116,7 +116,7 @@ public class MigrationHistoricProcessInstanceTest {
           .processDefinitionId(targetProcessDefinition.getId());
 
     HistoricProcessInstance historicProcessInstanceBeforeMigration = sourceHistoryProcessInstanceQuery.singleResult();
-    assertEquals(HistoricProcessInstance.STATE_ACTIVE, historicProcessInstanceBeforeMigration.getState());
+    assertThat(historicProcessInstanceBeforeMigration.getState()).isEqualTo(HistoricProcessInstance.STATE_ACTIVE);
 
     //when
     ProcessInstanceQuery sourceProcessInstanceQuery = runtimeService.createProcessInstanceQuery().processDefinitionId(sourceProcessDefinition.getId());
@@ -126,7 +126,7 @@ public class MigrationHistoricProcessInstanceTest {
 
     //then
     HistoricProcessInstance instance = targetHistoryProcessInstanceQuery.singleResult();
-    assertEquals(historicProcessInstanceBeforeMigration.getState(), instance.getState());
+    assertThat(instance.getState()).isEqualTo(historicProcessInstanceBeforeMigration.getState());
   }
 
 }

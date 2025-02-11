@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.migration;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 
 import java.util.ArrayList;
@@ -36,7 +37,6 @@ import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -108,7 +108,7 @@ public class MigrateProcessInstanceSyncQueryTest {
       .processInstanceId(instance1.getId())
       .singleResult();
 
-    Assert.assertEquals(sourceDefinition.getId(), instance1AfterMigration.getProcessDefinitionId());
+    assertThat(instance1AfterMigration.getProcessDefinitionId()).isEqualTo(sourceDefinition.getId());
   }
 
   protected void grantAuthorization(String userId, Resource resource, String resourceId, Permission permission) {

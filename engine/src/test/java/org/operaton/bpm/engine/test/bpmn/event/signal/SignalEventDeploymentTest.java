@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.signal;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
@@ -45,9 +45,9 @@ public class SignalEventDeploymentTest extends PluggableProcessEngineTest {
     EventSubscription eventSubscription = runtimeService.createEventSubscriptionQuery().singleResult();
     assertNotNull(eventSubscription);
 
-    assertEquals(EventType.SIGNAL.name(), eventSubscription.getEventType());
-    assertEquals("alert", eventSubscription.getEventName());
-    assertEquals("start", eventSubscription.getActivityId());
+    assertThat(eventSubscription.getEventType()).isEqualTo(EventType.SIGNAL.name());
+    assertThat(eventSubscription.getEventName()).isEqualTo("alert");
+    assertThat(eventSubscription.getActivityId()).isEqualTo("start");
   }
 
   @Test
@@ -57,7 +57,7 @@ public class SignalEventDeploymentTest extends PluggableProcessEngineTest {
 
     EventSubscription eventSubscription = runtimeService.createEventSubscriptionQuery().eventType("signal").singleResult();
     assertNotNull(eventSubscription);
-    assertEquals("alert", eventSubscription.getEventName());
+    assertThat(eventSubscription.getEventName()).isEqualTo("alert");
 
     // deploy a new version of the process with different signal name
     String newDeploymentId = repositoryService.createDeployment()
@@ -65,15 +65,15 @@ public class SignalEventDeploymentTest extends PluggableProcessEngineTest {
         .deploy().getId();
 
     ProcessDefinition newProcessDefinition = repositoryService.createProcessDefinitionQuery().latestVersion().singleResult();
-    assertEquals(2, newProcessDefinition.getVersion());
+    assertThat(newProcessDefinition.getVersion()).isEqualTo(2);
 
     List<EventSubscription> newEventSubscriptions = runtimeService.createEventSubscriptionQuery().eventType("signal").list();
     // only one event subscription for the new version of the process definition
-    assertEquals(1, newEventSubscriptions.size());
+    assertThat(newEventSubscriptions.size()).isEqualTo(1);
 
     EventSubscriptionEntity newEventSubscription = (EventSubscriptionEntity) newEventSubscriptions.iterator().next();
-    assertEquals(newProcessDefinition.getId(), newEventSubscription.getConfiguration());
-    assertEquals("abort", newEventSubscription.getEventName());
+    assertThat(newEventSubscription.getConfiguration()).isEqualTo(newProcessDefinition.getId());
+    assertThat(newEventSubscription.getEventName()).isEqualTo("abort");
 
     // clean db
     repositoryService.deleteDeployment(newDeploymentId);
@@ -94,12 +94,12 @@ public class SignalEventDeploymentTest extends PluggableProcessEngineTest {
     // then deleting the deployment succeeds
     repositoryService.deleteDeployment(deployment.getId(), true);
 
-    assertEquals(0, repositoryService.createDeploymentQuery().count());
+    assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(0);
 
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
     if (historyLevel >= HistoryLevel.HISTORY_LEVEL_FULL.getId()) {
       // and there are no job logs left
-      assertEquals(0, historyService.createHistoricJobLogQuery().count());
+      assertThat(historyService.createHistoricJobLogQuery().count()).isEqualTo(0);
     }
 
   }

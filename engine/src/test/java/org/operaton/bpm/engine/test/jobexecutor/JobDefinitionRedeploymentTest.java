@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -89,7 +89,7 @@ public class JobDefinitionRedeploymentTest {
   public void testJobDefinitionsAfterRedeploment() {
 
     // initially there are no job definitions:
-    assertEquals(0, managementService.createJobDefinitionQuery().count());
+    assertThat(managementService.createJobDefinitionQuery().count()).isEqualTo(0);
 
     // initial deployment
     String deploymentId = repositoryService.createDeployment()
@@ -111,7 +111,7 @@ public class JobDefinitionRedeploymentTest {
     runtimeService.startProcessInstanceByKey(processDefinition.getKey());
 
     // no new definitions were created
-    assertEquals(jobDefinitions.size(), managementService.createJobDefinitionQuery().count());
+    assertThat(managementService.createJobDefinitionQuery().count()).isEqualTo(jobDefinitions.size());
 
     // the job has the correct definitionId set:
     List<Job> jobs = managementService.createJobQuery().list();

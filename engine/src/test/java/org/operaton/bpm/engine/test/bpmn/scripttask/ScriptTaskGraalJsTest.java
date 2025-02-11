@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.bpmn.scripttask;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 import java.util.Arrays;
@@ -137,7 +136,7 @@ public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
       // the script task can be executed without exceptions
       // the execution variable is stored and has the correct value
       Object variableValue = runtimeService.getVariable(pi.getId(), "foo");
-      assertEquals("a", variableValue);
+      assertThat(variableValue).isEqualTo("a");
     } else {
       // WHEN
       // we start an instance of this process
@@ -226,9 +225,9 @@ public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
 
       // THEN
       Date date = (Date) runtimeService.getVariable(pi.getId(), "date");
-      assertEquals(0, date.getTime());
+      assertThat(date.getTime()).isEqualTo(0);
       MySerializable myVar = (MySerializable) runtimeService.getVariable(pi.getId(), "myVar");
-      assertEquals("test", myVar.getName());
+      assertThat(myVar.getName()).isEqualTo("test");
     } else {
       // WHEN
       // we start an instance of this process
@@ -262,7 +261,7 @@ public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
         // the script task can be executed without exceptions
         // the execution variable is stored and has the correct value
         Object variableValue = runtimeService.getVariable(pi.getId(), "foo");
-        assertEquals(7, variableValue);
+        assertThat(variableValue).isEqualTo(7);
       } else {
         // WHEN
         // we start an instance of this process

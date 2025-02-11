@@ -56,7 +56,6 @@ import org.junit.runners.Parameterized;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -204,7 +203,7 @@ public class JobQueryTest {
       jobQuery.activityId(null);
       fail();
     } catch (ProcessEngineException e) {
-      assertEquals("Provided activity id is null", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Provided activity id is null");
     }
   }
 
@@ -226,7 +225,7 @@ public class JobQueryTest {
       jobQuery.jobDefinitionId(null);
       fail();
     } catch (ProcessEngineException e) {
-      assertEquals("Provided job definition id is null", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Provided job definition id is null");
     }
   }
 
@@ -246,7 +245,7 @@ public class JobQueryTest {
       jobQuery.processInstanceId(null);
       fail();
     } catch (ProcessEngineException e) {
-      assertEquals("Provided process instance id is null", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Provided process instance id is null");
     }
   }
 
@@ -254,7 +253,7 @@ public class JobQueryTest {
   public void testQueryByExecutionId() {
     Job job = managementService.createJobQuery().processInstanceId(processInstanceIdOne).singleResult();
     JobQuery query = managementService.createJobQuery().executionId(job.getExecutionId());
-    assertEquals(query.singleResult().getId(), job.getId());
+    assertThat(job.getId()).isEqualTo(query.singleResult().getId());
     verifyQueryResults(query, 1);
   }
 
@@ -268,7 +267,7 @@ public class JobQueryTest {
       jobQuery.executionId(null);
       fail();
     } catch (ProcessEngineException e) {
-      assertEquals("Provided execution id is null", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Provided execution id is null");
     }
   }
 
@@ -290,7 +289,7 @@ public class JobQueryTest {
       jobQuery.processDefinitionId(null);
       fail();
     } catch (ProcessEngineException e) {
-      assertEquals("Provided process definition id is null", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Provided process definition id is null");
     }
   }
 
@@ -332,7 +331,7 @@ public class JobQueryTest {
       jobQuery.processDefinitionKey(null);
       fail();
     } catch (ProcessEngineException e) {
-      assertEquals("Provided process instance key is null", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Provided process instance key is null");
     }
   }
 
@@ -514,7 +513,7 @@ public class JobQueryTest {
     JobQuery query = managementService.createJobQuery()
             .processInstanceId(processInstanceIdOne);
     List<Job> jobs = query.list();
-    assertEquals(1, jobs.size());
+    assertThat(jobs.size()).isEqualTo(1);
     Date jobCreateTime = jobs.get(0).getCreateTime();
 
     query = managementService.createJobQuery()
@@ -543,7 +542,7 @@ public class JobQueryTest {
     JobQuery query = managementService.createJobQuery().processInstanceId(processInstanceIdOne);
 
     List<Job> jobs = query.list();
-    assertEquals(1, jobs.size());
+    assertThat(jobs.size()).isEqualTo(1);
 
     query = query.createdBefore(new Date(0)).createdAfter(new Date());
 
@@ -555,7 +554,7 @@ public class JobQueryTest {
     JobQuery query = managementService.createJobQuery().processInstanceId(processInstanceIdOne);
 
     List<Job> jobs = query.list();
-    assertEquals(1, jobs.size());
+    assertThat(jobs.size()).isEqualTo(1);
 
     query = query.createdBefore(new Date()).createdAfter(new Date(0));
 
@@ -607,7 +606,7 @@ public class JobQueryTest {
       jobQuery.exceptionMessage(null);
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException e) {
-      assertEquals("Provided exception message is null", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Provided exception message is null");
     }
   }
 
@@ -633,7 +632,7 @@ public class JobQueryTest {
       jobQuery.failedActivityId(null);
       fail();
     } catch (ProcessEngineException e) {
-      assertEquals("Provided activity id is null", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Provided activity id is null");
     }
   }
 
@@ -648,7 +647,7 @@ public class JobQueryTest {
     assertNotNull(job);
 
     List<Job> list = managementService.createJobQuery().withException().list();
-    assertEquals(1, list.size());
+    assertThat(list.size()).isEqualTo(1);
 
     deleteJobInDatabase();
 
@@ -659,7 +658,7 @@ public class JobQueryTest {
     assertNotNull(job);
 
     list = managementService.createJobQuery().withException().list();
-    assertEquals(1, list.size());
+    assertThat(list.size()).isEqualTo(1);
 
     deleteJobInDatabase();
 
@@ -828,22 +827,22 @@ public class JobQueryTest {
   @Test
   public void testQuerySorting() {
     // asc
-    assertEquals(4, managementService.createJobQuery().orderByJobId().asc().count());
-    assertEquals(4, managementService.createJobQuery().orderByJobDuedate().asc().count());
-    assertEquals(4, managementService.createJobQuery().orderByExecutionId().asc().count());
-    assertEquals(4, managementService.createJobQuery().orderByProcessInstanceId().asc().count());
-    assertEquals(4, managementService.createJobQuery().orderByJobRetries().asc().count());
-    assertEquals(4, managementService.createJobQuery().orderByProcessDefinitionId().asc().count());
-    assertEquals(4, managementService.createJobQuery().orderByProcessDefinitionKey().asc().count());
+    assertThat(managementService.createJobQuery().orderByJobId().asc().count()).isEqualTo(4);
+    assertThat(managementService.createJobQuery().orderByJobDuedate().asc().count()).isEqualTo(4);
+    assertThat(managementService.createJobQuery().orderByExecutionId().asc().count()).isEqualTo(4);
+    assertThat(managementService.createJobQuery().orderByProcessInstanceId().asc().count()).isEqualTo(4);
+    assertThat(managementService.createJobQuery().orderByJobRetries().asc().count()).isEqualTo(4);
+    assertThat(managementService.createJobQuery().orderByProcessDefinitionId().asc().count()).isEqualTo(4);
+    assertThat(managementService.createJobQuery().orderByProcessDefinitionKey().asc().count()).isEqualTo(4);
 
     // desc
-    assertEquals(4, managementService.createJobQuery().orderByJobId().desc().count());
-    assertEquals(4, managementService.createJobQuery().orderByJobDuedate().desc().count());
-    assertEquals(4, managementService.createJobQuery().orderByExecutionId().desc().count());
-    assertEquals(4, managementService.createJobQuery().orderByProcessInstanceId().desc().count());
-    assertEquals(4, managementService.createJobQuery().orderByJobRetries().desc().count());
-    assertEquals(4, managementService.createJobQuery().orderByProcessDefinitionId().desc().count());
-    assertEquals(4, managementService.createJobQuery().orderByProcessDefinitionKey().desc().count());
+    assertThat(managementService.createJobQuery().orderByJobId().desc().count()).isEqualTo(4);
+    assertThat(managementService.createJobQuery().orderByJobDuedate().desc().count()).isEqualTo(4);
+    assertThat(managementService.createJobQuery().orderByExecutionId().desc().count()).isEqualTo(4);
+    assertThat(managementService.createJobQuery().orderByProcessInstanceId().desc().count()).isEqualTo(4);
+    assertThat(managementService.createJobQuery().orderByJobRetries().desc().count()).isEqualTo(4);
+    assertThat(managementService.createJobQuery().orderByProcessDefinitionId().desc().count()).isEqualTo(4);
+    assertThat(managementService.createJobQuery().orderByProcessDefinitionKey().desc().count()).isEqualTo(4);
 
     // sorting on multiple fields
     setRetries(processInstanceIdTwo, 2);
@@ -858,15 +857,15 @@ public class JobQueryTest {
       .desc();
 
     List<Job> jobs = query.list();
-    assertEquals(3, jobs.size());
+    assertThat(jobs.size()).isEqualTo(3);
 
-    assertEquals(2, jobs.get(0).getRetries());
-    assertEquals(3, jobs.get(1).getRetries());
-    assertEquals(3, jobs.get(2).getRetries());
+    assertThat(jobs.get(0).getRetries()).isEqualTo(2);
+    assertThat(jobs.get(1).getRetries()).isEqualTo(3);
+    assertThat(jobs.get(2).getRetries()).isEqualTo(3);
 
-    assertEquals(processInstanceIdTwo, jobs.get(0).getProcessInstanceId());
-    assertEquals(processInstanceIdThree, jobs.get(1).getProcessInstanceId());
-    assertEquals(processInstanceIdOne, jobs.get(2).getProcessInstanceId());
+    assertThat(jobs.get(0).getProcessInstanceId()).isEqualTo(processInstanceIdTwo);
+    assertThat(jobs.get(1).getProcessInstanceId()).isEqualTo(processInstanceIdThree);
+    assertThat(jobs.get(2).getProcessInstanceId()).isEqualTo(processInstanceIdOne);
   }
 
   @Test
@@ -926,14 +925,14 @@ public class JobQueryTest {
 
     Job failedJob = query.singleResult();
     assertNotNull(failedJob);
-    assertEquals(processInstance.getId(), failedJob.getProcessInstanceId());
+    assertThat(failedJob.getProcessInstanceId()).isEqualTo(processInstance.getId());
     assertNotNull(failedJob.getExceptionMessage());
     assertThat(failedJob.getExceptionMessage()).contains(EXCEPTION_MESSAGE);
   }
 
   private void verifyQueryResults(JobQuery query, int countExpected) {
-    assertEquals(countExpected, query.list().size());
-    assertEquals(countExpected, query.count());
+    assertThat(query.list().size()).isEqualTo(countExpected);
+    assertThat(query.count()).isEqualTo(countExpected);
 
     if (countExpected == 1) {
       assertNotNull(query.singleResult());

@@ -26,7 +26,7 @@ import java.util.List;
 
 import org.assertj.core.api.Assertions;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 
 public class MigratingProcessInstanceValidationReportAssert {
@@ -50,7 +50,9 @@ public class MigratingProcessInstanceValidationReportAssert {
   public MigratingProcessInstanceValidationReportAssert hasProcessInstanceId(String processInstanceId) {
     isNotNull();
 
-    assertEquals("Expected report to be for process instance", processInstanceId, actual.getProcessInstanceId());
+    Assertions.assertThat(actual.getProcessInstanceId())
+      .as("Expected report to be for process instance")
+      .isEqualTo(processInstanceId);
 
     return this;
   }

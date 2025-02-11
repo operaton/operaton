@@ -41,6 +41,7 @@ import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.engine.variable.Variables;
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.*;
 
 /**
@@ -85,7 +86,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
     // and there is no activity instance for task2 yet
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     assertNotNull(updatedTree);
-    assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
+    assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
@@ -281,7 +282,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
 
-    assertEquals(1, managementService.createJobQuery().count());
+    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
 
     // when the async task is cancelled via cancelTransitionInstance
     runtimeService.createProcessInstanceModification(processInstance.getId())
@@ -289,7 +290,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
       .execute();
 
     // then the job has been removed
-    assertEquals(0, managementService.createJobQuery().count());
+    assertThat(managementService.createJobQuery().count()).isEqualTo(0);
 
     // and the activity instance and execution trees match
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstance.getId());
@@ -425,7 +426,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
     Execution innerTask2Execution = runtimeService.createExecutionQuery().activityId("innerTask2").singleResult();
     assertNotNull(innerTask2Execution);
 
-    assertEquals(innerTask2Job.getExecutionId(), innerTask2Execution.getId());
+    assertThat(innerTask2Execution.getId()).isEqualTo(innerTask2Job.getExecutionId());
 
     // and completing the process should succeed
     completeTasksInOrder("outerTask");
@@ -475,7 +476,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
     .done());
 
     // and there should be no job for innerTask1 anymore
-    assertEquals(0, managementService.createJobQuery().activityId("innerTask1").count());
+    assertThat(managementService.createJobQuery().activityId("innerTask1").count()).isEqualTo(0);
 
     // and completing the process should succeed
     completeTasksInOrder("innerTask2", "outerTask");
@@ -494,7 +495,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
 
-    assertEquals(1, managementService.createJobQuery().count());
+    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
 
     // when the async task is cancelled via cancelTransitionInstance
     runtimeService.createProcessInstanceModification(processInstance.getId())
@@ -503,7 +504,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
 
     // then no io mapping is executed and no end listener is executed
     assertTrue(RecorderExecutionListener.getRecordedEvents().isEmpty());
-    assertEquals(0, runtimeService.createVariableInstanceQuery().variableName("outputMappingExecuted").count());
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("outputMappingExecuted").count()).isEqualTo(0);
 
     // and the process can be completed successfully
     completeTasksInOrder("outerTask");
@@ -522,7 +523,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
 
-    assertEquals(1, managementService.createJobQuery().count());
+    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
 
     // when the async task is cancelled via cancelTransitionInstance
     runtimeService.createProcessInstanceModification(processInstance.getId())
@@ -530,7 +531,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
       .execute();
 
     // then the job has been removed
-    assertEquals(0, managementService.createJobQuery().count());
+    assertThat(managementService.createJobQuery().count()).isEqualTo(0);
 
     // and the activity instance and execution trees match
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstance.getId());
@@ -559,7 +560,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
 
-    assertEquals(1, managementService.createJobQuery().count());
+    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
 
     // when the async task is cancelled via cancelTransitionInstance
     runtimeService.createProcessInstanceModification(processInstance.getId())
@@ -567,7 +568,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
       .execute();
 
     // then the job has been removed
-    assertEquals(0, managementService.createJobQuery().count());
+    assertThat(managementService.createJobQuery().count()).isEqualTo(0);
 
     // and the activity instance and execution trees match
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstance.getId());
@@ -623,9 +624,9 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
       .cancelTransitionInstance(getChildTransitionInstanceForTargetActivity(tree, "subProcessEnd").getId())
       .execute();
 
-    assertEquals(1, RecorderExecutionListener.getRecordedEvents().size());
+    assertThat(RecorderExecutionListener.getRecordedEvents().size()).isEqualTo(1);
     RecordedEvent event = RecorderExecutionListener.getRecordedEvents().get(0);
-    assertEquals("subProcess", event.getActivityId());
+    assertThat(event.getActivityId()).isEqualTo("subProcess");
 
     RecorderExecutionListener.clear();
   }
@@ -636,7 +637,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
     // given a process instance with an async task in a subprocess
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("nestedOneTaskProcess");
 
-    assertEquals(1, managementService.createJobQuery().count());
+    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
 
     // when the async task is cancelled via cancelAll
     runtimeService.createProcessInstanceModification(processInstance.getId())
@@ -644,7 +645,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
       .execute();
 
     // then the job has been removed
-    assertEquals(0, managementService.createJobQuery().count());
+    assertThat(managementService.createJobQuery().count()).isEqualTo(0);
 
     // and the activity instance and execution trees match
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstance.getId());
@@ -715,11 +716,11 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
         .includeIncidents()
         .list();
 
-    assertEquals(1, statistics.size());
-    assertEquals("task1", statistics.get(0).getId());
-    assertEquals(0, statistics.get(0).getFailedJobs());
-    assertEquals(0, statistics.get(0).getIncidentStatistics().size());
-    assertEquals(1, statistics.get(0).getInstances());
+    assertThat(statistics.size()).isEqualTo(1);
+    assertThat(statistics.get(0).getId()).isEqualTo("task1");
+    assertThat(statistics.get(0).getFailedJobs()).isEqualTo(0);
+    assertThat(statistics.get(0).getIncidentStatistics().size()).isEqualTo(0);
+    assertThat(statistics.get(0).getInstances()).isEqualTo(1);
 
     // when
     runtimeService.createProcessInstanceModification(processInstance.getId())
@@ -733,11 +734,11 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
       .includeIncidents()
       .list();
 
-    assertEquals(1, statistics.size());
-    assertEquals("task1", statistics.get(0).getId());
-    assertEquals(0, statistics.get(0).getFailedJobs());
-    assertEquals(0, statistics.get(0).getIncidentStatistics().size());
-    assertEquals(2, statistics.get(0).getInstances());
+    assertThat(statistics.size()).isEqualTo(1);
+    assertThat(statistics.get(0).getId()).isEqualTo("task1");
+    assertThat(statistics.get(0).getFailedJobs()).isEqualTo(0);
+    assertThat(statistics.get(0).getIncidentStatistics().size()).isEqualTo(0);
+    assertThat(statistics.get(0).getInstances()).isEqualTo(2);
 
 
     // when all jobs are executed

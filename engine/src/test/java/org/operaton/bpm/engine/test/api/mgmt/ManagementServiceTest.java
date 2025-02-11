@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.test.api.mgmt;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -187,14 +186,14 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
         .singleResult();
 
     assertNotNull("No job found for process instance", timerJob);
-    assertEquals(JobEntity.DEFAULT_RETRIES, timerJob.getRetries());
+    assertThat(timerJob.getRetries()).isEqualTo(JobEntity.DEFAULT_RETRIES);
 
     managementService.setJobRetries(timerJob.getId(), 5);
 
     timerJob = managementService.createJobQuery()
         .processInstanceId(processInstance.getId())
         .singleResult();
-    assertEquals(5, timerJob.getRetries());
+    assertThat(timerJob.getRetries()).isEqualTo(5);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/ManagementServiceTest.testGetJobExceptionStacktrace.bpmn20.xml"})
@@ -412,7 +411,7 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
   public void testSetJobRetriesNullCreatesIncident() {
 
     // initially there is no incident
-    assertEquals(0, runtimeService.createIncidentQuery().count());
+    assertThat(runtimeService.createIncidentQuery().count()).isEqualTo(0);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exceptionInJobExecution");
 
@@ -423,16 +422,16 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
         .singleResult();
 
     assertNotNull("No job found for process instance", timerJob);
-    assertEquals(JobEntity.DEFAULT_RETRIES, timerJob.getRetries());
+    assertThat(timerJob.getRetries()).isEqualTo(JobEntity.DEFAULT_RETRIES);
 
     managementService.setJobRetries(timerJob.getId(), 0);
 
     timerJob = managementService.createJobQuery()
         .processInstanceId(processInstance.getId())
         .singleResult();
-    assertEquals(0, timerJob.getRetries());
+    assertThat(timerJob.getRetries()).isEqualTo(0);
 
-    assertEquals(1, runtimeService.createIncidentQuery().count());
+    assertThat(runtimeService.createIncidentQuery().count()).isEqualTo(1);
 
   }
 
@@ -476,12 +475,12 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
     Job timerJob = query.singleResult();
 
     assertNotNull("No job found for process instance", timerJob);
-    assertEquals(0, timerJob.getRetries());
+    assertThat(timerJob.getRetries()).isEqualTo(0);
 
     managementService.setJobRetriesByJobDefinitionId(jobDefinition.getId(), 5);
 
     timerJob = query.singleResult();
-    assertEquals(5, timerJob.getRetries());
+    assertThat(timerJob.getRetries()).isEqualTo(5);
   }
 
   @Test
@@ -515,7 +514,7 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
     assertNotNull(job);
     assertNull(job.getLockOwner());
     assertNull(job.getLockExpirationTime());
-    assertEquals(3, job.getRetries());
+    assertThat(job.getRetries()).isEqualTo(3);
 
     deleteJobAndIncidents(job);
 
@@ -532,7 +531,7 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
     assertNotNull(job);
     assertNull(job.getLockOwner());
     assertNull(job.getLockExpirationTime());
-    assertEquals(3, job.getRetries());
+    assertThat(job.getRetries()).isEqualTo(3);
 
     deleteJobAndIncidents(job);
 
@@ -549,7 +548,7 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
     assertNotNull(job);
     assertNotNull(job.getLockOwner());
     assertNotNull(job.getLockExpirationTime());
-    assertEquals(3, job.getRetries());
+    assertThat(job.getRetries()).isEqualTo(3);
 
     deleteJobAndIncidents(job);
   }
@@ -601,7 +600,7 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
     assertNotNull(job);
     assertNull(job.getLockOwner());
     assertNull(job.getLockExpirationTime());
-    assertEquals(3, job.getRetries());
+    assertThat(job.getRetries()).isEqualTo(3);
 
     deleteJobAndIncidents(job);
   }
@@ -715,8 +714,7 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
 
     // normalize date for mysql dropping fractional seconds in time values
     int SECOND = 1000;
-    assertEquals((cal.getTime().getTime() / SECOND) * SECOND,
-        (newTimerJob.getDuedate().getTime() / SECOND) * SECOND);
+    assertThat((newTimerJob.getDuedate().getTime() / SECOND) * SECOND).isEqualTo((cal.getTime().getTime() / SECOND) * SECOND);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/ManagementServiceTest.testGetJobExceptionStacktrace.bpmn20.xml"})
@@ -803,7 +801,7 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
     Map<String, String> properties = managementService.getProperties();
     assertTrue(properties.containsKey(name));
     String storedValue = properties.get(name);
-    assertEquals(value, storedValue);
+    assertThat(storedValue).isEqualTo(value);
 
     managementService.deleteProperty(name);
   }
@@ -817,7 +815,7 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
     Map<String, String> properties = managementService.getProperties();
     assertTrue(properties.containsKey(name));
     String storedValue = properties.get(name);
-    assertEquals(value, storedValue);
+    assertThat(storedValue).isEqualTo(value);
 
     managementService.deleteProperty(name);
     properties = managementService.getProperties();
@@ -834,7 +832,7 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
   @Test
   public void testGetHistoryLevel() {
     int historyLevel = managementService.getHistoryLevel();
-    assertEquals(processEngineConfiguration.getHistoryLevel().getId(), historyLevel);
+    assertThat(historyLevel).isEqualTo(processEngineConfiguration.getHistoryLevel().getId());
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/asyncTaskProcess.bpmn20.xml")
@@ -854,7 +852,7 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
     // then
     job = managementService.createJobQuery().singleResult();
 
-    assertEquals(42, job.getPriority());
+    assertThat(job.getPriority()).isEqualTo(42);
   }
 
   @Test
@@ -890,12 +888,12 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
     // it is possible to set the max integer value
     managementService.setJobPriority(job.getId(), Long.MAX_VALUE);
     job = managementService.createJobQuery().singleResult();
-    assertEquals(Long.MAX_VALUE, job.getPriority());
+    assertThat(job.getPriority()).isEqualTo(Long.MAX_VALUE);
 
     // it is possible to set the min integer value
     managementService.setJobPriority(job.getId(), Long.MIN_VALUE + 1); // +1 for informix
     job = managementService.createJobQuery().singleResult();
-    assertEquals(Long.MIN_VALUE + 1, job.getPriority());
+    assertThat(job.getPriority()).isEqualTo(Long.MIN_VALUE + 1);
   }
 
   @Test
@@ -927,19 +925,19 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
         .tableName(tablePrefix + "ACT_RU_TASK")
         .listPage(0, 5);
 
-    assertEquals(0, tablePage.getFirstResult());
-    assertEquals(5, tablePage.getSize());
-    assertEquals(5, tablePage.getRows().size());
-    assertEquals(20, tablePage.getTotal());
+    assertThat(tablePage.getFirstResult()).isEqualTo(0);
+    assertThat(tablePage.getSize()).isEqualTo(5);
+    assertThat(tablePage.getRows().size()).isEqualTo(5);
+    assertThat(tablePage.getTotal()).isEqualTo(20);
 
     tablePage = managementService.createTablePageQuery()
         .tableName(tablePrefix + "ACT_RU_TASK")
         .listPage(14, 10);
 
-    assertEquals(14, tablePage.getFirstResult());
-    assertEquals(6, tablePage.getSize());
-    assertEquals(6, tablePage.getRows().size());
-    assertEquals(20, tablePage.getTotal());
+    assertThat(tablePage.getFirstResult()).isEqualTo(14);
+    assertThat(tablePage.getSize()).isEqualTo(6);
+    assertThat(tablePage.getRows().size()).isEqualTo(6);
+    assertThat(tablePage.getTotal()).isEqualTo(20);
 
     taskService.deleteTasks(taskIds, true);
   }
@@ -988,7 +986,7 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
   }
 
   private void verifyTaskNames(String[] expectedTaskNames, List<Map<String, Object>> rowData) {
-    assertEquals(expectedTaskNames.length, rowData.size());
+    assertThat(rowData.size()).isEqualTo(expectedTaskNames.length);
     String columnKey = "NAME_";
 
     for (int i = 0; i < expectedTaskNames.length; i++) {
@@ -996,7 +994,7 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
       if (o == null) {
         o = rowData.get(i).get(columnKey.toLowerCase());
       }
-      assertEquals(expectedTaskNames[i], o);
+      assertThat(o).isEqualTo(expectedTaskNames[i]);
     }
   }
 

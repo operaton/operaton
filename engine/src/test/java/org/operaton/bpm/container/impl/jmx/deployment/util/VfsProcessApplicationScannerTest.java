@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.container.impl.jmx.deployment.util;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -43,7 +43,7 @@ public class VfsProcessApplicationScannerTest {
     Map<String, byte[]> scanResult = ProcessApplicationScanningUtil.findResources(classLoader, processRootPath, null);
 
     // expect: finds only the BPMN process file and not treats the 'bpmn' folder
-    assertEquals(1, scanResult.size());
+    assertThat(scanResult.size()).isEqualTo(1);
     String processFileName = "VfsProcessScannerTest.bpmn20.xml";
     assertTrue("'" + processFileName + "'not found", contains(scanResult, processFileName));
     assertFalse("'bpmn' folder in resource path found", contains(scanResult, "processResource.txt"));
@@ -58,7 +58,7 @@ public class VfsProcessApplicationScannerTest {
     Map<String, byte[]> scanResult = ProcessApplicationScanningUtil.findResources(classLoader, processRootPath, null);
 
     // expect: finds only the CMMN process file and not treats the 'cmmn' folder
-    assertEquals(1, scanResult.size());
+    assertThat(scanResult.size()).isEqualTo(1);
     String processFileName = "VfsProcessScannerTest.cmmn";
     assertTrue("'" + processFileName + "' not found", contains(scanResult, processFileName));
     assertFalse("'cmmn' in resource path found", contains(scanResult, "caseResource.txt"));
@@ -71,7 +71,7 @@ public class VfsProcessApplicationScannerTest {
     String[] additionalResourceSuffixes = new String[] { "py", "groovy", "rb" };
     Map<String, byte[]> scanResult = ProcessApplicationScanningUtil.findResources(classLoader, processRootPath, null, additionalResourceSuffixes);
 
-    assertEquals(4, scanResult.size());
+    assertThat(scanResult.size()).isEqualTo(4);
     String processFileName = "VfsProcessScannerTest.bpmn20.xml";
     assertTrue("'" + processFileName + "' not found", contains(scanResult, processFileName));
     assertTrue("'hello.py' in resource path found", contains(scanResult, "hello.py"));

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.cmmn;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -33,6 +32,7 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
@@ -314,19 +314,19 @@ public class CaseServiceStageTest extends PluggableProcessEngineTest {
 
   protected void verifyVariables(String caseInstanceId, String caseExecutionId, List<VariableInstance> result) {
     assertFalse(result.isEmpty());
-    assertEquals(2, result.size());
+    assertThat(result.size()).isEqualTo(2);
 
     for (VariableInstance variable : result) {
 
-      assertEquals(caseExecutionId, variable.getCaseExecutionId());
-      assertEquals(caseInstanceId, variable.getCaseInstanceId());
+      assertThat(variable.getCaseExecutionId()).isEqualTo(caseExecutionId);
+      assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
       if (variable.getName().equals("aVariableName")) {
-        assertEquals("aVariableName", variable.getName());
-        assertEquals("abc", variable.getValue());
+        assertThat(variable.getName()).isEqualTo("aVariableName");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if (variable.getName().equals("anotherVariableName")) {
-        assertEquals("anotherVariableName", variable.getName());
-        assertEquals(999, variable.getValue());
+        assertThat(variable.getName()).isEqualTo("anotherVariableName");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else {
         fail("Unexpected variable: " + variable.getName());
       }

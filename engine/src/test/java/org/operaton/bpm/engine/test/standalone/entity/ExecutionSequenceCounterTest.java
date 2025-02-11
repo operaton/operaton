@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.standalone.entity;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
@@ -83,31 +83,31 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
     // then (1)
     List<ActivitySequenceCounterMap> order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertEquals(5, order.size());
+    assertThat(order.size()).isEqualTo(5);
 
     long lastSequenceCounter = 0;
 
     ActivitySequenceCounterMap theStartElement = order.get(0);
-    assertEquals("theStart", theStartElement.getActivityId());
+    assertThat(theStartElement.getActivityId()).isEqualTo("theStart");
     assertTrue(theStartElement.getSequenceCounter() > lastSequenceCounter);
     lastSequenceCounter = theStartElement.getSequenceCounter();
 
     ActivitySequenceCounterMap theForkElement = order.get(1);
-    assertEquals("theService", theForkElement.getActivityId());
+    assertThat(theForkElement.getActivityId()).isEqualTo("theService");
     assertTrue(theForkElement.getSequenceCounter() > lastSequenceCounter);
     lastSequenceCounter = theForkElement.getSequenceCounter();
 
     ActivitySequenceCounterMap theServiceElement = order.get(2);
-    assertEquals("fork", theServiceElement.getActivityId());
+    assertThat(theServiceElement.getActivityId()).isEqualTo("fork");
     assertTrue(theServiceElement.getSequenceCounter() > lastSequenceCounter);
     lastSequenceCounter = theServiceElement.getSequenceCounter();
 
     ActivitySequenceCounterMap theService1Element = order.get(3);
-    assertEquals("theService1", theService1Element.getActivityId());
+    assertThat(theService1Element.getActivityId()).isEqualTo("theService1");
     assertTrue(theService1Element.getSequenceCounter() > lastSequenceCounter);
 
     ActivitySequenceCounterMap theService2Element = order.get(4);
-    assertEquals("theService2", theService2Element.getActivityId());
+    assertThat(theService2Element.getActivityId()).isEqualTo("theService2");
     assertTrue(theService2Element.getSequenceCounter() > lastSequenceCounter);
 
     // when (2)
@@ -116,10 +116,10 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
     // then (2)
     order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertEquals(6, order.size());
+    assertThat(order.size()).isEqualTo(6);
 
     ActivitySequenceCounterMap theEnd1Element = order.get(5);
-    assertEquals("theEnd1", theEnd1Element.getActivityId());
+    assertThat(theEnd1Element.getActivityId()).isEqualTo("theEnd1");
     assertTrue(theEnd1Element.getSequenceCounter() > theService1Element.getSequenceCounter());
 
     // when (3)
@@ -130,10 +130,10 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(processInstanceId);
 
     order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertEquals(7, order.size());
+    assertThat(order.size()).isEqualTo(7);
 
     ActivitySequenceCounterMap theEnd2Element = order.get(6);
-    assertEquals("theEnd2", theEnd2Element.getActivityId());
+    assertThat(theEnd2Element.getActivityId()).isEqualTo("theEnd2");
     assertTrue(theEnd2Element.getSequenceCounter() > theService2Element.getSequenceCounter());
   }
 
@@ -165,35 +165,35 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
     // then (1)
     List<ActivitySequenceCounterMap> order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertEquals(6, order.size());
+    assertThat(order.size()).isEqualTo(6);
 
     long lastSequenceCounter = 0;
 
     ActivitySequenceCounterMap theStartElement = order.get(0);
-    assertEquals("theStart", theStartElement.getActivityId());
+    assertThat(theStartElement.getActivityId()).isEqualTo("theStart");
     assertTrue(theStartElement.getSequenceCounter() > lastSequenceCounter);
     lastSequenceCounter = theStartElement.getSequenceCounter();
 
     ActivitySequenceCounterMap theForkElement = order.get(1);
-    assertEquals("theService", theForkElement.getActivityId());
+    assertThat(theForkElement.getActivityId()).isEqualTo("theService");
     assertTrue(theForkElement.getSequenceCounter() > lastSequenceCounter);
     lastSequenceCounter = theForkElement.getSequenceCounter();
 
     ActivitySequenceCounterMap theServiceElement = order.get(2);
-    assertEquals("fork", theServiceElement.getActivityId());
+    assertThat(theServiceElement.getActivityId()).isEqualTo("fork");
     assertTrue(theServiceElement.getSequenceCounter() > lastSequenceCounter);
     lastSequenceCounter = theServiceElement.getSequenceCounter();
 
     ActivitySequenceCounterMap theService1Element = order.get(3);
-    assertEquals("theService1", theService1Element.getActivityId());
+    assertThat(theService1Element.getActivityId()).isEqualTo("theService1");
     assertTrue(theService1Element.getSequenceCounter() > lastSequenceCounter);
 
     ActivitySequenceCounterMap theService2Element = order.get(4);
-    assertEquals("theService2", theService2Element.getActivityId());
+    assertThat(theService2Element.getActivityId()).isEqualTo("theService2");
     assertTrue(theService2Element.getSequenceCounter() > lastSequenceCounter);
 
     ActivitySequenceCounterMap theService3Element = order.get(5);
-    assertEquals("theService3", theService3Element.getActivityId());
+    assertThat(theService3Element.getActivityId()).isEqualTo("theService3");
     assertTrue(theService3Element.getSequenceCounter() > theService2Element.getSequenceCounter() );
 
     // when (2)
@@ -202,10 +202,10 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
     // then (2)
     order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertEquals(7, order.size());
+    assertThat(order.size()).isEqualTo(7);
 
     ActivitySequenceCounterMap theEnd1Element = order.get(6);
-    assertEquals("theEnd1", theEnd1Element.getActivityId());
+    assertThat(theEnd1Element.getActivityId()).isEqualTo("theEnd1");
     assertTrue(theEnd1Element.getSequenceCounter() > theService1Element.getSequenceCounter());
 
     // when (3)
@@ -216,10 +216,10 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(processInstanceId);
 
     order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertEquals(8, order.size());
+    assertThat(order.size()).isEqualTo(8);
 
     ActivitySequenceCounterMap theEnd2Element = order.get(7);
-    assertEquals("theEnd2", theEnd2Element.getActivityId());
+    assertThat(theEnd2Element.getActivityId()).isEqualTo("theEnd2");
     assertTrue(theEnd2Element.getSequenceCounter() > theService3Element.getSequenceCounter());
   }
 
@@ -235,15 +235,15 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
     // then (1)
     List<ActivitySequenceCounterMap> order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertEquals(2, order.size());
+    assertThat(order.size()).isEqualTo(2);
 
     ActivitySequenceCounterMap theService1Element = order.get(0);
-    assertEquals("theService1", theService1Element.getActivityId());
+    assertThat(theService1Element.getActivityId()).isEqualTo("theService1");
 
     ActivitySequenceCounterMap theService3Element = order.get(1);
-    assertEquals("theService3", theService3Element.getActivityId());
+    assertThat(theService3Element.getActivityId()).isEqualTo("theService3");
 
-    assertEquals(theService1Element.getSequenceCounter(), theService3Element.getSequenceCounter());
+    assertThat(theService3Element.getSequenceCounter()).isEqualTo(theService1Element.getSequenceCounter());
 
     // when (2)
     String jobId = jobQuery.activityId("theService4").singleResult().getId();
@@ -251,18 +251,18 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
     // then (2)
     order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertEquals(5, order.size());
+    assertThat(order.size()).isEqualTo(5);
 
     ActivitySequenceCounterMap theService4Element = order.get(2);
-    assertEquals("theService4", theService4Element.getActivityId());
+    assertThat(theService4Element.getActivityId()).isEqualTo("theService4");
     assertTrue(theService4Element.getSequenceCounter() > theService3Element.getSequenceCounter());
 
     ActivitySequenceCounterMap theService5Element = order.get(3);
-    assertEquals("theService5", theService5Element.getActivityId());
+    assertThat(theService5Element.getActivityId()).isEqualTo("theService5");
     assertTrue(theService5Element.getSequenceCounter() > theService4Element.getSequenceCounter());
 
     ActivitySequenceCounterMap theEnd2Element = order.get(4);
-    assertEquals("theEnd2", theEnd2Element.getActivityId());
+    assertThat(theEnd2Element.getActivityId()).isEqualTo("theEnd2");
     assertTrue(theEnd2Element.getSequenceCounter() > theService5Element.getSequenceCounter());
 
     // when (3)
@@ -271,15 +271,15 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
     // then (3)
     order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertEquals(7, order.size());
+    assertThat(order.size()).isEqualTo(7);
 
     ActivitySequenceCounterMap theService2Element = order.get(5);
-    assertEquals("theService2", theService2Element.getActivityId());
+    assertThat(theService2Element.getActivityId()).isEqualTo("theService2");
     assertTrue(theService2Element.getSequenceCounter() > theService1Element.getSequenceCounter());
     assertTrue(theService2Element.getSequenceCounter() > theEnd2Element.getSequenceCounter());
 
     ActivitySequenceCounterMap theEnd1Element = order.get(6);
-    assertEquals("theEnd1", theEnd1Element.getActivityId());
+    assertThat(theEnd1Element.getActivityId()).isEqualTo("theEnd1");
     assertTrue(theEnd1Element.getSequenceCounter() > theService2Element.getSequenceCounter());
 
     testRule.assertProcessEnded(processInstanceId);
@@ -296,15 +296,15 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
     // then (1)
     List<ActivitySequenceCounterMap> order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertEquals(2, order.size());
+    assertThat(order.size()).isEqualTo(2);
 
     ActivitySequenceCounterMap theService1Element = order.get(0);
-    assertEquals("theService1", theService1Element.getActivityId());
+    assertThat(theService1Element.getActivityId()).isEqualTo("theService1");
 
     ActivitySequenceCounterMap theService3Element = order.get(1);
-    assertEquals("theService3", theService3Element.getActivityId());
+    assertThat(theService3Element.getActivityId()).isEqualTo("theService3");
 
-    assertEquals(theService1Element.getSequenceCounter(), theService3Element.getSequenceCounter());
+    assertThat(theService3Element.getSequenceCounter()).isEqualTo(theService1Element.getSequenceCounter());
 
     // when (2)
     String jobId = jobQuery.activityId("theService2").singleResult().getId();
@@ -312,14 +312,14 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
     // then (2)
     order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertEquals(4, order.size());
+    assertThat(order.size()).isEqualTo(4);
 
     ActivitySequenceCounterMap theService2Element = order.get(2);
-    assertEquals("theService2", theService2Element.getActivityId());
+    assertThat(theService2Element.getActivityId()).isEqualTo("theService2");
     assertTrue(theService2Element.getSequenceCounter() > theService1Element.getSequenceCounter());
 
     ActivitySequenceCounterMap theEnd1Element = order.get(3);
-    assertEquals("theEnd1", theEnd1Element.getActivityId());
+    assertThat(theEnd1Element.getActivityId()).isEqualTo("theEnd1");
     assertTrue(theEnd1Element.getSequenceCounter() > theService2Element.getSequenceCounter());
 
     // when (3)
@@ -328,19 +328,19 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
     // then (3)
     order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertEquals(7, order.size());
+    assertThat(order.size()).isEqualTo(7);
 
     ActivitySequenceCounterMap theService4Element = order.get(4);
-    assertEquals("theService4", theService4Element.getActivityId());
+    assertThat(theService4Element.getActivityId()).isEqualTo("theService4");
     assertTrue(theService4Element.getSequenceCounter() > theService3Element.getSequenceCounter());
     assertTrue(theService4Element.getSequenceCounter() > theEnd1Element.getSequenceCounter());
 
     ActivitySequenceCounterMap theService5Element = order.get(5);
-    assertEquals("theService5", theService5Element.getActivityId());
+    assertThat(theService5Element.getActivityId()).isEqualTo("theService5");
     assertTrue(theService5Element.getSequenceCounter() > theService4Element.getSequenceCounter());
 
     ActivitySequenceCounterMap theEnd2Element = order.get(6);
-    assertEquals("theEnd2", theEnd2Element.getActivityId());
+    assertThat(theEnd2Element.getActivityId()).isEqualTo("theEnd2");
     assertTrue(theEnd2Element.getSequenceCounter() > theService5Element.getSequenceCounter());
 
     testRule.assertProcessEnded(processInstanceId);
@@ -357,19 +357,19 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
     // then (1)
     List<ActivitySequenceCounterMap> order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertEquals(3, order.size());
+    assertThat(order.size()).isEqualTo(3);
 
     ActivitySequenceCounterMap theService1Element = order.get(0);
-    assertEquals("theService1", theService1Element.getActivityId());
+    assertThat(theService1Element.getActivityId()).isEqualTo("theService1");
 
     ActivitySequenceCounterMap theService3Element = order.get(1);
-    assertEquals("theService3", theService3Element.getActivityId());
+    assertThat(theService3Element.getActivityId()).isEqualTo("theService3");
 
     ActivitySequenceCounterMap theService6Element = order.get(2);
-    assertEquals("theService6", theService6Element.getActivityId());
+    assertThat(theService6Element.getActivityId()).isEqualTo("theService6");
 
-    assertEquals(theService1Element.getSequenceCounter(), theService3Element.getSequenceCounter());
-    assertEquals(theService3Element.getSequenceCounter(), theService6Element.getSequenceCounter());
+    assertThat(theService3Element.getSequenceCounter()).isEqualTo(theService1Element.getSequenceCounter());
+    assertThat(theService6Element.getSequenceCounter()).isEqualTo(theService3Element.getSequenceCounter());
 
     // when (2)
     String jobId = jobQuery.activityId("theService2").singleResult().getId();
@@ -377,14 +377,14 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
     // then (2)
     order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertEquals(5, order.size());
+    assertThat(order.size()).isEqualTo(5);
 
     ActivitySequenceCounterMap theService2Element = order.get(3);
-    assertEquals("theService2", theService2Element.getActivityId());
+    assertThat(theService2Element.getActivityId()).isEqualTo("theService2");
     assertTrue(theService2Element.getSequenceCounter() > theService1Element.getSequenceCounter());
 
     ActivitySequenceCounterMap theEnd1Element = order.get(4);
-    assertEquals("theEnd1", theEnd1Element.getActivityId());
+    assertThat(theEnd1Element.getActivityId()).isEqualTo("theEnd1");
     assertTrue(theEnd1Element.getSequenceCounter() > theService2Element.getSequenceCounter());
 
     // when (3)
@@ -393,18 +393,18 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
     // then (3)
     order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertEquals(8, order.size());
+    assertThat(order.size()).isEqualTo(8);
 
     ActivitySequenceCounterMap theService4Element = order.get(5);
-    assertEquals("theService4", theService4Element.getActivityId());
+    assertThat(theService4Element.getActivityId()).isEqualTo("theService4");
     assertTrue(theService4Element.getSequenceCounter() > theService3Element.getSequenceCounter());
 
     ActivitySequenceCounterMap theService5Element = order.get(6);
-    assertEquals("theService5", theService5Element.getActivityId());
+    assertThat(theService5Element.getActivityId()).isEqualTo("theService5");
     assertTrue(theService5Element.getSequenceCounter() > theService4Element.getSequenceCounter());
 
     ActivitySequenceCounterMap theEnd2Element = order.get(7);
-    assertEquals("theEnd2", theEnd2Element.getActivityId());
+    assertThat(theEnd2Element.getActivityId()).isEqualTo("theEnd2");
     assertTrue(theEnd2Element.getSequenceCounter() > theService5Element.getSequenceCounter());
 
     // when (4)
@@ -413,23 +413,23 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
     // then (4)
     order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertEquals(12, order.size());
+    assertThat(order.size()).isEqualTo(12);
 
     ActivitySequenceCounterMap theService7Element = order.get(8);
-    assertEquals("theService7", theService7Element.getActivityId());
+    assertThat(theService7Element.getActivityId()).isEqualTo("theService7");
     assertTrue(theService7Element.getSequenceCounter() > theService6Element.getSequenceCounter());
     assertTrue(theService7Element.getSequenceCounter() > theEnd2Element.getSequenceCounter());
 
     ActivitySequenceCounterMap theService8Element = order.get(9);
-    assertEquals("theService8", theService8Element.getActivityId());
+    assertThat(theService8Element.getActivityId()).isEqualTo("theService8");
     assertTrue(theService8Element.getSequenceCounter() > theService7Element.getSequenceCounter());
 
     ActivitySequenceCounterMap theService9Element = order.get(10);
-    assertEquals("theService9", theService9Element.getActivityId());
+    assertThat(theService9Element.getActivityId()).isEqualTo("theService9");
     assertTrue(theService9Element.getSequenceCounter() > theService8Element.getSequenceCounter());
 
     ActivitySequenceCounterMap theEnd3Element = order.get(11);
-    assertEquals("theEnd3", theEnd3Element.getActivityId());
+    assertThat(theEnd3Element.getActivityId()).isEqualTo("theEnd3");
     assertTrue(theEnd3Element.getSequenceCounter() > theService9Element.getSequenceCounter());
 
     testRule.assertProcessEnded(processInstanceId);
@@ -447,53 +447,53 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(processInstanceId);
 
     List<ActivitySequenceCounterMap> order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertEquals(9, order.size());
+    assertThat(order.size()).isEqualTo(9);
 
     long lastSequenceCounter = 0;
 
     ActivitySequenceCounterMap theStartElement = order.get(0);
-    assertEquals("theStart", theStartElement.getActivityId());
+    assertThat(theStartElement.getActivityId()).isEqualTo("theStart");
     assertTrue(theStartElement.getSequenceCounter() > lastSequenceCounter);
     lastSequenceCounter = theStartElement.getSequenceCounter();
 
     ActivitySequenceCounterMap theForkElement = order.get(1);
-    assertEquals("theService", theForkElement.getActivityId());
+    assertThat(theForkElement.getActivityId()).isEqualTo("theService");
     assertTrue(theForkElement.getSequenceCounter() > lastSequenceCounter);
     lastSequenceCounter = theForkElement.getSequenceCounter();
 
     ActivitySequenceCounterMap theServiceElement = order.get(2);
-    assertEquals("fork", theServiceElement.getActivityId());
+    assertThat(theServiceElement.getActivityId()).isEqualTo("fork");
     assertTrue(theServiceElement.getSequenceCounter() > lastSequenceCounter);
     lastSequenceCounter = theServiceElement.getSequenceCounter();
 
     ActivitySequenceCounterMap theService1Element = order.get(3);
-    assertEquals("theService1", theService1Element.getActivityId());
+    assertThat(theService1Element.getActivityId()).isEqualTo("theService1");
     assertTrue(theService1Element.getSequenceCounter() > lastSequenceCounter);
     lastSequenceCounter = theService1Element.getSequenceCounter();
 
     ActivitySequenceCounterMap theJoin1Element = order.get(4);
-    assertEquals("join", theJoin1Element.getActivityId());
+    assertThat(theJoin1Element.getActivityId()).isEqualTo("join");
     assertTrue(theJoin1Element.getSequenceCounter() > lastSequenceCounter);
 
     lastSequenceCounter = theForkElement.getSequenceCounter();
 
     ActivitySequenceCounterMap theService2Element = order.get(5);
-    assertEquals("theService2", theService2Element.getActivityId());
+    assertThat(theService2Element.getActivityId()).isEqualTo("theService2");
     assertTrue(theService2Element.getSequenceCounter() > lastSequenceCounter);
     lastSequenceCounter = theService2Element.getSequenceCounter();
 
     ActivitySequenceCounterMap theJoin2Element = order.get(6);
-    assertEquals("join", theJoin2Element.getActivityId());
+    assertThat(theJoin2Element.getActivityId()).isEqualTo("join");
     assertTrue(theJoin2Element.getSequenceCounter() > lastSequenceCounter);
 
     ActivitySequenceCounterMap theService3Element = order.get(7);
-    assertEquals("theService3", theService3Element.getActivityId());
+    assertThat(theService3Element.getActivityId()).isEqualTo("theService3");
     assertTrue(theService3Element.getSequenceCounter() > theJoin1Element.getSequenceCounter());
     assertTrue(theService3Element.getSequenceCounter() > theJoin2Element.getSequenceCounter());
     lastSequenceCounter = theService3Element.getSequenceCounter();
 
     ActivitySequenceCounterMap theEndElement = order.get(8);
-    assertEquals("theEnd", theEndElement.getActivityId());
+    assertThat(theEndElement.getActivityId()).isEqualTo("theEnd");
     assertTrue(theEndElement.getSequenceCounter() > lastSequenceCounter);
   }
 
@@ -509,60 +509,60 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(processInstanceId);
 
     List<ActivitySequenceCounterMap> order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertEquals(10, order.size());
+    assertThat(order.size()).isEqualTo(10);
 
     long lastSequenceCounter = 0;
 
     ActivitySequenceCounterMap theStartElement = order.get(0);
-    assertEquals("theStart", theStartElement.getActivityId());
+    assertThat(theStartElement.getActivityId()).isEqualTo("theStart");
     assertTrue(theStartElement.getSequenceCounter() > lastSequenceCounter);
     lastSequenceCounter = theStartElement.getSequenceCounter();
 
     ActivitySequenceCounterMap theForkElement = order.get(1);
-    assertEquals("theService", theForkElement.getActivityId());
+    assertThat(theForkElement.getActivityId()).isEqualTo("theService");
     assertTrue(theForkElement.getSequenceCounter() > lastSequenceCounter);
     lastSequenceCounter = theForkElement.getSequenceCounter();
 
     ActivitySequenceCounterMap theServiceElement = order.get(2);
-    assertEquals("fork", theServiceElement.getActivityId());
+    assertThat(theServiceElement.getActivityId()).isEqualTo("fork");
     assertTrue(theServiceElement.getSequenceCounter() > lastSequenceCounter);
     lastSequenceCounter = theServiceElement.getSequenceCounter();
 
     ActivitySequenceCounterMap theService1Element = order.get(3);
-    assertEquals("theService1", theService1Element.getActivityId());
+    assertThat(theService1Element.getActivityId()).isEqualTo("theService1");
     assertTrue(theService1Element.getSequenceCounter() > lastSequenceCounter);
     lastSequenceCounter = theService1Element.getSequenceCounter();
 
     ActivitySequenceCounterMap theJoin1Element = order.get(4);
-    assertEquals("join", theJoin1Element.getActivityId());
+    assertThat(theJoin1Element.getActivityId()).isEqualTo("join");
     assertTrue(theJoin1Element.getSequenceCounter() > lastSequenceCounter);
 
     lastSequenceCounter = theForkElement.getSequenceCounter();
 
     ActivitySequenceCounterMap theService2Element = order.get(5);
-    assertEquals("theService2", theService2Element.getActivityId());
+    assertThat(theService2Element.getActivityId()).isEqualTo("theService2");
     assertTrue(theService2Element.getSequenceCounter() > lastSequenceCounter);
     lastSequenceCounter = theService2Element.getSequenceCounter();
 
     ActivitySequenceCounterMap theService3Element = order.get(6);
-    assertEquals("theService3", theService3Element.getActivityId());
+    assertThat(theService3Element.getActivityId()).isEqualTo("theService3");
     assertTrue(theService3Element.getSequenceCounter() > lastSequenceCounter);
     lastSequenceCounter = theService3Element.getSequenceCounter();
 
     ActivitySequenceCounterMap theJoin2Element = order.get(7);
-    assertEquals("join", theJoin2Element.getActivityId());
+    assertThat(theJoin2Element.getActivityId()).isEqualTo("join");
     assertTrue(theJoin2Element.getSequenceCounter() > lastSequenceCounter);
 
     assertNotEquals(theJoin1Element.getSequenceCounter(), theJoin2Element.getSequenceCounter());
 
     ActivitySequenceCounterMap theService4Element = order.get(8);
-    assertEquals("theService4", theService4Element.getActivityId());
+    assertThat(theService4Element.getActivityId()).isEqualTo("theService4");
     assertTrue(theService4Element.getSequenceCounter() > theJoin1Element.getSequenceCounter());
     assertTrue(theService4Element.getSequenceCounter() > theJoin2Element.getSequenceCounter());
     lastSequenceCounter = theService4Element.getSequenceCounter();
 
     ActivitySequenceCounterMap theEndElement = order.get(9);
-    assertEquals("theEnd", theEndElement.getActivityId());
+    assertThat(theEndElement.getActivityId()).isEqualTo("theEnd");
     assertTrue(theEndElement.getSequenceCounter() > lastSequenceCounter);
   }
 
@@ -578,23 +578,23 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(processInstanceId);
 
     List<ActivitySequenceCounterMap> order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertEquals(4, order.size());
+    assertThat(order.size()).isEqualTo(4);
 
     ActivitySequenceCounterMap theJoin1Element = order.get(0);
-    assertEquals("join", theJoin1Element.getActivityId());
+    assertThat(theJoin1Element.getActivityId()).isEqualTo("join");
 
     ActivitySequenceCounterMap theJoin2Element = order.get(1);
-    assertEquals("join", theJoin2Element.getActivityId());
+    assertThat(theJoin2Element.getActivityId()).isEqualTo("join");
 
     ActivitySequenceCounterMap theJoin3Element = order.get(2);
-    assertEquals("join", theJoin3Element.getActivityId());
+    assertThat(theJoin3Element.getActivityId()).isEqualTo("join");
 
     assertNotEquals(theJoin1Element.getSequenceCounter(), theJoin2Element.getSequenceCounter());
     assertNotEquals(theJoin2Element.getSequenceCounter(), theJoin3Element.getSequenceCounter());
     assertNotEquals(theJoin3Element.getSequenceCounter(), theJoin1Element.getSequenceCounter());
 
     ActivitySequenceCounterMap theService7Element = order.get(3);
-    assertEquals("theService7", theService7Element.getActivityId());
+    assertThat(theService7Element.getActivityId()).isEqualTo("theService7");
     assertTrue(theService7Element.getSequenceCounter() > theJoin1Element.getSequenceCounter());
     assertTrue(theService7Element.getSequenceCounter() > theJoin2Element.getSequenceCounter());
     assertTrue(theService7Element.getSequenceCounter() > theJoin3Element.getSequenceCounter());
@@ -627,16 +627,16 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(processInstanceId);
 
     List<ActivitySequenceCounterMap> order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertEquals(3, order.size());
+    assertThat(order.size()).isEqualTo(3);
 
     ActivitySequenceCounterMap innerEnd1Element = order.get(0);
-    assertEquals("innerEnd1", innerEnd1Element.getActivityId());
+    assertThat(innerEnd1Element.getActivityId()).isEqualTo("innerEnd1");
 
     ActivitySequenceCounterMap innerEnd2Element = order.get(1);
-    assertEquals("innerEnd2", innerEnd2Element.getActivityId());
+    assertThat(innerEnd2Element.getActivityId()).isEqualTo("innerEnd2");
 
     ActivitySequenceCounterMap theService1Element = order.get(2);
-    assertEquals("theService1", theService1Element.getActivityId());
+    assertThat(theService1Element.getActivityId()).isEqualTo("theService1");
 
     assertTrue(theService1Element.getSequenceCounter() > innerEnd1Element.getSequenceCounter());
     assertTrue(theService1Element.getSequenceCounter() > innerEnd2Element.getSequenceCounter());
@@ -654,16 +654,16 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(processInstanceId);
 
     List<ActivitySequenceCounterMap> order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertEquals(3, order.size());
+    assertThat(order.size()).isEqualTo(3);
 
     ActivitySequenceCounterMap innerEnd1Element = order.get(0);
-    assertEquals("innerEnd1", innerEnd1Element.getActivityId());
+    assertThat(innerEnd1Element.getActivityId()).isEqualTo("innerEnd1");
 
     ActivitySequenceCounterMap innerEnd2Element = order.get(1);
-    assertEquals("innerEnd2", innerEnd2Element.getActivityId());
+    assertThat(innerEnd2Element.getActivityId()).isEqualTo("innerEnd2");
 
     ActivitySequenceCounterMap theService1Element = order.get(2);
-    assertEquals("theService1", theService1Element.getActivityId());
+    assertThat(theService1Element.getActivityId()).isEqualTo("theService1");
 
     assertTrue(theService1Element.getSequenceCounter() > innerEnd1Element.getSequenceCounter());
     assertTrue(theService1Element.getSequenceCounter() > innerEnd2Element.getSequenceCounter());
@@ -696,30 +696,30 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(processInstanceId);
 
     List<ActivitySequenceCounterMap> order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertEquals(6, order.size());
+    assertThat(order.size()).isEqualTo(6);
 
     ActivitySequenceCounterMap theStartElement = order.get(0);
-    assertEquals("theStart", theStartElement.getActivityId());
+    assertThat(theStartElement.getActivityId()).isEqualTo("theStart");
 
     ActivitySequenceCounterMap theService1Element = order.get(1);
-    assertEquals("theService1", theService1Element.getActivityId());
+    assertThat(theService1Element.getActivityId()).isEqualTo("theService1");
     assertTrue(theService1Element.getSequenceCounter() > theStartElement.getSequenceCounter());
 
     ActivitySequenceCounterMap theService21Element = order.get(2);
-    assertEquals("theService2", theService21Element.getActivityId());
+    assertThat(theService21Element.getActivityId()).isEqualTo("theService2");
     assertTrue(theService21Element.getSequenceCounter() > theService1Element.getSequenceCounter());
 
     ActivitySequenceCounterMap theService22Element = order.get(3);
-    assertEquals("theService2", theService22Element.getActivityId());
+    assertThat(theService22Element.getActivityId()).isEqualTo("theService2");
     assertTrue(theService22Element.getSequenceCounter() > theService1Element.getSequenceCounter());
 
     ActivitySequenceCounterMap theService3Element = order.get(4);
-    assertEquals("theService3", theService3Element.getActivityId());
+    assertThat(theService3Element.getActivityId()).isEqualTo("theService3");
     assertTrue(theService3Element.getSequenceCounter() > theService21Element.getSequenceCounter());
     assertTrue(theService3Element.getSequenceCounter() > theService22Element.getSequenceCounter());
 
     ActivitySequenceCounterMap theEndElement = order.get(5);
-    assertEquals("theEnd", theEndElement.getActivityId());
+    assertThat(theEndElement.getActivityId()).isEqualTo("theEnd");
     assertTrue(theEndElement.getSequenceCounter() > theService3Element.getSequenceCounter());
   }
 
@@ -777,25 +777,25 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
     // then (2)
     order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertEquals(6, order.size());
+    assertThat(order.size()).isEqualTo(6);
 
     ActivitySequenceCounterMap theService1Element = order.get(1);
-    assertEquals("theService1", theService1Element.getActivityId());
+    assertThat(theService1Element.getActivityId()).isEqualTo("theService1");
 
     ActivitySequenceCounterMap theTaskElement = order.get(2);
-    assertEquals("theTask", theTaskElement.getActivityId());
+    assertThat(theTaskElement.getActivityId()).isEqualTo("theTask");
 
     ActivitySequenceCounterMap messageBoundaryElement = order.get(3);
-    assertEquals("messageBoundary", messageBoundaryElement.getActivityId());
+    assertThat(messageBoundaryElement.getActivityId()).isEqualTo("messageBoundary");
     assertTrue(messageBoundaryElement.getSequenceCounter() > theService1Element.getSequenceCounter());
     assertFalse(messageBoundaryElement.getSequenceCounter() > theTaskElement.getSequenceCounter());
 
     ActivitySequenceCounterMap theServiceAfterMessageElement = order.get(4);
-    assertEquals("theServiceAfterMessage", theServiceAfterMessageElement.getActivityId());
+    assertThat(theServiceAfterMessageElement.getActivityId()).isEqualTo("theServiceAfterMessage");
     assertTrue(theServiceAfterMessageElement.getSequenceCounter() > messageBoundaryElement.getSequenceCounter());
 
     ActivitySequenceCounterMap theEnd2Element = order.get(5);
-    assertEquals("theEnd2", theEnd2Element.getActivityId());
+    assertThat(theEnd2Element.getActivityId()).isEqualTo("theEnd2");
     assertTrue(theEnd2Element.getSequenceCounter() > theServiceAfterMessageElement.getSequenceCounter());
 
     // when (3)
@@ -806,15 +806,15 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(processInstanceId);
 
     order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertEquals(7, order.size());
+    assertThat(order.size()).isEqualTo(7);
 
     ActivitySequenceCounterMap theEnd1Element = order.get(6);
-    assertEquals("theEnd1", theEnd1Element.getActivityId());
+    assertThat(theEnd1Element.getActivityId()).isEqualTo("theEnd1");
     assertTrue(theEnd1Element.getSequenceCounter() > theEnd2Element.getSequenceCounter());
   }
 
   protected void verifyOrder(List<ActivitySequenceCounterMap> actualOrder, String... expectedOrder) {
-    assertEquals(expectedOrder.length, actualOrder.size());
+    assertThat(actualOrder.size()).isEqualTo(expectedOrder.length);
 
     long lastActualSequenceCounter = 0;
     for (int i = 0; i < expectedOrder.length; i++) {
@@ -822,7 +822,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
       String actualActivityId = actual.getActivityId();
       String expectedActivityId = expectedOrder[i];
-      assertEquals(actualActivityId, expectedActivityId);
+      assertThat(expectedActivityId).isEqualTo(actualActivityId);
 
       long actualSequenceCounter = actual.getSequenceCounter();
       assertTrue(actualSequenceCounter > lastActualSequenceCounter);

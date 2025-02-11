@@ -18,7 +18,7 @@ package org.operaton.bpm.engine.test.jobexecutor;
 
 import static org.operaton.bpm.engine.test.util.JobExecutorWaitUtils.waitForJobExecutionRunnablesToFinish;
 import static org.operaton.bpm.engine.test.util.JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 
 import java.text.DateFormat.Field;
@@ -92,7 +92,7 @@ public class SequentialJobAcquisitionTest {
 
     engine.getRuntimeService().startProcessInstanceByKey("intermediateTimerEventExample");
 
-    assertEquals(1, engine.getManagementService().createJobQuery().count());
+    assertThat(engine.getManagementService().createJobQuery().count()).isEqualTo(1);
 
     Calendar calendar = Calendar.getInstance();
     calendar.add(Field.DAY_OF_YEAR.getCalendarField(), 6);
@@ -100,7 +100,7 @@ public class SequentialJobAcquisitionTest {
     jobExecutor.start();
     waitForJobExecutorToProcessAllJobs(10000, 100, jobExecutor, engine.getManagementService(), true);
 
-    assertEquals(0, engine.getManagementService().createJobQuery().count());
+    assertThat(engine.getManagementService().createJobQuery().count()).isEqualTo(0);
   }
 
   @Test
@@ -143,8 +143,8 @@ public class SequentialJobAcquisitionTest {
     engine1.getRuntimeService().startProcessInstanceByKey("intermediateTimerEventExample");
     engine2.getRuntimeService().startProcessInstanceByKey("intermediateTimerEventExample");
 
-    assertEquals(1, engine1.getManagementService().createJobQuery().count());
-    assertEquals(1, engine2.getManagementService().createJobQuery().count());
+    assertThat(engine1.getManagementService().createJobQuery().count()).isEqualTo(1);
+    assertThat(engine2.getManagementService().createJobQuery().count()).isEqualTo(1);
 
     Calendar calendar = Calendar.getInstance();
     calendar.add(Field.DAY_OF_YEAR.getCalendarField(), 6);
@@ -158,8 +158,8 @@ public class SequentialJobAcquisitionTest {
     // assert task completed for the second engine
     waitForJobExecutorToProcessAllJobs(10000, 100, jobExecutor, engine2.getManagementService(), true);
 
-    assertEquals(0, engine1.getManagementService().createJobQuery().count());
-    assertEquals(0, engine2.getManagementService().createJobQuery().count());
+    assertThat(engine1.getManagementService().createJobQuery().count()).isEqualTo(0);
+    assertThat(engine2.getManagementService().createJobQuery().count()).isEqualTo(0);
   }
 
   @Test
@@ -204,8 +204,8 @@ public class SequentialJobAcquisitionTest {
     calendar.add(Field.DAY_OF_YEAR.getCalendarField(), 6);
     ClockUtil.setCurrentTime(calendar.getTime());
 
-    assertEquals(1, engine1.getManagementService().createJobQuery().count());
-    assertEquals(1, engine2.getManagementService().createJobQuery().count());
+    assertThat(engine1.getManagementService().createJobQuery().count()).isEqualTo(1);
+    assertThat(engine2.getManagementService().createJobQuery().count()).isEqualTo(1);
 
     // assert task completed for the first engine
     jobExecutor.start();
@@ -221,8 +221,8 @@ public class SequentialJobAcquisitionTest {
 
     assertFalse(jobExecutor.getAcquireJobsRunnable().isJobAdded());
 
-    assertEquals(0, engine1.getManagementService().createJobQuery().count());
-    assertEquals(0, engine2.getManagementService().createJobQuery().count());
+    assertThat(engine1.getManagementService().createJobQuery().count()).isEqualTo(0);
+    assertThat(engine2.getManagementService().createJobQuery().count()).isEqualTo(0);
   }
 
 }

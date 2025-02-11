@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.operation;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -80,7 +80,7 @@ public class CaseInstanceTest {
     expectedStateTransitions.add("() --create(A)--> available");
     expectedStateTransitions.add("available --enable(A)--> enabled");
 
-    assertEquals(expectedStateTransitions, stateTransitionCollector.stateTransitions);
+    assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
 
     // clear lists
     emptyCollector(stateTransitionCollector, expectedStateTransitions);
@@ -92,7 +92,7 @@ public class CaseInstanceTest {
 
     // case instance has one child plan item
     List<CaseExecutionImpl> childPlanItems = instance.getCaseExecutions();
-    assertEquals(1, childPlanItems.size());
+    assertThat(childPlanItems.size()).isEqualTo(1);
 
     CaseExecutionImpl planItemA = childPlanItems.get(0);
 
@@ -100,7 +100,7 @@ public class CaseInstanceTest {
     assertTrue(planItemA.isEnabled());
 
     // the parent of the child plan item is the case instance
-    assertEquals(caseInstance, planItemA.getParent());
+    assertThat(planItemA.getParent()).isEqualTo(caseInstance);
 
     // manual start of A
     planItemA.manualStart();
@@ -109,7 +109,7 @@ public class CaseInstanceTest {
     // enabled --enable(A)--> active
     expectedStateTransitions.add("enabled --manualStart(A)--> active");
 
-    assertEquals(expectedStateTransitions, stateTransitionCollector.stateTransitions);
+    assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
 
     assertTrue(planItemA.isActive());
   }
@@ -195,14 +195,14 @@ public class CaseInstanceTest {
     expectedStateTransitions.add("() --create(B)--> available");
     expectedStateTransitions.add("available --enable(B)--> enabled");
 
-    assertEquals(expectedStateTransitions, stateTransitionCollector.stateTransitions);
+    assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
 
     // clear lists
     emptyCollector(stateTransitionCollector, expectedStateTransitions);
 
     // X should have two chil plan items
     childPlanItems = planItemX.getCaseExecutions();
-    assertEquals(2, childPlanItems.size());
+    assertThat(childPlanItems.size()).isEqualTo(2);
 
     for (CmmnExecution childPlanItem : childPlanItems) {
       // both children should be enabled
@@ -215,7 +215,7 @@ public class CaseInstanceTest {
       assertTrue(childPlanItem.isActive());
 
       // X should be the parent of both children
-      assertEquals(planItemX, childPlanItem.getParent());
+      assertThat(childPlanItem.getParent()).isEqualTo(planItemX);
     }
 
     // expected state transitions after the manual starts of A and B:
@@ -224,7 +224,7 @@ public class CaseInstanceTest {
     expectedStateTransitions.add("enabled --manualStart(A)--> active");
     expectedStateTransitions.add("enabled --manualStart(B)--> active");
 
-    assertEquals(expectedStateTransitions, stateTransitionCollector.stateTransitions);
+    assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
 
   }
 
@@ -237,12 +237,12 @@ public class CaseInstanceTest {
 
     // case instance has one child plan item
     List<CaseExecutionImpl> childPlanItems = instance.getCaseExecutions();
-    assertEquals(1, childPlanItems.size());
+    assertThat(childPlanItems.size()).isEqualTo(1);
 
     CaseExecutionImpl planItemX = childPlanItems.get(0);
 
     // the case instance should be the parent of X
-    assertEquals(caseInstance, planItemX.getParent());
+    assertThat(planItemX.getParent()).isEqualTo(caseInstance);
 
     // X should be enabled
     assertTrue(planItemX.isEnabled());
@@ -299,7 +299,7 @@ public class CaseInstanceTest {
     expectedStateTransitions.add("() --create(B)--> available");
     expectedStateTransitions.add("available --start(B)--> active");
 
-    assertEquals(expectedStateTransitions, stateTransitionCollector.stateTransitions);
+    assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
 
     // clear lists
     emptyCollector(stateTransitionCollector, expectedStateTransitions);
@@ -307,14 +307,14 @@ public class CaseInstanceTest {
     // X should have two chil plan items
     List<CaseExecutionImpl> childPlanItems;
     childPlanItems = planItemX.getCaseExecutions();
-    assertEquals(2, childPlanItems.size());
+    assertThat(childPlanItems.size()).isEqualTo(2);
 
     for (CmmnExecution childPlanItem : childPlanItems) {
       // both children should be active
       assertTrue(childPlanItem.isActive());
 
       // X should be the parent of both children
-      assertEquals(planItemX, childPlanItem.getParent());
+      assertThat(childPlanItem.getParent()).isEqualTo(planItemX);
     }
   }
 
@@ -334,7 +334,7 @@ public class CaseInstanceTest {
     expectedStateTransitions.add("() --create(X)--> available");
     expectedStateTransitions.add("available --enable(X)--> enabled");
 
-    assertEquals(expectedStateTransitions, stateTransitionCollector.stateTransitions);
+    assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
     return expectedStateTransitions;
   }
 
@@ -468,7 +468,7 @@ public class CaseInstanceTest {
     expectedStateTransitions.add("() --create(Y)--> available");
     expectedStateTransitions.add("available --enable(Y)--> enabled");
 
-    assertEquals(expectedStateTransitions, stateTransitionCollector.stateTransitions);
+    assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
 
     // clear lists
     emptyCollector(stateTransitionCollector, expectedStateTransitions);
@@ -480,14 +480,14 @@ public class CaseInstanceTest {
 
     // the case instance should have three child plan items (A1, X1, Y)
     List<CaseExecutionImpl> childPlanItems = instance.getCaseExecutions();
-    assertEquals(3, childPlanItems.size());
+    assertThat(childPlanItems.size()).isEqualTo(3);
 
     // handle plan item A1 //////////////////////////////////////////////////
 
     CaseExecutionImpl planItemA1 = (CaseExecutionImpl) instance.findCaseExecution("A1");
 
     // case instance should be the parent of A1
-    assertEquals(caseInstance, planItemA1.getParent());
+    assertThat(planItemA1.getParent()).isEqualTo(caseInstance);
 
     // A1 should be enabled
     assertTrue(planItemA1.isEnabled());
@@ -502,7 +502,7 @@ public class CaseInstanceTest {
     // enabled --manualStart(A1)--> active
     expectedStateTransitions.add("enabled --manualStart(A1)--> active");
 
-    assertEquals(expectedStateTransitions, stateTransitionCollector.stateTransitions);
+    assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
 
     // clear lists
     emptyCollector(stateTransitionCollector, expectedStateTransitions);
@@ -512,7 +512,7 @@ public class CaseInstanceTest {
     CaseExecutionImpl planItemX1 = (CaseExecutionImpl) instance.findCaseExecution("X1");
 
     // case instance should be the parent of X1
-    assertEquals(caseInstance, planItemX1.getParent());
+    assertThat(planItemX1.getParent()).isEqualTo(caseInstance);
 
     // X1 should be enabled
     assertTrue(planItemX1.isEnabled());
@@ -525,7 +525,7 @@ public class CaseInstanceTest {
 
     // X1 should have two children
     childPlanItems = planItemX1.getCaseExecutions();
-    assertEquals(2, childPlanItems.size());
+    assertThat(childPlanItems.size()).isEqualTo(2);
 
     // expected state transitions after manual start of X1:
     // enabled   --manualStart(X1)--> active
@@ -539,7 +539,7 @@ public class CaseInstanceTest {
     expectedStateTransitions.add("() --create(B1)--> available");
     expectedStateTransitions.add("available --enable(B1)--> enabled");
 
-    assertEquals(expectedStateTransitions, stateTransitionCollector.stateTransitions);
+    assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
 
     // clear lists
     emptyCollector(stateTransitionCollector, expectedStateTransitions);
@@ -549,7 +549,7 @@ public class CaseInstanceTest {
     CaseExecutionImpl planItemA2 = (CaseExecutionImpl) instance.findCaseExecution("A2");
 
     // X1 should be the parent of A2
-    assertEquals(planItemX1, planItemA2.getParent());
+    assertThat(planItemA2.getParent()).isEqualTo(planItemX1);
 
     // A2 should be enabled
     assertTrue(planItemA2.isEnabled());
@@ -564,7 +564,7 @@ public class CaseInstanceTest {
     // enabled --manualStart(A2)--> active
     expectedStateTransitions.add("enabled --manualStart(A2)--> active");
 
-    assertEquals(expectedStateTransitions, stateTransitionCollector.stateTransitions);
+    assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
 
     // clear lists
     emptyCollector(stateTransitionCollector, expectedStateTransitions);
@@ -574,7 +574,7 @@ public class CaseInstanceTest {
     CaseExecutionImpl planItemB1 = (CaseExecutionImpl) instance.findCaseExecution("B1");
 
     // X1 should be the parent of B1
-    assertEquals(planItemX1, planItemB1.getParent());
+    assertThat(planItemB1.getParent()).isEqualTo(planItemX1);
 
     // B1 should be enabled
     assertTrue(planItemB1.isEnabled());
@@ -589,7 +589,7 @@ public class CaseInstanceTest {
     // enabled --manualStart(B1)--> active
     expectedStateTransitions.add("enabled --manualStart(B1)--> active");
 
-    assertEquals(expectedStateTransitions, stateTransitionCollector.stateTransitions);
+    assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
 
     // clear lists
     emptyCollector(stateTransitionCollector, expectedStateTransitions);
@@ -599,7 +599,7 @@ public class CaseInstanceTest {
     CaseExecutionImpl planItemY = (CaseExecutionImpl) instance.findCaseExecution("Y");
 
     // case instance should be the parent of Y
-    assertEquals(caseInstance, planItemY.getParent());
+    assertThat(planItemY.getParent()).isEqualTo(caseInstance);
 
     // Y should be enabled
     assertTrue(planItemY.isEnabled());
@@ -612,7 +612,7 @@ public class CaseInstanceTest {
 
     // Y should have two children
     childPlanItems = planItemY.getCaseExecutions();
-    assertEquals(2, childPlanItems.size());
+    assertThat(childPlanItems.size()).isEqualTo(2);
 
     // expected state transitions after manual start of Y:
     // enabled   --manualStart(Y)--> active
@@ -626,7 +626,7 @@ public class CaseInstanceTest {
     expectedStateTransitions.add("() --create(X2)--> available");
     expectedStateTransitions.add("available --enable(X2)--> enabled");
 
-    assertEquals(expectedStateTransitions, stateTransitionCollector.stateTransitions);
+    assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
 
     // clear lists
     emptyCollector(stateTransitionCollector, expectedStateTransitions);
@@ -636,7 +636,7 @@ public class CaseInstanceTest {
     CaseExecutionImpl planItemC = (CaseExecutionImpl) instance.findCaseExecution("C");
 
     // Y should be the parent of C
-    assertEquals(planItemY, planItemC.getParent());
+    assertThat(planItemC.getParent()).isEqualTo(planItemY);
 
     // C should be enabled
     assertTrue(planItemC.isEnabled());
@@ -651,7 +651,7 @@ public class CaseInstanceTest {
     // enabled --manualStart(C)--> active
     expectedStateTransitions.add("enabled --manualStart(C)--> active");
 
-    assertEquals(expectedStateTransitions, stateTransitionCollector.stateTransitions);
+    assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
 
     // clear lists
     emptyCollector(stateTransitionCollector, expectedStateTransitions);
@@ -661,7 +661,7 @@ public class CaseInstanceTest {
     CaseExecutionImpl planItemX2 = (CaseExecutionImpl) instance.findCaseExecution("X2");
 
     // Y should be the parent of X2
-    assertEquals(planItemY, planItemX2.getParent());
+    assertThat(planItemX2.getParent()).isEqualTo(planItemY);
 
     // X2 should be enabled
     assertTrue(planItemX2.isEnabled());
@@ -674,7 +674,7 @@ public class CaseInstanceTest {
 
     // X2 should have two children
     childPlanItems = planItemX2.getCaseExecutions();
-    assertEquals(2, childPlanItems.size());
+    assertThat(childPlanItems.size()).isEqualTo(2);
 
     // expected state transitions after manual start of X2:
     // enabled   --manualStart(X2)--> active
@@ -688,7 +688,7 @@ public class CaseInstanceTest {
     expectedStateTransitions.add("() --create(B2)--> available");
     expectedStateTransitions.add("available --enable(B2)--> enabled");
 
-    assertEquals(expectedStateTransitions, stateTransitionCollector.stateTransitions);
+    assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
 
     // clear lists
     emptyCollector(stateTransitionCollector, expectedStateTransitions);
@@ -698,7 +698,7 @@ public class CaseInstanceTest {
     CaseExecutionImpl planItemA3 = (CaseExecutionImpl) instance.findCaseExecution("A3");
 
     // A3 should be the parent of X2
-    assertEquals(planItemX2, planItemA3.getParent());
+    assertThat(planItemA3.getParent()).isEqualTo(planItemX2);
 
     // A3 should be enabled
     assertTrue(planItemA3.isEnabled());
@@ -713,7 +713,7 @@ public class CaseInstanceTest {
     // enabled --manualStart(A3)--> active
     expectedStateTransitions.add("enabled --manualStart(A3)--> active");
 
-    assertEquals(expectedStateTransitions, stateTransitionCollector.stateTransitions);
+    assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
 
     // clear lists
     emptyCollector(stateTransitionCollector, expectedStateTransitions);
@@ -723,7 +723,7 @@ public class CaseInstanceTest {
     CaseExecutionImpl planItemB2 = (CaseExecutionImpl) instance.findCaseExecution("B2");
 
     // B2 should be the parent of X2
-    assertEquals(planItemX2, planItemB2.getParent());
+    assertThat(planItemB2.getParent()).isEqualTo(planItemX2);
 
     // B2 should be enabled
     assertTrue(planItemB2.isEnabled());
@@ -738,7 +738,7 @@ public class CaseInstanceTest {
     // enabled --manualStart(B2)--> active
     expectedStateTransitions.add("enabled --manualStart(B2)--> active");
 
-    assertEquals(expectedStateTransitions, stateTransitionCollector.stateTransitions);
+    assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
 
     // clear lists
     emptyCollector(stateTransitionCollector, expectedStateTransitions);

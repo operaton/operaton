@@ -48,8 +48,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class HistoryCleanupAuthorizationTest extends AuthorizationTest {
@@ -109,15 +109,15 @@ public class HistoryCleanupAuthorizationTest extends AuthorizationTest {
     // update time to live
     disableAuthorization();
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().processDefinitionKey("testProcess").list();
-    assertEquals(1, processDefinitions.size());
+    assertThat(processDefinitions.size()).isEqualTo(1);
     repositoryService.updateProcessDefinitionHistoryTimeToLive(processDefinitions.get(0).getId(), processInstanceTimeToLive);
 
     final List<DecisionDefinition> decisionDefinitions = repositoryService.createDecisionDefinitionQuery().decisionDefinitionKey("testDecision").list();
-    assertEquals(1, decisionDefinitions.size());
+    assertThat(decisionDefinitions.size()).isEqualTo(1);
     repositoryService.updateDecisionDefinitionHistoryTimeToLive(decisionDefinitions.get(0).getId(), decisionTimeToLive);
 
     List<CaseDefinition> caseDefinitions = repositoryService.createCaseDefinitionQuery().caseDefinitionKey("oneTaskCase").list();
-    assertEquals(1, caseDefinitions.size());
+    assertThat(caseDefinitions.size()).isEqualTo(1);
     repositoryService.updateCaseDefinitionHistoryTimeToLive(caseDefinitions.get(0).getId(), caseTimeToLive);
 
     Date oldCurrentTime = ClockUtil.getCurrentTime();
@@ -153,7 +153,7 @@ public class HistoryCleanupAuthorizationTest extends AuthorizationTest {
   protected void assertResult(long expectedInstanceCount) {
     long count = historyService.createHistoricProcessInstanceQuery().count() + historyService.createHistoricDecisionInstanceQuery().count()
         + historyService.createHistoricCaseInstanceQuery().count();
-    assertEquals(expectedInstanceCount, count);
+    assertThat(count).isEqualTo(expectedInstanceCount);
   }
 
   protected void clearDatabase() {
@@ -169,7 +169,7 @@ public class HistoryCleanupAuthorizationTest extends AuthorizationTest {
     processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
       List<Job> jobs = managementService.createJobQuery().list();
       if (!jobs.isEmpty()) {
-        assertEquals(1, jobs.size());
+        assertThat(jobs.size()).isEqualTo(1);
         String jobId = jobs.get(0).getId();
         commandContext.getJobManager().deleteJob((JobEntity) jobs.get(0));
         commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(jobId);

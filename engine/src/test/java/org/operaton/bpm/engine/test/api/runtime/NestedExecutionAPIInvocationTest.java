@@ -28,8 +28,10 @@ import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
 import org.junit.After;
-import org.junit.Assert;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -152,7 +154,7 @@ public class NestedExecutionAPIInvocationTest {
       // then the wait state is reached immediately after instantiation
       ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
       ActivityInstance[] activityInstances = activityInstance.getActivityInstances("waitState");
-      Assert.assertEquals(1, activityInstances.length);
+      assertThat(activityInstances.length).isEqualTo(1);
 
     }
   }
@@ -170,7 +172,7 @@ public class NestedExecutionAPIInvocationTest {
       // then the wait state is reached immediately after instantiation
       ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
       ActivityInstance[] activityInstances = activityInstance.getActivityInstances("waitState");
-      Assert.assertEquals(1, activityInstances.length);
+      assertThat(activityInstances.length).isEqualTo(1);
 
     }
   }

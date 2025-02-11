@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.cfg;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.lang.reflect.Method;
 import java.util.Map;
 
@@ -50,7 +52,7 @@ public class CustomExpressionManagerTest {
 
     // then 4 default functions should be registered
     Assert.assertSame(customExpressionManager, config.getExpressionManager());
-    Assert.assertEquals(4, customExpressionManager.getFunctions().size());
+    assertThat(customExpressionManager.getFunctions().size()).isEqualTo(4);
 
     Map<String, Method> functions = customExpressionManager.getFunctions();
 

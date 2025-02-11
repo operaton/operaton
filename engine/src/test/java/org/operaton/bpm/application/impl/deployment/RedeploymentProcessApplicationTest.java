@@ -17,7 +17,6 @@
 package org.operaton.bpm.application.impl.deployment;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -148,7 +147,7 @@ public class RedeploymentProcessApplicationTest {
         .addDeploymentResources(deployment1.getId())
         .deploy();
 
-    assertEquals(2, testProvider.countDefinitionsByKey(definitionKey1));
+    assertThat(testProvider.countDefinitionsByKey(definitionKey1)).isEqualTo(2);
 
     // when
     testProvider.createInstanceByDefinitionKey(definitionKey1);
@@ -231,7 +230,7 @@ public class RedeploymentProcessApplicationTest {
         .addDeploymentResources(deployment1.getId())
         .deploy();
 
-    assertEquals(3, testProvider.countDefinitionsByKey(definitionKey1));
+    assertThat(testProvider.countDefinitionsByKey(definitionKey1)).isEqualTo(3);
 
     // when
     testProvider.createInstanceByDefinitionKey(definitionKey1);
@@ -269,7 +268,7 @@ public class RedeploymentProcessApplicationTest {
         .addDeploymentResources(deployment1.getId())
         .deploy();
 
-    assertEquals(3, testProvider.countDefinitionsByKey(definitionKey1));
+    assertThat(testProvider.countDefinitionsByKey(definitionKey1)).isEqualTo(3);
 
     // when
     testProvider.createInstanceByDefinitionKey(definitionKey1);
@@ -307,7 +306,7 @@ public class RedeploymentProcessApplicationTest {
         .addDeploymentResources(deployment1.getId())
         .deploy();
 
-    assertEquals(3, testProvider.countDefinitionsByKey(definitionKey1));
+    assertThat(testProvider.countDefinitionsByKey(definitionKey1)).isEqualTo(3);
 
     // when
     deleteDeployments(deployment2);
@@ -347,7 +346,7 @@ public class RedeploymentProcessApplicationTest {
         .addDeploymentResources(deployment1.getId())
         .deploy();
 
-    assertEquals(3, testProvider.countDefinitionsByKey(definitionKey1));
+    assertThat(testProvider.countDefinitionsByKey(definitionKey1)).isEqualTo(3);
 
     // when
     managementService.unregisterProcessApplication(deployment2.getId(), true);
@@ -388,8 +387,8 @@ public class RedeploymentProcessApplicationTest {
         .addDeploymentResources(deployment2.getId())
         .deploy();
 
-    assertEquals(2, testProvider.countDefinitionsByKey(definitionKey1));
-    assertEquals(2, testProvider.countDefinitionsByKey(definitionKey2));
+    assertThat(testProvider.countDefinitionsByKey(definitionKey1)).isEqualTo(2);
+    assertThat(testProvider.countDefinitionsByKey(definitionKey2)).isEqualTo(2);
 
     // when (1)
     testProvider.createInstanceByDefinitionKey(definitionKey1);
@@ -439,8 +438,8 @@ public class RedeploymentProcessApplicationTest {
         .addDeploymentResources(deployment1.getId())
         .deploy();
 
-    assertEquals(3, testProvider.countDefinitionsByKey(definitionKey1));
-    assertEquals(2, testProvider.countDefinitionsByKey(definitionKey2));
+    assertThat(testProvider.countDefinitionsByKey(definitionKey1)).isEqualTo(3);
+    assertThat(testProvider.countDefinitionsByKey(definitionKey2)).isEqualTo(2);
 
     // when (1)
     testProvider.createInstanceByDefinitionKey(definitionKey1);

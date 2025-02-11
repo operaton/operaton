@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.event.message;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -90,7 +89,7 @@ public class MessageIntermediateEventTest {
 
     List<String> activeActivityIds = runtimeService.getActiveActivityIds(pi.getId());
     assertNotNull(activeActivityIds);
-    assertEquals(1, activeActivityIds.size());
+    assertThat(activeActivityIds.size()).isEqualTo(1);
     assertTrue(activeActivityIds.contains("messageCatch"));
 
     String messageName = "newInvoiceMessage";
@@ -117,7 +116,7 @@ public class MessageIntermediateEventTest {
 
     List<String> activeActivityIds = runtimeService.getActiveActivityIds(pi.getId());
     assertNotNull(activeActivityIds);
-    assertEquals(2, activeActivityIds.size());
+    assertThat(activeActivityIds.size()).isEqualTo(2);
     assertTrue(activeActivityIds.contains("messageCatch1"));
     assertTrue(activeActivityIds.contains("messageCatch2"));
 
@@ -127,7 +126,7 @@ public class MessageIntermediateEventTest {
         .list();
 
     assertNotNull(executions);
-    assertEquals(2, executions.size());
+    assertThat(executions.size()).isEqualTo(2);
 
     runtimeService.messageEventReceived(messageName, executions.get(0).getId());
 
@@ -152,13 +151,13 @@ public class MessageIntermediateEventTest {
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/message/MessageIntermediateEventTest.testSingleIntermediateMessageEvent.bpmn20.xml")
         .deploy();
     // now there is one process deployed
-    assertEquals(1, repositoryService.createProcessDefinitionQuery().count());
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
     List<String> activeActivityIds = runtimeService.getActiveActivityIds(pi.getId());
     assertNotNull(activeActivityIds);
-    assertEquals(1, activeActivityIds.size());
+    assertThat(activeActivityIds.size()).isEqualTo(1);
     assertTrue(activeActivityIds.contains("messageCatch"));
 
     // deploy version 2
@@ -167,12 +166,12 @@ public class MessageIntermediateEventTest {
         .deploy();
 
     // now there are two versions deployed:
-    assertEquals(2, repositoryService.createProcessDefinitionQuery().count());
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(2);
 
     // assert process is still waiting in message event:
     activeActivityIds = runtimeService.getActiveActivityIds(pi.getId());
     assertNotNull(activeActivityIds);
-    assertEquals(1, activeActivityIds.size());
+    assertThat(activeActivityIds.size()).isEqualTo(1);
     assertTrue(activeActivityIds.contains("messageCatch"));
 
     // delete both versions:
@@ -235,9 +234,9 @@ public class MessageIntermediateEventTest {
     ObjectValue variableTyped = runtimeService.getVariableTyped(processInstance.getId(), "var", false);
     assertNotNull(variableTyped);
     assertFalse(variableTyped.isDeserialized());
-    assertEquals(serializedObject, variableTyped.getValueSerialized());
-    assertEquals(FailingJavaSerializable.class.getName(), variableTyped.getObjectTypeName());
-    assertEquals(SerializationDataFormats.JAVA.getName(), variableTyped.getSerializationDataFormat());
+    assertThat(variableTyped.getValueSerialized()).isEqualTo(serializedObject);
+    assertThat(variableTyped.getObjectTypeName()).isEqualTo(FailingJavaSerializable.class.getName());
+    assertThat(variableTyped.getSerializationDataFormat()).isEqualTo(SerializationDataFormats.JAVA.getName());
   }
 
   @Deployment
@@ -252,7 +251,7 @@ public class MessageIntermediateEventTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process", variables);
     List<String> activeActivityIds = runtimeService.getActiveActivityIds(pi.getId());
     assertNotNull(activeActivityIds);
-    assertEquals(1, activeActivityIds.size());
+    assertThat(activeActivityIds.size()).isEqualTo(1);
     assertTrue(activeActivityIds.contains("messageCatch"));
 
     // then

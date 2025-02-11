@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.decisiontask;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -28,6 +28,9 @@ import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.cmmn.CmmnTest;
 import org.operaton.bpm.engine.variable.Variables;
+import org.operaton.bpm.engine.variable.value.IntegerValue;
+import org.operaton.bpm.engine.variable.value.StringValue;
+
 import org.junit.After;
 import org.junit.Test;
 
@@ -68,7 +71,7 @@ public class DmnDecisionTaskResultListenerTest extends CmmnTest {
   public void testEmptyMap() {
     startTestCase("empty map");
 
-    assertEquals(2, results.size());
+    assertThat(results.size()).isEqualTo(2);
 
     for (DmnDecisionResultEntries output : results) {
       assertTrue("The decision output should be empty", output.isEmpty());
@@ -81,8 +84,8 @@ public class DmnDecisionTaskResultListenerTest extends CmmnTest {
     startTestCase("single entry");
 
     DmnDecisionResultEntries firstOutput = results.get(0);
-    assertEquals("foo", firstOutput.getFirstEntry());
-    assertEquals(Variables.stringValue("foo"), firstOutput.getFirstEntryTyped());
+    assertThat(firstOutput.<String>getFirstEntry()).isEqualTo("foo");
+    assertThat(firstOutput.<StringValue>getFirstEntryTyped()).isEqualTo(Variables.stringValue("foo"));
   }
 
   @Deployment(resources = { TEST_CASE, TEST_DECISION})
@@ -91,11 +94,11 @@ public class DmnDecisionTaskResultListenerTest extends CmmnTest {
     startTestCase("multiple entries");
 
     DmnDecisionResultEntries firstOutput = results.get(0);
-    assertEquals("foo", firstOutput.get("result1"));
-    assertEquals("bar", firstOutput.get("result2"));
+    assertThat(firstOutput.get("result1")).isEqualTo("foo");
+    assertThat(firstOutput.get("result2")).isEqualTo("bar");
 
-    assertEquals(Variables.stringValue("foo"), firstOutput.getEntryTyped("result1"));
-    assertEquals(Variables.stringValue("bar"), firstOutput.getEntryTyped("result2"));
+    assertThat(firstOutput.<StringValue>getEntryTyped("result1")).isEqualTo(Variables.stringValue("foo"));
+    assertThat(firstOutput.<StringValue>getEntryTyped("result2")).isEqualTo(Variables.stringValue("bar"));
   }
 
   @Deployment(resources = { TEST_CASE, TEST_DECISION})
@@ -103,11 +106,11 @@ public class DmnDecisionTaskResultListenerTest extends CmmnTest {
   public void testSingleEntryList() {
     startTestCase("single entry list");
 
-    assertEquals(2, results.size());
+    assertThat(results.size()).isEqualTo(2);
 
     for (DmnDecisionResultEntries output : results) {
-      assertEquals("foo", output.getFirstEntry());
-      assertEquals(Variables.stringValue("foo"), output.getFirstEntryTyped());
+      assertThat(output.<String >getFirstEntry()).isEqualTo("foo");
+      assertThat(output.<StringValue>getFirstEntryTyped()).isEqualTo(Variables.stringValue("foo"));
     }
   }
 
@@ -116,15 +119,15 @@ public class DmnDecisionTaskResultListenerTest extends CmmnTest {
   public void testMultipleEntriesList() {
     startTestCase("multiple entries list");
 
-    assertEquals(2, results.size());
+    assertThat(results.size()).isEqualTo(2);
 
     for (DmnDecisionResultEntries output : results) {
-      assertEquals(2, output.size());
-      assertEquals("foo", output.get("result1"));
-      assertEquals("bar", output.get("result2"));
+      assertThat(output.size()).isEqualTo(2);
+      assertThat(output.get("result1")).isEqualTo("foo");
+      assertThat(output.get("result2")).isEqualTo("bar");
 
-      assertEquals(Variables.stringValue("foo"), output.getEntryTyped("result1"));
-      assertEquals(Variables.stringValue("bar"), output.getEntryTyped("result2"));
+      assertThat(output.<StringValue>getEntryTyped("result1")).isEqualTo(Variables.stringValue("foo"));
+      assertThat(output.<StringValue>getEntryTyped("result2")).isEqualTo(Variables.stringValue("bar"));
     }
   }
 
@@ -133,11 +136,11 @@ public class DmnDecisionTaskResultListenerTest extends CmmnTest {
   public void testCollectCountHitPolicyNoOutput() {
     startTestCase("no output");
 
-    assertEquals(1, results.size());
+    assertThat(results.size()).isEqualTo(1);
     DmnDecisionResultEntries firstOutput = results.get(0);
 
-    assertEquals(0, (int) firstOutput.getFirstEntry());
-    assertEquals(Variables.integerValue(0), firstOutput.getFirstEntryTyped());
+    assertThat((int) firstOutput.getFirstEntry()).isEqualTo(0);
+    assertThat(firstOutput.<IntegerValue>getFirstEntryTyped()).isEqualTo(Variables.integerValue(0));
   }
 
   @Deployment(resources = { TEST_CASE, TEST_DECISION_COLLECT_SUM })
@@ -153,11 +156,11 @@ public class DmnDecisionTaskResultListenerTest extends CmmnTest {
   public void testCollectSumHitPolicySingleEntry() {
     startTestCase("single entry");
 
-    assertEquals(1, results.size());
+    assertThat(results.size()).isEqualTo(1);
     DmnDecisionResultEntries firstOutput = results.get(0);
 
-    assertEquals(12, (int) firstOutput.getFirstEntry());
-    assertEquals(Variables.integerValue(12), firstOutput.getFirstEntryTyped());
+    assertThat((int) firstOutput.getFirstEntry()).isEqualTo(12);
+    assertThat(firstOutput.<IntegerValue>getFirstEntryTyped()).isEqualTo(Variables.integerValue(12));
   }
 
   @Deployment(resources = { TEST_CASE, TEST_DECISION_COLLECT_SUM })
@@ -165,11 +168,11 @@ public class DmnDecisionTaskResultListenerTest extends CmmnTest {
   public void testCollectSumHitPolicySingleEntryList() {
     startTestCase("single entry list");
 
-    assertEquals(1, results.size());
+    assertThat(results.size()).isEqualTo(1);
     DmnDecisionResultEntries firstOutput = results.get(0);
 
-    assertEquals(33, (int) firstOutput.getFirstEntry());
-    assertEquals(Variables.integerValue(33), firstOutput.getFirstEntryTyped());
+    assertThat((int) firstOutput.getFirstEntry()).isEqualTo(33);
+    assertThat(firstOutput.<IntegerValue>getFirstEntryTyped()).isEqualTo(Variables.integerValue(33));
   }
 
   protected CaseInstance startTestCase(String input) {

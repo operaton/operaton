@@ -33,8 +33,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -79,7 +79,7 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
     // then
     assertNotNull(sentryDeclaration);
 
-    assertEquals(sentry.getId(), sentryDeclaration.getId());
+    assertThat(sentryDeclaration.getId()).isEqualTo(sentry.getId());
 
     assertNull(sentryDeclaration.getIfPart());
     assertTrue(sentryDeclaration.getOnParts().isEmpty());
@@ -105,7 +105,7 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
 
     Expression condition = ifPartDeclaration.getCondition();
     assertNotNull(condition);
-    assertEquals(expression, condition.getExpressionText());
+    assertThat(condition.getExpressionText()).isEqualTo(expression);
 
     assertTrue(sentryDeclaration.getOnParts().isEmpty());
 
@@ -137,7 +137,7 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
 
     Expression condition = ifPartDeclaration.getCondition();
     assertNotNull(condition);
-    assertEquals(firstExpression, condition.getExpressionText());
+    assertThat(condition.getExpressionText()).isEqualTo(firstExpression);
 
     // the second condition will be ignored!
 
@@ -163,20 +163,20 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
     List<CmmnOnPartDeclaration> onParts = sentryDeclaration.getOnParts();
     assertNotNull(onParts);
     assertFalse(onParts.isEmpty());
-    assertEquals(1, onParts.size());
+    assertThat(onParts.size()).isEqualTo(1);
 
     List<CmmnOnPartDeclaration> onPartsAssociatedWithSource = sentryDeclaration.getOnParts(source.getId());
     assertNotNull(onPartsAssociatedWithSource);
     assertFalse(onPartsAssociatedWithSource.isEmpty());
-    assertEquals(1, onParts.size());
+    assertThat(onParts.size()).isEqualTo(1);
 
     CmmnOnPartDeclaration onPartDeclaration = onPartsAssociatedWithSource.get(0);
     assertNotNull(onPartDeclaration);
     // source
-    assertEquals(source, onPartDeclaration.getSource());
-    assertEquals(onPart.getSource().getId(), onPartDeclaration.getSource().getId());
+    assertThat(onPartDeclaration.getSource()).isEqualTo(source);
+    assertThat(onPartDeclaration.getSource().getId()).isEqualTo(onPart.getSource().getId());
     // standardEvent
-    assertEquals(onPart.getStandardEvent().name(), onPartDeclaration.getStandardEvent());
+    assertThat(onPartDeclaration.getStandardEvent()).isEqualTo(onPart.getStandardEvent().name());
     // sentry
     assertNull(onPartDeclaration.getSentry());
 
@@ -211,23 +211,23 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
     List<CmmnOnPartDeclaration> onParts = sentryDeclaration.getOnParts();
     assertNotNull(onParts);
     assertFalse(onParts.isEmpty());
-    assertEquals(1, onParts.size());
+    assertThat(onParts.size()).isEqualTo(1);
 
     List<CmmnOnPartDeclaration> onPartsAssociatedWithSource = sentryDeclaration.getOnParts(source.getId());
     assertNotNull(onPartsAssociatedWithSource);
     assertFalse(onPartsAssociatedWithSource.isEmpty());
-    assertEquals(1, onParts.size());
+    assertThat(onParts.size()).isEqualTo(1);
 
     CmmnOnPartDeclaration onPartDeclaration = onPartsAssociatedWithSource.get(0);
     assertNotNull(onPartDeclaration);
     // source
-    assertEquals(source, onPartDeclaration.getSource());
-    assertEquals(onPart.getSource().getId(), onPartDeclaration.getSource().getId());
+    assertThat(onPartDeclaration.getSource()).isEqualTo(source);
+    assertThat(onPartDeclaration.getSource().getId()).isEqualTo(onPart.getSource().getId());
     // standardEvent
-    assertEquals(onPart.getStandardEvent().name(), onPartDeclaration.getStandardEvent());
+    assertThat(onPartDeclaration.getStandardEvent()).isEqualTo(onPart.getStandardEvent().name());
     // sentry
     assertNotNull(onPartDeclaration.getSentry());
-    assertEquals(exitSentryDeclaration, onPartDeclaration.getSentry());
+    assertThat(onPartDeclaration.getSentry()).isEqualTo(exitSentryDeclaration);
 
     assertNull(sentryDeclaration.getIfPart());
 
@@ -250,11 +250,11 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
     List<CmmnVariableOnPartDeclaration> variableOnParts = sentryDeclaration.getVariableOnParts();
     assertNotNull(variableOnParts);
     assertFalse(variableOnParts.isEmpty());
-    assertEquals(1, variableOnParts.size());
+    assertThat(variableOnParts.size()).isEqualTo(1);
 
     CmmnVariableOnPartDeclaration transformedVariableOnPart = variableOnParts.get(0);
-    assertEquals("aVariable", transformedVariableOnPart.getVariableName());
-    assertEquals(VariableTransition.create.name(), transformedVariableOnPart.getVariableEvent());
+    assertThat(transformedVariableOnPart.getVariableName()).isEqualTo("aVariable");
+    assertThat(transformedVariableOnPart.getVariableEvent()).isEqualTo(VariableTransition.create.name());
 
   }
 
@@ -279,7 +279,7 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
     List<CmmnVariableOnPartDeclaration> variableOnParts = sentryDeclaration.getVariableOnParts();
     assertNotNull(variableOnParts);
     assertFalse(variableOnParts.isEmpty());
-    assertEquals(2, variableOnParts.size());
+    assertThat(variableOnParts.size()).isEqualTo(2);
 
   }
 
@@ -304,7 +304,7 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
     List<CmmnVariableOnPartDeclaration> variableOnParts = sentryDeclaration.getVariableOnParts();
     assertNotNull(variableOnParts);
     assertFalse(variableOnParts.isEmpty());
-    assertEquals(1, variableOnParts.size());
+    assertThat(variableOnParts.size()).isEqualTo(1);
 
   }
 
@@ -354,12 +354,12 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
     List<CmmnVariableOnPartDeclaration> variableOnParts = sentryDeclaration.getVariableOnParts();
     assertNotNull(variableOnParts);
     assertFalse(variableOnParts.isEmpty());
-    assertEquals(1, variableOnParts.size());
+    assertThat(variableOnParts.size()).isEqualTo(1);
 
     CmmnVariableOnPartDeclaration transformedVariableOnPart = variableOnParts.get(0);
-    assertEquals("aVariable", transformedVariableOnPart.getVariableName());
+    assertThat(transformedVariableOnPart.getVariableName()).isEqualTo("aVariable");
     // when there are multiple variable events then, only first variable event is considered.
-    assertEquals(VariableTransition.create.name(), transformedVariableOnPart.getVariableEvent());
+    assertThat(transformedVariableOnPart.getVariableEvent()).isEqualTo(VariableTransition.create.name());
   }
 
   @Test

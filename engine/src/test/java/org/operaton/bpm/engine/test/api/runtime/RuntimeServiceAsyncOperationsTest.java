@@ -48,7 +48,8 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertNotNull;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 
 
@@ -153,7 +154,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
     List<Exception> exceptions = executeBatchJobs(batch);
 
     // then
-    assertEquals(0, exceptions.size());
+    assertThat(exceptions.size()).isEqualTo(0);
 
     assertThat(managementService.createJobQuery().withException().list()).isEmpty();
 
@@ -534,10 +535,10 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
     }
 
     // the process instances related to the first deployment should be deleted
-    assertEquals(0, runtimeService.createProcessInstanceQuery().deploymentId(firstDeploymentId).count());
+    assertThat(runtimeService.createProcessInstanceQuery().deploymentId(firstDeploymentId).count()).isEqualTo(0);
     assertHistoricTaskDeletionPresent(processInstanceIdsFromFirstDeployment, "test_reason", testRule);
     // and process instances related to the second deployment should not be deleted
-    assertEquals(processInstanceIdsFromSecondDeployment.size(), runtimeService.createProcessInstanceQuery().deploymentId(secondDeploymentId).count());
+    assertThat(runtimeService.createProcessInstanceQuery().deploymentId(secondDeploymentId).count()).isEqualTo(processInstanceIdsFromSecondDeployment.size());
     assertHistoricTaskDeletionPresent(processInstanceIdsFromSecondDeployment, null, testRule);
 
     // execute jobs related to the second deployment
@@ -548,7 +549,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
     }
 
     // all of the process instances should be deleted
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
   }
 
   @Deployment(resources = {

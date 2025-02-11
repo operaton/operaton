@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.sentry;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -180,10 +180,10 @@ public class SentryEntryCriteriaTest extends CmmnTest {
       .createCaseExecutionQuery()
       .enabled();
 
-    assertEquals(2, query.count());
+    assertThat(query.count()).isEqualTo(2);
 
     for (CaseExecution child : query.list()) {
-      assertEquals(stageId, child.getParentId());
+      assertThat(child.getParentId()).isEqualTo(stageId);
     }
 
   }
@@ -613,7 +613,7 @@ public class SentryEntryCriteriaTest extends CmmnTest {
 
     secondHumanTask = queryCaseExecutionById(secondHumanTaskId);
     assertTrue(((CaseExecutionEntity)secondHumanTask).isSuspended());
-    assertEquals(CaseExecutionState.ENABLED, ((CaseExecutionEntity)secondHumanTask).getPreviousState());
+    assertThat(((CaseExecutionEntity) secondHumanTask).getPreviousState()).isEqualTo(CaseExecutionState.ENABLED);
 
     // (2) when
     resume(stageId);
@@ -661,7 +661,7 @@ public class SentryEntryCriteriaTest extends CmmnTest {
 
     secondHumanTask = queryCaseExecutionById(secondHumanTaskId);
     assertTrue(((CaseExecutionEntity)secondHumanTask).isSuspended());
-    assertEquals(CaseExecutionState.AVAILABLE, ((CaseExecutionEntity)secondHumanTask).getPreviousState());
+    assertThat(((CaseExecutionEntity) secondHumanTask).getPreviousState()).isEqualTo(CaseExecutionState.AVAILABLE);
 
     // (2) when
     resume(stageId);
@@ -796,7 +796,7 @@ public class SentryEntryCriteriaTest extends CmmnTest {
       .activityId("PI_HumanTask_1")
       .active()
       .list();
-    assertEquals(2, humanTasks.size());
+    assertThat(humanTasks.size()).isEqualTo(2);
 
     String humanTaskInsideFirstStageId = null;
     if (((CaseExecutionEntity) humanTasks.get(0)).getParentId().equals(firstStageId)) {
@@ -815,13 +815,13 @@ public class SentryEntryCriteriaTest extends CmmnTest {
       .activityId("PI_HumanTask_2")
       .active()
       .singleResult();
-    assertEquals(firstStageId, ((CaseExecutionEntity) secondHumanTaskInsideFirstStage).getParentId());
+    assertThat(((CaseExecutionEntity) secondHumanTaskInsideFirstStage).getParentId()).isEqualTo(firstStageId);
 
     // PI_HumanTask_1 in PI_Stage_2 is enabled
     CaseExecution firstHumanTaskInsideSecondStage = queryCaseExecutionByActivityId("PI_HumanTask_1");
     assertNotNull(firstHumanTaskInsideSecondStage);
     assertTrue(firstHumanTaskInsideSecondStage.isActive());
-    assertEquals(secondStageId, ((CaseExecutionEntity) firstHumanTaskInsideSecondStage).getParentId());
+    assertThat(((CaseExecutionEntity) firstHumanTaskInsideSecondStage).getParentId()).isEqualTo(secondStageId);
 
     // PI_HumanTask_2 in PI_Stage_2 is available
     CaseExecution secondHumanTaskInsideSecondStage = caseService
@@ -831,7 +831,7 @@ public class SentryEntryCriteriaTest extends CmmnTest {
         .singleResult();
     assertNotNull(secondHumanTaskInsideSecondStage);
     assertTrue(secondHumanTaskInsideSecondStage.isAvailable());
-    assertEquals(secondStageId, ((CaseExecutionEntity) secondHumanTaskInsideSecondStage).getParentId());
+    assertThat(((CaseExecutionEntity) secondHumanTaskInsideSecondStage).getParentId()).isEqualTo(secondStageId);
   }
 
   /**

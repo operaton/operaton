@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.identity;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -108,7 +108,7 @@ public class GroupQueryTest extends PluggableProcessEngineTest {
       groupQuery.groupId(null);
       fail();
     } catch (ProcessEngineException e) {
-      assertEquals("Provided id is null", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Provided id is null");
     }
   }
 
@@ -125,7 +125,7 @@ public class GroupQueryTest extends PluggableProcessEngineTest {
     }
 
     List<Group> idInList = identityService.createGroupQuery().groupIdIn(ids).list();
-    assertEquals(list.size(), idInList.size());
+    assertThat(idInList.size()).isEqualTo(list.size());
     for (Group group : idInList) {
       boolean found = false;
       for (Group otherGroup : list) {
@@ -158,7 +158,7 @@ public class GroupQueryTest extends PluggableProcessEngineTest {
       groupQuery.groupName(null);
       fail();
     } catch (ProcessEngineException e) {
-      assertEquals("Provided name is null", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Provided name is null");
     }
   }
 
@@ -187,7 +187,7 @@ public class GroupQueryTest extends PluggableProcessEngineTest {
       groupQuery.groupNameLike(null);
       fail();
     } catch (ProcessEngineException e) {
-      assertEquals("Provided nameLike is null", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Provided nameLike is null");
     }
   }
 
@@ -210,7 +210,7 @@ public class GroupQueryTest extends PluggableProcessEngineTest {
       groupQuery.groupType(null);
       fail();
     } catch (ProcessEngineException e) {
-      assertEquals("Provided type is null", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Provided type is null");
     }
   }
 
@@ -224,16 +224,16 @@ public class GroupQueryTest extends PluggableProcessEngineTest {
 
     query = query.orderByGroupId().asc();
     List<Group> groups = query.list();
-    assertEquals(3, groups.size());
-    assertEquals("admin", groups.get(0).getId());
-    assertEquals("frogs", groups.get(1).getId());
-    assertEquals("muppets", groups.get(2).getId());
+    assertThat(groups.size()).isEqualTo(3);
+    assertThat(groups.get(0).getId()).isEqualTo("admin");
+    assertThat(groups.get(1).getId()).isEqualTo("frogs");
+    assertThat(groups.get(2).getId()).isEqualTo("muppets");
 
     query = query.groupType("user");
     groups = query.list();
-    assertEquals(2, groups.size());
-    assertEquals("frogs", groups.get(0).getId());
-    assertEquals("muppets", groups.get(1).getId());
+    assertThat(groups.size()).isEqualTo(2);
+    assertThat(groups.get(0).getId()).isEqualTo("frogs");
+    assertThat(groups.get(1).getId()).isEqualTo("muppets");
   }
 
   @Test
@@ -246,7 +246,7 @@ public class GroupQueryTest extends PluggableProcessEngineTest {
       groupQuery.groupMember(null);
       fail();
     } catch (ProcessEngineException e) {
-      assertEquals("Provided userId is null", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Provided userId is null");
     }
   }
 
@@ -259,35 +259,35 @@ public class GroupQueryTest extends PluggableProcessEngineTest {
     verifyQueryResults(query, 1);
 
     Group group = query.singleResult();
-    assertEquals("frogs", group.getId());
+    assertThat(group.getId()).isEqualTo("frogs");
   }
 
   @Test
   public void testQuerySorting() {
     // asc
-    assertEquals(4, identityService.createGroupQuery().orderByGroupId().asc().count());
-    assertEquals(4, identityService.createGroupQuery().orderByGroupName().asc().count());
-    assertEquals(4, identityService.createGroupQuery().orderByGroupType().asc().count());
+    assertThat(identityService.createGroupQuery().orderByGroupId().asc().count()).isEqualTo(4);
+    assertThat(identityService.createGroupQuery().orderByGroupName().asc().count()).isEqualTo(4);
+    assertThat(identityService.createGroupQuery().orderByGroupType().asc().count()).isEqualTo(4);
 
     // desc
-    assertEquals(4, identityService.createGroupQuery().orderByGroupId().desc().count());
-    assertEquals(4, identityService.createGroupQuery().orderByGroupName().desc().count());
-    assertEquals(4, identityService.createGroupQuery().orderByGroupType().desc().count());
+    assertThat(identityService.createGroupQuery().orderByGroupId().desc().count()).isEqualTo(4);
+    assertThat(identityService.createGroupQuery().orderByGroupName().desc().count()).isEqualTo(4);
+    assertThat(identityService.createGroupQuery().orderByGroupType().desc().count()).isEqualTo(4);
 
     // Multiple sortings
     GroupQuery query = identityService.createGroupQuery().orderByGroupType().asc().orderByGroupName().desc();
     List<Group> groups = query.list();
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
-    assertEquals("security", groups.get(0).getType());
-    assertEquals("user", groups.get(1).getType());
-    assertEquals("user", groups.get(2).getType());
-    assertEquals("user", groups.get(3).getType());
+    assertThat(groups.get(0).getType()).isEqualTo("security");
+    assertThat(groups.get(1).getType()).isEqualTo("user");
+    assertThat(groups.get(2).getType()).isEqualTo("user");
+    assertThat(groups.get(3).getType()).isEqualTo("user");
 
-    assertEquals("admin", groups.get(0).getId());
-    assertEquals("muppets", groups.get(1).getId());
-    assertEquals("mammals", groups.get(2).getId());
-    assertEquals("frogs", groups.get(3).getId());
+    assertThat(groups.get(0).getId()).isEqualTo("admin");
+    assertThat(groups.get(1).getId()).isEqualTo("muppets");
+    assertThat(groups.get(2).getId()).isEqualTo("mammals");
+    assertThat(groups.get(3).getId()).isEqualTo("frogs");
   }
 
   @Test
@@ -305,8 +305,8 @@ public class GroupQueryTest extends PluggableProcessEngineTest {
   }
 
   private void verifyQueryResults(GroupQuery query, int countExpected) {
-    assertEquals(countExpected, query.list().size());
-    assertEquals(countExpected, query.count());
+    assertThat(query.list().size()).isEqualTo(countExpected);
+    assertThat(query.count()).isEqualTo(countExpected);
 
     if (countExpected == 1) {
       assertNotNull(query.singleResult());

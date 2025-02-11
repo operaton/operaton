@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -96,7 +96,7 @@ public class MultiTenancyTaskCountByCandidateGroupTest {
     List<TaskCountByCandidateGroupResult> results = taskService.createTaskReport().taskCountByCandidateGroup();
 
     // then
-    assertEquals(1, results.size());
+    assertThat(results.size()).isEqualTo(1);
   }
 
   protected void createTask(String groupId, String tenantId) {

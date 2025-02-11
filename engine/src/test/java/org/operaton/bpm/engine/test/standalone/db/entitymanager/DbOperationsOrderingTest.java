@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.standalone.db.entitymanager;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
@@ -110,7 +110,7 @@ public class DbOperationsOrderingTest {
     entityManager.flushEntityCache();
 
     List<DbOperation> flush = entityManager.getDbOperationManager().calculateFlush();
-    assertEquals(1, flush.size());
+    assertThat(flush.size()).isEqualTo(1);
   }
 
   @Test

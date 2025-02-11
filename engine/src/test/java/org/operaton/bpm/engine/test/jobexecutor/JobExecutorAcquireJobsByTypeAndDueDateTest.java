@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.jobexecutor;
 
 import static org.operaton.bpm.engine.test.util.ClockTestUtil.incrementClock;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -54,7 +54,7 @@ public class JobExecutorAcquireJobsByTypeAndDueDateTest extends AbstractJobExecu
 
     Job job = managementService.createJobQuery().singleResult();
     assertNotNull(job.getDuedate());
-    assertEquals(ClockUtil.getCurrentTime(), job.getDuedate());
+    assertThat(job.getDuedate()).isEqualTo(ClockUtil.getCurrentTime());
   }
 
   @Test
@@ -90,10 +90,10 @@ public class JobExecutorAcquireJobsByTypeAndDueDateTest extends AbstractJobExecu
     assertTrue(timerJob2.getDuedate().before(messageJob2.getDuedate()));
 
     List<AcquirableJobEntity> acquirableJobs = findAcquirableJobs();
-    assertEquals(4, acquirableJobs.size());
-    assertEquals(timerJob1.getId(), acquirableJobs.get(0).getId());
-    assertEquals(timerJob2.getId(), acquirableJobs.get(1).getId());
-    assertEquals(messageJob1.getId(), acquirableJobs.get(2).getId());
-    assertEquals(messageJob2.getId(), acquirableJobs.get(3).getId());
+    assertThat(acquirableJobs.size()).isEqualTo(4);
+    assertThat(acquirableJobs.get(0).getId()).isEqualTo(timerJob1.getId());
+    assertThat(acquirableJobs.get(1).getId()).isEqualTo(timerJob2.getId());
+    assertThat(acquirableJobs.get(2).getId()).isEqualTo(messageJob1.getId());
+    assertThat(acquirableJobs.get(3).getId()).isEqualTo(messageJob2.getId());
   }
 }

@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.usertask;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
@@ -92,15 +91,15 @@ public class TaskCandidateTest extends PluggableProcessEngineTest {
 
     // The task should be visible in the candidate task list
     tasks = taskService.createTaskQuery().taskCandidateUser(KERMIT).list();
-    assertEquals(1, tasks.size());
+    assertThat(tasks.size()).isEqualTo(1);
     Task task = tasks.get(0);
-    assertEquals("Pay out expenses", task.getName());
+    assertThat(task.getName()).isEqualTo("Pay out expenses");
 
     // The above query again, now between 'or' and 'endOr'
     tasks = taskService.createTaskQuery().or().taskCandidateUser(KERMIT).endOr().list();
-    assertEquals(1, tasks.size());
+    assertThat(tasks.size()).isEqualTo(1);
     task = tasks.get(0);
-    assertEquals("Pay out expenses", task.getName());
+    assertThat(task.getName()).isEqualTo("Pay out expenses");
 
     // Claim the task
     taskService.claim(task.getId(), KERMIT);
@@ -114,9 +113,9 @@ public class TaskCandidateTest extends PluggableProcessEngineTest {
       .createTaskQuery()
       .taskAssignee(KERMIT)
       .list();
-    assertEquals(1, tasks.size());
+    assertThat(tasks.size()).isEqualTo(1);
     task = tasks.get(0);
-    assertEquals("Pay out expenses", task.getName());
+    assertThat(task.getName()).isEqualTo("Pay out expenses");
 
     // Completing the task ends the process
     taskService.complete(task.getId());
@@ -147,31 +146,31 @@ public class TaskCandidateTest extends PluggableProcessEngineTest {
 
     // The task should be visible in the candidate task list of Gonzo and Kermit
     // and anyone in the management/accountancy group
-    assertEquals(1, taskService.createTaskQuery().taskCandidateUser(KERMIT).list().size());
-    assertEquals(1, taskService.createTaskQuery().taskCandidateUser(GONZO).list().size());
-    assertEquals(1, taskService.createTaskQuery().taskCandidateGroup(MANAGEMENT).count());
-    assertEquals(1, taskService.createTaskQuery().taskCandidateGroup("accountancy").count());
-    assertEquals(0, taskService.createTaskQuery().taskCandidateGroup("sales").count());
+    assertThat(taskService.createTaskQuery().taskCandidateUser(KERMIT).list().size()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskCandidateUser(GONZO).list().size()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskCandidateGroup(MANAGEMENT).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskCandidateGroup("accountancy").count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskCandidateGroup("sales").count()).isEqualTo(0);
 
     // Gonzo claims the task
     tasks = taskService.createTaskQuery().taskCandidateUser(GONZO).list();
     Task task = tasks.get(0);
-    assertEquals("Approve expenses", task.getName());
+    assertThat(task.getName()).isEqualTo("Approve expenses");
     taskService.claim(task.getId(), GONZO);
 
     // The task must now be gone from the candidate task lists
     assertTrue(taskService.createTaskQuery().taskCandidateUser(KERMIT).list().isEmpty());
     assertTrue(taskService.createTaskQuery().taskCandidateUser(GONZO).list().isEmpty());
-    assertEquals(0, taskService.createTaskQuery().taskCandidateGroup(MANAGEMENT).count());
+    assertThat(taskService.createTaskQuery().taskCandidateGroup(MANAGEMENT).count()).isEqualTo(0);
 
     // The task will be visible on the personal task list of Gonzo
-    assertEquals(1, taskService
-      .createTaskQuery()
-      .taskAssignee(GONZO)
-      .count());
+    assertThat(taskService
+        .createTaskQuery()
+        .taskAssignee(GONZO)
+        .count()).isEqualTo(1);
 
     // But not on the personal task list of (for example) Kermit
-    assertEquals(0, taskService.createTaskQuery().taskAssignee(KERMIT).count());
+    assertThat(taskService.createTaskQuery().taskAssignee(KERMIT).count()).isEqualTo(0);
 
     // Completing the task ends the process
     taskService.complete(task.getId());
@@ -184,8 +183,8 @@ public class TaskCandidateTest extends PluggableProcessEngineTest {
   public void testMultipleCandidateUsers() {
     runtimeService.startProcessInstanceByKey("multipleCandidateUsersExample");
 
-    assertEquals(1, taskService.createTaskQuery().taskCandidateUser(GONZO).list().size());
-    assertEquals(1, taskService.createTaskQuery().taskCandidateUser(KERMIT).list().size());
+    assertThat(taskService.createTaskQuery().taskCandidateUser(GONZO).list().size()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskCandidateUser(KERMIT).list().size()).isEqualTo(1);
   }
 
   @Deployment
@@ -193,8 +192,8 @@ public class TaskCandidateTest extends PluggableProcessEngineTest {
   public void testMixedCandidateUserAndGroup() {
     runtimeService.startProcessInstanceByKey("mixedCandidateUserAndGroupExample");
 
-    assertEquals(1, taskService.createTaskQuery().taskCandidateUser(GONZO).list().size());
-    assertEquals(1, taskService.createTaskQuery().taskCandidateUser(KERMIT).list().size());
+    assertThat(taskService.createTaskQuery().taskCandidateUser(GONZO).list().size()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskCandidateUser(KERMIT).list().size()).isEqualTo(1);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/usertask/groupTest.bpmn")

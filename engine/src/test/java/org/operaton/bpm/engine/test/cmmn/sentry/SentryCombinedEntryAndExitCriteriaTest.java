@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.sentry;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -133,7 +133,7 @@ public class SentryCombinedEntryAndExitCriteriaTest extends CmmnTest {
 
     thirdHumanTask = queryCaseExecutionById(thirdHumanTaskId);
     assertTrue(((CaseExecutionEntity)thirdHumanTask).isSuspended());
-    assertEquals(CaseExecutionState.ENABLED, ((CaseExecutionEntity) thirdHumanTask).getPreviousState());
+    assertThat(((CaseExecutionEntity) thirdHumanTask).getPreviousState()).isEqualTo(CaseExecutionState.ENABLED);
 
   }
 
@@ -236,7 +236,7 @@ public class SentryCombinedEntryAndExitCriteriaTest extends CmmnTest {
 
     thirdHumanTask = queryCaseExecutionById(thirdHumanTaskId);
     assertTrue(((CaseExecutionEntity)thirdHumanTask).isSuspended());
-    assertEquals(CaseExecutionState.ENABLED, ((CaseExecutionEntity) thirdHumanTask).getPreviousState());
+    assertThat(((CaseExecutionEntity) thirdHumanTask).getPreviousState()).isEqualTo(CaseExecutionState.ENABLED);
 
   }
 }

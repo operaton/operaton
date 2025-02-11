@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.api.runtime.migration.history;
 
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 
@@ -93,22 +93,22 @@ public class MigrationHistoricTaskInstanceTest {
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
 
     //when
-    assertEquals(1, sourceHistoryTaskInstanceQuery.count());
-    assertEquals(0, targetHistoryTaskInstanceQuery.count());
+    assertThat(sourceHistoryTaskInstanceQuery.count()).isEqualTo(1);
+    assertThat(targetHistoryTaskInstanceQuery.count()).isEqualTo(0);
     ProcessInstanceQuery sourceProcessInstanceQuery = runtimeService.createProcessInstanceQuery().processDefinitionId(sourceProcessDefinition.getId());
     runtimeService.newMigration(migrationPlan)
       .processInstanceQuery(sourceProcessInstanceQuery)
       .execute();
 
     //then
-    assertEquals(0, sourceHistoryTaskInstanceQuery.count());
-    assertEquals(1, targetHistoryTaskInstanceQuery.count());
+    assertThat(sourceHistoryTaskInstanceQuery.count()).isEqualTo(0);
+    assertThat(targetHistoryTaskInstanceQuery.count()).isEqualTo(1);
 
     HistoricTaskInstance instance = targetHistoryTaskInstanceQuery.singleResult();
-    assertEquals(targetProcessDefinition.getKey(), instance.getProcessDefinitionKey());
-    assertEquals(targetProcessDefinition.getId(), instance.getProcessDefinitionId());
-    assertEquals("userTask2", instance.getTaskDefinitionKey());
-    assertEquals(activityInstance.getActivityInstances("userTask")[0].getId(), instance.getActivityInstanceId());
+    assertThat(instance.getProcessDefinitionKey()).isEqualTo(targetProcessDefinition.getKey());
+    assertThat(instance.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());
+    assertThat(instance.getTaskDefinitionKey()).isEqualTo("userTask2");
+    assertThat(instance.getActivityInstanceId()).isEqualTo(activityInstance.getActivityInstances("userTask")[0].getId());
   }
 
   @Test

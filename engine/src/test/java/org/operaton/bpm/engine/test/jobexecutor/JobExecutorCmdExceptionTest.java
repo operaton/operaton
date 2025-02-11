@@ -33,6 +33,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.*;
 
 /**
@@ -67,7 +68,7 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
 
     // the job was successfully executed
     JobQuery query = managementService.createJobQuery().noRetriesLeft();
-    assertEquals(0, query.count());
+    assertThat(query.count()).isEqualTo(0);
   }
 
   @Test
@@ -86,7 +87,7 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
     // the job execution failed (job.retries = 0)
     Job job = managementService.createJobQuery().noRetriesLeft().singleResult();
     assertNotNull(job);
-    assertEquals(0, job.getRetries());
+    assertThat(job.getRetries()).isEqualTo(0);
   }
 
   @Test
@@ -106,11 +107,11 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
 
     // now there are 40 jobs with retries = 0:
     List<Job> jobList = managementService.createJobQuery().list();
-    assertEquals(40, jobList.size());
+    assertThat(jobList.size()).isEqualTo(40);
 
     for (Job job : jobList) {
       // all jobs have retries exhausted
-      assertEquals(0, job.getRetries());
+      assertThat(job.getRetries()).isEqualTo(0);
     }
   }
 
@@ -123,7 +124,7 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
     Job job = managementService.createJobQuery().singleResult();
     var jobId = job.getId();
 
-    assertEquals(3, job.getRetries());
+    assertThat(job.getRetries()).isEqualTo(3);
 
     try {
       managementService.executeJob(jobId);
@@ -133,14 +134,14 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
     }
 
     job = managementService.createJobQuery().singleResult();
-    assertEquals(2, job.getRetries());
+    assertThat(job.getRetries()).isEqualTo(2);
 
     testRule.executeAvailableJobs();
 
     // the job execution failed (job.retries = 0)
     job = managementService.createJobQuery().noRetriesLeft().singleResult();
     assertNotNull(job);
-    assertEquals(0, job.getRetries());
+    assertThat(job.getRetries()).isEqualTo(0);
   }
 
   @Deployment(resources="org/operaton/bpm/engine/test/jobexecutor/jobFailingOnFlush.bpmn20.xml")
@@ -153,7 +154,7 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
     Job job = managementService.createJobQuery().singleResult();
     assertNotNull(job);
     // with 3 retries
-    assertEquals(3, job.getRetries());
+    assertThat(job.getRetries()).isEqualTo(3);
 
     // if we execute the job
     testRule.waitForJobExecutorToProcessAllJobs(6000);
@@ -162,7 +163,7 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
     job = managementService.createJobQuery().singleResult();
     assertNotNull(job);
     // but has no more retires
-    assertEquals(0, job.getRetries());
+    assertThat(job.getRetries()).isEqualTo(0);
   }
 
   @Test
@@ -182,7 +183,7 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
     Job job = managementService.createJobQuery().singleResult();
     assertNotNull(job);
     // with 3 retries
-    assertEquals(3, job.getRetries());
+    assertThat(job.getRetries()).isEqualTo(3);
 
     // if we execute the job
     testRule.waitForJobExecutorToProcessAllJobs(6000);
@@ -191,8 +192,8 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
     job = managementService.createJobQuery().singleResult();
     assertNotNull(job);
     // but has no more retires
-    assertEquals(0, job.getRetries());
-    assertEquals("exception in transaction listener", job.getExceptionMessage());
+    assertThat(job.getRetries()).isEqualTo(0);
+    assertThat(job.getExceptionMessage()).isEqualTo("exception in transaction listener");
 
     String stacktrace = managementService.getJobExceptionStacktrace(job.getId());
     assertNotNull(stacktrace);

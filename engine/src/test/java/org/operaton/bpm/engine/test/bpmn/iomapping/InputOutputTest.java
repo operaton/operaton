@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.iomapping;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -67,8 +65,8 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
-    assertEquals("null", variable.getTypeName());
-    assertEquals(execution.getId(), variable.getExecutionId());
+    assertThat(variable.getTypeName()).isEqualTo("null");
+    assertThat(variable.getExecutionId()).isEqualTo(execution.getId());
   }
 
   @Deployment
@@ -79,8 +77,8 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
-    assertEquals("stringValue", variable.getValue());
-    assertEquals(execution.getId(), variable.getExecutionId());
+    assertThat(variable.getValue()).isEqualTo("stringValue");
+    assertThat(variable.getExecutionId()).isEqualTo(execution.getId());
   }
 
 
@@ -92,8 +90,8 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
-    assertEquals(2l, variable.getValue());
-    assertEquals(execution.getId(), variable.getExecutionId());
+    assertThat(variable.getValue()).isEqualTo(2l);
+    assertThat(variable.getExecutionId()).isEqualTo(execution.getId());
   }
 
   @Deployment
@@ -104,8 +102,8 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
-    assertEquals(2, variable.getValue());
-    assertEquals(execution.getId(), variable.getExecutionId());
+    assertThat(variable.getValue()).isEqualTo(2);
+    assertThat(variable.getExecutionId()).isEqualTo(execution.getId());
   }
 
   @Deployment
@@ -118,8 +116,8 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
-    assertEquals(2, variable.getValue());
-    assertEquals(execution.getId(), variable.getExecutionId());
+    assertThat(variable.getValue()).isEqualTo(2);
+    assertThat(variable.getExecutionId()).isEqualTo(execution.getId());
   }
 
   @Deployment
@@ -132,8 +130,8 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
-    assertEquals(2, variable.getValue());
-    assertEquals(execution.getId(), variable.getExecutionId());
+    assertThat(variable.getValue()).isEqualTo(2);
+    assertThat(variable.getExecutionId()).isEqualTo(execution.getId());
   }
 
   @Deployment
@@ -144,8 +142,8 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
-    assertEquals(2, variable.getValue());
-    assertEquals(execution.getId(), variable.getExecutionId());
+    assertThat(variable.getValue()).isEqualTo(2);
+    assertThat(variable.getExecutionId()).isEqualTo(execution.getId());
   }
 
   @Deployment
@@ -158,8 +156,8 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
-    assertEquals(2, variable.getValue());
-    assertEquals(execution.getId(), variable.getExecutionId());
+    assertThat(variable.getValue()).isEqualTo(2);
+    assertThat(variable.getExecutionId()).isEqualTo(execution.getId());
   }
 
   @Deployment
@@ -172,8 +170,8 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
-    assertEquals(2, variable.getValue());
-    assertEquals(execution.getId(), variable.getExecutionId());
+    assertThat(variable.getValue()).isEqualTo(2);
+    assertThat(variable.getExecutionId()).isEqualTo(execution.getId());
   }
 
   @Deployment
@@ -184,8 +182,8 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
-    assertEquals(2, variable.getValue());
-    assertEquals(execution.getId(), variable.getExecutionId());
+    assertThat(variable.getValue()).isEqualTo(2);
+    assertThat(variable.getExecutionId()).isEqualTo(execution.getId());
   }
 
   @Deployment
@@ -198,8 +196,8 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
-    assertEquals(2, variable.getValue());
-    assertEquals(execution.getId(), variable.getExecutionId());
+    assertThat(variable.getValue()).isEqualTo(2);
+    assertThat(variable.getExecutionId()).isEqualTo(execution.getId());
   }
 
   @Deployment
@@ -212,8 +210,8 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
-    assertEquals(2, variable.getValue());
-    assertEquals(execution.getId(), variable.getExecutionId());
+    assertThat(variable.getValue()).isEqualTo(2);
+    assertThat(variable.getExecutionId()).isEqualTo(execution.getId());
   }
 
   @Deployment(resources = {
@@ -227,8 +225,8 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
-    assertEquals(2, variable.getValue());
-    assertEquals(execution.getId(), variable.getExecutionId());
+    assertThat(variable.getValue()).isEqualTo(2);
+    assertThat(variable.getExecutionId()).isEqualTo(execution.getId());
   }
 
   @Deployment(resources = {
@@ -244,8 +242,8 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
-    assertEquals(2, variable.getValue());
-    assertEquals(execution.getId(), variable.getExecutionId());
+    assertThat(variable.getValue()).isEqualTo(2);
+    assertThat(variable.getExecutionId()).isEqualTo(execution.getId());
   }
 
   @Deployment(resources = {
@@ -261,8 +259,8 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
-    assertEquals(2, variable.getValue());
-    assertEquals(execution.getId(), variable.getExecutionId());
+    assertThat(variable.getValue()).isEqualTo(2);
+    assertThat(variable.getExecutionId()).isEqualTo(execution.getId());
   }
 
   @Deployment
@@ -274,9 +272,9 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
     List<Object> value = (List<Object>) variable.getValue();
-    assertEquals(2l, value.get(0));
-    assertEquals(3l, value.get(1));
-    assertEquals(4l, value.get(2));
+    assertThat(value.get(0)).isEqualTo(2l);
+    assertThat(value.get(1)).isEqualTo(3l);
+    assertThat(value.get(2)).isEqualTo(4l);
   }
 
   @Deployment
@@ -288,9 +286,9 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
     List<Object> value = (List<Object>) variable.getValue();
-    assertEquals("constantStringValue", value.get(0));
-    assertEquals("elValue", value.get(1));
-    assertEquals("scriptValue", value.get(2));
+    assertThat(value.get(0)).isEqualTo("constantStringValue");
+    assertThat(value.get(1)).isEqualTo("elValue");
+    assertThat(value.get(2)).isEqualTo("scriptValue");
   }
 
   @Deployment
@@ -302,9 +300,9 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
     TreeMap<String, Object> value = (TreeMap) variable.getValue();
-    assertEquals(2l, value.get("a"));
-    assertEquals(3l, value.get("b"));
-    assertEquals(4l, value.get("c"));
+    assertThat(value.get("a")).isEqualTo(2l);
+    assertThat(value.get("b")).isEqualTo(3l);
+    assertThat(value.get("c")).isEqualTo(4l);
 
   }
 
@@ -316,13 +314,13 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     VariableInstance var1 = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(var1);
-    assertEquals(2l, var1.getValue());
-    assertEquals(execution.getId(), var1.getExecutionId());
+    assertThat(var1.getValue()).isEqualTo(2l);
+    assertThat(var1.getExecutionId()).isEqualTo(execution.getId());
 
     VariableInstance var2 = runtimeService.createVariableInstanceQuery().variableName("var2").singleResult();
     assertNotNull(var2);
-    assertEquals(3l, var2.getValue());
-    assertEquals(execution.getId(), var2.getExecutionId());
+    assertThat(var2.getValue()).isEqualTo(3l);
+    assertThat(var2.getExecutionId()).isEqualTo(execution.getId());
   }
 
   @Deployment
@@ -333,13 +331,13 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     VariableInstance var1 = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(var1);
-    assertEquals(2l, var1.getValue());
-    assertEquals(execution.getId(), var1.getExecutionId());
+    assertThat(var1.getValue()).isEqualTo(2l);
+    assertThat(var1.getExecutionId()).isEqualTo(execution.getId());
 
     VariableInstance var2 = runtimeService.createVariableInstanceQuery().variableName("var2").singleResult();
     assertNotNull(var2);
-    assertEquals("stringConstantValue", var2.getValue());
-    assertEquals(execution.getId(), var2.getExecutionId());
+    assertThat(var2.getValue()).isEqualTo("stringConstantValue");
+    assertThat(var2.getExecutionId()).isEqualTo(execution.getId());
   }
 
   @Deployment
@@ -354,14 +352,14 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     VariableInstance var1 = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     TreeMap<String, Object> value = (TreeMap) var1.getValue();
     List<Object> nestedList = (List<Object>) value.get("a");
-    assertEquals("stringInListNestedInMap", nestedList.get(0));
-    assertEquals("b", nestedList.get(1));
-    assertEquals("stringValueWithExprKey", value.get("b"));
+    assertThat(nestedList.get(0)).isEqualTo("stringInListNestedInMap");
+    assertThat(nestedList.get(1)).isEqualTo("b");
+    assertThat(value.get("b")).isEqualTo("stringValueWithExprKey");
 
     VariableInstance var2 = runtimeService.createVariableInstanceQuery().variableName("var2").singleResult();
     assertNotNull(var2);
-    assertEquals("stringConstantValue", var2.getValue());
-    assertEquals(execution.getId(), var2.getExecutionId());
+    assertThat(var2.getValue()).isEqualTo("stringConstantValue");
+    assertThat(var2.getExecutionId()).isEqualTo(execution.getId());
   }
 
   @Deployment
@@ -375,21 +373,21 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
     List<Object> value = (List<Object>) variable.getValue();
-    assertEquals("constantStringValue", value.get(0));
-    assertEquals("elValue", value.get(1));
-    assertEquals("scriptValue", value.get(2));
+    assertThat(value.get(0)).isEqualTo("constantStringValue");
+    assertThat(value.get(1)).isEqualTo("elValue");
+    assertThat(value.get(2)).isEqualTo("scriptValue");
 
     List<Object> nestedList = (List<Object>) value.get(3);
     List<Object> nestedNestedList = (List<Object>) nestedList.get(0);
-    assertEquals("a", nestedNestedList.get(0));
-    assertEquals("b", nestedNestedList.get(1));
-    assertEquals("c", nestedNestedList.get(2));
-    assertEquals("d", nestedList.get(1));
+    assertThat(nestedNestedList.get(0)).isEqualTo("a");
+    assertThat(nestedNestedList.get(1)).isEqualTo("b");
+    assertThat(nestedNestedList.get(2)).isEqualTo("c");
+    assertThat(nestedList.get(1)).isEqualTo("d");
 
     TreeMap<String, Object> nestedMap = (TreeMap<String, Object>) value.get(4);
-    assertEquals("bar", nestedMap.get("foo"));
-    assertEquals("world", nestedMap.get("hello"));
-    assertEquals("potato", nestedMap.get("vegie"));
+    assertThat(nestedMap.get("foo")).isEqualTo("bar");
+    assertThat(nestedMap.get("hello")).isEqualTo("world");
+    assertThat(nestedMap.get("vegie")).isEqualTo("potato");
   }
 
   @Deployment
@@ -404,8 +402,8 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
     TreeMap<String, Object> value = (TreeMap) variable.getValue();
-    assertEquals("potato", value.get("a"));
-    assertEquals("tomato", value.get("b"));
+    assertThat(value.get("a")).isEqualTo("potato");
+    assertThat(value.get("b")).isEqualTo("tomato");
   }
 
   @Deployment
@@ -421,8 +419,8 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
     TreeMap<String, Object> value = (TreeMap) variable.getValue();
-    assertEquals("potato", value.get("a"));
-    assertEquals("tomato", value.get("b"));
+    assertThat(value.get("a")).isEqualTo("potato");
+    assertThat(value.get("b")).isEqualTo("tomato");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/iomapping/InputOutputTest.testInputMapElKey.bpmn")
@@ -445,8 +443,8 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
-    assertEquals("null", variable.getTypeName());
-    assertEquals(pi.getId(), variable.getExecutionId());
+    assertThat(variable.getTypeName()).isEqualTo("null");
+    assertThat(variable.getExecutionId()).isEqualTo(pi.getId());
   }
 
   @Deployment
@@ -456,8 +454,8 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
-    assertEquals("stringValue", variable.getValue());
-    assertEquals(pi.getId(), variable.getExecutionId());
+    assertThat(variable.getValue()).isEqualTo("stringValue");
+    assertThat(variable.getExecutionId()).isEqualTo(pi.getId());
   }
 
 
@@ -468,8 +466,8 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
-    assertEquals(2l, variable.getValue());
-    assertEquals(pi.getId(), variable.getExecutionId());
+    assertThat(variable.getValue()).isEqualTo(2l);
+    assertThat(variable.getExecutionId()).isEqualTo(pi.getId());
   }
 
   @Deployment
@@ -479,8 +477,8 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
-    assertEquals(2, variable.getValue());
-    assertEquals(pi.getId(), variable.getExecutionId());
+    assertThat(variable.getValue()).isEqualTo(2);
+    assertThat(variable.getExecutionId()).isEqualTo(pi.getId());
   }
 
   @Deployment
@@ -492,8 +490,8 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
-    assertEquals(2, variable.getValue());
-    assertEquals(pi.getId(), variable.getExecutionId());
+    assertThat(variable.getValue()).isEqualTo(2);
+    assertThat(variable.getExecutionId()).isEqualTo(pi.getId());
   }
 
   // related to CAM-8072
@@ -534,8 +532,8 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
-    assertEquals(2, variable.getValue());
-    assertEquals(pi.getId(), variable.getExecutionId());
+    assertThat(variable.getValue()).isEqualTo(2);
+    assertThat(variable.getExecutionId()).isEqualTo(pi.getId());
   }
 
   @Deployment
@@ -545,8 +543,8 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
-    assertEquals(2, variable.getValue());
-    assertEquals(pi.getId(), variable.getExecutionId());
+    assertThat(variable.getValue()).isEqualTo(2);
+    assertThat(variable.getExecutionId()).isEqualTo(pi.getId());
   }
 
   @Deployment
@@ -558,8 +556,8 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
-    assertEquals(2, variable.getValue());
-    assertEquals(pi.getId(), variable.getExecutionId());
+    assertThat(variable.getValue()).isEqualTo(2);
+    assertThat(variable.getExecutionId()).isEqualTo(pi.getId());
   }
 
   @Deployment
@@ -571,8 +569,8 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
-    assertEquals(2, variable.getValue());
-    assertEquals(pi.getId(), variable.getExecutionId());
+    assertThat(variable.getValue()).isEqualTo(2);
+    assertThat(variable.getExecutionId()).isEqualTo(pi.getId());
   }
 
   @Deployment
@@ -582,8 +580,8 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
-    assertEquals(2, variable.getValue());
-    assertEquals(pi.getId(), variable.getExecutionId());
+    assertThat(variable.getValue()).isEqualTo(2);
+    assertThat(variable.getExecutionId()).isEqualTo(pi.getId());
   }
 
   @Deployment
@@ -595,8 +593,8 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
-    assertEquals(2, variable.getValue());
-    assertEquals(pi.getId(), variable.getExecutionId());
+    assertThat(variable.getValue()).isEqualTo(2);
+    assertThat(variable.getExecutionId()).isEqualTo(pi.getId());
   }
 
   @Deployment
@@ -608,8 +606,8 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
-    assertEquals(2, variable.getValue());
-    assertEquals(pi.getId(), variable.getExecutionId());
+    assertThat(variable.getValue()).isEqualTo(2);
+    assertThat(variable.getExecutionId()).isEqualTo(pi.getId());
   }
 
   @Deployment(resources = {
@@ -622,8 +620,8 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
-    assertEquals(2, variable.getValue());
-    assertEquals(pi.getId(), variable.getExecutionId());
+    assertThat(variable.getValue()).isEqualTo(2);
+    assertThat(variable.getExecutionId()).isEqualTo(pi.getId());
   }
 
   @Deployment(resources = {
@@ -638,8 +636,8 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
-    assertEquals(2, variable.getValue());
-    assertEquals(pi.getId(), variable.getExecutionId());
+    assertThat(variable.getValue()).isEqualTo(2);
+    assertThat(variable.getExecutionId()).isEqualTo(pi.getId());
   }
 
   @Deployment(resources = {
@@ -654,8 +652,8 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
-    assertEquals(2, variable.getValue());
-    assertEquals(pi.getId(), variable.getExecutionId());
+    assertThat(variable.getValue()).isEqualTo(2);
+    assertThat(variable.getExecutionId()).isEqualTo(pi.getId());
   }
 
   @Deployment
@@ -667,9 +665,9 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
     List<Object> value = (List<Object>) variable.getValue();
-    assertEquals(2l, value.get(0));
-    assertEquals(3l, value.get(1));
-    assertEquals(4l, value.get(2));
+    assertThat(value.get(0)).isEqualTo(2l);
+    assertThat(value.get(1)).isEqualTo(3l);
+    assertThat(value.get(2)).isEqualTo(4l);
   }
 
   @Deployment
@@ -681,9 +679,9 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
     List<Object> value = (List<Object>) variable.getValue();
-    assertEquals("constantStringValue", value.get(0));
-    assertEquals("elValue", value.get(1));
-    assertEquals("scriptValue", value.get(2));
+    assertThat(value.get(0)).isEqualTo("constantStringValue");
+    assertThat(value.get(1)).isEqualTo("elValue");
+    assertThat(value.get(2)).isEqualTo("scriptValue");
   }
 
   @Deployment
@@ -695,9 +693,9 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
     TreeMap<String, Object> value = (TreeMap) variable.getValue();
-    assertEquals(2l, value.get("a"));
-    assertEquals(3l, value.get("b"));
-    assertEquals(4l, value.get("c"));
+    assertThat(value.get("a")).isEqualTo(2l);
+    assertThat(value.get("b")).isEqualTo(3l);
+    assertThat(value.get("c")).isEqualTo(4l);
 
   }
 
@@ -708,13 +706,13 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     VariableInstance var1 = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(var1);
-    assertEquals(2l, var1.getValue());
-    assertEquals(pi.getId(), var1.getExecutionId());
+    assertThat(var1.getValue()).isEqualTo(2l);
+    assertThat(var1.getExecutionId()).isEqualTo(pi.getId());
 
     VariableInstance var2 = runtimeService.createVariableInstanceQuery().variableName("var2").singleResult();
     assertNotNull(var2);
-    assertEquals(3l, var2.getValue());
-    assertEquals(pi.getId(), var2.getExecutionId());
+    assertThat(var2.getValue()).isEqualTo(3l);
+    assertThat(var2.getExecutionId()).isEqualTo(pi.getId());
   }
 
   @Deployment
@@ -724,13 +722,13 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     VariableInstance var1 = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(var1);
-    assertEquals(2l, var1.getValue());
-    assertEquals(pi.getId(), var1.getExecutionId());
+    assertThat(var1.getValue()).isEqualTo(2l);
+    assertThat(var1.getExecutionId()).isEqualTo(pi.getId());
 
     VariableInstance var2 = runtimeService.createVariableInstanceQuery().variableName("var2").singleResult();
     assertNotNull(var2);
-    assertEquals("stringConstantValue", var2.getValue());
-    assertEquals(pi.getId(), var2.getExecutionId());
+    assertThat(var2.getValue()).isEqualTo("stringConstantValue");
+    assertThat(var2.getExecutionId()).isEqualTo(pi.getId());
   }
 
   @Deployment
@@ -744,15 +742,15 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     VariableInstance var1 = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     TreeMap<String, Object> value = (TreeMap) var1.getValue();
     List<Object> nestedList = (List<Object>) value.get("a");
-    assertEquals("stringInListNestedInMap", nestedList.get(0));
-    assertEquals("b", nestedList.get(1));
-    assertEquals(pi.getId(), var1.getExecutionId());
-    assertEquals("stringValueWithExprKey", value.get("b"));
+    assertThat(nestedList.get(0)).isEqualTo("stringInListNestedInMap");
+    assertThat(nestedList.get(1)).isEqualTo("b");
+    assertThat(var1.getExecutionId()).isEqualTo(pi.getId());
+    assertThat(value.get("b")).isEqualTo("stringValueWithExprKey");
 
     VariableInstance var2 = runtimeService.createVariableInstanceQuery().variableName("var2").singleResult();
     assertNotNull(var2);
-    assertEquals("stringConstantValue", var2.getValue());
-    assertEquals(pi.getId(), var2.getExecutionId());
+    assertThat(var2.getValue()).isEqualTo("stringConstantValue");
+    assertThat(var2.getExecutionId()).isEqualTo(pi.getId());
   }
 
   @Deployment
@@ -766,21 +764,21 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
     List<Object> value = (List<Object>) variable.getValue();
-    assertEquals("constantStringValue", value.get(0));
-    assertEquals("elValue", value.get(1));
-    assertEquals("scriptValue", value.get(2));
+    assertThat(value.get(0)).isEqualTo("constantStringValue");
+    assertThat(value.get(1)).isEqualTo("elValue");
+    assertThat(value.get(2)).isEqualTo("scriptValue");
 
     List<Object> nestedList = (List<Object>) value.get(3);
     List<Object> nestedNestedList = (List<Object>) nestedList.get(0);
-    assertEquals("a", nestedNestedList.get(0));
-    assertEquals("b", nestedNestedList.get(1));
-    assertEquals("c", nestedNestedList.get(2));
-    assertEquals("d", nestedList.get(1));
+    assertThat(nestedNestedList.get(0)).isEqualTo("a");
+    assertThat(nestedNestedList.get(1)).isEqualTo("b");
+    assertThat(nestedNestedList.get(2)).isEqualTo("c");
+    assertThat(nestedList.get(1)).isEqualTo("d");
 
     TreeMap<String, Object> nestedMap = (TreeMap<String, Object>) value.get(4);
-    assertEquals("bar", nestedMap.get("foo"));
-    assertEquals("world", nestedMap.get("hello"));
-    assertEquals("potato", nestedMap.get("vegie"));
+    assertThat(nestedMap.get("foo")).isEqualTo("bar");
+    assertThat(nestedMap.get("hello")).isEqualTo("world");
+    assertThat(nestedMap.get("vegie")).isEqualTo("potato");
   }
 
   @Deployment
@@ -797,8 +795,8 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
     TreeMap<String, Object> value = (TreeMap) variable.getValue();
-    assertEquals("potato", value.get("a"));
-    assertEquals("tomato", value.get("b"));
+    assertThat(value.get("a")).isEqualTo("potato");
+    assertThat(value.get("b")).isEqualTo("tomato");
   }
 
   @Deployment
@@ -813,8 +811,8 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
     TreeMap<String, Object> value = (TreeMap) variable.getValue();
-    assertEquals("potato", value.get("a"));
-    assertEquals("tomato", value.get("b"));
+    assertThat(value.get("a")).isEqualTo("potato");
+    assertThat(value.get("b")).isEqualTo("tomato");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/iomapping/InputOutputTest.testOutputMapElKey.bpmn")
@@ -854,15 +852,15 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     Execution subprocessExecution = runtimeService.createExecutionQuery().activityId("subprocessTask").singleResult();
     Map<String, Object> variablesLocal = runtimeService.getVariablesLocal(subprocessExecution.getId());
-    assertEquals(1, variablesLocal.size());
-    assertEquals("value", variablesLocal.get("innerVar"));
+    assertThat(variablesLocal.size()).isEqualTo(1);
+    assertThat(variablesLocal.get("innerVar")).isEqualTo("value");
 
     Task task = taskService.createTaskQuery().singleResult();
     taskService.complete(task.getId());
 
     String outerVariable = (String) runtimeService.getVariableLocal(processInstance.getId(), "outerVar");
     assertNotNull(outerVariable);
-    assertEquals("value", outerVariable);
+    assertThat(outerVariable).isEqualTo("value");
 
 
   }
@@ -879,11 +877,11 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     Execution miExecution = runtimeService.createExecutionQuery().activityId("miTask").singleResult();
     assertNotNull(miExecution);
     assertNotEquals(instance.getId(), miExecution.getId());
-    assertEquals(0, runtimeService.getVariable(miExecution.getId(), "loopCounter"));
+    assertThat(runtimeService.getVariable(miExecution.getId(), "loopCounter")).isEqualTo(0);
 
     // input mapping
-    assertEquals(1, runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count());
-    assertEquals(1, runtimeService.getVariableLocal(miExecution.getId(), "miCounterValue"));
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isEqualTo(1);
+    assertThat(runtimeService.getVariableLocal(miExecution.getId(), "miCounterValue")).isEqualTo(1);
 
     Task task = taskService.createTaskQuery().singleResult();
     taskService.complete(task.getId());
@@ -892,17 +890,17 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     miExecution = runtimeService.createExecutionQuery().activityId("miTask").singleResult();
     assertNotNull(miExecution);
     assertNotEquals(instance.getId(), miExecution.getId());
-    assertEquals(1, runtimeService.getVariable(miExecution.getId(), "loopCounter"));
+    assertThat(runtimeService.getVariable(miExecution.getId(), "loopCounter")).isEqualTo(1);
 
     // input mapping
-    assertEquals(1, runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count());
-    assertEquals(2, runtimeService.getVariableLocal(miExecution.getId(), "miCounterValue"));
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isEqualTo(1);
+    assertThat(runtimeService.getVariableLocal(miExecution.getId(), "miCounterValue")).isEqualTo(2);
 
     task = taskService.createTaskQuery().singleResult();
     taskService.complete(task.getId());
 
     // variable does not exist outside of scope
-    assertEquals(0, runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count());
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isEqualTo(0);
   }
 
   @Deployment
@@ -916,11 +914,11 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     // first sequential mi execution
     Execution miScopeExecution = runtimeService.createExecutionQuery().activityId("task").singleResult();
     assertNotNull(miScopeExecution);
-    assertEquals(0, runtimeService.getVariable(miScopeExecution.getId(), "loopCounter"));
+    assertThat(runtimeService.getVariable(miScopeExecution.getId(), "loopCounter")).isEqualTo(0);
 
     // input mapping
-    assertEquals(1, runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count());
-    assertEquals(1, runtimeService.getVariableLocal(miScopeExecution.getId(), "miCounterValue"));
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isEqualTo(1);
+    assertThat(runtimeService.getVariableLocal(miScopeExecution.getId(), "miCounterValue")).isEqualTo(1);
 
     Task task = taskService.createTaskQuery().singleResult();
     taskService.complete(task.getId());
@@ -929,17 +927,17 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     miScopeExecution = runtimeService.createExecutionQuery().activityId("task").singleResult();
     assertNotNull(miScopeExecution);
     assertNotEquals(instance.getId(), miScopeExecution.getId());
-    assertEquals(1, runtimeService.getVariable(miScopeExecution.getId(), "loopCounter"));
+    assertThat(runtimeService.getVariable(miScopeExecution.getId(), "loopCounter")).isEqualTo(1);
 
     // input mapping
-    assertEquals(1, runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count());
-    assertEquals(2, runtimeService.getVariableLocal(miScopeExecution.getId(), "miCounterValue"));
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isEqualTo(1);
+    assertThat(runtimeService.getVariableLocal(miScopeExecution.getId(), "miCounterValue")).isEqualTo(2);
 
     task = taskService.createTaskQuery().singleResult();
     taskService.complete(task.getId());
 
     // variable does not exist outside of scope
-    assertEquals(0, runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count());
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isEqualTo(0);
   }
 
   @Deployment
@@ -969,14 +967,14 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     assertTrue(counters.contains(1));
     assertTrue(counters.contains(2));
 
-    assertEquals(2, runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count());
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isEqualTo(2);
 
     for (Task task : taskService.createTaskQuery().list()) {
       taskService.complete(task.getId());
     }
 
     // variable does not exist outside of scope
-    assertEquals(0, runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count());
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isEqualTo(0);
   }
 
   @Deployment
@@ -1005,14 +1003,14 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     assertTrue(counters.contains(1));
     assertTrue(counters.contains(2));
 
-    assertEquals(2, runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count());
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isEqualTo(2);
 
     for (Task task : taskService.createTaskQuery().list()) {
       taskService.complete(task.getId());
     }
 
     // variable does not exist outside of scope
-    assertEquals(0, runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count());
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isEqualTo(0);
   }
 
   @Test
@@ -1094,16 +1092,16 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     Task task = taskService.createTaskQuery().singleResult();
 
     assertNotNull(task);
-    assertEquals("taskOk", task.getTaskDefinitionKey());
+    assertThat(task.getTaskDefinitionKey()).isEqualTo("taskOk");
 
     // then: variable mapped exists
-    assertEquals(0, runtimeService.createVariableInstanceQuery().variableName("localNotMapped").count());
-    assertEquals(0, runtimeService.createVariableInstanceQuery().variableName("localMapped").count());
-    assertEquals(1, runtimeService.createVariableInstanceQuery().variableName("mapped").count());
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("localNotMapped").count()).isEqualTo(0);
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("localMapped").count()).isEqualTo(0);
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("mapped").count()).isEqualTo(1);
 
     taskService.complete(task.getId());
 
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
 
     // case 2: error occurs
     runtimeService.startProcessInstanceByKey("testProcess", Collections.<String, Object>singletonMap("throwError", true));
@@ -1111,15 +1109,15 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     task = taskService.createTaskQuery().singleResult();
 
     assertNotNull(task);
-    assertEquals("taskError", task.getTaskDefinitionKey());
+    assertThat(task.getTaskDefinitionKey()).isEqualTo("taskError");
 
-    assertEquals(0, runtimeService.createVariableInstanceQuery().variableName("localNotMapped").count());
-    assertEquals(0, runtimeService.createVariableInstanceQuery().variableName("localMapped").count());
-    assertEquals(0, runtimeService.createVariableInstanceQuery().variableName("mapped").count());
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("localNotMapped").count()).isEqualTo(0);
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("localMapped").count()).isEqualTo(0);
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("mapped").count()).isEqualTo(0);
 
     taskService.complete(task.getId());
 
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
   }
 
   @Deployment
@@ -1133,21 +1131,21 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     Task task = taskService.createTaskQuery().singleResult();
 
     assertNotNull(task);
-    assertEquals("wait", task.getTaskDefinitionKey());
+    assertThat(task.getTaskDefinitionKey()).isEqualTo("wait");
 
     taskService.complete(task.getId());
 
     task = taskService.createTaskQuery().singleResult();
 
     assertNotNull(task);
-    assertEquals("taskOk", task.getTaskDefinitionKey());
+    assertThat(task.getTaskDefinitionKey()).isEqualTo("taskOk");
 
     // then: variable mapped exists
-    assertEquals(1, runtimeService.createVariableInstanceQuery().variableName("mapped").count());
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("mapped").count()).isEqualTo(1);
 
     taskService.complete(task.getId());
 
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
 
     // case 2: error occurs
     runtimeService.startProcessInstanceByKey("testProcess", Collections.<String, Object>singletonMap("throwError", true));
@@ -1155,20 +1153,20 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     task = taskService.createTaskQuery().singleResult();
 
     assertNotNull(task);
-    assertEquals("wait", task.getTaskDefinitionKey());
+    assertThat(task.getTaskDefinitionKey()).isEqualTo("wait");
 
     runtimeService.correlateMessage("message");
 
     task = taskService.createTaskQuery().singleResult();
 
     assertNotNull(task);
-    assertEquals("taskError", task.getTaskDefinitionKey());
+    assertThat(task.getTaskDefinitionKey()).isEqualTo("taskError");
 
-    assertEquals(0, runtimeService.createVariableInstanceQuery().variableName("mapped").count());
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("mapped").count()).isEqualTo(0);
 
     taskService.complete(task.getId());
 
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
   }
 
   @Deployment
@@ -1182,21 +1180,21 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     Task task = taskService.createTaskQuery().singleResult();
 
     assertNotNull(task);
-    assertEquals("wait", task.getTaskDefinitionKey());
+    assertThat(task.getTaskDefinitionKey()).isEqualTo("wait");
 
     taskService.complete(task.getId());
 
     task = taskService.createTaskQuery().singleResult();
 
     assertNotNull(task);
-    assertEquals("taskOk", task.getTaskDefinitionKey());
+    assertThat(task.getTaskDefinitionKey()).isEqualTo("taskOk");
 
     // then: variable mapped exists
-    assertEquals(1, runtimeService.createVariableInstanceQuery().variableName("mapped").count());
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("mapped").count()).isEqualTo(1);
 
     taskService.complete(task.getId());
 
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
 
     // case 2: error occurs
     runtimeService.startProcessInstanceByKey("testProcess", Collections.<String, Object>singletonMap("throwError", true));
@@ -1204,7 +1202,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     task = taskService.createTaskQuery().singleResult();
 
     assertNotNull(task);
-    assertEquals("wait", task.getTaskDefinitionKey());
+    assertThat(task.getTaskDefinitionKey()).isEqualTo("wait");
 
     Job job = managementService.createJobQuery().singleResult();
     assertNotNull(job);
@@ -1213,13 +1211,13 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     task = taskService.createTaskQuery().singleResult();
 
     assertNotNull(task);
-    assertEquals("taskError", task.getTaskDefinitionKey());
+    assertThat(task.getTaskDefinitionKey()).isEqualTo("taskError");
 
-    assertEquals(0, runtimeService.createVariableInstanceQuery().variableName("mapped").count());
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("mapped").count()).isEqualTo(0);
 
     taskService.complete(task.getId());
 
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
   }
 
   @Deployment
@@ -1237,7 +1235,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
       .singleResult();
 
     // then
-    assertEquals(theTaskInstance.getId(), variableInstance.getActivityInstanceId());
+    assertThat(variableInstance.getActivityInstanceId()).isEqualTo(theTaskInstance.getId());
   }
 
   @Test
@@ -1261,7 +1259,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
       .singleResult();
 
     // then
-    assertEquals("Hello World!", variableInstance.getValue());
+    assertThat(variableInstance.getValue()).isEqualTo("Hello World!");
   }
 
   @Test
@@ -1288,7 +1286,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
       .singleResult();
 
     // then
-    assertEquals("Hello World!", variableInstance.getValue());
+    assertThat(variableInstance.getValue()).isEqualTo("Hello World!");
   }
 
   @Deployment
@@ -1300,7 +1298,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var").singleResult();
     assertNotNull(variable);
-    assertEquals("baroque", variable.getValue());
-    assertEquals(pi.getId(), variable.getExecutionId());
+    assertThat(variable.getValue()).isEqualTo("baroque");
+    assertThat(variable.getExecutionId()).isEqualTo(pi.getId());
   }
 }

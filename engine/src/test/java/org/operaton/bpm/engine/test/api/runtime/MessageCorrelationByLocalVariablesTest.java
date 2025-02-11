@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.Arrays;
@@ -84,7 +84,7 @@ public class MessageCorrelationByLocalVariablesTest {
 
     //uncorrelated executions
     List<Execution> uncorrelatedExecutions = engineRule.getRuntimeService().createExecutionQuery().activityId("MessageReceiver_1").list();
-    assertEquals(2, uncorrelatedExecutions.size());
+    assertThat(uncorrelatedExecutions.size()).isEqualTo(2);
 
   }
 
@@ -121,7 +121,7 @@ public class MessageCorrelationByLocalVariablesTest {
 
     //uncorrelated executions
     List<Execution> uncorrelatedExecutions = engineRule.getRuntimeService().createExecutionQuery().activityId("MessageReceiver_1").list();
-    assertEquals(2, uncorrelatedExecutions.size());
+    assertThat(uncorrelatedExecutions.size()).isEqualTo(2);
 
   }
 
@@ -165,7 +165,7 @@ public class MessageCorrelationByLocalVariablesTest {
 
     //uncorrelated executions
     List<Execution> uncorrelatedExecutions = engineRule.getRuntimeService().createExecutionQuery().activityId("UserTask_1").list();
-    assertEquals(2, uncorrelatedExecutions.size());
+    assertThat(uncorrelatedExecutions.size()).isEqualTo(2);
 
   }
 
@@ -221,7 +221,7 @@ public class MessageCorrelationByLocalVariablesTest {
 
     //uncorrelated executions
     List<Execution> uncorrelatedExecutions = engineRule.getRuntimeService().createExecutionQuery().activityId("MessageReceiver_1").list();
-    assertEquals(5, uncorrelatedExecutions.size());
+    assertThat(uncorrelatedExecutions.size()).isEqualTo(5);
 
   }
 
@@ -305,16 +305,16 @@ public class MessageCorrelationByLocalVariablesTest {
 
     //uncorrelated executions
     List<Execution> uncorrelatedExecutions = engineRule.getRuntimeService().createExecutionQuery().activityId("MessageReceiver_1").list();
-    assertEquals(1, uncorrelatedExecutions.size());
+    assertThat(uncorrelatedExecutions.size()).isEqualTo(1);
 
   }
 
   protected void checkExecutionMessageCorrelationResult(MessageCorrelationResult result, ProcessInstance processInstance, String activityId) {
     assertNotNull(result);
-    assertEquals(MessageCorrelationResultType.Execution, result.getResultType());
-    assertEquals(processInstance.getId(), result.getExecution().getProcessInstanceId());
+    assertThat(result.getResultType()).isEqualTo(MessageCorrelationResultType.Execution);
+    assertThat(result.getExecution().getProcessInstanceId()).isEqualTo(processInstance.getId());
     ExecutionEntity entity = (ExecutionEntity) result.getExecution();
-    assertEquals(activityId, entity.getActivityId());
+    assertThat(entity.getActivityId()).isEqualTo(activityId);
   }
 
 }

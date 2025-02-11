@@ -21,7 +21,6 @@ import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertTha
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -107,7 +106,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
         .jobDefinitionId(modificationBatch.getBatchJobDefinitionId())
         .list()) {
       managementService.executeJob(pending.getId());
-      assertEquals(processDefinition.getDeploymentId(), pending.getDeploymentId());
+      assertThat(pending.getDeploymentId()).isEqualTo(processDefinition.getDeploymentId());
     }
   }
 
@@ -127,7 +126,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     assertNotNull(updatedTree);
-    assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
+    assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task2").done());
@@ -194,7 +193,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     assertNotNull(updatedTree);
-    assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
+    assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1")
@@ -213,7 +212,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
         .noScope()
         .done());
 
-    assertEquals(2, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(2);
 
     // complete the process
     completeTasksInOrder("task1", "task2");
@@ -236,7 +235,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     assertNotNull(updatedTree);
-    assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
+    assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1")
@@ -255,7 +254,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
         .noScope()
         .done());
 
-    assertEquals(2, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(2);
 
     // complete the process
     completeTasksInOrder("task1", "task2");
@@ -337,7 +336,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
     assertThat(executionTree).matches(describeExecutionTree("task1").scope().done());
 
-    assertEquals(1, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
 
     // complete the process
     completeTasksInOrder("task1");
@@ -358,7 +357,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     assertNotNull(updatedTree);
-    assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
+    assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1")
@@ -377,7 +376,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
         .noScope()
         .done());
 
-    assertEquals(2, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(2);
 
     // complete the process
     completeTasksInOrder("task1", "task2");
@@ -400,7 +399,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     assertNotNull(updatedTree);
-    assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
+    assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1")
@@ -419,7 +418,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
         .noScope()
         .done());
 
-    assertEquals(2, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(2);
 
     // complete the process
     completeTasksInOrder("task1", "task2");
@@ -461,7 +460,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     assertNotNull(updatedTree);
-    assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
+    assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1")
@@ -480,7 +479,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
         .noScope()
         .done());
 
-    assertEquals(2, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(2);
 
     // complete the process
     completeTasksInOrder("task1", "task1");
@@ -503,7 +502,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     assertNotNull(updatedTree);
-    assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
+    assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1")
@@ -522,7 +521,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
         .noScope()
         .done());
 
-    assertEquals(2, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(2);
 
     // complete the process
     completeTasksInOrder("task1", "task1");
@@ -635,7 +634,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     assertNotNull(updatedTree);
-    assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
+    assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("theTask")
@@ -659,7 +658,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
         .scope()
         .done());
 
-    assertEquals(2, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(2);
     completeTasksInOrder("theTask", "theTask");
     testRule.assertProcessEnded(processInstanceId);
   }
@@ -680,7 +679,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     assertNotNull(updatedTree);
-    assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
+    assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("theTask").done());
@@ -698,7 +697,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
     updatedTree = runtimeService.getActivityInstance(processInstanceId);
     assertNotNull(updatedTree);
-    assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
+    assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("theTask")
@@ -804,16 +803,16 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
     // transition listener should have been invoked
     List<RecordedEvent> events = RecorderExecutionListener.getRecordedEvents();
-    assertEquals(1, events.size());
+    assertThat(events.size()).isEqualTo(1);
 
     RecordedEvent event = events.get(0);
-    assertEquals("flow2", event.getTransitionId());
+    assertThat(event.getTransitionId()).isEqualTo("flow2");
 
     RecorderExecutionListener.clear();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(instance.getId());
     assertNotNull(updatedTree);
-    assertEquals(instance.getId(), updatedTree.getProcessInstanceId());
+    assertThat(updatedTree.getProcessInstanceId()).isEqualTo(instance.getId());
 
     assertThat(updatedTree).hasStructure(
         describeActivityInstanceTree(instance.getProcessDefinitionId()).activity("task1").activity("task2").done());
@@ -850,16 +849,16 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
     // transition listener should have been invoked
     List<RecordedEvent> events = RecorderExecutionListener.getRecordedEvents();
-    assertEquals(1, events.size());
+    assertThat(events.size()).isEqualTo(1);
 
     RecordedEvent event = events.get(0);
-    assertEquals("flow2", event.getTransitionId());
+    assertThat(event.getTransitionId()).isEqualTo("flow2");
 
     RecorderExecutionListener.clear();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(instance.getId());
     assertNotNull(updatedTree);
-    assertEquals(instance.getId(), updatedTree.getProcessInstanceId());
+    assertThat(updatedTree.getProcessInstanceId()).isEqualTo(instance.getId());
 
     assertThat(updatedTree).hasStructure(
         describeActivityInstanceTree(instance.getProcessDefinitionId()).activity("task1").activity("task2").done());
@@ -897,7 +896,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
     ActivityInstance activityInstanceTree = runtimeService.getActivityInstance(processInstanceId);
     assertNotNull(activityInstanceTree);
-    assertEquals(processInstanceId, activityInstanceTree.getProcessInstanceId());
+    assertThat(activityInstanceTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(activityInstanceTree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task2").done());

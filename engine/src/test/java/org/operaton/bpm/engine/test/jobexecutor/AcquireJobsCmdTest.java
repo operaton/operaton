@@ -29,7 +29,7 @@ import java.util.Date;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 
 /**
@@ -54,14 +54,14 @@ public class AcquireJobsCmdTest extends PluggableProcessEngineTest {
 
     // the acquirejobs command sees the job:
     AcquiredJobs acquiredJobs = executeAcquireJobsCommand();
-    assertEquals(1, acquiredJobs.size());
+    assertThat(acquiredJobs.size()).isEqualTo(1);
 
     // suspend the process instance:
     runtimeService.suspendProcessInstanceById(pi.getId());
 
     // now, the acquirejobs command does not see the job:
     acquiredJobs = executeAcquireJobsCommand();
-    assertEquals(0, acquiredJobs.size());
+    assertThat(acquiredJobs.size()).isEqualTo(0);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/standalone/jobexecutor/oneJobProcess.bpmn20.xml"})
@@ -79,14 +79,14 @@ public class AcquireJobsCmdTest extends PluggableProcessEngineTest {
 
     // the acquirejobs command sees the job:
     AcquiredJobs acquiredJobs = executeAcquireJobsCommand();
-    assertEquals(1, acquiredJobs.size());
+    assertThat(acquiredJobs.size()).isEqualTo(1);
 
     // suspend the process instance:
     repositoryService.suspendProcessDefinitionById(pd.getId());
 
     // now, the acquirejobs command does not see the job:
     acquiredJobs = executeAcquireJobsCommand();
-    assertEquals(0, acquiredJobs.size());
+    assertThat(acquiredJobs.size()).isEqualTo(0);
   }
 
   protected void makeSureJobDue(final Job job) {

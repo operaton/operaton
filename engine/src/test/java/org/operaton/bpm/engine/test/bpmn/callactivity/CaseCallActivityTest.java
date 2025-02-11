@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.callactivity;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -74,7 +73,7 @@ public class CaseCallActivityTest extends CmmnTest {
     CaseExecutionEntity subCaseInstance = (CaseExecutionEntity) queryOneTaskCaseInstance();
     assertNotNull(subCaseInstance);
 
-    assertEquals(callActivityId, subCaseInstance.getSuperExecutionId());
+    assertThat(subCaseInstance.getSuperExecutionId()).isEqualTo(callActivityId);
 
     // complete
     String humanTaskId = queryCaseExecutionByActivityId(HUMAN_TASK_ID).getId();
@@ -102,7 +101,7 @@ public class CaseCallActivityTest extends CmmnTest {
     CaseExecutionEntity subCaseInstance = (CaseExecutionEntity) queryOneTaskCaseInstance();
     assertNotNull(subCaseInstance);
 
-    assertEquals(callActivityId, subCaseInstance.getSuperExecutionId());
+    assertThat(subCaseInstance.getSuperExecutionId()).isEqualTo(callActivityId);
 
     // complete
     String humanTaskId = queryCaseExecutionByActivityId(HUMAN_TASK_ID).getId();
@@ -130,7 +129,7 @@ public class CaseCallActivityTest extends CmmnTest {
     CaseExecutionEntity subCaseInstance = (CaseExecutionEntity) queryOneTaskCaseInstance();
     assertNotNull(subCaseInstance);
 
-    assertEquals(callActivityId, subCaseInstance.getSuperExecutionId());
+    assertThat(subCaseInstance.getSuperExecutionId()).isEqualTo(callActivityId);
 
     // complete
     String humanTaskId = queryCaseExecutionByActivityId(HUMAN_TASK_ID).getId();
@@ -158,7 +157,7 @@ public class CaseCallActivityTest extends CmmnTest {
     CaseExecutionEntity subCaseInstance = (CaseExecutionEntity) queryOneTaskCaseInstance();
     assertNotNull(subCaseInstance);
 
-    assertEquals(callActivityId, subCaseInstance.getSuperExecutionId());
+    assertThat(subCaseInstance.getSuperExecutionId()).isEqualTo(callActivityId);
 
     // complete
     String humanTaskId = queryCaseExecutionByActivityId(HUMAN_TASK_ID).getId();
@@ -182,7 +181,7 @@ public class CaseCallActivityTest extends CmmnTest {
         .deploy()
         .getId();
 
-    assertEquals(2, repositoryService.createCaseDefinitionQuery().count());
+    assertThat(repositoryService.createCaseDefinitionQuery().count()).isEqualTo(2);
 
     String latestCaseDefinitionId = repositoryService
         .createCaseDefinitionQuery()
@@ -200,8 +199,8 @@ public class CaseCallActivityTest extends CmmnTest {
     CaseExecutionEntity subCaseInstance = (CaseExecutionEntity) queryOneTaskCaseInstance();
     assertNotNull(subCaseInstance);
 
-    assertEquals(callActivityId, subCaseInstance.getSuperExecutionId());
-    assertEquals(latestCaseDefinitionId, subCaseInstance.getCaseDefinitionId());
+    assertThat(subCaseInstance.getSuperExecutionId()).isEqualTo(callActivityId);
+    assertThat(subCaseInstance.getCaseDefinitionId()).isEqualTo(latestCaseDefinitionId);
 
     // complete ////////////////////////////////////////////////////////
     String humanTaskId = queryCaseExecutionByActivityId(HUMAN_TASK_ID).getId();
@@ -232,7 +231,7 @@ public class CaseCallActivityTest extends CmmnTest {
             .deploy()
             .getId();
 
-    assertEquals(2, repositoryService.createCaseDefinitionQuery().count());
+    assertThat(repositoryService.createCaseDefinitionQuery().count()).isEqualTo(2);
 
     String caseDefinitionIdInSameDeployment = repositoryService
         .createCaseDefinitionQuery()
@@ -250,8 +249,8 @@ public class CaseCallActivityTest extends CmmnTest {
     CaseExecutionEntity subCaseInstance = (CaseExecutionEntity) queryOneTaskCaseInstance();
     assertNotNull(subCaseInstance);
 
-    assertEquals(callActivityId, subCaseInstance.getSuperExecutionId());
-    assertEquals(caseDefinitionIdInSameDeployment, subCaseInstance.getCaseDefinitionId());
+    assertThat(subCaseInstance.getSuperExecutionId()).isEqualTo(callActivityId);
+    assertThat(subCaseInstance.getCaseDefinitionId()).isEqualTo(caseDefinitionIdInSameDeployment);
 
     // complete ////////////////////////////////////////////////////////
     String humanTaskId = queryCaseExecutionByActivityId(HUMAN_TASK_ID).getId();
@@ -282,7 +281,7 @@ public class CaseCallActivityTest extends CmmnTest {
           .deploy()
           .getId();
 
-    assertEquals(3, repositoryService.createCaseDefinitionQuery().count());
+    assertThat(repositoryService.createCaseDefinitionQuery().count()).isEqualTo(3);
 
     String caseDefinitionIdInSecondDeployment = repositoryService
       .createCaseDefinitionQuery()
@@ -300,8 +299,8 @@ public class CaseCallActivityTest extends CmmnTest {
     CaseExecutionEntity subCaseInstance = (CaseExecutionEntity) queryOneTaskCaseInstance();
     assertNotNull(subCaseInstance);
 
-    assertEquals(callActivityId, subCaseInstance.getSuperExecutionId());
-    assertEquals(caseDefinitionIdInSecondDeployment, subCaseInstance.getCaseDefinitionId());
+    assertThat(subCaseInstance.getSuperExecutionId()).isEqualTo(callActivityId);
+    assertThat(subCaseInstance.getCaseDefinitionId()).isEqualTo(caseDefinitionIdInSecondDeployment);
 
     // complete ////////////////////////////////////////////////////////
     String humanTaskId = queryCaseExecutionByActivityId(HUMAN_TASK_ID).getId();
@@ -334,7 +333,7 @@ public class CaseCallActivityTest extends CmmnTest {
           .deploy()
           .getId();
 
-    assertEquals(3, repositoryService.createCaseDefinitionQuery().count());
+    assertThat(repositoryService.createCaseDefinitionQuery().count()).isEqualTo(3);
 
     String caseDefinitionIdInSecondDeployment = repositoryService
         .createCaseDefinitionQuery()
@@ -352,7 +351,7 @@ public class CaseCallActivityTest extends CmmnTest {
     CaseExecutionEntity subCaseInstance = (CaseExecutionEntity) queryOneTaskCaseInstance();
     assertNotNull(subCaseInstance);
 
-    assertEquals(caseDefinitionIdInSecondDeployment, subCaseInstance.getCaseDefinitionId());
+    assertThat(subCaseInstance.getCaseDefinitionId()).isEqualTo(caseDefinitionIdInSecondDeployment);
 
     // complete ////////////////////////////////////////////////////////
     String humanTaskId = queryCaseExecutionByActivityId(HUMAN_TASK_ID).getId();
@@ -396,8 +395,8 @@ public class CaseCallActivityTest extends CmmnTest {
     CaseExecutionEntity subCaseInstance = (CaseExecutionEntity) queryOneTaskCaseInstance();
     assertNotNull(subCaseInstance);
 
-    assertEquals(callActivityId, subCaseInstance.getSuperExecutionId());
-    assertEquals(businessKey, subCaseInstance.getBusinessKey());
+    assertThat(subCaseInstance.getSuperExecutionId()).isEqualTo(callActivityId);
+    assertThat(subCaseInstance.getBusinessKey()).isEqualTo(businessKey);
 
     // complete ////////////////////////////////////////////////////////
     String humanTaskId = queryCaseExecutionByActivityId(HUMAN_TASK_ID).getId();
@@ -428,8 +427,8 @@ public class CaseCallActivityTest extends CmmnTest {
     CaseExecutionEntity subCaseInstance = (CaseExecutionEntity) queryOneTaskCaseInstance();
     assertNotNull(subCaseInstance);
 
-    assertEquals(callActivityId, subCaseInstance.getSuperExecutionId());
-    assertEquals(myOwnBusinessKey, subCaseInstance.getBusinessKey());
+    assertThat(subCaseInstance.getSuperExecutionId()).isEqualTo(callActivityId);
+    assertThat(subCaseInstance.getBusinessKey()).isEqualTo(myOwnBusinessKey);
 
     // complete ////////////////////////////////////////////////////////
     String humanTaskId = queryCaseExecutionByActivityId(HUMAN_TASK_ID).getId();
@@ -465,17 +464,17 @@ public class CaseCallActivityTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertEquals(2, variables.size());
+    assertThat(variables.size()).isEqualTo(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
       if ("aVariable".equals(name)) {
-        assertEquals("aVariable", name);
-        assertEquals("abc", variable.getValue());
+        assertThat(name).isEqualTo("aVariable");
+        assertThat(variable.getValue()).isEqualTo("abc");
 
       } else if ("anotherVariable".equals(name)) {
-        assertEquals("anotherVariable", name);
-        assertEquals(999, variable.getValue());
+        assertThat(name).isEqualTo("anotherVariable");
+        assertThat(variable.getValue()).isEqualTo(999);
 
       } else {
         fail("Found an unexpected variable: '"+name+"'");
@@ -516,16 +515,16 @@ public class CaseCallActivityTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertEquals(2, variables.size());
+    assertThat(variables.size()).isEqualTo(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
       if ("myVariable".equals(name)) {
-        assertEquals("myVariable", name);
-        assertEquals("abc", variable.getValue());
+        assertThat(name).isEqualTo("myVariable");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if ("myAnotherVariable".equals(name)) {
-        assertEquals("myAnotherVariable", name);
-        assertEquals(999, variable.getValue());
+        assertThat(name).isEqualTo("myAnotherVariable");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else {
         fail("Found an unexpected variable: '"+name+"'");
       }
@@ -561,15 +560,15 @@ public class CaseCallActivityTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertEquals(2, variables.size());
+    assertThat(variables.size()).isEqualTo(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
 
       if ("aVariable".equals(name)) {
-        assertEquals("aVariable", name);
+        assertThat(name).isEqualTo("aVariable");
       } else if ("anotherVariable".equals(name)) {
-        assertEquals("anotherVariable", name);
+        assertThat(name).isEqualTo("anotherVariable");
       } else {
         fail("Found an unexpected variable: '"+name+"'");
       }
@@ -609,17 +608,17 @@ public class CaseCallActivityTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertEquals(2, variables.size());
+    assertThat(variables.size()).isEqualTo(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
       if ("aVariable".equals(name)) {
-        assertEquals("aVariable", name);
-        assertEquals("abc", variable.getValue());
+        assertThat(name).isEqualTo("aVariable");
+        assertThat(variable.getValue()).isEqualTo("abc");
 
       } else if ("anotherVariable".equals(name)) {
-        assertEquals("anotherVariable", name);
-        assertEquals((long)1000, variable.getValue());
+        assertThat(name).isEqualTo("anotherVariable");
+        assertThat(variable.getValue()).isEqualTo((long) 1000);
 
       } else {
         fail("Found an unexpected variable: '"+name+"'");
@@ -658,17 +657,17 @@ public class CaseCallActivityTest extends CmmnTest {
       .list();
 
     assertFalse(variables.isEmpty());
-    assertEquals(2, variables.size());
+    assertThat(variables.size()).isEqualTo(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
       if ("aVariable".equals(name)) {
-        assertEquals("aVariable", name);
-        assertEquals("Prefixabc", variable.getValue());
+        assertThat(name).isEqualTo("aVariable");
+        assertThat(variable.getValue()).isEqualTo("Prefixabc");
 
       } else if ("anotherVariable".equals(name)) {
-        assertEquals("anotherVariable", name);
-        assertEquals("Prefix" + (long)1000, variable.getValue());
+        assertThat(name).isEqualTo("anotherVariable");
+        assertThat(variable.getValue()).isEqualTo("Prefix" + (long) 1000);
 
       } else {
         fail("Found an unexpected variable: '"+name+"'");
@@ -707,16 +706,16 @@ public class CaseCallActivityTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertEquals(2, variables.size());
+    assertThat(variables.size()).isEqualTo(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
       if ("aVariable".equals(name)) {
-        assertEquals("aVariable", name);
-        assertEquals("abc", variable.getValue());
+        assertThat(name).isEqualTo("aVariable");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if ("anotherVariable".equals(name)) {
-        assertEquals("anotherVariable", name);
-        assertEquals(999, variable.getValue());
+        assertThat(name).isEqualTo("anotherVariable");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else {
         fail("Found an unexpected variable: '"+name+"'");
       }
@@ -792,16 +791,16 @@ public class CaseCallActivityTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertEquals(2, variables.size());
+    assertThat(variables.size()).isEqualTo(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
       if ("aVariable".equals(name)) {
-        assertEquals("aVariable", name);
-        assertEquals("abc", variable.getValue());
+        assertThat(name).isEqualTo("aVariable");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if ("anotherVariable".equals(name)) {
-        assertEquals("anotherVariable", name);
-        assertEquals(999, variable.getValue());
+        assertThat(name).isEqualTo("anotherVariable");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else {
         fail("Found an unexpected variable: '"+name+"'");
       }
@@ -845,16 +844,16 @@ public class CaseCallActivityTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertEquals(2, variables.size());
+    assertThat(variables.size()).isEqualTo(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
       if ("myVariable".equals(name)) {
-        assertEquals("myVariable", name);
-        assertEquals("abc", variable.getValue());
+        assertThat(name).isEqualTo("myVariable");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if ("myAnotherVariable".equals(name)) {
-        assertEquals("myAnotherVariable", name);
-        assertEquals(999, variable.getValue());
+        assertThat(name).isEqualTo("myAnotherVariable");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else {
         fail("Found an unexpected variable: '"+name+"'");
       }
@@ -892,14 +891,14 @@ public class CaseCallActivityTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertEquals(2, variables.size());
+    assertThat(variables.size()).isEqualTo(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
       if ("aVariable".equals(name)) {
-        assertEquals("aVariable", name);
+        assertThat(name).isEqualTo("aVariable");
       } else if ("anotherVariable".equals(name)) {
-        assertEquals("anotherVariable", name);
+        assertThat(name).isEqualTo("anotherVariable");
       } else {
         fail("Found an unexpected variable: '"+name+"'");
       }
@@ -945,16 +944,16 @@ public class CaseCallActivityTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertEquals(2, variables.size());
+    assertThat(variables.size()).isEqualTo(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
       if ("aVariable".equals(name)) {
-        assertEquals("aVariable", name);
-        assertEquals("abc", variable.getValue());
+        assertThat(name).isEqualTo("aVariable");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if ("anotherVariable".equals(name)) {
-        assertEquals("anotherVariable", name);
-        assertEquals((long) 1000, variable.getValue());
+        assertThat(name).isEqualTo("anotherVariable");
+        assertThat(variable.getValue()).isEqualTo((long) 1000);
       } else {
         fail("Found an unexpected variable: '"+name+"'");
       }
@@ -998,16 +997,16 @@ public class CaseCallActivityTest extends CmmnTest {
       .list();
 
     assertFalse(variables.isEmpty());
-    assertEquals(2, variables.size());
+    assertThat(variables.size()).isEqualTo(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
       if ("aVariable".equals(name)) {
-        assertEquals("aVariable", name);
-        assertEquals("Prefixabc", variable.getValue());
+        assertThat(name).isEqualTo("aVariable");
+        assertThat(variable.getValue()).isEqualTo("Prefixabc");
       } else if ("anotherVariable".equals(name)) {
-        assertEquals("anotherVariable", name);
-        assertEquals("Prefix"+(long) 1000, variable.getValue());
+        assertThat(name).isEqualTo("anotherVariable");
+        assertThat(variable.getValue()).isEqualTo("Prefix" + (long) 1000);
       } else {
         fail("Found an unexpected variable: '"+name+"'");
       }
@@ -1051,16 +1050,16 @@ public class CaseCallActivityTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertEquals(2, variables.size());
+    assertThat(variables.size()).isEqualTo(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
       if ("aVariable".equals(name)) {
-        assertEquals("aVariable", name);
-        assertEquals("abc", variable.getValue());
+        assertThat(name).isEqualTo("aVariable");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if ("anotherVariable".equals(name)) {
-        assertEquals("anotherVariable", name);
-        assertEquals(999, variable.getValue());
+        assertThat(name).isEqualTo("anotherVariable");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else {
         fail("Found an unexpected variable: '"+name+"'");
       }
@@ -1159,16 +1158,16 @@ public class CaseCallActivityTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertEquals(2, variables.size());
+    assertThat(variables.size()).isEqualTo(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
       if ("aVariable".equals(name)) {
-        assertEquals("aVariable", name);
-        assertEquals("abc", variable.getValue());
+        assertThat(name).isEqualTo("aVariable");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if ("anotherVariable".equals(name)) {
-        assertEquals("anotherVariable", name);
-        assertEquals(1000, variable.getValue());
+        assertThat(name).isEqualTo("anotherVariable");
+        assertThat(variable.getValue()).isEqualTo(1000);
       } else {
         fail("Found an unexpected variable: '"+name+"'");
       }
@@ -1223,7 +1222,7 @@ public class CaseCallActivityTest extends CmmnTest {
     runtimeService.deleteProcessInstance(superProcessInstanceId, null);
 
     // then
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
 
     CaseInstance subCaseInstance = queryOneTaskCaseInstance();
     assertNotNull(subCaseInstance);
@@ -1350,7 +1349,7 @@ public class CaseCallActivityTest extends CmmnTest {
 
     // then (1)
 
-    assertEquals(0, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(0);
 
     // when (2)
     humanTaskId = queryCaseExecutionByActivityId("PI_HumanTask_2").getId();
@@ -1361,8 +1360,8 @@ public class CaseCallActivityTest extends CmmnTest {
     Task task = taskService.createTaskQuery().singleResult();
     assertNotNull(task);
 
-    assertEquals(superProcessInstanceId, task.getProcessInstanceId());
-    assertEquals("userTask", task.getTaskDefinitionKey());
+    assertThat(task.getProcessInstanceId()).isEqualTo(superProcessInstanceId);
+    assertThat(task.getTaskDefinitionKey()).isEqualTo("userTask");
   }
 
   @Deployment(resources = {
@@ -1384,8 +1383,8 @@ public class CaseCallActivityTest extends CmmnTest {
     assertNotNull(calledInstance);
 
     Map<String, Object> calledInstanceVariables = caseService.getVariables(calledInstance.getId());
-    assertEquals(1, calledInstanceVariables.size());
-    assertEquals("val2", calledInstanceVariables.get("inputParameter"));
+    assertThat(calledInstanceVariables.size()).isEqualTo(1);
+    assertThat(calledInstanceVariables.get("inputParameter")).isEqualTo("val2");
 
     // when setting a variable in the called instance
     caseService.setVariable(calledInstance.getId(), "calledCaseVar1", 42L);
@@ -1397,10 +1396,10 @@ public class CaseCallActivityTest extends CmmnTest {
     // then the call activity output variable has been mapped to the process instance execution
     // and the output mapping variable as well
     Map<String, Object> callingInstanceVariables = runtimeService.getVariables(processInstance.getId());
-    assertEquals(3, callingInstanceVariables.size());
-    assertEquals("val1", callingInstanceVariables.get("callingProcessVar1"));
-    assertEquals(42L, callingInstanceVariables.get("calledCaseVar1"));
-    assertEquals(43L, callingInstanceVariables.get("outputParameter"));
+    assertThat(callingInstanceVariables.size()).isEqualTo(3);
+    assertThat(callingInstanceVariables.get("callingProcessVar1")).isEqualTo("val1");
+    assertThat(callingInstanceVariables.get("calledCaseVar1")).isEqualTo(42L);
+    assertThat(callingInstanceVariables.get("outputParameter")).isEqualTo(43L);
   }
 
   @Deployment(resources = {
@@ -1422,8 +1421,8 @@ public class CaseCallActivityTest extends CmmnTest {
     assertNotNull(calledInstance);
 
     Map<String, Object> calledInstanceVariables = caseService.getVariables(calledInstance.getId());
-    assertEquals(1, calledInstanceVariables.size());
-    assertEquals("val2", calledInstanceVariables.get("mappedInputParameter"));
+    assertThat(calledInstanceVariables.size()).isEqualTo(1);
+    assertThat(calledInstanceVariables.get("mappedInputParameter")).isEqualTo("val2");
 
     // when setting a variable in the called instance
     caseService.setVariable(calledInstance.getId(), "calledCaseVar1", 42L);
@@ -1435,11 +1434,11 @@ public class CaseCallActivityTest extends CmmnTest {
     // then the call activity output variable has been mapped to the process instance execution
     // and the output mapping variable as well
     Map<String, Object> callingInstanceVariables = runtimeService.getVariables(processInstance.getId());
-    assertEquals(4, callingInstanceVariables.size());
-    assertEquals("val1", callingInstanceVariables.get("callingProcessVar1"));
-    assertEquals("val2", callingInstanceVariables.get("mappedInputParameter"));
-    assertEquals(42L, callingInstanceVariables.get("calledCaseVar1"));
-    assertEquals(43L, callingInstanceVariables.get("outputParameter"));
+    assertThat(callingInstanceVariables.size()).isEqualTo(4);
+    assertThat(callingInstanceVariables.get("callingProcessVar1")).isEqualTo("val1");
+    assertThat(callingInstanceVariables.get("mappedInputParameter")).isEqualTo("val2");
+    assertThat(callingInstanceVariables.get("calledCaseVar1")).isEqualTo(42L);
+    assertThat(callingInstanceVariables.get("outputParameter")).isEqualTo(43L);
   }
 
   @Deployment(resources = {
@@ -1459,8 +1458,8 @@ public class CaseCallActivityTest extends CmmnTest {
     assertNotNull(calledInstance);
 
     Map<String, Object> calledInstanceVariables = caseService.getVariables(calledInstance.getId());
-    assertEquals(1, calledInstanceVariables.size());
-    assertEquals(43L, calledInstanceVariables.get("mappedInputParameter"));
+    assertThat(calledInstanceVariables.size()).isEqualTo(1);
+    assertThat(calledInstanceVariables.get("mappedInputParameter")).isEqualTo(43L);
 
     // and completing it
     String humanTaskId = queryCaseExecutionByActivityId(HUMAN_TASK_ID).getId();
@@ -1499,9 +1498,9 @@ public class CaseCallActivityTest extends CmmnTest {
     assertNotNull(calledInstance);
 
     Map<String, Object> calledInstanceVariables = caseService.getVariables(calledInstance.getId());
-    assertEquals(2, calledInstanceVariables.size());
-    assertEquals("val1", calledInstanceVariables.get("callingProcessVar1"));
-    assertEquals("val2", calledInstanceVariables.get("inputParameter"));
+    assertThat(calledInstanceVariables.size()).isEqualTo(2);
+    assertThat(calledInstanceVariables.get("callingProcessVar1")).isEqualTo("val1");
+    assertThat(calledInstanceVariables.get("inputParameter")).isEqualTo("val2");
 
     // when setting a variable in the called instance
     caseService.setVariable(calledInstance.getId(), "calledCaseVar1", 42L);
@@ -1513,9 +1512,9 @@ public class CaseCallActivityTest extends CmmnTest {
 
     // then only the output mapping variable has been mapped into the calling process instance
     Map<String, Object> callingInstanceVariables = runtimeService.getVariables(processInstance.getId());
-    assertEquals(2, callingInstanceVariables.size());
-    assertEquals("val1", callingInstanceVariables.get("callingProcessVar1"));
-    assertEquals(43L, callingInstanceVariables.get("outputParameter"));
+    assertThat(callingInstanceVariables.size()).isEqualTo(2);
+    assertThat(callingInstanceVariables.get("callingProcessVar1")).isEqualTo("val1");
+    assertThat(callingInstanceVariables.get("outputParameter")).isEqualTo(43L);
   }
 
   @Deployment(resources = {
@@ -1537,9 +1536,9 @@ public class CaseCallActivityTest extends CmmnTest {
     assertNotNull(calledInstance);
 
     Map<String, Object> calledInstanceVariables = caseService.getVariables(calledInstance.getId());
-    assertEquals(2, calledInstanceVariables.size());
-    assertEquals("val1", calledInstanceVariables.get("callingProcessVar1"));
-    assertEquals("val2", calledInstanceVariables.get("inputParameter"));
+    assertThat(calledInstanceVariables.size()).isEqualTo(2);
+    assertThat(calledInstanceVariables.get("callingProcessVar1")).isEqualTo("val1");
+    assertThat(calledInstanceVariables.get("inputParameter")).isEqualTo("val2");
 
     // when setting a variable in the called instance
     caseService.setVariable(calledInstance.getId(), "calledCaseVar1", 42L);
@@ -1550,9 +1549,9 @@ public class CaseCallActivityTest extends CmmnTest {
 
     // then only the output mapping variable has been mapped into the calling process instance
     Map<String, Object> callingInstanceVariables = runtimeService.getVariables(processInstance.getId());
-    assertEquals(2, callingInstanceVariables.size());
-    assertEquals("val1", callingInstanceVariables.get("callingProcessVar1"));
-    assertEquals(43L, callingInstanceVariables.get("outputParameter"));
+    assertThat(callingInstanceVariables.size()).isEqualTo(2);
+    assertThat(callingInstanceVariables.get("callingProcessVar1")).isEqualTo("val1");
+    assertThat(callingInstanceVariables.get("outputParameter")).isEqualTo(43L);
   }
 
   protected ProcessInstance startProcessInstanceByKey(String processDefinitionKey) {

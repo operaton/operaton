@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.List;
 
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
@@ -28,7 +30,6 @@ import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -103,10 +104,10 @@ public class JobAcquisitionTest {
     acquisitionThread1.makeContinueAndWaitForSync();
 
     // then it has not performed waiting since it was able to acquire and execute all jobs
-    Assert.assertEquals(0, engineRule.getManagementService().createJobQuery().active().count());
+    assertThat(engineRule.getManagementService().createJobQuery().active().count()).isEqualTo(0);
     List<RecordedWaitEvent> jobExecutor1WaitEvents = jobExecutor1.getAcquireJobsRunnable().getWaitEvents();
-    Assert.assertEquals(1, jobExecutor1WaitEvents.size());
-    Assert.assertEquals(0, jobExecutor1WaitEvents.get(0).getTimeBetweenAcquisitions());
+    assertThat(jobExecutor1WaitEvents.size()).isEqualTo(1);
+    assertThat(jobExecutor1WaitEvents.get(0).getTimeBetweenAcquisitions()).isEqualTo(0);
 
     // when continuing acquisition thread 2
     acquisitionThread2.makeContinueAndWaitForSync();
@@ -114,8 +115,8 @@ public class JobAcquisitionTest {
     // then its acquisition cycle fails with OLEs
     // but the acquisition thread immediately tries again
     List<RecordedWaitEvent> jobExecutor2WaitEvents = jobExecutor2.getAcquireJobsRunnable().getWaitEvents();
-    Assert.assertEquals(1, jobExecutor2WaitEvents.size());
+    assertThat(jobExecutor2WaitEvents.size()).isEqualTo(1);
 
-    Assert.assertEquals(0, jobExecutor2WaitEvents.get(0).getTimeBetweenAcquisitions());
+    assertThat(jobExecutor2WaitEvents.get(0).getTimeBetweenAcquisitions()).isEqualTo(0);
   }
 }

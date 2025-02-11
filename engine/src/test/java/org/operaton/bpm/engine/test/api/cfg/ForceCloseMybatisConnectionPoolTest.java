@@ -24,7 +24,7 @@ import org.apache.ibatis.datasource.pooled.PoolState;
 import org.apache.ibatis.datasource.pooled.PooledDataSource;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Daniel Meyer
@@ -55,7 +55,7 @@ public class ForceCloseMybatisConnectionPoolTest {
     processEngine.close();
 
     // the idle connections are closed
-    assertEquals(0, state.getIdleConnectionCount());
+    assertThat(state.getIdleConnectionCount()).isEqualTo(0);
 
   }
 
@@ -82,11 +82,11 @@ public class ForceCloseMybatisConnectionPoolTest {
     processEngine.close();
 
     // the idle connections are not closed
-    assertEquals(state.getIdleConnectionCount(), idleConnections);
+    assertThat(idleConnections).isEqualTo(state.getIdleConnectionCount());
 
     pooledDataSource.forceCloseAll();
 
-    assertEquals(0, state.getIdleConnectionCount());
+    assertThat(state.getIdleConnectionCount()).isEqualTo(0);
   }
 
 }

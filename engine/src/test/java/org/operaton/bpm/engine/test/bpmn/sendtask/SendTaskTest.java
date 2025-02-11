@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.sendtask;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -55,10 +55,10 @@ public class SendTaskTest extends PluggableProcessEngineTest {
     assertTrue(DummyActivityBehavior.wasExecuted);
 
     assertNotNull(DummyActivityBehavior.currentActivityName);
-    assertEquals("Task", DummyActivityBehavior.currentActivityName);
+    assertThat(DummyActivityBehavior.currentActivityName).isEqualTo("Task");
 
     assertNotNull(DummyActivityBehavior.currentActivityId);
-    assertEquals("task", DummyActivityBehavior.currentActivityId);
+    assertThat(DummyActivityBehavior.currentActivityId).isEqualTo("task");
   }
 
 }

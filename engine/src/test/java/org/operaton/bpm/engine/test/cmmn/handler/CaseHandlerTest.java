@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -72,7 +72,7 @@ public class CaseHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(caseDefinition, context);
 
     // then
-    assertEquals(name, activity.getName());
+    assertThat(activity.getName()).isEqualTo(name);
   }
 
   @Test
@@ -106,7 +106,7 @@ public class CaseHandlerTest extends CmmnElementHandlerTest {
     CaseDefinitionEntity activity = (CaseDefinitionEntity) handler.handleElement(caseDefinition, context);
 
     // then
-    assertEquals(caseDefinition.getId(), activity.getKey());
+    assertThat(activity.getKey()).isEqualTo(caseDefinition.getId());
   }
 
   @Test
@@ -118,7 +118,7 @@ public class CaseHandlerTest extends CmmnElementHandlerTest {
 
     // then
     String deploymentId = context.getDeployment().getId();
-    assertEquals(deploymentId, activity.getDeploymentId());
+    assertThat(activity.getDeploymentId()).isEqualTo(deploymentId);
   }
 
   @Test
@@ -142,7 +142,7 @@ public class CaseHandlerTest extends CmmnElementHandlerTest {
     CaseDefinitionEntity activity = (CaseDefinitionEntity) handler.handleElement(caseDefinition, context);
 
     // then
-    assertEquals(historyTimeToLive, activity.getHistoryTimeToLive());
+    assertThat(activity.getHistoryTimeToLive()).isEqualTo(historyTimeToLive);
   }
 
   @Test

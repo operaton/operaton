@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
@@ -54,7 +54,7 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
 
     verifyQueryResults(query, 1);
 
-    assertEquals(jobDefinition.getId(), query.singleResult().getId());
+    assertThat(query.singleResult().getId()).isEqualTo(jobDefinition.getId());
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/JobDefinitionQueryTest.testBase.bpmn"})
@@ -97,14 +97,14 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
       jobDefinitionQuery.activityIdIn(null);
       fail("A ProcessEngineExcpetion was expected.");
     } catch (ProcessEngineException e) {
-      assertEquals("Activity ids is null", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Activity ids is null");
     }
 
     try {
       jobDefinitionQuery.activityIdIn((String)null);
       fail("A ProcessEngineExcpetion was expected.");
     } catch (ProcessEngineException e) {
-      assertEquals("Activity ids contains null value", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Activity ids contains null value");
     }
   }
 
@@ -269,10 +269,10 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/JobDefinitionQueryTest.testBase.bpmn"})
   @Test
   public void testQueryPaging() {
-    assertEquals(4, managementService.createJobDefinitionQuery().listPage(0, 4).size());
-    assertEquals(1, managementService.createJobDefinitionQuery().listPage(2, 1).size());
-    assertEquals(2, managementService.createJobDefinitionQuery().listPage(1, 2).size());
-    assertEquals(3, managementService.createJobDefinitionQuery().listPage(1, 4).size());
+    assertThat(managementService.createJobDefinitionQuery().listPage(0, 4).size()).isEqualTo(4);
+    assertThat(managementService.createJobDefinitionQuery().listPage(2, 1).size()).isEqualTo(1);
+    assertThat(managementService.createJobDefinitionQuery().listPage(1, 2).size()).isEqualTo(2);
+    assertThat(managementService.createJobDefinitionQuery().listPage(1, 4).size()).isEqualTo(3);
   }
 
   // Sorting /////////////////////////////////////////////////////////////
@@ -281,20 +281,20 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
   @Test
   public void testQuerySorting() {
     // asc
-    assertEquals(4, managementService.createJobDefinitionQuery().orderByActivityId().asc().list().size());
-    assertEquals(4, managementService.createJobDefinitionQuery().orderByJobConfiguration().asc().list().size());
-    assertEquals(4, managementService.createJobDefinitionQuery().orderByJobDefinitionId().asc().list().size());
-    assertEquals(4, managementService.createJobDefinitionQuery().orderByJobType().asc().list().size());
-    assertEquals(4, managementService.createJobDefinitionQuery().orderByProcessDefinitionId().asc().list().size());
-    assertEquals(4, managementService.createJobDefinitionQuery().orderByProcessDefinitionKey().asc().list().size());
+    assertThat(managementService.createJobDefinitionQuery().orderByActivityId().asc().list().size()).isEqualTo(4);
+    assertThat(managementService.createJobDefinitionQuery().orderByJobConfiguration().asc().list().size()).isEqualTo(4);
+    assertThat(managementService.createJobDefinitionQuery().orderByJobDefinitionId().asc().list().size()).isEqualTo(4);
+    assertThat(managementService.createJobDefinitionQuery().orderByJobType().asc().list().size()).isEqualTo(4);
+    assertThat(managementService.createJobDefinitionQuery().orderByProcessDefinitionId().asc().list().size()).isEqualTo(4);
+    assertThat(managementService.createJobDefinitionQuery().orderByProcessDefinitionKey().asc().list().size()).isEqualTo(4);
 
     // desc
-    assertEquals(4, managementService.createJobDefinitionQuery().orderByActivityId().desc().list().size());
-    assertEquals(4, managementService.createJobDefinitionQuery().orderByJobConfiguration().desc().list().size());
-    assertEquals(4, managementService.createJobDefinitionQuery().orderByJobDefinitionId().desc().list().size());
-    assertEquals(4, managementService.createJobDefinitionQuery().orderByJobType().desc().list().size());
-    assertEquals(4, managementService.createJobDefinitionQuery().orderByProcessDefinitionId().desc().list().size());
-    assertEquals(4, managementService.createJobDefinitionQuery().orderByProcessDefinitionKey().desc().list().size());
+    assertThat(managementService.createJobDefinitionQuery().orderByActivityId().desc().list().size()).isEqualTo(4);
+    assertThat(managementService.createJobDefinitionQuery().orderByJobConfiguration().desc().list().size()).isEqualTo(4);
+    assertThat(managementService.createJobDefinitionQuery().orderByJobDefinitionId().desc().list().size()).isEqualTo(4);
+    assertThat(managementService.createJobDefinitionQuery().orderByJobType().desc().list().size()).isEqualTo(4);
+    assertThat(managementService.createJobDefinitionQuery().orderByProcessDefinitionId().desc().list().size()).isEqualTo(4);
+    assertThat(managementService.createJobDefinitionQuery().orderByProcessDefinitionKey().desc().list().size()).isEqualTo(4);
 
   }
 
@@ -329,19 +329,19 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
 
     // then
     assertNotNull(queriedDefinition);
-    assertEquals(jobDefinition.getId(), queriedDefinition.getId());
-    assertEquals(42L, (long) queriedDefinition.getOverridingJobPriority());
+    assertThat(queriedDefinition.getId()).isEqualTo(jobDefinition.getId());
+    assertThat((long) queriedDefinition.getOverridingJobPriority()).isEqualTo(42L);
 
     // and
-    assertEquals(1, managementService.createJobDefinitionQuery().withOverridingJobPriority().count());
+    assertThat(managementService.createJobDefinitionQuery().withOverridingJobPriority().count()).isEqualTo(1);
 
   }
 
   // Test Helpers ////////////////////////////////////////////////////////
 
   private void verifyQueryResults(JobDefinitionQuery query, int countExpected) {
-    assertEquals(countExpected, query.list().size());
-    assertEquals(countExpected, query.count());
+    assertThat(query.list().size()).isEqualTo(countExpected);
+    assertThat(query.count()).isEqualTo(countExpected);
 
     if (countExpected == 1) {
       assertNotNull(query.singleResult());

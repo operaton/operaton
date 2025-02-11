@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.multitenancy.tenantcheck;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.util.List;
@@ -94,7 +93,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
     List<LockedExternalTask> externalTasks = externalTaskService.fetchAndLock(1, WORKER_ID)
       .topic(TOPIC_NAME, LOCK_TIME)
       .execute();
-    assertEquals(1, externalTasks.size());
+    assertThat(externalTasks.size()).isEqualTo(1);
 
   }
 
@@ -107,7 +106,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
     List<LockedExternalTask> externalTasks = externalTaskService.fetchAndLock(1, WORKER_ID)
       .topic(TOPIC_NAME, LOCK_TIME)
       .execute();
-    assertEquals(0, externalTasks.size());
+    assertThat(externalTasks.size()).isEqualTo(0);
 
   }
 
@@ -120,7 +119,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
     List<LockedExternalTask> externalTasks = externalTaskService.fetchAndLock(1, WORKER_ID)
       .topic(TOPIC_NAME, LOCK_TIME)
       .execute();
-    assertEquals(0, externalTasks.size());
+    assertThat(externalTasks.size()).isEqualTo(0);
 
   }
 
@@ -133,7 +132,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
     List<LockedExternalTask> externalTasks = externalTaskService.fetchAndLock(1, WORKER_ID)
       .topic(TOPIC_NAME, LOCK_TIME)
       .execute();
-    assertEquals(1, externalTasks.size());
+    assertThat(externalTasks.size()).isEqualTo(1);
 
   }
 
@@ -149,7 +148,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
       .execute();
 
     // then
-    assertEquals(0, externalTasks.size());
+    assertThat(externalTasks.size()).isEqualTo(0);
   }
 
   @Test
@@ -166,7 +165,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
       .execute();
 
     // then
-    assertEquals(1, externalTasks.size());
+    assertThat(externalTasks.size()).isEqualTo(1);
   }
 
   @Test
@@ -179,7 +178,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
       .execute();
 
     // then
-    assertEquals(1, externalTasks.size());
+    assertThat(externalTasks.size()).isEqualTo(1);
   }
 
   @Test
@@ -198,13 +197,13 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
       .execute();
 
     // then
-    assertEquals(2, externalTasks.size());
+    assertThat(externalTasks.size()).isEqualTo(2);
 
     for (LockedExternalTask externalTask : externalTasks) {
       if (externalTask.getProcessInstanceId().equals(processInstanceId)) {
-        assertEquals(TENANT_ONE, externalTask.getTenantId());
+        assertThat(externalTask.getTenantId()).isEqualTo(TENANT_ONE);
       } else if (externalTask.getProcessInstanceId().equals(instanceId)) {
-        assertEquals(TENANT_TWO, externalTask.getTenantId());
+        assertThat(externalTask.getTenantId()).isEqualTo(TENANT_TWO);
       } else {
         fail("No other external tasks should be available!");
       }
@@ -221,7 +220,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
       .get(0)
       .getId();
 
-    assertEquals(1, externalTaskService.createExternalTaskQuery().active().count());
+    assertThat(externalTaskService.createExternalTaskQuery().active().count()).isEqualTo(1);
 
     identityService.setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
@@ -240,7 +239,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
       .get(0)
       .getId();
 
-    assertEquals(1, externalTaskService.createExternalTaskQuery().active().count());
+    assertThat(externalTaskService.createExternalTaskQuery().active().count()).isEqualTo(1);
 
     identityService.setAuthentication("aUserId", null);
 
@@ -261,7 +260,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
       .get(0)
       .getId();
 
-    assertEquals(1, externalTaskService.createExternalTaskQuery().active().count());
+    assertThat(externalTaskService.createExternalTaskQuery().active().count()).isEqualTo(1);
 
     identityService.setAuthentication("aUserId", null);
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
@@ -285,11 +284,11 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
     externalTaskService.handleFailure(task.getId(), WORKER_ID, ERROR_MESSAGE, 1, 0);
 
     // then
-    assertEquals(ERROR_MESSAGE, externalTaskService.fetchAndLock(1, WORKER_ID)
-      .topic(TOPIC_NAME, LOCK_TIME)
-      .execute()
-      .get(0)
-      .getErrorMessage());
+    assertThat(externalTaskService.fetchAndLock(1, WORKER_ID)
+        .topic(TOPIC_NAME, LOCK_TIME)
+        .execute()
+        .get(0)
+        .getErrorMessage()).isEqualTo(ERROR_MESSAGE);
 
   }
 
@@ -325,11 +324,11 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
 
     externalTaskService.handleFailure(taskId, WORKER_ID, ERROR_MESSAGE, 1, 0);
     // then
-    assertEquals(ERROR_MESSAGE, externalTaskService.fetchAndLock(1, WORKER_ID)
-      .topic(TOPIC_NAME, LOCK_TIME)
-      .execute()
-      .get(0)
-      .getErrorMessage());
+    assertThat(externalTaskService.fetchAndLock(1, WORKER_ID)
+        .topic(TOPIC_NAME, LOCK_TIME)
+        .execute()
+        .get(0)
+        .getErrorMessage()).isEqualTo(ERROR_MESSAGE);
   }
 
   // handle BPMN error
@@ -348,7 +347,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
     externalTaskService.handleBpmnError(taskId, WORKER_ID, "ERROR-OCCURED");
 
     // then
-    assertEquals("afterBpmnError", taskService.createTaskQuery().singleResult().getTaskDefinitionKey());
+    assertThat(taskService.createTaskQuery().singleResult().getTaskDefinitionKey()).isEqualTo("afterBpmnError");
   }
 
   @Test
@@ -386,7 +385,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
     externalTaskService.handleBpmnError(taskId, WORKER_ID, "ERROR-OCCURED");
 
     // then
-    assertEquals("afterBpmnError", taskService.createTaskQuery().singleResult().getTaskDefinitionKey());
+    assertThat(taskService.createTaskQuery().singleResult().getTaskDefinitionKey()).isEqualTo("afterBpmnError");
 
   }
 
@@ -406,7 +405,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
     externalTaskService.setRetries(externalTaskId, 5);
 
     // then
-    assertEquals(5, (int) externalTaskService.createExternalTaskQuery().singleResult().getRetries());
+    assertThat((int) externalTaskService.createExternalTaskQuery().singleResult().getRetries()).isEqualTo(5);
   }
 
   @Test
@@ -444,7 +443,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
     externalTaskService.setRetries(externalTaskId, 5);
 
     // then
-    assertEquals(5, (int) externalTaskService.createExternalTaskQuery().singleResult().getRetries());
+    assertThat((int) externalTaskService.createExternalTaskQuery().singleResult().getRetries()).isEqualTo(5);
 
   }
 
@@ -464,7 +463,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
     externalTaskService.setPriority(externalTaskId, 1);
 
     // then
-    assertEquals(1, (int) externalTaskService.createExternalTaskQuery().singleResult().getPriority());
+    assertThat((int) externalTaskService.createExternalTaskQuery().singleResult().getPriority()).isEqualTo(1);
   }
 
   @Test
@@ -502,7 +501,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
     externalTaskService.setPriority(externalTaskId, 1);
 
     // then
-    assertEquals(1, (int) externalTaskService.createExternalTaskQuery().singleResult().getPriority());
+    assertThat((int) externalTaskService.createExternalTaskQuery().singleResult().getPriority()).isEqualTo(1);
   }
 
   // unlock test cases

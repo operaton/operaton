@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.test.api.authorization;
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
 import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_TASK;
 import static org.operaton.bpm.engine.authorization.Resources.TASK;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.Arrays;
@@ -143,7 +143,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
     // then
     task = selectSingleTask();
     assertNotNull(task);
-    assertEquals(DEMO, task.getAssignee());
+    assertThat(task.getAssignee()).isEqualTo(DEMO);
     verifyUserAuthorization(DEMO);
     taskService.deleteTask(taskId, true);
   }
@@ -164,7 +164,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
     // then
     task = selectSingleTask();
     assertNotNull(task);
-    assertEquals(DEMO, task.getAssignee());
+    assertThat(task.getAssignee()).isEqualTo(DEMO);
     verifyUserAuthorization(DEMO);
   }
 
@@ -184,7 +184,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
     // then
     Task task = selectSingleTask();
     assertNotNull(task);
-    assertEquals(DEMO, task.getOwner());
+    assertThat(task.getOwner()).isEqualTo(DEMO);
     verifyUserAuthorization(DEMO);
 
     taskService.deleteTask(taskId, true);
@@ -205,7 +205,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
     // then
     Task task = selectSingleTask();
     assertNotNull(task);
-    assertEquals(DEMO, task.getOwner());
+    assertThat(task.getOwner()).isEqualTo(DEMO);
     verifyUserAuthorization(DEMO);
   }
 
@@ -228,13 +228,13 @@ public class TaskReadVariablePermissionAuthorizationTest {
     authRule.disableAuthorization();
 
     assertNotNull(linksForTask);
-    assertEquals(1, linksForTask.size());
+    assertThat(linksForTask.size()).isEqualTo(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
 
-    assertEquals(DEMO, identityLink.getUserId());
-    assertEquals(IdentityLinkType.CANDIDATE, identityLink.getType());
+    assertThat(identityLink.getUserId()).isEqualTo(DEMO);
+    assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
     verifyUserAuthorization(DEMO);
 
     taskService.deleteTask(taskId, true);
@@ -258,13 +258,13 @@ public class TaskReadVariablePermissionAuthorizationTest {
     authRule.disableAuthorization();
 
     assertNotNull(linksForTask);
-    assertEquals(1, linksForTask.size());
+    assertThat(linksForTask.size()).isEqualTo(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
 
-    assertEquals(DEMO, identityLink.getUserId());
-    assertEquals(IdentityLinkType.CANDIDATE, identityLink.getType());
+    assertThat(identityLink.getUserId()).isEqualTo(DEMO);
+    assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
     verifyUserAuthorization(DEMO);
   }
 
@@ -287,13 +287,13 @@ public class TaskReadVariablePermissionAuthorizationTest {
     authRule.disableAuthorization();
 
     assertNotNull(linksForTask);
-    assertEquals(1, linksForTask.size());
+    assertThat(linksForTask.size()).isEqualTo(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
 
-    assertEquals(ACCOUNTING_GROUP, identityLink.getGroupId());
-    assertEquals(IdentityLinkType.CANDIDATE, identityLink.getType());
+    assertThat(identityLink.getGroupId()).isEqualTo(ACCOUNTING_GROUP);
+    assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
 
     verifyGroupAuthorization(ACCOUNTING_GROUP);
 
@@ -318,13 +318,13 @@ public class TaskReadVariablePermissionAuthorizationTest {
     authRule.disableAuthorization();
 
     assertNotNull(linksForTask);
-    assertEquals(1, linksForTask.size());
+    assertThat(linksForTask.size()).isEqualTo(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
 
-    assertEquals(ACCOUNTING_GROUP, identityLink.getGroupId());
-    assertEquals(IdentityLinkType.CANDIDATE, identityLink.getType());
+    assertThat(identityLink.getGroupId()).isEqualTo(ACCOUNTING_GROUP);
+    assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
     verifyGroupAuthorization(ACCOUNTING_GROUP);
   }
 
@@ -405,7 +405,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
                                               Permission expectedPermission) {
     Permission[] permissions = groupAuthorization.getPermissions(new Permission[] { expectedPermission });
     assertNotNull(permissions);
-    assertEquals(expectedPermission, permissions[0]);
+    assertThat(permissions[0]).isEqualTo(expectedPermission);
   }
 
 }

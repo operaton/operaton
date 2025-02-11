@@ -110,7 +110,7 @@ public class MultiTenancyBatchTest {
     Batch batch = batchHelper.migrateProcessInstanceAsync(tenant1Definition, sharedDefinition);
 
     // then
-    Assert.assertEquals(TENANT_ONE, batch.getTenantId());
+    assertThat(batch.getTenantId()).isEqualTo(TENANT_ONE);
   }
 
   /**
@@ -134,7 +134,7 @@ public class MultiTenancyBatchTest {
 
     // then
     HistoricBatch historicBatch = historyService.createHistoricBatchQuery().singleResult();
-    Assert.assertEquals(TENANT_ONE, historicBatch.getTenantId());
+    assertThat(historicBatch.getTenantId()).isEqualTo(TENANT_ONE);
   }
 
   @Test
@@ -144,13 +144,13 @@ public class MultiTenancyBatchTest {
 
     // then
     JobDefinition migrationJobDefinition = batchHelper.getExecutionJobDefinition(batch);
-    Assert.assertEquals(TENANT_ONE, migrationJobDefinition.getTenantId());
+    assertThat(migrationJobDefinition.getTenantId()).isEqualTo(TENANT_ONE);
 
     JobDefinition monitorJobDefinition = batchHelper.getMonitorJobDefinition(batch);
-    Assert.assertEquals(TENANT_ONE, monitorJobDefinition.getTenantId());
+    assertThat(monitorJobDefinition.getTenantId()).isEqualTo(TENANT_ONE);
 
     JobDefinition seedJobDefinition = batchHelper.getSeedJobDefinition(batch);
-    Assert.assertEquals(TENANT_ONE, seedJobDefinition.getTenantId());
+    assertThat(seedJobDefinition.getTenantId()).isEqualTo(TENANT_ONE);
   }
 
   @Test
@@ -160,15 +160,15 @@ public class MultiTenancyBatchTest {
 
     // then
     Job seedJob = batchHelper.getSeedJob(batch);
-    Assert.assertEquals(TENANT_ONE, seedJob.getTenantId());
+    assertThat(seedJob.getTenantId()).isEqualTo(TENANT_ONE);
 
     batchHelper.completeSeedJobs(batch);
 
     List<Job> migrationJob = batchHelper.getExecutionJobs(batch);
-    Assert.assertEquals(TENANT_ONE, migrationJob.get(0).getTenantId());
+    assertThat(migrationJob.get(0).getTenantId()).isEqualTo(TENANT_ONE);
 
     Job monitorJob = batchHelper.getMonitorJob(batch);
-    Assert.assertEquals(TENANT_ONE, monitorJob.getTenantId());
+    assertThat(monitorJob.getTenantId()).isEqualTo(TENANT_ONE);
   }
 
   @Test
@@ -182,7 +182,7 @@ public class MultiTenancyBatchTest {
     identityService.clearAuthentication();
 
     // then
-    Assert.assertEquals(0, managementService.createBatchQuery().count());
+    assertThat(managementService.createBatchQuery().count()).isEqualTo(0);
   }
 
   @Test

@@ -20,7 +20,6 @@ import static org.operaton.bpm.engine.variable.Variables.booleanValue;
 import static org.operaton.bpm.engine.variable.Variables.createVariables;
 import static org.operaton.bpm.engine.variable.Variables.integerValue;
 import static org.operaton.bpm.engine.variable.Variables.stringValue;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -44,6 +43,7 @@ import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.engine.variable.value.StringValue;
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
@@ -169,19 +169,19 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .list();
 
     assertFalse(result.isEmpty());
-    assertEquals(2, result.size());
+    assertThat(result.size()).isEqualTo(2);
 
     for (VariableInstance variable : result) {
 
-      assertEquals(caseInstanceId, variable.getCaseExecutionId());
-      assertEquals(caseInstanceId, variable.getCaseInstanceId());
+      assertThat(variable.getCaseExecutionId()).isEqualTo(caseInstanceId);
+      assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
       if (variable.getName().equals("aVariableName")) {
-        assertEquals("aVariableName", variable.getName());
-        assertEquals("abc", variable.getValue());
+        assertThat(variable.getName()).isEqualTo("aVariableName");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if (variable.getName().equals("anotherVariableName")) {
-        assertEquals("anotherVariableName", variable.getName());
-        assertEquals(999, variable.getValue());
+        assertThat(variable.getName()).isEqualTo("anotherVariableName");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else {
         fail("Unexpected variable: " + variable.getName());
       }
@@ -234,19 +234,19 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .list();
 
     assertFalse(result.isEmpty());
-    assertEquals(2, result.size());
+    assertThat(result.size()).isEqualTo(2);
 
     for (VariableInstance variable : result) {
 
-      assertEquals(caseInstanceId, variable.getCaseExecutionId());
-      assertEquals(caseInstanceId, variable.getCaseInstanceId());
+      assertThat(variable.getCaseExecutionId()).isEqualTo(caseInstanceId);
+      assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
       if (variable.getName().equals("aVariableName")) {
-        assertEquals("aVariableName", variable.getName());
-        assertEquals(stringValue("abc"), variable.getTypedValue());
+        assertThat(variable.getName()).isEqualTo("aVariableName");
+        assertThat(variable.getTypedValue()).isEqualTo(stringValue("abc"));
       } else if (variable.getName().equals("anotherVariableName")) {
-        assertEquals("anotherVariableName", variable.getName());
-        assertEquals(integerValue(null), variable.getTypedValue());
+        assertThat(variable.getName()).isEqualTo("anotherVariableName");
+        assertThat(variable.getTypedValue()).isEqualTo(integerValue(null));
       } else {
         fail("Unexpected variable: " + variable.getName());
       }
@@ -302,19 +302,19 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .list();
 
     assertFalse(result.isEmpty());
-    assertEquals(2, result.size());
+    assertThat(result.size()).isEqualTo(2);
 
     for (VariableInstance variable : result) {
 
-      assertEquals(caseInstanceId, variable.getCaseExecutionId());
-      assertEquals(caseInstanceId, variable.getCaseInstanceId());
+      assertThat(variable.getCaseExecutionId()).isEqualTo(caseInstanceId);
+      assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
       if (variable.getName().equals("aVariableName")) {
-        assertEquals("aVariableName", variable.getName());
-        assertEquals("abc", variable.getValue());
+        assertThat(variable.getName()).isEqualTo("aVariableName");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if (variable.getName().equals("anotherVariableName")) {
-        assertEquals("anotherVariableName", variable.getName());
-        assertEquals(999, variable.getValue());
+        assertThat(variable.getName()).isEqualTo("anotherVariableName");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else {
         fail("Unexpected variable: " + variable.getName());
       }
@@ -370,19 +370,19 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .list();
 
     assertFalse(result.isEmpty());
-    assertEquals(2, result.size());
+    assertThat(result.size()).isEqualTo(2);
 
     for (VariableInstance variable : result) {
 
-      assertEquals(caseInstanceId, variable.getCaseExecutionId());
-      assertEquals(caseInstanceId, variable.getCaseInstanceId());
+      assertThat(variable.getCaseExecutionId()).isEqualTo(caseInstanceId);
+      assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
       if (variable.getName().equals("aVariableName")) {
-        assertEquals("aVariableName", variable.getName());
-        assertEquals(stringValue("abc"), variable.getTypedValue());
+        assertThat(variable.getName()).isEqualTo("aVariableName");
+        assertThat(variable.getTypedValue()).isEqualTo(stringValue("abc"));
       } else if (variable.getName().equals("anotherVariableName")) {
-        assertEquals("anotherVariableName", variable.getName());
-        assertEquals(integerValue(null), variable.getTypedValue());
+        assertThat(variable.getName()).isEqualTo("anotherVariableName");
+        assertThat(variable.getTypedValue()).isEqualTo(integerValue(null));
       } else {
         fail("Unexpected variable: " + variable.getName());
       }
@@ -439,22 +439,22 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .list();
 
     assertFalse(result.isEmpty());
-    assertEquals(3, result.size());
+    assertThat(result.size()).isEqualTo(3);
 
     for (VariableInstance variable : result) {
 
-      assertEquals(caseInstanceId, variable.getCaseExecutionId());
-      assertEquals(caseInstanceId, variable.getCaseInstanceId());
+      assertThat(variable.getCaseExecutionId()).isEqualTo(caseInstanceId);
+      assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
       if (variable.getName().equals("aVariableName")) {
-        assertEquals("aVariableName", variable.getName());
-        assertEquals("abc", variable.getValue());
+        assertThat(variable.getName()).isEqualTo("aVariableName");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if (variable.getName().equals("anotherVariableName")) {
-        assertEquals("anotherVariableName", variable.getName());
-        assertEquals(999, variable.getValue());
+        assertThat(variable.getName()).isEqualTo("anotherVariableName");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else if (variable.getName().equals("aThirdVariable")) {
-        assertEquals("aThirdVariable", variable.getName());
-        assertEquals(123, variable.getValue());
+        assertThat(variable.getName()).isEqualTo("aThirdVariable");
+        assertThat(variable.getValue()).isEqualTo(123);
       } else {
         fail("Unexpected variable: " + variable.getName());
       }
@@ -512,22 +512,22 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .list();
 
     assertFalse(result.isEmpty());
-    assertEquals(3, result.size());
+    assertThat(result.size()).isEqualTo(3);
 
     for (VariableInstance variable : result) {
 
-      assertEquals(caseInstanceId, variable.getCaseExecutionId());
-      assertEquals(caseInstanceId, variable.getCaseInstanceId());
+      assertThat(variable.getCaseExecutionId()).isEqualTo(caseInstanceId);
+      assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
       if (variable.getName().equals("aVariableName")) {
-        assertEquals("aVariableName", variable.getName());
-        assertEquals(stringValue("abc"), variable.getTypedValue());
+        assertThat(variable.getName()).isEqualTo("aVariableName");
+        assertThat(variable.getTypedValue()).isEqualTo(stringValue("abc"));
       } else if (variable.getName().equals("anotherVariableName")) {
-        assertEquals("anotherVariableName", variable.getName());
-        assertEquals(integerValue(null), variable.getTypedValue());
+        assertThat(variable.getName()).isEqualTo("anotherVariableName");
+        assertThat(variable.getTypedValue()).isEqualTo(integerValue(null));
       } else if (variable.getName().equals("aThirdVariable")) {
-        assertEquals("aThirdVariable", variable.getName());
-        assertEquals(booleanValue(null), variable.getTypedValue());
+        assertThat(variable.getName()).isEqualTo("aThirdVariable");
+        assertThat(variable.getTypedValue()).isEqualTo(booleanValue(null));
       } else {
         fail("Unexpected variable: " + variable.getName());
       }
@@ -572,19 +572,19 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .list();
 
     assertFalse(result.isEmpty());
-    assertEquals(2, result.size());
+    assertThat(result.size()).isEqualTo(2);
 
     for (VariableInstance variable : result) {
 
-      assertEquals(caseExecutionId, variable.getCaseExecutionId());
-      assertEquals(caseInstanceId, variable.getCaseInstanceId());
+      assertThat(variable.getCaseExecutionId()).isEqualTo(caseExecutionId);
+      assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
       if (variable.getName().equals("aVariableName")) {
-        assertEquals("aVariableName", variable.getName());
-        assertEquals("abc", variable.getValue());
+        assertThat(variable.getName()).isEqualTo("aVariableName");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if (variable.getName().equals("anotherVariableName")) {
-        assertEquals("anotherVariableName", variable.getName());
-        assertEquals(999, variable.getValue());
+        assertThat(variable.getName()).isEqualTo("anotherVariableName");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else {
         fail("Unexpected variable: " + variable.getName());
       }
@@ -597,19 +597,19 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .list();
 
     assertFalse(result.isEmpty());
-    assertEquals(2, result.size());
+    assertThat(result.size()).isEqualTo(2);
 
     for (VariableInstance variable : result) {
 
-      assertEquals(caseExecutionId, variable.getCaseExecutionId());
-      assertEquals(caseInstanceId, variable.getCaseInstanceId());
+      assertThat(variable.getCaseExecutionId()).isEqualTo(caseExecutionId);
+      assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
       if (variable.getName().equals("aVariableName")) {
-        assertEquals("aVariableName", variable.getName());
-        assertEquals("abc", variable.getValue());
+        assertThat(variable.getName()).isEqualTo("aVariableName");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if (variable.getName().equals("anotherVariableName")) {
-        assertEquals("anotherVariableName", variable.getName());
-        assertEquals(999, variable.getValue());
+        assertThat(variable.getName()).isEqualTo("anotherVariableName");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else {
         fail("Unexpected variable: " + variable.getName());
       }
@@ -658,19 +658,19 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .list();
 
     assertFalse(result.isEmpty());
-    assertEquals(2, result.size());
+    assertThat(result.size()).isEqualTo(2);
 
     for (VariableInstance variable : result) {
 
-      assertEquals(caseExecutionId, variable.getCaseExecutionId());
-      assertEquals(caseInstanceId, variable.getCaseInstanceId());
+      assertThat(variable.getCaseExecutionId()).isEqualTo(caseExecutionId);
+      assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
       if (variable.getName().equals("aVariableName")) {
-        assertEquals("aVariableName", variable.getName());
-        assertEquals("abc", variable.getValue());
+        assertThat(variable.getName()).isEqualTo("aVariableName");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if (variable.getName().equals("anotherVariableName")) {
-        assertEquals("anotherVariableName", variable.getName());
-        assertEquals(999, variable.getValue());
+        assertThat(variable.getName()).isEqualTo("anotherVariableName");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else {
         fail("Unexpected variable: " + variable.getName());
       }
@@ -683,19 +683,19 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .list();
 
     assertFalse(result.isEmpty());
-    assertEquals(2, result.size());
+    assertThat(result.size()).isEqualTo(2);
 
     for (VariableInstance variable : result) {
 
-      assertEquals(caseExecutionId, variable.getCaseExecutionId());
-      assertEquals(caseInstanceId, variable.getCaseInstanceId());
+      assertThat(variable.getCaseExecutionId()).isEqualTo(caseExecutionId);
+      assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
       if (variable.getName().equals("aVariableName")) {
-        assertEquals("aVariableName", variable.getName());
-        assertEquals("abc", variable.getValue());
+        assertThat(variable.getName()).isEqualTo("aVariableName");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if (variable.getName().equals("anotherVariableName")) {
-        assertEquals("anotherVariableName", variable.getName());
-        assertEquals(999, variable.getValue());
+        assertThat(variable.getName()).isEqualTo("anotherVariableName");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else {
         fail("Unexpected variable: " + variable.getName());
       }
@@ -743,19 +743,19 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .list();
 
     assertFalse(result.isEmpty());
-    assertEquals(2, result.size());
+    assertThat(result.size()).isEqualTo(2);
 
     for (VariableInstance variable : result) {
 
-      assertEquals(caseExecutionId, variable.getCaseExecutionId());
-      assertEquals(caseInstanceId, variable.getCaseInstanceId());
+      assertThat(variable.getCaseExecutionId()).isEqualTo(caseExecutionId);
+      assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
       if (variable.getName().equals("aVariableName")) {
-        assertEquals("aVariableName", variable.getName());
-        assertEquals(stringValue("abc"), variable.getTypedValue());
+        assertThat(variable.getName()).isEqualTo("aVariableName");
+        assertThat(variable.getTypedValue()).isEqualTo(stringValue("abc"));
       } else if (variable.getName().equals("anotherVariableName")) {
-        assertEquals("anotherVariableName", variable.getName());
-        assertEquals(integerValue(null), variable.getTypedValue());
+        assertThat(variable.getName()).isEqualTo("anotherVariableName");
+        assertThat(variable.getTypedValue()).isEqualTo(integerValue(null));
       } else {
         fail("Unexpected variable: " + variable.getName());
       }
@@ -804,22 +804,22 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .list();
 
     assertFalse(result.isEmpty());
-    assertEquals(3, result.size());
+    assertThat(result.size()).isEqualTo(3);
 
     for (VariableInstance variable : result) {
 
-      assertEquals(caseExecutionId, variable.getCaseExecutionId());
-      assertEquals(caseInstanceId, variable.getCaseInstanceId());
+      assertThat(variable.getCaseExecutionId()).isEqualTo(caseExecutionId);
+      assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
       if (variable.getName().equals("aVariableName")) {
-        assertEquals("aVariableName", variable.getName());
-        assertEquals("abc", variable.getValue());
+        assertThat(variable.getName()).isEqualTo("aVariableName");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if (variable.getName().equals("anotherVariableName")) {
-        assertEquals("anotherVariableName", variable.getName());
-        assertEquals(999, variable.getValue());
+        assertThat(variable.getName()).isEqualTo("anotherVariableName");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else if (variable.getName().equals("aThirdVariable")) {
-        assertEquals("aThirdVariable", variable.getName());
-        assertEquals(123, variable.getValue());
+        assertThat(variable.getName()).isEqualTo("aThirdVariable");
+        assertThat(variable.getValue()).isEqualTo(123);
       } else {
         fail("Unexpected variable: " + variable.getName());
       }
@@ -832,22 +832,22 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .list();
 
     assertFalse(result.isEmpty());
-    assertEquals(3, result.size());
+    assertThat(result.size()).isEqualTo(3);
 
     for (VariableInstance variable : result) {
 
-      assertEquals(caseExecutionId, variable.getCaseExecutionId());
-      assertEquals(caseInstanceId, variable.getCaseInstanceId());
+      assertThat(variable.getCaseExecutionId()).isEqualTo(caseExecutionId);
+      assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
       if (variable.getName().equals("aVariableName")) {
-        assertEquals("aVariableName", variable.getName());
-        assertEquals("abc", variable.getValue());
+        assertThat(variable.getName()).isEqualTo("aVariableName");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if (variable.getName().equals("anotherVariableName")) {
-        assertEquals("anotherVariableName", variable.getName());
-        assertEquals(999, variable.getValue());
+        assertThat(variable.getName()).isEqualTo("anotherVariableName");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else if (variable.getName().equals("aThirdVariable")) {
-        assertEquals("aThirdVariable", variable.getName());
-        assertEquals(123, variable.getValue());
+        assertThat(variable.getName()).isEqualTo("aThirdVariable");
+        assertThat(variable.getValue()).isEqualTo(123);
       } else {
         fail("Unexpected variable: " + variable.getName());
       }
@@ -896,13 +896,13 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .list();
 
     assertFalse(result.isEmpty());
-    assertEquals(1, result.size());
+    assertThat(result.size()).isEqualTo(1);
 
     VariableInstance aThirdVariable = result.get(0);
 
     assertNotNull(aThirdVariable);
-    assertEquals("aThirdVariable", aThirdVariable.getName());
-    assertEquals(123, aThirdVariable.getValue());
+    assertThat(aThirdVariable.getName()).isEqualTo("aThirdVariable");
+    assertThat(aThirdVariable.getValue()).isEqualTo(123);
 
     // query by caseInstanceId
     result = runtimeService
@@ -911,31 +911,31 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .list();
 
     assertFalse(result.isEmpty());
-    assertEquals(3, result.size());
+    assertThat(result.size()).isEqualTo(3);
 
     for (VariableInstance variable : result) {
 
 
       if (variable.getName().equals("aVariableName")) {
-        assertEquals(caseInstanceId, variable.getCaseExecutionId());
-        assertEquals(caseInstanceId, variable.getCaseInstanceId());
+        assertThat(variable.getCaseExecutionId()).isEqualTo(caseInstanceId);
+        assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
-        assertEquals("aVariableName", variable.getName());
-        assertEquals("abc", variable.getValue());
+        assertThat(variable.getName()).isEqualTo("aVariableName");
+        assertThat(variable.getValue()).isEqualTo("abc");
 
       } else if (variable.getName().equals("anotherVariableName")) {
-        assertEquals(caseInstanceId, variable.getCaseExecutionId());
-        assertEquals(caseInstanceId, variable.getCaseInstanceId());
+        assertThat(variable.getCaseExecutionId()).isEqualTo(caseInstanceId);
+        assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
-        assertEquals("anotherVariableName", variable.getName());
-        assertEquals(999, variable.getValue());
+        assertThat(variable.getName()).isEqualTo("anotherVariableName");
+        assertThat(variable.getValue()).isEqualTo(999);
 
       } else if (variable.getName().equals("aThirdVariable")) {
-        assertEquals(caseExecutionId, variable.getCaseExecutionId());
-        assertEquals(caseInstanceId, variable.getCaseInstanceId());
+        assertThat(variable.getCaseExecutionId()).isEqualTo(caseExecutionId);
+        assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
-        assertEquals("aThirdVariable", variable.getName());
-        assertEquals(123, variable.getValue());
+        assertThat(variable.getName()).isEqualTo("aThirdVariable");
+        assertThat(variable.getValue()).isEqualTo(123);
 
       } else {
         fail("Unexpected variable: " + variable.getName());
@@ -1434,12 +1434,12 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
      // then
      assertNotNull(variables);
      assertFalse(variables.isEmpty());
-     assertEquals(2, variables.size());
+    assertThat(variables.size()).isEqualTo(2);
 
-     assertEquals("abc", variables.get("aVariableName"));
-     assertEquals(999, variables.get("anotherVariableName"));
+    assertThat(variables.get("aVariableName")).isEqualTo("abc");
+    assertThat(variables.get("anotherVariableName")).isEqualTo(999);
 
-     assertEquals(variables, caseService.getVariablesTyped(caseExecutionId, true));
+    assertThat(caseService.getVariablesTyped(caseExecutionId, true)).isEqualTo(variables);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -1472,12 +1472,12 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
      // then
      assertNotNull(variables);
      assertFalse(variables.isEmpty());
-     assertEquals(2, variables.size());
+    assertThat(variables.size()).isEqualTo(2);
 
-     assertEquals("abc", variables.get("aVariableName"));
-     assertEquals(999, variables.get("anotherVariableName"));
+    assertThat(variables.get("aVariableName")).isEqualTo("abc");
+    assertThat(variables.get("anotherVariableName")).isEqualTo(999);
 
-     assertEquals(variables, caseService.getVariablesTyped(caseExecutionId, true));
+    assertThat(caseService.getVariablesTyped(caseExecutionId, true)).isEqualTo(variables);
   }
 
   @Test
@@ -1533,12 +1533,12 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
      // then
      assertNotNull(variables);
      assertFalse(variables.isEmpty());
-     assertEquals(2, variables.size());
+    assertThat(variables.size()).isEqualTo(2);
 
-     assertEquals("abc", variables.get("aVariableName"));
-     assertEquals(999, variables.get("anotherVariableName"));
+    assertThat(variables.get("aVariableName")).isEqualTo("abc");
+    assertThat(variables.get("anotherVariableName")).isEqualTo(999);
 
-     assertEquals(variables, caseService.getVariables(caseExecutionId, names));
+    assertThat(caseService.getVariables(caseExecutionId, names)).isEqualTo(variables);
   }
 
 
@@ -1577,12 +1577,12 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
      // then
      assertNotNull(variables);
      assertFalse(variables.isEmpty());
-     assertEquals(2, variables.size());
+    assertThat(variables.size()).isEqualTo(2);
 
-     assertEquals("abc", variables.get("aVariableName"));
-     assertEquals(999, variables.get("anotherVariableName"));
+    assertThat(variables.get("aVariableName")).isEqualTo("abc");
+    assertThat(variables.get("anotherVariableName")).isEqualTo(999);
 
-     assertEquals(variables, caseService.getVariables(caseExecutionId, names));
+    assertThat(caseService.getVariables(caseExecutionId, names)).isEqualTo(variables);
   }
 
   @Test
@@ -1637,12 +1637,12 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
      // then
      assertNotNull(variables);
      assertFalse(variables.isEmpty());
-     assertEquals(2, variables.size());
+    assertThat(variables.size()).isEqualTo(2);
 
-     assertEquals("abc", variables.get("aVariableName"));
-     assertEquals(999, variables.get("anotherVariableName"));
+    assertThat(variables.get("aVariableName")).isEqualTo("abc");
+    assertThat(variables.get("anotherVariableName")).isEqualTo(999);
 
-     assertEquals(variables, caseService.getVariablesLocal(caseExecutionId));
+    assertThat(caseService.getVariablesLocal(caseExecutionId)).isEqualTo(variables);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -1679,12 +1679,12 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
      // then
      assertNotNull(variables);
      assertFalse(variables.isEmpty());
-     assertEquals(2, variables.size());
+    assertThat(variables.size()).isEqualTo(2);
 
-     assertEquals("abc", variables.get("aVariableName"));
-     assertEquals(999, variables.get("anotherVariableName"));
+    assertThat(variables.get("aVariableName")).isEqualTo("abc");
+    assertThat(variables.get("anotherVariableName")).isEqualTo(999);
 
-     assertEquals(variables, caseService.getVariablesLocalTyped(caseExecutionId, true));
+    assertThat(caseService.getVariablesLocalTyped(caseExecutionId, true)).isEqualTo(variables);
   }
 
   @Test
@@ -1743,12 +1743,12 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
      // then
      assertNotNull(variables);
      assertFalse(variables.isEmpty());
-     assertEquals(2, variables.size());
+    assertThat(variables.size()).isEqualTo(2);
 
-     assertEquals("abc", variables.get("aVariableName"));
-     assertEquals(999, variables.get("anotherVariableName"));
+    assertThat(variables.get("aVariableName")).isEqualTo("abc");
+    assertThat(variables.get("anotherVariableName")).isEqualTo(999);
 
-     assertEquals(variables, caseService.getVariablesLocal(caseExecutionId, names));
+    assertThat(caseService.getVariablesLocal(caseExecutionId, names)).isEqualTo(variables);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -1789,12 +1789,12 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
      // then
      assertNotNull(variables);
      assertFalse(variables.isEmpty());
-     assertEquals(2, variables.size());
+    assertThat(variables.size()).isEqualTo(2);
 
-     assertEquals("abc", variables.get("aVariableName"));
-     assertEquals(999, variables.get("anotherVariableName"));
+    assertThat(variables.get("aVariableName")).isEqualTo("abc");
+    assertThat(variables.get("anotherVariableName")).isEqualTo(999);
 
-     assertEquals(variables, caseService.getVariablesLocal(caseExecutionId, names));
+    assertThat(caseService.getVariablesLocal(caseExecutionId, names)).isEqualTo(variables);
   }
   @Test
   public void testGetVariablesLocalWithVariablesNamesInvalidCaseExecutionId() {
@@ -1844,7 +1844,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
 
      // then
      assertNotNull(value);
-     assertEquals("abc", value);
+    assertThat(value).isEqualTo("abc");
   }
 
   @Test
@@ -1897,7 +1897,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
 
      // then
      assertNotNull(value);
-     assertEquals("abc", value);
+    assertThat(value).isEqualTo("abc");
   }
 
   @Test
@@ -1951,7 +1951,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
      assertNotNull(stringValue.getValue());
      assertNotNull(objectValue.getValue());
      assertTrue(objectValue.isDeserialized());
-     assertEquals(Arrays.asList("1", "2"), objectValue.getValue());
+    assertThat(objectValue.getValue()).isEqualTo(Arrays.asList("1", "2"));
      assertFalse(serializedObjectValue.isDeserialized());
      assertNotNull(serializedObjectValue.getValueSerialized());
   }
@@ -2010,11 +2010,11 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .list();
 
     assertFalse(result.isEmpty());
-    assertEquals(1, result.size());
+    assertThat(result.size()).isEqualTo(1);
 
     VariableInstance variable = result.get(0);
-    assertEquals("aVariableName", variable.getName());
-    assertEquals("abc", variable.getValue());
+    assertThat(variable.getName()).isEqualTo("aVariableName");
+    assertThat(variable.getValue()).isEqualTo("abc");
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -2057,22 +2057,22 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .list();
 
     assertFalse(result.isEmpty());
-    assertEquals(2, result.size());
+    assertThat(result.size()).isEqualTo(2);
 
     for (VariableInstance variable : result) {
       if (variable.getName().equals("aVariableName")) {
-        assertEquals(caseInstanceId, variable.getCaseExecutionId());
-        assertEquals(caseInstanceId, variable.getCaseInstanceId());
+        assertThat(variable.getCaseExecutionId()).isEqualTo(caseInstanceId);
+        assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
-        assertEquals("aVariableName", variable.getName());
-        assertEquals("abc", variable.getValue());
+        assertThat(variable.getName()).isEqualTo("aVariableName");
+        assertThat(variable.getValue()).isEqualTo("abc");
 
       } else if (variable.getName().equals("anotherVariableName")) {
-        assertEquals(caseInstanceId, variable.getCaseExecutionId());
-        assertEquals(caseInstanceId, variable.getCaseInstanceId());
+        assertThat(variable.getCaseExecutionId()).isEqualTo(caseInstanceId);
+        assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
-        assertEquals("anotherVariableName", variable.getName());
-        assertEquals(123, variable.getValue());
+        assertThat(variable.getName()).isEqualTo("anotherVariableName");
+        assertThat(variable.getValue()).isEqualTo(123);
 
       } else {
         fail("Unexpected variable: " + variable.getName());
@@ -2117,11 +2117,11 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .list();
 
     assertFalse(result.isEmpty());
-    assertEquals(1, result.size());
+    assertThat(result.size()).isEqualTo(1);
 
     VariableInstance variable = result.get(0);
-    assertEquals("aVariableName", variable.getName());
-    assertEquals("abc", variable.getValue());
+    assertThat(variable.getName()).isEqualTo("aVariableName");
+    assertThat(variable.getValue()).isEqualTo("abc");
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -2164,22 +2164,22 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .list();
 
     assertFalse(result.isEmpty());
-    assertEquals(2, result.size());
+    assertThat(result.size()).isEqualTo(2);
 
     for (VariableInstance variable : result) {
       if (variable.getName().equals("aVariableName")) {
-        assertEquals(caseExecutionId, variable.getCaseExecutionId());
-        assertEquals(caseInstanceId, variable.getCaseInstanceId());
+        assertThat(variable.getCaseExecutionId()).isEqualTo(caseExecutionId);
+        assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
-        assertEquals("aVariableName", variable.getName());
-        assertEquals("abc", variable.getValue());
+        assertThat(variable.getName()).isEqualTo("aVariableName");
+        assertThat(variable.getValue()).isEqualTo("abc");
 
       } else if (variable.getName().equals("anotherVariableName")) {
-        assertEquals(caseExecutionId, variable.getCaseExecutionId());
-        assertEquals(caseInstanceId, variable.getCaseInstanceId());
+        assertThat(variable.getCaseExecutionId()).isEqualTo(caseExecutionId);
+        assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
-        assertEquals("anotherVariableName", variable.getName());
-        assertEquals(123, variable.getValue());
+        assertThat(variable.getName()).isEqualTo("anotherVariableName");
+        assertThat(variable.getValue()).isEqualTo(123);
 
       } else {
         fail("Unexpected variable: " + variable.getName());
@@ -2224,7 +2224,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
      assertNotNull(stringValue.getValue());
      assertNotNull(objectValue.getValue());
      assertTrue(objectValue.isDeserialized());
-     assertEquals(Arrays.asList("1", "2"), objectValue.getValue());
+    assertThat(objectValue.getValue()).isEqualTo(Arrays.asList("1", "2"));
      assertFalse(serializedObjectValue.isDeserialized());
      assertNotNull(serializedObjectValue.getValueSerialized());
   }
@@ -2268,7 +2268,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
     caseService.removeVariable(caseExecutionId, "aVariableName");
 
     // then the variable should be gone
-    assertEquals(0, runtimeService.createVariableInstanceQuery().count());
+    assertThat(runtimeService.createVariableInstanceQuery().count()).isEqualTo(0);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -2300,7 +2300,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
     // then there should be only one variable left
     VariableInstance variable = runtimeService.createVariableInstanceQuery().singleResult();
     assertNotNull(variable);
-    assertEquals("aThirdVariable", variable.getName());
+    assertThat(variable.getName()).isEqualTo("aThirdVariable");
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -2326,13 +2326,13 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
     caseService.removeVariableLocal(caseInstanceId, "aVariableName");
 
     // then the variable should still be there
-    assertEquals(1, runtimeService.createVariableInstanceQuery().count());
+    assertThat(runtimeService.createVariableInstanceQuery().count()).isEqualTo(1);
 
     // when
     caseService.removeVariableLocal(caseExecutionId, "aVariableName");
 
     // then the variable should be gone
-    assertEquals(0, runtimeService.createVariableInstanceQuery().count());
+    assertThat(runtimeService.createVariableInstanceQuery().count()).isEqualTo(0);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -2364,7 +2364,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
     caseService.removeVariablesLocal(caseInstanceId, variables.keySet());
 
     // then no variables should have been removed
-    assertEquals(3, runtimeService.createVariableInstanceQuery().count());
+    assertThat(runtimeService.createVariableInstanceQuery().count()).isEqualTo(3);
 
     // when
     caseService.removeVariablesLocal(caseExecutionId, variables.keySet());
@@ -2372,7 +2372,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
     // then there should be only one variable left
     VariableInstance variable = runtimeService.createVariableInstanceQuery().singleResult();
     assertNotNull(variable);
-    assertEquals("aThirdVariable", variable.getName());
+    assertThat(variable.getName()).isEqualTo("aThirdVariable");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/cmmn/loan-application.cmmn")
@@ -2482,7 +2482,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseInstanceId(caseInstance.getId())
         .list();
 
-    assertEquals(3, caseExecutions.size());
+    assertThat(caseExecutions.size()).isEqualTo(3);
 
     CaseExecution casePlanModelExecution = caseService
         .createCaseExecutionQuery()
@@ -2540,7 +2540,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .active()
         .list();
 
-    assertEquals(1, caseInstances.size());
+    assertThat(caseInstances.size()).isEqualTo(1);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})

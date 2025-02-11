@@ -26,9 +26,8 @@ import static org.operaton.bpm.engine.authorization.Permissions.UPDATE_INSTANCE;
 import static org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions.SUSPEND_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
-
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -125,7 +124,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
 
     ProcessDefinition definition = query.singleResult();
     assertNotNull(definition);
-    assertEquals(ONE_TASK_PROCESS_KEY, definition.getKey());
+    assertThat(definition.getKey()).isEqualTo(ONE_TASK_PROCESS_KEY);
   }
 
   @Test
@@ -147,7 +146,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
 
     ProcessDefinition definition = query.singleResult();
     assertNotNull(definition);
-    assertEquals(TWO_TASKS_PROCESS_KEY, definition.getKey());
+    assertThat(definition.getKey()).isEqualTo(TWO_TASKS_PROCESS_KEY);
   }
 
   @Test
@@ -172,7 +171,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
 
     ProcessDefinition definition = query.singleResult();
     assertNotNull(definition);
-    assertEquals(TWO_TASKS_PROCESS_KEY, definition.getKey());
+    assertThat(definition.getKey()).isEqualTo(TWO_TASKS_PROCESS_KEY);
   }
 
   // get process definition /////////////////////////////////////////////////////
@@ -1214,7 +1213,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     definition = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY);
-    assertEquals(6, definition.getHistoryTimeToLive().intValue());
+    assertThat(definition.getHistoryTimeToLive().intValue()).isEqualTo(6);
 
   }
 
@@ -1247,8 +1246,8 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().startablePermissionCheck().startableInTasklist().list();
     // then
     assertNotNull(processDefinitions);
-    assertEquals(1, repositoryService.createProcessDefinitionQuery().startablePermissionCheck().startableInTasklist().count());
-    assertEquals(definition.getId(), processDefinitions.get(0).getId());
+    assertThat(repositoryService.createProcessDefinitionQuery().startablePermissionCheck().startableInTasklist().count()).isEqualTo(1);
+    assertThat(processDefinitions.get(0).getId()).isEqualTo(definition.getId());
     assertTrue(processDefinitions.get(0).isStartableInTasklist());
   }
 
@@ -1264,8 +1263,8 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().startablePermissionCheck().startableInTasklist().list();
     // then
     assertNotNull(processDefinitions);
-    assertEquals(1, repositoryService.createProcessDefinitionQuery().startablePermissionCheck().startableInTasklist().count());
-    assertEquals(definition.getId(), processDefinitions.get(0).getId());
+    assertThat(repositoryService.createProcessDefinitionQuery().startablePermissionCheck().startableInTasklist().count()).isEqualTo(1);
+    assertThat(processDefinitions.get(0).getId()).isEqualTo(definition.getId());
     assertTrue(processDefinitions.get(0).isStartableInTasklist());
   }
 
@@ -1280,7 +1279,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().startablePermissionCheck().startableInTasklist().list();
     // then
     assertNotNull(processDefinitions);
-    assertEquals(0, processDefinitions.size());
+    assertThat(processDefinitions.size()).isEqualTo(0);
   }
 
   @Test
@@ -1294,7 +1293,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().startablePermissionCheck().startableInTasklist().list();
     // then
     assertNotNull(processDefinitions);
-    assertEquals(0, processDefinitions.size());
+    assertThat(processDefinitions.size()).isEqualTo(0);
   }
 
   @Test
@@ -1306,7 +1305,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().startablePermissionCheck().startableInTasklist().list();
     // then
     assertNotNull(processDefinitions);
-    assertEquals(0, processDefinitions.size());
+    assertThat(processDefinitions.size()).isEqualTo(0);
   }
 
   @Test

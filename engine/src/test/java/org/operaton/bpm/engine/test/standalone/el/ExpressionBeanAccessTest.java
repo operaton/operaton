@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.standalone.el;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -57,7 +57,7 @@ public class ExpressionBeanAccessTest {
   public void testConfigurationBeanAccess() {
     // Exposed bean returns 'I'm exposed' when to-string is called in first service-task
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("expressionBeanAccess");
-    assertEquals("I'm exposed", runtimeService.getVariable(pi.getId(), "exposedBeanResult"));
+    assertThat(runtimeService.getVariable(pi.getId(), "exposedBeanResult")).isEqualTo("I'm exposed");
     var processInstanceId = pi.getId();
 
     // After signaling, an expression tries to use a bean that is present in the configuration but

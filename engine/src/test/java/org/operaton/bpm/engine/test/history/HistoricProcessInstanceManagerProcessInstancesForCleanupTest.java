@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -135,7 +135,7 @@ public class HistoricProcessInstanceManagerProcessInstancesForCleanupTest {
           batchSize, 0, 60);
 
       //then
-      assertEquals(resultCount, historicProcessInstanceIdsForCleanup.size());
+      assertThat(historicProcessInstanceIdsForCleanup.size()).isEqualTo(resultCount);
 
       if (resultCount > 0) {
 
@@ -146,7 +146,7 @@ public class HistoricProcessInstanceManagerProcessInstancesForCleanupTest {
           assertNotNull(historicProcessInstance.getEndTime());
           List<ProcessDefinition> processDefinitions = engineRule.getRepositoryService().createProcessDefinitionQuery()
               .processDefinitionId(historicProcessInstance.getProcessDefinitionId()).list();
-          assertEquals(1, processDefinitions.size());
+          assertThat(processDefinitions.size()).isEqualTo(1);
           ProcessDefinitionEntity processDefinition = (ProcessDefinitionEntity) processDefinitions.get(0);
           assertTrue(historicProcessInstance.getEndTime().before(DateUtils.addDays(ClockUtil.getCurrentTime(), processDefinition.getHistoryTimeToLive())));
         }
@@ -159,7 +159,7 @@ public class HistoricProcessInstanceManagerProcessInstancesForCleanupTest {
 
   private void updateTimeToLive(CommandContext commandContext, String businessKey, int timeToLive) {
     List<ProcessDefinition> processDefinitions = engineRule.getRepositoryService().createProcessDefinitionQuery().processDefinitionKey(businessKey).list();
-    assertEquals(1, processDefinitions.size());
+    assertThat(processDefinitions.size()).isEqualTo(1);
     ProcessDefinitionEntity processDefinition1 = (ProcessDefinitionEntity) processDefinitions.get(0);
     processDefinition1.setHistoryTimeToLive(timeToLive);
     commandContext.getDbEntityManager().merge(processDefinition1);

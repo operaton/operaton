@@ -29,7 +29,6 @@ import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertTha
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -47,6 +46,7 @@ import org.operaton.bpm.engine.test.util.ExecutionTree;
 import org.junit.After;
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class SingleProcessInstanceModificationAsyncAuthorizationTest extends AuthorizationTest {
@@ -99,12 +99,12 @@ public class SingleProcessInstanceModificationAsyncAuthorizationTest extends Aut
     // then
     for (Job pending : managementService.createJobQuery().jobDefinitionId(modificationBatch.getBatchJobDefinitionId()).list()) {
       managementService.executeJob(pending.getId());
-      assertEquals(processDefinition.getDeploymentId(), pending.getDeploymentId());
+      assertThat(pending.getDeploymentId()).isEqualTo(processDefinition.getDeploymentId());
     }
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     assertNotNull(updatedTree);
-    assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
+    assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task2").done());
 

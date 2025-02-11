@@ -30,7 +30,6 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -95,13 +94,13 @@ public class ExternalTaskSupportTest {
         .topic("externalTaskTopic", 5000L)
         .execute();
 
-    Assert.assertEquals(1, externalTasks.size());
-    Assert.assertEquals(processInstance.getId(), externalTasks.get(0).getProcessInstanceId());
+    assertThat(externalTasks.size()).isEqualTo(1);
+    assertThat(externalTasks.get(0).getProcessInstanceId()).isEqualTo(processInstance.getId());
 
     // and it is possible to complete the external task successfully and end the process instance
     rule.getExternalTaskService().complete(externalTasks.get(0).getId(), "aWorker");
 
-    Assert.assertEquals(0L, rule.getRuntimeService().createProcessInstanceQuery().count());
+    assertThat(rule.getRuntimeService().createProcessInstanceQuery().count()).isEqualTo(0L);
   }
 
   @Test

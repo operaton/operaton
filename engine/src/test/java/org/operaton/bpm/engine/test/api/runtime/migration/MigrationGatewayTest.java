@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
@@ -67,8 +68,8 @@ public class MigrationGatewayTest {
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
     // then
-    Assert.assertEquals(1, rule.getTaskService().createTaskQuery().count());
-    Assert.assertEquals(0, rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count());
+    assertThat(rule.getTaskService().createTaskQuery().count()).isEqualTo(1);
+    assertThat(rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count()).isEqualTo(0);
 
     testHelper.completeTask("parallel1");
     testHelper.completeTask("afterJoin");
@@ -134,8 +135,8 @@ public class MigrationGatewayTest {
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
     // then
-    Assert.assertEquals(1, rule.getTaskService().createTaskQuery().count());
-    Assert.assertEquals(0, rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count());
+    assertThat(rule.getTaskService().createTaskQuery().count()).isEqualTo(1);
+    assertThat(rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count()).isEqualTo(0);
 
     testHelper.completeTask("parallel1");
     testHelper.completeTask("afterJoin");
@@ -164,8 +165,8 @@ public class MigrationGatewayTest {
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
     // then
-    Assert.assertEquals(1, rule.getTaskService().createTaskQuery().count());
-    Assert.assertEquals(0, rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count());
+    assertThat(rule.getTaskService().createTaskQuery().count()).isEqualTo(1);
+    assertThat(rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count()).isEqualTo(0);
 
     testHelper.completeTask("parallel1");
     testHelper.completeTask("afterJoin");
@@ -231,8 +232,8 @@ public class MigrationGatewayTest {
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
     // then
-    Assert.assertEquals(1, rule.getTaskService().createTaskQuery().count());
-    Assert.assertEquals(0, rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count());
+    assertThat(rule.getTaskService().createTaskQuery().count()).isEqualTo(1);
+    assertThat(rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count()).isEqualTo(0);
 
     testHelper.completeTask("parallel1");
     testHelper.completeTask("afterJoin");
@@ -339,13 +340,13 @@ public class MigrationGatewayTest {
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
     // then
-    Assert.assertEquals(1, rule.getTaskService().createTaskQuery().count());
-    Assert.assertEquals(0, rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count());
+    assertThat(rule.getTaskService().createTaskQuery().count()).isEqualTo(1);
+    assertThat(rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count()).isEqualTo(0);
 
     rule.getRuntimeService().createProcessInstanceModification(processInstance.getId())
       .startBeforeActivity("join")
       .execute();
-    Assert.assertEquals(0, rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count());
+    assertThat(rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count()).isEqualTo(0);
 
     testHelper.completeTask("parallel1");
     testHelper.completeTask("afterJoin");

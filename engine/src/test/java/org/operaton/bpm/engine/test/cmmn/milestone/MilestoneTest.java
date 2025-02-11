@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.milestone;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -189,7 +189,7 @@ public class MilestoneTest extends PluggableProcessEngineTest {
         .singleResult();
 
     // then
-    assertEquals("milestone", milestone.getActivityType());
+    assertThat(milestone.getActivityType()).isEqualTo("milestone");
   }
 
 }

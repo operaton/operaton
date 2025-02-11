@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.repository;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.Collection;
@@ -47,10 +47,10 @@ public class BpmnModelInstanceCmdTest extends PluggableProcessEngineTest {
     assertNotNull(modelInstance);
 
     Collection<ModelElementInstance> events = modelInstance.getModelElementsByType(modelInstance.getModel().getType(Event.class));
-    assertEquals(2, events.size());
+    assertThat(events.size()).isEqualTo(2);
 
     Collection<ModelElementInstance> sequenceFlows = modelInstance.getModelElementsByType(modelInstance.getModel().getType(SequenceFlow.class));
-    assertEquals(1, sequenceFlows.size());
+    assertThat(sequenceFlows.size()).isEqualTo(1);
 
     StartEvent startEvent = modelInstance.getModelElementById("start");
     assertNotNull(startEvent);

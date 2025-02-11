@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.test.cmmn.handler;
 import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_ACTIVITY_DESCRIPTION;
 import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_ACTIVITY_TYPE;
 import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_AUTO_COMPLETE;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -58,7 +58,7 @@ public class CasePlanModelHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(casePlanModel, context);
 
     // then
-    assertEquals(name, activity.getName());
+    assertThat(activity.getName()).isEqualTo(name);
   }
 
   @Test
@@ -70,7 +70,7 @@ public class CasePlanModelHandlerTest extends CmmnElementHandlerTest {
 
     // then
     String activityType = (String) activity.getProperty(PROPERTY_ACTIVITY_TYPE);
-    assertEquals("casePlanModel", activityType);
+    assertThat(activityType).isEqualTo("casePlanModel");
   }
 
   @Test
@@ -83,7 +83,7 @@ public class CasePlanModelHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(casePlanModel, context);
 
     // then
-    assertEquals(description, activity.getProperty(PROPERTY_ACTIVITY_DESCRIPTION));
+    assertThat(activity.getProperty(PROPERTY_ACTIVITY_DESCRIPTION)).isEqualTo(description);
   }
 
   @Test
@@ -120,7 +120,7 @@ public class CasePlanModelHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(casePlanModel, context);
 
     // then
-    assertEquals(parent, activity.getParent());
+    assertThat(activity.getParent()).isEqualTo(parent);
     assertTrue(parent.getActivities().contains(activity));
   }
 
@@ -154,9 +154,9 @@ public class CasePlanModelHandlerTest extends CmmnElementHandlerTest {
     assertTrue(newActivity.getEntryCriteria().isEmpty());
 
     assertFalse(newActivity.getExitCriteria().isEmpty());
-    assertEquals(1, newActivity.getExitCriteria().size());
+    assertThat(newActivity.getExitCriteria().size()).isEqualTo(1);
 
-    assertEquals(sentryDeclaration, newActivity.getExitCriteria().get(0));
+    assertThat(newActivity.getExitCriteria().get(0)).isEqualTo(sentryDeclaration);
 
   }
 
@@ -203,7 +203,7 @@ public class CasePlanModelHandlerTest extends CmmnElementHandlerTest {
     assertTrue(newActivity.getEntryCriteria().isEmpty());
 
     assertFalse(newActivity.getExitCriteria().isEmpty());
-    assertEquals(2, newActivity.getExitCriteria().size());
+    assertThat(newActivity.getExitCriteria().size()).isEqualTo(2);
 
     assertTrue(newActivity.getExitCriteria().contains(firstSentryDeclaration));
     assertTrue(newActivity.getExitCriteria().contains(secondSentryDeclaration));

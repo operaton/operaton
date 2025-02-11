@@ -20,7 +20,7 @@ import static org.operaton.bpm.engine.authorization.Resources.TASK;
 import static org.operaton.bpm.engine.authorization.TaskPermissions.READ_VARIABLE;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
@@ -132,7 +132,7 @@ public class StandaloneTaskGetVariableAuthorizationTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      assertEquals(VARIABLE_VALUE, variable);
+      assertThat(variable).isEqualTo(VARIABLE_VALUE);
       deleteAuthorizations();
     }
   }
@@ -155,7 +155,7 @@ public class StandaloneTaskGetVariableAuthorizationTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      assertEquals(VARIABLE_VALUE, variable);
+      assertThat(variable).isEqualTo(VARIABLE_VALUE);
       deleteAuthorizations();
     }
   }
@@ -179,7 +179,7 @@ public class StandaloneTaskGetVariableAuthorizationTest {
     // then
     if (authRule.assertScenario(scenario)) {
       assertNotNull(typedValue);
-      assertEquals(VARIABLE_VALUE, typedValue.getValue());
+      assertThat(typedValue.getValue()).isEqualTo(VARIABLE_VALUE);
       deleteAuthorizations();
     }
   }
@@ -203,7 +203,7 @@ public class StandaloneTaskGetVariableAuthorizationTest {
     // then
     if (authRule.assertScenario(scenario)) {
       assertNotNull(typedValue);
-      assertEquals(VARIABLE_VALUE, typedValue.getValue());
+      assertThat(typedValue.getValue()).isEqualTo(VARIABLE_VALUE);
       deleteAuthorizations();
     }
   }
@@ -415,8 +415,8 @@ public class StandaloneTaskGetVariableAuthorizationTest {
   protected void verifyGetVariables(Map<String, Object> variables) {
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertEquals(1, variables.size());
-    assertEquals(VARIABLE_VALUE, variables.get(VARIABLE_NAME));
+    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
   }
 
 }

@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.repository;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.Collection;
@@ -51,13 +51,13 @@ public class CmmnModelElementInstanceCmdTest extends PluggableProcessEngineTest 
     assertNotNull(modelInstance);
 
     Collection<ModelElementInstance> humanTasks = modelInstance.getModelElementsByType(modelInstance.getModel().getType(HumanTask.class));
-    assertEquals(1, humanTasks.size());
+    assertThat(humanTasks.size()).isEqualTo(1);
 
     Collection<ModelElementInstance> planItems = modelInstance.getModelElementsByType(modelInstance.getModel().getType(PlanItem.class));
-    assertEquals(1, planItems.size());
+    assertThat(planItems.size()).isEqualTo(1);
 
     Collection<ModelElementInstance> cases = modelInstance.getModelElementsByType(modelInstance.getModel().getType(Case.class));
-    assertEquals(1, cases.size());
+    assertThat(cases.size()).isEqualTo(1);
 
   }
 

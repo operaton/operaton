@@ -26,7 +26,9 @@ import java.util.*;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 /**
  * @author Tom Baeyens
@@ -59,7 +61,7 @@ public class JobExecutorTest extends JobExecutorTestCase {
     expectedMessages.add("timer-one");
     expectedMessages.add("timer-two");
 
-    assertEquals(new TreeSet<String>(expectedMessages), new TreeSet<String>(messages));
+    assertThat(new TreeSet<String>(messages)).isEqualTo(new TreeSet<String>(expectedMessages));
 
     commandExecutor.execute(commandContext -> {
       List<HistoricJobLog> historicJobLogs = processEngineConfiguration
@@ -107,17 +109,17 @@ public class JobExecutorTest extends JobExecutorTestCase {
     acquiredJobs.addJobIdBatch(secondBatch);
     acquiredJobs.addJobIdBatch(thirdBatch);
 
-    assertEquals(firstBatch, acquiredJobs.getJobIdBatches().get(0));
-    assertEquals(secondBatch, acquiredJobs.getJobIdBatches().get(1));
-    assertEquals(thirdBatch, acquiredJobs.getJobIdBatches().get(2));
+    assertThat(acquiredJobs.getJobIdBatches().get(0)).isEqualTo(firstBatch);
+    assertThat(acquiredJobs.getJobIdBatches().get(1)).isEqualTo(secondBatch);
+    assertThat(acquiredJobs.getJobIdBatches().get(2)).isEqualTo(thirdBatch);
 
     acquiredJobs.removeJobId("a");
-    assertEquals(Arrays.asList("b", "c"), acquiredJobs.getJobIdBatches().get(0));
-    assertEquals(secondBatch, acquiredJobs.getJobIdBatches().get(1));
-    assertEquals(thirdBatch, acquiredJobs.getJobIdBatches().get(2));
+    assertThat(acquiredJobs.getJobIdBatches().get(0)).isEqualTo(Arrays.asList("b", "c"));
+    assertThat(acquiredJobs.getJobIdBatches().get(1)).isEqualTo(secondBatch);
+    assertThat(acquiredJobs.getJobIdBatches().get(2)).isEqualTo(thirdBatch);
 
-    assertEquals(3, acquiredJobs.getJobIdBatches().size());
+    assertThat(acquiredJobs.getJobIdBatches().size()).isEqualTo(3);
     acquiredJobs.removeJobId("g");
-    assertEquals(2, acquiredJobs.getJobIdBatches().size());
+    assertThat(acquiredJobs.getJobIdBatches().size()).isEqualTo(2);
   }
 }

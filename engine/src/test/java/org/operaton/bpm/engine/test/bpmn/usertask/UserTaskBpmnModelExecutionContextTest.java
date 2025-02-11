@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.bpmn.usertask;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -170,13 +170,13 @@ public class UserTaskBpmnModelExecutionContextTest {
     assertNotNull(modelInstance);
 
     Collection<ModelElementInstance> events = modelInstance.getModelElementsByType(modelInstance.getModel().getType(Event.class));
-    assertEquals(2, events.size());
+    assertThat(events.size()).isEqualTo(2);
 
     Collection<ModelElementInstance> tasks = modelInstance.getModelElementsByType(modelInstance.getModel().getType(Task.class));
-    assertEquals(1, tasks.size());
+    assertThat(tasks.size()).isEqualTo(1);
 
     Process process = (Process) modelInstance.getDefinitions().getRootElements().iterator().next();
-    assertEquals(PROCESS_ID, process.getId());
+    assertThat(process.getId()).isEqualTo(PROCESS_ID);
     assertTrue(process.isExecutable());
   }
 
@@ -185,8 +185,8 @@ public class UserTaskBpmnModelExecutionContextTest {
     assertNotNull(userTask);
 
     ModelElementInstance taskListener = userTask.getExtensionElements().getUniqueChildElementByNameNs(OPERATON_NS, "taskListener");
-    assertEquals(eventName, taskListener.getAttributeValueNs(OPERATON_NS, "event"));
-    assertEquals(ModelExecutionContextTaskListener.class.getName(), taskListener.getAttributeValueNs(OPERATON_NS, "class"));
+    assertThat(taskListener.getAttributeValueNs(OPERATON_NS, "event")).isEqualTo(eventName);
+    assertThat(taskListener.getAttributeValueNs(OPERATON_NS, "class")).isEqualTo(ModelExecutionContextTaskListener.class.getName());
 
     BpmnModelInstance modelInstance = ModelExecutionContextTaskListener.modelInstance;
     Collection<ModelElementInstance> tasks = modelInstance.getModelElementsByType(modelInstance.getModel().getType(Task.class));

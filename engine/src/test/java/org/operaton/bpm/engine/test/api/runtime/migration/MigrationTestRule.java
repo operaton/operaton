@@ -18,7 +18,7 @@ package org.operaton.bpm.engine.test.api.runtime.migration;
 
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
@@ -164,9 +164,9 @@ public class MigrationTestRule extends ProcessEngineTestRule {
     assertNotNull("Expected that an event subscription with id '" + eventSubscriptionBefore.getId() + "' "
         + "exists after migration", eventSubscriptionAfter);
 
-    assertEquals(eventSubscriptionBefore.getEventType(), eventSubscriptionAfter.getEventType());
-    assertEquals(activityIdAfter, eventSubscriptionAfter.getActivityId());
-    assertEquals(eventName, eventSubscriptionAfter.getEventName());
+    assertThat(eventSubscriptionAfter.getEventType()).isEqualTo(eventSubscriptionBefore.getEventType());
+    assertThat(eventSubscriptionAfter.getActivityId()).isEqualTo(activityIdAfter);
+    assertThat(eventSubscriptionAfter.getEventName()).isEqualTo(eventName);
   }
 
 
@@ -207,12 +207,12 @@ public class MigrationTestRule extends ProcessEngineTestRule {
   }
 
   public void assertTimerJob(Job job) {
-    assertEquals("Expected job to be a timer job", TimerEntity.TYPE, ((JobEntity) job).getType());
+    assertThat(((JobEntity) job).getType()).as("Expected job to be a timer job").isEqualTo(TimerEntity.TYPE);
   }
 
   public Job assertTimerJobExists(ProcessInstanceSnapshot snapshot) {
     List<Job> jobs = snapshot.getJobs();
-    assertEquals(1, jobs.size());
+    assertThat(jobs.size()).isEqualTo(1);
     Job job = jobs.get(0);
     assertTimerJob(job);
     return job;
@@ -225,8 +225,8 @@ public class MigrationTestRule extends ProcessEngineTestRule {
     Job jobAfter = snapshotAfterMigration.getJobForDefinitionId(jobDefinitionAfter.getId());
     assertNotNull("Expected that a job for activity '" + activityId + "' exists after migration", jobAfter);
     assertTimerJob(jobAfter);
-    assertEquals(jobDefinitionAfter.getProcessDefinitionId(), jobAfter.getProcessDefinitionId());
-    assertEquals(jobDefinitionAfter.getProcessDefinitionKey(), jobAfter.getProcessDefinitionKey());
+    assertThat(jobAfter.getProcessDefinitionId()).isEqualTo(jobDefinitionAfter.getProcessDefinitionId());
+    assertThat(jobAfter.getProcessDefinitionKey()).isEqualTo(jobDefinitionAfter.getProcessDefinitionKey());
 
     for (Job job : snapshotBeforeMigration.getJobs()) {
       if (jobAfter.getId().equals(job.getId())) {
@@ -237,16 +237,14 @@ public class MigrationTestRule extends ProcessEngineTestRule {
 
   public void assertJobsCreated(String activityId, String handlerType, int countJobs) {
     List<JobDefinition> jobDefinitionsAfter = snapshotAfterMigration.getJobDefinitionsForActivityIdAndType(activityId, handlerType);
-    assertEquals(
-        "Expected that " + countJobs + "job definitions for activity '" + activityId + "' exist after migration, but found " + jobDefinitionsAfter.size(),
-        countJobs, jobDefinitionsAfter.size());
+    assertThat(jobDefinitionsAfter.size()).as("Expected that " + countJobs + "job definitions for activity '" + activityId + "' exist after migration, but found " + jobDefinitionsAfter.size()).isEqualTo(countJobs);
 
     for (JobDefinition jobDefinitionAfter : jobDefinitionsAfter) {
       Job jobAfter = snapshotAfterMigration.getJobForDefinitionId(jobDefinitionAfter.getId());
       assertNotNull("Expected that a job for activity '" + activityId + "' exists after migration", jobAfter);
       assertTimerJob(jobAfter);
-      assertEquals(jobDefinitionAfter.getProcessDefinitionId(), jobAfter.getProcessDefinitionId());
-      assertEquals(jobDefinitionAfter.getProcessDefinitionKey(), jobAfter.getProcessDefinitionKey());
+      assertThat(jobAfter.getProcessDefinitionId()).isEqualTo(jobDefinitionAfter.getProcessDefinitionId());
+      assertThat(jobAfter.getProcessDefinitionKey()).isEqualTo(jobDefinitionAfter.getProcessDefinitionKey());
 
       for (Job job : snapshotBeforeMigration.getJobs()) {
         if (jobAfter.getId().equals(job.getId())) {
@@ -297,16 +295,14 @@ public class MigrationTestRule extends ProcessEngineTestRule {
     JobDefinition jobDefinitionAfter = snapshotAfterMigration.getJobDefinitionForActivityIdAndType(activityIdAfter, ((JobEntity) jobBefore).getJobHandlerType());
     assertNotNull("Expected that a job definition for activity '" + activityIdAfter + "' exists after migration", jobDefinitionAfter);
 
-    assertEquals(jobBefore.getId(), jobAfter.getId());
-    assertEquals("Expected that job is assigned to job definition '" + jobDefinitionAfter.getId() + "' after migration",
-        jobDefinitionAfter.getId(), jobAfter.getJobDefinitionId());
-    assertEquals("Expected that job is assigned to deployment '" + snapshotAfterMigration.getDeploymentId() + "' after migration",
-        snapshotAfterMigration.getDeploymentId(), jobAfter.getDeploymentId());
-    assertEquals(dueDateAfter, jobAfter.getDuedate());
-    assertEquals(((JobEntity) jobBefore).getType(), ((JobEntity) jobAfter).getType());
-    assertEquals(jobBefore.getPriority(), jobAfter.getPriority());
-    assertEquals(jobDefinitionAfter.getProcessDefinitionId(), jobAfter.getProcessDefinitionId());
-    assertEquals(jobDefinitionAfter.getProcessDefinitionKey(), jobAfter.getProcessDefinitionKey());
+    assertThat(jobAfter.getId()).isEqualTo(jobBefore.getId());
+    assertThat(jobAfter.getJobDefinitionId()).as("Expected that job is assigned to job definition '" + jobDefinitionAfter.getId() + "' after migration").isEqualTo(jobDefinitionAfter.getId());
+    assertThat(jobAfter.getDeploymentId()).as("Expected that job is assigned to deployment '" + snapshotAfterMigration.getDeploymentId() + "' after migration").isEqualTo(snapshotAfterMigration.getDeploymentId());
+    assertThat(jobAfter.getDuedate()).isEqualTo(dueDateAfter);
+    assertThat(((JobEntity) jobAfter).getType()).isEqualTo(((JobEntity) jobBefore).getType());
+    assertThat(jobAfter.getPriority()).isEqualTo(jobBefore.getPriority());
+    assertThat(jobAfter.getProcessDefinitionId()).isEqualTo(jobDefinitionAfter.getProcessDefinitionId());
+    assertThat(jobAfter.getProcessDefinitionKey()).isEqualTo(jobDefinitionAfter.getProcessDefinitionKey());
   }
 
   public void assertBoundaryTimerJobCreated(String activityId) {
@@ -370,18 +366,18 @@ public class MigrationTestRule extends ProcessEngineTestRule {
 
     Assert.assertNotNull("Variable with id " + variableBefore.getId() + " does not exist", variableAfter);
 
-    Assert.assertEquals(activityInstanceId, variableAfter.getActivityInstanceId());
-    Assert.assertEquals(variableBefore.getCaseExecutionId(), variableAfter.getCaseExecutionId());
-    Assert.assertEquals(variableBefore.getCaseInstanceId(), variableAfter.getCaseInstanceId());
-    Assert.assertEquals(variableBefore.getErrorMessage(), variableAfter.getErrorMessage());
-    Assert.assertEquals(executionId, variableAfter.getExecutionId());
-    Assert.assertEquals(variableBefore.getId(), variableAfter.getId());
-    Assert.assertEquals(variableBefore.getName(), variableAfter.getName());
-    Assert.assertEquals(variableBefore.getProcessInstanceId(), variableAfter.getProcessInstanceId());
-    Assert.assertEquals(variableBefore.getTaskId(), variableAfter.getTaskId());
-    Assert.assertEquals(variableBefore.getTenantId(), variableAfter.getTenantId());
-    Assert.assertEquals(variableBefore.getTypeName(), variableAfter.getTypeName());
-    Assert.assertEquals(variableBefore.getValue(), variableAfter.getValue());
+    assertThat(variableAfter.getActivityInstanceId()).isEqualTo(activityInstanceId);
+    assertThat(variableAfter.getCaseExecutionId()).isEqualTo(variableBefore.getCaseExecutionId());
+    assertThat(variableAfter.getCaseInstanceId()).isEqualTo(variableBefore.getCaseInstanceId());
+    assertThat(variableAfter.getErrorMessage()).isEqualTo(variableBefore.getErrorMessage());
+    assertThat(variableAfter.getExecutionId()).isEqualTo(executionId);
+    assertThat(variableAfter.getId()).isEqualTo(variableBefore.getId());
+    assertThat(variableAfter.getName()).isEqualTo(variableBefore.getName());
+    assertThat(variableAfter.getProcessInstanceId()).isEqualTo(variableBefore.getProcessInstanceId());
+    assertThat(variableAfter.getTaskId()).isEqualTo(variableBefore.getTaskId());
+    assertThat(variableAfter.getTenantId()).isEqualTo(variableBefore.getTenantId());
+    assertThat(variableAfter.getTypeName()).isEqualTo(variableBefore.getTypeName());
+    assertThat(variableAfter.getValue()).isEqualTo(variableBefore.getValue());
   }
 
   public void assertSuperExecutionOfCaseInstance(String caseInstanceId, String expectedSuperExecutionId) {
@@ -390,7 +386,7 @@ public class MigrationTestRule extends ProcessEngineTestRule {
         .caseInstanceId(caseInstanceId)
         .singleResult();
 
-    Assert.assertEquals(expectedSuperExecutionId, calledInstance.getSuperExecutionId());
+    assertThat(calledInstance.getSuperExecutionId()).isEqualTo(expectedSuperExecutionId);
   }
 
   public void assertSuperExecutionOfProcessInstance(String processInstance, String expectedSuperExecutionId) {
@@ -399,7 +395,7 @@ public class MigrationTestRule extends ProcessEngineTestRule {
         .processInstanceId(processInstance)
         .singleResult();
 
-    Assert.assertEquals(expectedSuperExecutionId, calledInstance.getSuperExecutionId());
+    assertThat(calledInstance.getSuperExecutionId()).isEqualTo(expectedSuperExecutionId);
   }
 
 }

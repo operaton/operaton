@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt.metrics;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.spi.DmnEngineMetricCollector;
@@ -88,27 +88,27 @@ public class DecisionMetricsTest extends AbstractMetricsTest {
         .addModelInstance("process.bpmn", modelInstance)
         .addClasspathResource(DMN_FILE));
 
-    assertEquals(0l, getExecutedDecisionInstances());
-    assertEquals(0l, getDecisionInstances());
-    assertEquals(0l, getExecutedDecisionElements());
-    assertEquals(0l, getExecutedDecisionInstancesFromDmnEngine());
-    assertEquals(0l, getExecutedDecisionElementsFromDmnEngine());
+    assertThat(getExecutedDecisionInstances()).isEqualTo(0l);
+    assertThat(getDecisionInstances()).isEqualTo(0l);
+    assertThat(getExecutedDecisionElements()).isEqualTo(0l);
+    assertThat(getExecutedDecisionInstancesFromDmnEngine()).isEqualTo(0l);
+    assertThat(getExecutedDecisionElementsFromDmnEngine()).isEqualTo(0l);
 
     runtimeService.startProcessInstanceByKey("testProcess", VARIABLES);
 
-    assertEquals(1l, getExecutedDecisionInstances());
-    assertEquals(1l, getDecisionInstances());
-    assertEquals(16l, getExecutedDecisionElements());
-    assertEquals(1l, getExecutedDecisionInstancesFromDmnEngine());
-    assertEquals(16l, getExecutedDecisionElementsFromDmnEngine());
+    assertThat(getExecutedDecisionInstances()).isEqualTo(1l);
+    assertThat(getDecisionInstances()).isEqualTo(1l);
+    assertThat(getExecutedDecisionElements()).isEqualTo(16l);
+    assertThat(getExecutedDecisionInstancesFromDmnEngine()).isEqualTo(1l);
+    assertThat(getExecutedDecisionElementsFromDmnEngine()).isEqualTo(16l);
 
     processEngineConfiguration.getDbMetricsReporter().reportNow();
 
-    assertEquals(1l, getExecutedDecisionInstances());
-    assertEquals(1l, getDecisionInstances());
-    assertEquals(16l, getExecutedDecisionElements());
-    assertEquals(1l, getExecutedDecisionInstancesFromDmnEngine());
-    assertEquals(16l, getExecutedDecisionElementsFromDmnEngine());
+    assertThat(getExecutedDecisionInstances()).isEqualTo(1l);
+    assertThat(getDecisionInstances()).isEqualTo(1l);
+    assertThat(getExecutedDecisionElements()).isEqualTo(16l);
+    assertThat(getExecutedDecisionInstancesFromDmnEngine()).isEqualTo(1l);
+    assertThat(getExecutedDecisionElementsFromDmnEngine()).isEqualTo(16l);
   }
 
   @Test
@@ -123,13 +123,13 @@ public class DecisionMetricsTest extends AbstractMetricsTest {
         .evaluate();
 
     // then
-    assertEquals(1l, getExecutedDecisionInstances());
-    assertEquals(1l, getDecisionInstances());
+    assertThat(getExecutedDecisionInstances()).isEqualTo(1l);
+    assertThat(getDecisionInstances()).isEqualTo(1l);
 
     processEngineConfiguration.getDbMetricsReporter().reportNow();
 
-    assertEquals(1l, getExecutedDecisionInstances());
-    assertEquals(1l, getDecisionInstances());
+    assertThat(getExecutedDecisionInstances()).isEqualTo(1l);
+    assertThat(getDecisionInstances()).isEqualTo(1l);
   }
 
   @Test
@@ -146,13 +146,13 @@ public class DecisionMetricsTest extends AbstractMetricsTest {
         .evaluate();
 
     // then
-    assertEquals(3l, getExecutedDecisionInstances());
-    assertEquals(3l, getDecisionInstances());
+    assertThat(getExecutedDecisionInstances()).isEqualTo(3l);
+    assertThat(getDecisionInstances()).isEqualTo(3l);
 
     processEngineConfiguration.getDbMetricsReporter().reportNow();
 
-    assertEquals(3l, getExecutedDecisionInstances());
-    assertEquals(3l, getDecisionInstances());
+    assertThat(getExecutedDecisionInstances()).isEqualTo(3l);
+    assertThat(getDecisionInstances()).isEqualTo(3l);
   }
 
   protected long getExecutedDecisionInstances() {

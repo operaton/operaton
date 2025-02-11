@@ -24,7 +24,7 @@ import static org.operaton.bpm.engine.authorization.Resources.TASK;
 import static org.operaton.bpm.engine.authorization.TaskPermissions.UPDATE_VARIABLE;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
@@ -45,7 +45,6 @@ import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -462,12 +461,12 @@ public class ProcessTaskAuthorizationTest {
     verifyVariableInstanceCount(0);
     assertNull(runtimeService.createVariableInstanceQuery().singleResult());
     HistoricVariableInstance deletedVariable = engineRule.getHistoryService().createHistoricVariableInstanceQuery().includeDeleted().singleResult();
-    Assert.assertEquals("DELETED", deletedVariable.getState());
+    assertThat(deletedVariable.getState()).isEqualTo("DELETED");
   }
 
   protected void verifyVariableInstanceCount(int count) {
-    assertEquals(count, runtimeService.createVariableInstanceQuery().list().size());
-    assertEquals(count, runtimeService.createVariableInstanceQuery().count());
+    assertThat(runtimeService.createVariableInstanceQuery().list().size()).isEqualTo(count);
+    assertThat(runtimeService.createVariableInstanceQuery().count()).isEqualTo(count);
   }
 
   protected VariableMap getVariables() {

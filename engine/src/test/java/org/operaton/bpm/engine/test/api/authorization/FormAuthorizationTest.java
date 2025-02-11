@@ -28,7 +28,7 @@ import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.TASK;
 import static org.operaton.bpm.engine.authorization.TaskPermissions.READ_VARIABLE;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
@@ -112,7 +112,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(startFormData);
-    assertEquals("deployment:org/operaton/bpm/engine/test/api/form/start.html", startFormData.getFormKey());
+    assertThat(startFormData.getFormKey()).isEqualTo("deployment:org/operaton/bpm/engine/test/api/form/start.html");
   }
 
   // get rendered start form /////////////////////////////////////
@@ -181,7 +181,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(variables);
-    assertEquals(1, variables.size());
+    assertThat(variables.size()).isEqualTo(1);
   }
 
   // submit start form /////////////////////////////////////////
@@ -795,7 +795,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(variables);
-    assertEquals(1, variables.size());
+    assertThat(variables.size()).isEqualTo(1);
   }
 
   @Test
@@ -810,7 +810,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(variables);
-    assertEquals(1, variables.size());
+    assertThat(variables.size()).isEqualTo(1);
   }
 
   @Test
@@ -826,7 +826,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(variables);
-    assertEquals(1, variables.size());
+    assertThat(variables.size()).isEqualTo(1);
   }
 
   @Test
@@ -842,7 +842,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(variables);
-    assertEquals(1, variables.size());
+    assertThat(variables.size()).isEqualTo(1);
   }
 
   @Test
@@ -858,7 +858,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(variables);
-    assertEquals(1, variables.size());
+    assertThat(variables.size()).isEqualTo(1);
   }
 
   // get task form variables (case task) /////////////////////////////////
@@ -874,7 +874,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(variables);
-    assertEquals(0, variables.size());
+    assertThat(variables.size()).isEqualTo(0);
   }
 
   // submit task form (standalone task) ////////////////////////////////
@@ -1038,7 +1038,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
     String formKey = formService.getStartFormKey(processDefinitionId);
 
     // then
-    assertEquals("deployment:org/operaton/bpm/engine/test/api/form/start.html", formKey);
+    assertThat(formKey).isEqualTo("deployment:org/operaton/bpm/engine/test/api/form/start.html");
   }
 
   // get task form key ////////////////////////////////////////
@@ -1072,7 +1072,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
     String formKey = formService.getTaskFormKey(processDefinitionId, "task");
 
     // then
-    assertEquals("deployment:org/operaton/bpm/engine/test/api/form/task.html", formKey);
+    assertThat(formKey).isEqualTo("deployment:org/operaton/bpm/engine/test/api/form/task.html");
   }
 
   // get deployed start form////////////////////////////////////////

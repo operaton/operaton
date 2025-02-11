@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.concurrency;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -187,7 +186,7 @@ public class ConcurrentJobExecutorTest {
     runtimeService.startProcessInstanceByKey("miParallelSubprocess");
 
     List<Job> currentJobs = managementService.createJobQuery().list();
-    assertEquals(2, currentJobs.size());
+    assertThat(currentJobs.size()).isEqualTo(2);
 
     // when the jobs are executed in parallel
     JobExecutionThread threadOne = new JobExecutionThread(currentJobs.get(0).getId());
@@ -208,7 +207,7 @@ public class ConcurrentJobExecutorTest {
     assertNotNull(threadTwo.exception);
 
     Job remainingJob = managementService.createJobQuery().singleResult();
-    assertEquals(currentJobs.get(1).getRetries(), remainingJob.getRetries());
+    assertThat(remainingJob.getRetries()).isEqualTo(currentJobs.get(1).getRetries());
 
     assertNotNull(remainingJob.getExceptionMessage());
 
@@ -226,7 +225,7 @@ public class ConcurrentJobExecutorTest {
     runtimeService.startProcessInstanceByKey("miParallelSubprocess");
 
     List<Job> currentJobs = managementService.createJobQuery().list();
-    assertEquals(2, currentJobs.size());
+    assertThat(currentJobs.size()).isEqualTo(2);
 
     // when the jobs are executed in parallel
     JobExecutionThread threadOne = new JobExecutionThread(currentJobs.get(0).getId());
@@ -248,7 +247,7 @@ public class ConcurrentJobExecutorTest {
 
     Job remainingJob = managementService.createJobQuery().singleResult();
     // retries are configured as R5/PT5M, so no decrement means 5 retries left
-    assertEquals(5, remainingJob.getRetries());
+    assertThat(remainingJob.getRetries()).isEqualTo(5);
 
     assertNotNull(remainingJob.getExceptionMessage());
 
@@ -321,7 +320,7 @@ public class ConcurrentJobExecutorTest {
 
     assertNull(acquisitionThread.exception);
     // but the job will also not be acquired
-    assertEquals(0, acquisitionThread.acquiredJobs.size());
+    assertThat(acquisitionThread.acquiredJobs.size()).isEqualTo(0);
 
     //--------------------------------------------
 
@@ -362,17 +361,17 @@ public class ConcurrentJobExecutorTest {
     repositoryService.suspendProcessDefinitionById(processDefinition.getId());
 
     // assert that there still exists a running and active process instance
-    assertEquals(1, runtimeService.createProcessInstanceQuery().active().count());
+    assertThat(runtimeService.createProcessInstanceQuery().active().count()).isEqualTo(1);
 
     // when
     runtimeService.signal(processInstance.getId());
 
     // then
     // there should be one suspended job
-    assertEquals(1, managementService.createJobQuery().suspended().count());
-    assertEquals(0, managementService.createJobQuery().active().count());
+    assertThat(managementService.createJobQuery().suspended().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().active().count()).isEqualTo(0);
 
-    assertEquals(1, runtimeService.createProcessInstanceQuery().active().count());
+    assertThat(runtimeService.createProcessInstanceQuery().active().count()).isEqualTo(1);
 
   }
 
@@ -405,7 +404,7 @@ public class ConcurrentJobExecutorTest {
     // then both jobs priority has changed
     List<Job> currentJobs = managementService.createJobQuery().list();
     for (Job job : currentJobs) {
-      assertEquals(42, job.getPriority());
+      assertThat(job.getPriority()).isEqualTo(42);
     }
 
     // and the execution thread can nevertheless successfully finish job execution
@@ -415,7 +414,7 @@ public class ConcurrentJobExecutorTest {
     assertNull(executionThread.exception);
 
     // and ultimately only one job with an updated priority is left
-    assertEquals(1L, remainingJobCount);
+    assertThat(remainingJobCount).isEqualTo(1L);
   }
 
   @Test
@@ -444,9 +443,9 @@ public class ConcurrentJobExecutorTest {
 
     // then both updates have been performed
     List<Job> updatedJobs = managementService.createJobQuery().list();
-    assertEquals(2, updatedJobs.size());
+    assertThat(updatedJobs.size()).isEqualTo(2);
     for (Job job : updatedJobs) {
-      assertEquals(42, job.getPriority());
+      assertThat(job.getPriority()).isEqualTo(42);
       assertTrue(job.isSuspended());
     }
   }

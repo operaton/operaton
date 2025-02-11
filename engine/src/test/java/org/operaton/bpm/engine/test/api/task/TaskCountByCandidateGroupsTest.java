@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.task;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -92,7 +92,7 @@ public class TaskCountByCandidateGroupsTest {
     List<TaskCountByCandidateGroupResult> results = taskService.createTaskReport().taskCountByCandidateGroup();
 
     // then
-    assertEquals(3, results.size());
+    assertThat(results.size()).isEqualTo(3);
   }
 
   @Test
@@ -132,7 +132,7 @@ public class TaskCountByCandidateGroupsTest {
     identityService.deleteUser(userId);
 
     // then
-    assertEquals(2, results.size());
+    assertThat(results.size()).isEqualTo(2);
   }
 
   protected void createTask(String groupId, String tenantId) {
@@ -150,7 +150,7 @@ public class TaskCountByCandidateGroupsTest {
   protected void checkResultCount(TaskCountByCandidateGroupResult result, String expectedResultName, int expectedResultCount) {
     if((expectedResultName == null && result.getGroupName() == null) ||
        (result.getGroupName() != null && result.getGroupName().equals(expectedResultName))) {
-      assertEquals(expectedResultCount, result.getTaskCount());
+      assertThat(result.getTaskCount()).isEqualTo(expectedResultCount);
     }
   }
 

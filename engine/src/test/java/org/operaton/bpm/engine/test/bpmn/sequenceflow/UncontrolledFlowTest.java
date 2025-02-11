@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.sequenceflow;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.fail;
 
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -46,9 +46,9 @@ public class UncontrolledFlowTest extends PluggableProcessEngineTest {
     taskService.complete(innerTask.getId());
 
     // then there are two tasks after the sub process
-    assertEquals(2, taskService.createTaskQuery().count());
-    assertEquals(1, taskService.createTaskQuery().taskDefinitionKey("outerTask1").count());
-    assertEquals(1, taskService.createTaskQuery().taskDefinitionKey("outerTask2").count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(2);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("outerTask1").count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("outerTask2").count()).isEqualTo(1);
 
     // and then the message for the event subprocess cannot be delivered
     try {

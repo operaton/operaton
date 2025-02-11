@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.standalone.variablescope;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -59,7 +59,7 @@ public class VariableScopeTest extends PluggableProcessEngineTest {
         .singleResult();
     runtimeService.setVariableLocal(pi.getProcessInstanceId(), "mainProcessLocalVariable", "Hello World");
 
-    assertEquals("Task in subprocess", subProcessTask.getName());
+    assertThat(subProcessTask.getName()).isEqualTo("Task in subprocess");
 
     runtimeService.setVariableLocal(subProcessTask.getExecutionId(), "subProcessLocalVariable", "Hello SubProcess");
 

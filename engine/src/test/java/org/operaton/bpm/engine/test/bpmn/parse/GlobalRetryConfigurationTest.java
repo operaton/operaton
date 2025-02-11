@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.parse;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -188,7 +187,7 @@ public class GlobalRetryConfigurationTest {
 
     // update job
     job = fetchJob(pi.getProcessInstanceId());
-    assertEquals(expectedJobRetries, job.getRetries());
+    assertThat(job.getRetries()).isEqualTo(expectedJobRetries);
   }
 
   private Job fetchJob(String processInstanceId) {

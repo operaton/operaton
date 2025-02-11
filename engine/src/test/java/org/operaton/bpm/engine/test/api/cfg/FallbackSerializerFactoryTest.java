@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.cfg;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.Arrays;
 
 import org.operaton.bpm.engine.ProcessEngine;
@@ -76,8 +78,8 @@ public class FallbackSerializerFactoryTest {
 
      // then the fallback serializer is used
      Assert.assertNotNull(fetchedValue);
-     Assert.assertEquals(ExampleSerializer.FORMAT, fetchedValue.getSerializationDataFormat());
-     Assert.assertEquals("foo", fetchedValue.getValue());
+    assertThat(fetchedValue.getSerializationDataFormat()).isEqualTo(ExampleSerializer.FORMAT);
+    assertThat(fetchedValue.getValue()).isEqualTo("foo");
   }
 
   @Test
@@ -105,8 +107,8 @@ public class FallbackSerializerFactoryTest {
 
      // then the fallback serializer is used
      Assert.assertNotNull(fetchedValue);
-     Assert.assertEquals(ExampleSerializer.FORMAT, fetchedValue.getSerializationDataFormat());
-     Assert.assertEquals(ExampleConstantSerializer.DESERIALIZED_VALUE, fetchedValue.getValue());
+    assertThat(fetchedValue.getSerializationDataFormat()).isEqualTo(ExampleSerializer.FORMAT);
+    assertThat(fetchedValue.getValue()).isEqualTo(ExampleConstantSerializer.DESERIALIZED_VALUE);
   }
 
   public static class ExampleSerializerFactory implements VariableSerializerFactory {

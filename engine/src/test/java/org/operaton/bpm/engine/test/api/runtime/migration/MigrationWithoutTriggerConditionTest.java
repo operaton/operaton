@@ -26,7 +26,7 @@ import static org.operaton.bpm.engine.test.api.runtime.migration.models.Conditio
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.ConditionalModels.VAR_CONDITION;
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.EventSubProcessModels.EVENT_SUB_PROCESS_START_ID;
 import static org.operaton.bpm.engine.test.bpmn.event.conditional.AbstractConditionalEventTestCase.TASK_AFTER_CONDITION_ID;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNull;
 
 import org.operaton.bpm.engine.delegate.ExecutionListener;
@@ -90,7 +90,7 @@ public class MigrationWithoutTriggerConditionTest {
     //when sub process is removed, end listener is called and sets variable
     ProcessInstance processInstance = testHelper.createProcessInstanceAndMigrate(migrationPlan);
     testHelper.assertEventSubscriptionMigrated(CONDITION_ID, CONDITION_ID, null);
-    assertEquals(1, rule.getRuntimeService().getVariable(processInstance.getId(), VARIABLE_NAME));
+    assertThat(rule.getRuntimeService().getVariable(processInstance.getId(), VARIABLE_NAME)).isEqualTo(1);
 
     //then conditional event is not triggered
     assertNull(rule.getTaskService().createTaskQuery().singleResult());
@@ -142,7 +142,7 @@ public class MigrationWithoutTriggerConditionTest {
     //when sub process is added, start listener is called and sets variable
     ProcessInstance processInstance = testHelper.createProcessInstanceAndMigrate(migrationPlan);
     testHelper.assertEventSubscriptionMigrated(CONDITION_ID, CONDITION_ID, null);
-    assertEquals(1, rule.getRuntimeService().getVariable(processInstance.getId(), VARIABLE_NAME));
+    assertThat(rule.getRuntimeService().getVariable(processInstance.getId(), VARIABLE_NAME)).isEqualTo(1);
 
     //then conditional event is not triggered
     assertNull(rule.getTaskService().createTaskQuery().singleResult());
@@ -199,10 +199,10 @@ public class MigrationWithoutTriggerConditionTest {
     //when sub process is added, start listener is called and sets variable
     ProcessInstance processInstance = testHelper.createProcessInstanceAndMigrate(migrationPlan);
     testHelper.assertEventSubscriptionMigrated(BOUNDARY_ID, BOUNDARY_ID, null);
-    assertEquals(1, rule.getRuntimeService().getVariable(processInstance.getId(), VARIABLE_NAME));
+    assertThat(rule.getRuntimeService().getVariable(processInstance.getId(), VARIABLE_NAME)).isEqualTo(1);
 
     //then conditional event is not triggered
-    assertEquals(USER_TASK_ID, rule.getTaskService().createTaskQuery().singleResult().getTaskDefinitionKey());
+    assertThat(rule.getTaskService().createTaskQuery().singleResult().getTaskDefinitionKey()).isEqualTo(USER_TASK_ID);
 
     //when any var is set
     testHelper.setAnyVariable(processInstance.getId());
@@ -255,10 +255,10 @@ public class MigrationWithoutTriggerConditionTest {
     //when sub process is removed, end listener is called and sets variable
     ProcessInstance processInstance = testHelper.createProcessInstanceAndMigrate(migrationPlan);
     testHelper.assertEventSubscriptionMigrated(BOUNDARY_ID, BOUNDARY_ID, null);
-    assertEquals(1, rule.getRuntimeService().getVariable(processInstance.getId(), VARIABLE_NAME));
+    assertThat(rule.getRuntimeService().getVariable(processInstance.getId(), VARIABLE_NAME)).isEqualTo(1);
 
     //then conditional event is not triggered
-    assertEquals(USER_TASK_ID, rule.getTaskService().createTaskQuery().singleResult().getTaskDefinitionKey());
+    assertThat(rule.getTaskService().createTaskQuery().singleResult().getTaskDefinitionKey()).isEqualTo(USER_TASK_ID);
 
     //when any var is set
     testHelper.setAnyVariable(processInstance.getId());
@@ -322,10 +322,10 @@ public class MigrationWithoutTriggerConditionTest {
     //when sub process is added, start listener is called and sets variable
     ProcessInstance processInstance = testHelper.createProcessInstanceAndMigrate(migrationPlan);
     testHelper.assertEventSubscriptionMigrated(EVENT_SUB_PROCESS_START_ID, EVENT_SUB_PROCESS_START_ID, null);
-    assertEquals(1, rule.getRuntimeService().getVariable(processInstance.getId(), VARIABLE_NAME));
+    assertThat(rule.getRuntimeService().getVariable(processInstance.getId(), VARIABLE_NAME)).isEqualTo(1);
 
     //then conditional event is not triggered
-    assertEquals(USER_TASK_ID, rule.getTaskService().createTaskQuery().singleResult().getTaskDefinitionKey());
+    assertThat(rule.getTaskService().createTaskQuery().singleResult().getTaskDefinitionKey()).isEqualTo(USER_TASK_ID);
 
     //when any var is set
     testHelper.setAnyVariable(processInstance.getId());
@@ -390,10 +390,10 @@ public class MigrationWithoutTriggerConditionTest {
     //when sub process is removed, end listener is called and sets variable
     ProcessInstance processInstance = testHelper.createProcessInstanceAndMigrate(migrationPlan);
     testHelper.assertEventSubscriptionMigrated(EVENT_SUB_PROCESS_START_ID, EVENT_SUB_PROCESS_START_ID, null);
-    assertEquals(1, rule.getRuntimeService().getVariable(processInstance.getId(), VARIABLE_NAME));
+    assertThat(rule.getRuntimeService().getVariable(processInstance.getId(), VARIABLE_NAME)).isEqualTo(1);
 
     //then conditional event is not triggered
-    assertEquals(USER_TASK_ID, rule.getTaskService().createTaskQuery().singleResult().getTaskDefinitionKey());
+    assertThat(rule.getTaskService().createTaskQuery().singleResult().getTaskDefinitionKey()).isEqualTo(USER_TASK_ID);
 
     //when any var is set
     testHelper.setAnyVariable(processInstance.getId());

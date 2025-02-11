@@ -37,7 +37,7 @@ import java.util.Optional;
 import org.junit.*;
 import org.junit.rules.RuleChain;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -100,10 +100,10 @@ public class LegacyUserOperationLogTest {
       assertTrue((Boolean) runtimeService.getVariable(processInstanceId, "serviceTaskCalled"));
 
       UserOperationLogQuery query = userOperationLogQuery().userId(USER_ID);
-      assertEquals(4, query.count());
-      assertEquals(1, query.operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE).count());
-      assertEquals(1, query.operationType(UserOperationLogEntry.OPERATION_TYPE_COMPLETE).count());
-      assertEquals(2, query.operationType(UserOperationLogEntry.OPERATION_TYPE_SET_VARIABLE).count());
+      assertThat(query.count()).isEqualTo(4);
+      assertThat(query.operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE).count()).isEqualTo(1);
+      assertThat(query.operationType(UserOperationLogEntry.OPERATION_TYPE_COMPLETE).count()).isEqualTo(1);
+      assertThat(query.operationType(UserOperationLogEntry.OPERATION_TYPE_SET_VARIABLE).count()).isEqualTo(2);
 
     } finally {
       identityService.clearAuthentication();
@@ -125,17 +125,17 @@ public class LegacyUserOperationLogTest {
     assertTrue((Boolean) runtimeService.getVariable(processInstanceId, "taskListenerCalled"));
     assertTrue((Boolean) runtimeService.getVariable(processInstanceId, "serviceTaskCalled"));
 
-    assertEquals(5, userOperationLogQuery().count());
-    assertEquals(1, userOperationLogQuery().operationType(UserOperationLogEntry.OPERATION_TYPE_COMPLETE).count());
-    assertEquals(2, userOperationLogQuery().operationType(UserOperationLogEntry.OPERATION_TYPE_SET_VARIABLE).count());
-    assertEquals(1, userOperationLogQuery()
-            .entityType(EntityTypes.DEPLOYMENT)
-            .operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE)
-            .count());
-    assertEquals(1, userOperationLogQuery()
-            .entityType(EntityTypes.PROCESS_INSTANCE)
-            .operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE)
-            .count());
+    assertThat(userOperationLogQuery().count()).isEqualTo(5);
+    assertThat(userOperationLogQuery().operationType(UserOperationLogEntry.OPERATION_TYPE_COMPLETE).count()).isEqualTo(1);
+    assertThat(userOperationLogQuery().operationType(UserOperationLogEntry.OPERATION_TYPE_SET_VARIABLE).count()).isEqualTo(2);
+    assertThat(userOperationLogQuery()
+        .entityType(EntityTypes.DEPLOYMENT)
+        .operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE)
+        .count()).isEqualTo(1);
+    assertThat(userOperationLogQuery()
+        .entityType(EntityTypes.PROCESS_INSTANCE)
+        .operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE)
+        .count()).isEqualTo(1);
   }
 
   @Test
@@ -148,16 +148,16 @@ public class LegacyUserOperationLogTest {
     runtimeService.setVariable(processInstanceId, "aVariable", "aValue");
 
     // then
-    assertEquals(3, userOperationLogQuery().count());
-    assertEquals(1, userOperationLogQuery().operationType(UserOperationLogEntry.OPERATION_TYPE_SET_VARIABLE).count());
-    assertEquals(1, userOperationLogQuery()
-            .entityType(EntityTypes.DEPLOYMENT)
-            .operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE)
-            .count());
-    assertEquals(1, userOperationLogQuery()
-            .entityType(EntityTypes.PROCESS_INSTANCE)
-            .operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE)
-            .count());
+    assertThat(userOperationLogQuery().count()).isEqualTo(3);
+    assertThat(userOperationLogQuery().operationType(UserOperationLogEntry.OPERATION_TYPE_SET_VARIABLE).count()).isEqualTo(1);
+    assertThat(userOperationLogQuery()
+        .entityType(EntityTypes.DEPLOYMENT)
+        .operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE)
+        .count()).isEqualTo(1);
+    assertThat(userOperationLogQuery()
+        .entityType(EntityTypes.PROCESS_INSTANCE)
+        .operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE)
+        .count()).isEqualTo(1);
   }
 
   @Test
@@ -176,7 +176,7 @@ public class LegacyUserOperationLogTest {
       managementService.executeJob(pending.getId());
     }
 
-    assertEquals(5, userOperationLogQuery().entityTypeIn(EntityTypes.PROCESS_INSTANCE, EntityTypes.DEPLOYMENT).count());
+    assertThat(userOperationLogQuery().entityTypeIn(EntityTypes.PROCESS_INSTANCE, EntityTypes.DEPLOYMENT).count()).isEqualTo(5);
   }
 
   @Test
@@ -207,19 +207,19 @@ public class LegacyUserOperationLogTest {
     managementService.executeJob(migrationJob.getId());
 
     // then
-    assertEquals(9, userOperationLogQuery().count());
-    assertEquals(2, userOperationLogQuery()
+    assertThat(userOperationLogQuery().count()).isEqualTo(9);
+    assertThat(userOperationLogQuery()
         .operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE)
         .entityType(EntityTypes.DEPLOYMENT)
-        .count());
-    assertEquals(1, userOperationLogQuery()
+        .count()).isEqualTo(2);
+    assertThat(userOperationLogQuery()
         .operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE)
         .entityType(EntityTypes.PROCESS_INSTANCE)
-        .count());
-    assertEquals(3, userOperationLogQuery()
+        .count()).isEqualTo(1);
+    assertThat(userOperationLogQuery()
         .operationType(UserOperationLogEntry.OPERATION_TYPE_MIGRATE)
         .entityType(EntityTypes.PROCESS_INSTANCE)
-        .count());
+        .count()).isEqualTo(3);
   }
 
   protected UserOperationLogQuery userOperationLogQuery() {

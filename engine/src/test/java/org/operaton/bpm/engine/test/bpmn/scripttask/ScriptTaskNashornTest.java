@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.scripttask;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import java.util.Date;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -68,7 +67,7 @@ public class ScriptTaskNashornTest extends AbstractScriptTaskTest {
     // the script task can be executed without exceptions
     // the execution variable is stored and has the correct value
     Object variableValue = runtimeService.getVariable(pi.getId(), "foo");
-    assertEquals("a", variableValue);
+    assertThat(variableValue).isEqualTo("a");
 
   }
 
@@ -122,14 +121,14 @@ public class ScriptTaskNashornTest extends AbstractScriptTaskTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
 
     Date date = (Date) runtimeService.getVariable(pi.getId(), "date");
-    assertEquals(0, date.getTime());
+    assertThat(date.getTime()).isEqualTo(0);
 
     deployProcess(NASHORN, "execution.setVariable('myVar', new org.operaton.bpm.engine.test.bpmn.scripttask.MySerializable('test'));");
 
     pi = runtimeService.startProcessInstanceByKey("testProcess");
 
     MySerializable myVar = (MySerializable) runtimeService.getVariable(pi.getId(), "myVar");
-    assertEquals("test", myVar.getName());
+    assertThat(myVar.getName()).isEqualTo("test");
   }
 
   @Test

@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.history;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.util.List;
@@ -85,7 +84,7 @@ public class HistoricCaseActivityStatisticsQueryTest {
     HistoricCaseActivityStatisticsQuery query = historyService.createHistoricCaseActivityStatisticsQuery(caseDefinitionId);
 
     // then
-    assertEquals(0, query.count());
+    assertThat(query.count()).isEqualTo(0);
     assertThat(query.list()).isEmpty();
   }
 
@@ -103,7 +102,7 @@ public class HistoricCaseActivityStatisticsQueryTest {
     // then
     List<HistoricCaseActivityStatistics> statistics = query.list();
 
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
     assertThat(statistics).hasSize(1);
     assertStatisitcs(statistics.get(0), "PI_HumanTask_1", 5, 0, 0, 0, 0, 0);
   }
@@ -127,7 +126,7 @@ public class HistoricCaseActivityStatisticsQueryTest {
     // then
     List<HistoricCaseActivityStatistics> statistics = query.list();
     assertThat(statistics).hasSize(6);
-    assertEquals(6, query.count());
+    assertThat(query.count()).isEqualTo(6);
 
     assertStatisitcs(statistics.get(0), "ACTIVE", 5, 0, 0, 0, 0, 0);
     assertStatisitcs(statistics.get(1), "AVAILABLE", 0, 5, 0, 0, 0, 0);
@@ -176,7 +175,7 @@ public class HistoricCaseActivityStatisticsQueryTest {
     // then
     List<HistoricCaseActivityStatistics> statistics = query.list();
     assertThat(statistics).hasSize(6);
-    assertEquals(6, query.count());
+    assertThat(query.count()).isEqualTo(6);
 
     assertStatisitcs(statistics.get(0), "ACTIVE", 2, 0, 8, 0, 0, 5);
     assertStatisitcs(statistics.get(1), "AVAILABLE", 0, 7, 3, 0, 0, 5);
@@ -233,12 +232,12 @@ public class HistoricCaseActivityStatisticsQueryTest {
   protected void assertStatisitcs(HistoricCaseActivityStatistics statistics,
       String id, long active, long availabe, long completed, long disabled, long enabled, long terminated) {
     assertThat(statistics.getId()).isEqualTo(id);
-    assertEquals(active, statistics.getActive());
-    assertEquals(availabe, statistics.getAvailable());
-    assertEquals(completed, statistics.getCompleted());
-    assertEquals(disabled, statistics.getDisabled());
-    assertEquals(enabled, statistics.getEnabled());
-    assertEquals(terminated, statistics.getTerminated());
+    assertThat(statistics.getActive()).isEqualTo(active);
+    assertThat(statistics.getAvailable()).isEqualTo(availabe);
+    assertThat(statistics.getCompleted()).isEqualTo(completed);
+    assertThat(statistics.getDisabled()).isEqualTo(disabled);
+    assertThat(statistics.getEnabled()).isEqualTo(enabled);
+    assertThat(statistics.getTerminated()).isEqualTo(terminated);
   }
 
   protected void createCaseByKey(int numberOfInstances, String key) {

@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.history;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -157,7 +157,7 @@ public class UserOperationIdTest {
     List<UserOperationLogEntry> userOperationLogEntries = historyService.createUserOperationLogQuery()
         .taskId(taskId)
         .list();
-    assertEquals(0, userOperationLogEntries.size());
+    assertThat(userOperationLogEntries.size()).isEqualTo(0);
     List<HistoricDetail> historicDetails = historyService.createHistoricDetailQuery().list();
     assertTrue(!historicDetails.isEmpty());
     //history detail records must have null userOperationId as user operation log was not created
@@ -242,10 +242,10 @@ public class UserOperationIdTest {
     assertNotNull(operationId);
     assertTrue("Some historic details are expected to be present", !historicDetails.isEmpty());
     for (UserOperationLogEntry userOperationLogEntry: userOperationLogEntries) {
-      assertEquals("OperationIds must be the same", operationId, userOperationLogEntry.getOperationId());
+      assertThat(userOperationLogEntry.getOperationId()).as("OperationIds must be the same").isEqualTo(operationId);
     }
     for (HistoricDetail historicDetail : historicDetails) {
-      assertEquals("OperationIds must be the same", operationId, historicDetail.getUserOperationId());
+      assertThat(historicDetail.getUserOperationId()).as("OperationIds must be the same").isEqualTo(operationId);
     }
   }
 

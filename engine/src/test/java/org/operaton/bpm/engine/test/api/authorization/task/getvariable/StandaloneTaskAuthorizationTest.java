@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.task.getvariable;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
@@ -100,7 +100,7 @@ public abstract class StandaloneTaskAuthorizationTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      assertEquals(VARIABLE_VALUE, variable);
+      assertThat(variable).isEqualTo(VARIABLE_VALUE);
     }
   }
 
@@ -122,7 +122,7 @@ public abstract class StandaloneTaskAuthorizationTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      assertEquals(VARIABLE_VALUE, variable);
+      assertThat(variable).isEqualTo(VARIABLE_VALUE);
     }
   }
 
@@ -145,7 +145,7 @@ public abstract class StandaloneTaskAuthorizationTest {
     // then
     if (authRule.assertScenario(scenario)) {
       assertNotNull(typedValue);
-      assertEquals(VARIABLE_VALUE, typedValue.getValue());
+      assertThat(typedValue.getValue()).isEqualTo(VARIABLE_VALUE);
     }
   }
 
@@ -168,7 +168,7 @@ public abstract class StandaloneTaskAuthorizationTest {
     // then
     if (authRule.assertScenario(scenario)) {
       assertNotNull(typedValue);
-      assertEquals(VARIABLE_VALUE, typedValue.getValue());
+      assertThat(typedValue.getValue()).isEqualTo(VARIABLE_VALUE);
     }
   }
 
@@ -356,9 +356,9 @@ public abstract class StandaloneTaskAuthorizationTest {
   protected void verifyGetVariables(Map<String, Object> variables) {
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertEquals(1, variables.size());
+    assertThat(variables.size()).isEqualTo(1);
 
-    assertEquals(ProcessTaskAuthorizationTest.VARIABLE_VALUE, variables.get(ProcessTaskAuthorizationTest.VARIABLE_NAME));
+    assertThat(variables.get(ProcessTaskAuthorizationTest.VARIABLE_NAME)).isEqualTo(ProcessTaskAuthorizationTest.VARIABLE_VALUE);
   }
 
 }

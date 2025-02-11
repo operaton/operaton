@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.fail;
 
 import java.text.ParseException;
@@ -57,8 +57,8 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     HistoricActivityStatisticsQuery query = historyService.createHistoricActivityStatisticsQuery(processDefinitionId);
     List<HistoricActivityStatistics> statistics = query.list();
 
-    assertEquals(0, query.count());
-    assertEquals(0, statistics.size());
+    assertThat(query.count()).isEqualTo(0);
+    assertThat(statistics.size()).isEqualTo(0);
   }
 
   @Deployment
@@ -71,13 +71,13 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     HistoricActivityStatisticsQuery query = historyService.createHistoricActivityStatisticsQuery(processDefinitionId);
     List<HistoricActivityStatistics> statistics = query.list();
 
-    assertEquals(1, query.count());
-    assertEquals(1, statistics.size());
+    assertThat(query.count()).isEqualTo(1);
+    assertThat(statistics.size()).isEqualTo(1);
 
     HistoricActivityStatistics statistic = statistics.get(0);
 
-    assertEquals("task", statistic.getId());
-    assertEquals(5, statistic.getInstances());
+    assertThat(statistic.getId()).isEqualTo("task");
+    assertThat(statistic.getInstances()).isEqualTo(5);
 
     completeProcessInstances();
   }
@@ -94,8 +94,8 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     HistoricActivityStatisticsQuery query = historyService.createHistoricActivityStatisticsQuery(processDefinitionId);
     List<HistoricActivityStatistics> statistics = query.list();
 
-    assertEquals(0, query.count());
-    assertEquals(0, statistics.size());
+    assertThat(query.count()).isEqualTo(0);
+    assertThat(statistics.size()).isEqualTo(0);
   }
 
   @Deployment
@@ -112,32 +112,32 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
 
     List<HistoricActivityStatistics> statistics = query.list();
 
-    assertEquals(4, query.count());
-    assertEquals(4, statistics.size());
+    assertThat(query.count()).isEqualTo(4);
+    assertThat(statistics.size()).isEqualTo(4);
 
     // innerTask
     HistoricActivityStatistics innerTask = statistics.get(0);
 
-    assertEquals("innerTask", innerTask.getId());
-    assertEquals(25, innerTask.getInstances());
+    assertThat(innerTask.getId()).isEqualTo("innerTask");
+    assertThat(innerTask.getInstances()).isEqualTo(25);
 
     // subprocess
     HistoricActivityStatistics subProcess = statistics.get(1);
 
-    assertEquals("subprocess", subProcess.getId());
-    assertEquals(25, subProcess.getInstances());
+    assertThat(subProcess.getId()).isEqualTo("subprocess");
+    assertThat(subProcess.getInstances()).isEqualTo(25);
 
     // subprocess multi instance body
     HistoricActivityStatistics subProcessMiBody = statistics.get(2);
 
-    assertEquals("subprocess#multiInstanceBody", subProcessMiBody.getId());
-    assertEquals(5, subProcessMiBody.getInstances());
+    assertThat(subProcessMiBody.getId()).isEqualTo("subprocess#multiInstanceBody");
+    assertThat(subProcessMiBody.getInstances()).isEqualTo(5);
 
     // task
     HistoricActivityStatistics task = statistics.get(3);
 
-    assertEquals("task", task.getId());
-    assertEquals(5, task.getInstances());
+    assertThat(task.getId()).isEqualTo("task");
+    assertThat(task.getInstances()).isEqualTo(5);
 
     completeProcessInstances();
   }
@@ -160,14 +160,14 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
 
     List<HistoricActivityStatistics> statistics = query.list();
 
-    assertEquals(1, query.count());
-    assertEquals(1, statistics.size());
+    assertThat(query.count()).isEqualTo(1);
+    assertThat(statistics.size()).isEqualTo(1);
 
     // callActivity
     HistoricActivityStatistics calledActivity = statistics.get(0);
 
-    assertEquals("callActivity", calledActivity.getId());
-    assertEquals(5, calledActivity.getInstances());
+    assertThat(calledActivity.getId()).isEqualTo("callActivity");
+    assertThat(calledActivity.getInstances()).isEqualTo(5);
 
     query = historyService
         .createHistoricActivityStatisticsQuery(calledProcessId)
@@ -176,20 +176,20 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
 
     statistics = query.list();
 
-    assertEquals(2, query.count());
-    assertEquals(2, statistics.size());
+    assertThat(query.count()).isEqualTo(2);
+    assertThat(statistics.size()).isEqualTo(2);
 
     // task1
     HistoricActivityStatistics task1 = statistics.get(0);
 
-    assertEquals("task1", task1.getId());
-    assertEquals(15, task1.getInstances());
+    assertThat(task1.getId()).isEqualTo("task1");
+    assertThat(task1.getInstances()).isEqualTo(15);
 
     // task2
     HistoricActivityStatistics task2 = statistics.get(1);
 
-    assertEquals("task2", task2.getId());
-    assertEquals(15, task2.getInstances());
+    assertThat(task2.getId()).isEqualTo("task2");
+    assertThat(task2.getInstances()).isEqualTo(15);
 
     completeProcessInstances();
   }
@@ -208,22 +208,22 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
         .asc();
     List<HistoricActivityStatistics> statistics = query.list();
 
-    assertEquals(2, query.count());
-    assertEquals(2, statistics.size());
+    assertThat(query.count()).isEqualTo(2);
+    assertThat(statistics.size()).isEqualTo(2);
 
     // start
     HistoricActivityStatistics start = statistics.get(0);
 
-    assertEquals("start", start.getId());
-    assertEquals(0, start.getInstances());
-    assertEquals(5, start.getFinished());
+    assertThat(start.getId()).isEqualTo("start");
+    assertThat(start.getInstances()).isEqualTo(0);
+    assertThat(start.getFinished()).isEqualTo(5);
 
     // task
     HistoricActivityStatistics task = statistics.get(1);
 
-    assertEquals("task", task.getId());
-    assertEquals(5, task.getInstances());
-    assertEquals(0, task.getFinished());
+    assertThat(task.getId()).isEqualTo("task");
+    assertThat(task.getInstances()).isEqualTo(5);
+    assertThat(task.getFinished()).isEqualTo(0);
   }
 
   @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
@@ -248,29 +248,29 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
 
     List<HistoricActivityStatistics> statistics = query.list();
 
-    assertEquals(3, query.count());
-    assertEquals(3, statistics.size());
+    assertThat(query.count()).isEqualTo(3);
+    assertThat(statistics.size()).isEqualTo(3);
 
     // end
     HistoricActivityStatistics end = statistics.get(0);
 
-    assertEquals("end", end.getId());
-    assertEquals(0, end.getInstances());
-    assertEquals(2, end.getFinished());
+    assertThat(end.getId()).isEqualTo("end");
+    assertThat(end.getInstances()).isEqualTo(0);
+    assertThat(end.getFinished()).isEqualTo(2);
 
     // start
     HistoricActivityStatistics start = statistics.get(1);
 
-    assertEquals("start", start.getId());
-    assertEquals(0, start.getInstances());
-    assertEquals(5, start.getFinished());
+    assertThat(start.getId()).isEqualTo("start");
+    assertThat(start.getInstances()).isEqualTo(0);
+    assertThat(start.getFinished()).isEqualTo(5);
 
     // task
     HistoricActivityStatistics task = statistics.get(2);
 
-    assertEquals("task", task.getId());
-    assertEquals(3, task.getInstances());
-    assertEquals(2, task.getFinished());
+    assertThat(task.getId()).isEqualTo("task");
+    assertThat(task.getInstances()).isEqualTo(3);
+    assertThat(task.getFinished()).isEqualTo(2);
 
     completeProcessInstances();
   }
@@ -295,71 +295,71 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
 
     List<HistoricActivityStatistics> statistics = query.list();
 
-    assertEquals(9, query.count());
-    assertEquals(9, statistics.size());
+    assertThat(query.count()).isEqualTo(9);
+    assertThat(statistics.size()).isEqualTo(9);
 
     // end1
     HistoricActivityStatistics end1 = statistics.get(0);
 
-    assertEquals("end1", end1.getId());
-    assertEquals(0, end1.getInstances());
-    assertEquals(5, end1.getFinished());
+    assertThat(end1.getId()).isEqualTo("end1");
+    assertThat(end1.getInstances()).isEqualTo(0);
+    assertThat(end1.getFinished()).isEqualTo(5);
 
     // gtw
     HistoricActivityStatistics gtw = statistics.get(1);
 
-    assertEquals("gtw", gtw.getId());
-    assertEquals(0, gtw.getInstances());
-    assertEquals(5, gtw.getFinished());
+    assertThat(gtw.getId()).isEqualTo("gtw");
+    assertThat(gtw.getInstances()).isEqualTo(0);
+    assertThat(gtw.getFinished()).isEqualTo(5);
 
     // innerEnd
     HistoricActivityStatistics innerEnd = statistics.get(2);
 
-    assertEquals("innerEnd", innerEnd.getId());
-    assertEquals(0, innerEnd.getInstances());
-    assertEquals(25, innerEnd.getFinished());
+    assertThat(innerEnd.getId()).isEqualTo("innerEnd");
+    assertThat(innerEnd.getInstances()).isEqualTo(0);
+    assertThat(innerEnd.getFinished()).isEqualTo(25);
 
     // innerStart
     HistoricActivityStatistics innerStart = statistics.get(3);
 
-    assertEquals("innerStart", innerStart.getId());
-    assertEquals(0, innerStart.getInstances());
-    assertEquals(25, innerStart.getFinished());
+    assertThat(innerStart.getId()).isEqualTo("innerStart");
+    assertThat(innerStart.getInstances()).isEqualTo(0);
+    assertThat(innerStart.getFinished()).isEqualTo(25);
 
     // innerTask
     HistoricActivityStatistics innerTask = statistics.get(4);
 
-    assertEquals("innerTask", innerTask.getId());
-    assertEquals(0, innerTask.getInstances());
-    assertEquals(25, innerTask.getFinished());
+    assertThat(innerTask.getId()).isEqualTo("innerTask");
+    assertThat(innerTask.getInstances()).isEqualTo(0);
+    assertThat(innerTask.getFinished()).isEqualTo(25);
 
     // innerStart
     HistoricActivityStatistics start = statistics.get(5);
 
-    assertEquals("start", start.getId());
-    assertEquals(0, start.getInstances());
-    assertEquals(5, start.getFinished());
+    assertThat(start.getId()).isEqualTo("start");
+    assertThat(start.getInstances()).isEqualTo(0);
+    assertThat(start.getFinished()).isEqualTo(5);
 
     // subprocess
     HistoricActivityStatistics subProcess = statistics.get(6);
 
-    assertEquals("subprocess", subProcess.getId());
-    assertEquals(0, subProcess.getInstances());
-    assertEquals(25, subProcess.getFinished());
+    assertThat(subProcess.getId()).isEqualTo("subprocess");
+    assertThat(subProcess.getInstances()).isEqualTo(0);
+    assertThat(subProcess.getFinished()).isEqualTo(25);
 
     // subprocess - multi-instance body
     HistoricActivityStatistics subProcessMiBody = statistics.get(7);
 
-    assertEquals("subprocess#multiInstanceBody", subProcessMiBody.getId());
-    assertEquals(0, subProcessMiBody.getInstances());
-    assertEquals(5, subProcessMiBody.getFinished());
+    assertThat(subProcessMiBody.getId()).isEqualTo("subprocess#multiInstanceBody");
+    assertThat(subProcessMiBody.getInstances()).isEqualTo(0);
+    assertThat(subProcessMiBody.getFinished()).isEqualTo(5);
 
     // task
     HistoricActivityStatistics task = statistics.get(8);
 
-    assertEquals("task", task.getId());
-    assertEquals(5, task.getInstances());
-    assertEquals(0, task.getFinished());
+    assertThat(task.getId()).isEqualTo("task");
+    assertThat(task.getInstances()).isEqualTo(5);
+    assertThat(task.getFinished()).isEqualTo(0);
 
     completeProcessInstances();
   }
@@ -378,15 +378,15 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
         .includeCompleteScope();
     List<HistoricActivityStatistics> statistics = query.list();
 
-    assertEquals(1, query.count());
-    assertEquals(1, statistics.size());
+    assertThat(query.count()).isEqualTo(1);
+    assertThat(statistics.size()).isEqualTo(1);
 
     // end
     HistoricActivityStatistics end = statistics.get(0);
 
-    assertEquals("end", end.getId());
-    assertEquals(0, end.getInstances());
-    assertEquals(5, end.getCompleteScope());
+    assertThat(end.getId()).isEqualTo("end");
+    assertThat(end.getInstances()).isEqualTo(0);
+    assertThat(end.getCompleteScope()).isEqualTo(5);
   }
 
   @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
@@ -411,22 +411,22 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
 
     List<HistoricActivityStatistics> statistics = query.list();
 
-    assertEquals(2, query.count());
-    assertEquals(2, statistics.size());
+    assertThat(query.count()).isEqualTo(2);
+    assertThat(statistics.size()).isEqualTo(2);
 
     // end
     HistoricActivityStatistics end = statistics.get(0);
 
-    assertEquals("end", end.getId());
-    assertEquals(0, end.getInstances());
-    assertEquals(2, end.getCompleteScope());
+    assertThat(end.getId()).isEqualTo("end");
+    assertThat(end.getInstances()).isEqualTo(0);
+    assertThat(end.getCompleteScope()).isEqualTo(2);
 
     // task
     HistoricActivityStatistics task = statistics.get(1);
 
-    assertEquals("task", task.getId());
-    assertEquals(3, task.getInstances());
-    assertEquals(0, task.getCompleteScope());
+    assertThat(task.getId()).isEqualTo("task");
+    assertThat(task.getInstances()).isEqualTo(3);
+    assertThat(task.getCompleteScope()).isEqualTo(0);
 
     completeProcessInstances();
   }
@@ -451,36 +451,36 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
 
     List<HistoricActivityStatistics> statistics = query.list();
 
-    assertEquals(4, query.count());
-    assertEquals(4, statistics.size());
+    assertThat(query.count()).isEqualTo(4);
+    assertThat(statistics.size()).isEqualTo(4);
 
     // end1
     HistoricActivityStatistics end1 = statistics.get(0);
 
-    assertEquals("end1", end1.getId());
-    assertEquals(0, end1.getInstances());
-    assertEquals(5, end1.getCompleteScope());
+    assertThat(end1.getId()).isEqualTo("end1");
+    assertThat(end1.getInstances()).isEqualTo(0);
+    assertThat(end1.getCompleteScope()).isEqualTo(5);
 
     // innerEnd
     HistoricActivityStatistics innerEnd = statistics.get(1);
 
-    assertEquals("innerEnd", innerEnd.getId());
-    assertEquals(0, innerEnd.getInstances());
-    assertEquals(25, innerEnd.getCompleteScope());
+    assertThat(innerEnd.getId()).isEqualTo("innerEnd");
+    assertThat(innerEnd.getInstances()).isEqualTo(0);
+    assertThat(innerEnd.getCompleteScope()).isEqualTo(25);
 
     // subprocess (completes the multi-instances body scope, see BPMN spec)
     HistoricActivityStatistics subprocess = statistics.get(2);
 
-    assertEquals("subprocess", subprocess.getId());
-    assertEquals(0, subprocess.getInstances());
-    assertEquals(25, subprocess.getCompleteScope());
+    assertThat(subprocess.getId()).isEqualTo("subprocess");
+    assertThat(subprocess.getInstances()).isEqualTo(0);
+    assertThat(subprocess.getCompleteScope()).isEqualTo(25);
 
     // task
     HistoricActivityStatistics task = statistics.get(3);
 
-    assertEquals("task", task.getId());
-    assertEquals(5, task.getInstances());
-    assertEquals(0, task.getCompleteScope());
+    assertThat(task.getId()).isEqualTo("task");
+    assertThat(task.getInstances()).isEqualTo(5);
+    assertThat(task.getCompleteScope()).isEqualTo(0);
 
     completeProcessInstances();
   }
@@ -500,15 +500,15 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
 
     List<HistoricActivityStatistics> statistics = query.list();
 
-    assertEquals(1, query.count());
-    assertEquals(1, statistics.size());
+    assertThat(query.count()).isEqualTo(1);
+    assertThat(statistics.size()).isEqualTo(1);
 
     // task
     HistoricActivityStatistics task = statistics.get(0);
 
-    assertEquals("task", task.getId());
-    assertEquals(0, task.getInstances());
-    assertEquals(5, task.getCanceled());
+    assertThat(task.getId()).isEqualTo("task");
+    assertThat(task.getInstances()).isEqualTo(0);
+    assertThat(task.getCanceled()).isEqualTo(5);
   }
 
   @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
@@ -532,15 +532,15 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
 
     List<HistoricActivityStatistics> statistics = query.list();
 
-    assertEquals(1, query.count());
-    assertEquals(1, statistics.size());
+    assertThat(query.count()).isEqualTo(1);
+    assertThat(statistics.size()).isEqualTo(1);
 
     // task
     HistoricActivityStatistics task = statistics.get(0);
 
-    assertEquals("task", task.getId());
-    assertEquals(2, task.getInstances());
-    assertEquals(3, task.getCanceled());
+    assertThat(task.getId()).isEqualTo("task");
+    assertThat(task.getInstances()).isEqualTo(2);
+    assertThat(task.getCanceled()).isEqualTo(3);
 
     completeProcessInstances();
   }
@@ -576,32 +576,32 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
         .asc();
     List<HistoricActivityStatistics> statistics = query.list();
 
-    assertEquals(3, query.count());
-    assertEquals(3, statistics.size());
+    assertThat(query.count()).isEqualTo(3);
+    assertThat(statistics.size()).isEqualTo(3);
 
     // end
     HistoricActivityStatistics end = statistics.get(0);
 
-    assertEquals("end", end.getId());
-    assertEquals(0, end.getInstances());
-    assertEquals(0, end.getCanceled());
-    assertEquals(2, end.getFinished());
+    assertThat(end.getId()).isEqualTo("end");
+    assertThat(end.getInstances()).isEqualTo(0);
+    assertThat(end.getCanceled()).isEqualTo(0);
+    assertThat(end.getFinished()).isEqualTo(2);
 
     // start
     HistoricActivityStatistics start = statistics.get(1);
 
-    assertEquals("start", start.getId());
-    assertEquals(0, start.getInstances());
-    assertEquals(0, start.getCanceled());
-    assertEquals(6, start.getFinished());
+    assertThat(start.getId()).isEqualTo("start");
+    assertThat(start.getInstances()).isEqualTo(0);
+    assertThat(start.getCanceled()).isEqualTo(0);
+    assertThat(start.getFinished()).isEqualTo(6);
 
     // task
     HistoricActivityStatistics task = statistics.get(2);
 
-    assertEquals("task", task.getId());
-    assertEquals(2, task.getInstances());
-    assertEquals(2, task.getCanceled());
-    assertEquals(4, task.getFinished());
+    assertThat(task.getId()).isEqualTo("task");
+    assertThat(task.getInstances()).isEqualTo(2);
+    assertThat(task.getCanceled()).isEqualTo(2);
+    assertThat(task.getFinished()).isEqualTo(4);
   }
 
   @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
@@ -644,8 +644,8 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
         .startedAfter(sdf.parse("01.01.2016 00:00:00")).startedBefore(sdf.parse("31.01.2016 23:59:59")).orderByActivityId().asc();
       List<HistoricActivityStatistics> statistics = query.list();
 
-      assertEquals(2, query.count());
-      assertEquals(2, statistics.size());
+      assertThat(query.count()).isEqualTo(2);
+      assertThat(statistics.size()).isEqualTo(2);
 
       // start
       assertActivityStatistics(statistics.get(0), "start", 0, 0, 2);
@@ -658,16 +658,16 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
         .finishedAfter(sdf.parse("01.01.2016 00:00:00")).finishedBefore(sdf.parse("31.01.2016 23:59:59")).orderByActivityId().asc();
       statistics = query.list();
 
-      assertEquals(0, query.count());
-      assertEquals(0, statistics.size());
+      assertThat(query.count()).isEqualTo(0);
+      assertThat(statistics.size()).isEqualTo(0);
 
       //check February by started dates
       query = historyService.createHistoricActivityStatisticsQuery(processDefinitionId).includeCanceled().includeFinished()
         .startedAfter(sdf.parse("01.02.2016 00:00:00")).startedBefore(sdf.parse("28.02.2016 23:59:59")).orderByActivityId().asc();
       statistics = query.list();
 
-      assertEquals(3, query.count());
-      assertEquals(3, statistics.size());
+      assertThat(query.count()).isEqualTo(3);
+      assertThat(statistics.size()).isEqualTo(3);
 
       // end
       assertActivityStatistics(statistics.get(0), "end", 0, 0, 2);
@@ -683,8 +683,8 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
         .finishedAfter(sdf.parse("01.02.2016 00:00:00")).finishedBefore(sdf.parse("28.02.2016 23:59:59")).orderByActivityId().asc();
       statistics = query.list();
 
-      assertEquals(3, query.count());
-      assertEquals(3, statistics.size());
+      assertThat(query.count()).isEqualTo(3);
+      assertThat(statistics.size()).isEqualTo(3);
 
       // end
       assertActivityStatistics(statistics.get(0), "end", 0, 0, 2);
@@ -700,8 +700,8 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
         .startedAfter(sdf.parse("01.03.2016 00:00:00")).orderByActivityId().asc();
       statistics = query.list();
 
-      assertEquals(2, query.count());
-      assertEquals(2, statistics.size());
+      assertThat(query.count()).isEqualTo(2);
+      assertThat(statistics.size()).isEqualTo(2);
 
       // start
       assertActivityStatistics(statistics.get(0), "start", 0, 0, 2);
@@ -714,16 +714,16 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
         .finishedAfter(sdf.parse("01.03.2016 00:00:00")).orderByActivityId().asc();
       statistics = query.list();
 
-      assertEquals(0, query.count());
-      assertEquals(0, statistics.size());
+      assertThat(query.count()).isEqualTo(0);
+      assertThat(statistics.size()).isEqualTo(0);
 
       //check whole period by started date
       query = historyService.createHistoricActivityStatisticsQuery(processDefinitionId).includeCanceled().includeFinished()
         .startedAfter(sdf.parse("01.01.2016 00:00:00")).orderByActivityId().asc();
       statistics = query.list();
 
-      assertEquals(3, query.count());
-      assertEquals(3, statistics.size());
+      assertThat(query.count()).isEqualTo(3);
+      assertThat(statistics.size()).isEqualTo(3);
 
       // end
       assertActivityStatistics(statistics.get(0), "end", 0, 0, 2);
@@ -741,10 +741,10 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
   }
 
   protected void assertActivityStatistics(HistoricActivityStatistics activity, String activityName, long instances, long canceled, long finished) {
-    assertEquals(activityName, activity.getId());
-    assertEquals(instances, activity.getInstances());
-    assertEquals(canceled, activity.getCanceled());
-    assertEquals(finished, activity.getFinished());
+    assertThat(activity.getId()).isEqualTo(activityName);
+    assertThat(activity.getInstances()).isEqualTo(instances);
+    assertThat(activity.getCanceled()).isEqualTo(canceled);
+    assertThat(activity.getFinished()).isEqualTo(finished);
   }
 
   @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
@@ -778,24 +778,24 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
         .asc();
     List<HistoricActivityStatistics> statistics = query.list();
 
-    assertEquals(2, query.count());
-    assertEquals(2, statistics.size());
+    assertThat(query.count()).isEqualTo(2);
+    assertThat(statistics.size()).isEqualTo(2);
 
     // end
     HistoricActivityStatistics end = statistics.get(0);
 
-    assertEquals("end", end.getId());
-    assertEquals(0, end.getInstances());
-    assertEquals(0, end.getCanceled());
-    assertEquals(2, end.getCompleteScope());
+    assertThat(end.getId()).isEqualTo("end");
+    assertThat(end.getInstances()).isEqualTo(0);
+    assertThat(end.getCanceled()).isEqualTo(0);
+    assertThat(end.getCompleteScope()).isEqualTo(2);
 
     // task
     HistoricActivityStatistics task = statistics.get(1);
 
-    assertEquals("task", task.getId());
-    assertEquals(2, task.getInstances());
-    assertEquals(2, task.getCanceled());
-    assertEquals(0, task.getCompleteScope());
+    assertThat(task.getId()).isEqualTo("task");
+    assertThat(task.getInstances()).isEqualTo(2);
+    assertThat(task.getCanceled()).isEqualTo(2);
+    assertThat(task.getCompleteScope()).isEqualTo(0);
   }
 
   @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
@@ -829,32 +829,32 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
         .asc();
     List<HistoricActivityStatistics> statistics = query.list();
 
-    assertEquals(3, query.count());
-    assertEquals(3, statistics.size());
+    assertThat(query.count()).isEqualTo(3);
+    assertThat(statistics.size()).isEqualTo(3);
 
     // end
     HistoricActivityStatistics end = statistics.get(0);
 
-    assertEquals("end", end.getId());
-    assertEquals(0, end.getInstances());
-    assertEquals(2, end.getFinished());
-    assertEquals(2, end.getCompleteScope());
+    assertThat(end.getId()).isEqualTo("end");
+    assertThat(end.getInstances()).isEqualTo(0);
+    assertThat(end.getFinished()).isEqualTo(2);
+    assertThat(end.getCompleteScope()).isEqualTo(2);
 
     // start
     HistoricActivityStatistics start = statistics.get(1);
 
-    assertEquals("start", start.getId());
-    assertEquals(0, start.getInstances());
-    assertEquals(6, start.getFinished());
-    assertEquals(0, start.getCompleteScope());
+    assertThat(start.getId()).isEqualTo("start");
+    assertThat(start.getInstances()).isEqualTo(0);
+    assertThat(start.getFinished()).isEqualTo(6);
+    assertThat(start.getCompleteScope()).isEqualTo(0);
 
     // task
     HistoricActivityStatistics task = statistics.get(2);
 
-    assertEquals("task", task.getId());
-    assertEquals(2, task.getInstances());
-    assertEquals(4, task.getFinished());
-    assertEquals(0, task.getCompleteScope());
+    assertThat(task.getId()).isEqualTo("task");
+    assertThat(task.getInstances()).isEqualTo(2);
+    assertThat(task.getFinished()).isEqualTo(4);
+    assertThat(task.getCompleteScope()).isEqualTo(0);
   }
 
   @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
@@ -889,35 +889,35 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
         .asc();
     List<HistoricActivityStatistics> statistics = query.list();
 
-    assertEquals(3, query.count());
-    assertEquals(3, statistics.size());
+    assertThat(query.count()).isEqualTo(3);
+    assertThat(statistics.size()).isEqualTo(3);
 
     // end
     HistoricActivityStatistics end = statistics.get(0);
 
-    assertEquals("end", end.getId());
-    assertEquals(0, end.getInstances());
-    assertEquals(0, end.getCanceled());
-    assertEquals(2, end.getFinished());
-    assertEquals(2, end.getCompleteScope());
+    assertThat(end.getId()).isEqualTo("end");
+    assertThat(end.getInstances()).isEqualTo(0);
+    assertThat(end.getCanceled()).isEqualTo(0);
+    assertThat(end.getFinished()).isEqualTo(2);
+    assertThat(end.getCompleteScope()).isEqualTo(2);
 
     // start
     HistoricActivityStatistics start = statistics.get(1);
 
-    assertEquals("start", start.getId());
-    assertEquals(0, start.getInstances());
-    assertEquals(0, start.getCanceled());
-    assertEquals(6, start.getFinished());
-    assertEquals(0, start.getCompleteScope());
+    assertThat(start.getId()).isEqualTo("start");
+    assertThat(start.getInstances()).isEqualTo(0);
+    assertThat(start.getCanceled()).isEqualTo(0);
+    assertThat(start.getFinished()).isEqualTo(6);
+    assertThat(start.getCompleteScope()).isEqualTo(0);
 
     // task
     HistoricActivityStatistics task = statistics.get(2);
 
-    assertEquals("task", task.getId());
-    assertEquals(2, task.getInstances());
-    assertEquals(2, task.getCanceled());
-    assertEquals(4, task.getFinished());
-    assertEquals(0, task.getCompleteScope());
+    assertThat(task.getId()).isEqualTo("task");
+    assertThat(task.getInstances()).isEqualTo(2);
+    assertThat(task.getCanceled()).isEqualTo(2);
+    assertThat(task.getFinished()).isEqualTo(4);
+    assertThat(task.getCompleteScope()).isEqualTo(0);
   }
 
   @Deployment(resources="org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
@@ -950,29 +950,29 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     // end
     HistoricActivityStatistics endStats = statistics.get(0);
 
-    assertEquals("end", endStats.getId());
-    assertEquals(0, endStats.getInstances());
-    assertEquals(0, endStats.getCanceled());
-    assertEquals(1, endStats.getFinished());
-    assertEquals(1, endStats.getCompleteScope());
+    assertThat(endStats.getId()).isEqualTo("end");
+    assertThat(endStats.getInstances()).isEqualTo(0);
+    assertThat(endStats.getCanceled()).isEqualTo(0);
+    assertThat(endStats.getFinished()).isEqualTo(1);
+    assertThat(endStats.getCompleteScope()).isEqualTo(1);
 
     // start
     HistoricActivityStatistics startStats = statistics.get(1);
 
-    assertEquals("start", startStats.getId());
-    assertEquals(0, startStats.getInstances());
-    assertEquals(0, startStats.getCanceled());
-    assertEquals(2, startStats.getFinished());
-    assertEquals(0, startStats.getCompleteScope());
+    assertThat(startStats.getId()).isEqualTo("start");
+    assertThat(startStats.getInstances()).isEqualTo(0);
+    assertThat(startStats.getCanceled()).isEqualTo(0);
+    assertThat(startStats.getFinished()).isEqualTo(2);
+    assertThat(startStats.getCompleteScope()).isEqualTo(0);
 
     // task
     HistoricActivityStatistics taskStats = statistics.get(2);
 
-    assertEquals("task", taskStats.getId());
-    assertEquals(0, taskStats.getInstances());
-    assertEquals(1, taskStats.getCanceled());
-    assertEquals(2, taskStats.getFinished());
-    assertEquals(0, taskStats.getCompleteScope());
+    assertThat(taskStats.getId()).isEqualTo("task");
+    assertThat(taskStats.getInstances()).isEqualTo(0);
+    assertThat(taskStats.getCanceled()).isEqualTo(1);
+    assertThat(taskStats.getFinished()).isEqualTo(2);
+    assertThat(taskStats.getCompleteScope()).isEqualTo(0);
   }
 
   @Test
@@ -1010,11 +1010,11 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     HistoricActivityStatisticsQuery query = historyService
         .createHistoricActivityStatisticsQuery(processDefinitionId);
 
-    assertEquals(1, query.orderByActivityId().asc().list().size());
-    assertEquals(1, query.orderByActivityId().desc().list().size());
+    assertThat(query.orderByActivityId().asc().list().size()).isEqualTo(1);
+    assertThat(query.orderByActivityId().desc().list().size()).isEqualTo(1);
 
-    assertEquals(1, query.orderByActivityId().asc().count());
-    assertEquals(1, query.orderByActivityId().desc().count());
+    assertThat(query.orderByActivityId().asc().count()).isEqualTo(1);
+    assertThat(query.orderByActivityId().desc().count()).isEqualTo(1);
   }
 
   @Deployment(resources= {"org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml",
@@ -1034,11 +1034,11 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
 
     List<HistoricActivityStatistics> statistics = query.list();
 
-    assertEquals(1, query.count());
-    assertEquals(1, statistics.size());
+    assertThat(query.count()).isEqualTo(1);
+    assertThat(statistics.size()).isEqualTo(1);
 
     HistoricActivityStatistics task = statistics.get(0);
-    assertEquals(5, task.getInstances());
+    assertThat(task.getInstances()).isEqualTo(5);
 
     // second processDefinition
     query = historyService
@@ -1046,11 +1046,11 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
 
     statistics = query.list();
 
-    assertEquals(1, query.count());
-    assertEquals(1, statistics.size());
+    assertThat(query.count()).isEqualTo(1);
+    assertThat(statistics.size()).isEqualTo(1);
 
     task = statistics.get(0);
-    assertEquals(10, task.getInstances());
+    assertThat(task.getInstances()).isEqualTo(10);
 
   }
 
@@ -1088,7 +1088,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     List<HistoricActivityStatistics> statistics = query.list();
 
     // then
-    assertEquals(2, statistics.size());
+    assertThat(statistics.size()).isEqualTo(2);
 
     // start
     assertActivityStatistics(statistics.get(0), "start", 0, 0, 4, 0, 0, 0);
@@ -1129,7 +1129,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     List<HistoricActivityStatistics> statistics = query.list();
 
     // then
-    assertEquals(2, statistics.size());
+    assertThat(statistics.size()).isEqualTo(2);
 
     // start
     assertActivityStatistics(statistics.get(0), "start", 0, 0, 1, 0, 0, 0);
@@ -1161,7 +1161,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     List<HistoricActivityStatistics> statistics = query.list();
 
     // then
-    assertEquals(2, statistics.size());
+    assertThat(statistics.size()).isEqualTo(2);
 
     // start
     assertActivityStatistics(statistics.get(0), "start", 0, 0, 2, 0, 0, 0);
@@ -1200,7 +1200,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     List<HistoricActivityStatistics> statistics = query.list();
 
     // then
-    assertEquals(7, statistics.size());
+    assertThat(statistics.size()).isEqualTo(7);
 
     assertActivityStatistics(statistics.get(0), "gtw", 0, 0, 2, 0, 0, 0);
     assertActivityStatistics(statistics.get(1), "innerStart", 0, 0, 10, 0, 0, 0);
@@ -1243,7 +1243,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     List<HistoricActivityStatistics> statistics = query.list();
 
     // then
-    assertEquals(4, statistics.size());
+    assertThat(statistics.size()).isEqualTo(4);
 
     assertActivityStatistics(statistics.get(0), "innerTask", 10, 0, 0, 3, 0, 0);
     assertActivityStatistics(statistics.get(1), "subprocess", 10, 0, 0, 0, 0, 0);
@@ -1291,7 +1291,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
       List<HistoricActivityStatistics> statistics = query.list();
 
       // then results only from the first two instances
-      assertEquals(2, statistics.size());
+      assertThat(statistics.size()).isEqualTo(2);
       assertActivityStatistics(statistics.get(0), "start", 0, 0, 2, 0, 0, 0);
       assertActivityStatistics(statistics.get(1), "task", 0, 2, 2, 0, 0, 1);
     } finally {
@@ -1337,7 +1337,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
       List<HistoricActivityStatistics> statistics = query.list();
 
       // then results only from the second two instances
-      assertEquals(3, statistics.size());
+      assertThat(statistics.size()).isEqualTo(3);
       assertActivityStatistics(statistics.get(0), "end", 0, 0, 2, 0, 0, 0);
       assertActivityStatistics(statistics.get(1), "start", 0, 0, 2, 0, 0, 0);
       assertActivityStatistics(statistics.get(2), "task", 0, 0, 2, 0, 0, 1);
@@ -1375,7 +1375,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     List<HistoricActivityStatistics> statistics = query.list();
 
     // then
-    assertEquals(2, statistics.size());
+    assertThat(statistics.size()).isEqualTo(2);
 
     assertActivityStatistics(statistics.get(0), "serviceTask", 0, 0, 0, 1, 0, 2);
     assertActivityStatistics(statistics.get(1), "start", 0, 0, 3, 0, 0, 0);
@@ -1409,7 +1409,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     List<HistoricActivityStatistics> statistics = query.list();
 
     // then
-    assertEquals(1, statistics.size());
+    assertThat(statistics.size()).isEqualTo(1);
 
     assertActivityStatistics(statistics.get(0), "serviceTask", 0, 0, 0, 1, 0, 2);
   }
@@ -1453,9 +1453,9 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
 
   protected void assertActivityStatistics(HistoricActivityStatistics activity, String activityName, int instances, int canceled, int finished, int openIncidents, int resolvedIncidents, int deletedIncidents) {
     assertActivityStatistics(activity, activityName, instances, canceled, finished);
-    assertEquals(openIncidents, activity.getOpenIncidents());
-    assertEquals(resolvedIncidents, activity.getResolvedIncidents());
-    assertEquals(deletedIncidents, activity.getDeletedIncidents());
+    assertThat(activity.getOpenIncidents()).isEqualTo(openIncidents);
+    assertThat(activity.getResolvedIncidents()).isEqualTo(resolvedIncidents);
+    assertThat(activity.getDeletedIncidents()).isEqualTo(deletedIncidents);
   }
 
 }

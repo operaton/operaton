@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.cfg;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
@@ -149,7 +148,7 @@ public class DmnEngineConfigurationTest {
     engine = processEngineConfiguration.buildProcessEngine();
 
     // then the DMN engine should use the process engine el provider
-    assertEquals(ProcessEngineJuelElProvider.class, getConfigurationOfDmnEngine().getElProvider().getClass());
+    assertThat(getConfigurationOfDmnEngine().getElProvider().getClass()).isEqualTo(ProcessEngineJuelElProvider.class);
   }
 
   @Test
@@ -163,7 +162,7 @@ public class DmnEngineConfigurationTest {
     engine = processEngineConfiguration.buildProcessEngine();
 
     // then the DMN engine should use the provided el provider
-    assertEquals(elProvider, getConfigurationOfDmnEngine().getElProvider());
+    assertThat(getConfigurationOfDmnEngine().getElProvider()).isEqualTo(elProvider);
   }
 
   @Test
@@ -175,7 +174,7 @@ public class DmnEngineConfigurationTest {
     engine = processEngineConfiguration.buildProcessEngine();
 
     // then the DMN engine should use the script engines from the process engine
-    assertEquals(processEngineConfiguration.getScriptingEngines(), getConfigurationOfDmnEngine().getScriptEngineResolver());
+    assertThat(getConfigurationOfDmnEngine().getScriptEngineResolver()).isEqualTo(processEngineConfiguration.getScriptingEngines());
   }
 
   @Test

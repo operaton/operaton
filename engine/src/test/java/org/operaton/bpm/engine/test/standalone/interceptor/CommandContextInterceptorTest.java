@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.standalone.interceptor;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -70,7 +70,7 @@ public class CommandContextInterceptorTest extends PluggableProcessEngineTest {
 
       fail("Exception expected");
     } catch (IdentifiableRuntimeException e) {
-      assertEquals(1, e.id);
+      assertThat(e.id).isEqualTo(1);
     }
 
     assertTrue(innerCommand1.executed);
@@ -127,7 +127,7 @@ public class CommandContextInterceptorTest extends PluggableProcessEngineTest {
     assertTrue(errorThrown);
 
     // Check data base consistency
-    assertEquals(0, historyService.createHistoricProcessInstanceQuery().count());
+    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(0);
   }
 
   protected class ExceptionThrowingCmd implements Command<Void> {

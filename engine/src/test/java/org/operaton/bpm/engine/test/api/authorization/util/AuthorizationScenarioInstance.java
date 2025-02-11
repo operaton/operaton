@@ -87,7 +87,7 @@ public class AuthorizationScenarioInstance {
 
       for (Authorization missingAuthorization : missingAuthorizations) {
         Assert.assertTrue(assertionFailureMessage, message.contains(missingAuthorization.getUserId()));
-        Assert.assertEquals(missingAuthorization.getUserId(), e.getUserId());
+        assertThat(e.getUserId()).isEqualTo(missingAuthorization.getUserId());
 
         Permission[] permissions = AuthorizationTestUtil.getPermissions(missingAuthorization);
         for (Permission permission : permissions) {

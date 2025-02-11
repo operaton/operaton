@@ -52,7 +52,7 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(Parameterized.class)
@@ -170,7 +170,7 @@ public class CustomHistoryLevelIncidentTest {
 
     // then
     List<HistoricIncident> incidents = historyService.createHistoricIncidentQuery().list();
-    assertEquals(0, incidents.size());
+    assertThat(incidents.size()).isEqualTo(0);
   }
 
   @Test
@@ -209,7 +209,7 @@ public class CustomHistoryLevelIncidentTest {
 
     // then
     List<HistoricIncident> incidents = historyService.createHistoricIncidentQuery().list();
-    assertEquals(0, incidents.size());
+    assertThat(incidents.size()).isEqualTo(0);
   }
 
   @Test
@@ -238,7 +238,7 @@ public class CustomHistoryLevelIncidentTest {
 
     // then
     List<HistoricIncident> incidents = historyService.createHistoricIncidentQuery().list();
-    assertEquals(0, incidents.size());
+    assertThat(incidents.size()).isEqualTo(0);
   }
 
   protected void executeAvailableJobs() {

@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.test.bpmn.common;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -122,7 +122,7 @@ public abstract class AbstractProcessEngineServicesAccessTest extends PluggableP
 
     // then
     // starting the process fails and everything is rolled back:
-    assertEquals(0, runtimeService.createExecutionQuery().count());
+    assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(0);
   }
 
   protected abstract Class<?> getTestServiceAccessibleClass();
@@ -170,7 +170,7 @@ public abstract class AbstractProcessEngineServicesAccessTest extends PluggableP
 
     // then
     // the started process instance is still active and waiting at the user task
-    assertEquals(1, taskService.createTaskQuery().taskDefinitionKey(TASK_DEF_KEY).count());
+    assertThat(taskService.createTaskQuery().taskDefinitionKey(TASK_DEF_KEY).count()).isEqualTo(1);
   }
 
   @Test

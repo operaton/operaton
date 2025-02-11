@@ -43,8 +43,8 @@ import java.util.concurrent.*;
 import org.junit.After;
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -104,16 +104,16 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
     assertNull(grantAuthorization.getUserId());
     // I can set userId = ANY
     grantAuthorization.setUserId(ANY);
-    assertEquals(ANY, grantAuthorization.getUserId());
+    assertThat(grantAuthorization.getUserId()).isEqualTo(ANY);
     // I can set anything else:
     grantAuthorization.setUserId("something");
-    assertEquals("something", grantAuthorization.getUserId());
+    assertThat(grantAuthorization.getUserId()).isEqualTo("something");
     // I can set groupId = null
     grantAuthorization.setGroupId(null);
     assertNull(grantAuthorization.getGroupId());
     // I can set anything else:
     grantAuthorization.setGroupId("something");
-    assertEquals("something", grantAuthorization.getGroupId());
+    assertThat(grantAuthorization.getGroupId()).isEqualTo("something");
   }
 
   @Test
@@ -124,16 +124,16 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
     assertNull(revokeAuthorization.getUserId());
     // I can set userId = ANY
     revokeAuthorization.setUserId(ANY);
-    assertEquals(ANY, revokeAuthorization.getUserId());
+    assertThat(revokeAuthorization.getUserId()).isEqualTo(ANY);
     // I can set anything else:
     revokeAuthorization.setUserId("something");
-    assertEquals("something", revokeAuthorization.getUserId());
+    assertThat(revokeAuthorization.getUserId()).isEqualTo("something");
     // I can set groupId = null
     revokeAuthorization.setGroupId(null);
     assertNull(revokeAuthorization.getGroupId());
     // I can set anything else:
     revokeAuthorization.setGroupId("something");
-    assertEquals("something", revokeAuthorization.getGroupId());
+    assertThat(revokeAuthorization.getGroupId()).isEqualTo("something");
   }
 
   @Test
@@ -154,7 +154,7 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
     Resource resource1 = TestResource.RESOURCE1;
 
     // initially, no authorization exists:
-    assertEquals(0, authorizationService.createAuthorizationQuery().count());
+    assertThat(authorizationService.createAuthorizationQuery().count()).isEqualTo(0);
 
     // simple create / delete with userId
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
@@ -164,11 +164,11 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
     // save the authorization
     authorizationService.saveAuthorization(authorization);
     // authorization exists
-    assertEquals(1, authorizationService.createAuthorizationQuery().count());
+    assertThat(authorizationService.createAuthorizationQuery().count()).isEqualTo(1);
     // delete the authorization
     authorizationService.deleteAuthorization(authorization.getId());
     // it's gone
-    assertEquals(0, authorizationService.createAuthorizationQuery().count());
+    assertThat(authorizationService.createAuthorizationQuery().count()).isEqualTo(0);
 
   }
 
@@ -178,7 +178,7 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
     Resource resource1 = TestResource.RESOURCE1;
 
     // initially, no authorization exists:
-    assertEquals(0, authorizationService.createAuthorizationQuery().count());
+    assertThat(authorizationService.createAuthorizationQuery().count()).isEqualTo(0);
 
     // simple create / delete with userId
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
@@ -188,11 +188,11 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
     // save the authorization
     authorizationService.saveAuthorization(authorization);
     // authorization exists
-    assertEquals(1, authorizationService.createAuthorizationQuery().count());
+    assertThat(authorizationService.createAuthorizationQuery().count()).isEqualTo(1);
     // delete the authorization
     authorizationService.deleteAuthorization(authorization.getId());
     // it's gone
-    assertEquals(0, authorizationService.createAuthorizationQuery().count());
+    assertThat(authorizationService.createAuthorizationQuery().count()).isEqualTo(0);
 
   }
 
@@ -402,9 +402,9 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
 
     // validate authorization
     Authorization savedAuthorization = authorizationService.createAuthorizationQuery().singleResult();
-    assertEquals("aUserId", savedAuthorization.getUserId());
-    assertEquals(resource1.resourceType(), savedAuthorization.getResourceType());
-    assertEquals("aResourceId", savedAuthorization.getResourceId());
+    assertThat(savedAuthorization.getUserId()).isEqualTo("aUserId");
+    assertThat(savedAuthorization.getResourceType()).isEqualTo(resource1.resourceType());
+    assertThat(savedAuthorization.getResourceId()).isEqualTo("aResourceId");
     assertTrue(savedAuthorization.isPermissionGranted(TestPermissions.ACCESS));
 
     // update authorization
@@ -416,9 +416,9 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
 
     // validate authorization updated
     savedAuthorization = authorizationService.createAuthorizationQuery().singleResult();
-    assertEquals("anotherUserId", savedAuthorization.getUserId());
-    assertEquals(resource2.resourceType(), savedAuthorization.getResourceType());
-    assertEquals("anotherResourceId", savedAuthorization.getResourceId());
+    assertThat(savedAuthorization.getUserId()).isEqualTo("anotherUserId");
+    assertThat(savedAuthorization.getResourceType()).isEqualTo(resource2.resourceType());
+    assertThat(savedAuthorization.getResourceId()).isEqualTo("anotherResourceId");
     assertTrue(savedAuthorization.isPermissionGranted(TestPermissions.ACCESS));
     assertTrue(savedAuthorization.isPermissionGranted(TestPermissions.DELETE));
 
@@ -440,9 +440,9 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
 
     // validate authorization
     Authorization savedAuthorization = authorizationService.createAuthorizationQuery().singleResult();
-    assertEquals("aUserId", savedAuthorization.getUserId());
-    assertEquals(resource1.resourceType(), savedAuthorization.getResourceType());
-    assertEquals("aResourceId", savedAuthorization.getResourceId());
+    assertThat(savedAuthorization.getUserId()).isEqualTo("aUserId");
+    assertThat(savedAuthorization.getResourceType()).isEqualTo(resource1.resourceType());
+    assertThat(savedAuthorization.getResourceId()).isEqualTo("aResourceId");
     assertTrue(savedAuthorization.isPermissionGranted(TestPermissions.ACCESS));
 
     // update authorization
@@ -454,9 +454,9 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
 
     // validate authorization updated
     savedAuthorization = authorizationService.createAuthorizationQuery().singleResult();
-    assertEquals("anotherUserId", savedAuthorization.getUserId());
-    assertEquals(resource2.resourceType(), savedAuthorization.getResourceType());
-    assertEquals("anotherResourceId", savedAuthorization.getResourceId());
+    assertThat(savedAuthorization.getUserId()).isEqualTo("anotherUserId");
+    assertThat(savedAuthorization.getResourceType()).isEqualTo(resource2.resourceType());
+    assertThat(savedAuthorization.getResourceId()).isEqualTo("anotherResourceId");
     assertTrue(savedAuthorization.isPermissionGranted(TestPermissions.ACCESS));
     assertTrue(savedAuthorization.isPermissionGranted(TestPermissions.DELETE));
 
@@ -468,7 +468,7 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     authorization.setResource(Resources.USER);
 
-    assertEquals(1, authorization.getPermissions(Permissions.values()).length);
+    assertThat(authorization.getPermissions(Permissions.values()).length).isEqualTo(1);
 
     assertFalse(authorization.isPermissionGranted(CREATE));
     assertFalse(authorization.isPermissionGranted(DELETE));
@@ -535,13 +535,13 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
     assertTrue(authorization.isPermissionGranted(NONE));
     List<Permission> perms = Arrays.asList(authorization.getPermissions(Permissions.values()));
     assertTrue(perms.contains(NONE));
-    assertEquals(1, perms.size());
+    assertThat(perms.size()).isEqualTo(1);
 
     authorization.addPermission(READ);
     perms = Arrays.asList(authorization.getPermissions(Permissions.values()));
     assertTrue(perms.contains(NONE));
     assertTrue(perms.contains(READ));
-    assertEquals(2, perms.size());
+    assertThat(perms.size()).isEqualTo(2);
     assertTrue(authorization.isPermissionGranted(READ));
     assertTrue(authorization.isPermissionGranted(NONE)); // (none is always granted => you are always authorized to do nothing)
 
@@ -564,13 +564,13 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
     assertTrue(authorization.isPermissionGranted(NONE));
     List<Permission> perms = Arrays.asList(authorization.getPermissions(Permissions.values()));
     assertTrue(perms.contains(NONE));
-    assertEquals(1, perms.size());
+    assertThat(perms.size()).isEqualTo(1);
 
     authorization.addPermission(READ);
     perms = Arrays.asList(authorization.getPermissions(Permissions.values()));
     assertTrue(perms.contains(NONE));
     assertTrue(perms.contains(READ));
-    assertEquals(2, perms.size());
+    assertThat(perms.size()).isEqualTo(2);
     assertTrue(authorization.isPermissionGranted(READ));
     assertTrue(authorization.isPermissionGranted(NONE)); // (none is always granted => you are always authorized to do nothing)
 
@@ -591,13 +591,13 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
 
     assertFalse(authorization.isPermissionRevoked(ALL));
     List<Permission> perms = Arrays.asList(authorization.getPermissions(Permissions.values()));
-    assertEquals(0, perms.size());
+    assertThat(perms.size()).isEqualTo(0);
 
     authorization.removePermission(READ);
     perms = Arrays.asList(authorization.getPermissions(Permissions.values()));
     assertTrue(perms.contains(READ));
     assertTrue(perms.contains(ALL));
-    assertEquals(2, perms.size());
+    assertThat(perms.size()).isEqualTo(2);
 
     try {
       authorization.isPermissionGranted(READ);
@@ -697,7 +697,7 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
     authorizationService.saveAuthorization(authorization);
 
     processEngineConfiguration.setAuthorizationEnabled(true);
-    assertEquals(true, authorizationService.isUserAuthorized(testUserId, Arrays.asList(testGroupId), ALL, REPORT));
+    assertThat(authorizationService.isUserAuthorized(testUserId, Arrays.asList(testGroupId), ALL, REPORT)).isEqualTo(true);
     processEngineConfiguration.setAuthorizationEnabled(false);
   }
 
@@ -714,10 +714,10 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
     authorizationService.saveAuthorization(authorization);
 
     processEngineConfiguration.setAuthorizationEnabled(true);
-    assertEquals(true, authorizationService.isUserAuthorized(testUserId, null, CREATE, REPORT));
-    assertEquals(true, authorizationService.isUserAuthorized(testUserId, null, READ, REPORT));
-    assertEquals(true, authorizationService.isUserAuthorized(testUserId, null, UPDATE, REPORT));
-    assertEquals(true, authorizationService.isUserAuthorized(testUserId, null, DELETE, REPORT));
+    assertThat(authorizationService.isUserAuthorized(testUserId, null, CREATE, REPORT)).isEqualTo(true);
+    assertThat(authorizationService.isUserAuthorized(testUserId, null, READ, REPORT)).isEqualTo(true);
+    assertThat(authorizationService.isUserAuthorized(testUserId, null, UPDATE, REPORT)).isEqualTo(true);
+    assertThat(authorizationService.isUserAuthorized(testUserId, null, DELETE, REPORT)).isEqualTo(true);
     processEngineConfiguration.setAuthorizationEnabled(false);
   }
 
@@ -731,7 +731,7 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
     authorizationService.saveAuthorization(authorization);
 
     processEngineConfiguration.setAuthorizationEnabled(true);
-    assertEquals(true, authorizationService.isUserAuthorized(testUserId, Arrays.asList(testGroupId), ALL, DASHBOARD));
+    assertThat(authorizationService.isUserAuthorized(testUserId, Arrays.asList(testGroupId), ALL, DASHBOARD)).isEqualTo(true);
     processEngineConfiguration.setAuthorizationEnabled(false);
   }
 
@@ -748,10 +748,10 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
     authorizationService.saveAuthorization(authorization);
 
     processEngineConfiguration.setAuthorizationEnabled(true);
-    assertEquals(true, authorizationService.isUserAuthorized(testUserId, null, CREATE, DASHBOARD));
-    assertEquals(true, authorizationService.isUserAuthorized(testUserId, null, READ, DASHBOARD));
-    assertEquals(true, authorizationService.isUserAuthorized(testUserId, null, UPDATE, DASHBOARD));
-    assertEquals(true, authorizationService.isUserAuthorized(testUserId, null, DELETE, DASHBOARD));
+    assertThat(authorizationService.isUserAuthorized(testUserId, null, CREATE, DASHBOARD)).isEqualTo(true);
+    assertThat(authorizationService.isUserAuthorized(testUserId, null, READ, DASHBOARD)).isEqualTo(true);
+    assertThat(authorizationService.isUserAuthorized(testUserId, null, UPDATE, DASHBOARD)).isEqualTo(true);
+    assertThat(authorizationService.isUserAuthorized(testUserId, null, DELETE, DASHBOARD)).isEqualTo(true);
     processEngineConfiguration.setAuthorizationEnabled(false);
   }
 

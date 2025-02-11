@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.List;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
@@ -121,7 +123,7 @@ public class JobExecutorShutdownTest {
     executionThread.waitUntilDone();
 
     // then the current job has completed successfully
-    Assert.assertEquals(0, engineRule.getManagementService().createJobQuery().jobId(firstAsyncJob.getId()).count());
+    assertThat(engineRule.getManagementService().createJobQuery().jobId(firstAsyncJob.getId()).count()).isEqualTo(0);
 
     // but the exclusive follow-up job is not executed and is not locked
     JobEntity secondAsyncJob = (JobEntity) engineRule.getManagementService().createJobQuery().singleResult();
@@ -159,7 +161,7 @@ public class JobExecutorShutdownTest {
 
     // jobs must now be locked
     List<Job> lockedJobList = engineRule.getManagementService().createJobQuery().list();
-    Assert.assertEquals(2, lockedJobList.size());
+    assertThat(lockedJobList.size()).isEqualTo(2);
     for(Job job : lockedJobList) {
       JobEntity jobEntity = (JobEntity)job;
       Assert.assertNotNull(jobEntity.getLockOwner());

@@ -22,7 +22,6 @@ import static org.operaton.bpm.engine.authorization.Permissions.READ_HISTORY;
 import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_PROCESS_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_TASK;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
-import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -238,7 +237,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
         .list();
 
     // then
-    assertEquals(0, result.size());
+    assertThat(result.size()).isEqualTo(0);
   }
 
   @Test
@@ -256,7 +255,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
         .list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result.size()).isEqualTo(1);
   }
 
   @Test
@@ -278,7 +277,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
         .list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result.size()).isEqualTo(1);
 
     // clear
     deleteTask(taskId, true);
@@ -302,7 +301,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
         .list();
 
     // then
-    assertEquals(0, result.size());
+    assertThat(result.size()).isEqualTo(0);
 
     // clear
     deleteTask(taskId, true);
@@ -326,7 +325,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
         .list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result.size()).isEqualTo(1);
   }
 
   @Test
@@ -348,7 +347,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
         .list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result.size()).isEqualTo(1);
   }
 
   @Test
@@ -371,7 +370,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
         .list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result.size()).isEqualTo(1);
   }
 
   @Test
@@ -390,7 +389,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
         .list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result.size()).isEqualTo(1);
   }
 
   @Test

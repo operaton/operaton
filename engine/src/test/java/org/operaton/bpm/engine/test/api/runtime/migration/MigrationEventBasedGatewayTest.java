@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.test.api.runtime.migration;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 
 import org.operaton.bpm.engine.migration.MigrationPlan;
@@ -30,7 +30,6 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.EventBasedGatewayModels;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
@@ -497,11 +496,11 @@ public class MigrationEventBasedGatewayTest {
     Incident incidentAfterMigration = rule.getRuntimeService().createIncidentQuery().singleResult();
     assertNotNull(incidentAfterMigration);
 
-    assertEquals(incidentBeforeMigration.getId(), incidentAfterMigration.getId());
-    assertEquals(jobAfterMigration.getId(), incidentAfterMigration.getConfiguration());
+    assertThat(incidentAfterMigration.getId()).isEqualTo(incidentBeforeMigration.getId());
+    assertThat(incidentAfterMigration.getConfiguration()).isEqualTo(jobAfterMigration.getId());
 
-    assertEquals("timerCatch", incidentAfterMigration.getActivityId());
-    assertEquals(targetProcessDefinition.getId(), incidentAfterMigration.getProcessDefinitionId());
+    assertThat(incidentAfterMigration.getActivityId()).isEqualTo("timerCatch");
+    assertThat(incidentAfterMigration.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());
 
     // and it is possible to complete the process
     rule.getManagementService().executeJob(jobAfterMigration.getId());
@@ -532,7 +531,7 @@ public class MigrationEventBasedGatewayTest {
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
     // then the incident is gone
-    Assert.assertEquals(0, rule.getRuntimeService().createIncidentQuery().count());
+    assertThat(rule.getRuntimeService().createIncidentQuery().count()).isEqualTo(0);
   }
 
 }

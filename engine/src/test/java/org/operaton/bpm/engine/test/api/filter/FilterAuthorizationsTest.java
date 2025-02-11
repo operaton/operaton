@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.filter;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
@@ -40,6 +39,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
@@ -132,7 +132,7 @@ public class FilterAuthorizationsTest extends PluggableProcessEngineTest {
     grantUpdateFilter(filter.getId());
 
     filter = filterService.saveFilter(filter);
-    assertEquals("anotherName", filter.getName());
+    assertThat(filter.getName()).isEqualTo("anotherName");
   }
 
   @Test
@@ -152,7 +152,7 @@ public class FilterAuthorizationsTest extends PluggableProcessEngineTest {
     filterService.deleteFilter(filter.getId());
 
     long count = filterService.createFilterQuery().count();
-    assertEquals(0, count);
+    assertThat(count).isEqualTo(0);
   }
 
   @Test
@@ -160,7 +160,7 @@ public class FilterAuthorizationsTest extends PluggableProcessEngineTest {
     Filter filter = createTestFilter();
 
     long count = filterService.createFilterQuery().count();
-    assertEquals(0, count);
+    assertThat(count).isEqualTo(0);
 
     Filter returnedFilter = filterService.createFilterQuery().filterId(filter.getId()).singleResult();
     assertNull(returnedFilter);
@@ -193,7 +193,7 @@ public class FilterAuthorizationsTest extends PluggableProcessEngineTest {
     grantReadFilter(filter.getId());
 
     long count = filterService.createFilterQuery().count();
-    assertEquals(1, count);
+    assertThat(count).isEqualTo(1);
 
     Filter returnedFilter = filterService.createFilterQuery().filterId(filter.getId()).singleResult();
     assertNotNull(returnedFilter);
@@ -207,20 +207,20 @@ public class FilterAuthorizationsTest extends PluggableProcessEngineTest {
 
     Task result = filterService.singleResult(filter.getId());
     assertNotNull(result);
-    assertEquals(task.getId(), result.getId());
+    assertThat(result.getId()).isEqualTo(task.getId());
 
     List<Task> resultList = filterService.list(filter.getId());
     assertNotNull(resultList);
-    assertEquals(1, resultList.size());
-    assertEquals(task.getId(), resultList.get(0).getId());
+    assertThat(resultList.size()).isEqualTo(1);
+    assertThat(resultList.get(0).getId()).isEqualTo(task.getId());
 
     resultList = filterService.listPage(filter.getId(), 0, 2);
     assertNotNull(resultList);
-    assertEquals(1, resultList.size());
-    assertEquals(task.getId(), resultList.get(0).getId());
+    assertThat(resultList.size()).isEqualTo(1);
+    assertThat(resultList.get(0).getId()).isEqualTo(task.getId());
 
     count = filterService.count(filter.getId());
-    assertEquals(1, count);
+    assertThat(count).isEqualTo(1);
 
     // remove Task
     taskService.deleteTask(task.getId(), true);
@@ -234,7 +234,7 @@ public class FilterAuthorizationsTest extends PluggableProcessEngineTest {
     revokeReadFilter(filter.getId());
 
     long count = filterService.createFilterQuery().count();
-    assertEquals(0, count);
+    assertThat(count).isEqualTo(0);
 
     Filter returnedFilter = filterService.createFilterQuery().filterId(filter.getId()).singleResult();
     assertNull(returnedFilter);
@@ -273,7 +273,7 @@ public class FilterAuthorizationsTest extends PluggableProcessEngineTest {
     processEngine.getAuthorizationService().saveAuthorization(authorization);
 
     long count = filterService.createFilterQuery().count();
-    assertEquals(1, count);
+    assertThat(count).isEqualTo(1);
 
     Filter returnedFilter = filterService.createFilterQuery().filterId(filter.getId()).singleResult();
     assertNotNull(returnedFilter);
@@ -439,7 +439,7 @@ public class FilterAuthorizationsTest extends PluggableProcessEngineTest {
     else {
       result = authorizationService.isUserAuthorized(user.getId(), null, permission, Resources.FILTER);
     }
-    assertEquals(expected, result);
+    assertThat(result).isEqualTo(expected);
   }
 
 }

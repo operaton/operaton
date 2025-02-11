@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
@@ -314,7 +314,7 @@ public class HistoricActivityInstanceSequenceCounterTest extends PluggableProces
   }
 
   protected void verifyOrder(HistoricActivityInstanceQuery query, String... expectedOrder) {
-    assertEquals(expectedOrder.length, query.count());
+    assertThat(query.count()).isEqualTo(expectedOrder.length);
 
     List<HistoricActivityInstance> activityInstances = query.list();
 
@@ -322,7 +322,7 @@ public class HistoricActivityInstanceSequenceCounterTest extends PluggableProces
       HistoricActivityInstance activityInstance = activityInstances.get(i);
       String currentActivityId = activityInstance.getActivityId();
       String expectedActivityId = expectedOrder[i];
-      assertEquals(expectedActivityId, currentActivityId);
+      assertThat(currentActivityId).isEqualTo(expectedActivityId);
     }
 
   }

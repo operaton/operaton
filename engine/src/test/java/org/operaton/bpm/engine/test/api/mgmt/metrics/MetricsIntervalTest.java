@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.api.mgmt.metrics;
 
 import static junit.framework.TestCase.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.management.Metrics.ACTIVTY_INSTANCE_START;
 import static org.junit.Assert.assertNotEquals;
@@ -33,7 +34,6 @@ import org.operaton.bpm.engine.management.MetricIntervalValue;
 import org.operaton.bpm.engine.management.Metrics;
 import org.operaton.bpm.engine.management.MetricsQuery;
 import org.joda.time.DateTime;
-import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -439,14 +439,14 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
     //on query with name
      metrics = managementService.createMetricsQuery().name(ACTIVTY_INSTANCE_START).limit(1).interval();
     long newValue = metrics.get(0).getValue();
-    Assert.assertEquals(value + 3, newValue);
+    assertThat(newValue).isEqualTo(value + 3);
 
     //on query without name also
      metrics = managementService.createMetricsQuery().interval();
      for (MetricIntervalValue intervalValue : metrics) {
        if (intervalValue.getName().equalsIgnoreCase(ACTIVTY_INSTANCE_START)) {
         newValue = intervalValue.getValue();
-         Assert.assertEquals(value + 3, newValue);
+         assertThat(newValue).isEqualTo(value + 3);
         break;
        }
      }

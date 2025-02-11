@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.runtime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -161,7 +160,7 @@ public class ProcessInstanceQueryOrTest {
         .list();
 
     // then
-    assertEquals(2, processInstances.size());
+    assertThat(processInstances.size()).isEqualTo(2);
   }
 
   @Test
@@ -185,7 +184,7 @@ public class ProcessInstanceQueryOrTest {
         .list();
 
     // then
-    assertEquals(2, processInstances.size());
+    assertThat(processInstances.size()).isEqualTo(2);
   }
 
   @Test
@@ -219,7 +218,7 @@ public class ProcessInstanceQueryOrTest {
         .list();
 
     // then
-    assertEquals(4, processInstances.size());
+    assertThat(processInstances.size()).isEqualTo(4);
   }
 
   @Test
@@ -256,7 +255,7 @@ public class ProcessInstanceQueryOrTest {
         .list();
 
     // then
-    assertEquals(2, processInstances.size());
+    assertThat(processInstances.size()).isEqualTo(2);
   }
 
   @Test
@@ -321,7 +320,7 @@ public class ProcessInstanceQueryOrTest {
         .list();
 
     // then
-    assertEquals(2, processInstances.size());
+    assertThat(processInstances.size()).isEqualTo(2);
   }
 
   @Test
@@ -342,7 +341,7 @@ public class ProcessInstanceQueryOrTest {
         .list();
 
     // then
-    assertEquals(1, processInstances.size());
+    assertThat(processInstances.size()).isEqualTo(1);
   }
 
   @Test
@@ -369,7 +368,7 @@ public class ProcessInstanceQueryOrTest {
         .endOr();
 
     // then
-    assertEquals(3, query.count());
+    assertThat(query.count()).isEqualTo(3);
   }
 
   @Test
@@ -417,7 +416,7 @@ public class ProcessInstanceQueryOrTest {
         .list();
 
     // then
-    assertEquals(2, processInstances.size());
+    assertThat(processInstances.size()).isEqualTo(2);
   }
 
   @Test
@@ -464,7 +463,7 @@ public class ProcessInstanceQueryOrTest {
         .list();
 
     // then
-    assertEquals(2, processInstances.size());
+    assertThat(processInstances.size()).isEqualTo(2);
   }
 
   @Test
@@ -505,8 +504,8 @@ public class ProcessInstanceQueryOrTest {
         .list();
 
     // assume
-    assertEquals(2, activeProcessInstances.size());
-    assertEquals(1, suspendedProcessInstances.size());
+    assertThat(activeProcessInstances.size()).isEqualTo(2);
+    assertThat(suspendedProcessInstances.size()).isEqualTo(1);
 
     List<ProcessInstance> processInstances = runtimeService.createProcessInstanceQuery()
         .or()
@@ -516,7 +515,7 @@ public class ProcessInstanceQueryOrTest {
         .list();
 
     // then
-    assertEquals(3, processInstances.size());
+    assertThat(processInstances.size()).isEqualTo(3);
   }
 
   @Test

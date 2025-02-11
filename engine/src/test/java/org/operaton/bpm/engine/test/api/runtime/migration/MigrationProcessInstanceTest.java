@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.util.Arrays;
@@ -33,7 +32,6 @@ import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -72,8 +70,8 @@ public class MigrationProcessInstanceTest {
       .execute();
 
     // then
-    Assert.assertEquals(2, runtimeService.createProcessInstanceQuery()
-        .processDefinitionId(targetDefinition.getId()).count());
+    assertThat(runtimeService.createProcessInstanceQuery()
+        .processDefinitionId(targetDefinition.getId()).count()).isEqualTo(2);
 
   }
 
@@ -269,16 +267,16 @@ public class MigrationProcessInstanceTest {
     ProcessInstanceQuery sourceProcessInstanceQuery = runtimeService.createProcessInstanceQuery().processDefinitionId(sourceProcessDefinition.getId());
     ProcessInstanceQuery targetProcessInstanceQuery = runtimeService.createProcessInstanceQuery().processDefinitionId(targetProcessDefinition.getId());
 
-    assertEquals(processInstanceCount, sourceProcessInstanceQuery.count());
-    assertEquals(0, targetProcessInstanceQuery.count());
+    assertThat(sourceProcessInstanceQuery.count()).isEqualTo(processInstanceCount);
+    assertThat(targetProcessInstanceQuery.count()).isEqualTo(0);
 
 
     runtimeService.newMigration(migrationPlan)
       .processInstanceQuery(sourceProcessInstanceQuery)
       .execute();
 
-    assertEquals(0, sourceProcessInstanceQuery.count());
-    assertEquals(processInstanceCount, targetProcessInstanceQuery.count());
+    assertThat(sourceProcessInstanceQuery.count()).isEqualTo(0);
+    assertThat(targetProcessInstanceQuery.count()).isEqualTo(processInstanceCount);
   }
 
   @Test
@@ -306,7 +304,7 @@ public class MigrationProcessInstanceTest {
       .build();
 
     ProcessInstanceQuery emptyProcessInstanceQuery = runtimeService.createProcessInstanceQuery();
-    assertEquals(0, emptyProcessInstanceQuery.count());
+    assertThat(emptyProcessInstanceQuery.count()).isEqualTo(0);
     var migrationPlanExecutionBuilder = runtimeService.newMigration(migrationPlan).processInstanceQuery(emptyProcessInstanceQuery);
 
     try {
@@ -330,7 +328,7 @@ public class MigrationProcessInstanceTest {
       .build();
 
     ProcessInstanceQuery wrongProcessInstanceQuery = runtimeService.createProcessInstanceQuery().processDefinitionId(wrongProcessDefinition.getId());
-    assertEquals(1, wrongProcessInstanceQuery.count());
+    assertThat(wrongProcessInstanceQuery.count()).isEqualTo(1);
     var migrationPlanExecutionBuilder = runtimeService.newMigration(migrationPlan).processInstanceQuery(wrongProcessInstanceQuery);
 
     try {
@@ -357,14 +355,14 @@ public class MigrationProcessInstanceTest {
     ProcessInstanceQuery sourceProcessInstanceQuery = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance2.getId());
     ProcessInstanceQuery targetProcessInstanceQuery = runtimeService.createProcessInstanceQuery().processDefinitionId(targetProcessDefinition.getId());
 
-    assertEquals(0, targetProcessInstanceQuery.count());
+    assertThat(targetProcessInstanceQuery.count()).isEqualTo(0);
 
     runtimeService.newMigration(migrationPlan)
       .processInstanceIds(Collections.singletonList(processInstance1.getId()))
       .processInstanceQuery(sourceProcessInstanceQuery)
       .execute();
 
-    assertEquals(2, targetProcessInstanceQuery.count());
+    assertThat(targetProcessInstanceQuery.count()).isEqualTo(2);
   }
 
   @Test
@@ -382,14 +380,14 @@ public class MigrationProcessInstanceTest {
     ProcessInstanceQuery sourceProcessInstanceQuery = runtimeService.createProcessInstanceQuery().processDefinitionId(sourceProcessDefinition.getId());
     ProcessInstanceQuery targetProcessInstanceQuery = runtimeService.createProcessInstanceQuery().processDefinitionId(targetProcessDefinition.getId());
 
-    assertEquals(0, targetProcessInstanceQuery.count());
+    assertThat(targetProcessInstanceQuery.count()).isEqualTo(0);
 
     runtimeService.newMigration(migrationPlan)
       .processInstanceIds(Arrays.asList(processInstance1.getId(), processInstance2.getId()))
       .processInstanceQuery(sourceProcessInstanceQuery)
       .execute();
 
-    assertEquals(2, targetProcessInstanceQuery.count());
+    assertThat(targetProcessInstanceQuery.count()).isEqualTo(2);
   }
 
 }

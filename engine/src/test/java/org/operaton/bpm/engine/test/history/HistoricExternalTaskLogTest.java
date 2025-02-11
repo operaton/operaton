@@ -20,9 +20,9 @@ import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
 import static junit.framework.TestCase.fail;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.DEFAULT_TOPIC;
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.createDefaultExternalTaskModel;
-import static org.junit.Assert.assertEquals;
 
 import java.util.Date;
 import java.util.List;
@@ -97,7 +97,7 @@ public class HistoricExternalTaskLogTest {
 
     // then
     assertHistoricLogPropertiesAreProperlySet(task, log);
-    assertEquals(null, log.getWorkerId());
+    assertThat(log.getWorkerId()).isEqualTo(null);
     assertLogIsInCreatedState(log);
 
   }
@@ -118,7 +118,7 @@ public class HistoricExternalTaskLogTest {
 
     // then
     assertHistoricLogPropertiesAreProperlySet(task, null, log);
-    assertEquals(WORKER_ID, log.getWorkerId());
+    assertThat(log.getWorkerId()).isEqualTo(WORKER_ID);
     assertLogIsInFailedState(log);
 
   }
@@ -138,7 +138,7 @@ public class HistoricExternalTaskLogTest {
 
     // then
     assertHistoricLogPropertiesAreProperlySet(task, log);
-    assertEquals(WORKER_ID, log.getWorkerId());
+    assertThat(log.getWorkerId()).isEqualTo(WORKER_ID);
     assertLogIsInSuccessfulState(log);
 
   }
@@ -158,7 +158,7 @@ public class HistoricExternalTaskLogTest {
 
     // then
     assertHistoricLogPropertiesAreProperlySet(task, log);
-    assertEquals(null, log.getWorkerId());
+    assertThat(log.getWorkerId()).isEqualTo(null);
     assertLogIsInDeletedState(log);
 
   }
@@ -178,8 +178,8 @@ public class HistoricExternalTaskLogTest {
       .singleResult();
 
     // then
-    assertEquals(WORKER_ID, log.getWorkerId());
-    assertEquals(Integer.valueOf(1), log.getRetries());
+    assertThat(log.getWorkerId()).isEqualTo(WORKER_ID);
+    assertThat(log.getRetries()).isEqualTo(Integer.valueOf(1));
     assertLogIsInSuccessfulState(log);
   }
 
@@ -199,7 +199,7 @@ public class HistoricExternalTaskLogTest {
     // then
     String stacktrace = historyService.getHistoricExternalTaskLogErrorDetails(failedHistoricExternalTaskLogId);
     assertNotNull(stacktrace);
-    assertEquals(ERROR_DETAILS, stacktrace);
+    assertThat(stacktrace).isEqualTo(ERROR_DETAILS);
   }
 
   @Test
@@ -228,8 +228,8 @@ public class HistoricExternalTaskLogTest {
     String stacktrace2 = historyService.getHistoricExternalTaskLogErrorDetails(secondFailedLogId);
     assertNotNull(stacktrace1);
     assertNotNull(stacktrace2);
-    assertEquals(firstErrorDetails, stacktrace1);
-    assertEquals(secondErrorDetails, stacktrace2);
+    assertThat(stacktrace1).isEqualTo(firstErrorDetails);
+    assertThat(stacktrace2).isEqualTo(secondErrorDetails);
   }
 
 
@@ -273,8 +273,8 @@ public class HistoricExternalTaskLogTest {
 
     // then
     assertNotNull(failedLog);
-    assertEquals(ExternalTaskEntity.MAX_EXCEPTION_MESSAGE_LENGTH, errorMessage.length());
-    assertEquals(expectedErrorMessage, errorMessage);
+    assertThat(errorMessage.length()).isEqualTo(ExternalTaskEntity.MAX_EXCEPTION_MESSAGE_LENGTH);
+    assertThat(errorMessage).isEqualTo(expectedErrorMessage);
 
   }
 
@@ -317,16 +317,16 @@ public class HistoricExternalTaskLogTest {
     assertNotNull(log.getId());
     assertNotNull(log.getTimestamp());
 
-    assertEquals(task.getId(), log.getExternalTaskId());
-    assertEquals(task.getActivityId(), log.getActivityId());
-    assertEquals(task.getActivityInstanceId(), log.getActivityInstanceId());
-    assertEquals(task.getTopicName(), log.getTopicName());
-    assertEquals(retries, log.getRetries());
-    assertEquals(task.getExecutionId(), log.getExecutionId());
-    assertEquals(task.getProcessInstanceId(), log.getProcessInstanceId());
-    assertEquals(task.getProcessDefinitionId(), log.getProcessDefinitionId());
-    assertEquals(task.getProcessDefinitionKey(), log.getProcessDefinitionKey());
-    assertEquals(task.getPriority(), log.getPriority());
+    assertThat(log.getExternalTaskId()).isEqualTo(task.getId());
+    assertThat(log.getActivityId()).isEqualTo(task.getActivityId());
+    assertThat(log.getActivityInstanceId()).isEqualTo(task.getActivityInstanceId());
+    assertThat(log.getTopicName()).isEqualTo(task.getTopicName());
+    assertThat(log.getRetries()).isEqualTo(retries);
+    assertThat(log.getExecutionId()).isEqualTo(task.getExecutionId());
+    assertThat(log.getProcessInstanceId()).isEqualTo(task.getProcessInstanceId());
+    assertThat(log.getProcessDefinitionId()).isEqualTo(task.getProcessDefinitionId());
+    assertThat(log.getProcessDefinitionKey()).isEqualTo(task.getProcessDefinitionKey());
+    assertThat(log.getPriority()).isEqualTo(task.getPriority());
   }
 
   protected void completeExternalTask(String externalTaskId) {

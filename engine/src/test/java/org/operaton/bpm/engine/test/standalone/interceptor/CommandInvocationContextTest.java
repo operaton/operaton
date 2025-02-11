@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.standalone.interceptor;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -48,14 +48,14 @@ public class CommandInvocationContextTest extends PluggableProcessEngineTest {
 
     @Override
     public Void execute(CommandContext commandContext) {
-      assertEquals(this, Context.getCommandInvocationContext().getCommand());
+      assertThat(Context.getCommandInvocationContext().getCommand()).isEqualTo(this);
 
       if (innerCommand != null) {
         CommandExecutor commandExecutor = Context.getProcessEngineConfiguration().getCommandExecutorTxRequired();
         commandExecutor.execute(innerCommand);
 
         // should still be correct after command invocation
-        assertEquals(this, Context.getCommandInvocationContext().getCommand());
+        assertThat(Context.getCommandInvocationContext().getCommand()).isEqualTo(this);
       }
 
       return null;

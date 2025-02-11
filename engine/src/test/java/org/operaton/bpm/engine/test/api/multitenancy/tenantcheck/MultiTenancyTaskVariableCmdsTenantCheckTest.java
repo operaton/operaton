@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy.tenantcheck;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
@@ -91,7 +91,7 @@ public class MultiTenancyTaskVariableCmdsTenantCheckTest {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
-    assertEquals(VARIABLE_VALUE_1, taskService.getVariable(taskId, VARIABLE_1));
+    assertThat(taskService.getVariable(taskId, VARIABLE_1)).isEqualTo(VARIABLE_VALUE_1);
   }
 
   @Test
@@ -115,7 +115,7 @@ public class MultiTenancyTaskVariableCmdsTenantCheckTest {
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
 
     // then
-    assertEquals(VARIABLE_VALUE_1, taskService.getVariable(taskId, VARIABLE_1));
+    assertThat(taskService.getVariable(taskId, VARIABLE_1)).isEqualTo(VARIABLE_VALUE_1);
   }
 
   // get task variable typed
@@ -125,7 +125,7 @@ public class MultiTenancyTaskVariableCmdsTenantCheckTest {
     engineRule.getIdentityService().setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
     // then
-    assertEquals(VARIABLE_VALUE_1, taskService.getVariableTyped(taskId, VARIABLE_1).getValue());
+    assertThat(taskService.getVariableTyped(taskId, VARIABLE_1).getValue()).isEqualTo(VARIABLE_VALUE_1);
 
   }
 
@@ -148,7 +148,7 @@ public class MultiTenancyTaskVariableCmdsTenantCheckTest {
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
 
     // then
-    assertEquals(VARIABLE_VALUE_1, taskService.getVariableTyped(taskId, VARIABLE_1).getValue());
+    assertThat(taskService.getVariableTyped(taskId, VARIABLE_1).getValue()).isEqualTo(VARIABLE_VALUE_1);
   }
 
   // get task variables
@@ -158,7 +158,7 @@ public class MultiTenancyTaskVariableCmdsTenantCheckTest {
     engineRule.getIdentityService().setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
     // then
-    assertEquals(2, taskService.getVariables(taskId).size());
+    assertThat(taskService.getVariables(taskId).size()).isEqualTo(2);
   }
 
   @Test
@@ -180,7 +180,7 @@ public class MultiTenancyTaskVariableCmdsTenantCheckTest {
     engineRule.getIdentityService().setAuthentication("aUserId", null);
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
 
-    assertEquals(2, taskService.getVariables(taskId).size());
+    assertThat(taskService.getVariables(taskId).size()).isEqualTo(2);
   }
 
 
@@ -191,7 +191,7 @@ public class MultiTenancyTaskVariableCmdsTenantCheckTest {
     engineRule.getIdentityService().setAuthentication("aUserId", null, List.of(TENANT_ONE));
     taskService.setVariable(taskId, "newVariable", "newValue");
 
-    assertEquals(3, taskService.getVariables(taskId).size());
+    assertThat(taskService.getVariables(taskId).size()).isEqualTo(3);
   }
 
   @Test
@@ -214,7 +214,7 @@ public class MultiTenancyTaskVariableCmdsTenantCheckTest {
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
 
     taskService.setVariable(taskId, "newVariable", "newValue");
-    assertEquals(3, taskService.getVariables(taskId).size());
+    assertThat(taskService.getVariables(taskId).size()).isEqualTo(3);
 
   }
 
@@ -225,7 +225,7 @@ public class MultiTenancyTaskVariableCmdsTenantCheckTest {
     engineRule.getIdentityService().setAuthentication("aUserId", null, List.of(TENANT_ONE));
     taskService.removeVariable(taskId, VARIABLE_1);
     // then
-    assertEquals(1, taskService.getVariables(taskId).size());
+    assertThat(taskService.getVariables(taskId).size()).isEqualTo(1);
   }
 
   @Test
@@ -248,7 +248,7 @@ public class MultiTenancyTaskVariableCmdsTenantCheckTest {
 
     // then
     taskService.removeVariable(taskId, VARIABLE_1);
-    assertEquals(1, taskService.getVariables(taskId).size());
+    assertThat(taskService.getVariables(taskId).size()).isEqualTo(1);
   }
 
 }

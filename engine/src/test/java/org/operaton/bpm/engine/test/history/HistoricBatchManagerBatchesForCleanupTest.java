@@ -39,7 +39,7 @@ import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(Parameterized.class)
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
@@ -109,7 +109,7 @@ public class HistoricBatchManagerBatchesForCleanupTest {
       List<String> historicBatchIdsForCleanup = commandContext.getHistoricBatchManager().findHistoricBatchIdsForCleanup(batchSize, batchOperationsMap, 0, 59);
 
       // then
-      assertEquals(resultCount, historicBatchIdsForCleanup.size());
+      assertThat(historicBatchIdsForCleanup.size()).isEqualTo(resultCount);
 
       if (resultCount > 0) {
 

@@ -32,7 +32,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Tom Baeyens
@@ -51,20 +51,20 @@ public class JobExecutorCmdHappyTest extends JobExecutorTestCase {
 
     AcquiredJobs acquiredJobs = commandExecutor.execute(new AcquireJobsCmd(jobExecutor));
     List<List<String>> jobIdsList = acquiredJobs.getJobIdBatches();
-    assertEquals(1, jobIdsList.size());
+    assertThat(jobIdsList.size()).isEqualTo(1);
 
     List<String> jobIds = jobIdsList.get(0);
 
     List<String> expectedJobIds = new ArrayList<>();
     expectedJobIds.add(jobId);
 
-    assertEquals(expectedJobIds, new ArrayList<String>(jobIds));
-    assertEquals(0, tweetHandler.getMessages().size());
+    assertThat(new ArrayList<String>(jobIds)).isEqualTo(expectedJobIds);
+    assertThat(tweetHandler.getMessages().size()).isEqualTo(0);
 
     ExecuteJobHelper.executeJob(jobId, commandExecutor);
 
-    assertEquals("i'm coding a test", tweetHandler.getMessages().get(0));
-    assertEquals(1, tweetHandler.getMessages().size());
+    assertThat(tweetHandler.getMessages().get(0)).isEqualTo("i'm coding a test");
+    assertThat(tweetHandler.getMessages().size()).isEqualTo(1);
 
     clearDatabase();
   }
@@ -88,7 +88,7 @@ public class JobExecutorCmdHappyTest extends JobExecutorTestCase {
 
     AcquiredJobs acquiredJobs = commandExecutor.execute(new AcquireJobsCmd(jobExecutor));
     List<List<String>> jobIdsList = acquiredJobs.getJobIdBatches();
-    assertEquals(0, jobIdsList.size());
+    assertThat(jobIdsList.size()).isEqualTo(0);
 
     List<String> expectedJobIds = new ArrayList<>();
 
@@ -96,19 +96,19 @@ public class JobExecutorCmdHappyTest extends JobExecutorTestCase {
 
     acquiredJobs = commandExecutor.execute(new AcquireJobsCmd(jobExecutor, jobExecutor.getMaxJobsPerAcquisition()));
     jobIdsList = acquiredJobs.getJobIdBatches();
-    assertEquals(1, jobIdsList.size());
+    assertThat(jobIdsList.size()).isEqualTo(1);
 
     List<String> jobIds = jobIdsList.get(0);
 
     expectedJobIds.add(jobId);
-    assertEquals(expectedJobIds, new ArrayList<String>(jobIds));
+    assertThat(new ArrayList<String>(jobIds)).isEqualTo(expectedJobIds);
 
-    assertEquals(0, tweetHandler.getMessages().size());
+    assertThat(tweetHandler.getMessages().size()).isEqualTo(0);
 
     ExecuteJobHelper.executeJob(jobId, commandExecutor);
 
-    assertEquals("i'm coding a test", tweetHandler.getMessages().get(0));
-    assertEquals(1, tweetHandler.getMessages().size());
+    assertThat(tweetHandler.getMessages().get(0)).isEqualTo("i'm coding a test");
+    assertThat(tweetHandler.getMessages().size()).isEqualTo(1);
 
     clearDatabase();
   }

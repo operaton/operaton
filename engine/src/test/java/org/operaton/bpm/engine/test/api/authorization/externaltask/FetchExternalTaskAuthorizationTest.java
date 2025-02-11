@@ -23,7 +23,7 @@ import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import org.operaton.bpm.engine.externaltask.LockedExternalTask;
@@ -63,7 +63,7 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
       .execute();
 
     // then
-    assertEquals(0, tasks.size());
+    assertThat(tasks.size()).isEqualTo(0);
   }
 
   @Test
@@ -77,7 +77,7 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
       .execute();
 
     // then
-    assertEquals(0, tasks.size());
+    assertThat(tasks.size()).isEqualTo(0);
   }
 
   @Test
@@ -91,7 +91,7 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
       .execute();
 
     // then
-    assertEquals(0, tasks.size());
+    assertThat(tasks.size()).isEqualTo(0);
   }
 
   @Test
@@ -105,8 +105,8 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
       .execute();
 
     // then
-    assertEquals(1, tasks.size());
-    assertEquals(instance1Id, tasks.get(0).getProcessInstanceId());
+    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks.get(0).getProcessInstanceId()).isEqualTo(instance1Id);
   }
 
   @Test
@@ -120,7 +120,7 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
       .execute();
 
     // then
-    assertEquals(0, tasks.size());
+    assertThat(tasks.size()).isEqualTo(0);
   }
 
   @Test
@@ -134,7 +134,7 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
       .execute();
 
     // then
-    assertEquals(0, tasks.size());
+    assertThat(tasks.size()).isEqualTo(0);
   }
 
   @Test
@@ -148,8 +148,8 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
       .execute();
 
     // then
-    assertEquals(1, tasks.size());
-    assertEquals(instance1Id, tasks.get(0).getProcessInstanceId());
+    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks.get(0).getProcessInstanceId()).isEqualTo(instance1Id);
   }
 
   @Test
@@ -164,8 +164,8 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
       .execute();
 
     // then
-    assertEquals(1, tasks.size());
-    assertEquals(instance1Id, tasks.get(0).getProcessInstanceId());
+    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks.get(0).getProcessInstanceId()).isEqualTo(instance1Id);
   }
 
   @Test
@@ -180,8 +180,8 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
       .execute();
 
     // then
-    assertEquals(1, tasks.size());
-    assertEquals(instance1Id, tasks.get(0).getProcessInstanceId());
+    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks.get(0).getProcessInstanceId()).isEqualTo(instance1Id);
   }
 
   @Test
@@ -195,7 +195,7 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
       .execute();
 
     // then
-    assertEquals(2, tasks.size());
+    assertThat(tasks.size()).isEqualTo(2);
   }
 
   @Test
@@ -210,7 +210,7 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
       .execute();
 
     // then
-    assertEquals(2, tasks.size());
+    assertThat(tasks.size()).isEqualTo(2);
   }
 
   @Test
@@ -224,7 +224,7 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
       .execute();
 
     // then
-    assertEquals(2, tasks.size());
+    assertThat(tasks.size()).isEqualTo(2);
   }
 
   @Test
@@ -239,8 +239,8 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
       .execute();
 
     // then
-    assertEquals(1, tasks.size());
-    assertEquals(instance1Id, tasks.get(0).getProcessInstanceId());
+    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks.get(0).getProcessInstanceId()).isEqualTo(instance1Id);
   }
 
   @Test
@@ -255,6 +255,6 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
       .execute();
 
     // then
-    assertEquals(1, tasks.size());
+    assertThat(tasks.size()).isEqualTo(1);
   }
 }

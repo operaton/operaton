@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 
@@ -81,7 +82,7 @@ public class MigrationRemoveMultiInstanceTest {
         .done());
 
     List<Task> migratedTasks = testHelper.snapshotAfterMigration.getTasks();
-    Assert.assertEquals(3, migratedTasks.size());
+    assertThat(migratedTasks.size()).isEqualTo(3);
 
     // and it is possible to successfully complete the migrated instance
     for (Task migratedTask : migratedTasks) {
@@ -107,15 +108,15 @@ public class MigrationRemoveMultiInstanceTest {
     testHelper.createProcessInstanceAndMigrate(migrationPlan);
 
     // then
-    Assert.assertEquals(0, rule.getRuntimeService().createVariableInstanceQuery().variableName("nrOfInstances").count());
+    assertThat(rule.getRuntimeService().createVariableInstanceQuery().variableName("nrOfInstances").count()).isEqualTo(0);
 
     // the MI body variables are gone
-    Assert.assertEquals(0, rule.getRuntimeService().createVariableInstanceQuery().variableName("nrOfInstances").count());
-    Assert.assertEquals(0, rule.getRuntimeService().createVariableInstanceQuery().variableName("nrOfActiveInstances").count());
-    Assert.assertEquals(0, rule.getRuntimeService().createVariableInstanceQuery().variableName("nrOfCompletedInstances").count());
+    assertThat(rule.getRuntimeService().createVariableInstanceQuery().variableName("nrOfInstances").count()).isEqualTo(0);
+    assertThat(rule.getRuntimeService().createVariableInstanceQuery().variableName("nrOfActiveInstances").count()).isEqualTo(0);
+    assertThat(rule.getRuntimeService().createVariableInstanceQuery().variableName("nrOfCompletedInstances").count()).isEqualTo(0);
 
     // and the loop counters are still there (because they logically belong to the inner activity instances)
-    Assert.assertEquals(3, rule.getRuntimeService().createVariableInstanceQuery().variableName("loopCounter").count());
+    assertThat(rule.getRuntimeService().createVariableInstanceQuery().variableName("loopCounter").count()).isEqualTo(3);
   }
 
   @Test
@@ -163,7 +164,7 @@ public class MigrationRemoveMultiInstanceTest {
         .done());
 
     List<Task> migratedTasks = testHelper.snapshotAfterMigration.getTasks();
-    Assert.assertEquals(3, migratedTasks.size());
+    assertThat(migratedTasks.size()).isEqualTo(3);
 
     // and it is possible to successfully complete the migrated instance
     for (Task migratedTask : migratedTasks) {
@@ -210,7 +211,7 @@ public class MigrationRemoveMultiInstanceTest {
         .done());
 
     List<Task> migratedTasks = testHelper.snapshotAfterMigration.getTasks();
-    Assert.assertEquals(2, migratedTasks.size());
+    assertThat(migratedTasks.size()).isEqualTo(2);
 
     // and it is possible to successfully complete the migrated instance
     for (Task migratedTask : migratedTasks) {
@@ -268,7 +269,7 @@ public class MigrationRemoveMultiInstanceTest {
     testHelper.createProcessInstanceAndMigrate(migrationPlan);
 
     // then all MI variables are gone
-    Assert.assertEquals(0, rule.getRuntimeService().createVariableInstanceQuery().count());
+    assertThat(rule.getRuntimeService().createVariableInstanceQuery().count()).isEqualTo(0);
   }
 
   @Test

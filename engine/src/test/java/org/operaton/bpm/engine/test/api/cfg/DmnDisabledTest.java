@@ -26,7 +26,7 @@ import org.operaton.bpm.engine.impl.test.TestHelper;
 import org.junit.After;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Roman Smirnov
@@ -56,10 +56,10 @@ public class DmnDisabledTest {
       .getCommandExecutorSchemaOperations()
       .execute(new SchemaOperationsProcessEngineBuild());
 
-    assertEquals(0, processEngineImpl.getRepositoryService().createDecisionDefinitionQuery().count());
-    assertEquals(0, processEngineImpl.getRepositoryService().createDecisionDefinitionQuery().list().size());
-    assertEquals(0, processEngineImpl.getRepositoryService().createDecisionRequirementsDefinitionQuery().count());
-    assertEquals(0, processEngineImpl.getRepositoryService().createDecisionRequirementsDefinitionQuery().list().size());
+    assertThat(processEngineImpl.getRepositoryService().createDecisionDefinitionQuery().count()).isEqualTo(0);
+    assertThat(processEngineImpl.getRepositoryService().createDecisionDefinitionQuery().list().size()).isEqualTo(0);
+    assertThat(processEngineImpl.getRepositoryService().createDecisionRequirementsDefinitionQuery().count()).isEqualTo(0);
+    assertThat(processEngineImpl.getRepositoryService().createDecisionRequirementsDefinitionQuery().list().size()).isEqualTo(0);
 
   }
 

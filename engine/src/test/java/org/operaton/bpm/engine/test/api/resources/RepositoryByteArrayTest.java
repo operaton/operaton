@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.api.resources;
 
 import static org.operaton.bpm.engine.repository.ResourceTypes.REPOSITORY;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.Date;
@@ -101,7 +101,7 @@ public class RepositoryByteArrayTest {
         "org/operaton/bpm/engine/test/api/authorization/oneTaskCase.cmmn").getId();
 
     List<Resource> deploymentResources = repositoryService.getDeploymentResources(deploymentId);
-    assertEquals(5, deploymentResources.size());
+    assertThat(deploymentResources.size()).isEqualTo(5);
     for (Resource resource : deploymentResources) {
       ResourceEntity entity = (ResourceEntity) resource;
       checkEntity(fixedDate, entity);
@@ -126,21 +126,21 @@ public class RepositoryByteArrayTest {
 
     // then
     assertNotNull(byteArrayEntity);
-    assertEquals(fixedDate.toString(), byteArrayEntity.getCreateTime().toString());
-    assertEquals(REPOSITORY.getValue(), byteArrayEntity.getType());
+    assertThat(byteArrayEntity.getCreateTime().toString()).isEqualTo(fixedDate.toString());
+    assertThat(byteArrayEntity.getType()).isEqualTo(REPOSITORY.getValue());
   }
 
 
   protected void checkResource(Date expectedDate, String deploymentId) {
     List<Resource> deploymentResources = repositoryService.getDeploymentResources(deploymentId);
-    assertEquals(1, deploymentResources.size());
+    assertThat(deploymentResources.size()).isEqualTo(1);
     ResourceEntity resource = (ResourceEntity) deploymentResources.get(0);
     checkEntity(expectedDate, resource);
   }
 
   protected void checkEntity(Date expectedDate, ResourceEntity entity) {
     assertNotNull(entity);
-    assertEquals(expectedDate.toString(), entity.getCreateTime().toString());
-    assertEquals(REPOSITORY.getValue(), entity.getType());
+    assertThat(entity.getCreateTime().toString()).isEqualTo(expectedDate.toString());
+    assertThat(entity.getType()).isEqualTo(REPOSITORY.getValue());
   }
 }

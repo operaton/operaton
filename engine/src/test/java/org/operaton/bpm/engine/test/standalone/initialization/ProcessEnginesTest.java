@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.standalone.initialization;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
@@ -54,7 +54,7 @@ public class ProcessEnginesTest {
     List<ProcessEngineInfo> processEngineInfos = ProcessEngines.getProcessEngineInfos();
 
     // then
-    assertEquals(1, processEngineInfos.size());
+    assertThat(processEngineInfos.size()).isEqualTo(1);
 
     ProcessEngineInfo processEngineInfo = processEngineInfos.get(0);
     assertNull(processEngineInfo.getException());

@@ -23,7 +23,6 @@ import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.DEFAULT_PROCESS_KEY;
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.DEFAULT_TOPIC;
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.createDefaultExternalTaskModel;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
@@ -221,7 +220,7 @@ public class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest 
 
     // then
     assertNotNull(stacktrace);
-    assertEquals(ERROR_DETAILS, stacktrace);
+    assertThat(stacktrace).isEqualTo(ERROR_DETAILS);
   }
 
   @Test
@@ -243,7 +242,7 @@ public class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest 
 
     // then
     assertNotNull(stacktrace);
-    assertEquals(ERROR_DETAILS, stacktrace);
+    assertThat(stacktrace).isEqualTo(ERROR_DETAILS);
   }
 
   @Test

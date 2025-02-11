@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.repository;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
@@ -68,11 +68,11 @@ public class ProcessDefinitionCandidateTest {
     // then
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     List<IdentityLink> links = repositoryService.getIdentityLinksForProcessDefinition(processDefinition.getId());
-    assertEquals(1, links.size());
+    assertThat(links.size()).isEqualTo(1);
 
     IdentityLink link = links.get(0);
     assertNotNull(link.getTenantId());
-    assertEquals(TENANT_ONE, link.getTenantId());
+    assertThat(link.getTenantId()).isEqualTo(TENANT_ONE);
   }
 
   @Test
@@ -86,11 +86,11 @@ public class ProcessDefinitionCandidateTest {
     // then
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     List<IdentityLink> links = repositoryService.getIdentityLinksForProcessDefinition(processDefinition.getId());
-    assertEquals(3, links.size());
+    assertThat(links.size()).isEqualTo(3);
 
     for (IdentityLink link : links) {
       assertNotNull(link.getTenantId());
-      assertEquals(TENANT_ONE, link.getTenantId());
+      assertThat(link.getTenantId()).isEqualTo(TENANT_ONE);
     }
   }
 
@@ -105,11 +105,11 @@ public class ProcessDefinitionCandidateTest {
     // then
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     List<IdentityLink> links = repositoryService.getIdentityLinksForProcessDefinition(processDefinition.getId());
-    assertEquals(1, links.size());
+    assertThat(links.size()).isEqualTo(1);
 
     IdentityLink link = links.get(0);
     assertNotNull(link.getTenantId());
-    assertEquals(TENANT_ONE, link.getTenantId());
+    assertThat(link.getTenantId()).isEqualTo(TENANT_ONE);
   }
 
   @Test
@@ -123,11 +123,11 @@ public class ProcessDefinitionCandidateTest {
     // then
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     List<IdentityLink> links = repositoryService.getIdentityLinksForProcessDefinition(processDefinition.getId());
-    assertEquals(3, links.size());
+    assertThat(links.size()).isEqualTo(3);
 
     for (IdentityLink link : links) {
       assertNotNull(link.getTenantId());
-      assertEquals(TENANT_ONE, link.getTenantId());
+      assertThat(link.getTenantId()).isEqualTo(TENANT_ONE);
     }
   }
 }

@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.handler.specification;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
@@ -46,10 +46,10 @@ public class DelegateExpressionExecutionListenerSpec extends AbstractExecutionLi
     assertTrue(listener instanceof DelegateExpressionCaseExecutionListener);
 
     DelegateExpressionCaseExecutionListener delegateExpressionListener = (DelegateExpressionCaseExecutionListener) listener;
-    assertEquals(DELEGATE_EXPRESSION, delegateExpressionListener.getExpressionText());
+    assertThat(delegateExpressionListener.getExpressionText()).isEqualTo(DELEGATE_EXPRESSION);
 
     List<FieldDeclaration> fieldDeclarations = delegateExpressionListener.getFieldDeclarations();
-    assertEquals(fieldSpecs.size(), fieldDeclarations.size());
+    assertThat(fieldDeclarations.size()).isEqualTo(fieldSpecs.size());
 
     for (int i = 0; i < fieldDeclarations.size(); i++) {
       FieldDeclaration declaration = fieldDeclarations.get(i);

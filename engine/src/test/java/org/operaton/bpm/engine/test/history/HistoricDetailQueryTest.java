@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.test.history;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.tuple;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -116,8 +115,8 @@ public class HistoricDetailQueryTest {
     HistoricDetailQuery query = historyService.createHistoricDetailQuery()
             .userOperationId(userOperationId);
 
-    assertEquals(1, query.list().size());
-    assertEquals(1, query.count());
+    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.count()).isEqualTo(1);
   }
 
   @Test
@@ -139,8 +138,8 @@ public class HistoricDetailQueryTest {
         .userOperationId(userOperationId)
         .variableUpdates();
 
-    assertEquals(1, query.list().size());
-    assertEquals(1, query.count());
+    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.count()).isEqualTo(1);
   }
 
   @Test
@@ -157,8 +156,8 @@ public class HistoricDetailQueryTest {
     HistoricDetailQuery query = historyService.createHistoricDetailQuery()
             .userOperationId("invalid");
 
-    assertEquals(0, query.list().size());
-    assertEquals(0, query.count());
+    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.count()).isEqualTo(0);
 
     try {
       query.userOperationId(null);
@@ -182,8 +181,8 @@ public class HistoricDetailQueryTest {
     HistoricDetailQuery query = historyService.createHistoricDetailQuery()
             .executionId(executionId);
 
-    assertEquals(1, query.list().size());
-    assertEquals(1, query.count());
+    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.count()).isEqualTo(1);
   }
 
   @Test
@@ -200,8 +199,8 @@ public class HistoricDetailQueryTest {
     HistoricDetailQuery query = historyService.createHistoricDetailQuery()
             .executionId("invalid");
 
-    assertEquals(0, query.list().size());
-    assertEquals(0, query.count());
+    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.count()).isEqualTo(0);
   }
 
   @Test
@@ -243,12 +242,12 @@ public class HistoricDetailQueryTest {
         .variableTypeIn("string");
 
     // then
-    assertEquals(1, query.list().size());
-    assertEquals(1, query.count());
+    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.count()).isEqualTo(1);
     HistoricDetail historicDetail = query.list().get(0);
     if (historicDetail instanceof HistoricVariableUpdate variableUpdate) {
-      assertEquals("stringVar", variableUpdate.getVariableName());
-      assertEquals("string", variableUpdate.getTypeName());
+      assertThat(variableUpdate.getVariableName()).isEqualTo("stringVar");
+      assertThat(variableUpdate.getTypeName()).isEqualTo("string");
     } else {
       fail("Historic detail should be a variable update!");
     }
@@ -269,12 +268,12 @@ public class HistoricDetailQueryTest {
         .variableTypeIn("Boolean");
 
     // then
-    assertEquals(1, query.list().size());
-    assertEquals(1, query.count());
+    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.count()).isEqualTo(1);
     HistoricDetail historicDetail = query.list().get(0);
     if (historicDetail instanceof HistoricVariableUpdate variableUpdate) {
-      assertEquals("boolVar", variableUpdate.getVariableName());
-      assertEquals("boolean", variableUpdate.getTypeName());
+      assertThat(variableUpdate.getVariableName()).isEqualTo("boolVar");
+      assertThat(variableUpdate.getTypeName()).isEqualTo("boolean");
     } else {
       fail("Historic detail should be a variable update!");
     }
@@ -298,8 +297,8 @@ public class HistoricDetailQueryTest {
         .variableTypeIn("boolean", "integer", "Serializable");
 
     // then
-    assertEquals(3, query.list().size());
-    assertEquals(3, query.count());
+    assertThat(query.list().size()).isEqualTo(3);
+    assertThat(query.count()).isEqualTo(3);
     Set<String> allowedVariableTypes = new HashSet<>();
     allowedVariableTypes.add("boolean");
     allowedVariableTypes.add("integer");
@@ -329,7 +328,7 @@ public class HistoricDetailQueryTest {
         .variableTypeIn("invalid");
 
     // then
-    assertEquals(0, query.count());
+    assertThat(query.count()).isEqualTo(0);
 
     try {
       // when
@@ -561,8 +560,8 @@ public class HistoricDetailQueryTest {
         .processInstanceIdIn(processInstance.getProcessInstanceId());
 
     // then
-    assertEquals(1, query.count());
-    assertEquals(query.list().get(0).getProcessInstanceId(), processInstance.getId());
+    assertThat(query.count()).isEqualTo(1);
+    assertThat(processInstance.getId()).isEqualTo(query.list().get(0).getProcessInstanceId());
   }
 
   @Test
@@ -585,7 +584,7 @@ public class HistoricDetailQueryTest {
     Set<String> expectedProcessInstanceIds = new HashSet<>();
     expectedProcessInstanceIds.add(processInstance.getId());
     expectedProcessInstanceIds.add(processInstance2.getId());
-    assertEquals(2, query.count());
+    assertThat(query.count()).isEqualTo(2);
     assertTrue(expectedProcessInstanceIds.contains(query.list().get(0).getProcessInstanceId()));
     assertTrue(expectedProcessInstanceIds.contains(query.list().get(1).getProcessInstanceId()));
   }
@@ -604,7 +603,7 @@ public class HistoricDetailQueryTest {
         .processInstanceIdIn("foo");
 
     // then
-    assertEquals(0, query.count());
+    assertThat(query.count()).isEqualTo(0);
   }
 
   @Test
@@ -657,8 +656,8 @@ public class HistoricDetailQueryTest {
       historyService.createHistoricDetailQuery();
 
     // then
-    assertEquals(1, query.occurredBefore(hourFromNow.getTime()).count());
-    assertEquals(0, query.occurredBefore(hourAgo.getTime()).count());
+    assertThat(query.occurredBefore(hourFromNow.getTime()).count()).isEqualTo(1);
+    assertThat(query.occurredBefore(hourAgo.getTime()).count()).isEqualTo(0);
 
   }
 
@@ -683,8 +682,8 @@ public class HistoricDetailQueryTest {
       historyService.createHistoricDetailQuery();
 
     // then
-    assertEquals(0, query.occurredAfter(hourFromNow.getTime()).count());
-    assertEquals(1, query.occurredAfter(hourAgo.getTime()).count());
+    assertThat(query.occurredAfter(hourFromNow.getTime()).count()).isEqualTo(0);
+    assertThat(query.occurredAfter(hourAgo.getTime()).count()).isEqualTo(1);
   }
 
   @Test
@@ -708,10 +707,10 @@ public class HistoricDetailQueryTest {
       historyService.createHistoricDetailQuery();
 
     // then
-    assertEquals(0, query.occurredAfter(hourFromNow.getTime()).occurredBefore(hourFromNow.getTime()).count());
-    assertEquals(1, query.occurredAfter(hourAgo.getTime()).occurredBefore(hourFromNow.getTime()).count());
-    assertEquals(0, query.occurredAfter(hourFromNow.getTime()).occurredBefore(hourAgo.getTime()).count());
-    assertEquals(0, query.occurredAfter(hourAgo.getTime()).occurredBefore(hourAgo.getTime()).count());
+    assertThat(query.occurredAfter(hourFromNow.getTime()).occurredBefore(hourFromNow.getTime()).count()).isEqualTo(0);
+    assertThat(query.occurredAfter(hourAgo.getTime()).occurredBefore(hourFromNow.getTime()).count()).isEqualTo(1);
+    assertThat(query.occurredAfter(hourFromNow.getTime()).occurredBefore(hourAgo.getTime()).count()).isEqualTo(0);
+    assertThat(query.occurredAfter(hourAgo.getTime()).occurredBefore(hourAgo.getTime()).count()).isEqualTo(0);
   }
 
   @Test
@@ -793,7 +792,7 @@ public class HistoricDetailQueryTest {
         .list();
 
     // then
-    assertEquals(2, details.size());
+    assertThat(details.size()).isEqualTo(2);
     for (HistoricDetail historicDetail : details) {
       HistoricVariableUpdateEventEntity detail = (HistoricVariableUpdateEventEntity) historicDetail;
       String variableValue = detail.getTextValue();
@@ -827,7 +826,7 @@ public class HistoricDetailQueryTest {
         .list();
 
     // then
-    assertEquals(2, details.size());
+    assertThat(details.size()).isEqualTo(2);
     for (HistoricDetail historicDetail : details) {
       HistoricVariableUpdateEventEntity detail = (HistoricVariableUpdateEventEntity) historicDetail;
 
@@ -863,7 +862,7 @@ public class HistoricDetailQueryTest {
         .list();
 
     // then
-    assertEquals(2, details.size());
+    assertThat(details.size()).isEqualTo(2);
     for (HistoricDetail historicDetail : details) {
       HistoricVariableUpdateEventEntity detail = (HistoricVariableUpdateEventEntity) historicDetail;
 
@@ -896,7 +895,7 @@ public class HistoricDetailQueryTest {
         .list();
 
     // then
-    assertEquals(2, details.size());
+    assertThat(details.size()).isEqualTo(2);
     for (HistoricDetail historicDetail : details) {
       HistoricVariableUpdateEventEntity detail = (HistoricVariableUpdateEventEntity) historicDetail;
 
@@ -904,9 +903,9 @@ public class HistoricDetailQueryTest {
 
       String variableValue = detail.getTextValue();
       if (variableValue.equals(initalValue)) {
-        assertEquals("foo", detail.getVariableName());
+        assertThat(detail.getVariableName()).isEqualTo("foo");
       } else if (variableValue.equals("listener invoked")) {
-        assertEquals("listener", detail.getVariableName());
+        assertThat(detail.getVariableName()).isEqualTo("listener");
       } else {
         fail("illegal variable value:" + variableValue);
       }
@@ -939,15 +938,15 @@ public class HistoricDetailQueryTest {
         .list();
 
     // then
-    assertEquals(2, details.size());
+    assertThat(details.size()).isEqualTo(2);
     for (HistoricDetail historicDetail : details) {
       HistoricVariableUpdateEventEntity detail = (HistoricVariableUpdateEventEntity) historicDetail;
       String variableValue = detail.getTextValue();
       assertTrue(detail.isInitial());
       if (variableValue.equals(initalValue)) {
-        assertEquals("foo", detail.getVariableName());
+        assertThat(detail.getVariableName()).isEqualTo("foo");
       } else if (variableValue.equals("listener invoked")) {
-        assertEquals("listener", detail.getVariableName());
+        assertThat(detail.getVariableName()).isEqualTo("listener");
       } else {
         fail("illegal variable value:" + variableValue);
       }
@@ -980,15 +979,15 @@ public class HistoricDetailQueryTest {
         .list();
 
     // then
-    assertEquals(2, details.size());
+    assertThat(details.size()).isEqualTo(2);
     for (HistoricDetail historicDetail : details) {
       HistoricVariableUpdateEventEntity detail = (HistoricVariableUpdateEventEntity) historicDetail;
       String variableValue = detail.getTextValue();
       assertTrue(detail.isInitial());
       if (variableValue.equals(initalValue)) {
-        assertEquals("foo", detail.getVariableName());
+        assertThat(detail.getVariableName()).isEqualTo("foo");
       } else if (variableValue.equals("listener invoked")) {
-        assertEquals("listener", detail.getVariableName());
+        assertThat(detail.getVariableName()).isEqualTo("listener");
       } else {
         fail("illegal variable value:" + variableValue);
       }

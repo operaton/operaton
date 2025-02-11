@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.standalone.task;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -84,7 +84,7 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
     decorate(task, taskDecorator);
 
     // then
-    assertEquals(aTaskName, task.getName());
+    assertThat(task.getName()).isEqualTo(aTaskName);
   }
 
   @Test
@@ -100,7 +100,7 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
     decorate(task, taskDecorator);
 
     // then
-    assertEquals(aTaskName, task.getName());
+    assertThat(task.getName()).isEqualTo(aTaskName);
   }
 
   @Test
@@ -114,7 +114,7 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
     decorate(task, taskDecorator);
 
     // then
-    assertEquals(aDescription, task.getDescription());
+    assertThat(task.getDescription()).isEqualTo(aDescription);
   }
 
   @Test
@@ -130,7 +130,7 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
     decorate(task, taskDecorator);
 
     // then
-    assertEquals(aDescription, task.getDescription());
+    assertThat(task.getDescription()).isEqualTo(aDescription);
   }
 
   @Test
@@ -146,7 +146,7 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
     decorate(task, taskDecorator);
 
     // then
-    assertEquals(dueDate, task.getDueDate());
+    assertThat(task.getDueDate()).isEqualTo(dueDate);
   }
 
   @Test
@@ -163,7 +163,7 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
     decorate(task, taskDecorator);
 
     // then
-    assertEquals(dueDate, task.getDueDate());
+    assertThat(task.getDueDate()).isEqualTo(dueDate);
   }
 
   @Test
@@ -179,7 +179,7 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
     decorate(task, taskDecorator);
 
     // then
-    assertEquals(followUpDate, task.getFollowUpDate());
+    assertThat(task.getFollowUpDate()).isEqualTo(followUpDate);
   }
 
   @Test
@@ -196,7 +196,7 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
     decorate(task, taskDecorator);
 
     // then
-    assertEquals(followUpDate, task.getFollowUpDate());
+    assertThat(task.getFollowUpDate()).isEqualTo(followUpDate);
   }
 
   @Test
@@ -210,7 +210,7 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
     decorate(task, taskDecorator);
 
     // then
-    assertEquals(Integer.parseInt(aPriority), task.getPriority());
+    assertThat(task.getPriority()).isEqualTo(Integer.parseInt(aPriority));
   }
 
   @Test
@@ -226,7 +226,7 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
     decorate(task, taskDecorator);
 
     // then
-    assertEquals(aPriority, task.getPriority());
+    assertThat(task.getPriority()).isEqualTo(aPriority);
   }
 
   @Test
@@ -240,7 +240,7 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
     decorate(task, taskDecorator);
 
     // then
-    assertEquals(aAssignee, task.getAssignee());
+    assertThat(task.getAssignee()).isEqualTo(aAssignee);
   }
 
   @Test
@@ -256,7 +256,7 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
     decorate(task, taskDecorator);
 
     // then
-    assertEquals(aAssignee, task.getAssignee());
+    assertThat(task.getAssignee()).isEqualTo(aAssignee);
   }
 
   @Test
@@ -277,21 +277,21 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
 
     // then
     Set<IdentityLink> candidates = task.getCandidates();
-    assertEquals(3, candidates.size());
+    assertThat(candidates.size()).isEqualTo(3);
 
     for (IdentityLink identityLink : candidates) {
       String taskId = identityLink.getTaskId();
-      assertEquals(task.getId(), taskId);
+      assertThat(taskId).isEqualTo(task.getId());
 
-      assertEquals(IdentityLinkType.CANDIDATE, identityLink.getType());
+      assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
 
       String userId = identityLink.getUserId();
       if ("john".equals(userId)) {
-        assertEquals("john", userId);
+        assertThat(userId).isEqualTo("john");
       } else if ("peter".equals(userId)) {
-        assertEquals("peter", userId);
+        assertThat(userId).isEqualTo("peter");
       } else if ("mary".equals(userId)) {
-        assertEquals("mary", userId);
+        assertThat(userId).isEqualTo("mary");
       } else {
         fail("Unexpected user: " + userId);
       }
@@ -321,21 +321,21 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
 
     // then
     Set<IdentityLink> candidates = task.getCandidates();
-    assertEquals(3, candidates.size());
+    assertThat(candidates.size()).isEqualTo(3);
 
     for (IdentityLink identityLink : candidates) {
       String taskId = identityLink.getTaskId();
-      assertEquals(task.getId(), taskId);
+      assertThat(taskId).isEqualTo(task.getId());
 
-      assertEquals(IdentityLinkType.CANDIDATE, identityLink.getType());
+      assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
 
       String userId = identityLink.getUserId();
       if ("john".equals(userId)) {
-        assertEquals("john", userId);
+        assertThat(userId).isEqualTo("john");
       } else if ("peter".equals(userId)) {
-        assertEquals("peter", userId);
+        assertThat(userId).isEqualTo("peter");
       } else if ("mary".equals(userId)) {
-        assertEquals("mary", userId);
+        assertThat(userId).isEqualTo("mary");
       } else {
         fail("Unexpected user: " + userId);
       }
@@ -360,21 +360,21 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
 
     // then
     Set<IdentityLink> candidates = task.getCandidates();
-    assertEquals(3, candidates.size());
+    assertThat(candidates.size()).isEqualTo(3);
 
     for (IdentityLink identityLink : candidates) {
       String taskId = identityLink.getTaskId();
-      assertEquals(task.getId(), taskId);
+      assertThat(taskId).isEqualTo(task.getId());
 
-      assertEquals(IdentityLinkType.CANDIDATE, identityLink.getType());
+      assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
 
       String groupId = identityLink.getGroupId();
       if ("management".equals(groupId)) {
-        assertEquals("management", groupId);
+        assertThat(groupId).isEqualTo("management");
       } else if ("accounting".equals(groupId)) {
-        assertEquals("accounting", groupId);
+        assertThat(groupId).isEqualTo("accounting");
       } else if ("backoffice".equals(groupId)) {
-        assertEquals("backoffice", groupId);
+        assertThat(groupId).isEqualTo("backoffice");
       } else {
         fail("Unexpected group: " + groupId);
       }
@@ -404,21 +404,21 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
 
     // then
     Set<IdentityLink> candidates = task.getCandidates();
-    assertEquals(3, candidates.size());
+    assertThat(candidates.size()).isEqualTo(3);
 
     for (IdentityLink identityLink : candidates) {
       String taskId = identityLink.getTaskId();
-      assertEquals(task.getId(), taskId);
+      assertThat(taskId).isEqualTo(task.getId());
 
-      assertEquals(IdentityLinkType.CANDIDATE, identityLink.getType());
+      assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
 
       String groupId = identityLink.getGroupId();
       if ("management".equals(groupId)) {
-        assertEquals("management", groupId);
+        assertThat(groupId).isEqualTo("management");
       } else if ("accounting".equals(groupId)) {
-        assertEquals("accounting", groupId);
+        assertThat(groupId).isEqualTo("accounting");
       } else if ("backoffice".equals(groupId)) {
-        assertEquals("backoffice", groupId);
+        assertThat(groupId).isEqualTo("backoffice");
       } else {
         fail("Unexpected group: " + groupId);
       }

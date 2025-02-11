@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.conditional;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
@@ -130,7 +130,7 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
     assertNotNull(task);
-    assertEquals(TASK_BEFORE_CONDITION, task.getName());
+    assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task is completed
     taskService.complete(task.getId());
@@ -138,7 +138,7 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
     //then start listener sets variable
     //conditional event is triggered
     tasksAfterVariableIsSet = taskQuery.list();
-    assertEquals(specifier.getExpectedInterruptingCount(), taskQuery.taskName(TASK_AFTER_CONDITION).count());
+    assertThat(taskQuery.taskName(TASK_AFTER_CONDITION).count()).isEqualTo(specifier.getExpectedInterruptingCount());
   }
 
   @Test
@@ -164,8 +164,8 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
     //then start listener sets variable
     //non interrupting boundary event is triggered
     tasksAfterVariableIsSet = taskQuery.list();
-    assertEquals(1 + specifier.getExpectedNonInterruptingCount(), tasksAfterVariableIsSet.size());
-    assertEquals(specifier.getExpectedNonInterruptingCount(), taskQuery.taskName(TASK_AFTER_CONDITION).count());
+    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(1 + specifier.getExpectedNonInterruptingCount());
+    assertThat(taskQuery.taskName(TASK_AFTER_CONDITION).count()).isEqualTo(specifier.getExpectedNonInterruptingCount());
   }
 
   @Test
@@ -190,7 +190,7 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
     assertNotNull(task);
-    assertEquals(TASK_BEFORE_CONDITION, task.getName());
+    assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task is completed
     taskService.complete(task.getId());
@@ -198,7 +198,7 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
     //then take listener sets variable
     //conditional event is triggered
     tasksAfterVariableIsSet = taskQuery.list();
-    assertEquals(specifier.getExpectedInterruptingCount(), taskQuery.taskName(TASK_AFTER_CONDITION).count());
+    assertThat(taskQuery.taskName(TASK_AFTER_CONDITION).count()).isEqualTo(specifier.getExpectedInterruptingCount());
   }
 
   @Test
@@ -223,7 +223,7 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
     assertNotNull(task);
-    assertEquals(TASK_BEFORE_CONDITION, task.getName());
+    assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task is completed
     taskService.complete(task.getId());
@@ -231,8 +231,8 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
     //then take listener sets variable
     //non interrupting boundary event is triggered
     tasksAfterVariableIsSet = taskQuery.list();
-    assertEquals(1 + specifier.getExpectedNonInterruptingCount(), tasksAfterVariableIsSet.size());
-    assertEquals(specifier.getExpectedNonInterruptingCount(), taskQuery.taskName(TASK_AFTER_CONDITION).count());
+    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(1 + specifier.getExpectedNonInterruptingCount());
+    assertThat(taskQuery.taskName(TASK_AFTER_CONDITION).count()).isEqualTo(specifier.getExpectedNonInterruptingCount());
   }
 
   @Test
@@ -257,7 +257,7 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
     assertNotNull(task);
-    assertEquals(TASK_BEFORE_CONDITION, task.getName());
+    assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task is completed
     taskService.complete(task.getId());
@@ -265,7 +265,7 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
     //then take listener sets variable
     //conditional event is triggered
     tasksAfterVariableIsSet = taskQuery.list();
-    assertEquals(specifier.getExpectedInterruptingCount(), taskQuery.taskName(TASK_AFTER_CONDITION).count());
+    assertThat(taskQuery.taskName(TASK_AFTER_CONDITION).count()).isEqualTo(specifier.getExpectedInterruptingCount());
   }
 
   @Test
@@ -294,7 +294,7 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
 
     //then take listener sets variable
     //non interrupting boundary event is triggered
-    assertEquals(specifier.getExpectedNonInterruptingCount(),  taskService.createTaskQuery().taskName(TASK_AFTER_CONDITION).count());
+    assertThat(taskService.createTaskQuery().taskName(TASK_AFTER_CONDITION).count()).isEqualTo(specifier.getExpectedNonInterruptingCount());
 
     //and job was created
     Job job = engine.getManagementService().createJobQuery().singleResult();
@@ -304,14 +304,14 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
     //when job is executed task is created
     engine.getManagementService().executeJob(job.getId());
     //when all tasks are completed
-    assertEquals(specifier.getExpectedNonInterruptingCount() + 1, taskQuery.count());
+    assertThat(taskQuery.count()).isEqualTo(specifier.getExpectedNonInterruptingCount() + 1);
     for (Task task : taskQuery.list()) {
       taskService.complete(task.getId());
     }
 
     //then no task exist and process instance is ended
     tasksAfterVariableIsSet = taskQuery.list();
-    assertEquals(0, tasksAfterVariableIsSet.size());
+    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(0);
     assertNull(runtimeService.createProcessInstanceQuery().singleResult());
   }
 
@@ -339,7 +339,7 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
     //then end listener sets variable
     //conditional event is triggered
     tasksAfterVariableIsSet = taskQuery.list();
-    assertEquals(specifier.getExpectedInterruptingCount(), taskQuery.taskName(TASK_AFTER_CONDITION).count());
+    assertThat(taskQuery.taskName(TASK_AFTER_CONDITION).count()).isEqualTo(specifier.getExpectedInterruptingCount());
   }
 
   @Test
@@ -365,8 +365,8 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
     //then end listener sets variable
     //non interrupting event is triggered
     tasksAfterVariableIsSet = taskQuery.list();
-    assertEquals(1 + specifier.getExpectedNonInterruptingCount(), tasksAfterVariableIsSet.size());
-    assertEquals(specifier.getExpectedNonInterruptingCount(), taskQuery.taskName(TASK_AFTER_CONDITION).count());
+    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(1 + specifier.getExpectedNonInterruptingCount());
+    assertThat(taskQuery.taskName(TASK_AFTER_CONDITION).count()).isEqualTo(specifier.getExpectedNonInterruptingCount());
   }
 
   @Test
@@ -390,8 +390,8 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
     //execution stays in task after conditional event in event sub process
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertEquals(TASK_AFTER_CONDITION, task.getName());
+    assertThat(task.getName()).isEqualTo(TASK_AFTER_CONDITION);
     tasksAfterVariableIsSet = taskQuery.list();
-    assertEquals(specifier.getExpectedInterruptingCount(), taskQuery.taskName(TASK_AFTER_CONDITION).count());
+    assertThat(taskQuery.taskName(TASK_AFTER_CONDITION).count()).isEqualTo(specifier.getExpectedInterruptingCount());
   }
 }

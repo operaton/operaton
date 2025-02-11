@@ -16,7 +16,8 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.within;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -93,7 +94,7 @@ public class HistoricTaskDurationReportTest {
     List<DurationReportResult> taskReportResults = historyService.createHistoricTaskInstanceReport().duration(PeriodUnit.MONTH);
 
     // then
-    assertEquals(3, taskReportResults.size());
+    assertThat(taskReportResults.size()).isEqualTo(3);
   }
 
   @Test
@@ -113,7 +114,7 @@ public class HistoricTaskDurationReportTest {
       .duration(PeriodUnit.MONTH);
 
     // then
-    assertEquals(1, taskReportResults.size());
+    assertThat(taskReportResults.size()).isEqualTo(1);
   }
 
   @Test
@@ -133,7 +134,7 @@ public class HistoricTaskDurationReportTest {
       .duration(PeriodUnit.MONTH);
 
     // then
-    assertEquals(2, taskReportResults.size());
+    assertThat(taskReportResults.size()).isEqualTo(2);
   }
 
   @Test
@@ -164,9 +165,9 @@ public class HistoricTaskDurationReportTest {
 
     long avg = sum / historicTaskInstances.size();
 
-    assertEquals("maximum", max, taskReportResult.getMaximum());
-    assertEquals("minimum", min, taskReportResult.getMinimum());
-    assertEquals("average", avg, taskReportResult.getAverage(), 0);
+    assertThat(taskReportResult.getMaximum()).as("maximum").isEqualTo(max);
+    assertThat(taskReportResult.getMinimum()).as("minimum").isEqualTo(min);
+    assertThat(taskReportResult.getAverage()).as("average").isCloseTo(avg, within(0L));
 
   }
 

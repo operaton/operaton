@@ -20,7 +20,7 @@ import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertTha
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -107,22 +107,22 @@ public class MultiTenancySingleProcessInstanceModificationAsyncTest {
         .cancelActivityInstance(getInstanceIdForActivity(tree, "task1"))
         .executeAsync();
     assertNotNull(modificationBatch);
-    assertEquals(TENANT_ONE, modificationBatch.getTenantId());
+    assertThat(modificationBatch.getTenantId()).isEqualTo(TENANT_ONE);
     Job job = managementService.createJobQuery().jobDefinitionId(modificationBatch.getSeedJobDefinitionId()).singleResult();
     // seed job
-    assertEquals(TENANT_ONE, job.getTenantId());
+    assertThat(job.getTenantId()).isEqualTo(TENANT_ONE);
     managementService.executeJob(job.getId());
 
     for (Job pending : managementService.createJobQuery().jobDefinitionId(modificationBatch.getBatchJobDefinitionId()).list()) {
       managementService.executeJob(pending.getId());
-      assertEquals(processDefinition.getDeploymentId(), pending.getDeploymentId());
-      assertEquals(TENANT_ONE, pending.getTenantId());
+      assertThat(pending.getDeploymentId()).isEqualTo(processDefinition.getDeploymentId());
+      assertThat(pending.getTenantId()).isEqualTo(TENANT_ONE);
     }
 
     // when
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     assertNotNull(updatedTree);
-    assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
+    assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task2").done());
 

@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy.query;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.List;
@@ -112,11 +112,11 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
     List<DeploymentStatistics> deploymentStatistics = managementService
       .createDeploymentStatisticsQuery()
       .list();
- 
+
     // then
-    assertEquals(1, deploymentStatistics.size());
+    assertThat(deploymentStatistics.size()).isEqualTo(1);
     // user must see only the process instances that belongs to no tenant
-    assertEquals(1, deploymentStatistics.get(0).getInstances());
+    assertThat(deploymentStatistics.get(0).getInstances()).isEqualTo(1);
     
   }
 
@@ -132,11 +132,11 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
     List<DeploymentStatistics> deploymentStatistics = managementService
       .createDeploymentStatisticsQuery()
       .list();
- 
+
     // then
-    assertEquals(1, deploymentStatistics.size());
+    assertThat(deploymentStatistics.size()).isEqualTo(1);
     // user can see the process instances that belongs to tenant1 and instances that have no tenant  
-    assertEquals(2, deploymentStatistics.get(0).getInstances());
+    assertThat(deploymentStatistics.get(0).getInstances()).isEqualTo(2);
     
   }
 
@@ -153,10 +153,10 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
     List<DeploymentStatistics> deploymentStatistics = managementService
       .createDeploymentStatisticsQuery()
       .list();
- 
+
     // then
-    assertEquals(1, deploymentStatistics.size());
-    assertEquals(3, deploymentStatistics.get(0).getInstances());
+    assertThat(deploymentStatistics.size()).isEqualTo(1);
+    assertThat(deploymentStatistics.get(0).getInstances()).isEqualTo(3);
   }
 
   @Test
@@ -171,11 +171,11 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
     List<DeploymentStatistics> deploymentStatistics = managementService
       .createDeploymentStatisticsQuery()
       .list();
- 
+
     // then
-    assertEquals(1, deploymentStatistics.size());
+    assertThat(deploymentStatistics.size()).isEqualTo(1);
     // user can see all the active process instances 
-    assertEquals(3, deploymentStatistics.get(0).getInstances());
+    assertThat(deploymentStatistics.get(0).getInstances()).isEqualTo(3);
     
   }
 
@@ -196,8 +196,8 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
       .list();
 
     // then
-    assertEquals(1, deploymentStatistics.size());
-    assertEquals(1, deploymentStatistics.get(0).getFailedJobs());
+    assertThat(deploymentStatistics.size()).isEqualTo(1);
+    assertThat(deploymentStatistics.get(0).getFailedJobs()).isEqualTo(1);
     
   }
 
@@ -219,8 +219,8 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
       .list();
 
     // then
-    assertEquals(1, deploymentStatistics.size());
-    assertEquals(3, deploymentStatistics.get(0).getFailedJobs());
+    assertThat(deploymentStatistics.size()).isEqualTo(1);
+    assertThat(deploymentStatistics.get(0).getFailedJobs()).isEqualTo(3);
     
   }
 
@@ -241,8 +241,8 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
       .list();
 
     // then
-    assertEquals(1, deploymentStatistics.size());
-    assertEquals(2, deploymentStatistics.get(0).getFailedJobs());
+    assertThat(deploymentStatistics.size()).isEqualTo(1);
+    assertThat(deploymentStatistics.get(0).getFailedJobs()).isEqualTo(2);
   }
 
   @Test
@@ -262,8 +262,8 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
       .list();
 
     // then
-    assertEquals(1, deploymentStatistics.size());
-    assertEquals(3, deploymentStatistics.get(0).getFailedJobs());
+    assertThat(deploymentStatistics.size()).isEqualTo(1);
+    assertThat(deploymentStatistics.get(0).getFailedJobs()).isEqualTo(3);
   }
 
   @Test
@@ -283,11 +283,11 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
       .list();
 
     // then
-    assertEquals(1, deploymentStatistics.size());
+    assertThat(deploymentStatistics.size()).isEqualTo(1);
     
     List<IncidentStatistics> incidentStatistics = deploymentStatistics.get(0).getIncidentStatistics();
-    assertEquals(1, incidentStatistics.size());
-    assertEquals(1, incidentStatistics.get(0).getIncidentCount());
+    assertThat(incidentStatistics.size()).isEqualTo(1);
+    assertThat(incidentStatistics.get(0).getIncidentCount()).isEqualTo(1);
   }
 
   @Test
@@ -308,11 +308,11 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
       .list();
 
     // then
-    assertEquals(1, deploymentStatistics.size());
+    assertThat(deploymentStatistics.size()).isEqualTo(1);
     
     List<IncidentStatistics> incidentStatistics = deploymentStatistics.get(0).getIncidentStatistics();
-    assertEquals(1, incidentStatistics.size());
-    assertEquals(3, incidentStatistics.get(0).getIncidentCount());
+    assertThat(incidentStatistics.size()).isEqualTo(1);
+    assertThat(incidentStatistics.get(0).getIncidentCount()).isEqualTo(3);
   }
 
   @Test
@@ -332,11 +332,11 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
       .list();
 
     // then
-    assertEquals(1, deploymentStatistics.size());
+    assertThat(deploymentStatistics.size()).isEqualTo(1);
     
     List<IncidentStatistics> incidentStatistics = deploymentStatistics.get(0).getIncidentStatistics();
-    assertEquals(1, incidentStatistics.size());
-    assertEquals(2, incidentStatistics.get(0).getIncidentCount());
+    assertThat(incidentStatistics.size()).isEqualTo(1);
+    assertThat(incidentStatistics.get(0).getIncidentCount()).isEqualTo(2);
   }
 
   @Test
@@ -356,10 +356,10 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
       .list();
 
     // then
-    assertEquals(1, deploymentStatistics.size());
+    assertThat(deploymentStatistics.size()).isEqualTo(1);
     List<IncidentStatistics> incidentStatistics = deploymentStatistics.get(0).getIncidentStatistics();
-    assertEquals(1, incidentStatistics.size());
-    assertEquals(3, incidentStatistics.get(0).getIncidentCount());
+    assertThat(incidentStatistics.size()).isEqualTo(1);
+    assertThat(incidentStatistics.get(0).getIncidentCount()).isEqualTo(3);
   }
 
   @Test
@@ -377,13 +377,13 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
       .createDeploymentStatisticsQuery()
       .includeIncidentsForType("failedJob")
       .list();
-    
+
     // then
-    assertEquals(1, deploymentStatistics.size());
+    assertThat(deploymentStatistics.size()).isEqualTo(1);
     
     List<IncidentStatistics> incidentStatistics = deploymentStatistics.get(0).getIncidentStatistics();
-    assertEquals(1, incidentStatistics.size());
-    assertEquals(2, incidentStatistics.get(0).getIncidentCount());
+    assertThat(incidentStatistics.size()).isEqualTo(1);
+    assertThat(incidentStatistics.get(0).getIncidentCount()).isEqualTo(2);
   }
 
   @Test
@@ -403,16 +403,16 @@ public class MultiTenancySharedDeploymentStatisticsQueryTest {
       .includeFailedJobs()
       .includeIncidents()
       .list();
-    
+
     // then
-    assertEquals(1, deploymentStatistics.size());
+    assertThat(deploymentStatistics.size()).isEqualTo(1);
     DeploymentStatistics singleDeploymentStatistics = deploymentStatistics.get(0);
-    assertEquals(4, singleDeploymentStatistics.getInstances());
-    assertEquals(4, singleDeploymentStatistics.getFailedJobs());
+    assertThat(singleDeploymentStatistics.getInstances()).isEqualTo(4);
+    assertThat(singleDeploymentStatistics.getFailedJobs()).isEqualTo(4);
     
     List<IncidentStatistics> incidentStatistics = singleDeploymentStatistics.getIncidentStatistics();
-    assertEquals(1, incidentStatistics.size());
-    assertEquals(4, incidentStatistics.get(0).getIncidentCount());
+    assertThat(incidentStatistics.size()).isEqualTo(1);
+    assertThat(incidentStatistics.get(0).getIncidentCount()).isEqualTo(4);
   }
 
   protected void startProcessInstances(String key) {

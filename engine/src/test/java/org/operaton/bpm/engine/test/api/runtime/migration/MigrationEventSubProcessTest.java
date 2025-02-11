@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.impl.migration.validation.instruction.ConditionalEventUpdateEventTriggerValidator.MIGRATION_CONDITIONAL_VALIDATION_ERROR_MSG;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
@@ -23,7 +24,6 @@ import static org.operaton.bpm.engine.test.api.runtime.migration.models.EventSub
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 import static org.operaton.bpm.engine.test.util.MigrationPlanValidationReportAssert.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.Date;
@@ -141,7 +141,7 @@ public class MigrationEventSubProcessTest {
         .done());
 
     testHelper.assertEventSubscriptionRemoved(EVENT_SUB_PROCESS_START_ID, EventSubProcessModels.MESSAGE_NAME);
-    Assert.assertEquals(0, testHelper.snapshotAfterMigration.getEventSubscriptions().size());
+    assertThat(testHelper.snapshotAfterMigration.getEventSubscriptions().size()).isEqualTo(0);
 
     // and it is possible to complete the process instance
     testHelper.completeTask(USER_TASK_ID);
@@ -318,7 +318,7 @@ public class MigrationEventSubProcessTest {
 
     // and it is possible to trigger the event subprocess
     rule.getRuntimeService().correlateMessage(EventSubProcessModels.MESSAGE_NAME);
-    Assert.assertEquals(1, rule.getTaskService().createTaskQuery().count());
+    assertThat(rule.getTaskService().createTaskQuery().count()).isEqualTo(1);
 
     // and complete the process instance
     testHelper.completeTask(EVENT_SUB_PROCESS_TASK_ID);
@@ -347,7 +347,7 @@ public class MigrationEventSubProcessTest {
     // and it is possible to trigger the event subprocess
     Job timerJob = testHelper.snapshotAfterMigration.getJobs().get(0);
     rule.getManagementService().executeJob(timerJob.getId());
-    Assert.assertEquals(1, rule.getTaskService().createTaskQuery().count());
+    assertThat(rule.getTaskService().createTaskQuery().count()).isEqualTo(1);
 
     // and complete the process instance
     testHelper.completeTask(EVENT_SUB_PROCESS_TASK_ID);
@@ -375,7 +375,7 @@ public class MigrationEventSubProcessTest {
 
     // and it is possible to trigger the event subprocess
     rule.getRuntimeService().signalEventReceived(EventSubProcessModels.SIGNAL_NAME);
-    Assert.assertEquals(1, rule.getTaskService().createTaskQuery().count());
+    assertThat(rule.getTaskService().createTaskQuery().count()).isEqualTo(1);
 
     // and complete the process instance
     testHelper.completeTask(EVENT_SUB_PROCESS_TASK_ID);
@@ -449,11 +449,11 @@ public class MigrationEventSubProcessTest {
     Incident incidentAfterMigration = rule.getRuntimeService().createIncidentQuery().singleResult();
     assertNotNull(incidentAfterMigration);
 
-    assertEquals(incidentBeforeMigration.getId(), incidentAfterMigration.getId());
-    assertEquals(timerTriggerJob.getId(), incidentAfterMigration.getConfiguration());
+    assertThat(incidentAfterMigration.getId()).isEqualTo(incidentBeforeMigration.getId());
+    assertThat(incidentAfterMigration.getConfiguration()).isEqualTo(timerTriggerJob.getId());
 
-    assertEquals(EVENT_SUB_PROCESS_START_ID, incidentAfterMigration.getActivityId());
-    assertEquals(targetProcessDefinition.getId(), incidentAfterMigration.getProcessDefinitionId());
+    assertThat(incidentAfterMigration.getActivityId()).isEqualTo(EVENT_SUB_PROCESS_START_ID);
+    assertThat(incidentAfterMigration.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());
 
     // and it is possible to complete the process
     rule.getManagementService().executeJob(timerTriggerJob.getId());
@@ -487,7 +487,7 @@ public class MigrationEventSubProcessTest {
 
     // and it is possible to trigger the event subprocess
     rule.getRuntimeService().correlateMessage(EventSubProcessModels.MESSAGE_NAME);
-    Assert.assertEquals(2, rule.getTaskService().createTaskQuery().count());
+    assertThat(rule.getTaskService().createTaskQuery().count()).isEqualTo(2);
 
     // and complete the process instance
     testHelper.completeTask(EVENT_SUB_PROCESS_TASK_ID);

@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.concurrency;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNull;
 
 import java.util.Collections;
@@ -112,11 +112,11 @@ public class CompetingExternalTaskFetchingTest {
     // thread1 succeeds
     thread1.proceedAndWaitTillDone();
     assertNull(thread1.exception);
-    assertEquals(1, thread1.fetchedTasks.size());
+    assertThat(thread1.fetchedTasks.size()).isEqualTo(1);
 
     // thread2 does not succeed in locking the job
     thread2.proceedAndWaitTillDone();
-    assertEquals(0, thread2.fetchedTasks.size());
+    assertThat(thread2.fetchedTasks.size()).isEqualTo(0);
     // but does not fail with an OptimisticLockingException
     assertNull(thread2.exception);
   }

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration.history;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 
 import java.util.Arrays;
@@ -104,15 +105,15 @@ public class MigrationHistoricIncidentTest {
     HistoricIncident historicIncident = historyService.createHistoricIncidentQuery().singleResult();
     Assert.assertNotNull(historicIncident);
 
-    Assert.assertEquals("newUserTask", historicIncident.getActivityId());
-    Assert.assertEquals(targetJobDefinition.getId(), historicIncident.getJobDefinitionId());
-    Assert.assertEquals(targetProcess.getId(), historicIncident.getProcessDefinitionId());
-    Assert.assertEquals(targetProcess.getKey(), historicIncident.getProcessDefinitionKey());
-    Assert.assertEquals(processInstance.getId(), historicIncident.getExecutionId());
+    assertThat(historicIncident.getActivityId()).isEqualTo("newUserTask");
+    assertThat(historicIncident.getJobDefinitionId()).isEqualTo(targetJobDefinition.getId());
+    assertThat(historicIncident.getProcessDefinitionId()).isEqualTo(targetProcess.getId());
+    assertThat(historicIncident.getProcessDefinitionKey()).isEqualTo(targetProcess.getKey());
+    assertThat(historicIncident.getExecutionId()).isEqualTo(processInstance.getId());
 
     // and other properties have not changed
-    Assert.assertEquals(incidentBeforeMigration.getCreateTime(), historicIncident.getCreateTime());
-    Assert.assertEquals(incidentBeforeMigration.getProcessInstanceId(), historicIncident.getProcessInstanceId());
+    assertThat(historicIncident.getCreateTime()).isEqualTo(incidentBeforeMigration.getCreateTime());
+    assertThat(historicIncident.getProcessInstanceId()).isEqualTo(incidentBeforeMigration.getProcessInstanceId());
 
   }
 
@@ -141,8 +142,6 @@ public class MigrationHistoricIncidentTest {
 
     HistoricIncident historicIncident = historyService.createHistoricIncidentQuery().singleResult();
     Assert.assertNotNull(historicIncident);
-    Assert.assertEquals(
-        activityInstance.getTransitionInstances("userTask")[0].getExecutionId(),
-        historicIncident.getExecutionId());
+    assertThat(historicIncident.getExecutionId()).isEqualTo(activityInstance.getTransitionInstances("userTask")[0].getExecutionId());
   }
 }

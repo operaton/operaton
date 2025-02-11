@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.api.resources;
 
 import static org.operaton.bpm.engine.repository.ResourceTypes.HISTORY;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
@@ -200,7 +200,7 @@ public class HistoryByteArrayTest {
 
     HistoricDecisionInstance historicDecisionInstance = engineRule.getHistoryService().createHistoricDecisionInstanceQuery().includeInputs().singleResult();
     List<HistoricDecisionInputInstance> inputInstances = historicDecisionInstance.getInputs();
-    assertEquals(1, inputInstances.size());
+    assertThat(inputInstances.size()).isEqualTo(1);
 
     String byteArrayValueId = ((HistoricDecisionInputInstanceEntity) inputInstances.get(0)).getByteArrayValueId();
 
@@ -218,7 +218,7 @@ public class HistoryByteArrayTest {
 
     HistoricDecisionInstance historicDecisionInstance = engineRule.getHistoryService().createHistoricDecisionInstanceQuery().includeOutputs().singleResult();
     List<HistoricDecisionOutputInstance> outputInstances = historicDecisionInstance.getOutputs();
-    assertEquals(1, outputInstances.size());
+    assertThat(outputInstances.size()).isEqualTo(1);
 
 
     String byteArrayValueId = ((HistoricDecisionOutputInstanceEntity) outputInstances.get(0)).getByteArrayValueId();
@@ -310,7 +310,7 @@ public class HistoryByteArrayTest {
   protected void checkBinary(ByteArrayEntity byteArrayEntity) {
     assertNotNull(byteArrayEntity);
     assertNotNull(byteArrayEntity.getCreateTime());
-    assertEquals(HISTORY.getValue(), byteArrayEntity.getType());
+    assertThat(byteArrayEntity.getType()).isEqualTo(HISTORY.getValue());
   }
 
   protected FileValue createFile() {

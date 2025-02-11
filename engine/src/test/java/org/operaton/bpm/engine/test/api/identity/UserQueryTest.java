@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.identity;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -113,7 +113,7 @@ public class UserQueryTest extends PluggableProcessEngineTest {
     verifyQueryResults(query, 1);
 
     User result = query.singleResult();
-    assertEquals("gonzo", result.getId());
+    assertThat(result.getId()).isEqualTo("gonzo");
   }
 
   @Test
@@ -158,7 +158,7 @@ public class UserQueryTest extends PluggableProcessEngineTest {
     verifyQueryResults(query, 1);
 
     User result = query.singleResult();
-    assertEquals("fozzie", result.getId());
+    assertThat(result.getId()).isEqualTo("fozzie");
   }
 
   @Test
@@ -236,23 +236,23 @@ public class UserQueryTest extends PluggableProcessEngineTest {
   @Test
   public void testQuerySorting() {
     // asc
-    assertEquals(3, identityService.createUserQuery().orderByUserId().asc().count());
-    assertEquals(3, identityService.createUserQuery().orderByUserEmail().asc().count());
-    assertEquals(3, identityService.createUserQuery().orderByUserFirstName().asc().count());
-    assertEquals(3, identityService.createUserQuery().orderByUserLastName().asc().count());
+    assertThat(identityService.createUserQuery().orderByUserId().asc().count()).isEqualTo(3);
+    assertThat(identityService.createUserQuery().orderByUserEmail().asc().count()).isEqualTo(3);
+    assertThat(identityService.createUserQuery().orderByUserFirstName().asc().count()).isEqualTo(3);
+    assertThat(identityService.createUserQuery().orderByUserLastName().asc().count()).isEqualTo(3);
 
     // desc
-    assertEquals(3, identityService.createUserQuery().orderByUserId().desc().count());
-    assertEquals(3, identityService.createUserQuery().orderByUserEmail().desc().count());
-    assertEquals(3, identityService.createUserQuery().orderByUserFirstName().desc().count());
-    assertEquals(3, identityService.createUserQuery().orderByUserLastName().desc().count());
+    assertThat(identityService.createUserQuery().orderByUserId().desc().count()).isEqualTo(3);
+    assertThat(identityService.createUserQuery().orderByUserEmail().desc().count()).isEqualTo(3);
+    assertThat(identityService.createUserQuery().orderByUserFirstName().desc().count()).isEqualTo(3);
+    assertThat(identityService.createUserQuery().orderByUserLastName().desc().count()).isEqualTo(3);
 
     // Combined with criteria
     UserQuery query = identityService.createUserQuery().userLastNameLike("%ea%").orderByUserFirstName().asc();
     List<User> users = query.list();
-    assertEquals(2,users.size());
-    assertEquals("Fozzie", users.get(0).getFirstName());
-    assertEquals("Gonzo", users.get(1).getFirstName());
+    assertThat(users.size()).isEqualTo(2);
+    assertThat(users.get(0).getFirstName()).isEqualTo("Fozzie");
+    assertThat(users.get(1).getFirstName()).isEqualTo("Gonzo");
   }
 
   @Test
@@ -279,7 +279,7 @@ public class UserQueryTest extends PluggableProcessEngineTest {
     verifyQueryResults(query, 1);
 
     User result = query.singleResult();
-    assertEquals("kermit", result.getId());
+    assertThat(result.getId()).isEqualTo("kermit");
   }
 
   @Test
@@ -303,12 +303,12 @@ public class UserQueryTest extends PluggableProcessEngineTest {
     verifyQueryResults(query, 1);
 
     User result = query.singleResult();
-    assertEquals("kermit", result.getId());
+    assertThat(result.getId()).isEqualTo("kermit");
   }
 
   private void verifyQueryResults(UserQuery query, int countExpected) {
-    assertEquals(countExpected, query.list().size());
-    assertEquals(countExpected, query.count());
+    assertThat(query.list().size()).isEqualTo(countExpected);
+    assertThat(query.count()).isEqualTo(countExpected);
 
     if (countExpected == 1) {
       assertNotNull(query.singleResult());
@@ -358,12 +358,12 @@ public class UserQueryTest extends PluggableProcessEngineTest {
   public void testNativeQuery() {
     String tablePrefix = processEngineConfiguration.getDatabaseTablePrefix();
     // just test that the query will be constructed and executed, details are tested in the TaskQueryTest
-    assertEquals(tablePrefix + "ACT_ID_USER", managementService.getTableName(UserEntity.class));
+    assertThat(managementService.getTableName(UserEntity.class)).isEqualTo(tablePrefix + "ACT_ID_USER");
 
     long userCount = identityService.createUserQuery().count();
 
-    assertEquals(userCount, identityService.createNativeUserQuery().sql("SELECT * FROM " + managementService.getTableName(UserEntity.class)).list().size());
-    assertEquals(userCount, identityService.createNativeUserQuery().sql("SELECT count(*) FROM " + managementService.getTableName(UserEntity.class)).count());
+    assertThat(identityService.createNativeUserQuery().sql("SELECT * FROM " + managementService.getTableName(UserEntity.class)).list().size()).isEqualTo(userCount);
+    assertThat(identityService.createNativeUserQuery().sql("SELECT count(*) FROM " + managementService.getTableName(UserEntity.class)).count()).isEqualTo(userCount);
   }
 
   @Test
@@ -373,14 +373,14 @@ public class UserQueryTest extends PluggableProcessEngineTest {
     String fromWhereClauses = String.format("FROM %s WHERE FIRST_ LIKE #{searchPattern} OR LAST_ LIKE #{searchPattern} OR EMAIL_ LIKE #{searchPattern}",
         managementService.getTableName(UserEntity.class));
 
-    assertEquals(1, identityService.createNativeUserQuery().sql("SELECT * " + fromWhereClauses).parameter("searchPattern", searchPattern).list().size());
-    assertEquals(1, identityService.createNativeUserQuery().sql("SELECT count(*) " + fromWhereClauses).parameter("searchPattern", searchPattern).count());
+    assertThat(identityService.createNativeUserQuery().sql("SELECT * " + fromWhereClauses).parameter("searchPattern", searchPattern).list().size()).isEqualTo(1);
+    assertThat(identityService.createNativeUserQuery().sql("SELECT count(*) " + fromWhereClauses).parameter("searchPattern", searchPattern).count()).isEqualTo(1);
   }
 
   @Test
   public void testNativeQueryPaging() {
-    assertEquals(2, identityService.createNativeUserQuery().sql("SELECT * FROM " + managementService.getTableName(UserEntity.class)).listPage(1, 2).size());
-    assertEquals(1, identityService.createNativeUserQuery().sql("SELECT * FROM " + managementService.getTableName(UserEntity.class)).listPage(2, 1).size());
+    assertThat(identityService.createNativeUserQuery().sql("SELECT * FROM " + managementService.getTableName(UserEntity.class)).listPage(1, 2).size()).isEqualTo(2);
+    assertThat(identityService.createNativeUserQuery().sql("SELECT * FROM " + managementService.getTableName(UserEntity.class)).listPage(2, 1).size()).isEqualTo(1);
   }
 
 }

@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.api.runtime;
 
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
@@ -211,10 +211,10 @@ public class SelfCancellationTest {
 
   private void checkRecordedEvents(String ...activityIds) {
     List<RecorderExecutionListener.RecordedEvent> recordedEvents = RecorderExecutionListener.getRecordedEvents();
-    assertEquals(activityIds.length, recordedEvents.size());
+    assertThat(recordedEvents.size()).isEqualTo(activityIds.length);
 
     for (int i = 0; i < activityIds.length; i++) {
-      assertEquals(activityIds[i], recordedEvents.get(i).getActivityId());
+      assertThat(recordedEvents.get(i).getActivityId()).isEqualTo(activityIds[i]);
     }
   }
 
@@ -229,7 +229,7 @@ public class SelfCancellationTest {
     taskService.complete(task.getId());
 
     // then
-    Assert.assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
     checkRecordedEvents("receiveTask", "sendTask", "terminateEnd");
   }
 
@@ -270,7 +270,7 @@ public class SelfCancellationTest {
     taskService.complete(task.getId());
 
     // then
-    Assert.assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
     checkRecordedEvents("sendTask", "startSubEvent", "endEventSubEvent");
   }
 
@@ -286,7 +286,7 @@ public class SelfCancellationTest {
     // then
     List<String> activities = runtimeService.getActiveActivityIds(procInst.getId());
     Assert.assertNotNull(activities);
-    Assert.assertEquals(1, activities.size());
+    assertThat(activities.size()).isEqualTo(1);
     checkRecordedEvents("sendTask", "boundary", "endEventBoundary");
   }
 

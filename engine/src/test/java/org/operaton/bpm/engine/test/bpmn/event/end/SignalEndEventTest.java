@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.end;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.HashMap;
@@ -41,13 +41,13 @@ public class SignalEndEventTest extends PluggableProcessEngineTest {
 
     // After process start, usertask in subprocess should exist
     Task task = taskService.createTaskQuery().singleResult();
-    assertEquals("subprocessTask", task.getName());
+    assertThat(task.getName()).isEqualTo("subprocessTask");
 
     // After task completion, signal end event is reached and caught
     taskService.complete(task.getId());
 
     task = taskService.createTaskQuery().singleResult();
-    assertEquals("task after catching the signal", task.getName());
+    assertThat(task.getName()).isEqualTo("task after catching the signal");
 
     taskService.complete(task.getId());
     testRule.assertProcessEnded(processInstance.getId());
@@ -64,8 +64,8 @@ public class SignalEndEventTest extends PluggableProcessEngineTest {
     assertNotNull(processInstanceCatchEvent);
 
     // now we have a subscription for the signal event:
-    assertEquals(1, runtimeService.createEventSubscriptionQuery().count());
-    assertEquals("alert", runtimeService.createEventSubscriptionQuery().singleResult().getEventName());
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().singleResult().getEventName()).isEqualTo("alert");
 
     // start process which throw the signal end event
     ProcessInstance processInstanceEndEvent = runtimeService.startProcessInstanceByKey("processWithSignalEndEvent");
@@ -73,9 +73,9 @@ public class SignalEndEventTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(processInstanceEndEvent.getId());
 
     // user task of process catchSignalEndEvent
-    assertEquals(1, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
     Task task = taskService.createTaskQuery().singleResult();
-    assertEquals("taskAfterSignalCatch", task.getTaskDefinitionKey());
+    assertThat(task.getTaskDefinitionKey()).isEqualTo("taskAfterSignalCatch");
 
     // complete user task
     taskService.complete(task.getId());
@@ -118,9 +118,9 @@ public class SignalEndEventTest extends PluggableProcessEngineTest {
   }
 
   protected void checkOutput(String processInstanceId) {
-    assertEquals(1, taskService.createTaskQuery().taskName("task after catched signal").count());
+    assertThat(taskService.createTaskQuery().taskName("task after catched signal").count()).isEqualTo(1);
     // and set the output variable of the called process to the process
     assertNotNull(runtimeService.getVariable(processInstanceId, "cancelReason"));
-    assertEquals(42, runtimeService.getVariable(processInstanceId, "input"));
+    assertThat(runtimeService.getVariable(processInstanceId, "input")).isEqualTo(42);
   }
 }

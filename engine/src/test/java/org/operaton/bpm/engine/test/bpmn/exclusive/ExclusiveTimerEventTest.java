@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.exclusive;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Date;
 
@@ -40,13 +40,13 @@ public class ExclusiveTimerEventTest extends PluggableProcessEngineTest {
     // After process start, there should be 3 timers created
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("exclusiveTimers");
     JobQuery jobQuery = managementService.createJobQuery().processInstanceId(pi.getId());
-    assertEquals(3, jobQuery.count());
+    assertThat(jobQuery.count()).isEqualTo(3);
 
     // After setting the clock to time '50minutes and 5 seconds', the timers should fire
     ClockUtil.setCurrentTime(new Date(startTime.getTime() + ((50 * 60 * 1000) + 5000)));
     testRule.waitForJobExecutorToProcessAllJobs(5000L);
 
-    assertEquals(0, jobQuery.count());
+    assertThat(jobQuery.count()).isEqualTo(0);
     testRule.assertProcessEnded(pi.getProcessInstanceId());
 
 

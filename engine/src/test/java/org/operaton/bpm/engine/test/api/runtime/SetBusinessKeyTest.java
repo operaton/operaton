@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.api.runtime;
 
 import static org.operaton.bpm.engine.test.api.runtime.util.SetBusinessKeyListener.BUSINESS_KEY_VARIABLE;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.concurrent.TimeUnit;
@@ -322,11 +322,11 @@ public class SetBusinessKeyTest {
   protected void checkBusinessKeyChanged(String newBusinessKeyValue) {
     ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processDefinitionKey(PROCESS_KEY).singleResult();
     assertNotNull(processInstance);
-    assertEquals(newBusinessKeyValue, processInstance.getBusinessKey());
+    assertThat(processInstance.getBusinessKey()).isEqualTo(newBusinessKeyValue);
 
     HistoricProcessInstance historicInstance = historyService.createHistoricProcessInstanceQuery().singleResult();
     assertNotNull(historicInstance);
-    assertEquals(newBusinessKeyValue, historicInstance.getBusinessKey());
+    assertThat(historicInstance.getBusinessKey()).isEqualTo(newBusinessKeyValue);
   }
 
   protected BpmnModelInstance createModelExecutionListener(String listener) {

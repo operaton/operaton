@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.operation;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -93,7 +93,7 @@ public class CaseInstanceCloseTest {
     // completed --close(Case1)--> closed
     expectedStateTransitions.add("completed --close(Case1)--> closed");
 
-    assertEquals(expectedStateTransitions, stateTransitionCollector.stateTransitions);
+    assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
 
     assertTrue(caseInstance.isClosed());
   }
@@ -144,7 +144,7 @@ public class CaseInstanceCloseTest {
     // terminated --close(Case1)--> closed
     expectedStateTransitions.add("terminated --close(Case1)--> closed");
 
-    assertEquals(expectedStateTransitions, stateTransitionCollector.stateTransitions);
+    assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
 
     assertTrue(caseInstance.isClosed());
   }
@@ -195,7 +195,7 @@ public class CaseInstanceCloseTest {
     // suspended --close(Case1)--> closed
     expectedStateTransitions.add("suspended --close(Case1)--> closed");
 
-    assertEquals(expectedStateTransitions, stateTransitionCollector.stateTransitions);
+    assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
 
     assertTrue(caseInstance.isClosed());
 

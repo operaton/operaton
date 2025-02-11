@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy.tenantcheck;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
@@ -78,7 +78,7 @@ public class MultiTenancyFormVariablesCmdsTenantCheckTest {
 
     engineRule.getIdentityService().setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
-    assertEquals(4, engineRule.getFormService().getStartFormVariables(instance.getProcessDefinitionId()).size());
+    assertThat(engineRule.getFormService().getStartFormVariables(instance.getProcessDefinitionId()).size()).isEqualTo(4);
 
   }
 
@@ -102,7 +102,7 @@ public class MultiTenancyFormVariablesCmdsTenantCheckTest {
     engineRule.getIdentityService().setAuthentication("aUserId", null);
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
 
-    assertEquals(4, engineRule.getFormService().getStartFormVariables(instance.getProcessDefinitionId()).size());
+    assertThat(engineRule.getFormService().getStartFormVariables(instance.getProcessDefinitionId()).size()).isEqualTo(4);
 
   }
 
@@ -113,7 +113,7 @@ public class MultiTenancyFormVariablesCmdsTenantCheckTest {
 
     Task task = engineRule.getTaskService().createTaskQuery().singleResult();
 
-    assertEquals(2, engineRule.getFormService().getTaskFormVariables(task.getId()).size());
+    assertThat(engineRule.getFormService().getTaskFormVariables(task.getId()).size()).isEqualTo(2);
 
   }
 
@@ -142,7 +142,7 @@ public class MultiTenancyFormVariablesCmdsTenantCheckTest {
     engineRule.getIdentityService().setAuthentication("aUserId", null);
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
 
-    assertEquals(2, engineRule.getFormService().getTaskFormVariables(task.getId()).size());
+    assertThat(engineRule.getFormService().getTaskFormVariables(task.getId()).size()).isEqualTo(2);
 
   }
 }

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.util;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -28,6 +30,8 @@ import org.operaton.bpm.engine.impl.persistence.entity.ActivityInstanceImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.TransitionInstanceImpl;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.TransitionInstance;
+
+import org.assertj.core.api.Assertions;
 import org.junit.Assert;
 
 /**
@@ -67,7 +71,7 @@ public class ActivityInstanceAssert {
         }
       }
 
-      Assert.assertEquals(expected, actualIncidents);
+      Assertions.assertThat(actualIncidents).isEqualTo(expected);
     }
 
     protected void assertTreeMatch(ActivityInstance expected, ActivityInstance actual) {

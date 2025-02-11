@@ -18,7 +18,7 @@ package org.operaton.bpm.engine.test.api.runtime;
 
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -118,7 +118,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
 
     // then
     assertNotNull(instance);
-    assertEquals("businessKey", instance.getBusinessKey());
+    assertThat(instance.getBusinessKey()).isEqualTo("businessKey");
   }
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
@@ -133,7 +133,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
 
     // then
     assertNotNull(instance);
-    assertEquals("caseInstanceId", instance.getCaseInstanceId());
+    assertThat(instance.getCaseInstanceId()).isEqualTo("caseInstanceId");
   }
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
@@ -174,7 +174,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
     // then
     assertNotNull(instance);
 
-    assertEquals("aValue", runtimeService.getVariable(instance.getId(), "aVariable"));
+    assertThat(runtimeService.getVariable(instance.getId(), "aVariable")).isEqualTo("aValue");
   }
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
@@ -240,7 +240,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
     Execution task2Execution = runtimeService.createExecutionQuery().activityId("task2").singleResult();
     assertNotNull(task2Execution);
     assertNull(runtimeService.getVariableLocal(task2Execution.getId(), "aVar1"));
-    assertEquals("aValue2", runtimeService.getVariableLocal(task2Execution.getId(), "aVar2"));
+    assertThat(runtimeService.getVariableLocal(task2Execution.getId(), "aVar2")).isEqualTo("aValue2");
 
     // variables for task1's execution
     Execution task1Execution = runtimeService.createExecutionQuery().activityId("task1").singleResult();
@@ -250,7 +250,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
 
     // this variable is not a local variable on execution1 due to tree expansion
     assertNull(runtimeService.getVariableLocal(task1Execution.getId(), "aVar1"));
-    assertEquals("aValue1", runtimeService.getVariable(task1Execution.getId(), "aVar1"));
+    assertThat(runtimeService.getVariable(task1Execution.getId(), "aVar1")).isEqualTo("aValue1");
 
   }
 
@@ -344,19 +344,19 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
       .done());
 
     List<RecordedEvent> events = RecorderExecutionListener.getRecordedEvents();
-    assertEquals(3, events.size());
+    assertThat(events.size()).isEqualTo(3);
 
     RecordedEvent processStartEvent = events.get(0);
-    assertEquals(ExecutionListener.EVENTNAME_START, processStartEvent.getEventName());
-    assertEquals("innerTask", processStartEvent.getActivityId());
+    assertThat(processStartEvent.getEventName()).isEqualTo(ExecutionListener.EVENTNAME_START);
+    assertThat(processStartEvent.getActivityId()).isEqualTo("innerTask");
 
     RecordedEvent subProcessStartEvent = events.get(1);
-    assertEquals(ExecutionListener.EVENTNAME_START, subProcessStartEvent.getEventName());
-    assertEquals("subProcess", subProcessStartEvent.getActivityId());
+    assertThat(subProcessStartEvent.getEventName()).isEqualTo(ExecutionListener.EVENTNAME_START);
+    assertThat(subProcessStartEvent.getActivityId()).isEqualTo("subProcess");
 
     RecordedEvent innerTaskStartEvent = events.get(2);
-    assertEquals(ExecutionListener.EVENTNAME_START, innerTaskStartEvent.getEventName());
-    assertEquals("innerTask", innerTaskStartEvent.getActivityId());
+    assertThat(innerTaskStartEvent.getEventName()).isEqualTo(ExecutionListener.EVENTNAME_START);
+    assertThat(innerTaskStartEvent.getActivityId()).isEqualTo("innerTask");
 
   }
 
@@ -382,7 +382,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
       .done());
 
     List<RecordedEvent> events = RecorderExecutionListener.getRecordedEvents();
-    assertEquals(0, events.size());
+    assertThat(events.size()).isEqualTo(0);
   }
 
   @Deployment(resources = IO_PROCESS)
@@ -397,18 +397,18 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
     // then no io mappings have been executed
     List<VariableInstance> variables = runtimeService.createVariableInstanceQuery()
         .orderByVariableName().asc().list();
-    assertEquals(2, variables.size());
+    assertThat(variables.size()).isEqualTo(2);
 
     Execution innerTaskExecution = runtimeService.createExecutionQuery().activityId("innerTask").singleResult();
     VariableInstance innerTaskVariable = variables.get(0);
-    assertEquals("innerTaskVariable", innerTaskVariable.getName());
-    assertEquals("innerTaskValue", innerTaskVariable.getValue());
-    assertEquals(innerTaskExecution.getId(), innerTaskVariable.getExecutionId());
+    assertThat(innerTaskVariable.getName()).isEqualTo("innerTaskVariable");
+    assertThat(innerTaskVariable.getValue()).isEqualTo("innerTaskValue");
+    assertThat(innerTaskVariable.getExecutionId()).isEqualTo(innerTaskExecution.getId());
 
     VariableInstance subProcessVariable = variables.get(1);
-    assertEquals("subProcessVariable", subProcessVariable.getName());
-    assertEquals("subProcessValue", subProcessVariable.getValue());
-    assertEquals(((ExecutionEntity) innerTaskExecution).getParentId(), subProcessVariable.getExecutionId());
+    assertThat(subProcessVariable.getName()).isEqualTo("subProcessVariable");
+    assertThat(subProcessVariable.getValue()).isEqualTo("subProcessValue");
+    assertThat(subProcessVariable.getExecutionId()).isEqualTo(((ExecutionEntity) innerTaskExecution).getParentId());
   }
 
   @Deployment(resources = IO_PROCESS)
@@ -421,7 +421,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
       .execute(true, true);
 
     // then no io mappings have been executed
-    assertEquals(0, runtimeService.createVariableInstanceQuery().count());
+    assertThat(runtimeService.createVariableInstanceQuery().count()).isEqualTo(0);
   }
 
   @Deployment(resources = SUBPROCESS_PROCESS)
@@ -441,22 +441,22 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
     List<VariableInstance> variables = runtimeService.createVariableInstanceQuery()
         .orderByVariableName().asc().list();
 
-    assertEquals(4, variables.size());
-    assertEquals("aVariable1", variables.get(0).getName());
-    assertEquals("aValue1", variables.get(0).getValue());
-    assertEquals(instance.getId(), variables.get(0).getExecutionId());
+    assertThat(variables.size()).isEqualTo(4);
+    assertThat(variables.get(0).getName()).isEqualTo("aVariable1");
+    assertThat(variables.get(0).getValue()).isEqualTo("aValue1");
+    assertThat(variables.get(0).getExecutionId()).isEqualTo(instance.getId());
 
-    assertEquals("aVariable2", variables.get(1).getName());
-    assertEquals("aValue2", variables.get(1).getValue());
-    assertEquals(instance.getId(), variables.get(1).getExecutionId());
+    assertThat(variables.get(1).getName()).isEqualTo("aVariable2");
+    assertThat(variables.get(1).getValue()).isEqualTo("aValue2");
+    assertThat(variables.get(1).getExecutionId()).isEqualTo(instance.getId());
 
-    assertEquals("aVariable3", variables.get(2).getName());
-    assertEquals("aValue3", variables.get(2).getValue());
-    assertEquals(instance.getId(), variables.get(2).getExecutionId());
+    assertThat(variables.get(2).getName()).isEqualTo("aVariable3");
+    assertThat(variables.get(2).getValue()).isEqualTo("aValue3");
+    assertThat(variables.get(2).getExecutionId()).isEqualTo(instance.getId());
 
-    assertEquals("aVariable4", variables.get(3).getName());
-    assertEquals("aValue4", variables.get(3).getValue());
-    assertEquals(instance.getId(), variables.get(3).getExecutionId());
+    assertThat(variables.get(3).getName()).isEqualTo("aVariable4");
+    assertThat(variables.get(3).getValue()).isEqualTo("aValue4");
+    assertThat(variables.get(3).getExecutionId()).isEqualTo(instance.getId());
 
   }
 
@@ -508,33 +508,33 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
 
     // and the execution listener was invoked correctly
     List<RecordedEvent> events = RecorderExecutionListener.getRecordedEvents();
-    assertEquals(8, events.size());
+    assertThat(events.size()).isEqualTo(8);
 
     // process start event
-    assertEquals(ExecutionListener.EVENTNAME_START, events.get(0).getEventName());
-    assertEquals("syncTask", events.get(0).getActivityId());
+    assertThat(events.get(0).getEventName()).isEqualTo(ExecutionListener.EVENTNAME_START);
+    assertThat(events.get(0).getActivityId()).isEqualTo("syncTask");
 
     // start instruction 1
-    assertEquals(ExecutionListener.EVENTNAME_START, events.get(1).getEventName());
-    assertEquals("syncTask", events.get(1).getActivityId());
-    assertEquals(ExecutionListener.EVENTNAME_END, events.get(2).getEventName());
-    assertEquals("syncTask", events.get(2).getActivityId());
+    assertThat(events.get(1).getEventName()).isEqualTo(ExecutionListener.EVENTNAME_START);
+    assertThat(events.get(1).getActivityId()).isEqualTo("syncTask");
+    assertThat(events.get(2).getEventName()).isEqualTo(ExecutionListener.EVENTNAME_END);
+    assertThat(events.get(2).getActivityId()).isEqualTo("syncTask");
 
     // start instruction 2
-    assertEquals(ExecutionListener.EVENTNAME_START, events.get(3).getEventName());
-    assertEquals("syncTask", events.get(3).getActivityId());
-    assertEquals(ExecutionListener.EVENTNAME_END, events.get(4).getEventName());
-    assertEquals("syncTask", events.get(4).getActivityId());
+    assertThat(events.get(3).getEventName()).isEqualTo(ExecutionListener.EVENTNAME_START);
+    assertThat(events.get(3).getActivityId()).isEqualTo("syncTask");
+    assertThat(events.get(4).getEventName()).isEqualTo(ExecutionListener.EVENTNAME_END);
+    assertThat(events.get(4).getActivityId()).isEqualTo("syncTask");
 
     // start instruction 3
-    assertEquals(ExecutionListener.EVENTNAME_START, events.get(5).getEventName());
-    assertEquals("syncTask", events.get(5).getActivityId());
-    assertEquals(ExecutionListener.EVENTNAME_END, events.get(6).getEventName());
-    assertEquals("syncTask", events.get(6).getActivityId());
+    assertThat(events.get(5).getEventName()).isEqualTo(ExecutionListener.EVENTNAME_START);
+    assertThat(events.get(5).getActivityId()).isEqualTo("syncTask");
+    assertThat(events.get(6).getEventName()).isEqualTo(ExecutionListener.EVENTNAME_END);
+    assertThat(events.get(6).getActivityId()).isEqualTo("syncTask");
 
     // process end event
-    assertEquals(ExecutionListener.EVENTNAME_END, events.get(7).getEventName());
-    assertEquals("end", events.get(7).getActivityId());
+    assertThat(events.get(7).getEventName()).isEqualTo(ExecutionListener.EVENTNAME_END);
+    assertThat(events.get(7).getActivityId()).isEqualTo("end");
   }
 
   @Deployment
@@ -551,7 +551,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
 
     // then
     String initiator = (String) runtimeService.getVariable(instance.getId(), "initiator");
-    assertEquals("kermit", initiator);
+    assertThat(initiator).isEqualTo("kermit");
 
     identityService.clearAuthentication();
   }
@@ -570,7 +570,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
         .processInstanceId(processInstance.getId())
         .activityId("Event_0s2zckl")
         .list();
-    assertEquals(1, executions.size());
+    assertThat(executions.size()).isEqualTo(1);
 
     // when the user tasks are completed
     String id = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult().getId();
@@ -584,7 +584,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
         .processInstanceId(processInstance.getId())
         .activityId("Event_0s2zckl")
         .list();
-    assertEquals(0, executions.size());
+    assertThat(executions.size()).isEqualTo(0);
   }
 
   protected void completeTasksInOrder(String... taskNames) {

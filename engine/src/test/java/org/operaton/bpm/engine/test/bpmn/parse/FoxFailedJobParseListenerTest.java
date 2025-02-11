@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.bpmn.parse;
 
 import static org.operaton.bpm.engine.impl.bpmn.parser.DefaultFailedJobParseListener.FAILED_JOB_CONFIGURATION;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -171,7 +171,7 @@ public class FoxFailedJobParseListenerTest extends PluggableProcessEngineTest {
     assertTrue(activity.getProperties().contains(FAILED_JOB_CONFIGURATION));
 
     Object value = activity.getProperties().get(FAILED_JOB_CONFIGURATION).getRetryIntervals().get(0);
-    assertEquals("R5/PT5M", value);
+    assertThat(value).isEqualTo("R5/PT5M");
   }
 
   protected void checkNotContainingFoxFailedJobConfig(ActivityImpl activity) {

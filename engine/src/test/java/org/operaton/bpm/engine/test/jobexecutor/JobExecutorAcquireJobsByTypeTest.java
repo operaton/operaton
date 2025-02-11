@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.jobexecutor;
 
 import static org.operaton.bpm.engine.test.util.ClockTestUtil.incrementClock;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -68,7 +68,7 @@ public class JobExecutorAcquireJobsByTypeTest extends AbstractJobExecutorAcquire
     Job job = managementService.createJobQuery().singleResult();
 
     // time is fixed for the purposes of the test
-    assertEquals(ClockUtil.getCurrentTime(), job.getDuedate());
+    assertThat(job.getDuedate()).isEqualTo(ClockUtil.getCurrentTime());
   }
 
   @Test
@@ -90,7 +90,7 @@ public class JobExecutorAcquireJobsByTypeTest extends AbstractJobExecutorAcquire
     incrementClock(70);
 
     List<AcquirableJobEntity> acquirableJobs = findAcquirableJobs();
-    assertEquals(4, acquirableJobs.size());
+    assertThat(acquirableJobs.size()).isEqualTo(4);
     assertTrue(findJobById(acquirableJobs.get(0).getId()) instanceof TimerEntity);
     assertTrue(findJobById(acquirableJobs.get(1).getId()) instanceof TimerEntity);
     assertTrue(findJobById(acquirableJobs.get(2).getId()) instanceof MessageEntity);

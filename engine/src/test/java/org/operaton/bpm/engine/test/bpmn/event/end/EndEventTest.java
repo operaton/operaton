@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.end;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
@@ -63,8 +63,8 @@ public class EndEventTest extends PluggableProcessEngineTest {
     if (taskCompleter2.isSucceeded()) {
       successCount++;
     }
-    
-    assertEquals("(Only) one thread should have been able to successfully end the process", 1, successCount);
+
+    assertThat(successCount).as("(Only) one thread should have been able to successfully end the process").isEqualTo(1);
     testRule.assertProcessEnded(processInstance.getId());
   }
   

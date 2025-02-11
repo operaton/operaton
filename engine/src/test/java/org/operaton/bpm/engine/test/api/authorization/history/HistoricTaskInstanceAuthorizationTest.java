@@ -27,7 +27,6 @@ import static org.operaton.bpm.engine.authorization.Resources.TASK;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.InstanceOfAssertFactories.list;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -539,7 +538,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
             .duration(PeriodUnit.MONTH);
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result.size()).isEqualTo(1);
   }
 
   @Test
@@ -583,7 +582,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
             .countByProcessDefinitionKey();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result.size()).isEqualTo(1);
   }
 
   @Test
@@ -627,7 +626,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
             .countByTaskName();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result.size()).isEqualTo(1);
   }
 
   @Test
@@ -695,7 +694,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
     List<HistoricTaskInstance> result = historyService.createHistoricTaskInstanceQuery().list();
 
     // then
-    assertEquals(0, result.size());
+    assertThat(result.size()).isEqualTo(0);
   }
 
   @Test
@@ -712,7 +711,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
     List<HistoricTaskInstance> result = historyService.createHistoricTaskInstanceQuery().list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result.size()).isEqualTo(1);
   }
 
   @Test
@@ -729,7 +728,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
     List<HistoricTaskInstance> result = historyService.createHistoricTaskInstanceQuery().list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result.size()).isEqualTo(1);
 
     // clear
     deleteTask(taskId, true);
@@ -749,7 +748,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
     List<HistoricTaskInstance> result = historyService.createHistoricTaskInstanceQuery().list();
 
     // then
-    assertEquals(0, result.size());
+    assertThat(result.size()).isEqualTo(0);
 
     // clear
     deleteTask(taskId, true);
@@ -772,7 +771,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
     List<HistoricTaskInstance> result = historyService.createHistoricTaskInstanceQuery().list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result.size()).isEqualTo(1);
   }
 
   @Test
@@ -793,7 +792,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
     List<HistoricTaskInstance> result = historyService.createHistoricTaskInstanceQuery().list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result.size()).isEqualTo(1);
   }
 
   @Test
@@ -815,7 +814,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
     List<HistoricTaskInstance> result = historyService.createHistoricTaskInstanceQuery().list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result.size()).isEqualTo(1);
   }
 
   @Test
@@ -831,7 +830,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
     List<HistoricTaskInstance> result = historyService.createHistoricTaskInstanceQuery().list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result.size()).isEqualTo(1);
   }
 
   @Test
@@ -852,7 +851,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
     List<HistoricTaskInstance> result = historyService.createHistoricTaskInstanceQuery().list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result.size()).isEqualTo(1);
   }
 
   @Test
@@ -873,7 +872,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
     List<HistoricTaskInstance> result = historyService.createHistoricTaskInstanceQuery().list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result.size()).isEqualTo(1);
 
     // clear
     deleteTask(taskId, true);
@@ -897,7 +896,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
     List<HistoricTaskInstance> result = historyService.createHistoricTaskInstanceQuery().list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result.size()).isEqualTo(1);
   }
 
   @Test
@@ -918,7 +917,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
     List<HistoricTaskInstance> result = historyService.createHistoricTaskInstanceQuery().list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result.size()).isEqualTo(1);
   }
 
   @Test
@@ -939,7 +938,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
     List<HistoricTaskInstance> result = historyService.createHistoricTaskInstanceQuery().list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result.size()).isEqualTo(1);
   }
 
   @Test

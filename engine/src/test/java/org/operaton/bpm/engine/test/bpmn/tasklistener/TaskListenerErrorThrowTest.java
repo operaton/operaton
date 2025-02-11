@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.tasklistener;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -209,7 +209,7 @@ public class TaskListenerErrorThrowTest extends AbstractTaskListenerTest {
     // then
     Task resultTask = taskService.createTaskQuery().singleResult();
     assertNotNull(resultTask);
-    assertEquals("afterCatch", resultTask.getName());
+    assertThat(resultTask.getName()).isEqualTo("afterCatch");
   }
 
   @Test
@@ -256,8 +256,8 @@ public class TaskListenerErrorThrowTest extends AbstractTaskListenerTest {
     } catch (Exception e) {
       // then
       assertTrue(e.getMessage().contains("business error"));
-      assertEquals(1, ThrowBPMNErrorListener.INVOCATIONS);
-      assertEquals(0, RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_DELETE));
+      assertThat(ThrowBPMNErrorListener.INVOCATIONS).isEqualTo(1);
+      assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_DELETE)).isEqualTo(0);
     }
 
     // cleanup
@@ -295,9 +295,9 @@ public class TaskListenerErrorThrowTest extends AbstractTaskListenerTest {
     // then
     Task resultTask = taskService.createTaskQuery().singleResult();
     assertNotNull(resultTask);
-    assertEquals("mainTask", resultTask.getName());
-    assertEquals(1, ThrowBPMNErrorListener.INVOCATIONS);
-    assertEquals(0, RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_DELETE));
+    assertThat(resultTask.getName()).isEqualTo("mainTask");
+    assertThat(ThrowBPMNErrorListener.INVOCATIONS).isEqualTo(1);
+    assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_DELETE)).isEqualTo(0);
 
     // cleanup
     processEngineConfiguration.setEnableExceptionsAfterUnhandledBpmnError(false);
@@ -308,9 +308,9 @@ public class TaskListenerErrorThrowTest extends AbstractTaskListenerTest {
   protected void verifyErrorGotCaught() {
     Task resultTask = taskService.createTaskQuery().singleResult();
     assertNotNull(resultTask);
-    assertEquals("afterCatch", resultTask.getName());
-    assertEquals(1, ThrowBPMNErrorListener.INVOCATIONS);
-    assertEquals(1, RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_DELETE));
+    assertThat(resultTask.getName()).isEqualTo("afterCatch");
+    assertThat(ThrowBPMNErrorListener.INVOCATIONS).isEqualTo(1);
+    assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_DELETE)).isEqualTo(1);
   }
 
   protected BpmnModelInstance createModelThrowErrorInListenerAndCatchOnUserTask(String eventName) {

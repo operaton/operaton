@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
@@ -251,7 +252,7 @@ public class MigrationCompensationAddSubProcessTest {
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
     // then
-    Assert.assertEquals(0, testHelper.snapshotAfterMigration.getVariables().size());
+    assertThat(testHelper.snapshotAfterMigration.getVariables().size()).isEqualTo(0);
   }
 
   @Ignore("CAM-6035")
@@ -276,7 +277,7 @@ public class MigrationCompensationAddSubProcessTest {
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
     // then
-    Assert.assertEquals(0, testHelper.snapshotAfterMigration.getVariables().size());
+    assertThat(testHelper.snapshotAfterMigration.getVariables().size()).isEqualTo(0);
   }
 
   @Test
@@ -305,7 +306,7 @@ public class MigrationCompensationAddSubProcessTest {
 
     // then the variable snapshot is available
     Task compensationTask = rule.getTaskService().createTaskQuery().singleResult();
-    Assert.assertEquals("bar", rule.getTaskService().getVariable(compensationTask.getId(), "foo"));
+    assertThat(rule.getTaskService().getVariable(compensationTask.getId(), "foo")).isEqualTo("bar");
   }
 
   @Test

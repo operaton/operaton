@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.test.standalone.entity;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
@@ -108,7 +108,7 @@ public class ExecutionEntityTest {
 
     // when
     assertNotNull(execution);
-    assertEquals(pi.getId(), execution.getProcessInstanceId());
+    assertThat(execution.getProcessInstanceId()).isEqualTo(pi.getId());
     processEngineRule.getRuntimeService().signal(execution.getId());
 
     // then (see #TestLocalVariableTaskListener::notify)
@@ -130,7 +130,7 @@ public class ExecutionEntityTest {
       try {
         // then (see #testRemoveExecutionSequence)
         StringValue variable = delegateTask.getExecution().getVariableLocalTyped("localVar");
-        assertEquals("localVarVal", variable.getValue());
+        assertThat(variable.getValue()).isEqualTo("localVarVal");
       } catch (NullPointerException e) {
         fail("Local variable shouldn't be null.");
       }

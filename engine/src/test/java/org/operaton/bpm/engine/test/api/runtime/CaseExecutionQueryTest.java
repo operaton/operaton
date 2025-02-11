@@ -20,7 +20,7 @@ import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.caseExec
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.caseExecutionByDefinitionKey;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.caseExecutionById;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -87,8 +87,8 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
   }
 
   private void verifyQueryResults(CaseExecutionQuery query, int countExpected) {
-    assertEquals(countExpected, query.list().size());
-    assertEquals(countExpected, query.count());
+    assertThat(query.list().size()).isEqualTo(countExpected);
+    assertThat(query.count()).isEqualTo(countExpected);
 
     if (countExpected == 1) {
       assertNotNull(query.singleResult());
@@ -709,7 +709,7 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       query.variableValueGreaterThan("aNullValue", null);
       fail();
     } catch (NotValidException e) {
-      assertEquals("Booleans and null cannot be used in 'greater than' condition", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'greater than' condition");
     }
   }
 
@@ -740,7 +740,7 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       query.variableValueGreaterThan("aBooleanValue", false);
       fail();
     } catch (NotValidException e) {
-      assertEquals("Booleans and null cannot be used in 'greater than' condition", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'greater than' condition");
     }
   }
 
@@ -874,7 +874,7 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       query.variableValueGreaterThanOrEqual("aNullValue", null);
       fail();
     } catch (NotValidException e) {
-      assertEquals("Booleans and null cannot be used in 'greater than or equal' condition", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'greater than or equal' condition");
     }
 
   }
@@ -912,7 +912,7 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       query.variableValueGreaterThanOrEqual("aBooleanValue", false);
       fail();
     } catch (NotValidException e) {
-      assertEquals("Booleans and null cannot be used in 'greater than or equal' condition", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'greater than or equal' condition");
     }
 
   }
@@ -1077,7 +1077,7 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       query.variableValueLessThan("aNullValue", null);
       fail();
     } catch (NotValidException e) {
-      assertEquals("Booleans and null cannot be used in 'less than' condition", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'less than' condition");
     }
 
   }
@@ -1109,7 +1109,7 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       query.variableValueLessThan("aBooleanValue", false);
       fail();
     } catch (NotValidException e) {
-      assertEquals("Booleans and null cannot be used in 'less than' condition", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'less than' condition");
     }
 
   }
@@ -1243,7 +1243,7 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       query.variableValueLessThanOrEqual("aNullValue", null);
       fail();
     } catch (NotValidException e) {
-      assertEquals("Booleans and null cannot be used in 'less than or equal' condition", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'less than or equal' condition");
     }
 
   }
@@ -1281,7 +1281,7 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       query.variableValueLessThanOrEqual("aBooleanValue", false);
       fail();
     } catch (NotValidException e) {
-      assertEquals("Booleans and null cannot be used in 'less than or equal' condition", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'less than or equal' condition");
     }
 
   }
@@ -1447,7 +1447,7 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       query.variableValueLike("aNullValue", null);
       fail();
     } catch (NotValidException e) {
-      assertEquals("Booleans and null cannot be used in 'like' condition", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'like' condition");
     }
 
   }
@@ -1783,7 +1783,7 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       query.caseInstanceVariableValueGreaterThan("aNullValue", null);
       fail();
     } catch (NotValidException e) {
-      assertEquals("Booleans and null cannot be used in 'greater than' condition", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'greater than' condition");
     }
 
   }
@@ -1815,7 +1815,7 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       query.caseInstanceVariableValueGreaterThan("aBooleanValue", false);
       fail();
     } catch (NotValidException e) {
-      assertEquals("Booleans and null cannot be used in 'greater than' condition", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'greater than' condition");
     }
 
   }
@@ -1950,7 +1950,7 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       query.caseInstanceVariableValueGreaterThanOrEqual("aNullValue", null);
       fail();
     } catch (NotValidException e) {
-      assertEquals("Booleans and null cannot be used in 'greater than or equal' condition", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'greater than or equal' condition");
     }
 
   }
@@ -1989,7 +1989,7 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       query.caseInstanceVariableValueGreaterThanOrEqual("aBooleanValue", false);
       fail();
     } catch (NotValidException e) {
-      assertEquals("Booleans and null cannot be used in 'greater than or equal' condition", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'greater than or equal' condition");
     }
 
   }
@@ -2154,7 +2154,7 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       query.caseInstanceVariableValueLessThan("aNullValue", null);
       fail();
     } catch (NotValidException e) {
-      assertEquals("Booleans and null cannot be used in 'less than' condition", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'less than' condition");
     }
 
   }
@@ -2186,7 +2186,7 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       query.caseInstanceVariableValueLessThan("aBooleanValue", false);
       fail();
     } catch (NotValidException e) {
-      assertEquals("Booleans and null cannot be used in 'less than' condition", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'less than' condition");
     }
 
   }
@@ -2321,7 +2321,7 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       query.caseInstanceVariableValueLessThanOrEqual("aNullValue", null);
       fail();
     } catch (NotValidException e) {
-      assertEquals("Booleans and null cannot be used in 'less than or equal' condition", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'less than or equal' condition");
     }
 
   }
@@ -2359,7 +2359,7 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       query.caseInstanceVariableValueLessThanOrEqual("aBooleanValue", false);
       fail();
     } catch (NotValidException e) {
-      assertEquals("Booleans and null cannot be used in 'less than or equal' condition", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'less than or equal' condition");
     }
 
   }
@@ -2524,7 +2524,7 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       query.caseInstanceVariableValueLike("aNullValue", null);
       fail();
     } catch (NotValidException e) {
-      assertEquals("Booleans and null cannot be used in 'like' condition", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'like' condition");
     }
 
   }
@@ -2604,34 +2604,34 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
       .setVariable("var", "123")
       .create();
 
-    assertEquals(4, caseService.createCaseExecutionQuery().variableValueEquals("var", Variables.numberValue(123)).count());
-    assertEquals(4, caseService.createCaseExecutionQuery().variableValueEquals("var", Variables.numberValue(123L)).count());
-    assertEquals(4, caseService.createCaseExecutionQuery().variableValueEquals("var", Variables.numberValue(123.0d)).count());
-    assertEquals(4, caseService.createCaseExecutionQuery().variableValueEquals("var", Variables.numberValue((short) 123)).count());
+    assertThat(caseService.createCaseExecutionQuery().variableValueEquals("var", Variables.numberValue(123)).count()).isEqualTo(4);
+    assertThat(caseService.createCaseExecutionQuery().variableValueEquals("var", Variables.numberValue(123L)).count()).isEqualTo(4);
+    assertThat(caseService.createCaseExecutionQuery().variableValueEquals("var", Variables.numberValue(123.0d)).count()).isEqualTo(4);
+    assertThat(caseService.createCaseExecutionQuery().variableValueEquals("var", Variables.numberValue((short) 123)).count()).isEqualTo(4);
 
-    assertEquals(1, caseService.createCaseExecutionQuery().variableValueEquals("var", Variables.numberValue(null)).count());
+    assertThat(caseService.createCaseExecutionQuery().variableValueEquals("var", Variables.numberValue(null)).count()).isEqualTo(1);
 
     // other operators
-    assertEquals(4, caseService.createCaseExecutionQuery().variableValueNotEquals("var", Variables.numberValue(123)).count());
-    assertEquals(1, caseService.createCaseExecutionQuery().variableValueGreaterThan("var", Variables.numberValue(123L)).count());
-    assertEquals(5, caseService.createCaseExecutionQuery().variableValueGreaterThanOrEqual("var", Variables.numberValue(123.0d)).count());
-    assertEquals(0, caseService.createCaseExecutionQuery().variableValueLessThan("var", Variables.numberValue((short) 123)).count());
-    assertEquals(4, caseService.createCaseExecutionQuery().variableValueLessThanOrEqual("var", Variables.numberValue((short) 123)).count());
+    assertThat(caseService.createCaseExecutionQuery().variableValueNotEquals("var", Variables.numberValue(123)).count()).isEqualTo(4);
+    assertThat(caseService.createCaseExecutionQuery().variableValueGreaterThan("var", Variables.numberValue(123L)).count()).isEqualTo(1);
+    assertThat(caseService.createCaseExecutionQuery().variableValueGreaterThanOrEqual("var", Variables.numberValue(123.0d)).count()).isEqualTo(5);
+    assertThat(caseService.createCaseExecutionQuery().variableValueLessThan("var", Variables.numberValue((short) 123)).count()).isEqualTo(0);
+    assertThat(caseService.createCaseExecutionQuery().variableValueLessThanOrEqual("var", Variables.numberValue((short) 123)).count()).isEqualTo(4);
 
     // two executions per case instance match the query
-    assertEquals(8, caseService.createCaseExecutionQuery().caseInstanceVariableValueEquals("var", Variables.numberValue(123)).count());
-    assertEquals(8, caseService.createCaseExecutionQuery().caseInstanceVariableValueEquals("var", Variables.numberValue(123L)).count());
-    assertEquals(8, caseService.createCaseExecutionQuery().caseInstanceVariableValueEquals("var", Variables.numberValue(123.0d)).count());
-    assertEquals(8, caseService.createCaseExecutionQuery().caseInstanceVariableValueEquals("var", Variables.numberValue((short) 123)).count());
+    assertThat(caseService.createCaseExecutionQuery().caseInstanceVariableValueEquals("var", Variables.numberValue(123)).count()).isEqualTo(8);
+    assertThat(caseService.createCaseExecutionQuery().caseInstanceVariableValueEquals("var", Variables.numberValue(123L)).count()).isEqualTo(8);
+    assertThat(caseService.createCaseExecutionQuery().caseInstanceVariableValueEquals("var", Variables.numberValue(123.0d)).count()).isEqualTo(8);
+    assertThat(caseService.createCaseExecutionQuery().caseInstanceVariableValueEquals("var", Variables.numberValue((short) 123)).count()).isEqualTo(8);
 
-    assertEquals(2, caseService.createCaseExecutionQuery().caseInstanceVariableValueEquals("var", Variables.numberValue(null)).count());
+    assertThat(caseService.createCaseExecutionQuery().caseInstanceVariableValueEquals("var", Variables.numberValue(null)).count()).isEqualTo(2);
 
     // other operators
-    assertEquals(8, caseService.createCaseExecutionQuery().caseInstanceVariableValueNotEquals("var", Variables.numberValue(123)).count());
-    assertEquals(2, caseService.createCaseExecutionQuery().caseInstanceVariableValueGreaterThan("var", Variables.numberValue(123L)).count());
-    assertEquals(10, caseService.createCaseExecutionQuery().caseInstanceVariableValueGreaterThanOrEqual("var", Variables.numberValue(123.0d)).count());
-    assertEquals(0, caseService.createCaseExecutionQuery().caseInstanceVariableValueLessThan("var", Variables.numberValue((short) 123)).count());
-    assertEquals(8, caseService.createCaseExecutionQuery().caseInstanceVariableValueLessThanOrEqual("var", Variables.numberValue((short) 123)).count());
+    assertThat(caseService.createCaseExecutionQuery().caseInstanceVariableValueNotEquals("var", Variables.numberValue(123)).count()).isEqualTo(8);
+    assertThat(caseService.createCaseExecutionQuery().caseInstanceVariableValueGreaterThan("var", Variables.numberValue(123L)).count()).isEqualTo(2);
+    assertThat(caseService.createCaseExecutionQuery().caseInstanceVariableValueGreaterThanOrEqual("var", Variables.numberValue(123.0d)).count()).isEqualTo(10);
+    assertThat(caseService.createCaseExecutionQuery().caseInstanceVariableValueLessThan("var", Variables.numberValue((short) 123)).count()).isEqualTo(0);
+    assertThat(caseService.createCaseExecutionQuery().caseInstanceVariableValueLessThanOrEqual("var", Variables.numberValue((short) 123)).count()).isEqualTo(8);
 
   }
 
@@ -2710,12 +2710,12 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
         .singleResult();
 
     // then
-    assertEquals("PI_HumanTask_1", task.getActivityId());
-    assertEquals("A HumanTask", task.getActivityName());
-    assertEquals(caseDefinitionId, task.getCaseDefinitionId());
-    assertEquals(caseInstanceId, task.getCaseInstanceId());
-    assertEquals(caseInstanceId, task.getParentId());
-    assertEquals("humanTask", task.getActivityType());
+    assertThat(task.getActivityId()).isEqualTo("PI_HumanTask_1");
+    assertThat(task.getActivityName()).isEqualTo("A HumanTask");
+    assertThat(task.getCaseDefinitionId()).isEqualTo(caseDefinitionId);
+    assertThat(task.getCaseInstanceId()).isEqualTo(caseInstanceId);
+    assertThat(task.getParentId()).isEqualTo(caseInstanceId);
+    assertThat(task.getActivityType()).isEqualTo("humanTask");
     assertNotNull(task.getActivityDescription());
     assertNotNull(task.getId());
   }
@@ -2742,7 +2742,7 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
     List<CaseExecution> executions = caseService.createCaseExecutionQuery().caseInstanceBusinessKey("7890").list();
     for (CaseExecution e : executions) {
       if (((CaseExecutionEntity) e).isCaseInstanceExecution()) {
-        assertEquals("7890", ((CaseExecutionEntity) e).getBusinessKeyWithoutCascade());
+        assertThat(((CaseExecutionEntity) e).getBusinessKeyWithoutCascade()).isEqualTo("7890");
       } else {
         assertNull(((CaseExecutionEntity) e).getBusinessKeyWithoutCascade());
       }

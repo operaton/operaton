@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.variables;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 import static org.operaton.bpm.engine.test.util.TypedValueAssert.assertObjectValueDeserialized;
 import static org.operaton.bpm.engine.test.util.TypedValueAssert.assertObjectValueDeserializedNull;
 import static org.operaton.bpm.engine.test.util.TypedValueAssert.assertObjectValueSerializedJava;
@@ -25,7 +24,6 @@ import static org.operaton.bpm.engine.test.util.TypedValueAssert.assertObjectVal
 import static org.operaton.bpm.engine.test.util.TypedValueAssert.assertUntypedNullValue;
 import static org.operaton.bpm.engine.variable.Variables.objectValue;
 import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -96,7 +94,7 @@ public class JavaSerializationTest {
     // validate untyped value
     JavaSerializable value = (JavaSerializable) runtimeService.getVariable(instance.getId(), "simpleBean");
 
-    assertEquals(javaSerializable, value);
+    assertThat(value).isEqualTo(javaSerializable);
 
     // validate typed value
     ObjectValue typedValue = runtimeService.getVariableTyped(instance.getId(), "simpleBean");
@@ -123,7 +121,7 @@ public class JavaSerializationTest {
 
     // validate untyped value
     JavaSerializable value = (JavaSerializable) runtimeService.getVariable(instance.getId(), "simpleBean");
-    assertEquals(javaSerializable, value);
+    assertThat(value).isEqualTo(javaSerializable);
 
     // validate typed value
     ObjectValue typedValue = runtimeService.getVariableTyped(instance.getId(), "simpleBean");
@@ -255,18 +253,18 @@ public class JavaSerializationTest {
     ObjectValue deserializedTypedValue = runtimeService.getVariableTyped(instance.getId(), "nullObject");
     assertNotNull(deserializedTypedValue);
     assertTrue(deserializedTypedValue.isDeserialized());
-    assertEquals(JAVA_DATA_FORMAT, deserializedTypedValue.getSerializationDataFormat());
+    assertThat(deserializedTypedValue.getSerializationDataFormat()).isEqualTo(JAVA_DATA_FORMAT);
     assertNull(deserializedTypedValue.getValue());
     assertNull(deserializedTypedValue.getValueSerialized());
     assertNull(deserializedTypedValue.getObjectType());
-    assertEquals(typeName, deserializedTypedValue.getObjectTypeName());
+    assertThat(deserializedTypedValue.getObjectTypeName()).isEqualTo(typeName);
 
     ObjectValue serializedTypedValue = runtimeService.getVariableTyped(instance.getId(), "nullObject", false);
     assertNotNull(serializedTypedValue);
     assertFalse(serializedTypedValue.isDeserialized());
-    assertEquals(JAVA_DATA_FORMAT, serializedTypedValue.getSerializationDataFormat());
+    assertThat(serializedTypedValue.getSerializationDataFormat()).isEqualTo(JAVA_DATA_FORMAT);
     assertNull(serializedTypedValue.getValueSerialized());
-    assertEquals(typeName, serializedTypedValue.getObjectTypeName());
+    assertThat(serializedTypedValue.getObjectTypeName()).isEqualTo(typeName);
   }
 
   @Test
@@ -284,7 +282,7 @@ public class JavaSerializationTest {
         .create());
 
     // get value via untyped api
-    assertEquals(javaSerializable, runtimeService.getVariable(instance.getId(), "varName"));
+    assertThat(runtimeService.getVariable(instance.getId(), "varName")).isEqualTo(javaSerializable);
 
     // set the variable to null via untyped Api
     runtimeService.setVariable(instance.getId(), "varName", null);
@@ -310,7 +308,7 @@ public class JavaSerializationTest {
         .create());
 
     // get value via untyped api
-    assertEquals(javaSerializable, runtimeService.getVariable(instance.getId(), "varName"));
+    assertThat(runtimeService.getVariable(instance.getId(), "varName")).isEqualTo(javaSerializable);
 
     // set the variable to null via typed Api
     runtimeService.setVariable(instance.getId(), "varName", objectValue(null));
@@ -335,7 +333,7 @@ public class JavaSerializationTest {
           .objectTypeName(String.class.getName())
           .serializationDataFormat(Variables.SerializationDataFormats.JAVA)
           .create());
-      assertEquals("trumpet", taskService.getVariable(taskId, "instrument"));
+      assertThat(taskService.getVariable(taskId, "instrument")).isEqualTo("trumpet");
     } finally {
       taskService.deleteTask(taskId, true);
     }
@@ -375,11 +373,11 @@ public class JavaSerializationTest {
 
     // then
     List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
-    assertEquals(0, variableInstances.size());
+    assertThat(variableInstances.size()).isEqualTo(0);
 
     Task task = taskService.createTaskQuery().singleResult();
     assertNotNull(task);
-    assertEquals("userTask1", task.getTaskDefinitionKey());
+    assertThat(task.getTaskDefinitionKey()).isEqualTo("userTask1");
   }
 
 }

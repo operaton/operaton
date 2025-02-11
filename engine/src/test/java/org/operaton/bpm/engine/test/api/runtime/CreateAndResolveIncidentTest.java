@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.runtime;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
@@ -116,11 +115,11 @@ public class CreateAndResolveIncidentTest {
 
     // then
     Incident incident2 = runtimeService.createIncidentQuery().executionId(processInstance.getId()).singleResult();
-    assertEquals(incident2.getId(), incident.getId());
-    assertEquals("foo", incident2.getIncidentType());
-    assertEquals("aa", incident2.getConfiguration());
-    assertEquals("bar", incident2.getIncidentMessage());
-    assertEquals(processInstance.getId(), incident2.getExecutionId());
+    assertThat(incident.getId()).isEqualTo(incident2.getId());
+    assertThat(incident2.getIncidentType()).isEqualTo("foo");
+    assertThat(incident2.getConfiguration()).isEqualTo("aa");
+    assertThat(incident2.getIncidentMessage()).isEqualTo("bar");
+    assertThat(incident2.getExecutionId()).isEqualTo(processInstance.getId());
   }
 
   @Test
@@ -231,9 +230,9 @@ public class CreateAndResolveIncidentTest {
 
     Incident incident2 = runtimeService.createIncidentQuery().singleResult();
     assertNotNull(incident2);
-    assertEquals(incident, incident2);
-    assertEquals("custom", incident.getIncidentType());
-    assertEquals("configuration", incident.getConfiguration());
+    assertThat(incident2).isEqualTo(incident);
+    assertThat(incident.getIncidentType()).isEqualTo("custom");
+    assertThat(incident.getConfiguration()).isEqualTo("configuration");
 
     assertThat(CUSTOM_HANDLER.getCreateEvents()).hasSize(1);
     assertThat(CUSTOM_HANDLER.getResolveEvents()).isEmpty();

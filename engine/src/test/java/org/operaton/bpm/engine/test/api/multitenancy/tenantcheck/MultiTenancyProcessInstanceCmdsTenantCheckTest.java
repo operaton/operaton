@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy.tenantcheck;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
@@ -79,11 +79,11 @@ public class MultiTenancyProcessInstanceCmdsTenantCheckTest {
 
     engineRule.getRuntimeService().deleteProcessInstance(processInstanceId, null);
 
-    assertEquals(0, engineRule.getRuntimeService()
-      .createProcessInstanceQuery()
-      .processInstanceId(processInstanceId)
-      .list()
-      .size());
+    assertThat(engineRule.getRuntimeService()
+        .createProcessInstanceQuery()
+        .processInstanceId(processInstanceId)
+        .list()
+        .size()).isEqualTo(0);
   }
 
   @Test
@@ -109,11 +109,11 @@ public class MultiTenancyProcessInstanceCmdsTenantCheckTest {
     //then
     engineRule.getRuntimeService().deleteProcessInstance(processInstanceId, null);
 
-    assertEquals(0, engineRule.getRuntimeService()
-      .createProcessInstanceQuery()
-      .processInstanceId(processInstanceId)
-      .list()
-      .size());
+    assertThat(engineRule.getRuntimeService()
+        .createProcessInstanceQuery()
+        .processInstanceId(processInstanceId)
+        .list()
+        .size()).isEqualTo(0);
   }
 
   // modify instances

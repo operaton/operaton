@@ -55,7 +55,7 @@ import java.util.concurrent.Callable;
 import org.junit.After;
 import org.junit.Before;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
@@ -569,8 +569,8 @@ public abstract class AuthorizationTest extends PluggableProcessEngineTest {
   // verify query results ////////////////////////////////////////////////////////
 
   protected void verifyQueryResults(Query<?, ?> query, int countExpected) {
-    assertEquals(countExpected, query.list().size());
-    assertEquals(countExpected, query.count());
+    assertThat(query.list().size()).isEqualTo(countExpected);
+    assertThat(query.count()).isEqualTo(countExpected);
 
     if (countExpected == 1) {
       assertNotNull(query.singleResult());

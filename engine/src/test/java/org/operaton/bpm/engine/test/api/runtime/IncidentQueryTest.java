@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.runtime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -110,39 +109,39 @@ public class IncidentQueryTest {
     Calendar hourFromNow = Calendar.getInstance();
     hourFromNow.add(Calendar.HOUR_OF_DAY, 1);
 
-    assertEquals(0, query.incidentTimestampBefore(hourAgo.getTime()).count());
-    assertEquals(4, query.incidentTimestampBefore(hourFromNow.getTime()).count());
-    assertEquals(4, query.incidentTimestampAfter(hourAgo.getTime()).count());
-    assertEquals(0, query.incidentTimestampAfter(hourFromNow.getTime()).count());
-    assertEquals(4, query.incidentTimestampBefore(hourFromNow.getTime())
-                                  .incidentTimestampAfter(hourAgo.getTime()).count());
+    assertThat(query.incidentTimestampBefore(hourAgo.getTime()).count()).isEqualTo(0);
+    assertThat(query.incidentTimestampBefore(hourFromNow.getTime()).count()).isEqualTo(4);
+    assertThat(query.incidentTimestampAfter(hourAgo.getTime()).count()).isEqualTo(4);
+    assertThat(query.incidentTimestampAfter(hourFromNow.getTime()).count()).isEqualTo(0);
+    assertThat(query.incidentTimestampBefore(hourFromNow.getTime())
+        .incidentTimestampAfter(hourAgo.getTime()).count()).isEqualTo(4);
   }
 
   @Test
   public void testQuery() {
     IncidentQuery query = runtimeService.createIncidentQuery();
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
     List<Incident> incidents = query.list();
     assertFalse(incidents.isEmpty());
-    assertEquals(4, incidents.size());
+    assertThat(incidents.size()).isEqualTo(4);
   }
 
   @Test
   public void testQueryByIncidentType() {
     IncidentQuery query = runtimeService.createIncidentQuery().incidentType(Incident.FAILED_JOB_HANDLER_TYPE);
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
     List<Incident> incidents = query.list();
     assertFalse(incidents.isEmpty());
-    assertEquals(4, incidents.size());
+    assertThat(incidents.size()).isEqualTo(4);
   }
 
   @Test
   public void testQueryByInvalidIncidentType() {
     IncidentQuery query = runtimeService.createIncidentQuery().incidentType("invalid");
 
-    assertEquals(0, query.count());
+    assertThat(query.count()).isEqualTo(0);
 
     List<Incident> incidents = query.list();
     assertTrue(incidents.isEmpty());
@@ -154,18 +153,18 @@ public class IncidentQueryTest {
   @Test
   public void testQueryByIncidentMessage() {
     IncidentQuery query = runtimeService.createIncidentQuery().incidentMessage("exception0");
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     List<Incident> incidents = query.list();
     assertFalse(incidents.isEmpty());
-    assertEquals(1, incidents.size());
+    assertThat(incidents.size()).isEqualTo(1);
   }
 
   @Test
   public void testQueryByInvalidIncidentMessage() {
     IncidentQuery query = runtimeService.createIncidentQuery().incidentMessage("invalid");
 
-    assertEquals(0, query.count());
+    assertThat(query.count()).isEqualTo(0);
 
     List<Incident> incidents = query.list();
     assertTrue(incidents.isEmpty());
@@ -177,9 +176,9 @@ public class IncidentQueryTest {
   @Test
   public void testQueryByIncidentMessageLike() {
     IncidentQuery query = runtimeService.createIncidentQuery();
-    assertEquals(0, query.incidentMessageLike("exception").list().size());
-    assertEquals(4, query.incidentMessageLike("exception%").list().size());
-    assertEquals(1, query.incidentMessageLike("%xception1").list().size());
+    assertThat(query.incidentMessageLike("exception").list().size()).isEqualTo(0);
+    assertThat(query.incidentMessageLike("exception%").list().size()).isEqualTo(4);
+    assertThat(query.incidentMessageLike("%xception1").list().size()).isEqualTo(1);
   }
 
   @Test
@@ -187,18 +186,18 @@ public class IncidentQueryTest {
     String processDefinitionId = engineRule.getRepositoryService().createProcessDefinitionQuery().singleResult().getId();
 
     IncidentQuery query = runtimeService.createIncidentQuery().processDefinitionId(processDefinitionId);
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
     List<Incident> incidents = query.list();
     assertFalse(incidents.isEmpty());
-    assertEquals(4, incidents.size());
+    assertThat(incidents.size()).isEqualTo(4);
   }
 
   @Test
   public void testQueryByInvalidProcessDefinitionId() {
     IncidentQuery query = runtimeService.createIncidentQuery().processDefinitionId("invalid");
 
-    assertEquals(0, query.count());
+    assertThat(query.count()).isEqualTo(0);
 
     List<Incident> incidents = query.list();
     assertTrue(incidents.isEmpty());
@@ -258,11 +257,11 @@ public class IncidentQueryTest {
   public void testQueryByProcessInstanceId() {
     IncidentQuery query = runtimeService.createIncidentQuery().processInstanceId(processInstanceIds.get(0));
 
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     List<Incident> incidents = query.list();
     assertFalse(incidents.isEmpty());
-    assertEquals(1, incidents.size());
+    assertThat(incidents.size()).isEqualTo(1);
 
     Incident incident = query.singleResult();
     assertNotNull(incident);
@@ -272,7 +271,7 @@ public class IncidentQueryTest {
   public void testQueryByInvalidProcessInstanceId() {
     IncidentQuery query = runtimeService.createIncidentQuery().processInstanceId("invalid");
 
-    assertEquals(0, query.count());
+    assertThat(query.count()).isEqualTo(0);
 
     List<Incident> incidents = query.list();
     assertTrue(incidents.isEmpty());
@@ -288,18 +287,18 @@ public class IncidentQueryTest {
 
     IncidentQuery query = runtimeService.createIncidentQuery().incidentId(incident.getId());
 
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     List<Incident> incidents = query.list();
     assertFalse(incidents.isEmpty());
-    assertEquals(1, incidents.size());
+    assertThat(incidents.size()).isEqualTo(1);
   }
 
   @Test
   public void testQueryByInvalidIncidentId() {
     IncidentQuery query = runtimeService.createIncidentQuery().incidentId("invalid");
 
-    assertEquals(0, query.count());
+    assertThat(query.count()).isEqualTo(0);
 
     List<Incident> incidents = query.list();
     assertTrue(incidents.isEmpty());
@@ -315,18 +314,18 @@ public class IncidentQueryTest {
 
     IncidentQuery query = runtimeService.createIncidentQuery().executionId(execution.getId());
 
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     List<Incident> incidents = query.list();
     assertFalse(incidents.isEmpty());
-    assertEquals(1, incidents.size());
+    assertThat(incidents.size()).isEqualTo(1);
   }
 
   @Test
   public void testQueryByInvalidExecutionId() {
     IncidentQuery query = runtimeService.createIncidentQuery().executionId("invalid");
 
-    assertEquals(0, query.count());
+    assertThat(query.count()).isEqualTo(0);
 
     List<Incident> incidents = query.list();
     assertTrue(incidents.isEmpty());
@@ -338,18 +337,18 @@ public class IncidentQueryTest {
   @Test
   public void testQueryByActivityId() {
     IncidentQuery query = runtimeService.createIncidentQuery().activityId("task");
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
     List<Incident> incidents = query.list();
     assertFalse(incidents.isEmpty());
-    assertEquals(4, incidents.size());
+    assertThat(incidents.size()).isEqualTo(4);
   }
 
   @Test
   public void testQueryByInvalidActivityId() {
     IncidentQuery query = runtimeService.createIncidentQuery().activityId("invalid");
 
-    assertEquals(0, query.count());
+    assertThat(query.count()).isEqualTo(0);
 
     List<Incident> incidents = query.list();
     assertTrue(incidents.isEmpty());
@@ -361,18 +360,18 @@ public class IncidentQueryTest {
   @Test
   public void testQueryByFailedActivityId() {
     IncidentQuery query = runtimeService.createIncidentQuery().failedActivityId("task");
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
     List<Incident> incidents = query.list();
     assertFalse(incidents.isEmpty());
-    assertEquals(4, incidents.size());
+    assertThat(incidents.size()).isEqualTo(4);
   }
 
   @Test
   public void testQueryByInvalidFailedActivityId() {
     IncidentQuery query = runtimeService.createIncidentQuery().failedActivityId("invalid");
 
-    assertEquals(0, query.count());
+    assertThat(query.count()).isEqualTo(0);
 
     List<Incident> incidents = query.list();
     assertTrue(incidents.isEmpty());
@@ -386,18 +385,18 @@ public class IncidentQueryTest {
     String jobId = managementService.createJobQuery().processInstanceId(processInstanceIds.get(0)).singleResult().getId();
 
     IncidentQuery query = runtimeService.createIncidentQuery().configuration(jobId);
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     List<Incident> incidents = query.list();
     assertFalse(incidents.isEmpty());
-    assertEquals(1, incidents.size());
+    assertThat(incidents.size()).isEqualTo(1);
   }
 
   @Test
   public void testQueryByInvalidConfiguration() {
     IncidentQuery query = runtimeService.createIncidentQuery().configuration("invalid");
 
-    assertEquals(0, query.count());
+    assertThat(query.count()).isEqualTo(0);
 
     List<Incident> incidents = query.list();
     assertTrue(incidents.isEmpty());
@@ -409,21 +408,21 @@ public class IncidentQueryTest {
   @Test
   public void testQueryByCauseIncidentIdEqualsNull() {
     IncidentQuery query = runtimeService.createIncidentQuery().causeIncidentId(null);
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
     List<Incident> incidents = query.list();
     assertFalse(incidents.isEmpty());
-    assertEquals(4, incidents.size());
+    assertThat(incidents.size()).isEqualTo(4);
   }
 
   @Test
   public void testQueryByInvalidCauseIncidentId() {
     IncidentQuery query = runtimeService.createIncidentQuery().causeIncidentId("invalid");
-    assertEquals(0, query.count());
+    assertThat(query.count()).isEqualTo(0);
 
     List<Incident> incidents = query.list();
     assertTrue(incidents.isEmpty());
-    assertEquals(0, incidents.size());
+    assertThat(incidents.size()).isEqualTo(0);
   }
 
   @Test
@@ -440,31 +439,31 @@ public class IncidentQueryTest {
     assertNotNull(causeIncident);
 
     IncidentQuery query = runtimeService.createIncidentQuery().causeIncidentId(causeIncident.getId());
-    assertEquals(2, query.count());
+    assertThat(query.count()).isEqualTo(2);
 
     List<Incident> incidents = query.list();
     assertFalse(incidents.isEmpty());
-    assertEquals(2, incidents.size());
+    assertThat(incidents.size()).isEqualTo(2);
   }
 
   @Test
   public void testQueryByRootCauseIncidentIdEqualsNull() {
     IncidentQuery query = runtimeService.createIncidentQuery().rootCauseIncidentId(null);
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
     List<Incident> incidents = query.list();
     assertFalse(incidents.isEmpty());
-    assertEquals(4, incidents.size());
+    assertThat(incidents.size()).isEqualTo(4);
   }
 
   @Test
   public void testQueryByRootInvalidCauseIncidentId() {
     IncidentQuery query = runtimeService.createIncidentQuery().rootCauseIncidentId("invalid");
-    assertEquals(0, query.count());
+    assertThat(query.count()).isEqualTo(0);
 
     List<Incident> incidents = query.list();
     assertTrue(incidents.isEmpty());
-    assertEquals(0, incidents.size());
+    assertThat(incidents.size()).isEqualTo(0);
   }
 
   @Test
@@ -485,11 +484,11 @@ public class IncidentQueryTest {
     assertNotNull(incident);
 
     IncidentQuery query = runtimeService.createIncidentQuery().rootCauseIncidentId(incident.getId());
-    assertEquals(3, query.count());
+    assertThat(query.count()).isEqualTo(3);
 
     List<Incident> incidents = query.list();
     assertFalse(incidents.isEmpty());
-    assertEquals(3, incidents.size());
+    assertThat(incidents.size()).isEqualTo(3);
 
     try {
       query.singleResult();
@@ -519,29 +518,29 @@ public class IncidentQueryTest {
     IncidentQuery query = runtimeService.createIncidentQuery()
       .jobDefinitionIdIn(jobDefinitionId1, jobDefinitionId2);
 
-    assertEquals(2, query.list().size());
-    assertEquals(2, query.count());
+    assertThat(query.list().size()).isEqualTo(2);
+    assertThat(query.count()).isEqualTo(2);
 
     query = runtimeService.createIncidentQuery()
       .jobDefinitionIdIn(jobDefinitionId1);
 
-    assertEquals(1, query.list().size());
-    assertEquals(1, query.count());
+    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.count()).isEqualTo(1);
 
     query = runtimeService.createIncidentQuery()
       .jobDefinitionIdIn(jobDefinitionId2);
 
-    assertEquals(1, query.list().size());
-    assertEquals(1, query.count());
+    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.count()).isEqualTo(1);
   }
 
   @Test
   public void testQueryByUnknownJobDefinitionId() {
     IncidentQuery query = runtimeService.createIncidentQuery().jobDefinitionIdIn("unknown");
-    assertEquals(0, query.count());
+    assertThat(query.count()).isEqualTo(0);
 
     List<Incident> incidents = query.list();
-    assertEquals(0, incidents.size());
+    assertThat(incidents.size()).isEqualTo(0);
   }
 
   @Test
@@ -570,35 +569,35 @@ public class IncidentQueryTest {
 
   @Test
   public void testQueryPaging() {
-    assertEquals(4, runtimeService.createIncidentQuery().listPage(0, 4).size());
-    assertEquals(1, runtimeService.createIncidentQuery().listPage(2, 1).size());
-    assertEquals(2, runtimeService.createIncidentQuery().listPage(1, 2).size());
-    assertEquals(3, runtimeService.createIncidentQuery().listPage(1, 4).size());
+    assertThat(runtimeService.createIncidentQuery().listPage(0, 4).size()).isEqualTo(4);
+    assertThat(runtimeService.createIncidentQuery().listPage(2, 1).size()).isEqualTo(1);
+    assertThat(runtimeService.createIncidentQuery().listPage(1, 2).size()).isEqualTo(2);
+    assertThat(runtimeService.createIncidentQuery().listPage(1, 4).size()).isEqualTo(3);
   }
 
   @Test
   public void testQuerySorting() {
-    assertEquals(4, runtimeService.createIncidentQuery().orderByIncidentId().asc().list().size());
-    assertEquals(4, runtimeService.createIncidentQuery().orderByIncidentTimestamp().asc().list().size());
-    assertEquals(4, runtimeService.createIncidentQuery().orderByIncidentType().asc().list().size());
-    assertEquals(4, runtimeService.createIncidentQuery().orderByExecutionId().asc().list().size());
-    assertEquals(4, runtimeService.createIncidentQuery().orderByActivityId().asc().list().size());
-    assertEquals(4, runtimeService.createIncidentQuery().orderByProcessInstanceId().asc().list().size());
-    assertEquals(4, runtimeService.createIncidentQuery().orderByProcessDefinitionId().asc().list().size());
-    assertEquals(4, runtimeService.createIncidentQuery().orderByCauseIncidentId().asc().list().size());
-    assertEquals(4, runtimeService.createIncidentQuery().orderByRootCauseIncidentId().asc().list().size());
-    assertEquals(4, runtimeService.createIncidentQuery().orderByConfiguration().asc().list().size());
+    assertThat(runtimeService.createIncidentQuery().orderByIncidentId().asc().list().size()).isEqualTo(4);
+    assertThat(runtimeService.createIncidentQuery().orderByIncidentTimestamp().asc().list().size()).isEqualTo(4);
+    assertThat(runtimeService.createIncidentQuery().orderByIncidentType().asc().list().size()).isEqualTo(4);
+    assertThat(runtimeService.createIncidentQuery().orderByExecutionId().asc().list().size()).isEqualTo(4);
+    assertThat(runtimeService.createIncidentQuery().orderByActivityId().asc().list().size()).isEqualTo(4);
+    assertThat(runtimeService.createIncidentQuery().orderByProcessInstanceId().asc().list().size()).isEqualTo(4);
+    assertThat(runtimeService.createIncidentQuery().orderByProcessDefinitionId().asc().list().size()).isEqualTo(4);
+    assertThat(runtimeService.createIncidentQuery().orderByCauseIncidentId().asc().list().size()).isEqualTo(4);
+    assertThat(runtimeService.createIncidentQuery().orderByRootCauseIncidentId().asc().list().size()).isEqualTo(4);
+    assertThat(runtimeService.createIncidentQuery().orderByConfiguration().asc().list().size()).isEqualTo(4);
 
-    assertEquals(4, runtimeService.createIncidentQuery().orderByIncidentId().desc().list().size());
-    assertEquals(4, runtimeService.createIncidentQuery().orderByIncidentTimestamp().desc().list().size());
-    assertEquals(4, runtimeService.createIncidentQuery().orderByIncidentType().desc().list().size());
-    assertEquals(4, runtimeService.createIncidentQuery().orderByExecutionId().desc().list().size());
-    assertEquals(4, runtimeService.createIncidentQuery().orderByActivityId().desc().list().size());
-    assertEquals(4, runtimeService.createIncidentQuery().orderByProcessInstanceId().desc().list().size());
-    assertEquals(4, runtimeService.createIncidentQuery().orderByProcessDefinitionId().desc().list().size());
-    assertEquals(4, runtimeService.createIncidentQuery().orderByCauseIncidentId().desc().list().size());
-    assertEquals(4, runtimeService.createIncidentQuery().orderByRootCauseIncidentId().desc().list().size());
-    assertEquals(4, runtimeService.createIncidentQuery().orderByConfiguration().desc().list().size());
+    assertThat(runtimeService.createIncidentQuery().orderByIncidentId().desc().list().size()).isEqualTo(4);
+    assertThat(runtimeService.createIncidentQuery().orderByIncidentTimestamp().desc().list().size()).isEqualTo(4);
+    assertThat(runtimeService.createIncidentQuery().orderByIncidentType().desc().list().size()).isEqualTo(4);
+    assertThat(runtimeService.createIncidentQuery().orderByExecutionId().desc().list().size()).isEqualTo(4);
+    assertThat(runtimeService.createIncidentQuery().orderByActivityId().desc().list().size()).isEqualTo(4);
+    assertThat(runtimeService.createIncidentQuery().orderByProcessInstanceId().desc().list().size()).isEqualTo(4);
+    assertThat(runtimeService.createIncidentQuery().orderByProcessDefinitionId().desc().list().size()).isEqualTo(4);
+    assertThat(runtimeService.createIncidentQuery().orderByCauseIncidentId().desc().list().size()).isEqualTo(4);
+    assertThat(runtimeService.createIncidentQuery().orderByRootCauseIncidentId().desc().list().size()).isEqualTo(4);
+    assertThat(runtimeService.createIncidentQuery().orderByConfiguration().desc().list().size()).isEqualTo(4);
 
   }
 

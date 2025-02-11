@@ -23,7 +23,8 @@ import org.operaton.bpm.engine.impl.pvm.ProcessDefinitionBuilder;
 import org.operaton.bpm.engine.impl.pvm.PvmExecution;
 import org.operaton.bpm.engine.impl.pvm.PvmProcessDefinition;
 import org.operaton.bpm.engine.impl.pvm.PvmProcessInstance;
-import static org.junit.Assert.assertEquals;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNotNull;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.Automatic;
@@ -120,7 +121,7 @@ public class PvmParallelTest {
     List<String> expectedActivityNames = new ArrayList<>();
     expectedActivityNames.add("end");
 
-    assertEquals(expectedActivityNames, activityNames);
+    assertThat(activityNames).isEqualTo(expectedActivityNames);
   }
 
   @Test

@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.signal;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -108,13 +108,13 @@ public class SignalEventTest {
 
     runtimeService.startProcessInstanceByKey("catchSignal");
 
-    assertEquals(1, createEventSubscriptionQuery().count());
-    assertEquals(1, runtimeService.createProcessInstanceQuery().count());
+    assertThat(createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
 
     runtimeService.startProcessInstanceByKey("throwSignal");
 
-    assertEquals(0, createEventSubscriptionQuery().count());
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(createEventSubscriptionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
 
   }
 
@@ -125,13 +125,13 @@ public class SignalEventTest {
   public void testSignalCatchBoundary() {
     runtimeService.startProcessInstanceByKey("catchSignal");
 
-    assertEquals(1, createEventSubscriptionQuery().count());
-    assertEquals(1, runtimeService.createProcessInstanceQuery().count());
+    assertThat(createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
 
     runtimeService.startProcessInstanceByKey("throwSignal");
 
-    assertEquals(0, createEventSubscriptionQuery().count());
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(createEventSubscriptionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
   }
 
   @Deployment(resources = {
@@ -147,7 +147,7 @@ public class SignalEventTest {
     variables2.put("processName", "throwSignal");
     runtimeService.startProcessInstanceByKey("throwSignal", variables2);
 
-    assertEquals("catchSignal", runtimeService.getVariable(pi.getId(), "processName"));
+    assertThat(runtimeService.getVariable(pi.getId(), "processName")).isEqualTo("catchSignal");
   }
 
   @Deployment(resources = {
@@ -158,24 +158,24 @@ public class SignalEventTest {
 
     runtimeService.startProcessInstanceByKey("catchSignal");
 
-    assertEquals(1, createEventSubscriptionQuery().count());
-    assertEquals(1, runtimeService.createProcessInstanceQuery().count());
+    assertThat(createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
 
     runtimeService.startProcessInstanceByKey("throwSignal");
 
-    assertEquals(1, createEventSubscriptionQuery().count());
-    assertEquals(1, runtimeService.createProcessInstanceQuery().count());
+    assertThat(createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
 
     // there is a job:
-    assertEquals(1, managementService.createJobQuery().count());
+    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
 
     try {
       ClockUtil.setCurrentTime(new Date(System.currentTimeMillis() + 1000));
       testRule.waitForJobExecutorToProcessAllJobs(10000);
 
-      assertEquals(0, createEventSubscriptionQuery().count());
-      assertEquals(0, runtimeService.createProcessInstanceQuery().count());
-      assertEquals(0, managementService.createJobQuery().count());
+      assertThat(createEventSubscriptionQuery().count()).isEqualTo(0);
+      assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+      assertThat(managementService.createJobQuery().count()).isEqualTo(0);
     } finally {
       ClockUtil.setCurrentTime(new Date());
     }
@@ -191,13 +191,13 @@ public class SignalEventTest {
 
     runtimeService.startProcessInstanceByKey("catchSignal");
 
-    assertEquals(2, createEventSubscriptionQuery().count());
-    assertEquals(1, runtimeService.createProcessInstanceQuery().count());
+    assertThat(createEventSubscriptionQuery().count()).isEqualTo(2);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
 
     runtimeService.startProcessInstanceByKey("throwAbort");
 
-    assertEquals(1, createEventSubscriptionQuery().count());
-    assertEquals(1, runtimeService.createProcessInstanceQuery().count());
+    assertThat(createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
 
     Task taskAfterAbort = taskService.createTaskQuery().taskAssignee("gonzo").singleResult();
     assertNotNull(taskAfterAbort);
@@ -205,8 +205,8 @@ public class SignalEventTest {
 
     runtimeService.startProcessInstanceByKey("throwSignal");
 
-    assertEquals(0, createEventSubscriptionQuery().count());
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(createEventSubscriptionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
   }
 
   /**
@@ -233,14 +233,14 @@ public class SignalEventTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("nonInterruptingSignalEvent");
 
     List<Task> tasks = taskService.createTaskQuery().processInstanceId(pi.getProcessInstanceId()).list();
-    assertEquals(1, tasks.size());
+    assertThat(tasks.size()).isEqualTo(1);
     Task currentTask = tasks.get(0);
-    assertEquals("My User Task", currentTask.getName());
+    assertThat(currentTask.getName()).isEqualTo("My User Task");
 
     runtimeService.signalEventReceived("alert");
 
     tasks = taskService.createTaskQuery().processInstanceId(pi.getProcessInstanceId()).list();
-    assertEquals(2, tasks.size());
+    assertThat(tasks.size()).isEqualTo(2);
 
     for (Task task : tasks) {
       if (!task.getName().equals("My User Task") && !task.getName().equals("My Second User Task")) {
@@ -251,9 +251,9 @@ public class SignalEventTest {
     taskService.complete(taskService.createTaskQuery().taskName("My User Task").singleResult().getId());
 
     tasks = taskService.createTaskQuery().processInstanceId(pi.getProcessInstanceId()).list();
-    assertEquals(1, tasks.size());
+    assertThat(tasks.size()).isEqualTo(1);
     currentTask = tasks.get(0);
-    assertEquals("My Second User Task", currentTask.getName());
+    assertThat(currentTask.getName()).isEqualTo("My Second User Task");
   }
 
 
@@ -265,15 +265,15 @@ public class SignalEventTest {
   public void testNonInterruptingSignalWithSubProcess() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("nonInterruptingSignalWithSubProcess");
     List<Task> tasks = taskService.createTaskQuery().processInstanceId(pi.getProcessInstanceId()).list();
-    assertEquals(1, tasks.size());
+    assertThat(tasks.size()).isEqualTo(1);
 
     Task currentTask = tasks.get(0);
-    assertEquals("Approve", currentTask.getName());
+    assertThat(currentTask.getName()).isEqualTo("Approve");
 
     runtimeService.signalEventReceived("alert");
 
     tasks = taskService.createTaskQuery().processInstanceId(pi.getProcessInstanceId()).list();
-    assertEquals(2, tasks.size());
+    assertThat(tasks.size()).isEqualTo(2);
 
     for (Task task : tasks) {
       if (!task.getName().equals("Approve") && !task.getName().equals("Review")) {
@@ -284,15 +284,15 @@ public class SignalEventTest {
     taskService.complete(taskService.createTaskQuery().taskName("Approve").singleResult().getId());
 
     tasks = taskService.createTaskQuery().processInstanceId(pi.getProcessInstanceId()).list();
-    assertEquals(1, tasks.size());
+    assertThat(tasks.size()).isEqualTo(1);
 
     currentTask = tasks.get(0);
-    assertEquals("Review", currentTask.getName());
+    assertThat(currentTask.getName()).isEqualTo("Review");
 
     taskService.complete(taskService.createTaskQuery().taskName("Review").singleResult().getId());
 
     tasks = taskService.createTaskQuery().processInstanceId(pi.getProcessInstanceId()).list();
-    assertEquals(1, tasks.size());
+    assertThat(tasks.size()).isEqualTo(1);
 
   }
 
@@ -304,24 +304,24 @@ public class SignalEventTest {
 
     // check if execution exists
     ExecutionQuery executionQuery = runtimeService.createExecutionQuery().processInstanceId(processInstance.getId());
-    assertEquals(1, executionQuery.count());
+    assertThat(executionQuery.count()).isEqualTo(1);
 
     // check if user task exists
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(processInstance.getId());
-    assertEquals(1, taskQuery.count());
+    assertThat(taskQuery.count()).isEqualTo(1);
 
     // send interrupting signal to event sub process
     runtimeService.signalEventReceived("alert");
 
-    assertEquals(true, DummyServiceTask.wasExecuted);
+    assertThat(DummyServiceTask.wasExecuted).isEqualTo(true);
 
     // check if user task doesn't exist because signal start event is interrupting
     taskQuery = taskService.createTaskQuery().processInstanceId(processInstance.getId());
-    assertEquals(0, taskQuery.count());
+    assertThat(taskQuery.count()).isEqualTo(0);
 
     // check if execution doesn't exist because signal start event is interrupting
     executionQuery = runtimeService.createExecutionQuery().processInstanceId(processInstance.getId());
-    assertEquals(0, executionQuery.count());
+    assertThat(executionQuery.count()).isEqualTo(0);
   }
 
   @Deployment
@@ -332,49 +332,49 @@ public class SignalEventTest {
 
     // check if execution exists
     ExecutionQuery executionQuery = runtimeService.createExecutionQuery().processInstanceId(processInstance.getId());
-    assertEquals(1, executionQuery.count());
+    assertThat(executionQuery.count()).isEqualTo(1);
 
     // check if user task exists
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(processInstance.getId());
-    assertEquals(1, taskQuery.count());
+    assertThat(taskQuery.count()).isEqualTo(1);
 
     // send non interrupting signal to event sub process
     runtimeService.signalEventReceived("alert");
 
-    assertEquals(true, DummyServiceTask.wasExecuted);
+    assertThat(DummyServiceTask.wasExecuted).isEqualTo(true);
 
     // check if user task still exists because signal start event is non interrupting
     taskQuery = taskService.createTaskQuery().processInstanceId(processInstance.getId());
-    assertEquals(1, taskQuery.count());
+    assertThat(taskQuery.count()).isEqualTo(1);
 
     // check if execution still exists because signal start event is non interrupting
     executionQuery = runtimeService.createExecutionQuery().processInstanceId(processInstance.getId());
-    assertEquals(1, executionQuery.count());
+    assertThat(executionQuery.count()).isEqualTo(1);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTest.signalStartEvent.bpmn20.xml"})
   @Test
   public void testSignalStartEvent() {
     // event subscription for signal start event
-    assertEquals(1, runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert").count());
+    assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert").count()).isEqualTo(1);
 
     runtimeService.signalEventReceived("alert");
     // the signal should start a new process instance
-    assertEquals(1, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTest.signalStartEvent.bpmn20.xml"})
   @Test
   public void testSuspendedProcessWithSignalStartEvent() {
     // event subscription for signal start event
-    assertEquals(1, runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert").count());
+    assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert").count()).isEqualTo(1);
 
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     repositoryService.suspendProcessDefinitionById(processDefinition.getId());
 
     runtimeService.signalEventReceived("alert");
     // the signal should not start a process instance for the suspended process definition
-    assertEquals(0, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(0);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTest.signalStartEvent.bpmn20.xml",
@@ -382,11 +382,11 @@ public class SignalEventTest {
   @Test
   public void testMultipleProcessesWithSameSignalStartEvent() {
     // event subscriptions for signal start event
-    assertEquals(2, runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert").count());
+    assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert").count()).isEqualTo(2);
 
     runtimeService.signalEventReceived("alert");
     // the signal should start new process instances for both process definitions
-    assertEquals(2, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(2);
   }
 
   @Deployment(resources = {
@@ -397,7 +397,7 @@ public class SignalEventTest {
     // start a process instance to throw a signal
     runtimeService.startProcessInstanceByKey("throwSignal");
     // the signal should start a new process instance
-    assertEquals(1, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
   }
 
   @Deployment(resources = {
@@ -406,7 +406,7 @@ public class SignalEventTest {
   @Test
   public void testIntermediateThrowingSignalEventWithSuspendedSignalStartEvent() {
     // event subscription for signal start event
-    assertEquals(1, runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert").count());
+    assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert").count()).isEqualTo(1);
 
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionKey("startBySignal").singleResult();
     repositoryService.suspendProcessDefinitionById(processDefinition.getId());
@@ -414,18 +414,18 @@ public class SignalEventTest {
     // start a process instance to throw a signal
     runtimeService.startProcessInstanceByKey("throwSignal");
     // the signal should not start a new process instance of the suspended process definition
-    assertEquals(0, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(0);
   }
 
   @Deployment
   @Test
   public void testProcessesWithMultipleSignalStartEvents() {
     // event subscriptions for signal start event
-    assertEquals(2, runtimeService.createEventSubscriptionQuery().eventType("signal").count());
+    assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").count()).isEqualTo(2);
 
     runtimeService.signalEventReceived("alert");
     // the signal should start new process instances for both process definitions
-    assertEquals(1, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTests.catchAlertTwiceAndTerminate.bpmn20.xml"})
@@ -436,16 +436,16 @@ public class SignalEventTest {
     runtimeService.startProcessInstanceByKey("catchAlertTwiceAndTerminate");
 
     // event subscription for intermediate signal events
-    assertEquals(2, runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert").count());
+    assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert").count()).isEqualTo(2);
 
     // try to send 'alert' signal to both executions
     runtimeService.signalEventReceived("alert");
 
     // then only one terminate end event was executed
-    assertEquals(1, RecorderExecutionListener.getRecordedEvents().size());
+    assertThat(RecorderExecutionListener.getRecordedEvents().size()).isEqualTo(1);
 
     // and instances ended successfully
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
   }
 
   @Deployment(resources = {
@@ -458,16 +458,16 @@ public class SignalEventTest {
     runtimeService.startProcessInstanceByKey("catchAlertTwiceAndTerminate");
 
     // event subscriptions for intermediate events
-    assertEquals(2, runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert").count());
+    assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert").count()).isEqualTo(2);
 
     // started process instance try to send 'alert' signal to both executions
     runtimeService.startProcessInstanceByKey("throwSignal");
 
     // then only one terminate end event was executed
-    assertEquals(1, RecorderExecutionListener.getRecordedEvents().size());
+    assertThat(RecorderExecutionListener.getRecordedEvents().size()).isEqualTo(1);
 
     // and both instances ended successfully
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
   }
 
   @Deployment(resources = {
@@ -487,18 +487,18 @@ public class SignalEventTest {
     // where the throwing instance ends immediately
 
     // then there is not yet a catching process instance
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
 
     // but there is a job for the asynchronous continuation
     Job asyncJob = managementService.createJobQuery().singleResult();
-    assertEquals(catchingProcessDefinition.getId(), asyncJob.getProcessDefinitionId());
-    assertEquals(catchingProcessDefinition.getKey(), asyncJob.getProcessDefinitionKey());
+    assertThat(asyncJob.getProcessDefinitionId()).isEqualTo(catchingProcessDefinition.getId());
+    assertThat(asyncJob.getProcessDefinitionKey()).isEqualTo(catchingProcessDefinition.getKey());
     assertNull(asyncJob.getExceptionMessage());
     assertNull(asyncJob.getExecutionId());
     assertNull(asyncJob.getJobDefinitionId());
-    assertEquals(0, asyncJob.getPriority());
+    assertThat(asyncJob.getPriority()).isEqualTo(0);
     assertNull(asyncJob.getProcessInstanceId());
-    assertEquals(3, asyncJob.getRetries());
+    assertThat(asyncJob.getRetries()).isEqualTo(3);
     assertNull(asyncJob.getDuedate());
     assertNull(asyncJob.getDeploymentId());
   }
@@ -522,19 +522,19 @@ public class SignalEventTest {
     // where the throwing instance ends immediately
 
     // then there is not yet a catching process instance
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
 
     // but there is a job for the asynchronous continuation
     Job asyncJob = managementService.createJobQuery().singleResult();
-    assertEquals(catchingProcessDefinition.getId(), asyncJob.getProcessDefinitionId());
-    assertEquals(catchingProcessDefinition.getKey(), asyncJob.getProcessDefinitionKey());
+    assertThat(asyncJob.getProcessDefinitionId()).isEqualTo(catchingProcessDefinition.getId());
+    assertThat(asyncJob.getProcessDefinitionKey()).isEqualTo(catchingProcessDefinition.getKey());
     assertNull(asyncJob.getExceptionMessage());
     assertNull(asyncJob.getExecutionId());
     assertNull(asyncJob.getJobDefinitionId());
-    assertEquals(0, asyncJob.getPriority());
+    assertThat(asyncJob.getPriority()).isEqualTo(0);
     assertNull(asyncJob.getProcessInstanceId());
-    assertEquals(3, asyncJob.getRetries());
-    assertEquals(testTime, asyncJob.getDuedate());
+    assertThat(asyncJob.getRetries()).isEqualTo(3);
+    assertThat(asyncJob.getDuedate()).isEqualTo(testTime);
     assertNull(asyncJob.getDeploymentId());
   }
 
@@ -560,10 +560,10 @@ public class SignalEventTest {
     // then there is a process instance
     ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().singleResult();
     assertNotNull(processInstance);
-    assertEquals(catchingProcessDefinition.getId(), processInstance.getProcessDefinitionId());
+    assertThat(processInstance.getProcessDefinitionId()).isEqualTo(catchingProcessDefinition.getId());
 
     // and a task
-    assertEquals(1, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
   }
 
   /**
@@ -581,9 +581,9 @@ public class SignalEventTest {
     taskService.complete(subProcessTask.getId());
 
     // then execution should not have been continued after the subprocess
-    assertEquals(1, taskService.createTaskQuery().count());
-    assertEquals(0, taskService.createTaskQuery().taskDefinitionKey("afterSubProcessTask").count());
-    assertEquals(1, taskService.createTaskQuery().taskDefinitionKey("eventSubProcessTask").count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("afterSubProcessTask").count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("eventSubProcessTask").count()).isEqualTo(1);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTest.signalStartEvent.bpmn20.xml")
@@ -622,9 +622,9 @@ public class SignalEventTest {
     ObjectValue variableTyped = runtimeService.getVariableTyped(startedInstance.getId(), "var", false);
     assertNotNull(variableTyped);
     assertFalse(variableTyped.isDeserialized());
-    assertEquals(serializedObject, variableTyped.getValueSerialized());
-    assertEquals(FailingJavaSerializable.class.getName(), variableTyped.getObjectTypeName());
-    assertEquals(SerializationDataFormats.JAVA.getName(), variableTyped.getSerializationDataFormat());
+    assertThat(variableTyped.getValueSerialized()).isEqualTo(serializedObject);
+    assertThat(variableTyped.getObjectTypeName()).isEqualTo(FailingJavaSerializable.class.getName());
+    assertThat(variableTyped.getSerializationDataFormat()).isEqualTo(SerializationDataFormats.JAVA.getName());
   }
 
   /**
@@ -653,7 +653,7 @@ public class SignalEventTest {
 //    assertEquals(catchingProcessDefinition.getId(), processInstance.getProcessDefinitionId());
 
     // and a task
-    assertEquals(1, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
   }
 
   @Test
@@ -663,7 +663,7 @@ public class SignalEventTest {
 
     Task taskBefore = taskService.createTaskQuery().singleResult();
     assertNotNull(taskBefore);
-    assertEquals("task in subprocess", taskBefore.getName());
+    assertThat(taskBefore.getName()).isEqualTo("task in subprocess");
 
     Job job = managementService.createJobQuery().singleResult();
     assertNotNull(job);
@@ -673,7 +673,7 @@ public class SignalEventTest {
 
     Task taskAfter = taskService.createTaskQuery().singleResult();
     assertNotNull(taskAfter);
-    assertEquals("after catch", taskAfter.getName());
+    assertThat(taskAfter.getName()).isEqualTo("after catch");
 
     Job jobAfter = managementService.createJobQuery().singleResult();
     assertNull(jobAfter);

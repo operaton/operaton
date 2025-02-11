@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
@@ -58,11 +58,11 @@ public class JobDefinitionPriorityTest extends PluggableProcessEngineTest {
     // then the job definition's priority value has changed
     JobDefinition updatedDefinition = managementService.createJobDefinitionQuery()
         .jobDefinitionId(jobDefinition.getId()).singleResult();
-    assertEquals(42, (long) updatedDefinition.getOverridingJobPriority());
+    assertThat((long) updatedDefinition.getOverridingJobPriority()).isEqualTo(42);
 
     // the existing job's priority has not changed
     Job updatedExistingJob = managementService.createJobQuery().singleResult();
-    assertEquals(job.getPriority(), updatedExistingJob.getPriority());
+    assertThat(updatedExistingJob.getPriority()).isEqualTo(job.getPriority());
 
     // and a new job of that definition receives the updated priority
     runtimeService.createProcessInstanceModification(instance.getId())
@@ -70,7 +70,7 @@ public class JobDefinitionPriorityTest extends PluggableProcessEngineTest {
       .execute();
 
     Job newJob = getJobThatIsNot(updatedExistingJob);
-    assertEquals(42, newJob.getPriority());
+    assertThat(newJob.getPriority()).isEqualTo(42);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/asyncTaskProcess.bpmn20.xml")
@@ -91,11 +91,11 @@ public class JobDefinitionPriorityTest extends PluggableProcessEngineTest {
     // then the job definition's priority value has changed
     JobDefinition updatedDefinition = managementService.createJobDefinitionQuery()
         .jobDefinitionId(jobDefinition.getId()).singleResult();
-    assertEquals(52, (long) updatedDefinition.getOverridingJobPriority());
+    assertThat((long) updatedDefinition.getOverridingJobPriority()).isEqualTo(52);
 
     // the existing job's priority has changed as well
     Job updatedExistingJob = managementService.createJobQuery().singleResult();
-    assertEquals(52, updatedExistingJob.getPriority());
+    assertThat(updatedExistingJob.getPriority()).isEqualTo(52);
 
     // and a new job of that definition receives the updated priority
     runtimeService.createProcessInstanceModification(instance.getId())
@@ -103,7 +103,7 @@ public class JobDefinitionPriorityTest extends PluggableProcessEngineTest {
       .execute();
 
     Job newJob = getJobThatIsNot(updatedExistingJob);
-    assertEquals(52, newJob.getPriority());
+    assertThat(newJob.getPriority()).isEqualTo(52);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/jobPrioProcess.bpmn20.xml")
@@ -124,11 +124,11 @@ public class JobDefinitionPriorityTest extends PluggableProcessEngineTest {
     // then the job definition's priority value has changed
     JobDefinition updatedDefinition = managementService.createJobDefinitionQuery()
         .jobDefinitionId(jobDefinition.getId()).singleResult();
-    assertEquals(62, (long) updatedDefinition.getOverridingJobPriority());
+    assertThat((long) updatedDefinition.getOverridingJobPriority()).isEqualTo(62);
 
     // the existing job's priority is still the value as given in the BPMN XML
     Job updatedExistingJob = managementService.createJobQuery().singleResult();
-    assertEquals(5, updatedExistingJob.getPriority());
+    assertThat(updatedExistingJob.getPriority()).isEqualTo(5);
 
     // and a new job of that definition receives the updated priority
     // meaning that the updated priority overrides the priority specified in the BPMN XML
@@ -137,7 +137,7 @@ public class JobDefinitionPriorityTest extends PluggableProcessEngineTest {
       .execute();
 
     Job newJob = getJobThatIsNot(updatedExistingJob);
-    assertEquals(62, newJob.getPriority());
+    assertThat(newJob.getPriority()).isEqualTo(62);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/jobPrioProcess.bpmn20.xml")
@@ -158,11 +158,11 @@ public class JobDefinitionPriorityTest extends PluggableProcessEngineTest {
     // then the job definition's priority value has changed
     JobDefinition updatedDefinition = managementService.createJobDefinitionQuery()
         .jobDefinitionId(jobDefinition.getId()).singleResult();
-    assertEquals(72, (long) updatedDefinition.getOverridingJobPriority());
+    assertThat((long) updatedDefinition.getOverridingJobPriority()).isEqualTo(72);
 
     // the existing job's priority has changed as well
     Job updatedExistingJob = managementService.createJobQuery().singleResult();
-    assertEquals(72, updatedExistingJob.getPriority());
+    assertThat(updatedExistingJob.getPriority()).isEqualTo(72);
 
     // and a new job of that definition receives the updated priority
     // meaning that the updated priority overrides the priority specified in the BPMN XML
@@ -171,7 +171,7 @@ public class JobDefinitionPriorityTest extends PluggableProcessEngineTest {
       .execute();
 
     Job newJob = getJobThatIsNot(updatedExistingJob);
-    assertEquals(72, newJob.getPriority());
+    assertThat(newJob.getPriority()).isEqualTo(72);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/jobPrioProcess.bpmn20.xml")
@@ -192,11 +192,11 @@ public class JobDefinitionPriorityTest extends PluggableProcessEngineTest {
     // then the job definition's priority value has changed
     JobDefinition updatedDefinition = managementService.createJobDefinitionQuery()
       .jobDefinitionId(jobDefinition.getId()).singleResult();
-    assertEquals(72, (long) updatedDefinition.getOverridingJobPriority());
+    assertThat((long) updatedDefinition.getOverridingJobPriority()).isEqualTo(72);
 
     // the existing job's priority has changed as well
     Job updatedExistingJob = managementService.createJobQuery().singleResult();
-    assertEquals(72, updatedExistingJob.getPriority());
+    assertThat(updatedExistingJob.getPriority()).isEqualTo(72);
 
     // if the process definition is redeployed
     String secondDeploymentId = repositoryService.createDeployment().addClasspathResource("org/operaton/bpm/engine/test/api/mgmt/jobPrioProcess.bpmn20.xml").deploy().getId();
@@ -207,7 +207,7 @@ public class JobDefinitionPriorityTest extends PluggableProcessEngineTest {
       .execute();
 
     Job newJob = managementService.createJobQuery().processInstanceId(secondInstance.getId()).singleResult();
-    assertEquals(5, newJob.getPriority());
+    assertThat(newJob.getPriority()).isEqualTo(5);
 
     repositoryService.deleteDeployment(secondDeploymentId, true);
   }
@@ -236,7 +236,7 @@ public class JobDefinitionPriorityTest extends PluggableProcessEngineTest {
       .execute();
 
     Job job = managementService.createJobQuery().singleResult();
-    assertEquals(EXPECTED_DEFAULT_PRIORITY, job.getPriority());
+    assertThat(job.getPriority()).isEqualTo(EXPECTED_DEFAULT_PRIORITY);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/asyncTaskProcess.bpmn20.xml")
@@ -263,7 +263,7 @@ public class JobDefinitionPriorityTest extends PluggableProcessEngineTest {
     // then the definitions have a default null priority, meaning that they don't override the
     // value in the BPMN XML
     List<JobDefinition> jobDefinitions = managementService.createJobDefinitionQuery().list();
-    assertEquals(4, jobDefinitions.size());
+    assertThat(jobDefinitions.size()).isEqualTo(4);
 
     assertNull(jobDefinitions.get(0).getOverridingJobPriority());
     assertNull(jobDefinitions.get(1).getOverridingJobPriority());
@@ -342,17 +342,17 @@ public class JobDefinitionPriorityTest extends PluggableProcessEngineTest {
     // it is possible to set the max long value
     managementService.setOverridingJobPriorityForJobDefinition(jobDefinition.getId(), Long.MAX_VALUE);
     jobDefinition = managementService.createJobDefinitionQuery().singleResult();
-    assertEquals(Long.MAX_VALUE, (long) jobDefinition.getOverridingJobPriority());
+    assertThat((long) jobDefinition.getOverridingJobPriority()).isEqualTo(Long.MAX_VALUE);
 
     // it is possible to set the min long value
     managementService.setOverridingJobPriorityForJobDefinition(jobDefinition.getId(), Long.MIN_VALUE + 1); // +1 for informix
     jobDefinition = managementService.createJobDefinitionQuery().singleResult();
-    assertEquals(Long.MIN_VALUE + 1, (long) jobDefinition.getOverridingJobPriority());
+    assertThat((long) jobDefinition.getOverridingJobPriority()).isEqualTo(Long.MIN_VALUE + 1);
   }
 
   protected Job getJobThatIsNot(Job other) {
     List<Job> jobs = managementService.createJobQuery().list();
-    assertEquals(2, jobs.size());
+    assertThat(jobs.size()).isEqualTo(2);
 
     if (jobs.get(0).getId().equals(other.getId())) {
       return jobs.get(1);

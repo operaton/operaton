@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.dmn.businessruletask;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -32,6 +31,7 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.engine.variable.Variables;
+import org.operaton.bpm.engine.variable.value.StringValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 import org.junit.Test;
 
@@ -57,11 +57,11 @@ public class DmnBusinessRuleTaskResultMappingTest extends PluggableProcessEngine
   public void testCustomOutputMapping() {
     ProcessInstance processInstance = startTestProcess("multiple entries");
 
-    assertEquals("foo", runtimeService.getVariable(processInstance.getId(), "result1"));
-    assertEquals(Variables.stringValue("foo"), runtimeService.getVariableTyped(processInstance.getId(), "result1"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "result1")).isEqualTo("foo");
+    assertThat(runtimeService.<StringValue>getVariableTyped(processInstance.getId(), "result1")).isEqualTo(Variables.stringValue("foo"));
 
-    assertEquals("bar", runtimeService.getVariable(processInstance.getId(), "result2"));
-    assertEquals(Variables.stringValue("bar"), runtimeService.getVariableTyped(processInstance.getId(), "result2"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "result2")).isEqualTo("bar");
+    assertThat(runtimeService.<StringValue>getVariableTyped(processInstance.getId(), "result2")).isEqualTo(Variables.stringValue("bar"));
   }
 
   @Deployment(resources = { SINGLE_ENTRY_BPMN, TEST_DECISION})
@@ -69,8 +69,8 @@ public class DmnBusinessRuleTaskResultMappingTest extends PluggableProcessEngine
   public void testSingleEntryMapping() {
     ProcessInstance processInstance = startTestProcess("single entry");
 
-    assertEquals("foo", runtimeService.getVariable(processInstance.getId(), "result"));
-    assertEquals(Variables.stringValue("foo"), runtimeService.getVariableTyped(processInstance.getId(), "result"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "result")).isEqualTo("foo");
+    assertThat(runtimeService.<StringValue>getVariableTyped(processInstance.getId(), "result")).isEqualTo(Variables.stringValue("foo"));
   }
 
   @Deployment(resources = { SINGLE_RESULT_BPMN, TEST_DECISION })
@@ -81,9 +81,9 @@ public class DmnBusinessRuleTaskResultMappingTest extends PluggableProcessEngine
     @SuppressWarnings("unchecked")
     Map<String, Object> output = (Map<String, Object>) runtimeService.getVariable(processInstance.getId(), "result");
 
-    assertEquals(2, output.size());
-    assertEquals("foo", output.get("result1"));
-    assertEquals("bar", output.get("result2"));
+    assertThat(output.size()).isEqualTo(2);
+    assertThat(output.get("result1")).isEqualTo("foo");
+    assertThat(output.get("result2")).isEqualTo("bar");
   }
 
   @Deployment(resources = { COLLECT_ENTRIES_BPMN, TEST_DECISION })
@@ -94,9 +94,9 @@ public class DmnBusinessRuleTaskResultMappingTest extends PluggableProcessEngine
     @SuppressWarnings("unchecked")
     List<String> output = (List<String>) runtimeService.getVariable(processInstance.getId(), "result");
 
-    assertEquals(2, output.size());
-    assertEquals("foo", output.get(0));
-    assertEquals("foo", output.get(1));
+    assertThat(output.size()).isEqualTo(2);
+    assertThat(output.get(0)).isEqualTo("foo");
+    assertThat(output.get(1)).isEqualTo("foo");
   }
 
   @Deployment(resources = { RESULT_LIST_BPMN, TEST_DECISION })
@@ -106,12 +106,12 @@ public class DmnBusinessRuleTaskResultMappingTest extends PluggableProcessEngine
 
     @SuppressWarnings("unchecked")
     List<Map<String, Object>> resultList = (List<Map<String, Object>>) runtimeService.getVariable(processInstance.getId(), "result");
-    assertEquals(2, resultList.size());
+    assertThat(resultList.size()).isEqualTo(2);
 
     for (Map<String, Object> valueMap : resultList) {
-      assertEquals(2, valueMap.size());
-      assertEquals("foo", valueMap.get("result1"));
-      assertEquals("bar", valueMap.get("result2"));
+      assertThat(valueMap.size()).isEqualTo(2);
+      assertThat(valueMap.get("result1")).isEqualTo("foo");
+      assertThat(valueMap.get("result2")).isEqualTo("bar");
     }
   }
 
@@ -123,12 +123,12 @@ public class DmnBusinessRuleTaskResultMappingTest extends PluggableProcessEngine
     // default mapping is 'resultList'
     @SuppressWarnings("unchecked")
     List<Map<String, Object>> resultList = (List<Map<String, Object>>) runtimeService.getVariable(processInstance.getId(), "result");
-    assertEquals(2, resultList.size());
+    assertThat(resultList.size()).isEqualTo(2);
 
     for (Map<String, Object> valueMap : resultList) {
-      assertEquals(2, valueMap.size());
-      assertEquals("foo", valueMap.get("result1"));
-      assertEquals("bar", valueMap.get("result2"));
+      assertThat(valueMap.size()).isEqualTo(2);
+      assertThat(valueMap.get("result1")).isEqualTo("foo");
+      assertThat(valueMap.get("result2")).isEqualTo("bar");
     }
   }
 
@@ -229,7 +229,7 @@ public class DmnBusinessRuleTaskResultMappingTest extends PluggableProcessEngine
     Object result = runtimeService.getVariable(processInstance.getId(), "result");
     assertNull(result);
     TypedValue resultTyped = runtimeService.getVariableTyped(processInstance.getId(), "result");
-    assertEquals(Variables.untypedNullValue(), resultTyped);
+    assertThat(resultTyped).isEqualTo(Variables.untypedNullValue());
   }
 
   @Deployment(resources = { SINGLE_RESULT_BPMN, TEST_DECISION })
@@ -240,7 +240,7 @@ public class DmnBusinessRuleTaskResultMappingTest extends PluggableProcessEngine
     Object result = runtimeService.getVariable(processInstance.getId(), "result");
     assertNull(result);
     TypedValue resultTyped = runtimeService.getVariableTyped(processInstance.getId(), "result");
-    assertEquals(Variables.untypedNullValue(), resultTyped);
+    assertThat(resultTyped).isEqualTo(Variables.untypedNullValue());
   }
 
   @Deployment(resources = { COLLECT_ENTRIES_BPMN, TEST_DECISION })

@@ -43,7 +43,6 @@ import java.util.stream.Collectors;
 import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
 
 /**
  * @author Askar Akhmerov
@@ -114,12 +113,12 @@ public class HistoryServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
     Batch batch = historyService.deleteHistoricProcessInstancesAsync(historicProcessInstances, TEST_REASON);
     // then a seed job with the lowest deployment id exist
     Job seedJob = getSeedJob(batch);
-    assertEquals(firstDeploymentId, seedJob.getDeploymentId());
+    assertThat(seedJob.getDeploymentId()).isEqualTo(firstDeploymentId);
     // when
     executeSeedJob(batch);
     // then
     seedJob = getSeedJob(batch);
-    assertEquals(firstDeploymentId, seedJob.getDeploymentId());
+    assertThat(seedJob.getDeploymentId()).isEqualTo(firstDeploymentId);
     // when
     executeSeedJob(batch);
     // then batch jobs with different deployment ids exist

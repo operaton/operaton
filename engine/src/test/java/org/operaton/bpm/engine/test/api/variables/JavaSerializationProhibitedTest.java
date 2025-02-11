@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.test.api.variables;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.test.util.TypedValueAssert.assertObjectValueDeserialized;
 import static org.operaton.bpm.engine.test.util.TypedValueAssert.assertObjectValueSerializedJava;
 import static org.operaton.bpm.engine.variable.Variables.objectValue;
 import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
-import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutputStream;
@@ -90,7 +90,7 @@ public class JavaSerializationProhibitedTest {
     // validate untyped value
     JavaSerializable value = (JavaSerializable) runtimeService.getVariable(instance.getId(), "simpleBean");
 
-    assertEquals(javaSerializable, value);
+    assertThat(value).isEqualTo(javaSerializable);
 
     // validate typed value
     ObjectValue typedValue = runtimeService.getVariableTyped(instance.getId(), "simpleBean");

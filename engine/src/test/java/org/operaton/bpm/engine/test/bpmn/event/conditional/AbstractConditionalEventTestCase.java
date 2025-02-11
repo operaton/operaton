@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.bpmn.event.conditional;
 
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -120,7 +120,7 @@ public abstract class AbstractConditionalEventTestCase {
     }
 
     //then
-    assertEquals(0, conditionEventSubscriptionQuery.list().size());
+    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(0);
     assertNull(taskService.createTaskQuery().singleResult());
     assertNull(runtimeService.createProcessInstanceQuery().singleResult());
     tasksAfterVariableIsSet = null;

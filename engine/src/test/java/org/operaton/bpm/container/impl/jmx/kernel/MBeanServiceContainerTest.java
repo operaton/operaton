@@ -142,19 +142,19 @@ public class MBeanServiceContainerTest {
     serviceContainer.startService(service2Name, service2);
 
     List<PlatformService<TestService>> servicesByType1 = serviceContainer.getServicesByType(TestServiceType.TYPE1);
-    assertThat(servicesByType1.size()).isEqualTo(2);
+    assertThat(servicesByType1).hasSize(2);
 
     List<PlatformService<TestService>> servicesByType2 = serviceContainer.getServicesByType(TestServiceType.TYPE2);
-    assertThat(servicesByType2.size()).isEqualTo(0);
+    assertThat(servicesByType2).hasSize(0);
 
     serviceContainer.startService(service3Name, service3);
     serviceContainer.startService(service4Name, service4);
 
     servicesByType1 = serviceContainer.getServicesByType(TestServiceType.TYPE1);
-    assertThat(servicesByType1.size()).isEqualTo(2);
+    assertThat(servicesByType1).hasSize(2);
 
     servicesByType2 = serviceContainer.getServicesByType(TestServiceType.TYPE2);
-    assertThat(servicesByType2.size()).isEqualTo(2);
+    assertThat(servicesByType2).hasSize(2);
 
   }
 
@@ -166,22 +166,22 @@ public class MBeanServiceContainerTest {
     serviceContainer.startService(service2Name, service2);
 
     List<PlatformService<TestService>> servicesByType1 = serviceContainer.getServiceValuesByType(TestServiceType.TYPE1);
-    assertThat(servicesByType1.size()).isEqualTo(2);
+    assertThat(servicesByType1).hasSize(2);
     assertTrue(servicesByType1.contains(service1));
     assertTrue(servicesByType1.contains(service2));
 
     List<PlatformService<TestService>> servicesByType2 = serviceContainer.getServicesByType(TestServiceType.TYPE2);
-    assertThat(servicesByType2.size()).isEqualTo(0);
+    assertThat(servicesByType2).hasSize(0);
 
     // start more services
     serviceContainer.startService(service3Name, service3);
     serviceContainer.startService(service4Name, service4);
 
     servicesByType1 = serviceContainer.getServicesByType(TestServiceType.TYPE1);
-    assertThat(servicesByType1.size()).isEqualTo(2);
+    assertThat(servicesByType1).hasSize(2);
 
     servicesByType2 = serviceContainer.getServicesByType(TestServiceType.TYPE2);
-    assertThat(servicesByType2.size()).isEqualTo(2);
+    assertThat(servicesByType2).hasSize(2);
     assertTrue(servicesByType2.contains(service3));
     assertTrue(servicesByType2.contains(service4));
 
@@ -195,24 +195,24 @@ public class MBeanServiceContainerTest {
     serviceContainer.startService(service2Name, service2);
 
     Set<String> serviceNames = serviceContainer.getServiceNames(TestServiceType.TYPE1);
-    assertThat(serviceNames.size()).isEqualTo(2);
+    assertThat(serviceNames).hasSize(2);
     assertTrue(serviceNames.contains(service1Name));
     assertTrue(serviceNames.contains(service2Name));
 
     serviceNames = serviceContainer.getServiceNames(TestServiceType.TYPE2);
-    assertThat(serviceNames.size()).isEqualTo(0);
+    assertThat(serviceNames).isEmpty();
 
     // start more services
     serviceContainer.startService(service3Name, service3);
     serviceContainer.startService(service4Name, service4);
 
     serviceNames = serviceContainer.getServiceNames(TestServiceType.TYPE1);
-    assertThat(serviceNames.size()).isEqualTo(2);
+    assertThat(serviceNames).hasSize(2);
     assertTrue(serviceNames.contains(service1Name));
     assertTrue(serviceNames.contains(service2Name));
 
     serviceNames = serviceContainer.getServiceNames(TestServiceType.TYPE2);
-    assertThat(serviceNames.size()).isEqualTo(2);
+    assertThat(serviceNames).hasSize(2);
     assertTrue(serviceNames.contains(service3Name));
     assertTrue(serviceNames.contains(service4Name));
 

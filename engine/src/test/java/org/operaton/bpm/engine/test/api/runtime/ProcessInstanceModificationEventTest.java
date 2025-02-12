@@ -222,7 +222,7 @@ public class ProcessInstanceModificationEventTest extends PluggableProcessEngine
 
     // and the process can be ended as usual
     List<Task> tasks = taskService.createTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
 
     for (Task task : tasks) {
       taskService.complete(task.getId());

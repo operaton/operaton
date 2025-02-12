@@ -172,7 +172,7 @@ public class MigrationTransitionInstancesTest {
         .transition("userTask")
       .done());
 
-    assertThat(testHelper.snapshotAfterMigration.getJobs().size()).isEqualTo(2);
+    assertThat(testHelper.snapshotAfterMigration.getJobs()).hasSize(2);
 
     // and it is possible to successfully execute the migrated job
     for (Job job : testHelper.snapshotAfterMigration.getJobs()) {
@@ -712,7 +712,7 @@ public class MigrationTransitionInstancesTest {
           .transition("userTask")
       .done());
 
-    assertThat(testHelper.snapshotAfterMigration.getJobs().size()).isEqualTo(2);
+    assertThat(testHelper.snapshotAfterMigration.getJobs()).hasSize(2);
 
     // and it is possible to successfully execute the migrated job
     for (Job job : testHelper.snapshotAfterMigration.getJobs()) {
@@ -788,7 +788,7 @@ public class MigrationTransitionInstancesTest {
 
     // then
     List<Job> jobs = testHelper.snapshotAfterMigration.getJobs();
-    assertThat(jobs.size()).isEqualTo(3);
+    assertThat(jobs).hasSize(3);
 
     testHelper.assertJobMigrated(jobs.get(0), "userTask");
     testHelper.assertJobMigrated(jobs.get(1), "userTask");
@@ -832,7 +832,7 @@ public class MigrationTransitionInstancesTest {
 
     // then
     List<Job> jobs = testHelper.snapshotAfterMigration.getJobs();
-    assertThat(jobs.size()).isEqualTo(3);
+    assertThat(jobs).hasSize(3);
 
     testHelper.assertJobMigrated(jobs.get(0), "userTask");
     testHelper.assertJobMigrated(jobs.get(1), "userTask");

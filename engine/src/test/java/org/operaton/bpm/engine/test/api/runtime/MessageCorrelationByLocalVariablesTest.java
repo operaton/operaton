@@ -84,7 +84,7 @@ public class MessageCorrelationByLocalVariablesTest {
 
     //uncorrelated executions
     List<Execution> uncorrelatedExecutions = engineRule.getRuntimeService().createExecutionQuery().activityId("MessageReceiver_1").list();
-    assertThat(uncorrelatedExecutions.size()).isEqualTo(2);
+    assertThat(uncorrelatedExecutions).hasSize(2);
 
   }
 
@@ -121,7 +121,7 @@ public class MessageCorrelationByLocalVariablesTest {
 
     //uncorrelated executions
     List<Execution> uncorrelatedExecutions = engineRule.getRuntimeService().createExecutionQuery().activityId("MessageReceiver_1").list();
-    assertThat(uncorrelatedExecutions.size()).isEqualTo(2);
+    assertThat(uncorrelatedExecutions).hasSize(2);
 
   }
 
@@ -165,7 +165,7 @@ public class MessageCorrelationByLocalVariablesTest {
 
     //uncorrelated executions
     List<Execution> uncorrelatedExecutions = engineRule.getRuntimeService().createExecutionQuery().activityId("UserTask_1").list();
-    assertThat(uncorrelatedExecutions.size()).isEqualTo(2);
+    assertThat(uncorrelatedExecutions).hasSize(2);
 
   }
 
@@ -221,7 +221,7 @@ public class MessageCorrelationByLocalVariablesTest {
 
     //uncorrelated executions
     List<Execution> uncorrelatedExecutions = engineRule.getRuntimeService().createExecutionQuery().activityId("MessageReceiver_1").list();
-    assertThat(uncorrelatedExecutions.size()).isEqualTo(5);
+    assertThat(uncorrelatedExecutions).hasSize(5);
 
   }
 
@@ -305,7 +305,7 @@ public class MessageCorrelationByLocalVariablesTest {
 
     //uncorrelated executions
     List<Execution> uncorrelatedExecutions = engineRule.getRuntimeService().createExecutionQuery().activityId("MessageReceiver_1").list();
-    assertThat(uncorrelatedExecutions.size()).isEqualTo(1);
+    assertThat(uncorrelatedExecutions).hasSize(1);
 
   }
 

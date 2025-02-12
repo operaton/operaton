@@ -134,7 +134,7 @@ public class MigrationHistoricActivityInstanceTest {
         .asc()
         .list();
 
-    assertThat(historicInstances.size()).isEqualTo(2);
+    assertThat(historicInstances).hasSize(2);
 
     assertMigratedTo(historicInstances.get(0), processDefinition, "subProcess");
     assertMigratedTo(historicInstances.get(1), processDefinition, "userTask");
@@ -172,7 +172,7 @@ public class MigrationHistoricActivityInstanceTest {
         .asc()
         .list();
 
-    assertThat(historicInstances.size()).isEqualTo(2);
+    assertThat(historicInstances).hasSize(2);
 
     assertMigratedTo(historicInstances.get(0), targetDefinition, "newSubProcess");
     assertMigratedTo(historicInstances.get(1), targetDefinition, "userTask");
@@ -208,7 +208,7 @@ public class MigrationHistoricActivityInstanceTest {
         .asc()
         .list();
 
-    assertThat(historicInstances.size()).isEqualTo(1);
+    assertThat(historicInstances).hasSize(1);
 
     assertMigratedTo(historicInstances.get(0), targetDefinition, "userTask");
     assertThat(historicInstances.get(0).getParentActivityInstanceId()).isEqualTo(processInstance.getId());
@@ -242,7 +242,7 @@ public class MigrationHistoricActivityInstanceTest {
         .asc()
         .list();
 
-    assertThat(historicInstances.size()).isEqualTo(2);
+    assertThat(historicInstances).hasSize(2);
 
     assertMigratedTo(historicInstances.get(0), targetDefinition, "subProcess");
     assertMigratedTo(historicInstances.get(1), targetDefinition, "userTask");

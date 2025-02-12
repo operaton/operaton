@@ -29,10 +29,10 @@ import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.TASK;
 import static org.operaton.bpm.engine.authorization.TaskPermissions.READ_VARIABLE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.InputStream;
 
@@ -181,7 +181,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(variables);
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
   }
 
   // submit start form /////////////////////////////////////////
@@ -514,7 +514,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
 
     // when
     // Standalone task, no TaskFormData available
-    assertThrows(NullValueException.class, () -> formService.getRenderedTaskForm(taskId));
+    assertThatExceptionOfType(NullValueException.class).isThrownBy(() -> formService.getRenderedTaskForm(taskId));
 
     deleteTask(taskId, true);
   }
@@ -529,7 +529,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
 
     // when
     // Standalone task, no TaskFormData available
-    assertThrows(NullValueException.class, () -> formService.getRenderedTaskForm(taskId));
+    assertThatExceptionOfType(NullValueException.class).isThrownBy(() -> formService.getRenderedTaskForm(taskId));
 
     deleteTask(taskId, true);
   }
@@ -795,7 +795,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(variables);
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
   }
 
   @Test
@@ -810,7 +810,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(variables);
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
   }
 
   @Test
@@ -826,7 +826,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(variables);
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
   }
 
   @Test
@@ -842,7 +842,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(variables);
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
   }
 
   @Test
@@ -858,7 +858,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(variables);
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
   }
 
   // get task form variables (case task) /////////////////////////////////
@@ -874,7 +874,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
 
     // then
     assertNotNull(variables);
-    assertThat(variables.size()).isEqualTo(0);
+    assertThat(variables).hasSize(0);
   }
 
   // submit task form (standalone task) ////////////////////////////////

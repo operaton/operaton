@@ -174,7 +174,7 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
 
     List<HistoricActivityInstance> activityInstances = getEndActivityInstances();
 
-    assertThat(activityInstances.size()).isEqualTo(7);
+    assertThat(activityInstances).hasSize(7);
 
     List<HistoricActivityInstance> allInstances = getAllActivityInstances();
 
@@ -198,7 +198,7 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
 
     List<HistoricActivityInstance> activityInstances = getEndActivityInstances();
 
-    assertThat(activityInstances.size()).isEqualTo(7);
+    assertThat(activityInstances).hasSize(7);
 
     List<HistoricActivityInstance> allInstances = getAllActivityInstances();
 

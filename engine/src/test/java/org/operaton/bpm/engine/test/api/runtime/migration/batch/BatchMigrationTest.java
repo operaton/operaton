@@ -43,7 +43,6 @@ import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnM
 
 import java.util.*;
 
-import org.assertj.core.api.Assertions;
 import org.junit.*;
 import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
@@ -294,7 +293,7 @@ public class BatchMigrationTest {
 
     // but no migration jobs where created
     List<Job> migrationJobs = helper.getExecutionJobs(batch);
-    assertThat(migrationJobs.size()).isEqualTo(0);
+    assertThat(migrationJobs).hasSize(0);
   }
 
   @Test
@@ -314,7 +313,7 @@ public class BatchMigrationTest {
 
     // then there exist migration jobs
     List<Job> migrationJobs = helper.getJobsForDefinition(migrationJobDefinition);
-    assertThat(migrationJobs.size()).isEqualTo(10);
+    assertThat(migrationJobs).hasSize(10);
 
     for (Job migrationJob : migrationJobs) {
       assertThat(migrationJob.getJobDefinitionId()).isEqualTo(migrationJobDefinition.getId());
@@ -369,7 +368,7 @@ public class BatchMigrationTest {
     assertThat(helper.countTargetProcessInstances()).isEqualTo(10);
 
     // and the no migration jobs exist
-    assertThat(helper.getExecutionJobs(batch).size()).isEqualTo(0);
+    assertThat(helper.getExecutionJobs(batch)).hasSize(0);
 
     // but a monitor job exists
     assertNotNull(helper.getMonitorJob(batch));
@@ -408,19 +407,19 @@ public class BatchMigrationTest {
     helper.executeSeedJob(batch);
 
     // then the default number of jobs was created
-    assertThat(helper.getExecutionJobs(batch).size()).isEqualTo(batch.getBatchJobsPerSeed());
+    assertThat(helper.getExecutionJobs(batch)).hasSize(batch.getBatchJobsPerSeed());
 
     // when the seed job is executed a second time
     helper.executeSeedJob(batch);
 
     // then the same amount of jobs was created
-    assertThat(helper.getExecutionJobs(batch).size()).isEqualTo(2 * batch.getBatchJobsPerSeed());
+    assertThat(helper.getExecutionJobs(batch)).hasSize(2 * batch.getBatchJobsPerSeed());
 
     // when the seed job is executed a third time
     helper.executeSeedJob(batch);
 
     // then the all jobs where created
-    assertThat(helper.getExecutionJobs(batch).size()).isEqualTo(2 * batch.getBatchJobsPerSeed() + 4);
+    assertThat(helper.getExecutionJobs(batch)).hasSize(2 * batch.getBatchJobsPerSeed() + 4);
 
     // and the seed job is removed
     assertNull(helper.getSeedJob(batch));
@@ -454,13 +453,13 @@ public class BatchMigrationTest {
     helper.executeSeedJob(batch);
 
     // then there exist the first batch of migration jobs
-    assertThat(helper.getExecutionJobs(batch).size()).isEqualTo(2);
+    assertThat(helper.getExecutionJobs(batch)).hasSize(2);
 
     // when the seed job is executed a second time
     helper.executeSeedJob(batch);
 
     // then the full batch of migration jobs exist
-    assertThat(helper.getExecutionJobs(batch).size()).isEqualTo(4);
+    assertThat(helper.getExecutionJobs(batch)).hasSize(4);
 
     // and the seed job is removed
     assertNull(helper.getSeedJob(batch));
@@ -612,7 +611,7 @@ public class BatchMigrationTest {
 
     // and one batch job failed and has 2 retries left
     List<Job> migrationJobs = helper.getExecutionJobs(batch);
-    assertThat(migrationJobs.size()).isEqualTo(1);
+    assertThat(migrationJobs).hasSize(1);
 
     Job failedJob = migrationJobs.get(0);
     assertThat(failedJob.getRetries()).isEqualTo(2);
@@ -709,7 +708,7 @@ public class BatchMigrationTest {
 
     // then
     List<DelegateEvent> recordedEvents = DelegateEvent.getEvents();
-    assertThat(recordedEvents.size()).isEqualTo(1);
+    assertThat(recordedEvents).hasSize(1);
 
     DelegateEvent event = recordedEvents.get(0);
     assertThat(event.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());
@@ -747,7 +746,7 @@ public class BatchMigrationTest {
     helper.executeJobs(batch);
 
     // then
-    assertThat(DelegateEvent.getEvents().size()).isEqualTo(0);
+    assertThat(DelegateEvent.getEvents()).hasSize(0);
   }
 
   @Test
@@ -925,8 +924,8 @@ public class BatchMigrationTest {
     HistoricBatch historicBatch = historyService.createHistoricBatchQuery().singleResult();
     batch = managementService.createBatchQuery().singleResult();
 
-    Assertions.assertThat(batch.getExecutionStartTime()).isCloseTo(TEST_DATE, 1000);
-    Assertions.assertThat(historicBatch.getExecutionStartTime()).isCloseTo(TEST_DATE, 1000);
+    assertThat(batch.getExecutionStartTime()).isCloseTo(TEST_DATE, 1000);
+    assertThat(historicBatch.getExecutionStartTime()).isCloseTo(TEST_DATE, 1000);
   }
 
   protected void assertBatchCreated(Batch batch, int processInstanceCount) {

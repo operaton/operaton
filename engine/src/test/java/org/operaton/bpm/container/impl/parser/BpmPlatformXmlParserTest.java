@@ -61,16 +61,16 @@ public class BpmPlatformXmlParserTest {
 
     assertNotNull(bpmPlatformXml);
     assertNotNull(bpmPlatformXml.getJobExecutor());
-    assertThat(bpmPlatformXml.getProcessEngines().size()).isEqualTo(0);
+    assertThat(bpmPlatformXml.getProcessEngines()).hasSize(0);
 
     JobExecutorXml jobExecutorXml = bpmPlatformXml.getJobExecutor();
-    assertThat(jobExecutorXml.getJobAcquisitions().size()).isEqualTo(1);
+    assertThat(jobExecutorXml.getJobAcquisitions()).hasSize(1);
 
     JobAcquisitionXml jobAcquisitionXml = jobExecutorXml.getJobAcquisitions().get(0);
     assertThat(jobAcquisitionXml.getName()).isEqualTo("default");
     assertThat(jobAcquisitionXml.getJobExecutorClassName()).isEqualTo("org.operaton.bpm.engine.impl.jobexecutor.DefaultJobExecutor");
 
-    assertThat(jobAcquisitionXml.getProperties().size()).isEqualTo(2);
+    assertThat(jobAcquisitionXml.getProperties()).hasSize(2);
 
   }
 
@@ -84,17 +84,17 @@ public class BpmPlatformXmlParserTest {
 
     assertNotNull(bpmPlatformXml);
     assertNotNull(bpmPlatformXml.getJobExecutor());
-    assertThat(bpmPlatformXml.getProcessEngines().size()).isEqualTo(1);
+    assertThat(bpmPlatformXml.getProcessEngines()).hasSize(1);
 
     JobExecutorXml jobExecutorXml = bpmPlatformXml.getJobExecutor();
-    assertThat(jobExecutorXml.getJobAcquisitions().size()).isEqualTo(1);
+    assertThat(jobExecutorXml.getJobAcquisitions()).hasSize(1);
     assertThat(jobExecutorXml.getProperties()).hasSize(2);
 
     JobAcquisitionXml jobAcquisitionXml = jobExecutorXml.getJobAcquisitions().get(0);
     assertThat(jobAcquisitionXml.getName()).isEqualTo("default");
     assertThat(jobAcquisitionXml.getJobExecutorClassName()).isEqualTo("org.operaton.bpm.engine.impl.jobexecutor.DefaultJobExecutor");
 
-    assertThat(jobAcquisitionXml.getProperties().size()).isEqualTo(2);
+    assertThat(jobAcquisitionXml.getProperties()).hasSize(2);
 
     ProcessEngineXml engineXml = bpmPlatformXml.getProcessEngines().get(0);
     assertThat(engineXml.getName()).isEqualTo("engine1");
@@ -102,11 +102,11 @@ public class BpmPlatformXmlParserTest {
 
     Map<String, String> properties = engineXml.getProperties();
     assertNotNull(properties);
-    assertThat(properties.size()).isEqualTo(0);
+    assertThat(properties).isEmpty();
 
     List<ProcessEnginePluginXml> plugins = engineXml.getPlugins();
     assertNotNull(plugins);
-    assertThat(plugins.size()).isEqualTo(0);
+    assertThat(plugins).hasSize(0);
 
   }
 
@@ -119,14 +119,14 @@ public class BpmPlatformXmlParserTest {
       .getBpmPlatformXml();
 
     assertNotNull(bpmPlatformXml);
-    assertThat(bpmPlatformXml.getProcessEngines().size()).isEqualTo(1);
+    assertThat(bpmPlatformXml.getProcessEngines()).hasSize(1);
 
     ProcessEngineXml engineXml = bpmPlatformXml.getProcessEngines().get(0);
     assertThat(engineXml.getName()).isEqualTo("engine1");
     assertThat(engineXml.getJobAcquisitionName()).isEqualTo("default");
 
     List<ProcessEnginePluginXml> plugins = engineXml.getPlugins();
-    assertThat(plugins.size()).isEqualTo(1);
+    assertThat(plugins).hasSize(1);
 
     ProcessEnginePluginXml plugin1 = plugins.get(0);
     assertNotNull(plugin1);
@@ -135,7 +135,7 @@ public class BpmPlatformXmlParserTest {
 
     Map<String, String> properties = plugin1.getProperties();
     assertNotNull(properties);
-    assertThat(properties.size()).isEqualTo(2);
+    assertThat(properties).hasSize(2);
 
     String val1 = properties.get("prop1");
     assertNotNull(val1);
@@ -156,14 +156,14 @@ public class BpmPlatformXmlParserTest {
       .getBpmPlatformXml();
 
     assertNotNull(bpmPlatformXml);
-    assertThat(bpmPlatformXml.getProcessEngines().size()).isEqualTo(1);
+    assertThat(bpmPlatformXml.getProcessEngines()).hasSize(1);
 
     ProcessEngineXml engineXml = bpmPlatformXml.getProcessEngines().get(0);
     assertThat(engineXml.getName()).isEqualTo("engine1");
     assertThat(engineXml.getJobAcquisitionName()).isEqualTo("default");
 
     List<ProcessEnginePluginXml> plugins = engineXml.getPlugins();
-    assertThat(plugins.size()).isEqualTo(2);
+    assertThat(plugins).hasSize(2);
 
   }
 
@@ -179,15 +179,14 @@ public class BpmPlatformXmlParserTest {
 
     ProcessEngineXml engineXml = platformXml.getProcessEngines().get(0);
 
-    assertThat(engineXml.getPlugins().size()).isEqualTo(1);
+    assertThat(engineXml.getPlugins()).hasSize(1);
     ProcessEnginePluginXml pluginXml = engineXml.getPlugins().get(0);
 
     Map<String, String> properties = pluginXml.getProperties();
-    assertThat(properties.size()).isEqualTo(2);
-
-    // these two system properties are guaranteed to be set
-    assertThat(properties.get("prop1")).isEqualTo(System.getProperty("java.version"));
-    assertThat(properties.get("prop2")).isEqualTo("prefix-" + System.getProperty("os.name"));
+    assertThat(properties)
+            .hasSize(2)
+            .containsEntry("prop1", System.getProperty("java.version"))
+            .containsEntry("prop2", "prefix-" + System.getProperty("os.name"));
   }
 
 }

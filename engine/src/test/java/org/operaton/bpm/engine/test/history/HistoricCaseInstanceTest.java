@@ -365,9 +365,9 @@ public class HistoricCaseInstanceTest extends CmmnTest {
     createCaseInstance();
     createCaseInstance();
 
-    assertThat(historicQuery().listPage(0, 3).size()).isEqualTo(3);
-    assertThat(historicQuery().listPage(2, 2).size()).isEqualTo(2);
-    assertThat(historicQuery().listPage(3, 2).size()).isEqualTo(1);
+    assertThat(historicQuery().listPage(0, 3)).hasSize(3);
+    assertThat(historicQuery().listPage(2, 2)).hasSize(2);
+    assertThat(historicQuery().listPage(3, 2)).hasSize(1);
   }
 
   @Deployment(resources = {
@@ -396,11 +396,11 @@ public class HistoricCaseInstanceTest extends CmmnTest {
     Collections.sort(sortedList);
 
     List<HistoricCaseInstance> instances = historicQuery().orderByCaseInstanceId().asc().list();
-    assertThat(instances.size()).isEqualTo(2);
+    assertThat(instances).hasSize(2);
     assertThat(instances).extracting("id").containsExactly(sortedList.get(0), sortedList.get(1));
 
     instances = historicQuery().orderByCaseInstanceId().desc().list();
-    assertThat(instances.size()).isEqualTo(2);
+    assertThat(instances).hasSize(2);
     assertThat(instances).extracting("id").containsExactly(sortedList.get(1), sortedList.get(0));
 
     // sort by case definition ids
@@ -408,11 +408,11 @@ public class HistoricCaseInstanceTest extends CmmnTest {
     Collections.sort(sortedList);
 
     instances = historicQuery().orderByCaseDefinitionId().asc().list();
-    assertThat(instances.size()).isEqualTo(2);
+    assertThat(instances).hasSize(2);
     assertThat(instances).extracting("caseDefinitionId").containsExactly(sortedList.get(0), sortedList.get(1));
 
     instances = historicQuery().orderByCaseDefinitionId().desc().list();
-    assertThat(instances.size()).isEqualTo(2);
+    assertThat(instances).hasSize(2);
     assertThat(instances).extracting("caseDefinitionId").containsExactly(sortedList.get(1), sortedList.get(0));
 
     // sort by business keys
@@ -420,11 +420,11 @@ public class HistoricCaseInstanceTest extends CmmnTest {
     Collections.sort(sortedList);
 
     instances = historicQuery().orderByCaseInstanceBusinessKey().asc().list();
-    assertThat(instances.size()).isEqualTo(2);
+    assertThat(instances).hasSize(2);
     assertThat(instances).extracting("businessKey").containsExactly(sortedList.get(0), sortedList.get(1));
 
     instances = historicQuery().orderByCaseInstanceBusinessKey().desc().list();
-    assertThat(instances.size()).isEqualTo(2);
+    assertThat(instances).hasSize(2);
     assertThat(instances).extracting("businessKey").containsExactly(sortedList.get(1), sortedList.get(0));
 
     // sort by create time
@@ -432,11 +432,11 @@ public class HistoricCaseInstanceTest extends CmmnTest {
     Collections.sort(sortedList);
 
     instances = historicQuery().orderByCaseInstanceCreateTime().asc().list();
-    assertThat(instances.size()).isEqualTo(2);
+    assertThat(instances).hasSize(2);
     assertThat(instances).extracting("createTime").containsExactly(sortedList.get(0), sortedList.get(1));
 
     instances = historicQuery().orderByCaseInstanceCreateTime().desc().list();
-    assertThat(instances.size()).isEqualTo(2);
+    assertThat(instances).hasSize(2);
     assertThat(instances).extracting("createTime").containsExactly(sortedList.get(1), sortedList.get(0));
 
     // sort by close time
@@ -444,11 +444,11 @@ public class HistoricCaseInstanceTest extends CmmnTest {
     Collections.sort(sortedList);
 
     instances = historicQuery().orderByCaseInstanceCloseTime().asc().list();
-    assertThat(instances.size()).isEqualTo(2);
+    assertThat(instances).hasSize(2);
     assertThat(instances).extracting("closeTime").containsExactly(sortedList.get(0), sortedList.get(1));
 
     instances = historicQuery().orderByCaseInstanceCloseTime().desc().list();
-    assertThat(instances.size()).isEqualTo(2);
+    assertThat(instances).hasSize(2);
     assertThat(instances).extracting("closeTime").containsExactly(sortedList.get(1), sortedList.get(0));
 
     // sort by duration
@@ -456,11 +456,11 @@ public class HistoricCaseInstanceTest extends CmmnTest {
     Collections.sort(sortedList);
 
     instances = historicQuery().orderByCaseInstanceDuration().asc().list();
-    assertThat(instances.size()).isEqualTo(2);
+    assertThat(instances).hasSize(2);
     assertThat(instances).extracting("durationInMillis").containsExactly(sortedList.get(0), sortedList.get(1));
 
     instances = historicQuery().orderByCaseInstanceDuration().desc().list();
-    assertThat(instances.size()).isEqualTo(2);
+    assertThat(instances).hasSize(2);
     assertThat(instances).extracting("durationInMillis").containsExactly(sortedList.get(1), sortedList.get(0));
 
   }
@@ -508,16 +508,16 @@ public class HistoricCaseInstanceTest extends CmmnTest {
     assertThat(tableName).isEqualTo(tablePrefix + "ACT_HI_CASEINST");
     assertThat(managementService.getTableName(HistoricCaseInstanceEntity.class)).isEqualTo(tableName);
 
-    assertThat(historyService.createNativeHistoricCaseInstanceQuery().sql("SELECT * FROM " + tableName).list().size()).isEqualTo(4);
+    assertThat(historyService.createNativeHistoricCaseInstanceQuery().sql("SELECT * FROM " + tableName).list()).hasSize(4);
     assertThat(historyService.createNativeHistoricCaseInstanceQuery().sql("SELECT count(*) FROM " + tableName).count()).isEqualTo(4);
 
     assertThat(historyService.createNativeHistoricCaseInstanceQuery().sql("SELECT count(*) FROM " + tableName + " H1, " + tableName + " H2").count()).isEqualTo(16);
 
     // select with distinct
-    assertThat(historyService.createNativeHistoricCaseInstanceQuery().sql("SELECT DISTINCT * FROM " + tableName).list().size()).isEqualTo(4);
+    assertThat(historyService.createNativeHistoricCaseInstanceQuery().sql("SELECT DISTINCT * FROM " + tableName).list()).hasSize(4);
 
     assertThat(historyService.createNativeHistoricCaseInstanceQuery().sql("SELECT count(*) FROM " + tableName + " H WHERE H.ID_ = '" + id + "'").count()).isEqualTo(1);
-    assertThat(historyService.createNativeHistoricCaseInstanceQuery().sql("SELECT * FROM " + tableName + " H WHERE H.ID_ = '" + id + "'").list().size()).isEqualTo(1);
+    assertThat(historyService.createNativeHistoricCaseInstanceQuery().sql("SELECT * FROM " + tableName + " H WHERE H.ID_ = '" + id + "'").list()).hasSize(1);
 
     // use parameters
     assertThat(historyService.createNativeHistoricCaseInstanceQuery().sql("SELECT count(*) FROM " + tableName + " H WHERE H.ID_ = #{caseInstanceId}").parameter("caseInstanceId", id).count()).isEqualTo(1);
@@ -532,8 +532,8 @@ public class HistoricCaseInstanceTest extends CmmnTest {
     createCaseInstance();
 
     String tableName = managementService.getTableName(HistoricCaseInstance.class);
-    assertThat(historyService.createNativeHistoricCaseInstanceQuery().sql("SELECT * FROM " + tableName).listPage(0, 3).size()).isEqualTo(3);
-    assertThat(historyService.createNativeHistoricCaseInstanceQuery().sql("SELECT * FROM " + tableName).listPage(2, 2).size()).isEqualTo(2);
+    assertThat(historyService.createNativeHistoricCaseInstanceQuery().sql("SELECT * FROM " + tableName).listPage(0, 3)).hasSize(3);
+    assertThat(historyService.createNativeHistoricCaseInstanceQuery().sql("SELECT * FROM " + tableName).listPage(2, 2)).hasSize(2);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/emptyStageWithManualActivationCase.cmmn"})
@@ -590,7 +590,7 @@ public class HistoricCaseInstanceTest extends CmmnTest {
         .createHistoricCaseInstanceQuery()
         .superProcessInstanceId(superProcessInstanceId);
 
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
     assertThat(query.count()).isEqualTo(1);
 
     HistoricCaseInstance subCaseInstance = query.singleResult();
@@ -606,12 +606,12 @@ public class HistoricCaseInstanceTest extends CmmnTest {
     query.superProcessInstanceId("invalid");
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
 
     query.caseInstanceId(null);
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
 
   }
 
@@ -632,7 +632,7 @@ public class HistoricCaseInstanceTest extends CmmnTest {
         .createHistoricCaseInstanceQuery()
         .subProcessInstanceId(subProcessInstanceId);
 
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
     assertThat(query.count()).isEqualTo(1);
 
     HistoricCaseInstance caseInstance = query.singleResult();
@@ -648,12 +648,12 @@ public class HistoricCaseInstanceTest extends CmmnTest {
     query.subProcessInstanceId("invalid");
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
 
     query.caseInstanceId(null);
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
 
   }
 
@@ -669,7 +669,7 @@ public class HistoricCaseInstanceTest extends CmmnTest {
         .createHistoricCaseInstanceQuery()
         .superCaseInstanceId(superCaseInstanceId);
 
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
     assertThat(query.count()).isEqualTo(1);
 
     HistoricCaseInstance caseInstance = query.singleResult();
@@ -684,12 +684,12 @@ public class HistoricCaseInstanceTest extends CmmnTest {
     query.superCaseInstanceId("invalid");
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
 
     query.caseInstanceId(null);
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
 
   }
 
@@ -711,7 +711,7 @@ public class HistoricCaseInstanceTest extends CmmnTest {
         .createHistoricCaseInstanceQuery()
         .subCaseInstanceId(subCaseInstanceId);
 
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
     assertThat(query.count()).isEqualTo(1);
 
     HistoricCaseInstance caseInstance = query.singleResult();
@@ -727,12 +727,12 @@ public class HistoricCaseInstanceTest extends CmmnTest {
     query.subCaseInstanceId("invalid");
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
 
     query.caseInstanceId(null);
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
   }
 
   @Deployment(resources = {
@@ -749,7 +749,7 @@ public class HistoricCaseInstanceTest extends CmmnTest {
       .caseActivityIdIn("PI_HumanTask_1");
 
     // then
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
     assertThat(query.count()).isEqualTo(1);
   }
 
@@ -768,7 +768,7 @@ public class HistoricCaseInstanceTest extends CmmnTest {
       .caseActivityIdIn("PI_HumanTask_1", "PI_CaseTask_1");
 
     // then
-    assertThat(query.list().size()).isEqualTo(2);
+    assertThat(query.list()).hasSize(2);
     assertThat(query.count()).isEqualTo(2);
   }
 
@@ -786,7 +786,7 @@ public class HistoricCaseInstanceTest extends CmmnTest {
       .caseActivityIdIn("PI_HumanTask_1", "PI_HumanTask_2");
 
     // then
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
     assertThat(query.count()).isEqualTo(1);
   }
 

@@ -81,7 +81,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
 
     // Complete the task and check if the size is count 1
     List<Task> tasks = taskService.createTaskQuery().processInstanceId(processInstance.getId()).list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
     taskService.complete(tasks.get(0).getId());
     assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(1);
   }
@@ -94,7 +94,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
 
     List<Task> tasks = taskService.createTaskQuery().processInstanceId(processInstance.getId()).list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
     taskService.complete(tasks.get(0).getId());
 
     historyService.createHistoricTaskInstanceQuery().orderByDeleteReason().asc().list();
@@ -122,16 +122,16 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
 
     // when
     List<Task> tasks = taskService.createTaskQuery().processInstanceId(processInstance.getId()).list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
     taskService.complete(tasks.get(0).getId());
 
     // then
     List<HistoricTaskInstance> historicTasks = historyService.createHistoricTaskInstanceQuery().taskName("my task").list();
-    assertThat(historicTasks.size()).isEqualTo(1);
+    assertThat(historicTasks).hasSize(1);
 
     // CAM-12186: check that query is case insensitive
     List<HistoricTaskInstance> historicTasksUcFirst = historyService.createHistoricTaskInstanceQuery().taskName("My task").list();
-    assertThat(historicTasksUcFirst.size()).isEqualTo(1);
+    assertThat(historicTasksUcFirst).hasSize(1);
   }
 
   @Test
@@ -142,16 +142,16 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
 
     // when
     List<Task> tasks = taskService.createTaskQuery().processInstanceId(processInstance.getId()).list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
     taskService.complete(tasks.get(0).getId());
 
     // then
     List<HistoricTaskInstance> historicTasks = historyService.createHistoricTaskInstanceQuery().taskNameLike("my task").list();
-    assertThat(historicTasks.size()).isEqualTo(1);
+    assertThat(historicTasks).hasSize(1);
 
     // CAM-12186: check that query is case insensitive
     List<HistoricTaskInstance> historicTasksUcFirst = historyService.createHistoricTaskInstanceQuery().taskNameLike("My task").list();
-    assertThat(historicTasksUcFirst.size()).isEqualTo(1);
+    assertThat(historicTasksUcFirst).hasSize(1);
   }
 
   @Test
@@ -162,16 +162,16 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
 
     // when
     List<Task> tasks = taskService.createTaskQuery().processInstanceId(processInstance.getId()).list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
     taskService.complete(tasks.get(0).getId());
 
     // then
     List<HistoricTaskInstance> historicTasks = historyService.createHistoricTaskInstanceQuery().taskDescription("my description").list();
-    assertThat(historicTasks.size()).isEqualTo(1);
+    assertThat(historicTasks).hasSize(1);
 
     // CAM-12186: check that query is case insensitive
     List<HistoricTaskInstance> historicTasksUcFirst = historyService.createHistoricTaskInstanceQuery().taskDescription("My description").list();
-    assertThat(historicTasksUcFirst.size()).isEqualTo(1);
+    assertThat(historicTasksUcFirst).hasSize(1);
   }
 
   @Test
@@ -182,16 +182,16 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
 
     // when
     List<Task> tasks = taskService.createTaskQuery().processInstanceId(processInstance.getId()).list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
     taskService.complete(tasks.get(0).getId());
 
     // then
     List<HistoricTaskInstance> historicTasks = historyService.createHistoricTaskInstanceQuery().taskDescriptionLike("my description").list();
-    assertThat(historicTasks.size()).isEqualTo(1);
+    assertThat(historicTasks).hasSize(1);
 
     // CAM-12186: check that query is case insensitive
     List<HistoricTaskInstance> historicTasksUcFirst = historyService.createHistoricTaskInstanceQuery().taskDescriptionLike("My description").list();
-    assertThat(historicTasksUcFirst.size()).isEqualTo(1);
+    assertThat(historicTasksUcFirst).hasSize(1);
   }
 
   @SuppressWarnings("deprecation") // deprecated method is tested here
@@ -205,7 +205,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     assertThat(historicProcessInstance.getStartActivityId()).isEqualTo("theStart");
 
     List<Task> tasks = taskService.createTaskQuery().processInstanceId(processInstance.getId()).list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
     taskService.complete(tasks.get(0).getId());
 
     historicProcessInstance = historyService.createHistoricProcessInstanceQuery().singleResult();
@@ -282,7 +282,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
 
     List<HistoricProcessInstance> processInstances = processInstanceQuery.list();
     assertNotNull(processInstances);
-    assertThat(processInstances.size()).isEqualTo(5);
+    assertThat(processInstances).hasSize(5);
 
     for (HistoricProcessInstance historicProcessInstance : processInstances) {
       assertTrue(processInstanceIds.contains(historicProcessInstance.getId()));
@@ -343,7 +343,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
         .list();
 
     // then
-    assertThat(list.size()).isEqualTo(1);
+    assertThat(list).hasSize(1);
     assertThat(list.get(0).getId()).isEqualTo(processInstanceId1);
   }
 
@@ -525,7 +525,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     HistoricProcessInstanceQuery query = historyService.createHistoricProcessInstanceQuery().variableValueEquals("dateVar", date1);
     List<HistoricProcessInstance> processInstances = query.list();
     Assert.assertNotNull(processInstances);
-    assertThat(processInstances.size()).isEqualTo(2);
+    assertThat(processInstances).hasSize(2);
 
     // Query on two short variables, should result in single value
     query = historyService.createHistoricProcessInstanceQuery().variableValueEquals("dateVar", date1).variableValueEquals("dateVar2", date2);
@@ -564,7 +564,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
 
     // Test LESS_THAN
     processInstances = historyService.createHistoricProcessInstanceQuery().variableValueLessThan("dateVar", nextYear.getTime()).list();
-    assertThat(processInstances.size()).isEqualTo(2);
+    assertThat(processInstances).hasSize(2);
 
     List<String> expecedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
     List<String> ids = new ArrayList<>(Arrays.asList(processInstances.get(0).getId(), processInstances.get(1).getId()));
@@ -576,7 +576,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
 
     // Test LESS_THAN_OR_EQUAL
     processInstances = historyService.createHistoricProcessInstanceQuery().variableValueLessThanOrEqual("dateVar", nextYear.getTime()).list();
-    assertThat(processInstances.size()).isEqualTo(3);
+    assertThat(processInstances).hasSize(3);
 
     assertThat(historyService.createHistoricProcessInstanceQuery().variableValueLessThanOrEqual("dateVar", oneYearAgo.getTime()).count()).isEqualTo(0);
 
@@ -649,7 +649,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     // just test that the query will be constructed and executed, details are tested in the TaskQueryTest
     runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
     assertThat(historyService.createNativeHistoricProcessInstanceQuery().sql("SELECT count(*) FROM " + managementService.getTableName(HistoricProcessInstance.class)).count()).isEqualTo(1);
-    assertThat(historyService.createNativeHistoricProcessInstanceQuery().sql("SELECT * FROM " + managementService.getTableName(HistoricProcessInstance.class)).list().size()).isEqualTo(1);
+    assertThat(historyService.createNativeHistoricProcessInstanceQuery().sql("SELECT * FROM " + managementService.getTableName(HistoricProcessInstance.class)).list()).hasSize(1);
 //  assertEquals(1, historyService.createNativeHistoricProcessInstanceQuery().sql("SELECT * FROM " + managementService.getTableName(HistoricProcessInstance.class)).listPage(0, 1).size());
   }
 
@@ -658,8 +658,8 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
   public void testNativeHistoricTaskInstanceTest() {
     runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
     assertThat(historyService.createNativeHistoricTaskInstanceQuery().sql("SELECT count(*) FROM " + managementService.getTableName(HistoricProcessInstance.class)).count()).isEqualTo(1);
-    assertThat(historyService.createNativeHistoricTaskInstanceQuery().sql("SELECT * FROM " + managementService.getTableName(HistoricProcessInstance.class)).list().size()).isEqualTo(1);
-    assertThat(historyService.createNativeHistoricTaskInstanceQuery().sql("SELECT * FROM " + managementService.getTableName(HistoricProcessInstance.class)).listPage(0, 1).size()).isEqualTo(1);
+    assertThat(historyService.createNativeHistoricTaskInstanceQuery().sql("SELECT * FROM " + managementService.getTableName(HistoricProcessInstance.class)).list()).hasSize(1);
+    assertThat(historyService.createNativeHistoricTaskInstanceQuery().sql("SELECT * FROM " + managementService.getTableName(HistoricProcessInstance.class)).listPage(0, 1)).hasSize(1);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -667,8 +667,8 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
   public void testNativeHistoricActivityInstanceTest() {
     runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
     assertThat(historyService.createNativeHistoricActivityInstanceQuery().sql("SELECT count(*) FROM " + managementService.getTableName(HistoricProcessInstance.class)).count()).isEqualTo(1);
-    assertThat(historyService.createNativeHistoricActivityInstanceQuery().sql("SELECT * FROM " + managementService.getTableName(HistoricProcessInstance.class)).list().size()).isEqualTo(1);
-    assertThat(historyService.createNativeHistoricActivityInstanceQuery().sql("SELECT * FROM " + managementService.getTableName(HistoricProcessInstance.class)).listPage(0, 1).size()).isEqualTo(1);
+    assertThat(historyService.createNativeHistoricActivityInstanceQuery().sql("SELECT * FROM " + managementService.getTableName(HistoricProcessInstance.class)).list()).hasSize(1);
+    assertThat(historyService.createNativeHistoricActivityInstanceQuery().sql("SELECT * FROM " + managementService.getTableName(HistoricProcessInstance.class)).listPage(0, 1)).hasSize(1);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -681,10 +681,10 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS, vars);
 
     assertThat(historyService.createNativeHistoricVariableInstanceQuery().sql("SELECT count(*) FROM " + managementService.getTableName(HistoricVariableInstance.class)).count()).isEqualTo(2);
-    assertThat(historyService.createNativeHistoricVariableInstanceQuery().sql("SELECT * FROM " + managementService.getTableName(HistoricVariableInstance.class)).listPage(0, 1).size()).isEqualTo(1);
+    assertThat(historyService.createNativeHistoricVariableInstanceQuery().sql("SELECT * FROM " + managementService.getTableName(HistoricVariableInstance.class)).listPage(0, 1)).hasSize(1);
 
     List<HistoricVariableInstance> variables = historyService.createNativeHistoricVariableInstanceQuery().sql("SELECT * FROM " + managementService.getTableName(HistoricVariableInstance.class)).list();
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
     for (HistoricVariableInstance variable : variables) {
       assertTrue(vars.containsKey(variable.getName()));
       assertThat(variable.getValue()).isEqualTo(vars.get(variable.getName()));

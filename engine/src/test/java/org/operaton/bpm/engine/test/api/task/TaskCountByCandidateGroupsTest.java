@@ -92,7 +92,7 @@ public class TaskCountByCandidateGroupsTest {
     List<TaskCountByCandidateGroupResult> results = taskService.createTaskReport().taskCountByCandidateGroup();
 
     // then
-    assertThat(results.size()).isEqualTo(3);
+    assertThat(results).hasSize(3);
   }
 
   @Test
@@ -132,7 +132,7 @@ public class TaskCountByCandidateGroupsTest {
     identityService.deleteUser(userId);
 
     // then
-    assertThat(results.size()).isEqualTo(2);
+    assertThat(results).hasSize(2);
   }
 
   protected void createTask(String groupId, String tenantId) {

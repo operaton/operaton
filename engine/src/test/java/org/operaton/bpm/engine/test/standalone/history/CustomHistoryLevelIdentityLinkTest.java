@@ -107,7 +107,7 @@ public class CustomHistoryLevelIdentityLinkTest {
   public void testDeletingIdentityLinkByProcDefId() {
     // Pre test
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertThat(historicIdentityLinks.size()).isEqualTo(0);
+    assertThat(historicIdentityLinks).hasSize(0);
 
     // given
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
@@ -129,14 +129,14 @@ public class CustomHistoryLevelIdentityLinkTest {
 
     // then
     historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertThat(historicIdentityLinks.size()).isEqualTo(0);
+    assertThat(historicIdentityLinks).hasSize(0);
   }
 
   @Test
   public void testDeletingIdentityLinkByTaskId() {
     // Pre test
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertThat(historicIdentityLinks.size()).isEqualTo(0);
+    assertThat(historicIdentityLinks).hasSize(0);
 
     // given
     Task task = taskService.newTask();
@@ -156,7 +156,7 @@ public class CustomHistoryLevelIdentityLinkTest {
 
     // then
     historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertThat(historicIdentityLinks.size()).isEqualTo(0);
+    assertThat(historicIdentityLinks).hasSize(0);
   }
 
 }

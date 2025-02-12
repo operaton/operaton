@@ -128,7 +128,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .execute();
 
     // then
-    assertThat(externalTasks.size()).isEqualTo(1);
+    assertThat(externalTasks).hasSize(1);
 
     LockedExternalTask task = externalTasks.get(0);
     assertNotNull(task.getId());
@@ -162,7 +162,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .execute();
 
     // then
-    assertThat(externalTasks.size()).isEqualTo(1);
+    assertThat(externalTasks).hasSize(1);
 
     LockedExternalTask task = externalTasks.get(0);
     assertNotNull(task.getId());
@@ -432,7 +432,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .execute();
 
     // then
-    assertThat(externalTasks.size()).isEqualTo(2);
+    assertThat(externalTasks).hasSize(2);
 
     //task with no prio gets prio defined by process
     assertThat(externalTasks.get(0).getPriority()).isEqualTo(9);
@@ -452,7 +452,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .topic(TOPIC_NAME, LOCK_TIME)
       .execute();
 
-    assertThat(externalTasks.size()).isEqualTo(2);
+    assertThat(externalTasks).hasSize(2);
 
     // then
     //task with no prio gets prio defined by process
@@ -473,7 +473,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .execute();
 
     // then
-    assertThat(externalTasks.size()).isEqualTo(1);
+    assertThat(externalTasks).hasSize(1);
 
     LockedExternalTask task = externalTasks.get(0);
     assertNotNull(task.getId());
@@ -508,7 +508,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .execute();
 
     // then
-    assertThat(externalTasks.size()).isEqualTo(2);
+    assertThat(externalTasks).hasSize(2);
     assertTrue(externalTasks.get(0).getPriority() > externalTasks.get(1).getPriority());
   }
 
@@ -524,7 +524,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .execute();
 
     // then the task is locked
-    assertThat(externalTasks.size()).isEqualTo(1);
+    assertThat(externalTasks).hasSize(1);
 
     LockedExternalTask task = externalTasks.get(0);
     long firstPrio = task.getPriority();
@@ -534,7 +534,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     externalTasks = externalTaskService.fetchAndLock(1, "anotherWorkerId", true)
         .topic(TOPIC_NAME, LOCK_TIME)
         .execute();
-    assertThat(externalTasks.size()).isEqualTo(1);
+    assertThat(externalTasks).hasSize(1);
     assertTrue(firstPrio >= externalTasks.get(0).getPriority());
 
     // the expiration time expires
@@ -544,7 +544,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     externalTasks = externalTaskService.fetchAndLock(1, WORKER_ID, true)
       .topic(TOPIC_NAME, LOCK_TIME)
       .execute();
-    assertThat(externalTasks.size()).isEqualTo(1);
+    assertThat(externalTasks).hasSize(1);
     assertThat(externalTasks.get(0).getPriority()).isEqualTo(firstPrio);
   }
 
@@ -564,10 +564,10 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .execute();
 
     // then
-    assertThat(topic1Tasks.size()).isEqualTo(1);
+    assertThat(topic1Tasks).hasSize(1);
     assertThat(topic1Tasks.get(0).getTopicName()).isEqualTo("topic1");
 
-    assertThat(topic2Tasks.size()).isEqualTo(1);
+    assertThat(topic2Tasks).hasSize(1);
     assertThat(topic2Tasks.get(0).getTopicName()).isEqualTo("topic2");
   }
 
@@ -631,7 +631,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .topic(TOPIC_NAME, LOCK_TIME)
       .execute();
 
-    assertThat(externalTasks.size()).isEqualTo(5);
+    assertThat(externalTasks).hasSize(5);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -677,7 +677,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .execute();
 
     // then
-    assertThat(tasks.size()).isEqualTo(0);
+    assertThat(tasks).hasSize(0);
   }
 
   @Deployment
@@ -696,11 +696,11 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     // then
     LockedExternalTask task = externalTasks.get(0);
     VariableMap variables = task.getVariables();
-    assertThat(variables.size()).isEqualTo(3);
+    assertThat(variables).hasSize(3);
 
-    assertThat(variables.get("processVar1")).isEqualTo(42);
-    assertThat(variables.get("subProcessVar")).isEqualTo(44L);
-    assertThat(variables.get("taskVar")).isEqualTo(45L);
+    assertThat(variables).containsEntry("processVar1", 42);
+    assertThat(variables).containsEntry("subProcessVar", 44L);
+    assertThat(variables).containsEntry("taskVar", 45L);
 
   }
 
@@ -722,7 +722,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     // then
     LockedExternalTask task = externalTasks.get(0);
     VariableMap variables = task.getVariables();
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
 
     // when
     assertThatThrownBy(() -> variables.get("processVar1"))
@@ -751,7 +751,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     // then
     LockedExternalTask task = externalTasks.get(0);
     VariableMap variables = task.getVariables();
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
 
     final ExternalTaskCustomValue receivedCustomValue = (ExternalTaskCustomValue) variables.get("processVar1");
     assertNotNull(receivedCustomValue);
@@ -774,11 +774,11 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .topic(topicName, 60000)
       .execute();
 
-    assertThat(lockedExternalTasks.size()).isEqualTo(1);
+    assertThat(lockedExternalTasks).hasSize(1);
 
     LockedExternalTask lockedExternalTask = lockedExternalTasks.get(0);
     VariableMap variables = lockedExternalTask.getVariables();
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
     assertThat(variables.getValue("globalVar", String.class)).isEqualTo("globalVal");
     assertThat(variables.getValue("localVar", String.class)).isEqualTo("localVal");
 
@@ -790,11 +790,11 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .localVariables()
       .execute();
 
-    assertThat(lockedExternalTasks.size()).isEqualTo(1);
+    assertThat(lockedExternalTasks).hasSize(1);
 
     lockedExternalTask = lockedExternalTasks.get(0);
     variables = lockedExternalTask.getVariables();
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
     assertThat(variables.getValue("localVar", String.class)).isEqualTo("localVal");
   }
 
@@ -815,11 +815,11 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .localVariables()
       .execute();
 
-    assertThat(lockedExternalTasks.size()).isEqualTo(1);
+    assertThat(lockedExternalTasks).hasSize(1);
 
     LockedExternalTask lockedExternalTask = lockedExternalTasks.get(0);
     VariableMap variables = lockedExternalTask.getVariables();
-    assertThat(variables.size()).isEqualTo(0);
+    assertThat(variables).hasSize(0);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.testFetchVariables.bpmn20.xml")
@@ -899,7 +899,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .execute();
 
     // then those two tasks are locked
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
     LockedExternalTask topic1Task = "topic1".equals(tasks.get(0).getTopicName()) ? tasks.get(0) : tasks.get(1);
     LockedExternalTask topic2Task = "topic2".equals(tasks.get(0).getTopicName()) ? tasks.get(0) : tasks.get(1);
 
@@ -916,7 +916,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .topic("topic3", LOCK_TIME * 3)
       .execute();
 
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
 
     LockedExternalTask topic3Task = tasks.get(0);
     assertThat(topic3Task.getTopicName()).isEqualTo("topic3");
@@ -945,13 +945,13 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
     // then the correct variables have been fetched
     VariableMap topic1Variables = topic1Task.getVariables();
-    assertThat(topic1Variables.size()).isEqualTo(2);
-    assertThat(topic1Variables.get("var1")).isEqualTo(1L);
-    assertThat(topic1Variables.get("var2")).isEqualTo(1L);
+    assertThat(topic1Variables).hasSize(2);
+    assertThat(topic1Variables).containsEntry("var1", 1L);
+    assertThat(topic1Variables).containsEntry("var2", 1L);
 
     VariableMap topic2Variables = topic2Task.getVariables();
-    assertThat(topic2Variables.size()).isEqualTo(1);
-    assertThat(topic2Variables.get("var1")).isEqualTo(2L);
+    assertThat(topic2Variables).hasSize(1);
+    assertThat(topic2Variables).containsEntry("var1", 2L);
 
   }
 
@@ -971,7 +971,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .execute();
 
     // then 5 tasks were returned in total, not per topic
-    assertThat(tasks.size()).isEqualTo(5);
+    assertThat(tasks).hasSize(5);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -988,7 +988,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .topic(TOPIC_NAME, LOCK_TIME)
       .execute();
 
-    assertThat(externalTasks.size()).isEqualTo(0);
+    assertThat(externalTasks).hasSize(0);
 
     // when activating the process instance
     runtimeService.activateProcessInstanceById(processInstance.getId());
@@ -998,7 +998,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .topic(TOPIC_NAME, LOCK_TIME)
         .execute();
 
-    assertThat(externalTasks.size()).isEqualTo(1);
+    assertThat(externalTasks).hasSize(1);
   }
 
   /**
@@ -1023,7 +1023,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     List<LockedExternalTask> tasks = initialBuilder.execute();
 
     // then
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
@@ -1042,7 +1042,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .execute();
 
     // then
-    assertThat(externalTasks.size()).isEqualTo(1);
+    assertThat(externalTasks).hasSize(1);
     assertThat(externalTasks.get(0).getProcessDefinitionId()).isEqualTo(processDefinitionId2);
   }
 
@@ -1071,7 +1071,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .execute();
 
     //then
-    assertThat(topicTasks.size()).isEqualTo(3);
+    assertThat(topicTasks).hasSize(3);
 
     for (LockedExternalTask externalTask : topicTasks) {
       ProcessInstance pi = runtimeService.createProcessInstanceQuery()
@@ -1124,7 +1124,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .execute();
 
     // then
-    assertThat(topicTasks.size()).isEqualTo(2);
+    assertThat(topicTasks).hasSize(2);
 
     for (LockedExternalTask externalTask : topicTasks) {
       ProcessInstance pi = runtimeService.createProcessInstanceQuery()
@@ -1160,7 +1160,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .execute();
 
     // then
-    assertThat(externalTasks.size()).isEqualTo(0);
+    assertThat(externalTasks).hasSize(0);
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
@@ -1180,7 +1180,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .execute();
 
     // then
-    assertThat(externalTasks.size()).isEqualTo(1);
+    assertThat(externalTasks).hasSize(1);
     assertThat(externalTasks.get(0).getProcessDefinitionKey()).isEqualTo(processDefinitionKey2);
   }
 
@@ -1201,7 +1201,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .execute();
 
     // then
-    assertThat(externalTasks.size()).isEqualTo(1);
+    assertThat(externalTasks).hasSize(1);
     assertThat(externalTasks.get(0).getProcessDefinitionKey()).isEqualTo(processDefinitionKey2);
   }
 
@@ -1223,7 +1223,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .execute();
 
     // then
-    assertThat(externalTasks.size()).isEqualTo(0);
+    assertThat(externalTasks).hasSize(0);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/parallelExternalTaskProcess.bpmn20.xml")
@@ -1256,7 +1256,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .execute();
 
     //then
-    assertThat(topicTasks.size()).isEqualTo(3);
+    assertThat(topicTasks).hasSize(3);
 
     for (LockedExternalTask externalTask : topicTasks) {
       ProcessInstance pi = runtimeService.createProcessInstanceQuery()
@@ -1286,7 +1286,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .execute();
 
     // then
-    assertThat(externalTasks.size()).isEqualTo(1);
+    assertThat(externalTasks).hasSize(1);
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml"})
@@ -1461,7 +1461,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     externalTasks = externalTaskService.fetchAndLock(1, WORKER_ID)
       .topic(TOPIC_NAME, LOCK_TIME)
       .execute();
-    assertThat(externalTasks.size()).isEqualTo(0);
+    assertThat(externalTasks).hasSize(0);
 
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
     assertThat(activityInstance).hasStructure(
@@ -2245,7 +2245,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .execute();
 
     // then the task is locked
-    assertThat(externalTasks.size()).isEqualTo(1);
+    assertThat(externalTasks).hasSize(1);
 
     LockedExternalTask task = externalTasks.get(0);
     AssertUtil.assertEqualsSecondPrecision(nowPlus(LOCK_TIME), task.getLockExpirationTime());
@@ -2254,7 +2254,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     externalTasks = externalTaskService.fetchAndLock(1, WORKER_ID)
         .topic(TOPIC_NAME, LOCK_TIME)
         .execute();
-    assertThat(externalTasks.size()).isEqualTo(0);
+    assertThat(externalTasks).hasSize(0);
 
     // unless the expiration time expires
     ClockUtil.setCurrentTime(new DateTime(ClockUtil.getCurrentTime()).plus(LOCK_TIME * 2).toDate());
@@ -2262,7 +2262,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     externalTasks = externalTaskService.fetchAndLock(1, WORKER_ID)
       .topic(TOPIC_NAME, LOCK_TIME)
       .execute();
-    assertThat(externalTasks.size()).isEqualTo(1);
+    assertThat(externalTasks).hasSize(1);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -2285,7 +2285,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     externalTasks = externalTaskService.fetchAndLock(1, WORKER_ID)
       .topic(TOPIC_NAME, LOCK_TIME)
       .execute();
-    assertThat(externalTasks.size()).isEqualTo(0);
+    assertThat(externalTasks).hasSize(0);
     testRule.assertProcessEnded(processInstance.getId());
   }
 
@@ -2322,7 +2322,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     externalTasks = externalTaskService.fetchAndLock(1, WORKER_ID)
       .topic(TOPIC_NAME, LOCK_TIME)
       .execute();
-    assertThat(externalTasks.size()).isEqualTo(0);
+    assertThat(externalTasks).hasSize(0);
     testRule.assertProcessEnded(processInstance.getId());
   }
 
@@ -2336,7 +2336,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     runtimeService.deleteProcessInstance(processInstance.getId(), null);
 
     // then
-    assertThat(externalTaskService.fetchAndLock(5, WORKER_ID).topic(TOPIC_NAME, LOCK_TIME).execute().size()).isEqualTo(0);
+    assertThat(externalTaskService.fetchAndLock(5, WORKER_ID).topic(TOPIC_NAME, LOCK_TIME).execute()).hasSize(0);
     testRule.assertProcessEnded(processInstance.getId());
   }
 
@@ -2396,7 +2396,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .fetchAndLock(1, WORKER_ID)
         .topic(TOPIC_NAME, LOCK_TIME)
         .execute();
-    assertThat(tasks.size()).isEqualTo(0);
+    assertThat(tasks).hasSize(0);
 
     testRule.assertProcessEnded(processInstance.getId());
   }
@@ -2421,7 +2421,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .topic(TOPIC_NAME, LOCK_TIME)
       .execute();
 
-    assertThat(externalTasks.size()).isEqualTo(1);
+    assertThat(externalTasks).hasSize(1);
     LockedExternalTask reAcquiredTask = externalTasks.get(0);
     assertThat(reAcquiredTask.getId()).isEqualTo(task.getId());
   }
@@ -2462,7 +2462,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     tasks = externalTaskService.fetchAndLock(5, WORKER_ID)
         .topic(TOPIC_NAME, LOCK_TIME)
         .execute();
-    assertThat(tasks.size()).isEqualTo(0);
+    assertThat(tasks).hasSize(0);
 
     // and no incident exists because there are still retries left
     assertThat(runtimeService.createIncidentQuery().count()).isEqualTo(0);
@@ -2473,7 +2473,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     tasks = externalTaskService.fetchAndLock(5, WORKER_ID)
         .topic(TOPIC_NAME, LOCK_TIME)
         .execute();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
 
     // and the retries and error message are accessible
     task = tasks.get(0);
@@ -2558,7 +2558,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     tasks = externalTaskService.fetchAndLock(5, WORKER_ID)
         .topic(TOPIC_NAME, LOCK_TIME)
         .execute();
-    assertThat(tasks.size()).isEqualTo(0);
+    assertThat(tasks).hasSize(0);
 
     // and an incident has been created
     Incident incident = runtimeService.createIncidentQuery().singleResult();
@@ -2620,10 +2620,10 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
           .configuration(task.getId())
           .orderByCreateTime().asc()
           .list();
-      assertThat(historicIncidents.size()).isEqualTo(2);
+      assertThat(historicIncidents).hasSize(2);
       // there are 3 failure logs for external tasks
       List<HistoricExternalTaskLog> logs = getHistoricTaskLogOrdered(task.getId());
-      assertThat(logs.size()).isEqualTo(3);
+      assertThat(logs).hasSize(3);
       // the oldest incident is resolved and correlates to the oldest external task log entry
       assertTrue(historicIncidents.get(0).isResolved());
       assertThat(historicIncidents.get(0).getHistoryConfiguration()).isEqualTo(logs.get(2).getId());
@@ -2882,7 +2882,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .topic(TOPIC_NAME, LOCK_TIME)
         .execute();
 
-    assertThat(externalTasks.size()).isEqualTo(1);
+    assertThat(externalTasks).hasSize(1);
     assertThat(externalTasks.get(0).getId()).isEqualTo(lockedTask.getId());
   }
 
@@ -2958,7 +2958,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       assertNotNull(historicIncident);
       // there are two failure logs for external tasks
       List<HistoricExternalTaskLog> logs = getHistoricTaskLogOrdered(task.getId());
-      assertThat(logs.size()).isEqualTo(2);
+      assertThat(logs).hasSize(2);
       HistoricExternalTaskLog log = logs.get(0);
       // the incident is open and correlates to the oldest external task log entry
       assertTrue(historicIncident.isOpen());
@@ -3042,7 +3042,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     List<LockedExternalTask> externalTasks = externalTaskService.fetchAndLock(2, WORKER_ID, true)
       .topic(TOPIC_NAME, LOCK_TIME)
       .execute();
-    assertThat(externalTasks.size()).isEqualTo(2);
+    assertThat(externalTasks).hasSize(2);
     LockedExternalTask task = externalTasks.get(1);
     assertThat(task.getPriority()).isEqualTo(0);
     externalTaskService.setPriority(task.getId(), 9);
@@ -3108,7 +3108,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     // when
     List<LockedExternalTask> externalTasks = helperHandleBpmnError(1, WORKER_ID, TOPIC_NAME, LOCK_TIME,  "ERROR-OCCURED");
     //then
-    assertThat(externalTasks.size()).isEqualTo(0);
+    assertThat(externalTasks).hasSize(0);
     assertThat(externalTaskService.createExternalTaskQuery().count()).isEqualTo(0);
     Task afterBpmnError = taskService.createTaskQuery().singleResult();
     assertNotNull(afterBpmnError);
@@ -3126,7 +3126,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     List<LockedExternalTask> externalTasks = helperHandleBpmnError(1, WORKER_ID, TOPIC_NAME, LOCK_TIME,  "ERROR-OCCURED");
 
     //then
-    assertThat(externalTasks.size()).isEqualTo(0);
+    assertThat(externalTasks).hasSize(0);
     assertThat(externalTaskService.createExternalTaskQuery().count()).isEqualTo(0);
     Task afterBpmnError = taskService.createTaskQuery().singleResult();
     assertNull(afterBpmnError);
@@ -3176,7 +3176,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .topic(TOPIC_NAME, LOCK_TIME)
       .execute();
 
-    assertThat(externalTasks.size()).isEqualTo(0);
+    assertThat(externalTasks).hasSize(0);
     assertThat(externalTaskService.createExternalTaskQuery().count()).isEqualTo(0);
     Task afterBpmnError = taskService.createTaskQuery().singleResult();
     assertNotNull(afterBpmnError);
@@ -3239,7 +3239,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     externalTasks = externalTaskService.fetchAndLock(1, WORKER_ID)
       .topic(TOPIC_NAME, LOCK_TIME)
       .execute();
-    assertThat(externalTasks.size()).isEqualTo(0);
+    assertThat(externalTasks).hasSize(0);
   }
 
   @Test
@@ -3339,13 +3339,13 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .execute();
 
     // then
-    assertThat(externalTasks.size()).isEqualTo(0);
+    assertThat(externalTasks).hasSize(0);
     assertThat(externalTaskService.createExternalTaskQuery().count()).isEqualTo(0);
     Task afterBpmnError = taskService.createTaskQuery().singleResult();
     assertNotNull(afterBpmnError);
     assertThat(afterBpmnError.getTaskDefinitionKey()).isEqualTo("afterBpmnError");
     List<VariableInstance> list = runtimeService.createVariableInstanceQuery().processInstanceIdIn(pi.getId()).list();
-    assertThat(list.size()).isEqualTo(1);
+    assertThat(list).hasSize(1);
     assertThat(list.get(0).getName()).isEqualTo("foo");
   }
 
@@ -3398,13 +3398,13 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .execute();
 
     // then
-    assertThat(externalTasks.size()).isEqualTo(0);
+    assertThat(externalTasks).hasSize(0);
     assertThat(externalTaskService.createExternalTaskQuery().count()).isEqualTo(0);
     Task afterBpmnError = taskService.createTaskQuery().singleResult();
     assertNotNull(afterBpmnError);
     assertThat(afterBpmnError.getTaskDefinitionKey()).isEqualTo("afterBpmnError");
     List<VariableInstance> list = runtimeService.createVariableInstanceQuery().processInstanceIdIn(pi.getId()).list();
-    assertThat(list.size()).isEqualTo(1);
+    assertThat(list).hasSize(1);
     assertThat(list.get(0).getName()).isEqualTo("foo");
   }
 
@@ -3430,13 +3430,13 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .execute();
 
     // then
-    assertThat(externalTasks.size()).isEqualTo(0);
+    assertThat(externalTasks).hasSize(0);
     assertThat(externalTaskService.createExternalTaskQuery().count()).isEqualTo(0);
     Task afterBpmnError = taskService.createTaskQuery().singleResult();
     assertNotNull(afterBpmnError);
     assertThat(afterBpmnError.getTaskDefinitionKey()).isEqualTo("afterBpmnError");
     List<VariableInstance> list = runtimeService.createVariableInstanceQuery().processInstanceIdIn(pi.getId()).list();
-    assertThat(list.size()).isEqualTo(1);
+    assertThat(list).hasSize(1);
     assertThat(list.get(0).getName()).isEqualTo("errorMessageVariable");
     assertThat(list.get(0).getValue()).isEqualTo(anErrorMessage);
   }
@@ -3468,7 +3468,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
     // then
     tasks = externalTaskService.createExternalTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(5);
+    assertThat(tasks).hasSize(5);
 
     for (ExternalTask task : tasks) {
       assertThat((int) task.getRetries()).isEqualTo(5);
@@ -3493,7 +3493,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
     // then
     tasks = externalTaskService.createExternalTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(5);
+    assertThat(tasks).hasSize(5);
 
     for (ExternalTask task : tasks) {
       assertThat((int) task.getRetries()).isEqualTo(5);
@@ -3511,7 +3511,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
     // then
     List<ExternalTask> tasks = externalTaskService.createExternalTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(5);
+    assertThat(tasks).hasSize(5);
 
     for (ExternalTask task : tasks) {
       assertThat((int) task.getRetries()).isEqualTo(5);
@@ -3529,7 +3529,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
     // then
     List<ExternalTask> tasks = externalTaskService.createExternalTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(5);
+    assertThat(tasks).hasSize(5);
 
     for (ExternalTask task : tasks) {
       assertThat((int) task.getRetries()).isEqualTo(5);
@@ -3549,7 +3549,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
     // then
     List<ExternalTask> tasks = query.list();
-    assertThat(tasks.size()).isEqualTo(5);
+    assertThat(tasks).hasSize(5);
 
     for (ExternalTask task : tasks) {
       assertThat((int) task.getRetries()).isEqualTo(5);
@@ -3571,7 +3571,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
     // then
     List<ExternalTask> tasks = externalTaskService.createExternalTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(5);
+    assertThat(tasks).hasSize(5);
 
     for (ExternalTask task : tasks) {
       assertThat((int) task.getRetries()).isEqualTo(5);
@@ -3594,7 +3594,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
     // then
     List<ExternalTask> tasks = externalTaskService.createExternalTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(5);
+    assertThat(tasks).hasSize(5);
 
     for (ExternalTask task : tasks) {
       assertThat((int) task.getRetries()).isEqualTo(5);
@@ -3636,7 +3636,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
     // then
     List<ExternalTask> tasks = externalTaskService.createExternalTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(5);
+    assertThat(tasks).hasSize(5);
 
     for (ExternalTask task : tasks) {
       assertThat(task.getRetries()).isEqualTo(Integer.valueOf(5));
@@ -3682,7 +3682,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     String externalTaskId = lockedTasks.get(0).getId();
 
     assertNotNull(lockedTasks);
-    assertThat(lockedTasks.size()).isEqualTo(1);
+    assertThat(lockedTasks).hasSize(1);
 
     ClockUtil.setCurrentTime(nowPlus(2));
     // when
@@ -3720,7 +3720,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     String externalTaskId = lockedTasks.get(0).getId();
 
     assertNotNull(lockedTasks);
-    assertThat(lockedTasks.size()).isEqualTo(1);
+    assertThat(lockedTasks).hasSize(1);
 
     // when
     assertThatThrownBy(() -> externalTaskService.extendLock(externalTaskId, WORKER_ID, 0))
@@ -3741,7 +3741,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     String externalTaskId = lockedTasks.get(0).getId();
 
     assertNotNull(lockedTasks);
-    assertThat(lockedTasks.size()).isEqualTo(1);
+    assertThat(lockedTasks).hasSize(1);
 
     // when
     assertThatThrownBy(() -> externalTaskService.extendLock(externalTaskId, WORKER_ID, -1))
@@ -3762,7 +3762,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     String externalTaskId = lockedTasks.get(0).getId();
 
     assertNotNull(lockedTasks);
-    assertThat(lockedTasks.size()).isEqualTo(1);
+    assertThat(lockedTasks).hasSize(1);
 
     // when
     assertThatThrownBy(() -> externalTaskService.extendLock(externalTaskId, null, 100))
@@ -3783,7 +3783,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     String externalTaskId = lockedTasks.get(0).getId();
 
     assertNotNull(lockedTasks);
-    assertThat(lockedTasks.size()).isEqualTo(1);
+    assertThat(lockedTasks).hasSize(1);
 
     // when
     assertThatThrownBy(() -> externalTaskService.extendLock(externalTaskId, "anAnotherWorkerId", 100))
@@ -3803,7 +3803,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .execute();
 
     assertNotNull(lockedTasks);
-    assertThat(lockedTasks.size()).isEqualTo(1);
+    assertThat(lockedTasks).hasSize(1);
 
     // when
     assertThatThrownBy(() -> externalTaskService.extendLock(null, WORKER_ID, 100))
@@ -3887,11 +3887,11 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .execute();
 
     // then
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
 
     LockedExternalTask task = tasks.get(0);
     assertNotNull(task.getId());
-    assertThat(task.getVariables().size()).isEqualTo(0);
+    assertThat(task.getVariables()).hasSize(0);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/parallelExternalTaskProcess.bpmn20.xml")
@@ -3922,7 +3922,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .execute();
 
     //then
-    assertThat(topicTasks.size()).isEqualTo(2);
+    assertThat(topicTasks).hasSize(2);
 
     for (LockedExternalTask externalTask : topicTasks) {
       ProcessInstance pi = runtimeService.createProcessInstanceQuery()
@@ -3964,7 +3964,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .execute();
 
     //then
-    assertThat(topicTasks.size()).isEqualTo(3);
+    assertThat(topicTasks).hasSize(3);
 
     for (LockedExternalTask externalTask : topicTasks) {
       ProcessInstance pi = runtimeService.createProcessInstanceQuery()
@@ -4005,7 +4005,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .execute();
 
     //then
-    assertThat(topicTasks.size()).isEqualTo(3);
+    assertThat(topicTasks).hasSize(3);
 
     for (LockedExternalTask externalTask : topicTasks) {
       ProcessInstance pi = runtimeService.createProcessInstanceQuery()
@@ -4060,8 +4060,8 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .execute();
 
     //then
-    assertThat(lockedTopicTasks.size()).isEqualTo(2);
-    assertThat(topicTasks.size()).isEqualTo(1);
+    assertThat(lockedTopicTasks).hasSize(2);
+    assertThat(topicTasks).hasSize(1);
 
     LockedExternalTask externalTask = topicTasks.get(0);
     ProcessInstance pi = runtimeService.createProcessInstanceQuery()
@@ -4103,13 +4103,13 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .execute();
 
     //then
-    assertThat(topicTasks.size()).isEqualTo(2);
+    assertThat(topicTasks).hasSize(2);
 
     for (LockedExternalTask externalTask : topicTasks) {
       if (externalTask.getTopicName().equals(topicName1)) {
-        assertThat(externalTask.getVariables().get(variableName)).isEqualTo(variableValue1);
+        assertThat(externalTask.getVariables()).containsEntry(variableName, variableValue1);
       } else if (externalTask.getTopicName().equals(topicName2)){
-        assertThat(externalTask.getVariables().get(variableName)).isEqualTo(variableValue2);
+        assertThat(externalTask.getVariables()).containsEntry(variableName, variableValue2);
       } else {
         fail("No other topic name values should be available!");
       }
@@ -4158,12 +4158,12 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .execute();
 
     //then
-    assertThat(lockedTopicTasks.size()).isEqualTo(2);
-    assertThat(topicTasks.size()).isEqualTo(1);
+    assertThat(lockedTopicTasks).hasSize(2);
+    assertThat(topicTasks).hasSize(1);
 
     LockedExternalTask externalTask = topicTasks.get(0);
     assertThat(externalTask.getTopicName()).isEqualTo(topicName3);
-    assertThat(externalTask.getVariables().get(variableName)).isEqualTo(variableValue2);
+    assertThat(externalTask.getVariables()).containsEntry(variableName, variableValue2);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.testVariableValueTopicQuery.bpmn20.xml")
@@ -4213,16 +4213,16 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .execute();
 
     //then
-    assertThat(topicTasks.size()).isEqualTo(2);
+    assertThat(topicTasks).hasSize(2);
 
     for (LockedExternalTask externalTask : topicTasks) {
       // topic names are not always in the same order
       if (externalTask.getTopicName().equals(topicName1)) {
-        assertThat(externalTask.getVariables().get(variableName1)).isEqualTo(variableValue1);
-        assertThat(externalTask.getVariables().get(variableName2)).isEqualTo(variableValue2);
+        assertThat(externalTask.getVariables()).containsEntry(variableName1, variableValue1);
+        assertThat(externalTask.getVariables()).containsEntry(variableName2, variableValue2);
       } else if (externalTask.getTopicName().equals(topicName2)){
-        assertThat(externalTask.getVariables().get(variableName2)).isEqualTo(variableValue5);
-        assertThat(externalTask.getVariables().get(variableName3)).isEqualTo(variableValue6);
+        assertThat(externalTask.getVariables()).containsEntry(variableName2, variableValue5);
+        assertThat(externalTask.getVariables()).containsEntry(variableName3, variableValue6);
       } else {
         fail("No other topic name values should be available!");
       }
@@ -4268,7 +4268,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .execute();
 
     //then
-    assertThat(topicTasks.size()).isEqualTo(2);
+    assertThat(topicTasks).hasSize(2);
 
     for (LockedExternalTask externalTask : topicTasks) {
       ProcessInstance pi = runtimeService.createProcessInstanceQuery()
@@ -4277,10 +4277,10 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       // topic names are not always in the same order
       if (externalTask.getTopicName().equals(topicName1)) {
         assertThat(pi.getBusinessKey()).isEqualTo(businessKey1);
-        assertThat(externalTask.getVariables().get(variableName)).isEqualTo(variableValue1);
+        assertThat(externalTask.getVariables()).containsEntry(variableName, variableValue1);
       } else if (externalTask.getTopicName().equals(topicName2)){
         assertThat(pi.getBusinessKey()).isEqualTo(businessKey2);
-        assertThat(externalTask.getVariables().get(variableName)).isEqualTo(variableValue2);
+        assertThat(externalTask.getVariables()).containsEntry(variableName, variableValue2);
       } else {
         fail("No other topic name values should be available!");
       }
@@ -4437,12 +4437,12 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
   protected void verifyVariables(LockedExternalTask task) {
     VariableMap variables = task.getVariables();
-    assertThat(variables.size()).isEqualTo(4);
+    assertThat(variables).hasSize(4);
 
-    assertThat(variables.get("processVar1")).isEqualTo(42);
-    assertThat(variables.get("processVar2")).isEqualTo(43);
-    assertThat(variables.get("subProcessVar")).isEqualTo(44L);
-    assertThat(variables.get("taskVar")).isEqualTo(45L);
+    assertThat(variables).containsEntry("processVar1", 42);
+    assertThat(variables).containsEntry("processVar2", 43);
+    assertThat(variables).containsEntry("subProcessVar", 44L);
+    assertThat(variables).containsEntry("taskVar", 45L);
   }
 
   protected List<HistoricExternalTaskLog> getHistoricTaskLogOrdered(String taskId) {

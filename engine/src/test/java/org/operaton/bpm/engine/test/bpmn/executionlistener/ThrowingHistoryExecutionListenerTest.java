@@ -374,7 +374,7 @@ public class ThrowingHistoryExecutionListenerTest {
   }
 
   protected void verifyHistoryListenerErrorGotCaught() {
-    assertThat(taskService.createTaskQuery().list().size()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().list()).hasSize(1);
     assertThat(taskService.createTaskQuery().singleResult().getName()).isEqualTo("afterCatchHistory");
   }
 

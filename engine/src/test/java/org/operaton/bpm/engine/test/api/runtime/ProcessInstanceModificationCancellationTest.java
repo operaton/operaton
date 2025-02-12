@@ -446,7 +446,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
     // assert successful completion of process
     List<Task> tasks = taskService.createTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
 
     taskService.complete(tasks.get(0).getId());
     taskService.complete(tasks.get(1).getId());
@@ -493,7 +493,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
     // assert successful completion of process
     List<Task> tasks = taskService.createTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
 
     taskService.complete(tasks.get(0).getId());
     taskService.complete(tasks.get(1).getId());
@@ -630,7 +630,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
     // assert successful completion of process
     List<Task> tasks = taskService.createTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
 
     taskService.complete(tasks.get(0).getId());
     taskService.complete(tasks.get(1).getId());
@@ -679,7 +679,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
     // assert successful completion of process
     List<Task> tasks = taskService.createTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
 
     taskService.complete(tasks.get(0).getId());
     taskService.complete(tasks.get(1).getId());
@@ -808,7 +808,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
     // assert successful completion of process
     List<Task> tasks = taskService.createTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
 
     for (Task task : tasks) {
       taskService.complete(task.getId());
@@ -858,7 +858,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
     // assert successful completion of process
     List<Task> tasks = taskService.createTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
 
     for (Task task : tasks) {
       taskService.complete(task.getId());
@@ -987,7 +987,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
     // assert successful completion of process
     List<Task> tasks = taskService.createTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
 
     for (Task task : tasks) {
       taskService.complete(task.getId());
@@ -1038,7 +1038,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
     // assert successful completion of process
     List<Task> tasks = taskService.createTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
 
     for (Task task : tasks) {
       taskService.complete(task.getId());
@@ -1086,7 +1086,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
     // assert successful completion of process
     List<Task> tasks = taskService.createTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
     for (Task task : tasks) {
       taskService.complete(task.getId());
     }
@@ -1178,7 +1178,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
     // assert successful completion of process
     List<Task> tasks = taskService.createTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(3);
+    assertThat(tasks).hasSize(3);
     for (Task task : tasks) {
       taskService.complete(task.getId());
     }
@@ -1230,7 +1230,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
     // assert successful completion of process
     List<Task> tasks = taskService.createTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(3);
+    assertThat(tasks).hasSize(3);
     for (Task task : tasks) {
       taskService.complete(task.getId());
     }
@@ -1278,7 +1278,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
     // assert successful completion of process
     List<Task> tasks = taskService.createTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
     for (Task task : tasks) {
       taskService.complete(task.getId());
     }
@@ -1372,7 +1372,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
     // assert successful completion of process
     List<Task> tasks = taskService.createTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(3);
+    assertThat(tasks).hasSize(3);
 
     for (Task task : tasks) {
       taskService.complete(task.getId());
@@ -1427,7 +1427,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
     // assert successful completion of process
     List<Task> tasks = taskService.createTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(3);
+    assertThat(tasks).hasSize(3);
 
     for (Task task : tasks) {
       taskService.complete(task.getId());
@@ -1451,7 +1451,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
       .cancelActivityInstance(getInstanceIdForActivity(tree, "innerTask1"))
       .execute();
 
-    assertThat(RecorderExecutionListener.getRecordedEvents().size()).isEqualTo(1);
+    assertThat(RecorderExecutionListener.getRecordedEvents()).hasSize(1);
     RecordedEvent innerTask1EndEvent = RecorderExecutionListener.getRecordedEvents().get(0);
     assertThat(innerTask1EndEvent.getEventName()).isEqualTo(ExecutionListener.EVENTNAME_END);
     assertThat(innerTask1EndEvent.getActivityId()).isEqualTo("innerTask1");
@@ -1463,7 +1463,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
       .cancelActivityInstance(getInstanceIdForActivity(tree, "innerTask2"))
       .execute();
 
-    assertThat(RecorderExecutionListener.getRecordedEvents().size()).isEqualTo(2);
+    assertThat(RecorderExecutionListener.getRecordedEvents()).hasSize(2);
     RecordedEvent innerTask2EndEvent = RecorderExecutionListener.getRecordedEvents().get(0);
     assertThat(innerTask2EndEvent.getEventName()).isEqualTo(ExecutionListener.EVENTNAME_END);
     assertThat(innerTask2EndEvent.getActivityId()).isEqualTo("innerTask2");
@@ -1480,7 +1480,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
       .cancelActivityInstance(getInstanceIdForActivity(tree, "outerTask"))
       .execute();
 
-    assertThat(RecorderExecutionListener.getRecordedEvents().size()).isEqualTo(2);
+    assertThat(RecorderExecutionListener.getRecordedEvents()).hasSize(2);
     RecordedEvent outerTaskEndEvent = RecorderExecutionListener.getRecordedEvents().get(0);
     assertThat(outerTaskEndEvent.getEventName()).isEqualTo(ExecutionListener.EVENTNAME_END);
     assertThat(outerTaskEndEvent.getActivityId()).isEqualTo("outerTask");
@@ -1617,7 +1617,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
     List<ProcessInstance> instanceList = runtimeService.createProcessInstanceQuery().list();
     assertNotNull(instanceList);
-    assertThat(instanceList.size()).isEqualTo(2);
+    assertThat(instanceList).hasSize(2);
 
     ActivityInstance tree = runtimeService.getActivityInstance(taskInSubProcess.getProcessInstanceId());
     // when
@@ -1633,7 +1633,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
     // How many process Instances
     instanceList = runtimeService.createProcessInstanceQuery().list();
     assertNotNull(instanceList);
-    assertThat(instanceList.size()).isEqualTo(0);
+    assertThat(instanceList).hasSize(0);
   }
 
   @Deployment(resources = {
@@ -1656,7 +1656,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
     List<ProcessInstance> instanceList = runtimeService.createProcessInstanceQuery().list();
     assertNotNull(instanceList);
-    assertThat(instanceList.size()).isEqualTo(2);
+    assertThat(instanceList).hasSize(2);
 
     ActivityInstance tree = runtimeService.getActivityInstance(taskInSubProcess.getProcessInstanceId());
     // when
@@ -1669,7 +1669,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
     // then
     // How many process Instances
     instanceList = runtimeService.createProcessInstanceQuery().list();
-    assertThat(instanceList.size()).isEqualTo(2);
+    assertThat(instanceList).hasSize(2);
   }
 
   /**
@@ -1688,15 +1688,15 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("callTwoSubProcesses");
     List<ProcessInstance> instanceList = runtimeService.createProcessInstanceQuery().list();
     assertNotNull(instanceList);
-    assertThat(instanceList.size()).isEqualTo(3);
+    assertThat(instanceList).hasSize(3);
 
     List<Task> taskList = taskService.createTaskQuery().list();
     assertNotNull(taskList);
-    assertThat(taskList.size()).isEqualTo(2);
+    assertThat(taskList).hasSize(2);
 
     List<String> activeActivityIds = runtimeService.getActiveActivityIds(processInstance.getProcessInstanceId());
     assertNotNull(activeActivityIds);
-    assertThat(activeActivityIds.size()).isEqualTo(2);
+    assertThat(activeActivityIds).hasSize(2);
 
     ActivityInstance tree = runtimeService.getActivityInstance(taskList.get(0).getProcessInstanceId());
 
@@ -1711,12 +1711,12 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
     // How many process Instances
     instanceList = runtimeService.createProcessInstanceQuery().list();
     assertNotNull(instanceList);
-    assertThat(instanceList.size()).isEqualTo(2);
+    assertThat(instanceList).hasSize(2);
 
     // How man call activities
     activeActivityIds = runtimeService.getActiveActivityIds(processInstance.getProcessInstanceId());
     assertNotNull(activeActivityIds);
-    assertThat(activeActivityIds.size()).isEqualTo(1);
+    assertThat(activeActivityIds).hasSize(1);
   }
 
   /**
@@ -1749,7 +1749,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
     List<ProcessInstance> instanceList = runtimeService.createProcessInstanceQuery().list();
     assertNotNull(instanceList);
-    assertThat(instanceList.size()).isEqualTo(3);
+    assertThat(instanceList).hasSize(3);
 
     ActivityInstance tree = runtimeService.getActivityInstance(taskInNestedSubProcess.getProcessInstanceId());
 
@@ -1763,7 +1763,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
     // How many process Instances
     instanceList = runtimeService.createProcessInstanceQuery().list();
     assertNotNull(instanceList);
-    assertThat(instanceList.size()).isEqualTo(0);
+    assertThat(instanceList).hasSize(0);
   }
 
 }

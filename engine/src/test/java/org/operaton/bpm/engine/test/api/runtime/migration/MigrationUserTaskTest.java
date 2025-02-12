@@ -157,7 +157,7 @@ public class MigrationUserTaskTest {
           .done());
 
     List<Task> migratedTasks = testHelper.snapshotAfterMigration.getTasks();
-    assertThat(migratedTasks.size()).isEqualTo(2);
+    assertThat(migratedTasks).hasSize(2);
 
     for (Task migratedTask : migratedTasks) {
       assertThat(migratedTask.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());

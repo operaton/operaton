@@ -51,7 +51,7 @@ public class EmailSendTaskTest extends EmailTestCase {
     runtimeService.startProcessInstanceByKey("simpleTextOnly");
 
     List<WiserMessage> messages = wiser.getMessages();
-    assertThat(messages.size()).isEqualTo(1);
+    assertThat(messages).hasSize(1);
 
     WiserMessage message = messages.get(0);
     assertEmailSend(message, false, "Hello Kermit!", "This a text only e-mail.", "operaton@localhost",
@@ -65,7 +65,7 @@ public class EmailSendTaskTest extends EmailTestCase {
 
     // 3 recipients == 3 emails in wiser with different receivers
     List<WiserMessage> messages = wiser.getMessages();
-    assertThat(messages.size()).isEqualTo(3);
+    assertThat(messages).hasSize(3);
 
     // sort recipients for easy assertion
     List<String> recipients = new ArrayList<>();
@@ -97,7 +97,7 @@ public class EmailSendTaskTest extends EmailTestCase {
     runtimeService.startProcessInstanceByKey("textMailExpressions", vars);
 
     List<WiserMessage> messages = wiser.getMessages();
-    assertThat(messages.size()).isEqualTo(1);
+    assertThat(messages).hasSize(1);
 
     WiserMessage message = messages.get(0);
     assertEmailSend(message, false, subject, "Hello " + recipientName + ", this is an e-mail",
@@ -115,7 +115,7 @@ public class EmailSendTaskTest extends EmailTestCase {
 
     // Bcc is not stored in the header (obviously)
     // so the only way to verify the bcc, is that there are three messages send.
-    assertThat(messages.size()).isEqualTo(3);
+    assertThat(messages).hasSize(3);
   }
 
   @Deployment
@@ -124,7 +124,7 @@ public class EmailSendTaskTest extends EmailTestCase {
     runtimeService.startProcessInstanceByKey("htmlMail", CollectionUtil.singletonMap("gender", "male"));
 
     List<WiserMessage> messages = wiser.getMessages();
-    assertThat(messages.size()).isEqualTo(1);
+    assertThat(messages).hasSize(1);
     assertEmailSend(messages.get(0), true, "Test", "Mr. <b>Kermit</b>", "operaton@localhost", Arrays.asList("kermit@operaton.org"), null);
   }
 
@@ -150,7 +150,7 @@ public class EmailSendTaskTest extends EmailTestCase {
     runtimeService.startProcessInstanceByKey("sendMailExample", vars);
 
     List<WiserMessage> messages = wiser.getMessages();
-    assertThat(messages.size()).isEqualTo(1);
+    assertThat(messages).hasSize(1);
 
     WiserMessage message = messages.get(0);
     MimeMessage mimeMessage = message.getMimeMessage();

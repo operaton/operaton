@@ -26,7 +26,6 @@ import org.operaton.bpm.engine.impl.identity.*;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 
-import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -204,7 +203,7 @@ public class DefaultPasswordPolicyTest {
     PasswordPolicyResult result = identityService.checkPasswordAgainstPolicy(policy, candidatePassword, user);
 
     // then
-    Assertions.assertThat(result.getViolatedRules())
+    assertThat(result.getViolatedRules())
         .extracting("placeholder")
         .contains(PasswordPolicyUserDataRuleImpl.PLACEHOLDER);
   }
@@ -232,7 +231,7 @@ public class DefaultPasswordPolicyTest {
         identityService.checkPasswordAgainstPolicy(candidatePassword, user);
 
     // then
-    Assertions.assertThat(result.getFulfilledRules())
+    assertThat(result.getFulfilledRules())
         .extracting("placeholder")
         .contains(PasswordPolicyUserDataRuleImpl.PLACEHOLDER);
   }
@@ -248,7 +247,7 @@ public class DefaultPasswordPolicyTest {
         identityService.checkPasswordAgainstPolicy(candidatePassword, user);
 
     // then
-    Assertions.assertThat(result.getFulfilledRules())
+    assertThat(result.getFulfilledRules())
         .extracting("placeholder")
         .contains(PasswordPolicyUserDataRuleImpl.PLACEHOLDER);
   }

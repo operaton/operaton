@@ -79,7 +79,7 @@ public class CleanableHistoricDecisionInstanceReportTest {
 
   protected void prepareDecisionInstances(String key, int daysInThePast, Integer historyTimeToLive, int instanceCount) {
     List<DecisionDefinition> decisionDefinitions = repositoryService.createDecisionDefinitionQuery().decisionDefinitionKey(key).list();
-    assertThat(decisionDefinitions.size()).isEqualTo(1);
+    assertThat(decisionDefinitions).hasSize(1);
     repositoryService.updateDecisionDefinitionHistoryTimeToLive(decisionDefinitions.get(0).getId(), historyTimeToLive);
 
     Date oldCurrentTime = ClockUtil.getCurrentTime();
@@ -110,7 +110,7 @@ public class CleanableHistoricDecisionInstanceReportTest {
     CleanableHistoricDecisionInstanceReportResult thirdReportResult = historyService.createCleanableHistoricDecisionInstanceReport().decisionDefinitionKeyIn(THIRD_DECISION_DEFINITION_KEY).singleResult();
 
     // then
-    assertThat(reportResults.size()).isEqualTo(4);
+    assertThat(reportResults).hasSize(4);
     for (CleanableHistoricDecisionInstanceReportResult result : reportResults) {
       if (result.getDecisionDefinitionKey().equals(DECISION_DEFINITION_KEY)) {
         checkResultNumbers(result, 10, 20);
@@ -142,7 +142,7 @@ public class CleanableHistoricDecisionInstanceReportTest {
     long count = historyService.createCleanableHistoricDecisionInstanceReport().count();
 
     // then
-    assertThat(reportResults.size()).isEqualTo(1);
+    assertThat(reportResults).hasSize(1);
     assertThat(count).isEqualTo(1);
 
     checkResultNumbers(reportResults.get(0), 10, 10);
@@ -158,7 +158,7 @@ public class CleanableHistoricDecisionInstanceReportTest {
     List<CleanableHistoricDecisionInstanceReportResult> reportResults = historyService.createCleanableHistoricDecisionInstanceReport().list();
 
     // then
-    assertThat(reportResults.size()).isEqualTo(1);
+    assertThat(reportResults).hasSize(1);
     checkResultNumbers(reportResults.get(0), 5, 10);
   }
 
@@ -172,7 +172,7 @@ public class CleanableHistoricDecisionInstanceReportTest {
     List<CleanableHistoricDecisionInstanceReportResult> reportResults = historyService.createCleanableHistoricDecisionInstanceReport().list();
 
     // then
-    assertThat(reportResults.size()).isEqualTo(1);
+    assertThat(reportResults).hasSize(1);
     checkResultNumbers(reportResults.get(0), 10, 10);
   }
 
@@ -186,7 +186,7 @@ public class CleanableHistoricDecisionInstanceReportTest {
     List<CleanableHistoricDecisionInstanceReportResult> reportResults = historyService.createCleanableHistoricDecisionInstanceReport().list();
 
     // then
-    assertThat(reportResults.size()).isEqualTo(1);
+    assertThat(reportResults).hasSize(1);
     checkResultNumbers(reportResults.get(0), 0, 10);
   }
 
@@ -232,11 +232,11 @@ public class CleanableHistoricDecisionInstanceReportTest {
   public void testReportCompact() {
     // given
     List<DecisionDefinition> decisionDefinitions = repositoryService.createDecisionDefinitionQuery().decisionDefinitionKey(DECISION_DEFINITION_KEY).list();
-    assertThat(decisionDefinitions.size()).isEqualTo(1);
+    assertThat(decisionDefinitions).hasSize(1);
 
     // assume
     List<CleanableHistoricDecisionInstanceReportResult> resultWithZeros = historyService.createCleanableHistoricDecisionInstanceReport().list();
-    assertThat(resultWithZeros.size()).isEqualTo(1);
+    assertThat(resultWithZeros).hasSize(1);
     assertThat(resultWithZeros.get(0).getFinishedDecisionInstanceCount()).isEqualTo(0);
 
     // when
@@ -262,7 +262,7 @@ public class CleanableHistoricDecisionInstanceReportTest {
         .list();
 
     // then
-    assertThat(reportResult.size()).isEqualTo(3);
+    assertThat(reportResult).hasSize(3);
     assertThat(reportResult.get(0).getDecisionDefinitionKey()).isEqualTo(DECISION_DEFINITION_KEY);
     assertThat(reportResult.get(1).getDecisionDefinitionKey()).isEqualTo(SECOND_DECISION_DEFINITION_KEY);
     assertThat(reportResult.get(2).getDecisionDefinitionKey()).isEqualTo(THIRD_DECISION_DEFINITION_KEY);
@@ -284,7 +284,7 @@ public class CleanableHistoricDecisionInstanceReportTest {
         .list();
 
     // then
-    assertThat(reportResult.size()).isEqualTo(3);
+    assertThat(reportResult).hasSize(3);
     assertThat(reportResult.get(0).getDecisionDefinitionKey()).isEqualTo(THIRD_DECISION_DEFINITION_KEY);
     assertThat(reportResult.get(1).getDecisionDefinitionKey()).isEqualTo(SECOND_DECISION_DEFINITION_KEY);
     assertThat(reportResult.get(2).getDecisionDefinitionKey()).isEqualTo(DECISION_DEFINITION_KEY);

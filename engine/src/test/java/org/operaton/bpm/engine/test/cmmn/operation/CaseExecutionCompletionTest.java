@@ -1032,10 +1032,10 @@ public class CaseExecutionCompletionTest {
     assertNotNull(caseInstance.findCaseExecution("X"));
 
     // case instance has only one child
-    assertThat(((CaseExecutionImpl) caseInstance).getCaseExecutions().size()).isEqualTo(1);
+    assertThat(((CaseExecutionImpl) caseInstance).getCaseExecutions()).hasSize(1);
 
     // stage X has two children
-    assertThat(((CaseExecutionImpl) stageX).getCaseExecutions().size()).isEqualTo(1);
+    assertThat(((CaseExecutionImpl) stageX).getCaseExecutions()).hasSize(1);
 
     // case instance is still active
     assertTrue(caseInstance.isActive());
@@ -1134,10 +1134,10 @@ public class CaseExecutionCompletionTest {
     assertNotNull(caseInstance.findCaseExecution("X"));
 
     // case instance has only one child
-    assertThat(((CaseExecutionImpl) caseInstance).getCaseExecutions().size()).isEqualTo(1);
+    assertThat(((CaseExecutionImpl) caseInstance).getCaseExecutions()).hasSize(1);
 
     // stage X has two children
-    assertThat(((CaseExecutionImpl) stageX).getCaseExecutions().size()).isEqualTo(1);
+    assertThat(((CaseExecutionImpl) stageX).getCaseExecutions()).hasSize(1);
 
     // case instance is still active
     assertTrue(caseInstance.isActive());
@@ -1227,10 +1227,10 @@ public class CaseExecutionCompletionTest {
     assertNotNull(caseInstance.findCaseExecution("X"));
 
     // case instance has only one child
-    assertThat(((CaseExecutionImpl) caseInstance).getCaseExecutions().size()).isEqualTo(1);
+    assertThat(((CaseExecutionImpl) caseInstance).getCaseExecutions()).hasSize(1);
 
     // stage X has only one child
-    assertThat(((CaseExecutionImpl) stageX).getCaseExecutions().size()).isEqualTo(2);
+    assertThat(((CaseExecutionImpl) stageX).getCaseExecutions()).hasSize(2);
 
     // case instance is still active
     assertTrue(caseInstance.isActive());
@@ -1319,10 +1319,10 @@ public class CaseExecutionCompletionTest {
     assertNotNull(caseInstance.findCaseExecution("X"));
 
     // case instance has only one child
-    assertThat(((CaseExecutionImpl) caseInstance).getCaseExecutions().size()).isEqualTo(1);
+    assertThat(((CaseExecutionImpl) caseInstance).getCaseExecutions()).hasSize(1);
 
     // stage X has only one child
-    assertThat(((CaseExecutionImpl) stageX).getCaseExecutions().size()).isEqualTo(1);
+    assertThat(((CaseExecutionImpl) stageX).getCaseExecutions()).hasSize(1);
 
     // case instance is still active
     assertTrue(caseInstance.isActive());
@@ -1427,7 +1427,7 @@ public class CaseExecutionCompletionTest {
     assertNull(caseInstance.findCaseExecution("X"));
 
     // stage X has only one child
-    assertThat(((CaseExecutionImpl) caseInstance).getCaseExecutions().size()).isEqualTo(0);
+    assertThat(((CaseExecutionImpl) caseInstance).getCaseExecutions()).hasSize(0);
 
     // case instance is completed
     assertTrue(caseInstance.isCompleted());
@@ -1532,7 +1532,7 @@ public class CaseExecutionCompletionTest {
     assertNull(caseInstance.findCaseExecution("X"));
 
     // stage X has only one child
-    assertThat(((CaseExecutionImpl) caseInstance).getCaseExecutions().size()).isEqualTo(0);
+    assertThat(((CaseExecutionImpl) caseInstance).getCaseExecutions()).hasSize(0);
 
     // case instance is completed
     assertTrue(caseInstance.isCompleted());
@@ -1635,7 +1635,7 @@ public class CaseExecutionCompletionTest {
     assertNull(caseInstance.findCaseExecution("X"));
 
     // stage X has only one child
-    assertThat(((CaseExecutionImpl) caseInstance).getCaseExecutions().size()).isEqualTo(0);
+    assertThat(((CaseExecutionImpl) caseInstance).getCaseExecutions()).hasSize(0);
 
     // case instance is completed
     assertTrue(caseInstance.isCompleted());
@@ -1736,7 +1736,7 @@ public class CaseExecutionCompletionTest {
     assertNull(caseInstance.findCaseExecution("X"));
 
     // stage X has only one child
-    assertThat(((CaseExecutionImpl) caseInstance).getCaseExecutions().size()).isEqualTo(0);
+    assertThat(((CaseExecutionImpl) caseInstance).getCaseExecutions()).hasSize(0);
 
     // case instance is completed
     assertTrue(caseInstance.isCompleted());

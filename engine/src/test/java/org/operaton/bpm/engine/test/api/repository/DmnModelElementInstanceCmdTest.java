@@ -48,19 +48,19 @@ public class DmnModelElementInstanceCmdTest extends PluggableProcessEngineTest {
     assertNotNull(modelInstance);
 
     Collection<Decision> decisions = modelInstance.getModelElementsByType(Decision.class);
-    assertThat(decisions.size()).isEqualTo(1);
+    assertThat(decisions).hasSize(1);
 
     Collection<DecisionTable> decisionTables = modelInstance.getModelElementsByType(DecisionTable.class);
-    assertThat(decisionTables.size()).isEqualTo(1);
+    assertThat(decisionTables).hasSize(1);
 
     Collection<Input> inputs = modelInstance.getModelElementsByType(Input.class);
-    assertThat(inputs.size()).isEqualTo(1);
+    assertThat(inputs).hasSize(1);
 
     Collection<Output> outputs = modelInstance.getModelElementsByType(Output.class);
-    assertThat(outputs.size()).isEqualTo(1);
+    assertThat(outputs).hasSize(1);
 
     Collection<Rule> rules = modelInstance.getModelElementsByType(Rule.class);
-    assertThat(rules.size()).isEqualTo(2);
+    assertThat(rules).hasSize(2);
   }
 
 }

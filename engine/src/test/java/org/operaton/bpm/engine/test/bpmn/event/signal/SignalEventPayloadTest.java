@@ -88,7 +88,7 @@ public class SignalEventPayloadTest {
     List<VariableInstance> catchingPiVariables = runtimeService.createVariableInstanceQuery()
       .processInstanceIdIn(catchingPiUserTask.getProcessInstanceId())
       .list();
-    assertThat(catchingPiVariables.size()).isEqualTo(2);
+    assertThat(catchingPiVariables).hasSize(2);
 
     for(VariableInstance variable : catchingPiVariables) {
       if(variable.getName().equals("payloadVar1Target")) {
@@ -122,7 +122,7 @@ public class SignalEventPayloadTest {
       .createVariableInstanceQuery()
       .processInstanceIdIn(catchingPI.getId())
       .list();
-    assertThat(catchingPiVariables.size()).isEqualTo(2);
+    assertThat(catchingPiVariables).hasSize(2);
 
     for(VariableInstance variable : catchingPiVariables) {
       if(variable.getName().equals("payloadVar1Target")) {
@@ -154,7 +154,7 @@ public class SignalEventPayloadTest {
       .createVariableInstanceQuery()
       .processInstanceIdIn(catchingPI.getId())
       .list();
-    assertThat(catchingPiVariables.size()).isEqualTo(1);
+    assertThat(catchingPiVariables).hasSize(1);
 
     assertThat(catchingPiVariables.get(0).getName()).isEqualTo("srcExpressionResVal");
     assertThat(catchingPiVariables.get(0).getValue()).isEqualTo("sourceVal");
@@ -183,7 +183,7 @@ public class SignalEventPayloadTest {
       .createVariableInstanceQuery()
       .processInstanceIdIn(catchingPI.getId())
       .list();
-    assertThat(catchingPiVariables.size()).isEqualTo(2);
+    assertThat(catchingPiVariables).hasSize(2);
 
     for(VariableInstance variable : catchingPiVariables) {
       if(variable.getName().equals("payloadVar1")) {
@@ -219,7 +219,7 @@ public class SignalEventPayloadTest {
       .createVariableInstanceQuery()
       .processInstanceIdIn(catchingPI.getId())
       .list();
-    assertThat(catchingPiVariables.size()).isEqualTo(2);
+    assertThat(catchingPiVariables).hasSize(2);
 
     for(VariableInstance variable : catchingPiVariables) {
       if(variable.getName().equals(localVar1)) {
@@ -281,7 +281,7 @@ public class SignalEventPayloadTest {
     assertThat(catchingPI.getBusinessKey()).isEqualTo(businessKey);
 
     List<VariableInstance> targetVariables = runtimeService.createVariableInstanceQuery().processInstanceIdIn(catchingPiUserTask.getProcessInstanceId()).list();
-    assertThat(targetVariables.size()).isEqualTo(4);
+    assertThat(targetVariables).hasSize(4);
 
     for (VariableInstance variable : targetVariables) {
       if (variable.getName().equals(globalVar1 + "Target")) {

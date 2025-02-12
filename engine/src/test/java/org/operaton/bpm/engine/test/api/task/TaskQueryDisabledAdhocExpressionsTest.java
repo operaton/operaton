@@ -83,7 +83,7 @@ public class TaskQueryDisabledAdhocExpressionsTest extends PluggableProcessEngin
 
     // it is possible to execute the stored query with an expression
     assertThat(filterService.count(filter.getId())).isEqualTo(Long.valueOf(0));
-    assertThat(filterService.list(filter.getId()).size()).isEqualTo(0);
+    assertThat(filterService.list(filter.getId())).isEmpty();
 
     // but it is not possible to executed the filter with an extended query that uses expressions
     extendFilterAndValidateFailingQuery(filter, taskService.createTaskQuery().dueAfterExpression(STATE_MANIPULATING_EXPRESSION));
@@ -102,11 +102,11 @@ public class TaskQueryDisabledAdhocExpressionsTest extends PluggableProcessEngin
 
     // it is possible to execute the stored query with an expression
     assertThat(filterService.count(filter.getId())).isEqualTo(Long.valueOf(0));
-    assertThat(filterService.list(filter.getId()).size()).isEqualTo(0);
+    assertThat(filterService.list(filter.getId())).isEmpty();
 
     // and it is possible to extend the filter query when not using an expression
     assertThat(filterService.count(filter.getId(), taskService.createTaskQuery().dueAfter(new Date()))).isEqualTo(Long.valueOf(0));
-    assertThat(filterService.list(filter.getId(), taskService.createTaskQuery().dueAfter(new Date())).size()).isEqualTo(0);
+    assertThat(filterService.list(filter.getId(), taskService.createTaskQuery().dueAfter(new Date()))).hasSize(0);
 
     // cleanup
     filterService.deleteFilter(filter.getId());

@@ -49,7 +49,7 @@ public class ClassExecutionListenerSpec extends AbstractExecutionListenerSpec {
     assertThat(classDelegateListener.getClassName()).isEqualTo(CLASS_NAME);
 
     List<FieldDeclaration> fieldDeclarations = classDelegateListener.getFieldDeclarations();
-    assertThat(fieldDeclarations.size()).isEqualTo(fieldSpecs.size());
+    assertThat(fieldDeclarations).hasSize(fieldSpecs.size());
 
     for (int i = 0; i < fieldDeclarations.size(); i++) {
       FieldDeclaration declaration = fieldDeclarations.get(i);

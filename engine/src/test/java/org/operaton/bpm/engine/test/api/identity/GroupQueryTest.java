@@ -125,7 +125,7 @@ public class GroupQueryTest extends PluggableProcessEngineTest {
     }
 
     List<Group> idInList = identityService.createGroupQuery().groupIdIn(ids).list();
-    assertThat(idInList.size()).isEqualTo(list.size());
+    assertThat(idInList).hasSize(list.size());
     for (Group group : idInList) {
       boolean found = false;
       for (Group otherGroup : list) {
@@ -224,14 +224,14 @@ public class GroupQueryTest extends PluggableProcessEngineTest {
 
     query = query.orderByGroupId().asc();
     List<Group> groups = query.list();
-    assertThat(groups.size()).isEqualTo(3);
+    assertThat(groups).hasSize(3);
     assertThat(groups.get(0).getId()).isEqualTo("admin");
     assertThat(groups.get(1).getId()).isEqualTo("frogs");
     assertThat(groups.get(2).getId()).isEqualTo("muppets");
 
     query = query.groupType("user");
     groups = query.list();
-    assertThat(groups.size()).isEqualTo(2);
+    assertThat(groups).hasSize(2);
     assertThat(groups.get(0).getId()).isEqualTo("frogs");
     assertThat(groups.get(1).getId()).isEqualTo("muppets");
   }
@@ -305,7 +305,7 @@ public class GroupQueryTest extends PluggableProcessEngineTest {
   }
 
   private void verifyQueryResults(GroupQuery query, int countExpected) {
-    assertThat(query.list().size()).isEqualTo(countExpected);
+    assertThat(query.list()).hasSize(countExpected);
     assertThat(query.count()).isEqualTo(countExpected);
 
     if (countExpected == 1) {

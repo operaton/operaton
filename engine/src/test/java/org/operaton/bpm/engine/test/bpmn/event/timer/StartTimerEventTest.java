@@ -86,7 +86,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     executeAllJobs();
 
     List<ProcessInstance> pi = runtimeService.createProcessInstanceQuery().processDefinitionKey("startTimerEventExample").list();
-    assertThat(pi.size()).isEqualTo(1);
+    assertThat(pi).hasSize(1);
 
     assertThat(jobQuery.count()).isEqualTo(0);
 
@@ -104,7 +104,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     executeAllJobs();
 
     List<ProcessInstance> pi = runtimeService.createProcessInstanceQuery().processDefinitionKey("startTimerEventExample").list();
-    assertThat(pi.size()).isEqualTo(1);
+    assertThat(pi).hasSize(1);
 
     assertThat(jobQuery.count()).isEqualTo(0);
 
@@ -221,7 +221,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     executeAllJobs();
 
     List<ProcessInstance> pi = runtimeService.createProcessInstanceQuery().processDefinitionKey("startTimerEventExample").list();
-    assertThat(pi.size()).isEqualTo(1);
+    assertThat(pi).hasSize(1);
 
     assertThat(jobQuery.count()).isEqualTo(0);
   }
@@ -258,7 +258,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     executeAllJobs();
 
     List<ProcessInstance> pi = processInstanceQuery.list();
-    assertThat(pi.size()).isEqualTo(1);
+    assertThat(pi).hasSize(1);
 
     assertThat(jobQuery.count()).isEqualTo(0);
   }
@@ -289,7 +289,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     executeAllJobs();
 
     List<ProcessInstance> pi = processInstanceQuery.list();
-    assertThat(pi.size()).isEqualTo(1);
+    assertThat(pi).hasSize(1);
 
     assertThat(jobQuery.count()).isEqualTo(0);
   }
@@ -1439,7 +1439,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     managementService.executeJob(jobId);
 
     // then
-    assertThat(taskService.createTaskQuery().taskName("aTaskName").list().size()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskName("aTaskName").list()).hasSize(1);
 
     // cleanup
     Mocks.reset();
@@ -1476,7 +1476,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     managementService.executeJob(jobId);
 
     // then
-    assertThat(taskService.createTaskQuery().taskName("taskInSubprocess").list().size()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskName("taskInSubprocess").list()).hasSize(1);
   }
 
   @Test
@@ -1509,7 +1509,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     managementService.executeJob(jobId);
 
     // then
-    assertThat(taskService.createTaskQuery().taskName("taskInSubprocess").list().size()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskName("taskInSubprocess").list()).hasSize(1);
   }
 
   @Test
@@ -1552,7 +1552,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     assertThat(newDuedate).isCloseTo(expectedDate, 1000l);
 
     managementService.executeJob(jobId);
-    assertThat(taskService.createTaskQuery().taskName("taskInSubprocess").list().size()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskName("taskInSubprocess").list()).hasSize(1);
   }
 
   @Test
@@ -1593,7 +1593,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     assertThat(newDuedate).isEqualTo(expectedDate);
 
     managementService.executeJob(jobId);
-    assertThat(taskService.createTaskQuery().taskName("taskInSubprocess").list().size()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskName("taskInSubprocess").list()).hasSize(1);
   }
 
   @Deployment

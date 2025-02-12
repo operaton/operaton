@@ -55,7 +55,7 @@ public class SentryInitializationTest extends CmmnTest {
     List<CaseSentryPartEntity> parts = createCaseSentryPartQuery()
       .list();
 
-    assertThat(parts.size()).isEqualTo(1);
+    assertThat(parts).hasSize(1);
 
     CaseSentryPartEntity part = parts.get(0);
 
@@ -87,7 +87,7 @@ public class SentryInitializationTest extends CmmnTest {
     List<CaseSentryPartEntity> parts = createCaseSentryPartQuery()
       .list();
 
-    assertThat(parts.size()).isEqualTo(1);
+    assertThat(parts).hasSize(1);
 
     CaseSentryPartEntity part = parts.get(0);
 
@@ -120,7 +120,7 @@ public class SentryInitializationTest extends CmmnTest {
     List<CaseSentryPartEntity> parts = createCaseSentryPartQuery()
       .list();
 
-    assertThat(parts.size()).isEqualTo(1);
+    assertThat(parts).hasSize(1);
 
     CaseSentryPartEntity part = parts.get(0);
 

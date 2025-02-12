@@ -115,7 +115,7 @@ public class HistoricDetailQueryTest {
     HistoricDetailQuery query = historyService.createHistoricDetailQuery()
             .userOperationId(userOperationId);
 
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
     assertThat(query.count()).isEqualTo(1);
   }
 
@@ -138,7 +138,7 @@ public class HistoricDetailQueryTest {
         .userOperationId(userOperationId)
         .variableUpdates();
 
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
     assertThat(query.count()).isEqualTo(1);
   }
 
@@ -156,7 +156,7 @@ public class HistoricDetailQueryTest {
     HistoricDetailQuery query = historyService.createHistoricDetailQuery()
             .userOperationId("invalid");
 
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
     assertThat(query.count()).isEqualTo(0);
 
     try {
@@ -181,7 +181,7 @@ public class HistoricDetailQueryTest {
     HistoricDetailQuery query = historyService.createHistoricDetailQuery()
             .executionId(executionId);
 
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
     assertThat(query.count()).isEqualTo(1);
   }
 
@@ -199,7 +199,7 @@ public class HistoricDetailQueryTest {
     HistoricDetailQuery query = historyService.createHistoricDetailQuery()
             .executionId("invalid");
 
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
     assertThat(query.count()).isEqualTo(0);
   }
 
@@ -242,7 +242,7 @@ public class HistoricDetailQueryTest {
         .variableTypeIn("string");
 
     // then
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
     assertThat(query.count()).isEqualTo(1);
     HistoricDetail historicDetail = query.list().get(0);
     if (historicDetail instanceof HistoricVariableUpdate variableUpdate) {
@@ -268,7 +268,7 @@ public class HistoricDetailQueryTest {
         .variableTypeIn("Boolean");
 
     // then
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
     assertThat(query.count()).isEqualTo(1);
     HistoricDetail historicDetail = query.list().get(0);
     if (historicDetail instanceof HistoricVariableUpdate variableUpdate) {
@@ -297,7 +297,7 @@ public class HistoricDetailQueryTest {
         .variableTypeIn("boolean", "integer", "Serializable");
 
     // then
-    assertThat(query.list().size()).isEqualTo(3);
+    assertThat(query.list()).hasSize(3);
     assertThat(query.count()).isEqualTo(3);
     Set<String> allowedVariableTypes = new HashSet<>();
     allowedVariableTypes.add("boolean");
@@ -792,7 +792,7 @@ public class HistoricDetailQueryTest {
         .list();
 
     // then
-    assertThat(details.size()).isEqualTo(2);
+    assertThat(details).hasSize(2);
     for (HistoricDetail historicDetail : details) {
       HistoricVariableUpdateEventEntity detail = (HistoricVariableUpdateEventEntity) historicDetail;
       String variableValue = detail.getTextValue();
@@ -826,7 +826,7 @@ public class HistoricDetailQueryTest {
         .list();
 
     // then
-    assertThat(details.size()).isEqualTo(2);
+    assertThat(details).hasSize(2);
     for (HistoricDetail historicDetail : details) {
       HistoricVariableUpdateEventEntity detail = (HistoricVariableUpdateEventEntity) historicDetail;
 
@@ -862,7 +862,7 @@ public class HistoricDetailQueryTest {
         .list();
 
     // then
-    assertThat(details.size()).isEqualTo(2);
+    assertThat(details).hasSize(2);
     for (HistoricDetail historicDetail : details) {
       HistoricVariableUpdateEventEntity detail = (HistoricVariableUpdateEventEntity) historicDetail;
 
@@ -895,7 +895,7 @@ public class HistoricDetailQueryTest {
         .list();
 
     // then
-    assertThat(details.size()).isEqualTo(2);
+    assertThat(details).hasSize(2);
     for (HistoricDetail historicDetail : details) {
       HistoricVariableUpdateEventEntity detail = (HistoricVariableUpdateEventEntity) historicDetail;
 
@@ -938,7 +938,7 @@ public class HistoricDetailQueryTest {
         .list();
 
     // then
-    assertThat(details.size()).isEqualTo(2);
+    assertThat(details).hasSize(2);
     for (HistoricDetail historicDetail : details) {
       HistoricVariableUpdateEventEntity detail = (HistoricVariableUpdateEventEntity) historicDetail;
       String variableValue = detail.getTextValue();
@@ -979,7 +979,7 @@ public class HistoricDetailQueryTest {
         .list();
 
     // then
-    assertThat(details.size()).isEqualTo(2);
+    assertThat(details).hasSize(2);
     for (HistoricDetail historicDetail : details) {
       HistoricVariableUpdateEventEntity detail = (HistoricVariableUpdateEventEntity) historicDetail;
       String variableValue = detail.getTextValue();

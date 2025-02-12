@@ -182,7 +182,7 @@ public class HistoryCleanupTest {
       .operationType(OPERATION_TYPE_CREATE_HISTORY_CLEANUP_JOB)
       .list();
 
-    assertThat(userOperationLogEntries.size()).isEqualTo(1);
+    assertThat(userOperationLogEntries).hasSize(1);
 
     UserOperationLogEntry entry = userOperationLogEntries.get(0);
     assertThat(entry.getCategory()).isEqualTo(CATEGORY_OPERATOR);
@@ -331,13 +331,13 @@ public class HistoryCleanupTest {
     assertThat(noneCaseInstances).isEqualTo(0);
 
     List<MetricIntervalValue> piList = processMetricsQuery.startDate(currentDate).interval(900);
-    assertThat(piList.size()).isEqualTo(1);
+    assertThat(piList).hasSize(1);
     assertThat(piList.get(0).getValue()).isEqualTo(5);
     List<MetricIntervalValue> diList = decisionMetricsQuery.startDate(DateUtils.addDays(currentDate, DAYS_IN_THE_PAST)).interval(900);
-    assertThat(diList.size()).isEqualTo(1);
+    assertThat(diList).hasSize(1);
     assertThat(diList.get(0).getValue()).isEqualTo(5);
     List<MetricIntervalValue> ciList = caseMetricsQuery.startDate(DateUtils.addDays(currentDate, DAYS_IN_THE_PAST)).interval(900);
-    assertThat(ciList.size()).isEqualTo(1);
+    assertThat(ciList).hasSize(1);
     assertThat(ciList.get(0).getValue()).isEqualTo(5);
   }
 
@@ -479,15 +479,15 @@ public class HistoryCleanupTest {
   private void prepareInstances(Integer processInstanceTimeToLive, Integer decisionTimeToLive, Integer caseTimeToLive) {
     //update time to live
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().processDefinitionKey("testProcess").list();
-    assertThat(processDefinitions.size()).isEqualTo(1);
+    assertThat(processDefinitions).hasSize(1);
     repositoryService.updateProcessDefinitionHistoryTimeToLive(processDefinitions.get(0).getId(), processInstanceTimeToLive);
 
     final List<DecisionDefinition> decisionDefinitions = repositoryService.createDecisionDefinitionQuery().decisionDefinitionKey("testDecision").list();
-    assertThat(decisionDefinitions.size()).isEqualTo(1);
+    assertThat(decisionDefinitions).hasSize(1);
     repositoryService.updateDecisionDefinitionHistoryTimeToLive(decisionDefinitions.get(0).getId(), decisionTimeToLive);
 
     List<CaseDefinition> caseDefinitions = repositoryService.createCaseDefinitionQuery().caseDefinitionKey("oneTaskCase").list();
-    assertThat(caseDefinitions.size()).isEqualTo(1);
+    assertThat(caseDefinitions).hasSize(1);
     repositoryService.updateCaseDefinitionHistoryTimeToLive(caseDefinitions.get(0).getId(), caseTimeToLive);
 
     Date oldCurrentTime = ClockUtil.getCurrentTime();
@@ -555,15 +555,15 @@ public class HistoryCleanupTest {
 
   private void removeHistoryTimeToLive() {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().processDefinitionKey(ONE_TASK_PROCESS).list();
-    assertThat(processDefinitions.size()).isEqualTo(1);
+    assertThat(processDefinitions).hasSize(1);
     repositoryService.updateProcessDefinitionHistoryTimeToLive(processDefinitions.get(0).getId(), null);
 
     final List<DecisionDefinition> decisionDefinitions = repositoryService.createDecisionDefinitionQuery().decisionDefinitionKey(DECISION).list();
-    assertThat(decisionDefinitions.size()).isEqualTo(1);
+    assertThat(decisionDefinitions).hasSize(1);
     repositoryService.updateDecisionDefinitionHistoryTimeToLive(decisionDefinitions.get(0).getId(), null);
 
     final List<CaseDefinition> caseDefinitions = repositoryService.createCaseDefinitionQuery().caseDefinitionKey(ONE_TASK_CASE).list();
-    assertThat(caseDefinitions.size()).isEqualTo(1);
+    assertThat(caseDefinitions).hasSize(1);
     repositoryService.updateCaseDefinitionHistoryTimeToLive(caseDefinitions.get(0).getId(), null);
   }
 
@@ -590,7 +590,7 @@ public class HistoryCleanupTest {
     final List<Job> historyCleanupJobs = historyService.findHistoryCleanupJobs();
 
     //then
-    assertThat(historyCleanupJobs.size()).isEqualTo(NUMBER_OF_THREADS);
+    assertThat(historyCleanupJobs).hasSize(NUMBER_OF_THREADS);
   }
 
   @Test

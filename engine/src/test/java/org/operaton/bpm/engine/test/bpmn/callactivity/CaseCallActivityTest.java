@@ -464,7 +464,7 @@ public class CaseCallActivityTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -515,7 +515,7 @@ public class CaseCallActivityTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -560,7 +560,7 @@ public class CaseCallActivityTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -608,7 +608,7 @@ public class CaseCallActivityTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -657,7 +657,7 @@ public class CaseCallActivityTest extends CmmnTest {
       .list();
 
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -706,7 +706,7 @@ public class CaseCallActivityTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -791,7 +791,7 @@ public class CaseCallActivityTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -844,7 +844,7 @@ public class CaseCallActivityTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -891,7 +891,7 @@ public class CaseCallActivityTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -944,7 +944,7 @@ public class CaseCallActivityTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -997,7 +997,7 @@ public class CaseCallActivityTest extends CmmnTest {
       .list();
 
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -1050,7 +1050,7 @@ public class CaseCallActivityTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -1158,7 +1158,7 @@ public class CaseCallActivityTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -1383,8 +1383,9 @@ public class CaseCallActivityTest extends CmmnTest {
     assertNotNull(calledInstance);
 
     Map<String, Object> calledInstanceVariables = caseService.getVariables(calledInstance.getId());
-    assertThat(calledInstanceVariables.size()).isEqualTo(1);
-    assertThat(calledInstanceVariables.get("inputParameter")).isEqualTo("val2");
+    assertThat(calledInstanceVariables)
+            .hasSize(1)
+            .containsEntry("inputParameter", "val2");
 
     // when setting a variable in the called instance
     caseService.setVariable(calledInstance.getId(), "calledCaseVar1", 42L);
@@ -1396,10 +1397,11 @@ public class CaseCallActivityTest extends CmmnTest {
     // then the call activity output variable has been mapped to the process instance execution
     // and the output mapping variable as well
     Map<String, Object> callingInstanceVariables = runtimeService.getVariables(processInstance.getId());
-    assertThat(callingInstanceVariables.size()).isEqualTo(3);
-    assertThat(callingInstanceVariables.get("callingProcessVar1")).isEqualTo("val1");
-    assertThat(callingInstanceVariables.get("calledCaseVar1")).isEqualTo(42L);
-    assertThat(callingInstanceVariables.get("outputParameter")).isEqualTo(43L);
+    assertThat(callingInstanceVariables)
+            .hasSize(3)
+            .containsEntry("callingProcessVar1", "val1")
+            .containsEntry("calledCaseVar1", 42L)
+            .containsEntry("outputParameter", 43L);
   }
 
   @Deployment(resources = {
@@ -1421,8 +1423,9 @@ public class CaseCallActivityTest extends CmmnTest {
     assertNotNull(calledInstance);
 
     Map<String, Object> calledInstanceVariables = caseService.getVariables(calledInstance.getId());
-    assertThat(calledInstanceVariables.size()).isEqualTo(1);
-    assertThat(calledInstanceVariables.get("mappedInputParameter")).isEqualTo("val2");
+    assertThat(calledInstanceVariables)
+            .hasSize(1)
+            .containsEntry("mappedInputParameter", "val2");
 
     // when setting a variable in the called instance
     caseService.setVariable(calledInstance.getId(), "calledCaseVar1", 42L);
@@ -1434,11 +1437,12 @@ public class CaseCallActivityTest extends CmmnTest {
     // then the call activity output variable has been mapped to the process instance execution
     // and the output mapping variable as well
     Map<String, Object> callingInstanceVariables = runtimeService.getVariables(processInstance.getId());
-    assertThat(callingInstanceVariables.size()).isEqualTo(4);
-    assertThat(callingInstanceVariables.get("callingProcessVar1")).isEqualTo("val1");
-    assertThat(callingInstanceVariables.get("mappedInputParameter")).isEqualTo("val2");
-    assertThat(callingInstanceVariables.get("calledCaseVar1")).isEqualTo(42L);
-    assertThat(callingInstanceVariables.get("outputParameter")).isEqualTo(43L);
+    assertThat(callingInstanceVariables)
+            .hasSize(4)
+            .containsEntry("callingProcessVar1", "val1")
+            .containsEntry("mappedInputParameter", "val2")
+            .containsEntry("calledCaseVar1", 42L)
+            .containsEntry("outputParameter", 43L);
   }
 
   @Deployment(resources = {
@@ -1458,8 +1462,9 @@ public class CaseCallActivityTest extends CmmnTest {
     assertNotNull(calledInstance);
 
     Map<String, Object> calledInstanceVariables = caseService.getVariables(calledInstance.getId());
-    assertThat(calledInstanceVariables.size()).isEqualTo(1);
-    assertThat(calledInstanceVariables.get("mappedInputParameter")).isEqualTo(43L);
+    assertThat(calledInstanceVariables)
+            .hasSize(1)
+            .containsEntry("mappedInputParameter", 43L);
 
     // and completing it
     String humanTaskId = queryCaseExecutionByActivityId(HUMAN_TASK_ID).getId();
@@ -1498,9 +1503,10 @@ public class CaseCallActivityTest extends CmmnTest {
     assertNotNull(calledInstance);
 
     Map<String, Object> calledInstanceVariables = caseService.getVariables(calledInstance.getId());
-    assertThat(calledInstanceVariables.size()).isEqualTo(2);
-    assertThat(calledInstanceVariables.get("callingProcessVar1")).isEqualTo("val1");
-    assertThat(calledInstanceVariables.get("inputParameter")).isEqualTo("val2");
+    assertThat(calledInstanceVariables)
+            .hasSize(2)
+            .containsEntry("callingProcessVar1", "val1")
+            .containsEntry("inputParameter", "val2");
 
     // when setting a variable in the called instance
     caseService.setVariable(calledInstance.getId(), "calledCaseVar1", 42L);
@@ -1512,9 +1518,10 @@ public class CaseCallActivityTest extends CmmnTest {
 
     // then only the output mapping variable has been mapped into the calling process instance
     Map<String, Object> callingInstanceVariables = runtimeService.getVariables(processInstance.getId());
-    assertThat(callingInstanceVariables.size()).isEqualTo(2);
-    assertThat(callingInstanceVariables.get("callingProcessVar1")).isEqualTo("val1");
-    assertThat(callingInstanceVariables.get("outputParameter")).isEqualTo(43L);
+    assertThat(callingInstanceVariables)
+            .hasSize(2)
+            .containsEntry("callingProcessVar1", "val1")
+            .containsEntry("outputParameter", 43L);
   }
 
   @Deployment(resources = {
@@ -1536,9 +1543,10 @@ public class CaseCallActivityTest extends CmmnTest {
     assertNotNull(calledInstance);
 
     Map<String, Object> calledInstanceVariables = caseService.getVariables(calledInstance.getId());
-    assertThat(calledInstanceVariables.size()).isEqualTo(2);
-    assertThat(calledInstanceVariables.get("callingProcessVar1")).isEqualTo("val1");
-    assertThat(calledInstanceVariables.get("inputParameter")).isEqualTo("val2");
+    assertThat(calledInstanceVariables)
+            .hasSize(2)
+            .containsEntry("callingProcessVar1", "val1")
+            .containsEntry("inputParameter", "val2");
 
     // when setting a variable in the called instance
     caseService.setVariable(calledInstance.getId(), "calledCaseVar1", 42L);
@@ -1549,9 +1557,10 @@ public class CaseCallActivityTest extends CmmnTest {
 
     // then only the output mapping variable has been mapped into the calling process instance
     Map<String, Object> callingInstanceVariables = runtimeService.getVariables(processInstance.getId());
-    assertThat(callingInstanceVariables.size()).isEqualTo(2);
-    assertThat(callingInstanceVariables.get("callingProcessVar1")).isEqualTo("val1");
-    assertThat(callingInstanceVariables.get("outputParameter")).isEqualTo(43L);
+    assertThat(callingInstanceVariables)
+            .hasSize(2)
+            .containsEntry("callingProcessVar1", "val1")
+            .containsEntry("outputParameter", 43L);
   }
 
   protected ProcessInstance startProcessInstanceByKey(String processDefinitionKey) {

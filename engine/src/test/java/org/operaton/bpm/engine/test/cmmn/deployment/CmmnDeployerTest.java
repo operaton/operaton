@@ -199,7 +199,7 @@ public class CmmnDeployerTest extends PluggableProcessEngineTest {
 
     // then deployment contains deployed case definition
     List<CaseDefinition> deployedCaseDefinitions = deployment.getDeployedCaseDefinitions();
-    assertThat(deployedCaseDefinitions.size()).isEqualTo(1);
+    assertThat(deployedCaseDefinitions).hasSize(1);
     assertNull(deployment.getDeployedProcessDefinitions());
     assertNull(deployment.getDeployedDecisionDefinitions());
     assertNull(deployment.getDeployedDecisionRequirementsDefinitions());

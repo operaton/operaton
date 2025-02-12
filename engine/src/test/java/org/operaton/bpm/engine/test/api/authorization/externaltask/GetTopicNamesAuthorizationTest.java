@@ -52,7 +52,7 @@ public class GetTopicNamesAuthorizationTest extends AuthorizationTest {
     List<String> result = externalTaskService.getTopicNames();
 
     // then
-    assertThat(result.size()).isEqualTo(0);
+    assertThat(result).isEmpty();
   }
 
   @Test
@@ -64,7 +64,7 @@ public class GetTopicNamesAuthorizationTest extends AuthorizationTest {
     List<String> result = externalTaskService.getTopicNames();
 
     // then
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
     assertThat(result.get(0)).isEqualTo("externalTaskTopic");
   }
 
@@ -77,7 +77,7 @@ public class GetTopicNamesAuthorizationTest extends AuthorizationTest {
     List<String> result = externalTaskService.getTopicNames();
 
     // then
-    assertThat(result.size()).isEqualTo(4);
+    assertThat(result).hasSize(4);
   }
 
   @Test
@@ -89,7 +89,7 @@ public class GetTopicNamesAuthorizationTest extends AuthorizationTest {
     List<String> result = externalTaskService.getTopicNames();
 
     // then
-    assertThat(result.size()).isEqualTo(4);
+    assertThat(result).hasSize(4);
   }
 
   @Test
@@ -101,7 +101,7 @@ public class GetTopicNamesAuthorizationTest extends AuthorizationTest {
     List<String> result = externalTaskService.getTopicNames();
 
     // then
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
     assertThat(result.get(0)).isEqualTo("externalTaskTopic");
   }
 
@@ -116,6 +116,6 @@ public class GetTopicNamesAuthorizationTest extends AuthorizationTest {
     List<String> result = externalTaskService.getTopicNames();
 
     // then
-    assertThat(result.size()).isEqualTo(4);
+    assertThat(result).hasSize(4);
   }
 }

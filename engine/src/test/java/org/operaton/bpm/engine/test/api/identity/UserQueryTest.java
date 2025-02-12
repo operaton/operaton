@@ -250,7 +250,7 @@ public class UserQueryTest extends PluggableProcessEngineTest {
     // Combined with criteria
     UserQuery query = identityService.createUserQuery().userLastNameLike("%ea%").orderByUserFirstName().asc();
     List<User> users = query.list();
-    assertThat(users.size()).isEqualTo(2);
+    assertThat(users).hasSize(2);
     assertThat(users.get(0).getFirstName()).isEqualTo("Fozzie");
     assertThat(users.get(1).getFirstName()).isEqualTo("Gonzo");
   }
@@ -307,7 +307,7 @@ public class UserQueryTest extends PluggableProcessEngineTest {
   }
 
   private void verifyQueryResults(UserQuery query, int countExpected) {
-    assertThat(query.list().size()).isEqualTo(countExpected);
+    assertThat(query.list()).hasSize(countExpected);
     assertThat(query.count()).isEqualTo(countExpected);
 
     if (countExpected == 1) {
@@ -362,7 +362,7 @@ public class UserQueryTest extends PluggableProcessEngineTest {
 
     long userCount = identityService.createUserQuery().count();
 
-    assertThat(identityService.createNativeUserQuery().sql("SELECT * FROM " + managementService.getTableName(UserEntity.class)).list().size()).isEqualTo(userCount);
+    assertThat(identityService.createNativeUserQuery().sql("SELECT * FROM " + managementService.getTableName(UserEntity.class)).list()).hasSize(Long.valueOf(userCount).intValue());
     assertThat(identityService.createNativeUserQuery().sql("SELECT count(*) FROM " + managementService.getTableName(UserEntity.class)).count()).isEqualTo(userCount);
   }
 
@@ -373,14 +373,14 @@ public class UserQueryTest extends PluggableProcessEngineTest {
     String fromWhereClauses = String.format("FROM %s WHERE FIRST_ LIKE #{searchPattern} OR LAST_ LIKE #{searchPattern} OR EMAIL_ LIKE #{searchPattern}",
         managementService.getTableName(UserEntity.class));
 
-    assertThat(identityService.createNativeUserQuery().sql("SELECT * " + fromWhereClauses).parameter("searchPattern", searchPattern).list().size()).isEqualTo(1);
+    assertThat(identityService.createNativeUserQuery().sql("SELECT * " + fromWhereClauses).parameter("searchPattern", searchPattern).list()).hasSize(1);
     assertThat(identityService.createNativeUserQuery().sql("SELECT count(*) " + fromWhereClauses).parameter("searchPattern", searchPattern).count()).isEqualTo(1);
   }
 
   @Test
   public void testNativeQueryPaging() {
-    assertThat(identityService.createNativeUserQuery().sql("SELECT * FROM " + managementService.getTableName(UserEntity.class)).listPage(1, 2).size()).isEqualTo(2);
-    assertThat(identityService.createNativeUserQuery().sql("SELECT * FROM " + managementService.getTableName(UserEntity.class)).listPage(2, 1).size()).isEqualTo(1);
+    assertThat(identityService.createNativeUserQuery().sql("SELECT * FROM " + managementService.getTableName(UserEntity.class)).listPage(1, 2)).hasSize(2);
+    assertThat(identityService.createNativeUserQuery().sql("SELECT * FROM " + managementService.getTableName(UserEntity.class)).listPage(2, 1)).hasSize(1);
   }
 
 }

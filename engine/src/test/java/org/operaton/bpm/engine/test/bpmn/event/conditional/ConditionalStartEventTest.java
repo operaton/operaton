@@ -94,7 +94,7 @@ public class ConditionalStartEventTest {
     List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
 
     // then
-    assertThat(eventSubscriptions.size()).isEqualTo(1);
+    assertThat(eventSubscriptions).hasSize(1);
     EventSubscriptionEntity conditionalEventSubscription = (EventSubscriptionEntity) eventSubscriptions.get(0);
     assertThat(conditionalEventSubscription.getEventType()).isEqualTo(EventType.CONDITONAL.name());
     assertThat(conditionalEventSubscription.getConfiguration()).isEqualTo(processDefinitionId);
@@ -110,8 +110,8 @@ public class ConditionalStartEventTest {
     List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
 
-    assertThat(eventSubscriptions.size()).isEqualTo(1);
-    assertThat(processDefinitions.size()).isEqualTo(1);
+    assertThat(eventSubscriptions).hasSize(1);
+    assertThat(processDefinitions).hasSize(1);
 
     // when
     testRule.deploy(SINGLE_CONDITIONAL_START_EVENT_XML);
@@ -120,8 +120,8 @@ public class ConditionalStartEventTest {
     List<EventSubscription> newEventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
     List<ProcessDefinition> newProcessDefinitions = repositoryService.createProcessDefinitionQuery().list();
 
-    assertThat(newEventSubscriptions.size()).isEqualTo(1);
-    assertThat(newProcessDefinitions.size()).isEqualTo(2);
+    assertThat(newEventSubscriptions).hasSize(1);
+    assertThat(newProcessDefinitions).hasSize(2);
     for (ProcessDefinition processDefinition : newProcessDefinitions) {
       if (processDefinition.getVersion() == 1) {
         for (EventSubscription subscription : newEventSubscriptions) {
@@ -181,7 +181,7 @@ public class ConditionalStartEventTest {
         .evaluateStartConditions();
 
     // then
-    assertThat(conditionInstances.size()).isEqualTo(1);
+    assertThat(conditionInstances).hasSize(1);
     assertNotNull(conditionInstances.get(0));
   }
 
@@ -204,7 +204,7 @@ public class ConditionalStartEventTest {
         .evaluateStartConditions();
 
     // then
-    assertThat(conditionInstances.size()).isEqualTo(1);
+    assertThat(conditionInstances).hasSize(1);
     assertNotNull(conditionInstances.get(0));
   }
 
@@ -273,7 +273,7 @@ public class ConditionalStartEventTest {
 
     // then
     List<EventSubscription> list = runtimeService.createEventSubscriptionQuery().list();
-    assertThat(list.size()).isEqualTo(2);
+    assertThat(list).hasSize(2);
     for (EventSubscription eventSubscription : list) {
       EventSubscriptionEntity eventSubscriptionEntity = (EventSubscriptionEntity) eventSubscription;
       if (!eventSubscriptionEntity.getConfiguration().equals(processDefId1)
@@ -465,7 +465,7 @@ public class ConditionalStartEventTest {
       assertThat(e.getMessage()).contains("Cannot have more than one conditional event subscription with the same condition '${variable == 1}'");
       assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("StartEvent_2");
       List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
-      assertThat(eventSubscriptions.size()).isEqualTo(0);
+      assertThat(eventSubscriptions).hasSize(0);
     }
   }
 
@@ -480,10 +480,10 @@ public class ConditionalStartEventTest {
         .evaluateStartConditions();
 
     // then
-    assertThat(conditionInstances.size()).isEqualTo(1);
+    assertThat(conditionInstances).hasSize(1);
 
     List<ProcessInstance> processInstances = runtimeService.createProcessInstanceQuery().processDefinitionKey(TRUE_CONDITION_PROCESS).list();
-    assertThat(processInstances.size()).isEqualTo(1);
+    assertThat(processInstances).hasSize(1);
 
     assertThat(conditionInstances.get(0).getId()).isEqualTo(processInstances.get(0).getId());
   }
@@ -500,7 +500,7 @@ public class ConditionalStartEventTest {
         .evaluateStartConditions();
 
     // then
-    assertThat(instances.size()).isEqualTo(1);
+    assertThat(instances).hasSize(1);
 
     VariableInstance vars = runtimeService.createVariableInstanceQuery().singleResult();
     assertThat(instances.get(0).getId()).isEqualTo(vars.getProcessInstanceId());
@@ -521,7 +521,7 @@ public class ConditionalStartEventTest {
         .evaluateStartConditions();
 
     // then
-    assertThat(instances.size()).isEqualTo(1);
+    assertThat(instances).hasSize(1);
 
     VariableInstance vars = runtimeService.createVariableInstanceQuery().singleResult();
     assertNull(vars);
@@ -539,7 +539,7 @@ public class ConditionalStartEventTest {
       .evaluateStartConditions();
 
     assertNotNull(processes);
-    assertThat(processes.size()).isEqualTo(0);
+    assertThat(processes).hasSize(0);
 
     assertNull(runtimeService.createVariableInstanceQuery().singleResult());
     assertNull(runtimeService.createProcessInstanceQuery().processDefinitionKey(CONDITIONAL_EVENT_PROCESS).singleResult());
@@ -551,7 +551,7 @@ public class ConditionalStartEventTest {
     // given a deployed process with three conditional start events
     List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
 
-    assertThat(eventSubscriptions.size()).isEqualTo(3);
+    assertThat(eventSubscriptions).hasSize(3);
     for (EventSubscription eventSubscription : eventSubscriptions) {
       assertThat(eventSubscription.getEventType()).isEqualTo(EventType.CONDITONAL.name());
     }
@@ -567,10 +567,10 @@ public class ConditionalStartEventTest {
         .evaluateStartConditions();
 
     // then
-    assertThat(resultInstances.size()).isEqualTo(2);
+    assertThat(resultInstances).hasSize(2);
 
     List<ProcessInstance> instances = runtimeService.createProcessInstanceQuery().processDefinitionKey(MULTIPLE_CONDITIONS).list();
-    assertThat(instances.size()).isEqualTo(2);
+    assertThat(instances).hasSize(2);
   }
 
   @Test
@@ -581,7 +581,7 @@ public class ConditionalStartEventTest {
     // given three deployed processes
     List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
 
-    assertThat(eventSubscriptions.size()).isEqualTo(5);
+    assertThat(eventSubscriptions).hasSize(5);
 
     Map<String, Object> variableMap = new HashMap<>();
     variableMap.put("foo", 1);
@@ -594,7 +594,7 @@ public class ConditionalStartEventTest {
         .evaluateStartConditions();
 
     // then
-    assertThat(instances.size()).isEqualTo(4);
+    assertThat(instances).hasSize(4);
   }
 
   @Test
@@ -605,7 +605,7 @@ public class ConditionalStartEventTest {
     // given three deployed processes
     List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
 
-    assertThat(eventSubscriptions.size()).isEqualTo(5);
+    assertThat(eventSubscriptions).hasSize(5);
 
     Map<String, Object> variableMap = new HashMap<>();
     variableMap.put("foo", 1);
@@ -617,7 +617,7 @@ public class ConditionalStartEventTest {
         .evaluateStartConditions();
 
     // then
-    assertThat(instances.size()).isEqualTo(3);
+    assertThat(instances).hasSize(3);
   }
 
   @Test
@@ -626,7 +626,7 @@ public class ConditionalStartEventTest {
     // given two deployed processes
     List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
 
-    assertThat(eventSubscriptions.size()).isEqualTo(4);
+    assertThat(eventSubscriptions).hasSize(4);
 
     // when
     List<ProcessInstance> instances = runtimeService
@@ -636,7 +636,7 @@ public class ConditionalStartEventTest {
         .evaluateStartConditions();
 
     // then
-    assertThat(instances.size()).isEqualTo(2);
+    assertThat(instances).hasSize(2);
     assertThat(runtimeService.createProcessInstanceQuery().processInstanceBusinessKey("humuhumunukunukuapua").count()).isEqualTo(2);
   }
 
@@ -646,7 +646,7 @@ public class ConditionalStartEventTest {
     // given two deployed processes
     List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
 
-    assertThat(eventSubscriptions.size()).isEqualTo(2);
+    assertThat(eventSubscriptions).hasSize(2);
 
     String processDefinitionId = repositoryService.createProcessDefinitionQuery().processDefinitionKey(TRUE_CONDITION_PROCESS).singleResult().getId();
 
@@ -658,7 +658,7 @@ public class ConditionalStartEventTest {
         .evaluateStartConditions();
 
     // then
-    assertThat(instances.size()).isEqualTo(1);
+    assertThat(instances).hasSize(1);
     assertThat(instances.get(0).getProcessDefinitionId()).isEqualTo(processDefinitionId);
   }
 
@@ -670,7 +670,7 @@ public class ConditionalStartEventTest {
 
     // assume
     List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
-    assertThat(eventSubscriptions.size()).isEqualTo(4);
+    assertThat(eventSubscriptions).hasSize(4);
 
     // when deploy another version
     testRule.deploy(SINGLE_CONDITIONAL_START_EVENT_XML);
@@ -682,7 +682,7 @@ public class ConditionalStartEventTest {
         .evaluateStartConditions();
 
     // then
-    assertThat(instances.size()).isEqualTo(1);
+    assertThat(instances).hasSize(1);
     assertThat(instances.get(0).getProcessDefinitionId()).isEqualTo(processDefinitionId);
   }
 
@@ -692,7 +692,7 @@ public class ConditionalStartEventTest {
     // given two deployed processes
     List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
 
-    assertThat(eventSubscriptions.size()).isEqualTo(2);
+    assertThat(eventSubscriptions).hasSize(2);
 
     var conditionEvaluationBuilder = runtimeService
       .createConditionEvaluation()
@@ -713,7 +713,7 @@ public class ConditionalStartEventTest {
 
     List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
 
-    assertThat(eventSubscriptions.size()).isEqualTo(0);
+    assertThat(eventSubscriptions).hasSize(0);
 
     var conditionEvaluationBuilder = runtimeService
       .createConditionEvaluation()
@@ -733,7 +733,7 @@ public class ConditionalStartEventTest {
 
     // assume
     List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
-    assertThat(eventSubscriptions.size()).isEqualTo(1);
+    assertThat(eventSubscriptions).hasSize(1);
 
     // when
     List<ProcessInstance> instances = runtimeService
@@ -742,7 +742,7 @@ public class ConditionalStartEventTest {
         .evaluateStartConditions();
 
     // then
-    assertThat(instances.size()).isEqualTo(1);
+    assertThat(instances).hasSize(1);
   }
 
   @Test
@@ -753,7 +753,7 @@ public class ConditionalStartEventTest {
 
     // assume
     List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
-    assertThat(eventSubscriptions.size()).isEqualTo(1);
+    assertThat(eventSubscriptions).hasSize(1);
 
     // when
     List<ProcessInstance> instances = runtimeService
@@ -761,18 +761,18 @@ public class ConditionalStartEventTest {
         .evaluateStartConditions();
 
     // then
-    assertThat(instances.size()).isEqualTo(0);
+    assertThat(instances).hasSize(0);
   }
 
   protected String deployProcess(String resourcePath) {
     List<ProcessDefinition> deployedProcessDefinitions = testRule.deploy(resourcePath).getDeployedProcessDefinitions();
-    assertThat(deployedProcessDefinitions.size()).isEqualTo(1);
+    assertThat(deployedProcessDefinitions).hasSize(1);
     return deployedProcessDefinitions.get(0).getId();
   }
 
   protected String deployModel(BpmnModelInstance model) {
     List<ProcessDefinition> deployedProcessDefinitions = testRule.deploy(model).getDeployedProcessDefinitions();
-    assertThat(deployedProcessDefinitions.size()).isEqualTo(1);
+    assertThat(deployedProcessDefinitions).hasSize(1);
     return deployedProcessDefinitions.get(0).getId();
   }
 }

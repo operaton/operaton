@@ -148,14 +148,14 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
     List<Task> undoBookHotel = taskService.createTaskQuery().taskDefinitionKey("undoBookHotel").list();
     List<Task> undoBookFlight = taskService.createTaskQuery().taskDefinitionKey("undoBookFlight").list();
 
-    assertThat(undoBookHotel.size()).isEqualTo(5);
-    assertThat(undoBookFlight.size()).isEqualTo(1);
+    assertThat(undoBookHotel).hasSize(5);
+    assertThat(undoBookFlight).hasSize(1);
 
     ActivityInstance rootActivityInstance = runtimeService.getActivityInstance(processInstance.getId());
     List<ActivityInstance> undoBookHotelInstances = getInstancesForActivityId(rootActivityInstance, "undoBookHotel");
     List<ActivityInstance> undoBookFlightInstances = getInstancesForActivityId(rootActivityInstance, "undoBookFlight");
-    assertThat(undoBookHotelInstances.size()).isEqualTo(5);
-    assertThat(undoBookFlightInstances.size()).isEqualTo(1);
+    assertThat(undoBookHotelInstances).hasSize(5);
+    assertThat(undoBookFlightInstances).hasSize(1);
 
     assertThat(
         describeActivityInstanceTree(processInstance.getId())
@@ -429,7 +429,7 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
       .list();
 
     // there are 10 compensation event subscriptions
-    assertThat(eventSubscriptions.size()).isEqualTo(10);
+    assertThat(eventSubscriptions).hasSize(10);
 
     Task task = taskService.createTaskQuery().listPage(0, 1).get(0);
 
@@ -460,7 +460,7 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
       .list();
 
     // there are 10 compensation event subscriptions
-    assertThat(eventSubscriptions.size()).isEqualTo(10);
+    assertThat(eventSubscriptions).hasSize(10);
 
     // first complete the inner user-tasks
     List<Task> tasks = taskService.createTaskQuery().list();

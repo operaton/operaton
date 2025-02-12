@@ -92,7 +92,7 @@ public class MultiTenancyCleanableHistoricProcessInstanceReportCmdTenantCheckTes
     List<CleanableHistoricProcessInstanceReportResult> reportResults = historyService.createCleanableHistoricProcessInstanceReport().list();
 
     // then
-    assertThat(reportResults.size()).isEqualTo(0);
+    assertThat(reportResults).hasSize(0);
   }
 
   @Test
@@ -108,7 +108,7 @@ public class MultiTenancyCleanableHistoricProcessInstanceReportCmdTenantCheckTes
     List<CleanableHistoricProcessInstanceReportResult> reportResults = historyService.createCleanableHistoricProcessInstanceReport().list();
 
     // then
-    assertThat(reportResults.size()).isEqualTo(1);
+    assertThat(reportResults).hasSize(1);
     assertThat(reportResults.get(0).getTenantId()).isEqualTo(TENANT_ONE);
   }
 
@@ -128,7 +128,7 @@ public class MultiTenancyCleanableHistoricProcessInstanceReportCmdTenantCheckTes
     List<CleanableHistoricProcessInstanceReportResult> reportResults = historyService.createCleanableHistoricProcessInstanceReport().list();
 
     // then
-    assertThat(reportResults.size()).isEqualTo(2);
+    assertThat(reportResults).hasSize(2);
     assertThat(reportResults.get(0).getTenantId()).isEqualTo(TENANT_ONE);
     assertThat(reportResults.get(1).getTenantId()).isEqualTo(TENANT_TWO);
   }
@@ -149,8 +149,8 @@ public class MultiTenancyCleanableHistoricProcessInstanceReportCmdTenantCheckTes
     List<CleanableHistoricProcessInstanceReportResult> reportResultsTwo = historyService.createCleanableHistoricProcessInstanceReport().tenantIdIn(TENANT_TWO).list();
 
     // then
-    assertThat(reportResultsOne.size()).isEqualTo(0);
-    assertThat(reportResultsTwo.size()).isEqualTo(0);
+    assertThat(reportResultsOne).hasSize(0);
+    assertThat(reportResultsTwo).hasSize(0);
   }
 
   @Test
@@ -169,9 +169,9 @@ public class MultiTenancyCleanableHistoricProcessInstanceReportCmdTenantCheckTes
     List<CleanableHistoricProcessInstanceReportResult> reportResultsTwo = historyService.createCleanableHistoricProcessInstanceReport().tenantIdIn(TENANT_TWO).list();
 
     // then
-    assertThat(reportResultsOne.size()).isEqualTo(1);
+    assertThat(reportResultsOne).hasSize(1);
     assertThat(reportResultsOne.get(0).getTenantId()).isEqualTo(TENANT_ONE);
-    assertThat(reportResultsTwo.size()).isEqualTo(0);
+    assertThat(reportResultsTwo).hasSize(0);
   }
 
   @Test
@@ -191,9 +191,9 @@ public class MultiTenancyCleanableHistoricProcessInstanceReportCmdTenantCheckTes
     List<CleanableHistoricProcessInstanceReportResult> reportResultsTwo = historyService.createCleanableHistoricProcessInstanceReport().tenantIdIn(TENANT_TWO).list();
 
     // then
-    assertThat(reportResultsOne.size()).isEqualTo(1);
+    assertThat(reportResultsOne).hasSize(1);
     assertThat(reportResultsOne.get(0).getTenantId()).isEqualTo(TENANT_ONE);
-    assertThat(reportResultsTwo.size()).isEqualTo(1);
+    assertThat(reportResultsTwo).hasSize(1);
     assertThat(reportResultsTwo.get(0).getTenantId()).isEqualTo(TENANT_TWO);
   }
 
@@ -208,8 +208,8 @@ public class MultiTenancyCleanableHistoricProcessInstanceReportCmdTenantCheckTes
     List<CleanableHistoricProcessInstanceReportResult> reportResults = historyService.createCleanableHistoricProcessInstanceReport().withoutTenantId().list();
 
     // then
-    assertThat(reportResults.size()).isEqualTo(1);
-    assertThat(reportResults.get(0).getTenantId()).isEqualTo(null);
+    assertThat(reportResults).hasSize(1);
+    assertThat(reportResults.get(0).getTenantId()).isNull();
   }
 
   @Test
@@ -226,9 +226,9 @@ public class MultiTenancyCleanableHistoricProcessInstanceReportCmdTenantCheckTes
     List<CleanableHistoricProcessInstanceReportResult> reportResultsOne = historyService.createCleanableHistoricProcessInstanceReport().tenantIdIn(TENANT_ONE).list();
 
     // then
-    assertThat(reportResults.size()).isEqualTo(1);
-    assertThat(reportResults.get(0).getTenantId()).isEqualTo(null);
-    assertThat(reportResultsOne.size()).isEqualTo(1);
+    assertThat(reportResults).hasSize(1);
+    assertThat(reportResults.get(0).getTenantId()).isNull();
+    assertThat(reportResultsOne).hasSize(1);
     assertThat(reportResultsOne.get(0).getTenantId()).isEqualTo(TENANT_ONE);
   }
 
@@ -239,7 +239,7 @@ public class MultiTenancyCleanableHistoricProcessInstanceReportCmdTenantCheckTes
     } else {
       processDefinitions = repositoryService.createProcessDefinitionQuery().processDefinitionKey(key).tenantIdIn(tenantId).list();
     }
-    assertThat(processDefinitions.size()).isEqualTo(1);
+    assertThat(processDefinitions).hasSize(1);
     repositoryService.updateProcessDefinitionHistoryTimeToLive(processDefinitions.get(0).getId(), historyTimeToLive);
 
     Date oldCurrentTime = ClockUtil.getCurrentTime();

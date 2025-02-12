@@ -161,7 +161,7 @@ public class JobExecutorShutdownTest {
 
     // jobs must now be locked
     List<Job> lockedJobList = engineRule.getManagementService().createJobQuery().list();
-    assertThat(lockedJobList.size()).isEqualTo(2);
+    assertThat(lockedJobList).hasSize(2);
     for(Job job : lockedJobList) {
       JobEntity jobEntity = (JobEntity)job;
       Assert.assertNotNull(jobEntity.getLockOwner());

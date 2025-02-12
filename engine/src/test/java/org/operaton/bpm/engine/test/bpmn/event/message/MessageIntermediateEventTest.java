@@ -89,7 +89,7 @@ public class MessageIntermediateEventTest {
 
     List<String> activeActivityIds = runtimeService.getActiveActivityIds(pi.getId());
     assertNotNull(activeActivityIds);
-    assertThat(activeActivityIds.size()).isEqualTo(1);
+    assertThat(activeActivityIds).hasSize(1);
     assertTrue(activeActivityIds.contains("messageCatch"));
 
     String messageName = "newInvoiceMessage";
@@ -116,7 +116,7 @@ public class MessageIntermediateEventTest {
 
     List<String> activeActivityIds = runtimeService.getActiveActivityIds(pi.getId());
     assertNotNull(activeActivityIds);
-    assertThat(activeActivityIds.size()).isEqualTo(2);
+    assertThat(activeActivityIds).hasSize(2);
     assertTrue(activeActivityIds.contains("messageCatch1"));
     assertTrue(activeActivityIds.contains("messageCatch2"));
 
@@ -126,7 +126,7 @@ public class MessageIntermediateEventTest {
         .list();
 
     assertNotNull(executions);
-    assertThat(executions.size()).isEqualTo(2);
+    assertThat(executions).hasSize(2);
 
     runtimeService.messageEventReceived(messageName, executions.get(0).getId());
 
@@ -157,7 +157,7 @@ public class MessageIntermediateEventTest {
 
     List<String> activeActivityIds = runtimeService.getActiveActivityIds(pi.getId());
     assertNotNull(activeActivityIds);
-    assertThat(activeActivityIds.size()).isEqualTo(1);
+    assertThat(activeActivityIds).hasSize(1);
     assertTrue(activeActivityIds.contains("messageCatch"));
 
     // deploy version 2
@@ -171,7 +171,7 @@ public class MessageIntermediateEventTest {
     // assert process is still waiting in message event:
     activeActivityIds = runtimeService.getActiveActivityIds(pi.getId());
     assertNotNull(activeActivityIds);
-    assertThat(activeActivityIds.size()).isEqualTo(1);
+    assertThat(activeActivityIds).hasSize(1);
     assertTrue(activeActivityIds.contains("messageCatch"));
 
     // delete both versions:
@@ -251,7 +251,7 @@ public class MessageIntermediateEventTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process", variables);
     List<String> activeActivityIds = runtimeService.getActiveActivityIds(pi.getId());
     assertNotNull(activeActivityIds);
-    assertThat(activeActivityIds.size()).isEqualTo(1);
+    assertThat(activeActivityIds).hasSize(1);
     assertTrue(activeActivityIds.contains("messageCatch"));
 
     // then

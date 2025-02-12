@@ -140,11 +140,11 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("compensateProcess");
 
     List<Task> compensationHandlerTasks = taskService.createTaskQuery().taskDefinitionKey("undoBookHotel").list();
-    assertThat(compensationHandlerTasks.size()).isEqualTo(5);
+    assertThat(compensationHandlerTasks).hasSize(5);
 
     ActivityInstance rootActivityInstance = runtimeService.getActivityInstance(processInstance.getId());
     List<ActivityInstance> compensationHandlerInstances = getInstancesForActivityId(rootActivityInstance, "undoBookHotel");
-    assertThat(compensationHandlerInstances.size()).isEqualTo(5);
+    assertThat(compensationHandlerInstances).hasSize(5);
 
     for (Task task : compensationHandlerTasks) {
       taskService.complete(task.getId());
@@ -165,7 +165,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
 
     // five inner tasks
     List<Task> compensationHandlerTasks = taskService.createTaskQuery().taskDefinitionKey("undoBookHotel").list();
-    assertThat(compensationHandlerTasks.size()).isEqualTo(5);
+    assertThat(compensationHandlerTasks).hasSize(5);
 
     // when
     runtimeService.deleteProcessInstance(processInstance.getId(), "");
@@ -1129,7 +1129,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
     // then the variable listener has been invoked and was able to read the variable on the end event
     readListener = (ReadLocalVariableListener) runtimeService.getVariable(processInstance.getId(), "readListener");
 
-    assertThat(readListener.getVariableEvents().size()).isEqualTo(1);
+    assertThat(readListener.getVariableEvents()).hasSize(1);
 
     VariableEvent event = readListener.getVariableEvents().get(0);
     assertThat(event.getVariableName()).isEqualTo("foo");
@@ -1178,7 +1178,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
     // then
     List<HistoricActivityInstance> historicActivityInstance = historyService.createHistoricActivityInstanceQuery()
         .orderByActivityId().asc().list();
-    assertThat(historicActivityInstance.size()).isEqualTo(5);
+    assertThat(historicActivityInstance).hasSize(5);
 
     assertThat(historicActivityInstance.get(0).getActivityId()).isEqualTo("start");
     assertThat(historicActivityInstance.get(0).getEndTime()).isEqualTo(date1);

@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.assertj.core.api.Assertions;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -85,7 +84,7 @@ public class BatchQueryTest {
     List<Batch> list = managementService.createBatchQuery().list();
 
     // then
-    assertThat(list.size()).isEqualTo(2);
+    assertThat(list).hasSize(2);
 
     List<String> batchIds = new ArrayList<>();
     for (Batch resultBatch : list) {
@@ -119,8 +118,8 @@ public class BatchQueryTest {
     assertThat(resultBatch.getTotalJobs()).isEqualTo(batch.getTotalJobs());
     assertThat(resultBatch.getJobsCreated()).isEqualTo(batch.getJobsCreated());
     assertThat(resultBatch.isSuspended()).isEqualTo(batch.isSuspended());
-    Assertions.assertThat(batch.getStartTime()).isCloseTo(resultBatch.getStartTime(), 1000);
-    Assertions.assertThat(batch.getStartTime()).isCloseTo(ClockUtil.getCurrentTime(), 1000);
+    assertThat(batch.getStartTime()).isCloseTo(resultBatch.getStartTime(), 1000);
+    assertThat(batch.getStartTime()).isCloseTo(ClockUtil.getCurrentTime(), 1000);
   }
 
   @Test
@@ -266,7 +265,7 @@ public class BatchQueryTest {
     // then
     BatchQuery query = managementService.createBatchQuery().suspended();
     assertThat(query.count()).isEqualTo(1);
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
     assertThat(query.singleResult().getId()).isEqualTo(batch2.getId());
   }
 
@@ -285,7 +284,7 @@ public class BatchQueryTest {
     // then
     BatchQuery query = managementService.createBatchQuery().active();
     assertThat(query.count()).isEqualTo(2);
-    assertThat(query.list().size()).isEqualTo(2);
+    assertThat(query.list()).hasSize(2);
 
     List<String> foundIds = new ArrayList<>();
     for (Batch batch : query.list()) {

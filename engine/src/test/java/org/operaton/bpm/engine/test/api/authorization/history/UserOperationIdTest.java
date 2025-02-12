@@ -157,7 +157,7 @@ public class UserOperationIdTest {
     List<UserOperationLogEntry> userOperationLogEntries = historyService.createUserOperationLogQuery()
         .taskId(taskId)
         .list();
-    assertThat(userOperationLogEntries.size()).isEqualTo(0);
+    assertThat(userOperationLogEntries).hasSize(0);
     List<HistoricDetail> historicDetails = historyService.createHistoricDetailQuery().list();
     assertTrue(!historicDetails.isEmpty());
     //history detail records must have null userOperationId as user operation log was not created

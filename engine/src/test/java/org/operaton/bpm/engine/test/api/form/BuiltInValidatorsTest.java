@@ -48,12 +48,12 @@ public class BuiltInValidatorsTest extends PluggableProcessEngineTest {
     FormValidators formValidators = ((ProcessEngineImpl) processEngine).getProcessEngineConfiguration().getFormValidators();
 
     Map<String, Class<? extends FormFieldValidator>> validators = formValidators.getValidators();
-    assertThat(validators.get("required")).isEqualTo(RequiredValidator.class);
-    assertThat(validators.get("readonly")).isEqualTo(ReadOnlyValidator.class);
-    assertThat(validators.get("min")).isEqualTo(MinValidator.class);
-    assertThat(validators.get("max")).isEqualTo(MaxValidator.class);
-    assertThat(validators.get("maxlength")).isEqualTo(MaxLengthValidator.class);
-    assertThat(validators.get("minlength")).isEqualTo(MinLengthValidator.class);
+    assertThat(validators).containsEntry("required", RequiredValidator.class);
+    assertThat(validators).containsEntry("readonly", ReadOnlyValidator.class);
+    assertThat(validators).containsEntry("min", MinValidator.class);
+    assertThat(validators).containsEntry("max", MaxValidator.class);
+    assertThat(validators).containsEntry("maxlength", MaxLengthValidator.class);
+    assertThat(validators).containsEntry("minlength", MinLengthValidator.class);
 
   }
 

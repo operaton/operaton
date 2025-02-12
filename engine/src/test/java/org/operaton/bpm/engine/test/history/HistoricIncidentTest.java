@@ -425,7 +425,7 @@ public class HistoricIncidentTest extends PluggableProcessEngineTest {
     testRule.executeAvailableJobs(false);
 
     List<HistoricJobLog> logs = getHistoricJobLogOrdered(job.getId());
-    assertThat(logs.size()).isEqualTo(2);
+    assertThat(logs).hasSize(2);
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery().processInstanceId(pi.getId());
     assertThat(query.count()).isEqualTo(0);
 

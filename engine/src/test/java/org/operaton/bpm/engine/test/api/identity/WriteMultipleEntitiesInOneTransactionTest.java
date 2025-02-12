@@ -64,7 +64,7 @@ public class WriteMultipleEntitiesInOneTransactionTest {
 
     // It is expected, that the User is in exactly one Group
     List<Group> groups = this.identityService.createGroupQuery().groupMember("multipleEntities").list();
-    assertThat(groups.size()).isEqualTo(1);
+    assertThat(groups).hasSize(1);
 
     Group group = groups.get(0);
     assertThat(group.getId()).isEqualTo("multipleEntities_group");

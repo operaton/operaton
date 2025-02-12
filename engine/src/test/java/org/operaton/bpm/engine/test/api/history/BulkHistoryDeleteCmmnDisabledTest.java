@@ -72,7 +72,7 @@ public class BulkHistoryDeleteCmmnDisabledTest {
 
       List<Job> jobs = engineRule.getManagementService().createJobQuery().list();
       if (!jobs.isEmpty()) {
-        assertThat(jobs.size()).isEqualTo(1);
+        assertThat(jobs).hasSize(1);
         String jobId = jobs.get(0).getId();
         commandContext.getJobManager().deleteJob((JobEntity) jobs.get(0));
         commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(jobId);
@@ -122,7 +122,7 @@ public class BulkHistoryDeleteCmmnDisabledTest {
       processInstanceIds.add(processInstance.getId());
     }
     List<ProcessDefinition> processDefinitions = engineRule.getRepositoryService().createProcessDefinitionQuery().list();
-    assertThat(processDefinitions.size()).isEqualTo(1);
+    assertThat(processDefinitions).hasSize(1);
     engineRule.getRepositoryService().updateProcessDefinitionHistoryTimeToLive(processDefinitions.get(0).getId(), 5);
 
     runtimeService.deleteProcessInstances(processInstanceIds, null, true, true);
@@ -132,7 +132,7 @@ public class BulkHistoryDeleteCmmnDisabledTest {
   private void prepareHistoricDecisions(int instanceCount) {
     Date oldCurrentTime = ClockUtil.getCurrentTime();
     List<DecisionDefinition> decisionDefinitions = engineRule.getRepositoryService().createDecisionDefinitionQuery().decisionDefinitionKey("decision").list();
-    assertThat(decisionDefinitions.size()).isEqualTo(1);
+    assertThat(decisionDefinitions).hasSize(1);
     engineRule.getRepositoryService().updateDecisionDefinitionHistoryTimeToLive(decisionDefinitions.get(0).getId(), 5);
 
     ClockUtil.setCurrentTime(DateUtils.addDays(new Date(), -6));

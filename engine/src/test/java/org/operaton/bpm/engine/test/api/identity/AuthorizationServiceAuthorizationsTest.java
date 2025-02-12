@@ -86,7 +86,7 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
       fail("exception expected");
 
     } catch (AuthorizationException e) {
-      assertThat(e.getMissingAuthorizations().size()).isEqualTo(1);
+      assertThat(e.getMissingAuthorizations()).hasSize(1);
       MissingAuthorization info = e.getMissingAuthorizations().get(0);
       assertThat(e.getUserId()).isEqualTo(JONNY_2);
       assertExceptionInfo(CREATE.getName(), AUTHORIZATION.resourceName(), null, info);
@@ -102,7 +102,7 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
       fail("exception expected");
 
     } catch (AuthorizationException e) {
-      assertThat(e.getMissingAuthorizations().size()).isEqualTo(1);
+      assertThat(e.getMissingAuthorizations()).hasSize(1);
       MissingAuthorization info = e.getMissingAuthorizations().get(0);
       assertThat(e.getUserId()).isEqualTo(JONNY_2);
       assertExceptionInfo(CREATE.getName(), AUTHORIZATION.resourceName(), null, info);
@@ -131,7 +131,7 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
       fail("exception expected");
 
     } catch (AuthorizationException e) {
-      assertThat(e.getMissingAuthorizations().size()).isEqualTo(1);
+      assertThat(e.getMissingAuthorizations()).hasSize(1);
       MissingAuthorization info = e.getMissingAuthorizations().get(0);
       assertThat(e.getUserId()).isEqualTo(JONNY_2);
       assertExceptionInfo(DELETE.getName(), AUTHORIZATION.resourceName(), basePerms.getId(), info);
@@ -163,7 +163,7 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
       fail("exception expected");
 
     } catch (AuthorizationException e) {
-      assertThat(e.getMissingAuthorizations().size()).isEqualTo(1);
+      assertThat(e.getMissingAuthorizations()).hasSize(1);
       MissingAuthorization info = e.getMissingAuthorizations().get(0);
       assertThat(e.getUserId()).isEqualTo(JONNY_2);
       assertExceptionInfo(UPDATE.getName(), AUTHORIZATION.resourceName(), basePerms.getId(), info);

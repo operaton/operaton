@@ -51,7 +51,7 @@ public class EventSubscriptionQueryTest extends PluggableProcessEngineTest {
     List<EventSubscription> list = runtimeService.createEventSubscriptionQuery()
         .eventName("messageName2")
         .list();
-    assertThat(list.size()).isEqualTo(1);
+    assertThat(list).hasSize(1);
 
     EventSubscription eventSubscription = list.get(0);
 
@@ -59,7 +59,7 @@ public class EventSubscriptionQueryTest extends PluggableProcessEngineTest {
         .eventSubscriptionId(eventSubscription.getId());
 
     assertThat(query.count()).isEqualTo(1);
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
     assertNotNull(query.singleResult());
     var eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery();
 
@@ -81,12 +81,12 @@ public class EventSubscriptionQueryTest extends PluggableProcessEngineTest {
     List<EventSubscription> list = runtimeService.createEventSubscriptionQuery()
       .eventName("messageName")
       .list();
-    assertThat(list.size()).isEqualTo(2);
+    assertThat(list).hasSize(2);
 
     list = runtimeService.createEventSubscriptionQuery()
       .eventName("messageName2")
       .list();
-    assertThat(list.size()).isEqualTo(1);
+    assertThat(list).hasSize(1);
     var eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery();
 
     try {
@@ -108,12 +108,12 @@ public class EventSubscriptionQueryTest extends PluggableProcessEngineTest {
     List<EventSubscription> list = runtimeService.createEventSubscriptionQuery()
       .eventType("signal")
       .list();
-    assertThat(list.size()).isEqualTo(1);
+    assertThat(list).hasSize(1);
 
     list = runtimeService.createEventSubscriptionQuery()
       .eventType("message")
       .list();
-    assertThat(list.size()).isEqualTo(2);
+    assertThat(list).hasSize(2);
     var eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery();
 
     try {
@@ -135,13 +135,13 @@ public class EventSubscriptionQueryTest extends PluggableProcessEngineTest {
     List<EventSubscription> list = runtimeService.createEventSubscriptionQuery()
       .activityId("someOtherActivity")
       .list();
-    assertThat(list.size()).isEqualTo(1);
+    assertThat(list).hasSize(1);
 
     list = runtimeService.createEventSubscriptionQuery()
       .activityId("someActivity")
       .eventType("message")
       .list();
-    assertThat(list.size()).isEqualTo(2);
+    assertThat(list).hasSize(2);
     var eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery();
 
     try {
@@ -198,7 +198,7 @@ public class EventSubscriptionQueryTest extends PluggableProcessEngineTest {
   public void testQuerySorting() {
     createExampleEventSubscriptions();
     List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().orderByCreated().asc().list();
-    assertThat(eventSubscriptions.size()).isEqualTo(3);
+    assertThat(eventSubscriptions).hasSize(3);
 
     Assert.assertTrue(eventSubscriptions.get(0).getCreated().compareTo(eventSubscriptions.get(1).getCreated()) < 0);
     Assert.assertTrue(eventSubscriptions.get(1).getCreated().compareTo(eventSubscriptions.get(2).getCreated()) < 0);

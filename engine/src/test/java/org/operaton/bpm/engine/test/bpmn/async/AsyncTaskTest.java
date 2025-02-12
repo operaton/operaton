@@ -266,7 +266,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
 
     // then there are five inner async before jobs
     List<Job> innerBeforeJobs = managementService.createJobQuery().list();
-    assertThat(innerBeforeJobs.size()).isEqualTo(5);
+    assertThat(innerBeforeJobs).hasSize(5);
     assertTransitionInstances(processInstance.getId(), "service", 5);
     assertThat(NUM_INVOCATIONS).isEqualTo(0);
 
@@ -278,7 +278,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
 
     // then there are five async after jobs
     List<Job> innerAfterJobs = managementService.createJobQuery().list();
-    assertThat(innerAfterJobs.size()).isEqualTo(5);
+    assertThat(innerAfterJobs).hasSize(5);
     assertTransitionInstances(processInstance.getId(), "service", 5);
 
     // when executing all inner jobs
@@ -628,7 +628,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
     assertThat(managementService.createJobQuery().count()).isEqualTo(0);
     // now there are 2 user tasks
     List<Task> list = taskService.createTaskQuery().list();
-    assertThat(list.size()).isEqualTo(2);
+    assertThat(list).hasSize(2);
 
     // complete these tasks and finish the process instance
     for(Task task: list) {
@@ -684,7 +684,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
 
     // then no listeners for the async activity should have been invoked because
     // it was not active yet
-    assertThat(RecorderExecutionListener.getRecordedEvents().size()).isEqualTo(0);
+    assertThat(RecorderExecutionListener.getRecordedEvents()).hasSize(0);
 
     RecorderExecutionListener.clear();
   }
@@ -709,7 +709,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
     // process and the process
 
     List<RecordedEvent> recordedEvents = RecorderExecutionListener.getRecordedEvents();
-    assertThat(recordedEvents.size()).isEqualTo(2);
+    assertThat(recordedEvents).hasSize(2);
     assertThat(recordedEvents.get(0).getActivityId()).isEqualTo("subProcess");
     assertNull(recordedEvents.get(1).getActivityId()); // process instance end event has no activity id
 
@@ -805,16 +805,16 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
 
     // There should be two jobs
     assertNotNull(jobList);
-    assertThat(jobList.size()).isEqualTo(2);
+    assertThat(jobList).hasSize(2);
 
     managementService.executeJob(jobList.get(0).getId());
 
     // There should be only one job left
     jobList = managementService.createJobQuery().list();
-    assertThat(jobList.size()).isEqualTo(1);
+    assertThat(jobList).hasSize(1);
 
     // There should only be 1 execution left - the root execution
-    assertThat(runtimeService.createExecutionQuery().list().size()).isEqualTo(1);
+    assertThat(runtimeService.createExecutionQuery().list()).hasSize(1);
 
     // root execution should be attached to the last job
     assertThat(jobList.get(0).getExecutionId()).isEqualTo(processInstanceId);
@@ -823,7 +823,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
 
     // There should be no more jobs
     jobList = managementService.createJobQuery().list();
-    assertThat(jobList.size()).isEqualTo(0);
+    assertThat(jobList).hasSize(0);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/bpmn/async/processGatewayAndTwoEndEventsPlusTimer.bpmn20.xml"})
@@ -836,7 +836,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
 
     // There should be two jobs
     assertNotNull(jobList);
-    assertThat(jobList.size()).isEqualTo(2);
+    assertThat(jobList).hasSize(2);
 
     // execute timer first
     String timerId = managementService.createJobQuery().timers().singleResult().getId();
@@ -844,10 +844,10 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
 
     // There should be only one job left
     jobList = managementService.createJobQuery().list();
-    assertThat(jobList.size()).isEqualTo(1);
+    assertThat(jobList).hasSize(1);
 
     // There should only be 1 execution left - the root execution
-    assertThat(runtimeService.createExecutionQuery().list().size()).isEqualTo(1);
+    assertThat(runtimeService.createExecutionQuery().list()).hasSize(1);
 
     // root execution should be attached to the last job
     assertThat(jobList.get(0).getExecutionId()).isEqualTo(processInstanceId);
@@ -857,7 +857,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
 
     // There should be no more jobs
     jobList = managementService.createJobQuery().list();
-    assertThat(jobList.size()).isEqualTo(0);
+    assertThat(jobList).hasSize(0);
   }
 
   @Deployment

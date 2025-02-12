@@ -118,8 +118,8 @@ public class JobExecutorTest extends JobExecutorTestCase {
     assertThat(acquiredJobs.getJobIdBatches().get(1)).isEqualTo(secondBatch);
     assertThat(acquiredJobs.getJobIdBatches().get(2)).isEqualTo(thirdBatch);
 
-    assertThat(acquiredJobs.getJobIdBatches().size()).isEqualTo(3);
+    assertThat(acquiredJobs.getJobIdBatches()).hasSize(3);
     acquiredJobs.removeJobId("g");
-    assertThat(acquiredJobs.getJobIdBatches().size()).isEqualTo(2);
+    assertThat(acquiredJobs.getJobIdBatches()).hasSize(2);
   }
 }

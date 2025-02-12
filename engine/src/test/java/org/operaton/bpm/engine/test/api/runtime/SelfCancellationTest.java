@@ -211,7 +211,7 @@ public class SelfCancellationTest {
 
   private void checkRecordedEvents(String ...activityIds) {
     List<RecorderExecutionListener.RecordedEvent> recordedEvents = RecorderExecutionListener.getRecordedEvents();
-    assertThat(recordedEvents.size()).isEqualTo(activityIds.length);
+    assertThat(recordedEvents).hasSize(activityIds.length);
 
     for (int i = 0; i < activityIds.length; i++) {
       assertThat(recordedEvents.get(i).getActivityId()).isEqualTo(activityIds[i]);
@@ -286,7 +286,7 @@ public class SelfCancellationTest {
     // then
     List<String> activities = runtimeService.getActiveActivityIds(procInst.getId());
     Assert.assertNotNull(activities);
-    assertThat(activities.size()).isEqualTo(1);
+    assertThat(activities).hasSize(1);
     checkRecordedEvents("sendTask", "boundary", "endEventBoundary");
   }
 

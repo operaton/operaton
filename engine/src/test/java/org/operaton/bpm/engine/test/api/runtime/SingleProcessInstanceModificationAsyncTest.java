@@ -32,7 +32,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.assertj.core.api.Assertions;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.exception.NotValidException;
@@ -803,7 +802,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
     // transition listener should have been invoked
     List<RecordedEvent> events = RecorderExecutionListener.getRecordedEvents();
-    assertThat(events.size()).isEqualTo(1);
+    assertThat(events).hasSize(1);
 
     RecordedEvent event = events.get(0);
     assertThat(event.getTransitionId()).isEqualTo("flow2");
@@ -849,7 +848,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
     // transition listener should have been invoked
     List<RecordedEvent> events = RecorderExecutionListener.getRecordedEvents();
-    assertThat(events.size()).isEqualTo(1);
+    assertThat(events).hasSize(1);
 
     RecordedEvent event = events.get(0);
     assertThat(event.getTransitionId()).isEqualTo("flow2");
@@ -1003,7 +1002,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
         .executeAsync();
 
     // then
-    Assertions.assertThat(batch.getInvocationsPerBatchJob()).isEqualTo(42);
+    assertThat(batch.getInvocationsPerBatchJob()).isEqualTo(42);
 
     // clear
     processEngineConfiguration.setInvocationsPerBatchJobByBatchType(new HashMap<>());

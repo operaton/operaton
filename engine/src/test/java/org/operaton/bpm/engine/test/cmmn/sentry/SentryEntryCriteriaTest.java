@@ -796,7 +796,7 @@ public class SentryEntryCriteriaTest extends CmmnTest {
       .activityId("PI_HumanTask_1")
       .active()
       .list();
-    assertThat(humanTasks.size()).isEqualTo(2);
+    assertThat(humanTasks).hasSize(2);
 
     String humanTaskInsideFirstStageId = null;
     if (((CaseExecutionEntity) humanTasks.get(0)).getParentId().equals(firstStageId)) {

@@ -78,7 +78,7 @@ public class UserTaskTest extends PluggableProcessEngineTest {
 
     // the next test verifies that if an execution creates a task, that no events are created during creation of the task.
     if (processEngineConfiguration.getHistoryLevel().getId() >= ProcessEngineConfigurationImpl.HISTORYLEVEL_ACTIVITY) {
-      assertThat(taskService.getTaskEvents(task.getId()).size()).isEqualTo(0);
+      assertThat(taskService.getTaskEvents(task.getId())).hasSize(0);
     }
   }
 
@@ -86,7 +86,7 @@ public class UserTaskTest extends PluggableProcessEngineTest {
   @Test
   public void testQuerySortingWithParameter() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
-    assertThat(taskService.createTaskQuery().processInstanceId(processInstance.getId()).list().size()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().processInstanceId(processInstance.getId()).list()).hasSize(1);
   }
 
   @Deployment
@@ -98,7 +98,7 @@ public class UserTaskTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("ForkProcess");
     List<Task> taskList = taskService.createTaskQuery().list();
     assertNotNull(taskList);
-    assertThat(taskList.size()).isEqualTo(2);
+    assertThat(taskList).hasSize(2);
 
     // make sure user task exists
     Task task = taskService.createTaskQuery().taskDefinitionKey("SimpleUser").singleResult();
@@ -115,7 +115,7 @@ public class UserTaskTest extends PluggableProcessEngineTest {
 
     List<Task> taskList = taskService.createTaskQuery().list();
     assertNotNull(taskList);
-    assertThat(taskList.size()).isEqualTo(13);
+    assertThat(taskList).hasSize(13);
 
   }
 
@@ -126,7 +126,7 @@ public class UserTaskTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("financialReport");
 
     List<Task> tasks = taskService.createTaskQuery().taskCandidateUser("fozzie").list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
     Task task = tasks.get(0);
     assertThat(task.getName()).isEqualTo("Write monthly financial report");
 
@@ -136,13 +136,13 @@ public class UserTaskTest extends PluggableProcessEngineTest {
       .taskAssignee("fozzie")
       .list();
 
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
     taskService.complete(task.getId());
 
     tasks = taskService.createTaskQuery().taskCandidateUser("fozzie").list();
-    assertThat(tasks.size()).isEqualTo(0);
+    assertThat(tasks).hasSize(0);
     tasks = taskService.createTaskQuery().taskCandidateUser("kermit").list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
     assertThat(tasks.get(0).getName()).isEqualTo("Verify monthly financial report");
     taskService.complete(tasks.get(0).getId());
 

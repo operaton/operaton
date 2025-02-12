@@ -42,10 +42,10 @@ public class EmptyProcessesXmlTest {
     assertNotNull(emptyProcessesXml);
 
     assertNotNull(emptyProcessesXml.getProcessEngines());
-    assertThat(emptyProcessesXml.getProcessEngines().size()).isEqualTo(0);
+    assertThat(emptyProcessesXml.getProcessEngines()).hasSize(0);
 
     assertNotNull(emptyProcessesXml.getProcessArchives());
-    assertThat(emptyProcessesXml.getProcessArchives().size()).isEqualTo(1);
+    assertThat(emptyProcessesXml.getProcessArchives()).hasSize(1);
 
     ProcessArchiveXml processArchiveXml = emptyProcessesXml.getProcessArchives().get(0);
 
@@ -53,12 +53,12 @@ public class EmptyProcessesXmlTest {
     assertNull(processArchiveXml.getProcessEngineName());
 
     assertNotNull(processArchiveXml.getProcessResourceNames());
-    assertThat(processArchiveXml.getProcessResourceNames().size()).isEqualTo(0);
+    assertThat(processArchiveXml.getProcessResourceNames()).isEmpty();
 
     Map<String, String> properties = processArchiveXml.getProperties();
 
     assertNotNull(properties);
-    assertThat(properties.size()).isEqualTo(4);
+    assertThat(properties).hasSize(4);
 
     String isDeleteUponUndeploy = properties.get(ProcessArchiveXml.PROP_IS_DELETE_UPON_UNDEPLOY);
     assertNotNull(isDeleteUponUndeploy);

@@ -97,8 +97,8 @@ public class DmnDecisionResultListenerTest extends PluggableProcessEngineTest {
     startTestProcess("multiple entries");
 
     DmnDecisionResultEntries firstOutput = results.get(0);
-    assertThat(firstOutput.get("result1")).isEqualTo("foo");
-    assertThat(firstOutput.get("result2")).isEqualTo("bar");
+    assertThat(firstOutput).containsEntry("result1", "foo");
+    assertThat(firstOutput).containsEntry("result2", "bar");
 
     assertThat(firstOutput.<StringValue>getEntryTyped("result1")).isEqualTo(Variables.stringValue("foo"));
     assertThat(firstOutput.<StringValue>getEntryTyped("result2")).isEqualTo(Variables.stringValue("bar"));
@@ -109,7 +109,7 @@ public class DmnDecisionResultListenerTest extends PluggableProcessEngineTest {
   public void testSingleEntryList() {
     startTestProcess("single entry list");
 
-    assertThat(results.size()).isEqualTo(2);
+    assertThat(results).hasSize(2);
 
     for (DmnDecisionResultEntries output : results) {
       assertThat(output.<String>getFirstEntry()).isEqualTo("foo");
@@ -122,12 +122,12 @@ public class DmnDecisionResultListenerTest extends PluggableProcessEngineTest {
   public void testMultipleEntriesList() {
     startTestProcess("multiple entries list");
 
-    assertThat(results.size()).isEqualTo(2);
+    assertThat(results).hasSize(2);
 
     for (DmnDecisionResultEntries output : results) {
-      assertThat(output.size()).isEqualTo(2);
-      assertThat(output.get("result1")).isEqualTo("foo");
-      assertThat(output.get("result2")).isEqualTo("bar");
+      assertThat(output).hasSize(2);
+      assertThat(output).containsEntry("result1", "foo");
+      assertThat(output).containsEntry("result2", "bar");
 
       assertThat(output.<StringValue>getEntryTyped("result1")).isEqualTo(Variables.stringValue("foo"));
       assertThat(output.<StringValue>getEntryTyped("result2")).isEqualTo(Variables.stringValue("bar"));
@@ -139,7 +139,7 @@ public class DmnDecisionResultListenerTest extends PluggableProcessEngineTest {
   public void testCollectCountHitPolicyNoOutput() {
     startTestProcess("no output");
 
-    assertThat(results.size()).isEqualTo(1);
+    assertThat(results).hasSize(1);
     DmnDecisionResultEntries firstOutput = results.get(0);
 
     assertThat((int) firstOutput.getFirstEntry()).isEqualTo(0);
@@ -159,7 +159,7 @@ public class DmnDecisionResultListenerTest extends PluggableProcessEngineTest {
   public void testCollectSumHitPolicySingleEntry() {
     startTestProcess("single entry");
 
-    assertThat(results.size()).isEqualTo(1);
+    assertThat(results).hasSize(1);
     DmnDecisionResultEntries firstOutput = results.get(0);
 
     assertThat((int) firstOutput.getFirstEntry()).isEqualTo(12);
@@ -171,7 +171,7 @@ public class DmnDecisionResultListenerTest extends PluggableProcessEngineTest {
   public void testCollectSumHitPolicySingleEntryList() {
     startTestProcess("single entry list");
 
-    assertThat(results.size()).isEqualTo(1);
+    assertThat(results).hasSize(1);
     DmnDecisionResultEntries firstOutput = results.get(0);
 
     assertThat((int) firstOutput.getFirstEntry()).isEqualTo(33);

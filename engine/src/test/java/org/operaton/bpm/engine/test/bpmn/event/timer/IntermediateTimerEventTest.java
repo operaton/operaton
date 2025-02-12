@@ -79,7 +79,7 @@ public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
 
     // After setting the clock to one second in the future the timers should fire
     List<Job> jobs = managementService.createJobQuery().executable().list();
-    assertThat(jobs.size()).isEqualTo(2);
+    assertThat(jobs).hasSize(2);
     for (Job job : jobs) {
       managementService.executeJob(job.getId());
     }

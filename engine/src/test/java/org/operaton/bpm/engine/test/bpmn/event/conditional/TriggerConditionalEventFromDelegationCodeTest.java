@@ -164,7 +164,7 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
     //then start listener sets variable
     //non interrupting boundary event is triggered
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(1 + specifier.getExpectedNonInterruptingCount());
+    assertThat(tasksAfterVariableIsSet).hasSize(1 + specifier.getExpectedNonInterruptingCount());
     assertThat(taskQuery.taskName(TASK_AFTER_CONDITION).count()).isEqualTo(specifier.getExpectedNonInterruptingCount());
   }
 
@@ -231,7 +231,7 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
     //then take listener sets variable
     //non interrupting boundary event is triggered
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(1 + specifier.getExpectedNonInterruptingCount());
+    assertThat(tasksAfterVariableIsSet).hasSize(1 + specifier.getExpectedNonInterruptingCount());
     assertThat(taskQuery.taskName(TASK_AFTER_CONDITION).count()).isEqualTo(specifier.getExpectedNonInterruptingCount());
   }
 
@@ -311,7 +311,7 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
 
     //then no task exist and process instance is ended
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(0);
+    assertThat(tasksAfterVariableIsSet).hasSize(0);
     assertNull(runtimeService.createProcessInstanceQuery().singleResult());
   }
 
@@ -365,7 +365,7 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
     //then end listener sets variable
     //non interrupting event is triggered
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(1 + specifier.getExpectedNonInterruptingCount());
+    assertThat(tasksAfterVariableIsSet).hasSize(1 + specifier.getExpectedNonInterruptingCount());
     assertThat(taskQuery.taskName(TASK_AFTER_CONDITION).count()).isEqualTo(specifier.getExpectedNonInterruptingCount());
   }
 

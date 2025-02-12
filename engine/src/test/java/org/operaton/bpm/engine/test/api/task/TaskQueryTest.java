@@ -110,7 +110,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   public void testQueryNoCriteria() {
     TaskQuery query = taskService.createTaskQuery();
     assertThat(query.count()).isEqualTo(12);
-    assertThat(query.list().size()).isEqualTo(12);
+    assertThat(query.list()).hasSize(12);
     try {
       query.singleResult();
       fail("expected exception");
@@ -126,7 +126,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertNotNull(query.singleResult());
     assertThat(query.count()).isEqualTo(1);
     List<Task> foundTasks = query.list();
-    assertThat(foundTasks.size()).isEqualTo(1);
+    assertThat(foundTasks).hasSize(1);
     List<String> foundTaskIds = foundTasks.stream().map(Task::getId).toList();
     assertThat(foundTaskIds).containsOnly(taskId);
   }
@@ -138,7 +138,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     TaskQuery query = taskService.createTaskQuery().taskIdIn(task0Id, task1Id);
     assertThat(query.count()).isEqualTo(2);
     List<Task> foundTasks = query.list();
-    assertThat(foundTasks.size()).isEqualTo(2);
+    assertThat(foundTasks).hasSize(2);
     List<String> foundTaskIds = foundTasks.stream().map(Task::getId).toList();
     assertThat(foundTaskIds).containsOnly(task0Id, task1Id);
   }
@@ -147,7 +147,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidTaskId() {
     TaskQuery query = taskService.createTaskQuery().taskId("invalid");
     assertNull(query.singleResult());
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
     assertThat(query.count()).isEqualTo(0);
     var taskQuery = taskService.createTaskQuery();
 
@@ -162,7 +162,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   @Test
   public void testQueryByName() {
     TaskQuery query = taskService.createTaskQuery().taskName("testTask");
-    assertThat(query.list().size()).isEqualTo(6);
+    assertThat(query.list()).hasSize(6);
     assertThat(query.count()).isEqualTo(6);
 
     try {
@@ -177,7 +177,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidName() {
     TaskQuery query = taskService.createTaskQuery().taskName("invalid");
     assertNull(query.singleResult());
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
     assertThat(query.count()).isEqualTo(0);
     var taskQuery = taskService.createTaskQuery().taskName(null);
 
@@ -193,7 +193,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   public void testQueryByNameLike() {
     TaskQuery query = taskService.createTaskQuery().taskNameLike("gonzo\\_%");
     assertNotNull(query.singleResult());
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
     assertThat(query.count()).isEqualTo(1);
   }
 
@@ -201,7 +201,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidNameLike() {
     TaskQuery query = taskService.createTaskQuery().taskName("1");
     assertNull(query.singleResult());
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
     assertThat(query.count()).isEqualTo(0);
     var taskQuery = taskService.createTaskQuery().taskName(null);
 
@@ -216,7 +216,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   @Test
   public void testQueryByDescription() {
     TaskQuery query = taskService.createTaskQuery().taskDescription("testTask description");
-    assertThat(query.list().size()).isEqualTo(6);
+    assertThat(query.list()).hasSize(6);
     assertThat(query.count()).isEqualTo(6);
 
     try {
@@ -231,7 +231,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidDescription() {
     TaskQuery query = taskService.createTaskQuery().taskDescription("invalid");
     assertNull(query.singleResult());
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
     assertThat(query.count()).isEqualTo(0);
     var taskQuery = taskService.createTaskQuery();
 
@@ -294,7 +294,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   public void testQueryByDescriptionLike() {
     TaskQuery query = taskService.createTaskQuery().taskDescriptionLike("%gonzo\\_%");
     assertNotNull(query.singleResult());
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
     assertThat(query.count()).isEqualTo(1);
   }
 
@@ -302,7 +302,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidDescriptionLike() {
     TaskQuery query = taskService.createTaskQuery().taskDescriptionLike("invalid");
     assertNull(query.singleResult());
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
     assertThat(query.count()).isEqualTo(0);
     var taskQuery = taskService.createTaskQuery();
 
@@ -317,7 +317,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   @Test
   public void testQueryByPriority() {
     TaskQuery query = taskService.createTaskQuery().taskPriority(10);
-    assertThat(query.list().size()).isEqualTo(2);
+    assertThat(query.list()).hasSize(2);
     assertThat(query.count()).isEqualTo(2);
 
     try {
@@ -329,32 +329,32 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     query = taskService.createTaskQuery().taskPriority(100);
     assertNull(query.singleResult());
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
     assertThat(query.count()).isEqualTo(0);
 
     query = taskService.createTaskQuery().taskMinPriority(50);
-    assertThat(query.list().size()).isEqualTo(3);
+    assertThat(query.list()).hasSize(3);
 
     query = taskService.createTaskQuery().taskMinPriority(10);
-    assertThat(query.list().size()).isEqualTo(5);
+    assertThat(query.list()).hasSize(5);
 
     query = taskService.createTaskQuery().taskMaxPriority(10);
-    assertThat(query.list().size()).isEqualTo(9);
+    assertThat(query.list()).hasSize(9);
 
     query = taskService.createTaskQuery().taskMaxPriority(3);
-    assertThat(query.list().size()).isEqualTo(6);
+    assertThat(query.list()).hasSize(6);
 
     query = taskService.createTaskQuery().taskMinPriority(50).taskMaxPriority(10);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
 
     query = taskService.createTaskQuery().taskPriority(30).taskMaxPriority(10);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
 
     query = taskService.createTaskQuery().taskMinPriority(30).taskPriority(10);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
 
     query = taskService.createTaskQuery().taskMinPriority(30).taskPriority(20).taskMaxPriority(10);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
   }
 
   @Test
@@ -372,12 +372,12 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   public void testQueryByAssignee() {
     TaskQuery query = taskService.createTaskQuery().taskAssignee("gonzo_");
     assertThat(query.count()).isEqualTo(1);
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
     assertNotNull(query.singleResult());
 
     query = taskService.createTaskQuery().taskAssignee("kermit");
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
     assertNull(query.singleResult());
   }
 
@@ -385,12 +385,12 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   public void testQueryByAssigneeLike() {
     TaskQuery query = taskService.createTaskQuery().taskAssigneeLike("gonz%\\_");
     assertThat(query.count()).isEqualTo(1);
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
     assertNotNull(query.singleResult());
 
     query = taskService.createTaskQuery().taskAssignee("gonz");
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
     assertNull(query.singleResult());
   }
 
@@ -415,7 +415,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     // then
     assertThat(query.count()).isEqualTo(1);
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
   }
 
   @Test
@@ -428,7 +428,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     // then
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
   }
 
   @Test
@@ -443,7 +443,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     // then
     assertThat(query.count()).isEqualTo(1);
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
   }
 
   @Test
@@ -473,7 +473,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     // then
     assertThat(query.count()).isEqualTo(1);
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
   }
 
   @Test
@@ -486,7 +486,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     // then
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
   }
 
   @Test
@@ -501,7 +501,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     // then
     assertThat(query.count()).isEqualTo(1);
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
   }
 
   @Test
@@ -525,14 +525,14 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   public void testQueryByUnassigned() {
     TaskQuery query = taskService.createTaskQuery().taskUnassigned();
     assertThat(query.count()).isEqualTo(10);
-    assertThat(query.list().size()).isEqualTo(10);
+    assertThat(query.list()).hasSize(10);
   }
 
   @Test
   public void testQueryByAssigned() {
     TaskQuery query = taskService.createTaskQuery().taskAssigned();
     assertThat(query.count()).isEqualTo(2);
-    assertThat(query.list().size()).isEqualTo(2);
+    assertThat(query.list()).hasSize(2);
   }
 
   @Test
@@ -540,7 +540,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     // kermit is candidate for 12 tasks, two of them are already assigned
     TaskQuery query = taskService.createTaskQuery().taskCandidateUser("kermit");
     assertThat(query.count()).isEqualTo(10);
-    assertThat(query.list().size()).isEqualTo(10);
+    assertThat(query.list()).hasSize(10);
     try {
       query.singleResult();
       fail("expected exception");
@@ -551,12 +551,12 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     // test including assigned tasks
     query = taskService.createTaskQuery().taskCandidateUser("kermit").includeAssignedTasks();
     assertThat(query.count()).isEqualTo(12);
-    assertThat(query.list().size()).isEqualTo(12);
+    assertThat(query.list()).hasSize(12);
 
     // fozzie is candidate for one task and her groups are candidate for 2 tasks, one of them is already assigned
     query = taskService.createTaskQuery().taskCandidateUser("fozzie");
     assertThat(query.count()).isEqualTo(2);
-    assertThat(query.list().size()).isEqualTo(2);
+    assertThat(query.list()).hasSize(2);
     try {
       query.singleResult();
       fail("expected exception");
@@ -567,17 +567,17 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     // test including assigned tasks
     query = taskService.createTaskQuery().taskCandidateUser("fozzie").includeAssignedTasks();
     assertThat(query.count()).isEqualTo(3);
-    assertThat(query.list().size()).isEqualTo(3);
+    assertThat(query.list()).hasSize(3);
 
     // gonzo is candidate for one task, which is already assinged
     query = taskService.createTaskQuery().taskCandidateUser("gonzo");
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
 
     // test including assigned tasks
     query = taskService.createTaskQuery().taskCandidateUser("gonzo").includeAssignedTasks();
     assertThat(query.count()).isEqualTo(1);
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
   }
 
   @Test
@@ -671,7 +671,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     // management group is candidate for 3 tasks, one of them is already assigned
     TaskQuery query = taskService.createTaskQuery().taskCandidateGroup("management");
     assertThat(query.count()).isEqualTo(2);
-    assertThat(query.list().size()).isEqualTo(2);
+    assertThat(query.list()).hasSize(2);
     try {
       query.singleResult();
       fail("expected exception");
@@ -682,28 +682,28 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     // test including assigned tasks
     query = taskService.createTaskQuery().taskCandidateGroup("management").includeAssignedTasks();
     assertThat(query.count()).isEqualTo(3);
-    assertThat(query.list().size()).isEqualTo(3);
+    assertThat(query.list()).hasSize(3);
 
 
     // accountancy group is candidate for 3 tasks, one of them is already assigned
     query = taskService.createTaskQuery().taskCandidateGroup("accountancy");
     assertThat(query.count()).isEqualTo(2);
-    assertThat(query.list().size()).isEqualTo(2);
+    assertThat(query.list()).hasSize(2);
 
     // test including assigned tasks
     query = taskService.createTaskQuery().taskCandidateGroup("accountancy").includeAssignedTasks();
     assertThat(query.count()).isEqualTo(3);
-    assertThat(query.list().size()).isEqualTo(3);
+    assertThat(query.list()).hasSize(3);
 
     // sales group is candidate for no tasks
     query = taskService.createTaskQuery().taskCandidateGroup("sales");
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
 
     // test including assigned tasks
     query = taskService.createTaskQuery().taskCandidateGroup("sales").includeAssignedTasks();
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
   }
 
   @Test
@@ -711,50 +711,50 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     // management group is candidate for 3 tasks, one of them is already assigned
     TaskQuery query = taskService.createTaskQuery().taskCandidateGroupLike("management");
     assertThat(query.count()).isEqualTo(2);
-    assertThat(query.list().size()).isEqualTo(2);
+    assertThat(query.list()).hasSize(2);
     assertThrows(ProcessEngineException.class, query::singleResult);
 
     // test with "shortened" group name for like query
     query = taskService.createTaskQuery().taskCandidateGroupLike("mana%");
     assertThat(query.count()).isEqualTo(2);
-    assertThat(query.list().size()).isEqualTo(2);
+    assertThat(query.list()).hasSize(2);
     assertThrows(ProcessEngineException.class, query::singleResult);
 
     // test with "shortened" group name for like query (different part)
     query = taskService.createTaskQuery().taskCandidateGroupLike("%ment");
     assertThat(query.count()).isEqualTo(2);
-    assertThat(query.list().size()).isEqualTo(2);
+    assertThat(query.list()).hasSize(2);
     assertThrows(ProcessEngineException.class, query::singleResult);
 
     // test management candidates group with assigned tasks included
     query = taskService.createTaskQuery().taskCandidateGroupLike("management").includeAssignedTasks();
     assertThat(query.count()).isEqualTo(3);
-    assertThat(query.list().size()).isEqualTo(3);
+    assertThat(query.list()).hasSize(3);
     assertThrows(ProcessEngineException.class, query::singleResult);
 
     // test with "shortened" group name for like query (assigned tasks included)
     query = taskService.createTaskQuery().taskCandidateGroupLike("mana%").includeAssignedTasks();
     assertThat(query.count()).isEqualTo(3);
-    assertThat(query.list().size()).isEqualTo(3);
+    assertThat(query.list()).hasSize(3);
     assertThrows(ProcessEngineException.class, query::singleResult);
 
     // test with "shortened" group name for like query (different part, assigned tasks included)
     query = taskService.createTaskQuery().taskCandidateGroupLike("%ment").includeAssignedTasks();
     assertThat(query.count()).isEqualTo(3);
-    assertThat(query.list().size()).isEqualTo(3);
+    assertThat(query.list()).hasSize(3);
     assertThrows(ProcessEngineException.class, query::singleResult);
 
     // test query that matches tasks with the "management" the "accountancy" candidate groups
     // accountancy group is candidate for 3 tasks, one of them is already assigned
     query = taskService.createTaskQuery().taskCandidateGroupLike("%an%");
     assertThat(query.count()).isEqualTo(4);
-    assertThat(query.list().size()).isEqualTo(4);
+    assertThat(query.list()).hasSize(4);
     assertThrows(ProcessEngineException.class, query::singleResult);
 
     // test query that matches tasks with the "management" the "accountancy" candidate groups (assigned tasks included)
     query = taskService.createTaskQuery().taskCandidateGroupLike("%an%").includeAssignedTasks();
     assertThat(query.count()).isEqualTo(5);
-    assertThat(query.list().size()).isEqualTo(5);
+    assertThat(query.list()).hasSize(5);
     assertThrows(ProcessEngineException.class, query::singleResult);
   }
 
@@ -763,10 +763,10 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     // test withCandidateGroups
     TaskQuery query = taskService.createTaskQuery().withCandidateGroups();
     assertThat(query.count()).isEqualTo(4);
-    assertThat(query.list().size()).isEqualTo(4);
+    assertThat(query.list()).hasSize(4);
 
     assertThat(query.includeAssignedTasks().count()).isEqualTo(5);
-    assertThat(query.includeAssignedTasks().list().size()).isEqualTo(5);
+    assertThat(query.includeAssignedTasks().list()).hasSize(5);
   }
 
   @Test
@@ -774,10 +774,10 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     // test withoutCandidateGroups
     TaskQuery query = taskService.createTaskQuery().withoutCandidateGroups();
     assertThat(query.count()).isEqualTo(6);
-    assertThat(query.list().size()).isEqualTo(6);
+    assertThat(query.list()).hasSize(6);
 
     assertThat(query.includeAssignedTasks().count()).isEqualTo(7);
-    assertThat(query.includeAssignedTasks().list().size()).isEqualTo(7);
+    assertThat(query.includeAssignedTasks().list()).hasSize(7);
   }
 
   @Test
@@ -812,7 +812,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     List<String> groups = Arrays.asList("management", "accountancy");
     TaskQuery query = taskService.createTaskQuery().taskCandidateGroupIn(groups);
     assertThat(query.count()).isEqualTo(4);
-    assertThat(query.list().size()).isEqualTo(4);
+    assertThat(query.list()).hasSize(4);
     try {
       query.singleResult();
       fail("expected exception");
@@ -823,18 +823,18 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     // test including assigned tasks
     query = taskService.createTaskQuery().taskCandidateGroupIn(groups).includeAssignedTasks();
     assertThat(query.count()).isEqualTo(5);
-    assertThat(query.list().size()).isEqualTo(5);
+    assertThat(query.list()).hasSize(5);
 
     // Unexisting groups or groups that don't have candidate tasks shouldn't influence other results
     groups = Arrays.asList("management", "accountancy", "sales", "unexising");
     query = taskService.createTaskQuery().taskCandidateGroupIn(groups);
     assertThat(query.count()).isEqualTo(4);
-    assertThat(query.list().size()).isEqualTo(4);
+    assertThat(query.list()).hasSize(4);
 
     // test including assigned tasks
     query = taskService.createTaskQuery().taskCandidateGroupIn(groups).includeAssignedTasks();
     assertThat(query.count()).isEqualTo(5);
-    assertThat(query.list().size()).isEqualTo(5);
+    assertThat(query.list()).hasSize(5);
   }
 
   @Test
@@ -843,7 +843,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     String candidateGroup = "management";
     TaskQuery query = taskService.createTaskQuery().taskCandidateGroupIn(groups).taskCandidateGroup(candidateGroup);
     assertThat(query.count()).isEqualTo(2);
-    assertThat(query.list().size()).isEqualTo(2);
+    assertThat(query.list()).hasSize(2);
     try {
       query.singleResult();
       fail("expected exception");
@@ -854,13 +854,13 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     // test including assigned tasks
     query = taskService.createTaskQuery().taskCandidateGroupIn(groups).taskCandidateGroup(candidateGroup).includeAssignedTasks();
     assertThat(query.count()).isEqualTo(3);
-    assertThat(query.list().size()).isEqualTo(3);
+    assertThat(query.list()).hasSize(3);
 
     // Unexisting groups or groups that don't have candidate tasks shouldn't influence other results
     groups = Arrays.asList("management", "accountancy", "sales", "unexising");
     query = taskService.createTaskQuery().taskCandidateGroupIn(groups).taskCandidateGroup(candidateGroup);
     assertThat(query.count()).isEqualTo(2);
-    assertThat(query.list().size()).isEqualTo(2);
+    assertThat(query.list()).hasSize(2);
     try {
       query.singleResult();
       fail("expected exception");
@@ -871,17 +871,17 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     // test including assigned tasks
     query = taskService.createTaskQuery().taskCandidateGroupIn(groups).taskCandidateGroup(candidateGroup).includeAssignedTasks();
     assertThat(query.count()).isEqualTo(3);
-    assertThat(query.list().size()).isEqualTo(3);
+    assertThat(query.list()).hasSize(3);
 
     // sales group is candidate for no tasks
     query = taskService.createTaskQuery().taskCandidateGroupIn(groups).taskCandidateGroup("sales");
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
 
     // test including assigned tasks
     query = taskService.createTaskQuery().taskCandidateGroupIn(groups).taskCandidateGroup("sales").includeAssignedTasks();
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
   }
 
   @Test
@@ -890,7 +890,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     String candidateGroup = "management";
     TaskQuery query = taskService.createTaskQuery().taskCandidateGroupIn(groups).taskCandidateGroup(candidateGroup);
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
   }
 
   @Test
@@ -915,38 +915,38 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   public void testQueryByDelegationState() {
     TaskQuery query = taskService.createTaskQuery().taskDelegationState(null);
     assertThat(query.count()).isEqualTo(12);
-    assertThat(query.list().size()).isEqualTo(12);
+    assertThat(query.list()).hasSize(12);
     query = taskService.createTaskQuery().taskDelegationState(DelegationState.PENDING);
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
     query = taskService.createTaskQuery().taskDelegationState(DelegationState.RESOLVED);
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
 
     String taskId= taskService.createTaskQuery().taskAssignee("gonzo_").singleResult().getId();
     taskService.delegateTask(taskId, "kermit");
 
     query = taskService.createTaskQuery().taskDelegationState(null);
     assertThat(query.count()).isEqualTo(11);
-    assertThat(query.list().size()).isEqualTo(11);
+    assertThat(query.list()).hasSize(11);
     query = taskService.createTaskQuery().taskDelegationState(DelegationState.PENDING);
     assertThat(query.count()).isEqualTo(1);
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
     query = taskService.createTaskQuery().taskDelegationState(DelegationState.RESOLVED);
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
 
     taskService.resolveTask(taskId);
 
     query = taskService.createTaskQuery().taskDelegationState(null);
     assertThat(query.count()).isEqualTo(11);
-    assertThat(query.list().size()).isEqualTo(11);
+    assertThat(query.list()).hasSize(11);
     query = taskService.createTaskQuery().taskDelegationState(DelegationState.PENDING);
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
     query = taskService.createTaskQuery().taskDelegationState(DelegationState.RESOLVED);
     assertThat(query.count()).isEqualTo(1);
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
   }
 
   @Test
@@ -958,7 +958,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     TaskQuery query = taskService.createTaskQuery().taskCreatedOn(createTime);
     assertThat(query.count()).isEqualTo(6);
-    assertThat(query.list().size()).isEqualTo(6);
+    assertThat(query.list()).hasSize(6);
   }
 
   @Test
@@ -970,12 +970,12 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     TaskQuery query = taskService.createTaskQuery().taskCreatedBefore(before);
     assertThat(query.count()).isEqualTo(7);
-    assertThat(query.list().size()).isEqualTo(7);
+    assertThat(query.list()).hasSize(7);
 
     before = sdf.parse("01/01/2001 01:01:01.000");
     query = taskService.createTaskQuery().taskCreatedBefore(before);
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
   }
 
   @Test
@@ -987,12 +987,12 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     TaskQuery query = taskService.createTaskQuery().taskCreatedAfter(after);
     assertThat(query.count()).isEqualTo(3);
-    assertThat(query.list().size()).isEqualTo(3);
+    assertThat(query.list()).hasSize(3);
 
     after = sdf.parse("05/05/2005 05:05:05.000");
     query = taskService.createTaskQuery().taskCreatedAfter(after);
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
   }
 
   @Test
@@ -1025,7 +1025,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     // 1 task should exist with key "taskKey_1"
     List<Task> tasks = taskService.createTaskQuery().taskDefinitionKey("taskKey_1").list();
     assertNotNull(tasks);
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
 
     assertThat(tasks.get(0).getTaskDefinitionKey()).isEqualTo("taskKey_1");
 
@@ -1044,7 +1044,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     // Ends with matching, TaskKey_1 and TaskKey_123 match
     List<Task> tasks = taskService.createTaskQuery().taskDefinitionKeyLike("taskKey\\_1%").orderByTaskName().asc().list();
     assertNotNull(tasks);
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
 
     assertThat(tasks.get(0).getTaskDefinitionKey()).isEqualTo("taskKey_1");
     assertThat(tasks.get(1).getTaskDefinitionKey()).isEqualTo("taskKey_123");
@@ -1052,14 +1052,14 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     // Starts with matching, TaskKey_123 matches
     tasks = taskService.createTaskQuery().taskDefinitionKeyLike("%\\_123").orderByTaskName().asc().list();
     assertNotNull(tasks);
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
 
     assertThat(tasks.get(0).getTaskDefinitionKey()).isEqualTo("taskKey_123");
 
     // Contains matching, TaskKey_123 matches
     tasks = taskService.createTaskQuery().taskDefinitionKeyLike("%Key\\_12%").orderByTaskName().asc().list();
     assertNotNull(tasks);
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
 
     assertThat(tasks.get(0).getTaskDefinitionKey()).isEqualTo("taskKey_123");
 
@@ -1079,14 +1079,14 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     // 1 Task should be found with TaskKey1
     List<Task> tasks = taskService.createTaskQuery().taskDefinitionKeyIn("taskKey_1").list();
     assertNotNull(tasks);
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
 
     assertThat(tasks.get(0).getTaskDefinitionKey()).isEqualTo("taskKey_1");
 
     // 2 Tasks should be found with TaskKey_1 and TaskKey_123
     tasks = taskService.createTaskQuery().taskDefinitionKeyIn("taskKey_1", "taskKey_123").orderByTaskName().asc().list();
     assertNotNull(tasks);
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
 
     assertThat(tasks.get(0).getTaskDefinitionKey()).isEqualTo("taskKey_1");
     assertThat(tasks.get(1).getTaskDefinitionKey()).isEqualTo("taskKey_123");
@@ -1094,7 +1094,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     // 2 Tasks should be found with TaskKey1, TaskKey123 and UnexistingKey
     tasks = taskService.createTaskQuery().taskDefinitionKeyIn("taskKey_1", "taskKey_123", "unexistingKey").orderByTaskName().asc().list();
     assertNotNull(tasks);
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
 
     assertThat(tasks.get(0).getTaskDefinitionKey()).isEqualTo("taskKey_1");
     assertThat(tasks.get(1).getTaskDefinitionKey()).isEqualTo("taskKey_123");
@@ -1859,7 +1859,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     List<Task> tasks = taskService.createTaskQuery().processDefinitionKey("oneTaskProcess").list();
-    assertThat(tasks.size()).isEqualTo(8);
+    assertThat(tasks).hasSize(8);
     taskService.setVariableLocal(tasks.get(0).getId(), "var", 123L);
     taskService.setVariableLocal(tasks.get(1).getId(), "var", 12345L);
     taskService.setVariableLocal(tasks.get(2).getId(), "var", (short) 123);
@@ -1925,7 +1925,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     List<Task> tasks = taskService.createTaskQuery().processDefinitionId(processInstance.getProcessDefinitionId()).list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
     assertThat(tasks.get(0).getProcessInstanceId()).isEqualTo(processInstance.getId());
 
     assertThat(taskService.createTaskQuery().processDefinitionId("unexisting").count()).isEqualTo(0);
@@ -1938,7 +1938,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     List<Task> tasks = taskService.createTaskQuery().processDefinitionKey("oneTaskProcess").list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
     assertThat(tasks.get(0).getProcessInstanceId()).isEqualTo(processInstance.getId());
 
     assertThat(taskService.createTaskQuery().processDefinitionKey("unexisting").count()).isEqualTo(0);
@@ -1958,7 +1958,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     // 1 task should be found with oneTaskProcess
     List<Task> tasks = taskService.createTaskQuery().processDefinitionKeyIn("oneTaskProcess").list();
     assertNotNull(tasks);
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
 
     assertThat(tasks.get(0).getTaskDefinitionKey()).isEqualTo("theTask");
 
@@ -1967,7 +1967,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
       .processDefinitionKeyIn("oneTaskProcess", "taskDefinitionKeyProcess")
       .list();
     assertNotNull(tasks);
-    assertThat(tasks.size()).isEqualTo(3);
+    assertThat(tasks).hasSize(3);
 
     Set<String> keysFound = new HashSet<>();
     for (Task task : tasks) {
@@ -1980,7 +1980,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     // 1 Tasks should be found with oneTaskProcess,and NonExistingKey
     tasks = taskService.createTaskQuery().processDefinitionKeyIn("oneTaskProcess", "NonExistingKey").orderByTaskName().asc().list();
     assertNotNull(tasks);
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
 
     assertThat(tasks.get(0).getTaskDefinitionKey()).isEqualTo("theTask");
 
@@ -1999,7 +1999,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     List<Task> tasks = taskService.createTaskQuery().processDefinitionName("The%One%Task%Process").list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
     assertThat(tasks.get(0).getProcessInstanceId()).isEqualTo(processInstance.getId());
 
     assertThat(taskService.createTaskQuery().processDefinitionName("unexisting").count()).isEqualTo(0);
@@ -2011,7 +2011,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     List<Task> tasks = taskService.createTaskQuery().processDefinitionNameLike("The\\%One\\%Task%").list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
     assertThat(tasks.get(0).getProcessInstanceId()).isEqualTo(processInstance.getId());
 
     assertThat(taskService.createTaskQuery().processDefinitionNameLike("The One Task").count()).isEqualTo(0);
@@ -2023,8 +2023,8 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   public void testProcessInstanceBusinessKey() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess", "BUSINESS-KEY-1");
 
-    assertThat(taskService.createTaskQuery().processDefinitionName("The%One%Task%Process").processInstanceBusinessKey("BUSINESS-KEY-1").list().size()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().processInstanceBusinessKey("BUSINESS-KEY-1").list().size()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().processDefinitionName("The%One%Task%Process").processInstanceBusinessKey("BUSINESS-KEY-1").list()).hasSize(1);
+    assertThat(taskService.createTaskQuery().processInstanceBusinessKey("BUSINESS-KEY-1").list()).hasSize(1);
     assertThat(taskService.createTaskQuery().processInstanceBusinessKey("NON-EXISTING").count()).isEqualTo(0);
   }
 
@@ -2037,7 +2037,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     // 1 task should be found with BUSINESS-KEY-1
     List<Task> tasks = taskService.createTaskQuery().processInstanceBusinessKeyIn("BUSINESS-KEY-1").list();
     assertNotNull(tasks);
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
 
     assertThat(tasks.get(0).getTaskDefinitionKey()).isEqualTo("theTask");
 
@@ -2046,7 +2046,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
       .processInstanceBusinessKeyIn("BUSINESS-KEY-1", "BUSINESS-KEY-2")
       .list();
     assertNotNull(tasks);
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
 
     for (Task task : tasks) {
       assertThat(task.getTaskDefinitionKey()).isEqualTo("theTask");
@@ -2070,8 +2070,8 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   public void testProcessInstanceBusinessKeyLike() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess", "BUSINESS-KEY-1");
 
-    assertThat(taskService.createTaskQuery().processDefinitionName("The%One%Task%Process").processInstanceBusinessKey("BUSINESS-KEY-1").list().size()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().processInstanceBusinessKeyLike("BUSINESS-KEY%").list().size()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().processDefinitionName("The%One%Task%Process").processInstanceBusinessKey("BUSINESS-KEY-1").list()).hasSize(1);
+    assertThat(taskService.createTaskQuery().processInstanceBusinessKeyLike("BUSINESS-KEY%").list()).hasSize(1);
     assertThat(taskService.createTaskQuery().processInstanceBusinessKeyLike("BUSINESS-KEY").count()).isEqualTo(0);
     assertThat(taskService.createTaskQuery().processInstanceBusinessKeyLike("BUZINESS-KEY%").count()).isEqualTo(0);
   }
@@ -2326,7 +2326,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     String activityInstanceId = runtimeService.getActivityInstance(processInstance.getId())
                                               .getChildActivityInstances()[0].getId();
 
-    assertThat(taskService.createTaskQuery().activityInstanceIdIn(activityInstanceId).list().size()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().activityInstanceIdIn(activityInstanceId).list()).hasSize(1);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
@@ -2343,14 +2343,14 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
                                               .getChildActivityInstances()[0].getId();
 
     List<Task> result1 = taskService.createTaskQuery().activityInstanceIdIn(activityInstanceId1).list();
-    assertThat(result1.size()).isEqualTo(1);
+    assertThat(result1).hasSize(1);
     assertThat(result1.get(0).getProcessInstanceId()).isEqualTo(processInstance1.getId());
 
     List<Task> result2 = taskService.createTaskQuery().activityInstanceIdIn(activityInstanceId2).list();
-    assertThat(result2.size()).isEqualTo(1);
+    assertThat(result2).hasSize(1);
     assertThat(result2.get(0).getProcessInstanceId()).isEqualTo(processInstance2.getId());
 
-    assertThat(taskService.createTaskQuery().activityInstanceIdIn(activityInstanceId1, activityInstanceId2).list().size()).isEqualTo(2);
+    assertThat(taskService.createTaskQuery().activityInstanceIdIn(activityInstanceId1, activityInstanceId2).list()).hasSize(2);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
@@ -2358,30 +2358,30 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidActivityInstanceId() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
-    assertThat(taskService.createTaskQuery().activityInstanceIdIn("anInvalidActivityInstanceId").list().size()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().activityInstanceIdIn("anInvalidActivityInstanceId").list()).hasSize(0);
   }
 
   @Test
   public void testQueryPaging() {
     TaskQuery query = taskService.createTaskQuery().taskCandidateUser("kermit");
 
-    assertThat(query.listPage(0, Integer.MAX_VALUE).size()).isEqualTo(10);
+    assertThat(query.listPage(0, Integer.MAX_VALUE)).hasSize(10);
 
     // Verifying the un-paged results
     assertThat(query.count()).isEqualTo(10);
-    assertThat(query.list().size()).isEqualTo(10);
+    assertThat(query.list()).hasSize(10);
 
     // Verifying paged results
-    assertThat(query.listPage(0, 2).size()).isEqualTo(2);
-    assertThat(query.listPage(2, 2).size()).isEqualTo(2);
-    assertThat(query.listPage(4, 3).size()).isEqualTo(3);
-    assertThat(query.listPage(9, 3).size()).isEqualTo(1);
-    assertThat(query.listPage(9, 1).size()).isEqualTo(1);
+    assertThat(query.listPage(0, 2)).hasSize(2);
+    assertThat(query.listPage(2, 2)).hasSize(2);
+    assertThat(query.listPage(4, 3)).hasSize(3);
+    assertThat(query.listPage(9, 3)).hasSize(1);
+    assertThat(query.listPage(9, 1)).hasSize(1);
 
     // Verifying odd usages
-    assertThat(query.listPage(-1, -1).size()).isEqualTo(0);
-    assertThat(query.listPage(10, 2).size()).isEqualTo(0); // 9 is the last index with a result
-    assertThat(query.listPage(0, 15).size()).isEqualTo(10); // there are only 10 tasks
+    assertThat(query.listPage(-1, -1)).hasSize(0);
+    assertThat(query.listPage(10, 2)).hasSize(0); // 9 is the last index with a result
+    assertThat(query.listPage(0, 15)).hasSize(10); // there are only 10 tasks
   }
 
   @Test
@@ -2470,7 +2470,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
       .orderByTaskName()
       .asc()
       .list();
-    assertThat(tasks.size()).isEqualTo(12);
+    assertThat(tasks).hasSize(12);
 
 
     List<String> taskNames = getTaskNamesFromTasks(tasks);
@@ -2492,7 +2492,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
       .orderByTaskName()
       .desc()
       .list();
-    assertThat(tasks.size()).isEqualTo(12);
+    assertThat(tasks).hasSize(12);
 
     taskNames = getTaskNamesFromTasks(tasks);
     assertThat(taskNames.get(0)).isEqualTo("testTask");
@@ -2522,7 +2522,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     String tablePrefix = processEngineConfiguration.getDatabaseTablePrefix();
     assertThat(managementService.getTableName(Task.class)).isEqualTo(tablePrefix + "ACT_RU_TASK");
     assertThat(managementService.getTableName(TaskEntity.class)).isEqualTo(tablePrefix + "ACT_RU_TASK");
-    assertThat(taskService.createNativeTaskQuery().sql("SELECT * FROM " + managementService.getTableName(Task.class)).list().size()).isEqualTo(12);
+    assertThat(taskService.createNativeTaskQuery().sql("SELECT * FROM " + managementService.getTableName(Task.class)).list()).hasSize(12);
     assertThat(taskService.createNativeTaskQuery().sql("SELECT count(*) FROM " + managementService.getTableName(Task.class)).count()).isEqualTo(12);
 
     assertThat(taskService.createNativeTaskQuery().sql("SELECT count(*) FROM " + tablePrefix + "ACT_RU_TASK T1, " + tablePrefix + "ACT_RU_TASK T2").count()).isEqualTo(144);
@@ -2530,14 +2530,14 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     // join task and variable instances
     assertThat(taskService.createNativeTaskQuery().sql("SELECT count(*) FROM " + managementService.getTableName(Task.class) + " T1, " + managementService.getTableName(VariableInstanceEntity.class) + " V1 WHERE V1.TASK_ID_ = T1.ID_").count()).isEqualTo(1);
     List<Task> tasks = taskService.createNativeTaskQuery().sql("SELECT T1.* FROM " + managementService.getTableName(Task.class) + " T1, "+managementService.getTableName(VariableInstanceEntity.class)+" V1 WHERE V1.TASK_ID_ = T1.ID_").list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
     assertThat(tasks.get(0).getName()).isEqualTo("gonzo_Task");
 
     // select with distinct
-    assertThat(taskService.createNativeTaskQuery().sql("SELECT DISTINCT T1.* FROM " + tablePrefix + "ACT_RU_TASK T1").list().size()).isEqualTo(12);
+    assertThat(taskService.createNativeTaskQuery().sql("SELECT DISTINCT T1.* FROM " + tablePrefix + "ACT_RU_TASK T1").list()).hasSize(12);
 
     assertThat(taskService.createNativeTaskQuery().sql("SELECT count(*) FROM " + managementService.getTableName(Task.class) + " T WHERE T.NAME_ = 'gonzo_Task'").count()).isEqualTo(1);
-    assertThat(taskService.createNativeTaskQuery().sql("SELECT * FROM " + managementService.getTableName(Task.class) + " T WHERE T.NAME_ = 'gonzo_Task'").list().size()).isEqualTo(1);
+    assertThat(taskService.createNativeTaskQuery().sql("SELECT * FROM " + managementService.getTableName(Task.class) + " T WHERE T.NAME_ = 'gonzo_Task'").list()).hasSize(1);
 
     // use parameters
     assertThat(taskService.createNativeTaskQuery().sql("SELECT count(*) FROM " + managementService.getTableName(Task.class) + " T WHERE T.NAME_ = #{taskName}").parameter("taskName", "gonzo_Task").count()).isEqualTo(1);
@@ -2548,8 +2548,8 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     String tablePrefix = processEngineConfiguration.getDatabaseTablePrefix();
     assertThat(managementService.getTableName(Task.class)).isEqualTo(tablePrefix + "ACT_RU_TASK");
     assertThat(managementService.getTableName(TaskEntity.class)).isEqualTo(tablePrefix + "ACT_RU_TASK");
-    assertThat(taskService.createNativeTaskQuery().sql("SELECT * FROM " + managementService.getTableName(Task.class)).listPage(0, 5).size()).isEqualTo(5);
-    assertThat(taskService.createNativeTaskQuery().sql("SELECT * FROM " + managementService.getTableName(Task.class)).listPage(10, 12).size()).isEqualTo(2);
+    assertThat(taskService.createNativeTaskQuery().sql("SELECT * FROM " + managementService.getTableName(Task.class)).listPage(0, 5)).hasSize(5);
+    assertThat(taskService.createNativeTaskQuery().sql("SELECT * FROM " + managementService.getTableName(Task.class)).listPage(10, 12)).hasSize(2);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -4556,7 +4556,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
       .list();
 
     // then the tasks are ordered correctly
-    assertThat(tasks.size()).isEqualTo(3);
+    assertThat(tasks).hasSize(3);
     // then in alphabetical order
     assertThat(tasks.get(0).getProcessInstanceId()).isEqualTo(instance3.getId());
     assertThat(tasks.get(1).getProcessInstanceId()).isEqualTo(instance1.getId());
@@ -4570,7 +4570,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
       .list();
 
     // then the tasks are ordered correctly
-    assertThat(tasks.size()).isEqualTo(3);
+    assertThat(tasks).hasSize(3);
     // then in alphabetical order
     assertThat(tasks.get(0).getProcessInstanceId()).isEqualTo(instance2.getId());
     assertThat(tasks.get(1).getProcessInstanceId()).isEqualTo(instance1.getId());
@@ -4585,7 +4585,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
       .list();
 
     // then the tasks are in no particular ordering
-    assertThat(unorderedTasks.size()).isEqualTo(3);
+    assertThat(unorderedTasks).hasSize(3);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/task/TaskQueryTest.testLocalExecutionVariable.bpmn20.xml")
@@ -4617,7 +4617,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
       .list();
 
     // then the tasks are ordered correctly by their local variables
-    assertThat(tasks.size()).isEqualTo(3);
+    assertThat(tasks).hasSize(3);
     assertThat(tasks.get(0).getProcessInstanceId()).isEqualTo(instance3.getId());
     assertThat(tasks.get(1).getProcessInstanceId()).isEqualTo(instance2.getId());
     assertThat(tasks.get(2).getProcessInstanceId()).isEqualTo(instance1.getId());
@@ -4652,7 +4652,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
       .list();
 
     // then the tasks are ordered correctly by their local variables
-    assertThat(tasks.size()).isEqualTo(3);
+    assertThat(tasks).hasSize(3);
     assertThat(tasks.get(0).getProcessInstanceId()).isEqualTo(instance3.getId());
     assertThat(tasks.get(1).getProcessInstanceId()).isEqualTo(instance2.getId());
     assertThat(tasks.get(2).getProcessInstanceId()).isEqualTo(instance1.getId());
@@ -4677,7 +4677,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
       .list();
 
     // then the tasks are ordered correctly by their local variables
-    assertThat(tasks.size()).isEqualTo(3);
+    assertThat(tasks).hasSize(3);
     assertThat(tasks.get(0).getCaseInstanceId()).isEqualTo(instance2.getId());
     assertThat(tasks.get(1).getCaseInstanceId()).isEqualTo(instance3.getId());
     assertThat(tasks.get(2).getCaseInstanceId()).isEqualTo(instance1.getId());
@@ -4733,7 +4733,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
         .list();
 
     // then the tasks are ordered correctly by their local variables
-    assertThat(tasks.size()).isEqualTo(3);
+    assertThat(tasks).hasSize(3);
     assertThat(tasks.get(0).getCaseInstanceId()).isEqualTo(instance1.getId());
     assertThat(tasks.get(1).getCaseInstanceId()).isEqualTo(instance2.getId());
     assertThat(tasks.get(2).getCaseInstanceId()).isEqualTo(instance3.getId());
@@ -4825,7 +4825,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
       .list();
 
     // then the tasks are ordered correctly
-    assertThat(tasks.size()).isEqualTo(3);
+    assertThat(tasks).hasSize(3);
     // first the numeric valued task (since it is treated like null-valued)
     assertThat(tasks.get(0).getProcessInstanceId()).isEqualTo(instance1.getId());
     // then the others in alphabetical order
@@ -4990,7 +4990,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
         .list();
 
     // then the tasks are ordered correctly
-    assertThat(tasks.size()).isEqualTo(3);
+    assertThat(tasks).hasSize(3);
 
     Task firstTask = tasks.get(0);
 
@@ -5034,7 +5034,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
         .list();
 
     // then the tasks are ordered correctly
-    assertThat(tasks.size()).isEqualTo(6);
+    assertThat(tasks).hasSize(6);
     // var = c; var2 = 30
     assertThat(tasks.get(0).getProcessInstanceId()).isEqualTo(cInstance2.getId());
     // var = c; var2 = 50
@@ -5059,7 +5059,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
         .list();
 
     // then the tasks are ordered correctly
-    assertThat(tasks.size()).isEqualTo(6);
+    assertThat(tasks).hasSize(6);
     // var = a; var2 = 50
     assertThat(tasks.get(0).getProcessInstanceId()).isEqualTo(aInstance2.getId());
     // var = c; var2 = 50
@@ -5101,7 +5101,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
         .list();
 
     // then the tasks are ordered correctly
-    assertThat(tasks.size()).isEqualTo(6);
+    assertThat(tasks).hasSize(6);
 
     // var = a
     verifyTasksSortedByProcessInstanceId(Arrays.asList(aInstance1, aInstance2),
@@ -5193,7 +5193,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   protected void verifyTasksSortedByProcessInstanceId(List<ProcessInstance> expectedProcessInstances,
       List<Task> actualTasks) {
 
-    assertThat(actualTasks.size()).isEqualTo(expectedProcessInstances.size());
+    assertThat(actualTasks).hasSize(expectedProcessInstances.size());
     List<ProcessInstance> instances = new ArrayList<>(expectedProcessInstances);
 
     instances.sort(Comparator.comparing(Execution::getId));
@@ -5204,7 +5204,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   }
 
   private void verifyQueryResults(TaskQuery query, int countExpected) {
-    assertThat(query.list().size()).isEqualTo(countExpected);
+    assertThat(query.list()).hasSize(countExpected);
     assertThat(query.count()).isEqualTo(countExpected);
 
     if (countExpected == 1) {
@@ -5310,7 +5310,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
       .asc()
       .list();
 
-    assertThat(tasks.size()).isEqualTo(3);
+    assertThat(tasks).hasSize(3);
     assertThat(tasks.get(0).getProcessInstanceId()).isEqualTo(instance250.getId());
     assertThat(tasks.get(1).getProcessInstanceId()).isEqualTo(instance500.getId());
     assertThat(tasks.get(2).getProcessInstanceId()).isEqualTo(instance1000.getId());
@@ -5322,7 +5322,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
       .desc()
       .list();
 
-    assertThat(tasks.size()).isEqualTo(3);
+    assertThat(tasks).hasSize(3);
     assertThat(tasks.get(0).getProcessInstanceId()).isEqualTo(instance1000.getId());
     assertThat(tasks.get(1).getProcessInstanceId()).isEqualTo(instance500.getId());
     assertThat(tasks.get(2).getProcessInstanceId()).isEqualTo(instance250.getId());
@@ -5351,7 +5351,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
       .asc()
       .list();
 
-    assertThat(tasks.size()).isEqualTo(3);
+    assertThat(tasks).hasSize(3);
     assertThat(tasks.get(0).getId()).isEqualTo(task250.getId());
     assertThat(tasks.get(1).getId()).isEqualTo(task500.getId());
     assertThat(tasks.get(2).getId()).isEqualTo(task1000.getId());
@@ -5363,7 +5363,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
       .desc()
       .list();
 
-    assertThat(tasks.size()).isEqualTo(3);
+    assertThat(tasks).hasSize(3);
     assertThat(tasks.get(0).getId()).isEqualTo(task1000.getId());
     assertThat(tasks.get(1).getId()).isEqualTo(task500.getId());
     assertThat(tasks.get(2).getId()).isEqualTo(task250.getId());
@@ -5484,7 +5484,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
         .processInstanceId(processInstance.getId())
         .withCandidateUsers()
         .list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
   }
 
   @Test
@@ -5505,7 +5505,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
         .processInstanceId(processInstance.getId())
         .withoutCandidateUsers()
         .list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
   }
 
   @Test
@@ -5560,17 +5560,17 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
   @Test
   public void testQueryByNameNotEqual() {
     TaskQuery query = taskService.createTaskQuery().taskNameNotEqual("gonzo_Task");
-    assertThat(query.list().size()).isEqualTo(11);
+    assertThat(query.list()).hasSize(11);
   }
 
   @Test
   public void testQueryByNameNotLike() {
     TaskQuery query = taskService.createTaskQuery().taskNameNotLike("management%");
-    assertThat(query.list().size()).isEqualTo(9);
+    assertThat(query.list()).hasSize(9);
     assertThat(query.count()).isEqualTo(9);
 
     query = taskService.createTaskQuery().taskNameNotLike("gonzo\\_%");
-    assertThat(query.list().size()).isEqualTo(11);
+    assertThat(query.list()).hasSize(11);
     assertThat(query.count()).isEqualTo(11);
   }
 

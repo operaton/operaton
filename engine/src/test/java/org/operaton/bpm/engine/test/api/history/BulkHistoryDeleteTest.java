@@ -203,13 +203,13 @@ public class BulkHistoryDeleteTest {
 
     //then
     assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(0);
-    assertThat(taskService.getTaskAttachments(taskWithAttachmentId).size()).isEqualTo(0);
+    assertThat(taskService.getTaskAttachments(taskWithAttachmentId)).hasSize(0);
     //check that attachment content was removed
     verifyByteArraysWereRemoved(contentId);
   }
 
   private String findAttachmentContentId(List<Attachment> attachments) {
-    assertThat(attachments.size()).isEqualTo(1);
+    assertThat(attachments).hasSize(1);
     return ((AttachmentEntity) attachments.get(0)).getContentId();
   }
 
@@ -231,7 +231,7 @@ public class BulkHistoryDeleteTest {
 
     //then
     assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(0);
-    assertThat(taskService.getProcessInstanceAttachments(processInstanceWithAttachmentId).size()).isEqualTo(0);
+    assertThat(taskService.getProcessInstanceAttachments(processInstanceWithAttachmentId)).hasSize(0);
     //check that attachment content was removed
     verifyByteArraysWereRemoved(contentId);
   }
@@ -241,7 +241,7 @@ public class BulkHistoryDeleteTest {
         .createAttachment("web page", null, processInstanceId, "weatherforcast", "temperatures and more", new ByteArrayInputStream("someContent".getBytes()));
 
     List<Attachment> taskAttachments = taskService.getProcessInstanceAttachments(processInstanceId);
-    assertThat(taskAttachments.size()).isEqualTo(1);
+    assertThat(taskAttachments).hasSize(1);
     assertNotNull(taskService.getAttachmentContent(taskAttachments.get(0).getId()));
   }
 
@@ -249,7 +249,7 @@ public class BulkHistoryDeleteTest {
     taskService.createAttachment("web page", taskId, null, "weatherforcast", "temperatures and more", new ByteArrayInputStream("someContent".getBytes()));
 
     List<Attachment> taskAttachments = taskService.getTaskAttachments(taskId);
-    assertThat(taskAttachments.size()).isEqualTo(1);
+    assertThat(taskAttachments).hasSize(1);
     assertNotNull(taskService.getAttachmentContent(taskAttachments.get(0).getId()));
   }
 
@@ -271,7 +271,7 @@ public class BulkHistoryDeleteTest {
 
     //then
     assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(0);
-    assertThat(taskService.getTaskComments(taskWithCommentId).size()).isEqualTo(0);
+    assertThat(taskService.getTaskComments(taskWithCommentId)).hasSize(0);
   }
 
   @Test
@@ -290,7 +290,7 @@ public class BulkHistoryDeleteTest {
 
     //then
     assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(0);
-    assertThat(taskService.getProcessInstanceComments(processInstanceWithCommentId).size()).isEqualTo(0);
+    assertThat(taskService.getProcessInstanceComments(processInstanceWithCommentId)).hasSize(0);
   }
 
   @Test
@@ -366,7 +366,7 @@ public class BulkHistoryDeleteTest {
 
   private String findErrorDetailsByteArrayId(String errorMessage) {
     final List<HistoricExternalTaskLog> historicExternalTaskLogs = historyService.createHistoricExternalTaskLogQuery().errorMessage(errorMessage).list();
-    assertThat(historicExternalTaskLogs.size()).isEqualTo(1);
+    assertThat(historicExternalTaskLogs).hasSize(1);
 
     return ((HistoricExternalTaskLogEntity) historicExternalTaskLogs.get(0)).getErrorDetailsByteArrayId();
   }
@@ -460,7 +460,7 @@ public class BulkHistoryDeleteTest {
       .property("nrOfInstances")
       .list();
 
-    assertThat(userOperationLogEntries.size()).isEqualTo(1);
+    assertThat(userOperationLogEntries).hasSize(1);
 
     UserOperationLogEntry entry = userOperationLogEntries.get(0);
     assertThat(entry.getNewValue()).isEqualTo(String.valueOf(historicDecisionInstances.size()));
@@ -590,7 +590,7 @@ public class BulkHistoryDeleteTest {
         }
       }
     }
-    assertThat(historicDecisionInputIds.size()).isEqualTo(PROCESS_INSTANCE_COUNT);
+    assertThat(historicDecisionInputIds).hasSize(PROCESS_INSTANCE_COUNT);
   }
 
   private void collectHistoricDecisionOutputIds(List<HistoricDecisionInstance> historicDecisionInstances, List<String> historicDecisionOutputIds, List<String> outputByteArrayId) {
@@ -603,7 +603,7 @@ public class BulkHistoryDeleteTest {
         }
       }
     }
-    assertThat(historicDecisionOutputIds.size()).isEqualTo(PROCESS_INSTANCE_COUNT);
+    assertThat(historicDecisionOutputIds).hasSize(PROCESS_INSTANCE_COUNT);
   }
 
   private List<String> prepareHistoricProcesses() {
@@ -654,7 +654,7 @@ public class BulkHistoryDeleteTest {
 
     // assume
     List<HistoricCaseInstance> caseInstanceList = historyService.createHistoricCaseInstanceQuery().list();
-    assertThat(caseInstanceList.size()).isEqualTo(instanceCount);
+    assertThat(caseInstanceList).hasSize(instanceCount);
 
     // when
     historyService.deleteHistoricCaseInstancesBulk(caseInstanceIds);
@@ -674,14 +674,14 @@ public class BulkHistoryDeleteTest {
 
     // assume
     List<HistoricCaseActivityInstance> activityInstances = historyService.createHistoricCaseActivityInstanceQuery().list();
-    assertThat(activityInstances.size()).isEqualTo(1);
+    assertThat(activityInstances).hasSize(1);
 
     // when
     historyService.deleteHistoricCaseInstancesBulk(Arrays.asList(caseInstanceId));
 
     // then
     activityInstances = historyService.createHistoricCaseActivityInstanceQuery().list();
-    assertThat(activityInstances.size()).isEqualTo(0);
+    assertThat(activityInstances).hasSize(0);
   }
 
   @Test
@@ -694,14 +694,14 @@ public class BulkHistoryDeleteTest {
 
     // assume
     List<HistoricTaskInstance> taskInstances = historyService.createHistoricTaskInstanceQuery().list();
-    assertThat(taskInstances.size()).isEqualTo(1);
+    assertThat(taskInstances).hasSize(1);
 
     // when
     historyService.deleteHistoricCaseInstancesBulk(Arrays.asList(caseInstanceId));
 
     // then
     taskInstances = historyService.createHistoricTaskInstanceQuery().list();
-    assertThat(taskInstances.size()).isEqualTo(0);
+    assertThat(taskInstances).hasSize(0);
   }
 
   @Test
@@ -716,7 +716,7 @@ public class BulkHistoryDeleteTest {
 
     // assume
     List<Comment> comments = taskService.getTaskComments(task.getId());
-    assertThat(comments.size()).isEqualTo(1);
+    assertThat(comments).hasSize(1);
     terminateAndCloseCaseInstance(caseInstanceId, null);
 
     // when
@@ -724,7 +724,7 @@ public class BulkHistoryDeleteTest {
 
     // then
     comments = taskService.getTaskComments(task.getId());
-    assertThat(comments.size()).isEqualTo(0);
+    assertThat(comments).hasSize(0);
   }
 
   @Test
@@ -743,7 +743,7 @@ public class BulkHistoryDeleteTest {
 
     // assume
     List<HistoricDetail> detailsList = historyService.createHistoricDetailQuery().list();
-    assertThat(detailsList.size()).isEqualTo(3);
+    assertThat(detailsList).hasSize(3);
     terminateAndCloseCaseInstance(caseInstance.getId(), taskService.getVariables(task.getId()));
 
     // when
@@ -751,7 +751,7 @@ public class BulkHistoryDeleteTest {
 
     // then
     detailsList = historyService.createHistoricDetailQuery().list();
-    assertThat(detailsList.size()).isEqualTo(0);
+    assertThat(detailsList).hasSize(0);
   }
 
   @Test
@@ -774,7 +774,7 @@ public class BulkHistoryDeleteTest {
 
     // then
     List<HistoricIdentityLinkLog> historicIdentityLinkLog = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertThat(historicIdentityLinkLog.size()).isEqualTo(0);
+    assertThat(historicIdentityLinkLog).hasSize(0);
   }
 
   @Test
@@ -790,7 +790,7 @@ public class BulkHistoryDeleteTest {
 
     // assume
     List<Attachment> attachments = taskService.getTaskAttachments(taskId);
-    assertThat(attachments.size()).isEqualTo(1);
+    assertThat(attachments).hasSize(1);
     String contentId = findAttachmentContentId(attachments);
     terminateAndCloseCaseInstance(caseInstance.getId(), null);
 
@@ -799,7 +799,7 @@ public class BulkHistoryDeleteTest {
 
     // then
     attachments = taskService.getTaskAttachments(taskId);
-    assertThat(attachments.size()).isEqualTo(0);
+    assertThat(attachments).hasSize(0);
     verifyByteArraysWereRemoved(contentId);
   }
 
@@ -815,7 +815,7 @@ public class BulkHistoryDeleteTest {
 
     // assume
     List<Attachment> attachments = taskService.getTaskAttachments(task.getId());
-    assertThat(attachments.size()).isEqualTo(1);
+    assertThat(attachments).hasSize(1);
     terminateAndCloseCaseInstance(caseInstanceId, null);
 
     // when
@@ -823,7 +823,7 @@ public class BulkHistoryDeleteTest {
 
     // then
     attachments = taskService.getTaskAttachments(task.getId());
-    assertThat(attachments.size()).isEqualTo(0);
+    assertThat(attachments).hasSize(0);
   }
 
   @Test
@@ -841,14 +841,14 @@ public class BulkHistoryDeleteTest {
     }
     // assume
     List<HistoricVariableInstance> variablesInstances = historyService.createHistoricVariableInstanceQuery().list();
-    assertThat(variablesInstances.size()).isEqualTo(instanceCount);
+    assertThat(variablesInstances).hasSize(instanceCount);
 
     // when
     historyService.deleteHistoricCaseInstancesBulk(caseInstanceIds);
 
     // then
     variablesInstances = historyService.createHistoricVariableInstanceQuery().list();
-    assertThat(variablesInstances.size()).isEqualTo(0);
+    assertThat(variablesInstances).hasSize(0);
   }
 
   @Test
@@ -863,9 +863,9 @@ public class BulkHistoryDeleteTest {
 
     // assume
     List<HistoricVariableInstance> variablesInstances = historyService.createHistoricVariableInstanceQuery().list();
-    assertThat(variablesInstances.size()).isEqualTo(1);
+    assertThat(variablesInstances).hasSize(1);
     List<HistoricDetail> detailsList = historyService.createHistoricDetailQuery().list();
-    assertThat(detailsList.size()).isEqualTo(2);
+    assertThat(detailsList).hasSize(2);
     terminateAndCloseCaseInstance(caseInstance.getId(), variables);
 
     // when
@@ -873,9 +873,9 @@ public class BulkHistoryDeleteTest {
 
     // then
     variablesInstances = historyService.createHistoricVariableInstanceQuery().list();
-    assertThat(variablesInstances.size()).isEqualTo(0);
+    assertThat(variablesInstances).hasSize(0);
     detailsList = historyService.createHistoricDetailQuery().list();
-    assertThat(detailsList.size()).isEqualTo(0);
+    assertThat(detailsList).hasSize(0);
   }
 
   @Test
@@ -891,7 +891,7 @@ public class BulkHistoryDeleteTest {
 
     // assume
     List<HistoricDetail> detailsList = historyService.createHistoricDetailQuery().list();
-    assertThat(detailsList.size()).isEqualTo(3);
+    assertThat(detailsList).hasSize(3);
     caseService.terminateCaseExecution(caseInstance1.getId(), caseService.getVariables(caseInstance1.getId()));
     caseService.terminateCaseExecution(caseInstance2.getId(), caseService.getVariables(caseInstance2.getId()));
     caseService.closeCaseInstance(caseInstance1.getId());
@@ -902,7 +902,7 @@ public class BulkHistoryDeleteTest {
 
     // then
     detailsList = historyService.createHistoricDetailQuery().list();
-    assertThat(detailsList.size()).isEqualTo(0);
+    assertThat(detailsList).hasSize(0);
   }
 
   @Test
@@ -915,7 +915,7 @@ public class BulkHistoryDeleteTest {
 
     // assume
     List<HistoricCaseInstance> caseInstanceList = historyService.createHistoricCaseInstanceQuery().list();
-    assertThat(caseInstanceList.size()).isEqualTo(instanceCount);
+    assertThat(caseInstanceList).hasSize(instanceCount);
 
     // when
     identityService.setAuthenticatedUserId(USER_ID);

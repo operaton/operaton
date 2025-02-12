@@ -51,7 +51,7 @@ public class JobExecutorCmdHappyTest extends JobExecutorTestCase {
 
     AcquiredJobs acquiredJobs = commandExecutor.execute(new AcquireJobsCmd(jobExecutor));
     List<List<String>> jobIdsList = acquiredJobs.getJobIdBatches();
-    assertThat(jobIdsList.size()).isEqualTo(1);
+    assertThat(jobIdsList).hasSize(1);
 
     List<String> jobIds = jobIdsList.get(0);
 
@@ -59,12 +59,12 @@ public class JobExecutorCmdHappyTest extends JobExecutorTestCase {
     expectedJobIds.add(jobId);
 
     assertThat(new ArrayList<String>(jobIds)).isEqualTo(expectedJobIds);
-    assertThat(tweetHandler.getMessages().size()).isEqualTo(0);
+    assertThat(tweetHandler.getMessages()).isEmpty();
 
     ExecuteJobHelper.executeJob(jobId, commandExecutor);
 
     assertThat(tweetHandler.getMessages().get(0)).isEqualTo("i'm coding a test");
-    assertThat(tweetHandler.getMessages().size()).isEqualTo(1);
+    assertThat(tweetHandler.getMessages()).hasSize(1);
 
     clearDatabase();
   }
@@ -88,7 +88,7 @@ public class JobExecutorCmdHappyTest extends JobExecutorTestCase {
 
     AcquiredJobs acquiredJobs = commandExecutor.execute(new AcquireJobsCmd(jobExecutor));
     List<List<String>> jobIdsList = acquiredJobs.getJobIdBatches();
-    assertThat(jobIdsList.size()).isEqualTo(0);
+    assertThat(jobIdsList).isEmpty();
 
     List<String> expectedJobIds = new ArrayList<>();
 
@@ -96,19 +96,19 @@ public class JobExecutorCmdHappyTest extends JobExecutorTestCase {
 
     acquiredJobs = commandExecutor.execute(new AcquireJobsCmd(jobExecutor, jobExecutor.getMaxJobsPerAcquisition()));
     jobIdsList = acquiredJobs.getJobIdBatches();
-    assertThat(jobIdsList.size()).isEqualTo(1);
+    assertThat(jobIdsList).hasSize(1);
 
     List<String> jobIds = jobIdsList.get(0);
 
     expectedJobIds.add(jobId);
     assertThat(new ArrayList<String>(jobIds)).isEqualTo(expectedJobIds);
 
-    assertThat(tweetHandler.getMessages().size()).isEqualTo(0);
+    assertThat(tweetHandler.getMessages()).isEmpty();
 
     ExecuteJobHelper.executeJob(jobId, commandExecutor);
 
     assertThat(tweetHandler.getMessages().get(0)).isEqualTo("i'm coding a test");
-    assertThat(tweetHandler.getMessages().size()).isEqualTo(1);
+    assertThat(tweetHandler.getMessages()).hasSize(1);
 
     clearDatabase();
   }

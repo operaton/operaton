@@ -106,7 +106,7 @@ public class CleanableHistoricProcessInstanceReportTest {
 
   protected void prepareProcessInstances(String key, int daysInThePast, Integer historyTimeToLive, int instanceCount) {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().processDefinitionKey(key).list();
-    assertThat(processDefinitions.size()).isEqualTo(1);
+    assertThat(processDefinitions).hasSize(1);
     repositoryService.updateProcessDefinitionHistoryTimeToLive(processDefinitions.get(0).getId(), historyTimeToLive);
 
     Date oldCurrentTime = ClockUtil.getCurrentTime();
@@ -143,7 +143,7 @@ public class CleanableHistoricProcessInstanceReportTest {
     CleanableHistoricProcessInstanceReportResult thirdReportResult = historyService.createCleanableHistoricProcessInstanceReport().processDefinitionKeyIn(FOURTH_PROCESS_DEFINITION_KEY).singleResult();
 
     // then
-    assertThat(reportResults.size()).isEqualTo(3);
+    assertThat(reportResults).hasSize(3);
     for (CleanableHistoricProcessInstanceReportResult result : reportResults) {
       if (result.getProcessDefinitionKey().equals(PROCESS_DEFINITION_KEY)) {
         checkResultNumbers(result, 10, 20);
@@ -172,7 +172,7 @@ public class CleanableHistoricProcessInstanceReportTest {
     long count = historyService.createCleanableHistoricProcessInstanceReport().count();
 
     // then
-    assertThat(reportResults.size()).isEqualTo(1);
+    assertThat(reportResults).hasSize(1);
     assertThat(count).isEqualTo(1);
 
     checkResultNumbers(reportResults.get(0), 10, 10);
@@ -188,7 +188,7 @@ public class CleanableHistoricProcessInstanceReportTest {
     List<CleanableHistoricProcessInstanceReportResult> reportResults = historyService.createCleanableHistoricProcessInstanceReport().list();
 
     // then
-    assertThat(reportResults.size()).isEqualTo(1);
+    assertThat(reportResults).hasSize(1);
 
     checkResultNumbers(reportResults.get(0), 5, 10);
   }
@@ -216,7 +216,7 @@ public class CleanableHistoricProcessInstanceReportTest {
     List<CleanableHistoricProcessInstanceReportResult> reportResults = historyService.createCleanableHistoricProcessInstanceReport().list();
 
     // then
-    assertThat(reportResults.size()).isEqualTo(1);
+    assertThat(reportResults).hasSize(1);
 
     checkResultNumbers(reportResults.get(0), 0, 10);
   }
@@ -263,11 +263,11 @@ public class CleanableHistoricProcessInstanceReportTest {
   public void testReportCompact() {
     // given
     List<ProcessDefinition> pdList = repositoryService.createProcessDefinitionQuery().processDefinitionKey(PROCESS_DEFINITION_KEY).list();
-    assertThat(pdList.size()).isEqualTo(1);
+    assertThat(pdList).hasSize(1);
     runtimeService.startProcessInstanceById(pdList.get(0).getId());
 
     List<CleanableHistoricProcessInstanceReportResult> resultWithZeros = historyService.createCleanableHistoricProcessInstanceReport().list();
-    assertThat(resultWithZeros.size()).isEqualTo(1);
+    assertThat(resultWithZeros).hasSize(1);
     assertThat(resultWithZeros.get(0).getFinishedProcessInstanceCount()).isEqualTo(0);
 
     // when
@@ -294,7 +294,7 @@ public class CleanableHistoricProcessInstanceReportTest {
       .list();
 
     // then
-    assertThat(reportResult.size()).isEqualTo(3);
+    assertThat(reportResult).hasSize(3);
     assertThat(reportResult.get(0).getProcessDefinitionKey()).isEqualTo(PROCESS_DEFINITION_KEY);
     assertThat(reportResult.get(1).getProcessDefinitionKey()).isEqualTo(SECOND_PROCESS_DEFINITION_KEY);
     assertThat(reportResult.get(2).getProcessDefinitionKey()).isEqualTo(THIRD_PROCESS_DEFINITION_KEY);
@@ -317,7 +317,7 @@ public class CleanableHistoricProcessInstanceReportTest {
       .list();
 
     // then
-    assertThat(reportResult.size()).isEqualTo(3);
+    assertThat(reportResult).hasSize(3);
     assertThat(reportResult.get(0).getProcessDefinitionKey()).isEqualTo(THIRD_PROCESS_DEFINITION_KEY);
     assertThat(reportResult.get(1).getProcessDefinitionKey()).isEqualTo(SECOND_PROCESS_DEFINITION_KEY);
     assertThat(reportResult.get(2).getProcessDefinitionKey()).isEqualTo(PROCESS_DEFINITION_KEY);

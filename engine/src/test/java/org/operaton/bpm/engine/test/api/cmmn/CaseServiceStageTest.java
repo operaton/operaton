@@ -314,7 +314,7 @@ public class CaseServiceStageTest extends PluggableProcessEngineTest {
 
   protected void verifyVariables(String caseInstanceId, String caseExecutionId, List<VariableInstance> result) {
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     for (VariableInstance variable : result) {
 

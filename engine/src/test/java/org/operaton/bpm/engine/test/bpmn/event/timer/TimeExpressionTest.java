@@ -50,7 +50,7 @@ public class TimeExpressionTest extends PluggableProcessEngineTest {
 
 
 		    List<Job> jobs = managementService.createJobQuery().executable().list();
-      assertThat(jobs.size()).isEqualTo(1);
+      assertThat(jobs).hasSize(1);
 		    return jobs.get(0).getDuedate();
 	  }
 	  

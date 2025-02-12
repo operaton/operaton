@@ -489,7 +489,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
         .duration(MONTH);
 
     // then
-    Assertions.assertThat(result.size()).isEqualTo(0);
+    Assertions.assertThat(result).isEmpty();
   }
 
   @Test

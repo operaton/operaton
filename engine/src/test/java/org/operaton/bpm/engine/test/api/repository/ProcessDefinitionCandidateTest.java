@@ -68,7 +68,7 @@ public class ProcessDefinitionCandidateTest {
     // then
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     List<IdentityLink> links = repositoryService.getIdentityLinksForProcessDefinition(processDefinition.getId());
-    assertThat(links.size()).isEqualTo(1);
+    assertThat(links).hasSize(1);
 
     IdentityLink link = links.get(0);
     assertNotNull(link.getTenantId());
@@ -86,7 +86,7 @@ public class ProcessDefinitionCandidateTest {
     // then
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     List<IdentityLink> links = repositoryService.getIdentityLinksForProcessDefinition(processDefinition.getId());
-    assertThat(links.size()).isEqualTo(3);
+    assertThat(links).hasSize(3);
 
     for (IdentityLink link : links) {
       assertNotNull(link.getTenantId());
@@ -105,7 +105,7 @@ public class ProcessDefinitionCandidateTest {
     // then
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     List<IdentityLink> links = repositoryService.getIdentityLinksForProcessDefinition(processDefinition.getId());
-    assertThat(links.size()).isEqualTo(1);
+    assertThat(links).hasSize(1);
 
     IdentityLink link = links.get(0);
     assertNotNull(link.getTenantId());
@@ -123,7 +123,7 @@ public class ProcessDefinitionCandidateTest {
     // then
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     List<IdentityLink> links = repositoryService.getIdentityLinksForProcessDefinition(processDefinition.getId());
-    assertThat(links.size()).isEqualTo(3);
+    assertThat(links).hasSize(3);
 
     for (IdentityLink link : links) {
       assertNotNull(link.getTenantId());

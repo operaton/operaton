@@ -79,7 +79,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
     caseService.withCaseExecution(taskExecution.getId()).setVariableLocal("aTaskVariable", "aTaskValue").execute();
 
     // then the listener is invoked
-    assertThat(LogVariableListener.getInvocations().size()).isEqualTo(1);
+    assertThat(LogVariableListener.getInvocations()).hasSize(1);
 
     DelegateVariableInstanceSpec
       .fromCaseExecution(taskExecution)
@@ -94,7 +94,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
     caseService.withCaseExecution(taskExecution.getId()).setVariable("aTaskVariable", "aNewTaskValue").execute();
 
     // then the listener is invoked
-    assertThat(LogVariableListener.getInvocations().size()).isEqualTo(1);
+    assertThat(LogVariableListener.getInvocations()).hasSize(1);
     DelegateVariableInstanceSpec
       .fromCaseExecution(taskExecution)
       .event(VariableListener.UPDATE)
@@ -108,7 +108,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
     caseService.withCaseExecution(taskExecution.getId()).removeVariable("aTaskVariable").execute();
 
     // then the listener is invoked
-    assertThat(LogVariableListener.getInvocations().size()).isEqualTo(1);
+    assertThat(LogVariableListener.getInvocations()).hasSize(1);
     DelegateVariableInstanceSpec
       .fromCaseExecution(taskExecution)
       .event(VariableListener.DELETE)
@@ -135,7 +135,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
     caseService.withCaseExecution(taskExecution.getId()).setVariableLocal("aTaskVariable", "aTaskValue").execute();
 
     // then the listener is invoked
-    assertThat(LogVariableListener.getInvocations().size()).isEqualTo(1);
+    assertThat(LogVariableListener.getInvocations()).hasSize(1);
 
     DelegateVariableInstanceSpec
       .fromCaseExecution(taskExecution)
@@ -180,7 +180,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
     caseService.withCaseExecution(taskExecution.getId()).setVariable("aTaskVariable", "aNewTaskValue").execute();
 
     // then the listener is invoked
-    assertThat(LogVariableListener.getInvocations().size()).isEqualTo(1);
+    assertThat(LogVariableListener.getInvocations()).hasSize(1);
 
     DelegateVariableInstanceSpec
       .fromCaseExecution(taskExecution)
@@ -216,13 +216,13 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
     caseService.withCaseExecution(caseInstance.getId()).setVariable("aTaskVariable", "aTaskValue").execute();
 
     // then the listener is not invoked
-    assertThat(LogVariableListener.getInvocations().size()).isEqualTo(0);
+    assertThat(LogVariableListener.getInvocations()).hasSize(0);
 
     // when i update the variable from the task execution
     caseService.withCaseExecution(taskExecution.getId()).setVariable("aTaskVariable", "aTaskValue").execute();
 
     // then the listener is invoked
-    assertThat(LogVariableListener.getInvocations().size()).isEqualTo(1);
+    assertThat(LogVariableListener.getInvocations()).hasSize(1);
 
     DelegateVariableInstanceSpec
       .fromCaseExecution(caseInstance)
@@ -263,7 +263,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
     caseService.withCaseExecution(taskExecution.getId()).removeVariable("aTaskVariable").execute();
 
     // then the listener is invoked
-    assertThat(LogVariableListener.getInvocations().size()).isEqualTo(1);
+    assertThat(LogVariableListener.getInvocations()).hasSize(1);
 
     DelegateVariableInstanceSpec
       .fromCaseExecution(taskExecution)
@@ -293,7 +293,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
     caseService.withCaseExecution(taskExecution.getId()).setVariableLocal("aTaskVariable", "aTaskValue").execute();
 
     // then the listener is invoked
-    assertThat(LogVariableListener.getInvocations().size()).isEqualTo(1);
+    assertThat(LogVariableListener.getInvocations()).hasSize(1);
 
     DelegateVariableInstanceSpec
       .fromCaseExecution(taskExecution)
@@ -361,7 +361,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
     caseService.withCaseExecution(taskExecution.getId()).setVariable("aTaskVariable", "aTaskValue").execute();
 
     // then the listener is invoked
-    assertThat(LogVariableListener.getInvocations().size()).isEqualTo(1);
+    assertThat(LogVariableListener.getInvocations()).hasSize(1);
 
     // and the source execution is the execution the variable was set on
     DelegateVariableInstanceSpec
@@ -390,7 +390,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
     caseService.withCaseExecution(taskExecution.getId()).setVariableLocal("aTaskVariable", "aTaskValue").execute();
 
     // then the listener is invoked
-    assertThat(LogVariableListener.getInvocations().size()).isEqualTo(1);
+    assertThat(LogVariableListener.getInvocations()).hasSize(1);
 
     DelegateVariableInstanceSpec
       .fromCaseExecution(taskExecution)
@@ -413,7 +413,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
     caseService.withCaseExecution(caseInstance.getId()).setVariableLocal("aTaskVariable", "aTaskValue").execute();
 
     // then the listener is not invoked
-    assertThat(LogVariableListener.getInvocations().size()).isEqualTo(0);
+    assertThat(LogVariableListener.getInvocations()).hasSize(0);
 
     LogVariableListener.reset();
   }
@@ -437,7 +437,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
     caseService.withCaseExecution(taskExecution.getId()).setVariableLocal("aTaskVariable", "aTaskValue").execute();
 
     // then the listener is invoked
-    assertThat(LogVariableListener.getInvocations().size()).isEqualTo(1);
+    assertThat(LogVariableListener.getInvocations()).hasSize(1);
 
     DelegateVariableInstanceSpec
       .fromCaseExecution(taskExecution)
@@ -530,7 +530,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
     if (processEngineConfiguration.getHistoryLevel().getId() >= HistoryLevel.HISTORY_LEVEL_FULL.getId()) {
       List<HistoricDetail> variableUpdates = historyService.createHistoricDetailQuery().variableUpdates().list();
 
-      assertThat(variableUpdates.size()).isEqualTo(2);
+      assertThat(variableUpdates).hasSize(2);
 
       for (HistoricDetail detail : variableUpdates) {
         HistoricVariableUpdate update = (HistoricVariableUpdate) detail;
@@ -565,7 +565,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
     // then all listeners for the first variable update are invoked first
     // and then the listeners for the second update are invoked
     List<DelegateCaseVariableInstance> invocations = LogAndUpdateVariableListener.getInvocations();
-    assertThat(invocations.size()).isEqualTo(6);
+    assertThat(invocations).hasSize(6);
 
     // the first invocations should regard the first value
     DelegateVariableInstanceSpec
@@ -612,7 +612,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
     caseService.withCaseExecution(taskExecution.getId()).setVariableLocal("testVariable", "value1").execute();
 
     // then both listeners are invoked
-    assertThat(LogVariableListener.getInvocations().size()).isEqualTo(1);
+    assertThat(LogVariableListener.getInvocations()).hasSize(1);
 
     DelegateVariableInstanceSpec
       .fromCaseExecution(taskExecution)
@@ -621,7 +621,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
       .value("value1")
       .matches(LogVariableListener.getInvocations().get(0));
 
-    assertThat(LogAndUpdateVariableListener.getInvocations().size()).isEqualTo(1);
+    assertThat(LogAndUpdateVariableListener.getInvocations()).hasSize(1);
 
     DelegateVariableInstanceSpec
       .fromCaseExecution(taskExecution)
@@ -650,10 +650,10 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
     caseService.withCaseExecution(taskExecution.getId()).setVariableLocal("testVariable", "value1").execute();
 
     // then the field expressions are resolved
-    assertThat(LogInjectedValuesListener.getResolvedStringValueExpressions().size()).isEqualTo(1);
+    assertThat(LogInjectedValuesListener.getResolvedStringValueExpressions()).hasSize(1);
     assertThat(LogInjectedValuesListener.getResolvedStringValueExpressions().get(0)).isEqualTo("injectedValue");
 
-    assertThat(LogInjectedValuesListener.getResolvedJuelExpressions().size()).isEqualTo(1);
+    assertThat(LogInjectedValuesListener.getResolvedJuelExpressions()).hasSize(1);
     assertThat(LogInjectedValuesListener.getResolvedJuelExpressions().get(0)).isEqualTo("ope");
 
     LogInjectedValuesListener.reset();
@@ -676,10 +676,10 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
     caseService.withCaseExecution(taskExecution.getId()).setVariableLocal("testVariable", "value1").execute();
 
     // then the field expressions are resolved
-    assertThat(LogInjectedValuesListener.getResolvedStringValueExpressions().size()).isEqualTo(1);
+    assertThat(LogInjectedValuesListener.getResolvedStringValueExpressions()).hasSize(1);
     assertThat(LogInjectedValuesListener.getResolvedStringValueExpressions().get(0)).isEqualTo("injectedValue");
 
-    assertThat(LogInjectedValuesListener.getResolvedJuelExpressions().size()).isEqualTo(1);
+    assertThat(LogInjectedValuesListener.getResolvedJuelExpressions()).hasSize(1);
     assertThat(LogInjectedValuesListener.getResolvedJuelExpressions().get(0)).isEqualTo("ope");
 
     LogInjectedValuesListener.reset();
@@ -700,7 +700,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
     caseService.withCaseExecution(taskExecution.getId()).setVariableLocal("testVariable", "value1").execute();
 
     // then the listener is invoked
-    assertThat(LogExecutionContextListener.getCaseExecutionContexts().size()).isEqualTo(1);
+    assertThat(LogExecutionContextListener.getCaseExecutionContexts()).hasSize(1);
     CaseExecutionContext executionContext = LogExecutionContextListener.getCaseExecutionContexts().get(0);
 
     assertNotNull(executionContext);
@@ -738,10 +738,10 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
     caseService.withCaseExecution(taskExecution.getId()).setVariableLocal("testVariable", "value1").execute();
 
     // then the builtin listener is invoked
-    assertThat(LogVariableListener.getInvocations().size()).isEqualTo(1);
+    assertThat(LogVariableListener.getInvocations()).hasSize(1);
 
     // but the custom listener is not invoked
-    assertThat(LogExecutionContextListener.getCaseExecutionContexts().size()).isEqualTo(0);
+    assertThat(LogExecutionContextListener.getCaseExecutionContexts()).hasSize(0);
 
     LogVariableListener.reset();
     LogExecutionContextListener.reset();
@@ -775,7 +775,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
       .manualStart();
 
     // then the listener is invoked
-    assertThat(LogVariableListener.getInvocations().size()).isEqualTo(1);
+    assertThat(LogVariableListener.getInvocations()).hasSize(1);
 
     DelegateVariableInstanceSpec
       .fromCaseExecution(caseInstance)

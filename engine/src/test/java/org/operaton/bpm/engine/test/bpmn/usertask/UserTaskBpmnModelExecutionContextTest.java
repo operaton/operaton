@@ -170,10 +170,10 @@ public class UserTaskBpmnModelExecutionContextTest {
     assertNotNull(modelInstance);
 
     Collection<ModelElementInstance> events = modelInstance.getModelElementsByType(modelInstance.getModel().getType(Event.class));
-    assertThat(events.size()).isEqualTo(2);
+    assertThat(events).hasSize(2);
 
     Collection<ModelElementInstance> tasks = modelInstance.getModelElementsByType(modelInstance.getModel().getType(Task.class));
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
 
     Process process = (Process) modelInstance.getDefinitions().getRootElements().iterator().next();
     assertThat(process.getId()).isEqualTo(PROCESS_ID);

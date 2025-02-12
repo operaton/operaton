@@ -228,7 +228,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
     authRule.disableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -258,7 +258,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
     authRule.disableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -287,7 +287,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
     authRule.disableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -318,7 +318,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
     authRule.disableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);

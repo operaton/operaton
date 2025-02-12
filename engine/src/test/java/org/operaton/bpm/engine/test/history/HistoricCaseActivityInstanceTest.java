@@ -497,9 +497,9 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
     createCaseInstance();
     createCaseInstance();
 
-    assertThat(historicQuery().listPage(0, 3).size()).isEqualTo(3);
-    assertThat(historicQuery().listPage(2, 2).size()).isEqualTo(2);
-    assertThat(historicQuery().listPage(3, 2).size()).isEqualTo(1);
+    assertThat(historicQuery().listPage(0, 3)).hasSize(3);
+    assertThat(historicQuery().listPage(2, 2)).hasSize(2);
+    assertThat(historicQuery().listPage(3, 2)).hasSize(1);
   }
 
   @Deployment(resources = {
@@ -624,16 +624,16 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
     assertThat(tableName).isEqualTo(tablePrefix + "ACT_HI_CASEACTINST");
     assertThat(managementService.getTableName(HistoricCaseActivityInstanceEntity.class)).isEqualTo(tableName);
 
-    assertThat(historyService.createNativeHistoricCaseActivityInstanceQuery().sql("SELECT * FROM " + tableName).list().size()).isEqualTo(4);
+    assertThat(historyService.createNativeHistoricCaseActivityInstanceQuery().sql("SELECT * FROM " + tableName).list()).hasSize(4);
     assertThat(historyService.createNativeHistoricCaseActivityInstanceQuery().sql("SELECT count(*) FROM " + tableName).count()).isEqualTo(4);
 
     assertThat(historyService.createNativeHistoricCaseActivityInstanceQuery().sql("SELECT count(*) FROM " + tableName + " H1, " + tableName + " H2").count()).isEqualTo(16);
 
     // select with distinct
-    assertThat(historyService.createNativeHistoricCaseActivityInstanceQuery().sql("SELECT DISTINCT * FROM " + tableName).list().size()).isEqualTo(4);
+    assertThat(historyService.createNativeHistoricCaseActivityInstanceQuery().sql("SELECT DISTINCT * FROM " + tableName).list()).hasSize(4);
 
     assertThat(historyService.createNativeHistoricCaseActivityInstanceQuery().sql("SELECT count(*) FROM " + tableName + " H WHERE H.ID_ = '" + instanceId + "'").count()).isEqualTo(1);
-    assertThat(historyService.createNativeHistoricCaseActivityInstanceQuery().sql("SELECT * FROM " + tableName + " H WHERE H.ID_ = '" + instanceId + "'").list().size()).isEqualTo(1);
+    assertThat(historyService.createNativeHistoricCaseActivityInstanceQuery().sql("SELECT * FROM " + tableName + " H WHERE H.ID_ = '" + instanceId + "'").list()).hasSize(1);
 
     // use parameters
     assertThat(historyService.createNativeHistoricCaseActivityInstanceQuery().sql("SELECT count(*) FROM " + tableName + " H WHERE H.ID_ = #{caseActivityInstanceId}").parameter("caseActivityInstanceId", instanceId).count()).isEqualTo(1);
@@ -648,8 +648,8 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
     createCaseInstance();
 
     String tableName = managementService.getTableName(HistoricCaseActivityInstance.class);
-    assertThat(historyService.createNativeHistoricCaseActivityInstanceQuery().sql("SELECT * FROM " + tableName).listPage(0, 3).size()).isEqualTo(3);
-    assertThat(historyService.createNativeHistoricCaseActivityInstanceQuery().sql("SELECT * FROM " + tableName).listPage(2, 2).size()).isEqualTo(2);
+    assertThat(historyService.createNativeHistoricCaseActivityInstanceQuery().sql("SELECT * FROM " + tableName).listPage(0, 3)).hasSize(3);
+    assertThat(historyService.createNativeHistoricCaseActivityInstanceQuery().sql("SELECT * FROM " + tableName).listPage(2, 2)).hasSize(2);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn"})
@@ -715,7 +715,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
         .required();
 
     assertThat(query.count()).isEqualTo(1);
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
 
     HistoricCaseActivityInstance activityInstance = query.singleResult();
     assertNotNull(activityInstance);

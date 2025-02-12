@@ -141,7 +141,7 @@ public class ProcessDefinitionStatisticsAuthorizationTest extends AuthorizationT
     List<ProcessDefinitionStatistics> statistics = managementService.createProcessDefinitionStatisticsQuery().list();
 
     // then
-    assertThat(statistics.size()).isEqualTo(2);
+    assertThat(statistics).hasSize(2);
 
     ProcessDefinitionStatistics oneTaskProcessStatistics = getStatisticsByKey(statistics, ONE_TASK_PROCESS_KEY);
     verifyStatisticsResult(oneTaskProcessStatistics, 2, 0, 0);
@@ -171,7 +171,7 @@ public class ProcessDefinitionStatisticsAuthorizationTest extends AuthorizationT
         .list();
 
     // then
-    assertThat(statistics.size()).isEqualTo(2);
+    assertThat(statistics).hasSize(2);
 
     ProcessDefinitionStatistics oneTaskProcessStatistics = getStatisticsByKey(statistics, ONE_TASK_PROCESS_KEY);
     verifyStatisticsResult(oneTaskProcessStatistics, 2, 0, 0);
@@ -201,7 +201,7 @@ public class ProcessDefinitionStatisticsAuthorizationTest extends AuthorizationT
         .list();
 
     // then
-    assertThat(statistics.size()).isEqualTo(2);
+    assertThat(statistics).hasSize(2);
 
     ProcessDefinitionStatistics oneTaskProcessStatistics = getStatisticsByKey(statistics, ONE_TASK_PROCESS_KEY);
     verifyStatisticsResult(oneTaskProcessStatistics, 2, 0, 0);
@@ -232,7 +232,7 @@ public class ProcessDefinitionStatisticsAuthorizationTest extends AuthorizationT
         .list();
 
     // then
-    assertThat(statistics.size()).isEqualTo(2);
+    assertThat(statistics).hasSize(2);
 
     ProcessDefinitionStatistics oneTaskProcessStatistics = getStatisticsByKey(statistics, ONE_TASK_PROCESS_KEY);
     verifyStatisticsResult(oneTaskProcessStatistics, 2, 0, 0);

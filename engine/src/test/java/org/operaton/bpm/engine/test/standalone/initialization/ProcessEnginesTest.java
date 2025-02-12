@@ -54,7 +54,7 @@ public class ProcessEnginesTest {
     List<ProcessEngineInfo> processEngineInfos = ProcessEngines.getProcessEngineInfos();
 
     // then
-    assertThat(processEngineInfos.size()).isEqualTo(1);
+    assertThat(processEngineInfos).hasSize(1);
 
     ProcessEngineInfo processEngineInfo = processEngineInfos.get(0);
     assertNull(processEngineInfo.getException());

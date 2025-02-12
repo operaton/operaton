@@ -170,7 +170,7 @@ public class CustomHistoryLevelIncidentTest {
 
     // then
     List<HistoricIncident> incidents = historyService.createHistoricIncidentQuery().list();
-    assertThat(incidents.size()).isEqualTo(0);
+    assertThat(incidents).hasSize(0);
   }
 
   @Test
@@ -209,7 +209,7 @@ public class CustomHistoryLevelIncidentTest {
 
     // then
     List<HistoricIncident> incidents = historyService.createHistoricIncidentQuery().list();
-    assertThat(incidents.size()).isEqualTo(0);
+    assertThat(incidents).hasSize(0);
   }
 
   @Test
@@ -238,7 +238,7 @@ public class CustomHistoryLevelIncidentTest {
 
     // then
     List<HistoricIncident> incidents = historyService.createHistoricIncidentQuery().list();
-    assertThat(incidents.size()).isEqualTo(0);
+    assertThat(incidents).hasSize(0);
   }
 
   protected void executeAvailableJobs() {

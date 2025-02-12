@@ -127,7 +127,7 @@ public class HistoryCleanupHistoricBatchTest {
     // given
     prepareHistoricBatches(3, daysInThePast);
     List<HistoricBatch> historicList = historyService.createHistoricBatchQuery().list();
-    assertThat(historicList.size()).isEqualTo(3);
+    assertThat(historicList).hasSize(3);
 
     // when
     runHistoryCleanup();
@@ -240,7 +240,7 @@ public class HistoryCleanupHistoricBatchTest {
 
     // when
     List<HistoricBatch> historicList = historyService.createHistoricBatchQuery().list();
-    assertThat(historicList.size()).isEqualTo(30);
+    assertThat(historicList).hasSize(30);
     runHistoryCleanup();
 
     // then
@@ -290,7 +290,7 @@ public class HistoryCleanupHistoricBatchTest {
 
     // when
     List<HistoricBatch> historicList = historyService.createHistoricBatchQuery().list();
-    assertThat(historicList.size()).isEqualTo(31);
+    assertThat(historicList).hasSize(31);
     runHistoryCleanup();
 
     // then

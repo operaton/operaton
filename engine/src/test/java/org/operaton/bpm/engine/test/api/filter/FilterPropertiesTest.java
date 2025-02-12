@@ -109,7 +109,7 @@ public class FilterPropertiesTest {
 
     // then
     Map<String, Object> persistentProperties = filter.getProperties();
-    assertThat(persistentProperties.size()).isEqualTo(1);
+    assertThat(persistentProperties).hasSize(1);
     assertTrue(persistentProperties.containsKey("null"));
     assertNull(persistentProperties.get("null"));
 
@@ -255,11 +255,12 @@ public class FilterPropertiesTest {
     filter = filterService.getFilter(filter.getId());
 
     Map<String, Object> properties = filter.getProperties();
-    assertThat(properties.size()).isEqualTo(5);
-    assertThat(properties.get("color")).isEqualTo("#123456");
-    assertThat(properties.get("priority")).isEqualTo(42);
-    assertThat(properties.get("userDefined")).isEqualTo(true);
-    assertThat(properties.get("object")).isEqualTo(nestedJsonObject);
-    assertThat(properties.get("array")).isEqualTo(nestedJsonArray);
+    assertThat(properties)
+            .hasSize(5)
+            .containsEntry("color", "#123456")
+            .containsEntry("priority", 42)
+            .containsEntry("userDefined", true)
+            .containsEntry("object", nestedJsonObject)
+            .containsEntry("array", nestedJsonArray);
   }
 }

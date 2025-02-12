@@ -93,7 +93,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
     List<LockedExternalTask> externalTasks = externalTaskService.fetchAndLock(1, WORKER_ID)
       .topic(TOPIC_NAME, LOCK_TIME)
       .execute();
-    assertThat(externalTasks.size()).isEqualTo(1);
+    assertThat(externalTasks).hasSize(1);
 
   }
 
@@ -106,7 +106,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
     List<LockedExternalTask> externalTasks = externalTaskService.fetchAndLock(1, WORKER_ID)
       .topic(TOPIC_NAME, LOCK_TIME)
       .execute();
-    assertThat(externalTasks.size()).isEqualTo(0);
+    assertThat(externalTasks).hasSize(0);
 
   }
 
@@ -119,7 +119,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
     List<LockedExternalTask> externalTasks = externalTaskService.fetchAndLock(1, WORKER_ID)
       .topic(TOPIC_NAME, LOCK_TIME)
       .execute();
-    assertThat(externalTasks.size()).isEqualTo(0);
+    assertThat(externalTasks).hasSize(0);
 
   }
 
@@ -132,7 +132,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
     List<LockedExternalTask> externalTasks = externalTaskService.fetchAndLock(1, WORKER_ID)
       .topic(TOPIC_NAME, LOCK_TIME)
       .execute();
-    assertThat(externalTasks.size()).isEqualTo(1);
+    assertThat(externalTasks).hasSize(1);
 
   }
 
@@ -148,7 +148,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
       .execute();
 
     // then
-    assertThat(externalTasks.size()).isEqualTo(0);
+    assertThat(externalTasks).hasSize(0);
   }
 
   @Test
@@ -165,7 +165,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
       .execute();
 
     // then
-    assertThat(externalTasks.size()).isEqualTo(1);
+    assertThat(externalTasks).hasSize(1);
   }
 
   @Test
@@ -178,7 +178,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
       .execute();
 
     // then
-    assertThat(externalTasks.size()).isEqualTo(1);
+    assertThat(externalTasks).hasSize(1);
   }
 
   @Test
@@ -197,7 +197,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
       .execute();
 
     // then
-    assertThat(externalTasks.size()).isEqualTo(2);
+    assertThat(externalTasks).hasSize(2);
 
     for (LockedExternalTask externalTask : externalTasks) {
       if (externalTask.getProcessInstanceId().equals(processInstanceId)) {

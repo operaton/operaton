@@ -83,7 +83,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
     // then (1)
     List<ActivitySequenceCounterMap> order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertThat(order.size()).isEqualTo(5);
+    assertThat(order).hasSize(5);
 
     long lastSequenceCounter = 0;
 
@@ -116,7 +116,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
     // then (2)
     order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertThat(order.size()).isEqualTo(6);
+    assertThat(order).hasSize(6);
 
     ActivitySequenceCounterMap theEnd1Element = order.get(5);
     assertThat(theEnd1Element.getActivityId()).isEqualTo("theEnd1");
@@ -130,7 +130,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(processInstanceId);
 
     order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertThat(order.size()).isEqualTo(7);
+    assertThat(order).hasSize(7);
 
     ActivitySequenceCounterMap theEnd2Element = order.get(6);
     assertThat(theEnd2Element.getActivityId()).isEqualTo("theEnd2");
@@ -165,7 +165,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
     // then (1)
     List<ActivitySequenceCounterMap> order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertThat(order.size()).isEqualTo(6);
+    assertThat(order).hasSize(6);
 
     long lastSequenceCounter = 0;
 
@@ -202,7 +202,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
     // then (2)
     order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertThat(order.size()).isEqualTo(7);
+    assertThat(order).hasSize(7);
 
     ActivitySequenceCounterMap theEnd1Element = order.get(6);
     assertThat(theEnd1Element.getActivityId()).isEqualTo("theEnd1");
@@ -216,7 +216,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(processInstanceId);
 
     order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertThat(order.size()).isEqualTo(8);
+    assertThat(order).hasSize(8);
 
     ActivitySequenceCounterMap theEnd2Element = order.get(7);
     assertThat(theEnd2Element.getActivityId()).isEqualTo("theEnd2");
@@ -235,7 +235,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
     // then (1)
     List<ActivitySequenceCounterMap> order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertThat(order.size()).isEqualTo(2);
+    assertThat(order).hasSize(2);
 
     ActivitySequenceCounterMap theService1Element = order.get(0);
     assertThat(theService1Element.getActivityId()).isEqualTo("theService1");
@@ -251,7 +251,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
     // then (2)
     order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertThat(order.size()).isEqualTo(5);
+    assertThat(order).hasSize(5);
 
     ActivitySequenceCounterMap theService4Element = order.get(2);
     assertThat(theService4Element.getActivityId()).isEqualTo("theService4");
@@ -271,7 +271,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
     // then (3)
     order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertThat(order.size()).isEqualTo(7);
+    assertThat(order).hasSize(7);
 
     ActivitySequenceCounterMap theService2Element = order.get(5);
     assertThat(theService2Element.getActivityId()).isEqualTo("theService2");
@@ -296,7 +296,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
     // then (1)
     List<ActivitySequenceCounterMap> order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertThat(order.size()).isEqualTo(2);
+    assertThat(order).hasSize(2);
 
     ActivitySequenceCounterMap theService1Element = order.get(0);
     assertThat(theService1Element.getActivityId()).isEqualTo("theService1");
@@ -312,7 +312,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
     // then (2)
     order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertThat(order.size()).isEqualTo(4);
+    assertThat(order).hasSize(4);
 
     ActivitySequenceCounterMap theService2Element = order.get(2);
     assertThat(theService2Element.getActivityId()).isEqualTo("theService2");
@@ -328,7 +328,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
     // then (3)
     order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertThat(order.size()).isEqualTo(7);
+    assertThat(order).hasSize(7);
 
     ActivitySequenceCounterMap theService4Element = order.get(4);
     assertThat(theService4Element.getActivityId()).isEqualTo("theService4");
@@ -357,7 +357,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
     // then (1)
     List<ActivitySequenceCounterMap> order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertThat(order.size()).isEqualTo(3);
+    assertThat(order).hasSize(3);
 
     ActivitySequenceCounterMap theService1Element = order.get(0);
     assertThat(theService1Element.getActivityId()).isEqualTo("theService1");
@@ -377,7 +377,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
     // then (2)
     order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertThat(order.size()).isEqualTo(5);
+    assertThat(order).hasSize(5);
 
     ActivitySequenceCounterMap theService2Element = order.get(3);
     assertThat(theService2Element.getActivityId()).isEqualTo("theService2");
@@ -393,7 +393,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
     // then (3)
     order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertThat(order.size()).isEqualTo(8);
+    assertThat(order).hasSize(8);
 
     ActivitySequenceCounterMap theService4Element = order.get(5);
     assertThat(theService4Element.getActivityId()).isEqualTo("theService4");
@@ -413,7 +413,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
     // then (4)
     order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertThat(order.size()).isEqualTo(12);
+    assertThat(order).hasSize(12);
 
     ActivitySequenceCounterMap theService7Element = order.get(8);
     assertThat(theService7Element.getActivityId()).isEqualTo("theService7");
@@ -447,7 +447,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(processInstanceId);
 
     List<ActivitySequenceCounterMap> order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertThat(order.size()).isEqualTo(9);
+    assertThat(order).hasSize(9);
 
     long lastSequenceCounter = 0;
 
@@ -509,7 +509,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(processInstanceId);
 
     List<ActivitySequenceCounterMap> order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertThat(order.size()).isEqualTo(10);
+    assertThat(order).hasSize(10);
 
     long lastSequenceCounter = 0;
 
@@ -578,7 +578,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(processInstanceId);
 
     List<ActivitySequenceCounterMap> order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertThat(order.size()).isEqualTo(4);
+    assertThat(order).hasSize(4);
 
     ActivitySequenceCounterMap theJoin1Element = order.get(0);
     assertThat(theJoin1Element.getActivityId()).isEqualTo("join");
@@ -627,7 +627,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(processInstanceId);
 
     List<ActivitySequenceCounterMap> order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertThat(order.size()).isEqualTo(3);
+    assertThat(order).hasSize(3);
 
     ActivitySequenceCounterMap innerEnd1Element = order.get(0);
     assertThat(innerEnd1Element.getActivityId()).isEqualTo("innerEnd1");
@@ -654,7 +654,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(processInstanceId);
 
     List<ActivitySequenceCounterMap> order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertThat(order.size()).isEqualTo(3);
+    assertThat(order).hasSize(3);
 
     ActivitySequenceCounterMap innerEnd1Element = order.get(0);
     assertThat(innerEnd1Element.getActivityId()).isEqualTo("innerEnd1");
@@ -696,7 +696,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(processInstanceId);
 
     List<ActivitySequenceCounterMap> order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertThat(order.size()).isEqualTo(6);
+    assertThat(order).hasSize(6);
 
     ActivitySequenceCounterMap theStartElement = order.get(0);
     assertThat(theStartElement.getActivityId()).isEqualTo("theStart");
@@ -777,7 +777,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
 
     // then (2)
     order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertThat(order.size()).isEqualTo(6);
+    assertThat(order).hasSize(6);
 
     ActivitySequenceCounterMap theService1Element = order.get(1);
     assertThat(theService1Element.getActivityId()).isEqualTo("theService1");
@@ -806,7 +806,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(processInstanceId);
 
     order = ExecutionOrderListener.getActivityExecutionOrder();
-    assertThat(order.size()).isEqualTo(7);
+    assertThat(order).hasSize(7);
 
     ActivitySequenceCounterMap theEnd1Element = order.get(6);
     assertThat(theEnd1Element.getActivityId()).isEqualTo("theEnd1");
@@ -814,7 +814,7 @@ public class ExecutionSequenceCounterTest extends PluggableProcessEngineTest {
   }
 
   protected void verifyOrder(List<ActivitySequenceCounterMap> actualOrder, String... expectedOrder) {
-    assertThat(actualOrder.size()).isEqualTo(expectedOrder.length);
+    assertThat(actualOrder).hasSize(expectedOrder.length);
 
     long lastActualSequenceCounter = 0;
     for (int i = 0; i < expectedOrder.length; i++) {

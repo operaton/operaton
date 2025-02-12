@@ -39,12 +39,12 @@ public class AsyncEmailTaskTest extends EmailTestCase {
     String procId = runtimeService.startProcessInstanceByKey("simpleTextOnly").getId();
 
     List<WiserMessage> messages = wiser.getMessages();
-    assertThat(messages.size()).isEqualTo(0);
+    assertThat(messages).hasSize(0);
 
     testRule.waitForJobExecutorToProcessAllJobs(5000L);
 
     messages = wiser.getMessages();
-    assertThat(messages.size()).isEqualTo(1);
+    assertThat(messages).hasSize(1);
 
     WiserMessage message = messages.get(0);
     EmailServiceTaskTest.assertEmailSend(message, false, "Hello Kermit!", "This a text only e-mail.", "operaton@localhost",
@@ -58,12 +58,12 @@ public class AsyncEmailTaskTest extends EmailTestCase {
     runtimeService.startProcessInstanceByKey("simpleTextOnly");
 
     List<WiserMessage> messages = wiser.getMessages();
-    assertThat(messages.size()).isEqualTo(0);
+    assertThat(messages).hasSize(0);
 
     testRule.waitForJobExecutorToProcessAllJobs(5000L);
 
     messages = wiser.getMessages();
-    assertThat(messages.size()).isEqualTo(1);
+    assertThat(messages).hasSize(1);
 
     WiserMessage message = messages.get(0);
     EmailServiceTaskTest.assertEmailSend(message, false, "Hello Kermit!", "This a text only e-mail.", "operaton@localhost",

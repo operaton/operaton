@@ -51,13 +51,13 @@ public class CmmnModelElementInstanceCmdTest extends PluggableProcessEngineTest 
     assertNotNull(modelInstance);
 
     Collection<ModelElementInstance> humanTasks = modelInstance.getModelElementsByType(modelInstance.getModel().getType(HumanTask.class));
-    assertThat(humanTasks.size()).isEqualTo(1);
+    assertThat(humanTasks).hasSize(1);
 
     Collection<ModelElementInstance> planItems = modelInstance.getModelElementsByType(modelInstance.getModel().getType(PlanItem.class));
-    assertThat(planItems.size()).isEqualTo(1);
+    assertThat(planItems).hasSize(1);
 
     Collection<ModelElementInstance> cases = modelInstance.getModelElementsByType(modelInstance.getModel().getType(Case.class));
-    assertThat(cases.size()).isEqualTo(1);
+    assertThat(cases).hasSize(1);
 
   }
 

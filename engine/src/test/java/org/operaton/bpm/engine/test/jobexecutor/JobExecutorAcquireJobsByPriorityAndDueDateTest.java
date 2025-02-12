@@ -65,7 +65,7 @@ public class JobExecutorAcquireJobsByPriorityAndDueDateTest extends AbstractJobE
     String instance4 = startProcess("jobPrioProcess", "task2");
 
     List<AcquirableJobEntity> acquirableJobs = findAcquirableJobs();
-    assertThat(acquirableJobs.size()).isEqualTo(4);
+    assertThat(acquirableJobs).hasSize(4);
     assertThat(acquirableJobs.get(0).getProcessInstanceId()).isEqualTo(instance1);
     assertThat(acquirableJobs.get(1).getProcessInstanceId()).isEqualTo(instance3);
     assertThat(acquirableJobs.get(2).getProcessInstanceId()).isEqualTo(instance2);

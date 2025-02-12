@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -154,7 +153,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
     List<Exception> exceptions = executeBatchJobs(batch);
 
     // then
-    assertThat(exceptions.size()).isEqualTo(0);
+    assertThat(exceptions).isEmpty();
 
     assertThat(managementService.createJobQuery().withException().list()).isEmpty();
 
@@ -567,7 +566,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
     Batch batch = runtimeService.deleteProcessInstancesAsync(processIds, null, TESTING_INSTANCE_DELETE);
 
     // then
-    Assertions.assertThat(batch.getInvocationsPerBatchJob()).isEqualTo(42);
+    assertThat(batch.getInvocationsPerBatchJob()).isEqualTo(42);
 
     // clear
     engineRule.getProcessEngineConfiguration()

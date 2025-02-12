@@ -107,7 +107,7 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
 
     // now there are 40 jobs with retries = 0:
     List<Job> jobList = managementService.createJobQuery().list();
-    assertThat(jobList.size()).isEqualTo(40);
+    assertThat(jobList).hasSize(40);
 
     for (Job job : jobList) {
       // all jobs have retries exhausted

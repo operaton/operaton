@@ -269,10 +269,10 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/JobDefinitionQueryTest.testBase.bpmn"})
   @Test
   public void testQueryPaging() {
-    assertThat(managementService.createJobDefinitionQuery().listPage(0, 4).size()).isEqualTo(4);
-    assertThat(managementService.createJobDefinitionQuery().listPage(2, 1).size()).isEqualTo(1);
-    assertThat(managementService.createJobDefinitionQuery().listPage(1, 2).size()).isEqualTo(2);
-    assertThat(managementService.createJobDefinitionQuery().listPage(1, 4).size()).isEqualTo(3);
+    assertThat(managementService.createJobDefinitionQuery().listPage(0, 4)).hasSize(4);
+    assertThat(managementService.createJobDefinitionQuery().listPage(2, 1)).hasSize(1);
+    assertThat(managementService.createJobDefinitionQuery().listPage(1, 2)).hasSize(2);
+    assertThat(managementService.createJobDefinitionQuery().listPage(1, 4)).hasSize(3);
   }
 
   // Sorting /////////////////////////////////////////////////////////////
@@ -281,20 +281,20 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
   @Test
   public void testQuerySorting() {
     // asc
-    assertThat(managementService.createJobDefinitionQuery().orderByActivityId().asc().list().size()).isEqualTo(4);
-    assertThat(managementService.createJobDefinitionQuery().orderByJobConfiguration().asc().list().size()).isEqualTo(4);
-    assertThat(managementService.createJobDefinitionQuery().orderByJobDefinitionId().asc().list().size()).isEqualTo(4);
-    assertThat(managementService.createJobDefinitionQuery().orderByJobType().asc().list().size()).isEqualTo(4);
-    assertThat(managementService.createJobDefinitionQuery().orderByProcessDefinitionId().asc().list().size()).isEqualTo(4);
-    assertThat(managementService.createJobDefinitionQuery().orderByProcessDefinitionKey().asc().list().size()).isEqualTo(4);
+    assertThat(managementService.createJobDefinitionQuery().orderByActivityId().asc().list()).hasSize(4);
+    assertThat(managementService.createJobDefinitionQuery().orderByJobConfiguration().asc().list()).hasSize(4);
+    assertThat(managementService.createJobDefinitionQuery().orderByJobDefinitionId().asc().list()).hasSize(4);
+    assertThat(managementService.createJobDefinitionQuery().orderByJobType().asc().list()).hasSize(4);
+    assertThat(managementService.createJobDefinitionQuery().orderByProcessDefinitionId().asc().list()).hasSize(4);
+    assertThat(managementService.createJobDefinitionQuery().orderByProcessDefinitionKey().asc().list()).hasSize(4);
 
     // desc
-    assertThat(managementService.createJobDefinitionQuery().orderByActivityId().desc().list().size()).isEqualTo(4);
-    assertThat(managementService.createJobDefinitionQuery().orderByJobConfiguration().desc().list().size()).isEqualTo(4);
-    assertThat(managementService.createJobDefinitionQuery().orderByJobDefinitionId().desc().list().size()).isEqualTo(4);
-    assertThat(managementService.createJobDefinitionQuery().orderByJobType().desc().list().size()).isEqualTo(4);
-    assertThat(managementService.createJobDefinitionQuery().orderByProcessDefinitionId().desc().list().size()).isEqualTo(4);
-    assertThat(managementService.createJobDefinitionQuery().orderByProcessDefinitionKey().desc().list().size()).isEqualTo(4);
+    assertThat(managementService.createJobDefinitionQuery().orderByActivityId().desc().list()).hasSize(4);
+    assertThat(managementService.createJobDefinitionQuery().orderByJobConfiguration().desc().list()).hasSize(4);
+    assertThat(managementService.createJobDefinitionQuery().orderByJobDefinitionId().desc().list()).hasSize(4);
+    assertThat(managementService.createJobDefinitionQuery().orderByJobType().desc().list()).hasSize(4);
+    assertThat(managementService.createJobDefinitionQuery().orderByProcessDefinitionId().desc().list()).hasSize(4);
+    assertThat(managementService.createJobDefinitionQuery().orderByProcessDefinitionKey().desc().list()).hasSize(4);
 
   }
 
@@ -340,7 +340,7 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
   // Test Helpers ////////////////////////////////////////////////////////
 
   private void verifyQueryResults(JobDefinitionQuery query, int countExpected) {
-    assertThat(query.list().size()).isEqualTo(countExpected);
+    assertThat(query.list()).hasSize(countExpected);
     assertThat(query.count()).isEqualTo(countExpected);
 
     if (countExpected == 1) {

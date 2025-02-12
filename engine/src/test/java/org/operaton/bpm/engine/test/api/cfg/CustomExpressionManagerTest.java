@@ -52,7 +52,7 @@ public class CustomExpressionManagerTest {
 
     // then 4 default functions should be registered
     Assert.assertSame(customExpressionManager, config.getExpressionManager());
-    assertThat(customExpressionManager.getFunctions().size()).isEqualTo(4);
+    assertThat(customExpressionManager.getFunctions()).hasSize(4);
 
     Map<String, Method> functions = customExpressionManager.getFunctions();
 

@@ -37,15 +37,16 @@ public class ManagementServiceTableCountTest extends PluggableProcessEngineTest 
 
     String tablePrefix = processEngineConfiguration.getDatabaseTablePrefix();
 
-    assertThat(tableCount.get(tablePrefix + "ACT_GE_BYTEARRAY")).isEqualTo(Long.valueOf(0));
-    assertThat(tableCount.get(tablePrefix + "ACT_RE_DEPLOYMENT")).isEqualTo(Long.valueOf(0));
-    assertThat(tableCount.get(tablePrefix + "ACT_RU_EXECUTION")).isEqualTo(Long.valueOf(0));
-    assertThat(tableCount.get(tablePrefix + "ACT_ID_GROUP")).isEqualTo(Long.valueOf(0));
-    assertThat(tableCount.get(tablePrefix + "ACT_ID_MEMBERSHIP")).isEqualTo(Long.valueOf(0));
-    assertThat(tableCount.get(tablePrefix + "ACT_ID_USER")).isEqualTo(Long.valueOf(0));
-    assertThat(tableCount.get(tablePrefix + "ACT_RE_PROCDEF")).isEqualTo(Long.valueOf(0));
-    assertThat(tableCount.get(tablePrefix + "ACT_RU_TASK")).isEqualTo(Long.valueOf(0));
-    assertThat(tableCount.get(tablePrefix + "ACT_RU_IDENTITYLINK")).isEqualTo(Long.valueOf(0));
+    assertThat(tableCount)
+            .containsEntry(tablePrefix + "ACT_GE_BYTEARRAY", Long.valueOf(0))
+            .containsEntry(tablePrefix + "ACT_RE_DEPLOYMENT", Long.valueOf(0))
+            .containsEntry(tablePrefix + "ACT_RU_EXECUTION", Long.valueOf(0))
+            .containsEntry(tablePrefix + "ACT_ID_GROUP", Long.valueOf(0))
+            .containsEntry(tablePrefix + "ACT_ID_MEMBERSHIP", Long.valueOf(0))
+            .containsEntry(tablePrefix + "ACT_ID_USER", Long.valueOf(0))
+            .containsEntry(tablePrefix + "ACT_RE_PROCDEF", Long.valueOf(0))
+            .containsEntry(tablePrefix + "ACT_RU_TASK", Long.valueOf(0))
+            .containsEntry(tablePrefix + "ACT_RU_IDENTITYLINK", Long.valueOf(0));
   }
 
 }

@@ -52,7 +52,7 @@ public class InterruptingEventSubProcessTest extends PluggableProcessEngineTest 
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskBeforeInterruptingEventSuprocess");
 
     List<EventSubscription> eventSubscriptions = eventSubscriptionQuery.list();
-    assertThat(eventSubscriptions.size()).isEqualTo(2);
+    assertThat(eventSubscriptions).hasSize(2);
 
     runtimeService.messageEventReceived("newMessage", pi.getId());
 
@@ -88,7 +88,7 @@ public class InterruptingEventSubProcessTest extends PluggableProcessEngineTest 
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskBeforeInterruptingEventSuprocess");
 
     List<EventSubscription> eventSubscriptions = eventSubscriptionQuery.list();
-    assertThat(eventSubscriptions.size()).isEqualTo(2);
+    assertThat(eventSubscriptions).hasSize(2);
 
     runtimeService.signalEventReceived("newSignal", pi.getId());
 
@@ -152,7 +152,7 @@ public class InterruptingEventSubProcessTest extends PluggableProcessEngineTest 
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskBeforeInterruptingEventSuprocess");
 
     List<EventSubscription> eventSubscriptions = eventSubscriptionQuery.list();
-    assertThat(eventSubscriptions.size()).isEqualTo(2);
+    assertThat(eventSubscriptions).hasSize(2);
 
     runtimeService.messageEventReceived("newMessage", pi.getId());
 

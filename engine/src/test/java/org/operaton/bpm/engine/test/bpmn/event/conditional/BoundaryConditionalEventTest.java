@@ -59,7 +59,7 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     tasksAfterVariableIsSet = taskQuery.list();
     assertThat(tasksAfterVariableIsSet.get(0).getName()).isEqualTo(TASK_AFTER_CONDITION);
-    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(0);
+    assertThat(conditionEventSubscriptionQuery.list()).hasSize(0);
   }
 
   @Test
@@ -73,8 +73,8 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
     //then default evaluation behavior triggers conditional event
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(2);
-    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(1);
+    assertThat(tasksAfterVariableIsSet).hasSize(2);
+    assertThat(conditionEventSubscriptionQuery.list()).hasSize(1);
   }
 
   @Test
@@ -157,7 +157,7 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
 
     //then execution is at user task after boundary event and in the task with the boundary event
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(2);
+    assertThat(tasksAfterVariableIsSet).hasSize(2);
   }
 
   @Test
@@ -170,7 +170,7 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
     Task task = taskQuery.singleResult();
     assertNotNull(task);
     assertThat(task.getName()).isEqualTo(TASK_WITH_CONDITION);
-    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(1);
+    assertThat(conditionEventSubscriptionQuery.list()).hasSize(1);
 
     //when wrong variable is set on task execution
     taskService.setVariable(task.getId(), VARIABLE_NAME + 1, 1);
@@ -179,7 +179,7 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
     task = taskQuery.singleResult();
     assertNotNull(task);
     assertThat(task.getName()).isEqualTo(TASK_WITH_CONDITION);
-    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(1);
+    assertThat(conditionEventSubscriptionQuery.list()).hasSize(1);
 
     //when correct variable is set
     taskService.setVariable(task.getId(), VARIABLE_NAME, 1);
@@ -197,8 +197,8 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     List<Task> tasks = taskQuery.list();
-    assertThat(tasks.size()).isEqualTo(2);
-    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
+    assertThat(conditionEventSubscriptionQuery.list()).hasSize(2);
 
     Task task = tasks.get(0);
 
@@ -207,7 +207,7 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
 
     //then nothing happens
     tasks = taskQuery.list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
 
     //when local variable is set on task execution
     runtimeService.setVariableLocal(task.getExecutionId(), VARIABLE_NAME, 1);
@@ -215,8 +215,8 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
     //then boundary event is triggered of this task and task ends (subscription is deleted)
     //other execution stays in other task
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(1);
-    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(1);
+    assertThat(tasksAfterVariableIsSet).hasSize(1);
+    assertThat(conditionEventSubscriptionQuery.list()).hasSize(1);
   }
 
   @Test
@@ -227,7 +227,7 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     List<Task> tasks = taskQuery.list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
 
     Task task = tasks.get(0);
 
@@ -238,10 +238,10 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
     List<Execution> executions = runtimeService.createExecutionQuery()
             .processInstanceId(procInst.getId())
             .list();
-    assertThat(executions.size()).isEqualTo(0);
+    assertThat(executions).hasSize(0);
 
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(0);
+    assertThat(tasksAfterVariableIsSet).hasSize(0);
   }
 
   @Test
@@ -252,7 +252,7 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     List<Task> tasks = taskQuery.list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
 
     //when variable is set on execution
     //taskService.setVariable(task.getId(), VARIABLE_NAME, 1);
@@ -262,10 +262,10 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
     List<Execution> executions = runtimeService.createExecutionQuery()
             .processInstanceId(procInst.getId())
             .list();
-    assertThat(executions.size()).isEqualTo(0);
+    assertThat(executions).hasSize(0);
 
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(0);
+    assertThat(tasksAfterVariableIsSet).hasSize(0);
   }
 
   @Test
@@ -278,7 +278,7 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
     Task task = taskQuery.singleResult();
     assertNotNull(task);
     assertThat(task.getName()).isEqualTo(TASK_IN_SUB_PROCESS);
-    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(1);
+    assertThat(conditionEventSubscriptionQuery.list()).hasSize(1);
 
     //when local variable is set on task with condition
     taskService.setVariableLocal(task.getId(), VARIABLE_NAME, 1);
@@ -287,15 +287,15 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
     List<Execution> executions = runtimeService.createExecutionQuery()
             .processInstanceId(procInst.getId())
             .list();
-    assertThat(executions.size()).isEqualTo(2);
-    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(1);
+    assertThat(executions).hasSize(2);
+    assertThat(conditionEventSubscriptionQuery.list()).hasSize(1);
 
     //when local variable is set on task execution
     runtimeService.setVariableLocal(task.getExecutionId(), VARIABLE_NAME, 1);
 
     //then process instance ends
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(0);
+    assertThat(tasksAfterVariableIsSet).hasSize(0);
   }
 
   @Test
@@ -314,7 +314,7 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
 
     //then process instance ends
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(0);
+    assertThat(tasksAfterVariableIsSet).hasSize(0);
   }
 
   @Test
@@ -333,7 +333,7 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
 
     //then process instance ends
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(0);
+    assertThat(tasksAfterVariableIsSet).hasSize(0);
   }
 
   @Test
@@ -352,7 +352,7 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
 
     //then execution stays on user task and at task after condition
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(2);
+    assertThat(tasksAfterVariableIsSet).hasSize(2);
   }
 
   @Test
@@ -363,15 +363,15 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
 
-    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(1);
+    assertThat(conditionEventSubscriptionQuery.list()).hasSize(1);
 
     //when task is completed
     taskService.complete(task.getId());
 
     //then conditional subscription should be deleted
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(1);
-    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(0);
+    assertThat(tasksAfterVariableIsSet).hasSize(1);
+    assertThat(conditionEventSubscriptionQuery.list()).hasSize(0);
   }
 
   protected void deployBoundaryEventProcess(AbstractActivityBuilder builder, boolean isInterrupting) {
@@ -417,7 +417,7 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
     //-> conditional event is triggered and execution stays at user task after condition
     tasksAfterVariableIsSet = taskQuery.list();
     assertThat(tasksAfterVariableIsSet.get(0).getName()).isEqualTo(TASK_AFTER_CONDITION);
-    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(0);
+    assertThat(conditionEventSubscriptionQuery.list()).hasSize(0);
   }
 
   @Test
@@ -445,7 +445,7 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
     //-> non interrupting conditional event is triggered
     //execution stays at user task after condition and after service task
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(2);
+    assertThat(tasksAfterVariableIsSet).hasSize(2);
   }
 
   @Test
@@ -477,8 +477,8 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
     //then service task with delegated code is called and variable is set
     //-> conditional event is triggered and process instance ends
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(0);
-    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(0);
+    assertThat(tasksAfterVariableIsSet).hasSize(0);
+    assertThat(conditionEventSubscriptionQuery.list()).hasSize(0);
     assertNull(runtimeService.createProcessInstanceQuery().singleResult());
   }
 
@@ -514,8 +514,8 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
     //-> non interrupting conditional event is triggered
     //execution stays at user task after service task
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(1);
-    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(0);
+    assertThat(tasksAfterVariableIsSet).hasSize(1);
+    assertThat(conditionEventSubscriptionQuery.list()).hasSize(0);
   }
 
   @Test
@@ -623,7 +623,7 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
     //then service task with expression is called and variable is set
     //->non interrupting conditional event is triggered
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(2);
+    assertThat(tasksAfterVariableIsSet).hasSize(2);
   }
 
   @Test
@@ -657,7 +657,7 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
     // interrupting conditional event is triggered by default evaluation behavior
     tasksAfterVariableIsSet = taskQuery.list();
     assertThat(tasksAfterVariableIsSet.get(0).getName()).isEqualTo(TASK_AFTER_CONDITION);
-    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(0);
+    assertThat(conditionEventSubscriptionQuery.list()).hasSize(0);
   }
 
 
@@ -692,7 +692,7 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
     // non interrupting conditional event is not triggered
     tasksAfterVariableIsSet = taskQuery.list();
     assertThat(tasksAfterVariableIsSet.get(0).getName()).isEqualTo(TASK_IN_SUB_PROCESS_ID);
-    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(1);
+    assertThat(conditionEventSubscriptionQuery.list()).hasSize(1);
   }
 
   @Test
@@ -726,7 +726,7 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
     // interrupting conditional event is triggered by default evaluation behavior
     tasksAfterVariableIsSet = taskQuery.list();
     assertThat(tasksAfterVariableIsSet.get(0).getName()).isEqualTo(TASK_AFTER_CONDITION);
-    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(0);
+    assertThat(conditionEventSubscriptionQuery.list()).hasSize(0);
   }
 
   @Test
@@ -759,8 +759,8 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
     // Then start listener from sub process sets variable,
     // non interrupting conditional event is triggered by default evaluation behavior
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(2);
-    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(1);
+    assertThat(tasksAfterVariableIsSet).hasSize(2);
+    assertThat(conditionEventSubscriptionQuery.list()).hasSize(1);
   }
 
   @Test
@@ -847,7 +847,7 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
     //then output mapping sets variable
     //boundary event is triggered from default evaluation behavior
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(2);
+    assertThat(tasksAfterVariableIsSet).hasSize(2);
   }
 
   @Test
@@ -1008,7 +1008,7 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
     //then out mapping of call activity sets a variable
     //-> non interrupting conditional event is triggered
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(2);
+    assertThat(tasksAfterVariableIsSet).hasSize(2);
     assertThat(conditionEventSubscriptionQuery.count()).isEqualTo(0);
   }
 
@@ -1199,7 +1199,7 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
     //then take listener sets variable
     //non interrupting boundary event is triggered with default evaluation behavior
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(2);
+    assertThat(tasksAfterVariableIsSet).hasSize(2);
   }
 
   @Test
@@ -1317,7 +1317,7 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
     //then multi instance is created
     //and boundary event is triggered for each multi instance creation
     List<Task> multiInstanceTasks = taskQuery.taskDefinitionKey(TASK_WITH_CONDITION_ID).list();
-    assertThat(multiInstanceTasks.size()).isEqualTo(3);
+    assertThat(multiInstanceTasks).hasSize(3);
     assertThat(taskService.createTaskQuery().taskName(TASK_AFTER_CONDITION).count()).isEqualTo(3);
 
     //when multi instances are completed
@@ -1327,8 +1327,8 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
 
     //then non boundary events are triggered
     tasksAfterVariableIsSet = taskService.createTaskQuery().list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(9);
-    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(0);
+    assertThat(tasksAfterVariableIsSet).hasSize(9);
+    assertThat(conditionEventSubscriptionQuery.list()).hasSize(0);
   }
 
   @Test
@@ -1398,8 +1398,8 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
 
     //then non boundary events are triggered 9 times
     tasksAfterVariableIsSet = taskService.createTaskQuery().list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(9);
-    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(0);
+    assertThat(tasksAfterVariableIsSet).hasSize(9);
+    assertThat(conditionEventSubscriptionQuery.list()).hasSize(0);
   }
 
   @Test
@@ -1535,8 +1535,8 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
     //then service task in sub process sets variable
     //conditional event is triggered
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(2);
-    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(1);
+    assertThat(tasksAfterVariableIsSet).hasSize(2);
+    assertThat(conditionEventSubscriptionQuery.list()).hasSize(1);
   }
 
   @Test
@@ -1591,7 +1591,7 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     tasksAfterVariableIsSet = taskQuery.list();
     assertThat(tasksAfterVariableIsSet.get(0).getName()).isEqualTo(TASK_AFTER_CONDITION);
-    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(0);
+    assertThat(conditionEventSubscriptionQuery.list()).hasSize(0);
   }
 
   @Test

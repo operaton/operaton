@@ -91,13 +91,13 @@ public class TaskCandidateTest extends PluggableProcessEngineTest {
 
     // The task should be visible in the candidate task list
     tasks = taskService.createTaskQuery().taskCandidateUser(KERMIT).list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
     Task task = tasks.get(0);
     assertThat(task.getName()).isEqualTo("Pay out expenses");
 
     // The above query again, now between 'or' and 'endOr'
     tasks = taskService.createTaskQuery().or().taskCandidateUser(KERMIT).endOr().list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
     task = tasks.get(0);
     assertThat(task.getName()).isEqualTo("Pay out expenses");
 
@@ -113,7 +113,7 @@ public class TaskCandidateTest extends PluggableProcessEngineTest {
       .createTaskQuery()
       .taskAssignee(KERMIT)
       .list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
     task = tasks.get(0);
     assertThat(task.getName()).isEqualTo("Pay out expenses");
 
@@ -146,8 +146,8 @@ public class TaskCandidateTest extends PluggableProcessEngineTest {
 
     // The task should be visible in the candidate task list of Gonzo and Kermit
     // and anyone in the management/accountancy group
-    assertThat(taskService.createTaskQuery().taskCandidateUser(KERMIT).list().size()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskCandidateUser(GONZO).list().size()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskCandidateUser(KERMIT).list()).hasSize(1);
+    assertThat(taskService.createTaskQuery().taskCandidateUser(GONZO).list()).hasSize(1);
     assertThat(taskService.createTaskQuery().taskCandidateGroup(MANAGEMENT).count()).isEqualTo(1);
     assertThat(taskService.createTaskQuery().taskCandidateGroup("accountancy").count()).isEqualTo(1);
     assertThat(taskService.createTaskQuery().taskCandidateGroup("sales").count()).isEqualTo(0);
@@ -183,8 +183,8 @@ public class TaskCandidateTest extends PluggableProcessEngineTest {
   public void testMultipleCandidateUsers() {
     runtimeService.startProcessInstanceByKey("multipleCandidateUsersExample");
 
-    assertThat(taskService.createTaskQuery().taskCandidateUser(GONZO).list().size()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskCandidateUser(KERMIT).list().size()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskCandidateUser(GONZO).list()).hasSize(1);
+    assertThat(taskService.createTaskQuery().taskCandidateUser(KERMIT).list()).hasSize(1);
   }
 
   @Deployment
@@ -192,8 +192,8 @@ public class TaskCandidateTest extends PluggableProcessEngineTest {
   public void testMixedCandidateUserAndGroup() {
     runtimeService.startProcessInstanceByKey("mixedCandidateUserAndGroupExample");
 
-    assertThat(taskService.createTaskQuery().taskCandidateUser(GONZO).list().size()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskCandidateUser(KERMIT).list().size()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskCandidateUser(GONZO).list()).hasSize(1);
+    assertThat(taskService.createTaskQuery().taskCandidateUser(KERMIT).list()).hasSize(1);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/usertask/groupTest.bpmn")

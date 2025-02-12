@@ -154,10 +154,10 @@ public class CleanableHistoricBatchReportTest {
 
     // when
     List<HistoricBatch> historicList = historyService.createHistoricBatchQuery().list();
-    assertThat(historicList.size()).isEqualTo(31);
+    assertThat(historicList).hasSize(31);
 
     List<CleanableHistoricBatchReportResult> list = historyService.createCleanableHistoricBatchReport().list();
-    assertThat(list.size()).isEqualTo(3);
+    assertThat(list).hasSize(3);
     for (CleanableHistoricBatchReportResult result : list) {
       if (result.getBatchType().equals("instance-migration")) {
         checkResultNumbers(result, 4, 8, defaultTTL);
@@ -230,10 +230,10 @@ public class CleanableHistoricBatchReportTest {
 
     // when
     List<HistoricBatch> historicList = historyService.createHistoricBatchQuery().list();
-    assertThat(historicList.size()).isEqualTo(31);
+    assertThat(historicList).hasSize(31);
 
     List<CleanableHistoricBatchReportResult> list = historyService.createCleanableHistoricBatchReport().list();
-    assertThat(list.size()).isEqualTo(3);
+    assertThat(list).hasSize(3);
     for (CleanableHistoricBatchReportResult result : list) {
       if (result.getBatchType().equals("instance-migration")) {
         checkResultNumbers(result, 0, 8, null);
@@ -275,7 +275,7 @@ public class CleanableHistoricBatchReportTest {
 
     // when
     List<HistoricBatch> historicList = historyService.createHistoricBatchQuery().list();
-    assertThat(historicList.size()).isEqualTo(20);
+    assertThat(historicList).hasSize(20);
 
     assertThat(historyService.createCleanableHistoricBatchReport().count()).isEqualTo(1);
     checkResultNumbers(historyService.createCleanableHistoricBatchReport().singleResult(), 0, 18, null);
@@ -334,7 +334,7 @@ public class CleanableHistoricBatchReportTest {
 
     // assume
     List<HistoricBatch> historicList = historyService.createHistoricBatchQuery().list();
-    assertThat(historicList.size()).isEqualTo(31);
+    assertThat(historicList).hasSize(31);
 
     // then
     List<CleanableHistoricBatchReportResult> reportResultAsc = historyService
@@ -342,7 +342,7 @@ public class CleanableHistoricBatchReportTest {
         .orderByFinishedBatchOperation()
         .asc()
         .list();
-    assertThat(reportResultAsc.size()).isEqualTo(3);
+    assertThat(reportResultAsc).hasSize(3);
     assertThat(reportResultAsc.get(0).getBatchType()).isEqualTo("instance-modification");
     assertThat(reportResultAsc.get(1).getBatchType()).isEqualTo("instance-migration");
     assertThat(reportResultAsc.get(2).getBatchType()).isEqualTo("instance-deletion");
@@ -352,7 +352,7 @@ public class CleanableHistoricBatchReportTest {
         .orderByFinishedBatchOperation()
         .desc()
         .list();
-    assertThat(reportResultDesc.size()).isEqualTo(3);
+    assertThat(reportResultDesc).hasSize(3);
     assertThat(reportResultDesc.get(0).getBatchType()).isEqualTo("instance-deletion");
     assertThat(reportResultDesc.get(1).getBatchType()).isEqualTo("instance-migration");
     assertThat(reportResultDesc.get(2).getBatchType()).isEqualTo("instance-modification");

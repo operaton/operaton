@@ -58,7 +58,7 @@ public class ConditionStartEventAuthorizationTest extends AuthorizationTest {
         .evaluateStartConditions();
 
     // then
-    assertThat(instances.size()).isEqualTo(1);
+    assertThat(instances).hasSize(1);
   }
 
   @Deployment(resources = { SINGLE_CONDITIONAL_XML })

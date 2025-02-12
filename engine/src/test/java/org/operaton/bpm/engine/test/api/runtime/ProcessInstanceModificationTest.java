@@ -845,7 +845,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
     // assert listener invocations
     List<RecordedEvent> recordedEvents = RecorderExecutionListener.getRecordedEvents();
-    assertThat(recordedEvents.size()).isEqualTo(2);
+    assertThat(recordedEvents).hasSize(2);
 
     ActivityInstance subprocessInstance = getChildInstanceForActivity(activityInstanceTree, "subProcess");
     ActivityInstance innerTaskInstance = getChildInstanceForActivity(subprocessInstance, "innerTask");
@@ -865,7 +865,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
     runtimeService.createProcessInstanceModification(processInstance.getId()).cancelActivityInstance(innerTaskInstance.getId()).execute();
 
-    assertThat(RecorderExecutionListener.getRecordedEvents().size()).isEqualTo(2);
+    assertThat(RecorderExecutionListener.getRecordedEvents()).hasSize(2);
   }
 
   @Deployment(resources = SUBPROCESS_LISTENER_PROCESS)
@@ -1074,7 +1074,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
     // transition listener should have been invoked
     List<RecordedEvent> events = RecorderExecutionListener.getRecordedEvents();
-    assertThat(events.size()).isEqualTo(1);
+    assertThat(events).hasSize(1);
 
     RecordedEvent event = events.get(0);
     assertThat(event.getTransitionId()).isEqualTo("flow2");
@@ -1108,7 +1108,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
     // transition listener should have been invoked
     List<RecordedEvent> events = RecorderExecutionListener.getRecordedEvents();
-    assertThat(events.size()).isEqualTo(1);
+    assertThat(events).hasSize(1);
 
     RecordedEvent event = events.get(0);
     assertThat(event.getTransitionId()).isEqualTo("flow2");

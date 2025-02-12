@@ -63,7 +63,7 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
       return null;
     });
 
-    assertThat(processEngine.getHistoryService().createHistoricJobLogQuery().list().size()).isEqualTo(0);
+    assertThat(processEngine.getHistoryService().createHistoricJobLogQuery().list()).hasSize(0);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/concurrency/CompetingMessageCorrelationTest.catchMessageProcess.bpmn20.xml")
@@ -494,7 +494,7 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
 
     List<Execution> tasks = runtimeService.createExecutionQuery().messageEventSubscriptionName("Message").list();
     // two tasks waiting for the message
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
 
     // start first thread and wait in the second execution end listener
     ThreadControl thread1 = executeControllableCommand(new ControllableMessageEventReceivedCommand(tasks.get(0).getId(), "Message", true));

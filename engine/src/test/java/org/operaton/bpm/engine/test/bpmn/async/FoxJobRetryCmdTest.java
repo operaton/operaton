@@ -301,7 +301,7 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
 
     // a job is acquirable
     List<AcquirableJobEntity> acquirableJobs = findAndLockAcquirableJobs();
-    assertThat(acquirableJobs.size()).isEqualTo(1);
+    assertThat(acquirableJobs).hasSize(1);
 
     // execute job
     waitForExecutedJobWithRetriesLeft(4);
@@ -314,14 +314,14 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
 
     // the job is not acquirable
     acquirableJobs = findAndLockAcquirableJobs();
-    assertThat(acquirableJobs.size()).isEqualTo(0);
+    assertThat(acquirableJobs).hasSize(0);
 
     // set clock to two minutes before time shift
     ClockUtil.setCurrentTime(twoMinutesBeforeTimeShift);
 
     // the job is now acquirable
     acquirableJobs = findAndLockAcquirableJobs();
-    assertThat(acquirableJobs.size()).isEqualTo(1);
+    assertThat(acquirableJobs).hasSize(1);
 
     // execute job
     waitForExecutedJobWithRetriesLeft(3);
@@ -768,7 +768,7 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
 
       // then a second job will be created for the second timer
       List<Job> jobs = managementService.createJobQuery().list();
-      assertThat(jobs.size()).isEqualTo(2);
+      assertThat(jobs).hasSize(2);
       for (Job job : jobs) {
         if (job.getRetries() == 1) { // the first job already failed once
           Date expectedDate = simpleDateFormat.parse("2019-01-01T10:11:01");

@@ -70,12 +70,12 @@ public class StandaloneTaskTest extends PluggableProcessEngineTest {
 
     // Retrieve task list for jbarrez
     List<Task> tasks = taskService.createTaskQuery().taskCandidateUser("kermit").list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
     assertThat(tasks.get(0).getName()).isEqualTo("testTask");
 
     // Retrieve task list for tbaeyens
     tasks = taskService.createTaskQuery().taskCandidateUser("gonzo").list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
     assertThat(tasks.get(0).getName()).isEqualTo("testTask");
 
     // Claim task

@@ -411,7 +411,7 @@ public class BatchSuspensionTest {
     // then
     UserOperationLogQuery query = historyService.createUserOperationLogQuery().entityType(BATCH);
     assertThat(query.count()).isEqualTo(3);
-    assertThat(query.list().size()).isEqualTo(3);
+    assertThat(query.list()).hasSize(3);
   }
 
   @Test
@@ -431,11 +431,11 @@ public class BatchSuspensionTest {
     // then
     UserOperationLogQuery query = historyService.createUserOperationLogQuery().batchId(batch1.getId());
     assertThat(query.count()).isEqualTo(2);
-    assertThat(query.list().size()).isEqualTo(2);
+    assertThat(query.list()).hasSize(2);
 
     query = historyService.createUserOperationLogQuery().batchId(batch2.getId());
     assertThat(query.count()).isEqualTo(1);
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
   }
 
 }

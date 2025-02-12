@@ -112,11 +112,11 @@ public class CompetingExternalTaskFetchingTest {
     // thread1 succeeds
     thread1.proceedAndWaitTillDone();
     assertNull(thread1.exception);
-    assertThat(thread1.fetchedTasks.size()).isEqualTo(1);
+    assertThat(thread1.fetchedTasks).hasSize(1);
 
     // thread2 does not succeed in locking the job
     thread2.proceedAndWaitTillDone();
-    assertThat(thread2.fetchedTasks.size()).isEqualTo(0);
+    assertThat(thread2.fetchedTasks).hasSize(0);
     // but does not fail with an OptimisticLockingException
     assertNull(thread2.exception);
   }

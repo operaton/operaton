@@ -77,7 +77,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
 
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     assertThat(query.count()).isEqualTo(2);
 
@@ -154,7 +154,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(3);
+    assertThat(result).hasSize(3);
 
     assertThat(query.count()).isEqualTo(3);
 
@@ -181,7 +181,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
 
     assertThat(query.count()).isEqualTo(1);
 
@@ -407,7 +407,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(3);
+    assertThat(result).hasSize(3);
 
     assertThat(query.count()).isEqualTo(3);
 
@@ -452,7 +452,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     assertThat(query.count()).isEqualTo(varValues.length);
 
     List<VariableInstance> result = query.list();
-    assertThat(result.size()).isEqualTo(varValues.length);
+    assertThat(result).hasSize(varValues.length);
 
     List<String> expected = Arrays.asList(varValues);
 
@@ -477,7 +477,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
 
     assertThat(query.count()).isEqualTo(1);
 
@@ -505,7 +505,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
 
     assertThat(query.count()).isEqualTo(1);
 
@@ -537,7 +537,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     assertThat(query.count()).isEqualTo(2);
 
@@ -576,7 +576,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(3);
+    assertThat(result).hasSize(3);
 
     assertThat(query.count()).isEqualTo(3);
 
@@ -617,7 +617,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     assertThat(query.count()).isEqualTo(2);
 
@@ -656,7 +656,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(3);
+    assertThat(result).hasSize(3);
 
     assertThat(query.count()).isEqualTo(3);
 
@@ -689,7 +689,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
 
     assertThat(query.count()).isEqualTo(1);
 
@@ -717,7 +717,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
 
     assertThat(query.count()).isEqualTo(1);
 
@@ -749,7 +749,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     assertThat(query.count()).isEqualTo(2);
 
@@ -788,7 +788,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(3);
+    assertThat(result).hasSize(3);
 
     assertThat(query.count()).isEqualTo(3);
 
@@ -829,7 +829,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     assertThat(query.count()).isEqualTo(2);
 
@@ -868,7 +868,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(3);
+    assertThat(result).hasSize(3);
 
     assertThat(query.count()).isEqualTo(3);
 
@@ -901,7 +901,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
 
     assertThat(query.count()).isEqualTo(1);
 
@@ -929,7 +929,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
 
     assertThat(query.count()).isEqualTo(1);
 
@@ -961,7 +961,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     assertThat(query.count()).isEqualTo(2);
 
@@ -1000,7 +1000,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(3);
+    assertThat(result).hasSize(3);
 
     assertThat(query.count()).isEqualTo(3);
 
@@ -1041,7 +1041,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     assertThat(query.count()).isEqualTo(2);
 
@@ -1080,7 +1080,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(3);
+    assertThat(result).hasSize(3);
 
     assertThat(query.count()).isEqualTo(3);
 
@@ -1113,7 +1113,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
 
     assertThat(query.count()).isEqualTo(1);
 
@@ -1141,7 +1141,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
 
     assertThat(query.count()).isEqualTo(1);
 
@@ -1173,7 +1173,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     assertThat(query.count()).isEqualTo(2);
 
@@ -1212,7 +1212,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(3);
+    assertThat(result).hasSize(3);
 
     assertThat(query.count()).isEqualTo(3);
 
@@ -1253,7 +1253,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     assertThat(query.count()).isEqualTo(2);
 
@@ -1292,7 +1292,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(3);
+    assertThat(result).hasSize(3);
 
     assertThat(query.count()).isEqualTo(3);
 
@@ -1348,7 +1348,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
 
     assertThat(query.count()).isEqualTo(1);
 
@@ -1390,7 +1390,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
 
     assertThat(query.count()).isEqualTo(1);
 
@@ -1422,7 +1422,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     assertThat(query.count()).isEqualTo(2);
 
@@ -1456,7 +1456,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     assertThat(query.count()).isEqualTo(2);
 
@@ -1490,7 +1490,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     assertThat(query.count()).isEqualTo(2);
 
@@ -1542,7 +1542,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     assertThat(query.count()).isEqualTo(2);
 
@@ -1579,7 +1579,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(3);
+    assertThat(result).hasSize(3);
 
     assertThat(query.count()).isEqualTo(3);
 
@@ -1634,7 +1634,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
 
     assertThat(query.count()).isEqualTo(1);
 
@@ -1667,7 +1667,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     assertThat(query.count()).isEqualTo(2);
 
@@ -1736,38 +1736,38 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // query by variable scope id
     for (String variableScopeId : variables.keySet()) {
       variableInstances = runtimeService.createVariableInstanceQuery().variableScopeIdIn(variableScopeId).list();
-      assertThat(variableInstances.size()).isEqualTo(1);
+      assertThat(variableInstances).hasSize(1);
       assertThat(variableInstances.get(0).getName()).isEqualTo(variableName);
       assertThat(variableInstances.get(0).getValue()).isEqualTo(variables.get(variableScopeId));
     }
 
     // query by multiple variable scope ids
     variableInstances = runtimeService.createVariableInstanceQuery().variableScopeIdIn(taskId, executionId, processInstanceId).list();
-    assertThat(variableInstances.size()).isEqualTo(3);
+    assertThat(variableInstances).hasSize(3);
 
     // remove task variable
     taskService.removeVariableLocal(taskId, variableName);
 
     variableInstances = runtimeService.createVariableInstanceQuery().variableScopeIdIn(taskId).list();
-    assertThat(variableInstances.size()).isEqualTo(0);
+    assertThat(variableInstances).hasSize(0);
 
     variableInstances = runtimeService.createVariableInstanceQuery().variableScopeIdIn(taskId, executionId, processInstanceId).list();
-    assertThat(variableInstances.size()).isEqualTo(2);
+    assertThat(variableInstances).hasSize(2);
 
     // remove process instance variable variable
     runtimeService.removeVariable(processInstanceId, variableName);
 
     variableInstances = runtimeService.createVariableInstanceQuery().variableScopeIdIn(processInstanceId, taskId).list();
-    assertThat(variableInstances.size()).isEqualTo(0);
+    assertThat(variableInstances).hasSize(0);
 
     variableInstances = runtimeService.createVariableInstanceQuery().variableScopeIdIn(taskId, executionId, processInstanceId).list();
-    assertThat(variableInstances.size()).isEqualTo(1);
+    assertThat(variableInstances).hasSize(1);
 
     // remove execution variable
     runtimeService.removeVariable(executionId, variableName);
 
     variableInstances = runtimeService.createVariableInstanceQuery().variableScopeIdIn(taskId, executionId, processInstanceId).list();
-    assertThat(variableInstances.size()).isEqualTo(0);
+    assertThat(variableInstances).hasSize(0);
   }
 
   @Test
@@ -1838,7 +1838,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then (process variables)
     List<VariableInstance> result = processVariablesQuery.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(4);
+    assertThat(result).hasSize(4);
 
     assertThat(processVariablesQuery.count()).isEqualTo(4);
 
@@ -1858,7 +1858,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then (task variables)
     result = taskVariablesQuery.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     assertThat(taskVariablesQuery.count()).isEqualTo(2);
 
@@ -1891,7 +1891,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     VariableInstance first = result.get(0);
     VariableInstance second = result.get(1);
@@ -1915,7 +1915,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     VariableInstance first = result.get(0);
     VariableInstance second = result.get(1);
@@ -1941,7 +1941,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     VariableInstance first = result.get(0);
     VariableInstance second = result.get(1);
@@ -1967,7 +1967,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     VariableInstance first = result.get(0);
     VariableInstance second = result.get(1);
@@ -2000,7 +2000,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     VariableInstance first = result.get(0);
     VariableInstance second = result.get(1);
@@ -2042,7 +2042,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     VariableInstance first = result.get(0);
     VariableInstance second = result.get(1);
@@ -2081,7 +2081,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     // then
     List<VariableInstance> result = query.list();
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
 
     VariableInstance instance = result.get(0);
 
@@ -2386,7 +2386,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     List<VariableInstance> results = query.list();
 
     // both variables are not deserialized, but their serialized values are available
-    assertThat(results.size()).isEqualTo(2);
+    assertThat(results).hasSize(2);
 
     for (VariableInstance variableInstance : results) {
       assertNull(variableInstance.getErrorMessage());
@@ -2426,7 +2426,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     List<VariableInstance> results = query.list();
 
     // both variables are fetched
-    assertThat(results.size()).isEqualTo(2);
+    assertThat(results).hasSize(2);
 
     for (VariableInstance variableInstance : results) {
       if(variableInstance.getName().equals("customSerializable")) {
@@ -2495,7 +2495,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
 
     List<VariableInstance> result = query.list();
 
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     for (VariableInstance variableInstance : result) {
       if (variableInstance.getName().equals("aVariableName")) {
@@ -2561,7 +2561,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
 
     List<VariableInstance> result = query.list();
 
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     for (VariableInstance variableInstance : result) {
       if (variableInstance.getName().equals("aVariableName")) {
@@ -2628,7 +2628,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
 
     List<VariableInstance> result = query.list();
 
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     for (VariableInstance variableInstance : result) {
       if (variableInstance.getName().equals("aVariableName")) {
@@ -2696,7 +2696,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
       loopCounterActivityInstanceIds.add(loopCounter.getActivityInstanceId());
     }
 
-    assertThat(loopCounterActivityInstanceIds.size()).isEqualTo(4);
+    assertThat(loopCounterActivityInstanceIds).hasSize(4);
 
     for (ActivityInstance subProcessInstance : tree.getActivityInstances("miSubProcess")) {
       assertTrue(loopCounterActivityInstanceIds.contains(subProcessInstance.getId()));

@@ -89,8 +89,8 @@ public class MessageStartEventSubscriptionTest {
     List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
 
-    assertThat(eventSubscriptions.size()).isEqualTo(1);
-    assertThat(processDefinitions.size()).isEqualTo(1);
+    assertThat(eventSubscriptions).hasSize(1);
+    assertThat(processDefinitions).hasSize(1);
 
     // when
     testRule.deploy(SINGLE_MESSAGE_START_EVENT_XML);
@@ -99,8 +99,8 @@ public class MessageStartEventSubscriptionTest {
     List<EventSubscription> newEventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
     List<ProcessDefinition> newProcessDefinitions = repositoryService.createProcessDefinitionQuery().list();
 
-    assertThat(newEventSubscriptions.size()).isEqualTo(1);
-    assertThat(newProcessDefinitions.size()).isEqualTo(2);
+    assertThat(newEventSubscriptions).hasSize(1);
+    assertThat(newProcessDefinitions).hasSize(2);
     for (ProcessDefinition processDefinition : newProcessDefinitions) {
       if (processDefinition.getVersion() == 1) {
         for (EventSubscription subscription : newEventSubscriptions) {
@@ -266,7 +266,7 @@ public class MessageStartEventSubscriptionTest {
 
     // then
     List<EventSubscription> list = runtimeService.createEventSubscriptionQuery().list();
-    assertThat(list.size()).isEqualTo(2);
+    assertThat(list).hasSize(2);
     for (EventSubscription eventSubscription : list) {
       EventSubscriptionEntity eventSubscriptionEntity = (EventSubscriptionEntity) eventSubscription;
       if (!eventSubscriptionEntity.getConfiguration().equals(processDefId11) && !eventSubscriptionEntity.getConfiguration().equals(processDefId22)) {
@@ -448,13 +448,13 @@ public class MessageStartEventSubscriptionTest {
 
   protected String deployProcess(String resourcePath) {
     List<ProcessDefinition> deployedProcessDefinitions = testRule.deploy(resourcePath).getDeployedProcessDefinitions();
-    assertThat(deployedProcessDefinitions.size()).isEqualTo(1);
+    assertThat(deployedProcessDefinitions).hasSize(1);
     return deployedProcessDefinitions.get(0).getId();
   }
 
   protected String deployModel(BpmnModelInstance model) {
     List<ProcessDefinition> deployedProcessDefinitions = testRule.deploy(model).getDeployedProcessDefinitions();
-    assertThat(deployedProcessDefinitions.size()).isEqualTo(1);
+    assertThat(deployedProcessDefinitions).hasSize(1);
     return deployedProcessDefinitions.get(0).getId();
   }
 }

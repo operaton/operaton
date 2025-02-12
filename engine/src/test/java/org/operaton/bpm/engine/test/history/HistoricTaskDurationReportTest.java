@@ -94,7 +94,7 @@ public class HistoricTaskDurationReportTest {
     List<DurationReportResult> taskReportResults = historyService.createHistoricTaskInstanceReport().duration(PeriodUnit.MONTH);
 
     // then
-    assertThat(taskReportResults.size()).isEqualTo(3);
+    assertThat(taskReportResults).hasSize(3);
   }
 
   @Test
@@ -114,7 +114,7 @@ public class HistoricTaskDurationReportTest {
       .duration(PeriodUnit.MONTH);
 
     // then
-    assertThat(taskReportResults.size()).isEqualTo(1);
+    assertThat(taskReportResults).hasSize(1);
   }
 
   @Test
@@ -134,7 +134,7 @@ public class HistoricTaskDurationReportTest {
       .duration(PeriodUnit.MONTH);
 
     // then
-    assertThat(taskReportResults.size()).isEqualTo(2);
+    assertThat(taskReportResults).hasSize(2);
   }
 
   @Test

@@ -75,14 +75,14 @@ public class UserOperationLogTaskServiceAndBeanTest extends AbstractUserOperatio
     // assign and validate changes
     entity.setAssignee("icke");
     Map<String, PropertyChange> changes = entity.getPropertyChanges();
-    assertThat(changes.size()).isEqualTo(1);
+    assertThat(changes).hasSize(1);
     assertNull(changes.get(ASSIGNEE).getOrgValue());
     assertThat(changes.get(ASSIGNEE).getNewValue()).isEqualTo("icke");
 
     // assign it again
     entity.setAssignee("er");
     changes = entity.getPropertyChanges();
-    assertThat(changes.size()).isEqualTo(1);
+    assertThat(changes).hasSize(1);
 
     // original value is still null because the task was not saved
     assertNull(changes.get(ASSIGNEE).getOrgValue());
@@ -91,7 +91,7 @@ public class UserOperationLogTaskServiceAndBeanTest extends AbstractUserOperatio
     // set a due date
     entity.setDueDate(new Date());
     changes = entity.getPropertyChanges();
-    assertThat(changes.size()).isEqualTo(2);
+    assertThat(changes).hasSize(2);
   }
 
   @Test
@@ -205,7 +205,7 @@ public class UserOperationLogTaskServiceAndBeanTest extends AbstractUserOperatio
 
     // expect: two update entries with the same operation id
     List<UserOperationLogEntry> entries = queryOperationDetails(OPERATION_TYPE_UPDATE).list();
-    assertThat(entries.size()).isEqualTo(2);
+    assertThat(entries).hasSize(2);
     assertThat(entries.get(1).getOperationId()).isEqualTo(entries.get(0).getOperationId());
     assertThat(entries.get(0).getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_TASK_WORKER);
     assertThat(entries.get(1).getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_TASK_WORKER);
@@ -313,7 +313,7 @@ public class UserOperationLogTaskServiceAndBeanTest extends AbstractUserOperatio
     assertThat(query.count()).isEqualTo(2);
 
     List<UserOperationLogEntry> entries = query.list();
-    assertThat(entries.size()).isEqualTo(2);
+    assertThat(entries).hasSize(2);
 
     for (UserOperationLogEntry currentEntry : entries) {
       if (!currentEntry.getId().equals(entry.getId())) {

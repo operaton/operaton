@@ -363,7 +363,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
     // assert: assignee
     log = query.property("assignee").singleResult();
     assertThat(log.getOrgValue()).isEqualTo("demo");
-    assertThat(log.getNewValue()).isEqualTo(null);
+    assertThat(log.getNewValue()).isNull();
     assertThat(log.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_TASK_WORKER);
 
     completeTestProcess();

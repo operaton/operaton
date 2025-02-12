@@ -116,7 +116,7 @@ public class FileValueProcessSerializationTest extends PluggableProcessEngineTes
         Variables.createVariables().putValue("fileVar", Variables.fileValue("").create()));
 
     FileValue fileVar = runtimeService.getVariableTyped(pi.getId(), "fileVar");
-    assertThat(fileVar.getFilename()).isEqualTo("");
+    assertThat(fileVar.getFilename()).isEmpty();
   }
 
 }

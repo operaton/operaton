@@ -108,7 +108,7 @@ public class BoundaryTimerNonInterruptingEventTest {
 
     JobQuery jobQuery = managementService.createJobQuery().processInstanceId(pi.getId());
     List<Job> jobs = jobQuery.list();
-    assertThat(jobs.size()).isEqualTo(2);
+    assertThat(jobs).hasSize(2);
 
     // After setting the clock to time '1 hour and 5 seconds', the first timer should fire
     ClockUtil.setCurrentTime(new Date(startTime.getTime() + ((60 * 60 * 1000) + 5000)));
@@ -164,7 +164,7 @@ public class BoundaryTimerNonInterruptingEventTest {
     // After process start, there should be 1 timer created
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("nonInterruptingTimersOnUserTask");
     List<Task> taskList = taskService.createTaskQuery().list();
-    assertThat(taskList.size()).isEqualTo(5);
+    assertThat(taskList).hasSize(5);
     for (Task task : taskList) {
       assertThat(task.getName()).isEqualTo("First Task");
     }
@@ -182,7 +182,7 @@ public class BoundaryTimerNonInterruptingEventTest {
         .orderByTaskName()
         .asc()
         .list();
-    assertThat(taskList.size()).isEqualTo(6);
+    assertThat(taskList).hasSize(6);
 
     // first task is the escalation task
     Task escalationTask = taskList.remove(0);
@@ -241,7 +241,7 @@ public class BoundaryTimerNonInterruptingEventTest {
         .orderByTaskName()
         .desc()
         .list();
-    assertThat(taskList.size()).isEqualTo(6);
+    assertThat(taskList).hasSize(6);
     Task secondTask = taskList.remove(0);
     assertThat(secondTask.getName()).isEqualTo("Second Task");
     for (Task task : taskList) {
@@ -261,7 +261,7 @@ public class BoundaryTimerNonInterruptingEventTest {
         .orderByTaskName()
         .asc()
         .list();
-    assertThat(taskList.size()).isEqualTo(7);
+    assertThat(taskList).hasSize(7);
 
     // first task is the escalation task
     Task escalationTask = taskList.remove(0);
@@ -385,15 +385,15 @@ public class BoundaryTimerNonInterruptingEventTest {
 
     JobQuery jobQuery = managementService.createJobQuery().processInstanceId(pi.getId());
     List<Job> jobs = jobQuery.list();
-    assertThat(jobs.size()).isEqualTo(1);
+    assertThat(jobs).hasSize(1);
 
     // The Execution Query should work normally and find executions in state "task"
     List<Execution> executions = runtimeService.createExecutionQuery()
                                                .activityId("task")
                                                .list();
-    assertThat(executions.size()).isEqualTo(1);
+    assertThat(executions).hasSize(1);
     List<String> activeActivityIds = runtimeService.getActiveActivityIds(executions.get(0).getId());
-    assertThat(activeActivityIds.size()).isEqualTo(1);
+    assertThat(activeActivityIds).hasSize(1);
     assertThat(activeActivityIds.get(0)).isEqualTo("task");
 
     runtimeService.signal(executions.get(0).getId());
@@ -649,7 +649,7 @@ public class BoundaryTimerNonInterruptingEventTest {
 
     // there should be a single user task for the process instance
     List<Task> tasks = taskService.createTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
     assertThat(tasks.get(0).getName()).isEqualTo("User Waiting");
 
     // there should be a single timer job (R5/PT1H)
@@ -683,7 +683,7 @@ public class BoundaryTimerNonInterruptingEventTest {
 
     // and when the timer executes, there should be 2 user tasks waiting
     tasks = taskService.createTaskQuery().orderByTaskCreateTime().asc().list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
     assertThat(tasks.get(0).getName()).isEqualTo("User Waiting");
     assertThat(tasks.get(1).getName()).isEqualTo("Timer Fired");
 

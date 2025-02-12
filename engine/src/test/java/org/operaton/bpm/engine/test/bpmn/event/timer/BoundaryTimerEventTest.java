@@ -62,7 +62,7 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("multipleTimersOnUserTask");
     JobQuery jobQuery = managementService.createJobQuery().processInstanceId(pi.getId());
     List<Job> jobs = jobQuery.list();
-    assertThat(jobs.size()).isEqualTo(3);
+    assertThat(jobs).hasSize(3);
 
     // After setting the clock to time '1 hour and 5 seconds', the second timer should fire
     ClockUtil.setCurrentTime(new Date(startTime.getTime() + ((60 * 60 * 1000) + 5000)));
@@ -80,7 +80,7 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
 
     runtimeService.startProcessInstanceByKey("timerOnNestedSubprocesses");
     List<Task> tasks = taskService.createTaskQuery().orderByTaskName().asc().list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
     assertThat(tasks.get(0).getName()).isEqualTo("Inner subprocess task 1");
     assertThat(tasks.get(1).getName()).isEqualTo("Inner subprocess task 2");
 
@@ -105,7 +105,7 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
 
     JobQuery jobQuery = managementService.createJobQuery().processInstanceId(pi.getId());
     List<Job> jobs = jobQuery.list();
-    assertThat(jobs.size()).isEqualTo(1);
+    assertThat(jobs).hasSize(1);
 
     // After setting the clock to time '1 hour and 5 seconds', the second timer should fire
     ClockUtil.setCurrentTime(new Date(startTime.getTime() + ((60 * 60 * 1000) + 5000)));
@@ -130,7 +130,7 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
 
     JobQuery jobQuery = managementService.createJobQuery().processInstanceId(pi.getId());
     List<Job> jobs = jobQuery.list();
-    assertThat(jobs.size()).isEqualTo(1);
+    assertThat(jobs).hasSize(1);
     Job job = jobs.get(0);
     Date oldDate = job.getDuedate();
 
@@ -168,7 +168,7 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
 
     JobQuery jobQuery = managementService.createJobQuery().processInstanceId(pi.getId());
     List<Job> jobs = jobQuery.list();
-    assertThat(jobs.size()).isEqualTo(1);
+    assertThat(jobs).hasSize(1);
     Job job = jobs.get(0);
 
     // After recalculation of the timer, the job's duedate should be based on the creation date
@@ -202,7 +202,7 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
 
     JobQuery jobQuery = managementService.createJobQuery().processInstanceId(pi.getId());
     List<Job> jobs = jobQuery.list();
-    assertThat(jobs.size()).isEqualTo(1);
+    assertThat(jobs).hasSize(1);
     Job job = jobs.get(0);
     Date oldDate = job.getDuedate();
     ClockUtil.offset(2000L);
@@ -237,7 +237,7 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
 
     JobQuery jobQuery = managementService.createJobQuery().processInstanceId(pi.getId());
     List<Job> jobs = jobQuery.list();
-    assertThat(jobs.size()).isEqualTo(1);
+    assertThat(jobs).hasSize(1);
     Job job = jobs.get(0);
     Date oldDate = job.getDuedate();
 

@@ -109,13 +109,13 @@ public class HistoricInstanceForCleanupQueryTest {
     ClockUtil.setCurrentTime(new Date());
     // when
     List<HistoricBatch> historicList = historyService.createHistoricBatchQuery().list();
-    assertThat(historicList.size()).isEqualTo(3);
+    assertThat(historicList).hasSize(3);
 
     processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
 
       HistoricBatchManager historicBatchManager = commandContext.getHistoricBatchManager();
       List<String> ids = historicBatchManager.findHistoricBatchIdsForCleanup(7, batchOperationsMap, 0, 59);
-      assertThat(ids.size()).isEqualTo(3);
+      assertThat(ids).hasSize(3);
       HistoricBatchEntity instance0 = historicBatchManager.findHistoricBatchById(ids.get(0));
       HistoricBatchEntity instance1 = historicBatchManager.findHistoricBatchById(ids.get(1));
       HistoricBatchEntity instance2 = historicBatchManager.findHistoricBatchById(ids.get(2));

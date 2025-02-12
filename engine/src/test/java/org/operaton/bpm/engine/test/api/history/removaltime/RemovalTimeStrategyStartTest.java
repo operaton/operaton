@@ -29,7 +29,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.assertj.core.api.Assertions;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.AuthorizationQuery;
 import org.operaton.bpm.engine.authorization.Resources;
@@ -614,7 +613,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
 
     String rootProcessInstanceId = rootProcessInstance.getRootProcessInstanceId();
     Date removalTime = addDays(START_DATE, 5);
-    Assertions.assertThat(authQuery.list())
+    assertThat(authQuery.list())
         .extracting("removalTime", "resourceId", "rootProcessInstanceId")
         .containsExactly(tuple(removalTime, processInstanceId, rootProcessInstanceId));
   }
@@ -655,7 +654,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
 
     String rootProcessInstanceId = rootProcessInstance.getRootProcessInstanceId();
     Date removalTime = addDays(START_DATE, 5);
-    Assertions.assertThat(authQuery.list())
+    assertThat(authQuery.list())
         .extracting("removalTime", "resourceId", "rootProcessInstanceId")
         .containsExactly(tuple(removalTime, processInstanceId, rootProcessInstanceId));
 
@@ -667,7 +666,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
     authQuery = authorizationService.createAuthorizationQuery()
         .resourceType(Resources.HISTORIC_PROCESS_INSTANCE);
 
-    Assertions.assertThat(authQuery.list())
+    assertThat(authQuery.list())
         .extracting("removalTime", "resourceId", "rootProcessInstanceId")
         .containsExactly(tuple(null, "*", null));
   }
@@ -697,7 +696,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
     AuthorizationQuery authQuery = authorizationService.createAuthorizationQuery()
         .resourceType(Resources.HISTORIC_PROCESS_INSTANCE);
 
-    Assertions.assertThat(authQuery.list())
+    assertThat(authQuery.list())
         .extracting("removalTime", "resourceId", "rootProcessInstanceId")
         .containsExactly(tuple(null, "*", null));
 
@@ -717,7 +716,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
 
     Date removalTime = addDays(START_DATE, 5);
     String rootProcessInstanceId = rootProcessInstance.getRootProcessInstanceId();
-    Assertions.assertThat(authQuery.list())
+    assertThat(authQuery.list())
         .extracting("removalTime", "resourceId", "rootProcessInstanceId")
         .containsExactly(tuple(removalTime, processInstanceId, rootProcessInstanceId));
   }

@@ -188,7 +188,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
 
     //then conditional boundary should not triggered but conditional start event
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(2);
+    assertThat(tasksAfterVariableIsSet).hasSize(2);
     assertTaskNames(tasksAfterVariableIsSet,
       TASK_AFTER_CONDITIONAL_START_EVENT,
       TASK_AFTER_OUTPUT_MAPPING);
@@ -290,7 +290,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
     //then conditional boundary should triggered via default evaluation behavior
     //and conditional start event via delayed events
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(3);
+    assertThat(tasksAfterVariableIsSet).hasSize(3);
     assertTaskNames(tasksAfterVariableIsSet,
       TASK_AFTER_CONDITIONAL_START_EVENT,
       TASK_AFTER_CONDITIONAL_BOUNDARY_EVENT,
@@ -325,7 +325,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
 
     //then conditional boundary should not triggered but conditional start event
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(2);
+    assertThat(tasksAfterVariableIsSet).hasSize(2);
     assertTaskNames(tasksAfterVariableIsSet,
       TASK_AFTER_CONDITIONAL_START_EVENT,
       TASK_AFTER_OUTPUT_MAPPING);
@@ -460,7 +460,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
 
     //then conditional boundary should not triggered but conditional start event
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(2);
+    assertThat(tasksAfterVariableIsSet).hasSize(2);
     assertTaskNames(tasksAfterVariableIsSet,
       TASK_AFTER_CONDITIONAL_START_EVENT,
       TASK_AFTER_OUTPUT_MAPPING);
@@ -559,7 +559,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
     //then conditional boundary and event sub process inside the sub process should triggered via default evaluation behavior
     //and global conditional start event via delayed events
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(4);
+    assertThat(tasksAfterVariableIsSet).hasSize(4);
     assertTaskNames(tasksAfterVariableIsSet,
       TASK_AFTER_CONDITIONAL_START_EVENT,
       TASK_AFTER_COND_START_EVENT_IN_SUB_PROCESS,
@@ -596,7 +596,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
 
     //then all conditional events are triggered
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(4);
+    assertThat(tasksAfterVariableIsSet).hasSize(4);
   }
 
   // io mapping in sub process /////////////////////////////////////////////////////////////////////////////////////////
@@ -630,7 +630,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
     // The event sub process inside the sub process should not since the scope is lower than from the boundary.
     // The global event sub process should not since the variable is only locally.
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(1);
+    assertThat(tasksAfterVariableIsSet).hasSize(1);
     assertThat(tasksAfterVariableIsSet.get(0).getName()).isEqualTo(TASK_AFTER_CONDITIONAL_BOUNDARY_EVENT);
   }
 
@@ -695,7 +695,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
     //via the default evaluation behavior but not the global event sub process
     //since variable is only local
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(3);
+    assertThat(tasksAfterVariableIsSet).hasSize(3);
     assertTaskNames(tasksAfterVariableIsSet,
       TASK_AFTER_COND_START_EVENT_IN_SUB_PROCESS,
       TASK_AFTER_CONDITIONAL_BOUNDARY_EVENT,
@@ -731,7 +731,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
 
     //then all conditional events are triggered
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(4);
+    assertThat(tasksAfterVariableIsSet).hasSize(4);
   }
 
 
@@ -819,7 +819,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
     //then out mapping of call activity sets a variable
     //-> all non interrupting conditional events are triggered
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(5);
+    assertThat(tasksAfterVariableIsSet).hasSize(5);
     //three subscriptions: event sub process in sub process and on process instance level and boundary event of sub process
     assertThat(conditionEventSubscriptionQuery.count()).isEqualTo(3);
   }
@@ -839,7 +839,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
 
     //then compensation is triggered -> which triggers conditional events
     tasksAfterVariableIsSet = taskService.createTaskQuery().list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(4);
+    assertThat(tasksAfterVariableIsSet).hasSize(4);
   }
 
 
@@ -854,7 +854,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
 
     //then conditional events are triggered
     tasksAfterVariableIsSet = taskService.createTaskQuery().list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(1);
+    assertThat(tasksAfterVariableIsSet).hasSize(1);
     assertThat(tasksAfterVariableIsSet.get(0).getName()).isEqualTo(TASK_AFTER_CONDITIONAL_START_EVENT);
   }
 }

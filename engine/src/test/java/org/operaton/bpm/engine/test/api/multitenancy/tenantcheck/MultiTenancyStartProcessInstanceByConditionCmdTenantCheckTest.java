@@ -97,7 +97,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
 
     // then
     assertNotNull(instances);
-    assertThat(instances.size()).isEqualTo(1);
+    assertThat(instances).hasSize(1);
 
     identityService.clearAuthentication();
 
@@ -128,7 +128,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
 
     // then
     assertNotNull(processInstances);
-    assertThat(processInstances.size()).isEqualTo(1);
+    assertThat(processInstances).hasSize(1);
 
     identityService.clearAuthentication();
 
@@ -158,7 +158,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
 
     // then
     assertNotNull(processInstances);
-    assertThat(processInstances.size()).isEqualTo(1);
+    assertThat(processInstances).hasSize(1);
 
     identityService.clearAuthentication();
 
@@ -186,7 +186,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
       .createConditionEvaluation()
       .setVariables(variableMap)
       .evaluateStartConditions();
-    assertThat(evaluateStartConditions.size()).isEqualTo(2);
+    assertThat(evaluateStartConditions).hasSize(2);
 
     identityService.clearAuthentication();
   }
@@ -235,7 +235,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
 
     // then
     assertNotNull(instances);
-    assertThat(instances.size()).isEqualTo(1);
+    assertThat(instances).hasSize(1);
     assertThat(instances.get(0).getTenantId()).isEqualTo(TENANT_ONE);
 
     identityService.clearAuthentication();
@@ -282,7 +282,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
 
     // then
     List<EventSubscription> list = runtimeService.createEventSubscriptionQuery().list();
-    assertThat(list.size()).isEqualTo(3);
+    assertThat(list).hasSize(3);
     for (EventSubscription eventSubscription : list) {
       EventSubscriptionEntity eventSubscriptionEntity = (EventSubscriptionEntity) eventSubscription;
       if (eventSubscriptionEntity.getConfiguration().equals(processDefId2)) {
@@ -299,7 +299,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
 
   protected void ensureEventSubscriptions(int count) {
     List<EventSubscription> eventSubscriptions = engineRule.getRuntimeService().createEventSubscriptionQuery().list();
-    assertThat(eventSubscriptions.size()).isEqualTo(count);
+    assertThat(eventSubscriptions).hasSize(count);
     for (EventSubscription eventSubscription : eventSubscriptions) {
       assertThat(eventSubscription.getEventType()).isEqualTo(EventType.CONDITONAL.name());
     }

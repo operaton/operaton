@@ -237,7 +237,7 @@ public class MigrationSignalCatchEventTest {
 
     // then there should be a variable
     VariableInstance beforeMigration = testHelper.snapshotBeforeMigration.getSingleVariable("var");
-    assertThat(testHelper.snapshotAfterMigration.getVariables().size()).isEqualTo(1);
+    assertThat(testHelper.snapshotAfterMigration.getVariables()).hasSize(1);
     testHelper.assertVariableMigratedToExecution(beforeMigration, beforeMigration.getExecutionId());
 
     // and the signal event subscription's event name has changed

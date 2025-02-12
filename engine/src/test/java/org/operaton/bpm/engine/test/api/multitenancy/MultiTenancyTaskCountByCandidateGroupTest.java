@@ -96,7 +96,7 @@ public class MultiTenancyTaskCountByCandidateGroupTest {
     List<TaskCountByCandidateGroupResult> results = taskService.createTaskReport().taskCountByCandidateGroup();
 
     // then
-    assertThat(results.size()).isEqualTo(1);
+    assertThat(results).hasSize(1);
   }
 
   protected void createTask(String groupId, String tenantId) {

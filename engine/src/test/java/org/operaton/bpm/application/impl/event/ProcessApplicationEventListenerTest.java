@@ -342,26 +342,26 @@ public class ProcessApplicationEventListenerTest {
     ProcessInstance taskListenerProcess = runtimeService.startProcessInstanceByKey("taskListenerProcess");
 
     // create event received
-    assertThat(events.size()).isEqualTo(1);
+    assertThat(events).hasSize(1);
     assertThat(events.get(0)).isEqualTo(TaskListener.EVENTNAME_CREATE);
 
     Task task = taskService.createTaskQuery().singleResult();
     //assign task:
     taskService.setAssignee(task.getId(), "jonny");
-    assertThat(events.size()).isEqualTo(3);
+    assertThat(events).hasSize(3);
     assertThat(events.get(1)).isEqualTo(TaskListener.EVENTNAME_UPDATE);
     assertThat(events.get(2)).isEqualTo(TaskListener.EVENTNAME_ASSIGNMENT);
 
     // complete task
     taskService.complete(task.getId());
-    assertThat(events.size()).isEqualTo(5);
+    assertThat(events).hasSize(5);
     assertThat(events.get(3)).isEqualTo(TaskListener.EVENTNAME_COMPLETE);
     // next task was created
     assertThat(events.get(4)).isEqualTo(TaskListener.EVENTNAME_CREATE);
 
     // delete process instance so last task will be deleted
     runtimeService.deleteProcessInstance(taskListenerProcess.getProcessInstanceId(), "test delete event");
-    assertThat(events.size()).isEqualTo(6);
+    assertThat(events).hasSize(6);
     assertThat(events.get(5)).isEqualTo(TaskListener.EVENTNAME_DELETE);
 
   }
@@ -396,7 +396,7 @@ public class ProcessApplicationEventListenerTest {
     managementService.executeJob(jobId);
 
     // then
-    assertThat(timerEvents.size()).isEqualTo(2);
+    assertThat(timerEvents).hasSize(2);
 
     // "start" event listener
     assertThat(timerEvents.get(0)).isEqualTo(ExecutionListener.EVENTNAME_START);
@@ -434,7 +434,7 @@ public class ProcessApplicationEventListenerTest {
     runtimeService.signalEventReceived("abort");
 
     // then
-    assertThat(timerEvents.size()).isEqualTo(2);
+    assertThat(timerEvents).hasSize(2);
 
     // "start" event listener
     assertThat(timerEvents.get(0)).isEqualTo(ExecutionListener.EVENTNAME_START);

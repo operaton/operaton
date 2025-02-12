@@ -199,10 +199,10 @@ public class JobDefinitionDeploymentTest extends PluggableProcessEngineTest {
   public void testMultipleProcessDeployment() {
     JobDefinitionQuery query = managementService.createJobDefinitionQuery();
     List<JobDefinition> jobDefinitions = query.list();
-    assertThat(jobDefinitions.size()).isEqualTo(3);
+    assertThat(jobDefinitions).hasSize(3);
 
-    assertThat(query.processDefinitionKey("testProcess").list().size()).isEqualTo(1);
-    assertThat(query.processDefinitionKey("anotherTestProcess").list().size()).isEqualTo(2);
+    assertThat(query.processDefinitionKey("testProcess").list()).hasSize(1);
+    assertThat(query.processDefinitionKey("anotherTestProcess").list()).hasSize(2);
   }
 
 }

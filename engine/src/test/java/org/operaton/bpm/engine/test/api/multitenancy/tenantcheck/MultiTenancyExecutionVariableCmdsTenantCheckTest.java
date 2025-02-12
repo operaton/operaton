@@ -156,7 +156,7 @@ public class MultiTenancyExecutionVariableCmdsTenantCheckTest {
     engineRule.getIdentityService().setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
     // then
-    assertThat(engineRule.getRuntimeService().getVariables(processInstanceId).size()).isEqualTo(2);
+    assertThat(engineRule.getRuntimeService().getVariables(processInstanceId)).hasSize(2);
   }
 
   @Test
@@ -180,7 +180,7 @@ public class MultiTenancyExecutionVariableCmdsTenantCheckTest {
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
 
     // then
-    assertThat(engineRule.getRuntimeService().getVariables(processInstanceId).size()).isEqualTo(2);
+    assertThat(engineRule.getRuntimeService().getVariables(processInstanceId)).hasSize(2);
 
   }
 
@@ -192,7 +192,7 @@ public class MultiTenancyExecutionVariableCmdsTenantCheckTest {
 
     // then
     engineRule.getRuntimeService().setVariable(processInstanceId, "newVariable", "newValue");
-    assertThat(engineRule.getRuntimeService().getVariables(processInstanceId).size()).isEqualTo(3);
+    assertThat(engineRule.getRuntimeService().getVariables(processInstanceId)).hasSize(3);
   }
 
   @Test
@@ -215,7 +215,7 @@ public class MultiTenancyExecutionVariableCmdsTenantCheckTest {
 
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
     engineRule.getRuntimeService().setVariable(processInstanceId, "newVariable", "newValue");
-    assertThat(engineRule.getRuntimeService().getVariables(processInstanceId).size()).isEqualTo(3);
+    assertThat(engineRule.getRuntimeService().getVariables(processInstanceId)).hasSize(3);
   }
 
   // remove execution variable
@@ -226,7 +226,7 @@ public class MultiTenancyExecutionVariableCmdsTenantCheckTest {
     engineRule.getRuntimeService().removeVariable(processInstanceId, VARIABLE_1);
 
     // then
-    assertThat(engineRule.getRuntimeService().getVariables(processInstanceId).size()).isEqualTo(1);
+    assertThat(engineRule.getRuntimeService().getVariables(processInstanceId)).hasSize(1);
   }
 
   @Test
@@ -252,6 +252,6 @@ public class MultiTenancyExecutionVariableCmdsTenantCheckTest {
     engineRule.getRuntimeService().removeVariable(processInstanceId, VARIABLE_1);
 
     // then
-    assertThat(engineRule.getRuntimeService().getVariables(processInstanceId).size()).isEqualTo(1);
+    assertThat(engineRule.getRuntimeService().getVariables(processInstanceId)).hasSize(1);
   }
 }

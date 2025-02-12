@@ -158,7 +158,7 @@ public class MultiTenancyTaskVariableCmdsTenantCheckTest {
     engineRule.getIdentityService().setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
     // then
-    assertThat(taskService.getVariables(taskId).size()).isEqualTo(2);
+    assertThat(taskService.getVariables(taskId)).hasSize(2);
   }
 
   @Test
@@ -180,7 +180,7 @@ public class MultiTenancyTaskVariableCmdsTenantCheckTest {
     engineRule.getIdentityService().setAuthentication("aUserId", null);
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
 
-    assertThat(taskService.getVariables(taskId).size()).isEqualTo(2);
+    assertThat(taskService.getVariables(taskId)).hasSize(2);
   }
 
 
@@ -191,7 +191,7 @@ public class MultiTenancyTaskVariableCmdsTenantCheckTest {
     engineRule.getIdentityService().setAuthentication("aUserId", null, List.of(TENANT_ONE));
     taskService.setVariable(taskId, "newVariable", "newValue");
 
-    assertThat(taskService.getVariables(taskId).size()).isEqualTo(3);
+    assertThat(taskService.getVariables(taskId)).hasSize(3);
   }
 
   @Test
@@ -214,7 +214,7 @@ public class MultiTenancyTaskVariableCmdsTenantCheckTest {
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
 
     taskService.setVariable(taskId, "newVariable", "newValue");
-    assertThat(taskService.getVariables(taskId).size()).isEqualTo(3);
+    assertThat(taskService.getVariables(taskId)).hasSize(3);
 
   }
 
@@ -225,7 +225,7 @@ public class MultiTenancyTaskVariableCmdsTenantCheckTest {
     engineRule.getIdentityService().setAuthentication("aUserId", null, List.of(TENANT_ONE));
     taskService.removeVariable(taskId, VARIABLE_1);
     // then
-    assertThat(taskService.getVariables(taskId).size()).isEqualTo(1);
+    assertThat(taskService.getVariables(taskId)).hasSize(1);
   }
 
   @Test
@@ -248,7 +248,7 @@ public class MultiTenancyTaskVariableCmdsTenantCheckTest {
 
     // then
     taskService.removeVariable(taskId, VARIABLE_1);
-    assertThat(taskService.getVariables(taskId).size()).isEqualTo(1);
+    assertThat(taskService.getVariables(taskId)).hasSize(1);
   }
 
 }

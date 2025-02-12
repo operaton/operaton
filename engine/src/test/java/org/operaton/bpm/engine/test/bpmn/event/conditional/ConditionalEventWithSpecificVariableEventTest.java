@@ -195,7 +195,7 @@ public class ConditionalEventWithSpecificVariableEventTest extends AbstractCondi
     task = taskQuery.singleResult();
     assertNotNull(task);
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
-    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(1);
+    assertThat(conditionEventSubscriptionQuery.list()).hasSize(1);
 
     //when variable with name `variable` is set on execution
     taskService.setVariable(task.getId(), VARIABLE_NAME, 1);
@@ -203,7 +203,7 @@ public class ConditionalEventWithSpecificVariableEventTest extends AbstractCondi
     //then execution is at user task after conditional event
     tasksAfterVariableIsSet = taskQuery.list();
     assertThat(tasksAfterVariableIsSet.get(0).getName()).isEqualTo(TASK_AFTER_CONDITION);
-    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(0);
+    assertThat(conditionEventSubscriptionQuery.list()).hasSize(0);
   }
 
   @Test
@@ -225,7 +225,7 @@ public class ConditionalEventWithSpecificVariableEventTest extends AbstractCondi
     task = taskQuery.singleResult();
     assertNotNull(task);
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
-    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(1);
+    assertThat(conditionEventSubscriptionQuery.list()).hasSize(1);
 
     //when variable with name `variable` is updated
     taskService.setVariable(task.getId(), VARIABLE_NAME, 1);
@@ -233,7 +233,7 @@ public class ConditionalEventWithSpecificVariableEventTest extends AbstractCondi
     //then execution is at user task after conditional event
     tasksAfterVariableIsSet = taskQuery.list();
     assertThat(tasksAfterVariableIsSet.get(0).getName()).isEqualTo(TASK_AFTER_CONDITION);
-    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(0);
+    assertThat(conditionEventSubscriptionQuery.list()).hasSize(0);
   }
 
   @Test
@@ -249,15 +249,15 @@ public class ConditionalEventWithSpecificVariableEventTest extends AbstractCondi
 
     //then first event is triggered since condition is true
     List<Task> tasks = taskQuery.list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
 
     //when variable with name `variable1` is set on execution
     runtimeService.setVariable(procInst.getId(), VARIABLE_NAME + 1, 1);
 
     //then nothing happens
     tasks = taskQuery.list();
-    assertThat(tasks.size()).isEqualTo(2);
-    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(1);
+    assertThat(tasks).hasSize(2);
+    assertThat(conditionEventSubscriptionQuery.list()).hasSize(1);
 
     //when variable with name `variable` is set, updated and deleted
     runtimeService.setVariable(procInst.getId(), VARIABLE_NAME, 1); //create
@@ -268,8 +268,8 @@ public class ConditionalEventWithSpecificVariableEventTest extends AbstractCondi
     //one from default behavior and three times from the variable events
     assertThat(taskService.createTaskQuery().taskName(TASK_AFTER_CONDITION).count()).isEqualTo(4);
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(5);
-    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(1);
+    assertThat(tasksAfterVariableIsSet).hasSize(5);
+    assertThat(conditionEventSubscriptionQuery.list()).hasSize(1);
   }
 
   @Test
@@ -292,8 +292,8 @@ public class ConditionalEventWithSpecificVariableEventTest extends AbstractCondi
     //then execution is for two times at user task after conditional start event
     assertThat(taskService.createTaskQuery().taskName(TASK_AFTER_CONDITION).count()).isEqualTo(2);
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(3);
-    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(1);
+    assertThat(tasksAfterVariableIsSet).hasSize(3);
+    assertThat(conditionEventSubscriptionQuery.list()).hasSize(1);
   }
 
 
@@ -318,7 +318,7 @@ public class ConditionalEventWithSpecificVariableEventTest extends AbstractCondi
     task = taskQuery.singleResult();
     assertNotNull(task);
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
-    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(1);
+    assertThat(conditionEventSubscriptionQuery.list()).hasSize(1);
 
     //when variable with name `variable1` is updated
     runtimeService.setVariable(procInst.getId(), VARIABLE_NAME + 1, 1);
@@ -326,7 +326,7 @@ public class ConditionalEventWithSpecificVariableEventTest extends AbstractCondi
     //then execution is at user task after conditional intermediate event
     tasksAfterVariableIsSet = taskQuery.list();
     assertThat(tasksAfterVariableIsSet.get(0).getName()).isEqualTo(TASK_AFTER_CONDITION);
-    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(0);
+    assertThat(conditionEventSubscriptionQuery.list()).hasSize(0);
   }
 
   @Test
@@ -355,8 +355,8 @@ public class ConditionalEventWithSpecificVariableEventTest extends AbstractCondi
     //then execution is for two times at user task after conditional event
     assertThat(taskQuery.taskName(TASK_AFTER_CONDITION).count()).isEqualTo(2);
     tasksAfterVariableIsSet = taskService.createTaskQuery().list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(3);
-    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(1);
+    assertThat(tasksAfterVariableIsSet).hasSize(3);
+    assertThat(conditionEventSubscriptionQuery.list()).hasSize(1);
   }
 
 }

@@ -42,7 +42,7 @@ public class FormPropertyDefaultValueTest extends PluggableProcessEngineTest {
 
     TaskFormData formData = formService.getTaskFormData(task.getId());
     List<FormProperty> formProperties = formData.getFormProperties();
-    assertThat(formProperties.size()).isEqualTo(4);
+    assertThat(formProperties).hasSize(4);
 
     for (FormProperty prop : formProperties) {
       if ("booleanProperty".equals(prop.getId())) {
@@ -82,7 +82,7 @@ public class FormPropertyDefaultValueTest extends PluggableProcessEngineTest {
     
     
     List<FormProperty> formProperties = startForm.getFormProperties();
-    assertThat(formProperties.size()).isEqualTo(4);
+    assertThat(formProperties).hasSize(4);
 
     for (FormProperty prop : formProperties) {
       if ("booleanProperty".equals(prop.getId())) {

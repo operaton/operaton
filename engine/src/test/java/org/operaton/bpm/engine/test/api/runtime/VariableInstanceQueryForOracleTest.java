@@ -48,7 +48,7 @@ public class VariableInstanceQueryForOracleTest {
 
     // then
     List<VariableInstance> variables = engineRule.getRuntimeService().createVariableInstanceQuery().list();
-    assertThat(variables.size()).isEqualTo(0);
+    assertThat(variables).hasSize(0);
   }
 
   @Test
@@ -66,7 +66,7 @@ public class VariableInstanceQueryForOracleTest {
     // then
     List<VariableInstance> variables = engineRule.getRuntimeService().createVariableInstanceQuery()
         .activityInstanceIdIn(activityInstanceId).list();
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
   }
 
   @Test
@@ -88,7 +88,7 @@ public class VariableInstanceQueryForOracleTest {
     // then
     List<VariableInstance> variables = engineRule.getRuntimeService().createVariableInstanceQuery()
         .activityInstanceIdIn(ids).list();
-    assertThat(variables.size()).isEqualTo(1000);
+    assertThat(variables).hasSize(1000);
   }
 
   @Test
@@ -110,7 +110,7 @@ public class VariableInstanceQueryForOracleTest {
     // then
     List<VariableInstance> variables = engineRule.getRuntimeService().createVariableInstanceQuery()
         .activityInstanceIdIn(ids).list();
-    assertThat(variables.size()).isEqualTo(1001);
+    assertThat(variables).hasSize(1001);
   }
 
   @Test
@@ -132,6 +132,6 @@ public class VariableInstanceQueryForOracleTest {
     // then
     List<VariableInstance> variables = engineRule.getRuntimeService().createVariableInstanceQuery()
         .activityInstanceIdIn(ids).list();
-    assertThat(variables.size()).isEqualTo(2001);
+    assertThat(variables).hasSize(2001);
   }
 }

@@ -227,7 +227,7 @@ public class MultiTenancyTaskServiceTest extends PluggableProcessEngineTest {
         .singleResult();
 
     List<IdentityLink> identityLinks = taskService.getIdentityLinksForTask(tenantTask.getId());
-    assertThat(identityLinks.size()).isEqualTo(1);
+    assertThat(identityLinks).hasSize(1);
     assertThat(identityLinks.get(0).getTenantId()).isEqualTo("tenant");
   }
 
@@ -253,7 +253,7 @@ public class MultiTenancyTaskServiceTest extends PluggableProcessEngineTest {
         .singleResult();
 
     List<IdentityLink> identityLinks = taskService.getIdentityLinksForTask(tenantTask.getId());
-    assertThat(identityLinks.size()).isEqualTo(1);
+    assertThat(identityLinks).hasSize(1);
     assertThat(identityLinks.get(0).getTenantId()).isEqualTo("tenant");
   }
 

@@ -88,9 +88,9 @@ public class CmmnTransformListenerTest {
     assertThat(numberOfRegistered(EventListener.class)).isEqualTo(0);
     assertThat(numberOfRegistered(Sentry.class)).isEqualTo(3);
 
-    assertThat(TestCmmnTransformListener.cmmnActivities.size()).isEqualTo(11);
-    assertThat(TestCmmnTransformListener.modelElementInstances.size()).isEqualTo(24);
-    assertThat(TestCmmnTransformListener.sentryDeclarations.size()).isEqualTo(3);
+    assertThat(TestCmmnTransformListener.cmmnActivities).hasSize(11);
+    assertThat(TestCmmnTransformListener.modelElementInstances).hasSize(24);
+    assertThat(TestCmmnTransformListener.sentryDeclarations).hasSize(3);
   }
 
 }

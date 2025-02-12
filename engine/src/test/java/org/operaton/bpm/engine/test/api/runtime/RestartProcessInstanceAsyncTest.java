@@ -29,7 +29,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import org.assertj.core.api.Assertions;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
@@ -478,11 +477,11 @@ public class RestartProcessInstanceAsyncTest {
     // then
     List<ProcessInstance> restartedProcessInstances = runtimeService.createProcessInstanceQuery().processDefinitionId(processDefinition.getId()).active().list();
     List<VariableInstance> variables1 = runtimeService.createVariableInstanceQuery().processInstanceIdIn(restartedProcessInstances.get(0).getId()).list();
-    assertThat(variables1.size()).isEqualTo(1);
+    assertThat(variables1).hasSize(1);
     assertThat(variables1.get(0).getName()).isEqualTo("var");
     assertThat(variables1.get(0).getValue()).isEqualTo("bar");
     List<VariableInstance> variables2 = runtimeService.createVariableInstanceQuery().processInstanceIdIn(restartedProcessInstances.get(1).getId()).list();
-    assertThat(variables1.size()).isEqualTo(1);
+    assertThat(variables1).hasSize(1);
     assertThat(variables2.get(0).getName()).isEqualTo("var");
     assertThat(variables2.get(0).getValue()).isEqualTo("bar");
   }
@@ -1123,7 +1122,7 @@ public class RestartProcessInstanceAsyncTest {
     // then
     List<ProcessInstance> restartedProcessInstances = runtimeService.createProcessInstanceQuery().processDefinitionId(processDefinition.getId()).list();
     List<VariableInstance> variables = runtimeService.createVariableInstanceQuery().processInstanceIdIn(restartedProcessInstances.get(0).getId(), restartedProcessInstances.get(1).getId()).list();
-    assertThat(variables.size()).isEqualTo(0);
+    assertThat(variables).hasSize(0);
   }
 
   @Test
@@ -1180,8 +1179,8 @@ public class RestartProcessInstanceAsyncTest {
     HistoricBatch historicBatch = historyService.createHistoricBatchQuery().singleResult();
     batch = managementService.createBatchQuery().singleResult();
 
-    Assertions.assertThat(batch.getExecutionStartTime()).isCloseTo(TEST_DATE, 1000);
-    Assertions.assertThat(historicBatch.getExecutionStartTime()).isCloseTo(TEST_DATE, 1000);
+    assertThat(batch.getExecutionStartTime()).isCloseTo(TEST_DATE, 1000);
+    assertThat(historicBatch.getExecutionStartTime()).isCloseTo(TEST_DATE, 1000);
   }
 
   protected void assertBatchCreated(Batch batch, int processInstanceCount) {

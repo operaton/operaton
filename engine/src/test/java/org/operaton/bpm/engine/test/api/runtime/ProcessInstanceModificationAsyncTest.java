@@ -624,7 +624,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
       .cancelTransitionInstance(getChildTransitionInstanceForTargetActivity(tree, "subProcessEnd").getId())
       .execute();
 
-    assertThat(RecorderExecutionListener.getRecordedEvents().size()).isEqualTo(1);
+    assertThat(RecorderExecutionListener.getRecordedEvents()).hasSize(1);
     RecordedEvent event = RecorderExecutionListener.getRecordedEvents().get(0);
     assertThat(event.getActivityId()).isEqualTo("subProcess");
 
@@ -716,10 +716,10 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
         .includeIncidents()
         .list();
 
-    assertThat(statistics.size()).isEqualTo(1);
+    assertThat(statistics).hasSize(1);
     assertThat(statistics.get(0).getId()).isEqualTo("task1");
     assertThat(statistics.get(0).getFailedJobs()).isEqualTo(0);
-    assertThat(statistics.get(0).getIncidentStatistics().size()).isEqualTo(0);
+    assertThat(statistics.get(0).getIncidentStatistics()).hasSize(0);
     assertThat(statistics.get(0).getInstances()).isEqualTo(1);
 
     // when
@@ -734,10 +734,10 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
       .includeIncidents()
       .list();
 
-    assertThat(statistics.size()).isEqualTo(1);
+    assertThat(statistics).hasSize(1);
     assertThat(statistics.get(0).getId()).isEqualTo("task1");
     assertThat(statistics.get(0).getFailedJobs()).isEqualTo(0);
-    assertThat(statistics.get(0).getIncidentStatistics().size()).isEqualTo(0);
+    assertThat(statistics.get(0).getIncidentStatistics()).hasSize(0);
     assertThat(statistics.get(0).getInstances()).isEqualTo(2);
 
 

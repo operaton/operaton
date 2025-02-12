@@ -129,7 +129,7 @@ public class HistoricBatchQueryAuthorizationTest {
     authRule.disableAuthorization();
 
     // then
-    assertThat(batches.size()).isEqualTo(1);
+    assertThat(batches).hasSize(1);
     assertThat(batches.get(0).getId()).isEqualTo(batch1.getId());
   }
 
@@ -169,7 +169,7 @@ public class HistoricBatchQueryAuthorizationTest {
     authRule.disableAuthorization();
 
     // then
-    assertThat(batches.size()).isEqualTo(2);
+    assertThat(batches).hasSize(2);
   }
 
   @Test
@@ -184,7 +184,7 @@ public class HistoricBatchQueryAuthorizationTest {
     authRule.disableAuthorization();
 
     // then
-    assertThat(batches.size()).isEqualTo(2);
+    assertThat(batches).hasSize(2);
   }
 
   @Test

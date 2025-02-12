@@ -90,7 +90,7 @@ public class HistoricBatchQueryTest {
     List<HistoricBatch> list = historyService.createHistoricBatchQuery().list();
 
     // then
-    assertThat(list.size()).isEqualTo(2);
+    assertThat(list).hasSize(2);
 
     List<String> batchIds = new ArrayList<>();
     for (HistoricBatch resultBatch : list) {

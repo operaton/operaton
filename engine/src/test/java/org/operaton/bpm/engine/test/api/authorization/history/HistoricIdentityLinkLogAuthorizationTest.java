@@ -237,7 +237,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
         .list();
 
     // then
-    assertThat(result.size()).isEqualTo(0);
+    assertThat(result).hasSize(0);
   }
 
   @Test
@@ -255,7 +255,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
         .list();
 
     // then
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
   }
 
   @Test
@@ -277,7 +277,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
         .list();
 
     // then
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
 
     // clear
     deleteTask(taskId, true);
@@ -301,7 +301,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
         .list();
 
     // then
-    assertThat(result.size()).isEqualTo(0);
+    assertThat(result).hasSize(0);
 
     // clear
     deleteTask(taskId, true);
@@ -325,7 +325,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
         .list();
 
     // then
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
   }
 
   @Test
@@ -347,7 +347,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
         .list();
 
     // then
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
   }
 
   @Test
@@ -370,7 +370,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
         .list();
 
     // then
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
   }
 
   @Test
@@ -389,7 +389,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
         .list();
 
     // then
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
   }
 
   @Test

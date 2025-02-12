@@ -72,7 +72,7 @@ public class ExternalTaskQueryByPriorityTest extends PluggableProcessEngineTest 
     // when making a external task query and filtering by priority
     // then the correct external tasks are returned
     List<ExternalTask> tasks = externalTaskService.createExternalTaskQuery().priorityLowerThanOrEquals(2).list();
-    assertThat(tasks.size()).isEqualTo(8);
+    assertThat(tasks).hasSize(8);
 
     for (ExternalTask task : tasks) {
       assertTrue(task.getPriority() <= 2);
@@ -113,7 +113,7 @@ public class ExternalTaskQueryByPriorityTest extends PluggableProcessEngineTest 
     // when making a external task query and filtering by external task priority
     // then the correct external task are returned
     List<ExternalTask> tasks = externalTaskService.createExternalTaskQuery().priorityHigherThanOrEquals(2L).list();
-    assertThat(tasks.size()).isEqualTo(3);
+    assertThat(tasks).hasSize(3);
 
     Set<String> processInstanceIds = new HashSet<>();
     processInstanceIds.add(instances.get(2).getId());

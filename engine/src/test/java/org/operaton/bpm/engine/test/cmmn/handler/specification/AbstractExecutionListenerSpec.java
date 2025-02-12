@@ -67,11 +67,11 @@ public abstract class AbstractExecutionListenerSpec {
 
   public void verify(CmmnActivity activity) {
 
-    assertThat(activity.getListeners().size()).isEqualTo(expectedRegisteredEvents.size());
+    assertThat(activity.getListeners()).hasSize(expectedRegisteredEvents.size());
 
     for (String expectedRegisteredEvent : expectedRegisteredEvents) {
       List<DelegateListener<? extends BaseDelegateExecution>> listeners = activity.getListeners(expectedRegisteredEvent);
-      assertThat(listeners.size()).isEqualTo(1);
+      assertThat(listeners).hasSize(1);
       verifyListener(listeners.get(0));
     }
   }

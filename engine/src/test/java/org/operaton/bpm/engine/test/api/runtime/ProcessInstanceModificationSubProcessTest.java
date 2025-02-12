@@ -313,7 +313,7 @@ public class ProcessInstanceModificationSubProcessTest {
     runtimeService.startProcessInstanceByKey("parentProcess");
 
     final List<ProcessInstance> subprocesses = runtimeService.createProcessInstanceQuery().processDefinitionKey("subprocess").list();
-    assertThat(subprocesses.size()).isEqualTo(3);
+    assertThat(subprocesses).hasSize(3);
 
     // when I do process instance modification
     runtimeService.createModification(subprocessPrDefId)
@@ -353,7 +353,7 @@ public class ProcessInstanceModificationSubProcessTest {
     ProcessInstance parentPI = runtimeService.startProcessInstanceByKey("parentProcess");
 
     final List<ProcessInstance> subprocesses = runtimeService.createProcessInstanceQuery().processDefinitionKey("subprocess").list();
-    assertThat(subprocesses.size()).isEqualTo(3);
+    assertThat(subprocesses).hasSize(3);
 
     // when I do process instance modification
     runtimeService.createModification(subprocessPrDefId)
@@ -403,7 +403,7 @@ public class ProcessInstanceModificationSubProcessTest {
     runtimeService.startProcessInstanceByKey("parentProcess");
 
     final List<ProcessInstance> subprocesses = runtimeService.createProcessInstanceQuery().processDefinitionKey("subprocess").list();
-    assertThat(subprocesses.size()).isEqualTo(3);
+    assertThat(subprocesses).hasSize(3);
 
     // when I do process instance modification
     runtimeService.createModification(subprocessPrDefId)
@@ -450,7 +450,7 @@ public class ProcessInstanceModificationSubProcessTest {
     ProcessInstance parentPI = runtimeService.startProcessInstanceByKey("parentProcess");
 
     final List<ProcessInstance> subprocesses = runtimeService.createProcessInstanceQuery().processDefinitionKey("subprocess").list();
-    assertThat(subprocesses.size()).isEqualTo(3);
+    assertThat(subprocesses).hasSize(3);
 
     // when I do process instance modification
     runtimeService.createModification(subprocessPrDefId)
@@ -499,7 +499,7 @@ public class ProcessInstanceModificationSubProcessTest {
     runtimeService.startProcessInstanceByKey("parentProcess");
 
     final List<ProcessInstance> subprocesses = runtimeService.createProcessInstanceQuery().processDefinitionKey("subprocess").list();
-    assertThat(subprocesses.size()).isEqualTo(3);
+    assertThat(subprocesses).hasSize(3);
 
     // when I do process instance modification
     runtimeService.createModification(subprocessPrDefId)
@@ -546,7 +546,7 @@ public class ProcessInstanceModificationSubProcessTest {
     ProcessInstance parentPI = runtimeService.startProcessInstanceByKey("parentProcess");
 
     final List<ProcessInstance> subprocesses = runtimeService.createProcessInstanceQuery().processDefinitionKey("subprocess").list();
-    assertThat(subprocesses.size()).isEqualTo(3);
+    assertThat(subprocesses).hasSize(3);
 
     // when I do process instance modification
     runtimeService.createModification(subprocessPrDefId)
@@ -594,7 +594,7 @@ public class ProcessInstanceModificationSubProcessTest {
     List<ProcessInstance> subProcessInstances = runtimeService.createProcessInstanceQuery()
         .processDefinitionKey("subprocess")
         .list();
-    assertThat(subProcessInstances.size()).isEqualTo(3);
+    assertThat(subProcessInstances).hasSize(3);
 
     // when
     runtimeService.createModification(subProcessDefinition.getId())
@@ -644,7 +644,7 @@ public class ProcessInstanceModificationSubProcessTest {
     List<ProcessInstance> subProcessInstances = runtimeService.createProcessInstanceQuery()
         .processDefinitionKey("subprocess")
         .list();
-    assertThat(subProcessInstances.size()).isEqualTo(3);
+    assertThat(subProcessInstances).hasSize(3);
 
     // when
     runtimeService.createModification(subProcessDefinition.getId())

@@ -116,7 +116,7 @@ public class ModificationUserOperationLogTest {
             .createUserOperationLogQuery()
             .operationType(UserOperationLogEntry.OPERATION_TYPE_MODIFY_PROCESS_INSTANCE)
             .list();
-    assertThat(opLogEntries.size()).isEqualTo(2);
+    assertThat(opLogEntries).hasSize(2);
 
     Map<String, UserOperationLogEntry> entries = asMap(opLogEntries);
 
@@ -211,7 +211,7 @@ public class ModificationUserOperationLogTest {
     List<UserOperationLogEntry> opLogEntries = historyService.createUserOperationLogQuery()
         .operationType(UserOperationLogEntry.OPERATION_TYPE_MODIFY_PROCESS_INSTANCE)
         .list();
-    assertThat(opLogEntries.size()).isEqualTo(2);
+    assertThat(opLogEntries).hasSize(2);
 
     Map<String, UserOperationLogEntry> entries = asMap(opLogEntries);
 
@@ -247,7 +247,7 @@ public class ModificationUserOperationLogTest {
     List<UserOperationLogEntry> opLogEntries = historyService.createUserOperationLogQuery()
         .operationType(UserOperationLogEntry.OPERATION_TYPE_MODIFY_PROCESS_INSTANCE)
         .list();
-    assertThat(opLogEntries.size()).isEqualTo(2);
+    assertThat(opLogEntries).hasSize(2);
     Map<String, UserOperationLogEntry> entries = asMap(opLogEntries);
 
     UserOperationLogEntry asyncEntry = entries.get("async");
@@ -282,7 +282,7 @@ public class ModificationUserOperationLogTest {
     List<UserOperationLogEntry> logs = historyService.createUserOperationLogQuery()
         .operationType(UserOperationLogEntry.OPERATION_TYPE_MODIFY_PROCESS_INSTANCE)
         .list();
-    assertThat(logs.size()).isEqualTo(1);
+    assertThat(logs).hasSize(1);
 
     assertThat(logs.get(0).getAnnotation()).isEqualTo(annotation);
   }
@@ -309,7 +309,7 @@ public class ModificationUserOperationLogTest {
     List<UserOperationLogEntry> logs = historyService.createUserOperationLogQuery()
         .operationType(UserOperationLogEntry.OPERATION_TYPE_MODIFY_PROCESS_INSTANCE)
         .list();
-    assertThat(logs.size()).isEqualTo(1);
+    assertThat(logs).hasSize(1);
 
     assertThat(logs.get(0).getAnnotation()).isEqualTo(annotation);
   }
@@ -332,7 +332,7 @@ public class ModificationUserOperationLogTest {
 
     // then
     List<UserOperationLogEntry> logs = historyService.createUserOperationLogQuery().list();
-    assertThat(logs.size()).isEqualTo(1);
+    assertThat(logs).hasSize(1);
 
     UserOperationLogEntry userOperationLogEntry = logs.get(0);
     assertThat(userOperationLogEntry.getEntityType()).isEqualTo("ProcessInstance");

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -622,8 +621,8 @@ public class CorrelateAllMessageBatchTest {
     HistoricBatch historicBatch = historyService.createHistoricBatchQuery().singleResult();
     batch = managementService.createBatchQuery().singleResult();
 
-    Assertions.assertThat(batch.getExecutionStartTime()).isCloseTo(TEST_DATE, 1000);
-    Assertions.assertThat(historicBatch.getExecutionStartTime()).isCloseTo(TEST_DATE, 1000);
+    assertThat(batch.getExecutionStartTime()).isCloseTo(TEST_DATE, 1000);
+    assertThat(historicBatch.getExecutionStartTime()).isCloseTo(TEST_DATE, 1000);
 
     // clear
     managementService.deleteBatch(batch.getId(), true);

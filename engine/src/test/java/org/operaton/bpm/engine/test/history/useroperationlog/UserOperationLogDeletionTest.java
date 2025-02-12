@@ -372,7 +372,7 @@ public class UserOperationLogDeletionTest extends AbstractUserOperationLogTest {
       .property("nrOfInstances")
       .list();
 
-    assertThat(userOperationLogEntries.size()).isEqualTo(1);
+    assertThat(userOperationLogEntries).hasSize(1);
 
     UserOperationLogEntry entry = userOperationLogEntries.get(0);
     assertThat(entry.getNewValue()).isEqualTo("1");
@@ -395,7 +395,7 @@ public class UserOperationLogDeletionTest extends AbstractUserOperationLogTest {
       .property("nrOfInstances")
       .list();
 
-    assertThat(userOperationLogEntries.size()).isEqualTo(1);
+    assertThat(userOperationLogEntries).hasSize(1);
 
     UserOperationLogEntry entry = userOperationLogEntries.get(0);
     assertThat(entry.getNewValue()).isEqualTo("1");
@@ -411,7 +411,7 @@ public class UserOperationLogDeletionTest extends AbstractUserOperationLogTest {
 
     List<UserOperationLogEntry> userOperationLogs = userOperationLogQuery.list();
 
-    assertThat(userOperationLogs.size()).isEqualTo(3);
+    assertThat(userOperationLogs).hasSize(3);
 
     for (ProcessDefinition processDefinition: processDefinitions) {
       UserOperationLogEntry userOperationLogEntry = userOperationLogQuery

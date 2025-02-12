@@ -258,7 +258,7 @@ public class MigrationCompensationTest {
     testHelper.completeTask("userTask1");
 
     // then
-    assertThat(testHelper.snapshotAfterMigration.getEventSubscriptions().size()).isEqualTo(0);
+    assertThat(testHelper.snapshotAfterMigration.getEventSubscriptions()).hasSize(0);
 
     testHelper.completeTask("userTask2");
     testHelper.assertProcessEnded(processInstance.getId());
@@ -283,7 +283,7 @@ public class MigrationCompensationTest {
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
     // then
-    assertThat(testHelper.snapshotAfterMigration.getEventSubscriptions().size()).isEqualTo(0);
+    assertThat(testHelper.snapshotAfterMigration.getEventSubscriptions()).hasSize(0);
 
     testHelper.completeTask("userTask2");
     testHelper.assertProcessEnded(processInstance.getId());
@@ -825,7 +825,7 @@ public class MigrationCompensationTest {
         .createTaskQuery()
         .taskDefinitionKey("compensationHandler")
         .list();
-    assertThat(compensationTasks.size()).isEqualTo(2);
+    assertThat(compensationTasks).hasSize(2);
 
     Object value1 = rule.getTaskService().getVariable(compensationTasks.get(0).getId(), "var");
     Object value2 = rule.getTaskService().getVariable(compensationTasks.get(1).getId(), "var");

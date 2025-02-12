@@ -119,8 +119,8 @@ public class TransientVariableTest {
     // then
     List<HistoricVariableInstance> historicVariableInstances = historyService.createHistoricVariableInstanceQuery().list();
     List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
-    assertThat(historicVariableInstances.size()).isEqualTo(0);
-    assertThat(variableInstances.size()).isEqualTo(0);
+    assertThat(historicVariableInstances).hasSize(0);
+    assertThat(variableInstances).hasSize(0);
   }
 
   @Test
@@ -155,8 +155,8 @@ public class TransientVariableTest {
     // then
     List<HistoricVariableInstance> historicVariableInstances = historyService.createHistoricVariableInstanceQuery().list();
     List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
-    assertThat(historicVariableInstances.size()).isEqualTo(0);
-    assertThat(variableInstances.size()).isEqualTo(0);
+    assertThat(historicVariableInstances).hasSize(0);
+    assertThat(variableInstances).hasSize(0);
   }
 
   @Test
@@ -178,8 +178,8 @@ public class TransientVariableTest {
     // then
     List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
     List<HistoricVariableInstance> historicVariableInstances = historyService.createHistoricVariableInstanceQuery().list();
-    assertThat(variableInstances.size()).isEqualTo(0);
-    assertThat(historicVariableInstances.size()).isEqualTo(0);
+    assertThat(variableInstances).hasSize(0);
+    assertThat(historicVariableInstances).hasSize(0);
   }
 
   @Test
@@ -203,8 +203,8 @@ public class TransientVariableTest {
     // then
     List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
     List<HistoricVariableInstance> historicVariableInstances = historyService.createHistoricVariableInstanceQuery().list();
-    assertThat(variableInstances.size()).isEqualTo(0);
-    assertThat(historicVariableInstances.size()).isEqualTo(0);
+    assertThat(variableInstances).hasSize(0);
+    assertThat(historicVariableInstances).hasSize(0);
   }
 
   @Test
@@ -292,7 +292,7 @@ public class TransientVariableTest {
 
     // then
     List<VariableInstance> variables = runtimeService.createVariableInstanceQuery().list();
-    assertThat(variables.size()).isEqualTo(0);
+    assertThat(variables).hasSize(0);
   }
 
   @Test
@@ -306,7 +306,7 @@ public class TransientVariableTest {
 
     // then
     List<HistoricVariableInstance> variables = historyService.createHistoricVariableInstanceQuery().list();
-    assertThat(variables.size()).isEqualTo(0);
+    assertThat(variables).hasSize(0);
   }
 
   @Test
@@ -350,7 +350,7 @@ public class TransientVariableTest {
 
     // then
     List<VariableInstance> variables = runtimeService.createVariableInstanceQuery().list();
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
     assertThat(variables.get(0).getValue()).isEqualTo(9L);
   }
 
@@ -368,7 +368,7 @@ public class TransientVariableTest {
 
     // then
     List<VariableInstance> variables = runtimeService.createVariableInstanceQuery().list();
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
     assertThat(variables.get(0).getValue()).isEqualTo(9L);
   }
 
@@ -395,7 +395,7 @@ public class TransientVariableTest {
 
     // then
     List<HistoricVariableInstance> variables = historyService.createHistoricVariableInstanceQuery().list();
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
     assertThat(variables.get(0).getName()).isEqualTo("abc");
   }
 
@@ -421,9 +421,9 @@ public class TransientVariableTest {
 
     // then
     List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
-    assertThat(variableInstances.size()).isEqualTo(0);
+    assertThat(variableInstances).hasSize(0);
     List<HistoricVariableInstance> historicInstances = historyService.createHistoricVariableInstanceQuery().list();
-    assertThat(historicInstances.size()).isEqualTo(1);
+    assertThat(historicInstances).hasSize(1);
     assertThat(historicInstances.get(0).getName()).isEqualTo("abc");
     assertThat(historicInstances.get(0).getValue()).isEqualTo("bar");
   }
@@ -487,10 +487,10 @@ public class TransientVariableTest {
 
     // then
     List<VariableInstance> variables = runtimeService.createVariableInstanceQuery().list();
-    assertThat(variables.size()).isEqualTo(0);
+    assertThat(variables).hasSize(0);
 
     List<HistoricVariableInstance> historicVariables = historyService.createHistoricVariableInstanceQuery().variableName("abc").list();
-    assertThat(historicVariables.size()).isEqualTo(2);
+    assertThat(historicVariables).hasSize(2);
   }
 
   @Test
@@ -504,7 +504,7 @@ public class TransientVariableTest {
 
     // then
     List<VariableInstance> variables = runtimeService.createVariableInstanceQuery().list();
-    assertThat(variables.size()).isEqualTo(0);
+    assertThat(variables).hasSize(0);
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("theTask1");
   }
@@ -532,8 +532,8 @@ public class TransientVariableTest {
     // then
     List<HistoricVariableInstance> historicVariableInstances = historyService.createHistoricVariableInstanceQuery().list();
     List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
-    assertThat(historicVariableInstances.size()).isEqualTo(1);
-    assertThat(variableInstances.size()).isEqualTo(1);
+    assertThat(historicVariableInstances).hasSize(1);
+    assertThat(variableInstances).hasSize(1);
     assertThat(variableInstances.get(0).getName()).isEqualTo(output);
     assertThat(variableInstances.get(0).getValue()).isEqualTo(OUTPUT_VALUE);
   }

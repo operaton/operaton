@@ -280,7 +280,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
 
     // then
     assertFalse(names.isEmpty());
-    assertThat(names.size()).isEqualTo(2);
+    assertThat(names).hasSize(2);
     assertTrue(names.contains(FIRST_RESOURCE));
     assertTrue(names.contains(SECOND_RESOURCE));
   }
@@ -296,7 +296,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
 
     // then
     assertFalse(names.isEmpty());
-    assertThat(names.size()).isEqualTo(2);
+    assertThat(names).hasSize(2);
     assertTrue(names.contains(FIRST_RESOURCE));
     assertTrue(names.contains(SECOND_RESOURCE));
   }
@@ -327,7 +327,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
 
     // then
     assertFalse(resources.isEmpty());
-    assertThat(resources.size()).isEqualTo(2);
+    assertThat(resources).hasSize(2);
   }
 
   @Test
@@ -341,7 +341,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
 
     // then
     assertFalse(resources.isEmpty());
-    assertThat(resources.size()).isEqualTo(2);
+    assertThat(resources).hasSize(2);
   }
 
   // get resource as stream //////////////////////////////////

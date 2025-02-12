@@ -482,7 +482,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
 
       // check that now i event sub process tasks exist
       List<Task> eventSubProcessTasks = taskService.createTaskQuery().taskDefinitionKey("eventSubProcessTask").list();
-      assertThat(eventSubProcessTasks.size()).isEqualTo(i);
+      assertThat(eventSubProcessTasks).hasSize(i);
     }
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstance.getId(), processEngine);
@@ -552,7 +552,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
 
     // expect: two additional task, one for each triggered process
     tasks = taskService.createTaskQuery().taskName("Message User Task").list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
     for (Task task : tasks) { // complete both tasks
       taskService.complete(task.getId());
     }
@@ -568,7 +568,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
         runtimeService.createEventSubscriptionQuery().singleResult().getExecutionId());
 
     // expect: one message subprocess task exist
-    assertThat(taskService.createTaskQuery().taskName("Message User Task").list().size()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskName("Message User Task").list()).hasSize(1);
 
     // then: complete all inner subprocess tasks
     tasks = taskService.createTaskQuery().list();

@@ -127,7 +127,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("boundaryErrorTest");
 
     List<Task> tasks = taskService.createTaskQuery().orderByTaskName().asc().list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
     assertThat(tasks.get(0).getName()).isEqualTo("Inner subprocess task 1");
     assertThat(tasks.get(1).getName()).isEqualTo("Inner subprocess task 2");
 
@@ -154,7 +154,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
     // Completing task A will lead to task D
     String procId = runtimeService.startProcessInstanceByKey(processDefinitionKey).getId();
     List<Task> tasks = taskService.createTaskQuery().orderByTaskName().asc().list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
     assertThat(tasks.get(0).getName()).isEqualTo("task A");
     assertThat(tasks.get(1).getName()).isEqualTo("task B");
     taskService.complete(tasks.get(0).getId());
@@ -166,13 +166,13 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
     // Completing task B will lead to task C
     procId = runtimeService.startProcessInstanceByKey(processDefinitionKey).getId();
     tasks = taskService.createTaskQuery().orderByTaskName().asc().list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
     assertThat(tasks.get(0).getName()).isEqualTo("task A");
     assertThat(tasks.get(1).getName()).isEqualTo("task B");
     taskService.complete(tasks.get(1).getId());
 
     tasks = taskService.createTaskQuery().orderByTaskName().asc().list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
     assertThat(tasks.get(0).getName()).isEqualTo("task A");
     assertThat(tasks.get(1).getName()).isEqualTo("task C");
     taskService.complete(tasks.get(1).getId());
@@ -361,7 +361,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
   public void testCatchErrorOnParallelMultiInstance() {
     String procId = runtimeService.startProcessInstanceByKey("catchErrorOnParallelMi").getId();
     List<Task> tasks = taskService.createTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(5);
+    assertThat(tasks).hasSize(5);
 
     // Complete two subprocesses, just to make it a bit more complex
     Map<String, Object> vars = new HashMap<>();

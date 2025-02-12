@@ -570,7 +570,7 @@ public class MultiTenancyJobCmdsTenantCheckTest {
       .createTaskQuery()
       .processInstanceId(noFailProcessInstanceId);
 
-    assertThat(taskQuery.list().size()).isEqualTo(1);
+    assertThat(taskQuery.list()).hasSize(1);
 
     String timerJobId = managementService.createJobQuery()
       .processInstanceId(noFailProcessInstanceId)
@@ -581,7 +581,7 @@ public class MultiTenancyJobCmdsTenantCheckTest {
     managementService.executeJob(timerJobId);
 
     // then
-    assertThat(taskQuery.list().size()).isEqualTo(0);
+    assertThat(taskQuery.list()).hasSize(0);
   }
 
   @Test
@@ -628,7 +628,7 @@ public class MultiTenancyJobCmdsTenantCheckTest {
       .processInstanceId(noFailProcessInstanceId);
 
     // then
-    assertThat(taskQuery.list().size()).isEqualTo(0);
+    assertThat(taskQuery.list()).hasSize(0);
   }
 
   protected Job selectJobByProcessInstanceId(String processInstanceId) {

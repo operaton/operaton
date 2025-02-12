@@ -87,12 +87,12 @@ public class AsyncEndEventTest extends PluggableProcessEngineTest {
 
     // should stop at both end events
     List<Job> jobs = managementService.createJobQuery().withRetriesLeft().list();
-    assertThat(jobs.size()).isEqualTo(2);
+    assertThat(jobs).hasSize(2);
 
     // execute one of the end events
     managementService.executeJob(jobs.get(0).getId());
     jobs = managementService.createJobQuery().withRetriesLeft().list();
-    assertThat(jobs.size()).isEqualTo(1);
+    assertThat(jobs).hasSize(1);
 
     // execute the second one
     managementService.executeJob(jobs.get(0).getId());

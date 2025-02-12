@@ -96,7 +96,7 @@ public class IncidentTest extends PluggableProcessEngineTest {
     List<Incident> incidents = runtimeService.createIncidentQuery().processInstanceId(processInstance.getId()).list();
 
     assertFalse(incidents.isEmpty());
-    assertThat(incidents.size()).isEqualTo(1);
+    assertThat(incidents).hasSize(1);
 
     Job job = managementService.createJobQuery().processInstanceId(processInstance.getId()).singleResult();
 
@@ -111,7 +111,7 @@ public class IncidentTest extends PluggableProcessEngineTest {
 
     // There is still one incident
     assertFalse(incidents.isEmpty());
-    assertThat(incidents.size()).isEqualTo(1);
+    assertThat(incidents).hasSize(1);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn"})
@@ -124,7 +124,7 @@ public class IncidentTest extends PluggableProcessEngineTest {
     List<Incident> incidents = runtimeService.createIncidentQuery().processInstanceId(processInstance.getId()).list();
 
     assertFalse(incidents.isEmpty());
-    assertThat(incidents.size()).isEqualTo(1);
+    assertThat(incidents).hasSize(1);
 
     Job job = managementService.createJobQuery().processInstanceId(processInstance.getId()).singleResult();
 
@@ -143,7 +143,7 @@ public class IncidentTest extends PluggableProcessEngineTest {
 
     // There is still one incident
     assertFalse(incidents.isEmpty());
-    assertThat(incidents.size()).isEqualTo(1);
+    assertThat(incidents).hasSize(1);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncidentForNestedExecution.bpmn"})
@@ -230,7 +230,7 @@ public class IncidentTest extends PluggableProcessEngineTest {
 
     List<Incident> incidents = runtimeService.createIncidentQuery().list();
     assertFalse(incidents.isEmpty());
-    assertThat(incidents.size()).isEqualTo(2);
+    assertThat(incidents).hasSize(2);
 
     ProcessInstance failingProcess = runtimeService.createProcessInstanceQuery().processDefinitionKey("failingProcess").singleResult();
     assertNotNull(failingProcess);
@@ -290,7 +290,7 @@ public class IncidentTest extends PluggableProcessEngineTest {
 
     List<Incident> incidents = runtimeService.createIncidentQuery().list();
     assertFalse(incidents.isEmpty());
-    assertThat(incidents.size()).isEqualTo(3);
+    assertThat(incidents).hasSize(3);
 
     // Root Cause Incident
     ProcessInstance failingProcess = runtimeService.createProcessInstanceQuery().processDefinitionKey("failingProcess").singleResult();

@@ -64,7 +64,7 @@ public class JobExecutorAcquireJobsByPriorityTest extends AbstractJobExecutorAcq
     incrementClock(61);
 
     List<AcquirableJobEntity> acquirableJobs = findAcquirableJobs();
-    assertThat(acquirableJobs.size()).isEqualTo(20);
+    assertThat(acquirableJobs).hasSize(20);
     for (int i = 0; i < 5; i++) {
       assertThat(findJobById(acquirableJobs.get(i).getId()).getPriority()).isEqualTo(10);
     }

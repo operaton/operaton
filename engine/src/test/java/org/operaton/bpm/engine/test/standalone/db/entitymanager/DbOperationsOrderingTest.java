@@ -110,7 +110,7 @@ public class DbOperationsOrderingTest {
     entityManager.flushEntityCache();
 
     List<DbOperation> flush = entityManager.getDbOperationManager().calculateFlush();
-    assertThat(flush.size()).isEqualTo(1);
+    assertThat(flush).hasSize(1);
   }
 
   @Test

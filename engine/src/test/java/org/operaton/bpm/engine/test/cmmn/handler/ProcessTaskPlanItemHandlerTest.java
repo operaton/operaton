@@ -405,7 +405,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     List<CallableElementParameter> inputs = callableElement.getInputs();
     assertNotNull(inputs);
     assertFalse(inputs.isEmpty());
-    assertThat(inputs.size()).isEqualTo(3);
+    assertThat(inputs).hasSize(3);
   }
 
   @Test
@@ -525,7 +525,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     List<CallableElementParameter> outputs = callableElement.getOutputs();
     assertNotNull(outputs);
     assertFalse(outputs.isEmpty());
-    assertThat(outputs.size()).isEqualTo(3);
+    assertThat(outputs).hasSize(3);
   }
 
   @Test
@@ -652,7 +652,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     assertTrue(newActivity.getEntryCriteria().isEmpty());
 
     assertFalse(newActivity.getExitCriteria().isEmpty());
-    assertThat(newActivity.getExitCriteria().size()).isEqualTo(1);
+    assertThat(newActivity.getExitCriteria()).hasSize(1);
 
     assertThat(newActivity.getExitCriteria().get(0)).isEqualTo(sentryDeclaration);
 
@@ -697,7 +697,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     assertTrue(newActivity.getEntryCriteria().isEmpty());
 
     assertFalse(newActivity.getExitCriteria().isEmpty());
-    assertThat(newActivity.getExitCriteria().size()).isEqualTo(2);
+    assertThat(newActivity.getExitCriteria()).hasSize(2);
 
     assertTrue(newActivity.getExitCriteria().contains(firstSentryDeclaration));
     assertTrue(newActivity.getExitCriteria().contains(secondSentryDeclaration));
@@ -732,7 +732,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     assertTrue(newActivity.getExitCriteria().isEmpty());
 
     assertFalse(newActivity.getEntryCriteria().isEmpty());
-    assertThat(newActivity.getEntryCriteria().size()).isEqualTo(1);
+    assertThat(newActivity.getEntryCriteria()).hasSize(1);
 
     assertThat(newActivity.getEntryCriteria().get(0)).isEqualTo(sentryDeclaration);
 
@@ -777,7 +777,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     assertTrue(newActivity.getExitCriteria().isEmpty());
 
     assertFalse(newActivity.getEntryCriteria().isEmpty());
-    assertThat(newActivity.getEntryCriteria().size()).isEqualTo(2);
+    assertThat(newActivity.getEntryCriteria()).hasSize(2);
 
     assertTrue(newActivity.getEntryCriteria().contains(firstSentryDeclaration));
     assertTrue(newActivity.getEntryCriteria().contains(secondSentryDeclaration));
@@ -812,11 +812,11 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     assertFalse(newActivity.getExitCriteria().isEmpty());
-    assertThat(newActivity.getExitCriteria().size()).isEqualTo(1);
+    assertThat(newActivity.getExitCriteria()).hasSize(1);
     assertThat(newActivity.getExitCriteria().get(0)).isEqualTo(sentryDeclaration);
 
     assertFalse(newActivity.getEntryCriteria().isEmpty());
-    assertThat(newActivity.getEntryCriteria().size()).isEqualTo(1);
+    assertThat(newActivity.getEntryCriteria()).hasSize(1);
     assertThat(newActivity.getEntryCriteria().get(0)).isEqualTo(sentryDeclaration);
 
   }
@@ -951,7 +951,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     // then
     List<String> events = newActivity.getProperties().get(CmmnProperties.REPEAT_ON_STANDARD_EVENTS);
     assertNotNull(events);
-    assertThat(events.size()).isEqualTo(2);
+    assertThat(events).hasSize(2);
     assertTrue(events.contains(CaseExecutionListener.COMPLETE));
     assertTrue(events.contains(CaseExecutionListener.TERMINATE));
   }
@@ -972,7 +972,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     // then
     List<String> events = newActivity.getProperties().get(CmmnProperties.REPEAT_ON_STANDARD_EVENTS);
     assertNotNull(events);
-    assertThat(events.size()).isEqualTo(2);
+    assertThat(events).hasSize(2);
     assertTrue(events.contains(CaseExecutionListener.COMPLETE));
     assertTrue(events.contains(CaseExecutionListener.TERMINATE));
   }
@@ -995,7 +995,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     // then
     List<String> events = newActivity.getProperties().get(CmmnProperties.REPEAT_ON_STANDARD_EVENTS);
     assertNotNull(events);
-    assertThat(events.size()).isEqualTo(1);
+    assertThat(events).hasSize(1);
     assertTrue(events.contains(CaseExecutionListener.DISABLE));
   }
 
@@ -1017,7 +1017,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     // then
     List<String> events = newActivity.getProperties().get(CmmnProperties.REPEAT_ON_STANDARD_EVENTS);
     assertNotNull(events);
-    assertThat(events.size()).isEqualTo(1);
+    assertThat(events).hasSize(1);
     assertTrue(events.contains(CaseExecutionListener.DISABLE));
   }
 

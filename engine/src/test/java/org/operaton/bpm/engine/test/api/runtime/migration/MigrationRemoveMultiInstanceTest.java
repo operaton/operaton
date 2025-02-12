@@ -82,7 +82,7 @@ public class MigrationRemoveMultiInstanceTest {
         .done());
 
     List<Task> migratedTasks = testHelper.snapshotAfterMigration.getTasks();
-    assertThat(migratedTasks.size()).isEqualTo(3);
+    assertThat(migratedTasks).hasSize(3);
 
     // and it is possible to successfully complete the migrated instance
     for (Task migratedTask : migratedTasks) {
@@ -164,7 +164,7 @@ public class MigrationRemoveMultiInstanceTest {
         .done());
 
     List<Task> migratedTasks = testHelper.snapshotAfterMigration.getTasks();
-    assertThat(migratedTasks.size()).isEqualTo(3);
+    assertThat(migratedTasks).hasSize(3);
 
     // and it is possible to successfully complete the migrated instance
     for (Task migratedTask : migratedTasks) {
@@ -211,7 +211,7 @@ public class MigrationRemoveMultiInstanceTest {
         .done());
 
     List<Task> migratedTasks = testHelper.snapshotAfterMigration.getTasks();
-    assertThat(migratedTasks.size()).isEqualTo(2);
+    assertThat(migratedTasks).hasSize(2);
 
     // and it is possible to successfully complete the migrated instance
     for (Task migratedTask : migratedTasks) {

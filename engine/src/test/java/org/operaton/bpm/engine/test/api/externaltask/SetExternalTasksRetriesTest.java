@@ -405,7 +405,7 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
 
     // then
     tasks = externalTaskService.createExternalTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(6);
+    assertThat(tasks).hasSize(6);
 
     for (ExternalTask task : tasks) {
       assertThat((int) task.getRetries()).isEqualTo(RETRIES);
@@ -430,7 +430,7 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
 
     // then
     tasks = externalTaskService.createExternalTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(6);
+    assertThat(tasks).hasSize(6);
 
     for (ExternalTask task : tasks) {
       assertThat((int) task.getRetries()).isEqualTo(RETRIES);
@@ -445,7 +445,7 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
 
     // then
     List<ExternalTask> tasks = externalTaskService.createExternalTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(6);
+    assertThat(tasks).hasSize(6);
 
     for (ExternalTask task : tasks) {
       assertThat((int) task.getRetries()).isEqualTo(RETRIES);
@@ -462,7 +462,7 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
 
     // then
     List<ExternalTask> tasks = externalTaskService.createExternalTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(6);
+    assertThat(tasks).hasSize(6);
 
     for (ExternalTask task : tasks) {
       assertThat((int) task.getRetries()).isEqualTo(RETRIES);
@@ -480,7 +480,7 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
 
     // then
     List<ExternalTask> tasks = query.list();
-    assertThat(tasks.size()).isEqualTo(6);
+    assertThat(tasks).hasSize(6);
 
     for (ExternalTask task : tasks) {
       assertThat((int) task.getRetries()).isEqualTo(RETRIES);
@@ -498,7 +498,7 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
 
     // then
     List<ExternalTask> tasks = externalTaskService.createExternalTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(6);
+    assertThat(tasks).hasSize(6);
 
     for (ExternalTask task : tasks) {
       assertThat((int) task.getRetries()).isEqualTo(RETRIES);
@@ -517,7 +517,7 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
 
     // then
     List<ExternalTask> tasks = externalTaskService.createExternalTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(6);
+    assertThat(tasks).hasSize(6);
 
     for (ExternalTask task : tasks) {
       assertThat((int) task.getRetries()).isEqualTo(RETRIES);
@@ -558,7 +558,7 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
 
     // then
     List<ExternalTask> tasks = externalTaskService.createExternalTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(6);
+    assertThat(tasks).hasSize(6);
 
     for (ExternalTask task : tasks) {
       assertThat(task.getRetries()).isEqualTo(Integer.valueOf(RETRIES));

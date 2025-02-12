@@ -103,7 +103,7 @@ public class CompetingSubprocessCompletionTest {
     runtimeService.startProcessInstanceByKey("CompetingSubprocessEndProcess");
 
     List<Task> tasks = taskService.createTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(3);
+    assertThat(tasks).hasSize(3);
 
     LOG.debug("test thread starts thread one");
     CompleteTaskThread threadOne = new CompleteTaskThread(tasks.get(0).getId());

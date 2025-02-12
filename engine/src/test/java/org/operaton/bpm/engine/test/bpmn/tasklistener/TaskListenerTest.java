@@ -240,7 +240,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
 
     // then
     List<RecordedTaskEvent> recordedEvents = RecorderTaskListener.getRecordedEvents();
-    assertThat(recordedEvents.size()).isEqualTo(2);
+    assertThat(recordedEvents).hasSize(2);
     String createActivityInstanceId = recordedEvents.get(0).getActivityInstanceId();
     String deleteActivityInstanceId = recordedEvents.get(1).getActivityInstanceId();
 
@@ -277,8 +277,8 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     // then
     VariableMap collectedVariables = VariablesCollectingListener.getCollectedVariables();
     assertNotNull(collectedVariables);
-    assertThat(collectedVariables.size()).isEqualTo(1);
-    assertThat(collectedVariables.get("foo")).isEqualTo("bar");
+    assertThat(collectedVariables).hasSize(1);
+    assertThat(collectedVariables).containsEntry("foo", "bar");
   }
 
   // Expression & Scripts Task Listener tests
@@ -876,7 +876,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
 
     JobQuery jobQuery = managementService.createJobQuery().processInstanceId(pi.getId());
     List<Job> jobs = jobQuery.list();
-    assertThat(jobs.size()).isEqualTo(1);
+    assertThat(jobs).hasSize(1);
     Job job = jobs.get(0);
     Date oldDate = job.getDuedate();
 
@@ -900,7 +900,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
 
     JobQuery jobQuery = managementService.createJobQuery().processInstanceId(pi.getId());
     List<Job> jobs = jobQuery.list();
-    assertThat(jobs.size()).isEqualTo(1);
+    assertThat(jobs).hasSize(1);
     Job job = jobs.get(0);
     Date oldDate = job.getDuedate();
     ClockUtil.offset(2000L);
@@ -925,7 +925,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
         .processInstanceId(pi.getId())
         .activityId("userTask");
     List<Job> jobs = jobQuery.list();
-    assertThat(jobs.size()).isEqualTo(1);
+    assertThat(jobs).hasSize(1);
     Job job = jobs.get(0);
     Date oldDate = job.getDuedate();
 

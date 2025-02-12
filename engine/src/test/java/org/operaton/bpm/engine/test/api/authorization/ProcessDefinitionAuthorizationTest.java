@@ -1279,7 +1279,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().startablePermissionCheck().startableInTasklist().list();
     // then
     assertNotNull(processDefinitions);
-    assertThat(processDefinitions.size()).isEqualTo(0);
+    assertThat(processDefinitions).hasSize(0);
   }
 
   @Test
@@ -1293,7 +1293,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().startablePermissionCheck().startableInTasklist().list();
     // then
     assertNotNull(processDefinitions);
-    assertThat(processDefinitions.size()).isEqualTo(0);
+    assertThat(processDefinitions).hasSize(0);
   }
 
   @Test
@@ -1305,7 +1305,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().startablePermissionCheck().startableInTasklist().list();
     // then
     assertNotNull(processDefinitions);
-    assertThat(processDefinitions.size()).isEqualTo(0);
+    assertThat(processDefinitions).hasSize(0);
   }
 
   @Test

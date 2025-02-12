@@ -112,7 +112,7 @@ public class MultiTenancyActivityCmdsTenantCheckTest {
     identityService.setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
     // then
-    assertThat(engineRule.getRuntimeService().getActiveActivityIds(processInstanceId).size()).isEqualTo(1);
+    assertThat(engineRule.getRuntimeService().getActiveActivityIds(processInstanceId)).hasSize(1);
 
   }
 
@@ -134,7 +134,7 @@ public class MultiTenancyActivityCmdsTenantCheckTest {
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
 
     // then
-    assertThat(engineRule.getRuntimeService().getActiveActivityIds(processInstanceId).size()).isEqualTo(1);
+    assertThat(engineRule.getRuntimeService().getActiveActivityIds(processInstanceId)).hasSize(1);
 
   }
 

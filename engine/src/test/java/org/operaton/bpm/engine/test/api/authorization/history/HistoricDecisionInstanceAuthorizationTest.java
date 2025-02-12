@@ -235,7 +235,7 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
     List<CleanableHistoricDecisionInstanceReportResult> reportResults = historyService.createCleanableHistoricDecisionInstanceReport().list();
 
     // then
-    assertThat(reportResults.size()).isEqualTo(0);
+    assertThat(reportResults).hasSize(0);
   }
 
   @Test
@@ -250,7 +250,7 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
     List<CleanableHistoricDecisionInstanceReportResult> reportResults = historyService.createCleanableHistoricDecisionInstanceReport().list();
 
     // then
-    assertThat(reportResults.size()).isEqualTo(1);
+    assertThat(reportResults).hasSize(1);
     assertThat(reportResults.get(0).getCleanableDecisionInstanceCount()).isEqualTo(10);
     assertThat(reportResults.get(0).getFinishedDecisionInstanceCount()).isEqualTo(10);
   }
@@ -266,7 +266,7 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
     List<CleanableHistoricDecisionInstanceReportResult> reportResults = historyService.createCleanableHistoricDecisionInstanceReport().list();
 
     // then
-    assertThat(reportResults.size()).isEqualTo(0);
+    assertThat(reportResults).hasSize(0);
   }
 
   @Test
@@ -280,7 +280,7 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
     List<CleanableHistoricDecisionInstanceReportResult> reportResults = historyService.createCleanableHistoricDecisionInstanceReport().list();
 
     // then
-    assertThat(reportResults.size()).isEqualTo(0);
+    assertThat(reportResults).hasSize(0);
   }
 
   @Test
@@ -295,7 +295,7 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
     List<CleanableHistoricDecisionInstanceReportResult> reportResults = historyService.createCleanableHistoricDecisionInstanceReport().list();
 
     // then
-    assertThat(reportResults.size()).isEqualTo(0);
+    assertThat(reportResults).hasSize(0);
   }
 
   protected void startProcessInstanceAndEvaluateDecision() {

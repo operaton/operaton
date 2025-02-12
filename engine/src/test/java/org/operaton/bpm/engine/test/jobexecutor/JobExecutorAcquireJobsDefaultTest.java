@@ -69,7 +69,7 @@ public class JobExecutorAcquireJobsDefaultTest extends AbstractJobExecutorAcquir
     List<AcquirableJobEntity> jobList = findAcquirableJobs();
 
     // then
-    assertThat(jobList.size()).isEqualTo(1);
+    assertThat(jobList).hasSize(1);
     assertThat(jobList.get(0).getDuedate()).isEqualTo(currentTime);
   }
 }

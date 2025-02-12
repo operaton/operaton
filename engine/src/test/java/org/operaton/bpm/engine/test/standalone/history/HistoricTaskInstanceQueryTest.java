@@ -355,7 +355,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     List<Task> tasks = taskService.createTaskQuery().processDefinitionKey("oneTaskProcess").list();
-    assertThat(tasks.size()).isEqualTo(8);
+    assertThat(tasks).hasSize(8);
     taskService.setVariableLocal(tasks.get(0).getId(), "var", 123L);
     taskService.setVariableLocal(tasks.get(1).getId(), "var", 12345L);
     taskService.setVariableLocal(tasks.get(2).getId(), "var", (short) 123);
@@ -649,7 +649,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
     List<HistoricTaskInstance> list = historyService.createHistoricTaskInstanceQuery().taskAssigned().list();
 
     // then
-    assertThat(list.size()).isEqualTo(2);
+    assertThat(list).hasSize(2);
 
     // cleanup
     taskService.deleteTask("taskOne",true);
@@ -678,7 +678,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
     List<HistoricTaskInstance> list = historyService.createHistoricTaskInstanceQuery().taskUnassigned().list();
 
     // then
-    assertThat(list.size()).isEqualTo(1);
+    assertThat(list).hasSize(1);
 
     // cleanup
     taskService.deleteTask("taskOne",true);
@@ -707,7 +707,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
             .finishedBefore(hourAgo.getTime()).list();
 
     // then
-    assertThat(list.size()).isEqualTo(1);
+    assertThat(list).hasSize(1);
 
     // cleanup
     taskService.deleteTask("taskOne",true);
@@ -735,7 +735,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
             .finishedAfter(Calendar.getInstance().getTime()).list();
 
     // then
-    assertThat(list.size()).isEqualTo(0);
+    assertThat(list).hasSize(0);
 
     // cleanup
     taskService.deleteTask("taskOne",true);

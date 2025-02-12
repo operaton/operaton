@@ -50,7 +50,7 @@ public class VersionTagTest extends PluggableProcessEngineTest {
       .asc()
       .singleResult();
 
-    assertThat(process.getVersionTag()).isEqualTo(null);
+    assertThat(process.getVersionTag()).isNull();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/versionTag.dmn"})
@@ -74,6 +74,6 @@ public class VersionTagTest extends PluggableProcessEngineTest {
     .asc()
     .singleResult();
 
-    assertThat(decision.getVersionTag()).isEqualTo(null);
+    assertThat(decision.getVersionTag()).isNull();
   }
 }

@@ -94,7 +94,7 @@ public class ExternalTaskSupportTest {
         .topic("externalTaskTopic", 5000L)
         .execute();
 
-    assertThat(externalTasks.size()).isEqualTo(1);
+    assertThat(externalTasks).hasSize(1);
     assertThat(externalTasks.get(0).getProcessInstanceId()).isEqualTo(processInstance.getId());
 
     // and it is possible to complete the external task successfully and end the process instance

@@ -101,7 +101,7 @@ public class RepositoryByteArrayTest {
         "org/operaton/bpm/engine/test/api/authorization/oneTaskCase.cmmn").getId();
 
     List<Resource> deploymentResources = repositoryService.getDeploymentResources(deploymentId);
-    assertThat(deploymentResources.size()).isEqualTo(5);
+    assertThat(deploymentResources).hasSize(5);
     for (Resource resource : deploymentResources) {
       ResourceEntity entity = (ResourceEntity) resource;
       checkEntity(fixedDate, entity);
@@ -126,21 +126,21 @@ public class RepositoryByteArrayTest {
 
     // then
     assertNotNull(byteArrayEntity);
-    assertThat(byteArrayEntity.getCreateTime().toString()).isEqualTo(fixedDate.toString());
+    assertThat(byteArrayEntity.getCreateTime()).hasToString(fixedDate.toString());
     assertThat(byteArrayEntity.getType()).isEqualTo(REPOSITORY.getValue());
   }
 
 
   protected void checkResource(Date expectedDate, String deploymentId) {
     List<Resource> deploymentResources = repositoryService.getDeploymentResources(deploymentId);
-    assertThat(deploymentResources.size()).isEqualTo(1);
+    assertThat(deploymentResources).hasSize(1);
     ResourceEntity resource = (ResourceEntity) deploymentResources.get(0);
     checkEntity(expectedDate, resource);
   }
 
   protected void checkEntity(Date expectedDate, ResourceEntity entity) {
     assertNotNull(entity);
-    assertThat(entity.getCreateTime().toString()).isEqualTo(expectedDate.toString());
+    assertThat(entity.getCreateTime()).hasToString(expectedDate.toString());
     assertThat(entity.getType()).isEqualTo(REPOSITORY.getValue());
   }
 }

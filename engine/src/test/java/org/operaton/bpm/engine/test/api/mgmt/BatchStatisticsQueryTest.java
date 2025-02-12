@@ -89,31 +89,31 @@ public class BatchStatisticsQueryTest {
   @Test
   public void testQuery() {
     List<BatchStatistics> statistics = managementService.createBatchStatisticsQuery().list();
-    assertThat(statistics.size()).isEqualTo(0);
+    assertThat(statistics).hasSize(0);
 
     Batch batch1 = helper.createMigrationBatchWithSize(1);
 
     statistics = managementService.createBatchStatisticsQuery().list();
-    assertThat(statistics.size()).isEqualTo(1);
+    assertThat(statistics).hasSize(1);
     assertThat(statistics.get(0).getId()).isEqualTo(batch1.getId());
 
     Batch batch2 = helper.createMigrationBatchWithSize(1);
     Batch batch3 = helper.createMigrationBatchWithSize(1);
 
     statistics = managementService.createBatchStatisticsQuery().list();
-    assertThat(statistics.size()).isEqualTo(3);
+    assertThat(statistics).hasSize(3);
 
     helper.completeBatch(batch1);
     helper.completeBatch(batch3);
 
     statistics = managementService.createBatchStatisticsQuery().list();
-    assertThat(statistics.size()).isEqualTo(1);
+    assertThat(statistics).hasSize(1);
     assertThat(statistics.get(0).getId()).isEqualTo(batch2.getId());
 
     helper.completeBatch(batch2);
 
     statistics = managementService.createBatchStatisticsQuery().list();
-    assertThat(statistics.size()).isEqualTo(0);
+    assertThat(statistics).hasSize(0);
   }
 
   @Test
@@ -182,7 +182,7 @@ public class BatchStatisticsQueryTest {
       .list();
 
     // then
-    assertThat(statistics.size()).isEqualTo(0);
+    assertThat(statistics).hasSize(0);
   }
 
   @Test
@@ -197,7 +197,7 @@ public class BatchStatisticsQueryTest {
       .list();
 
     // then
-    assertThat(statistics.size()).isEqualTo(2);
+    assertThat(statistics).hasSize(2);
   }
 
   @Test
@@ -223,7 +223,7 @@ public class BatchStatisticsQueryTest {
       .list();
 
     // then
-    assertThat(statistics.size()).isEqualTo(0);
+    assertThat(statistics).hasSize(0);
   }
 
   @Test
@@ -597,7 +597,7 @@ public class BatchStatisticsQueryTest {
     // then
     BatchStatisticsQuery query = managementService.createBatchStatisticsQuery().suspended();
     assertThat(query.count()).isEqualTo(1);
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
     assertThat(query.singleResult().getId()).isEqualTo(batch2.getId());
   }
 
@@ -616,7 +616,7 @@ public class BatchStatisticsQueryTest {
     // then
     BatchStatisticsQuery query = managementService.createBatchStatisticsQuery().active();
     assertThat(query.count()).isEqualTo(2);
-    assertThat(query.list().size()).isEqualTo(2);
+    assertThat(query.list()).hasSize(2);
 
     List<String> foundIds = new ArrayList<>();
     for (Batch batch : query.list()) {

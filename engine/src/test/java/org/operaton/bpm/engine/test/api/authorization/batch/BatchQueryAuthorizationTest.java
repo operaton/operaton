@@ -104,7 +104,7 @@ public class BatchQueryAuthorizationTest {
     authRule.disableAuthorization();
 
     // then
-    assertThat(batches.size()).isEqualTo(1);
+    assertThat(batches).hasSize(1);
     assertThat(batches.get(0).getId()).isEqualTo(batch1.getId());
   }
 
@@ -144,7 +144,7 @@ public class BatchQueryAuthorizationTest {
     authRule.disableAuthorization();
 
     // then
-    assertThat(batches.size()).isEqualTo(2);
+    assertThat(batches).hasSize(2);
   }
 
   @Test
@@ -159,7 +159,7 @@ public class BatchQueryAuthorizationTest {
     authRule.disableAuthorization();
 
     // then
-    assertThat(batches.size()).isEqualTo(2);
+    assertThat(batches).hasSize(2);
   }
 
   @Test
@@ -174,7 +174,7 @@ public class BatchQueryAuthorizationTest {
     authRule.disableAuthorization();
 
     // then
-    assertThat(batches.size()).isEqualTo(0);
+    assertThat(batches).hasSize(0);
   }
 
   @Test

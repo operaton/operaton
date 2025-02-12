@@ -607,7 +607,7 @@ public class CustomHistoryLevelUserOperationLogTest {
   }
 
   protected void verifyQueryResults(UserOperationLogQuery query, int countExpected) {
-    assertThat(query.list().size()).isEqualTo(countExpected);
+    assertThat(query.list()).hasSize(countExpected);
     assertThat(query.count()).isEqualTo(countExpected);
 
     if (countExpected == 1) {

@@ -129,7 +129,7 @@ public class FailedJobListenerWithRetriesTest {
 
   private Job getJob() {
     List<Job> jobs = engineRule.getManagementService().createJobQuery().list();
-    assertThat(jobs.size()).isEqualTo(1);
+    assertThat(jobs).hasSize(1);
     return jobs.get(0);
   }
 

@@ -365,9 +365,9 @@ public abstract class ProcessTaskAuthorizationTest {
   protected void verifyGetVariables(Map<String, Object> variables) {
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
-
-    assertThat(variables.get(ProcessTaskAuthorizationTest.VARIABLE_NAME)).isEqualTo(ProcessTaskAuthorizationTest.VARIABLE_VALUE);
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(ProcessTaskAuthorizationTest.VARIABLE_NAME, ProcessTaskAuthorizationTest.VARIABLE_VALUE);
   }
 
 }

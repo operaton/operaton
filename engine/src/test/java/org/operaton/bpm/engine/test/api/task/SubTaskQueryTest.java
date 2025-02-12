@@ -72,11 +72,11 @@ public class SubTaskQueryTest extends PluggableProcessEngineTest {
     // query all tasks, including subtasks
     TaskQuery query = taskService.createTaskQuery();
     assertThat(query.count()).isEqualTo(10);
-    assertThat(query.list().size()).isEqualTo(10);
+    assertThat(query.list()).hasSize(10);
     // query only parent tasks (exclude subtasks)
     query = taskService.createTaskQuery().excludeSubtasks();
     assertThat(query.count()).isEqualTo(3);
-    assertThat(query.list().size()).isEqualTo(3);
+    assertThat(query.list()).hasSize(3);
   }
 
   /**
@@ -87,11 +87,11 @@ public class SubTaskQueryTest extends PluggableProcessEngineTest {
     // query all tasks, including subtasks
     TaskQuery query = taskService.createTaskQuery();
     assertThat(query.count()).isEqualTo(10);
-    assertThat(query.listPage(0, 2).size()).isEqualTo(2);
+    assertThat(query.listPage(0, 2)).hasSize(2);
     // query only parent tasks (exclude subtasks)
     query = taskService.createTaskQuery().excludeSubtasks();
     assertThat(query.count()).isEqualTo(3);
-    assertThat(query.listPage(0, 1).size()).isEqualTo(1);
+    assertThat(query.listPage(0, 1)).hasSize(1);
   }
 
   /**
@@ -102,11 +102,11 @@ public class SubTaskQueryTest extends PluggableProcessEngineTest {
     // query all tasks, including subtasks
     TaskQuery query = taskService.createTaskQuery().orderByTaskAssignee().asc();
     assertThat(query.count()).isEqualTo(10);
-    assertThat(query.list().size()).isEqualTo(10);
+    assertThat(query.list()).hasSize(10);
     // query only parent tasks (exclude subtasks)
     query = taskService.createTaskQuery().excludeSubtasks().orderByTaskAssignee().desc();
     assertThat(query.count()).isEqualTo(3);
-    assertThat(query.list().size()).isEqualTo(3);
+    assertThat(query.list()).hasSize(3);
   }
 
   /**
@@ -118,22 +118,22 @@ public class SubTaskQueryTest extends PluggableProcessEngineTest {
     // include subtasks
     TaskQuery query = taskService.createTaskQuery().taskAssignee("gonzo");
     assertThat(query.count()).isEqualTo(7);
-    assertThat(query.list().size()).isEqualTo(7);
+    assertThat(query.list()).hasSize(7);
     // exclude subtasks
     query = taskService.createTaskQuery().taskAssignee("gonzo").excludeSubtasks();
     assertThat(query.count()).isEqualTo(2);
-    assertThat(query.list().size()).isEqualTo(2);
+    assertThat(query.list()).hasSize(2);
 
     // kermit has no root tasks and no subtasks assigned
     // include subtasks
     query = taskService.createTaskQuery().taskAssignee("kermit");
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
     assertNull(query.singleResult());
     // exclude subtasks
     query = taskService.createTaskQuery().taskAssignee("kermit").excludeSubtasks();
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
     assertNull(query.singleResult());
   }
 
@@ -146,22 +146,22 @@ public class SubTaskQueryTest extends PluggableProcessEngineTest {
     // include subtasks
     TaskQuery query = taskService.createTaskQuery().taskAssignee("gonzo");
     assertThat(query.count()).isEqualTo(7);
-    assertThat(query.listPage(0, 2).size()).isEqualTo(2);
+    assertThat(query.listPage(0, 2)).hasSize(2);
     // exclude subtasks
     query = taskService.createTaskQuery().taskAssignee("gonzo").excludeSubtasks();
     assertThat(query.count()).isEqualTo(2);
-    assertThat(query.listPage(0, 1).size()).isEqualTo(1);
+    assertThat(query.listPage(0, 1)).hasSize(1);
 
     // kermit has no root tasks and no subtasks assigned
     // include subtasks
     query = taskService.createTaskQuery().taskAssignee("kermit");
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.listPage(0, 2).size()).isEqualTo(0);
+    assertThat(query.listPage(0, 2)).hasSize(0);
     assertNull(query.singleResult());
     // exclude subtasks
     query = taskService.createTaskQuery().taskAssignee("kermit").excludeSubtasks();
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.listPage(0, 2).size()).isEqualTo(0);
+    assertThat(query.listPage(0, 2)).hasSize(0);
     assertNull(query.singleResult());
   }
 
@@ -176,13 +176,13 @@ public class SubTaskQueryTest extends PluggableProcessEngineTest {
     // include subtasks
     TaskQuery query = taskService.createTaskQuery().taskAssignee("gonzo").orderByTaskCreateTime().desc();
     assertThat(query.count()).isEqualTo(7);
-    assertThat(query.list().size()).isEqualTo(7);
+    assertThat(query.list()).hasSize(7);
     assertThat(query.list().get(0).getCreateTime()).isEqualTo(sdf.parse("02/01/2009 01:01:01.000"));
 
     // exclude subtasks
     query = taskService.createTaskQuery().taskAssignee("gonzo").excludeSubtasks().orderByTaskCreateTime().asc();
     assertThat(query.count()).isEqualTo(2);
-    assertThat(query.list().size()).isEqualTo(2);
+    assertThat(query.list()).hasSize(2);
     assertThat(query.list().get(0).getCreateTime()).isEqualTo(sdf.parse("01/02/2008 02:02:02.000"));
     assertThat(query.list().get(1).getCreateTime()).isEqualTo(sdf.parse("05/02/2008 02:02:02.000"));
 
@@ -190,12 +190,12 @@ public class SubTaskQueryTest extends PluggableProcessEngineTest {
     // include subtasks
     query = taskService.createTaskQuery().taskAssignee("kermit").orderByTaskCreateTime().asc();
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
     assertNull(query.singleResult());
     // exclude subtasks
     query = taskService.createTaskQuery().taskAssignee("kermit").excludeSubtasks().orderByTaskCreateTime().desc();
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
     assertNull(query.singleResult());
   }
 
@@ -210,32 +210,32 @@ public class SubTaskQueryTest extends PluggableProcessEngineTest {
     // include subtasks
     TaskQuery query = taskService.createTaskQuery().taskAssignee("gonzo").orderByTaskCreateTime().asc();
     assertThat(query.count()).isEqualTo(7);
-    assertThat(query.listPage(0, 1).size()).isEqualTo(1);
+    assertThat(query.listPage(0, 1)).hasSize(1);
     assertThat(query.listPage(0, 1).get(0).getCreateTime()).isEqualTo(sdf.parse("01/02/2008 02:02:02.000"));
-    assertThat(query.listPage(1, 1).size()).isEqualTo(1);
+    assertThat(query.listPage(1, 1)).hasSize(1);
     assertThat(query.listPage(1, 1).get(0).getCreateTime()).isEqualTo(sdf.parse("05/02/2008 02:02:02.000"));
-    assertThat(query.listPage(0, 2).size()).isEqualTo(2);
+    assertThat(query.listPage(0, 2)).hasSize(2);
     assertThat(query.listPage(0, 2).get(0).getCreateTime()).isEqualTo(sdf.parse("01/02/2008 02:02:02.000"));
     assertThat(query.listPage(0, 2).get(1).getCreateTime()).isEqualTo(sdf.parse("05/02/2008 02:02:02.000"));
 
     // exclude subtasks
     query = taskService.createTaskQuery().taskAssignee("gonzo").excludeSubtasks().orderByTaskCreateTime().desc();
     assertThat(query.count()).isEqualTo(2);
-    assertThat(query.listPage(1, 1).size()).isEqualTo(1);
+    assertThat(query.listPage(1, 1)).hasSize(1);
     assertThat(query.listPage(1, 1).get(0).getCreateTime()).isEqualTo(sdf.parse("01/02/2008 02:02:02.000"));
-    assertThat(query.listPage(0, 1).size()).isEqualTo(1);
+    assertThat(query.listPage(0, 1)).hasSize(1);
     assertThat(query.listPage(0, 1).get(0).getCreateTime()).isEqualTo(sdf.parse("05/02/2008 02:02:02.000"));
 
     // kermit has no root tasks and no subtasks assigned
     // include subtasks
     query = taskService.createTaskQuery().taskAssignee("kermit").orderByTaskCreateTime().asc();
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.listPage(0, 2).size()).isEqualTo(0);
+    assertThat(query.listPage(0, 2)).hasSize(0);
     assertNull(query.singleResult());
     // exclude subtasks
     query = taskService.createTaskQuery().taskAssignee("kermit").excludeSubtasks().orderByTaskCreateTime().desc();
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.listPage(0, 2).size()).isEqualTo(0);
+    assertThat(query.listPage(0, 2)).hasSize(0);
     assertNull(query.singleResult());
   }
 

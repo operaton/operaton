@@ -29,7 +29,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-import org.assertj.core.api.Assertions;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.DecisionService;
 import org.operaton.bpm.engine.HistoryService;
@@ -233,7 +232,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
 
     // but no deletion jobs where created
     List<Job> deletionJobs = helper.getExecutionJobs(batch);
-    assertThat(deletionJobs.size()).isEqualTo(0);
+    assertThat(deletionJobs).hasSize(0);
   }
 
   @Test
@@ -270,7 +269,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
 
     // but no deletion jobs where created
     List<Job> deletionJobs = helper.getExecutionJobs(batch);
-    assertThat(deletionJobs.size()).isEqualTo(0);
+    assertThat(deletionJobs).hasSize(0);
   }
 
   @Test
@@ -307,7 +306,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
 
     // but no deletion jobs where created
     List<Job> deletionJobs = helper.getExecutionJobs(batch);
-    assertThat(deletionJobs.size()).isEqualTo(0);
+    assertThat(deletionJobs).hasSize(0);
   }
 
   @Test
@@ -325,7 +324,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
 
     // then
     List<Job> deletionJobs = helper.getJobsForDefinition(deletionJobDefinition);
-    assertThat(deletionJobs.size()).isEqualTo(5);
+    assertThat(deletionJobs).hasSize(5);
 
     for (Job deletionJob : deletionJobs) {
       assertThat(deletionJob.getJobDefinitionId()).isEqualTo(deletionJobDefinition.getId());
@@ -348,7 +347,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
 
     // assume
     List<DecisionDefinition> definitions = rule.getRepositoryService().createDecisionDefinitionQuery().orderByDecisionDefinitionVersion().asc().list();
-    assertThat(definitions.size()).isEqualTo(2);
+    assertThat(definitions).hasSize(2);
     String deploymentIdOne = definitions.get(0).getDeploymentId();
     String deploymentIdTwo = definitions.get(1).getDeploymentId();
 
@@ -370,7 +369,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
     // then there is no seed job anymore and 10 deletion jobs for every deployment exist
     assertNull(helper.getSeedJob(batch));
     List<Job> deletionJobs = helper.getExecutionJobs(batch);
-    assertThat(deletionJobs.size()).isEqualTo(20);
+    assertThat(deletionJobs).hasSize(20);
     assertThat(getJobCountByDeployment(deletionJobs, deploymentIdOne)).isEqualTo(10L);
     assertThat(getJobCountByDeployment(deletionJobs, deploymentIdTwo)).isEqualTo(10L);
   }
@@ -381,7 +380,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
     executeDecisionInstances();
 
     List<DecisionDefinition> definitions = rule.getRepositoryService().createDecisionDefinitionQuery().orderByDecisionDefinitionVersion().asc().list();
-    assertThat(definitions.size()).isEqualTo(2);
+    assertThat(definitions).hasSize(2);
     String deploymentIdOne = definitions.get(0).getDeploymentId();
     String deploymentIdTwo = definitions.get(1).getDeploymentId();
 
@@ -408,7 +407,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
 
     // ...and 10 deletion jobs for the first deployment and 10 jobs for no deployment exist
     List<Job> deletionJobs = helper.getExecutionJobs(batch);
-    assertThat(deletionJobs.size()).isEqualTo(20);
+    assertThat(deletionJobs).hasSize(20);
     assertThat(getJobCountByDeployment(deletionJobs, deploymentIdOne)).isEqualTo(10L);
     assertThat(getJobCountByDeployment(deletionJobs, null)).isEqualTo(10L);
 
@@ -433,7 +432,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
 
     // then
     List<Job> deletionJobs = helper.getJobsForDefinition(deletionJobDefinition);
-    assertThat(deletionJobs.size()).isEqualTo(5);
+    assertThat(deletionJobs).hasSize(5);
 
     for (Job deletionJob : deletionJobs) {
       assertThat(deletionJob.getJobDefinitionId()).isEqualTo(deletionJobDefinition.getId());
@@ -466,7 +465,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
 
     // then
     List<Job> deletionJobs = helper.getJobsForDefinition(deletionJobDefinition);
-    assertThat(deletionJobs.size()).isEqualTo(5);
+    assertThat(deletionJobs).hasSize(5);
 
     for (Job deletionJob : deletionJobs) {
       assertThat(deletionJob.getJobDefinitionId()).isEqualTo(deletionJobDefinition.getId());
@@ -620,7 +619,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
     Batch batch = historyService.deleteHistoricDecisionInstancesAsync(query, null);
 
     // then
-    Assertions.assertThat(batch.getInvocationsPerBatchJob()).isEqualTo(42);
+    assertThat(batch.getInvocationsPerBatchJob()).isEqualTo(42);
 
     // clear
     configuration.setInvocationsPerBatchJobByBatchType(new HashMap<>());
@@ -641,8 +640,8 @@ public class BatchHistoricDecisionInstanceDeletionTest {
     HistoricBatch historicBatch = historyService.createHistoricBatchQuery().singleResult();
     batch = rule.getManagementService().createBatchQuery().singleResult();
 
-    Assertions.assertThat(batch.getExecutionStartTime()).isCloseTo(TEST_DATE, 1000);
-    Assertions.assertThat(historicBatch.getExecutionStartTime()).isCloseTo(TEST_DATE, 1000);
+    assertThat(batch.getExecutionStartTime()).isCloseTo(TEST_DATE, 1000);
+    assertThat(historicBatch.getExecutionStartTime()).isCloseTo(TEST_DATE, 1000);
   }
 
   protected void assertBatchCreated(Batch batch, int decisionInstanceCount) {

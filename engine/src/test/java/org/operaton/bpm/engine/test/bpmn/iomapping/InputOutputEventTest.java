@@ -60,8 +60,9 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
 
     // input mapping
     Map<String, Object> mappedVariables = VariableLogDelegate.LOCAL_VARIABLES;
-    assertThat(mappedVariables.size()).isEqualTo(1);
-    assertThat(mappedVariables.get("mappedVariable")).isEqualTo("mappedValue");
+    assertThat(mappedVariables)
+            .hasSize(1)
+            .containsEntry("mappedVariable", "mappedValue");
 
     // output mapping
     String variable = (String) runtimeService.getVariableLocal(processInstance.getId(), "outVariable");
@@ -76,8 +77,9 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
     Execution messageExecution = runtimeService.createExecutionQuery().activityId("messageCatch").singleResult();
 
     Map<String, Object> localVariables = runtimeService.getVariablesLocal(messageExecution.getId());
-    assertThat(localVariables.size()).isEqualTo(1);
-    assertThat(localVariables.get("mappedVariable")).isEqualTo("mappedValue");
+    assertThat(localVariables)
+            .hasSize(1)
+            .containsEntry("mappedVariable", "mappedValue");
 
     Map<String, Object> variables = new HashMap<>();
     variables.put("messageVariable", "outValue");
@@ -112,8 +114,9 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
 
     Map<String, Object> mappedVariables = VariableLogDelegate.LOCAL_VARIABLES;
-    assertThat(mappedVariables.size()).isEqualTo(1);
-    assertThat(mappedVariables.get("mappedVariable")).isEqualTo("mappedValue");
+    assertThat(mappedVariables)
+            .hasSize(1)
+            .containsEntry("mappedVariable", "mappedValue");
 
     // output mapping
     String variable = (String) runtimeService.getVariableLocal(processInstance.getId(), "outVariable");
@@ -158,8 +161,9 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
 
     // input mapping
     Map<String, Object> mappedVariables = VariableLogDelegate.LOCAL_VARIABLES;
-    assertThat(mappedVariables.size()).isEqualTo(1);
-    assertThat(mappedVariables.get("mappedVariable")).isEqualTo("mappedValue");
+    assertThat(mappedVariables)
+            .hasSize(1)
+            .containsEntry("mappedVariable", "mappedValue");
   }
 
   @Deployment

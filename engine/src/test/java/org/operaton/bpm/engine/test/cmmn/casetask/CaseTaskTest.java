@@ -562,7 +562,7 @@ public class CaseTaskTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -616,7 +616,7 @@ public class CaseTaskTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -667,7 +667,7 @@ public class CaseTaskTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -721,7 +721,7 @@ public class CaseTaskTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -771,7 +771,7 @@ public class CaseTaskTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -826,7 +826,7 @@ public class CaseTaskTest extends CmmnTest {
         .caseInstanceIdIn(subCaseInstance.getId())
         .list();
 
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
     assertThat(variables.get(0).getName()).isEqualTo("aLocalVariable");
   }
 
@@ -937,7 +937,7 @@ public class CaseTaskTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -997,7 +997,7 @@ public class CaseTaskTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -1050,7 +1050,7 @@ public class CaseTaskTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -1115,7 +1115,7 @@ public class CaseTaskTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -1180,7 +1180,7 @@ public class CaseTaskTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -1306,7 +1306,7 @@ public class CaseTaskTest extends CmmnTest {
         .list();
 
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();

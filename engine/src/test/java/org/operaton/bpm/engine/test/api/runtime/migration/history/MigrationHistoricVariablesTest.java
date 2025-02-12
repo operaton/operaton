@@ -217,7 +217,7 @@ public class MigrationHistoricVariablesTest {
 
     //then
     List<HistoricVariableInstance> migratedVariables = historyService.createHistoricVariableInstanceQuery().list();
-    assertThat(migratedVariables.size()).isEqualTo(6); // 3 loop counter + nrOfInstance + nrOfActiveInstances + nrOfCompletedInstances
+    assertThat(migratedVariables).hasSize(6); // 3 loop counter + nrOfInstance + nrOfActiveInstances + nrOfCompletedInstances
 
     for (HistoricVariableInstance variable : migratedVariables) {
       assertThat(variable.getProcessDefinitionKey()).isEqualTo(targetDefinition.getKey());

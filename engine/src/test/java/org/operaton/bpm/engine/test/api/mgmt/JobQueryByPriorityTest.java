@@ -71,7 +71,7 @@ public class JobQueryByPriorityTest extends PluggableProcessEngineTest {
     // when making a job query and filtering by job priority
     // then the correct jobs are returned
     List<Job> jobs = managementService.createJobQuery().priorityLowerThanOrEquals(2).list();
-    assertThat(jobs.size()).isEqualTo(3);
+    assertThat(jobs).hasSize(3);
 
     Set<String> processInstanceIds = new HashSet<>();
     processInstanceIds.add(instances.get(0).getId());
@@ -114,7 +114,7 @@ public class JobQueryByPriorityTest extends PluggableProcessEngineTest {
     // when making a job query and filtering by job priority
     // then the correct jobs are returned
     List<Job> jobs = managementService.createJobQuery().priorityHigherThanOrEquals(2L).list();
-    assertThat(jobs.size()).isEqualTo(3);
+    assertThat(jobs).hasSize(3);
 
     Set<String> processInstanceIds = new HashSet<>();
     processInstanceIds.add(instances.get(2).getId());

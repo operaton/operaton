@@ -70,11 +70,11 @@ public class CaseVariableListenerHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     List<VariableListener<?>> listeners = activity.getVariableListenersLocal(CaseVariableListener.CREATE);
-    assertThat(listeners.size()).isEqualTo(1);
+    assertThat(listeners).hasSize(1);
 
     ClassDelegateCaseVariableListener listener = (ClassDelegateCaseVariableListener) listeners.get(0);
     assertThat(listener.getClassName()).isEqualTo("a.class.Name");
-    assertThat(listener.getFieldDeclarations().size()).isEqualTo(1);
+    assertThat(listener.getFieldDeclarations()).hasSize(1);
     assertThat(listener.getFieldDeclarations().get(0).getName()).isEqualTo("fieldName");
     Object fieldValue = listener.getFieldDeclarations().get(0).getValue();
     assertTrue(fieldValue instanceof Expression);
@@ -96,13 +96,13 @@ public class CaseVariableListenerHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     List<VariableListener<?>> listeners = activity.getVariableListenersLocal(CaseVariableListener.CREATE);
-    assertThat(listeners.size()).isEqualTo(1);
+    assertThat(listeners).hasSize(1);
 
     DelegateExpressionCaseVariableListener listener = (DelegateExpressionCaseVariableListener) listeners.get(0);
     assertThat(listener.getExpressionText()).isEqualTo("${expression}");
 
-    assertThat(activity.getVariableListenersLocal(CaseVariableListener.UPDATE).size()).isEqualTo(0);
-    assertThat(activity.getVariableListenersLocal(CaseVariableListener.DELETE).size()).isEqualTo(0);
+    assertThat(activity.getVariableListenersLocal(CaseVariableListener.UPDATE)).hasSize(0);
+    assertThat(activity.getVariableListenersLocal(CaseVariableListener.DELETE)).hasSize(0);
   }
 
   @Test
@@ -116,13 +116,13 @@ public class CaseVariableListenerHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     List<VariableListener<?>> listeners = activity.getVariableListenersLocal(CaseVariableListener.CREATE);
-    assertThat(listeners.size()).isEqualTo(1);
+    assertThat(listeners).hasSize(1);
 
     ExpressionCaseVariableListener listener = (ExpressionCaseVariableListener) listeners.get(0);
     assertThat(listener.getExpressionText()).isEqualTo("${expression}");
 
-    assertThat(activity.getVariableListenersLocal(CaseVariableListener.UPDATE).size()).isEqualTo(0);
-    assertThat(activity.getVariableListenersLocal(CaseVariableListener.DELETE).size()).isEqualTo(0);
+    assertThat(activity.getVariableListenersLocal(CaseVariableListener.UPDATE)).hasSize(0);
+    assertThat(activity.getVariableListenersLocal(CaseVariableListener.DELETE)).hasSize(0);
   }
 
 }

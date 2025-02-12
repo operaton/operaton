@@ -569,7 +569,7 @@ public abstract class AuthorizationTest extends PluggableProcessEngineTest {
   // verify query results ////////////////////////////////////////////////////////
 
   protected void verifyQueryResults(Query<?, ?> query, int countExpected) {
-    assertThat(query.list().size()).isEqualTo(countExpected);
+    assertThat(query.list()).hasSize(countExpected);
     assertThat(query.count()).isEqualTo(countExpected);
 
     if (countExpected == 1) {

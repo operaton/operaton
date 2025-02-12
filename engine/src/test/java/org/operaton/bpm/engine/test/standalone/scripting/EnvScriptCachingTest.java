@@ -66,7 +66,7 @@ public class EnvScriptCachingTest extends AbstractScriptEnvironmentTest {
 
     assertNotNull(groovyEnvScripts);
     assertFalse(groovyEnvScripts.isEmpty());
-    assertThat(groovyEnvScripts.size()).isEqualTo(processEngineConfiguration.getEnvScriptResolvers().size());
+    assertThat(groovyEnvScripts).hasSize(processEngineConfiguration.getEnvScriptResolvers().size());
 
     repositoryService.deleteDeployment(deployment.getId(), true);
   }

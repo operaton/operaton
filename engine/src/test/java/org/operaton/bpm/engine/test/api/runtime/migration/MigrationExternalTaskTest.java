@@ -422,7 +422,7 @@ public class MigrationExternalTaskTest {
 
     List<MigrationInstruction> instructions = migrationPlan.getInstructions();
     // test that the messageEventDefinition without an id isn't included
-    assertThat(instructions.size()).isEqualTo(2);
+    assertThat(instructions).hasSize(2);
   }
 
 
@@ -441,7 +441,7 @@ public class MigrationExternalTaskTest {
       .build();
 
     List<MigrationInstruction> instructions = migrationPlan.getInstructions();
-    assertThat(instructions.size()).isEqualTo(2);
+    assertThat(instructions).hasSize(2);
   }
 
   protected LockedExternalTask fetchAndLockSingleTask(String topic) {
@@ -451,7 +451,7 @@ public class MigrationExternalTaskTest {
       .topic(topic, 1000L)
       .execute();
 
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
 
     return tasks.get(0);
   }

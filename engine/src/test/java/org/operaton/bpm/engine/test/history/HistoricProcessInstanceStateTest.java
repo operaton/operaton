@@ -301,8 +301,9 @@ public class HistoricProcessInstanceStateTest {
   private HistoricProcessInstance getHistoricProcessInstanceWithAssertion(ProcessDefinition processDefinition) {
     List<HistoricProcessInstance> entities = processEngineRule.getHistoryService().createHistoricProcessInstanceQuery()
         .processDefinitionId(processDefinition.getId()).list();
-    assertThat(entities).isNotNull();
-    assertThat(entities).hasSize(1);
+    assertThat(entities)
+            .isNotNull()
+            .hasSize(1);
     return entities.get(0);
   }
 

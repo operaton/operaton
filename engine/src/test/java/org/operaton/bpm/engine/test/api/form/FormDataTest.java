@@ -136,9 +136,10 @@ public class FormDataTest extends PluggableProcessEngineTest {
     assertNotNull(enumField.getType());
     EnumFormType enumFormType = (EnumFormType) enumField.getType();
     Map<String, String> values = enumFormType.getValues();
-    assertThat(values.get("a")).isEqualTo("A");
-    assertThat(values.get("b")).isEqualTo("B");
-    assertThat(values.get("c")).isEqualTo("C");
+    assertThat(values)
+            .containsEntry("a", "A")
+            .containsEntry("b", "B")
+            .containsEntry("c", "C");
 
   }
 
@@ -156,8 +157,9 @@ public class FormDataTest extends PluggableProcessEngineTest {
 
     FormField stringField = formFields.get(0);
     Map<String, String> properties = stringField.getProperties();
-    assertThat(properties.get("p1")).isEqualTo("property1");
-    assertThat(properties.get("p2")).isEqualTo("property2");
+    assertThat(properties)
+            .containsEntry("p1", "property1")
+            .containsEntry("p2", "property2");
 
   }
 
@@ -263,7 +265,7 @@ public class FormDataTest extends PluggableProcessEngineTest {
     // then taskFormData contains form variables with null as values
     TaskFormData taskFormData = formService.getTaskFormData(task.getId());
     assertNotNull(taskFormData);
-    assertThat(taskFormData.getFormFields().size()).isEqualTo(5);
+    assertThat(taskFormData.getFormFields()).hasSize(5);
     for (FormField field : taskFormData.getFormFields()) {
       assertNotNull(field);
 

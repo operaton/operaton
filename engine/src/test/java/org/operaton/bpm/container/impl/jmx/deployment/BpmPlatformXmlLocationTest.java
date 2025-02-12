@@ -77,9 +77,9 @@ public class BpmPlatformXmlLocationTest {
     assertNull(tomcatParseBpmPlatformXmlStep.checkValidUrlLocation(BPM_PLATFORM_XML_LOCATION_VALID_PATH_UNIX));
 
     URL httpUrl = tomcatParseBpmPlatformXmlStep.checkValidUrlLocation(BPM_PLATFORM_XML_LOCATION_URL_HTTP_PROTOCOL);
-    assertThat(httpUrl.toString()).isEqualTo(BPM_PLATFORM_XML_LOCATION_URL_HTTP_PROTOCOL);
+    assertThat(httpUrl).hasToString(BPM_PLATFORM_XML_LOCATION_URL_HTTP_PROTOCOL);
     URL httpsUrl = tomcatParseBpmPlatformXmlStep.checkValidUrlLocation(BPM_PLATFORM_XML_LOCATION_URL_HTTPS_PROTOCOL);
-    assertThat(httpsUrl.toString()).isEqualTo(BPM_PLATFORM_XML_LOCATION_URL_HTTPS_PROTOCOL);
+    assertThat(httpsUrl).hasToString(BPM_PLATFORM_XML_LOCATION_URL_HTTPS_PROTOCOL);
   }
 
   @Test
@@ -142,7 +142,7 @@ public class BpmPlatformXmlLocationTest {
 
       URL url = new TomcatParseBpmPlatformXmlStep().lookupBpmPlatformXmlLocationFromEnvironmentVariable();
 
-      assertThat(url.toString()).isEqualTo(BPM_PLATFORM_XML_LOCATION_URL_HTTP_PROTOCOL);
+      assertThat(url).hasToString(BPM_PLATFORM_XML_LOCATION_URL_HTTP_PROTOCOL);
     } finally {
       System.clearProperty(BPM_PLATFORM_XML_SYSTEM_PROPERTY);
     }

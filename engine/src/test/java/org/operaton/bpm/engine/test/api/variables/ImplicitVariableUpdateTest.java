@@ -49,7 +49,7 @@ public class ImplicitVariableUpdateTest extends PluggableProcessEngineTest {
 
     List<String> list = (List<String>) runtimeService.getVariable(instance.getId(), "listVar");
     assertNotNull(list);
-    assertThat(list.size()).isEqualTo(1);
+    assertThat(list).hasSize(1);
     assertThat(list.get(0)).isEqualTo(UpdateValueDelegate.NEW_ELEMENT);
   }
 
@@ -66,7 +66,7 @@ public class ImplicitVariableUpdateTest extends PluggableProcessEngineTest {
 
     List<String> list = (List<String>) runtimeService.getVariable(instance.getId(), "listVar");
     assertNotNull(list);
-    assertThat(list.size()).isEqualTo(1);
+    assertThat(list).hasSize(1);
     assertThat(list.get(0)).isEqualTo(UpdateValueDelegate.NEW_ELEMENT);
   }
 

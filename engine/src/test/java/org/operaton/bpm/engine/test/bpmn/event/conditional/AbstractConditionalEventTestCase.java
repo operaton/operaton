@@ -120,7 +120,7 @@ public abstract class AbstractConditionalEventTestCase {
     }
 
     //then
-    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(0);
+    assertThat(conditionEventSubscriptionQuery.list()).hasSize(0);
     assertNull(taskService.createTaskQuery().singleResult());
     assertNull(runtimeService.createProcessInstanceQuery().singleResult());
     tasksAfterVariableIsSet = null;

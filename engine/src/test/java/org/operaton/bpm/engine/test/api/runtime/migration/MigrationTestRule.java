@@ -212,7 +212,7 @@ public class MigrationTestRule extends ProcessEngineTestRule {
 
   public Job assertTimerJobExists(ProcessInstanceSnapshot snapshot) {
     List<Job> jobs = snapshot.getJobs();
-    assertThat(jobs.size()).isEqualTo(1);
+    assertThat(jobs).hasSize(1);
     Job job = jobs.get(0);
     assertTimerJob(job);
     return job;

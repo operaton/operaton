@@ -140,7 +140,7 @@ public class ProcessApplicationDeploymentTest {
 
     // then
     Set<String> deploymentIds = registration.getDeploymentIds();
-    assertThat(deploymentIds.size()).isEqualTo(1);
+    assertThat(deploymentIds).hasSize(1);
     assertThat(registration.getProcessEngineName()).isEqualTo(processEngine.getName());
   }
 
@@ -168,7 +168,7 @@ public class ProcessApplicationDeploymentTest {
 
     // then
     Set<String> deploymentIds = registration.getDeploymentIds();
-    assertThat(deploymentIds.size()).isEqualTo(1);
+    assertThat(deploymentIds).hasSize(1);
     assertThat(registration.getProcessEngineName()).isEqualTo(processEngine.getName());
   }
 
@@ -209,7 +209,7 @@ public class ProcessApplicationDeploymentTest {
         .orderByProcessDefinitionVersion().asc().list();
 
     // now there are two versions of process1 deployed
-    assertThat(processDefinitionsModel1.size()).isEqualTo(2);
+    assertThat(processDefinitionsModel1).hasSize(2);
     assertThat(processDefinitionsModel1.get(0).getVersion()).isEqualTo(1);
     assertThat(processDefinitionsModel1.get(1).getVersion()).isEqualTo(2);
 
@@ -220,14 +220,14 @@ public class ProcessApplicationDeploymentTest {
           .processDefinitionKey("process1")
           .orderByProcessDefinitionVersion().asc().list();
 
-    assertThat(processDefinitionsModel2.size()).isEqualTo(2);
+    assertThat(processDefinitionsModel2).hasSize(2);
     assertThat(processDefinitionsModel2.get(0).getVersion()).isEqualTo(1);
     assertThat(processDefinitionsModel2.get(1).getVersion()).isEqualTo(2);
 
     // old deployment was resumed
     ProcessApplicationRegistration registration = deployment2.getProcessApplicationRegistration();
     Set<String> deploymentIds = registration.getDeploymentIds();
-    assertThat(deploymentIds.size()).isEqualTo(2);
+    assertThat(deploymentIds).hasSize(2);
     assertThat(registration.getProcessEngineName()).isEqualTo(processEngine.getName());
   }
 
@@ -279,14 +279,14 @@ public class ProcessApplicationDeploymentTest {
           .processDefinitionKey("process2")
           .orderByProcessDefinitionVersion().asc().list();
 
-    assertThat(processDefinitionsModel2.size()).isEqualTo(2);
+    assertThat(processDefinitionsModel2).hasSize(2);
     assertThat(processDefinitionsModel2.get(0).getVersion()).isEqualTo(1);
     assertThat(processDefinitionsModel2.get(1).getVersion()).isEqualTo(2);
 
     // old deployment was resumed
     ProcessApplicationRegistration registration = deployment2.getProcessApplicationRegistration();
     Set<String> deploymentIds = registration.getDeploymentIds();
-    assertThat(deploymentIds.size()).isEqualTo(2);
+    assertThat(deploymentIds).hasSize(2);
 
     BpmnModelInstance anotherChangedModel2 = Bpmn.createExecutableProcess("process2")
         .startEvent()
@@ -316,7 +316,7 @@ public class ProcessApplicationDeploymentTest {
     // old deployments are resumed
     registration = deployment3.getProcessApplicationRegistration();
     deploymentIds = registration.getDeploymentIds();
-    assertThat(deploymentIds.size()).isEqualTo(3);
+    assertThat(deploymentIds).hasSize(3);
   }
 
   @Test
@@ -398,7 +398,7 @@ public class ProcessApplicationDeploymentTest {
         .addModelInstance("process2.bpmn20.xml", model2));
 
     ProcessApplicationRegistration registration = deployment2.getProcessApplicationRegistration();
-    assertThat(registration.getDeploymentIds().size()).isEqualTo(2);
+    assertThat(registration.getDeploymentIds()).hasSize(2);
   }
 
   @Test
@@ -430,7 +430,7 @@ public class ProcessApplicationDeploymentTest {
     // old deployment was resumed
     ProcessApplicationRegistration registration = deployment2.getProcessApplicationRegistration();
     Set<String> deploymentIds = registration.getDeploymentIds();
-    assertThat(deploymentIds.size()).isEqualTo(2);
+    assertThat(deploymentIds).hasSize(2);
     assertThat(registration.getProcessEngineName()).isEqualTo(processEngine.getName());
   }
 
@@ -462,7 +462,7 @@ public class ProcessApplicationDeploymentTest {
     // and the old deployment was not resumed
     ProcessApplicationRegistration registration = deployment2.getProcessApplicationRegistration();
     Set<String> deploymentIds = registration.getDeploymentIds();
-    assertThat(deploymentIds.size()).isEqualTo(1);
+    assertThat(deploymentIds).hasSize(1);
     assertThat(deploymentIds.iterator().next()).isEqualTo(deployment2.getId());
     assertThat(registration.getProcessEngineName()).isEqualTo(processEngine.getName());
   }
@@ -489,7 +489,7 @@ public class ProcessApplicationDeploymentTest {
 
     // then
     ProcessApplicationRegistration registration = deployment2.getProcessApplicationRegistration();
-    assertThat(registration.getDeploymentIds().size()).isEqualTo(2);
+    assertThat(registration.getDeploymentIds()).hasSize(2);
   }
 
   @Test
@@ -529,12 +529,12 @@ public class ProcessApplicationDeploymentTest {
     // then
     // PA2 registers only it's own (new) version of the model
     ProcessApplicationRegistration registration2 = deployment2.getProcessApplicationRegistration();
-    assertThat(registration2.getDeploymentIds().size()).isEqualTo(1);
+    assertThat(registration2.getDeploymentIds()).hasSize(1);
 
     // PA3 deploys a duplicate version of the process. The duplicate deployment needs to be found
     // and registered (deployment1)
     ProcessApplicationRegistration registration3 = deployment3.getProcessApplicationRegistration();
-    assertThat(registration3.getDeploymentIds().size()).isEqualTo(1);
+    assertThat(registration3.getDeploymentIds()).hasSize(1);
     assertThat(registration3.getDeploymentIds().iterator().next()).isEqualTo(deployment1.getId());
   }
 
@@ -566,7 +566,7 @@ public class ProcessApplicationDeploymentTest {
     // old deployment was NOT resumed
     ProcessApplicationRegistration registration = deployment2.getProcessApplicationRegistration();
     Set<String> deploymentIds = registration.getDeploymentIds();
-    assertThat(deploymentIds.size()).isEqualTo(1);
+    assertThat(deploymentIds).hasSize(1);
     assertThat(registration.getProcessEngineName()).isEqualTo(processEngine.getName());
   }
 
@@ -600,7 +600,7 @@ public class ProcessApplicationDeploymentTest {
     // old deployment was resumed
     ProcessApplicationRegistration registration = deployment2.getProcessApplicationRegistration();
     Set<String> deploymentIds = registration.getDeploymentIds();
-    assertThat(deploymentIds.size()).isEqualTo(2);
+    assertThat(deploymentIds).hasSize(2);
     assertThat(registration.getProcessEngineName()).isEqualTo(processEngine.getName());
   }
 
@@ -644,7 +644,7 @@ public class ProcessApplicationDeploymentTest {
     // old deployment was resumed
     ProcessApplicationRegistration registration = deployment2.getProcessApplicationRegistration();
     Set<String> paDeploymentIds = registration.getDeploymentIds();
-    assertThat(paDeploymentIds.size()).isEqualTo(1);
+    assertThat(paDeploymentIds).hasSize(1);
     assertTrue(paDeploymentIds.contains(deployment2.getId()));
     assertThat(registration.getProcessEngineName()).isEqualTo(processEngine.getName());
   }
@@ -678,7 +678,7 @@ public class ProcessApplicationDeploymentTest {
     // old deployment was resumed
     ProcessApplicationRegistration registration = deployment2.getProcessApplicationRegistration();
     Set<String> deploymentIds = registration.getDeploymentIds();
-    assertThat(deploymentIds.size()).isEqualTo(2);
+    assertThat(deploymentIds).hasSize(2);
     assertThat(registration.getProcessEngineName()).isEqualTo(processEngine.getName());
   }
 
@@ -710,7 +710,7 @@ public class ProcessApplicationDeploymentTest {
     // but the old deployment was not resumed
     ProcessApplicationRegistration registration = deployment2.getProcessApplicationRegistration();
     Set<String> deploymentIds = registration.getDeploymentIds();
-    assertThat(deploymentIds.size()).isEqualTo(1);
+    assertThat(deploymentIds).hasSize(1);
     assertThat(deploymentIds.iterator().next()).isEqualTo(deployment2.getId());
     assertThat(registration.getProcessEngineName()).isEqualTo(processEngine.getName());
   }
@@ -736,7 +736,7 @@ public class ProcessApplicationDeploymentTest {
         .addModelInstance("process2.bpmn20.xml", model2));
 
     ProcessApplicationRegistration registration = deployment2.getProcessApplicationRegistration();
-    assertThat(registration.getDeploymentIds().size()).isEqualTo(2);
+    assertThat(registration.getDeploymentIds()).hasSize(2);
   }
 
   @Test

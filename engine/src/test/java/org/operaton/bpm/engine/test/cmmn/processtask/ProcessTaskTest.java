@@ -587,7 +587,7 @@ public class ProcessTaskTest extends CmmnTest {
         .processInstanceIdIn(processInstance.getId())
         .list();
 
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
     assertNotEquals(variables.get(0).getName(), variables.get(1).getName());
 
     for (VariableInstance variable : variables) {
@@ -642,7 +642,7 @@ public class ProcessTaskTest extends CmmnTest {
         .processInstanceIdIn(processInstance.getId())
         .list();
 
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
     assertNotEquals(variables.get(0).getName(), variables.get(1).getName());
 
     for (VariableInstance variable : variables) {
@@ -690,7 +690,7 @@ public class ProcessTaskTest extends CmmnTest {
         .processInstanceIdIn(processInstance.getId())
         .list();
 
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
     assertNotEquals(variables.get(0).getName(), variables.get(1).getName());
 
     for (VariableInstance variable : variables) {
@@ -737,7 +737,7 @@ public class ProcessTaskTest extends CmmnTest {
         .processInstanceIdIn(processInstance.getId())
         .list();
 
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
     assertNotEquals(variables.get(0).getName(), variables.get(1).getName());
 
     for (VariableInstance variable : variables) {
@@ -786,7 +786,7 @@ public class ProcessTaskTest extends CmmnTest {
         .processInstanceIdIn(processInstance.getId())
         .list();
 
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
     assertNotEquals(variables.get(0).getName(), variables.get(1).getName());
 
     for (VariableInstance variable : variables) {
@@ -837,7 +837,7 @@ public class ProcessTaskTest extends CmmnTest {
         .processInstanceIdIn(subProcessInstance.getId())
         .list();
 
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
     assertThat(variables.get(0).getName()).isEqualTo("aLocalVariable");
   }
 
@@ -871,7 +871,7 @@ public class ProcessTaskTest extends CmmnTest {
         .processInstanceIdIn(processInstance.getId())
         .list();
 
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
     assertNotEquals(variables.get(0).getName(), variables.get(1).getName());
 
     for (VariableInstance variable : variables) {
@@ -982,7 +982,7 @@ public class ProcessTaskTest extends CmmnTest {
         .caseInstanceIdIn(caseInstanceId)
         .list();
 
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
     assertNotEquals(variables.get(0).getName(), variables.get(1).getName());
 
     for (VariableInstance variable : variables) {
@@ -1033,7 +1033,7 @@ public class ProcessTaskTest extends CmmnTest {
         .caseInstanceIdIn(caseInstanceId)
         .list();
 
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
     assertNotEquals(variables.get(0).getName(), variables.get(1).getName());
 
     for (VariableInstance variable : variables) {
@@ -1081,7 +1081,7 @@ public class ProcessTaskTest extends CmmnTest {
         .caseInstanceIdIn(caseInstanceId)
         .list();
 
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
     assertNotEquals(variables.get(0).getName(), variables.get(1).getName());
 
     for (VariableInstance variable : variables) {
@@ -1128,7 +1128,7 @@ public class ProcessTaskTest extends CmmnTest {
         .caseInstanceIdIn(caseInstanceId)
         .list();
 
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
     assertNotEquals(variables.get(0).getName(), variables.get(1).getName());
 
     for (VariableInstance variable : variables) {
@@ -1181,7 +1181,7 @@ public class ProcessTaskTest extends CmmnTest {
         .caseInstanceIdIn(caseInstanceId)
         .list();
 
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
     assertNotEquals(variables.get(0).getName(), variables.get(1).getName());
 
     for (VariableInstance variable : variables) {
@@ -1234,7 +1234,7 @@ public class ProcessTaskTest extends CmmnTest {
         .caseInstanceIdIn(caseInstanceId)
         .list();
 
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
     assertNotEquals(variables.get(0).getName(), variables.get(1).getName());
 
     for (VariableInstance variable : variables) {
@@ -1339,7 +1339,7 @@ public class ProcessTaskTest extends CmmnTest {
         .caseInstanceIdIn(caseInstanceId)
         .list();
 
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
     assertNotEquals(variables.get(0).getName(), variables.get(1).getName());
 
     for (VariableInstance variable : variables) {

@@ -223,8 +223,8 @@ public class ConditionalEventTriggeredByExecutionListenerTest extends AbstractCo
     //then start listener sets variable
     //non interrupting boundary event is triggered
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(specifier.expectedTaskCount());
-    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(specifier.expectedSubscriptions());
+    assertThat(tasksAfterVariableIsSet).hasSize(specifier.expectedTaskCount());
+    assertThat(conditionEventSubscriptionQuery.list()).hasSize(specifier.expectedSubscriptions());
     specifier.assertTaskNames(tasksAfterVariableIsSet, false, false);
   }
 
@@ -295,8 +295,8 @@ public class ConditionalEventTriggeredByExecutionListenerTest extends AbstractCo
     //then take listener sets variable
     //non interrupting boundary event is triggered
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(specifier.expectedTaskCount());
-    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(specifier.expectedSubscriptions());
+    assertThat(tasksAfterVariableIsSet).hasSize(specifier.expectedTaskCount());
+    assertThat(conditionEventSubscriptionQuery.list()).hasSize(specifier.expectedSubscriptions());
     specifier.assertTaskNames(tasksAfterVariableIsSet, false, false);
   }
 
@@ -370,7 +370,7 @@ public class ConditionalEventTriggeredByExecutionListenerTest extends AbstractCo
     //and job was created
     Job job = engine.getManagementService().createJobQuery().singleResult();
     assertNotNull(job);
-    assertThat(conditionEventSubscriptionQuery.list().size()).isEqualTo(1);
+    assertThat(conditionEventSubscriptionQuery.list()).hasSize(1);
 
     //when job is executed task is created
     engine.getManagementService().executeJob(job.getId());
@@ -381,7 +381,7 @@ public class ConditionalEventTriggeredByExecutionListenerTest extends AbstractCo
 
     //then no task exist and process instance is ended
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(0);
+    assertThat(tasksAfterVariableIsSet).hasSize(0);
     assertNull(runtimeService.createProcessInstanceQuery().singleResult());
   }
 
@@ -438,7 +438,7 @@ public class ConditionalEventTriggeredByExecutionListenerTest extends AbstractCo
     //then end listener sets variable
     //non interrupting boundary event is triggered
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(specifier.expectedTaskCount());
+    assertThat(tasksAfterVariableIsSet).hasSize(specifier.expectedTaskCount());
     specifier.assertTaskNames(tasksAfterVariableIsSet, false, false);
   }
 

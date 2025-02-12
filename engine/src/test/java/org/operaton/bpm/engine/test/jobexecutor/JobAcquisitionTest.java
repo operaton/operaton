@@ -106,7 +106,7 @@ public class JobAcquisitionTest {
     // then it has not performed waiting since it was able to acquire and execute all jobs
     assertThat(engineRule.getManagementService().createJobQuery().active().count()).isEqualTo(0);
     List<RecordedWaitEvent> jobExecutor1WaitEvents = jobExecutor1.getAcquireJobsRunnable().getWaitEvents();
-    assertThat(jobExecutor1WaitEvents.size()).isEqualTo(1);
+    assertThat(jobExecutor1WaitEvents).hasSize(1);
     assertThat(jobExecutor1WaitEvents.get(0).getTimeBetweenAcquisitions()).isEqualTo(0);
 
     // when continuing acquisition thread 2
@@ -115,7 +115,7 @@ public class JobAcquisitionTest {
     // then its acquisition cycle fails with OLEs
     // but the acquisition thread immediately tries again
     List<RecordedWaitEvent> jobExecutor2WaitEvents = jobExecutor2.getAcquireJobsRunnable().getWaitEvents();
-    assertThat(jobExecutor2WaitEvents.size()).isEqualTo(1);
+    assertThat(jobExecutor2WaitEvents).hasSize(1);
 
     assertThat(jobExecutor2WaitEvents.get(0).getTimeBetweenAcquisitions()).isEqualTo(0);
   }

@@ -92,7 +92,7 @@ public class CaseInstanceTest {
 
     // case instance has one child plan item
     List<CaseExecutionImpl> childPlanItems = instance.getCaseExecutions();
-    assertThat(childPlanItems.size()).isEqualTo(1);
+    assertThat(childPlanItems).hasSize(1);
 
     CaseExecutionImpl planItemA = childPlanItems.get(0);
 
@@ -202,7 +202,7 @@ public class CaseInstanceTest {
 
     // X should have two chil plan items
     childPlanItems = planItemX.getCaseExecutions();
-    assertThat(childPlanItems.size()).isEqualTo(2);
+    assertThat(childPlanItems).hasSize(2);
 
     for (CmmnExecution childPlanItem : childPlanItems) {
       // both children should be enabled
@@ -237,7 +237,7 @@ public class CaseInstanceTest {
 
     // case instance has one child plan item
     List<CaseExecutionImpl> childPlanItems = instance.getCaseExecutions();
-    assertThat(childPlanItems.size()).isEqualTo(1);
+    assertThat(childPlanItems).hasSize(1);
 
     CaseExecutionImpl planItemX = childPlanItems.get(0);
 
@@ -307,7 +307,7 @@ public class CaseInstanceTest {
     // X should have two chil plan items
     List<CaseExecutionImpl> childPlanItems;
     childPlanItems = planItemX.getCaseExecutions();
-    assertThat(childPlanItems.size()).isEqualTo(2);
+    assertThat(childPlanItems).hasSize(2);
 
     for (CmmnExecution childPlanItem : childPlanItems) {
       // both children should be active
@@ -480,7 +480,7 @@ public class CaseInstanceTest {
 
     // the case instance should have three child plan items (A1, X1, Y)
     List<CaseExecutionImpl> childPlanItems = instance.getCaseExecutions();
-    assertThat(childPlanItems.size()).isEqualTo(3);
+    assertThat(childPlanItems).hasSize(3);
 
     // handle plan item A1 //////////////////////////////////////////////////
 
@@ -525,7 +525,7 @@ public class CaseInstanceTest {
 
     // X1 should have two children
     childPlanItems = planItemX1.getCaseExecutions();
-    assertThat(childPlanItems.size()).isEqualTo(2);
+    assertThat(childPlanItems).hasSize(2);
 
     // expected state transitions after manual start of X1:
     // enabled   --manualStart(X1)--> active
@@ -612,7 +612,7 @@ public class CaseInstanceTest {
 
     // Y should have two children
     childPlanItems = planItemY.getCaseExecutions();
-    assertThat(childPlanItems.size()).isEqualTo(2);
+    assertThat(childPlanItems).hasSize(2);
 
     // expected state transitions after manual start of Y:
     // enabled   --manualStart(Y)--> active
@@ -674,7 +674,7 @@ public class CaseInstanceTest {
 
     // X2 should have two children
     childPlanItems = planItemX2.getCaseExecutions();
-    assertThat(childPlanItems.size()).isEqualTo(2);
+    assertThat(childPlanItems).hasSize(2);
 
     // expected state transitions after manual start of X2:
     // enabled   --manualStart(X2)--> active

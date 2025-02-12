@@ -236,7 +236,7 @@ public class MessageBoundaryEventTest extends PluggableProcessEngineTest {
 
     List<Task> userTasks = taskService.createTaskQuery().list();
     assertNotNull(userTasks);
-    assertThat(userTasks.size()).isEqualTo(5);
+    assertThat(userTasks).hasSize(5);
 
     // as long as tasks exists, the message subscriptions exist
     for (int i = 0; i < userTasks.size() - 1; i++) {
@@ -573,21 +573,21 @@ public class MessageBoundaryEventTest extends PluggableProcessEngineTest {
     // 5 user tasks
     List<Task> userTasks = taskService.createTaskQuery().list();
     assertNotNull(userTasks);
-    assertThat(userTasks.size()).isEqualTo(5);
+    assertThat(userTasks).hasSize(5);
 
     // there are 5 event subscriptions to the event on the inner user task
     List<Execution> executions = runtimeService.createExecutionQuery()
         .messageEventSubscriptionName("messageName")
         .list();
     assertNotNull(executions);
-    assertThat(executions.size()).isEqualTo(5);
+    assertThat(executions).hasSize(5);
 
     // there is a single event subscription for the event on the subprocess
     executions = runtimeService.createExecutionQuery()
         .messageEventSubscriptionName("messageName2")
         .list();
     assertNotNull(executions);
-    assertThat(executions.size()).isEqualTo(1);
+    assertThat(executions).hasSize(1);
 
     // if we complete the outer message event, all inner executions are removed
     Execution outerScopeExecution = executions.get(0);
@@ -596,7 +596,7 @@ public class MessageBoundaryEventTest extends PluggableProcessEngineTest {
     executions = runtimeService.createExecutionQuery()
         .messageEventSubscriptionName("messageName")
         .list();
-    assertThat(executions.size()).isEqualTo(0);
+    assertThat(executions).hasSize(0);
 
     Task userTask = taskService.createTaskQuery()
         .singleResult();

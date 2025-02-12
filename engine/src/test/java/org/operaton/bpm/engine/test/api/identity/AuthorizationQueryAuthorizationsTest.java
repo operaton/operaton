@@ -253,7 +253,7 @@ public class AuthorizationQueryAuthorizationsTest {
 
     // then
     assertThat(authorizationsCount).isEqualTo(0);
-    assertThat(authorizations.size()).isEqualTo(0);
+    assertThat(authorizations).hasSize(0);
   }
 
   protected void cleanupAfterTest() {

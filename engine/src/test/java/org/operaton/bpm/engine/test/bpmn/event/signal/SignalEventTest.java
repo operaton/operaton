@@ -233,14 +233,14 @@ public class SignalEventTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("nonInterruptingSignalEvent");
 
     List<Task> tasks = taskService.createTaskQuery().processInstanceId(pi.getProcessInstanceId()).list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
     Task currentTask = tasks.get(0);
     assertThat(currentTask.getName()).isEqualTo("My User Task");
 
     runtimeService.signalEventReceived("alert");
 
     tasks = taskService.createTaskQuery().processInstanceId(pi.getProcessInstanceId()).list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
 
     for (Task task : tasks) {
       if (!task.getName().equals("My User Task") && !task.getName().equals("My Second User Task")) {
@@ -251,7 +251,7 @@ public class SignalEventTest {
     taskService.complete(taskService.createTaskQuery().taskName("My User Task").singleResult().getId());
 
     tasks = taskService.createTaskQuery().processInstanceId(pi.getProcessInstanceId()).list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
     currentTask = tasks.get(0);
     assertThat(currentTask.getName()).isEqualTo("My Second User Task");
   }
@@ -265,7 +265,7 @@ public class SignalEventTest {
   public void testNonInterruptingSignalWithSubProcess() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("nonInterruptingSignalWithSubProcess");
     List<Task> tasks = taskService.createTaskQuery().processInstanceId(pi.getProcessInstanceId()).list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
 
     Task currentTask = tasks.get(0);
     assertThat(currentTask.getName()).isEqualTo("Approve");
@@ -273,7 +273,7 @@ public class SignalEventTest {
     runtimeService.signalEventReceived("alert");
 
     tasks = taskService.createTaskQuery().processInstanceId(pi.getProcessInstanceId()).list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
 
     for (Task task : tasks) {
       if (!task.getName().equals("Approve") && !task.getName().equals("Review")) {
@@ -284,7 +284,7 @@ public class SignalEventTest {
     taskService.complete(taskService.createTaskQuery().taskName("Approve").singleResult().getId());
 
     tasks = taskService.createTaskQuery().processInstanceId(pi.getProcessInstanceId()).list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
 
     currentTask = tasks.get(0);
     assertThat(currentTask.getName()).isEqualTo("Review");
@@ -292,7 +292,7 @@ public class SignalEventTest {
     taskService.complete(taskService.createTaskQuery().taskName("Review").singleResult().getId());
 
     tasks = taskService.createTaskQuery().processInstanceId(pi.getProcessInstanceId()).list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
 
   }
 
@@ -442,7 +442,7 @@ public class SignalEventTest {
     runtimeService.signalEventReceived("alert");
 
     // then only one terminate end event was executed
-    assertThat(RecorderExecutionListener.getRecordedEvents().size()).isEqualTo(1);
+    assertThat(RecorderExecutionListener.getRecordedEvents()).hasSize(1);
 
     // and instances ended successfully
     assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
@@ -464,7 +464,7 @@ public class SignalEventTest {
     runtimeService.startProcessInstanceByKey("throwSignal");
 
     // then only one terminate end event was executed
-    assertThat(RecorderExecutionListener.getRecordedEvents().size()).isEqualTo(1);
+    assertThat(RecorderExecutionListener.getRecordedEvents()).hasSize(1);
 
     // and both instances ended successfully
     assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);

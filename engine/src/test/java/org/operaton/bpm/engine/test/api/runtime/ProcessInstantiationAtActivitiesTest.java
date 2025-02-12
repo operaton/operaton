@@ -344,7 +344,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
       .done());
 
     List<RecordedEvent> events = RecorderExecutionListener.getRecordedEvents();
-    assertThat(events.size()).isEqualTo(3);
+    assertThat(events).hasSize(3);
 
     RecordedEvent processStartEvent = events.get(0);
     assertThat(processStartEvent.getEventName()).isEqualTo(ExecutionListener.EVENTNAME_START);
@@ -382,7 +382,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
       .done());
 
     List<RecordedEvent> events = RecorderExecutionListener.getRecordedEvents();
-    assertThat(events.size()).isEqualTo(0);
+    assertThat(events).hasSize(0);
   }
 
   @Deployment(resources = IO_PROCESS)
@@ -397,7 +397,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
     // then no io mappings have been executed
     List<VariableInstance> variables = runtimeService.createVariableInstanceQuery()
         .orderByVariableName().asc().list();
-    assertThat(variables.size()).isEqualTo(2);
+    assertThat(variables).hasSize(2);
 
     Execution innerTaskExecution = runtimeService.createExecutionQuery().activityId("innerTask").singleResult();
     VariableInstance innerTaskVariable = variables.get(0);
@@ -441,7 +441,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
     List<VariableInstance> variables = runtimeService.createVariableInstanceQuery()
         .orderByVariableName().asc().list();
 
-    assertThat(variables.size()).isEqualTo(4);
+    assertThat(variables).hasSize(4);
     assertThat(variables.get(0).getName()).isEqualTo("aVariable1");
     assertThat(variables.get(0).getValue()).isEqualTo("aValue1");
     assertThat(variables.get(0).getExecutionId()).isEqualTo(instance.getId());
@@ -508,7 +508,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
 
     // and the execution listener was invoked correctly
     List<RecordedEvent> events = RecorderExecutionListener.getRecordedEvents();
-    assertThat(events.size()).isEqualTo(8);
+    assertThat(events).hasSize(8);
 
     // process start event
     assertThat(events.get(0).getEventName()).isEqualTo(ExecutionListener.EVENTNAME_START);
@@ -570,7 +570,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
         .processInstanceId(processInstance.getId())
         .activityId("Event_0s2zckl")
         .list();
-    assertThat(executions.size()).isEqualTo(1);
+    assertThat(executions).hasSize(1);
 
     // when the user tasks are completed
     String id = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult().getId();
@@ -584,7 +584,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
         .processInstanceId(processInstance.getId())
         .activityId("Event_0s2zckl")
         .list();
-    assertThat(executions.size()).isEqualTo(0);
+    assertThat(executions).hasSize(0);
   }
 
   protected void completeTasksInOrder(String... taskNames) {

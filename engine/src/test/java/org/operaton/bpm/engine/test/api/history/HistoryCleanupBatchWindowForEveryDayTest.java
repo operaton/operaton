@@ -135,7 +135,7 @@ public class HistoryCleanupBatchWindowForEveryDayTest {
 
       List<Job> jobs = managementService.createJobQuery().list();
       if (!jobs.isEmpty()) {
-        assertThat(jobs.size()).isEqualTo(1);
+        assertThat(jobs).hasSize(1);
         String jobId = jobs.get(0).getId();
         commandContext.getJobManager().deleteJob((JobEntity) jobs.get(0));
         commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(jobId);

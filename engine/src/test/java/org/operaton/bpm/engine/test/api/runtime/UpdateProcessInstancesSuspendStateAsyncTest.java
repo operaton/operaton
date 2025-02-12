@@ -26,7 +26,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import org.assertj.core.api.Assertions;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -381,8 +380,8 @@ public class UpdateProcessInstancesSuspendStateAsyncTest {
     HistoricBatch historicBatch = historyService.createHistoricBatchQuery().singleResult();
     batch = engineRule.getManagementService().createBatchQuery().singleResult();
 
-    Assertions.assertThat(batch.getExecutionStartTime()).isCloseTo(TEST_DATE, 1000);
-    Assertions.assertThat(historicBatch.getExecutionStartTime()).isCloseTo(TEST_DATE, 1000);
+    assertThat(batch.getExecutionStartTime()).isCloseTo(TEST_DATE, 1000);
+    assertThat(historicBatch.getExecutionStartTime()).isCloseTo(TEST_DATE, 1000);
   }
 
 }

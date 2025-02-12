@@ -415,8 +415,9 @@ public class StandaloneTaskGetVariableAuthorizationTest {
   protected void verifyGetVariables(Map<String, Object> variables) {
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
 }

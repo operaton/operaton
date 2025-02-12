@@ -106,7 +106,7 @@ public class ActivityInstanceVerification extends Assert implements ExecutionLis
     }
 
     assertNotNull(startInstancesForThisAct);
-    Assertions.assertThat(startInstancesForThisAct.size()).isEqualTo(count);
+    Assertions.assertThat(startInstancesForThisAct).hasSize(count);
 
     List<ActivityInstance> endInstancesForThisAct = endedActivityInstances.get(actId);
     assertNotNull(endInstancesForThisAct);
@@ -190,7 +190,7 @@ public class ActivityInstanceVerification extends Assert implements ExecutionLis
     }
 
     if (expectedCount != -1) {
-      Assertions.assertThat(endActivityInstances.size()).isEqualTo(expectedCount);
+      Assertions.assertThat(endActivityInstances).hasSize(expectedCount);
     }
   }
 

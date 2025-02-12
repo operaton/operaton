@@ -337,7 +337,7 @@ public class MigrationCompensationRemoveSubProcessTest {
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
     // then
-    assertThat(testHelper.snapshotAfterMigration.getVariables().size()).isEqualTo(1);
+    assertThat(testHelper.snapshotAfterMigration.getVariables()).hasSize(1);
 
     VariableInstance migratedVariable = testHelper.snapshotAfterMigration.getSingleVariable("innerVariable");
     Assert.assertNotNull(migratedVariable);
@@ -368,7 +368,7 @@ public class MigrationCompensationRemoveSubProcessTest {
 
     // then
     // the listener was only called once when the sub process completed properly
-    assertThat(RecorderExecutionListener.getRecordedEvents().size()).isEqualTo(1);
+    assertThat(RecorderExecutionListener.getRecordedEvents()).hasSize(1);
   }
 
   @Test
@@ -395,7 +395,7 @@ public class MigrationCompensationRemoveSubProcessTest {
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
     // then "foo" has not been set to "value2"
-    assertThat(testHelper.snapshotAfterMigration.getVariables().size()).isEqualTo(2); // "foo" and "bar"
+    assertThat(testHelper.snapshotAfterMigration.getVariables()).hasSize(2); // "foo" and "bar"
     VariableInstance variableInstance = testHelper.snapshotAfterMigration.getSingleVariable("foo");
     assertThat(variableInstance.getValue()).isEqualTo("value1");
   }

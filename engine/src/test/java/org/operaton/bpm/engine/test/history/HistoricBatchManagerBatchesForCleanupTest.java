@@ -109,7 +109,7 @@ public class HistoricBatchManagerBatchesForCleanupTest {
       List<String> historicBatchIdsForCleanup = commandContext.getHistoricBatchManager().findHistoricBatchIdsForCleanup(batchSize, batchOperationsMap, 0, 59);
 
       // then
-      assertThat(historicBatchIdsForCleanup.size()).isEqualTo(resultCount);
+      assertThat(historicBatchIdsForCleanup).hasSize(resultCount);
 
       if (resultCount > 0) {
 

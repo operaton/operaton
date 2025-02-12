@@ -90,7 +90,7 @@ public class JobExecutorAcquireJobsByTypeTest extends AbstractJobExecutorAcquire
     incrementClock(70);
 
     List<AcquirableJobEntity> acquirableJobs = findAcquirableJobs();
-    assertThat(acquirableJobs.size()).isEqualTo(4);
+    assertThat(acquirableJobs).hasSize(4);
     assertTrue(findJobById(acquirableJobs.get(0).getId()) instanceof TimerEntity);
     assertTrue(findJobById(acquirableJobs.get(1).getId()) instanceof TimerEntity);
     assertTrue(findJobById(acquirableJobs.get(2).getId()) instanceof MessageEntity);

@@ -234,7 +234,7 @@ public class RuntimeServiceTest {
 
     // then
     List<RecordedEvent> recordedEvents = RecorderExecutionListener.getRecordedEvents();
-    assertThat(recordedEvents.size()).isEqualTo(10);
+    assertThat(recordedEvents).hasSize(10);
 
     Set<RecordedEvent> startEvents = new HashSet<>();
     Set<RecordedEvent> endEvents = new HashSet<>();
@@ -293,7 +293,7 @@ public class RuntimeServiceTest {
     // if we do not skip the custom listeners,
     runtimeService.deleteProcessInstance(processInstance.getId(), null, false);
     // the custom listener is invoked
-    assertThat(TestExecutionListener.collectedEvents.size()).isEqualTo(1);
+    assertThat(TestExecutionListener.collectedEvents).hasSize(1);
     TestExecutionListener.reset();
 
     processInstance = runtimeService.startProcessInstanceByKey("testProcess");
@@ -314,7 +314,7 @@ public class RuntimeServiceTest {
     // if we do not skip the custom listeners,
     runtimeService.deleteProcessInstance(processInstance.getId(), null, false);
     // the custom listener is invoked
-    assertThat(TestExecutionListener.collectedEvents.size()).isEqualTo(1);
+    assertThat(TestExecutionListener.collectedEvents).hasSize(1);
     TestExecutionListener.reset();
 
     processInstance = runtimeService.startProcessInstanceByKey("testProcess");
@@ -340,7 +340,7 @@ public class RuntimeServiceTest {
     runtimeService.deleteProcessInstance(instance.getId(), null, false);
 
     // then the custom listener is invoked
-    assertThat(RecorderTaskListener.getRecordedEvents().size()).isEqualTo(1);
+    assertThat(RecorderTaskListener.getRecordedEvents()).hasSize(1);
     assertThat(RecorderTaskListener.getRecordedEvents().get(0).getEvent()).isEqualTo(TaskListener.EVENTNAME_DELETE);
 
     // if we do skip the custom listeners
@@ -367,7 +367,7 @@ public class RuntimeServiceTest {
 
     // then
     testRule.assertProcessEnded(instance.getId());
-    assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(instance.getId()).list().size()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(instance.getId()).list()).hasSize(1);
     assertThat(historyService.createHistoricVariableInstanceQuery().variableName("inputMappingExecuted").count()).isEqualTo(1);
   }
 
@@ -385,7 +385,7 @@ public class RuntimeServiceTest {
 
     // then
     testRule.assertProcessEnded(instance.getId());
-    assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(instance.getId()).list().size()).isEqualTo(2);
+    assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(instance.getId()).list()).hasSize(2);
     assertThat(historyService.createHistoricVariableInstanceQuery().variableName("inputMappingExecuted").count()).isEqualTo(1);
     assertThat(historyService.createHistoricVariableInstanceQuery().variableName("outputMappingExecuted").count()).isEqualTo(1);
   }
@@ -406,7 +406,7 @@ public class RuntimeServiceTest {
 
     // then
     testRule.assertProcessEnded(instance.getId());
-    assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(instance2.getId()).list().size()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(instance2.getId()).list()).hasSize(1);
     assertThat(historyService.createHistoricVariableInstanceQuery().variableName("inputMappingExecuted").count()).isEqualTo(1);
   }
 
@@ -426,7 +426,7 @@ public class RuntimeServiceTest {
 
     // then
     testRule.assertProcessEnded(instance.getId());
-    assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(instance2.getId()).list().size()).isEqualTo(2);
+    assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(instance2.getId()).list()).hasSize(2);
     assertThat(historyService.createHistoricVariableInstanceQuery().variableName("inputMappingExecuted").count()).isEqualTo(1);
     assertThat(historyService.createHistoricVariableInstanceQuery().variableName("outputMappingExecuted").count()).isEqualTo(1);
   }
@@ -611,7 +611,7 @@ public class RuntimeServiceTest {
 
     List<String> activities = runtimeService.getActiveActivityIds(processInstance.getId());
     assertNotNull(activities);
-    assertThat(activities.size()).isEqualTo(1);
+    assertThat(activities).hasSize(1);
   }
 
   @Test
@@ -643,10 +643,10 @@ public class RuntimeServiceTest {
     ProcessInstance processInstance = engineRule.getProcessEngine().getRuntimeService().startProcessInstanceByKey("errorEventSubprocess");
 
     List<String> activeActivities = runtimeService.getActiveActivityIds(processInstance.getId());
-    assertThat(activeActivities.size()).isEqualTo(3);
+    assertThat(activeActivities).hasSize(3);
 
     List<Task> tasks = taskService.createTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
 
     Task parallelUserTask = null;
     for (Task task : tasks) {
@@ -665,10 +665,10 @@ public class RuntimeServiceTest {
     runtimeService.signal(execution.getId());
 
     activeActivities = runtimeService.getActiveActivityIds(processInstance.getId());
-    assertThat(activeActivities.size()).isEqualTo(2);
+    assertThat(activeActivities).hasSize(2);
 
     tasks = taskService.createTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
 
     Task beforeErrorUserTask = null;
     for (Task task : tasks) {
@@ -684,10 +684,10 @@ public class RuntimeServiceTest {
     taskService.complete(beforeErrorUserTask.getId());
 
     activeActivities = runtimeService.getActiveActivityIds(processInstance.getId());
-    assertThat(activeActivities.size()).isEqualTo(2);
+    assertThat(activeActivities).hasSize(2);
 
     tasks = taskService.createTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
 
     Task afterErrorUserTask = null;
     for (Task task : tasks) {
@@ -703,11 +703,11 @@ public class RuntimeServiceTest {
     taskService.complete(afterErrorUserTask.getId());
 
     tasks = taskService.createTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
     assertThat(tasks.get(0).getName()).isEqualTo("MainUserTask");
 
     activeActivities = runtimeService.getActiveActivityIds(processInstance.getId());
-    assertThat(activeActivities.size()).isEqualTo(1);
+    assertThat(activeActivities).hasSize(1);
     assertThat(activeActivities.get(0)).isEqualTo("MainUserTask");
 
     taskService.complete(tasks.get(0).getId());
@@ -1833,7 +1833,7 @@ public class RuntimeServiceTest {
     }
 
     // ensure that all instances are unique
-    assertThat(instanceIds.size()).isEqualTo(expectedAmount);
+    assertThat(instanceIds).hasSize(expectedAmount);
   }
 
   @Test
@@ -2738,7 +2738,7 @@ public class RuntimeServiceTest {
       .createProcessDefinitionQuery()
       .list();
 
-    assertThat(processDefinitions.size()).isEqualTo(1);
+    assertThat(processDefinitions).hasSize(1);
 
     // Start a new Process instance
     ProcessInstance processInstance = processEngine.getRuntimeService().startProcessInstanceById(processDefinitions.get(0).getId());
@@ -2809,31 +2809,31 @@ public class RuntimeServiceTest {
 
     // get variables for execution id user task, should return the new value of variable test --> test2
     assertThat(runtimeService.getVariable(subProcessTask.getExecutionId(), "test")).isEqualTo("test2");
-    assertThat(runtimeService.getVariables(subProcessTask.getExecutionId()).get("test")).isEqualTo("test2");
+    assertThat(runtimeService.getVariables(subProcessTask.getExecutionId())).containsEntry("test", "test2");
 
     // get variables for process instance id, should return the initial value of variable test --> test
     assertThat(runtimeService.getVariable(pi.getId(), "test")).isEqualTo("test");
-    assertThat(runtimeService.getVariables(pi.getId()).get("test")).isEqualTo("test");
+    assertThat(runtimeService.getVariables(pi.getId())).containsEntry("test", "test");
 
     runtimeService.setVariableLocal(subProcessTask.getExecutionId(), "test", "test3");
 
     // get variables for execution id user task, should return the new value of variable test --> test3
     assertThat(runtimeService.getVariable(subProcessTask.getExecutionId(), "test")).isEqualTo("test3");
-    assertThat(runtimeService.getVariables(subProcessTask.getExecutionId()).get("test")).isEqualTo("test3");
+    assertThat(runtimeService.getVariables(subProcessTask.getExecutionId())).containsEntry("test", "test3");
 
     // get variables for process instance id, should still return the initial value of variable test --> test
     assertThat(runtimeService.getVariable(pi.getId(), "test")).isEqualTo("test");
-    assertThat(runtimeService.getVariables(pi.getId()).get("test")).isEqualTo("test");
+    assertThat(runtimeService.getVariables(pi.getId())).containsEntry("test", "test");
 
     runtimeService.setVariable(pi.getId(), "test", "test4");
 
     // get variables for execution id user task, should return the old value of variable test --> test3
     assertThat(runtimeService.getVariable(subProcessTask.getExecutionId(), "test")).isEqualTo("test3");
-    assertThat(runtimeService.getVariables(subProcessTask.getExecutionId()).get("test")).isEqualTo("test3");
+    assertThat(runtimeService.getVariables(subProcessTask.getExecutionId())).containsEntry("test", "test3");
 
     // get variables for process instance id, should also return the initial value of variable test --> test4
     assertThat(runtimeService.getVariable(pi.getId(), "test")).isEqualTo("test4");
-    assertThat(runtimeService.getVariables(pi.getId()).get("test")).isEqualTo("test4");
+    assertThat(runtimeService.getVariables(pi.getId())).containsEntry("test", "test4");
 
     // After completing the task in the subprocess,
     // the subprocess scope is destroyed and the complete process ends
@@ -2866,16 +2866,17 @@ public class RuntimeServiceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("taskAssigneeProcess", variables);
 
     variables = runtimeService.getVariables(processInstance.getId());
-    assertThat(variables.get("stringVar")).isEqualTo("coca-cola");
-    assertThat(variables.get("longVar")).isEqualTo(928374L);
-    assertThat(variables.get("shortVar")).isEqualTo((short) 123);
-    assertThat(variables.get("integerVar")).isEqualTo(1234);
-    assertThat(variables.get("dateVar")).isEqualTo(now);
+    assertThat(variables)
+            .containsEntry("stringVar", "coca-cola")
+            .containsEntry("longVar", 928374L)
+            .containsEntry("shortVar", (short) 123)
+            .containsEntry("integerVar", 1234)
+            .containsEntry("dateVar", now);
     assertNull(variables.get("nullVar"));
-    assertThat(variables.get("serializableVar")).isEqualTo(serializable);
+    assertThat(variables).containsEntry("serializableVar", serializable);
     assertArrayEquals(bytes, (byte[]) variables.get("bytesVar"));
     assertArrayEquals(streamBytes, (byte[]) variables.get("byteStreamVar"));
-    assertThat(variables.size()).isEqualTo(9);
+    assertThat(variables).hasSize(9);
 
     // Set all existing variables values to null
     runtimeService.setVariable(processInstance.getId(), "longVar", null);
@@ -2898,7 +2899,7 @@ public class RuntimeServiceTest {
     assertNull(variables.get("serializableVar"));
     assertNull(variables.get("bytesVar"));
     assertNull(variables.get("byteStreamVar"));
-    assertThat(variables.size()).isEqualTo(9);
+    assertThat(variables).hasSize(9);
 
     // Update existing variable values again, and add a new variable
     runtimeService.setVariable(processInstance.getId(), "new var", "hi");
@@ -2912,24 +2913,25 @@ public class RuntimeServiceTest {
     runtimeService.setVariable(processInstance.getId(), "byteStreamVar", new ByteArrayInputStream(streamBytes));
 
     variables = runtimeService.getVariables(processInstance.getId());
-    assertThat(variables.get("new var")).isEqualTo("hi");
-    assertThat(variables.get("longVar")).isEqualTo(9987L);
-    assertThat(variables.get("shortVar")).isEqualTo((short) 456);
-    assertThat(variables.get("integerVar")).isEqualTo(4567);
-    assertThat(variables.get("stringVar")).isEqualTo("colgate");
-    assertThat(variables.get("dateVar")).isEqualTo(now);
+    assertThat(variables)
+            .containsEntry("new var", "hi")
+            .containsEntry("longVar", 9987L)
+            .containsEntry("shortVar", (short) 456)
+            .containsEntry("integerVar", 4567)
+            .containsEntry("stringVar", "colgate")
+            .containsEntry("dateVar", now);
     assertNull(variables.get("nullVar"));
-    assertThat(variables.get("serializableVar")).isEqualTo(serializable);
+    assertThat(variables).containsEntry("serializableVar", serializable);
     assertArrayEquals(bytes, (byte[]) variables.get("bytesVar"));
     assertArrayEquals(streamBytes, (byte[]) variables.get("byteStreamVar"));
-    assertThat(variables.size()).isEqualTo(10);
+    assertThat(variables).hasSize(10);
 
     Collection<String> varFilter = new ArrayList<>(2);
     varFilter.add("stringVar");
     varFilter.add("integerVar");
 
     Map<String, Object> filteredVariables = runtimeService.getVariables(processInstance.getId(), varFilter);
-    assertThat(filteredVariables.size()).isEqualTo(2);
+    assertThat(filteredVariables).hasSize(2);
     assertTrue(filteredVariables.containsKey("stringVar"));
     assertTrue(filteredVariables.containsKey("integerVar"));
 
@@ -2942,12 +2944,12 @@ public class RuntimeServiceTest {
     // Try setting the value of the serializableVar to an integer value
     runtimeService.setVariable(processInstance.getId(), "serializableVar", 100);
     variables = runtimeService.getVariables(processInstance.getId());
-    assertThat(variables.get("serializableVar")).isEqualTo(100);
+    assertThat(variables).containsEntry("serializableVar", 100);
 
     // Try setting the value of the serializableVar back to a serializable value
     runtimeService.setVariable(processInstance.getId(), "serializableVar", serializable);
     variables = runtimeService.getVariables(processInstance.getId());
-    assertThat(variables.get("serializableVar")).isEqualTo(serializable);
+    assertThat(variables).containsEntry("serializableVar", serializable);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testBasicVariableOperations.bpmn20.xml"})

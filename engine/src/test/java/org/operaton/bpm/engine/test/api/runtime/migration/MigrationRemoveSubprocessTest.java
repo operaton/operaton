@@ -160,7 +160,7 @@ public class MigrationRemoveSubprocessTest {
         .done());
 
     List<Task> migratedTasks = testHelper.snapshotAfterMigration.getTasks();
-    assertThat(migratedTasks.size()).isEqualTo(2);
+    assertThat(migratedTasks).hasSize(2);
     for (Task migratedTask : migratedTasks) {
       assertThat(migratedTask.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());
     }
@@ -206,7 +206,7 @@ public class MigrationRemoveSubprocessTest {
         .done());
 
     List<Task> migratedTasks = testHelper.snapshotAfterMigration.getTasks();
-    assertThat(migratedTasks.size()).isEqualTo(2);
+    assertThat(migratedTasks).hasSize(2);
     for (Task migratedTask : migratedTasks) {
       assertThat(migratedTask.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());
     }
@@ -251,7 +251,7 @@ public class MigrationRemoveSubprocessTest {
         .done());
 
     List<Task> migratedTasks = testHelper.snapshotAfterMigration.getTasks();
-    assertThat(migratedTasks.size()).isEqualTo(2);
+    assertThat(migratedTasks).hasSize(2);
     for (Task migratedTask : migratedTasks) {
       assertThat(migratedTask.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());
     }
@@ -298,7 +298,7 @@ public class MigrationRemoveSubprocessTest {
         .done());
 
     List<Task> migratedTasks = testHelper.snapshotAfterMigration.getTasks();
-    assertThat(migratedTasks.size()).isEqualTo(2);
+    assertThat(migratedTasks).hasSize(2);
     for (Task migratedTask : migratedTasks) {
       assertThat(migratedTask.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());
     }
@@ -346,7 +346,7 @@ public class MigrationRemoveSubprocessTest {
         .done());
 
     List<Task> migratedTasks = testHelper.snapshotAfterMigration.getTasks();
-    assertThat(migratedTasks.size()).isEqualTo(2);
+    assertThat(migratedTasks).hasSize(2);
     for (Task migratedTask : migratedTasks) {
       assertThat(migratedTask.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());
     }
@@ -445,7 +445,7 @@ public class MigrationRemoveSubprocessTest {
 
     // then
     List<DelegateEvent> recordedEvents = DelegateEvent.getEvents();
-    assertThat(recordedEvents.size()).isEqualTo(1);
+    assertThat(recordedEvents).hasSize(1);
 
     DelegateEvent event = recordedEvents.get(0);
     assertThat(event.getProcessDefinitionId()).isEqualTo(sourceProcessDefinition.getId());
@@ -483,7 +483,7 @@ public class MigrationRemoveSubprocessTest {
 
     // then
     List<DelegateEvent> recordedEvents = DelegateEvent.getEvents();
-    assertThat(recordedEvents.size()).isEqualTo(0);
+    assertThat(recordedEvents).hasSize(0);
 
     DelegateEvent.clearEvents();
   }

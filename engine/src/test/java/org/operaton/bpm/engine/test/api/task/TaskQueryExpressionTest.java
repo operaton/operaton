@@ -485,7 +485,7 @@ public class TaskQueryExpressionTest {
     // execute query so expression will be evaluated
     taskQuery.count();
 
-    assertThat(taskQuery.getCandidateGroups().size()).isEqualTo(2);
+    assertThat(taskQuery.getCandidateGroups()).hasSize(2);
   }
 
   @Test
@@ -620,7 +620,7 @@ public class TaskQueryExpressionTest {
       .list();
 
     // then
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
   }
 
   @Test

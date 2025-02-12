@@ -90,7 +90,7 @@ public class JobExecutorAcquireJobsByTypeAndDueDateTest extends AbstractJobExecu
     assertTrue(timerJob2.getDuedate().before(messageJob2.getDuedate()));
 
     List<AcquirableJobEntity> acquirableJobs = findAcquirableJobs();
-    assertThat(acquirableJobs.size()).isEqualTo(4);
+    assertThat(acquirableJobs).hasSize(4);
     assertThat(acquirableJobs.get(0).getId()).isEqualTo(timerJob1.getId());
     assertThat(acquirableJobs.get(1).getId()).isEqualTo(timerJob2.getId());
     assertThat(acquirableJobs.get(2).getId()).isEqualTo(messageJob1.getId());

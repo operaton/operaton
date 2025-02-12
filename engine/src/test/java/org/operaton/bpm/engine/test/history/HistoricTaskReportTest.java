@@ -98,7 +98,7 @@ public class HistoricTaskReportTest {
       .countByTaskName();
 
     // then
-    assertThat(historicTaskInstanceReportResults.size()).isEqualTo(2);
+    assertThat(historicTaskInstanceReportResults).hasSize(2);
     assertThat(historicTaskInstanceReportResults.get(0).getCount()).isEqualTo(2);
     assertThat(historicTaskInstanceReportResults.get(0).getProcessDefinitionKey()).isEqualTo(ANOTHER_PROCESS_DEFINITION_KEY);
     assertThat(historicTaskInstanceReportResults.get(0).getProcessDefinitionName()).isEqualTo("name_" + ANOTHER_PROCESS_DEFINITION_KEY);
@@ -124,7 +124,7 @@ public class HistoricTaskReportTest {
       .countByProcessDefinitionKey();
 
     // then
-    assertThat(historicTaskInstanceReportResults.size()).isEqualTo(2);
+    assertThat(historicTaskInstanceReportResults).hasSize(2);
     assertTrue(historicTaskInstanceReportResults.get(0).getProcessDefinitionId().contains(":1:"));
     assertThat(historicTaskInstanceReportResults.get(0).getProcessDefinitionName()).isEqualTo("name_" + ANOTHER_PROCESS_DEFINITION_KEY);
 
@@ -148,7 +148,7 @@ public class HistoricTaskReportTest {
       .countByProcessDefinitionKey();
 
     // then
-    assertThat(historicTaskInstanceReportResults.size()).isEqualTo(1);
+    assertThat(historicTaskInstanceReportResults).hasSize(1);
     assertThat(historicTaskInstanceReportResults.get(0).getCount()).isOne();
   }
 
@@ -169,7 +169,7 @@ public class HistoricTaskReportTest {
       .countByProcessDefinitionKey();
 
     // then
-    assertThat(historicTaskInstanceReportResults.size()).isEqualTo(2);
+    assertThat(historicTaskInstanceReportResults).hasSize(2);
     assertThat(historicTaskInstanceReportResults.get(0).getCount()).isOne();
   }
 
@@ -222,7 +222,7 @@ public class HistoricTaskReportTest {
       .completedBefore(calendar.getTime())
       .countByTaskName();
 
-    assertThat(historicTaskInstanceReportResults.size()).isEqualTo(1);
+    assertThat(historicTaskInstanceReportResults).hasSize(1);
     assertThat(historicTaskInstanceReportResults.get(0).getCount()).isOne();
   }
 
@@ -251,7 +251,7 @@ public class HistoricTaskReportTest {
       .completedBefore(calendar.getTime())
       .countByTaskName();
 
-    assertThat(historicTaskInstanceReportResults.size()).isEqualTo(1);
+    assertThat(historicTaskInstanceReportResults).hasSize(1);
     assertThat(historicTaskInstanceReportResults.get(0).getCount()).isOne();
   }
 

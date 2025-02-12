@@ -89,13 +89,13 @@ public class DelegateTaskTest {
 
     @SuppressWarnings("unchecked")
     Set<String> candidateUsers = (Set<String>) taskService.getVariable(task.getId(), DelegateTaskTestTaskListener.VARNAME_CANDIDATE_USERS);
-    assertThat(candidateUsers.size()).isEqualTo(2);
+    assertThat(candidateUsers).hasSize(2);
     assertTrue(candidateUsers.contains("kermit"));
     assertTrue(candidateUsers.contains("gonzo"));
 
     @SuppressWarnings("unchecked")
     Set<String> candidateGroups = (Set<String>) taskService.getVariable(task.getId(), DelegateTaskTestTaskListener.VARNAME_CANDIDATE_GROUPS);
-    assertThat(candidateGroups.size()).isEqualTo(2);
+    assertThat(candidateGroups).hasSize(2);
     assertTrue(candidateGroups.contains("management"));
     assertTrue(candidateGroups.contains("accountancy"));
   }

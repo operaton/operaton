@@ -153,7 +153,7 @@ public class CaseServiceProcessTaskTest extends PluggableProcessEngineTest {
         .list();
 
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     verifyVariables(caseInstanceId, result);
 
@@ -196,7 +196,7 @@ public class CaseServiceProcessTaskTest extends PluggableProcessEngineTest {
         .list();
 
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     for (VariableInstance variable : result) {
 

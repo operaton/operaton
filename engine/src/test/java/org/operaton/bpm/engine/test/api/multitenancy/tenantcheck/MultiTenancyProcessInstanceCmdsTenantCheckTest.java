@@ -82,8 +82,7 @@ public class MultiTenancyProcessInstanceCmdsTenantCheckTest {
     assertThat(engineRule.getRuntimeService()
         .createProcessInstanceQuery()
         .processInstanceId(processInstanceId)
-        .list()
-        .size()).isEqualTo(0);
+        .list()).hasSize(0);
   }
 
   @Test
@@ -112,8 +111,7 @@ public class MultiTenancyProcessInstanceCmdsTenantCheckTest {
     assertThat(engineRule.getRuntimeService()
         .createProcessInstanceQuery()
         .processInstanceId(processInstanceId)
-        .list()
-        .size()).isEqualTo(0);
+        .list()).hasSize(0);
   }
 
   // modify instances

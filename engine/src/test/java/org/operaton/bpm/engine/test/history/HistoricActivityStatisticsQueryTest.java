@@ -58,7 +58,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     List<HistoricActivityStatistics> statistics = query.list();
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(statistics.size()).isEqualTo(0);
+    assertThat(statistics).hasSize(0);
   }
 
   @Deployment
@@ -72,7 +72,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     List<HistoricActivityStatistics> statistics = query.list();
 
     assertThat(query.count()).isEqualTo(1);
-    assertThat(statistics.size()).isEqualTo(1);
+    assertThat(statistics).hasSize(1);
 
     HistoricActivityStatistics statistic = statistics.get(0);
 
@@ -95,7 +95,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     List<HistoricActivityStatistics> statistics = query.list();
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(statistics.size()).isEqualTo(0);
+    assertThat(statistics).hasSize(0);
   }
 
   @Deployment
@@ -113,7 +113,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     List<HistoricActivityStatistics> statistics = query.list();
 
     assertThat(query.count()).isEqualTo(4);
-    assertThat(statistics.size()).isEqualTo(4);
+    assertThat(statistics).hasSize(4);
 
     // innerTask
     HistoricActivityStatistics innerTask = statistics.get(0);
@@ -161,7 +161,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     List<HistoricActivityStatistics> statistics = query.list();
 
     assertThat(query.count()).isEqualTo(1);
-    assertThat(statistics.size()).isEqualTo(1);
+    assertThat(statistics).hasSize(1);
 
     // callActivity
     HistoricActivityStatistics calledActivity = statistics.get(0);
@@ -177,7 +177,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     statistics = query.list();
 
     assertThat(query.count()).isEqualTo(2);
-    assertThat(statistics.size()).isEqualTo(2);
+    assertThat(statistics).hasSize(2);
 
     // task1
     HistoricActivityStatistics task1 = statistics.get(0);
@@ -209,7 +209,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     List<HistoricActivityStatistics> statistics = query.list();
 
     assertThat(query.count()).isEqualTo(2);
-    assertThat(statistics.size()).isEqualTo(2);
+    assertThat(statistics).hasSize(2);
 
     // start
     HistoricActivityStatistics start = statistics.get(0);
@@ -249,7 +249,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     List<HistoricActivityStatistics> statistics = query.list();
 
     assertThat(query.count()).isEqualTo(3);
-    assertThat(statistics.size()).isEqualTo(3);
+    assertThat(statistics).hasSize(3);
 
     // end
     HistoricActivityStatistics end = statistics.get(0);
@@ -296,7 +296,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     List<HistoricActivityStatistics> statistics = query.list();
 
     assertThat(query.count()).isEqualTo(9);
-    assertThat(statistics.size()).isEqualTo(9);
+    assertThat(statistics).hasSize(9);
 
     // end1
     HistoricActivityStatistics end1 = statistics.get(0);
@@ -379,7 +379,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     List<HistoricActivityStatistics> statistics = query.list();
 
     assertThat(query.count()).isEqualTo(1);
-    assertThat(statistics.size()).isEqualTo(1);
+    assertThat(statistics).hasSize(1);
 
     // end
     HistoricActivityStatistics end = statistics.get(0);
@@ -412,7 +412,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     List<HistoricActivityStatistics> statistics = query.list();
 
     assertThat(query.count()).isEqualTo(2);
-    assertThat(statistics.size()).isEqualTo(2);
+    assertThat(statistics).hasSize(2);
 
     // end
     HistoricActivityStatistics end = statistics.get(0);
@@ -452,7 +452,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     List<HistoricActivityStatistics> statistics = query.list();
 
     assertThat(query.count()).isEqualTo(4);
-    assertThat(statistics.size()).isEqualTo(4);
+    assertThat(statistics).hasSize(4);
 
     // end1
     HistoricActivityStatistics end1 = statistics.get(0);
@@ -501,7 +501,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     List<HistoricActivityStatistics> statistics = query.list();
 
     assertThat(query.count()).isEqualTo(1);
-    assertThat(statistics.size()).isEqualTo(1);
+    assertThat(statistics).hasSize(1);
 
     // task
     HistoricActivityStatistics task = statistics.get(0);
@@ -533,7 +533,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     List<HistoricActivityStatistics> statistics = query.list();
 
     assertThat(query.count()).isEqualTo(1);
-    assertThat(statistics.size()).isEqualTo(1);
+    assertThat(statistics).hasSize(1);
 
     // task
     HistoricActivityStatistics task = statistics.get(0);
@@ -577,7 +577,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     List<HistoricActivityStatistics> statistics = query.list();
 
     assertThat(query.count()).isEqualTo(3);
-    assertThat(statistics.size()).isEqualTo(3);
+    assertThat(statistics).hasSize(3);
 
     // end
     HistoricActivityStatistics end = statistics.get(0);
@@ -645,7 +645,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
       List<HistoricActivityStatistics> statistics = query.list();
 
       assertThat(query.count()).isEqualTo(2);
-      assertThat(statistics.size()).isEqualTo(2);
+      assertThat(statistics).hasSize(2);
 
       // start
       assertActivityStatistics(statistics.get(0), "start", 0, 0, 2);
@@ -659,7 +659,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
       statistics = query.list();
 
       assertThat(query.count()).isEqualTo(0);
-      assertThat(statistics.size()).isEqualTo(0);
+      assertThat(statistics).hasSize(0);
 
       //check February by started dates
       query = historyService.createHistoricActivityStatisticsQuery(processDefinitionId).includeCanceled().includeFinished()
@@ -667,7 +667,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
       statistics = query.list();
 
       assertThat(query.count()).isEqualTo(3);
-      assertThat(statistics.size()).isEqualTo(3);
+      assertThat(statistics).hasSize(3);
 
       // end
       assertActivityStatistics(statistics.get(0), "end", 0, 0, 2);
@@ -684,7 +684,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
       statistics = query.list();
 
       assertThat(query.count()).isEqualTo(3);
-      assertThat(statistics.size()).isEqualTo(3);
+      assertThat(statistics).hasSize(3);
 
       // end
       assertActivityStatistics(statistics.get(0), "end", 0, 0, 2);
@@ -701,7 +701,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
       statistics = query.list();
 
       assertThat(query.count()).isEqualTo(2);
-      assertThat(statistics.size()).isEqualTo(2);
+      assertThat(statistics).hasSize(2);
 
       // start
       assertActivityStatistics(statistics.get(0), "start", 0, 0, 2);
@@ -715,7 +715,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
       statistics = query.list();
 
       assertThat(query.count()).isEqualTo(0);
-      assertThat(statistics.size()).isEqualTo(0);
+      assertThat(statistics).hasSize(0);
 
       //check whole period by started date
       query = historyService.createHistoricActivityStatisticsQuery(processDefinitionId).includeCanceled().includeFinished()
@@ -723,7 +723,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
       statistics = query.list();
 
       assertThat(query.count()).isEqualTo(3);
-      assertThat(statistics.size()).isEqualTo(3);
+      assertThat(statistics).hasSize(3);
 
       // end
       assertActivityStatistics(statistics.get(0), "end", 0, 0, 2);
@@ -779,7 +779,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     List<HistoricActivityStatistics> statistics = query.list();
 
     assertThat(query.count()).isEqualTo(2);
-    assertThat(statistics.size()).isEqualTo(2);
+    assertThat(statistics).hasSize(2);
 
     // end
     HistoricActivityStatistics end = statistics.get(0);
@@ -830,7 +830,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     List<HistoricActivityStatistics> statistics = query.list();
 
     assertThat(query.count()).isEqualTo(3);
-    assertThat(statistics.size()).isEqualTo(3);
+    assertThat(statistics).hasSize(3);
 
     // end
     HistoricActivityStatistics end = statistics.get(0);
@@ -890,7 +890,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     List<HistoricActivityStatistics> statistics = query.list();
 
     assertThat(query.count()).isEqualTo(3);
-    assertThat(statistics.size()).isEqualTo(3);
+    assertThat(statistics).hasSize(3);
 
     // end
     HistoricActivityStatistics end = statistics.get(0);
@@ -1010,8 +1010,8 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     HistoricActivityStatisticsQuery query = historyService
         .createHistoricActivityStatisticsQuery(processDefinitionId);
 
-    assertThat(query.orderByActivityId().asc().list().size()).isEqualTo(1);
-    assertThat(query.orderByActivityId().desc().list().size()).isEqualTo(1);
+    assertThat(query.orderByActivityId().asc().list()).hasSize(1);
+    assertThat(query.orderByActivityId().desc().list()).hasSize(1);
 
     assertThat(query.orderByActivityId().asc().count()).isEqualTo(1);
     assertThat(query.orderByActivityId().desc().count()).isEqualTo(1);
@@ -1035,7 +1035,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     List<HistoricActivityStatistics> statistics = query.list();
 
     assertThat(query.count()).isEqualTo(1);
-    assertThat(statistics.size()).isEqualTo(1);
+    assertThat(statistics).hasSize(1);
 
     HistoricActivityStatistics task = statistics.get(0);
     assertThat(task.getInstances()).isEqualTo(5);
@@ -1047,7 +1047,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     statistics = query.list();
 
     assertThat(query.count()).isEqualTo(1);
-    assertThat(statistics.size()).isEqualTo(1);
+    assertThat(statistics).hasSize(1);
 
     task = statistics.get(0);
     assertThat(task.getInstances()).isEqualTo(10);
@@ -1088,7 +1088,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     List<HistoricActivityStatistics> statistics = query.list();
 
     // then
-    assertThat(statistics.size()).isEqualTo(2);
+    assertThat(statistics).hasSize(2);
 
     // start
     assertActivityStatistics(statistics.get(0), "start", 0, 0, 4, 0, 0, 0);
@@ -1129,7 +1129,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     List<HistoricActivityStatistics> statistics = query.list();
 
     // then
-    assertThat(statistics.size()).isEqualTo(2);
+    assertThat(statistics).hasSize(2);
 
     // start
     assertActivityStatistics(statistics.get(0), "start", 0, 0, 1, 0, 0, 0);
@@ -1161,7 +1161,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     List<HistoricActivityStatistics> statistics = query.list();
 
     // then
-    assertThat(statistics.size()).isEqualTo(2);
+    assertThat(statistics).hasSize(2);
 
     // start
     assertActivityStatistics(statistics.get(0), "start", 0, 0, 2, 0, 0, 0);
@@ -1200,7 +1200,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     List<HistoricActivityStatistics> statistics = query.list();
 
     // then
-    assertThat(statistics.size()).isEqualTo(7);
+    assertThat(statistics).hasSize(7);
 
     assertActivityStatistics(statistics.get(0), "gtw", 0, 0, 2, 0, 0, 0);
     assertActivityStatistics(statistics.get(1), "innerStart", 0, 0, 10, 0, 0, 0);
@@ -1243,7 +1243,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     List<HistoricActivityStatistics> statistics = query.list();
 
     // then
-    assertThat(statistics.size()).isEqualTo(4);
+    assertThat(statistics).hasSize(4);
 
     assertActivityStatistics(statistics.get(0), "innerTask", 10, 0, 0, 3, 0, 0);
     assertActivityStatistics(statistics.get(1), "subprocess", 10, 0, 0, 0, 0, 0);
@@ -1291,7 +1291,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
       List<HistoricActivityStatistics> statistics = query.list();
 
       // then results only from the first two instances
-      assertThat(statistics.size()).isEqualTo(2);
+      assertThat(statistics).hasSize(2);
       assertActivityStatistics(statistics.get(0), "start", 0, 0, 2, 0, 0, 0);
       assertActivityStatistics(statistics.get(1), "task", 0, 2, 2, 0, 0, 1);
     } finally {
@@ -1337,7 +1337,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
       List<HistoricActivityStatistics> statistics = query.list();
 
       // then results only from the second two instances
-      assertThat(statistics.size()).isEqualTo(3);
+      assertThat(statistics).hasSize(3);
       assertActivityStatistics(statistics.get(0), "end", 0, 0, 2, 0, 0, 0);
       assertActivityStatistics(statistics.get(1), "start", 0, 0, 2, 0, 0, 0);
       assertActivityStatistics(statistics.get(2), "task", 0, 0, 2, 0, 0, 1);
@@ -1375,7 +1375,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     List<HistoricActivityStatistics> statistics = query.list();
 
     // then
-    assertThat(statistics.size()).isEqualTo(2);
+    assertThat(statistics).hasSize(2);
 
     assertActivityStatistics(statistics.get(0), "serviceTask", 0, 0, 0, 1, 0, 2);
     assertActivityStatistics(statistics.get(1), "start", 0, 0, 3, 0, 0, 0);
@@ -1409,7 +1409,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     List<HistoricActivityStatistics> statistics = query.list();
 
     // then
-    assertThat(statistics.size()).isEqualTo(1);
+    assertThat(statistics).hasSize(1);
 
     assertActivityStatistics(statistics.get(0), "serviceTask", 0, 0, 0, 1, 0, 2);
   }

@@ -163,12 +163,12 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
     List<CmmnOnPartDeclaration> onParts = sentryDeclaration.getOnParts();
     assertNotNull(onParts);
     assertFalse(onParts.isEmpty());
-    assertThat(onParts.size()).isEqualTo(1);
+    assertThat(onParts).hasSize(1);
 
     List<CmmnOnPartDeclaration> onPartsAssociatedWithSource = sentryDeclaration.getOnParts(source.getId());
     assertNotNull(onPartsAssociatedWithSource);
     assertFalse(onPartsAssociatedWithSource.isEmpty());
-    assertThat(onParts.size()).isEqualTo(1);
+    assertThat(onParts).hasSize(1);
 
     CmmnOnPartDeclaration onPartDeclaration = onPartsAssociatedWithSource.get(0);
     assertNotNull(onPartDeclaration);
@@ -211,12 +211,12 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
     List<CmmnOnPartDeclaration> onParts = sentryDeclaration.getOnParts();
     assertNotNull(onParts);
     assertFalse(onParts.isEmpty());
-    assertThat(onParts.size()).isEqualTo(1);
+    assertThat(onParts).hasSize(1);
 
     List<CmmnOnPartDeclaration> onPartsAssociatedWithSource = sentryDeclaration.getOnParts(source.getId());
     assertNotNull(onPartsAssociatedWithSource);
     assertFalse(onPartsAssociatedWithSource.isEmpty());
-    assertThat(onParts.size()).isEqualTo(1);
+    assertThat(onParts).hasSize(1);
 
     CmmnOnPartDeclaration onPartDeclaration = onPartsAssociatedWithSource.get(0);
     assertNotNull(onPartDeclaration);
@@ -250,7 +250,7 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
     List<CmmnVariableOnPartDeclaration> variableOnParts = sentryDeclaration.getVariableOnParts();
     assertNotNull(variableOnParts);
     assertFalse(variableOnParts.isEmpty());
-    assertThat(variableOnParts.size()).isEqualTo(1);
+    assertThat(variableOnParts).hasSize(1);
 
     CmmnVariableOnPartDeclaration transformedVariableOnPart = variableOnParts.get(0);
     assertThat(transformedVariableOnPart.getVariableName()).isEqualTo("aVariable");
@@ -279,7 +279,7 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
     List<CmmnVariableOnPartDeclaration> variableOnParts = sentryDeclaration.getVariableOnParts();
     assertNotNull(variableOnParts);
     assertFalse(variableOnParts.isEmpty());
-    assertThat(variableOnParts.size()).isEqualTo(2);
+    assertThat(variableOnParts).hasSize(2);
 
   }
 
@@ -304,7 +304,7 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
     List<CmmnVariableOnPartDeclaration> variableOnParts = sentryDeclaration.getVariableOnParts();
     assertNotNull(variableOnParts);
     assertFalse(variableOnParts.isEmpty());
-    assertThat(variableOnParts.size()).isEqualTo(1);
+    assertThat(variableOnParts).hasSize(1);
 
   }
 
@@ -354,7 +354,7 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
     List<CmmnVariableOnPartDeclaration> variableOnParts = sentryDeclaration.getVariableOnParts();
     assertNotNull(variableOnParts);
     assertFalse(variableOnParts.isEmpty());
-    assertThat(variableOnParts.size()).isEqualTo(1);
+    assertThat(variableOnParts).hasSize(1);
 
     CmmnVariableOnPartDeclaration transformedVariableOnPart = variableOnParts.get(0);
     assertThat(transformedVariableOnPart.getVariableName()).isEqualTo("aVariable");

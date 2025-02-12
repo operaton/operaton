@@ -69,7 +69,7 @@ public class TaskAssignmentExtensionsTest extends PluggableProcessEngineTest {
       .createTaskQuery()
       .taskAssignee("kermit")
       .list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
     assertThat(tasks.get(0).getName()).isEqualTo("my task");
   }
 
@@ -90,9 +90,9 @@ public class TaskAssignmentExtensionsTest extends PluggableProcessEngineTest {
   public void testCandidateUsersExtension() {
     runtimeService.startProcessInstanceByKey("candidateUsersExtension");
     List<Task> tasks = taskService.createTaskQuery().taskCandidateUser("kermit").list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
     tasks = taskService.createTaskQuery().taskCandidateUser("gonzo").list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
   }
 
   @Deployment
@@ -103,11 +103,11 @@ public class TaskAssignmentExtensionsTest extends PluggableProcessEngineTest {
     // Bugfix check: potentially the query could return 2 tasks since
     // kermit is a member of the two candidate groups
     List<Task> tasks = taskService.createTaskQuery().taskCandidateUser("kermit").list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
     assertThat(tasks.get(0).getName()).isEqualTo("make profit");
 
     tasks = taskService.createTaskQuery().taskCandidateUser("fozzie").list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
     assertThat(tasks.get(0).getName()).isEqualTo("make profit");
 
     // Test the task query find-by-candidate-group operation
@@ -124,16 +124,16 @@ public class TaskAssignmentExtensionsTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("mixedCandidateUser");
 
     List<Task> tasks = taskService.createTaskQuery().taskCandidateUser("kermit").list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
 
     tasks = taskService.createTaskQuery().taskCandidateUser("fozzie").list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
 
     tasks = taskService.createTaskQuery().taskCandidateUser("gonzo").list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
 
     tasks = taskService.createTaskQuery().taskCandidateUser("mispiggy").list();
-    assertThat(tasks.size()).isEqualTo(0);
+    assertThat(tasks).hasSize(0);
   }
 
 }

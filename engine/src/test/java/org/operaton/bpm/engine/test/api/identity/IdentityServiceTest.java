@@ -165,7 +165,7 @@ public class IdentityServiceTest {
   private void assertListElementsMatch(List<String> list1, List<String> list2) {
     if (list1 != null) {
       assertNotNull(list2);
-      assertThat(list2.size()).isEqualTo(list1.size());
+      assertThat(list2).hasSize(list1.size());
       for (String value : list1) {
         assertTrue(list2.contains(value));
       }
@@ -430,7 +430,7 @@ public class IdentityServiceTest {
     identityService.createMembership(johndoe.getId(), sales.getId());
 
     List<Group> groups = identityService.createGroupQuery().groupMember(johndoe.getId()).list();
-    assertThat(groups.size()).isEqualTo(1);
+    assertThat(groups).hasSize(1);
     assertThat(groups.get(0).getId()).isEqualTo("sales");
 
     // Delete the membership and check members of sales group

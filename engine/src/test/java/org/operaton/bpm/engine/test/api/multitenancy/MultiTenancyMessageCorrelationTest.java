@@ -364,13 +364,13 @@ public class MultiTenancyMessageCorrelationTest {
 
     // then
     List<EventSubscription> list = engineRule.getRuntimeService().createEventSubscriptionQuery().list();
-    assertThat(list.size()).isEqualTo(3);
+    assertThat(list).hasSize(3);
     for (EventSubscription eventSubscription : list) {
       EventSubscriptionEntity eventSubscriptionEntity = (EventSubscriptionEntity) eventSubscription;
       if (eventSubscriptionEntity.getConfiguration().equals(processDefId2)) {
         assertThat(eventSubscription.getTenantId()).isEqualTo(TENANT_ONE);
       } else if (eventSubscriptionEntity.getConfiguration().equals(processDefId6)) {
-        assertThat(eventSubscription.getTenantId()).isEqualTo(null);
+        assertThat(eventSubscription.getTenantId()).isNull();
       } else if (eventSubscriptionEntity.getConfiguration().equals(processDefId7)) {
         assertThat(eventSubscription.getTenantId()).isEqualTo(TENANT_ONE);
       } else {

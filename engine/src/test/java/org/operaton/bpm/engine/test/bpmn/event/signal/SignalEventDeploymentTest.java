@@ -69,7 +69,7 @@ public class SignalEventDeploymentTest extends PluggableProcessEngineTest {
 
     List<EventSubscription> newEventSubscriptions = runtimeService.createEventSubscriptionQuery().eventType("signal").list();
     // only one event subscription for the new version of the process definition
-    assertThat(newEventSubscriptions.size()).isEqualTo(1);
+    assertThat(newEventSubscriptions).hasSize(1);
 
     EventSubscriptionEntity newEventSubscription = (EventSubscriptionEntity) newEventSubscriptions.iterator().next();
     assertThat(newEventSubscription.getConfiguration()).isEqualTo(newProcessDefinition.getId());

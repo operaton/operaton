@@ -81,9 +81,10 @@ public class DmnBusinessRuleTaskResultMappingTest extends PluggableProcessEngine
     @SuppressWarnings("unchecked")
     Map<String, Object> output = (Map<String, Object>) runtimeService.getVariable(processInstance.getId(), "result");
 
-    assertThat(output.size()).isEqualTo(2);
-    assertThat(output.get("result1")).isEqualTo("foo");
-    assertThat(output.get("result2")).isEqualTo("bar");
+    assertThat(output)
+            .hasSize(2)
+            .containsEntry("result1", "foo")
+            .containsEntry("result2", "bar");
   }
 
   @Deployment(resources = { COLLECT_ENTRIES_BPMN, TEST_DECISION })
@@ -94,7 +95,7 @@ public class DmnBusinessRuleTaskResultMappingTest extends PluggableProcessEngine
     @SuppressWarnings("unchecked")
     List<String> output = (List<String>) runtimeService.getVariable(processInstance.getId(), "result");
 
-    assertThat(output.size()).isEqualTo(2);
+    assertThat(output).hasSize(2);
     assertThat(output.get(0)).isEqualTo("foo");
     assertThat(output.get(1)).isEqualTo("foo");
   }
@@ -106,12 +107,13 @@ public class DmnBusinessRuleTaskResultMappingTest extends PluggableProcessEngine
 
     @SuppressWarnings("unchecked")
     List<Map<String, Object>> resultList = (List<Map<String, Object>>) runtimeService.getVariable(processInstance.getId(), "result");
-    assertThat(resultList.size()).isEqualTo(2);
+    assertThat(resultList).hasSize(2);
 
     for (Map<String, Object> valueMap : resultList) {
-      assertThat(valueMap.size()).isEqualTo(2);
-      assertThat(valueMap.get("result1")).isEqualTo("foo");
-      assertThat(valueMap.get("result2")).isEqualTo("bar");
+      assertThat(valueMap)
+              .hasSize(2)
+              .containsEntry("result1", "foo")
+              .containsEntry("result2", "bar");
     }
   }
 
@@ -123,12 +125,13 @@ public class DmnBusinessRuleTaskResultMappingTest extends PluggableProcessEngine
     // default mapping is 'resultList'
     @SuppressWarnings("unchecked")
     List<Map<String, Object>> resultList = (List<Map<String, Object>>) runtimeService.getVariable(processInstance.getId(), "result");
-    assertThat(resultList.size()).isEqualTo(2);
+    assertThat(resultList).hasSize(2);
 
     for (Map<String, Object> valueMap : resultList) {
-      assertThat(valueMap.size()).isEqualTo(2);
-      assertThat(valueMap.get("result1")).isEqualTo("foo");
-      assertThat(valueMap.get("result2")).isEqualTo("bar");
+      assertThat(valueMap)
+              .hasSize(2)
+              .containsEntry("result1", "foo")
+              .containsEntry("result2", "bar");
     }
   }
 

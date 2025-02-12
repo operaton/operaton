@@ -86,7 +86,7 @@ public class MigrationReceiveTaskTest {
     EventSubscription eventSubscriptionBefore = testHelper.snapshotBeforeMigration.getEventSubscriptions().get(0);
 
     List<EventSubscription> eventSubscriptionsAfter = testHelper.snapshotAfterMigration.getEventSubscriptions();
-    assertThat(eventSubscriptionsAfter.size()).isEqualTo(1);
+    assertThat(eventSubscriptionsAfter).hasSize(1);
     EventSubscription eventSubscriptionAfter = eventSubscriptionsAfter.get(0);
     assertThat(eventSubscriptionAfter.getCreated()).isEqualTo(eventSubscriptionBefore.getCreated());
     assertThat(eventSubscriptionAfter.getExecutionId()).isEqualTo(eventSubscriptionBefore.getExecutionId());

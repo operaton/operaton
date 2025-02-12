@@ -217,7 +217,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertThat(tasks.size()).isEqualTo(0);
+    assertThat(tasks).hasSize(0);
   }
 
   @Test
@@ -233,7 +233,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
   }
 
   @Test
@@ -256,7 +256,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
   }
 
   @Test
@@ -281,7 +281,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
   }
 
   @Test
@@ -304,7 +304,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
   }
 
   @Test
@@ -331,7 +331,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertThat(tasks.size()).isEqualTo(3);
+    assertThat(tasks).hasSize(3);
   }
 
   @Test
@@ -358,7 +358,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertThat(tasks.size()).isEqualTo(3);
+    assertThat(tasks).hasSize(3);
   }
 
   @Test
@@ -381,7 +381,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
   }
 
   @Test
@@ -418,7 +418,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertThat(tasks.size()).isEqualTo(5);
+    assertThat(tasks).hasSize(5);
   }
 
   @Test
@@ -468,7 +468,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertThat(tasks.size()).isEqualTo(3);
+    assertThat(tasks).hasSize(3);
   }
 
   @Test
@@ -536,7 +536,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertThat(tasks.size()).isEqualTo(3);
+    assertThat(tasks).hasSize(3);
   }
 
   @Test
@@ -564,7 +564,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
   }
 
   @Test
@@ -663,7 +663,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
     assertThat(tasks.get(0).getFormKey()).isEqualTo("aFormKey");
     assertThat(tasks.get(1).getFormKey()).isEqualTo("anotherFormKey");
   }
@@ -709,7 +709,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
   }
 
   @Test
@@ -754,7 +754,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
   }
 
   @Test
@@ -811,7 +811,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
   }
 
   @Test
@@ -862,7 +862,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertThat(tasks.size()).isEqualTo(3);
+    assertThat(tasks).hasSize(3);
   }
 
   @Test
@@ -900,7 +900,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
   }
 
   @Test
@@ -940,7 +940,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
   }
 
   @Test
@@ -987,7 +987,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertThat(tasks.size()).isEqualTo(3);
+    assertThat(tasks).hasSize(3);
   }
 
   @Test
@@ -1027,7 +1027,7 @@ public class TaskQueryOrTest {
         .processInstanceBusinessKey(businessKey)
       .endOr();
 
-    assertThat(query.list().size()).isEqualTo(2);
+    assertThat(query.list()).hasSize(2);
   }
 
   @Test
@@ -1062,7 +1062,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
   }
 
   @Test
@@ -1327,7 +1327,7 @@ public class TaskQueryOrTest {
     assertThat(taskService.createTaskQuery().taskDefinitionKey("testQuerySuspensionStateTask").suspended().count()).isEqualTo(1);
 
     // then
-    assertThat(taskService.createTaskQuery().or().active().processVariableValueEquals("foo", 0).endOr().list().size()).isEqualTo(3);
+    assertThat(taskService.createTaskQuery().or().active().processVariableValueEquals("foo", 0).endOr().list()).hasSize(3);
   }
 
   @Test
@@ -1364,7 +1364,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertThat(tasks.size()).isEqualTo(3);
+    assertThat(tasks).hasSize(3);
     for (Task task : tasks) {
       assertThat(task.getProcessInstanceId()).isIn(processInstanceId, processInstanceIds.get(0), processInstanceIds.get(1));
     }

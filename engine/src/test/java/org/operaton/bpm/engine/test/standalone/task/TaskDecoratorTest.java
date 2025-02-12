@@ -277,7 +277,7 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
 
     // then
     Set<IdentityLink> candidates = task.getCandidates();
-    assertThat(candidates.size()).isEqualTo(3);
+    assertThat(candidates).hasSize(3);
 
     for (IdentityLink identityLink : candidates) {
       String taskId = identityLink.getTaskId();
@@ -321,7 +321,7 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
 
     // then
     Set<IdentityLink> candidates = task.getCandidates();
-    assertThat(candidates.size()).isEqualTo(3);
+    assertThat(candidates).hasSize(3);
 
     for (IdentityLink identityLink : candidates) {
       String taskId = identityLink.getTaskId();
@@ -360,7 +360,7 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
 
     // then
     Set<IdentityLink> candidates = task.getCandidates();
-    assertThat(candidates.size()).isEqualTo(3);
+    assertThat(candidates).hasSize(3);
 
     for (IdentityLink identityLink : candidates) {
       String taskId = identityLink.getTaskId();
@@ -404,7 +404,7 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
 
     // then
     Set<IdentityLink> candidates = task.getCandidates();
-    assertThat(candidates.size()).isEqualTo(3);
+    assertThat(candidates).hasSize(3);
 
     for (IdentityLink identityLink : candidates) {
       String taskId = identityLink.getTaskId();

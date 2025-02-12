@@ -200,7 +200,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
 
     // there are two async jobs
     List<Job> jobs = managementService.createJobQuery().list();
-    assertThat(jobs.size()).isEqualTo(2);
+    assertThat(jobs).hasSize(2);
     managementService.executeJob(jobs.get(0).getId());
     managementService.executeJob(jobs.get(1).getId());
 
@@ -464,7 +464,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
 
     // and we will wait *after* the gateway:
     List<Job> jobs = managementService.createJobQuery().active().list();
-    assertThat(jobs.size()).isEqualTo(2);
+    assertThat(jobs).hasSize(2);
   }
 
   @Deployment
@@ -565,7 +565,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
 
     // there are two jobs
     List<Job> jobs = managementService.createJobQuery().list();
-    assertThat(jobs.size()).isEqualTo(2);
+    assertThat(jobs).hasSize(2);
     Job jobToExecute = fetchFirstJobByHandlerConfiguration(jobs, config1);
     assertNotNull(jobToExecute);
     managementService.executeJob(jobToExecute.getId());
@@ -575,7 +575,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
 
     // there is one left
     jobs = managementService.createJobQuery().list();
-    assertThat(jobs.size()).isEqualTo(1);
+    assertThat(jobs).hasSize(1);
     jobToExecute = fetchFirstJobByHandlerConfiguration(jobs, config2);
     managementService.executeJob(jobToExecute.getId());
 
@@ -658,14 +658,14 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
 
     // there are three jobs
     List<Job> jobs = managementService.createJobQuery().list();
-    assertThat(jobs.size()).isEqualTo(3);
+    assertThat(jobs).hasSize(3);
     Job jobToExecute = fetchFirstJobByHandlerConfiguration(jobs, configuration);
     assertNotNull(jobToExecute);
     managementService.executeJob(jobToExecute.getId());
 
     // there are two jobs left
     jobs = managementService.createJobQuery().list();
-    assertThat(jobs.size()).isEqualTo(2);
+    assertThat(jobs).hasSize(2);
     jobToExecute = fetchFirstJobByHandlerConfiguration(jobs, configuration);
     managementService.executeJob(jobToExecute.getId());
 

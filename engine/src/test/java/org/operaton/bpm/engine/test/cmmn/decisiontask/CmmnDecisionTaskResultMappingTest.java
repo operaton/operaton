@@ -63,9 +63,10 @@ public class CmmnDecisionTaskResultMappingTest extends CmmnTest {
 
     Map<String, Object> output = (Map<String, Object>) caseService.getVariable(caseInstance.getId(), "result");
 
-    assertThat(output.size()).isEqualTo(2);
-    assertThat(output.get("result1")).isEqualTo("foo");
-    assertThat(output.get("result2")).isEqualTo("bar");
+    assertThat(output)
+            .hasSize(2)
+            .containsEntry("result1", "foo")
+            .containsEntry("result2", "bar");
   }
 
   @SuppressWarnings("unchecked")
@@ -76,7 +77,7 @@ public class CmmnDecisionTaskResultMappingTest extends CmmnTest {
 
     List<String> output = (List<String>) caseService.getVariable(caseInstance.getId(), "result");
 
-    assertThat(output.size()).isEqualTo(2);
+    assertThat(output).hasSize(2);
     assertThat(output.get(0)).isEqualTo("foo");
     assertThat(output.get(1)).isEqualTo("foo");
   }
@@ -88,12 +89,13 @@ public class CmmnDecisionTaskResultMappingTest extends CmmnTest {
     CaseInstance caseInstance = createTestCase("multiple entries list");
 
     List<Map<String, Object>> resultList = (List<Map<String, Object>>) caseService.getVariable(caseInstance.getId(), "result");
-    assertThat(resultList.size()).isEqualTo(2);
+    assertThat(resultList).hasSize(2);
 
     for (Map<String, Object> valueMap : resultList) {
-      assertThat(valueMap.size()).isEqualTo(2);
-      assertThat(valueMap.get("result1")).isEqualTo("foo");
-      assertThat(valueMap.get("result2")).isEqualTo("bar");
+      assertThat(valueMap)
+              .hasSize(2)
+              .containsEntry("result1", "foo")
+              .containsEntry("result2", "bar");
     }
   }
 
@@ -105,12 +107,13 @@ public class CmmnDecisionTaskResultMappingTest extends CmmnTest {
 
     // default mapping is 'resultList'
     List<Map<String, Object>> resultList = (List<Map<String, Object>>) caseService.getVariable(caseInstance.getId(), "result");
-    assertThat(resultList.size()).isEqualTo(2);
+    assertThat(resultList).hasSize(2);
 
     for (Map<String, Object> valueMap : resultList) {
-      assertThat(valueMap.size()).isEqualTo(2);
-      assertThat(valueMap.get("result1")).isEqualTo("foo");
-      assertThat(valueMap.get("result2")).isEqualTo("bar");
+      assertThat(valueMap)
+              .hasSize(2)
+              .containsEntry("result1", "foo")
+              .containsEntry("result2", "bar");
     }
   }
 

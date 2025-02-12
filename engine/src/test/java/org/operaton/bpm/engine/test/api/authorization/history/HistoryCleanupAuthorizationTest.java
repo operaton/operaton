@@ -109,15 +109,15 @@ public class HistoryCleanupAuthorizationTest extends AuthorizationTest {
     // update time to live
     disableAuthorization();
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().processDefinitionKey("testProcess").list();
-    assertThat(processDefinitions.size()).isEqualTo(1);
+    assertThat(processDefinitions).hasSize(1);
     repositoryService.updateProcessDefinitionHistoryTimeToLive(processDefinitions.get(0).getId(), processInstanceTimeToLive);
 
     final List<DecisionDefinition> decisionDefinitions = repositoryService.createDecisionDefinitionQuery().decisionDefinitionKey("testDecision").list();
-    assertThat(decisionDefinitions.size()).isEqualTo(1);
+    assertThat(decisionDefinitions).hasSize(1);
     repositoryService.updateDecisionDefinitionHistoryTimeToLive(decisionDefinitions.get(0).getId(), decisionTimeToLive);
 
     List<CaseDefinition> caseDefinitions = repositoryService.createCaseDefinitionQuery().caseDefinitionKey("oneTaskCase").list();
-    assertThat(caseDefinitions.size()).isEqualTo(1);
+    assertThat(caseDefinitions).hasSize(1);
     repositoryService.updateCaseDefinitionHistoryTimeToLive(caseDefinitions.get(0).getId(), caseTimeToLive);
 
     Date oldCurrentTime = ClockUtil.getCurrentTime();
@@ -169,7 +169,7 @@ public class HistoryCleanupAuthorizationTest extends AuthorizationTest {
     processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
       List<Job> jobs = managementService.createJobQuery().list();
       if (!jobs.isEmpty()) {
-        assertThat(jobs.size()).isEqualTo(1);
+        assertThat(jobs).hasSize(1);
         String jobId = jobs.get(0).getId();
         commandContext.getJobManager().deleteJob((JobEntity) jobs.get(0));
         commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(jobId);

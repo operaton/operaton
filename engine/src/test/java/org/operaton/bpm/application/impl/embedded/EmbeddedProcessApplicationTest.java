@@ -199,7 +199,7 @@ public class EmbeddedProcessApplicationTest extends PluggableProcessEngineTest {
     assertNotNull(deployment);
 
     List<Resource> deploymentResources = repositoryService.getDeploymentResources(deployment.getId());
-    assertThat(deploymentResources.size()).isEqualTo(4);
+    assertThat(deploymentResources).hasSize(4);
 
     processApplication.undeploy();
     assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(0);
@@ -217,7 +217,7 @@ public class EmbeddedProcessApplicationTest extends PluggableProcessEngineTest {
     assertNotNull(deployment);
 
     List<Resource> deploymentResources = repositoryService.getDeploymentResources(deployment.getId());
-    assertThat(deploymentResources.size()).isEqualTo(4);
+    assertThat(deploymentResources).hasSize(4);
 
     processApplication.undeploy();
     assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(0);
@@ -245,7 +245,7 @@ public class EmbeddedProcessApplicationTest extends PluggableProcessEngineTest {
     pa.deploy();
 
     Set<String> deployedPAs = runtimeContainerDelegate.getProcessApplicationService().getProcessApplicationNames();
-    assertThat(deployedPAs.size()).isEqualTo(1);
+    assertThat(deployedPAs).hasSize(1);
     assertTrue(deployedPAs.contains(TestApplicationWithCustomName.NAME));
 
     pa.undeploy();
@@ -264,7 +264,7 @@ public class EmbeddedProcessApplicationTest extends PluggableProcessEngineTest {
         .asc()
         .list();
 
-    assertThat(deployments.size()).isEqualTo(2);
+    assertThat(deployments).hasSize(2);
     assertThat(deployments.get(0).getTenantId()).isEqualTo("tenant1");
     assertThat(deployments.get(1).getTenantId()).isEqualTo("tenant2");
 

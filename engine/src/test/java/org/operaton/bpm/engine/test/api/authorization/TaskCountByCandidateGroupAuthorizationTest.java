@@ -92,7 +92,7 @@ public class TaskCountByCandidateGroupAuthorizationTest {
     authorizationService.deleteAuthorization(authorization.getId());
     identityService.deleteUser(userId);
 
-    assertThat(results.size()).isEqualTo(0);
+    assertThat(results).hasSize(0);
   }
 
   @Test

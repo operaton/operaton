@@ -154,7 +154,7 @@ public class CasePlanModelHandlerTest extends CmmnElementHandlerTest {
     assertTrue(newActivity.getEntryCriteria().isEmpty());
 
     assertFalse(newActivity.getExitCriteria().isEmpty());
-    assertThat(newActivity.getExitCriteria().size()).isEqualTo(1);
+    assertThat(newActivity.getExitCriteria()).hasSize(1);
 
     assertThat(newActivity.getExitCriteria().get(0)).isEqualTo(sentryDeclaration);
 
@@ -203,7 +203,7 @@ public class CasePlanModelHandlerTest extends CmmnElementHandlerTest {
     assertTrue(newActivity.getEntryCriteria().isEmpty());
 
     assertFalse(newActivity.getExitCriteria().isEmpty());
-    assertThat(newActivity.getExitCriteria().size()).isEqualTo(2);
+    assertThat(newActivity.getExitCriteria()).hasSize(2);
 
     assertTrue(newActivity.getExitCriteria().contains(firstSentryDeclaration));
     assertTrue(newActivity.getExitCriteria().contains(secondSentryDeclaration));

@@ -103,7 +103,7 @@ public class MultiTenancyHistoricBatchQueryTest {
     List<HistoricBatch> batches = historyService.createHistoricBatchQuery().list();
 
     // then
-    assertThat(batches.size()).isEqualTo(1);
+    assertThat(batches).hasSize(1);
     assertThat(batches.get(0).getId()).isEqualTo(sharedBatch.getId());
 
     assertThat(historyService.createHistoricBatchQuery().count()).isEqualTo(1);
@@ -120,7 +120,7 @@ public class MultiTenancyHistoricBatchQueryTest {
     List<HistoricBatch> batches = historyService.createHistoricBatchQuery().list();
 
     // then
-    assertThat(batches.size()).isEqualTo(2);
+    assertThat(batches).hasSize(2);
     assertBatches(batches, tenant1Batch.getId(), sharedBatch.getId());
 
     assertThat(historyService.createHistoricBatchQuery().count()).isEqualTo(2);
@@ -137,7 +137,7 @@ public class MultiTenancyHistoricBatchQueryTest {
     List<HistoricBatch> batches = historyService.createHistoricBatchQuery().list();
 
     // then
-    assertThat(batches.size()).isEqualTo(3);
+    assertThat(batches).hasSize(3);
 
     assertThat(historyService.createHistoricBatchQuery().count()).isEqualTo(3);
 
@@ -198,7 +198,7 @@ public class MultiTenancyHistoricBatchQueryTest {
       .list();
 
     // then
-    assertThat(returnedBatches.size()).isEqualTo(2);
+    assertThat(returnedBatches).hasSize(2);
     assertThat(returnedBatches.get(0).getId()).isEqualTo(tenant1Batch.getId());
     assertThat(returnedBatches.get(1).getId()).isEqualTo(tenant2Batch.getId());
   }
@@ -262,7 +262,7 @@ public class MultiTenancyHistoricBatchQueryTest {
   }
 
   protected void assertBatches(List<HistoricBatch> actualBatches, String... expectedIds) {
-    assertThat(actualBatches.size()).isEqualTo(expectedIds.length);
+    assertThat(actualBatches).hasSize(expectedIds.length);
 
     Set<String> actualIds = new HashSet<>();
     for (HistoricBatch batch : actualBatches) {

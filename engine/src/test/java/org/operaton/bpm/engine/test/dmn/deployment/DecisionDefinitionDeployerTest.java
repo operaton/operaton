@@ -249,7 +249,7 @@ public class DecisionDefinitionDeployerTest {
 
     // both decisions should have a reference to the decision requirements definition
     List<DecisionDefinition> decisions = repositoryService.createDecisionDefinitionQuery().orderByDecisionDefinitionKey().asc().list();
-    assertThat(decisions.size()).isEqualTo(2);
+    assertThat(decisions).hasSize(2);
 
     DecisionDefinition firstDecision = decisions.get(0);
     assertThat(firstDecision.getKey()).isEqualTo("score-decision");
@@ -286,13 +286,13 @@ public class DecisionDefinitionDeployerTest {
         .asc()
         .list();
 
-    assertThat(decisionRequirementsDefinitions.size()).isEqualTo(2);
+    assertThat(decisionRequirementsDefinitions).hasSize(2);
     assertThat(decisionRequirementsDefinitions.get(0).getKey()).isEqualTo("score");
     assertThat(decisionRequirementsDefinitions.get(1).getKey()).isEqualTo("dish");
 
     // the decisions should have a reference to the decision requirements definition
     List<DecisionDefinition> decisions = repositoryService.createDecisionDefinitionQuery().orderByDecisionDefinitionCategory().asc().list();
-    assertThat(decisions.size()).isEqualTo(5);
+    assertThat(decisions).hasSize(5);
     assertThat(decisions.get(0).getDecisionRequirementsDefinitionId()).isEqualTo(decisionRequirementsDefinitions.get(0).getId());
     assertThat(decisions.get(1).getDecisionRequirementsDefinitionId()).isEqualTo(decisionRequirementsDefinitions.get(0).getId());
     assertThat(decisions.get(2).getDecisionRequirementsDefinitionId()).isEqualTo(decisionRequirementsDefinitions.get(1).getId());
@@ -342,7 +342,7 @@ public class DecisionDefinitionDeployerTest {
         .orderByDecisionDefinitionVersion().asc()
         .list();
 
-    assertThat(decisions.size()).isEqualTo(2);
+    assertThat(decisions).hasSize(2);
 
     DecisionDefinition firstDecision = decisions.get(0);
     assertThat(firstDecision.getVersion()).isEqualTo(1);
@@ -452,7 +452,7 @@ public class DecisionDefinitionDeployerTest {
 
     // then deployment contains definition
     List<DecisionDefinition> deployedDecisionDefinitions = deployment.getDeployedDecisionDefinitions();
-    assertThat(deployedDecisionDefinitions.size()).isEqualTo(1);
+    assertThat(deployedDecisionDefinitions).hasSize(1);
     assertNull(deployment.getDeployedDecisionRequirementsDefinitions());
     assertNull(deployment.getDeployedProcessDefinitions());
     assertNull(deployment.getDeployedCaseDefinitions());
@@ -496,10 +496,10 @@ public class DecisionDefinitionDeployerTest {
 
     // then deployment contains definitions
     List<DecisionDefinition> deployedDecisionDefinitions = deployment.getDeployedDecisionDefinitions();
-    assertThat(deployedDecisionDefinitions.size()).isEqualTo(2);
+    assertThat(deployedDecisionDefinitions).hasSize(2);
 
     List<DecisionRequirementsDefinition> deployedDecisionRequirementsDefinitions = deployment.getDeployedDecisionRequirementsDefinitions();
-    assertThat(deployedDecisionRequirementsDefinitions.size()).isEqualTo(1);
+    assertThat(deployedDecisionRequirementsDefinitions).hasSize(1);
 
     assertNull(deployment.getDeployedProcessDefinitions());
     assertNull(deployment.getDeployedCaseDefinitions());
@@ -510,7 +510,7 @@ public class DecisionDefinitionDeployerTest {
     assertThat(deployedDecisionRequirementsDefinitions.get(0).getId()).isEqualTo(persistedDecisionRequirementsDefinition.getId());
 
     List<DecisionDefinition> persistedDecisionDefinitions = repositoryService.createDecisionDefinitionQuery().decisionDefinitionResourceName(DRD_SCORE_RESOURCE).list();
-    assertThat(persistedDecisionDefinitions.size()).isEqualTo(deployedDecisionDefinitions.size());
+    assertThat(persistedDecisionDefinitions).hasSize(deployedDecisionDefinitions.size());
   }
 
   @Test
@@ -520,7 +520,7 @@ public class DecisionDefinitionDeployerTest {
 
     // then
     List<DecisionDefinition> deployedDecisionDefinitions = deployment.getDeployedDecisionDefinitions();
-    assertThat(deployedDecisionDefinitions.size()).isEqualTo(1);
+    assertThat(deployedDecisionDefinitions).hasSize(1);
     Integer historyTimeToLive = deployedDecisionDefinitions.get(0).getHistoryTimeToLive();
     assertNotNull(historyTimeToLive);
     assertThat((int) historyTimeToLive).isEqualTo(5);
@@ -533,7 +533,7 @@ public class DecisionDefinitionDeployerTest {
 
     // then
     List<DecisionDefinition> deployedDecisionDefinitions = deployment.getDeployedDecisionDefinitions();
-    assertThat(deployedDecisionDefinitions.size()).isEqualTo(1);
+    assertThat(deployedDecisionDefinitions).hasSize(1);
     Integer historyTimeToLive = deployedDecisionDefinitions.get(0).getHistoryTimeToLive();
     assertNotNull(historyTimeToLive);
     assertThat((int) historyTimeToLive).isEqualTo(5);
@@ -555,7 +555,7 @@ public class DecisionDefinitionDeployerTest {
 
       // then
       List<DecisionDefinition> deployedDecisionDefinitions = deployment.getDeployedDecisionDefinitions();
-    assertThat(deployedDecisionDefinitions.size()).isEqualTo(1);
+    assertThat(deployedDecisionDefinitions).hasSize(1);
       Integer historyTimeToLive = deployedDecisionDefinitions.get(0).getHistoryTimeToLive();
       assertNull(historyTimeToLive);
   }

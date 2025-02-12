@@ -90,7 +90,7 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   private void verifyQueryResults(CaseInstanceQuery query, int countExpected) {
-    assertThat(query.list().size()).isEqualTo(countExpected);
+    assertThat(query.list()).hasSize(countExpected);
     assertThat(query.count()).isEqualTo(countExpected);
 
     if (countExpected == 1) {

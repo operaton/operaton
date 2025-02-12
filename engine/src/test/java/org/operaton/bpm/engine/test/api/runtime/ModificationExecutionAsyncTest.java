@@ -45,7 +45,6 @@ import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeA
 
 import java.util.*;
 
-import org.assertj.core.api.Assertions;
 import org.junit.*;
 import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
@@ -296,7 +295,7 @@ public class ModificationExecutionAsyncTest {
 
     // but no modification jobs where created
     List<Job> modificationJobs = helper.getExecutionJobs(batch);
-    assertThat(modificationJobs.size()).isEqualTo(0);
+    assertThat(modificationJobs).hasSize(0);
   }
 
   @Test
@@ -310,7 +309,7 @@ public class ModificationExecutionAsyncTest {
     helper.executeSeedJob(batch);
 
     List<Job> modificationJobs = helper.getJobsForDefinition(modificationJobDefinition);
-    assertThat(modificationJobs.size()).isEqualTo(10);
+    assertThat(modificationJobs).hasSize(10);
 
     for (Job modificationJob : modificationJobs) {
       assertThat(modificationJob.getJobDefinitionId()).isEqualTo(modificationJobDefinition.getId());
@@ -378,7 +377,7 @@ public class ModificationExecutionAsyncTest {
     }
 
     // and the no modification jobs exist
-    assertThat(helper.getExecutionJobs(batch).size()).isEqualTo(0);
+    assertThat(helper.getExecutionJobs(batch)).hasSize(0);
 
     // but a monitor job exists
     assertNotNull(helper.getMonitorJob(batch));
@@ -413,7 +412,7 @@ public class ModificationExecutionAsyncTest {
     }
 
     // and the no modification jobs exist
-    assertThat(helper.getExecutionJobs(batch).size()).isEqualTo(0);
+    assertThat(helper.getExecutionJobs(batch)).hasSize(0);
 
     // but a monitor job exists
     assertNotNull(helper.getMonitorJob(batch));
@@ -448,7 +447,7 @@ public class ModificationExecutionAsyncTest {
     }
 
     // and the no modification jobs exist
-    assertThat(helper.getExecutionJobs(batch).size()).isEqualTo(0);
+    assertThat(helper.getExecutionJobs(batch)).hasSize(0);
 
     // but a monitor job exists
     assertNotNull(helper.getMonitorJob(batch));
@@ -473,7 +472,7 @@ public class ModificationExecutionAsyncTest {
     }
 
     // and the no modification jobs exist
-    assertThat(helper.getExecutionJobs(batch).size()).isEqualTo(0);
+    assertThat(helper.getExecutionJobs(batch)).hasSize(0);
 
     // but a monitor job exists
     assertNotNull(helper.getMonitorJob(batch));
@@ -514,7 +513,7 @@ public class ModificationExecutionAsyncTest {
     }
 
     // and the no modification jobs exist
-    assertThat(helper.getExecutionJobs(batch).size()).isEqualTo(0);
+    assertThat(helper.getExecutionJobs(batch)).hasSize(0);
 
     // but a monitor job exists
     assertNotNull(helper.getMonitorJob(batch));
@@ -547,7 +546,7 @@ public class ModificationExecutionAsyncTest {
     }
 
     // and the no modification jobs exist
-    assertThat(helper.getExecutionJobs(batch).size()).isEqualTo(0);
+    assertThat(helper.getExecutionJobs(batch)).hasSize(0);
 
     // but a monitor job exists
     assertNotNull(helper.getMonitorJob(batch));
@@ -587,7 +586,7 @@ public class ModificationExecutionAsyncTest {
     }
 
     // and the no modification jobs exist
-    assertThat(helper.getExecutionJobs(batch).size()).isEqualTo(0);
+    assertThat(helper.getExecutionJobs(batch)).hasSize(0);
 
     // but a monitor job exists
     assertNotNull(helper.getMonitorJob(batch));
@@ -630,7 +629,7 @@ public class ModificationExecutionAsyncTest {
     assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processDefinition.getId()).activity("user1").activity("user2").done());
 
     // and the no modification jobs exist
-    assertThat(helper.getExecutionJobs(batch).size()).isEqualTo(0);
+    assertThat(helper.getExecutionJobs(batch)).hasSize(0);
 
     // but a monitor job exists
     assertNotNull(helper.getMonitorJob(batch));
@@ -838,7 +837,7 @@ public class ModificationExecutionAsyncTest {
 
     // and one batch job failed and has 2 retries left
     List<Job> modificationJobs = helper.getExecutionJobs(batch);
-    assertThat(modificationJobs.size()).isEqualTo(1);
+    assertThat(modificationJobs).hasSize(1);
 
     Job failedJob = modificationJobs.get(0);
     assertThat(failedJob.getRetries()).isEqualTo(2);
@@ -892,7 +891,7 @@ public class ModificationExecutionAsyncTest {
 
     // and one batch job failed and has 2 retries left
     List<Job> modificationJobs = helper.getExecutionJobs(batch);
-    assertThat(modificationJobs.size()).isEqualTo(1);
+    assertThat(modificationJobs).hasSize(1);
 
     Job failedJob = modificationJobs.get(0);
     assertThat(failedJob.getRetries()).isEqualTo(2);
@@ -950,7 +949,7 @@ public class ModificationExecutionAsyncTest {
 
     // and one batch job failed and has 2 retries left
     List<Job> modificationJobs = helper.getExecutionJobs(batch);
-    assertThat(modificationJobs.size()).isEqualTo(0);
+    assertThat(modificationJobs).hasSize(0);
   }
 
   @Test
@@ -1042,7 +1041,7 @@ public class ModificationExecutionAsyncTest {
 
     //    and one batch job failed and has 2 retries left
     List<Job> modificationJobs = helper.getExecutionJobs(batch);
-    assertThat(modificationJobs.size()).isEqualTo(1);
+    assertThat(modificationJobs).hasSize(1);
 
     Job failedJob = modificationJobs.get(0);
     assertThat(failedJob.getRetries()).isEqualTo(2);
@@ -1101,7 +1100,7 @@ public class ModificationExecutionAsyncTest {
 
     // and one batch job failed and has 2 retries left
     List<Job> modificationJobs = helper.getExecutionJobs(batch);
-    assertThat(modificationJobs.size()).isEqualTo(1);
+    assertThat(modificationJobs).hasSize(1);
 
     Job failedJob = modificationJobs.get(0);
     assertThat(failedJob.getRetries()).isEqualTo(2);
@@ -1204,7 +1203,7 @@ public class ModificationExecutionAsyncTest {
 
     // then
     List<DelegateEvent> recordedEvents = DelegateEvent.getEvents();
-    assertThat(recordedEvents.size()).isEqualTo(1);
+    assertThat(recordedEvents).hasSize(1);
 
     DelegateEvent event = recordedEvents.get(0);
     assertThat(event.getProcessDefinitionId()).isEqualTo(processDefinition.getId());
@@ -1237,7 +1236,7 @@ public class ModificationExecutionAsyncTest {
     helper.executeJobs(batch);
 
     // then
-    assertThat(DelegateEvent.getEvents().size()).isEqualTo(0);
+    assertThat(DelegateEvent.getEvents()).hasSize(0);
   }
 
   @Test
@@ -1325,7 +1324,7 @@ public class ModificationExecutionAsyncTest {
     helper.executeJobs(batch);
 
     // then
-    assertThat(runtimeService.createExecutionQuery().list().size()).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().list()).hasSize(0);
   }
 
   @Test
@@ -1353,7 +1352,7 @@ public class ModificationExecutionAsyncTest {
     helper.executeJobs(batch);
 
     // then
-    assertThat(runtimeService.createExecutionQuery().list().size()).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().list()).hasSize(0);
   }
 
   @Test
@@ -1456,8 +1455,8 @@ public class ModificationExecutionAsyncTest {
     HistoricBatch historicBatch = rule.getHistoryService().createHistoricBatchQuery().singleResult();
     batch = rule.getManagementService().createBatchQuery().singleResult();
 
-    Assertions.assertThat(batch.getExecutionStartTime()).isCloseTo(START_DATE, 1000);
-    Assertions.assertThat(historicBatch.getExecutionStartTime()).isCloseTo(START_DATE, 1000);
+    assertThat(batch.getExecutionStartTime()).isCloseTo(START_DATE, 1000);
+    assertThat(historicBatch.getExecutionStartTime()).isCloseTo(START_DATE, 1000);
 
     // clear
     configuration.setInvocationsPerBatchJobByBatchType(new HashMap<>());

@@ -98,7 +98,7 @@ public class ExternalTaskUserOperationLogTest {
     rule.getIdentityService().clearAuthentication();
     // then
     List<UserOperationLogEntry> opLogEntries = rule.getHistoryService().createUserOperationLogQuery().list();
-    assertThat(opLogEntries.size()).isEqualTo(1);
+    assertThat(opLogEntries).hasSize(1);
 
     Map<String, UserOperationLogEntry> entries = asMap(opLogEntries);
 
@@ -135,7 +135,7 @@ public class ExternalTaskUserOperationLogTest {
     rule.getIdentityService().clearAuthentication();
     // then
     List<UserOperationLogEntry> opLogEntries = rule.getHistoryService().createUserOperationLogQuery().list();
-    assertThat(opLogEntries.size()).isEqualTo(3);
+    assertThat(opLogEntries).hasSize(3);
 
     Map<String, UserOperationLogEntry> entries = asMap(opLogEntries);
 
@@ -190,7 +190,7 @@ public class ExternalTaskUserOperationLogTest {
     rule.getIdentityService().clearAuthentication();
     // then
     List<UserOperationLogEntry> opLogEntries = rule.getHistoryService().createUserOperationLogQuery().list();
-    assertThat(opLogEntries.size()).isEqualTo(3);
+    assertThat(opLogEntries).hasSize(3);
 
     Map<String, UserOperationLogEntry> entries = asMap(opLogEntries);
 
@@ -246,7 +246,7 @@ public class ExternalTaskUserOperationLogTest {
     
     // then
     List<UserOperationLogEntry> opLogEntries = rule.getHistoryService().createUserOperationLogQuery().list();
-    assertThat(opLogEntries.size()).isEqualTo(1);
+    assertThat(opLogEntries).hasSize(1);
 
     UserOperationLogEntry entry = opLogEntries.get(0);
     Assert.assertNotNull(entry);
@@ -277,7 +277,7 @@ public class ExternalTaskUserOperationLogTest {
     
     // then
     List<UserOperationLogEntry> opLogEntries = rule.getHistoryService().createUserOperationLogQuery().list();
-    assertThat(opLogEntries.size()).isEqualTo(1);
+    assertThat(opLogEntries).hasSize(1);
 
     UserOperationLogEntry entry = opLogEntries.get(0);
     Assert.assertNotNull(entry);

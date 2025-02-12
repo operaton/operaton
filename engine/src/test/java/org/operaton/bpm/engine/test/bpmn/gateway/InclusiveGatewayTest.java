@@ -29,7 +29,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.assertj.core.api.Assertions;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.util.CollectionUtil;
@@ -81,11 +80,11 @@ public class InclusiveGatewayTest extends PluggableProcessEngineTest {
       for (Task task : tasks) {
         System.out.println("task " + task.getName());
       }
-      assertThat(tasks.size()).isEqualTo(4 - i);
+      assertThat(tasks).hasSize(4 - i);
       for (Task task : tasks) {
         expectedNames.remove(task.getName());
       }
-      assertThat(expectedNames.size()).isEqualTo(0);
+      assertThat(expectedNames).isEmpty();
       runtimeService.deleteProcessInstance(pi.getId(), "testing deletion");
     }
   }
@@ -148,12 +147,12 @@ public class InclusiveGatewayTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("parentActivationOnNonJoiningEnd");
 
     List<Execution> executionsBefore = runtimeService.createExecutionQuery().list();
-    assertThat(executionsBefore.size()).isEqualTo(3);
+    assertThat(executionsBefore).hasSize(3);
 
     // start first round of tasks
     List<Task> firstTasks = taskService.createTaskQuery().processInstanceId(processInstance.getId()).list();
 
-    assertThat(firstTasks.size()).isEqualTo(2);
+    assertThat(firstTasks).hasSize(2);
 
     for (Task t: firstTasks) {
       taskService.complete(t.getId());
@@ -162,7 +161,7 @@ public class InclusiveGatewayTest extends PluggableProcessEngineTest {
     // start first round of tasks
     List<Task> secondTasks = taskService.createTaskQuery().processInstanceId(processInstance.getId()).list();
 
-    assertThat(secondTasks.size()).isEqualTo(2);
+    assertThat(secondTasks).hasSize(2);
 
     // complete one task
     Task task = secondTasks.get(0);
@@ -170,13 +169,13 @@ public class InclusiveGatewayTest extends PluggableProcessEngineTest {
 
     // should have merged last child execution into parent
     List<Execution> executionsAfter = runtimeService.createExecutionQuery().list();
-    assertThat(executionsAfter.size()).isEqualTo(1);
+    assertThat(executionsAfter).hasSize(1);
 
     Execution execution = executionsAfter.get(0);
 
     // and should have one active activity
     List<String> activeActivityIds = runtimeService.getActiveActivityIds(execution.getId());
-    assertThat(activeActivityIds.size()).isEqualTo(1);
+    assertThat(activeActivityIds).hasSize(1);
 
     // Completing last task should finish the process instance
 
@@ -216,14 +215,14 @@ public class InclusiveGatewayTest extends PluggableProcessEngineTest {
   public void testDecideBasedOnBeanProperty() {
     runtimeService.startProcessInstanceByKey("inclusiveDecisionBasedOnBeanProperty", CollectionUtil.singletonMap("order", new InclusiveGatewayTestOrder(150)));
     List<Task> tasks = taskService.createTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
     Map<String, String> expectedNames = new HashMap<>();
     expectedNames.put(BEAN_TASK2_NAME, BEAN_TASK2_NAME);
     expectedNames.put(BEAN_TASK3_NAME, BEAN_TASK3_NAME);
     for (Task task : tasks) {
       expectedNames.remove(task.getName());
     }
-    assertThat(expectedNames.size()).isEqualTo(0);
+    assertThat(expectedNames).isEmpty();
   }
 
   @Deployment
@@ -253,14 +252,14 @@ public class InclusiveGatewayTest extends PluggableProcessEngineTest {
     pi = runtimeService.startProcessInstanceByKey("inclusiveDecisionBasedOnListOrArrayOfBeans", variables);
     List<Task> tasks = taskService.createTaskQuery().processInstanceId(pi.getId()).list();
     assertNotNull(tasks);
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
     List<String> expectedNames = new ArrayList<>();
     expectedNames.add(BEAN_TASK2_NAME);
     expectedNames.add(BEAN_TASK3_NAME);
     for (Task t : tasks) {
       expectedNames.remove(t.getName());
     }
-    assertThat(expectedNames.size()).isEqualTo(0);
+    assertThat(expectedNames).isEmpty();
 
     // Arrays are usable in exactly the same way
     InclusiveGatewayTestOrder[] orderArray = orders.toArray(new InclusiveGatewayTestOrder[0]);
@@ -268,7 +267,7 @@ public class InclusiveGatewayTest extends PluggableProcessEngineTest {
     pi = runtimeService.startProcessInstanceByKey("inclusiveDecisionBasedOnListOrArrayOfBeans", CollectionUtil.singletonMap("orders", orderArray));
     tasks = taskService.createTaskQuery().processInstanceId(pi.getId()).list();
     assertNotNull(tasks);
-    assertThat(tasks.size()).isEqualTo(3);
+    assertThat(tasks).hasSize(3);
     expectedNames.clear();
     expectedNames.add(BEAN_TASK1_NAME);
     expectedNames.add(BEAN_TASK2_NAME);
@@ -276,7 +275,7 @@ public class InclusiveGatewayTest extends PluggableProcessEngineTest {
     for (Task t : tasks) {
       expectedNames.remove(t.getName());
     }
-    assertThat(expectedNames.size()).isEqualTo(0);
+    assertThat(expectedNames).isEmpty();
   }
 
   @Deployment
@@ -291,14 +290,14 @@ public class InclusiveGatewayTest extends PluggableProcessEngineTest {
     pi = runtimeService.startProcessInstanceByKey("inclusiveDecisionBasedOnBeanMethod",
             CollectionUtil.singletonMap("order", new InclusiveGatewayTestOrder(125)));
     List<Task> tasks = taskService.createTaskQuery().processInstanceId(pi.getId()).list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
     List<String> expectedNames = new ArrayList<>();
     expectedNames.add(BEAN_TASK2_NAME);
     expectedNames.add(BEAN_TASK3_NAME);
     for (Task t : tasks) {
       expectedNames.remove(t.getName());
     }
-    assertThat(expectedNames.size()).isEqualTo(0);
+    assertThat(expectedNames).isEmpty();
     var variables = CollectionUtil.singletonMap("order", new InclusiveGatewayTestOrder(300));
 
     try {
@@ -328,14 +327,14 @@ public class InclusiveGatewayTest extends PluggableProcessEngineTest {
     // Input == 1 -> default is not selected, other 2 tasks are selected
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("inclusiveGwDefaultSequenceFlow", CollectionUtil.singletonMap("input", 1));
     List<Task> tasks = taskService.createTaskQuery().processInstanceId(pi.getId()).list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
     Map<String, String> expectedNames = new HashMap<>();
     expectedNames.put("Input is one", "Input is one");
     expectedNames.put("Input is three or one", "Input is three or one");
     for (Task t : tasks) {
       expectedNames.remove(t.getName());
     }
-    assertThat(expectedNames.size()).isEqualTo(0);
+    assertThat(expectedNames).isEmpty();
     runtimeService.deleteProcessInstance(pi.getId(), null);
 
     // Input == 3 -> default is not selected, "one or three" is selected
@@ -374,7 +373,7 @@ public class InclusiveGatewayTest extends PluggableProcessEngineTest {
         runtimeService.startProcessInstanceByKey("inclusiveGwSplitAndMerge", CollectionUtil.singletonMap("input", 1));
 
     List<Task> tasks = taskService.createTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
 
     // when the executions are joined at an inclusive gateway and the gateway itself has an outgoing default flow
     taskService.complete(tasks.get(0).getId());
@@ -398,14 +397,14 @@ public class InclusiveGatewayTest extends PluggableProcessEngineTest {
     // Both should be enabled on 1
     pi = runtimeService.startProcessInstanceByKey("inclusiveNoIdOnSequenceFlow", CollectionUtil.singletonMap("input", 1));
     List<Task> tasks = taskService.createTaskQuery().processInstanceId(pi.getId()).list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
     Map<String, String> expectedNames = new HashMap<>();
     expectedNames.put("Input is one", "Input is one");
     expectedNames.put("Input is more than one", "Input is more than one");
     for (Task t : tasks) {
       expectedNames.remove(t.getName());
     }
-    assertThat(expectedNames.size()).isEqualTo(0);
+    assertThat(expectedNames).isEmpty();
   }
 
   /** This test the isReachable() check thaty is done to check if
@@ -544,7 +543,7 @@ public class InclusiveGatewayTest extends PluggableProcessEngineTest {
     variables.put("input", 1);
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("inclusiveGateway", variables);
     List<Task> tasks = taskService.createTaskQuery().processInstanceId(pi.getId()).list();
-    assertThat(tasks.size()).isEqualTo(3);
+    assertThat(tasks).hasSize(3);
     Map<String, String> expectedMessages = new HashMap<>();
     expectedMessages.put(TASK1_NAME, TASK1_NAME);
     expectedMessages.put(TASK2_NAME, TASK2_NAME);
@@ -552,32 +551,32 @@ public class InclusiveGatewayTest extends PluggableProcessEngineTest {
     for (Task task : tasks) {
       expectedMessages.remove(task.getName());
     }
-    assertThat(expectedMessages.size()).isEqualTo(0);
+    assertThat(expectedMessages).isEmpty();
 
     // Test with input == 2
     variables.put("input", 2);
     pi = runtimeService.startProcessInstanceByKey("inclusiveGateway", variables);
     tasks = taskService.createTaskQuery().processInstanceId(pi.getId()).list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
     expectedMessages = new HashMap<>();
     expectedMessages.put(TASK2_NAME, TASK2_NAME);
     expectedMessages.put(TASK3_NAME, TASK3_NAME);
     for (Task task : tasks) {
       expectedMessages.remove(task.getName());
     }
-    assertThat(expectedMessages.size()).isEqualTo(0);
+    assertThat(expectedMessages).isEmpty();
 
     // Test with input == 3
     variables.put("input", 3);
     pi = runtimeService.startProcessInstanceByKey("inclusiveGateway", variables);
     tasks = taskService.createTaskQuery().processInstanceId(pi.getId()).list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
     expectedMessages = new HashMap<>();
     expectedMessages.put(TASK3_NAME, TASK3_NAME);
     for (Task task : tasks) {
       expectedMessages.remove(task.getName());
     }
-    assertThat(expectedMessages.size()).isEqualTo(0);
+    assertThat(expectedMessages).isEmpty();
 
     // Test with input == 4
     variables.put("input", 4);
@@ -799,8 +798,8 @@ public class InclusiveGatewayTest extends PluggableProcessEngineTest {
     testRule.executeAvailableJobs(1);
 
     // then
-    Assertions.assertThat(managementService.createJobQuery().count()).isZero();
-    Assertions.assertThat(historyService.createHistoricProcessInstanceQuery().singleResult().getState())
+    assertThat(managementService.createJobQuery().count()).isZero();
+    assertThat(historyService.createHistoricProcessInstanceQuery().singleResult().getState())
         .isEqualTo("COMPLETED");
   }
 
@@ -814,8 +813,8 @@ public class InclusiveGatewayTest extends PluggableProcessEngineTest {
     testRule.executeAvailableJobs(1);
 
     // then
-    Assertions.assertThat(managementService.createJobQuery().count()).isZero();
-    Assertions.assertThat(historyService.createHistoricProcessInstanceQuery().singleResult().getState())
+    assertThat(managementService.createJobQuery().count()).isZero();
+    assertThat(historyService.createHistoricProcessInstanceQuery().singleResult().getState())
         .isEqualTo("COMPLETED");
   }
   

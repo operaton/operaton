@@ -131,7 +131,7 @@ public class FormServiceTest {
   @Test
   public void testGetStartFormByProcessDefinitionId() {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
-    assertThat(processDefinitions.size()).isEqualTo(1);
+    assertThat(processDefinitions).hasSize(1);
     ProcessDefinition processDefinition = processDefinitions.get(0);
 
     Object startForm = formService.getRenderedStartForm(processDefinition.getId(), "juel");
@@ -142,7 +142,7 @@ public class FormServiceTest {
   @Test
   public void testGetStartFormByProcessDefinitionIdWithoutStartform() {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
-    assertThat(processDefinitions.size()).isEqualTo(1);
+    assertThat(processDefinitions).hasSize(1);
     ProcessDefinition processDefinition = processDefinitions.get(0);
 
     Object startForm = formService.getRenderedStartForm(processDefinition.getId());
@@ -288,7 +288,7 @@ public class FormServiceTest {
     assertThat(propertyFree.getId()).isEqualTo("free");
     assertThat(propertyFree.getValue()).isEqualTo("true");
 
-    assertThat(formProperties.size()).isEqualTo(5);
+    assertThat(formProperties).hasSize(5);
 
     HashMap<String, String> emptyProperties = new HashMap<>();
     assertThatThrownBy(() -> formService.submitTaskFormData(taskId, emptyProperties))
@@ -369,7 +369,7 @@ public class FormServiceTest {
     assertThat(propertyFree.getId()).isEqualTo("free");
     assertThat(propertyFree.getValue()).isEqualTo("true");
 
-    assertThat(formProperties.size()).isEqualTo(5);
+    assertThat(formProperties).hasSize(5);
 
     HashMap<String, Object> emptyProperties = new HashMap<>();
     assertThatThrownBy(() -> formService.submitTaskForm(taskId, emptyProperties))
@@ -607,8 +607,9 @@ public class FormServiceTest {
 
     assertThat(runtimeService.createProcessInstanceQuery().processInstanceBusinessKey("123").singleResult().getId()).isEqualTo(processInstance.getId());
     Map<String, Object> variables = runtimeService.getVariables(processInstance.getId());
-    assertThat(variables.get("SpeakerName")).isEqualTo("Mike");
-    assertThat(variables.get("duration")).isEqualTo(45L);
+    assertThat(variables)
+            .containsEntry("SpeakerName", "Mike")
+            .containsEntry("duration", 45L);
   }
 
   @Deployment
@@ -624,8 +625,9 @@ public class FormServiceTest {
 
     assertThat(runtimeService.createProcessInstanceQuery().processInstanceBusinessKey("123").singleResult().getId()).isEqualTo(processInstance.getId());
     Map<String, Object> variables = runtimeService.getVariables(processInstance.getId());
-    assertThat(variables.get("speaker")).isEqualTo("Mike");
-    assertThat(variables.get("duration")).isEqualTo(45L);
+    assertThat(variables)
+            .containsEntry("speaker", "Mike")
+            .containsEntry("duration", 45L);
   }
 
   @Test
@@ -798,13 +800,13 @@ public class FormServiceTest {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
 
     VariableMap variables = formService.getStartFormVariables(processDefinition.getId());
-    assertThat(variables.size()).isEqualTo(4);
+    assertThat(variables).hasSize(4);
 
-    assertThat(variables.get("stringField")).isEqualTo("someString");
+    assertThat(variables).containsEntry("stringField", "someString");
     assertThat(variables.getValueTyped("stringField").getValue()).isEqualTo("someString");
     assertThat(variables.getValueTyped("stringField").getType()).isEqualTo(ValueType.STRING);
 
-    assertThat(variables.get("longField")).isEqualTo(5L);
+    assertThat(variables).containsEntry("longField", 5L);
     assertThat(variables.getValueTyped("longField").getValue()).isEqualTo(5L);
     assertThat(variables.getValueTyped("longField").getType()).isEqualTo(ValueType.LONG);
 
@@ -826,18 +828,18 @@ public class FormServiceTest {
 
     // get restricted set of variables:
     variables = formService.getStartFormVariables(processDefinition.getId(), List.of("stringField"), true);
-    assertThat(variables.size()).isEqualTo(1);
-    assertThat(variables.get("stringField")).isEqualTo("someString");
+    assertThat(variables).hasSize(1);
+    assertThat(variables).containsEntry("stringField", "someString");
     assertThat(variables.getValueTyped("stringField").getValue()).isEqualTo("someString");
     assertThat(variables.getValueTyped("stringField").getType()).isEqualTo(ValueType.STRING);
 
     // request non-existing variable
     variables = formService.getStartFormVariables(processDefinition.getId(), List.of("non-existing!"), true);
-    assertThat(variables.size()).isEqualTo(0);
+    assertThat(variables).hasSize(0);
 
     // null => all
     variables = formService.getStartFormVariables(processDefinition.getId(), null, true);
-    assertThat(variables.size()).isEqualTo(4);
+    assertThat(variables).hasSize(4);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/form/FormServiceTest.startFormFieldsUnknownType.bpmn20.xml"})
@@ -847,7 +849,7 @@ public class FormServiceTest {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
 
     VariableMap startFormVariables = formService.getStartFormVariables(processDefinition.getId());
-    assertThat(startFormVariables.get("enumField")).isEqualTo("a");
+    assertThat(startFormVariables).containsEntry("enumField", "a");
     assertThat(startFormVariables.getValueTyped("enumField").getType()).isEqualTo(ValueType.STRING);
   }
 
@@ -865,13 +867,13 @@ public class FormServiceTest {
 
     Task task = taskService.createTaskQuery().singleResult();
     VariableMap variables = formService.getTaskFormVariables(task.getId());
-    assertThat(variables.size()).isEqualTo(7);
+    assertThat(variables).hasSize(7);
 
-    assertThat(variables.get("stringField")).isEqualTo("someString");
+    assertThat(variables).containsEntry("stringField", "someString");
     assertThat(variables.getValueTyped("stringField").getValue()).isEqualTo("someString");
     assertThat(variables.getValueTyped("stringField").getType()).isEqualTo(ValueType.STRING);
 
-    assertThat(variables.get("longField")).isEqualTo(5L);
+    assertThat(variables).containsEntry("longField", 5L);
     assertThat(variables.getValueTyped("longField").getValue()).isEqualTo(5L);
     assertThat(variables.getValueTyped("longField").getType()).isEqualTo(ValueType.LONG);
 
@@ -879,15 +881,15 @@ public class FormServiceTest {
     assertNull(variables.getValueTyped("customField").getValue());
     assertThat(variables.getValueTyped("customField").getType()).isEqualTo(ValueType.STRING);
 
-    assertThat(variables.get("someString")).isEqualTo("initialValue");
+    assertThat(variables).containsEntry("someString", "initialValue");
     assertThat(variables.getValueTyped("someString").getValue()).isEqualTo("initialValue");
     assertThat(variables.getValueTyped("someString").getType()).isEqualTo(ValueType.STRING);
 
-    assertThat(variables.get("initialBooleanVariable")).isEqualTo(true);
+    assertThat(variables).containsEntry("initialBooleanVariable", true);
     assertThat(variables.getValueTyped("initialBooleanVariable").getValue()).isEqualTo(true);
     assertThat(variables.getValueTyped("initialBooleanVariable").getType()).isEqualTo(ValueType.BOOLEAN);
 
-    assertThat(variables.get("initialLongVariable")).isEqualTo(1L);
+    assertThat(variables).containsEntry("initialLongVariable", 1L);
     assertThat(variables.getValueTyped("initialLongVariable").getValue()).isEqualTo(1L);
     assertThat(variables.getValueTyped("initialLongVariable").getType()).isEqualTo(ValueType.LONG);
 
@@ -897,33 +899,33 @@ public class FormServiceTest {
     taskService.setVariableLocal(task.getId(), "initialLongVariable", 2L);
 
     variables = formService.getTaskFormVariables(task.getId());
-    assertThat(variables.size()).isEqualTo(7);
+    assertThat(variables).hasSize(7);
 
-    assertThat(variables.get("initialLongVariable")).isEqualTo(2L);
+    assertThat(variables).containsEntry("initialLongVariable", 2L);
     assertThat(variables.getValueTyped("initialLongVariable").getValue()).isEqualTo(2L);
     assertThat(variables.getValueTyped("initialLongVariable").getType()).isEqualTo(ValueType.LONG);
 
     // get restricted set of variables (form field):
     variables = formService.getTaskFormVariables(task.getId(), List.of("someString"), true);
-    assertThat(variables.size()).isEqualTo(1);
-    assertThat(variables.get("someString")).isEqualTo("initialValue");
+    assertThat(variables).hasSize(1);
+    assertThat(variables).containsEntry("someString", "initialValue");
     assertThat(variables.getValueTyped("someString").getValue()).isEqualTo("initialValue");
     assertThat(variables.getValueTyped("someString").getType()).isEqualTo(ValueType.STRING);
 
     // get restricted set of variables (process variable):
     variables = formService.getTaskFormVariables(task.getId(), List.of("initialBooleanVariable"), true);
-    assertThat(variables.size()).isEqualTo(1);
-    assertThat(variables.get("initialBooleanVariable")).isEqualTo(true);
+    assertThat(variables).hasSize(1);
+    assertThat(variables).containsEntry("initialBooleanVariable", true);
     assertThat(variables.getValueTyped("initialBooleanVariable").getValue()).isEqualTo(true);
     assertThat(variables.getValueTyped("initialBooleanVariable").getType()).isEqualTo(ValueType.BOOLEAN);
 
     // request non-existing variable
     variables = formService.getTaskFormVariables(task.getId(), List.of("non-existing!"), true);
-    assertThat(variables.size()).isEqualTo(0);
+    assertThat(variables).hasSize(0);
 
     // null => all
     variables = formService.getTaskFormVariables(task.getId(), null, true);
-    assertThat(variables.size()).isEqualTo(7);
+    assertThat(variables).hasSize(7);
 
   }
 
@@ -947,17 +949,17 @@ public class FormServiceTest {
     taskService.setVariables(task.getId(), processVars);
 
     VariableMap variables = formService.getTaskFormVariables(task.getId());
-    assertThat(variables.size()).isEqualTo(4);
+    assertThat(variables).hasSize(4);
 
-    assertThat(variables.get("someString")).isEqualTo("initialValue");
+    assertThat(variables).containsEntry("someString", "initialValue");
     assertThat(variables.getValueTyped("someString").getValue()).isEqualTo("initialValue");
     assertThat(variables.getValueTyped("someString").getType()).isEqualTo(ValueType.STRING);
 
-    assertThat(variables.get("initialBooleanVariable")).isEqualTo(true);
+    assertThat(variables).containsEntry("initialBooleanVariable", true);
     assertThat(variables.getValueTyped("initialBooleanVariable").getValue()).isEqualTo(true);
     assertThat(variables.getValueTyped("initialBooleanVariable").getType()).isEqualTo(ValueType.BOOLEAN);
 
-    assertThat(variables.get("initialLongVariable")).isEqualTo(1L);
+    assertThat(variables).containsEntry("initialLongVariable", 1L);
     assertThat(variables.getValueTyped("initialLongVariable").getValue()).isEqualTo(1L);
     assertThat(variables.getValueTyped("initialLongVariable").getType()).isEqualTo(ValueType.LONG);
 
@@ -967,26 +969,26 @@ public class FormServiceTest {
     taskService.setVariable(task.getId(), "initialLongVariable", 2L);
 
     variables = formService.getTaskFormVariables(task.getId());
-    assertThat(variables.size()).isEqualTo(4);
+    assertThat(variables).hasSize(4);
 
-    assertThat(variables.get("initialLongVariable")).isEqualTo(2L);
+    assertThat(variables).containsEntry("initialLongVariable", 2L);
     assertThat(variables.getValueTyped("initialLongVariable").getValue()).isEqualTo(2L);
     assertThat(variables.getValueTyped("initialLongVariable").getType()).isEqualTo(ValueType.LONG);
 
     // get restricted set of variables
     variables = formService.getTaskFormVariables(task.getId(), List.of("someString"), true);
-    assertThat(variables.size()).isEqualTo(1);
-    assertThat(variables.get("someString")).isEqualTo("initialValue");
+    assertThat(variables).hasSize(1);
+    assertThat(variables).containsEntry("someString", "initialValue");
     assertThat(variables.getValueTyped("someString").getValue()).isEqualTo("initialValue");
     assertThat(variables.getValueTyped("someString").getType()).isEqualTo(ValueType.STRING);
 
     // request non-existing variable
     variables = formService.getTaskFormVariables(task.getId(), List.of("non-existing!"), true);
-    assertThat(variables.size()).isEqualTo(0);
+    assertThat(variables).hasSize(0);
 
     // null => all
     variables = formService.getTaskFormVariables(task.getId(), null, true);
-    assertThat(variables.size()).isEqualTo(4);
+    assertThat(variables).hasSize(4);
 
     // Finally, delete task
     taskService.deleteTask(task.getId(), true);
@@ -1065,21 +1067,21 @@ public class FormServiceTest {
 
     // After completion of firstUserTask a script Task sets 'x' = 5
     VariableMap vars = formService.submitTaskFormWithVariablesInReturn(firstUserTask.getId(), additionalVariables, true);
-    assertThat(vars.size()).isEqualTo(3);
-    assertThat(vars.get("x")).isEqualTo(5);
+    assertThat(vars).hasSize(3);
+    assertThat(vars).containsEntry("x", 5);
     assertThat(vars.getValueTyped("x").getType()).isEqualTo(ValueType.INTEGER);
-    assertThat(vars.get(processVarName)).isEqualTo(processVarValue);
+    assertThat(vars).containsEntry(processVarName, processVarValue);
     assertThat(vars.getValueTyped(processVarName).getType()).isEqualTo(ValueType.STRING);
-    assertThat(vars.get(taskVarName)).isEqualTo(taskVarValue);
+    assertThat(vars).containsEntry(taskVarName, taskVarValue);
 
     additionalVariables = new HashMap<>();
     additionalVariables.put("x", 7);
     Task secondUserTask = taskService.createTaskQuery().taskName("Second User Task").singleResult();
     vars = formService.submitTaskFormWithVariablesInReturn(secondUserTask.getId(), additionalVariables, true);
-    assertThat(vars.size()).isEqualTo(3);
-    assertThat(vars.get("x")).isEqualTo(7);
-    assertThat(vars.get(processVarName)).isEqualTo(processVarValue);
-    assertThat(vars.get(taskVarName)).isEqualTo(taskVarValue);
+    assertThat(vars).hasSize(3);
+    assertThat(vars).containsEntry("x", 7);
+    assertThat(vars).containsEntry(processVarName, processVarValue);
+    assertThat(vars).containsEntry(taskVarName, taskVarValue);
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/twoParallelTasksProcess.bpmn20.xml" })
@@ -1107,20 +1109,22 @@ public class FormServiceTest {
 
     Map<String, Object> vars = formService.submitTaskFormWithVariablesInReturn(firstTask.getId(), null, true);
 
-    assertThat(vars.size()).isEqualTo(3);
-    assertThat(vars.get(processVarName)).isEqualTo(processVarValue);
-    assertThat(vars.get(task1VarName)).isEqualTo(task1VarValue);
-    assertThat(vars.get(task2VarName)).isEqualTo(task2VarValue);
+    assertThat(vars)
+            .hasSize(3)
+            .containsEntry(processVarName, processVarValue)
+            .containsEntry(task1VarName, task1VarValue)
+            .containsEntry(task2VarName, task2VarValue);
 
     Map<String, Object> additionalVariables = new HashMap<>();
     additionalVariables.put(additionalVar, additionalVarValue);
 
     vars = formService.submitTaskFormWithVariablesInReturn(secondTask.getId(), additionalVariables, true);
-    assertThat(vars.size()).isEqualTo(4);
-    assertThat(vars.get(processVarName)).isEqualTo(processVarValue);
-    assertThat(vars.get(task1VarName)).isEqualTo(task1VarValue);
-    assertThat(vars.get(task2VarName)).isEqualTo(task2VarValue);
-    assertThat(vars.get(additionalVar)).isEqualTo(additionalVarValue);
+    assertThat(vars)
+            .hasSize(4)
+            .containsEntry(processVarName, processVarValue)
+            .containsEntry(task1VarName, task1VarValue)
+            .containsEntry(task2VarName, task2VarValue)
+            .containsEntry(additionalVar, additionalVarValue);
   }
 
   /**
@@ -1234,7 +1238,7 @@ public class FormServiceTest {
     TaskFormData formData = formService.getTaskFormData(task.getId());
 
     List<FormField> formFields = formData.getFormFields();
-    assertThat(formFields.size()).isEqualTo(3);
+    assertThat(formFields).hasSize(3);
 
     List<String> formFieldIds = new ArrayList<>();
     for (FormField field : formFields) {
@@ -1270,7 +1274,7 @@ public class FormServiceTest {
     StartFormData formData = formService.getStartFormData(processDefinition.getId());
 
     List<FormField> formFields = formData.getFormFields();
-    assertThat(formFields.size()).isEqualTo(3);
+    assertThat(formFields).hasSize(3);
 
     List<String> formFieldIds = new ArrayList<>();
     for (FormField field : formFields) {
@@ -1368,7 +1372,7 @@ public class FormServiceTest {
     assertThat(pi.getBusinessKey()).isEqualTo("foo");
 
     List<VariableInstance> result = runtimeService.createVariableInstanceQuery().list();
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
     assertThat(result.get(0).getName()).isEqualTo("secondParam");
   }
 

@@ -87,7 +87,7 @@ public class DecisionInstanceHistoryTest {
     decisionService.evaluateDecisionTableByKey("testDecision", variables);
 
     List<RecordHistoryLevel.ProducedHistoryEvent> producedHistoryEvents = historyLevel.getProducedHistoryEvents();
-    assertThat(producedHistoryEvents.size()).isEqualTo(1);
+    assertThat(producedHistoryEvents).hasSize(1);
 
     RecordHistoryLevel.ProducedHistoryEvent producedHistoryEvent = producedHistoryEvents.get(0);
     assertThat(producedHistoryEvent.eventType).isEqualTo(HistoryEventTypes.DMN_DECISION_EVALUATE);

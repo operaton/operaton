@@ -305,7 +305,7 @@ public class HistoricTaskInstanceQueryOrTest {
       .list();
 
     // then
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
   }
 
   @Test
@@ -328,7 +328,7 @@ public class HistoricTaskInstanceQueryOrTest {
       .list();
 
     // then
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
   }
 
   @Test
@@ -365,7 +365,7 @@ public class HistoricTaskInstanceQueryOrTest {
       .list();
 
     // then
-    assertThat(tasks.size()).isEqualTo(5);
+    assertThat(tasks).hasSize(5);
   }
 
   @Test
@@ -415,7 +415,7 @@ public class HistoricTaskInstanceQueryOrTest {
       .list();
 
     // then
-    assertThat(tasks.size()).isEqualTo(3);
+    assertThat(tasks).hasSize(3);
   }
 
   @Test
@@ -483,7 +483,7 @@ public class HistoricTaskInstanceQueryOrTest {
       .list();
 
     // then
-    assertThat(tasks.size()).isEqualTo(3);
+    assertThat(tasks).hasSize(3);
   }
 
   @Test
@@ -511,7 +511,7 @@ public class HistoricTaskInstanceQueryOrTest {
       .list();
 
     // then
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
   }
 
   @Test
@@ -546,7 +546,7 @@ public class HistoricTaskInstanceQueryOrTest {
       .list();
 
     // then
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
   }
 
   @Test

@@ -200,7 +200,7 @@ public class HistoryByteArrayTest {
 
     HistoricDecisionInstance historicDecisionInstance = engineRule.getHistoryService().createHistoricDecisionInstanceQuery().includeInputs().singleResult();
     List<HistoricDecisionInputInstance> inputInstances = historicDecisionInstance.getInputs();
-    assertThat(inputInstances.size()).isEqualTo(1);
+    assertThat(inputInstances).hasSize(1);
 
     String byteArrayValueId = ((HistoricDecisionInputInstanceEntity) inputInstances.get(0)).getByteArrayValueId();
 
@@ -218,7 +218,7 @@ public class HistoryByteArrayTest {
 
     HistoricDecisionInstance historicDecisionInstance = engineRule.getHistoryService().createHistoricDecisionInstanceQuery().includeOutputs().singleResult();
     List<HistoricDecisionOutputInstance> outputInstances = historicDecisionInstance.getOutputs();
-    assertThat(outputInstances.size()).isEqualTo(1);
+    assertThat(outputInstances).hasSize(1);
 
 
     String byteArrayValueId = ((HistoricDecisionOutputInstanceEntity) outputInstances.get(0)).getByteArrayValueId();

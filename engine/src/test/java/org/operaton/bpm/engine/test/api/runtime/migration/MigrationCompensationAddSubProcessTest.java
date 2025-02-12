@@ -252,7 +252,7 @@ public class MigrationCompensationAddSubProcessTest {
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
     // then
-    assertThat(testHelper.snapshotAfterMigration.getVariables().size()).isEqualTo(0);
+    assertThat(testHelper.snapshotAfterMigration.getVariables()).hasSize(0);
   }
 
   @Ignore("CAM-6035")
@@ -277,7 +277,7 @@ public class MigrationCompensationAddSubProcessTest {
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
     // then
-    assertThat(testHelper.snapshotAfterMigration.getVariables().size()).isEqualTo(0);
+    assertThat(testHelper.snapshotAfterMigration.getVariables()).hasSize(0);
   }
 
   @Test

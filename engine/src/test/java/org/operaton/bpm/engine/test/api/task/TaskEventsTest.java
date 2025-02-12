@@ -78,7 +78,7 @@ public class TaskEventsTest extends AbstractUserOperationLogTest {
 
     // now there is a task event created
     List<Event> events = taskService.getTaskEvents(task.getId());
-    assertThat(events.size()).isEqualTo(1);
+    assertThat(events).hasSize(1);
     Event event = events.get(0);
     assertThat(event.getMessageParts().get(0)).isEqualTo(JONNY);
     assertThat(event.getMessageParts().get(1)).isEqualTo(CANDIDATE);
@@ -105,7 +105,7 @@ public class TaskEventsTest extends AbstractUserOperationLogTest {
 
     // now there is a task event created
     List<Event> events = taskService.getTaskEvents(task.getId());
-    assertThat(events.size()).isEqualTo(2);
+    assertThat(events).hasSize(2);
     Event event = events.get(0);
     assertThat(event.getMessageParts().get(0)).isEqualTo(JONNY);
     assertThat(event.getMessageParts().get(1)).isEqualTo(CANDIDATE);
@@ -128,7 +128,7 @@ public class TaskEventsTest extends AbstractUserOperationLogTest {
 
     // now there is a task event created
     List<Event> events = taskService.getTaskEvents(task.getId());
-    assertThat(events.size()).isEqualTo(1);
+    assertThat(events).hasSize(1);
     Event event = events.get(0);
     assertThat(event.getMessageParts().get(0)).isEqualTo(ACCOUNTING);
     assertThat(event.getMessageParts().get(1)).isEqualTo(CANDIDATE);
@@ -155,7 +155,7 @@ public class TaskEventsTest extends AbstractUserOperationLogTest {
 
     // now there is a task event created
     List<Event> events = taskService.getTaskEvents(task.getId());
-    assertThat(events.size()).isEqualTo(2);
+    assertThat(events).hasSize(2);
     Event event = events.get(0);
     assertThat(event.getMessageParts().get(0)).isEqualTo(ACCOUNTING);
     assertThat(event.getMessageParts().get(1)).isEqualTo(CANDIDATE);
@@ -178,9 +178,9 @@ public class TaskEventsTest extends AbstractUserOperationLogTest {
 
     // now there is a task event created
     List<Event> events = taskService.getTaskEvents(task.getId());
-    assertThat(events.size()).isEqualTo(1);
+    assertThat(events).hasSize(1);
     Event event = events.get(0);
-    assertThat(event.getMessageParts().size()).isEqualTo(1);
+    assertThat(event.getMessageParts()).hasSize(1);
     assertThat(event.getMessageParts().get(0)).isEqualTo(IMAGE_NAME);
     assertThat(event.getTaskId()).isEqualTo(task.getId());
     assertThat(event.getAction()).isEqualTo(ACTION_ADD_ATTACHMENT);
@@ -205,9 +205,9 @@ public class TaskEventsTest extends AbstractUserOperationLogTest {
 
     // now there is a task event created
     List<Event> events = taskService.getTaskEvents(task.getId());
-    assertThat(events.size()).isEqualTo(2);
+    assertThat(events).hasSize(2);
     Event event = events.get(0);
-    assertThat(event.getMessageParts().size()).isEqualTo(1);
+    assertThat(event.getMessageParts()).hasSize(1);
     assertThat(event.getMessageParts().get(0)).isEqualTo(IMAGE_NAME);
     assertThat(event.getTaskId()).isEqualTo(task.getId());
     assertThat(event.getAction()).isEqualTo(ACTION_DELETE_ATTACHMENT);

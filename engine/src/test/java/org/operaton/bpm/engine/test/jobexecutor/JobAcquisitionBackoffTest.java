@@ -116,7 +116,7 @@ public class JobAcquisitionBackoffTest {
 
     // then it has not performed waiting since it was able to acquire and execute all jobs
     List<RecordedWaitEvent> jobExecutor1WaitEvents = jobExecutor1.getAcquireJobsRunnable().getWaitEvents();
-    assertThat(jobExecutor1WaitEvents.size()).isEqualTo(1);
+    assertThat(jobExecutor1WaitEvents).hasSize(1);
     assertThat(jobExecutor1WaitEvents.get(0).getTimeBetweenAcquisitions()).isEqualTo(0);
 
     // when continuing acquisition thread 2, acquisition fails with an OLE
@@ -124,7 +124,7 @@ public class JobAcquisitionBackoffTest {
 
     // and has performed backoff
     List<RecordedWaitEvent> jobExecutor2WaitEvents = jobExecutor2.getAcquireJobsRunnable().getWaitEvents();
-    assertThat(jobExecutor2WaitEvents.size()).isEqualTo(1);
+    assertThat(jobExecutor2WaitEvents).hasSize(1);
     RecordedWaitEvent waitEvent = jobExecutor2WaitEvents.get(0);
 
     // we don't know the exact wait time,
@@ -149,7 +149,7 @@ public class JobAcquisitionBackoffTest {
 
     // and not waited
     jobExecutor1WaitEvents = jobExecutor1.getAcquireJobsRunnable().getWaitEvents();
-    assertThat(jobExecutor1WaitEvents.size()).isEqualTo(2);
+    assertThat(jobExecutor1WaitEvents).hasSize(2);
     assertThat(jobExecutor1WaitEvents.get(1).getTimeBetweenAcquisitions()).isEqualTo(0);
 
     List<RecordedAcquisitionEvent> jobExecutor2AcquisitionEvents = jobExecutor2.getAcquireJobsRunnable().getAcquisitionEvents();
@@ -161,7 +161,7 @@ public class JobAcquisitionBackoffTest {
     // then thread 2 has tried to acquire 6 jobs this time
     assertThat(secondAcquisitionAttempt.getNumJobsToAcquire()).isEqualTo(6);
     // and again increased its backoff
-    assertThat(jobExecutor2WaitEvents.size()).isEqualTo(2);
+    assertThat(jobExecutor2WaitEvents).hasSize(2);
     JobAcquisitionTestHelper.assertInBetween(expectedBackoffTime, expectedBackoffTime + expectedBackoffTime / 2, secondWaitEvent.getTimeBetweenAcquisitions());
   }
 
@@ -196,7 +196,7 @@ public class JobAcquisitionBackoffTest {
 
     // such that acquisition thread 2 performs backoff
     List<RecordedWaitEvent> jobExecutor2WaitEvents = jobExecutor2.getAcquireJobsRunnable().getWaitEvents();
-    assertThat(jobExecutor2WaitEvents.size()).isEqualTo(1);
+    assertThat(jobExecutor2WaitEvents).hasSize(1);
 
     // when in the next cycles acquisition thread2 successfully acquires jobs without OLE for n times
     JobAcquisitionTestHelper.activateInstances(engineRule.getProcessEngine(), 12);

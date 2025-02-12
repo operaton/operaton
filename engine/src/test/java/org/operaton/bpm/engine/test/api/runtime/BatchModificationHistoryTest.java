@@ -226,7 +226,7 @@ public class BatchModificationHistoryTest {
 
     Job monitorJob = helper.getMonitorJob(batch);
     List<HistoricJobLog> jobLogs = helper.getHistoricMonitorJobLog(batch, monitorJob);
-    assertThat(jobLogs.size()).isEqualTo(1);
+    assertThat(jobLogs).hasSize(1);
 
     // then a creation historic job log exists for the monitor job without due date
     HistoricJobLog jobLog = jobLogs.get(0);
@@ -241,7 +241,7 @@ public class BatchModificationHistoryTest {
     helper.executeMonitorJob(batch);
 
     jobLogs = helper.getHistoricMonitorJobLog(batch, monitorJob);
-    assertThat(jobLogs.size()).isEqualTo(2);
+    assertThat(jobLogs).hasSize(2);
 
     // then a success job log was created for the last monitor job
     jobLog = jobLogs.get(1);
@@ -253,7 +253,7 @@ public class BatchModificationHistoryTest {
     // and a creation job log for the new monitor job was created with due date
     monitorJob = helper.getMonitorJob(batch);
     jobLogs = helper.getHistoricMonitorJobLog(batch, monitorJob);
-    assertThat(jobLogs.size()).isEqualTo(1);
+    assertThat(jobLogs).hasSize(1);
 
     jobLog = jobLogs.get(0);
     assertCommonMonitorJobLogProperties(batch, jobLog);
@@ -267,7 +267,7 @@ public class BatchModificationHistoryTest {
     helper.executeMonitorJob(batch);
 
     jobLogs = helper.getHistoricMonitorJobLog(batch, monitorJob);
-    assertThat(jobLogs.size()).isEqualTo(2);
+    assertThat(jobLogs).hasSize(2);
 
     // then a success job log was created for the last monitor job
     jobLog = jobLogs.get(1);

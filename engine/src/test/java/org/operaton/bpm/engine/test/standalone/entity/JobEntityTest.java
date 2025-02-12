@@ -59,7 +59,7 @@ public class JobEntityTest extends PluggableProcessEngineTest {
 
     String message = repeatCharacter("a", StringUtil.DB_MAX_STRING_LENGTH * 2);
     threeByteJobEntity.setExceptionMessage(message);
-    assertThat(threeByteJobEntity.getExceptionMessage().length()).isEqualTo(StringUtil.DB_MAX_STRING_LENGTH);
+    assertThat(threeByteJobEntity.getExceptionMessage()).hasSize(StringUtil.DB_MAX_STRING_LENGTH);
   }
 
   protected void insertJob(final JobEntity jobEntity) {

@@ -47,10 +47,10 @@ public class BpmnModelInstanceCmdTest extends PluggableProcessEngineTest {
     assertNotNull(modelInstance);
 
     Collection<ModelElementInstance> events = modelInstance.getModelElementsByType(modelInstance.getModel().getType(Event.class));
-    assertThat(events.size()).isEqualTo(2);
+    assertThat(events).hasSize(2);
 
     Collection<ModelElementInstance> sequenceFlows = modelInstance.getModelElementsByType(modelInstance.getModel().getType(SequenceFlow.class));
-    assertThat(sequenceFlows.size()).isEqualTo(1);
+    assertThat(sequenceFlows).hasSize(1);
 
     StartEvent startEvent = modelInstance.getModelElementById("start");
     assertNotNull(startEvent);

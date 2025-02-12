@@ -52,7 +52,7 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
 
     List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
 
-    assertThat(eventSubscriptions.size()).isEqualTo(1);
+    assertThat(eventSubscriptions).hasSize(1);
 
     repositoryService.deleteDeployment(deploymentId);
   }
@@ -123,8 +123,8 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
     List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
 
-    assertThat(eventSubscriptions.size()).isEqualTo(1);
-    assertThat(processDefinitions.size()).isEqualTo(1);
+    assertThat(eventSubscriptions).hasSize(1);
+    assertThat(processDefinitions).hasSize(1);
 
     String newDeploymentId = repositoryService
         .createDeployment()
@@ -135,8 +135,8 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
     List<EventSubscription> newEventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
     List<ProcessDefinition> newProcessDefinitions = repositoryService.createProcessDefinitionQuery().list();
 
-    assertThat(newEventSubscriptions.size()).isEqualTo(1);
-    assertThat(newProcessDefinitions.size()).isEqualTo(2);
+    assertThat(newEventSubscriptions).hasSize(1);
+    assertThat(newProcessDefinitions).hasSize(2);
     for (ProcessDefinition processDefinition : newProcessDefinitions) {
       if (processDefinition.getVersion() == 1) {
         for (EventSubscription subscription : newEventSubscriptions) {

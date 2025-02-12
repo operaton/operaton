@@ -171,11 +171,11 @@ public class ExecutionListenerBpmnModelExecutionContextTest extends PluggablePro
 
     Model model = modelInstance.getModel();
     Collection<ModelElementInstance> events = modelInstance.getModelElementsByType(model.getType(Event.class));
-    assertThat(events.size()).isEqualTo(3);
+    assertThat(events).hasSize(3);
     Collection<ModelElementInstance> gateways = modelInstance.getModelElementsByType(model.getType(Gateway.class));
-    assertThat(gateways.size()).isEqualTo(1);
+    assertThat(gateways).hasSize(1);
     Collection<ModelElementInstance> tasks = modelInstance.getModelElementsByType(model.getType(Task.class));
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
 
     FlowElement flowElement = ModelExecutionContextExecutionListener.flowElement;
     assertNotNull(flowElement);

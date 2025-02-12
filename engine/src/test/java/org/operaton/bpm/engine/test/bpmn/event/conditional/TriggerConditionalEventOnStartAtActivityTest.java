@@ -43,7 +43,7 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
 
     //then
     tasksAfterVariableIsSet = taskService.createTaskQuery().list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(1);
+    assertThat(tasksAfterVariableIsSet).hasSize(1);
     assertThat(tasksAfterVariableIsSet.get(0).getTaskDefinitionKey()).isEqualTo(TASK_AFTER_CONDITION_ID);
   }
 
@@ -61,7 +61,7 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
 
     //then
     tasksAfterVariableIsSet = taskService.createTaskQuery().list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(2);
+    assertThat(tasksAfterVariableIsSet).hasSize(2);
     assertThat(taskService.createTaskQuery().taskName(TASK_AFTER_CONDITION).count()).isEqualTo(1);
     assertThat(conditionEventSubscriptionQuery.count()).isEqualTo(1);
   }
@@ -92,7 +92,7 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
 
     //then
     tasksAfterVariableIsSet = taskService.createTaskQuery().list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(1);
+    assertThat(tasksAfterVariableIsSet).hasSize(1);
     assertThat(tasksAfterVariableIsSet.get(0).getTaskDefinitionKey()).isEqualTo(TASK_AFTER_CONDITION_ID);
   }
 
@@ -121,7 +121,7 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
 
     //then
     tasksAfterVariableIsSet = taskService.createTaskQuery().list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(2);
+    assertThat(tasksAfterVariableIsSet).hasSize(2);
     assertThat(taskService.createTaskQuery().taskName(TASK_AFTER_CONDITION).count()).isEqualTo(1);
     assertThat(conditionEventSubscriptionQuery.count()).isEqualTo(1);
   }
@@ -150,7 +150,7 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
 
     //then
     tasksAfterVariableIsSet = taskService.createTaskQuery().list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(1);
+    assertThat(tasksAfterVariableIsSet).hasSize(1);
     assertThat(tasksAfterVariableIsSet.get(0).getTaskDefinitionKey()).isEqualTo(TASK_AFTER_CONDITION_ID);
   }
 
@@ -178,7 +178,7 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
 
     //then
     tasksAfterVariableIsSet = taskService.createTaskQuery().list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(2);
+    assertThat(tasksAfterVariableIsSet).hasSize(2);
     assertThat(taskService.createTaskQuery().taskName(TASK_AFTER_CONDITION).count()).isEqualTo(1);
     assertThat(conditionEventSubscriptionQuery.count()).isEqualTo(1);
   }
@@ -209,7 +209,7 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
 
     //then
     tasksAfterVariableIsSet = taskService.createTaskQuery().list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(1);
+    assertThat(tasksAfterVariableIsSet).hasSize(1);
     assertThat(tasksAfterVariableIsSet.get(0).getTaskDefinitionKey()).isEqualTo(TASK_AFTER_CONDITION_ID);
   }
 
@@ -239,7 +239,7 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
 
     //then
     tasksAfterVariableIsSet = taskService.createTaskQuery().list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(3);
+    assertThat(tasksAfterVariableIsSet).hasSize(3);
     assertThat(taskService.createTaskQuery().taskName(TASK_AFTER_CONDITION).count()).isEqualTo(2);
     assertThat(taskService.createTaskQuery().taskDefinitionKey(TASK_AFTER_CONDITION_ID).count()).isEqualTo(1);
     assertThat(taskService.createTaskQuery().taskDefinitionKey(TASK_AFTER_CONDITION_ID + 1).count()).isEqualTo(1);
@@ -260,7 +260,7 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
 
     //then
     tasksAfterVariableIsSet = taskService.createTaskQuery().list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(1);
+    assertThat(tasksAfterVariableIsSet).hasSize(1);
     assertThat(tasksAfterVariableIsSet.get(0).getTaskDefinitionKey()).isEqualTo(TASK_AFTER_CONDITION_ID);
   }
 
@@ -277,7 +277,7 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
 
     //then
     tasksAfterVariableIsSet = taskService.createTaskQuery().list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(2);
+    assertThat(tasksAfterVariableIsSet).hasSize(2);
     assertThat(taskService.createTaskQuery().taskName(TASK_AFTER_CONDITION).count()).isEqualTo(1);
     assertThat(conditionEventSubscriptionQuery.count()).isEqualTo(1);
   }
@@ -308,7 +308,7 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
 
     //then
     tasksAfterVariableIsSet = taskService.createTaskQuery().list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(1);
+    assertThat(tasksAfterVariableIsSet).hasSize(1);
     assertThat(tasksAfterVariableIsSet.get(0).getTaskDefinitionKey()).isEqualTo(TASK_AFTER_CONDITION_ID);
   }
 
@@ -337,7 +337,7 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
 
     //then
     tasksAfterVariableIsSet = taskService.createTaskQuery().list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(2);
+    assertThat(tasksAfterVariableIsSet).hasSize(2);
     assertThat(taskService.createTaskQuery().taskName(TASK_AFTER_CONDITION).count()).isEqualTo(1);
     assertThat(conditionEventSubscriptionQuery.count()).isEqualTo(1);
   }
@@ -368,7 +368,7 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
 
     //then
     tasksAfterVariableIsSet = taskService.createTaskQuery().list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(1);
+    assertThat(tasksAfterVariableIsSet).hasSize(1);
     assertThat(tasksAfterVariableIsSet.get(0).getTaskDefinitionKey()).isEqualTo(TASK_AFTER_CONDITION_ID);
   }
 
@@ -399,7 +399,7 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
 
     //then
     tasksAfterVariableIsSet = taskService.createTaskQuery().list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(3);
+    assertThat(tasksAfterVariableIsSet).hasSize(3);
     assertThat(taskService.createTaskQuery().taskName(TASK_AFTER_CONDITION).count()).isEqualTo(2);
     assertThat(taskService.createTaskQuery().taskDefinitionKey(TASK_AFTER_CONDITION_ID + 1).count()).isEqualTo(1);
     assertThat(taskService.createTaskQuery().taskDefinitionKey(TASK_AFTER_CONDITION_ID).count()).isEqualTo(1);
@@ -434,7 +434,7 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
 
     //then
     tasksAfterVariableIsSet = taskService.createTaskQuery().list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(1);
+    assertThat(tasksAfterVariableIsSet).hasSize(1);
     assertThat(tasksAfterVariableIsSet.get(0).getTaskDefinitionKey()).isEqualTo(TASK_AFTER_CONDITION_ID);
   }
 
@@ -467,7 +467,7 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
 
     //then
     tasksAfterVariableIsSet = taskService.createTaskQuery().list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(5);
+    assertThat(tasksAfterVariableIsSet).hasSize(5);
     assertThat(taskService.createTaskQuery().taskName(TASK_AFTER_CONDITION).count()).isEqualTo(4);
     assertThat(taskService.createTaskQuery().taskDefinitionKey(TASK_AFTER_CONDITION_ID + 1).count()).isEqualTo(1);
     assertThat(taskService.createTaskQuery().taskDefinitionKey(TASK_AFTER_CONDITION_ID + 2).count()).isEqualTo(1);
@@ -549,7 +549,7 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
     assertThat(historyService.createHistoricVariableInstanceQuery().singleResult().getName()).isEqualTo("variable");
 
     tasksAfterVariableIsSet = taskService.createTaskQuery().list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(2);
+    assertThat(tasksAfterVariableIsSet).hasSize(2);
     assertThat(taskService.createTaskQuery().taskDefinitionKey(TASK_BEFORE_CONDITION_ID).count()).isEqualTo(1);
     assertThat(taskService.createTaskQuery().taskDefinitionKey(TASK_AFTER_CONDITION_ID).count()).isEqualTo(1);
   }
@@ -586,7 +586,7 @@ public class TriggerConditionalEventOnStartAtActivityTest extends AbstractCondit
     assertThat(historyService.createHistoricVariableInstanceQuery().singleResult().getName()).isEqualTo("variable");
 
     tasksAfterVariableIsSet = taskService.createTaskQuery().list();
-    assertThat(tasksAfterVariableIsSet.size()).isEqualTo(1);
+    assertThat(tasksAfterVariableIsSet).hasSize(1);
     assertThat(tasksAfterVariableIsSet.get(0).getTaskDefinitionKey()).isEqualTo(TASK_AFTER_CONDITION_ID);
   }
 }

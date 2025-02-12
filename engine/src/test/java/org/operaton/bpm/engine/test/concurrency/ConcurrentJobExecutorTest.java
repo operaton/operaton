@@ -186,7 +186,7 @@ public class ConcurrentJobExecutorTest {
     runtimeService.startProcessInstanceByKey("miParallelSubprocess");
 
     List<Job> currentJobs = managementService.createJobQuery().list();
-    assertThat(currentJobs.size()).isEqualTo(2);
+    assertThat(currentJobs).hasSize(2);
 
     // when the jobs are executed in parallel
     JobExecutionThread threadOne = new JobExecutionThread(currentJobs.get(0).getId());
@@ -225,7 +225,7 @@ public class ConcurrentJobExecutorTest {
     runtimeService.startProcessInstanceByKey("miParallelSubprocess");
 
     List<Job> currentJobs = managementService.createJobQuery().list();
-    assertThat(currentJobs.size()).isEqualTo(2);
+    assertThat(currentJobs).hasSize(2);
 
     // when the jobs are executed in parallel
     JobExecutionThread threadOne = new JobExecutionThread(currentJobs.get(0).getId());
@@ -443,7 +443,7 @@ public class ConcurrentJobExecutorTest {
 
     // then both updates have been performed
     List<Job> updatedJobs = managementService.createJobQuery().list();
-    assertThat(updatedJobs.size()).isEqualTo(2);
+    assertThat(updatedJobs).hasSize(2);
     for (Job job : updatedJobs) {
       assertThat(job.getPriority()).isEqualTo(42);
       assertTrue(job.isSuspended());

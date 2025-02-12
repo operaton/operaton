@@ -343,7 +343,7 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
     // then there are three jobs that have the priority as defined on the activity (TODO: or should it be MI characteristics?)
     List<Job> jobs = managementService.createJobQuery().list();
 
-    assertThat(jobs.size()).isEqualTo(3);
+    assertThat(jobs).hasSize(3);
     for (Job job : jobs) {
       assertNotNull(job);
       assertThat(job.getPriority()).isEqualTo(5);

@@ -87,7 +87,7 @@ public class UpdateSuspendStateUserOperationLogTest {
 
     // then
     List<UserOperationLogEntry> opLogEntries = rule.getHistoryService().createUserOperationLogQuery().list();
-    assertThat(opLogEntries.size()).isEqualTo(2);
+    assertThat(opLogEntries).hasSize(2);
 
     Map<String, UserOperationLogEntry> entries = asMap(opLogEntries);
 

@@ -513,7 +513,7 @@ public class JobQueryTest {
     JobQuery query = managementService.createJobQuery()
             .processInstanceId(processInstanceIdOne);
     List<Job> jobs = query.list();
-    assertThat(jobs.size()).isEqualTo(1);
+    assertThat(jobs).hasSize(1);
     Date jobCreateTime = jobs.get(0).getCreateTime();
 
     query = managementService.createJobQuery()
@@ -542,7 +542,7 @@ public class JobQueryTest {
     JobQuery query = managementService.createJobQuery().processInstanceId(processInstanceIdOne);
 
     List<Job> jobs = query.list();
-    assertThat(jobs.size()).isEqualTo(1);
+    assertThat(jobs).hasSize(1);
 
     query = query.createdBefore(new Date(0)).createdAfter(new Date());
 
@@ -554,7 +554,7 @@ public class JobQueryTest {
     JobQuery query = managementService.createJobQuery().processInstanceId(processInstanceIdOne);
 
     List<Job> jobs = query.list();
-    assertThat(jobs.size()).isEqualTo(1);
+    assertThat(jobs).hasSize(1);
 
     query = query.createdBefore(new Date()).createdAfter(new Date(0));
 
@@ -647,7 +647,7 @@ public class JobQueryTest {
     assertNotNull(job);
 
     List<Job> list = managementService.createJobQuery().withException().list();
-    assertThat(list.size()).isEqualTo(1);
+    assertThat(list).hasSize(1);
 
     deleteJobInDatabase();
 
@@ -658,7 +658,7 @@ public class JobQueryTest {
     assertNotNull(job);
 
     list = managementService.createJobQuery().withException().list();
-    assertThat(list.size()).isEqualTo(1);
+    assertThat(list).hasSize(1);
 
     deleteJobInDatabase();
 
@@ -857,7 +857,7 @@ public class JobQueryTest {
       .desc();
 
     List<Job> jobs = query.list();
-    assertThat(jobs.size()).isEqualTo(3);
+    assertThat(jobs).hasSize(3);
 
     assertThat(jobs.get(0).getRetries()).isEqualTo(2);
     assertThat(jobs.get(1).getRetries()).isEqualTo(3);
@@ -931,7 +931,7 @@ public class JobQueryTest {
   }
 
   private void verifyQueryResults(JobQuery query, int countExpected) {
-    assertThat(query.list().size()).isEqualTo(countExpected);
+    assertThat(query.list()).hasSize(countExpected);
     assertThat(query.count()).isEqualTo(countExpected);
 
     if (countExpected == 1) {

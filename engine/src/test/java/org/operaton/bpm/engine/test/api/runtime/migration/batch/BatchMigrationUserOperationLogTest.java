@@ -87,7 +87,7 @@ public class BatchMigrationUserOperationLogTest {
 
     // then
     List<UserOperationLogEntry> opLogEntries = engineRule.getHistoryService().createUserOperationLogQuery().list();
-    assertThat(opLogEntries.size()).isEqualTo(3);
+    assertThat(opLogEntries).hasSize(3);
 
     Map<String, UserOperationLogEntry> entries = asMap(opLogEntries);
 

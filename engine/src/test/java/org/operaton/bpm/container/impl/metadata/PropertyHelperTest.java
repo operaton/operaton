@@ -170,7 +170,7 @@ public class PropertyHelperTest {
   public void testResolvePropertyForMissingProperty() {
     Properties source = new Properties();
     String result = PropertyHelper.resolveProperty(source, "${operaton.test.someKey}");
-    assertThat(result).isEqualTo("");
+    assertThat(result).isEmpty();
   }
 
   @Test

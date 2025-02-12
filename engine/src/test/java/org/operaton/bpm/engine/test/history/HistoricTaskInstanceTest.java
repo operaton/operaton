@@ -531,7 +531,7 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
         .activityInstanceIdIn(activityInstanceId);
 
     assertThat(query.count()).isEqualTo(1);
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/history/HistoricTaskInstanceTest.testHistoricTaskInstance.bpmn20.xml"})
@@ -556,7 +556,7 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
         .activityInstanceIdIn(activityInstanceId1, activityInstanceId2);
 
     assertThat(query.count()).isEqualTo(2);
-    assertThat(query.list().size()).isEqualTo(2);
+    assertThat(query.list()).hasSize(2);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/history/HistoricTaskInstanceTest.testHistoricTaskInstance.bpmn20.xml"})
@@ -617,7 +617,7 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     query.caseDefinitionId(caseDefinitionId);
 
     assertThat(query.count()).isEqualTo(1);
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
     assertNotNull(query.singleResult());
 
     HistoricTaskInstance task = query.singleResult();
@@ -635,13 +635,13 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     query.caseDefinitionId("invalid");
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
     assertNull(query.singleResult());
 
     query.caseDefinitionId(null);
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
     assertNull(query.singleResult());
 
   }
@@ -675,7 +675,7 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     query.caseDefinitionKey(key);
 
     assertThat(query.count()).isEqualTo(1);
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
     assertNotNull(query.singleResult());
 
     HistoricTaskInstance task = query.singleResult();
@@ -693,13 +693,13 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     query.caseDefinitionKey("invalid");
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
     assertNull(query.singleResult());
 
     query.caseDefinitionKey(null);
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
     assertNull(query.singleResult());
 
   }
@@ -732,7 +732,7 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     query.caseDefinitionName(caseDefinitionName);
 
     assertThat(query.count()).isEqualTo(1);
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
     assertNotNull(query.singleResult());
 
     HistoricTaskInstance task = query.singleResult();
@@ -750,13 +750,13 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     query.caseDefinitionName("invalid");
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
     assertNull(query.singleResult());
 
     query.caseDefinitionName(null);
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
     assertNull(query.singleResult());
 
   }
@@ -790,7 +790,7 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     query.caseInstanceId(caseInstanceId);
 
     assertThat(query.count()).isEqualTo(1);
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
     assertNotNull(query.singleResult());
 
     HistoricTaskInstance task = query.singleResult();
@@ -828,7 +828,7 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     query.caseInstanceId(caseInstanceId);
 
     assertThat(query.count()).isEqualTo(2);
-    assertThat(query.list().size()).isEqualTo(2);
+    assertThat(query.list()).hasSize(2);
 
     for (HistoricTaskInstance task : query.list()) {
       assertThat(task.getCaseInstanceId()).isEqualTo(caseInstanceId);
@@ -840,7 +840,7 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     }
 
     assertThat(query.count()).isEqualTo(3);
-    assertThat(query.list().size()).isEqualTo(3);
+    assertThat(query.list()).hasSize(3);
 
     for (HistoricTaskInstance task : query.list()) {
       assertThat(task.getCaseInstanceId()).isEqualTo(caseInstanceId);
@@ -858,13 +858,13 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     query.caseInstanceId("invalid");
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
     assertNull(query.singleResult());
 
     query.caseInstanceId(null);
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
     assertNull(query.singleResult());
 
   }
@@ -898,7 +898,7 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     query.caseExecutionId(humanTaskId);
 
     assertThat(query.count()).isEqualTo(1);
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
     assertNotNull(query.singleResult());
 
     HistoricTaskInstance task = query.singleResult();
@@ -916,13 +916,13 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     query.caseExecutionId("invalid");
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
     assertNull(query.singleResult());
 
     query.caseExecutionId(null);
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
     assertNull(query.singleResult());
 
   }
@@ -1096,7 +1096,7 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     HistoricTaskInstanceQuery query = historyService.createHistoricTaskInstanceQuery();
 
     // then
-    assertThat(query.processInstanceBusinessKeyIn(businessKey1, businessKey2, businessKey3).list().size()).isEqualTo(3);
+    assertThat(query.processInstanceBusinessKeyIn(businessKey1, businessKey2, businessKey3).list()).hasSize(3);
     assertThat(query.processInstanceBusinessKeyIn(businessKey2, unexistingBusinessKey).count()).isEqualTo(1);
   }
 
@@ -1139,7 +1139,7 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     HistoricTaskInstanceQuery query = historyService.createHistoricTaskInstanceQuery();
 
     // then
-    assertThat(query.processInstanceBusinessKeyLike("BUSINESS-KEY-1").list().size()).isEqualTo(1);
+    assertThat(query.processInstanceBusinessKeyLike("BUSINESS-KEY-1").list()).hasSize(1);
     assertThat(query.processInstanceBusinessKeyLike("BUSINESS-KEY%").count()).isEqualTo(1);
     assertThat(query.processInstanceBusinessKeyLike("%KEY-1").count()).isEqualTo(1);
     assertThat(query.processInstanceBusinessKeyLike("%KEY%").count()).isEqualTo(1);
@@ -1183,9 +1183,9 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     HistoricTaskInstanceQuery historicTaskInstanceQuery = historyService.createHistoricTaskInstanceQuery().rootProcessInstanceId(rootProcessId);
 
     // then
-    assertThat(allTaskInstances.size()).isEqualTo(8);
+    assertThat(allTaskInstances).hasSize(8);
     assertThat(allTaskInstances.stream().filter(task -> task.getRootProcessInstanceId().equals(rootProcessId)).count()).isEqualTo(6);
     assertThat(historicTaskInstanceQuery.count()).isEqualTo(6);
-    assertThat(historicTaskInstanceQuery.list().size()).isEqualTo(6);
+    assertThat(historicTaskInstanceQuery.list()).hasSize(6);
   }
 }

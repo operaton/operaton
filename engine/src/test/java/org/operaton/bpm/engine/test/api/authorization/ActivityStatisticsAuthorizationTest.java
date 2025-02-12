@@ -480,7 +480,7 @@ public class ActivityStatisticsAuthorizationTest extends AuthorizationTest {
         .includeIncidents()
         .list();
 
-    assertThat(statistics.size()).isEqualTo(1);
+    assertThat(statistics).hasSize(1);
 
     ActivityStatistics activityResult = statistics.get(0);
     assertThat(activityResult.getInstances()).isEqualTo(3);
@@ -503,7 +503,7 @@ public class ActivityStatisticsAuthorizationTest extends AuthorizationTest {
         .createActivityStatisticsQuery(processDefinitionId)
         .list();
 
-    assertThat(statistics.size()).isEqualTo(1);
+    assertThat(statistics).hasSize(1);
 
     ActivityStatistics activityResult = statistics.get(0);
     assertThat(activityResult.getInstances()).isEqualTo(3);

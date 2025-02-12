@@ -49,14 +49,14 @@ public class VariableScopeTest {
   public void testGetVariables() {
     Map<String, Object> variables = variableScope.getVariables();
     assertNotNull(variables);
-    assertThat(variables.get(VAR_NAME)).isEqualTo(VAR_VALUE_STRING);
+    assertThat(variables).containsEntry(VAR_NAME, VAR_VALUE_STRING);
   }
 
   @Test
   public void testGetVariablesTyped() {
     VariableMap variables = variableScope.getVariablesTyped();
     assertNotNull(variables);
-    assertThat(variables.get(VAR_NAME)).isEqualTo(VAR_VALUE_STRING);
+    assertThat(variables).containsEntry(VAR_NAME, VAR_VALUE_STRING);
     assertThat(variableScope.getVariablesTyped(true)).isEqualTo(variables);
   }
 
@@ -64,14 +64,14 @@ public class VariableScopeTest {
   public void testGetVariablesLocal() {
     Map<String, Object> variables = variableScope.getVariablesLocal();
     assertNotNull(variables);
-    assertThat(variables.get(VAR_NAME)).isEqualTo(VAR_VALUE_STRING);
+    assertThat(variables).containsEntry(VAR_NAME, VAR_VALUE_STRING);
   }
 
   @Test
   public void testGetVariablesLocalTyped() {
     Map<String, Object> variables = variableScope.getVariablesLocalTyped();
     assertNotNull(variables);
-    assertThat(variables.get(VAR_NAME)).isEqualTo(VAR_VALUE_STRING);
+    assertThat(variables).containsEntry(VAR_NAME, VAR_VALUE_STRING);
     assertThat(variableScope.getVariablesLocalTyped(true)).isEqualTo(variables);
   }
 

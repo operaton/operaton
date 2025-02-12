@@ -97,7 +97,7 @@ public class HistoricExternalTaskLogTest {
 
     // then
     assertHistoricLogPropertiesAreProperlySet(task, log);
-    assertThat(log.getWorkerId()).isEqualTo(null);
+    assertThat(log.getWorkerId()).isNull();
     assertLogIsInCreatedState(log);
 
   }
@@ -158,7 +158,7 @@ public class HistoricExternalTaskLogTest {
 
     // then
     assertHistoricLogPropertiesAreProperlySet(task, log);
-    assertThat(log.getWorkerId()).isEqualTo(null);
+    assertThat(log.getWorkerId()).isNull();
     assertLogIsInDeletedState(log);
 
   }
@@ -273,7 +273,7 @@ public class HistoricExternalTaskLogTest {
 
     // then
     assertNotNull(failedLog);
-    assertThat(errorMessage.length()).isEqualTo(ExternalTaskEntity.MAX_EXCEPTION_MESSAGE_LENGTH);
+    assertThat(errorMessage).hasSize(ExternalTaskEntity.MAX_EXCEPTION_MESSAGE_LENGTH);
     assertThat(errorMessage).isEqualTo(expectedErrorMessage);
 
   }

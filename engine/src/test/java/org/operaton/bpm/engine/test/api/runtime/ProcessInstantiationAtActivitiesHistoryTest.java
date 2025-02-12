@@ -122,7 +122,7 @@ public class ProcessInstantiationAtActivitiesHistoryTest extends PluggableProces
     List<HistoricActivityInstance> innerTaskInstances = historyService.createHistoricActivityInstanceQuery()
         .activityId("innerTask").list();
 
-    assertThat(innerTaskInstances.size()).isEqualTo(2);
+    assertThat(innerTaskInstances).hasSize(2);
 
     for (HistoricActivityInstance innerTaskInstance : innerTaskInstances) {
       assertNotNull(innerTaskInstance);

@@ -300,9 +300,10 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
     TreeMap<String, Object> value = (TreeMap) variable.getValue();
-    assertThat(value.get("a")).isEqualTo(2l);
-    assertThat(value.get("b")).isEqualTo(3l);
-    assertThat(value.get("c")).isEqualTo(4l);
+    assertThat(value)
+            .containsEntry("a", 2l)
+            .containsEntry("b", 3l)
+            .containsEntry("c", 4l);
 
   }
 
@@ -354,7 +355,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     List<Object> nestedList = (List<Object>) value.get("a");
     assertThat(nestedList.get(0)).isEqualTo("stringInListNestedInMap");
     assertThat(nestedList.get(1)).isEqualTo("b");
-    assertThat(value.get("b")).isEqualTo("stringValueWithExprKey");
+    assertThat(value).containsEntry("b", "stringValueWithExprKey");
 
     VariableInstance var2 = runtimeService.createVariableInstanceQuery().variableName("var2").singleResult();
     assertNotNull(var2);
@@ -385,9 +386,10 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     assertThat(nestedList.get(1)).isEqualTo("d");
 
     TreeMap<String, Object> nestedMap = (TreeMap<String, Object>) value.get(4);
-    assertThat(nestedMap.get("foo")).isEqualTo("bar");
-    assertThat(nestedMap.get("hello")).isEqualTo("world");
-    assertThat(nestedMap.get("vegie")).isEqualTo("potato");
+    assertThat(nestedMap)
+            .containsEntry("foo", "bar")
+            .containsEntry("hello", "world")
+            .containsEntry("vegie", "potato");
   }
 
   @Deployment
@@ -402,8 +404,9 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
     TreeMap<String, Object> value = (TreeMap) variable.getValue();
-    assertThat(value.get("a")).isEqualTo("potato");
-    assertThat(value.get("b")).isEqualTo("tomato");
+    assertThat(value)
+            .containsEntry("a", "potato")
+            .containsEntry("b", "tomato");
   }
 
   @Deployment
@@ -419,8 +422,9 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
     TreeMap<String, Object> value = (TreeMap) variable.getValue();
-    assertThat(value.get("a")).isEqualTo("potato");
-    assertThat(value.get("b")).isEqualTo("tomato");
+    assertThat(value)
+            .containsEntry("a", "potato")
+            .containsEntry("b", "tomato");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/iomapping/InputOutputTest.testInputMapElKey.bpmn")
@@ -693,9 +697,10 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
     TreeMap<String, Object> value = (TreeMap) variable.getValue();
-    assertThat(value.get("a")).isEqualTo(2l);
-    assertThat(value.get("b")).isEqualTo(3l);
-    assertThat(value.get("c")).isEqualTo(4l);
+    assertThat(value)
+            .containsEntry("a", 2l)
+            .containsEntry("b", 3l)
+            .containsEntry("c", 4l);
 
   }
 
@@ -745,7 +750,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     assertThat(nestedList.get(0)).isEqualTo("stringInListNestedInMap");
     assertThat(nestedList.get(1)).isEqualTo("b");
     assertThat(var1.getExecutionId()).isEqualTo(pi.getId());
-    assertThat(value.get("b")).isEqualTo("stringValueWithExprKey");
+    assertThat(value).containsEntry("b", "stringValueWithExprKey");
 
     VariableInstance var2 = runtimeService.createVariableInstanceQuery().variableName("var2").singleResult();
     assertNotNull(var2);
@@ -776,9 +781,10 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     assertThat(nestedList.get(1)).isEqualTo("d");
 
     TreeMap<String, Object> nestedMap = (TreeMap<String, Object>) value.get(4);
-    assertThat(nestedMap.get("foo")).isEqualTo("bar");
-    assertThat(nestedMap.get("hello")).isEqualTo("world");
-    assertThat(nestedMap.get("vegie")).isEqualTo("potato");
+    assertThat(nestedMap)
+            .containsEntry("foo", "bar")
+            .containsEntry("hello", "world")
+            .containsEntry("vegie", "potato");
   }
 
   @Deployment
@@ -795,8 +801,9 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
     TreeMap<String, Object> value = (TreeMap) variable.getValue();
-    assertThat(value.get("a")).isEqualTo("potato");
-    assertThat(value.get("b")).isEqualTo("tomato");
+    assertThat(value)
+            .containsEntry("a", "potato")
+            .containsEntry("b", "tomato");
   }
 
   @Deployment
@@ -811,8 +818,9 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     VariableInstance variable = runtimeService.createVariableInstanceQuery().variableName("var1").singleResult();
     assertNotNull(variable);
     TreeMap<String, Object> value = (TreeMap) variable.getValue();
-    assertThat(value.get("a")).isEqualTo("potato");
-    assertThat(value.get("b")).isEqualTo("tomato");
+    assertThat(value)
+            .containsEntry("a", "potato")
+            .containsEntry("b", "tomato");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/iomapping/InputOutputTest.testOutputMapElKey.bpmn")
@@ -852,8 +860,9 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     Execution subprocessExecution = runtimeService.createExecutionQuery().activityId("subprocessTask").singleResult();
     Map<String, Object> variablesLocal = runtimeService.getVariablesLocal(subprocessExecution.getId());
-    assertThat(variablesLocal.size()).isEqualTo(1);
-    assertThat(variablesLocal.get("innerVar")).isEqualTo("value");
+    assertThat(variablesLocal)
+            .hasSize(1)
+            .containsEntry("innerVar", "value");
 
     Task task = taskService.createTaskQuery().singleResult();
     taskService.complete(task.getId());

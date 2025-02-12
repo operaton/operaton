@@ -232,7 +232,7 @@ public class HistoricProcessInstanceQueryOrTest {
       .list();
 
     // then
-    assertThat(processInstances.size()).isEqualTo(2);
+    assertThat(processInstances).hasSize(2);
   }
 
   @Test
@@ -256,7 +256,7 @@ public class HistoricProcessInstanceQueryOrTest {
       .list();
 
     // then
-    assertThat(processInstances.size()).isEqualTo(2);
+    assertThat(processInstances).hasSize(2);
   }
 
   @Test
@@ -428,7 +428,7 @@ public class HistoricProcessInstanceQueryOrTest {
       .list();
 
     // then
-    assertThat(processInstances.size()).isEqualTo(4);
+    assertThat(processInstances).hasSize(4);
   }
 
   @Test
@@ -465,7 +465,7 @@ public class HistoricProcessInstanceQueryOrTest {
       .list();
 
     // then
-    assertThat(processInstances.size()).isEqualTo(2);
+    assertThat(processInstances).hasSize(2);
   }
 
   @Test
@@ -530,7 +530,7 @@ public class HistoricProcessInstanceQueryOrTest {
       .list();
 
     // then
-    assertThat(processInstances.size()).isEqualTo(2);
+    assertThat(processInstances).hasSize(2);
   }
 
   @Test
@@ -551,7 +551,7 @@ public class HistoricProcessInstanceQueryOrTest {
       .list();
 
     // then
-    assertThat(processInstances.size()).isEqualTo(1);
+    assertThat(processInstances).hasSize(1);
   }
 
   @Test
@@ -626,7 +626,7 @@ public class HistoricProcessInstanceQueryOrTest {
       .list();
 
     // then
-    assertThat(processInstances.size()).isEqualTo(2);
+    assertThat(processInstances).hasSize(2);
   }
 
   @Test
@@ -673,7 +673,7 @@ public class HistoricProcessInstanceQueryOrTest {
       .list();
 
     // then
-    assertThat(processInstances.size()).isEqualTo(2);
+    assertThat(processInstances).hasSize(2);
   }
 
   @Test
@@ -711,7 +711,7 @@ public class HistoricProcessInstanceQueryOrTest {
       .list();
 
     // then
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
   }
 
   @Test
@@ -746,7 +746,7 @@ public class HistoricProcessInstanceQueryOrTest {
     assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey("oneTaskProcess").suspended().count()).isEqualTo(1);
 
     // then
-    assertThat(historyService.createHistoricProcessInstanceQuery().or().active().variableValueEquals("foo", 0).endOr().list().size()).isEqualTo(3);
+    assertThat(historyService.createHistoricProcessInstanceQuery().or().active().variableValueEquals("foo", 0).endOr().list()).hasSize(3);
   }
 
   @Test

@@ -148,7 +148,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .list();
 
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     for (VariableInstance variable : result) {
 
@@ -229,7 +229,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .list();
 
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     for (VariableInstance variable : result) {
 
@@ -347,7 +347,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .list();
 
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     for (VariableInstance variable : result) {
 
@@ -422,7 +422,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .list();
 
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     for (VariableInstance variable : result) {
 
@@ -499,7 +499,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .list();
 
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     for (VariableInstance variable : result) {
 
@@ -580,7 +580,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .list();
 
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     for (VariableInstance variable : result) {
 
@@ -1243,7 +1243,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .list();
 
     assertFalse(result.isEmpty());
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     for (VariableInstance variable : result) {
 

@@ -98,7 +98,7 @@ public class MultiTenancyBatchQueryTest {
 
     // then
     List<Batch> batches = managementService.createBatchQuery().list();
-    assertThat(batches.size()).isEqualTo(1);
+    assertThat(batches).hasSize(1);
     assertThat(batches.get(0).getId()).isEqualTo(sharedBatch.getId());
 
     assertThat(managementService.createBatchQuery().count()).isEqualTo(1);
@@ -115,7 +115,7 @@ public class MultiTenancyBatchQueryTest {
     List<Batch> batches = managementService.createBatchQuery().list();
 
     // then
-    assertThat(batches.size()).isEqualTo(2);
+    assertThat(batches).hasSize(2);
     assertBatches(batches, tenant1Batch.getId(), sharedBatch.getId());
 
     assertThat(managementService.createBatchQuery().count()).isEqualTo(2);
@@ -132,7 +132,7 @@ public class MultiTenancyBatchQueryTest {
     List<Batch> batches = managementService.createBatchQuery().list();
 
     // then
-    assertThat(batches.size()).isEqualTo(3);
+    assertThat(batches).hasSize(3);
     assertThat(managementService.createBatchQuery().count()).isEqualTo(3);
 
     identityService.clearAuthentication();
@@ -147,7 +147,7 @@ public class MultiTenancyBatchQueryTest {
     List<BatchStatistics> statistics = managementService.createBatchStatisticsQuery().list();
 
     // then
-    assertThat(statistics.size()).isEqualTo(1);
+    assertThat(statistics).hasSize(1);
     assertThat(statistics.get(0).getId()).isEqualTo(sharedBatch.getId());
 
     assertThat(managementService.createBatchStatisticsQuery().count()).isEqualTo(1);
@@ -164,7 +164,7 @@ public class MultiTenancyBatchQueryTest {
     List<BatchStatistics> statistics = managementService.createBatchStatisticsQuery().list();
 
     // then
-    assertThat(statistics.size()).isEqualTo(2);
+    assertThat(statistics).hasSize(2);
 
     assertThat(managementService.createBatchStatisticsQuery().count()).isEqualTo(2);
 
@@ -178,7 +178,7 @@ public class MultiTenancyBatchQueryTest {
 
     // then
     List<BatchStatistics> statistics = managementService.createBatchStatisticsQuery().list();
-    assertThat(statistics.size()).isEqualTo(3);
+    assertThat(statistics).hasSize(3);
 
     assertThat(managementService.createBatchStatisticsQuery().count()).isEqualTo(3);
 
@@ -205,7 +205,7 @@ public class MultiTenancyBatchQueryTest {
       .list();
 
     // then
-    assertThat(returnedBatches.size()).isEqualTo(2);
+    assertThat(returnedBatches).hasSize(2);
     assertThat(returnedBatches.get(0).getId()).isEqualTo(tenant1Batch.getId());
     assertThat(returnedBatches.get(1).getId()).isEqualTo(tenant2Batch.getId());
   }
@@ -288,7 +288,7 @@ public class MultiTenancyBatchQueryTest {
       .list();
 
     // then
-    assertThat(returnedBatches.size()).isEqualTo(2);
+    assertThat(returnedBatches).hasSize(2);
     assertThat(returnedBatches.get(0).getId()).isEqualTo(tenant1Batch.getId());
     assertThat(returnedBatches.get(1).getId()).isEqualTo(tenant2Batch.getId());
   }
@@ -350,7 +350,7 @@ public class MultiTenancyBatchQueryTest {
   }
 
   protected void assertBatches(List<? extends Batch> actualBatches, String... expectedIds) {
-    assertThat(actualBatches.size()).isEqualTo(expectedIds.length);
+    assertThat(actualBatches).hasSize(expectedIds.length);
 
     Set<String> actualIds = new HashSet<>();
     for (Batch batch : actualBatches) {

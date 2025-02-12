@@ -263,7 +263,7 @@ public class JobDefinitionPriorityTest extends PluggableProcessEngineTest {
     // then the definitions have a default null priority, meaning that they don't override the
     // value in the BPMN XML
     List<JobDefinition> jobDefinitions = managementService.createJobDefinitionQuery().list();
-    assertThat(jobDefinitions.size()).isEqualTo(4);
+    assertThat(jobDefinitions).hasSize(4);
 
     assertNull(jobDefinitions.get(0).getOverridingJobPriority());
     assertNull(jobDefinitions.get(1).getOverridingJobPriority());
@@ -352,7 +352,7 @@ public class JobDefinitionPriorityTest extends PluggableProcessEngineTest {
 
   protected Job getJobThatIsNot(Job other) {
     List<Job> jobs = managementService.createJobQuery().list();
-    assertThat(jobs.size()).isEqualTo(2);
+    assertThat(jobs).hasSize(2);
 
     if (jobs.get(0).getId().equals(other.getId())) {
       return jobs.get(1);

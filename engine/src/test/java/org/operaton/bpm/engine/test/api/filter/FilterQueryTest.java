@@ -70,7 +70,7 @@ public class FilterQueryTest extends PluggableProcessEngineTest {
   public void testQueryNoCriteria() {
     FilterQuery query = filterService.createFilterQuery();
     assertThat(query.count()).isEqualTo(4);
-    assertThat(query.list().size()).isEqualTo(4);
+    assertThat(query.list()).hasSize(4);
     try {
       query.singleResult();
       fail("Exception expected");
@@ -84,7 +84,7 @@ public class FilterQueryTest extends PluggableProcessEngineTest {
   public void testQueryByFilterId() {
     FilterQuery query = filterService.createFilterQuery().filterId(filterIds.get(0));
     assertNotNull(query.singleResult());
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
     assertThat(query.count()).isEqualTo(1);
   }
 
@@ -92,7 +92,7 @@ public class FilterQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidFilterId() {
     FilterQuery query = filterService.createFilterQuery().filterId("invalid");
     assertNull(query.singleResult());
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
     assertThat(query.count()).isEqualTo(0);
     FilterQuery filterQuery = filterService.createFilterQuery();
 
@@ -110,7 +110,7 @@ public class FilterQueryTest extends PluggableProcessEngineTest {
     catch (ProcessEngineException e) {
       // expected
     }
-    assertThat(query.list().size()).isEqualTo(4);
+    assertThat(query.list()).hasSize(4);
     assertThat(query.count()).isEqualTo(4);
   }
 
@@ -118,7 +118,7 @@ public class FilterQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidResourceType() {
     FilterQuery query = filterService.createFilterQuery().filterResourceType("invalid");
     assertNull(query.singleResult());
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
     assertThat(query.count()).isEqualTo(0);
     FilterQuery filterQuery = filterService.createFilterQuery();
 
@@ -130,7 +130,7 @@ public class FilterQueryTest extends PluggableProcessEngineTest {
   public void testQueryByName() {
     FilterQuery query = filterService.createFilterQuery().filterName("a");
     assertNotNull(query.singleResult());
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
     assertThat(query.count()).isEqualTo(1);
   }
 
@@ -138,7 +138,7 @@ public class FilterQueryTest extends PluggableProcessEngineTest {
   public void testQueryByNameLike() {
     FilterQuery query = filterService.createFilterQuery().filterNameLike("%\\_");
     assertNotNull(query.singleResult());
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
     assertThat(query.count()).isEqualTo(1);
   }
 
@@ -146,7 +146,7 @@ public class FilterQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidName() {
     FilterQuery query = filterService.createFilterQuery().filterName("invalid");
     assertNull(query.singleResult());
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
     assertThat(query.count()).isEqualTo(0);
     FilterQuery filterQuery = filterService.createFilterQuery();
 
@@ -158,7 +158,7 @@ public class FilterQueryTest extends PluggableProcessEngineTest {
   public void testQueryByOwner() {
     FilterQuery query = filterService.createFilterQuery().filterOwner("a");
     assertNotNull(query.singleResult());
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
     assertThat(query.count()).isEqualTo(1);
   }
 
@@ -166,7 +166,7 @@ public class FilterQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidOwner() {
     FilterQuery query = filterService.createFilterQuery().filterOwner("invalid");
     assertNull(query.singleResult());
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
     assertThat(query.count()).isEqualTo(0);
     FilterQuery filterQuery = filterService.createFilterQuery();
 
@@ -178,28 +178,28 @@ public class FilterQueryTest extends PluggableProcessEngineTest {
   public void testQueryPaging() {
     FilterQuery query = filterService.createFilterQuery();
 
-    assertThat(query.listPage(0, Integer.MAX_VALUE).size()).isEqualTo(4);
+    assertThat(query.listPage(0, Integer.MAX_VALUE)).hasSize(4);
 
     // Verifying the un-paged results
     assertThat(query.count()).isEqualTo(4);
-    assertThat(query.list().size()).isEqualTo(4);
+    assertThat(query.list()).hasSize(4);
 
     // Verifying paged results
-    assertThat(query.listPage(0, 2).size()).isEqualTo(2);
-    assertThat(query.listPage(2, 2).size()).isEqualTo(2);
-    assertThat(query.listPage(3, 1).size()).isEqualTo(1);
+    assertThat(query.listPage(0, 2)).hasSize(2);
+    assertThat(query.listPage(2, 2)).hasSize(2);
+    assertThat(query.listPage(3, 1)).hasSize(1);
 
     // Verifying odd usages
-    assertThat(query.listPage(-1, -1).size()).isEqualTo(0);
-    assertThat(query.listPage(4, 2).size()).isEqualTo(0); // 4 is the last index with a result
-    assertThat(query.listPage(0, 15).size()).isEqualTo(4); // there are only 4 tasks
+    assertThat(query.listPage(-1, -1)).hasSize(0);
+    assertThat(query.listPage(4, 2)).hasSize(0); // 4 is the last index with a result
+    assertThat(query.listPage(0, 15)).hasSize(4); // there are only 4 tasks
   }
 
   @Test
   public void testQuerySorting() {
     List<String> sortedIds = new ArrayList<>(filterIds);
     Collections.sort(sortedIds);
-    assertThat(filterService.createFilterQuery().orderByFilterId().asc().list().size()).isEqualTo(4);
+    assertThat(filterService.createFilterQuery().orderByFilterId().asc().list()).hasSize(4);
 
     assertThat(filterService.createFilterQuery().orderByFilterId().asc().list())
         .extracting("id")
@@ -240,8 +240,8 @@ public class FilterQueryTest extends PluggableProcessEngineTest {
         .extracting("owner")
         .containsExactly("d", "c", "b", "a");
 
-    assertThat(filterService.createFilterQuery().orderByFilterId().filterName("a").asc().list().size()).isEqualTo(1);
-    assertThat(filterService.createFilterQuery().orderByFilterId().filterName("a").desc().list().size()).isEqualTo(1);
+    assertThat(filterService.createFilterQuery().orderByFilterId().filterName("a").asc().list()).hasSize(1);
+    assertThat(filterService.createFilterQuery().orderByFilterId().filterName("a").desc().list()).hasSize(1);
   }
 
   @Test
@@ -249,16 +249,16 @@ public class FilterQueryTest extends PluggableProcessEngineTest {
     String tablePrefix = processEngineConfiguration.getDatabaseTablePrefix();
     assertThat(managementService.getTableName(Filter.class)).isEqualTo(tablePrefix + "ACT_RU_FILTER");
     assertThat(managementService.getTableName(FilterEntity.class)).isEqualTo(tablePrefix + "ACT_RU_FILTER");
-    assertThat(taskService.createNativeTaskQuery().sql("SELECT * FROM " + managementService.getTableName(Filter.class)).list().size()).isEqualTo(4);
+    assertThat(taskService.createNativeTaskQuery().sql("SELECT * FROM " + managementService.getTableName(Filter.class)).list()).hasSize(4);
     assertThat(taskService.createNativeTaskQuery().sql("SELECT count(*) FROM " + managementService.getTableName(Filter.class)).count()).isEqualTo(4);
 
     assertThat(taskService.createNativeTaskQuery().sql("SELECT count(*) FROM " + tablePrefix + "ACT_RU_FILTER F1, " + tablePrefix + "ACT_RU_FILTER F2").count()).isEqualTo(16);
 
     // select with distinct
-    assertThat(taskService.createNativeTaskQuery().sql("SELECT F1.* FROM " + tablePrefix + "ACT_RU_FILTER F1").list().size()).isEqualTo(4);
+    assertThat(taskService.createNativeTaskQuery().sql("SELECT F1.* FROM " + tablePrefix + "ACT_RU_FILTER F1").list()).hasSize(4);
 
     assertThat(taskService.createNativeTaskQuery().sql("SELECT count(*) FROM " + managementService.getTableName(Filter.class) + " F WHERE F.NAME_ = 'a'").count()).isEqualTo(1);
-    assertThat(taskService.createNativeTaskQuery().sql("SELECT * FROM " + managementService.getTableName(Filter.class) + " F WHERE F.NAME_ = 'a'").list().size()).isEqualTo(1);
+    assertThat(taskService.createNativeTaskQuery().sql("SELECT * FROM " + managementService.getTableName(Filter.class) + " F WHERE F.NAME_ = 'a'").list()).hasSize(1);
 
     // use parameters
     assertThat(taskService.createNativeTaskQuery().sql("SELECT count(*) FROM " + managementService.getTableName(Filter.class) + " F WHERE F.NAME_ = #{filterName}").parameter("filterName", "a").count()).isEqualTo(1);
@@ -269,8 +269,8 @@ public class FilterQueryTest extends PluggableProcessEngineTest {
     String tablePrefix = processEngineConfiguration.getDatabaseTablePrefix();
     assertThat(managementService.getTableName(Filter.class)).isEqualTo(tablePrefix + "ACT_RU_FILTER");
     assertThat(managementService.getTableName(FilterEntity.class)).isEqualTo(tablePrefix + "ACT_RU_FILTER");
-    assertThat(taskService.createNativeTaskQuery().sql("SELECT * FROM " + managementService.getTableName(Filter.class)).listPage(0, 3).size()).isEqualTo(3);
-    assertThat(taskService.createNativeTaskQuery().sql("SELECT * FROM " + managementService.getTableName(Filter.class)).listPage(2, 2).size()).isEqualTo(2);
+    assertThat(taskService.createNativeTaskQuery().sql("SELECT * FROM " + managementService.getTableName(Filter.class)).listPage(0, 3)).hasSize(3);
+    assertThat(taskService.createNativeTaskQuery().sql("SELECT * FROM " + managementService.getTableName(Filter.class)).listPage(2, 2)).hasSize(2);
   }
 
 }

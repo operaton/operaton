@@ -58,7 +58,7 @@ public class LinkEventTest extends PluggableProcessEngineTest {
     // validate history
     if(processEngineConfiguration.getHistoryLevel().getId() >= ProcessEngineConfigurationImpl.HISTORYLEVEL_ACTIVITY) {
       List<HistoricActivityInstance> activities = historyService.createHistoricActivityInstanceQuery().processInstanceId(pi.getId()).orderByActivityId().asc().list();
-      assertThat(activities.size()).isEqualTo(4);
+      assertThat(activities).hasSize(4);
       assertThat(activities.get(0).getActivityId()).isEqualTo("EndEvent_1");
       assertThat(activities.get(1).getActivityId()).isEqualTo("StartEvent_1");
       assertThat(activities.get(2).getActivityId()).isEqualTo("waitAfterLink1");
@@ -81,7 +81,7 @@ public class LinkEventTest extends PluggableProcessEngineTest {
     // validate history
     if(processEngineConfiguration.getHistoryLevel().getId() >= ProcessEngineConfigurationImpl.HISTORYLEVEL_ACTIVITY) {
       List<HistoricActivityInstance> activities = historyService.createHistoricActivityInstanceQuery().processInstanceId(pi.getId()).orderByActivityId().asc().list();
-      assertThat(activities.size()).isEqualTo(5);
+      assertThat(activities).hasSize(5);
       assertThat(activities.get(0).getActivityId()).isEqualTo("ManualTask_1");
       assertThat(activities.get(1).getActivityId()).isEqualTo("ParallelGateway_1");
       assertThat(activities.get(2).getActivityId()).isEqualTo("StartEvent_1");

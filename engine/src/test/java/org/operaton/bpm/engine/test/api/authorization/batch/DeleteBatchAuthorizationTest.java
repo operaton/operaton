@@ -153,7 +153,7 @@ public class DeleteBatchAuthorizationTest {
         .operationType(OPERATION_TYPE_DELETE)
         .list();
 
-      assertThat(userOperationLogEntries.size()).isEqualTo(1);
+      assertThat(userOperationLogEntries).hasSize(1);
 
       UserOperationLogEntry entry = userOperationLogEntries.get(0);
       assertThat(entry.getProperty()).isEqualTo("cascadeToHistory");
@@ -196,7 +196,7 @@ public class DeleteBatchAuthorizationTest {
       List<UserOperationLogEntry> userOperationLogEntries = query.operationType(OPERATION_TYPE_DELETE)
         .batchId(batch.getId())
         .list();
-      assertThat(userOperationLogEntries.size()).isEqualTo(1);
+      assertThat(userOperationLogEntries).hasSize(1);
 
       UserOperationLogEntry entry = userOperationLogEntries.get(0);
       assertThat(entry.getProperty()).isEqualTo("cascadeToHistory");
@@ -207,7 +207,7 @@ public class DeleteBatchAuthorizationTest {
       List<UserOperationLogEntry> userOperationLogHistoricEntries = query.operationType(OPERATION_TYPE_DELETE_HISTORY)
         .batchId(batch.getId())
         .list();
-      assertThat(userOperationLogHistoricEntries.size()).isEqualTo(0);
+      assertThat(userOperationLogHistoricEntries).hasSize(0);
     }
   }
 }

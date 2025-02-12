@@ -321,7 +321,7 @@ public class ProcessInstanceModificationMultiInstanceTest extends PluggableProce
 
     // then the mi variables should be correct
     List<Execution> leafExecutions = runtimeService.createExecutionQuery().activityId("miTasks").list();
-    assertThat(leafExecutions.size()).isEqualTo(4);
+    assertThat(leafExecutions).hasSize(4);
     assertVariableSet(leafExecutions, "loopCounter", Arrays.asList(0, 1, 2, 3));
     for (Execution leafExecution : leafExecutions) {
       assertVariable(leafExecution, "nrOfInstances", 4);
@@ -373,7 +373,7 @@ public class ProcessInstanceModificationMultiInstanceTest extends PluggableProce
 
     // then the mi variables should be correct
     List<Execution> leafExecutions = runtimeService.createExecutionQuery().activityId("subProcessTask").list();
-    assertThat(leafExecutions.size()).isEqualTo(4);
+    assertThat(leafExecutions).hasSize(4);
     assertVariableSet(leafExecutions, "loopCounter", Arrays.asList(0, 1, 2, 3));
     for (Execution leafExecution : leafExecutions) {
       assertVariable(leafExecution, "nrOfInstances", 4);
@@ -483,7 +483,7 @@ public class ProcessInstanceModificationMultiInstanceTest extends PluggableProce
 
     // then the activity instance statistics are correct
     List<ActivityStatistics> statistics = managementService.createActivityStatisticsQuery(processInstance.getProcessDefinitionId()).list();
-    assertThat(statistics.size()).isEqualTo(2);
+    assertThat(statistics).hasSize(2);
 
     ActivityStatistics miTasksStatistics = getStatisticsForActivity(statistics, "miTasks");
     assertNotNull(miTasksStatistics);
@@ -559,7 +559,7 @@ public class ProcessInstanceModificationMultiInstanceTest extends PluggableProce
 
     // then the activity instance statistics are correct
     List<ActivityStatistics> statistics = managementService.createActivityStatisticsQuery(processInstance.getProcessDefinitionId()).list();
-    assertThat(statistics.size()).isEqualTo(2);
+    assertThat(statistics).hasSize(2);
 
     ActivityStatistics miTasksStatistics = getStatisticsForActivity(statistics, "subProcessTask");
     assertNotNull(miTasksStatistics);
@@ -733,7 +733,7 @@ public class ProcessInstanceModificationMultiInstanceTest extends PluggableProce
 
     // then the activity instance statistics are correct
     List<ActivityStatistics> statistics = managementService.createActivityStatisticsQuery(processInstance.getProcessDefinitionId()).list();
-    assertThat(statistics.size()).isEqualTo(2);
+    assertThat(statistics).hasSize(2);
 
     ActivityStatistics miTasksStatistics = getStatisticsForActivity(statistics, "miTasks");
     assertNotNull(miTasksStatistics);
@@ -815,7 +815,7 @@ public class ProcessInstanceModificationMultiInstanceTest extends PluggableProce
 
     // then the activity instance statistics are correct
     List<ActivityStatistics> statistics = managementService.createActivityStatisticsQuery(processInstance.getProcessDefinitionId()).list();
-    assertThat(statistics.size()).isEqualTo(2);
+    assertThat(statistics).hasSize(2);
 
     ActivityStatistics miTasksStatistics = getStatisticsForActivity(statistics, "subProcessTask");
     assertNotNull(miTasksStatistics);

@@ -146,7 +146,7 @@ public class SubProcessTest extends PluggableProcessEngineTest {
     managementService.executeJob(job.getId());
 
     List<Task> tasksAfterTimer = taskQuery.list();
-    assertThat(tasksAfterTimer.size()).isEqualTo(2);
+    assertThat(tasksAfterTimer).hasSize(2);
     Task taskAfterTimer1 = tasksAfterTimer.get(0);
     Task taskAfterTimer2 = tasksAfterTimer.get(1);
     assertThat(taskAfterTimer1.getName()).isEqualTo("Task after timer 1");
@@ -554,7 +554,7 @@ public class SubProcessTest extends PluggableProcessEngineTest {
                                   .list();
 
     // Tasks are ordered by name (see query)
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
     Task investigateHardwareTask = tasks.get(0);
     Task investigateSoftwareTask = tasks.get(1);
     assertThat(investigateHardwareTask.getName()).isEqualTo("Investigate hardware");

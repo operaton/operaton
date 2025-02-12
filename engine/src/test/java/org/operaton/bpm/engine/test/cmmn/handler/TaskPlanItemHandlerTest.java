@@ -234,7 +234,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     assertTrue(newActivity.getEntryCriteria().isEmpty());
 
     assertFalse(newActivity.getExitCriteria().isEmpty());
-    assertThat(newActivity.getExitCriteria().size()).isEqualTo(1);
+    assertThat(newActivity.getExitCriteria()).hasSize(1);
 
     assertThat(newActivity.getExitCriteria().get(0)).isEqualTo(sentryDeclaration);
 
@@ -279,7 +279,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     assertTrue(newActivity.getEntryCriteria().isEmpty());
 
     assertFalse(newActivity.getExitCriteria().isEmpty());
-    assertThat(newActivity.getExitCriteria().size()).isEqualTo(2);
+    assertThat(newActivity.getExitCriteria()).hasSize(2);
 
     assertTrue(newActivity.getExitCriteria().contains(firstSentryDeclaration));
     assertTrue(newActivity.getExitCriteria().contains(secondSentryDeclaration));
@@ -314,7 +314,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     assertTrue(newActivity.getExitCriteria().isEmpty());
 
     assertFalse(newActivity.getEntryCriteria().isEmpty());
-    assertThat(newActivity.getEntryCriteria().size()).isEqualTo(1);
+    assertThat(newActivity.getEntryCriteria()).hasSize(1);
 
     assertThat(newActivity.getEntryCriteria().get(0)).isEqualTo(sentryDeclaration);
 
@@ -359,7 +359,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     assertTrue(newActivity.getExitCriteria().isEmpty());
 
     assertFalse(newActivity.getEntryCriteria().isEmpty());
-    assertThat(newActivity.getEntryCriteria().size()).isEqualTo(2);
+    assertThat(newActivity.getEntryCriteria()).hasSize(2);
 
     assertTrue(newActivity.getEntryCriteria().contains(firstSentryDeclaration));
     assertTrue(newActivity.getEntryCriteria().contains(secondSentryDeclaration));
@@ -394,11 +394,11 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     assertFalse(newActivity.getExitCriteria().isEmpty());
-    assertThat(newActivity.getExitCriteria().size()).isEqualTo(1);
+    assertThat(newActivity.getExitCriteria()).hasSize(1);
     assertThat(newActivity.getExitCriteria().get(0)).isEqualTo(sentryDeclaration);
 
     assertFalse(newActivity.getEntryCriteria().isEmpty());
-    assertThat(newActivity.getEntryCriteria().size()).isEqualTo(1);
+    assertThat(newActivity.getEntryCriteria()).hasSize(1);
     assertThat(newActivity.getEntryCriteria().get(0)).isEqualTo(sentryDeclaration);
 
   }

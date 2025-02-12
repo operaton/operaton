@@ -116,11 +116,11 @@ public class PrimitiveTypeValueSerializationTest {
 
     runtimeService.setVariable(instance.getId(), VARIABLE_NAME, nullValue);
 
-    assertThat(runtimeService.getVariable(instance.getId(), VARIABLE_NAME)).isEqualTo(null);
+    assertThat(runtimeService.getVariable(instance.getId(), VARIABLE_NAME)).isNull();
 
     TypedValue typedVariableValue = runtimeService.getVariableTyped(instance.getId(), VARIABLE_NAME);
     assertThat(typedVariableValue.getType()).isEqualTo(nullValue.getType());
-    assertThat(typedVariableValue.getValue()).isEqualTo(null);
+    assertThat(typedVariableValue.getValue()).isNull();
   }
 
 }

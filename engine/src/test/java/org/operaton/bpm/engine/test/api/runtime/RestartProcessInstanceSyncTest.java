@@ -307,7 +307,7 @@ public class RestartProcessInstanceSyncTest {
     // then
     ProcessInstance restartedProcessInstance = runtimeService.createProcessInstanceQuery().processDefinitionId(processDefinition.getId()).active().singleResult();
     List<VariableInstance> variables = runtimeService.createVariableInstanceQuery().processInstanceIdIn(restartedProcessInstance.getId()).list();
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
     assertThat(variables.get(0).getName()).isEqualTo("var");
     assertThat(variables.get(0).getValue()).isEqualTo("bar");
   }
@@ -333,7 +333,7 @@ public class RestartProcessInstanceSyncTest {
     // then
     ProcessInstance restartedProcessInstance = runtimeService.createProcessInstanceQuery().processDefinitionId(processDefinition.getId()).active().singleResult();
     List<VariableInstance> variables = runtimeService.createVariableInstanceQuery().processInstanceIdIn(restartedProcessInstance.getId()).list();
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
     assertThat(variables.get(0).getName()).isEqualTo("var");
     assertThat(variables.get(0).getValue()).isEqualTo("bar");
   }
@@ -357,7 +357,7 @@ public class RestartProcessInstanceSyncTest {
     // then
     ProcessInstance restartedProcessInstance = runtimeService.createProcessInstanceQuery().processDefinitionId(processDefinition.getId()).active().singleResult();
     List<VariableInstance> variables = runtimeService.createVariableInstanceQuery().processInstanceIdIn(restartedProcessInstance.getId()).list();
-    assertThat(variables.size()).isEqualTo(0);
+    assertThat(variables).hasSize(0);
 
     // details
     HistoricVariableUpdateEventEntity detail = (HistoricVariableUpdateEventEntity) historyService
@@ -390,7 +390,7 @@ public class RestartProcessInstanceSyncTest {
     // then
     ProcessInstance restartedProcessInstance = runtimeService.createProcessInstanceQuery().processDefinitionId(processDefinition.getId()).active().singleResult();
     List<VariableInstance> variables = runtimeService.createVariableInstanceQuery().processInstanceIdIn(restartedProcessInstance.getId()).list();
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
     assertThat(variables.get(0).getName()).isEqualTo("var");
     assertThat(variables.get(0).getValue()).isEqualTo("bar");
 
@@ -430,7 +430,7 @@ public class RestartProcessInstanceSyncTest {
         .processDefinitionId(processDefinition.getId()).active().singleResult();
     List<VariableInstance> variables = runtimeService.createVariableInstanceQuery()
         .processInstanceIdIn(restartedProcessInstance.getId()).list();
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
     assertThat(variables.get(0).getName()).isEqualTo("var");
     assertThat(variables.get(0).getValue()).isEqualTo("bar");
 
@@ -478,11 +478,11 @@ public class RestartProcessInstanceSyncTest {
         .processDefinitionId(processInstance.getProcessDefinitionId()).active().singleResult();
     List<VariableInstance> variables = runtimeService.createVariableInstanceQuery()
         .processInstanceIdIn(restartedProcessInstance.getId()).variableName("var").list();
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
     assertThat(variables.get(0).getValue()).isEqualTo("bar");
     variables = runtimeService.createVariableInstanceQuery()
         .processInstanceIdIn(restartedProcessInstance.getId()).variableName("listener").list();
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
     assertThat(variables.get(0).getValue()).isEqualTo("listener invoked");
   }
 
@@ -511,11 +511,11 @@ public class RestartProcessInstanceSyncTest {
         .processDefinitionId(processInstance.getProcessDefinitionId()).active().singleResult();
     List<VariableInstance> variables = runtimeService.createVariableInstanceQuery()
         .processInstanceIdIn(restartedProcessInstance.getId()).variableName("var").list();
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
     assertThat(variables.get(0).getValue()).isEqualTo("bar");
     variables = runtimeService.createVariableInstanceQuery()
         .processInstanceIdIn(restartedProcessInstance.getId()).variableName("listener").list();
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
     assertThat(variables.get(0).getValue()).isEqualTo("listener invoked");
   }
 
@@ -543,7 +543,7 @@ public class RestartProcessInstanceSyncTest {
     ProcessInstance restartedProcessInstance = runtimeService.createProcessInstanceQuery().processDefinitionId(processInstance.getProcessDefinitionId()).active().singleResult();
     List<VariableInstance> variables = runtimeService.createVariableInstanceQuery()
         .processInstanceIdIn(restartedProcessInstance.getId()).variableName("var").list();
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
     assertThat(variables.get(0).getValue()).isEqualTo("bar");
   }
 
@@ -852,7 +852,7 @@ public class RestartProcessInstanceSyncTest {
     // then
     ProcessInstance restartedProcessInstance = runtimeService.createProcessInstanceQuery().processDefinitionId(processDefinition.getId()).singleResult();
     List<VariableInstance> variables = runtimeService.createVariableInstanceQuery().processInstanceIdIn(restartedProcessInstance.getId()).list();
-    assertThat(variables.size()).isEqualTo(0);
+    assertThat(variables).hasSize(0);
   }
 
   @Test

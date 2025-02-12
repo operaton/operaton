@@ -103,7 +103,7 @@ public class CmmnDisabledTest {
     assertThat(processDefinition.getVersion()).isEqualTo(1);
 
     List<CaseDefinition> caseDefinitionList = repositoryService.createCaseDefinitionQuery().list();
-    assertThat(caseDefinitionList.size()).isEqualTo(0);
+    assertThat(caseDefinitionList).hasSize(0);
     long caseDefinitionCount =  repositoryService.createCaseDefinitionQuery().count();
     assertThat(caseDefinitionCount).isEqualTo(0);
 
@@ -121,7 +121,7 @@ public class CmmnDisabledTest {
 
     // variable instance query
     List<VariableInstance> result = runtimeService.createVariableInstanceQuery().list();
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
 
     VariableInstance variableInstance = result.get(0);
     assertThat(variableInstance.getName()).isEqualTo("my-variable");

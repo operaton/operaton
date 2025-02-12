@@ -106,7 +106,7 @@ public class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
       .list();
 
     // then
-    assertThat(processDefinitionsStatistics.size()).isEqualTo(1);
+    assertThat(processDefinitionsStatistics).hasSize(1);
     // user must see only the process instances that belongs to no tenant
     assertThat(processDefinitionsStatistics.get(0).getInstances()).isEqualTo(1);
     
@@ -126,7 +126,7 @@ public class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
       .list();
 
     // then
-    assertThat(processDefinitionsStatistics.size()).isEqualTo(1);
+    assertThat(processDefinitionsStatistics).hasSize(1);
     // user can see the process instances that belongs to tenant1 and instances that have no tenant  
     assertThat(processDefinitionsStatistics.get(0).getInstances()).isEqualTo(2);
     
@@ -147,7 +147,7 @@ public class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
       .list();
 
     // then
-    assertThat(processDefinitionsStatistics.size()).isEqualTo(1);
+    assertThat(processDefinitionsStatistics).hasSize(1);
     assertThat(processDefinitionsStatistics.get(0).getInstances()).isEqualTo(3);
   }
 
@@ -165,7 +165,7 @@ public class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
       .list();
 
     // then
-    assertThat(processDefinitionsStatistics.size()).isEqualTo(1);
+    assertThat(processDefinitionsStatistics).hasSize(1);
     // user can see all the active process instances 
     assertThat(processDefinitionsStatistics.get(0).getInstances()).isEqualTo(3);
     
@@ -189,7 +189,7 @@ public class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
         .list();
 
     // then
-    assertThat(processDefinitionsStatistics.size()).isEqualTo(1);
+    assertThat(processDefinitionsStatistics).hasSize(1);
     assertThat(processDefinitionsStatistics.get(0).getFailedJobs()).isEqualTo(1);
     
   }
@@ -213,7 +213,7 @@ public class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
         .list();
 
     // then
-    assertThat(processDefinitionsStatistics.size()).isEqualTo(1);
+    assertThat(processDefinitionsStatistics).hasSize(1);
     assertThat(processDefinitionsStatistics.get(0).getFailedJobs()).isEqualTo(3);
     
   }
@@ -236,7 +236,7 @@ public class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
         .list();
 
     // then
-    assertThat(processDefinitionsStatistics.size()).isEqualTo(1);
+    assertThat(processDefinitionsStatistics).hasSize(1);
     assertThat(processDefinitionsStatistics.get(0).getFailedJobs()).isEqualTo(2);
   }
 
@@ -258,7 +258,7 @@ public class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
         .list();
 
     // then
-    assertThat(processDefinitionsStatistics.size()).isEqualTo(1);
+    assertThat(processDefinitionsStatistics).hasSize(1);
     assertThat(processDefinitionsStatistics.get(0).getFailedJobs()).isEqualTo(3);
   }
 
@@ -280,10 +280,10 @@ public class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
         .list();
 
     // then
-    assertThat(processDefinitionsStatistics.size()).isEqualTo(1);
+    assertThat(processDefinitionsStatistics).hasSize(1);
     
     List<IncidentStatistics> incidentStatistics = processDefinitionsStatistics.get(0).getIncidentStatistics();
-    assertThat(incidentStatistics.size()).isEqualTo(1);
+    assertThat(incidentStatistics).hasSize(1);
     assertThat(incidentStatistics.get(0).getIncidentCount()).isEqualTo(1);
   }
 
@@ -306,10 +306,10 @@ public class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
         .list();
 
     // then
-    assertThat(processDefinitionsStatistics.size()).isEqualTo(1);
+    assertThat(processDefinitionsStatistics).hasSize(1);
     
     List<IncidentStatistics> incidentStatistics = processDefinitionsStatistics.get(0).getIncidentStatistics();
-    assertThat(incidentStatistics.size()).isEqualTo(1);
+    assertThat(incidentStatistics).hasSize(1);
     assertThat(incidentStatistics.get(0).getIncidentCount()).isEqualTo(3);
   }
 
@@ -331,10 +331,10 @@ public class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
         .list();
 
     // then
-    assertThat(processDefinitionsStatistics.size()).isEqualTo(1);
+    assertThat(processDefinitionsStatistics).hasSize(1);
     
     List<IncidentStatistics> incidentStatistics = processDefinitionsStatistics.get(0).getIncidentStatistics();
-    assertThat(incidentStatistics.size()).isEqualTo(1);
+    assertThat(incidentStatistics).hasSize(1);
     assertThat(incidentStatistics.get(0).getIncidentCount()).isEqualTo(2);
   }
 
@@ -356,9 +356,9 @@ public class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
         .list();
 
     // then
-    assertThat(processDefinitionsStatistics.size()).isEqualTo(1);
+    assertThat(processDefinitionsStatistics).hasSize(1);
     List<IncidentStatistics> incidentStatistics = processDefinitionsStatistics.get(0).getIncidentStatistics();
-    assertThat(incidentStatistics.size()).isEqualTo(1);
+    assertThat(incidentStatistics).hasSize(1);
     assertThat(incidentStatistics.get(0).getIncidentCount()).isEqualTo(3);
   }
 
@@ -380,10 +380,10 @@ public class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
         .list();
 
     // then
-    assertThat(processDefinitionsStatistics.size()).isEqualTo(1);
+    assertThat(processDefinitionsStatistics).hasSize(1);
     
     List<IncidentStatistics> incidentStatistics = processDefinitionsStatistics.get(0).getIncidentStatistics();
-    assertThat(incidentStatistics.size()).isEqualTo(1);
+    assertThat(incidentStatistics).hasSize(1);
     assertThat(incidentStatistics.get(0).getIncidentCount()).isEqualTo(2);
   }
 
@@ -406,13 +406,13 @@ public class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
         .list();
 
     // then
-    assertThat(processDefinitionsStatistics.size()).isEqualTo(1);
+    assertThat(processDefinitionsStatistics).hasSize(1);
     ProcessDefinitionStatistics processDefinitionStatistics = processDefinitionsStatistics.get(0);
     assertThat(processDefinitionStatistics.getInstances()).isEqualTo(2);
     assertThat(processDefinitionStatistics.getFailedJobs()).isEqualTo(2);
     
     List<IncidentStatistics> incidentStatistics = processDefinitionStatistics.getIncidentStatistics();
-    assertThat(incidentStatistics.size()).isEqualTo(1);
+    assertThat(incidentStatistics).hasSize(1);
     assertThat(incidentStatistics.get(0).getIncidentCount()).isEqualTo(2);
   }
 

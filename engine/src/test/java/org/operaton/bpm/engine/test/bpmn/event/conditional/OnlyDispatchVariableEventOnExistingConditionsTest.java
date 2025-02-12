@@ -54,7 +54,7 @@ public class OnlyDispatchVariableEventOnExistingConditionsTest {
 
       //then variable events should be delayed
       List<DelayedVariableEvent> delayedEvents = ((ExecutionEntity) execution).getDelayedEvents();
-      assertThat(delayedEvents.size()).isEqualTo(1);
+      assertThat(delayedEvents).hasSize(1);
       assertThat(delayedEvents.get(0).getEvent().getVariableInstance().getName()).isEqualTo("v");
     }
   }
@@ -69,7 +69,7 @@ public class OnlyDispatchVariableEventOnExistingConditionsTest {
 
       //then no variable events should be delayed
       List<DelayedVariableEvent> delayedEvents = ((ExecutionEntity) execution).getDelayedEvents();
-      assertThat(delayedEvents.size()).isEqualTo(0);
+      assertThat(delayedEvents).hasSize(0);
     }
   }
 

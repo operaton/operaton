@@ -59,7 +59,7 @@ public class UserOperationLogJobDefinitionTest extends AbstractUserOperationLogT
 
     assertThat(userOperationLogEntry.getProperty()).isEqualTo("overridingPriority");
     assertThat(userOperationLogEntry.getNewValue()).isEqualTo("42");
-    assertThat(userOperationLogEntry.getOrgValue()).isEqualTo(null);
+    assertThat(userOperationLogEntry.getOrgValue()).isNull();
 
     assertThat(userOperationLogEntry.getUserId()).isEqualTo(USER_ID);
 

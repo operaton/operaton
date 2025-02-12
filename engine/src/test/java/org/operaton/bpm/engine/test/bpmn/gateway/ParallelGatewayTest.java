@@ -93,14 +93,14 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
     // After process startm, only task 0 should be active
     TaskQuery query = taskService.createTaskQuery().orderByTaskName().asc();
     List<Task> tasks = query.list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
     assertThat(tasks.get(0).getName()).isEqualTo("Task 0");
     assertThat(runtimeService.getActivityInstance(pid).getChildActivityInstances().length).isEqualTo(1);
 
     // Completing task 0 will create Task A and B
     taskService.complete(tasks.get(0).getId());
     tasks = query.list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
     assertThat(tasks.get(0).getName()).isEqualTo("Task A");
     assertThat(tasks.get(1).getName()).isEqualTo("Task B");
     assertThat(runtimeService.getActivityInstance(pid).getChildActivityInstances().length).isEqualTo(2);
@@ -108,14 +108,14 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
     // Completing task A should not trigger any new tasks
     taskService.complete(tasks.get(0).getId());
     tasks = query.list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
     assertThat(tasks.get(0).getName()).isEqualTo("Task B");
     assertThat(runtimeService.getActivityInstance(pid).getChildActivityInstances().length).isEqualTo(2);
 
     // Completing task B creates tasks B1 and B2
     taskService.complete(tasks.get(0).getId());
     tasks = query.list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
     assertThat(tasks.get(0).getName()).isEqualTo("Task B1");
     assertThat(tasks.get(1).getName()).isEqualTo("Task B2");
     assertThat(runtimeService.getActivityInstance(pid).getChildActivityInstances().length).isEqualTo(3);
@@ -124,7 +124,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
     taskService.complete(tasks.get(0).getId());
     taskService.complete(tasks.get(1).getId());
     tasks = query.list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
     assertThat(tasks.get(0).getName()).isEqualTo("Task C");
     assertThat(runtimeService.getActivityInstance(pid).getChildActivityInstances().length).isEqualTo(1);
   }
@@ -141,7 +141,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
     // the sub process
     TaskQuery query = taskService.createTaskQuery().orderByTaskName().asc();
     List<Task> tasks = query.list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
     assertThat(tasks.get(0).getName()).isEqualTo("Another task");
     assertThat(tasks.get(1).getName()).isEqualTo("Some Task");
 
@@ -149,7 +149,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
     // receycled, the task in the sub process is still there
     taskService.complete(tasks.get(1).getId());
     tasks = query.list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
     assertThat(tasks.get(0).getName()).isEqualTo("Another task");
 
     // we end the task in the sub process and the sub process instance end is
@@ -183,7 +183,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
 
     // there are two jobs to continue the gateway:
     List<Job> list = managementService.createJobQuery().list();
-    assertThat(list.size()).isEqualTo(2);
+    assertThat(list).hasSize(2);
 
     managementService.executeJob(list.get(0).getId());
     managementService.executeJob(list.get(1).getId());
@@ -203,7 +203,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
 
     // there are two jobs to continue the gateway:
     List<Job> list = managementService.createJobQuery().list();
-    assertThat(list.size()).isEqualTo(2);
+    assertThat(list).hasSize(2);
 
     managementService.executeJob(list.get(0).getId());
     managementService.executeJob(list.get(1).getId());
@@ -253,7 +253,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
                         .asc();
 
     List<Task> tasks = query.list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
     // the tasks are ordered by name (see above)
     Task task1 = tasks.get(0);
     assertThat(task1.getName()).isEqualTo("Receive Payment");
@@ -265,7 +265,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
     taskService.complete(tasks.get(1).getId());
 
     tasks = query.list();
-    assertThat(tasks.size()).isEqualTo(1);
+    assertThat(tasks).hasSize(1);
     assertThat(tasks.get(0).getName()).isEqualTo("Archive Order");
   }
 
@@ -280,7 +280,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
                                  .asc();
 
     List<Task> tasks = query.list();
-    assertThat(tasks.size()).isEqualTo(3);
+    assertThat(tasks).hasSize(3);
     // the tasks are ordered by name (see above)
     Task task1 = tasks.get(0);
     assertThat(task1.getName()).isEqualTo("Task 1");
@@ -295,7 +295,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
 
     tasks = query.list();
     Task task3 = tasks.get(0);
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
     assertThat(task3.getName()).isEqualTo("Task 3");
     Task task4 = tasks.get(1);
     assertThat(task4.getName()).isEqualTo("Task 4");

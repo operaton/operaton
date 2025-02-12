@@ -95,7 +95,7 @@ public class ModificationExecutionSyncTest {
     for (String instanceId : instances) {
 
       List<String> activeActivityIds = runtimeService.getActiveActivityIds(instanceId);
-      assertThat(activeActivityIds.size()).isEqualTo(1);
+      assertThat(activeActivityIds).hasSize(1);
       assertThat(activeActivityIds.iterator().next()).isEqualTo("user2");
     }
   }
@@ -112,7 +112,7 @@ public class ModificationExecutionSyncTest {
 
     for (String instanceId : instances) {
       List<String> activeActivityIds = runtimeService.getActiveActivityIds(instanceId);
-      assertThat(activeActivityIds.size()).isEqualTo(1);
+      assertThat(activeActivityIds).hasSize(1);
       assertThat(activeActivityIds.iterator().next()).isEqualTo("user2");
     }
   }
@@ -131,7 +131,7 @@ public class ModificationExecutionSyncTest {
 
     for (String instanceId : instances) {
       List<String> activeActivityIds = runtimeService.getActiveActivityIds(instanceId);
-      assertThat(activeActivityIds.size()).isEqualTo(1);
+      assertThat(activeActivityIds).hasSize(1);
       assertThat(activeActivityIds.iterator().next()).isEqualTo("user2");
     }
   }
@@ -150,7 +150,7 @@ public class ModificationExecutionSyncTest {
 
     for (String instanceId : instances) {
       List<String> activeActivityIds = runtimeService.getActiveActivityIds(instanceId);
-      assertThat(activeActivityIds.size()).isEqualTo(1);
+      assertThat(activeActivityIds).hasSize(1);
       assertThat(activeActivityIds.iterator().next()).isEqualTo("user2");
     }
   }
@@ -168,7 +168,7 @@ public class ModificationExecutionSyncTest {
         .cancelAllForActivity("user1").historicProcessInstanceQuery(historicProcessInstanceQuery).execute();
 
     List<String> activeActivityIds = runtimeService.getActiveActivityIds(instances.get(1));
-    assertThat(activeActivityIds.size()).isEqualTo(1);
+    assertThat(activeActivityIds).hasSize(1);
     assertThat(activeActivityIds.iterator().next()).isEqualTo("user2");
   }
 
@@ -421,7 +421,7 @@ public class ModificationExecutionSyncTest {
       .execute();
 
     // then
-    assertThat(runtimeService.createExecutionQuery().list().size()).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().list()).hasSize(0);
   }
 
   @Test
@@ -446,7 +446,7 @@ public class ModificationExecutionSyncTest {
       .execute();
 
     // then
-    assertThat(runtimeService.createExecutionQuery().list().size()).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().list()).hasSize(0);
   }
 
   @Test

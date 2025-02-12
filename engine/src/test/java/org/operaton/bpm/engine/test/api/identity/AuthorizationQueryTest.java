@@ -136,44 +136,44 @@ public class AuthorizationQueryTest extends PluggableProcessEngineTest {
     Resource nonExisting = new NonExistingResource("non-existing", 102);
 
     // query by user id
-    assertThat(authorizationService.createAuthorizationQuery().userIdIn("user1").list().size()).isEqualTo(2);
-    assertThat(authorizationService.createAuthorizationQuery().userIdIn("user2").list().size()).isEqualTo(1);
-    assertThat(authorizationService.createAuthorizationQuery().userIdIn("user3").list().size()).isEqualTo(1);
-    assertThat(authorizationService.createAuthorizationQuery().userIdIn("user1", "user2").list().size()).isEqualTo(3);
-    assertThat(authorizationService.createAuthorizationQuery().userIdIn("non-existing").list().size()).isEqualTo(0);
+    assertThat(authorizationService.createAuthorizationQuery().userIdIn("user1").list()).hasSize(2);
+    assertThat(authorizationService.createAuthorizationQuery().userIdIn("user2").list()).hasSize(1);
+    assertThat(authorizationService.createAuthorizationQuery().userIdIn("user3").list()).hasSize(1);
+    assertThat(authorizationService.createAuthorizationQuery().userIdIn("user1", "user2").list()).hasSize(3);
+    assertThat(authorizationService.createAuthorizationQuery().userIdIn("non-existing").list()).hasSize(0);
 
     // query by group id
-    assertThat(authorizationService.createAuthorizationQuery().groupIdIn("group1").list().size()).isEqualTo(2);
-    assertThat(authorizationService.createAuthorizationQuery().groupIdIn("group2").list().size()).isEqualTo(1);
-    assertThat(authorizationService.createAuthorizationQuery().groupIdIn("group3").list().size()).isEqualTo(1);
-    assertThat(authorizationService.createAuthorizationQuery().groupIdIn("group1", "group2").list().size()).isEqualTo(3);
-    assertThat(authorizationService.createAuthorizationQuery().groupIdIn("non-existing").list().size()).isEqualTo(0);
+    assertThat(authorizationService.createAuthorizationQuery().groupIdIn("group1").list()).hasSize(2);
+    assertThat(authorizationService.createAuthorizationQuery().groupIdIn("group2").list()).hasSize(1);
+    assertThat(authorizationService.createAuthorizationQuery().groupIdIn("group3").list()).hasSize(1);
+    assertThat(authorizationService.createAuthorizationQuery().groupIdIn("group1", "group2").list()).hasSize(3);
+    assertThat(authorizationService.createAuthorizationQuery().groupIdIn("non-existing").list()).hasSize(0);
 
     // query by resource type
-    assertThat(authorizationService.createAuthorizationQuery().resourceType(resource1).list().size()).isEqualTo(4);
-    assertThat(authorizationService.createAuthorizationQuery().resourceType(nonExisting).list().size()).isEqualTo(0);
+    assertThat(authorizationService.createAuthorizationQuery().resourceType(resource1).list()).hasSize(4);
+    assertThat(authorizationService.createAuthorizationQuery().resourceType(nonExisting).list()).hasSize(0);
 
     // query by resource id
-    assertThat(authorizationService.createAuthorizationQuery().resourceId("resource1-2").list().size()).isEqualTo(2);
-    assertThat(authorizationService.createAuthorizationQuery().resourceId("non-existing").list().size()).isEqualTo(0);
+    assertThat(authorizationService.createAuthorizationQuery().resourceId("resource1-2").list()).hasSize(2);
+    assertThat(authorizationService.createAuthorizationQuery().resourceId("non-existing").list()).hasSize(0);
 
     // query by permission
-    assertThat(authorizationService.createAuthorizationQuery().hasPermission(TestPermissions.ACCESS).list().size()).isEqualTo(1);
-    assertThat(authorizationService.createAuthorizationQuery().hasPermission(TestPermissions.DELETE).list().size()).isEqualTo(2);
-    assertThat(authorizationService.createAuthorizationQuery().hasPermission(TestPermissions.READ).list().size()).isEqualTo(2);
-    assertThat(authorizationService.createAuthorizationQuery().hasPermission(TestPermissions.UPDATE).list().size()).isEqualTo(3);
+    assertThat(authorizationService.createAuthorizationQuery().hasPermission(TestPermissions.ACCESS).list()).hasSize(1);
+    assertThat(authorizationService.createAuthorizationQuery().hasPermission(TestPermissions.DELETE).list()).hasSize(2);
+    assertThat(authorizationService.createAuthorizationQuery().hasPermission(TestPermissions.READ).list()).hasSize(2);
+    assertThat(authorizationService.createAuthorizationQuery().hasPermission(TestPermissions.UPDATE).list()).hasSize(3);
     // multiple permissions at the same time
-    assertThat(authorizationService.createAuthorizationQuery().hasPermission(TestPermissions.READ).hasPermission(TestPermissions.UPDATE).list().size()).isEqualTo(2);
-    assertThat(authorizationService.createAuthorizationQuery().hasPermission(TestPermissions.UPDATE).hasPermission(TestPermissions.READ).list().size()).isEqualTo(2);
-    assertThat(authorizationService.createAuthorizationQuery().hasPermission(TestPermissions.READ).hasPermission(TestPermissions.ACCESS).list().size()).isEqualTo(0);
+    assertThat(authorizationService.createAuthorizationQuery().hasPermission(TestPermissions.READ).hasPermission(TestPermissions.UPDATE).list()).hasSize(2);
+    assertThat(authorizationService.createAuthorizationQuery().hasPermission(TestPermissions.UPDATE).hasPermission(TestPermissions.READ).list()).hasSize(2);
+    assertThat(authorizationService.createAuthorizationQuery().hasPermission(TestPermissions.READ).hasPermission(TestPermissions.ACCESS).list()).hasSize(0);
 
     // user id & resource type
-    assertThat(authorizationService.createAuthorizationQuery().userIdIn("user1").resourceType(resource1).list().size()).isEqualTo(1);
-    assertThat(authorizationService.createAuthorizationQuery().userIdIn("user1").resourceType(nonExisting).list().size()).isEqualTo(0);
+    assertThat(authorizationService.createAuthorizationQuery().userIdIn("user1").resourceType(resource1).list()).hasSize(1);
+    assertThat(authorizationService.createAuthorizationQuery().userIdIn("user1").resourceType(nonExisting).list()).hasSize(0);
 
     // group id & resource type
-    assertThat(authorizationService.createAuthorizationQuery().groupIdIn("group2").resourceType(resource2).list().size()).isEqualTo(1);
-    assertThat(authorizationService.createAuthorizationQuery().groupIdIn("group1").resourceType(nonExisting).list().size()).isEqualTo(0);
+    assertThat(authorizationService.createAuthorizationQuery().groupIdIn("group2").resourceType(resource2).list()).hasSize(1);
+    assertThat(authorizationService.createAuthorizationQuery().groupIdIn("group1").resourceType(nonExisting).list()).hasSize(0);
   }
 
   @Test

@@ -56,7 +56,7 @@ public class DisabledJobPrioritizationBpmnTest extends PluggableProcessEngineTes
 
     // then
     List<Job> jobs = managementService.createJobQuery().list();
-    assertThat(jobs.size()).isEqualTo(2);
+    assertThat(jobs).hasSize(2);
 
     for (Job job : jobs) {
       assertNotNull(job);

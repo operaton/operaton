@@ -49,7 +49,7 @@ public class DelegateExpressionExecutionListenerSpec extends AbstractExecutionLi
     assertThat(delegateExpressionListener.getExpressionText()).isEqualTo(DELEGATE_EXPRESSION);
 
     List<FieldDeclaration> fieldDeclarations = delegateExpressionListener.getFieldDeclarations();
-    assertThat(fieldDeclarations.size()).isEqualTo(fieldSpecs.size());
+    assertThat(fieldDeclarations).hasSize(fieldSpecs.size());
 
     for (int i = 0; i < fieldDeclarations.size(); i++) {
       FieldDeclaration declaration = fieldDeclarations.get(i);

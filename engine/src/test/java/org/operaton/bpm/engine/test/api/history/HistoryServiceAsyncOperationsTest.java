@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.history;
 
-import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -317,7 +316,7 @@ public class HistoryServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
     Batch batch = historyService.deleteHistoricProcessInstancesAsync(historicProcessInstances, TEST_REASON);
 
     // then
-    Assertions.assertThat(batch.getInvocationsPerBatchJob()).isEqualTo(42);
+    assertThat(batch.getInvocationsPerBatchJob()).isEqualTo(42);
 
     // clear
     engineRule.getProcessEngineConfiguration()

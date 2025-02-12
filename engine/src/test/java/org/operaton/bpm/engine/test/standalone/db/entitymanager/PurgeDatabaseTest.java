@@ -187,7 +187,7 @@ public class PurgeDatabaseTest {
     // and report contains deleted data
     assertFalse(purge.isEmpty());
     CachePurgeReport cachePurgeReport = purge.getCachePurgeReport();
-    assertThat(cachePurgeReport.getReportValue(CachePurgeReport.PROCESS_DEF_CACHE).size()).isEqualTo(1);
+    assertThat(cachePurgeReport.getReportValue(CachePurgeReport.PROCESS_DEF_CACHE)).hasSize(1);
 
     DatabasePurgeReport databasePurgeReport = purge.getDatabasePurgeReport();
     assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_ID_TENANT_MEMBER")).isEqualTo(2);
@@ -305,7 +305,7 @@ public class PurgeDatabaseTest {
     // and report contains deleted entities
     assertFalse(purge.isEmpty());
     CachePurgeReport cachePurgeReport = purge.getCachePurgeReport();
-    assertThat(cachePurgeReport.getReportValue(CachePurgeReport.CASE_DEF_CACHE).size()).isEqualTo(1);
+    assertThat(cachePurgeReport.getReportValue(CachePurgeReport.CASE_DEF_CACHE)).hasSize(1);
 
     DatabasePurgeReport databasePurgeReport = purge.getDatabasePurgeReport();
     assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_RE_DEPLOYMENT")).isEqualTo(1);
@@ -349,8 +349,8 @@ public class PurgeDatabaseTest {
     // and report contains deleted entities
     assertFalse(purge.isEmpty());
     CachePurgeReport cachePurgeReport = purge.getCachePurgeReport();
-    assertThat(cachePurgeReport.getReportValue(CachePurgeReport.DMN_DEF_CACHE).size()).isEqualTo(2);
-    assertThat(cachePurgeReport.getReportValue(CachePurgeReport.DMN_REQ_DEF_CACHE).size()).isEqualTo(1);
+    assertThat(cachePurgeReport.getReportValue(CachePurgeReport.DMN_DEF_CACHE)).hasSize(2);
+    assertThat(cachePurgeReport.getReportValue(CachePurgeReport.DMN_REQ_DEF_CACHE)).hasSize(1);
 
     DatabasePurgeReport databasePurgeReport = purge.getDatabasePurgeReport();
     assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_RE_DEPLOYMENT")).isEqualTo(1);

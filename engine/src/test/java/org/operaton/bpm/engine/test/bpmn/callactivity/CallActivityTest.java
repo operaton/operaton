@@ -185,7 +185,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // Completing this task ends the subprocess which leads to the end of the whole process instance
     taskService.complete(taskBeforeSubProcess.getId());
     testRule.assertProcessEnded(processInstance.getId());
-    assertThat(runtimeService.createExecutionQuery().list().size()).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().list()).hasSize(0);
   }
 
   @Deployment(resources = {
@@ -201,7 +201,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
             .orderByTaskName()
             .asc();
     List<Task> tasks = taskQuery.list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
 
     Task taskA = tasks.get(0);
     Task taskB = tasks.get(1);
@@ -210,7 +210,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
 
     // Completing the first task should not end the subprocess
     taskService.complete(taskA.getId());
-    assertThat(taskQuery.list().size()).isEqualTo(1);
+    assertThat(taskQuery.list()).hasSize(1);
 
     // Completing the second task should end the subprocess and end the whole process instance
     taskService.complete(taskB.getId());
@@ -295,7 +295,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
 
     // Completing the task ends the complete process
     taskService.complete(escalatedTask.getId());
-    assertThat(runtimeService.createExecutionQuery().list().size()).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().list()).hasSize(0);
   }
 
   /**
@@ -357,7 +357,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     taskService.complete(taskAfterSecondSubProcess.getId());
 
     testRule.assertProcessEnded(processInstance.getId());
-    assertThat(runtimeService.createExecutionQuery().list().size()).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().list()).hasSize(0);
   }
 
   /**
@@ -401,7 +401,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     taskService.complete(taskAfterSubProcess.getId());
 
     testRule.assertProcessEnded(processInstance.getId());
-    assertThat(runtimeService.createExecutionQuery().list().size()).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().list()).hasSize(0);
   }
 
   /**
@@ -442,7 +442,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     taskService.complete(taskAfterSubProcess.getId());
 
     testRule.assertProcessEnded(processInstance.getId());
-    assertThat(runtimeService.createExecutionQuery().list().size()).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().list()).hasSize(0);
   }
 
   /**
@@ -740,21 +740,21 @@ public class CallActivityTest extends PluggableProcessEngineTest {
 
     List<ProcessInstance> instanceList = runtimeService.createProcessInstanceQuery().list();
     assertNotNull(instanceList);
-    assertThat(instanceList.size()).isEqualTo(3);
+    assertThat(instanceList).hasSize(3);
 
     List<Task> taskList = taskService.createTaskQuery().list();
     assertNotNull(taskList);
-    assertThat(taskList.size()).isEqualTo(2);
+    assertThat(taskList).hasSize(2);
 
     runtimeService.deleteProcessInstance(processInstance.getId(), "Test cascading");
 
     instanceList = runtimeService.createProcessInstanceQuery().list();
     assertNotNull(instanceList);
-    assertThat(instanceList.size()).isEqualTo(0);
+    assertThat(instanceList).hasSize(0);
 
     taskList = taskService.createTaskQuery().list();
     assertNotNull(taskList);
-    assertThat(taskList.size()).isEqualTo(0);
+    assertThat(taskList).hasSize(0);
   }
 
   /**
@@ -809,7 +809,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     taskService.complete(taskAfterSubProcess.getId());
 
     testRule.assertProcessEnded(processInstance.getId());
-    assertThat(runtimeService.createExecutionQuery().list().size()).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().list()).hasSize(0);
   }
 
   /**
@@ -865,7 +865,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     taskService.complete(taskAfterSubProcess.getId());
 
     testRule.assertProcessEnded(processInstance.getId());
-    assertThat(runtimeService.createExecutionQuery().list().size()).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().list()).hasSize(0);
   }
 
   /**
@@ -913,7 +913,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     taskService.complete(taskAfterSubProcess.getId());
 
     testRule.assertProcessEnded(processInstance.getId());
-    assertThat(runtimeService.createExecutionQuery().list().size()).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().list()).hasSize(0);
   }
 
   @Deployment(resources = {
@@ -936,8 +936,9 @@ public class CallActivityTest extends PluggableProcessEngineTest {
             .singleResult();
 
     Map<String, Object> calledInstanceVariables = runtimeService.getVariables(calledInstance.getId());
-    assertThat(calledInstanceVariables.size()).isEqualTo(1);
-    assertThat(calledInstanceVariables.get("inputParameter")).isEqualTo("val2");
+    assertThat(calledInstanceVariables)
+            .hasSize(1)
+            .containsEntry("inputParameter", "val2");
 
     // when setting a variable in the called process instance
     runtimeService.setVariable(calledInstance.getId(), "calledProcessVar1", 42L);
@@ -949,10 +950,11 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // then the call activity output variable has been mapped to the process instance execution
     // and the output mapping variable as well
     Map<String, Object> callingInstanceVariables = runtimeService.getVariables(processInstance.getId());
-    assertThat(callingInstanceVariables.size()).isEqualTo(3);
-    assertThat(callingInstanceVariables.get("callingProcessVar1")).isEqualTo("val1");
-    assertThat(callingInstanceVariables.get("calledProcessVar1")).isEqualTo(42L);
-    assertThat(callingInstanceVariables.get("outputParameter")).isEqualTo(43L);
+    assertThat(callingInstanceVariables)
+            .hasSize(3)
+            .containsEntry("callingProcessVar1", "val1")
+            .containsEntry("calledProcessVar1", 42L)
+            .containsEntry("outputParameter", 43L);
   }
 
   @Deployment(resources = {
@@ -975,8 +977,9 @@ public class CallActivityTest extends PluggableProcessEngineTest {
             .singleResult();
 
     Map<String, Object> calledInstanceVariables = runtimeService.getVariables(calledInstance.getId());
-    assertThat(calledInstanceVariables.size()).isEqualTo(1);
-    assertThat(calledInstanceVariables.get("mappedInputParameter")).isEqualTo("val2");
+    assertThat(calledInstanceVariables)
+            .hasSize(1)
+            .containsEntry("mappedInputParameter", "val2");
 
     // when setting a variable in the called process instance
     runtimeService.setVariable(calledInstance.getId(), "calledProcessVar1", 42L);
@@ -988,11 +991,12 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // then the call activity output variable has been mapped to the process instance execution
     // and the output mapping variable as well
     Map<String, Object> callingInstanceVariables = runtimeService.getVariables(processInstance.getId());
-    assertThat(callingInstanceVariables.size()).isEqualTo(4);
-    assertThat(callingInstanceVariables.get("callingProcessVar1")).isEqualTo("val1");
-    assertThat(callingInstanceVariables.get("mappedInputParameter")).isEqualTo("val2");
-    assertThat(callingInstanceVariables.get("calledProcessVar1")).isEqualTo(42L);
-    assertThat(callingInstanceVariables.get("outputParameter")).isEqualTo(43L);
+    assertThat(callingInstanceVariables)
+            .hasSize(4)
+            .containsEntry("callingProcessVar1", "val1")
+            .containsEntry("mappedInputParameter", "val2")
+            .containsEntry("calledProcessVar1", 42L)
+            .containsEntry("outputParameter", 43L);
   }
 
   @Deployment(resources = {
@@ -1013,8 +1017,9 @@ public class CallActivityTest extends PluggableProcessEngineTest {
             .singleResult();
 
     Map<String, Object> calledInstanceVariables = runtimeService.getVariables(calledInstance.getId());
-    assertThat(calledInstanceVariables.size()).isEqualTo(1);
-    assertThat(calledInstanceVariables.get("mappedInputParameter")).isEqualTo(43L);
+    assertThat(calledInstanceVariables)
+            .hasSize(1)
+            .containsEntry("mappedInputParameter", 43L);
 
     // and completing it
     Task callActivityTask = taskService.createTaskQuery().singleResult();
@@ -1053,9 +1058,10 @@ public class CallActivityTest extends PluggableProcessEngineTest {
             .singleResult();
 
     Map<String, Object> calledInstanceVariables = runtimeService.getVariables(calledInstance.getId());
-    assertThat(calledInstanceVariables.size()).isEqualTo(2);
-    assertThat(calledInstanceVariables.get("callingProcessVar1")).isEqualTo("val1");
-    assertThat(calledInstanceVariables.get("inputParameter")).isEqualTo("val2");
+    assertThat(calledInstanceVariables)
+            .hasSize(2)
+            .containsEntry("callingProcessVar1", "val1")
+            .containsEntry("inputParameter", "val2");
 
     // when setting a variable in the called process instance
     runtimeService.setVariable(calledInstance.getId(), "calledProcessVar1", 42L);
@@ -1066,9 +1072,10 @@ public class CallActivityTest extends PluggableProcessEngineTest {
 
     // then only the output mapping variable has been mapped into the calling process instance
     Map<String, Object> callingInstanceVariables = runtimeService.getVariables(processInstance.getId());
-    assertThat(callingInstanceVariables.size()).isEqualTo(2);
-    assertThat(callingInstanceVariables.get("callingProcessVar1")).isEqualTo("val1");
-    assertThat(callingInstanceVariables.get("outputParameter")).isEqualTo(43L);
+    assertThat(callingInstanceVariables)
+            .hasSize(2)
+            .containsEntry("callingProcessVar1", "val1")
+            .containsEntry("outputParameter", 43L);
   }
 
   @Deployment(resources = {
@@ -1091,9 +1098,10 @@ public class CallActivityTest extends PluggableProcessEngineTest {
             .singleResult();
 
     Map<String, Object> calledInstanceVariables = runtimeService.getVariables(calledInstance.getId());
-    assertThat(calledInstanceVariables.size()).isEqualTo(2);
-    assertThat(calledInstanceVariables.get("callingProcessVar1")).isEqualTo("val1");
-    assertThat(calledInstanceVariables.get("inputParameter")).isEqualTo("val2");
+    assertThat(calledInstanceVariables)
+            .hasSize(2)
+            .containsEntry("callingProcessVar1", "val1")
+            .containsEntry("inputParameter", "val2");
 
     // when setting a variable in the called process instance
     runtimeService.setVariable(calledInstance.getId(), "calledProcessVar1", 42L);
@@ -1104,9 +1112,10 @@ public class CallActivityTest extends PluggableProcessEngineTest {
 
     // then only the output mapping variable has been mapped into the calling process instance
     Map<String, Object> callingInstanceVariables = runtimeService.getVariables(processInstance.getId());
-    assertThat(callingInstanceVariables.size()).isEqualTo(2);
-    assertThat(callingInstanceVariables.get("callingProcessVar1")).isEqualTo("val1");
-    assertThat(callingInstanceVariables.get("outputParameter")).isEqualTo(43L);
+    assertThat(callingInstanceVariables)
+            .hasSize(2)
+            .containsEntry("callingProcessVar1", "val1")
+            .containsEntry("outputParameter", 43L);
   }
 
   /**
@@ -1133,7 +1142,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
       HistoricProcessInstance hpi = historyService.createHistoricProcessInstanceQuery().superProcessInstanceId(processInstance.getId()).singleResult();
       assertThat(hpi.getBusinessKey()).isEqualTo(businessKey);
 
-      assertThat(historyService.createHistoricProcessInstanceQuery().processInstanceBusinessKey(businessKey).list().size()).isEqualTo(2);
+      assertThat(historyService.createHistoricProcessInstanceQuery().processInstanceBusinessKey(businessKey).list()).hasSize(2);
     }
 
     // one task in sub process should be active after starting sub process instance
@@ -1153,13 +1162,13 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     taskService.complete(taskAfterSubProcess.getId());
 
     testRule.assertProcessEnded(processInstance.getId());
-    assertThat(runtimeService.createExecutionQuery().list().size()).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().list()).hasSize(0);
 
     if (processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
       HistoricProcessInstance hpi = historyService.createHistoricProcessInstanceQuery().superProcessInstanceId(processInstance.getId()).finished().singleResult();
       assertThat(hpi.getBusinessKey()).isEqualTo(businessKey);
 
-      assertThat(historyService.createHistoricProcessInstanceQuery().processInstanceBusinessKey(businessKey).finished().list().size()).isEqualTo(2);
+      assertThat(historyService.createHistoricProcessInstanceQuery().processInstanceBusinessKey(businessKey).finished().list()).hasSize(2);
     }
   }
 
@@ -1211,7 +1220,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     String calledProcessInstanceId = taskInsideCallActivity.getProcessInstanceId();
     EventSubscriptionQuery eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery().processInstanceId(calledProcessInstanceId);
     List<EventSubscription> subscriptions = eventSubscriptionQuery.list();
-    assertThat(subscriptions.size()).isEqualTo(2);
+    assertThat(subscriptions).hasSize(2);
 
     // start the message interrupting event sub process
     runtimeService.correlateMessage("newMessage");
@@ -1245,7 +1254,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     String calledProcessInstanceId = taskInsideCallActivity.getProcessInstanceId();
     EventSubscriptionQuery eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery().processInstanceId(calledProcessInstanceId);
     List<EventSubscription> subscriptions = eventSubscriptionQuery.list();
-    assertThat(subscriptions.size()).isEqualTo(2);
+    assertThat(subscriptions).hasSize(2);
 
     // start the signal interrupting event sub process
     runtimeService.signalEventReceived("newSignal");
@@ -1663,7 +1672,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
 
     List<ProcessInstance> instanceList = runtimeService.createProcessInstanceQuery().list();
     assertNotNull(instanceList);
-    assertThat(instanceList.size()).isEqualTo(2);
+    assertThat(instanceList).hasSize(2);
 
 
     // when
@@ -1675,7 +1684,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // How many process Instances
     instanceList = runtimeService.createProcessInstanceQuery().list();
     assertNotNull(instanceList);
-    assertThat(instanceList.size()).isEqualTo(0);
+    assertThat(instanceList).hasSize(0);
   }
 
   /**
@@ -1695,15 +1704,15 @@ public class CallActivityTest extends PluggableProcessEngineTest {
 
     List<ProcessInstance> instanceList = runtimeService.createProcessInstanceQuery().list();
     assertNotNull(instanceList);
-    assertThat(instanceList.size()).isEqualTo(3);
+    assertThat(instanceList).hasSize(3);
 
     List<Task> taskList = taskService.createTaskQuery().list();
     assertNotNull(taskList);
-    assertThat(taskList.size()).isEqualTo(2);
+    assertThat(taskList).hasSize(2);
 
     List<String> activeActivityIds = runtimeService.getActiveActivityIds(processInstance.getProcessInstanceId());
     assertNotNull(activeActivityIds);
-    assertThat(activeActivityIds.size()).isEqualTo(2);
+    assertThat(activeActivityIds).hasSize(2);
 
     // when
     runtimeService.deleteProcessInstance(taskList.get(0).getProcessInstanceId(), "Test upstream deletion");
@@ -1712,12 +1721,12 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // How many process Instances
     instanceList = runtimeService.createProcessInstanceQuery().list();
     assertNotNull(instanceList);
-    assertThat(instanceList.size()).isEqualTo(2);
+    assertThat(instanceList).hasSize(2);
 
     // How man call activities
     activeActivityIds = runtimeService.getActiveActivityIds(processInstance.getProcessInstanceId());
     assertNotNull(activeActivityIds);
-    assertThat(activeActivityIds.size()).isEqualTo(1);
+    assertThat(activeActivityIds).hasSize(1);
   }
 
   /**
@@ -1750,7 +1759,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
 
     List<ProcessInstance> instanceList = runtimeService.createProcessInstanceQuery().list();
     assertNotNull(instanceList);
-    assertThat(instanceList.size()).isEqualTo(3);
+    assertThat(instanceList).hasSize(3);
 
     // when
     // Delete the ProcessInstance in the sub process
@@ -1761,7 +1770,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // How many process Instances
     instanceList = runtimeService.createProcessInstanceQuery().list();
     assertNotNull(instanceList);
-    assertThat(instanceList.size()).isEqualTo(0);
+    assertThat(instanceList).hasSize(0);
 
   }
 
@@ -1807,7 +1816,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
 
     List<ProcessInstance> instanceList = runtimeService.createProcessInstanceQuery().list();
     assertNotNull(instanceList);
-    assertThat(instanceList.size()).isEqualTo(4);
+    assertThat(instanceList).hasSize(4);
 
     // when
     // Delete the ProcessInstance in the sub process
@@ -1818,7 +1827,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // How many process Instances
     instanceList = runtimeService.createProcessInstanceQuery().list();
     assertNotNull(instanceList);
-    assertThat(instanceList.size()).isEqualTo(0);
+    assertThat(instanceList).hasSize(0);
 
   }
 

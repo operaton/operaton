@@ -75,7 +75,7 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
   @Test
   public void testQueryNoCriteria() {
     DeploymentQuery query = repositoryService.createDeploymentQuery();
-    assertThat(query.list().size()).isEqualTo(2);
+    assertThat(query.list()).hasSize(2);
     assertThat(query.count()).isEqualTo(2);
 
     try {
@@ -90,7 +90,7 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
   public void testQueryByDeploymentId() {
     DeploymentQuery query = repositoryService.createDeploymentQuery().deploymentId(deploymentOneId);
     assertNotNull(query.singleResult());
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
     assertThat(query.count()).isEqualTo(1);
   }
 
@@ -98,7 +98,7 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidDeploymentId() {
     DeploymentQuery query = repositoryService.createDeploymentQuery().deploymentId("invalid");
     assertNull(query.singleResult());
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
     assertThat(query.count()).isEqualTo(0);
     var deploymentQuery = repositoryService.createDeploymentQuery();
 
@@ -114,7 +114,7 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
   public void testQueryByName() {
     DeploymentQuery query = repositoryService.createDeploymentQuery().deploymentName("org/operaton/bpm/engine/test/repository/two_.bpmn20.xml");
     assertNotNull(query.singleResult());
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
     assertThat(query.count()).isEqualTo(1);
   }
 
@@ -122,7 +122,7 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidName() {
     DeploymentQuery query = repositoryService.createDeploymentQuery().deploymentName("invalid");
     assertNull(query.singleResult());
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
     assertThat(query.count()).isEqualTo(0);
     var deploymentQuery = repositoryService.createDeploymentQuery();
 
@@ -137,11 +137,11 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
   @Test
   public void testQueryByNameLike() {
     DeploymentQuery query = repositoryService.createDeploymentQuery().deploymentNameLike("%operaton%");
-    assertThat(query.list().size()).isEqualTo(2);
+    assertThat(query.list()).hasSize(2);
     assertThat(query.count()).isEqualTo(2);
 
     query = repositoryService.createDeploymentQuery().deploymentNameLike("%two\\_%");
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
     assertThat(query.count()).isEqualTo(1);
     assertThat(query.singleResult().getName()).isEqualTo("org/operaton/bpm/engine/test/repository/two_.bpmn20.xml");
   }
@@ -150,7 +150,7 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidNameLike() {
     DeploymentQuery query = repositoryService.createDeploymentQuery().deploymentNameLike("invalid");
     assertNull(query.singleResult());
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
     assertThat(query.count()).isEqualTo(0);
     var deploymentQuery = repositoryService.createDeploymentQuery();
 
@@ -208,7 +208,7 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
         .createDeploymentQuery()
         .deploymentSource(ProcessApplicationDeployment.PROCESS_APPLICATION_DEPLOYMENT_SOURCE);
 
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
     assertThat(query.count()).isEqualTo(1);
   }
 
@@ -218,7 +218,7 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
         .createDeploymentQuery()
         .deploymentSource(null);
 
-    assertThat(query.list().size()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
     assertThat(query.count()).isEqualTo(1);
   }
 
@@ -228,7 +228,7 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
         .createDeploymentQuery()
         .deploymentSource("invalid");
 
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list()).hasSize(0);
     assertThat(query.count()).isEqualTo(0);
   }
 
@@ -290,26 +290,22 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
     assertThat(repositoryService.createDeploymentQuery()
         .orderByDeploymentName()
         .asc()
-        .list()
-        .size()).isEqualTo(2);
+        .list()).hasSize(2);
 
     assertThat(repositoryService.createDeploymentQuery()
         .orderByDeploymentId()
         .asc()
-        .list()
-        .size()).isEqualTo(2);
+        .list()).hasSize(2);
 
     assertThat(repositoryService.createDeploymentQuery()
         .orderByDeploymenTime()
         .asc()
-        .list()
-        .size()).isEqualTo(2);
+        .list()).hasSize(2);
 
     assertThat(repositoryService.createDeploymentQuery()
         .orderByDeploymentTime()
         .asc()
-        .list()
-        .size()).isEqualTo(2);
+        .list()).hasSize(2);
   }
 
 }

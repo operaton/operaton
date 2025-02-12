@@ -1242,7 +1242,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -1291,7 +1291,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -1334,7 +1334,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -1361,7 +1361,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -1387,7 +1387,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -1413,7 +1413,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -1439,7 +1439,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -1465,7 +1465,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -1492,7 +1492,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -1518,7 +1518,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -1562,7 +1562,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -1590,7 +1590,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -1639,7 +1639,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -1665,7 +1665,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -1691,7 +1691,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -1717,7 +1717,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -1743,7 +1743,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -1769,7 +1769,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -1796,7 +1796,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -1823,7 +1823,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -1850,7 +1850,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -1876,7 +1876,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -1920,7 +1920,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -1947,7 +1947,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -1996,7 +1996,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -2022,7 +2022,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -2048,7 +2048,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -2074,7 +2074,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -2100,7 +2100,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -2126,7 +2126,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -2153,7 +2153,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -2179,7 +2179,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -2223,7 +2223,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -2272,7 +2272,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -2298,7 +2298,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -2324,7 +2324,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -2351,7 +2351,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -2377,7 +2377,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertNotNull(linksForTask);
-    assertThat(linksForTask.size()).isEqualTo(1);
+    assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertNotNull(identityLink);
@@ -4423,7 +4423,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     assertFalse(subTasks.isEmpty());
-    assertThat(subTasks.size()).isEqualTo(1);
+    assertThat(subTasks).hasSize(1);
 
     assertThat(subTasks.get(0).getId()).isEqualTo("sub1");
 
@@ -4453,7 +4453,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     assertFalse(subTasks.isEmpty());
-    assertThat(subTasks.size()).isEqualTo(2);
+    assertThat(subTasks).hasSize(2);
 
     deleteTask(parentTaskId, true);
   }
@@ -4506,7 +4506,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     assertFalse(subTasks.isEmpty());
-    assertThat(subTasks.size()).isEqualTo(1);
+    assertThat(subTasks).hasSize(1);
 
     assertThat(subTasks.get(0).getId()).isEqualTo("sub1");
   }
@@ -4534,7 +4534,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     assertFalse(subTasks.isEmpty());
-    assertThat(subTasks.size()).isEqualTo(2);
+    assertThat(subTasks).hasSize(2);
   }
 
   // get sub tasks ((case) task) ////////////////////////////////////
@@ -4585,7 +4585,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     assertFalse(subTasks.isEmpty());
-    assertThat(subTasks.size()).isEqualTo(1);
+    assertThat(subTasks).hasSize(1);
 
     assertThat(subTasks.get(0).getId()).isEqualTo("sub1");
   }
@@ -4613,7 +4613,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     assertFalse(subTasks.isEmpty());
-    assertThat(subTasks.size()).isEqualTo(2);
+    assertThat(subTasks).hasSize(2);
   }
 
   // clear authorization ((standalone) task) ////////////////////////
@@ -5867,9 +5867,9 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
-
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   // TaskService#getVariablesLocal() (case task) ////////////////////////////////////////////
@@ -5890,9 +5890,9 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
-
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   // TaskService#getVariablesTyped() (case task) ////////////////////////////////////////////
@@ -5909,9 +5909,9 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
 
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   // TaskService#getVariablesLocalTyped() (case task) ////////////////////////////////////////////
@@ -5932,9 +5932,9 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
-
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   // TaskService#getVariables() (case task) ////////////////////////////////////////////
@@ -5951,9 +5951,9 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
-
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   // TaskService#getVariablesLocal() (case task) ////////////////////////////////////////////
@@ -5974,9 +5974,9 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
-
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   // TaskService#getVariables() (case task) ////////////////////////////////////////////
@@ -5993,9 +5993,9 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
 
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   // TaskService#getVariablesLocal() (case task) ////////////////////////////////////////////
@@ -6016,9 +6016,9 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
-
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   // TaskService#setVariable() (case task) /////////////////////////////////////
@@ -6531,9 +6531,9 @@ public class TaskAuthorizationTest extends AuthorizationTest {
   protected void verifyGetVariables(Map<String, Object> variables) {
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
-
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
 }

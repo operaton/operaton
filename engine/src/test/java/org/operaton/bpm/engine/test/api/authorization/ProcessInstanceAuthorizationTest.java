@@ -2629,7 +2629,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertFalse(tasks.isEmpty());
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
   }
 
   @Test
@@ -2649,7 +2649,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertFalse(tasks.isEmpty());
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
   }
 
   @Test
@@ -2669,7 +2669,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertFalse(tasks.isEmpty());
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
   }
 
   @Test
@@ -2690,7 +2690,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     assertFalse(tasks.isEmpty());
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
   }
 
   @Test
@@ -3337,9 +3337,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
-
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -3354,9 +3354,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
-
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -3371,9 +3371,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
-
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -3388,9 +3388,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
-
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -3469,9 +3469,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
-
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -3486,9 +3486,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
-
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -3503,9 +3503,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
-
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -3520,9 +3520,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
-
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -3601,9 +3601,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
 
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -3618,9 +3618,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
 
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -3635,9 +3635,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
 
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -3652,9 +3652,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
 
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -3733,9 +3733,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
 
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -3750,9 +3750,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
 
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -3767,9 +3767,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
 
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -3784,9 +3784,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
 
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -3864,9 +3864,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
-
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -3881,9 +3881,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
-
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -3898,9 +3898,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
-
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -3915,9 +3915,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
-
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -3995,9 +3995,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
-
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -4012,9 +4012,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
-
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -4029,9 +4029,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
-
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -4046,9 +4046,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
-
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -4126,9 +4126,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
 
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -4143,9 +4143,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
 
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -4160,9 +4160,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
 
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -4177,9 +4177,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
 
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -4257,9 +4257,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
 
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -4274,9 +4274,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
 
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -4291,9 +4291,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
 
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -4308,9 +4308,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // then
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
 
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -5394,9 +5394,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
   protected void verifyGetVariables(Map<String, Object> variables) {
     assertNotNull(variables);
     assertFalse(variables.isEmpty());
-    assertThat(variables.size()).isEqualTo(1);
-
-    assertThat(variables.get(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
 }

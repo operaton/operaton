@@ -487,8 +487,8 @@ public class VariableInstanceAuthorizationTest extends AuthorizationTest {
     List<VariableInstance> ignoreCaseResults = ignoreCaseQuery.list();
 
     // then
-    assertThat(results.size()).isEqualTo(1);
-    assertThat(ignoreCaseResults.size()).isEqualTo(1);
+    assertThat(results).hasSize(1);
+    assertThat(ignoreCaseResults).hasSize(1);
   }
 
   @Test

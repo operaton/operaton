@@ -464,15 +464,15 @@ public class BpmnParseTest {
     ProcessDefinitionEntity processDefinitionEntity = commandExecutor.execute(commandContext -> Context.getProcessEngineConfiguration().getDeploymentCache().findDeployedLatestProcessDefinitionByKey("myProcess"));
 
     assertNotNull(processDefinitionEntity);
-    assertThat(processDefinitionEntity.getActivities().size()).isEqualTo(7);
+    assertThat(processDefinitionEntity.getActivities()).hasSize(7);
 
     // Check if diagram has been created based on Diagram Interchange when it's
     // not a headless instance
     List<String> resourceNames = repositoryService.getDeploymentResourceNames(processDefinitionEntity.getDeploymentId());
     if (processEngineConfiguration.isCreateDiagramOnDeploy()) {
-      assertThat(resourceNames.size()).isEqualTo(2);
+      assertThat(resourceNames).hasSize(2);
     } else {
-      assertThat(resourceNames.size()).isEqualTo(1);
+      assertThat(resourceNames).hasSize(1);
     }
 
     for (ActivityImpl activity : processDefinitionEntity.getActivities()) {
@@ -777,7 +777,7 @@ public class BpmnParseTest {
   }
 
   protected void assertSequenceFlowWayPoints(TransitionImpl sequenceFlow, Integer... waypoints) {
-    assertThat(sequenceFlow.getWaypoints().size()).isEqualTo(waypoints.length);
+    assertThat(sequenceFlow.getWaypoints()).hasSize(waypoints.length);
     for (int i = 0; i < waypoints.length; i++) {
       assertThat(sequenceFlow.getWaypoints().get(i)).isEqualTo(waypoints[i]);
     }
@@ -1022,7 +1022,7 @@ public class BpmnParseTest {
   public void testParseProcessDefinitionTtl() {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
     assertNotNull(processDefinitions);
-    assertThat(processDefinitions.size()).isEqualTo(1);
+    assertThat(processDefinitions).hasSize(1);
 
     Integer timeToLive = processDefinitions.get(0).getHistoryTimeToLive();
     assertNotNull(timeToLive);
@@ -1036,7 +1036,7 @@ public class BpmnParseTest {
   public void testParseProcessDefinitionStringTtl() {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
     assertNotNull(processDefinitions);
-    assertThat(processDefinitions.size()).isEqualTo(1);
+    assertThat(processDefinitions).hasSize(1);
 
     Integer timeToLive = processDefinitions.get(0).getHistoryTimeToLive();
     assertNotNull(timeToLive);
@@ -1061,7 +1061,7 @@ public class BpmnParseTest {
   public void testParseProcessDefinitionEmptyTtl() {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
     assertNotNull(processDefinitions);
-    assertThat(processDefinitions.size()).isEqualTo(1);
+    assertThat(processDefinitions).hasSize(1);
 
     Integer timeToLive = processDefinitions.get(0).getHistoryTimeToLive();
     assertNull(timeToLive);
@@ -1072,7 +1072,7 @@ public class BpmnParseTest {
   public void testParseProcessDefinitionWithoutTtl() {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
     assertNotNull(processDefinitions);
-    assertThat(processDefinitions.size()).isEqualTo(1);
+    assertThat(processDefinitions).hasSize(1);
 
     Integer timeToLive = processDefinitions.get(0).getHistoryTimeToLive();
     assertNull(timeToLive);
@@ -1086,7 +1086,7 @@ public class BpmnParseTest {
       repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
       List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
       assertNotNull(processDefinitions);
-      assertThat(processDefinitions.size()).isEqualTo(1);
+      assertThat(processDefinitions).hasSize(1);
 
       Integer timeToLive = processDefinitions.get(0).getHistoryTimeToLive();
       assertNotNull(timeToLive);
@@ -1170,7 +1170,7 @@ public class BpmnParseTest {
   public void testParseProcessDefinitionStartable() {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
     assertNotNull(processDefinitions);
-    assertThat(processDefinitions.size()).isEqualTo(1);
+    assertThat(processDefinitions).hasSize(1);
 
     assertFalse(processDefinitions.get(0).isStartableInTasklist());
   }

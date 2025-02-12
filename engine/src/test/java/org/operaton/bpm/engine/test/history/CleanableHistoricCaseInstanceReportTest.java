@@ -95,7 +95,7 @@ public class CleanableHistoricCaseInstanceReportTest {
   private void prepareCaseInstances(String key, int daysInThePast, Integer historyTimeToLive, int instanceCount) {
     // update time to live
     List<CaseDefinition> caseDefinitions = repositoryService.createCaseDefinitionQuery().caseDefinitionKey(key).list();
-    assertThat(caseDefinitions.size()).isEqualTo(1);
+    assertThat(caseDefinitions).hasSize(1);
     repositoryService.updateCaseDefinitionHistoryTimeToLive(caseDefinitions.get(0).getId(), historyTimeToLive);
 
     Date oldCurrentTime = ClockUtil.getCurrentTime();
@@ -125,7 +125,7 @@ public class CleanableHistoricCaseInstanceReportTest {
     long count = historyService.createCleanableHistoricCaseInstanceReport().count();
 
     // then
-    assertThat(reportResults.size()).isEqualTo(1);
+    assertThat(reportResults).hasSize(1);
     assertThat(count).isEqualTo(1);
     checkResultNumbers(reportResults.get(0), 10, 10);
   }
@@ -140,7 +140,7 @@ public class CleanableHistoricCaseInstanceReportTest {
     List<CleanableHistoricCaseInstanceReportResult> reportResults = historyService.createCleanableHistoricCaseInstanceReport().list();
 
     // then
-    assertThat(reportResults.size()).isEqualTo(1);
+    assertThat(reportResults).hasSize(1);
     checkResultNumbers(reportResults.get(0), 5, 10);
   }
 
@@ -154,7 +154,7 @@ public class CleanableHistoricCaseInstanceReportTest {
     List<CleanableHistoricCaseInstanceReportResult> reportResults = historyService.createCleanableHistoricCaseInstanceReport().list();
 
     // then
-    assertThat(reportResults.size()).isEqualTo(1);
+    assertThat(reportResults).hasSize(1);
     checkResultNumbers(reportResults.get(0), 10, 10);
   }
 
@@ -168,7 +168,7 @@ public class CleanableHistoricCaseInstanceReportTest {
     List<CleanableHistoricCaseInstanceReportResult> reportResults = historyService.createCleanableHistoricCaseInstanceReport().list();
 
     // then
-    assertThat(reportResults.size()).isEqualTo(1);
+    assertThat(reportResults).hasSize(1);
     checkResultNumbers(reportResults.get(0), 0, 10);
   }
 
@@ -195,7 +195,7 @@ public class CleanableHistoricCaseInstanceReportTest {
         .singleResult();
 
     // then
-    assertThat(reportResults.size()).isEqualTo(4);
+    assertThat(reportResults).hasSize(4);
     for (CleanableHistoricCaseInstanceReportResult result : reportResults) {
       if (result.getCaseDefinitionKey().equals(CASE_DEFINITION_KEY)) {
         checkResultNumbers(result, 10, 20);
@@ -253,10 +253,10 @@ public class CleanableHistoricCaseInstanceReportTest {
   public void testReportCompact() {
     // given
     List<CaseDefinition> caseDefinitions = repositoryService.createCaseDefinitionQuery().caseDefinitionKey(CASE_DEFINITION_KEY).list();
-    assertThat(caseDefinitions.size()).isEqualTo(1);
+    assertThat(caseDefinitions).hasSize(1);
 
     List<CleanableHistoricCaseInstanceReportResult> resultWithZeros = historyService.createCleanableHistoricCaseInstanceReport().list();
-    assertThat(resultWithZeros.size()).isEqualTo(1);
+    assertThat(resultWithZeros).hasSize(1);
     assertThat(resultWithZeros.get(0).getFinishedCaseInstanceCount()).isEqualTo(0);
 
     // when
@@ -282,7 +282,7 @@ public class CleanableHistoricCaseInstanceReportTest {
         .list();
 
     // then
-    assertThat(reportResult.size()).isEqualTo(3);
+    assertThat(reportResult).hasSize(3);
     assertThat(reportResult.get(0).getCaseDefinitionKey()).isEqualTo(CASE_DEFINITION_KEY);
     assertThat(reportResult.get(1).getCaseDefinitionKey()).isEqualTo(SECOND_CASE_DEFINITION_KEY);
     assertThat(reportResult.get(2).getCaseDefinitionKey()).isEqualTo(THIRD_CASE_DEFINITION_KEY);
@@ -304,7 +304,7 @@ public class CleanableHistoricCaseInstanceReportTest {
         .list();
 
     // then
-    assertThat(reportResult.size()).isEqualTo(3);
+    assertThat(reportResult).hasSize(3);
     assertThat(reportResult.get(0).getCaseDefinitionKey()).isEqualTo(THIRD_CASE_DEFINITION_KEY);
     assertThat(reportResult.get(1).getCaseDefinitionKey()).isEqualTo(SECOND_CASE_DEFINITION_KEY);
     assertThat(reportResult.get(2).getCaseDefinitionKey()).isEqualTo(CASE_DEFINITION_KEY);

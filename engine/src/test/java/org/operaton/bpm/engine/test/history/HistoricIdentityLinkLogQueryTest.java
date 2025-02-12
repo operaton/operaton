@@ -70,7 +70,7 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
   public void testQueryAddTaskCandidateforAddIdentityLink() {
 
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertThat(historicIdentityLinks.size()).isEqualTo(0);
+    assertThat(historicIdentityLinks).hasSize(0);
 
     // given
     ProcessInstance processInstance = startProcessInstance(PROCESS_DEFINITION_KEY);
@@ -97,7 +97,7 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
   public void testGroupQueryTaskCandidateForAddAndDeleteIdentityLink() {
 
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertThat(historicIdentityLinks.size()).isEqualTo(0);
+    assertThat(historicIdentityLinks).hasSize(0);
 
     // given
     ProcessInstance processInstance = startProcessInstance(PROCESS_DEFINITION_KEY);
@@ -124,7 +124,7 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
   public void testValidIndividualQueryTaskCandidateForAddAndDeleteIdentityLink() {
 
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertThat(historicIdentityLinks.size()).isEqualTo(0);
+    assertThat(historicIdentityLinks).hasSize(0);
 
     // given
     ProcessInstance processInstance = startProcessInstance(PROCESS_DEFINITION_KEY);
@@ -167,7 +167,7 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
   public void testValidGroupQueryTaskCandidateForAddAndDeleteIdentityLink() {
 
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertThat(historicIdentityLinks.size()).isEqualTo(0);
+    assertThat(historicIdentityLinks).hasSize(0);
 
     // given
     ProcessInstance processInstance = startProcessInstance(PROCESS_DEFINITION_KEY);
@@ -195,7 +195,7 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
   public void testInvalidIndividualQueryTaskCandidateForAddAndDeleteIdentityLink() {
 
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertThat(historicIdentityLinks.size()).isEqualTo(0);
+    assertThat(historicIdentityLinks).hasSize(0);
 
     // given
     startProcessInstance(PROCESS_DEFINITION_KEY);
@@ -232,7 +232,7 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
   public void testInvalidGroupQueryTaskCandidateForAddAndDeleteIdentityLink() {
 
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertThat(historicIdentityLinks.size()).isEqualTo(0);
+    assertThat(historicIdentityLinks).hasSize(0);
 
     // given
     startProcessInstance(PROCESS_DEFINITION_KEY);
@@ -271,7 +271,7 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
   public void testShouldAddTaskOwnerForAddandDeleteIdentityLinkByTimeStamp() {
 
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertThat(historicIdentityLinks.size()).isEqualTo(0);
+    assertThat(historicIdentityLinks).hasSize(0);
 
     // given
     startProcessInstance(PROCESS_DEFINITION_KEY);
@@ -323,12 +323,12 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
     ProcessDefinition latestProcessDef = repositoryService.createProcessDefinitionQuery().processDefinitionKey(PROCESS_DEFINITION_KEY).singleResult();
     assertNotNull(latestProcessDef);
     List<IdentityLink> links = repositoryService.getIdentityLinksForProcessDefinition(latestProcessDef.getId());
-    assertThat(links.size()).isEqualTo(0);
+    assertThat(links).hasSize(0);
 
     // Add candiate group with process definition
     repositoryService.addCandidateStarterGroup(latestProcessDef.getId(), GROUP_1);
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertThat(historicIdentityLinks.size()).isEqualTo(1);
+    assertThat(historicIdentityLinks).hasSize(1);
     // Query test
     HistoricIdentityLinkLogQuery query = historyService.createHistoricIdentityLinkLogQuery();
     assertThat(query.processDefinitionId(latestProcessDef.getId()).count()).isEqualTo(1);
@@ -371,10 +371,10 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
 
     HistoricIdentityLinkLogQuery query = historyService.createHistoricIdentityLinkLogQuery();
 
-    assertThat(query.listPage(0, 4).size()).isEqualTo(4);
-    assertThat(query.listPage(2, 1).size()).isEqualTo(1);
-    assertThat(query.listPage(1, 2).size()).isEqualTo(2);
-    assertThat(query.listPage(1, 4).size()).isEqualTo(3);
+    assertThat(query.listPage(0, 4)).hasSize(4);
+    assertThat(query.listPage(2, 1)).hasSize(1);
+    assertThat(query.listPage(1, 2)).hasSize(2);
+    assertThat(query.listPage(1, 4)).hasSize(3);
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/OneTaskProcessWithMultipleCandidateUser.bpmn20.xml" })
@@ -383,32 +383,32 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
 
     // Pre test - Historical identity link is added as part of deployment
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertThat(historicIdentityLinks.size()).isEqualTo(0);
+    assertThat(historicIdentityLinks).hasSize(0);
     startProcessInstance(PROCESS_DEFINITION_KEY_MULTIPLE_CANDIDATE_USER);
 
-    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByAssignerId().asc().list().size()).isEqualTo(4);
-    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByTime().asc().list().size()).isEqualTo(4);
-    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByGroupId().asc().list().size()).isEqualTo(4);
-    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByType().asc().list().size()).isEqualTo(4);
-    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByOperationType().asc().list().size()).isEqualTo(4);
-    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByProcessDefinitionId().asc().list().size()).isEqualTo(4);
-    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByProcessDefinitionKey().asc().list().size()).isEqualTo(4);
-    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByTaskId().asc().list().size()).isEqualTo(4);
-    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByUserId().asc().list().size()).isEqualTo(4);
-    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByTenantId().asc().list().size()).isEqualTo(4);
+    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByAssignerId().asc().list()).hasSize(4);
+    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByTime().asc().list()).hasSize(4);
+    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByGroupId().asc().list()).hasSize(4);
+    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByType().asc().list()).hasSize(4);
+    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByOperationType().asc().list()).hasSize(4);
+    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByProcessDefinitionId().asc().list()).hasSize(4);
+    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByProcessDefinitionKey().asc().list()).hasSize(4);
+    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByTaskId().asc().list()).hasSize(4);
+    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByUserId().asc().list()).hasSize(4);
+    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByTenantId().asc().list()).hasSize(4);
     assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByUserId().asc().list().get(0).getUserId()).isEqualTo("aUser");
     assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByUserId().asc().list().get(3).getUserId()).isEqualTo("dUser");
 
-    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByAssignerId().desc().list().size()).isEqualTo(4);
-    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByTime().desc().list().size()).isEqualTo(4);
-    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByGroupId().desc().list().size()).isEqualTo(4);
-    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByType().desc().list().size()).isEqualTo(4);
-    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByOperationType().desc().list().size()).isEqualTo(4);
-    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByProcessDefinitionId().desc().list().size()).isEqualTo(4);
-    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByProcessDefinitionKey().desc().list().size()).isEqualTo(4);
-    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByTaskId().desc().list().size()).isEqualTo(4);
-    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByUserId().desc().list().size()).isEqualTo(4);
-    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByTenantId().desc().list().size()).isEqualTo(4);
+    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByAssignerId().desc().list()).hasSize(4);
+    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByTime().desc().list()).hasSize(4);
+    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByGroupId().desc().list()).hasSize(4);
+    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByType().desc().list()).hasSize(4);
+    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByOperationType().desc().list()).hasSize(4);
+    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByProcessDefinitionId().desc().list()).hasSize(4);
+    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByProcessDefinitionKey().desc().list()).hasSize(4);
+    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByTaskId().desc().list()).hasSize(4);
+    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByUserId().desc().list()).hasSize(4);
+    assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByTenantId().desc().list()).hasSize(4);
     assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByUserId().desc().list().get(0).getUserId()).isEqualTo("dUser");
     assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByUserId().desc().list().get(3).getUserId()).isEqualTo("aUser");
   }

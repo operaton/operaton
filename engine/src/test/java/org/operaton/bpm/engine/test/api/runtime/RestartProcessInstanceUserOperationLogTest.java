@@ -118,7 +118,7 @@ public class RestartProcessInstanceUserOperationLogTest {
 
     // then
     List<UserOperationLogEntry> opLogEntries = rule.getHistoryService().createUserOperationLogQuery().operationType("RestartProcessInstance").list();
-    assertThat(opLogEntries.size()).isEqualTo(2);
+    assertThat(opLogEntries).hasSize(2);
 
     Map<String, UserOperationLogEntry> entries = asMap(opLogEntries);
 
@@ -166,7 +166,7 @@ public class RestartProcessInstanceUserOperationLogTest {
 
     // then
     List<UserOperationLogEntry> opLogEntries = rule.getHistoryService().createUserOperationLogQuery().operationType("RestartProcessInstance").list();
-    assertThat(opLogEntries.size()).isEqualTo(2);
+    assertThat(opLogEntries).hasSize(2);
 
     Map<String, UserOperationLogEntry> entries = asMap(opLogEntries);
 

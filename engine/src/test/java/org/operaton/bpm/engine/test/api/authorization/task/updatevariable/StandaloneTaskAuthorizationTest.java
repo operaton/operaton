@@ -444,7 +444,7 @@ public class StandaloneTaskAuthorizationTest {
   }
 
   protected void verifyVariableInstanceCount(int count) {
-    assertThat(runtimeService.createVariableInstanceQuery().list().size()).isEqualTo(count);
+    assertThat(runtimeService.createVariableInstanceQuery().list()).hasSize(count);
     assertThat(runtimeService.createVariableInstanceQuery().count()).isEqualTo(count);
   }
 

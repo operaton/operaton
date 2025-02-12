@@ -703,7 +703,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
         .list();
 
     // then
-    assertThat(result.size()).isEqualTo(0);
+    assertThat(result).hasSize(0);
   }
 
   @Test
@@ -724,7 +724,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
         .list();
 
     // then
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
   }
 
   @Test
@@ -745,7 +745,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
         .list();
 
     // then
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
 
     // clear
     deleteTask(taskId, true);
@@ -769,7 +769,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
         .list();
 
     // then
-    assertThat(result.size()).isEqualTo(0);
+    assertThat(result).hasSize(0);
 
     // clear
     deleteTask(taskId, true);
@@ -794,7 +794,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
         .list();
 
     // then
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
   }
 
   @Test
@@ -817,7 +817,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
         .list();
 
     // then
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
   }
 
   @Test
@@ -841,7 +841,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
         .list();
 
     // then
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
   }
 
   @Test
@@ -860,7 +860,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
         .list();
 
     // then
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
   }
 
   @Test
@@ -879,7 +879,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
         .list();
 
     // then
-    assertThat(result.size()).isEqualTo(0);
+    assertThat(result).hasSize(0);
   }
 
   @Test
@@ -898,7 +898,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
         .list();
 
     // then
-    assertThat(result.size()).isEqualTo(0);
+    assertThat(result).hasSize(0);
   }
 
   @Test
@@ -920,7 +920,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
         .list();
 
     // then
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
 
     // clear
     deleteTask(taskId, true);
@@ -945,7 +945,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
         .list();
 
     // then
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
   }
 
   @Test
@@ -969,7 +969,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
         .list();
 
     // then
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
   }
 
   @Test
@@ -992,7 +992,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
         .list();
 
     // then
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
   }
 
   @Test
@@ -1010,7 +1010,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
     List<HistoricVariableInstance> result = historyService.createHistoricVariableInstanceQuery().list();
 
     // then
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
   }
 
   @Test

@@ -317,7 +317,7 @@ public class MessageCorrelationTest {
     List<MessageCorrelationResult> resultList = runtimeService.createMessageCorrelation("newInvoiceMessage")
                                                               .correlateAllWithResult();
 
-    assertThat(resultList.size()).isEqualTo(2);
+    assertThat(resultList).hasSize(2);
     //then result should contain executions on which messages was correlated
     for (MessageCorrelationResult result : resultList) {
       assertNotNull(result);
@@ -338,7 +338,7 @@ public class MessageCorrelationTest {
     List<MessageCorrelationResult> resultList = runtimeService.createMessageCorrelation("newInvoiceMessage")
                                                               .correlateAllWithResult();
 
-    assertThat(resultList.size()).isEqualTo(1);
+    assertThat(resultList).hasSize(1);
     //then result should contain process definitions and start event activity ids on which messages was correlated
     for (MessageCorrelationResult result : resultList) {
       checkProcessDefinitionMessageCorrelationResult(result, "theStart", "messageStartEvent");
@@ -910,7 +910,7 @@ public class MessageCorrelationTest {
 
     //then result should contain three entries
     //two of type execution und one of type process definition
-    assertThat(resultList.size()).isEqualTo(3);
+    assertThat(resultList).hasSize(3);
     int executionResultCount = 0;
     int procDefResultCount = 0;
     for (MessageCorrelationResult result : resultList) {
@@ -1036,7 +1036,7 @@ public class MessageCorrelationTest {
         .processVariableValueEquals("aProcessVariable", "aVariableValue")
         .list();
 
-    assertThat(correlatedExecutions.size()).isEqualTo(2);
+    assertThat(correlatedExecutions).hasSize(2);
 
     // Instance 1
     Execution correlatedExecution = correlatedExecutions.get(0);
@@ -1214,7 +1214,7 @@ public class MessageCorrelationTest {
       .activityId("task")
       .list();
 
-    assertThat(correlatedExecutions.size()).isEqualTo(1);
+    assertThat(correlatedExecutions).hasSize(1);
     assertThat(correlatedExecutions.get(0).getId()).isEqualTo(instance.getId());
   }
 
@@ -1231,7 +1231,7 @@ public class MessageCorrelationTest {
       .activityId("task")
       .list();
 
-    assertThat(correlatedExecutions.size()).isEqualTo(1);
+    assertThat(correlatedExecutions).hasSize(1);
     assertThat(correlatedExecutions.get(0).getId()).isEqualTo(instance.getId());
   }
 
@@ -1251,7 +1251,7 @@ public class MessageCorrelationTest {
       .activityId("task")
       .list();
 
-    assertThat(correlatedExecutions.size()).isEqualTo(1);
+    assertThat(correlatedExecutions).hasSize(1);
     assertThat(correlatedExecutions.get(0).getId()).isEqualTo(instance.getId());
   }
 
@@ -1274,7 +1274,7 @@ public class MessageCorrelationTest {
       .activityId("task")
       .list();
 
-    assertThat(correlatedExecutions.size()).isEqualTo(1);
+    assertThat(correlatedExecutions).hasSize(1);
     assertThat(correlatedExecutions.get(0).getId()).isEqualTo(instance.getId());
   }
 
@@ -1302,7 +1302,7 @@ public class MessageCorrelationTest {
       .asc()
       .list();
 
-    assertThat(correlatedExecutions.size()).isEqualTo(2);
+    assertThat(correlatedExecutions).hasSize(2);
     assertThat(correlatedExecutions.get(0).getId()).isEqualTo(instance1.getId());
     assertThat(correlatedExecutions.get(1).getId()).isEqualTo(instance2.getId());
   }
@@ -1835,14 +1835,14 @@ public class MessageCorrelationTest {
         .createMessageCorrelation("newInvoiceMessage")
         .correlateAllWithResultAndVariables(true);
 
-    assertThat(resultList.size()).isEqualTo(2);
+    assertThat(resultList).hasSize(2);
     //then result should contain executions on which messages was correlated
     for (MessageCorrelationResultWithVariables result : resultList) {
       assertNotNull(result);
       assertThat(result.getResultType()).isEqualTo(MessageCorrelationResultType.Execution);
       ExecutionEntity execution = (ExecutionEntity) result.getExecution();
       VariableMap variables = result.getVariables();
-      assertThat(variables.size()).isEqualTo(1);
+      assertThat(variables).hasSize(1);
       if (procInstance1.getId().equalsIgnoreCase(execution.getProcessInstanceId())) {
         assertThat(variables.getValue("var1", String.class)).isEqualTo("foo");
       } else if (procInstance2.getId().equalsIgnoreCase(execution.getProcessInstanceId())) {
@@ -1881,10 +1881,10 @@ public class MessageCorrelationTest {
     // then
     assertNotNull(result);
     assertThat(result.getResultType()).isEqualTo(MessageCorrelationResultType.Execution);
-    assertThat(result.getVariables().size()).isEqualTo(3);
-    assertThat(result.getVariables().get("a")).isEqualTo("foo");
-    assertThat(result.getVariables().get("b")).isEqualTo(2);
-    assertThat(result.getVariables().get("sum")).isEqualTo(42);
+    assertThat(result.getVariables()).hasSize(3);
+    assertThat(result.getVariables()).containsEntry("a", "foo");
+    assertThat(result.getVariables()).containsEntry("b", 2);
+    assertThat(result.getVariables()).containsEntry("sum", 42);
   }
 
   @Test

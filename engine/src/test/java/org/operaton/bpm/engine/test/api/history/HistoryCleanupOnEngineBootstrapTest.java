@@ -95,7 +95,7 @@ public class HistoryCleanupOnEngineBootstrapTest {
 
     // assume
     ManagementService managementService = engine.getManagementService();
-    assertThat(managementService.createJobQuery().list().size()).isEqualTo(4);
+    assertThat(managementService.createJobQuery().list()).hasSize(4);
 
     engine.close();
 
@@ -107,7 +107,7 @@ public class HistoryCleanupOnEngineBootstrapTest {
     // then
     // reconfigure history cleanup job
     managementService = engine.getManagementService();
-    assertThat(managementService.createJobQuery().list().size()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().list()).hasSize(1);
 
     Job job = managementService.createJobQuery().singleResult();
     assertThat(getHistoryCleanupJobHandlerConfiguration(job).getMinuteFrom()).isEqualTo(0);
@@ -139,7 +139,7 @@ public class HistoryCleanupOnEngineBootstrapTest {
     // reconfigure history cleanup job
     managementService = engine.getManagementService();
     List<Job> jobs = managementService.createJobQuery().list();
-    assertThat(jobs.size()).isEqualTo(8);
+    assertThat(jobs).hasSize(8);
 
     for (Job job : jobs) {
       int minuteTo = getHistoryCleanupJobHandlerConfiguration(job).getMinuteTo();
@@ -203,7 +203,7 @@ public class HistoryCleanupOnEngineBootstrapTest {
     //history cleanup is scheduled for Wednesday
     List<Job> historyCleanupJobs = engine.getHistoryService().findHistoryCleanupJobs();
     assertFalse(historyCleanupJobs.isEmpty());
-    assertThat(historyCleanupJobs.size()).isEqualTo(1);
+    assertThat(historyCleanupJobs).hasSize(1);
     assertThat(historyCleanupJobs.get(0).getDuedate()).isEqualTo(sdf.parse("2018-05-16T23:00:00"));
     assertThat(historyCleanupJobs.get(0).isSuspended()).isEqualTo(false);
 
@@ -219,7 +219,7 @@ public class HistoryCleanupOnEngineBootstrapTest {
     //history cleanup is scheduled for today
     historyCleanupJobs = engine.getHistoryService().findHistoryCleanupJobs();
     assertFalse(historyCleanupJobs.isEmpty());
-    assertThat(historyCleanupJobs.size()).isEqualTo(1);
+    assertThat(historyCleanupJobs).hasSize(1);
     assertThat(historyCleanupJobs.get(0).getDuedate()).isEqualTo(sdf.parse("2018-05-14T23:00:00"));
     assertThat(historyCleanupJobs.get(0).isSuspended()).isEqualTo(false);
 
@@ -292,7 +292,7 @@ public class HistoryCleanupOnEngineBootstrapTest {
     //job is scheduled for next week Monday
     List<Job> historyCleanupJobs = engine.getHistoryService().findHistoryCleanupJobs();
     assertFalse(historyCleanupJobs.isEmpty());
-    assertThat(historyCleanupJobs.size()).isEqualTo(1);
+    assertThat(historyCleanupJobs).hasSize(1);
     assertThat(historyCleanupJobs.get(0).getDuedate()).isEqualTo(sdf.parse("2018-05-21T18:00:00"));     //monday next week
     assertThat(historyCleanupJobs.get(0).isSuspended()).isEqualTo(false);
 
@@ -306,7 +306,7 @@ public class HistoryCleanupOnEngineBootstrapTest {
     //job is scheduled for next week Monday
     historyCleanupJobs = engine.getHistoryService().findHistoryCleanupJobs();
     assertFalse(historyCleanupJobs.isEmpty());
-    assertThat(historyCleanupJobs.size()).isEqualTo(1);
+    assertThat(historyCleanupJobs).hasSize(1);
     assertThat(historyCleanupJobs.get(0).getDuedate()).isEqualTo(sdf.parse("2018-05-28T18:00:00"));     //monday next week
     assertThat(historyCleanupJobs.get(0).isSuspended()).isEqualTo(false);
 
@@ -331,7 +331,7 @@ public class HistoryCleanupOnEngineBootstrapTest {
     //job is scheduled for Monday 06 AM
     List<Job> historyCleanupJobs = engine.getHistoryService().findHistoryCleanupJobs();
     assertFalse(historyCleanupJobs.isEmpty());
-    assertThat(historyCleanupJobs.size()).isEqualTo(1);
+    assertThat(historyCleanupJobs).hasSize(1);
     assertThat(historyCleanupJobs.get(0).getDuedate()).isEqualTo(sdf.parse("2018-05-14T06:00:00"));
     assertThat(historyCleanupJobs.get(0).isSuspended()).isEqualTo(false);
 
@@ -345,7 +345,7 @@ public class HistoryCleanupOnEngineBootstrapTest {
     //job is still within current batch window
     historyCleanupJobs = engine.getHistoryService().findHistoryCleanupJobs();
     assertFalse(historyCleanupJobs.isEmpty());
-    assertThat(historyCleanupJobs.size()).isEqualTo(1);
+    assertThat(historyCleanupJobs).hasSize(1);
     assertTrue(sdf.parse("2018-05-15T06:00:00").after(historyCleanupJobs.get(0).getDuedate()));
     assertThat(historyCleanupJobs.get(0).isSuspended()).isEqualTo(false);
 
@@ -359,7 +359,7 @@ public class HistoryCleanupOnEngineBootstrapTest {
     //job is still within current batch window
     historyCleanupJobs = engine.getHistoryService().findHistoryCleanupJobs();
     assertFalse(historyCleanupJobs.isEmpty());
-    assertThat(historyCleanupJobs.size()).isEqualTo(1);
+    assertThat(historyCleanupJobs).hasSize(1);
     assertTrue(sdf.parse("2018-05-15T06:00:00").after(historyCleanupJobs.get(0).getDuedate()));
     assertThat(historyCleanupJobs.get(0).isSuspended()).isEqualTo(false);
 
@@ -373,7 +373,7 @@ public class HistoryCleanupOnEngineBootstrapTest {
     //job is rescheduled till next Monday
     historyCleanupJobs = engine.getHistoryService().findHistoryCleanupJobs();
     assertFalse(historyCleanupJobs.isEmpty());
-    assertThat(historyCleanupJobs.size()).isEqualTo(1);
+    assertThat(historyCleanupJobs).hasSize(1);
     assertThat(historyCleanupJobs.get(0).getDuedate()).isEqualTo(sdf.parse("2018-05-21T06:00:00"));
     assertThat(historyCleanupJobs.get(0).isSuspended()).isEqualTo(false);
 

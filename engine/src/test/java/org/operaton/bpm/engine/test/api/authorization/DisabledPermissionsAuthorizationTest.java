@@ -217,7 +217,7 @@ public class DisabledPermissionsAuthorizationTest {
     List<org.operaton.bpm.engine.repository.Deployment> deployments = engineRule.getRepositoryService().createDeploymentQuery().list();
 
     // then
-    assertThat(deployments.size()).isEqualTo(1);
+    assertThat(deployments).hasSize(1);
   }
 
   @Test
@@ -311,7 +311,7 @@ public class DisabledPermissionsAuthorizationTest {
         .execute();
 
     // then
-    assertThat(externalTasks.size()).isEqualTo(1);
+    assertThat(externalTasks).hasSize(1);
 
     LockedExternalTask task = externalTasks.get(0);
     assertNotNull(task.getId());

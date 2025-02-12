@@ -64,7 +64,7 @@ public class UuidGeneratorTest {
       thread.join();
     }
 
-    assertThat(generatedIds.size()).isEqualTo(THREAD_COUNT * LOOP_COUNT);
+    assertThat(generatedIds).hasSize(THREAD_COUNT * LOOP_COUNT);
     Assert.assertTrue(duplicatedIds.isEmpty());
   }
 }

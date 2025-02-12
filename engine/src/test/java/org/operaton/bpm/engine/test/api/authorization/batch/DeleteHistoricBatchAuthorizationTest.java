@@ -142,7 +142,7 @@ public class DeleteHistoricBatchAuthorizationTest {
         .operationType(OPERATION_TYPE_DELETE_HISTORY)
         .list();
 
-      assertThat(userOperationLogEntries.size()).isEqualTo(1);
+      assertThat(userOperationLogEntries).hasSize(1);
 
       UserOperationLogEntry entry = userOperationLogEntries.get(0);
       assertNull(entry.getProperty());

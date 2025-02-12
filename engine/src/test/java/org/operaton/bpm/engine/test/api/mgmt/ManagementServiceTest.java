@@ -927,7 +927,7 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
 
     assertThat(tablePage.getFirstResult()).isEqualTo(0);
     assertThat(tablePage.getSize()).isEqualTo(5);
-    assertThat(tablePage.getRows().size()).isEqualTo(5);
+    assertThat(tablePage.getRows()).hasSize(5);
     assertThat(tablePage.getTotal()).isEqualTo(20);
 
     tablePage = managementService.createTablePageQuery()
@@ -936,7 +936,7 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
 
     assertThat(tablePage.getFirstResult()).isEqualTo(14);
     assertThat(tablePage.getSize()).isEqualTo(6);
-    assertThat(tablePage.getRows().size()).isEqualTo(6);
+    assertThat(tablePage.getRows()).hasSize(6);
     assertThat(tablePage.getTotal()).isEqualTo(20);
 
     taskService.deleteTasks(taskIds, true);
@@ -986,7 +986,7 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
   }
 
   private void verifyTaskNames(String[] expectedTaskNames, List<Map<String, Object>> rowData) {
-    assertThat(rowData.size()).isEqualTo(expectedTaskNames.length);
+    assertThat(rowData).hasSize(expectedTaskNames.length);
     String columnKey = "NAME_";
 
     for (int i = 0; i < expectedTaskNames.length; i++) {

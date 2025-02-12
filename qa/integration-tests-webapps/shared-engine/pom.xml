@@ -90,6 +90,7 @@
                 <append>false</append>
                 <home>${jboss.runtime}</home>
                 <timeout>${cargo.timeout}</timeout>
+                <output>${project.build.directory}/cargo.log</output>
               </container>
               <configuration>
                 <type>standalone</type>
@@ -309,6 +310,7 @@
                 <append>false</append>
                 <home>${tomcat.runtime}</home>
                 <timeout>${cargo.timeout}</timeout>
+                <output>${project.build.directory}/cargo.log</output>
               </container>
               <configuration>
                 <type>standalone</type>
@@ -422,6 +424,7 @@
                 <append>false</append>
                 <home>${tomcat.runtime}</home>
                 <timeout>${cargo.timeout}</timeout>
+                <output>${project.build.directory}/cargo.log</output>
               </container>
               <configuration>
                 <type>standalone</type>

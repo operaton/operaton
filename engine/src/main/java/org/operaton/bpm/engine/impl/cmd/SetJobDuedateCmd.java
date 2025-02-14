@@ -29,7 +29,6 @@ import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.impl.persistence.entity.TimerEntity;
 
-import static org.springframework.util.ObjectUtils.isEmpty;
 
 /**
  * @author Kristin Polenz
@@ -43,7 +42,7 @@ public class SetJobDuedateCmd implements Command<Void>, Serializable {
   private final boolean cascade;
 
   public SetJobDuedateCmd(String jobId, Date newDuedate, boolean cascade) {
-    if (isEmpty(jobId)) {
+    if (jobId == null || jobId.length() < 1) {
       throw new ProcessEngineException("The job id is mandatory, but '" + jobId + "' has been provided.");
     }
     this.jobId = jobId;

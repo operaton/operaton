@@ -26,8 +26,6 @@ import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
-import static org.springframework.util.ObjectUtils.isEmpty;
-
 /**
  * Gives access to a deployed case diagram, e.g., a PNG image, through a stream
  * of bytes.
@@ -41,7 +39,7 @@ public class GetDeploymentCaseDiagramCmd implements Command<InputStream>, Serial
   protected String caseDefinitionId;
 
   public GetDeploymentCaseDiagramCmd(String caseDefinitionId) {
-    if (isEmpty(caseDefinitionId)) {
+    if (caseDefinitionId == null || caseDefinitionId.length() < 1) {
       throw new ProcessEngineException("The case definition id is mandatory, but '" + caseDefinitionId + "' has been provided.");
     }
     this.caseDefinitionId = caseDefinitionId;

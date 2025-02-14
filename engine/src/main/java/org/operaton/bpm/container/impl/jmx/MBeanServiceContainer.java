@@ -100,10 +100,12 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
   public synchronized void stopService(ServiceType serviceType, String localName) {
     String globalName = composeLocalName(serviceType, localName);
     stopService(globalName);
+
   }
 
   @Override
   public synchronized void stopService(String name) {
+
     final MBeanServer beanServer = getmBeanServer();
 
     ObjectName serviceName = getObjectName(name);
@@ -146,6 +148,7 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
 
   @Override
   public void executeDeploymentOperation(DeploymentOperation operation) {
+
     Stack<DeploymentOperation> currentOperationContext = activeDeploymentOperations.get();
     if(currentOperationContext == null) {
       currentOperationContext = new Stack<>();

@@ -60,7 +60,7 @@ public class ProcessVariables {
 
   protected String getVariableName(InjectionPoint ip) {
     String variableName = ip.getAnnotated().getAnnotation(ProcessVariable.class).value();
-    if (variableName.isEmpty()) {
+    if (variableName.length() == 0) {
       variableName = ip.getMember().getName();
     }
     return variableName;
@@ -68,7 +68,7 @@ public class ProcessVariables {
 
   protected String getVariableTypedName(InjectionPoint ip) {
     String variableName = ip.getAnnotated().getAnnotation(ProcessVariableTyped.class).value();
-    if (variableName.isEmpty()) {
+    if (variableName.length() == 0) {
       variableName = ip.getMember().getName();
     }
     return variableName;
@@ -118,7 +118,7 @@ public class ProcessVariables {
 
   protected String getVariableLocalName(InjectionPoint ip) {
     String variableName = ip.getAnnotated().getAnnotation(ProcessVariableLocal.class).value();
-    if (variableName.isEmpty()) {
+    if (variableName.length() == 0) {
       variableName = ip.getMember().getName();
     }
     return variableName;
@@ -126,7 +126,7 @@ public class ProcessVariables {
 
   protected String getVariableLocalTypedName(InjectionPoint ip) {
     String variableName = ip.getAnnotated().getAnnotation(ProcessVariableLocalTyped.class).value();
-    if (variableName.isEmpty()) {
+    if (variableName.length() == 0) {
       variableName = ip.getMember().getName();
     }
     return variableName;

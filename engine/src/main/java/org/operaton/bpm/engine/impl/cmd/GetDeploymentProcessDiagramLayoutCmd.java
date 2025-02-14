@@ -27,7 +27,6 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.repository.DiagramLayout;
 
-import static org.springframework.util.ObjectUtils.isEmpty;
 
 /**
  * Provides positions and dimensions of elements in a process diagram as
@@ -42,7 +41,7 @@ public class GetDeploymentProcessDiagramLayoutCmd implements Command<DiagramLayo
   protected String processDefinitionId;
 
   public GetDeploymentProcessDiagramLayoutCmd(String processDefinitionId) {
-    if (isEmpty(processDefinitionId)) {
+    if (processDefinitionId == null || processDefinitionId.length() < 1) {
       throw new ProcessEngineException("The process definition id is mandatory, but '" + processDefinitionId + "' has been provided.");
     }
     this.processDefinitionId = processDefinitionId;

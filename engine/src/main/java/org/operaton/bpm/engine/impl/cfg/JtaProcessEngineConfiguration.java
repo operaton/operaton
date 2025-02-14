@@ -24,7 +24,6 @@ import org.operaton.bpm.engine.impl.cfg.jta.JtaTransactionContextFactory;
 import org.operaton.bpm.engine.impl.interceptor.CommandInterceptor;
 import org.operaton.bpm.engine.impl.interceptor.JtaTransactionInterceptor;
 
-import static org.springframework.util.ObjectUtils.isEmpty;
 
 /**
  * JTA-based implementation of the {@link AbstractTransactionProcessEngineConfiguration}
@@ -45,7 +44,7 @@ public class JtaProcessEngineConfiguration extends AbstractTransactionProcessEng
   @Override
   protected void initTransactionManager() {
     if(transactionManager == null){
-      if(isEmpty(transactionManagerJndiName)) {
+      if(transactionManagerJndiName == null || transactionManagerJndiName.length() == 0) {
         throw LOG.invalidConfigTransactionManagerIsNull();
       }
       try {

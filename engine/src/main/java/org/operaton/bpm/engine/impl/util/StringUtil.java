@@ -207,9 +207,7 @@ public final class StringUtil {
   /**
    * @param string the String to check.
    * @return a boolean <code>TRUE</code> if the String is not null and not empty. <code>FALSE</code> otherwise.
-   * @deprecated use {@link org.springframework.util.StringUtils#hasText(String)} instead
    */
-  @Deprecated(forRemoval = true)
   public static boolean hasText(String string) {
     return string != null && !string.isEmpty();
   }

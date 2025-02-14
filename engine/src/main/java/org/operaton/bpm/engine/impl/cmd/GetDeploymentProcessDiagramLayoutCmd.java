@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.cmd;
 
 import java.io.InputStream;
+import java.io.Serial;
 import java.io.Serializable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.bpmn.diagram.ProcessDiagramLayoutFactory;
@@ -27,22 +28,23 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.repository.DiagramLayout;
 
-import static org.springframework.util.ObjectUtils.isEmpty;
 
 /**
  * Provides positions and dimensions of elements in a process diagram as
  * provided by {@link GetDeploymentProcessDiagramCmd}.
- *
+ * <p>
  * This command requires a process model and a diagram image to be deployed.
+ * </p>
  * @author Falko Menge
  */
 public class GetDeploymentProcessDiagramLayoutCmd implements Command<DiagramLayout>, Serializable {
 
+  @Serial
   private static final long serialVersionUID = 1L;
   protected String processDefinitionId;
 
   public GetDeploymentProcessDiagramLayoutCmd(String processDefinitionId) {
-    if (isEmpty(processDefinitionId)) {
+    if (processDefinitionId == null || processDefinitionId.isEmpty()) {
       throw new ProcessEngineException("The process definition id is mandatory, but '" + processDefinitionId + "' has been provided.");
     }
     this.processDefinitionId = processDefinitionId;

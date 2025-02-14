@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.container.impl.threading.ra;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,7 +37,6 @@ import org.operaton.bpm.container.impl.threading.ra.inflow.JobExecutionHandler;
 import org.operaton.bpm.container.impl.threading.ra.inflow.JobExecutionHandlerActivation;
 import org.operaton.bpm.container.impl.threading.ra.inflow.JobExecutionHandlerActivationSpec;
 
-import static org.springframework.util.StringUtils.hasText;
 
 /**
  * <p>The {@link ResourceAdapter} responsible for bootstrapping the JcaExecutorService</p>
@@ -55,9 +55,10 @@ public class JcaExecutorServiceConnector implements ResourceAdapter, Serializabl
    * This class must be free of engine classes to make it possible to install
    * the resource adapter without shared libraries. Some deployments scenarios might
    * require that.
-   *
-   * The wrapper class was introduced to provide more meaning to a otherwise
+   * <p>
+   * The wrapper class was introduced to provide more meaning to an otherwise
    * unspecified property.
+   * </p>
    */
   public class ExecutorServiceWrapper {
     /**
@@ -77,9 +78,10 @@ public class JcaExecutorServiceConnector implements ResourceAdapter, Serializabl
 
   protected ExecutorServiceWrapper executorServiceWrapper = new ExecutorServiceWrapper();
 
+  @Serial
   private static final long serialVersionUID = 1L;
 
-  private static Logger log = Logger.getLogger(JcaExecutorServiceConnector.class.getName());
+  private static final Logger LOG = Logger.getLogger(JcaExecutorServiceConnector.class.getName());
 
   protected JobExecutionHandlerActivation jobHandlerActivation;
 
@@ -93,7 +95,7 @@ public class JcaExecutorServiceConnector implements ResourceAdapter, Serializabl
       type = Boolean.class,
       defaultValue = "false",
       description = "If set to 'true', the CommonJ WorkManager is used instead of the Jca Work Manager."
-      + "Can only be used on platforms where a CommonJ Workmanager is available (such as IBM & Oracle)"
+      + "Can only be used on platforms where a CommonJ WorkManager is available (such as IBM & Oracle)"
   )
   protected Boolean isUseCommonJWorkManager = false;
 
@@ -101,7 +103,7 @@ public class JcaExecutorServiceConnector implements ResourceAdapter, Serializabl
   @ConfigProperty(
       type=String.class,
       defaultValue = "wm/operaton-bpm-workmanager",
-      description="Allows specifying the name of a CommonJ Workmanager."
+      description="Allows specifying the name of a CommonJ WorkManager."
   )
   protected String commonJWorkManagerName = "wm/operaton-bpm-workmanager";
 
@@ -113,13 +115,13 @@ public class JcaExecutorServiceConnector implements ResourceAdapter, Serializabl
     try {
       Class.forName(ORG_CAMUNDA_BPM_ENGINE_PROCESS_ENGINE);
     } catch (Exception e) {
-      log.info("ProcessEngine classes not found in shared libraries. Not initializing operaton Platform JobExecutor Resource Adapter.");
+      LOG.info("ProcessEngine classes not found in shared libraries. Not initializing operaton Platform JobExecutor Resource Adapter.");
       return;
     }
 
     // initialize the ExecutorService (CommonJ or JCA, depending on configuration)
     if(isUseCommonJWorkManager) {
-      if(hasText(commonJWorkManagerName)) {
+      if(commonJWorkManagerName != null && !commonJWorkManagerName.isEmpty()) {
         executorServiceWrapper.setExecutorService(new CommonJWorkManagerExecutorService(this, commonJWorkManagerName));
       } else {
         throw new RuntimeException("Resource Adapter configuration property 'isUseCommonJWorkManager' is set to true but 'commonJWorkManagerName' is not provided.");
@@ -129,7 +131,7 @@ public class JcaExecutorServiceConnector implements ResourceAdapter, Serializabl
       executorServiceWrapper.setExecutorService(new JcaWorkManagerExecutorService(this, ctx.getWorkManager()));
     }
 
-    log.log(Level.INFO, "Operaton executor service started.");
+    LOG.log(Level.INFO, "Operaton executor service started.");
   }
 
   public void stop() {
@@ -139,7 +141,7 @@ public class JcaExecutorServiceConnector implements ResourceAdapter, Serializabl
       return;
     }
 
-    log.log(Level.INFO, "Operaton executor service stopped.");
+    LOG.log(Level.INFO, "Operaton executor service stopped.");
 
   }
 
@@ -167,8 +169,8 @@ public class JcaExecutorServiceConnector implements ResourceAdapter, Serializabl
 
   // unsupported (No TX Support) ////////////////////////////////////////////
 
-  public XAResource[] getXAResources(ActivationSpec[] specs) throws ResourceException {
-    log.finest("getXAResources()");
+  public XAResource[] getXAResources(ActivationSpec[] specs) {
+    LOG.finest("getXAResources()");
     return null;
   }
 
@@ -215,10 +217,7 @@ public class JcaExecutorServiceConnector implements ResourceAdapter, Serializabl
     if (other == this) {
       return true;
     }
-    if (!(other instanceof JcaExecutorServiceConnector)) {
-      return false;
-    }
-    return true;
+    return other instanceof JcaExecutorServiceConnector;
   }
 
 }

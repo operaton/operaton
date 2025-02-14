@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.repository.diagram;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.FileInputStream;

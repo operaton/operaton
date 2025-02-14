@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.mgmt;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.fail;
 
 import java.util.Date;
 import java.util.HashMap;

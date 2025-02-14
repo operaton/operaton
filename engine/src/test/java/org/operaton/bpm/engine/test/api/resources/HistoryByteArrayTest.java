@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.test.api.resources;
 import static org.operaton.bpm.engine.repository.ResourceTypes.HISTORY;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.Assert.fail;
 
 import java.io.ByteArrayInputStream;
 import java.util.Date;

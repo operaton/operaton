@@ -85,7 +85,6 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.Assert.fail;
 import static org.junit.Assert.assertThrows;
 
 /**

@@ -20,7 +20,6 @@ import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertTha
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.Assert.fail;
 
 import java.util.Collections;
 import java.util.Date;
@@ -47,6 +46,8 @@ import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.util.ActivityInstanceAssert.ActivityInstanceAssertThatClause;
 import org.operaton.bpm.engine.test.util.ExecutionAssert;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
+
+import org.assertj.core.api.Assertions;
 
 /**
  * @author Thorben Lindhauer
@@ -189,7 +190,7 @@ public class MigrationTestRule extends ProcessEngineTestRule {
 
     for (EventSubscription eventSubscription : snapshotAfterMigration.getEventSubscriptions()) {
       if (eventSubscriptionBefore.getId().equals(eventSubscription.getId())) {
-        fail("Expected event subscription '" + eventSubscriptionBefore.getId() + "' to be removed after migration");
+        Assertions.fail("Expected event subscription '" + eventSubscriptionBefore.getId() + "' to be removed after migration");
       }
     }
   }
@@ -200,7 +201,7 @@ public class MigrationTestRule extends ProcessEngineTestRule {
 
     for (EventSubscription eventSubscription : snapshotBeforeMigration.getEventSubscriptions()) {
       if (eventSubscriptionAfter.getId().equals(eventSubscription.getId())) {
-        fail("Expected event subscription '" + eventSubscriptionAfter.getId() + "' to be created after migration");
+        Assertions.fail("Expected event subscription '" + eventSubscriptionAfter.getId() + "' to be created after migration");
       }
     }
   }
@@ -229,7 +230,7 @@ public class MigrationTestRule extends ProcessEngineTestRule {
 
     for (Job job : snapshotBeforeMigration.getJobs()) {
       if (jobAfter.getId().equals(job.getId())) {
-        fail("Expected job '" + jobAfter.getId() + "' to be created first after migration");
+        Assertions.fail("Expected job '" + jobAfter.getId() + "' to be created first after migration");
       }
     }
   }
@@ -247,7 +248,7 @@ public class MigrationTestRule extends ProcessEngineTestRule {
 
       for (Job job : snapshotBeforeMigration.getJobs()) {
         if (jobAfter.getId().equals(job.getId())) {
-          fail("Expected job '" + jobAfter.getId() + "' to be created first after migration");
+          Assertions.fail("Expected job '" + jobAfter.getId() + "' to be created first after migration");
         }
       }
     }
@@ -263,7 +264,7 @@ public class MigrationTestRule extends ProcessEngineTestRule {
 
     for (Job job : snapshotAfterMigration.getJobs()) {
       if (jobBefore.getId().equals(job.getId())) {
-        fail("Expected job '" + jobBefore.getId() + "' to be removed after migration");
+        Assertions.fail("Expected job '" + jobBefore.getId() + "' to be removed after migration");
       }
     }
   }

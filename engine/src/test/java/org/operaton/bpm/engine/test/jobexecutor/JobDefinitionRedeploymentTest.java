@@ -114,7 +114,7 @@ public class JobDefinitionRedeploymentTest {
     // the job has the correct definitionId set:
     List<Job> jobs = managementService.createJobQuery().list();
     for (Job job : jobs) {
-      assertThat(jobDefinitionIds).contains(job);
+      assertThat(jobDefinitionIds).contains(job.getJobDefinitionId());
     }
 
     // delete the deployment

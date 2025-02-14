@@ -35,12 +35,12 @@ import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.bpmn.multiinstance.DelegateEvent;
 import org.operaton.bpm.engine.test.bpmn.multiinstance.DelegateExecutionListener;
+import org.operaton.bpm.engine.test.util.ActivityInstanceAssert;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 
 import java.util.*;
@@ -55,7 +55,6 @@ import org.junit.runners.Parameterized;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.Assert.fail;
 
 @RunWith(Parameterized.class)
 public class ModificationExecutionAsyncTest {
@@ -370,7 +369,7 @@ public class ModificationExecutionAsyncTest {
       assertThat(updatedTree).isNotNull();
       assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-      assertThat(updatedTree).hasStructure(
+      ActivityInstanceAssert.assertThat(updatedTree).hasStructure(
           describeActivityInstanceTree(
               processDefinition.getId())
           .activity("user1")
@@ -405,7 +404,7 @@ public class ModificationExecutionAsyncTest {
       assertThat(updatedTree).isNotNull();
       assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-      assertThat(updatedTree).hasStructure(
+      ActivityInstanceAssert.assertThat(updatedTree).hasStructure(
           describeActivityInstanceTree(
               processDefinition.getId())
           .activity("user1")
@@ -440,7 +439,7 @@ public class ModificationExecutionAsyncTest {
       assertThat(updatedTree).isNotNull();
       assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-      assertThat(updatedTree).hasStructure(
+      ActivityInstanceAssert.assertThat(updatedTree).hasStructure(
           describeActivityInstanceTree(
               processDefinition.getId())
           .activity("user1")
@@ -507,7 +506,7 @@ public class ModificationExecutionAsyncTest {
       assertThat(updatedTree).isNotNull();
       assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-      assertThat(updatedTree).hasStructure(
+      ActivityInstanceAssert.assertThat(updatedTree).hasStructure(
           describeActivityInstanceTree(
               processDefinition.getId())
           .activity("user2")
@@ -580,7 +579,7 @@ public class ModificationExecutionAsyncTest {
     for (String processInstanceId : helper.currentProcessInstances) {
       ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
       assertThat(updatedTree).isNotNull();
-      assertThat(updatedTree).hasStructure(
+      ActivityInstanceAssert.assertThat(updatedTree).hasStructure(
           describeActivityInstanceTree(
               processDefinition.getId())
           .activity("user2")
@@ -623,12 +622,12 @@ public class ModificationExecutionAsyncTest {
     updatedTree = runtimeService.getActivityInstance(processInstanceId);
     assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
-    assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processDefinition.getId()).activity("user2").activity("user2").done());
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processDefinition.getId()).activity("user2").activity("user2").done());
 
     processInstanceId = processInstanceIds.get(1);
     updatedTree = runtimeService.getActivityInstance(processInstanceId);
     assertThat(updatedTree).isNotNull();
-    assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processDefinition.getId()).activity("user1").activity("user2").done());
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processDefinition.getId()).activity("user1").activity("user2").done());
 
     // and the no modification jobs exist
     assertThat(helper.getExecutionJobs(batch)).isEmpty();
@@ -789,7 +788,7 @@ public class ModificationExecutionAsyncTest {
         assertThat(updatedTree).isNotNull();
         assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-        assertThat(updatedTree).hasStructure(
+        ActivityInstanceAssert.assertThat(updatedTree).hasStructure(
             describeActivityInstanceTree(
                 processDefinition.getId())
             .activity("user1")
@@ -829,7 +828,7 @@ public class ModificationExecutionAsyncTest {
       assertThat(updatedTree).isNotNull();
       assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-      assertThat(updatedTree).hasStructure(
+      ActivityInstanceAssert.assertThat(updatedTree).hasStructure(
           describeActivityInstanceTree(
               processDefinition.getId())
           .activity("user1")
@@ -883,7 +882,7 @@ public class ModificationExecutionAsyncTest {
       assertThat(updatedTree).isNotNull();
       assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-      assertThat(updatedTree).hasStructure(
+      ActivityInstanceAssert.assertThat(updatedTree).hasStructure(
           describeActivityInstanceTree(
               processDefinition.getId())
               .activity("user1")
@@ -941,7 +940,7 @@ public class ModificationExecutionAsyncTest {
       assertThat(updatedTree).isNotNull();
       assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-      assertThat(updatedTree).hasStructure(
+      ActivityInstanceAssert.assertThat(updatedTree).hasStructure(
           describeActivityInstanceTree(
               processDefinitionId)
               .activity("theTask")
@@ -1033,7 +1032,7 @@ public class ModificationExecutionAsyncTest {
       assertThat(updatedTree).isNotNull();
       assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-      assertThat(updatedTree).hasStructure(
+      ActivityInstanceAssert.assertThat(updatedTree).hasStructure(
           describeActivityInstanceTree(
               processDefinitionId)
               .activity("theTask")
@@ -1092,7 +1091,7 @@ public class ModificationExecutionAsyncTest {
       assertThat(updatedTree).isNotNull();
       assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-      assertThat(updatedTree).hasStructure(
+      ActivityInstanceAssert.assertThat(updatedTree).hasStructure(
           describeActivityInstanceTree(
               processDefinitionId)
               .activity("theTask")

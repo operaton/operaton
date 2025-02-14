@@ -53,7 +53,6 @@ import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.Assert.fail;
 
 /**
  * @author Roman Smirnov

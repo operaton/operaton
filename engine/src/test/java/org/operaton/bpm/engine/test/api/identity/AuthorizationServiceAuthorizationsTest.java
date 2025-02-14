@@ -28,7 +28,6 @@ import static org.operaton.bpm.engine.authorization.Resources.AUTHORIZATION;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestUtil.assertExceptionInfo;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.Assert.fail;
 
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.AuthorizationService;
@@ -379,21 +378,21 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
       fail("expected exception");
     } catch (BadUserRequestException e) {
       assertThat(e.getMessage()).contains("The resource type 'Application' is not valid");
-      assertThat(e.getMessage()).contains(BatchPermissions.CREATE_BATCH_MIGRATE_PROCESS_INSTANCES);
+      assertThat(e.getMessage()).contains(BatchPermissions.CREATE_BATCH_MIGRATE_PROCESS_INSTANCES.getName());
     }
     try {
       authorizationService.isUserAuthorized(userId, null, ProcessDefinitionPermissions.RETRY_JOB, Resources.APPLICATION);
       fail("expected exception");
     } catch (BadUserRequestException e) {
       assertThat(e.getMessage()).contains("The resource type 'Application' is not valid");
-      assertThat(e.getMessage()).contains(ProcessDefinitionPermissions.RETRY_JOB);
+      assertThat(e.getMessage()).contains(ProcessDefinitionPermissions.RETRY_JOB.getName());
     }
     try {
       authorizationService.isUserAuthorized(userId, null, ProcessInstancePermissions.RETRY_JOB, Resources.APPLICATION);
       fail("expected exception");
     } catch (BadUserRequestException e) {
       assertThat(e.getMessage()).contains("The resource type 'Application' is not valid");
-      assertThat(e.getMessage()).contains(ProcessInstancePermissions.RETRY_JOB);
+      assertThat(e.getMessage()).contains(ProcessInstancePermissions.RETRY_JOB.getName());
     }
 
   }
@@ -423,7 +422,7 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
       fail("expected exception");
     } catch (BadUserRequestException e) {
       assertThat(e.getMessage()).contains("The resource type 'ProcessInstance' is not valid");
-      assertThat(e.getMessage()).contains(ProcessDefinitionPermissions.RETRY_JOB);
+      assertThat(e.getMessage()).contains(ProcessDefinitionPermissions.RETRY_JOB.getName());
     }
   }
 

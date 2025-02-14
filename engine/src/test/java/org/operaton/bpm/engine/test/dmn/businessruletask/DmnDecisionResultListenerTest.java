@@ -62,7 +62,7 @@ public class DmnDecisionResultListenerTest extends PluggableProcessEngineTest {
     assertThat(results.isEmpty()).as("The decision result 'ruleResult' should not be empty").isFalse();
 
     DmnDecisionResultEntries decisionOutput = results.get(0);
-    assertThat(decisionOutput.getFirstEntry()).isNull();
+    assertThat(decisionOutput.<Object>getFirstEntry()).isNull();
   }
 
   @Deployment(resources = { TEST_PROCESS, TEST_DECISION})

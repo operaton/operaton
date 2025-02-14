@@ -49,7 +49,6 @@ import org.operaton.bpm.engine.variable.value.ObjectValue;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.assertj.core.groups.Tuple.tuple;
-import static org.junit.Assert.fail;
 
 /**
  * @author roman.smirnov
@@ -2700,7 +2699,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     assertThat(loopCounterActivityInstanceIds).hasSize(4);
 
     for (ActivityInstance subProcessInstance : tree.getActivityInstances("miSubProcess")) {
-      assertThat(loopCounterActivityInstanceIds).contains(subProcessInstance);
+      assertThat(loopCounterActivityInstanceIds).contains(subProcessInstance.getId());
     }
   }
 

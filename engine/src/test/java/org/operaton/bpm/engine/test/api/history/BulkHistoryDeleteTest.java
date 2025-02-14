@@ -22,7 +22,6 @@ import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TY
 import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.Assert.fail;
 
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;

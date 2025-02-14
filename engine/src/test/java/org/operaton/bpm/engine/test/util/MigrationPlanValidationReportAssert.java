@@ -34,7 +34,7 @@ public class MigrationPlanValidationReportAssert {
   }
 
   public MigrationPlanValidationReportAssert isNotNull() {
-    assertThat(actual).as("Expected report to be not null").isNotNull();
+    Assertions.assertThat(actual).as("Expected report to be not null").isNotNull();
 
     return this;
   }

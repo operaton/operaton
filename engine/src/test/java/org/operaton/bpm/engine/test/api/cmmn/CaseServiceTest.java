@@ -21,7 +21,6 @@ import static org.operaton.bpm.engine.variable.Variables.createVariables;
 import static org.operaton.bpm.engine.variable.Variables.integerValue;
 import static org.operaton.bpm.engine.variable.Variables.stringValue;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;

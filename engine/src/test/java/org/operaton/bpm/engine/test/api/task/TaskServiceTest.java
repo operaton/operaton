@@ -16,33 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.task;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.Assert.fail;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import org.operaton.bpm.engine.BadUserRequestException;
-import org.operaton.bpm.engine.CaseService;
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.OptimisticLockingException;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskAlreadyClaimedException;
-import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.exception.NullValueException;
@@ -60,13 +34,7 @@ import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.VariableInstance;
-import org.operaton.bpm.engine.task.Attachment;
-import org.operaton.bpm.engine.task.Comment;
-import org.operaton.bpm.engine.task.DelegationState;
-import org.operaton.bpm.engine.task.Event;
-import org.operaton.bpm.engine.task.IdentityLink;
-import org.operaton.bpm.engine.task.IdentityLinkType;
-import org.operaton.bpm.engine.task.Task;
+import org.operaton.bpm.engine.task.*;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
@@ -79,12 +47,20 @@ import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.builder.ProcessBuilder;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+import org.junit.*;
 import org.junit.rules.RuleChain;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Frederik Heremans
@@ -2949,9 +2925,9 @@ public class TaskServiceTest {
 
     // this works
     VariableMap variablesTyped = taskService.getVariablesTyped(taskId, false);
-    assertThat(variablesTyped.getValueTyped("broken")).isNotNull();
+    assertThat(variablesTyped.<ObjectValue>getValueTyped("broken")).isNotNull();
     variablesTyped = taskService.getVariablesTyped(taskId, List.of("broken"), false);
-    assertThat(variablesTyped.getValueTyped("broken")).isNotNull();
+    assertThat(variablesTyped.<ObjectValue>getValueTyped("broken")).isNotNull();
 
     // this does not
     try {
@@ -2997,9 +2973,9 @@ public class TaskServiceTest {
 
     // this works
     VariableMap variablesTyped = taskService.getVariablesLocalTyped(taskId, false);
-    assertThat(variablesTyped.getValueTyped("broken")).isNotNull();
+    assertThat(variablesTyped.<ObjectValue>getValueTyped("broken")).isNotNull();
     variablesTyped = taskService.getVariablesLocalTyped(taskId, List.of("broken"), false);
-    assertThat(variablesTyped.getValueTyped("broken")).isNotNull();
+    assertThat(variablesTyped.<ObjectValue>getValueTyped("broken")).isNotNull();
 
     // this does not
     try {

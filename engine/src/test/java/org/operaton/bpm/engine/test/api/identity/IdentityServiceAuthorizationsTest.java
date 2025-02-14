@@ -32,7 +32,6 @@ import static org.operaton.bpm.engine.authorization.Resources.TENANT;
 import static org.operaton.bpm.engine.authorization.Resources.TENANT_MEMBERSHIP;
 import static org.operaton.bpm.engine.authorization.Resources.USER;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestUtil.assertExceptionInfo;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Collections;

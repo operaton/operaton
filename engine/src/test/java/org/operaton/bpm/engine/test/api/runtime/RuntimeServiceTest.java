@@ -44,17 +44,14 @@ import org.operaton.bpm.engine.test.bpmn.executionlistener.RecorderExecutionList
 import org.operaton.bpm.engine.test.bpmn.executionlistener.RecorderExecutionListener.RecordedEvent;
 import org.operaton.bpm.engine.test.bpmn.tasklistener.util.RecorderTaskListener;
 import org.operaton.bpm.engine.test.history.SerializableVariable;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.operaton.bpm.engine.test.util.TestExecutionListener;
+import org.operaton.bpm.engine.test.util.*;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.ValueType;
+import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.builder.SubProcessBuilder;
-import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutableProcessUtil.USER_TASK_PROCESS;
 import static org.operaton.bpm.engine.variable.Variables.createVariables;
@@ -70,7 +67,6 @@ import org.junit.Test;
 import org.junit.rules.RuleChain;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.Assert.fail;
 
 /**
  * @author Frederik Heremans
@@ -930,9 +926,9 @@ public class RuntimeServiceTest {
 
     // this works
     VariableMap variablesTyped = runtimeService.getVariablesTyped(processInstance.getId(), false);
-    assertThat(variablesTyped.getValueTyped("broken")).isNotNull();
+    assertThat(variablesTyped.<ObjectValue>getValueTyped("broken")).isNotNull();
     variablesTyped = runtimeService.getVariablesTyped(processInstance.getId(), List.of("broken"), false);
-    assertThat(variablesTyped.getValueTyped("broken")).isNotNull();
+    assertThat(variablesTyped.<ObjectValue>getValueTyped("broken")).isNotNull();
 
     // this does not
     try {
@@ -975,9 +971,9 @@ public class RuntimeServiceTest {
 
     // this works
     VariableMap variablesTyped = runtimeService.getVariablesLocalTyped(processInstance.getId(), false);
-    assertThat(variablesTyped.getValueTyped("broken")).isNotNull();
+    assertThat(variablesTyped.<ObjectValue>getValueTyped("broken")).isNotNull();
     variablesTyped = runtimeService.getVariablesLocalTyped(processInstance.getId(), List.of("broken"), false);
-    assertThat(variablesTyped.getValueTyped("broken")).isNotNull();
+    assertThat(variablesTyped.<ObjectValue>getValueTyped("broken")).isNotNull();
 
     // this does not
     try {
@@ -1524,7 +1520,7 @@ public class RuntimeServiceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(tree).hasStructure(
+    ActivityInstanceAssert.assertThat(tree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId())
           .transition("theTask")
         .done());
@@ -1539,7 +1535,7 @@ public class RuntimeServiceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("concurrentTasksProcess");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(tree).hasStructure(
+    ActivityInstanceAssert.assertThat(tree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId())
           .activity("theTask")
           .transition("asyncTask")
@@ -1556,7 +1552,7 @@ public class RuntimeServiceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(tree).hasStructure(
+    ActivityInstanceAssert.assertThat(tree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId())
           .transition("theStart")
         .done());
@@ -1575,7 +1571,7 @@ public class RuntimeServiceTest {
 
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(tree).hasStructure(
+    ActivityInstanceAssert.assertThat(tree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId())
           .transition("theTask")
         .done());
@@ -1594,7 +1590,7 @@ public class RuntimeServiceTest {
     taskService.complete(asyncTask.getId());
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(tree).hasStructure(
+    ActivityInstanceAssert.assertThat(tree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId())
           .activity("theTask")
           .transition("asyncTask")
@@ -1611,7 +1607,7 @@ public class RuntimeServiceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("asyncEndEventProcess");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(tree).hasStructure(
+    ActivityInstanceAssert.assertThat(tree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId())
           .transition("theEnd")
         .done());
@@ -1626,7 +1622,7 @@ public class RuntimeServiceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(tree).hasStructure(
+    ActivityInstanceAssert.assertThat(tree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId())
           .beginScope("subProcess")
             .transition("theTask")
@@ -1644,7 +1640,7 @@ public class RuntimeServiceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(tree).hasStructure(
+    ActivityInstanceAssert.assertThat(tree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId())
           .beginScope("subProcess")
             .transition("theSubProcessStart")
@@ -1661,7 +1657,7 @@ public class RuntimeServiceTest {
 
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(tree).hasStructure(
+    ActivityInstanceAssert.assertThat(tree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId())
           .beginScope("subProcess")
             .transition("theTask")
@@ -1679,7 +1675,7 @@ public class RuntimeServiceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("asyncEndEventProcess");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(tree).hasStructure(
+    ActivityInstanceAssert.assertThat(tree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId())
           .beginScope("subProcess")
             .transition("theSubProcessEnd")
@@ -1702,7 +1698,7 @@ public class RuntimeServiceTest {
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
     assertThat(tree).isNotNull();
 
-    assertThat(tree).hasStructure(
+    ActivityInstanceAssert.assertThat(tree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId())
           .activity("outerTask")
           .beginScope("subProcess")
@@ -1866,7 +1862,7 @@ public class RuntimeServiceTest {
     assertThat(tree).isNotNull();
 
     // assume
-    assertThat(tree).hasTotalIncidents(1);
+    ActivityInstanceAssert.assertThat(tree).hasTotalIncidents(1);
 
     Incident[] incidents = tree.getActivityInstances("theTask")[0].getIncidents();
 
@@ -1903,7 +1899,7 @@ public class RuntimeServiceTest {
     assertThat(tree).isNotNull();
 
     // then
-    assertThat(tree).hasTotalIncidents(1);
+    ActivityInstanceAssert.assertThat(tree).hasTotalIncidents(1);
 
     assertThat(tree.getActivityInstances("theTask").length).isEqualTo(1);
     String[] incidentIds = tree.getActivityInstances("theTask")[0].getIncidentIds();
@@ -1928,7 +1924,7 @@ public class RuntimeServiceTest {
     assertThat(tree).isNotNull();
 
     // then
-    assertThat(tree).hasTotalIncidents(3);
+    ActivityInstanceAssert.assertThat(tree).hasTotalIncidents(3);
 
     assertThat(tree.getActivityInstances("theTask").length).isEqualTo(1);
     String[] incidentIds = tree.getActivityInstances("theTask")[0].getIncidentIds();
@@ -1962,7 +1958,7 @@ public class RuntimeServiceTest {
     assertThat(tree).isNotNull();
 
     // then
-    assertThat(tree).hasTotalIncidents(2);
+    ActivityInstanceAssert.assertThat(tree).hasTotalIncidents(2);
 
     assertThat(tree.getActivityInstances("outerTask").length).isEqualTo(1);
     String[] incidentIds = tree.getActivityInstances("outerTask")[0].getIncidentIds();
@@ -1989,7 +1985,7 @@ public class RuntimeServiceTest {
     assertThat(tree).isNotNull();
 
     // then
-    assertThat(tree).hasTotalIncidents(1);
+    ActivityInstanceAssert.assertThat(tree).hasTotalIncidents(1);
 
     boolean innerTaskMatched = false;
 
@@ -2022,7 +2018,7 @@ public class RuntimeServiceTest {
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
 
     // then
-    assertThat(activityInstance).hasTotalIncidents(1);
+    ActivityInstanceAssert.assertThat(activityInstance).hasTotalIncidents(1);
 
     TransitionInstance transitionInstance = activityInstance.getTransitionInstances("theTask")[0];
     String[] incidents = transitionInstance.getIncidentIds();
@@ -2058,7 +2054,7 @@ public class RuntimeServiceTest {
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
 
     // then
-    assertThat(activityInstance).hasTotalIncidents(1);
+    ActivityInstanceAssert.assertThat(activityInstance).hasTotalIncidents(1);
 
     TransitionInstance transitionInstance = activityInstance.getTransitionInstances("task")[0];
     String[] incidents = transitionInstance.getIncidentIds();
@@ -2096,7 +2092,7 @@ public class RuntimeServiceTest {
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
 
     // then
-    assertThat(activityInstance).hasTotalIncidents(1);
+    ActivityInstanceAssert.assertThat(activityInstance).hasTotalIncidents(1);
 
     ActivityInstance subProcessInstance = activityInstance.getActivityInstances("subProcess")[0];
     String[] incidents = subProcessInstance.getIncidentIds();
@@ -2128,7 +2124,7 @@ public class RuntimeServiceTest {
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
 
     // then
-    assertThat(activityInstance).hasTotalIncidents(1);
+    ActivityInstanceAssert.assertThat(activityInstance).hasTotalIncidents(1);
 
     // while the incident references the sub process, the sub process
     // execution represents both the sub process and the user task (compacted tree).
@@ -2178,7 +2174,7 @@ public class RuntimeServiceTest {
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
 
     // then
-    assertThat(activityInstance).hasStructure(
+    ActivityInstanceAssert.assertThat(activityInstance).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
         .beginMiBody("subprocess")
           .transition("subprocess")
@@ -2208,7 +2204,7 @@ public class RuntimeServiceTest {
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
 
     // then
-    assertThat(activityInstance).hasStructure(
+    ActivityInstanceAssert.assertThat(activityInstance).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
         .beginMiBody("task")
           .transition("task")
@@ -2243,7 +2239,7 @@ public class RuntimeServiceTest {
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
 
     // then
-    assertThat(activityInstance).hasStructure(
+    ActivityInstanceAssert.assertThat(activityInstance).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
       .beginMiBody("subprocess")
         .transition("subprocess")
@@ -2278,7 +2274,7 @@ public class RuntimeServiceTest {
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
 
     // then
-    assertThat(activityInstance).hasStructure(
+    ActivityInstanceAssert.assertThat(activityInstance).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
       .beginScope("subprocess")
         .transition("task")
@@ -2309,7 +2305,7 @@ public class RuntimeServiceTest {
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
 
     // then
-    assertThat(activityInstance).hasStructure(
+    ActivityInstanceAssert.assertThat(activityInstance).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
       .beginScope("subprocess")
         .transition("task")
@@ -2341,7 +2337,7 @@ public class RuntimeServiceTest {
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
 
     // then
-    assertThat(activityInstance).hasStructure(
+    ActivityInstanceAssert.assertThat(activityInstance).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
       .beginScope("subprocess")
         .transition("task")

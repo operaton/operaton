@@ -51,7 +51,6 @@ import java.util.Locale;
 import static org.assertj.core.api.Assertions.*;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.fail;
 
 /**
  *

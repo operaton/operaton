@@ -41,6 +41,8 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.ExecutionTree;
+
+import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Test;
 
@@ -101,7 +103,7 @@ public class SingleProcessInstanceModificationAsyncAuthorizationTest extends Aut
     }
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertThat(updatedTree).isNotNull();
+    Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task2").done());

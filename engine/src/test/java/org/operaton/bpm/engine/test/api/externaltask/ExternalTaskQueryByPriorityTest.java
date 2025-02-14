@@ -120,7 +120,7 @@ public class ExternalTaskQueryByPriorityTest extends PluggableProcessEngineTest 
 
     for (ExternalTask task : tasks) {
       assertThat(task.getPriority() >= 2).isTrue();
-      assertThat(processInstanceIds).contains(task);
+      assertThat(processInstanceIds).contains(task.getProcessInstanceId());
     }
   }
 

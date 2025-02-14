@@ -492,8 +492,8 @@ public class GetHistoricOperationLogsForOptimizeTest {
     // then
     Set<String> allowedOperationsTypes = new HashSet<>(Arrays.asList(OPERATION_TYPE_SUSPEND, OPERATION_TYPE_ACTIVATE));
     assertThat(userOperationsLog).hasSize(2);
-    assertThat(allowedOperationsTypes).contains(userOperationsLog.get(0));
-    assertThat(allowedOperationsTypes).contains(userOperationsLog.get(1));
+    assertThat(allowedOperationsTypes).contains(userOperationsLog.get(0).getOperationType());
+    assertThat(allowedOperationsTypes).contains(userOperationsLog.get(1).getOperationType());
   }
 
   @Test

@@ -23,6 +23,7 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.ValueType;
+import org.operaton.bpm.engine.variable.value.IntegerValue;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 
 /**
@@ -39,7 +40,7 @@ public class AssertVariableInstancesDelegate implements JavaDelegate {
     assertThat(execution.getVariableTyped("anIntegerVariable").getValue()).isEqualTo(expectedIntValue);
     assertThat(execution.getVariableTyped("anIntegerVariable").getType()).isEqualTo(ValueType.INTEGER);
     assertThat(execution.getVariableLocal("anIntegerVariable")).isNull();
-    assertThat(execution.getVariableLocalTyped("anIntegerVariable")).isNull();
+    assertThat(execution.<IntegerValue>getVariableLocalTyped("anIntegerVariable")).isNull();
 
     // set an additional local variable
     execution.setVariableLocal("aStringVariable", "aStringValue");

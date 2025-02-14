@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.dmn.deployment;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.Assert.fail;
 
 import java.io.InputStream;
 import java.util.List;

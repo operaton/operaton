@@ -819,7 +819,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
 
         int period = reportResult.getPeriod();
         Set<String> processInstancesInPeriod = periodToProcessInstancesMap.get(period);
-        assertThat(processInstancesInPeriod).as("Unexpected report for period " + period).isNotNull();
+        Assertions.assertThat(processInstancesInPeriod).as("Unexpected report for period " + period).isNotNull();
 
         List<HistoricProcessInstance> historicProcessInstances = historyService
             .createHistoricProcessInstanceQuery()

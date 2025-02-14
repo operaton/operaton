@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.history;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.Assert.fail;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -280,7 +279,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     assertThat(processInstances).hasSize(5);
 
     for (HistoricProcessInstance historicProcessInstance : processInstances) {
-      assertThat(processInstanceIds).contains(historicProcessInstance);
+      assertThat(processInstanceIds).contains(historicProcessInstance.getId());
     }
 
     // making a query that has contradicting conditions should succeed
@@ -681,7 +680,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     List<HistoricVariableInstance> variables = historyService.createNativeHistoricVariableInstanceQuery().sql("SELECT * FROM " + managementService.getTableName(HistoricVariableInstance.class)).list();
     assertThat(variables).hasSize(2);
     for (HistoricVariableInstance variable : variables) {
-      assertThat(vars).containsKey(variable);
+      assertThat(vars).containsKey(variable.getName());
       assertThat(variable.getValue()).isEqualTo(vars.get(variable.getName()));
       vars.remove(variable.getName());
     }

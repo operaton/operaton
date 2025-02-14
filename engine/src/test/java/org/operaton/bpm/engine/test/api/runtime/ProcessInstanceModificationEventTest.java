@@ -33,6 +33,8 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.ExecutionTree;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.engine.variable.Variables;
+
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
 /**
@@ -61,7 +63,7 @@ public class ProcessInstanceModificationEventTest extends PluggableProcessEngine
 
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertThat(updatedTree).isNotNull();
+    Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
@@ -113,7 +115,7 @@ public class ProcessInstanceModificationEventTest extends PluggableProcessEngine
 
     // then there are two instances of "task"
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertThat(updatedTree).isNotNull();
+    Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
@@ -157,7 +159,7 @@ public class ProcessInstanceModificationEventTest extends PluggableProcessEngine
 
     // then there are two instances of "task"
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertThat(updatedTree).isNotNull();
+    Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
@@ -198,7 +200,7 @@ public class ProcessInstanceModificationEventTest extends PluggableProcessEngine
 
     // then there are two instances of "task"
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertThat(updatedTree).isNotNull();
+    Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
@@ -241,7 +243,7 @@ public class ProcessInstanceModificationEventTest extends PluggableProcessEngine
 
     // then there is no effect
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertThat(updatedTree).isNotNull();
+    Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
@@ -274,7 +276,7 @@ public class ProcessInstanceModificationEventTest extends PluggableProcessEngine
 
     // then the process instance is terminated
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertThat(updatedTree).isNull();
+    Assertions.assertThat(updatedTree).isNull();
     testRule.assertProcessEnded(processInstanceId);
   }
 
@@ -295,7 +297,7 @@ public class ProcessInstanceModificationEventTest extends PluggableProcessEngine
 
     // then the subprocess instance is cancelled
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertThat(updatedTree).isNotNull();
+    Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
@@ -339,7 +341,7 @@ public class ProcessInstanceModificationEventTest extends PluggableProcessEngine
 
     // then a new subprocess instance is created and immediately cancelled
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertThat(updatedTree).isNotNull();
+    Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(

@@ -92,8 +92,7 @@ public class BatchQueryTest {
       batchIds.add(resultBatch.getId());
     }
 
-    assertThat(batchIds).contains(batch1);
-    assertThat(batchIds).contains(batch2);
+    assertThat(batchIds).containsExactly(batch1.getId(), batch2.getId());
   }
 
   @Test

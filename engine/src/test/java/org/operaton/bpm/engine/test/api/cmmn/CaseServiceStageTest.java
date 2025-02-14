@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.cmmn;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.Assert.fail;
 
 import java.util.HashMap;
 import java.util.List;

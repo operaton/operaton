@@ -360,10 +360,10 @@ public class SubProcessTest extends PluggableProcessEngineTest {
     assertThat(rootActivityInstance.getChildActivityInstances().length).isEqualTo(2);
     ActivityInstance[] childActivityInstances = rootActivityInstance.getChildActivityInstances();
     for (ActivityInstance activityInstance : childActivityInstances) {
-      assertThat(Arrays.asList(new String[]{"subProcessA", "subProcessB"})).contains(activityInstance);
+      assertThat(List.of("subProcessA", "subProcessB")).contains(activityInstance.getActivityId());
       ActivityInstance[] subProcessChildren = activityInstance.getChildActivityInstances();
       assertThat(subProcessChildren.length).isEqualTo(1);
-      assertThat(Arrays.asList(new String[]{"subProcessATask", "subProcessBTask"})).contains(subProcessChildren[0]);
+      assertThat(List.of("subProcessATask", "subProcessBTask")).contains(subProcessChildren[0].getActivityId());
     }
 
     // Completing both tasks should active the tasks outside the subprocesses

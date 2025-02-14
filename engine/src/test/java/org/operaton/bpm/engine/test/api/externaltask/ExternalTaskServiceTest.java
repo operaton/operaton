@@ -18,9 +18,7 @@ package org.operaton.bpm.engine.test.api.externaltask;
 
 import static java.util.Comparator.reverseOrder;
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.Assert.fail;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 
 import java.text.SimpleDateFormat;
@@ -61,6 +59,7 @@ import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
+import org.operaton.bpm.engine.test.util.ActivityInstanceAssert;
 import org.operaton.bpm.engine.test.util.AssertUtil;
 import org.operaton.bpm.engine.test.util.ClockTestUtil;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
@@ -1461,7 +1460,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     assertThat(externalTasks).isEmpty();
 
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(activityInstance).hasStructure(
+    ActivityInstanceAssert.assertThat(activityInstance).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId())
           .activity("afterExternalTask")
         .done());
@@ -1485,7 +1484,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
     // then
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(activityInstance).hasStructure(
+    ActivityInstanceAssert.assertThat(activityInstance).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId())
           .activity("afterExternalTask")
         .done());
@@ -2358,7 +2357,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     externalTaskService.complete(externalTask.getId(), WORKER_ID);
 
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(activityInstance).hasStructure(
+    ActivityInstanceAssert.assertThat(activityInstance).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId())
           .activity("afterBoundaryTask")
         .done());

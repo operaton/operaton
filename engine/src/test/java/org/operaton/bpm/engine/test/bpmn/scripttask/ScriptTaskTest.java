@@ -31,7 +31,6 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.model.bpmn.Bpmn;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.Assert.fail;
 
 /**
  *

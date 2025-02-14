@@ -37,7 +37,7 @@ public class MigratingProcessInstanceValidationReportAssert {
   }
 
   public MigratingProcessInstanceValidationReportAssert isNotNull() {
-    assertThat(actual).as("Expected report to be not null").isNotNull();
+    Assertions.assertThat(actual).as("Expected report to be not null").isNotNull();
 
     return this;
   }
@@ -67,7 +67,7 @@ public class MigratingProcessInstanceValidationReportAssert {
       }
     }
 
-    assertThat(actualReport).as("No validation report found for source scope: " + sourceScopeId).isNotNull();
+    Assertions.assertThat(actualReport).as("No validation report found for source scope: " + sourceScopeId).isNotNull();
 
     assertFailures(sourceScopeId, Arrays.asList(expectedFailures), actualReport.getFailures());
 
@@ -85,7 +85,7 @@ public class MigratingProcessInstanceValidationReportAssert {
       }
     }
 
-    assertThat(actualReport).as("No validation report found for source scope: " + sourceScopeId).isNotNull();
+    Assertions.assertThat(actualReport).as("No validation report found for source scope: " + sourceScopeId).isNotNull();
 
     assertFailures(sourceScopeId, Arrays.asList(expectedFailures), actualReport.getFailures());
 

@@ -39,11 +39,12 @@ import org.operaton.bpm.engine.test.bpmn.executionlistener.RecorderExecutionList
 import org.operaton.bpm.engine.test.util.ExecutionTree;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.engine.variable.Variables;
+
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.Assert.fail;
 import static org.junit.Assert.assertNotSame;
 
 /**
@@ -87,7 +88,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
 
     // and there is no activity instance for task2 yet
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertThat(updatedTree).isNotNull();
+    Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
@@ -116,7 +117,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
 
     // and there is an activity instance for task2
     updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertThat(updatedTree).isNotNull();
+    Assertions.assertThat(updatedTree).isNotNull();
 
     assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
@@ -170,7 +171,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
 
     // then the process instance is in a valid state
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(updatedTree).isNotNull();
+    Assertions.assertThat(updatedTree).isNotNull();
 
     assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
@@ -204,7 +205,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
 
     // then the process instance is in a valid state
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(updatedTree).isNotNull();
+    Assertions.assertThat(updatedTree).isNotNull();
 
     assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
@@ -238,7 +239,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
 
     // then the process instance is in a valid state
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(updatedTree).isNotNull();
+    Assertions.assertThat(updatedTree).isNotNull();
 
     assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())

@@ -16,19 +16,6 @@
  */
 package org.operaton.bpm.engine.test.cmmn.handler;
 
-import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_ACTIVITY_DESCRIPTION;
-import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_ACTIVITY_TYPE;
-import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_IS_BLOCKING;
-import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_MANUAL_ACTIVATION_RULE;
-import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_REPETITION_RULE;
-import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_REQUIRED_RULE;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.junit.Assert.fail;
-
-import java.util.List;
-import java.util.Set;
-
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.delegate.TaskListener;
@@ -48,25 +35,23 @@ import org.operaton.bpm.engine.impl.task.listener.ClassDelegateTaskListener;
 import org.operaton.bpm.engine.impl.task.listener.DelegateExpressionTaskListener;
 import org.operaton.bpm.engine.impl.task.listener.ExpressionTaskListener;
 import org.operaton.bpm.model.cmmn.Cmmn;
-import org.operaton.bpm.model.cmmn.instance.Body;
-import org.operaton.bpm.model.cmmn.instance.CaseRole;
-import org.operaton.bpm.model.cmmn.instance.ConditionExpression;
-import org.operaton.bpm.model.cmmn.instance.DefaultControl;
-import org.operaton.bpm.model.cmmn.instance.EntryCriterion;
-import org.operaton.bpm.model.cmmn.instance.ExitCriterion;
-import org.operaton.bpm.model.cmmn.instance.ExtensionElements;
-import org.operaton.bpm.model.cmmn.instance.HumanTask;
-import org.operaton.bpm.model.cmmn.instance.IfPart;
-import org.operaton.bpm.model.cmmn.instance.ItemControl;
-import org.operaton.bpm.model.cmmn.instance.ManualActivationRule;
-import org.operaton.bpm.model.cmmn.instance.PlanItem;
-import org.operaton.bpm.model.cmmn.instance.PlanItemControl;
-import org.operaton.bpm.model.cmmn.instance.RepetitionRule;
-import org.operaton.bpm.model.cmmn.instance.RequiredRule;
-import org.operaton.bpm.model.cmmn.instance.Sentry;
+import org.operaton.bpm.model.cmmn.instance.*;
 import org.operaton.bpm.model.cmmn.instance.operaton.OperatonTaskListener;
+import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_ACTIVITY_DESCRIPTION;
+import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_ACTIVITY_TYPE;
+import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_IS_BLOCKING;
+import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_MANUAL_ACTIVATION_RULE;
+import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_REPETITION_RULE;
+import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_REQUIRED_RULE;
+
+import java.util.List;
+import java.util.Set;
+
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 
 /**

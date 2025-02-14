@@ -41,7 +41,6 @@ import org.junit.rules.RuleChain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.Assert.fail;
 
 
 /**
@@ -1362,8 +1361,9 @@ public class RedeploymentTest {
     // registration was performed:
     ProcessApplicationRegistration registration = deployment2.getProcessApplicationRegistration();
     Set<String> deploymentIds = registration.getDeploymentIds();
-    assertThat(deploymentIds).hasSize(1);
-    assertThat(deploymentIds).contains(deployment2);
+    assertThat(deploymentIds)
+      .hasSize(1)
+      .contains(deployment2.getId());
   }
 
   @Test

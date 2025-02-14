@@ -54,6 +54,8 @@ import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -143,7 +145,7 @@ public class RestartProcessInstanceSyncTest {
     assertThat(restartedTask.getTaskDefinitionKey()).isEqualTo(userTask2.getTaskDefinitionKey());
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(restartedProcessInstance.getId());
-    assertThat(updatedTree).isNotNull();
+    Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(restartedProcessInstance.getId());
     assertThat(updatedTree).hasStructure(
         describeActivityInstanceTree(
@@ -170,7 +172,7 @@ public class RestartProcessInstanceSyncTest {
     // then
     ProcessInstance restartedProcessInstance = runtimeService.createProcessInstanceQuery().active().singleResult();
     ActivityInstance updatedTree = runtimeService.getActivityInstance(restartedProcessInstance.getId());
-    assertThat(updatedTree).isNotNull();
+    Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(restartedProcessInstance.getId());
     assertThat(updatedTree).hasStructure(
         describeActivityInstanceTree(
@@ -196,7 +198,7 @@ public class RestartProcessInstanceSyncTest {
     // then
     ProcessInstance restartedProcessInstance = runtimeService.createProcessInstanceQuery().active().singleResult();
     ActivityInstance updatedTree = runtimeService.getActivityInstance(restartedProcessInstance.getId());
-    assertThat(updatedTree).isNotNull();
+    Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(restartedProcessInstance.getId());
     assertThat(updatedTree).hasStructure(
         describeActivityInstanceTree(
@@ -564,7 +566,7 @@ public class RestartProcessInstanceSyncTest {
     ProcessInstance restartedProcessInstance = runtimeService.createProcessInstanceQuery().active().singleResult();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(restartedProcessInstance.getId());
-    assertThat(updatedTree).isNotNull();
+    Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(restartedProcessInstance.getId());
     assertThat(updatedTree).hasStructure(
         describeActivityInstanceTree(

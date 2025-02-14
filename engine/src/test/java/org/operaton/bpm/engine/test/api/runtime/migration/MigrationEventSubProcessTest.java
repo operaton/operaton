@@ -22,7 +22,6 @@ import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnM
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.EventSubProcessModels.CONDITIONAL_EVENT_SUBPROCESS_PROCESS;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
-import static org.operaton.bpm.engine.test.util.MigrationPlanValidationReportAssert.assertThat;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -40,6 +39,7 @@ import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.EventSubProcessModels;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.ClockTestUtil;
+import org.operaton.bpm.engine.test.util.MigrationPlanValidationReportAssert;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.joda.time.DateTime;
@@ -414,7 +414,7 @@ public class MigrationEventSubProcessTest {
       fail("exception expected");
     } catch (MigrationPlanValidationException e) {
       // then
-      assertThat(e.getValidationReport())
+      MigrationPlanValidationReportAssert.assertThat(e.getValidationReport())
       .hasInstructionFailures(EVENT_SUB_PROCESS_START_ID,
         "Events are not of the same type (signalStartEvent != startTimerEvent)"
       );

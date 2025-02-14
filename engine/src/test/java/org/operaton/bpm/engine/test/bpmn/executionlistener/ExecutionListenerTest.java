@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.test.bpmn.executionlistener;
 import static org.assertj.core.api.Assertions.*;
 import static org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl.HISTORYLEVEL_AUDIT;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-import static org.junit.Assert.fail;
 
 import java.util.HashMap;
 import java.util.List;

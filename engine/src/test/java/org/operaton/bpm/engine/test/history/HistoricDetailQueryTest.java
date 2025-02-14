@@ -53,6 +53,8 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -300,7 +302,7 @@ public class HistoricDetailQueryTest {
     allowedVariableTypes.add("object");
     for (HistoricDetail detail : query.list()) {
       if (detail instanceof HistoricVariableUpdate variableUpdate) {
-        assertThat(allowedVariableTypes).contains(variableUpdate);
+        assertThat(allowedVariableTypes).contains(variableUpdate.getTypeName());
       } else {
         fail("Historic detail should be a variable update!");
       }
@@ -580,8 +582,7 @@ public class HistoricDetailQueryTest {
     expectedProcessInstanceIds.add(processInstance.getId());
     expectedProcessInstanceIds.add(processInstance2.getId());
     assertThat(query.count()).isEqualTo(2);
-    assertThat(expectedProcessInstanceIds).contains(query.list().get(0));
-    assertThat(expectedProcessInstanceIds).contains(query.list().get(1));
+    assertThat(expectedProcessInstanceIds).containsExactly(query.list().stream().map(HistoricDetail::getProcessInstanceId).toArray(String[]::new));
   }
 
   @Test

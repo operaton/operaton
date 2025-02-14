@@ -52,7 +52,6 @@ import java.util.*;
 
 import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.Assert.fail;
 import static org.junit.Assert.assertThrows;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.*;
 

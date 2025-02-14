@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.filter;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,6 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -150,7 +150,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     testFilter.setQuery(emptyQuery);
 
     assertThat(((FilterEntity) testFilter).getQueryInternal()).isEqualTo(emptyQueryJson);
-    assertThat(testFilter.getQuery()).isNotNull();
+    assertThat(testFilter.<TaskQuery>getQuery()).isNotNull();
   }
 
   @Test

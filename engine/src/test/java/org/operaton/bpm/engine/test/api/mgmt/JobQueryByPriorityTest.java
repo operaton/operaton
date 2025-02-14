@@ -78,7 +78,7 @@ public class JobQueryByPriorityTest extends PluggableProcessEngineTest {
 
     for (Job job : jobs) {
       assertThat(job.getPriority() <= 2).isTrue();
-      assertThat(processInstanceIds).contains(job);
+      assertThat(processInstanceIds).contains(job.getProcessInstanceId());
     }
   }
 
@@ -121,7 +121,7 @@ public class JobQueryByPriorityTest extends PluggableProcessEngineTest {
 
     for (Job job : jobs) {
       assertThat(job.getPriority() >= 2).isTrue();
-      assertThat(processInstanceIds).contains(job);
+      assertThat(processInstanceIds).contains(job.getProcessInstanceId());
     }
   }
 

@@ -67,7 +67,6 @@ import org.junit.*;
 import org.junit.rules.RuleChain;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.Assert.fail;
 
 /**
  * @author Joram Barrez
@@ -1246,7 +1245,7 @@ public class FormServiceTest {
       formFieldIds.add(field.getId());
     }
 
-    assertThat(formFieldIds).containsAll(Arrays);
+    assertThat(formFieldIds).containsAll(List.of("stringField", "customField", "longField"));
 
     // the form can be rendered
     Object startForm = formService.getRenderedTaskForm(task.getId());
@@ -1282,7 +1281,7 @@ public class FormServiceTest {
       formFieldIds.add(field.getId());
     }
 
-    assertThat(formFieldIds).containsAll(Arrays);
+    assertThat(formFieldIds).containsAll(List.of("stringField", "customField", "longField"));
 
     // the form can be rendered
     Object startForm = formService.getRenderedStartForm(processDefinition.getId());

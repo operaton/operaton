@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeNotNull;
 
 import java.util.Date;
@@ -643,7 +642,7 @@ public class ProcessApplicationDeploymentTest {
     ProcessApplicationRegistration registration = deployment2.getProcessApplicationRegistration();
     Set<String> paDeploymentIds = registration.getDeploymentIds();
     assertThat(paDeploymentIds).hasSize(1);
-    assertThat(paDeploymentIds).contains(deployment2);
+    assertThat(paDeploymentIds).contains(deployment2.getId());
     assertThat(registration.getProcessEngineName()).isEqualTo(processEngine.getName());
   }
 

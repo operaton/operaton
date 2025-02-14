@@ -20,7 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,6 +42,8 @@ import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -291,7 +292,7 @@ public class ModificationExecutionSyncTest {
 
     for (String processInstanceId : processInstanceIds) {
       ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-      assertThat(updatedTree).isNotNull();
+      Assertions.assertThat(updatedTree).isNotNull();
       assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
       assertThat(updatedTree).hasStructure(
@@ -314,7 +315,7 @@ public class ModificationExecutionSyncTest {
 
     for (String processInstanceId : processInstanceIds) {
       ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-      assertThat(updatedTree).isNotNull();
+      Assertions.assertThat(updatedTree).isNotNull();
       assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
       assertThat(updatedTree).hasStructure(describeActivityInstanceTree(definition.getId()).activity("user1").activity("user3").done());
@@ -332,7 +333,7 @@ public class ModificationExecutionSyncTest {
 
     for (String processInstanceId : processInstanceIds) {
       ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-      assertThat(updatedTree).isNotNull();
+      Assertions.assertThat(updatedTree).isNotNull();
       assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
       assertThat(updatedTree).hasStructure(describeActivityInstanceTree(definition.getId()).activity("user1").activity("user2").done());
@@ -348,7 +349,7 @@ public class ModificationExecutionSyncTest {
 
     for (String processInstanceId : processInstanceIds) {
       ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-      assertThat(updatedTree).isNull();
+      Assertions.assertThat(updatedTree).isNull();
     }
   }
 
@@ -363,7 +364,7 @@ public class ModificationExecutionSyncTest {
 
     for (String processInstanceId : processInstanceIds) {
       ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-      assertThat(updatedTree).isNotNull();
+      Assertions.assertThat(updatedTree).isNotNull();
       assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
       assertThat(updatedTree).hasStructure(describeActivityInstanceTree(definition.getId()).activity("user2").done());
@@ -387,13 +388,13 @@ public class ModificationExecutionSyncTest {
     ActivityInstance updatedTree = null;
     String processInstanceId = processInstanceIds.get(0);
     updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertThat(updatedTree).isNotNull();
+    Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
     assertThat(updatedTree).hasStructure(describeActivityInstanceTree(definition.getId()).activity("user2").activity("user3").done());
 
     processInstanceId = processInstanceIds.get(1);
     updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertThat(updatedTree).isNotNull();
+    Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
     assertThat(updatedTree).hasStructure(describeActivityInstanceTree(definition.getId()).activity("user1").activity("user3").done());
   }

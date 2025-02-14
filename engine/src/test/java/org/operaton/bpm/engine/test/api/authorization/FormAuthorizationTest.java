@@ -31,7 +31,6 @@ import static org.operaton.bpm.engine.authorization.TaskPermissions.READ_VARIABL
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
-import static org.junit.Assert.fail;
 
 import java.io.InputStream;
 

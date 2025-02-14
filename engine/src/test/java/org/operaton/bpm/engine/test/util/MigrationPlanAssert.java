@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,7 +44,7 @@ public class MigrationPlanAssert {
   }
 
   public MigrationPlanAssert isNotNull() {
-    assertThat(actual).as("The migration plan is null").isNotNull();
+    Assertions.assertThat(actual).as("The migration plan is null").isNotNull();
 
     return this;
   }
@@ -74,13 +73,13 @@ public class MigrationPlanAssert {
 
   public MigrationPlanAssert variablesNull() {
     isNotNull();
-    assertThat(actual.getVariables()).isNull();
+    Assertions.assertThat(actual.getVariables()).isNull();
     return this;
   }
 
   public MigrationPlanAssert variablesEmpty() {
     isNotNull();
-    assertThat(actual.getVariables() != null && actual.getVariables().isEmpty()).isTrue();
+    Assertions.assertThat(actual.getVariables() != null && actual.getVariables().isEmpty()).isTrue();
     return this;
   }
 
@@ -121,7 +120,7 @@ public class MigrationPlanAssert {
       if (!notFound.isEmpty()) {
         builder.append("Migration variables missing:\n\t").append(notFound);
       }
-      fail(builder.toString());
+      Assertions.fail(builder.toString());
     }
     return this;
   }
@@ -155,7 +154,7 @@ public class MigrationPlanAssert {
       if (!notFound.isEmpty()) {
         builder.append("Migration instructions missing:\n\t").append(notFound);
       }
-      fail(builder.toString());
+      Assertions.fail(builder.toString());
     }
 
     return this;
@@ -165,7 +164,7 @@ public class MigrationPlanAssert {
     isNotNull();
 
     List<MigrationInstruction> instructions = actual.getInstructions();
-    assertThat(instructions.isEmpty()).as("Expected migration plan has no instructions but has: " + instructions).isTrue();
+    Assertions.assertThat(instructions.isEmpty()).as("Expected migration plan has no instructions but has: " + instructions).isTrue();
 
     return this;
   }

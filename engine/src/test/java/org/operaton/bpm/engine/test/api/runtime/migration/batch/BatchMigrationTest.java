@@ -54,7 +54,6 @@ import org.junit.runners.Parameterized;
 import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.Assert.fail;
 
 @RunWith(Parameterized.class)
 public class BatchMigrationTest {

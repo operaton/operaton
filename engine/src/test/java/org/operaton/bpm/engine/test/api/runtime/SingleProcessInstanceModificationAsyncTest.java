@@ -18,11 +18,9 @@ package org.operaton.bpm.engine.test.api.runtime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,6 +41,7 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.bpmn.executionlistener.RecorderExecutionListener;
 import org.operaton.bpm.engine.test.bpmn.executionlistener.RecorderExecutionListener.RecordedEvent;
 import org.operaton.bpm.engine.test.bpmn.tasklistener.util.RecorderTaskListener;
+import org.operaton.bpm.engine.test.util.ActivityInstanceAssert;
 import org.operaton.bpm.engine.test.util.ExecutionTree;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.engine.variable.Variables;
@@ -125,7 +124,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-    assertThat(updatedTree).hasStructure(
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task2").done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
@@ -192,7 +191,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-    assertThat(updatedTree).hasStructure(
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1")
             .activity("task2")
             .done());
@@ -234,7 +233,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-    assertThat(updatedTree).hasStructure(
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1")
             .activity("task2")
             .done());
@@ -326,7 +325,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
 
-    assertThat(updatedTree).hasStructure(
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1").done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
@@ -356,7 +355,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-    assertThat(updatedTree).hasStructure(
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1")
             .activity("task2")
             .done());
@@ -398,7 +397,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-    assertThat(updatedTree).hasStructure(
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1")
             .activity("task2")
             .done());
@@ -459,7 +458,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-    assertThat(updatedTree).hasStructure(
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1")
             .activity("task1")
             .done());
@@ -501,7 +500,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-    assertThat(updatedTree).hasStructure(
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1")
             .activity("task1")
             .done());
@@ -633,7 +632,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-    assertThat(updatedTree).hasStructure(
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("theTask")
             .activity("theTask")
             .done());
@@ -678,7 +677,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-    assertThat(updatedTree).hasStructure(
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("theTask").done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
@@ -696,7 +695,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-    assertThat(updatedTree).hasStructure(
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("theTask")
             .activity("theTask")
             .done());
@@ -811,7 +810,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(instance.getId());
 
-    assertThat(updatedTree).hasStructure(
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(
         describeActivityInstanceTree(instance.getProcessDefinitionId()).activity("task1").activity("task2").done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(instance.getId(), processEngine);
@@ -857,7 +856,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(instance.getId());
 
-    assertThat(updatedTree).hasStructure(
+    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(
         describeActivityInstanceTree(instance.getProcessDefinitionId()).activity("task1").activity("task2").done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(instance.getId(), processEngine);
@@ -895,7 +894,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     assertThat(activityInstanceTree).isNotNull();
     assertThat(activityInstanceTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
-    assertThat(activityInstanceTree).hasStructure(
+    ActivityInstanceAssert.assertThat(activityInstanceTree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task2").done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);

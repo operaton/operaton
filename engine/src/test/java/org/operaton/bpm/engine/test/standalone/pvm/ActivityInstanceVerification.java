@@ -106,17 +106,17 @@ public class ActivityInstanceVerification extends Assert implements ExecutionLis
       return;
     }
 
-    assertThat(startInstancesForThisAct).isNotNull();
+    Assertions.assertThat(startInstancesForThisAct).isNotNull();
     Assertions.assertThat(startInstancesForThisAct).hasSize(count);
 
     List<ActivityInstance> endInstancesForThisAct = endedActivityInstances.get(actId);
-    assertThat(endInstancesForThisAct).isNotNull();
+    Assertions.assertThat(endInstancesForThisAct).isNotNull();
 
     for (ActivityInstance startedActInstance : startInstancesForThisAct) {
 
-      assertThat(startedActInstance.id).as("activityInstanceId cannot be null for " + startedActInstance).isNotNull();
-      assertThat(startedActInstance.executionId).as("executionId cannot be null for " + startedActInstance).isNotNull();
-      assertThat(startedActInstance.parentId).as("parentId cannot be null for " + startedActInstance).isNotNull();
+      Assertions.assertThat(startedActInstance.id).as("activityInstanceId cannot be null for " + startedActInstance).isNotNull();
+      Assertions.assertThat(startedActInstance.executionId).as("executionId cannot be null for " + startedActInstance).isNotNull();
+      Assertions.assertThat(startedActInstance.parentId).as("parentId cannot be null for " + startedActInstance).isNotNull();
 
       boolean foundMatchingEnd = false;
       for (ActivityInstance endedActInstance : endInstancesForThisAct) {
@@ -184,7 +184,7 @@ public class ActivityInstanceVerification extends Assert implements ExecutionLis
 
   private void assertCorrectCompletingState(String activityId, int expectedCount, boolean completing) {
     List<ActivityInstance> endActivityInstances = endedActivityInstances.get(activityId);
-    assertThat(endActivityInstances).isNotNull();
+    Assertions.assertThat(endActivityInstances).isNotNull();
 
     for (ActivityInstance instance : endActivityInstances) {
       Assertions.assertThat(instance.isCompleteScope).isEqualTo(completing);

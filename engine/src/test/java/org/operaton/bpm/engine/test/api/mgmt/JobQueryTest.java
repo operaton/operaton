@@ -55,7 +55,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.Assert.fail;
 
 /**
  * @author Joram Barrez

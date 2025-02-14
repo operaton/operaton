@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.test.cmmn.decisiontask;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.operaton.bpm.dmn.engine.DmnDecisionResult;
 import org.operaton.bpm.dmn.engine.DmnDecisionResultEntries;
 import org.operaton.bpm.engine.runtime.CaseInstance;
@@ -29,6 +27,8 @@ import org.operaton.bpm.engine.variable.value.StringValue;
 
 import org.junit.After;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Roman Smirnov
@@ -56,10 +56,10 @@ public class DmnDecisionTaskResultListenerTest extends CmmnTest {
   public void testEmptyOutput() {
     startTestCase("empty output");
 
-    assertThat(results.isEmpty()).as("The decision result 'ruleResult' should not be empty").isFalse();
+    assertThat(results).as("The decision result 'ruleResult' should not be empty").isNotEmpty();
 
     DmnDecisionResultEntries decisionOutput = results.get(0);
-    assertThat(decisionOutput.getFirstEntry()).isNull();
+    assertThat(decisionOutput.<Object>getFirstEntry()).isNull();
   }
 
   @Deployment(resources = { TEST_CASE, TEST_DECISION})
@@ -70,7 +70,7 @@ public class DmnDecisionTaskResultListenerTest extends CmmnTest {
     assertThat(results).hasSize(2);
 
     for (DmnDecisionResultEntries output : results) {
-      assertThat(output.isEmpty()).as("The decision output should be empty").isTrue();
+      assertThat(output).as("The decision output should be empty").isEmpty();
     }
   }
 

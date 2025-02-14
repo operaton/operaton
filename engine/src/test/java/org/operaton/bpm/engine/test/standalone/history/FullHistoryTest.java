@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.standalone.history;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.Assert.fail;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -65,6 +64,8 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
+
+import org.assertj.core.api.Assertions;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -727,14 +728,14 @@ public class FullHistoryTest {
     var historicDetailQuery = historyService.createHistoricDetailQuery();
     try {
       historicDetailQuery.asc();
-      fail("");
+      Assertions.fail("");
     } catch (ProcessEngineException e) {
 
     }
 
     try {
       historicDetailQuery.desc();
-      fail("");
+      Assertions.fail("");
     } catch (ProcessEngineException e) {
 
     }
@@ -742,7 +743,7 @@ public class FullHistoryTest {
     HistoricDetailQuery queryOrderByProcessInstanceId = historicDetailQuery.orderByProcessInstanceId();
     try {
       queryOrderByProcessInstanceId.list();
-      fail("");
+      Assertions.fail("");
     } catch (ProcessEngineException e) {
 
     }
@@ -750,7 +751,7 @@ public class FullHistoryTest {
     HistoricDetailQuery queryOrderByTime = historicDetailQuery.orderByTime();
     try {
       queryOrderByTime.list();
-      fail("");
+      Assertions.fail("");
     } catch (ProcessEngineException e) {
 
     }
@@ -758,7 +759,7 @@ public class FullHistoryTest {
     HistoricDetailQuery queryOrderByVariableName = historicDetailQuery.orderByVariableName();
     try {
       queryOrderByVariableName.list();
-      fail("");
+      Assertions.fail("");
     } catch (ProcessEngineException e) {
 
     }
@@ -766,7 +767,7 @@ public class FullHistoryTest {
     HistoricDetailQuery queryOrderByVariableRevision = historicDetailQuery.orderByVariableRevision();
     try {
       queryOrderByVariableRevision.list();
-      fail("");
+      Assertions.fail("");
     } catch (ProcessEngineException e) {
 
     }
@@ -774,7 +775,7 @@ public class FullHistoryTest {
     HistoricDetailQuery queryByVariableType = historicDetailQuery.orderByVariableType();
     try {
       queryByVariableType.list();
-      fail("");
+      Assertions.fail("");
     } catch (ProcessEngineException e) {
 
     }
@@ -1307,13 +1308,17 @@ public class FullHistoryTest {
 
     try {
       query.variableInstanceId(null);
-      fail("A ProcessEngineExcpetion was expected.");
-    } catch (ProcessEngineException e) {}
+      Assertions.fail("A ProcessEngineExcpetion was expected.");
+    } catch (ProcessEngineException e) {
+      // expected
+    }
 
     try {
       query.variableInstanceId((String)null);
-      fail("A ProcessEngineExcpetion was expected.");
-    } catch (ProcessEngineException e) {}
+      Assertions.fail("A ProcessEngineExcpetion was expected.");
+    } catch (ProcessEngineException e) {
+      // expected
+    }
   }
 
   @Test

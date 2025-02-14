@@ -50,7 +50,6 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import static java.util.Collections.emptySet;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.Assert.fail;
 
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.processInstanceByBusinessKey;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.processInstanceByProcessDefinitionId;
@@ -1367,7 +1366,7 @@ public class ProcessInstanceQueryTest {
     assertThat(processInstances).hasSize(5);
 
     for (ProcessInstance processInstance : processInstances) {
-      assertThat(ids).contains(processInstance);
+      assertThat(ids).contains(processInstance.getId());
     }
   }
 

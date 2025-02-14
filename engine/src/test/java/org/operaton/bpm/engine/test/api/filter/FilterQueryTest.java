@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.filter;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Collections;

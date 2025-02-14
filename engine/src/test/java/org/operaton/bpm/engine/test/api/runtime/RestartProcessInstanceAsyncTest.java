@@ -21,7 +21,6 @@ import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
-import static org.junit.Assert.fail;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -60,6 +59,8 @@ import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -303,7 +304,7 @@ public class RestartProcessInstanceAsyncTest {
     List<ProcessInstance> restartedProcessInstances = runtimeService.createProcessInstanceQuery().active().list();
     for (ProcessInstance restartedProcessInstance : restartedProcessInstances) {
       ActivityInstance updatedTree = runtimeService.getActivityInstance(restartedProcessInstance.getId());
-      assertThat(updatedTree).isNotNull();
+      Assertions.assertThat(updatedTree).isNotNull();
       assertThat(updatedTree.getProcessInstanceId()).isEqualTo(restartedProcessInstance.getId());
       assertThat(updatedTree).hasStructure(
           describeActivityInstanceTree(
@@ -336,7 +337,7 @@ public class RestartProcessInstanceAsyncTest {
     List<ProcessInstance> restartedProcessInstances = runtimeService.createProcessInstanceQuery().active().list();
     for (ProcessInstance restartedProcessInstance : restartedProcessInstances) {
       ActivityInstance updatedTree = runtimeService.getActivityInstance(restartedProcessInstance.getId());
-      assertThat(updatedTree).isNotNull();
+      Assertions.assertThat(updatedTree).isNotNull();
       assertThat(updatedTree.getProcessInstanceId()).isEqualTo(restartedProcessInstance.getId());
       assertThat(updatedTree).hasStructure(
           describeActivityInstanceTree(
@@ -835,7 +836,7 @@ public class RestartProcessInstanceAsyncTest {
       // then all process instances were restarted
       for (ProcessInstance restartedProcessInstance : restartedProcessInstances) {
         ActivityInstance updatedTree = runtimeService.getActivityInstance(restartedProcessInstance.getId());
-        assertThat(updatedTree).isNotNull();
+        Assertions.assertThat(updatedTree).isNotNull();
         assertThat(updatedTree.getProcessInstanceId()).isEqualTo(restartedProcessInstance.getId());
         assertThat(restartedProcessInstance.getTenantId()).isEqualTo("tenantId");
 

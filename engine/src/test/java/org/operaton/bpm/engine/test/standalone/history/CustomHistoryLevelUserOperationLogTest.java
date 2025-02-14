@@ -34,7 +34,6 @@ import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TY
 import static org.operaton.bpm.engine.impl.cmd.AbstractSetBatchStateCmd.SUSPENSION_STATE_PROPERTY;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -67,6 +66,8 @@ import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestBase
 import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+
+import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -621,7 +622,7 @@ public class CustomHistoryLevelUserOperationLogTest {
   protected void verifySingleResultFails(UserOperationLogQuery query) {
     try {
       query.singleResult();
-      fail("");
+      Assertions.fail("");
     } catch (ProcessEngineException e) {}
   }
 

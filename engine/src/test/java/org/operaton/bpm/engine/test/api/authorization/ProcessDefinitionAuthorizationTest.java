@@ -27,7 +27,6 @@ import static org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.Assert.fail;
 
 import java.io.InputStream;
 import java.util.Collection;

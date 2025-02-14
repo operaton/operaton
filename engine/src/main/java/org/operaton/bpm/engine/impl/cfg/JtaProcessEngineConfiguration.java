@@ -44,7 +44,7 @@ public class JtaProcessEngineConfiguration extends AbstractTransactionProcessEng
   @Override
   protected void initTransactionManager() {
     if(transactionManager == null){
-      if(transactionManagerJndiName == null || transactionManagerJndiName.length() == 0) {
+      if(transactionManagerJndiName == null || transactionManagerJndiName.isEmpty()) {
         throw LOG.invalidConfigTransactionManagerIsNull();
       }
       try {

@@ -102,7 +102,7 @@ public abstract class CallingTaskItemHandler extends TaskItemHandler {
 
     ExpressionManager expressionManager = context.getExpressionManager();
     String tenantId = getTenantId(element, activity, context);
-    if (tenantId != null && tenantId.length() > 0) {
+    if (tenantId != null && !tenantId.isEmpty()) {
       tenantIdProvider = createParameterValueProvider(tenantId, expressionManager);
     }
 

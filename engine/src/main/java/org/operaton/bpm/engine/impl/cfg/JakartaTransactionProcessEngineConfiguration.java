@@ -41,7 +41,7 @@ public class JakartaTransactionProcessEngineConfiguration extends AbstractTransa
   @Override
   protected void initTransactionManager() {
     if(transactionManager == null){
-      if(transactionManagerJndiName == null || transactionManagerJndiName.length() == 0) {
+      if(transactionManagerJndiName == null || transactionManagerJndiName.isEmpty()) {
         throw LOG.invalidConfigTransactionManagerIsNull();
       }
       try {

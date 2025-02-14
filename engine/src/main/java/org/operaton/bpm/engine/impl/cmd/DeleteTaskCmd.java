@@ -25,6 +25,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskManager;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collection;
 
@@ -34,6 +35,7 @@ import java.util.Collection;
  */
 public class DeleteTaskCmd implements Command<Void>, Serializable {
 
+  @Serial
   private static final long serialVersionUID = 1L;
   protected String taskId;
   protected Collection<String> taskIds;
@@ -80,7 +82,7 @@ public class DeleteTaskCmd implements Command<Void>, Serializable {
       checkDeleteTask(task, commandContext);
       task.logUserOperation(UserOperationLogEntry.OPERATION_TYPE_DELETE);
 
-      String reason = (deleteReason == null || deleteReason.length() == 0) ? TaskEntity.DELETE_REASON_DELETED : deleteReason;
+      String reason = (deleteReason == null || deleteReason.isEmpty()) ? TaskEntity.DELETE_REASON_DELETED : deleteReason;
       task.delete(reason, cascade);
     } else if (cascade) {
       Context

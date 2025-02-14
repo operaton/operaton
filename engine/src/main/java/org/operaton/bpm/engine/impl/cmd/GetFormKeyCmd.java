@@ -51,14 +51,14 @@ public class GetFormKeyCmd implements Command<String> {
    */
   public GetFormKeyCmd(String processDefinitionId, String taskDefinitionKey) {
     setProcessDefinitionId(processDefinitionId);
-    if (taskDefinitionKey == null || taskDefinitionKey.length() < 1) {
+    if (taskDefinitionKey == null || taskDefinitionKey.isEmpty()) {
       throw new ProcessEngineException("The task definition key is mandatory, but '" + taskDefinitionKey + "' has been provided.");
     }
     this.taskDefinitionKey = taskDefinitionKey;
   }
 
   protected void setProcessDefinitionId(String processDefinitionId) {
-    if (processDefinitionId == null || processDefinitionId.length() < 1) {
+    if (processDefinitionId == null || processDefinitionId.isEmpty()) {
       throw new ProcessEngineException("The process definition id is mandatory, but '" + processDefinitionId + "' has been provided.");
     }
     this.processDefinitionId = processDefinitionId;

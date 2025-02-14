@@ -713,7 +713,7 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
   }
 
   public void executeSchemaResource(String schemaFileResourceName) {
-    try (FileInputStream inputStream = new FileInputStream(new File(schemaFileResourceName))) {
+    try (FileInputStream inputStream = new FileInputStream(schemaFileResourceName)) {
       executeSchemaResource("schema operation", "process engine", schemaFileResourceName, inputStream);
     } catch (FileNotFoundException e) {
       throw LOG.missingSchemaResourceFileException(schemaFileResourceName, e);
@@ -740,7 +740,7 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
           logLines.add(line.substring(2));
         } else if (line.startsWith("-- ")) {
           logLines.add(line.substring(3));
-        } else if (line.length()>0) {
+        } else if (!line.isEmpty()) {
 
           if (line.endsWith(";")) {
             sqlStatement = addSqlStatementPiece(sqlStatement, line.substring(0, line.length()-1));

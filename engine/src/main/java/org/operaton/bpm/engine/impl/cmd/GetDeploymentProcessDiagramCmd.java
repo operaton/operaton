@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.cmd;
 
 import java.io.InputStream;
+import java.io.Serial;
 import java.io.Serializable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -34,12 +35,13 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
  */
 public class GetDeploymentProcessDiagramCmd implements Command<InputStream>, Serializable {
 
+  @Serial
   private static final long serialVersionUID = 1L;
 
   protected String processDefinitionId;
 
   public GetDeploymentProcessDiagramCmd(String processDefinitionId) {
-    if (processDefinitionId == null || processDefinitionId.length() < 1) {
+    if (processDefinitionId == null || processDefinitionId.isEmpty()) {
       throw new ProcessEngineException("The process definition id is mandatory, but '" + processDefinitionId + "' has been provided.");
     }
     this.processDefinitionId = processDefinitionId;

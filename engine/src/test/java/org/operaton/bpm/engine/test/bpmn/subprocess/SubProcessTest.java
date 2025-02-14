@@ -17,9 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.subprocess;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -72,7 +69,7 @@ public class SubProcessTest extends PluggableProcessEngineTest {
     // After completing the task in the subprocess,
     // the subprocess scope is destroyed and the complete process ends
     taskService.complete(subProcessTask.getId());
-    assertNull(runtimeService.createProcessInstanceQuery().processInstanceId(pi.getId()).singleResult());
+    assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(pi.getId()).singleResult()).isNull();
   }
 
   /**
@@ -82,7 +79,7 @@ public class SubProcessTest extends PluggableProcessEngineTest {
   @Test
   public void testSimpleAutomaticSubProcess() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("simpleSubProcessAutomatic");
-    assertTrue(pi.isEnded());
+    assertThat(pi.isEnded()).isTrue();
     testRule.assertProcessEnded(pi.getId());
   }
 
@@ -196,7 +193,7 @@ public class SubProcessTest extends PluggableProcessEngineTest {
     // both subprocesses are destroyed and the task after the subprocess should be active
     taskService.complete(subProcessTask.getId());
     Task taskAfterSubProcesses = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
-    assertNotNull(taskAfterSubProcesses);
+    assertThat(taskAfterSubProcesses).isNotNull();
     assertThat(taskAfterSubProcesses.getName()).isEqualTo("Task after subprocesses");
     taskService.complete(taskAfterSubProcesses.getId());
     testRule.assertProcessEnded(pi.getId());
@@ -363,10 +360,10 @@ public class SubProcessTest extends PluggableProcessEngineTest {
     assertThat(rootActivityInstance.getChildActivityInstances().length).isEqualTo(2);
     ActivityInstance[] childActivityInstances = rootActivityInstance.getChildActivityInstances();
     for (ActivityInstance activityInstance : childActivityInstances) {
-      assertTrue(Arrays.asList(new String[]{"subProcessA", "subProcessB"}).contains(activityInstance.getActivityId()));
+      assertThat(Arrays.asList(new String[]{"subProcessA", "subProcessB"})).contains(activityInstance);
       ActivityInstance[] subProcessChildren = activityInstance.getChildActivityInstances();
       assertThat(subProcessChildren.length).isEqualTo(1);
-      assertTrue(Arrays.asList(new String[]{"subProcessATask", "subProcessBTask"}).contains(subProcessChildren[0].getActivityId()));
+      assertThat(Arrays.asList(new String[]{"subProcessATask", "subProcessBTask"})).contains(subProcessChildren[0]);
     }
 
     // Completing both tasks should active the tasks outside the subprocesses
@@ -505,13 +502,13 @@ public class SubProcessTest extends PluggableProcessEngineTest {
 
     ActivityInstance activityInstance = GetActInstanceDelegate.activityInstance;
 
-    assertNotNull(activityInstance);
+    assertThat(activityInstance).isNotNull();
     ActivityInstance subProcessInstance = activityInstance.getChildActivityInstances()[0];
-    assertNotNull(subProcessInstance);
+    assertThat(subProcessInstance).isNotNull();
     assertThat(subProcessInstance.getActivityId()).isEqualTo("SubProcess_1");
 
     ActivityInstance serviceTaskInstance = subProcessInstance.getChildActivityInstances()[0];
-    assertNotNull(serviceTaskInstance);
+    assertThat(serviceTaskInstance).isNotNull();
     assertThat(serviceTaskInstance.getActivityId()).isEqualTo("ServiceTask_1");
   }
 
@@ -527,13 +524,13 @@ public class SubProcessTest extends PluggableProcessEngineTest {
 
     ActivityInstance activityInstance = GetActInstanceDelegate.activityInstance;
 
-    assertNotNull(activityInstance);
+    assertThat(activityInstance).isNotNull();
     ActivityInstance subProcessInstance = activityInstance.getChildActivityInstances()[0];
-    assertNotNull(subProcessInstance);
+    assertThat(subProcessInstance).isNotNull();
     assertThat(subProcessInstance.getActivityId()).isEqualTo("SubProcess_1");
 
     ActivityInstance serviceTaskInstance = subProcessInstance.getChildActivityInstances()[0];
-    assertNotNull(serviceTaskInstance);
+    assertThat(serviceTaskInstance).isNotNull();
     assertThat(serviceTaskInstance.getActivityId()).isEqualTo("ServiceTask_1");
   }
 

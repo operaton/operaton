@@ -235,7 +235,7 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
     List<CleanableHistoricDecisionInstanceReportResult> reportResults = historyService.createCleanableHistoricDecisionInstanceReport().list();
 
     // then
-    assertThat(reportResults).hasSize(0);
+    assertThat(reportResults).isEmpty();
   }
 
   @Test
@@ -266,7 +266,7 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
     List<CleanableHistoricDecisionInstanceReportResult> reportResults = historyService.createCleanableHistoricDecisionInstanceReport().list();
 
     // then
-    assertThat(reportResults).hasSize(0);
+    assertThat(reportResults).isEmpty();
   }
 
   @Test
@@ -280,7 +280,7 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
     List<CleanableHistoricDecisionInstanceReportResult> reportResults = historyService.createCleanableHistoricDecisionInstanceReport().list();
 
     // then
-    assertThat(reportResults).hasSize(0);
+    assertThat(reportResults).isEmpty();
   }
 
   @Test
@@ -295,7 +295,7 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
     List<CleanableHistoricDecisionInstanceReportResult> reportResults = historyService.createCleanableHistoricDecisionInstanceReport().list();
 
     // then
-    assertThat(reportResults).hasSize(0);
+    assertThat(reportResults).isEmpty();
   }
 
   protected void startProcessInstanceAndEvaluateDecision() {

@@ -16,10 +16,7 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.within;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.Calendar;
 import java.util.List;
@@ -179,7 +176,7 @@ public class HistoricTaskDurationReportTest {
 
       fail("Expected NotValidException");
     } catch( NotValidException nve) {
-      assertTrue(nve.getMessage().contains("completedAfter"));
+      assertThat(nve.getMessage()).contains("completedAfter");
     }
   }
 
@@ -191,7 +188,7 @@ public class HistoricTaskDurationReportTest {
 
       fail("Expected NotValidException");
     } catch( NotValidException nve) {
-      assertTrue(nve.getMessage().contains("completedBefore"));
+      assertThat(nve.getMessage()).contains("completedBefore");
     }
   }
 

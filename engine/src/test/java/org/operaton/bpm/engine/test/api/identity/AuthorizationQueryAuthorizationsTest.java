@@ -20,8 +20,6 @@ import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
 import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_REVOKE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 import org.operaton.bpm.engine.AuthorizationService;
@@ -74,7 +72,7 @@ public class AuthorizationQueryAuthorizationsTest {
 
     // assume
     Authorization authResult = authorizationService.createAuthorizationQuery().userIdIn("userId").resourceType(Resources.PROCESS_DEFINITION).singleResult();
-    assertNotNull(authResult);
+    assertThat(authResult).isNotNull();
 
     // then
     assertThat(authorizationService.createAuthorizationQuery().hasPermission(Permissions.READ).count()).isEqualTo(1);
@@ -94,7 +92,7 @@ public class AuthorizationQueryAuthorizationsTest {
 
     // assume
     Authorization authResult = authorizationService.createAuthorizationQuery().userIdIn("userId").resourceType(Resources.BATCH).singleResult();
-    assertNotNull(authResult);
+    assertThat(authResult).isNotNull();
 
     // then
     assertThat(authorizationService.createAuthorizationQuery().hasPermission(Permissions.CREATE_INSTANCE).count()).isEqualTo(0);
@@ -114,7 +112,7 @@ public class AuthorizationQueryAuthorizationsTest {
 
     // assume
     Authorization authResult = authorizationService.createAuthorizationQuery().userIdIn("userId").resourceType(Resources.APPLICATION).singleResult();
-    assertNotNull(authResult);
+    assertThat(authResult).isNotNull();
 
     // when
     Authorization accessResult = authorizationService.createAuthorizationQuery()
@@ -128,11 +126,11 @@ public class AuthorizationQueryAuthorizationsTest {
         .list();
 
     // then
-    assertNotNull(accessResult);
+    assertThat(accessResult).isNotNull();
     assertThat(authorizationService.createAuthorizationQuery().hasPermission(Permissions.ACCESS).count()).isEqualTo(1);
-    assertTrue(retryJobPDResult.isEmpty());
+    assertThat(retryJobPDResult).isEmpty();
     assertThat(authorizationService.createAuthorizationQuery().hasPermission(ProcessDefinitionPermissions.RETRY_JOB).count()).isEqualTo(0);
-    assertTrue(retryJobPIResult.isEmpty());
+    assertThat(retryJobPIResult).isEmpty();
     assertThat(authorizationService.createAuthorizationQuery().hasPermission(ProcessInstancePermissions.RETRY_JOB).count()).isEqualTo(0);
   }
 
@@ -150,7 +148,7 @@ public class AuthorizationQueryAuthorizationsTest {
 
     // assume
     Authorization authResult = authorizationService.createAuthorizationQuery().userIdIn("userId").resourceType(Resources.APPLICATION).singleResult();
-    assertNotNull(authResult);
+    assertThat(authResult).isNotNull();
 
     // then
     assertThat(authorizationService.createAuthorizationQuery()
@@ -174,7 +172,7 @@ public class AuthorizationQueryAuthorizationsTest {
 
     // assume
     Authorization authResult = authorizationService.createAuthorizationQuery().userIdIn("userId").resourceType(Resources.PROCESS_DEFINITION).singleResult();
-    assertNotNull(authResult);
+    assertThat(authResult).isNotNull();
     assertThat(authorizationService.createAuthorizationQuery()
         .resourceType(Resources.PROCESS_DEFINITION)
         .hasPermission(ProcessDefinitionPermissions.READ)
@@ -208,7 +206,7 @@ public class AuthorizationQueryAuthorizationsTest {
 
     // assume
     Authorization authResult = authorizationService.createAuthorizationQuery().userIdIn("userId").resourceType(Resources.PROCESS_DEFINITION).singleResult();
-    assertNotNull(authResult);
+    assertThat(authResult).isNotNull();
 
     // then
     assertThat(authorizationService.createAuthorizationQuery()
@@ -253,7 +251,7 @@ public class AuthorizationQueryAuthorizationsTest {
 
     // then
     assertThat(authorizationsCount).isEqualTo(0);
-    assertThat(authorizations).hasSize(0);
+    assertThat(authorizations).isEmpty();
   }
 
   protected void cleanupAfterTest() {

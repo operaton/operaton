@@ -42,7 +42,6 @@ import java.util.Collections;
 import org.junit.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNull;
 
 /**
  * @author Roman Smirnov
@@ -113,7 +112,7 @@ public class ResourceAuthorizationProviderTest {
     taskService.setAssignee(taskId, "demo");
 
     // then (1)
-    assertNull(MyResourceAuthorizationProvider.OLD_ASSIGNEE);
+    assertThat(MyResourceAuthorizationProvider.OLD_ASSIGNEE).isNull();
     assertThat(MyResourceAuthorizationProvider.NEW_ASSIGNEE).isEqualTo("demo");
 
     MyResourceAuthorizationProvider.clearProperties();
@@ -143,7 +142,7 @@ public class ResourceAuthorizationProviderTest {
     taskService.setOwner(taskId, "demo");
 
     // then (1)
-    assertNull(MyResourceAuthorizationProvider.OLD_OWNER);
+    assertThat(MyResourceAuthorizationProvider.OLD_OWNER).isNull();
     assertThat(MyResourceAuthorizationProvider.NEW_OWNER).isEqualTo("demo");
 
     MyResourceAuthorizationProvider.clearProperties();

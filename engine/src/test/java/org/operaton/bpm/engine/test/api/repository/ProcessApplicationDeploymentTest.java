@@ -17,9 +17,7 @@
 package org.operaton.bpm.engine.test.api.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeNotNull;
 
@@ -268,7 +266,7 @@ public class ProcessApplicationDeploymentTest {
           .processDefinitionKey("process1")
           .singleResult();
 
-    assertNotNull(processDefinitionModel1);
+    assertThat(processDefinitionModel1).isNotNull();
     assertThat(processDefinitionModel1.getVersion()).isEqualTo(1);
     assertThat(processDefinitionModel1.getDeploymentId()).isEqualTo(deployment1.getId());
 
@@ -645,7 +643,7 @@ public class ProcessApplicationDeploymentTest {
     ProcessApplicationRegistration registration = deployment2.getProcessApplicationRegistration();
     Set<String> paDeploymentIds = registration.getDeploymentIds();
     assertThat(paDeploymentIds).hasSize(1);
-    assertTrue(paDeploymentIds.contains(deployment2.getId()));
+    assertThat(paDeploymentIds).contains(deployment2);
     assertThat(registration.getProcessEngineName()).isEqualTo(processEngine.getName());
   }
 
@@ -758,7 +756,7 @@ public class ProcessApplicationDeploymentTest {
         .addClasspathResource("org/operaton/bpm/engine/test/api/repository/version2.bpmn20.xml"));
 
     // then the cache is still empty
-    assertTrue(deploymentCache.getBpmnModelInstanceCache().isEmpty());
+    assertThat(deploymentCache.getBpmnModelInstanceCache().isEmpty()).isTrue();
   }
 
   @Test
@@ -772,9 +770,9 @@ public class ProcessApplicationDeploymentTest {
         .name("first-deployment-without-a-source")
         .addModelInstance("process.bpmn", model));
 
-    assertNull(deploymentQuery.deploymentName("first-deployment-without-a-source")
-                   .singleResult()
-                   .getSource());
+    assertThat(deploymentQuery.deploymentName("first-deployment-without-a-source")
+        .singleResult()
+        .getSource()).isNull();
 
     // when
     testRule.deploy(repositoryService
@@ -784,9 +782,9 @@ public class ProcessApplicationDeploymentTest {
         .addModelInstance("process.bpmn", model));
 
     // then
-    assertNull(deploymentQuery.deploymentName("second-deployment-with-a-source")
-                   .singleResult()
-                   .getSource());
+    assertThat(deploymentQuery.deploymentName("second-deployment-with-a-source")
+        .singleResult()
+        .getSource()).isNull();
   }
 
   @Test
@@ -1203,7 +1201,7 @@ public class ProcessApplicationDeploymentTest {
     repositoryService.deleteDeployment(deployment.getId(), true);
 
     // then the registration is removed
-    assertNull(managementService.getProcessApplicationForDeployment(deployment.getId()));
+    assertThat(managementService.getProcessApplicationForDeployment(deployment.getId())).isNull();
   }
 
   /*
@@ -1253,8 +1251,8 @@ public class ProcessApplicationDeploymentTest {
         .name("foo"));
 
     // then
-    assertNotNull(managementService.getProcessApplicationForDeployment(deployment1.getId()));
-    assertNotNull(managementService.getProcessApplicationForDeployment(deployment2.getId()));
+    assertThat(managementService.getProcessApplicationForDeployment(deployment1.getId())).isNotNull();
+    assertThat(managementService.getProcessApplicationForDeployment(deployment2.getId())).isNotNull();
   }
 
   /*

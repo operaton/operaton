@@ -27,9 +27,6 @@ import static org.operaton.bpm.engine.authorization.Resources.TASK;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.InstanceOfAssertFactories.list;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 import org.operaton.bpm.engine.AuthorizationException;
@@ -638,17 +635,17 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
     createGrantAuthorization(HISTORIC_TASK, ANY, userId, HistoricTaskPermissions.ALL);
 
     // then
-    assertTrue(authorizationService.isUserAuthorized(userId, null,
-        HistoricTaskPermissions.NONE, HISTORIC_TASK));
+    assertThat(authorizationService.isUserAuthorized(userId, null,
+        HistoricTaskPermissions.NONE, HISTORIC_TASK)).isTrue();
 
-    assertTrue(authorizationService.isUserAuthorized(userId, null,
-        HistoricTaskPermissions.READ, HISTORIC_TASK));
+    assertThat(authorizationService.isUserAuthorized(userId, null,
+        HistoricTaskPermissions.READ, HISTORIC_TASK)).isTrue();
 
-    assertTrue(authorizationService.isUserAuthorized(userId, null,
-        HistoricTaskPermissions.READ_VARIABLE, HISTORIC_TASK));
+    assertThat(authorizationService.isUserAuthorized(userId, null,
+        HistoricTaskPermissions.READ_VARIABLE, HISTORIC_TASK)).isTrue();
 
-    assertTrue(authorizationService.isUserAuthorized(userId, null,
-        HistoricTaskPermissions.ALL, HISTORIC_TASK));
+    assertThat(authorizationService.isUserAuthorized(userId, null,
+        HistoricTaskPermissions.ALL, HISTORIC_TASK)).isTrue();
   }
 
   @Test
@@ -660,11 +657,11 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
     createGrantAuthorization(HISTORIC_TASK, ANY, userId, HistoricTaskPermissions.READ);
 
     // then
-    assertTrue(authorizationService.isUserAuthorized(userId, null,
-        HistoricTaskPermissions.NONE, HISTORIC_TASK));
+    assertThat(authorizationService.isUserAuthorized(userId, null,
+        HistoricTaskPermissions.NONE, HISTORIC_TASK)).isTrue();
 
-    assertTrue(authorizationService.isUserAuthorized(userId, null,
-        HistoricTaskPermissions.READ, HISTORIC_TASK));
+    assertThat(authorizationService.isUserAuthorized(userId, null,
+        HistoricTaskPermissions.READ, HISTORIC_TASK)).isTrue();
   }
 
   @Test
@@ -676,8 +673,8 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
     createGrantAuthorization(HISTORIC_TASK, ANY, userId, HistoricTaskPermissions.NONE);
 
     // then
-    assertTrue(authorizationService.isUserAuthorized(userId, null,
-        HistoricTaskPermissions.NONE, HISTORIC_TASK));
+    assertThat(authorizationService.isUserAuthorized(userId, null,
+        HistoricTaskPermissions.NONE, HISTORIC_TASK)).isTrue();
   }
 
   @Test
@@ -694,7 +691,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
     List<HistoricTaskInstance> result = historyService.createHistoricTaskInstanceQuery().list();
 
     // then
-    assertThat(result).hasSize(0);
+    assertThat(result).isEmpty();
   }
 
   @Test
@@ -748,7 +745,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
     List<HistoricTaskInstance> result = historyService.createHistoricTaskInstanceQuery().list();
 
     // then
-    assertThat(result).hasSize(0);
+    assertThat(result).isEmpty();
 
     // clear
     deleteTask(taskId, true);
@@ -957,7 +954,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
         .resourceId(taskId)
         .singleResult();
     enableAuthorization();
-    assertNotNull(authorization);
+    assertThat(authorization).isNotNull();
 
     // when
     historyService.deleteHistoricTaskInstance(taskId);
@@ -970,7 +967,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNull(authorization);
+    assertThat(authorization).isNull();
 
     // clear
     taskService.deleteTask(taskId);
@@ -992,7 +989,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
         .resourceId(taskId)
         .singleResult();
     enableAuthorization();
-    assertNotNull(authorization);
+    assertThat(authorization).isNotNull();
 
     taskService.complete(taskId);
 
@@ -1007,7 +1004,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNull(authorization);
+    assertThat(authorization).isNull();
 
     // clear
     taskService.deleteTask(taskId);

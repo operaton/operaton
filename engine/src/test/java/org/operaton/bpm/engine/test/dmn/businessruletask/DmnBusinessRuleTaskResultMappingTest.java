@@ -17,8 +17,7 @@
 package org.operaton.bpm.engine.test.dmn.businessruletask;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import java.util.Collections;
@@ -206,9 +205,9 @@ public class DmnBusinessRuleTaskResultMappingTest extends PluggableProcessEngine
     ProcessInstance processInstance = startTestProcess("single entry");
 
     // then the variable should not be available outside the business rule task
-    assertNull(runtimeService.getVariable(processInstance.getId(), "decisionResult"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "decisionResult")).isNull();
     // and should not create an entry in history since it is not persistent
-    assertNull(historyService.createHistoricVariableInstanceQuery().variableName("decisionResult").singleResult());
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableName("decisionResult").singleResult()).isNull();
   }
 
   @Deployment(resources = { OVERRIDE_DECISION_RESULT_BPMN, TEST_DECISION })
@@ -230,7 +229,7 @@ public class DmnBusinessRuleTaskResultMappingTest extends PluggableProcessEngine
     ProcessInstance processInstance = startTestProcess("empty result");
 
     Object result = runtimeService.getVariable(processInstance.getId(), "result");
-    assertNull(result);
+    assertThat(result).isNull();
     TypedValue resultTyped = runtimeService.getVariableTyped(processInstance.getId(), "result");
     assertThat(resultTyped).isEqualTo(Variables.untypedNullValue());
   }
@@ -241,7 +240,7 @@ public class DmnBusinessRuleTaskResultMappingTest extends PluggableProcessEngine
     ProcessInstance processInstance = startTestProcess("empty result");
 
     Object result = runtimeService.getVariable(processInstance.getId(), "result");
-    assertNull(result);
+    assertThat(result).isNull();
     TypedValue resultTyped = runtimeService.getVariableTyped(processInstance.getId(), "result");
     assertThat(resultTyped).isEqualTo(Variables.untypedNullValue());
   }
@@ -253,7 +252,7 @@ public class DmnBusinessRuleTaskResultMappingTest extends PluggableProcessEngine
     ProcessInstance processInstance = startTestProcess("empty result");
 
     List<Object> result = (List<Object>) runtimeService.getVariable(processInstance.getId(), "result");
-    assertTrue(result.isEmpty());
+    assertThat(result).isEmpty();
   }
 
   @Deployment(resources = { RESULT_LIST_BPMN, TEST_DECISION })
@@ -263,7 +262,7 @@ public class DmnBusinessRuleTaskResultMappingTest extends PluggableProcessEngine
     ProcessInstance processInstance = startTestProcess("empty result");
 
     List<Object> result = (List<Object>) runtimeService.getVariable(processInstance.getId(), "result");
-    assertTrue(result.isEmpty());
+    assertThat(result).isEmpty();
   }
 
   @Deployment(resources = { DEFAULT_MAPPING_BPMN, TEST_DECISION })
@@ -273,7 +272,7 @@ public class DmnBusinessRuleTaskResultMappingTest extends PluggableProcessEngine
     ProcessInstance processInstance = startTestProcess("empty result");
 
     List<Object> result = (List<Object>) runtimeService.getVariable(processInstance.getId(), "result");
-    assertTrue(result.isEmpty());
+    assertThat(result).isEmpty();
   }
 
   protected ProcessInstance startTestProcess(String input) {

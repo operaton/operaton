@@ -42,7 +42,9 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.fail;
+import static org.junit.Assert.fail;
+import static org.junit.Assert.assertNotSame;
 
 /**
  * @author Thorben Lindhauer
@@ -81,11 +83,11 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
 
     // the task does not yet exist because it is started asynchronously
     Task task = taskService.createTaskQuery().taskDefinitionKey("task2").singleResult();
-    assertNull(task);
+    assertThat(task).isNull();
 
     // and there is no activity instance for task2 yet
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
@@ -105,16 +107,16 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
 
     // when the async job is executed
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     testRule.executeAvailableJobs();
 
     // then there is the task
     task = taskService.createTaskQuery().taskDefinitionKey("task2").singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // and there is an activity instance for task2
     updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
 
     assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
@@ -142,10 +144,10 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
 
     // there is now a job for the end event after task2
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
 
     Execution jobExecution = runtimeService.createExecutionQuery().activityId("end2").executionId(job.getExecutionId()).singleResult();
-    assertNotNull(jobExecution);
+    assertThat(jobExecution).isNotNull();
 
     // end process
     completeTasksInOrder("task1");
@@ -168,7 +170,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
 
     // then the process instance is in a valid state
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstance.getId());
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
 
     assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
@@ -202,7 +204,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
 
     // then the process instance is in a valid state
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstance.getId());
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
 
     assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
@@ -236,7 +238,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
 
     // then the process instance is in a valid state
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstance.getId());
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
 
     assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
@@ -369,7 +371,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
 
     // and the async job should be a new one
     Job newAsyncJob = managementService.createJobQuery().singleResult();
-    assertNotEquals(asyncJob.getId(), newAsyncJob.getId());
+    assertThat(newAsyncJob.getId()).isNotEqualTo(asyncJob.getId());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstance.getId(), processEngine);
 
@@ -421,10 +423,10 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
 
     // and the job for innerTask2 should still be there and assigned to the correct execution
     Job innerTask2Job = managementService.createJobQuery().singleResult();
-    assertNotNull(innerTask2Job);
+    assertThat(innerTask2Job).isNotNull();
 
     Execution innerTask2Execution = runtimeService.createExecutionQuery().activityId("innerTask2").singleResult();
-    assertNotNull(innerTask2Execution);
+    assertThat(innerTask2Execution).isNotNull();
 
     assertThat(innerTask2Execution.getId()).isEqualTo(innerTask2Job.getExecutionId());
 
@@ -444,7 +446,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
     String processInstanceId = processInstance.getId();
 
     Job innerTask2Job = managementService.createJobQuery().activityId("innerTask2").singleResult();
-    assertNotNull(innerTask2Job);
+    assertThat(innerTask2Job).isNotNull();
     managementService.executeJob(innerTask2Job.getId());
 
     // when the transition instance to innerTask1 is cancelled
@@ -503,7 +505,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
       .execute();
 
     // then no io mapping is executed and no end listener is executed
-    assertTrue(RecorderExecutionListener.getRecordedEvents().isEmpty());
+    assertThat(RecorderExecutionListener.getRecordedEvents()).isEmpty();
     assertThat(runtimeService.createVariableInstanceQuery().variableName("outputMappingExecuted").count()).isEqualTo(0);
 
     // and the process can be completed successfully
@@ -518,7 +520,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("nestedOneTaskProcess");
 
     Task innerTask = taskService.createTaskQuery().taskDefinitionKey("innerTask").singleResult();
-    assertNotNull(innerTask);
+    assertThat(innerTask).isNotNull();
     taskService.complete(innerTask.getId());
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
@@ -596,7 +598,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
     String processInstanceId = processInstance.getId();
 
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     taskService.complete(task.getId());
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
@@ -673,7 +675,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingAfterAsyncTask");
 
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
 
     // when
     runtimeService.createProcessInstanceModification(processInstance.getId())
@@ -707,7 +709,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingAfterAsyncTask");
 
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
 
     // there is one statistics instance
     List<ActivityStatistics> statistics = managementService
@@ -719,7 +721,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
     assertThat(statistics).hasSize(1);
     assertThat(statistics.get(0).getId()).isEqualTo("task1");
     assertThat(statistics.get(0).getFailedJobs()).isEqualTo(0);
-    assertThat(statistics.get(0).getIncidentStatistics()).hasSize(0);
+    assertThat(statistics.get(0).getIncidentStatistics()).isEmpty();
     assertThat(statistics.get(0).getInstances()).isEqualTo(1);
 
     // when
@@ -737,7 +739,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
     assertThat(statistics).hasSize(1);
     assertThat(statistics.get(0).getId()).isEqualTo("task1");
     assertThat(statistics.get(0).getFailedJobs()).isEqualTo(0);
-    assertThat(statistics.get(0).getIncidentStatistics()).hasSize(0);
+    assertThat(statistics.get(0).getIncidentStatistics()).isEmpty();
     assertThat(statistics.get(0).getInstances()).isEqualTo(2);
 
 
@@ -1113,7 +1115,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
 
     testRule.executeAvailableJobs();
     Incident incident = runtimeService.createIncidentQuery().singleResult();
-    assertNotNull(incident);
+    assertThat(incident).isNotNull();
 
     // when the service task is restarted
     ActivityInstance tree = runtimeService.getActivityInstance(instance.getId());
@@ -1126,7 +1128,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
 
     // then executing the task has failed again and there is a new incident
     Incident newIncident = runtimeService.createIncidentQuery().singleResult();
-    assertNotNull(newIncident);
+    assertThat(newIncident).isNotNull();
 
     assertNotSame(incident.getId(), newIncident.getId());
   }
@@ -1175,7 +1177,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
     for (String taskName : taskNames) {
       // complete any task with that name
       List<Task> tasks = taskService.createTaskQuery().taskDefinitionKey(taskName).listPage(0, 1);
-      assertTrue("task for activity " + taskName + " does not exist", !tasks.isEmpty());
+      assertThat(!tasks.isEmpty()).as("task for activity " + taskName + " does not exist").isTrue();
       taskService.complete(tasks.get(0).getId());
     }
   }

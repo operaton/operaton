@@ -17,9 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.event.timer;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -140,8 +137,8 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
     managementService.recalculateJobDuedate(job.getId(), false);
     Job jobUpdated = jobQuery.singleResult();
     assertThat(jobUpdated.getId()).isEqualTo(job.getId());
-    assertNotEquals(oldDate, jobUpdated.getDuedate());
-    assertTrue(oldDate.before(jobUpdated.getDuedate()));
+    assertThat(jobUpdated.getDuedate()).isNotEqualTo(oldDate);
+    assertThat(oldDate.before(jobUpdated.getDuedate())).isTrue();
     Date expectedDate = LocalDateTime.fromDateFields(currentTime).plusHours(1).toDate();
     assertThat(jobUpdated.getDuedate()).isCloseTo(expectedDate, 1000l);
 
@@ -211,8 +208,8 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
     managementService.recalculateJobDuedate(job.getId(), false);
     Job jobUpdated = jobQuery.singleResult();
     assertThat(jobUpdated.getId()).isEqualTo(job.getId());
-    assertNotEquals(oldDate, jobUpdated.getDuedate());
-    assertTrue(oldDate.before(jobUpdated.getDuedate()));
+    assertThat(jobUpdated.getDuedate()).isNotEqualTo(oldDate);
+    assertThat(oldDate.before(jobUpdated.getDuedate())).isTrue();
 
     // After setting the clock to time '16 minutes', the timer should fire
     ClockUtil.setCurrentTime(new Date(startTime.getTime() + TimeUnit.HOURS.toMillis(2L)));
@@ -246,7 +243,7 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
     managementService.recalculateJobDuedate(job.getId(), true);
     Job jobUpdated = jobQuery.singleResult();
     assertThat(jobUpdated.getId()).isEqualTo(job.getId());
-    assertNotEquals(oldDate, jobUpdated.getDuedate());
+    assertThat(jobUpdated.getDuedate()).isNotEqualTo(oldDate);
     assertThat(jobUpdated.getDuedate()).isEqualTo(LocalDateTime.fromDateFields(jobUpdated.getCreateTime()).plusMinutes(15).toDate());
 
     // After setting the clock to time '16 minutes', the timer should fire
@@ -289,7 +286,7 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("interruptingTimer");
 
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
 
     managementService.executeJob(job.getId());
 
@@ -311,7 +308,7 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("interruptingTimer");
 
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
 
     managementService.executeJob(job.getId());
 
@@ -333,7 +330,7 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("interruptingTimer");
 
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
 
     managementService.executeJob(job.getId());
 

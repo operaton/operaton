@@ -23,7 +23,6 @@ import static org.operaton.bpm.engine.EntityTypes.PROCESS_INSTANCE;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.DB_SCHEMA_UPDATE_CREATE_DROP;
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_SET_JOB_RETRIES;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -452,7 +451,7 @@ public class CustomHistoryLevelWithoutUserOperationLogTest {
 
     Task task = taskService.createTaskQuery().singleResult();
 
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // when
     taskService.setAssignee(task.getId(), "demo");

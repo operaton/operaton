@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.test.history;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -178,7 +176,7 @@ public class CleanableHistoricBatchReportTest {
     map.put("instance-deletion", "P7D");
     processEngineConfiguration.setBatchOperationsForHistoryCleanup(map);
     processEngineConfiguration.initHistoryCleanup();
-    assertNull(processEngineConfiguration.getBatchOperationHistoryTimeToLive());
+    assertThat(processEngineConfiguration.getBatchOperationHistoryTimeToLive()).isNull();
 
     Date startDate = new Date();
     int daysInThePast = -11;
@@ -248,7 +246,7 @@ public class CleanableHistoricBatchReportTest {
   @Test
   public void testReportNoTTLConfiguration() {
     processEngineConfiguration.initHistoryCleanup();
-    assertNull(processEngineConfiguration.getBatchOperationHistoryTimeToLive());
+    assertThat(processEngineConfiguration.getBatchOperationHistoryTimeToLive()).isNull();
 
     Date startDate = new Date();
     int daysInThePast = -11;
@@ -299,7 +297,7 @@ public class CleanableHistoricBatchReportTest {
     managementService.deleteBatch(modificationBatch.getId(), false);
 
     CleanableHistoricBatchReportResult result = historyService.createCleanableHistoricBatchReport().singleResult();
-    assertNotNull(result);
+    assertThat(result).isNotNull();
     checkResultNumbers(result, 1, 1, modOperationsTTL);
   }
 
@@ -307,7 +305,7 @@ public class CleanableHistoricBatchReportTest {
   public void testReportOrderByFinishedProcessInstance() {
     processEngineConfiguration.setBatchOperationHistoryTimeToLive("P5D");
     processEngineConfiguration.initHistoryCleanup();
-    assertNotNull(processEngineConfiguration.getBatchOperationHistoryTimeToLive());
+    assertThat(processEngineConfiguration.getBatchOperationHistoryTimeToLive()).isNotNull();
 
     Date startDate = new Date();
     int daysInThePast = -11;

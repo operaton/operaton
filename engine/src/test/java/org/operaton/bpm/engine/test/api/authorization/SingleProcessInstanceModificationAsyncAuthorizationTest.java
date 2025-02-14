@@ -29,8 +29,6 @@ import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertTha
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -91,7 +89,7 @@ public class SingleProcessInstanceModificationAsyncAuthorizationTest extends Aut
         .createProcessInstanceModification(processInstance.getId())
         .cancelActivityInstance(getInstanceIdForActivity(tree, "task1"))
         .executeAsync();
-    assertNotNull(modificationBatch);
+    assertThat(modificationBatch).isNotNull();
     Job job = managementService.createJobQuery().jobDefinitionId(modificationBatch.getSeedJobDefinitionId()).singleResult();
     // seed job
     managementService.executeJob(job.getId());
@@ -103,7 +101,7 @@ public class SingleProcessInstanceModificationAsyncAuthorizationTest extends Aut
     }
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task2").done());
@@ -195,7 +193,7 @@ public class SingleProcessInstanceModificationAsyncAuthorizationTest extends Aut
     for (String taskName : taskNames) {
       // complete any task with that name
       List<Task> tasks = taskService.createTaskQuery().taskDefinitionKey(taskName).listPage(0, 1);
-      assertTrue("task for activity " + taskName + " does not exist", !tasks.isEmpty());
+      assertThat(!tasks.isEmpty()).as("task for activity " + taskName + " does not exist").isTrue();
       taskService.complete(tasks.get(0).getId());
     }
   }

@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.test.standalone.entity;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -107,7 +105,7 @@ public class ExecutionEntityTest {
       .singleResult();
 
     // when
-    assertNotNull(execution);
+    assertThat(execution).isNotNull();
     assertThat(execution.getProcessInstanceId()).isEqualTo(pi.getId());
     processEngineRule.getRuntimeService().signal(execution.getId());
 

@@ -63,7 +63,7 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
       .execute();
 
     // then
-    assertThat(tasks).hasSize(0);
+    assertThat(tasks).isEmpty();
   }
 
   @Test
@@ -77,7 +77,7 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
       .execute();
 
     // then
-    assertThat(tasks).hasSize(0);
+    assertThat(tasks).isEmpty();
   }
 
   @Test
@@ -91,7 +91,7 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
       .execute();
 
     // then
-    assertThat(tasks).hasSize(0);
+    assertThat(tasks).isEmpty();
   }
 
   @Test
@@ -120,7 +120,7 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
       .execute();
 
     // then
-    assertThat(tasks).hasSize(0);
+    assertThat(tasks).isEmpty();
   }
 
   @Test
@@ -134,7 +134,7 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
       .execute();
 
     // then
-    assertThat(tasks).hasSize(0);
+    assertThat(tasks).isEmpty();
   }
 
   @Test

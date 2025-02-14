@@ -174,7 +174,7 @@ public class BatchQueryAuthorizationTest {
     authRule.disableAuthorization();
 
     // then
-    assertThat(batches).hasSize(0);
+    assertThat(batches).isEmpty();
   }
 
   @Test

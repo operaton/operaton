@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.test.standalone.history;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 
@@ -76,13 +74,13 @@ public class AuditHistoryTest {
 
     HistoricVariableInstance historicStringVariable =
         historyService.createHistoricVariableInstanceQuery().variableName("aStringVariable").singleResult();
-    assertNotNull(historicStringVariable);
+    assertThat(historicStringVariable).isNotNull();
     assertThat(historicStringVariable.getValue()).isEqualTo(newValue);
 
     HistoricVariableInstance historicBytesVariable =
         historyService.createHistoricVariableInstanceQuery().variableName("aBytesVariable").singleResult();
-    assertNotNull(historicBytesVariable);
-    assertTrue(Arrays.equals(newValue.getBytes(), (byte[]) historicBytesVariable.getValue()));
+    assertThat(historicBytesVariable).isNotNull();
+    assertThat(Arrays).isEqualTo(newValue);
 
     // and no historic details exist
     assertThat(historyService.createHistoricDetailQuery().variableUpdates().count()).isEqualTo(0);

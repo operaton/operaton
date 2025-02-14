@@ -17,8 +17,7 @@
 package org.operaton.bpm.engine.test.api.runtime;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -166,7 +165,7 @@ public class CreateAndResolveIncidentTest {
 
     // then
     Incident incident2 = runtimeService.createIncidentQuery().executionId(processInstance.getId()).singleResult();
-    assertNull(incident2);
+    assertThat(incident2).isNull();
   }
 
   @Test
@@ -226,10 +225,10 @@ public class CreateAndResolveIncidentTest {
     Incident incident = runtimeService.createIncident("custom", processInstance.getId(), "configuration");
 
     // then
-    assertNotNull(incident);
+    assertThat(incident).isNotNull();
 
     Incident incident2 = runtimeService.createIncidentQuery().singleResult();
-    assertNotNull(incident2);
+    assertThat(incident2).isNotNull();
     assertThat(incident2).isEqualTo(incident);
     assertThat(incident.getIncidentType()).isEqualTo("custom");
     assertThat(incident.getConfiguration()).isEqualTo("configuration");
@@ -252,7 +251,7 @@ public class CreateAndResolveIncidentTest {
 
     // then
     incident = runtimeService.createIncidentQuery().singleResult();
-    assertNull(incident);
+    assertThat(incident).isNull();
 
     assertThat(CUSTOM_HANDLER.getCreateEvents()).hasSize(1);
     assertThat(CUSTOM_HANDLER.getResolveEvents()).hasSize(1);

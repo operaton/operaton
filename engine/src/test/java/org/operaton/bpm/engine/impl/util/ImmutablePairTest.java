@@ -22,9 +22,7 @@ import java.util.Map.Entry;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 public class ImmutablePairTest {
@@ -35,7 +33,7 @@ public class ImmutablePairTest {
     assertThat(pair.getLeft().intValue()).isEqualTo(0);
     assertThat(pair.getRight()).isEqualTo("foo");
     final ImmutablePair<Object, String> pair2 = new ImmutablePair<>(null, "bar");
-    assertNull(pair2.getLeft());
+    assertThat(pair2.getLeft()).isNull();
     assertThat(pair2.getRight()).isEqualTo("bar");
   }
 
@@ -54,9 +52,9 @@ public class ImmutablePairTest {
     final ImmutablePair<String, String> pair1 = new ImmutablePair<>("A", "D");
     final ImmutablePair<String, String> pair2 = new ImmutablePair<>("B", "C");
     assertThat(pair1.compareTo(pair1)).isEqualTo(0);
-    assertTrue(pair1.compareTo(pair2) < 0);
+    assertThat(pair1.compareTo(pair2) < 0).isTrue();
     assertThat(pair2.compareTo(pair2)).isEqualTo(0);
-    assertTrue(pair2.compareTo(pair1) > 0);
+    assertThat(pair2.compareTo(pair1) > 0).isTrue();
   }
 
   @Test
@@ -64,9 +62,9 @@ public class ImmutablePairTest {
     final ImmutablePair<String, String> pair1 = new ImmutablePair<>("A", "C");
     final ImmutablePair<String, String> pair2 = new ImmutablePair<>("A", "D");
     assertThat(pair1.compareTo(pair1)).isEqualTo(0);
-    assertTrue(pair1.compareTo(pair2) < 0);
+    assertThat(pair1.compareTo(pair2) < 0).isTrue();
     assertThat(pair2.compareTo(pair2)).isEqualTo(0);
-    assertTrue(pair2.compareTo(pair1) > 0);
+    assertThat(pair2.compareTo(pair1) > 0).isTrue();
   }
 
   @Test
@@ -84,12 +82,12 @@ public class ImmutablePairTest {
   @Test
   public void shouldFulfillEqualityRules() {
     assertThat(new ImmutablePair<>(null, "foo")).isEqualTo(new ImmutablePair<>(null, "foo"));
-    assertNotEquals(new ImmutablePair<>("foo", 0), new ImmutablePair<>("foo", null));
-    assertNotEquals(new ImmutablePair<>("foo", "bar"), new ImmutablePair<>("xyz", "bar"));
+    assertThat(new ImmutablePair<>("foo", null)).isNotEqualTo(new ImmutablePair<>("foo", 0));
+    assertThat(new ImmutablePair<>("xyz", "bar")).isNotEqualTo(new ImmutablePair<>("foo", "bar"));
 
     final ImmutablePair<String, String> p = new ImmutablePair<>("foo", "bar");
     assertThat(p).isEqualTo(p);
-    assertNotEquals(p, new Object());
+    assertThat(new Object()).isNotEqualTo(p);
   }
 
   @Test

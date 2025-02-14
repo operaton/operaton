@@ -17,8 +17,7 @@
 package org.operaton.bpm.engine.test.api.mgmt;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.List;
 
@@ -228,7 +227,7 @@ public class JobDefinitionPriorityTest extends PluggableProcessEngineTest {
     // then the job definition priority is still null
     JobDefinition updatedDefinition = managementService.createJobDefinitionQuery()
         .jobDefinitionId(jobDefinition.getId()).singleResult();
-    assertNull(updatedDefinition.getOverridingJobPriority());
+    assertThat(updatedDefinition.getOverridingJobPriority()).isNull();
 
     // and a new job instance does not receive the intermittently set priority
     runtimeService.createProcessInstanceByKey("asyncTaskProcess")
@@ -245,7 +244,7 @@ public class JobDefinitionPriorityTest extends PluggableProcessEngineTest {
 
     // given a job definition with null priority
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().singleResult();
-    assertNull(jobDefinition.getOverridingJobPriority());
+    assertThat(jobDefinition.getOverridingJobPriority()).isNull();
 
     // when I set a priority
     managementService.clearOverridingJobPriorityForJobDefinition(jobDefinition.getId());
@@ -253,7 +252,7 @@ public class JobDefinitionPriorityTest extends PluggableProcessEngineTest {
     // then the priority remains unchanged
     JobDefinition updatedDefinition = managementService.createJobDefinitionQuery()
         .jobDefinitionId(jobDefinition.getId()).singleResult();
-    assertNull(updatedDefinition.getOverridingJobPriority());
+    assertThat(updatedDefinition.getOverridingJobPriority()).isNull();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/jobPrioProcess.bpmn20.xml")
@@ -265,10 +264,10 @@ public class JobDefinitionPriorityTest extends PluggableProcessEngineTest {
     List<JobDefinition> jobDefinitions = managementService.createJobDefinitionQuery().list();
     assertThat(jobDefinitions).hasSize(4);
 
-    assertNull(jobDefinitions.get(0).getOverridingJobPriority());
-    assertNull(jobDefinitions.get(1).getOverridingJobPriority());
-    assertNull(jobDefinitions.get(2).getOverridingJobPriority());
-    assertNull(jobDefinitions.get(3).getOverridingJobPriority());
+    assertThat(jobDefinitions.get(0).getOverridingJobPriority()).isNull();
+    assertThat(jobDefinitions.get(1).getOverridingJobPriority()).isNull();
+    assertThat(jobDefinitions.get(2).getOverridingJobPriority()).isNull();
+    assertThat(jobDefinitions.get(3).getOverridingJobPriority()).isNull();
   }
 
   @Test

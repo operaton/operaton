@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.bpmn.iomapping;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import java.text.DateFormat;
@@ -183,7 +183,7 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
       .variableName("foo")
       .singleResult();
 
-    assertNotNull(variableInstance);
+    assertThat(variableInstance).isNotNull();
     assertThat(variableInstance.getValue()).isEqualTo("bar");
   }
 
@@ -206,7 +206,7 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
       .variableName("foo")
       .singleResult();
 
-    assertNotNull(variableInstance);
+    assertThat(variableInstance).isNotNull();
     assertThat(variableInstance.getValue()).isEqualTo("bar");
   }
 
@@ -221,7 +221,7 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
       .signalEventSubscriptionName("foo")
       .singleResult();
 
-    assertNotNull(execution);
+    assertThat(execution).isNotNull();
 
     // when
     runtimeService.signalEventReceived("foo", execution.getId());
@@ -232,7 +232,7 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
       .variableName("foo")
       .singleResult();
 
-    assertNotNull(variableInstance);
+    assertThat(variableInstance).isNotNull();
     assertThat(variableInstance.getValue()).isEqualTo("bar");
   }
 
@@ -251,7 +251,7 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
       .variableName("foo")
       .singleResult();
 
-    assertNotNull(variableInstance);
+    assertThat(variableInstance).isNotNull();
     assertThat(variableInstance.getValue()).isEqualTo("bar");
   }
 

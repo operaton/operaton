@@ -38,7 +38,6 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.EndEvent;
 import org.operaton.bpm.model.bpmn.instance.TerminateEventDefinition;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -285,8 +284,9 @@ public class SelfCancellationTest {
 
     // then
     List<String> activities = runtimeService.getActiveActivityIds(procInst.getId());
-    Assert.assertNotNull(activities);
-    assertThat(activities).hasSize(1);
+    assertThat(activities)
+            .isNotNull()
+            .hasSize(1);
     checkRecordedEvents("sendTask", "boundary", "endEventBoundary");
   }
 

@@ -18,9 +18,6 @@ package org.operaton.bpm.engine.test.jobexecutor;
 
 import static org.operaton.bpm.engine.test.util.ClockTestUtil.incrementClock;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -41,9 +38,9 @@ public class JobExecutorAcquireJobsByDueDateTest extends AbstractJobExecutorAcqu
 
   @Test
   public void testProcessEngineConfiguration() {
-    assertFalse(configuration.isJobExecutorPreferTimerJobs());
-    assertTrue(configuration.isJobExecutorAcquireByDueDate());
-    assertFalse(configuration.isJobExecutorAcquireByPriority());
+    assertThat(configuration.isJobExecutorPreferTimerJobs()).isFalse();
+    assertThat(configuration.isJobExecutorAcquireByDueDate()).isTrue();
+    assertThat(configuration.isJobExecutorAcquireByPriority()).isFalse();
   }
 
   @Test
@@ -52,7 +49,7 @@ public class JobExecutorAcquireJobsByDueDateTest extends AbstractJobExecutorAcqu
     runtimeService.startProcessInstanceByKey("simpleAsyncProcess");
 
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job.getDuedate());
+    assertThat(job.getDuedate()).isNotNull();
     assertThat(job.getDuedate()).isEqualTo(ClockUtil.getCurrentTime());
   }
 
@@ -79,14 +76,14 @@ public class JobExecutorAcquireJobsByDueDateTest extends AbstractJobExecutorAcqu
     Job messageJob1 = managementService.createJobQuery().processInstanceId(asyncProcess1.getId()).singleResult();
     Job messageJob2 = managementService.createJobQuery().processInstanceId(asyncProcess2.getId()).singleResult();
 
-    assertNotNull(timerJob1.getDuedate());
-    assertNotNull(timerJob2.getDuedate());
-    assertNotNull(messageJob1.getDuedate());
-    assertNotNull(messageJob2.getDuedate());
+    assertThat(timerJob1.getDuedate()).isNotNull();
+    assertThat(timerJob2.getDuedate()).isNotNull();
+    assertThat(messageJob1.getDuedate()).isNotNull();
+    assertThat(messageJob2.getDuedate()).isNotNull();
 
-    assertTrue(messageJob1.getDuedate().before(timerJob1.getDuedate()));
-    assertTrue(timerJob1.getDuedate().before(timerJob2.getDuedate()));
-    assertTrue(timerJob2.getDuedate().before(messageJob2.getDuedate()));
+    assertThat(messageJob1.getDuedate().before(timerJob1.getDuedate())).isTrue();
+    assertThat(timerJob1.getDuedate().before(timerJob2.getDuedate())).isTrue();
+    assertThat(timerJob2.getDuedate().before(messageJob2.getDuedate())).isTrue();
 
     List<AcquirableJobEntity> acquirableJobs = findAcquirableJobs();
     assertThat(acquirableJobs).hasSize(4);

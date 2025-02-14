@@ -17,8 +17,7 @@
 package org.operaton.bpm.engine.test.api.authorization;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -129,7 +128,7 @@ public class DefaultUserPermissionNameForTaskCfgTest {
         .buildProcessEngine();
 
       // then
-      assertTrue(testProcessEngineCfg.initMethodCalled);
+      assertThat(testProcessEngineCfg.initMethodCalled).isTrue();
     } finally {
       if(engine != null) {
         engine.close();

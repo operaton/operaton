@@ -23,11 +23,6 @@ import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_MAN
 import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_REPETITION_RULE;
 import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_REQUIRED_RULE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -108,7 +103,7 @@ public class StagePlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertNotEquals(stageName, activity.getName());
+    assertThat(activity.getName()).isNotEqualTo(stageName);
     assertThat(activity.getName()).isEqualTo(planItemName);
   }
 
@@ -159,7 +154,7 @@ public class StagePlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     CmmnActivityBehavior behavior = activity.getActivityBehavior();
-    assertTrue(behavior instanceof StageActivityBehavior);
+    assertThat(behavior instanceof StageActivityBehavior).isTrue();
   }
 
   @Test
@@ -170,7 +165,7 @@ public class StagePlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertNull(activity.getParent());
+    assertThat(activity.getParent()).isNull();
   }
 
   @Test
@@ -185,7 +180,7 @@ public class StagePlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     assertThat(activity.getParent()).isEqualTo(parent);
-    assertTrue(parent.getActivities().contains(activity));
+    assertThat(parent.getActivities()).contains(activity);
   }
 
   @Test
@@ -214,9 +209,9 @@ public class StagePlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity newActivity = handler.handleElement(planItem, context);
 
     // then
-    assertTrue(newActivity.getEntryCriteria().isEmpty());
+    assertThat(newActivity.getEntryCriteria()).isEmpty();
 
-    assertFalse(newActivity.getExitCriteria().isEmpty());
+    assertThat(newActivity.getExitCriteria()).isNotEmpty();
     assertThat(newActivity.getExitCriteria()).hasSize(1);
 
     assertThat(newActivity.getExitCriteria().get(0)).isEqualTo(sentryDeclaration);
@@ -261,13 +256,13 @@ public class StagePlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity newActivity = handler.handleElement(planItem, context);
 
     // then
-    assertTrue(newActivity.getEntryCriteria().isEmpty());
+    assertThat(newActivity.getEntryCriteria()).isEmpty();
 
-    assertFalse(newActivity.getExitCriteria().isEmpty());
+    assertThat(newActivity.getExitCriteria()).isNotEmpty();
     assertThat(newActivity.getExitCriteria()).hasSize(2);
 
-    assertTrue(newActivity.getExitCriteria().contains(firstSentryDeclaration));
-    assertTrue(newActivity.getExitCriteria().contains(secondSentryDeclaration));
+    assertThat(newActivity.getExitCriteria()).contains(firstSentryDeclaration);
+    assertThat(newActivity.getExitCriteria()).contains(secondSentryDeclaration);
 
   }
 
@@ -297,9 +292,9 @@ public class StagePlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity newActivity = handler.handleElement(planItem, context);
 
     // then
-    assertTrue(newActivity.getExitCriteria().isEmpty());
+    assertThat(newActivity.getExitCriteria()).isEmpty();
 
-    assertFalse(newActivity.getEntryCriteria().isEmpty());
+    assertThat(newActivity.getEntryCriteria()).isNotEmpty();
     assertThat(newActivity.getEntryCriteria()).hasSize(1);
 
     assertThat(newActivity.getEntryCriteria().get(0)).isEqualTo(sentryDeclaration);
@@ -344,13 +339,13 @@ public class StagePlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity newActivity = handler.handleElement(planItem, context);
 
     // then
-    assertTrue(newActivity.getExitCriteria().isEmpty());
+    assertThat(newActivity.getExitCriteria()).isEmpty();
 
-    assertFalse(newActivity.getEntryCriteria().isEmpty());
+    assertThat(newActivity.getEntryCriteria()).isNotEmpty();
     assertThat(newActivity.getEntryCriteria()).hasSize(2);
 
-    assertTrue(newActivity.getEntryCriteria().contains(firstSentryDeclaration));
-    assertTrue(newActivity.getEntryCriteria().contains(secondSentryDeclaration));
+    assertThat(newActivity.getEntryCriteria()).contains(firstSentryDeclaration);
+    assertThat(newActivity.getEntryCriteria()).contains(secondSentryDeclaration);
 
   }
 
@@ -382,11 +377,11 @@ public class StagePlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity newActivity = handler.handleElement(planItem, context);
 
     // then
-    assertFalse(newActivity.getExitCriteria().isEmpty());
+    assertThat(newActivity.getExitCriteria()).isNotEmpty();
     assertThat(newActivity.getExitCriteria()).hasSize(1);
     assertThat(newActivity.getExitCriteria().get(0)).isEqualTo(sentryDeclaration);
 
-    assertFalse(newActivity.getEntryCriteria().isEmpty());
+    assertThat(newActivity.getEntryCriteria()).isNotEmpty();
     assertThat(newActivity.getEntryCriteria()).hasSize(1);
     assertThat(newActivity.getEntryCriteria().get(0)).isEqualTo(sentryDeclaration);
 
@@ -407,8 +402,8 @@ public class StagePlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_MANUAL_ACTIVATION_RULE);
-    assertNotNull(rule);
-    assertTrue(rule instanceof CaseControlRule);
+    assertThat(rule).isNotNull();
+    assertThat(rule instanceof CaseControlRule).isTrue();
   }
 
 
@@ -427,8 +422,8 @@ public class StagePlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_MANUAL_ACTIVATION_RULE);
-    assertNotNull(rule);
-    assertTrue(rule instanceof CaseControlRule);
+    assertThat(rule).isNotNull();
+    assertThat(rule instanceof CaseControlRule).isTrue();
   }
 
   @Test
@@ -446,8 +441,8 @@ public class StagePlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_REQUIRED_RULE);
-    assertNotNull(rule);
-    assertTrue(rule instanceof CaseControlRule);
+    assertThat(rule).isNotNull();
+    assertThat(rule instanceof CaseControlRule).isTrue();
   }
 
   @Test
@@ -465,8 +460,8 @@ public class StagePlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_REQUIRED_RULE);
-    assertNotNull(rule);
-    assertTrue(rule instanceof CaseControlRule);
+    assertThat(rule).isNotNull();
+    assertThat(rule instanceof CaseControlRule).isTrue();
   }
 
   @Test
@@ -479,8 +474,8 @@ public class StagePlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Object autoComplete = newActivity.getProperty(PROPERTY_AUTO_COMPLETE);
-    assertNotNull(autoComplete);
-    assertTrue((Boolean) autoComplete);
+    assertThat(autoComplete).isNotNull();
+    assertThat((Boolean) autoComplete).isTrue();
   }
 
   @Test
@@ -498,8 +493,8 @@ public class StagePlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_REPETITION_RULE);
-    assertNotNull(rule);
-    assertTrue(rule instanceof CaseControlRule);
+    assertThat(rule).isNotNull();
+    assertThat(rule instanceof CaseControlRule).isTrue();
   }
 
   @Test
@@ -517,8 +512,8 @@ public class StagePlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_REPETITION_RULE);
-    assertNotNull(rule);
-    assertTrue(rule instanceof CaseControlRule);
+    assertThat(rule).isNotNull();
+    assertThat(rule instanceof CaseControlRule).isTrue();
   }
 
   @Test
@@ -536,10 +531,11 @@ public class StagePlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     List<String> events = newActivity.getProperties().get(CmmnProperties.REPEAT_ON_STANDARD_EVENTS);
-    assertNotNull(events);
-    assertThat(events).hasSize(2);
-    assertTrue(events.contains(CaseExecutionListener.COMPLETE));
-    assertTrue(events.contains(CaseExecutionListener.TERMINATE));
+    assertThat(events)
+            .isNotNull()
+            .hasSize(2)
+            .contains(CaseExecutionListener.COMPLETE)
+            .contains(CaseExecutionListener.TERMINATE);
   }
 
   @Test
@@ -557,10 +553,11 @@ public class StagePlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     List<String> events = newActivity.getProperties().get(CmmnProperties.REPEAT_ON_STANDARD_EVENTS);
-    assertNotNull(events);
-    assertThat(events).hasSize(2);
-    assertTrue(events.contains(CaseExecutionListener.COMPLETE));
-    assertTrue(events.contains(CaseExecutionListener.TERMINATE));
+    assertThat(events)
+            .isNotNull()
+            .hasSize(2)
+            .contains(CaseExecutionListener.COMPLETE)
+            .contains(CaseExecutionListener.TERMINATE);
   }
 
   @Test
@@ -580,9 +577,10 @@ public class StagePlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     List<String> events = newActivity.getProperties().get(CmmnProperties.REPEAT_ON_STANDARD_EVENTS);
-    assertNotNull(events);
-    assertThat(events).hasSize(1);
-    assertTrue(events.contains(CaseExecutionListener.DISABLE));
+    assertThat(events)
+            .isNotNull()
+            .hasSize(1)
+            .contains(CaseExecutionListener.DISABLE);
   }
 
   @Test
@@ -602,9 +600,10 @@ public class StagePlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     List<String> events = newActivity.getProperties().get(CmmnProperties.REPEAT_ON_STANDARD_EVENTS);
-    assertNotNull(events);
-    assertThat(events).hasSize(1);
-    assertTrue(events.contains(CaseExecutionListener.DISABLE));
+    assertThat(events)
+            .isNotNull()
+            .hasSize(1)
+            .contains(CaseExecutionListener.DISABLE);
   }
 
 }

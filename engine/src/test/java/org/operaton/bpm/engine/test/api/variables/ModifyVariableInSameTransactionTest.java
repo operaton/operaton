@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.variables;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
 
 import java.util.Arrays;
 import java.util.List;
@@ -65,7 +64,7 @@ public class ModifyVariableInSameTransactionTest {
     engineRule.getTaskService().complete(task.getId());
 
     VariableInstance variable = engineRule.getRuntimeService().createVariableInstanceQuery().processInstanceIdIn(instance.getId()).variableName("listVar").singleResult();
-    assertNotNull(variable);
+    assertThat(variable).isNotNull();
     assertThat(variable.getValue()).isEqualTo("stringValue");
     HistoricVariableInstance historicVariable = engineRule.getHistoryService().createHistoricVariableInstanceQuery().singleResult();
     assertThat(historicVariable.getName()).isEqualTo(variable.getName());
@@ -92,7 +91,7 @@ public class ModifyVariableInSameTransactionTest {
     engineRule.getTaskService().complete(task.getId());
 
     VariableInstance variable = engineRule.getRuntimeService().createVariableInstanceQuery().processInstanceIdIn(instance.getId()).variableName("foo").singleResult();
-    assertNotNull(variable);
+    assertThat(variable).isNotNull();
     assertThat(variable.getValue()).isEqualTo("secondValue");
     HistoricVariableInstance historicVariable = engineRule.getHistoryService().createHistoricVariableInstanceQuery().singleResult();
     assertThat(historicVariable.getName()).isEqualTo(variable.getName());
@@ -120,7 +119,7 @@ public class ModifyVariableInSameTransactionTest {
 
     VariableInstance variable = engineRule.getRuntimeService().createVariableInstanceQuery().processInstanceIdIn(instance.getId()).variableName("foo")
         .singleResult();
-    assertNotNull(variable);
+    assertThat(variable).isNotNull();
     assertThat(variable.getValue()).isEqualTo("bar");
     List<HistoricVariableInstance> historyVariables = engineRule.getHistoryService().createHistoricVariableInstanceQuery().list();
     for (HistoricVariableInstance historicVariable : historyVariables) {

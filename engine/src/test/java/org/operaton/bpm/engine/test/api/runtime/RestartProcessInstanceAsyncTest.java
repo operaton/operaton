@@ -17,11 +17,10 @@
 package org.operaton.bpm.engine.test.api.runtime;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import java.util.Arrays;
@@ -304,7 +303,7 @@ public class RestartProcessInstanceAsyncTest {
     List<ProcessInstance> restartedProcessInstances = runtimeService.createProcessInstanceQuery().active().list();
     for (ProcessInstance restartedProcessInstance : restartedProcessInstances) {
       ActivityInstance updatedTree = runtimeService.getActivityInstance(restartedProcessInstance.getId());
-      assertNotNull(updatedTree);
+      assertThat(updatedTree).isNotNull();
       assertThat(updatedTree.getProcessInstanceId()).isEqualTo(restartedProcessInstance.getId());
       assertThat(updatedTree).hasStructure(
           describeActivityInstanceTree(
@@ -337,7 +336,7 @@ public class RestartProcessInstanceAsyncTest {
     List<ProcessInstance> restartedProcessInstances = runtimeService.createProcessInstanceQuery().active().list();
     for (ProcessInstance restartedProcessInstance : restartedProcessInstances) {
       ActivityInstance updatedTree = runtimeService.getActivityInstance(restartedProcessInstance.getId());
-      assertNotNull(updatedTree);
+      assertThat(updatedTree).isNotNull();
       assertThat(updatedTree.getProcessInstanceId()).isEqualTo(restartedProcessInstance.getId());
       assertThat(updatedTree).hasStructure(
           describeActivityInstanceTree(
@@ -575,8 +574,8 @@ public class RestartProcessInstanceAsyncTest {
 
     // then the monitor job has a no due date set
     Job monitorJob = helper.getMonitorJob(batch);
-    assertNotNull(monitorJob);
-    assertNull(monitorJob.getDuedate());
+    assertThat(monitorJob).isNotNull();
+    assertThat(monitorJob.getDuedate()).isNull();
 
     // when the monitor job is executed
     helper.executeMonitorJob(batch);
@@ -612,7 +611,7 @@ public class RestartProcessInstanceAsyncTest {
 
     // then the monitor job has the create date as due date set
     Job monitorJob = helper.getMonitorJob(batch);
-    assertNotNull(monitorJob);
+    assertThat(monitorJob).isNotNull();
     assertThat(monitorJob.getDuedate()).isEqualTo(TEST_DATE);
 
     // when the monitor job is executed
@@ -836,7 +835,7 @@ public class RestartProcessInstanceAsyncTest {
       // then all process instances were restarted
       for (ProcessInstance restartedProcessInstance : restartedProcessInstances) {
         ActivityInstance updatedTree = runtimeService.getActivityInstance(restartedProcessInstance.getId());
-        assertNotNull(updatedTree);
+        assertThat(updatedTree).isNotNull();
         assertThat(updatedTree.getProcessInstanceId()).isEqualTo(restartedProcessInstance.getId());
         assertThat(restartedProcessInstance.getTenantId()).isEqualTo("tenantId");
 
@@ -899,8 +898,8 @@ public class RestartProcessInstanceAsyncTest {
     List<ProcessInstance> restartedProcessInstances = runtimeService.createProcessInstanceQuery().processDefinitionId(processDefinition.getId()).active().list();
     ProcessInstance restartedProcessInstance1 = restartedProcessInstances.get(0);
     ProcessInstance restartedProcessInstance2 = restartedProcessInstances.get(1);
-    assertNull(restartedProcessInstance1.getBusinessKey());
-    assertNull(restartedProcessInstance2.getBusinessKey());
+    assertThat(restartedProcessInstance1.getBusinessKey()).isNull();
+    assertThat(restartedProcessInstance2.getBusinessKey()).isNull();
   }
 
   @Test
@@ -924,8 +923,8 @@ public class RestartProcessInstanceAsyncTest {
     List<ProcessInstance> restartedProcessInstances = runtimeService.createProcessInstanceQuery().processDefinitionId(processDefinition.getId()).active().list();
     ProcessInstance restartedProcessInstance1 = restartedProcessInstances.get(0);
     ProcessInstance restartedProcessInstance2 = restartedProcessInstances.get(1);
-    assertNotNull(restartedProcessInstance1.getBusinessKey());
-    assertNotNull(restartedProcessInstance2.getBusinessKey());
+    assertThat(restartedProcessInstance1.getBusinessKey()).isNotNull();
+    assertThat(restartedProcessInstance2.getBusinessKey()).isNotNull();
   }
 
   @Test
@@ -949,8 +948,8 @@ public class RestartProcessInstanceAsyncTest {
     List<ProcessInstance> restartedProcessInstances = runtimeService.createProcessInstanceQuery().processDefinitionId(processDefinition.getId()).active().list();
     ProcessInstance restartedProcessInstance1 = restartedProcessInstances.get(0);
     ProcessInstance restartedProcessInstance2 = restartedProcessInstances.get(1);
-    assertNull(restartedProcessInstance1.getCaseInstanceId());
-    assertNull(restartedProcessInstance2.getCaseInstanceId());
+    assertThat(restartedProcessInstance1.getCaseInstanceId()).isNull();
+    assertThat(restartedProcessInstance2.getCaseInstanceId()).isNull();
   }
 
   @Test
@@ -973,8 +972,8 @@ public class RestartProcessInstanceAsyncTest {
     helper.completeBatch(batch);
     // then
     List<ProcessInstance> restartedProcessInstances = runtimeService.createProcessInstanceQuery().processDefinitionId(processDefinition.getId()).active().list();
-    assertNotNull(restartedProcessInstances.get(0).getTenantId());
-    assertNotNull(restartedProcessInstances.get(1).getTenantId());
+    assertThat(restartedProcessInstances.get(0).getTenantId()).isNotNull();
+    assertThat(restartedProcessInstances.get(1).getTenantId()).isNotNull();
     assertThat(restartedProcessInstances.get(0).getTenantId()).isEqualTo("tenantId");
     assertThat(restartedProcessInstances.get(1).getTenantId()).isEqualTo("tenantId");
   }
@@ -1026,12 +1025,12 @@ public class RestartProcessInstanceAsyncTest {
     // then
     List<ProcessInstance> restartedProcessInstances = runtimeService.createProcessInstanceQuery().processDefinitionId(processDefinition.getId()).list();
     Execution task1Execution = runtimeService.createExecutionQuery().processInstanceId(restartedProcessInstances.get(0).getId()).activityId("userTask1").singleResult();
-    assertNotNull(task1Execution);
-    assertNull(runtimeService.getVariable(task1Execution.getId(), "foo"));
+    assertThat(task1Execution).isNotNull();
+    assertThat(runtimeService.getVariable(task1Execution.getId(), "foo")).isNull();
 
     task1Execution = runtimeService.createExecutionQuery().processInstanceId(restartedProcessInstances.get(1).getId()).activityId("userTask1").singleResult();
-    assertNotNull(task1Execution);
-    assertNull(runtimeService.getVariable(task1Execution.getId(), "foo"));
+    assertThat(task1Execution).isNotNull();
+    assertThat(runtimeService.getVariable(task1Execution.getId(), "foo")).isNull();
   }
 
   @Test
@@ -1057,7 +1056,7 @@ public class RestartProcessInstanceAsyncTest {
     ProcessInstance restartedInstance = runtimeService.createProcessInstanceQuery().active()
       .processDefinitionId(processDefinition.getId()).singleResult();
 
-    assertNotNull(restartedInstance);
+    assertThat(restartedInstance).isNotNull();
     assertThat(restartedInstance.getTenantId()).isEqualTo(TestTenantIdProvider.TENANT_ID);
   }
 
@@ -1088,7 +1087,7 @@ public class RestartProcessInstanceAsyncTest {
     ProcessInstance restartedInstance = runtimeService.createProcessInstanceQuery().active()
       .processDefinitionId(processDefinition.getId()).singleResult();
 
-    assertNotNull(restartedInstance);
+    assertThat(restartedInstance).isNotNull();
     assertThat(restartedInstance.getTenantId()).isEqualTo(TestTenantIdProvider.TENANT_ID);
   }
 
@@ -1122,7 +1121,7 @@ public class RestartProcessInstanceAsyncTest {
     // then
     List<ProcessInstance> restartedProcessInstances = runtimeService.createProcessInstanceQuery().processDefinitionId(processDefinition.getId()).list();
     List<VariableInstance> variables = runtimeService.createVariableInstanceQuery().processInstanceIdIn(restartedProcessInstances.get(0).getId(), restartedProcessInstances.get(1).getId()).list();
-    assertThat(variables).hasSize(0);
+    assertThat(variables).isEmpty();
   }
 
   @Test
@@ -1184,8 +1183,8 @@ public class RestartProcessInstanceAsyncTest {
   }
 
   protected void assertBatchCreated(Batch batch, int processInstanceCount) {
-    assertNotNull(batch);
-    assertNotNull(batch.getId());
+    assertThat(batch).isNotNull();
+    assertThat(batch.getId()).isNotNull();
     assertThat(batch.getType()).isEqualTo("instance-restart");
     assertThat(batch.getTotalJobs()).isEqualTo(processInstanceCount);
   }

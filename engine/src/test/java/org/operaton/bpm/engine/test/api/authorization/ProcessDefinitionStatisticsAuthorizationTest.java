@@ -15,14 +15,12 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.authorization;
-
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.ALL;
 import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.List;
 import org.operaton.bpm.engine.management.IncidentStatistics;
@@ -77,7 +75,7 @@ public class ProcessDefinitionStatisticsAuthorizationTest extends AuthorizationT
     assertThat(statistics.getKey()).isEqualTo(ONE_TASK_PROCESS_KEY);
     assertThat(statistics.getInstances()).isEqualTo(0);
     assertThat(statistics.getFailedJobs()).isEqualTo(0);
-    assertTrue(statistics.getIncidentStatistics().isEmpty());
+    assertThat(statistics.getIncidentStatistics()).isEmpty();
   }
 
   @Test
@@ -249,7 +247,7 @@ public class ProcessDefinitionStatisticsAuthorizationTest extends AuthorizationT
 
     List<IncidentStatistics> incidentStatistics = statistics.getIncidentStatistics();
     if (incidents == 0) {
-      assertTrue("Incidents supposed to be empty", incidentStatistics.isEmpty());
+      assertThat(incidentStatistics.isEmpty()).as("Incidents supposed to be empty").isTrue();
     }
     else {
       // the test does have only one type of incidents

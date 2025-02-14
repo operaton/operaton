@@ -217,7 +217,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertThat(tasks).hasSize(0);
+    assertThat(tasks).isEmpty();
   }
 
   @Test

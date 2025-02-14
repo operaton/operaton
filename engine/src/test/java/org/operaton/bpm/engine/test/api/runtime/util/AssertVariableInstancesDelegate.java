@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.test.api.runtime.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
@@ -40,8 +38,8 @@ public class AssertVariableInstancesDelegate implements JavaDelegate {
     assertThat(execution.getVariable("anIntegerVariable")).isEqualTo(expectedIntValue);
     assertThat(execution.getVariableTyped("anIntegerVariable").getValue()).isEqualTo(expectedIntValue);
     assertThat(execution.getVariableTyped("anIntegerVariable").getType()).isEqualTo(ValueType.INTEGER);
-    assertNull(execution.getVariableLocal("anIntegerVariable"));
-    assertNull(execution.getVariableLocalTyped("anIntegerVariable"));
+    assertThat(execution.getVariableLocal("anIntegerVariable")).isNull();
+    assertThat(execution.getVariableLocalTyped("anIntegerVariable")).isNull();
 
     // set an additional local variable
     execution.setVariableLocal("aStringVariable", "aStringValue");
@@ -55,14 +53,14 @@ public class AssertVariableInstancesDelegate implements JavaDelegate {
     assertThat(execution.getVariableLocalTyped("aStringVariable").getType()).isEqualTo(ValueType.STRING);
 
     SimpleSerializableBean objectValue = (SimpleSerializableBean) execution.getVariable("anObjectValue");
-    assertNotNull(objectValue);
+    assertThat(objectValue).isNotNull();
     assertThat(objectValue.getIntProperty()).isEqualTo(10);
     ObjectValue variableTyped = execution.getVariableTyped("anObjectValue");
     assertThat(variableTyped.getValue(SimpleSerializableBean.class).getIntProperty()).isEqualTo(10);
     assertThat(variableTyped.getSerializationDataFormat()).isEqualTo(Variables.SerializationDataFormats.JAVA.getName());
 
     objectValue = (SimpleSerializableBean) execution.getVariable("anUntypedObjectValue");
-    assertNotNull(objectValue);
+    assertThat(objectValue).isNotNull();
     assertThat(objectValue.getIntProperty()).isEqualTo(30);
     variableTyped = execution.getVariableTyped("anUntypedObjectValue");
     assertThat(variableTyped.getValue(SimpleSerializableBean.class).getIntProperty()).isEqualTo(30);

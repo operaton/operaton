@@ -23,7 +23,6 @@ import org.junit.After;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.*;
 
 /**
  * Tests for the execution hierarchy methods exposed in delegate execution
@@ -52,7 +51,7 @@ public class DelegateExecutionHierarchyTest extends PluggableProcessEngineTest {
     AssertingJavaDelegate.addAsserts(
         execution -> {
           assertThat(execution.getProcessInstance()).isEqualTo(execution);
-          assertNull(execution.getSuperExecution());
+          assertThat(execution.getSuperExecution()).isNull();
         }
     );
 
@@ -78,8 +77,8 @@ public class DelegateExecutionHierarchyTest extends PluggableProcessEngineTest {
 
     AssertingJavaDelegate.addAsserts(
         execution -> {
-          assertNotEquals(execution, execution.getProcessInstance());
-          assertNull(execution.getSuperExecution());
+          assertThat(execution.getProcessInstance()).isNotEqualTo(execution);
+          assertThat(execution.getSuperExecution()).isNull();
         }
     );
 
@@ -103,8 +102,8 @@ public class DelegateExecutionHierarchyTest extends PluggableProcessEngineTest {
 
     AssertingJavaDelegate.addAsserts(
         execution -> {
-          assertNotEquals(execution, execution.getProcessInstance());
-          assertNull(execution.getSuperExecution());
+          assertThat(execution.getProcessInstance()).isNotEqualTo(execution);
+          assertThat(execution.getSuperExecution()).isNull();
         }
     );
 
@@ -131,7 +130,7 @@ public class DelegateExecutionHierarchyTest extends PluggableProcessEngineTest {
     AssertingJavaDelegate.addAsserts(
         execution -> {
           assertThat(execution.getProcessInstance()).isEqualTo(execution);
-          assertNotNull(execution.getSuperExecution());
+          assertThat(execution.getSuperExecution()).isNotNull();
         }
     );
 

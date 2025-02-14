@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.bpmn.async;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import org.operaton.bpm.engine.ManagementService;
@@ -59,10 +59,10 @@ public class JobRetryCmdWithDefaultPropertyTest {
   @Test
   public void testDefaultNumberOfRetryProperty() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("failedTask");
-    assertNotNull(pi);
+    assertThat(pi).isNotNull();
 
     Job job = managementService.createJobQuery().processInstanceId(pi.getProcessInstanceId()).singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     assertThat(job.getProcessInstanceId()).isEqualTo(pi.getProcessInstanceId());
     assertThat(job.getRetries()).isEqualTo(2);
   }
@@ -71,10 +71,10 @@ public class JobRetryCmdWithDefaultPropertyTest {
   @Test
   public void testOverwritingPropertyWithBpmnExtension() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("failedServiceTask");
-    assertNotNull(pi);
+    assertThat(pi).isNotNull();
 
     Job job = managementService.createJobQuery().processInstanceId(pi.getProcessInstanceId()).singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     var jobId = job.getId();
     assertThat(job.getProcessInstanceId()).isEqualTo(pi.getProcessInstanceId());
 

@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.bpmn.sequenceflow;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import java.util.Map;
@@ -48,7 +48,7 @@ public class ConditionalSequenceFlowTest extends PluggableProcessEngineTest {
       .processInstanceId(pi.getId())
       .singleResult();
 
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo("task right");
   }
 

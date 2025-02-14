@@ -43,10 +43,7 @@ import org.joda.time.DateTime;
 import org.junit.*;
 import org.junit.rules.RuleChain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * @author Sebastian Menski
@@ -444,15 +441,15 @@ public class TaskQueryExpressionTest {
     assertThat(taskQuery.getAssigneeLike()).isEqualTo(expressionString);
     assertThat(taskQuery.getOwner()).isEqualTo(expressionString);
     assertThat(taskQuery.getInvolvedUser()).isEqualTo(expressionString);
-    assertTrue(taskQuery.getCreateTimeBefore().after(queryDate));
-    assertTrue(taskQuery.getCreateTime().after(queryDate));
-    assertTrue(taskQuery.getCreateTimeAfter().after(queryDate));
-    assertTrue(taskQuery.getDueBefore().after(queryDate));
-    assertTrue(taskQuery.getDueDate().after(queryDate));
-    assertTrue(taskQuery.getDueAfter().after(queryDate));
-    assertTrue(taskQuery.getFollowUpBefore().after(queryDate));
-    assertTrue(taskQuery.getFollowUpDate().after(queryDate));
-    assertTrue(taskQuery.getFollowUpAfter().after(queryDate));
+    assertThat(taskQuery.getCreateTimeBefore().after(queryDate)).isTrue();
+    assertThat(taskQuery.getCreateTime().after(queryDate)).isTrue();
+    assertThat(taskQuery.getCreateTimeAfter().after(queryDate)).isTrue();
+    assertThat(taskQuery.getDueBefore().after(queryDate)).isTrue();
+    assertThat(taskQuery.getDueDate().after(queryDate)).isTrue();
+    assertThat(taskQuery.getDueAfter().after(queryDate)).isTrue();
+    assertThat(taskQuery.getFollowUpBefore().after(queryDate)).isTrue();
+    assertThat(taskQuery.getFollowUpDate().after(queryDate)).isTrue();
+    assertThat(taskQuery.getFollowUpAfter().after(queryDate)).isTrue();
 
     // candidates has to be tested separately because they have to be set exclusively
 

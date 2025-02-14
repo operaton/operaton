@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.test.history;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -70,7 +68,7 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
   public void testQueryAddTaskCandidateforAddIdentityLink() {
 
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertThat(historicIdentityLinks).hasSize(0);
+    assertThat(historicIdentityLinks).isEmpty();
 
     // given
     ProcessInstance processInstance = startProcessInstance(PROCESS_DEFINITION_KEY);
@@ -86,7 +84,7 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
     assertThat(taskId).isEqualTo(historicIdentityLink.getTaskId());
     assertThat(historicIdentityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
     assertThat(historicIdentityLink.getAssignerId()).isEqualTo(A_ASSIGNER_ID);
-    assertNull(historicIdentityLink.getGroupId());
+    assertThat(historicIdentityLink.getGroupId()).isNull();
     assertThat(historicIdentityLink.getOperationType()).isEqualTo(IDENTITY_LINK_ADD);
     assertThat(processInstance.getProcessDefinitionId()).isEqualTo(historicIdentityLink.getProcessDefinitionId());
     assertThat(historicIdentityLink.getProcessDefinitionKey()).isEqualTo(PROCESS_DEFINITION_KEY);
@@ -97,7 +95,7 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
   public void testGroupQueryTaskCandidateForAddAndDeleteIdentityLink() {
 
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertThat(historicIdentityLinks).hasSize(0);
+    assertThat(historicIdentityLinks).isEmpty();
 
     // given
     ProcessInstance processInstance = startProcessInstance(PROCESS_DEFINITION_KEY);
@@ -109,7 +107,7 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
 
     // Query test
     HistoricIdentityLinkLog historicIdentityLink = historyService.createHistoricIdentityLinkLogQuery().singleResult();
-    assertNull(historicIdentityLink.getUserId());
+    assertThat(historicIdentityLink.getUserId()).isNull();
     assertThat(taskId).isEqualTo(historicIdentityLink.getTaskId());
     assertThat(historicIdentityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
     assertThat(historicIdentityLink.getAssignerId()).isEqualTo(A_ASSIGNER_ID);
@@ -124,7 +122,7 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
   public void testValidIndividualQueryTaskCandidateForAddAndDeleteIdentityLink() {
 
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertThat(historicIdentityLinks).hasSize(0);
+    assertThat(historicIdentityLinks).isEmpty();
 
     // given
     ProcessInstance processInstance = startProcessInstance(PROCESS_DEFINITION_KEY);
@@ -167,7 +165,7 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
   public void testValidGroupQueryTaskCandidateForAddAndDeleteIdentityLink() {
 
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertThat(historicIdentityLinks).hasSize(0);
+    assertThat(historicIdentityLinks).isEmpty();
 
     // given
     ProcessInstance processInstance = startProcessInstance(PROCESS_DEFINITION_KEY);
@@ -195,7 +193,7 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
   public void testInvalidIndividualQueryTaskCandidateForAddAndDeleteIdentityLink() {
 
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertThat(historicIdentityLinks).hasSize(0);
+    assertThat(historicIdentityLinks).isEmpty();
 
     // given
     startProcessInstance(PROCESS_DEFINITION_KEY);
@@ -232,7 +230,7 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
   public void testInvalidGroupQueryTaskCandidateForAddAndDeleteIdentityLink() {
 
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertThat(historicIdentityLinks).hasSize(0);
+    assertThat(historicIdentityLinks).isEmpty();
 
     // given
     startProcessInstance(PROCESS_DEFINITION_KEY);
@@ -271,7 +269,7 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
   public void testShouldAddTaskOwnerForAddandDeleteIdentityLinkByTimeStamp() {
 
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertThat(historicIdentityLinks).hasSize(0);
+    assertThat(historicIdentityLinks).isEmpty();
 
     // given
     startProcessInstance(PROCESS_DEFINITION_KEY);
@@ -321,9 +319,9 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
   public void testQueryAddAndRemoveIdentityLinksForProcessDefinition() {
 
     ProcessDefinition latestProcessDef = repositoryService.createProcessDefinitionQuery().processDefinitionKey(PROCESS_DEFINITION_KEY).singleResult();
-    assertNotNull(latestProcessDef);
+    assertThat(latestProcessDef).isNotNull();
     List<IdentityLink> links = repositoryService.getIdentityLinksForProcessDefinition(latestProcessDef.getId());
-    assertThat(links).hasSize(0);
+    assertThat(links).isEmpty();
 
     // Add candiate group with process definition
     repositoryService.addCandidateStarterGroup(latestProcessDef.getId(), GROUP_1);
@@ -383,7 +381,7 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
 
     // Pre test - Historical identity link is added as part of deployment
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertThat(historicIdentityLinks).hasSize(0);
+    assertThat(historicIdentityLinks).isEmpty();
     startProcessInstance(PROCESS_DEFINITION_KEY_MULTIPLE_CANDIDATE_USER);
 
     assertThat(historyService.createHistoricIdentityLinkLogQuery().orderByAssignerId().asc().list()).hasSize(4);

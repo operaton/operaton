@@ -17,9 +17,6 @@
 package org.operaton.bpm.engine.test.history;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -270,7 +267,7 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
     ProcessInstance processInstance = startProcess();
 
     // should wait in user task
-    assertFalse(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isFalse();
 
     // signal sub process
     runtimeService.signalEventReceived("interrupt");
@@ -319,7 +316,7 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
 
     runtimeService.correlateMessage("message");
 
-    assertNull(runtimeService.createProcessInstanceQuery().singleResult());
+    assertThat(runtimeService.createProcessInstanceQuery().singleResult()).isNull();
 
     List<HistoricActivityInstance> allInstances = getAllActivityInstances();
 
@@ -510,7 +507,7 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
       }
     }
 
-    assertTrue("contains entry for activity <" + activityId + ">", found > 0);
+    assertThat(found > 0).as("contains entry for activity <" + activityId + ">").isTrue();
 
     if (expectedCount != -1) {
       assertThat(expectedCount).as("contains <" + expectedCount + "> entries for activity <" + activityId + ">").isEqualTo(found);
@@ -543,7 +540,7 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
       }
     }
 
-    assertTrue("contains entry for activity <" + activityId + ">", found > 0);
+    assertThat(found > 0).as("contains entry for activity <" + activityId + ">").isTrue();
 
     if (expectedCount != -1) {
       assertThat(expectedCount).as("contains <" + expectedCount + "> entries for activity <" + activityId + ">").isEqualTo(found);

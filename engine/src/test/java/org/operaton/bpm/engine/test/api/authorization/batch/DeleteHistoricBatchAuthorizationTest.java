@@ -21,7 +21,6 @@ import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TY
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNull;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -145,7 +144,7 @@ public class DeleteHistoricBatchAuthorizationTest {
       assertThat(userOperationLogEntries).hasSize(1);
 
       UserOperationLogEntry entry = userOperationLogEntries.get(0);
-      assertNull(entry.getProperty());
+      assertThat(entry.getProperty()).isNull();
       assertThat(entry.getCategory()).isEqualTo(CATEGORY_OPERATOR);
     }
   }

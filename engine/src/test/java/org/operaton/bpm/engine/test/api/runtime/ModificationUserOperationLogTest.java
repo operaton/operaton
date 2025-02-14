@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.api.runtime;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -122,24 +123,24 @@ public class ModificationUserOperationLogTest {
 
 
     UserOperationLogEntry asyncEntry = entries.get("async");
-    Assert.assertNotNull(asyncEntry);
+    assertThat(asyncEntry).isNotNull();
     assertThat(asyncEntry.getEntityType()).isEqualTo("ProcessInstance");
     assertThat(asyncEntry.getOperationType()).isEqualTo("ModifyProcessInstance");
     assertThat(asyncEntry.getProcessDefinitionId()).isEqualTo(processDefinition.getId());
     assertThat(asyncEntry.getProcessDefinitionKey()).isEqualTo(processDefinition.getKey());
-    Assert.assertNull(asyncEntry.getProcessInstanceId());
-    Assert.assertNull(asyncEntry.getOrgValue());
+    assertThat(asyncEntry.getProcessInstanceId()).isNull();
+    assertThat(asyncEntry.getOrgValue()).isNull();
     assertThat(asyncEntry.getNewValue()).isEqualTo("true");
     assertThat(asyncEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
     UserOperationLogEntry numInstancesEntry = entries.get("nrOfInstances");
-    Assert.assertNotNull(numInstancesEntry);
+    assertThat(numInstancesEntry).isNotNull();
     assertThat(numInstancesEntry.getEntityType()).isEqualTo("ProcessInstance");
     assertThat(numInstancesEntry.getOperationType()).isEqualTo("ModifyProcessInstance");
     assertThat(numInstancesEntry.getProcessDefinitionId()).isEqualTo(processDefinition.getId());
     assertThat(numInstancesEntry.getProcessDefinitionKey()).isEqualTo(processDefinition.getKey());
-    Assert.assertNull(numInstancesEntry.getProcessInstanceId());
-    Assert.assertNull(numInstancesEntry.getOrgValue());
+    assertThat(numInstancesEntry.getProcessInstanceId()).isNull();
+    assertThat(numInstancesEntry.getOrgValue()).isNull();
     assertThat(numInstancesEntry.getNewValue()).isEqualTo("10");
     assertThat(numInstancesEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
@@ -216,11 +217,11 @@ public class ModificationUserOperationLogTest {
     Map<String, UserOperationLogEntry> entries = asMap(opLogEntries);
 
     UserOperationLogEntry asyncEntry = entries.get("async");
-    Assert.assertNotNull(asyncEntry);
+    assertThat(asyncEntry).isNotNull();
     assertThat(asyncEntry.getAnnotation()).isEqualTo(annotation);
 
     UserOperationLogEntry numInstancesEntry = entries.get("nrOfInstances");
-    Assert.assertNotNull(numInstancesEntry);
+    assertThat(numInstancesEntry).isNotNull();
     assertThat(numInstancesEntry.getAnnotation()).isEqualTo(annotation);
   }
 
@@ -251,11 +252,11 @@ public class ModificationUserOperationLogTest {
     Map<String, UserOperationLogEntry> entries = asMap(opLogEntries);
 
     UserOperationLogEntry asyncEntry = entries.get("async");
-    Assert.assertNotNull(asyncEntry);
+    assertThat(asyncEntry).isNotNull();
     assertThat(asyncEntry.getAnnotation()).isEqualTo(annotation);
 
     UserOperationLogEntry numInstancesEntry = entries.get("nrOfInstances");
-    Assert.assertNotNull(numInstancesEntry);
+    assertThat(numInstancesEntry).isNotNull();
     assertThat(numInstancesEntry.getAnnotation()).isEqualTo(annotation);
   }
 
@@ -346,7 +347,7 @@ public class ModificationUserOperationLogTest {
 
       UserOperationLogEntry previousValue = map.put(entry.getProperty(), entry);
       if (previousValue != null) {
-        Assert.fail("expected only entry for every property");
+        fail("expected only entry for every property");
       }
     }
 

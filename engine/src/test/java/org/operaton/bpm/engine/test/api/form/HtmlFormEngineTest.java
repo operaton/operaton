@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.test.api.form;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.Map;
 
@@ -44,15 +42,15 @@ public class HtmlFormEngineTest extends PluggableProcessEngineTest {
 
     // make sure the html form engine is the default form engine:
     Map<String, FormEngine> formEngines = processEngineConfiguration.getFormEngines();
-    assertTrue(formEngines.get(null) instanceof HtmlFormEngine);
+    assertThat(formEngines.get(null) instanceof HtmlFormEngine).isTrue();
 
   }
 
   @Test
   public void testTransformNullFormData() {
     HtmlFormEngine formEngine = new HtmlFormEngine();
-    assertNull(formEngine.renderStartForm(null));
-    assertNull(formEngine.renderTaskForm(null));
+    assertThat(formEngine.renderStartForm(null)).isNull();
+    assertThat(formEngine.renderTaskForm(null)).isNull();
   }
 
   @Test
@@ -117,7 +115,7 @@ public class HtmlFormEngineTest extends PluggableProcessEngineTest {
     try {
       new HtmlElementWriter("sometagname", true).textContent("sometextcontet");
     } catch (IllegalStateException e) {
-      assertTrue(e.getMessage().contains("Self-closing element cannot have text content"));
+      assertThat(e.getMessage()).contains("Self-closing element cannot have text content");
     }
 
   }
@@ -128,7 +126,7 @@ public class HtmlFormEngineTest extends PluggableProcessEngineTest {
 
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
 
-    assertNull(formService.getRenderedStartForm(processDefinition.getId()));
+    assertThat(formService.getRenderedStartForm(processDefinition.getId())).isNull();
 
   }
 

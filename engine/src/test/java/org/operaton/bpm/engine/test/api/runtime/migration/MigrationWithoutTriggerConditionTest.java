@@ -27,7 +27,6 @@ import static org.operaton.bpm.engine.test.api.runtime.migration.models.Conditio
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.EventSubProcessModels.EVENT_SUB_PROCESS_START_ID;
 import static org.operaton.bpm.engine.test.bpmn.event.conditional.AbstractConditionalEventTestCase.TASK_AFTER_CONDITION_ID;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNull;
 
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.migration.MigrationPlan;
@@ -93,7 +92,7 @@ public class MigrationWithoutTriggerConditionTest {
     assertThat(rule.getRuntimeService().getVariable(processInstance.getId(), VARIABLE_NAME)).isEqualTo(1);
 
     //then conditional event is not triggered
-    assertNull(rule.getTaskService().createTaskQuery().singleResult());
+    assertThat(rule.getTaskService().createTaskQuery().singleResult()).isNull();
 
     //when any var is set
     testHelper.setAnyVariable(processInstance.getId());
@@ -145,7 +144,7 @@ public class MigrationWithoutTriggerConditionTest {
     assertThat(rule.getRuntimeService().getVariable(processInstance.getId(), VARIABLE_NAME)).isEqualTo(1);
 
     //then conditional event is not triggered
-    assertNull(rule.getTaskService().createTaskQuery().singleResult());
+    assertThat(rule.getTaskService().createTaskQuery().singleResult()).isNull();
 
     //when any var is set
     testHelper.setAnyVariable(processInstance.getId());

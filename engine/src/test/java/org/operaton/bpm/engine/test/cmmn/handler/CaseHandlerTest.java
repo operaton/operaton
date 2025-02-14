@@ -30,8 +30,7 @@ import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 /**
@@ -84,7 +83,7 @@ public class CaseHandlerTest extends CmmnElementHandlerTest {
 
     // then
     CmmnActivityBehavior behavior = activity.getActivityBehavior();
-    assertNull(behavior);
+    assertThat(behavior).isNull();
   }
 
   @Test
@@ -95,7 +94,7 @@ public class CaseHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(caseDefinition, context);
 
     // then
-    assertNull(activity.getParent());
+    assertThat(activity.getParent()).isNull();
   }
 
   @Test
@@ -129,7 +128,7 @@ public class CaseHandlerTest extends CmmnElementHandlerTest {
     CaseDefinitionEntity activity = (CaseDefinitionEntity) handler.handleElement(caseDefinition, context);
 
     // then
-    assertNull(activity.getHistoryTimeToLive());
+    assertThat(activity.getHistoryTimeToLive()).isNull();
   }
 
   @Test
@@ -156,7 +155,7 @@ public class CaseHandlerTest extends CmmnElementHandlerTest {
       handler.handleElement(caseDefinition, context);
       fail("Exception is expected, that negative value is not allowed.");
     } catch (NotValidException ex) {
-      assertTrue(ex.getMessage().contains("negative value is not allowed"));
+      assertThat(ex.getMessage()).contains("negative value is not allowed");
     }
   }
 

@@ -17,10 +17,7 @@
 package org.operaton.bpm.engine.test.bpmn.event.message;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import java.util.List;
@@ -71,7 +68,7 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
       deploymentBuilder.deploy();
       fail("exception expected");
     } catch (ProcessEngineException e) {
-      assertTrue(e.getMessage().contains("there already is a message event subscription for the message with name"));
+      assertThat(e.getMessage()).contains("there already is a message event subscription for the message with name");
     } finally {
       // clean db:
       List<org.operaton.bpm.engine.repository.Deployment> deployments = repositoryService.createDeploymentQuery().list();
@@ -94,7 +91,7 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
       deploymentBuilder.deploy();
       fail("exception expected");
     } catch (ParseException e) {
-      assertTrue(e.getMessage().contains("Cannot have a message event subscription with an empty or missing name"));
+      assertThat(e.getMessage()).contains("Cannot have a message event subscription with an empty or missing name");
       assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("theStart");
     }
   }
@@ -108,7 +105,7 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
       deploymentBuilder.deploy();
       fail("exception expected");
     } catch (ProcessEngineException e) {
-      assertTrue(e.getMessage().contains("Cannot have more than one message event subscription with name 'newInvoiceMessage' for scope"));
+      assertThat(e.getMessage()).contains("Cannot have more than one message event subscription with name 'newInvoiceMessage' for scope");
     }
   }
 
@@ -141,7 +138,7 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
       if (processDefinition.getVersion() == 1) {
         for (EventSubscription subscription : newEventSubscriptions) {
           EventSubscriptionEntity subscriptionEntity = (EventSubscriptionEntity) subscription;
-          assertNotEquals(subscriptionEntity.getConfiguration(), processDefinition.getId());
+          assertThat(processDefinition.getId()).isNotEqualTo(subscriptionEntity.getConfiguration());
         }
       } else {
         for (EventSubscription subscription : newEventSubscriptions) {
@@ -150,7 +147,7 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
         }
       }
     }
-    assertNotEquals(eventSubscriptions, newEventSubscriptions);
+    assertThat(newEventSubscriptions).isNotEqualTo(eventSubscriptions);
 
     repositoryService.deleteDeployment(deploymentId);
     repositoryService.deleteDeployment(newDeploymentId);
@@ -164,10 +161,10 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByMessage("newInvoiceMessage");
 
-    assertFalse(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isFalse();
 
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     taskService.complete(task.getId());
 
@@ -177,10 +174,10 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
 
     processInstance = runtimeService.startProcessInstanceByKey("singleMessageStartEvent");
 
-    assertFalse(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isFalse();
 
     task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     taskService.complete(task.getId());
 
@@ -197,10 +194,10 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
 
-    assertFalse(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isFalse();
 
     Task task = taskService.createTaskQuery().taskDefinitionKey("taskAfterNoneStart").singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     taskService.complete(task.getId());
 
@@ -210,10 +207,10 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
 
     processInstance = runtimeService.startProcessInstanceByMessage("newInvoiceMessage");
 
-    assertFalse(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isFalse();
 
     task = taskService.createTaskQuery().taskDefinitionKey("taskAfterMessageStart").singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     taskService.complete(task.getId());
 
@@ -229,10 +226,10 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByMessage("newInvoiceMessage");
 
-    assertFalse(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isFalse();
 
     Task task = taskService.createTaskQuery().taskDefinitionKey("taskAfterMessageStart").singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     taskService.complete(task.getId());
 
@@ -242,10 +239,10 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
 
     processInstance = runtimeService.startProcessInstanceByMessage("newInvoiceMessage2");
 
-    assertFalse(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isFalse();
 
     task = taskService.createTaskQuery().taskDefinitionKey("taskAfterMessageStart2").singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     taskService.complete(task.getId());
 
@@ -256,7 +253,7 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
       runtimeService.startProcessInstanceByKey("testProcess");
       fail("exception expected");
     } catch (ProcessEngineException e) {
-      assertTrue("different exception expected, not " + e.getMessage(), e.getMessage().contains("has no default start activity"));
+      assertThat(e.getMessage().contains("has no default start activity")).as("different exception expected, not " + e.getMessage()).isTrue();
     }
 
   }
@@ -364,8 +361,8 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
       fail("exception expected");
     } catch (ProcessEngineException e) {
       // then a process engine exception should be thrown with a certain message
-      assertTrue(e.getMessage().contains("Invalid message name"));
-      assertTrue(e.getMessage().contains("expressions in the message start event name are not allowed!"));
+      assertThat(e.getMessage()).contains("Invalid message name");
+      assertThat(e.getMessage()).contains("expressions in the message start event name are not allowed!");
     }
   }
 
@@ -385,8 +382,8 @@ public class MessageStartEventTest extends PluggableProcessEngineTest {
       fail("exception expected");
     } catch (ProcessEngineException e) {
       // then a process engine exception should be thrown with a certain message
-      assertTrue(e.getMessage().contains("Invalid message name"));
-      assertTrue(e.getMessage().contains("expressions in the message start event name are not allowed!"));
+      assertThat(e.getMessage()).contains("Invalid message name");
+      assertThat(e.getMessage()).contains("expressions in the message start event name are not allowed!");
     }
   }
 

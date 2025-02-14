@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,7 +33,6 @@ import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.TransitionInstance;
 
 import org.assertj.core.api.Assertions;
-import org.junit.Assert;
 
 /**
  * @author Daniel Meyer
@@ -77,7 +77,7 @@ public class ActivityInstanceAssert {
     protected void assertTreeMatch(ActivityInstance expected, ActivityInstance actual) {
       boolean treesMatch = isTreeMatched(expected, actual);
       if (!treesMatch) {
-        Assert.fail("Could not match expected tree \n" + expected +" \n\n with actual tree \n\n "+actual);
+        fail("Could not match expected tree \n" + expected + " \n\n with actual tree \n\n " + actual);
       }
 
     }

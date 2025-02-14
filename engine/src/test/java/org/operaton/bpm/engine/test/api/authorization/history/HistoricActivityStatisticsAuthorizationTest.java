@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.authorization.history;
-
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.READ_HISTORY;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
 
 import java.util.List;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;

@@ -19,10 +19,6 @@ package org.operaton.bpm.engine.test.history.useroperationlog;
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.CATEGORY_OPERATOR;
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_DELETE_HISTORY;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -187,7 +183,7 @@ public class UserOperationLogDeletionTest extends AbstractUserOperationLogTest {
       .property("nrOfInstances")
       .singleResult();
 
-    assertNotNull(entry);
+    assertThat(entry).isNotNull();
     assertThat(entry.getCategory()).isEqualTo(CATEGORY_OPERATOR);
   }
 
@@ -227,7 +223,7 @@ public class UserOperationLogDeletionTest extends AbstractUserOperationLogTest {
         .operationType(OPERATION_TYPE_DELETE_HISTORY)
         .singleResult();
 
-    assertNotNull(entry);
+    assertThat(entry).isNotNull();
     assertThat(entry.getCategory()).isEqualTo(CATEGORY_OPERATOR);
   }
 
@@ -425,17 +421,17 @@ public class UserOperationLogDeletionTest extends AbstractUserOperationLogTest {
       assertThat(userOperationLogEntry.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_DELETE);
 
       assertThat(userOperationLogEntry.getProperty()).isEqualTo("cascade");
-      assertFalse(Boolean.parseBoolean(userOperationLogEntry.getOrgValue()));
-      assertTrue(Boolean.parseBoolean(userOperationLogEntry.getNewValue()));
+      assertThat(Boolean.parseBoolean(userOperationLogEntry.getOrgValue())).isFalse();
+      assertThat(Boolean.parseBoolean(userOperationLogEntry.getNewValue())).isTrue();
 
       assertThat(userOperationLogEntry.getUserId()).isEqualTo(USER_ID);
 
       assertThat(userOperationLogEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_TASK_WORKER);
-      
-      assertNull(userOperationLogEntry.getJobDefinitionId());
-      assertNull(userOperationLogEntry.getProcessInstanceId());
-      assertNull(userOperationLogEntry.getCaseInstanceId());
-      assertNull(userOperationLogEntry.getCaseDefinitionId());
+
+      assertThat(userOperationLogEntry.getJobDefinitionId()).isNull();
+      assertThat(userOperationLogEntry.getProcessInstanceId()).isNull();
+      assertThat(userOperationLogEntry.getCaseInstanceId()).isNull();
+      assertThat(userOperationLogEntry.getCaseDefinitionId()).isNull();
     }
 
     assertThat(historyService.createUserOperationLogQuery().count()).isEqualTo(6);

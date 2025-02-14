@@ -16,12 +16,7 @@
  */
 package org.operaton.bpm.engine.test.dmn.deployment;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.Assert.fail;
 
 import java.io.InputStream;
@@ -99,14 +94,14 @@ public class DecisionDefinitionDeployerTest {
 
     DecisionDefinition decisionDefinition = query.singleResult();
 
-    assertTrue(decisionDefinition.getId().startsWith("decision:1:"));
+    assertThat(decisionDefinition.getId()).startsWith("decision:1:");
     assertThat(decisionDefinition.getCategory()).isEqualTo("http://operaton.org/schema/1.0/dmn");
     assertThat(decisionDefinition.getName()).isEqualTo("CheckOrder");
     assertThat(decisionDefinition.getKey()).isEqualTo("decision");
     assertThat(decisionDefinition.getVersion()).isEqualTo(1);
     assertThat(decisionDefinition.getResourceName()).isEqualTo(DMN_CHECK_ORDER_RESOURCE);
     assertThat(decisionDefinition.getDeploymentId()).isEqualTo(deploymentId);
-    assertNull(decisionDefinition.getDiagramResourceName());
+    assertThat(decisionDefinition.getDiagramResourceName()).isNull();
   }
 
   @Test
@@ -124,14 +119,14 @@ public class DecisionDefinitionDeployerTest {
 
     DecisionDefinition decisionDefinition = query.singleResult();
 
-    assertTrue(decisionDefinition.getId().startsWith("decision:1:"));
+    assertThat(decisionDefinition.getId()).startsWith("decision:1:");
     assertThat(decisionDefinition.getCategory()).isEqualTo("http://operaton.org/schema/1.0/dmn");
     assertThat(decisionDefinition.getName()).isEqualTo("CheckOrder");
     assertThat(decisionDefinition.getKey()).isEqualTo("decision");
     assertThat(decisionDefinition.getVersion()).isEqualTo(1);
     assertThat(decisionDefinition.getResourceName()).isEqualTo(DMN_CHECK_ORDER_RESOURCE_DMN_SUFFIX);
     assertThat(decisionDefinition.getDeploymentId()).isEqualTo(deploymentId);
-    assertNull(decisionDefinition.getDiagramResourceName());
+    assertThat(decisionDefinition.getDiagramResourceName()).isNull();
   }
 
   @Test
@@ -148,21 +143,21 @@ public class DecisionDefinitionDeployerTest {
 
     DecisionDefinition decisionDefinition = query.singleResult();
 
-    assertTrue(decisionDefinition.getId().startsWith("decisionLiteralExpression:1:"));
+    assertThat(decisionDefinition.getId()).startsWith("decisionLiteralExpression:1:");
     assertThat(decisionDefinition.getCategory()).isEqualTo("http://operaton.org/schema/1.0/dmn");
     assertThat(decisionDefinition.getKey()).isEqualTo("decisionLiteralExpression");
     assertThat(decisionDefinition.getName()).isEqualTo("Decision with Literal Expression");
     assertThat(decisionDefinition.getVersion()).isEqualTo(1);
     assertThat(decisionDefinition.getResourceName()).isEqualTo(DMN_DECISION_LITERAL_EXPRESSION);
     assertThat(decisionDefinition.getDeploymentId()).isEqualTo(deploymentId);
-    assertNull(decisionDefinition.getDiagramResourceName());
+    assertThat(decisionDefinition.getDiagramResourceName()).isNull();
   }
 
   @Test
   public void dmnDeploymentWithLegacyDmnDefinition() {
     String deploymentId = testRule.deploy(DMN_DECISION_LEGACY).getId();
 
-    assertNotNull(deploymentId);
+    assertThat(deploymentId).isNotNull();
   }
 
   @Deployment
@@ -170,7 +165,7 @@ public class DecisionDefinitionDeployerTest {
   public void longDecisionDefinitionKey() {
     DecisionDefinition decisionDefinition = repositoryService.createDecisionDefinitionQuery().singleResult();
 
-    assertFalse(decisionDefinition.getId().startsWith("o123456789"));
+    assertThat(decisionDefinition.getId()).doesNotStartWith("o123456789");
     assertThat(decisionDefinition.getKey()).isEqualTo("o123456789o123456789o123456789o123456789o123456789o123456789o123456789");
   }
 
@@ -238,14 +233,14 @@ public class DecisionDefinitionDeployerTest {
 
     DecisionRequirementsDefinition decisionRequirementsDefinition = query.singleResult();
 
-    assertTrue(decisionRequirementsDefinition.getId().startsWith("score:1:"));
+    assertThat(decisionRequirementsDefinition.getId()).startsWith("score:1:");
     assertThat(decisionRequirementsDefinition.getKey()).isEqualTo("score");
     assertThat(decisionRequirementsDefinition.getName()).isEqualTo("Score");
     assertThat(decisionRequirementsDefinition.getCategory()).isEqualTo("test-drd-1");
     assertThat(decisionRequirementsDefinition.getVersion()).isEqualTo(1);
     assertThat(decisionRequirementsDefinition.getResourceName()).isEqualTo(DRD_SCORE_RESOURCE);
     assertThat(decisionRequirementsDefinition.getDeploymentId()).isEqualTo(deploymentId);
-    assertNull(decisionRequirementsDefinition.getDiagramResourceName());
+    assertThat(decisionRequirementsDefinition.getDiagramResourceName()).isNull();
 
     // both decisions should have a reference to the decision requirements definition
     List<DecisionDefinition> decisions = repositoryService.createDecisionDefinitionQuery().orderByDecisionDefinitionKey().asc().list();
@@ -272,8 +267,8 @@ public class DecisionDefinitionDeployerTest {
     assertThat(repositoryService.createDecisionRequirementsDefinitionQuery().count()).isEqualTo(0);
     // and the decision should not be linked to a decision requirements definition
     DecisionDefinition decisionDefinition = repositoryService.createDecisionDefinitionQuery().singleResult();
-    assertNull(decisionDefinition.getDecisionRequirementsDefinitionId());
-    assertNull(decisionDefinition.getDecisionRequirementsDefinitionKey());
+    assertThat(decisionDefinition.getDecisionRequirementsDefinitionId()).isNull();
+    assertThat(decisionDefinition.getDecisionRequirementsDefinitionKey()).isNull();
   }
 
   @Deployment( resources = { DRD_SCORE_RESOURCE, DRD_DISH_RESOURCE })
@@ -347,7 +342,7 @@ public class DecisionDefinitionDeployerTest {
     DecisionDefinition firstDecision = decisions.get(0);
     assertThat(firstDecision.getVersion()).isEqualTo(1);
     assertThat(firstDecision.getDeploymentId()).isEqualTo(deploymentIdDecision);
-    assertNull(firstDecision.getDecisionRequirementsDefinitionId());
+    assertThat(firstDecision.getDecisionRequirementsDefinitionId()).isNull();
 
     DecisionDefinition secondDecision = decisions.get(1);
     assertThat(secondDecision.getVersion()).isEqualTo(2);
@@ -364,8 +359,8 @@ public class DecisionDefinitionDeployerTest {
     testRule.deploy(repositoryService.createDeployment().addModelInstance("foo.dmn", dmnModelInstance));
 
     // then
-    assertNotNull(repositoryService.createDecisionDefinitionQuery()
-        .decisionDefinitionResourceName("foo.dmn").singleResult());
+    assertThat(repositoryService.createDecisionDefinitionQuery()
+        .decisionDefinitionResourceName("foo.dmn").singleResult()).isNotNull();
   }
 
   @Test
@@ -378,7 +373,7 @@ public class DecisionDefinitionDeployerTest {
       testRule.deploy(deploymentBuilder);
       fail("Exception for negative time to live value is expected.");
     } catch (ProcessEngineException ex) {
-      assertTrue(ex.getCause().getMessage().contains("negative value is not allowed"));
+      assertThat(ex.getCause().getMessage()).contains("negative value is not allowed");
     }
   }
 
@@ -453,9 +448,9 @@ public class DecisionDefinitionDeployerTest {
     // then deployment contains definition
     List<DecisionDefinition> deployedDecisionDefinitions = deployment.getDeployedDecisionDefinitions();
     assertThat(deployedDecisionDefinitions).hasSize(1);
-    assertNull(deployment.getDeployedDecisionRequirementsDefinitions());
-    assertNull(deployment.getDeployedProcessDefinitions());
-    assertNull(deployment.getDeployedCaseDefinitions());
+    assertThat(deployment.getDeployedDecisionRequirementsDefinitions()).isNull();
+    assertThat(deployment.getDeployedProcessDefinitions()).isNull();
+    assertThat(deployment.getDeployedCaseDefinitions()).isNull();
 
     // and persisted definition are equal to deployed definition
     DecisionDefinition persistedDecisionDef = repositoryService.createDecisionDefinitionQuery()
@@ -479,12 +474,12 @@ public class DecisionDefinitionDeployerTest {
     DeploymentWithDefinitions deployment = testRule.deploy(deploymentBuilder);
 
     // then deployment contains no definitions
-    assertNull(deployment.getDeployedDecisionDefinitions());
-    assertNull(deployment.getDeployedDecisionRequirementsDefinitions());
+    assertThat(deployment.getDeployedDecisionDefinitions()).isNull();
+    assertThat(deployment.getDeployedDecisionRequirementsDefinitions()).isNull();
 
     // and there are no persisted definitions
-    assertNull(repositoryService.createDecisionDefinitionQuery()
-      .decisionDefinitionResourceName("foo.dmn").singleResult());
+    assertThat(repositoryService.createDecisionDefinitionQuery()
+        .decisionDefinitionResourceName("foo.dmn").singleResult()).isNull();
   }
 
 
@@ -501,8 +496,8 @@ public class DecisionDefinitionDeployerTest {
     List<DecisionRequirementsDefinition> deployedDecisionRequirementsDefinitions = deployment.getDeployedDecisionRequirementsDefinitions();
     assertThat(deployedDecisionRequirementsDefinitions).hasSize(1);
 
-    assertNull(deployment.getDeployedProcessDefinitions());
-    assertNull(deployment.getDeployedCaseDefinitions());
+    assertThat(deployment.getDeployedProcessDefinitions()).isNull();
+    assertThat(deployment.getDeployedCaseDefinitions()).isNull();
 
     // and persisted definitions are equal to deployed definitions
     DecisionRequirementsDefinition persistedDecisionRequirementsDefinition = repositoryService.createDecisionRequirementsDefinitionQuery()
@@ -522,7 +517,7 @@ public class DecisionDefinitionDeployerTest {
     List<DecisionDefinition> deployedDecisionDefinitions = deployment.getDeployedDecisionDefinitions();
     assertThat(deployedDecisionDefinitions).hasSize(1);
     Integer historyTimeToLive = deployedDecisionDefinitions.get(0).getHistoryTimeToLive();
-    assertNotNull(historyTimeToLive);
+    assertThat(historyTimeToLive).isNotNull();
     assertThat((int) historyTimeToLive).isEqualTo(5);
   }
 
@@ -535,7 +530,7 @@ public class DecisionDefinitionDeployerTest {
     List<DecisionDefinition> deployedDecisionDefinitions = deployment.getDeployedDecisionDefinitions();
     assertThat(deployedDecisionDefinitions).hasSize(1);
     Integer historyTimeToLive = deployedDecisionDefinitions.get(0).getHistoryTimeToLive();
-    assertNotNull(historyTimeToLive);
+    assertThat(historyTimeToLive).isNotNull();
     assertThat((int) historyTimeToLive).isEqualTo(5);
   }
 
@@ -545,7 +540,7 @@ public class DecisionDefinitionDeployerTest {
       testRule.deploy("org/operaton/bpm/engine/test/dmn/deployment/DecisionDefinitionDeployerTest.testDecisionDefinitionWithMalformedHistoryTimeToLive.dmn11.xml");
       fail("Exception expected");
     } catch (ProcessEngineException e) {
-      assertTrue(e.getCause().getMessage().contains("Cannot parse historyTimeToLive"));
+      assertThat(e.getCause().getMessage()).contains("Cannot parse historyTimeToLive");
     }
   }
 
@@ -557,7 +552,7 @@ public class DecisionDefinitionDeployerTest {
       List<DecisionDefinition> deployedDecisionDefinitions = deployment.getDeployedDecisionDefinitions();
     assertThat(deployedDecisionDefinitions).hasSize(1);
       Integer historyTimeToLive = deployedDecisionDefinitions.get(0).getHistoryTimeToLive();
-      assertNull(historyTimeToLive);
+    assertThat(historyTimeToLive).isNull();
   }
 
 }

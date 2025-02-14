@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.cmmn;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
 import org.operaton.bpm.engine.exception.NotAllowedException;
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseExecutionCommandBuilder;
@@ -109,7 +106,7 @@ public class CaseServiceMilestoneTest extends PluggableProcessEngineTest {
      .terminate();
 
     CaseExecution caseMilestone = queryCaseExecutionByActivityId(MILESTONE_KEY);
-    assertNull(caseMilestone);
+    assertThat(caseMilestone).isNull();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneMilestoneCase.cmmn"})
@@ -118,12 +115,12 @@ public class CaseServiceMilestoneTest extends PluggableProcessEngineTest {
     // given
     createCaseInstance(DEFINITION_KEY).getId();
     CaseExecution caseMilestone = queryCaseExecutionByActivityId(MILESTONE_KEY);
-    assertNotNull(caseMilestone);
+    assertThat(caseMilestone).isNotNull();
 
     caseService.terminateCaseExecution(caseMilestone.getId());
 
     caseMilestone = queryCaseExecutionByActivityId(MILESTONE_KEY);
-    assertNull(caseMilestone);
+    assertThat(caseMilestone).isNull();
 
   }
 

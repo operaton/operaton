@@ -18,7 +18,10 @@ package org.operaton.bpm.engine.test.standalone.pvm.verification;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
+
 import org.junit.Assert;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Daniel Meyer
@@ -28,8 +31,8 @@ public class TransitionInstanceVerifyer extends Assert implements ExecutionListe
 
   @Override
   public void notify(DelegateExecution execution) throws Exception {
-    
-    assertNull(execution.getActivityInstanceId());
+
+    assertThat(execution.getActivityInstanceId()).isNull();
     
   }
 

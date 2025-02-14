@@ -703,7 +703,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
         .list();
 
     // then
-    assertThat(result).hasSize(0);
+    assertThat(result).isEmpty();
   }
 
   @Test
@@ -769,7 +769,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
         .list();
 
     // then
-    assertThat(result).hasSize(0);
+    assertThat(result).isEmpty();
 
     // clear
     deleteTask(taskId, true);
@@ -879,7 +879,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
         .list();
 
     // then
-    assertThat(result).hasSize(0);
+    assertThat(result).isEmpty();
   }
 
   @Test
@@ -898,7 +898,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
         .list();
 
     // then
-    assertThat(result).hasSize(0);
+    assertThat(result).isEmpty();
   }
 
   @Test

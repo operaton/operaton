@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.standalone.deploy;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -117,13 +116,13 @@ public class BPMNParseListenerTest {
     ProcessDefinitionImpl processDefinition = ((ProcessInstanceWithVariablesImpl) processInstance).getExecutionEntity().getProcessDefinition();
 
     ActivityImpl cancelThrowEvent = processDefinition.findActivity("CancelthrowEvent");
-    assertTrue(cancelThrowEvent.getActivityBehavior() instanceof TestBPMNParseListener.TestCompensationEventActivityBehavior);
+    assertThat(cancelThrowEvent.getActivityBehavior() instanceof TestBPMNParseListener.TestCompensationEventActivityBehavior).isTrue();
 
     ActivityImpl startEvent = processDefinition.findActivity("theStart");
-    assertTrue(startEvent.getActivityBehavior() instanceof TestBPMNParseListener.TestNoneStartEventActivityBehavior);
+    assertThat(startEvent.getActivityBehavior() instanceof TestBPMNParseListener.TestNoneStartEventActivityBehavior).isTrue();
 
     ActivityImpl endEvent = processDefinition.findActivity("theEnd");
-    assertTrue(endEvent.getActivityBehavior() instanceof TestBPMNParseListener.TestNoneEndEventActivityBehavior);
+    assertThat(endEvent.getActivityBehavior() instanceof TestBPMNParseListener.TestNoneEndEventActivityBehavior).isTrue();
   }
 
   @Test

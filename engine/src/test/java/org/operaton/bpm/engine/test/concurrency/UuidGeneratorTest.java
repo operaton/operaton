@@ -25,7 +25,6 @@ import com.fasterxml.uuid.EthernetAddress;
 import static org.assertj.core.api.Assertions.assertThat;
 import com.fasterxml.uuid.Generators;
 import com.fasterxml.uuid.impl.TimeBasedGenerator;
-import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -65,6 +64,6 @@ public class UuidGeneratorTest {
     }
 
     assertThat(generatedIds).hasSize(THREAD_COUNT * LOOP_COUNT);
-    Assert.assertTrue(duplicatedIds.isEmpty());
+    assertThat(duplicatedIds).isEmpty();
   }
 }

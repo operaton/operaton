@@ -29,7 +29,6 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.test.TestHelper;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -93,7 +92,7 @@ public class DatabaseHistoryPropertyTest {
   private void assertHistoryLevel() {
     Map<String, String> properties = processEngineImpl.getManagementService().getProperties();
     String historyLevel = properties.get("historyLevel");
-    Assert.assertNotNull("historyLevel is null -> not set in database", historyLevel);
+    assertThat(historyLevel).as("historyLevel is null -> not set in database").isNotNull();
     assertThat(Integer.parseInt(historyLevel)).isEqualTo(ProcessEngineConfigurationImpl.HISTORYLEVEL_FULL);
   }
 

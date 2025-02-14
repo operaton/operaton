@@ -54,11 +54,7 @@ import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.Assert.fail;
 
 /**
@@ -201,7 +197,7 @@ public class JobQueryTest {
 
     try {
       jobQuery.activityId(null);
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).isEqualTo("Provided activity id is null");
     }
@@ -223,7 +219,7 @@ public class JobQueryTest {
 
     try {
       jobQuery.jobDefinitionId(null);
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).isEqualTo("Provided job definition id is null");
     }
@@ -243,7 +239,7 @@ public class JobQueryTest {
 
     try {
       jobQuery.processInstanceId(null);
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).isEqualTo("Provided process instance id is null");
     }
@@ -265,7 +261,7 @@ public class JobQueryTest {
 
     try {
       jobQuery.executionId(null);
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).isEqualTo("Provided execution id is null");
     }
@@ -287,7 +283,7 @@ public class JobQueryTest {
 
     try {
       jobQuery.processDefinitionId(null);
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).isEqualTo("Provided process definition id is null");
     }
@@ -312,7 +308,7 @@ public class JobQueryTest {
     verifyQueryResults(query, 1);
 
     String anotherJobId = query.singleResult().getId();
-    assertNotEquals(jobId, anotherJobId);
+    assertThat(anotherJobId).isNotEqualTo(jobId);
   }
 
   @Test
@@ -329,7 +325,7 @@ public class JobQueryTest {
 
     try {
       jobQuery.processDefinitionKey(null);
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).isEqualTo("Provided process instance key is null");
     }
@@ -348,7 +344,7 @@ public class JobQueryTest {
     verifyQueryResults(query, 1);
 
     String anotherJobId = query.singleResult().getId();
-    assertNotEquals(jobId, anotherJobId);
+    assertThat(anotherJobId).isNotEqualTo(jobId);
   }
 
   @Test
@@ -396,7 +392,7 @@ public class JobQueryTest {
     var jobQuery = managementService.createJobQuery().timers();
     try {
       jobQuery.messages();
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).contains("Cannot combine onlyTimers() with onlyMessages() in the same query");
     }
@@ -630,7 +626,7 @@ public class JobQueryTest {
 
     try {
       jobQuery.failedActivityId(null);
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).isEqualTo("Provided activity id is null");
     }
@@ -644,7 +640,7 @@ public class JobQueryTest {
 
     Job job = managementService.createJobQuery().jobId(timerEntity.getId()).singleResult();
 
-    assertNotNull(job);
+    assertThat(job).isNotNull();
 
     List<Job> list = managementService.createJobQuery().withException().list();
     assertThat(list).hasSize(1);
@@ -655,7 +651,7 @@ public class JobQueryTest {
 
     job = managementService.createJobQuery().jobId(timerEntity.getId()).singleResult();
 
-    assertNotNull(job);
+    assertThat(job).isNotNull();
 
     list = managementService.createJobQuery().withException().list();
     assertThat(list).hasSize(1);
@@ -873,7 +869,7 @@ public class JobQueryTest {
     var jobQuery = managementService.createJobQuery().orderByJobId();
     try {
       jobQuery.list();
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).contains("call asc() or desc() after using orderByXX()");
     }
@@ -881,7 +877,7 @@ public class JobQueryTest {
     var jobQuery2 = managementService.createJobQuery();
     try {
       jobQuery2.asc();
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).contains("You should call any of the orderBy methods first before specifying a direction");
     }
@@ -908,7 +904,7 @@ public class JobQueryTest {
       .processInstanceId(processInstance.getId())
       .singleResult();
 
-    assertNotNull("No job found for process instance", timerJob);
+    assertThat(timerJob).as("No job found for process instance").isNotNull();
     String timerJobId = timerJob.getId();
 
     try {
@@ -924,9 +920,9 @@ public class JobQueryTest {
     verifyQueryResults(query, 1);
 
     Job failedJob = query.singleResult();
-    assertNotNull(failedJob);
+    assertThat(failedJob).isNotNull();
     assertThat(failedJob.getProcessInstanceId()).isEqualTo(processInstance.getId());
-    assertNotNull(failedJob.getExceptionMessage());
+    assertThat(failedJob.getExceptionMessage()).isNotNull();
     assertThat(failedJob.getExceptionMessage()).contains(EXCEPTION_MESSAGE);
   }
 
@@ -935,18 +931,18 @@ public class JobQueryTest {
     assertThat(query.count()).isEqualTo(countExpected);
 
     if (countExpected == 1) {
-      assertNotNull(query.singleResult());
+      assertThat(query.singleResult()).isNotNull();
     } else if (countExpected > 1){
       verifySingleResultFails(query);
     } else if (countExpected == 0) {
-      assertNull(query.singleResult());
+      assertThat(query.singleResult()).isNull();
     }
   }
 
   private void verifySingleResultFails(JobQuery query) {
     try {
       query.singleResult();
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
       // expected
     }
@@ -968,7 +964,7 @@ public class JobQueryTest {
 
       jobManager.insert(timerEntity);
 
-      assertNotNull(timerEntity.getId());
+      assertThat(timerEntity.getId()).isNotNull();
 
       return null;
 
@@ -988,7 +984,7 @@ public class JobQueryTest {
 
       jobManager.insert(timerEntity);
 
-      assertNotNull(timerEntity.getId());
+      assertThat(timerEntity.getId()).isNotNull();
 
       return null;
 

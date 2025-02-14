@@ -31,7 +31,6 @@ import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -202,13 +201,13 @@ public class JobAcquisitionBackoffTest {
     JobAcquisitionTestHelper.activateInstances(engineRule.getProcessEngine(), 12);
 
     // backoff has not decreased yet;
-    Assert.assertTrue(jobExecutor2WaitEvents.get(0).getTimeBetweenAcquisitions() > 0);
+    assertThat(jobExecutor2WaitEvents.get(0).getTimeBetweenAcquisitions() > 0).isTrue();
     acquisitionThread2.makeContinueAndWaitForSync(); // acquire
     acquisitionThread2.makeContinueAndWaitForSync(); // continue after acquisition with next cycle
 
     for (int i = 1; i < BACKOFF_DECREASE_THRESHOLD; i++) {
       // backoff has not decreased yet
-      Assert.assertTrue(jobExecutor2WaitEvents.get(i).getTimeBetweenAcquisitions() > 0);
+      assertThat(jobExecutor2WaitEvents.get(i).getTimeBetweenAcquisitions() > 0).isTrue();
 
       acquisitionThread2.makeContinueAndWaitForSync(); // acquire
       acquisitionThread2.makeContinueAndWaitForSync(); // continue after acquisition with next cycle

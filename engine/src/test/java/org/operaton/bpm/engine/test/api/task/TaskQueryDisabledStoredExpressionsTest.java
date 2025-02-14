@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.task;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
 
@@ -98,7 +97,7 @@ public class TaskQueryDisabledStoredExpressionsTest {
     } catch (ProcessEngineException e) {
       testRule.assertTextPresent(EXPECTED_STORED_QUERY_FAILURE_MESSAGE, e.getMessage());
     }
-    assertTrue(fieldIsUnchanged());
+    assertThat(fieldIsUnchanged()).isTrue();
   }
 
   @Test
@@ -118,7 +117,7 @@ public class TaskQueryDisabledStoredExpressionsTest {
     } catch (ProcessEngineException e) {
       testRule.assertTextPresent(EXPECTED_STORED_QUERY_FAILURE_MESSAGE, e.getMessage());
     }
-    assertTrue(fieldIsUnchanged());
+    assertThat(fieldIsUnchanged()).isTrue();
 
     // cleanup
     filterService.deleteFilter(filter.getId());
@@ -155,7 +154,7 @@ public class TaskQueryDisabledStoredExpressionsTest {
       testRule.assertTextPresent(EXPECTED_STORED_QUERY_FAILURE_MESSAGE, e.getMessage());
     }
 
-    assertTrue(fieldIsUnchanged());
+    assertThat(fieldIsUnchanged()).isTrue();
 
     try {
       filterService.count(filterId, query);
@@ -163,6 +162,6 @@ public class TaskQueryDisabledStoredExpressionsTest {
       testRule.assertTextPresent(EXPECTED_STORED_QUERY_FAILURE_MESSAGE, e.getMessage());
     }
 
-    assertTrue(fieldIsUnchanged());
+    assertThat(fieldIsUnchanged()).isTrue();
   }
 }

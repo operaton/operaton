@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 
 import java.util.Arrays;
@@ -81,35 +82,35 @@ public class MigrationUserOperationLogTest {
     Map<String, UserOperationLogEntry> entries = asMap(opLogEntries);
 
     UserOperationLogEntry procDefEntry = entries.get("processDefinitionId");
-    Assert.assertNotNull(procDefEntry);
+    assertThat(procDefEntry).isNotNull();
     assertThat(procDefEntry.getEntityType()).isEqualTo("ProcessInstance");
     assertThat(procDefEntry.getOperationType()).isEqualTo("Migrate");
     assertThat(procDefEntry.getProcessDefinitionId()).isEqualTo(sourceProcessDefinition.getId());
     assertThat(procDefEntry.getProcessDefinitionKey()).isEqualTo(sourceProcessDefinition.getKey());
-    Assert.assertNull(procDefEntry.getProcessInstanceId());
+    assertThat(procDefEntry.getProcessInstanceId()).isNull();
     assertThat(procDefEntry.getOrgValue()).isEqualTo(sourceProcessDefinition.getId());
     assertThat(procDefEntry.getNewValue()).isEqualTo(targetProcessDefinition.getId());
     assertThat(procDefEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
     UserOperationLogEntry asyncEntry = entries.get("async");
-    Assert.assertNotNull(asyncEntry);
+    assertThat(asyncEntry).isNotNull();
     assertThat(asyncEntry.getEntityType()).isEqualTo("ProcessInstance");
     assertThat(asyncEntry.getOperationType()).isEqualTo("Migrate");
     assertThat(asyncEntry.getProcessDefinitionId()).isEqualTo(sourceProcessDefinition.getId());
     assertThat(asyncEntry.getProcessDefinitionKey()).isEqualTo(sourceProcessDefinition.getKey());
-    Assert.assertNull(asyncEntry.getProcessInstanceId());
-    Assert.assertNull(asyncEntry.getOrgValue());
+    assertThat(asyncEntry.getProcessInstanceId()).isNull();
+    assertThat(asyncEntry.getOrgValue()).isNull();
     assertThat(asyncEntry.getNewValue()).isEqualTo("false");
     assertThat(asyncEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
     UserOperationLogEntry numInstanceEntry = entries.get("nrOfInstances");
-    Assert.assertNotNull(numInstanceEntry);
+    assertThat(numInstanceEntry).isNotNull();
     assertThat(numInstanceEntry.getEntityType()).isEqualTo("ProcessInstance");
     assertThat(numInstanceEntry.getOperationType()).isEqualTo("Migrate");
     assertThat(numInstanceEntry.getProcessDefinitionId()).isEqualTo(sourceProcessDefinition.getId());
     assertThat(numInstanceEntry.getProcessDefinitionKey()).isEqualTo(sourceProcessDefinition.getKey());
-    Assert.assertNull(numInstanceEntry.getProcessInstanceId());
-    Assert.assertNull(numInstanceEntry.getOrgValue());
+    assertThat(numInstanceEntry.getProcessInstanceId()).isNull();
+    assertThat(numInstanceEntry.getOrgValue()).isNull();
     assertThat(numInstanceEntry.getNewValue()).isEqualTo("1");
     assertThat(numInstanceEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
@@ -124,7 +125,7 @@ public class MigrationUserOperationLogTest {
 
       UserOperationLogEntry previousValue = map.put(entry.getProperty(), entry);
       if (previousValue != null) {
-        Assert.fail("expected only entry for every property");
+        fail("expected only entry for every property");
       }
     }
 

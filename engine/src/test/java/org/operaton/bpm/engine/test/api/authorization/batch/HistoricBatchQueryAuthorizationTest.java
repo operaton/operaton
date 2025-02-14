@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.test.api.authorization.batch;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
-import static org.junit.Assert.assertNotNull;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -48,7 +47,10 @@ import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.RuleChain;
 
 /**
@@ -199,7 +201,7 @@ public class HistoricBatchQueryAuthorizationTest {
     authRule.disableAuthorization();
 
     // then
-    Assert.assertTrue(batches.isEmpty());
+    assertThat(batches).isEmpty();
   }
 
   @Test
@@ -228,7 +230,7 @@ public class HistoricBatchQueryAuthorizationTest {
     CleanableHistoricBatchReportResult result = engineRule.getHistoryService().createCleanableHistoricBatchReport().singleResult();
     authRule.disableAuthorization();
 
-    assertNotNull(result);
+    assertThat(result).isNotNull();
     checkResultNumbers(result, 1, 1, 0);
   }
 

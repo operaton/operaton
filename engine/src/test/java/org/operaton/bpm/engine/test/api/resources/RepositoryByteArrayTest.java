@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.resources;
 
 import static org.operaton.bpm.engine.repository.ResourceTypes.REPOSITORY;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
 
 import java.util.Date;
 import java.util.List;
@@ -125,7 +124,7 @@ public class RepositoryByteArrayTest {
         .execute(new GetByteArrayCommand(userInfo));
 
     // then
-    assertNotNull(byteArrayEntity);
+    assertThat(byteArrayEntity).isNotNull();
     assertThat(byteArrayEntity.getCreateTime()).hasToString(fixedDate.toString());
     assertThat(byteArrayEntity.getType()).isEqualTo(REPOSITORY.getValue());
   }
@@ -139,7 +138,7 @@ public class RepositoryByteArrayTest {
   }
 
   protected void checkEntity(Date expectedDate, ResourceEntity entity) {
-    assertNotNull(entity);
+    assertThat(entity).isNotNull();
     assertThat(entity.getCreateTime()).hasToString(expectedDate.toString());
     assertThat(entity.getType()).isEqualTo(REPOSITORY.getValue());
   }

@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.standalone.history;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
@@ -93,7 +92,7 @@ public class DecisionInstanceHistoryTest {
     assertThat(producedHistoryEvent.eventType).isEqualTo(HistoryEventTypes.DMN_DECISION_EVALUATE);
 
     DecisionDefinition entity = (DecisionDefinition) producedHistoryEvent.entity;
-    assertNotNull(entity);
+    assertThat(entity).isNotNull();
     assertThat(entity.getId()).isEqualTo(decisionDefinition.getId());
   }
 

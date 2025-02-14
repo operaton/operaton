@@ -17,8 +17,7 @@
 package org.operaton.bpm.engine.test.bpmn.job;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -72,7 +71,7 @@ public class JobPrioritizationBpmnExpressionValueTest extends PluggableProcessEn
 
     // then
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     assertThat(job.getPriority()).isEqualTo(15);
   }
 
@@ -87,7 +86,7 @@ public class JobPrioritizationBpmnExpressionValueTest extends PluggableProcessEn
 
     // then
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     assertThat(job.getPriority()).isEqualTo(16);
   }
 
@@ -103,7 +102,7 @@ public class JobPrioritizationBpmnExpressionValueTest extends PluggableProcessEn
 
     // then
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     assertThat(job.getPriority()).isEqualTo(22);
   }
 
@@ -141,7 +140,7 @@ public class JobPrioritizationBpmnExpressionValueTest extends PluggableProcessEn
 
     // then
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     assertThat(job.getPriority()).isEqualTo(25);
   }
 
@@ -208,7 +207,7 @@ public class JobPrioritizationBpmnExpressionValueTest extends PluggableProcessEn
 
     // then
     Job job = managementService.createJobQuery().activityId("task1").singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     assertThat(job.getPriority()).isEqualTo(14);
   }
 
@@ -257,7 +256,7 @@ public class JobPrioritizationBpmnExpressionValueTest extends PluggableProcessEn
   public void testDefaultEngineConfigurationSetting() {
     ProcessEngineConfigurationImpl config = new StandaloneInMemProcessEngineConfiguration();
 
-    assertTrue(config.isEnableGracefulDegradationOnContextSwitchFailure());
+    assertThat(config.isEnableGracefulDegradationOnContextSwitchFailure()).isTrue();
   }
 
 }

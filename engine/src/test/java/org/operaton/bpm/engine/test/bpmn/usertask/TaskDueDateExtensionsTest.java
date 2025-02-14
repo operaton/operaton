@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.usertask;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -49,8 +48,8 @@ public class TaskDueDateExtensionsTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("dueDateExtension", variables);
     
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-    
-    assertNotNull(task.getDueDate());
+
+    assertThat(task.getDueDate()).isNotNull();
     assertThat(task.getDueDate()).isEqualTo(date);
   }
   
@@ -65,8 +64,8 @@ public class TaskDueDateExtensionsTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("dueDateExtension", variables);
     
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-    
-    assertNotNull(task.getDueDate());
+
+    assertThat(task.getDueDate()).isNotNull();
     Date date = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse("06-07-1986 12:10:00");
     assertThat(task.getDueDate()).isEqualTo(date);
   }
@@ -83,7 +82,7 @@ public class TaskDueDateExtensionsTest extends PluggableProcessEngineTest {
     
     
     Date dueDate = task.getDueDate();
-    assertNotNull(dueDate);
+    assertThat(dueDate).isNotNull();
     
     Period period = new Period(task.getCreateTime().getTime(), dueDate.getTime());
     assertThat(period.getDays()).isEqualTo(2);

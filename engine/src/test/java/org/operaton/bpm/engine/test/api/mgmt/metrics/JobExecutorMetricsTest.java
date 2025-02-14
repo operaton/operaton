@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.mgmt.metrics;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -78,7 +77,7 @@ public class JobExecutorMetricsTest extends AbstractMetricsTest {
 
     // then
     long acquisitionAttempts = managementService.createMetricsQuery().name(Metrics.JOB_ACQUISITION_ATTEMPT).sum();
-    assertTrue(acquisitionAttempts >= 1);
+    assertThat(acquisitionAttempts >= 1).isTrue();
 
     long acquiredJobs = managementService.createMetricsQuery()
         .name(Metrics.JOB_ACQUIRED_SUCCESS).sum();

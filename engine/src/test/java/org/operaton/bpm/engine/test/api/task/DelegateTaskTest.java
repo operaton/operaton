@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.test.api.task;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -85,19 +83,19 @@ public class DelegateTaskTest {
     runtimeService.startProcessInstanceByKey("DelegateTaskTest.testGetCandidates");
 
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     @SuppressWarnings("unchecked")
     Set<String> candidateUsers = (Set<String>) taskService.getVariable(task.getId(), DelegateTaskTestTaskListener.VARNAME_CANDIDATE_USERS);
     assertThat(candidateUsers).hasSize(2);
-    assertTrue(candidateUsers.contains("kermit"));
-    assertTrue(candidateUsers.contains("gonzo"));
+    assertThat(candidateUsers).contains("kermit");
+    assertThat(candidateUsers).contains("gonzo");
 
     @SuppressWarnings("unchecked")
     Set<String> candidateGroups = (Set<String>) taskService.getVariable(task.getId(), DelegateTaskTestTaskListener.VARNAME_CANDIDATE_GROUPS);
     assertThat(candidateGroups).hasSize(2);
-    assertTrue(candidateGroups.contains("management"));
-    assertTrue(candidateGroups.contains("accountancy"));
+    assertThat(candidateGroups).contains("management");
+    assertThat(candidateGroups).contains("accountancy");
   }
 
   @Test

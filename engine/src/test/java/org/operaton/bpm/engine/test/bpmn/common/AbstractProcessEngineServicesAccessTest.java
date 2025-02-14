@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.common;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -31,7 +30,6 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.Task;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -183,14 +181,14 @@ public abstract class AbstractProcessEngineServicesAccessTest extends PluggableP
   }
 
   public static void assertCanAccessServices(ProcessEngineServices services) {
-    Assert.assertNotNull(services.getAuthorizationService());
-    Assert.assertNotNull(services.getFormService());
-    Assert.assertNotNull(services.getHistoryService());
-    Assert.assertNotNull(services.getIdentityService());
-    Assert.assertNotNull(services.getManagementService());
-    Assert.assertNotNull(services.getRepositoryService());
-    Assert.assertNotNull(services.getRuntimeService());
-    Assert.assertNotNull(services.getTaskService());
+    assertThat(services.getAuthorizationService()).isNotNull();
+    assertThat(services.getFormService()).isNotNull();
+    assertThat(services.getHistoryService()).isNotNull();
+    assertThat(services.getIdentityService()).isNotNull();
+    assertThat(services.getManagementService()).isNotNull();
+    assertThat(services.getRepositoryService()).isNotNull();
+    assertThat(services.getRuntimeService()).isNotNull();
+    assertThat(services.getTaskService()).isNotNull();
   }
 
   public static void assertCanPerformQuery(ProcessEngineServices services) {

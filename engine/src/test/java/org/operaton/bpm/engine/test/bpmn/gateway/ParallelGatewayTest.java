@@ -17,10 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.gateway;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
 import java.util.List;
@@ -53,35 +49,35 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
   @Test
   public void testSplitMergeNoWaitstates() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("forkJoinNoWaitStates");
-    assertTrue(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isTrue();
   }
 
   @Deployment
   @Test
   public void testUnstructuredConcurrencyTwoForks() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("unstructuredConcurrencyTwoForks");
-    assertTrue(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isTrue();
   }
 
   @Deployment
   @Test
   public void testUnstructuredConcurrencyTwoJoins() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("unstructuredConcurrencyTwoJoins");
-    assertTrue(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isTrue();
   }
 
   @Deployment
   @Test
   public void testForkFollowedByOnlyEndEvents() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("forkFollowedByEndEvents");
-    assertTrue(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isTrue();
   }
 
   @Deployment
   @Test
   public void testNestedForksFollowedByEndEvents() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("nestedForksFollowedByEndEvents");
-    assertTrue(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isTrue();
   }
 
   // ACT-482
@@ -167,7 +163,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
   public void testCompletingJoin() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
-    assertTrue(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isTrue();
   }
 
   @Deployment
@@ -175,11 +171,11 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
   public void testAsyncParallelGateway() {
 
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().singleResult();
-    assertNotNull(jobDefinition);
+    assertThat(jobDefinition).isNotNull();
     assertThat(jobDefinition.getActivityId()).isEqualTo("parallelJoinEnd");
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
-    assertFalse(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isFalse();
 
     // there are two jobs to continue the gateway:
     List<Job> list = managementService.createJobQuery().list();
@@ -188,7 +184,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
     managementService.executeJob(list.get(0).getId());
     managementService.executeJob(list.get(1).getId());
 
-    assertNull(runtimeService.createProcessInstanceQuery().singleResult());
+    assertThat(runtimeService.createProcessInstanceQuery().singleResult()).isNull();
   }
 
   @Deployment
@@ -196,7 +192,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
   public void testAsyncParallelGatewayAfterScopeTask() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
-    assertFalse(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isFalse();
 
     Task task = taskService.createTaskQuery().singleResult();
     taskService.complete(task.getId());
@@ -208,7 +204,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
     managementService.executeJob(list.get(0).getId());
     managementService.executeJob(list.get(1).getId());
 
-    assertNull(runtimeService.createProcessInstanceQuery().singleResult());
+    assertThat(runtimeService.createProcessInstanceQuery().singleResult()).isNull();
   }
 
   @Deployment
@@ -216,7 +212,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
   public void testCompletingJoinInSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
-    assertTrue(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isTrue();
   }
 
   @Deployment
@@ -355,7 +351,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
     }
 
     // then
-    assertNull(exceptionOccurred);
+    assertThat(exceptionOccurred).isNull();
     assertThat(taskService.createTaskQuery().count()).isEqualTo(3);
   }
 

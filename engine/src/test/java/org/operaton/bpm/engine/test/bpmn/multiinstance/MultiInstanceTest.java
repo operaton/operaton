@@ -22,10 +22,6 @@ import static org.operaton.bpm.engine.test.bpmn.event.error.ThrowErrorDelegate.t
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -101,7 +97,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     assertThat(task.getAssignee()).isEqualTo("kermit_2");
     taskService.complete(task.getId());
 
-    assertNull(taskService.createTaskQuery().singleResult());
+    assertThat(taskService.createTaskQuery().singleResult()).isNull();
     testRule.assertProcessEnded(procId);
   }
 
@@ -118,11 +114,11 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
       List<HistoricActivityInstance> historicActivityInstances = historyService.createHistoricActivityInstanceQuery().activityType("userTask").list();
       assertThat(historicActivityInstances).hasSize(4);
       for (HistoricActivityInstance hai : historicActivityInstances) {
-        assertNotNull(hai.getActivityId());
-        assertNotNull(hai.getActivityName());
-        assertNotNull(hai.getStartTime());
-        assertNotNull(hai.getEndTime());
-        assertNotNull(hai.getAssignee());
+        assertThat(hai.getActivityId()).isNotNull();
+        assertThat(hai.getActivityName()).isNotNull();
+        assertThat(hai.getStartTime()).isNotNull();
+        assertThat(hai.getEndTime()).isNotNull();
+        assertThat(hai.getAssignee()).isNotNull();
       }
 
     }
@@ -132,9 +128,9 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
       List<HistoricTaskInstance> historicTaskInstances = historyService.createHistoricTaskInstanceQuery().list();
       assertThat(historicTaskInstances).hasSize(4);
       for (HistoricTaskInstance ht : historicTaskInstances) {
-        assertNotNull(ht.getAssignee());
-        assertNotNull(ht.getStartTime());
-        assertNotNull(ht.getEndTime());
+        assertThat(ht.getAssignee()).isNotNull();
+        assertThat(ht.getStartTime()).isNotNull();
+        assertThat(ht.getEndTime()).isNotNull();
       }
 
     }
@@ -170,7 +166,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
       Task task = taskService.createTaskQuery().singleResult();
       taskService.complete(task.getId());
     }
-    assertNull(taskService.createTaskQuery().singleResult());
+    assertThat(taskService.createTaskQuery().singleResult()).isNull();
     testRule.assertProcessEnded(procId);
   }
 
@@ -184,7 +180,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("miSequentialListener", vars);
 
     assertThat((int) RecordInvocationListener.INVOCATIONS.get(ExecutionListener.EVENTNAME_START)).isEqualTo(1);
-    assertNull(RecordInvocationListener.INVOCATIONS.get(ExecutionListener.EVENTNAME_END));
+    assertThat(RecordInvocationListener.INVOCATIONS.get(ExecutionListener.EVENTNAME_END)).isNull();
 
     Task task = taskService.createTaskQuery().singleResult();
     taskService.complete(task.getId());
@@ -209,7 +205,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("miSequentialListener", vars);
 
     assertThat((int) RecordInvocationListener.INVOCATIONS.get(ExecutionListener.EVENTNAME_START)).isEqualTo(5);
-    assertNull(RecordInvocationListener.INVOCATIONS.get(ExecutionListener.EVENTNAME_END));
+    assertThat(RecordInvocationListener.INVOCATIONS.get(ExecutionListener.EVENTNAME_END)).isNull();
 
     List<Task> tasks = taskService.createTaskQuery().list();
     taskService.complete(tasks.get(0).getId());
@@ -320,25 +316,25 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
       List<HistoricTaskInstance> historicTaskInstances = historyService.createHistoricTaskInstanceQuery().orderByTaskAssignee().asc().list();
       for (int i=0; i<historicTaskInstances.size(); i++) {
         HistoricTaskInstance hi = historicTaskInstances.get(i);
-        assertNotNull(hi.getStartTime());
-        assertNotNull(hi.getEndTime());
+        assertThat(hi.getStartTime()).isNotNull();
+        assertThat(hi.getEndTime()).isNotNull();
         assertThat(hi.getAssignee()).isEqualTo("kermit_" + i);
       }
 
       HistoricActivityInstance multiInstanceBodyInstance = historyService.createHistoricActivityInstanceQuery()
           .activityId("miTasks#multiInstanceBody").singleResult();
-      assertNotNull(multiInstanceBodyInstance);
+      assertThat(multiInstanceBodyInstance).isNotNull();
       assertThat(multiInstanceBodyInstance.getParentActivityInstanceId()).isEqualTo(pi.getId());
 
       List<HistoricActivityInstance> historicActivityInstances = historyService.createHistoricActivityInstanceQuery().activityType("userTask").list();
       assertThat(historicActivityInstances).hasSize(3);
       for (HistoricActivityInstance hai : historicActivityInstances) {
-        assertNotNull(hai.getStartTime());
-        assertNotNull(hai.getEndTime());
-        assertNotNull(hai.getAssignee());
+        assertThat(hai.getStartTime()).isNotNull();
+        assertThat(hai.getEndTime()).isNotNull();
+        assertThat(hai.getAssignee()).isNotNull();
         assertThat(hai.getActivityType()).isEqualTo("userTask");
         assertThat(hai.getParentActivityInstanceId()).isEqualTo(multiInstanceBodyInstance.getId());
-        assertNotNull(hai.getTaskId());
+        assertThat(hai.getTaskId()).isNotNull();
       }
     }
   }
@@ -521,8 +517,8 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
       for (int i=0; i<7; i++) {
         HistoricActivityInstance hai = historicInstances.get(i);
         assertThat(hai.getActivityType()).isEqualTo("scriptTask");
-        assertNotNull(hai.getStartTime());
-        assertNotNull(hai.getEndTime());
+        assertThat(hai.getStartTime()).isNotNull();
+        assertThat(hai.getEndTime()).isNotNull();
       }
     }
   }
@@ -559,8 +555,8 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
       List<HistoricActivityInstance> historicActivityInstances = historyService.createHistoricActivityInstanceQuery().activityType("scriptTask").list();
       assertThat(historicActivityInstances).hasSize(4);
       for (HistoricActivityInstance hai : historicActivityInstances) {
-        assertNotNull(hai.getStartTime());
-        assertNotNull(hai.getStartTime());
+        assertThat(hai.getStartTime()).isNotNull();
+        assertThat(hai.getStartTime()).isNotNull();
       }
     }
   }
@@ -602,8 +598,9 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
       if(i != 3) {
         List<String> activities = runtimeService.getActiveActivityIds(procId);
-        assertNotNull(activities);
-        assertThat(activities).hasSize(2);
+        assertThat(activities)
+                .isNotNull()
+                .hasSize(2);
       }
     }
 
@@ -628,8 +625,9 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
       // Last run, the execution no longer exists
       if(i != 3) {
         List<String> activities = runtimeService.getActiveActivityIds(procId);
-        assertNotNull(activities);
-        assertThat(activities).hasSize(1);
+        assertThat(activities)
+                .isNotNull()
+                .hasSize(1);
       }
     }
 
@@ -654,15 +652,15 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
       List<HistoricActivityInstance> historicInstances = historyService.createHistoricActivityInstanceQuery().activityType("subProcess").list();
       assertThat(historicInstances).hasSize(4);
       for (HistoricActivityInstance hai : historicInstances) {
-        assertNotNull(hai.getStartTime());
-        assertNotNull(hai.getEndTime());
+        assertThat(hai.getStartTime()).isNotNull();
+        assertThat(hai.getEndTime()).isNotNull();
       }
 
       historicInstances = historyService.createHistoricActivityInstanceQuery().activityType("userTask").list();
       assertThat(historicInstances).hasSize(8);
       for (HistoricActivityInstance hai : historicInstances) {
-        assertNotNull(hai.getStartTime());
-        assertNotNull(hai.getEndTime());
+        assertThat(hai.getStartTime()).isNotNull();
+        assertThat(hai.getEndTime()).isNotNull();
       }
     }
   }
@@ -774,10 +772,10 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
       List<HistoricActivityInstance> historicActivityInstances = historyService.createHistoricActivityInstanceQuery().activityId("miSubProcess").list();
       assertThat(historicActivityInstances).hasSize(2);
       for (HistoricActivityInstance hai : historicActivityInstances) {
-        assertNotNull(hai.getStartTime());
+        assertThat(hai.getStartTime()).isNotNull();
         // now end time is null
-        assertNull(hai.getEndTime());
-        assertNotNull(pi.getId(), hai.getParentActivityInstanceId());
+        assertThat(hai.getEndTime()).isNull();
+        assertThat(hai.getParentActivityInstanceId()).as(pi.getId()).isNotNull();
       }
     }
 
@@ -790,9 +788,9 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
       List<HistoricActivityInstance> historicActivityInstances = historyService.createHistoricActivityInstanceQuery().activityId("miSubProcess").list();
       assertThat(historicActivityInstances).hasSize(2);
       for (HistoricActivityInstance hai : historicActivityInstances) {
-        assertNotNull(hai.getStartTime());
-        assertNotNull(hai.getEndTime());
-        assertNotNull(pi.getId(), hai.getParentActivityInstanceId());
+        assertThat(hai.getStartTime()).isNotNull();
+        assertThat(hai.getEndTime()).isNotNull();
+        assertThat(hai.getParentActivityInstanceId()).as(pi.getId()).isNotNull();
       }
     }
   }
@@ -932,8 +930,8 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     Task task1 = taskService.createTaskQuery().processVariableValueEquals("element", "one").singleResult();
     Task task2 = taskService.createTaskQuery().processVariableValueEquals("element", "two").singleResult();
 
-    assertNotNull(task1);
-    assertNotNull(task2);
+    assertThat(task1).isNotNull();
+    assertThat(task2).isNotNull();
 
     HashMap<String, Object> subVariables = new HashMap<>();
     subVariables.put("x", "y");
@@ -942,11 +940,11 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     taskService.complete(task2.getId(), subVariables);
 
     Task task3 = taskService.createTaskQuery().processDefinitionKey("midProcess").singleResult();
-    assertNotNull(task3);
+    assertThat(task3).isNotNull();
     taskService.complete(task3.getId());
 
     Task task4 = taskService.createTaskQuery().processDefinitionKey("parentProcess").singleResult();
-    assertNotNull(task4);
+    assertThat(task4).isNotNull();
     taskService.complete(task4.getId());
 
     testRule.assertProcessEnded(procId);
@@ -1007,16 +1005,16 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
       List<HistoricProcessInstance> historicProcessInstances = historyService.createHistoricProcessInstanceQuery().list();
       assertThat(historicProcessInstances).hasSize(7); // 6 subprocesses + main process
       for (HistoricProcessInstance hpi : historicProcessInstances) {
-        assertNotNull(hpi.getStartTime());
-        assertNotNull(hpi.getEndTime());
+        assertThat(hpi.getStartTime()).isNotNull();
+        assertThat(hpi.getEndTime()).isNotNull();
       }
 
       // Validate historic activities
       List<HistoricActivityInstance> historicActivityInstances = historyService.createHistoricActivityInstanceQuery().activityType("callActivity").list();
       assertThat(historicActivityInstances).hasSize(6);
       for (HistoricActivityInstance hai : historicActivityInstances) {
-        assertNotNull(hai.getStartTime());
-        assertNotNull(hai.getEndTime());
+        assertThat(hai.getStartTime()).isNotNull();
+        assertThat(hai.getEndTime()).isNotNull();
       }
     }
 
@@ -1025,9 +1023,9 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
       List<HistoricTaskInstance> historicTaskInstances = historyService.createHistoricTaskInstanceQuery().list();
       assertThat(historicTaskInstances).hasSize(12);
       for (HistoricTaskInstance hti : historicTaskInstances) {
-        assertNotNull(hti.getStartTime());
-        assertNotNull(hti.getEndTime());
-        assertNotNull(hti.getAssignee());
+        assertThat(hti.getStartTime()).isNotNull();
+        assertThat(hti.getEndTime()).isNotNull();
+        assertThat(hti.getAssignee()).isNotNull();
         assertThat(hti.getDeleteReason()).isEqualTo("completed");
       }
     }
@@ -1211,7 +1209,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
     // All tasks should be canceled
     tasks = taskService.createTaskQuery().processInstanceId(pi.getId()).orderByTaskName().asc().list();
-    assertThat(tasks).hasSize(0);
+    assertThat(tasks).isEmpty();
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.callActivityWithBoundaryErrorEvent.bpmn20.xml",
@@ -1237,7 +1235,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     taskService.complete(tasks.get(0).getId());
 
     List<ProcessInstance> processInstances = runtimeService.createProcessInstanceQuery().processDefinitionKey("process").list();
-    assertThat(processInstances).hasSize(0);
+    assertThat(processInstances).isEmpty();
     testRule.assertProcessEnded(processInstance.getId());
   }
 
@@ -1285,7 +1283,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     }
 
     List<ProcessInstance> processInstances = runtimeService.createProcessInstanceQuery().processDefinitionKey("miNestedMultiInstanceTasks").list();
-    assertThat(processInstances).hasSize(0);
+    assertThat(processInstances).isEmpty();
     testRule.assertProcessEnded(processInstance.getId());
   }
 
@@ -1338,10 +1336,10 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
 
       if (!entity.getId().equals(instance.getId()) && !entity.getParentId().equals(instance.getId())) {
         // child executions
-        assertTrue(entity.isActive());
+        assertThat(entity.isActive()).isTrue();
       } else {
         // process instance and scope execution
-        assertFalse(entity.isActive());
+        assertThat(entity.isActive()).isFalse();
       }
     }
   }
@@ -1353,11 +1351,11 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
   public void testCatchExceptionThrownByExecuteOfSequentialAbstractBpmnActivityBehavior() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess", throwException()).getId();
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertNull(runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat(runtimeService.getVariable(pi, "signaled")).isNull();
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskException");
 
     taskService.complete(userTask.getId());
@@ -1370,11 +1368,11 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
   public void testCatchErrorThrownByExecuteOfSequentialAbstractBpmnActivityBehavior() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess", throwError()).getId();
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertNull(runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat(runtimeService.getVariable(pi, "signaled")).isNull();
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskError");
 
     taskService.complete(userTask.getId());
@@ -1387,8 +1385,8 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
   public void testCatchExceptionThrownBySignalOfSequentialAbstractBpmnActivityBehavior() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess").getId();
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertNull(runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat(runtimeService.getVariable(pi, "signaled")).isNull();
 
     // signal 2 times to execute first sequential behaviors
     runtimeService.setVariables(pi, leaveExecution());
@@ -1397,16 +1395,16 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     runtimeService.signal(runtimeService.createExecutionQuery().processInstanceId(pi).activityId("serviceTask").singleResult().getId());
 
     Execution serviceTask = runtimeService.createExecutionQuery().processInstanceId(pi).activityId("serviceTask").singleResult();
-    assertNotNull(serviceTask);
+    assertThat(serviceTask).isNotNull();
 
     runtimeService.setVariables(pi, throwException());
     runtimeService.signal(serviceTask.getId());
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertTrue((Boolean) runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat((Boolean) runtimeService.getVariable(pi, "signaled")).isTrue();
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskException");
 
     taskService.complete(userTask.getId());
@@ -1419,8 +1417,8 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
   public void testCatchErrorThrownBySignalOfSequentialAbstractBpmnActivityBehavior() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess").getId();
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertNull(runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat(runtimeService.getVariable(pi, "signaled")).isNull();
 
     // signal 2 times to execute first sequential behaviors
     runtimeService.setVariables(pi, leaveExecution());
@@ -1429,16 +1427,16 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     runtimeService.signal(runtimeService.createExecutionQuery().processInstanceId(pi).activityId("serviceTask").singleResult().getId());
 
     Execution serviceTask = runtimeService.createExecutionQuery().processInstanceId(pi).activityId("serviceTask").singleResult();
-    assertNotNull(serviceTask);
+    assertThat(serviceTask).isNotNull();
 
     runtimeService.setVariables(pi, throwError());
     runtimeService.signal(serviceTask.getId());
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertTrue((Boolean) runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat((Boolean) runtimeService.getVariable(pi, "signaled")).isTrue();
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskError");
 
     taskService.complete(userTask.getId());
@@ -1451,11 +1449,11 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
   public void testCatchExceptionThrownByExecuteOfParallelAbstractBpmnActivityBehavior() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess", throwException()).getId();
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertNull(runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat(runtimeService.getVariable(pi, "signaled")).isNull();
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskException");
 
     taskService.complete(userTask.getId());
@@ -1468,11 +1466,11 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
   public void testCatchErrorThrownByExecuteOfParallelAbstractBpmnActivityBehavior() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess", throwError()).getId();
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertNull(runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat(runtimeService.getVariable(pi, "signaled")).isNull();
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskError");
 
     taskService.complete(userTask.getId());
@@ -1485,20 +1483,20 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
   public void testCatchExceptionThrownBySignalOfParallelAbstractBpmnActivityBehavior() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess").getId();
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertNull(runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat(runtimeService.getVariable(pi, "signaled")).isNull();
 
     Execution serviceTask = runtimeService.createExecutionQuery().processInstanceId(pi).activityId("serviceTask").list().get(3);
-    assertNotNull(serviceTask);
+    assertThat(serviceTask).isNotNull();
 
     runtimeService.setVariables(pi, throwException());
     runtimeService.signal(serviceTask.getId());
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertTrue((Boolean) runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat((Boolean) runtimeService.getVariable(pi, "signaled")).isTrue();
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskException");
 
     taskService.complete(userTask.getId());
@@ -1511,20 +1509,20 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
   public void testCatchErrorThrownBySignalOfParallelAbstractBpmnActivityBehavior() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess").getId();
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertNull(runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat(runtimeService.getVariable(pi, "signaled")).isNull();
 
     Execution serviceTask = runtimeService.createExecutionQuery().processInstanceId(pi).activityId("serviceTask").list().get(3);
-    assertNotNull(serviceTask);
+    assertThat(serviceTask).isNotNull();
 
     runtimeService.setVariables(pi, throwError());
     runtimeService.signal(serviceTask.getId());
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertTrue((Boolean) runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat((Boolean) runtimeService.getVariable(pi, "signaled")).isTrue();
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskError");
 
     taskService.complete(userTask.getId());
@@ -1539,11 +1537,11 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     variables.putAll(throwException());
     String pi = runtimeService.startProcessInstanceByKey("testProcess", variables).getId();
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertNull(runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat(runtimeService.getVariable(pi, "signaled")).isNull();
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskException");
 
     taskService.complete(userTask.getId());
@@ -1558,11 +1556,11 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     variables.putAll(throwError());
     String pi = runtimeService.startProcessInstanceByKey("testProcess", variables).getId();
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertNull(runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat(runtimeService.getVariable(pi, "signaled")).isNull();
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskError");
 
     taskService.complete(userTask.getId());
@@ -1576,8 +1574,8 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     VariableMap variables = Variables.createVariables().putValue("myDelegate", new ThrowErrorDelegate());
     String pi = runtimeService.startProcessInstanceByKey("testProcess", variables).getId();
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertNull(runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat(runtimeService.getVariable(pi, "signaled")).isNull();
 
     // signal 2 times to execute first sequential behaviors
     runtimeService.setVariables(pi, leaveExecution());
@@ -1586,16 +1584,16 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     runtimeService.signal(runtimeService.createExecutionQuery().processInstanceId(pi).activityId("serviceTask").singleResult().getId());
 
     Execution serviceTask = runtimeService.createExecutionQuery().processInstanceId(pi).activityId("serviceTask").singleResult();
-    assertNotNull(serviceTask);
+    assertThat(serviceTask).isNotNull();
 
     runtimeService.setVariables(pi, throwException());
     runtimeService.signal(serviceTask.getId());
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertTrue((Boolean) runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat((Boolean) runtimeService.getVariable(pi, "signaled")).isTrue();
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskException");
 
     taskService.complete(userTask.getId());
@@ -1609,8 +1607,8 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     VariableMap variables = Variables.createVariables().putValue("myDelegate", new ThrowErrorDelegate());
     String pi = runtimeService.startProcessInstanceByKey("testProcess", variables).getId();
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertNull(runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat(runtimeService.getVariable(pi, "signaled")).isNull();
 
     // signal 2 times to execute first sequential behaviors
     runtimeService.setVariables(pi, leaveExecution());
@@ -1619,16 +1617,16 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     runtimeService.signal(runtimeService.createExecutionQuery().processInstanceId(pi).activityId("serviceTask").singleResult().getId());
 
     Execution serviceTask = runtimeService.createExecutionQuery().processInstanceId(pi).activityId("serviceTask").singleResult();
-    assertNotNull(serviceTask);
+    assertThat(serviceTask).isNotNull();
 
     runtimeService.setVariables(pi, throwError());
     runtimeService.signal(serviceTask.getId());
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertTrue((Boolean) runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat((Boolean) runtimeService.getVariable(pi, "signaled")).isTrue();
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskError");
 
     taskService.complete(userTask.getId());
@@ -1643,11 +1641,11 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     variables.putAll(throwException());
     String pi = runtimeService.startProcessInstanceByKey("testProcess", variables).getId();
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertNull(runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat(runtimeService.getVariable(pi, "signaled")).isNull();
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskException");
 
     taskService.complete(userTask.getId());
@@ -1662,11 +1660,11 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     variables.putAll(throwError());
     String pi = runtimeService.startProcessInstanceByKey("testProcess", variables).getId();
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertNull(runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat(runtimeService.getVariable(pi, "signaled")).isNull();
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskError");
 
     taskService.complete(userTask.getId());
@@ -1680,20 +1678,20 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     VariableMap variables = Variables.createVariables().putValue("myDelegate", new ThrowErrorDelegate());
     String pi = runtimeService.startProcessInstanceByKey("testProcess", variables).getId();
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertNull(runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat(runtimeService.getVariable(pi, "signaled")).isNull();
 
     Execution serviceTask = runtimeService.createExecutionQuery().processInstanceId(pi).activityId("serviceTask").list().get(3);
-    assertNotNull(serviceTask);
+    assertThat(serviceTask).isNotNull();
 
     runtimeService.setVariables(pi, throwException());
     runtimeService.signal(serviceTask.getId());
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertTrue((Boolean) runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat((Boolean) runtimeService.getVariable(pi, "signaled")).isTrue();
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskException");
 
     taskService.complete(userTask.getId());
@@ -1707,20 +1705,20 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     VariableMap variables = Variables.createVariables().putValue("myDelegate", new ThrowErrorDelegate());
     String pi = runtimeService.startProcessInstanceByKey("testProcess", variables).getId();
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertNull(runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat(runtimeService.getVariable(pi, "signaled")).isNull();
 
     Execution serviceTask = runtimeService.createExecutionQuery().processInstanceId(pi).activityId("serviceTask").list().get(3);
-    assertNotNull(serviceTask);
+    assertThat(serviceTask).isNotNull();
 
     runtimeService.setVariables(pi, throwError());
     runtimeService.signal(serviceTask.getId());
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertTrue((Boolean) runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat((Boolean) runtimeService.getVariable(pi, "signaled")).isTrue();
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskError");
 
     taskService.complete(userTask.getId());

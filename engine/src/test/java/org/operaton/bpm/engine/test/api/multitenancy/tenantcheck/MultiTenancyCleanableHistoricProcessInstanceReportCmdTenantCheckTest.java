@@ -92,7 +92,7 @@ public class MultiTenancyCleanableHistoricProcessInstanceReportCmdTenantCheckTes
     List<CleanableHistoricProcessInstanceReportResult> reportResults = historyService.createCleanableHistoricProcessInstanceReport().list();
 
     // then
-    assertThat(reportResults).hasSize(0);
+    assertThat(reportResults).isEmpty();
   }
 
   @Test
@@ -149,8 +149,8 @@ public class MultiTenancyCleanableHistoricProcessInstanceReportCmdTenantCheckTes
     List<CleanableHistoricProcessInstanceReportResult> reportResultsTwo = historyService.createCleanableHistoricProcessInstanceReport().tenantIdIn(TENANT_TWO).list();
 
     // then
-    assertThat(reportResultsOne).hasSize(0);
-    assertThat(reportResultsTwo).hasSize(0);
+    assertThat(reportResultsOne).isEmpty();
+    assertThat(reportResultsTwo).isEmpty();
   }
 
   @Test
@@ -171,7 +171,7 @@ public class MultiTenancyCleanableHistoricProcessInstanceReportCmdTenantCheckTes
     // then
     assertThat(reportResultsOne).hasSize(1);
     assertThat(reportResultsOne.get(0).getTenantId()).isEqualTo(TENANT_ONE);
-    assertThat(reportResultsTwo).hasSize(0);
+    assertThat(reportResultsTwo).isEmpty();
   }
 
   @Test

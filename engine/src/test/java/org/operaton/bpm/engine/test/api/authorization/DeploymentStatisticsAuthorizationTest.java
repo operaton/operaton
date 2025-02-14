@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.authorization;
-
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Permissions.READ_INSTANCE;
@@ -23,8 +23,6 @@ import static org.operaton.bpm.engine.authorization.Resources.DEPLOYMENT;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.List;
 import org.operaton.bpm.engine.management.DeploymentStatistics;
@@ -801,7 +799,7 @@ public class DeploymentStatisticsAuthorizationTest extends AuthorizationTest {
 
     List<IncidentStatistics> incidentStatistics = statistics.getIncidentStatistics();
     if (incidents == 0) {
-      assertTrue("Incidents supposed to be empty", incidentStatistics.isEmpty());
+      assertThat(incidentStatistics.isEmpty()).as("Incidents supposed to be empty").isTrue();
     }
     else {
       // the test does have only one type of incidents

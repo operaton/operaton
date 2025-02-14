@@ -15,11 +15,7 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.cmmn;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import java.util.HashMap;
@@ -69,9 +65,9 @@ public class CaseServiceStageTest extends PluggableProcessEngineTest {
 
     // the child case execution is active...
     CaseExecution caseExecution = caseExecutionQuery.singleResult();
-    assertTrue(caseExecution.isActive());
+    assertThat(caseExecution.isActive()).isTrue();
     // ... and not enabled
-    assertFalse(caseExecution.isEnabled());
+    assertThat(caseExecution.isEnabled()).isFalse();
 
     // there exists two new case execution:
     verifyTasksState(caseExecutionQuery);
@@ -85,18 +81,18 @@ public class CaseServiceStageTest extends PluggableProcessEngineTest {
         .activityId("PI_HumanTask_1")
         .singleResult();
 
-    assertNotNull(firstHumanTask);
-    assertTrue(firstHumanTask.isActive());
-    assertFalse(firstHumanTask.isEnabled());
+    assertThat(firstHumanTask).isNotNull();
+    assertThat(firstHumanTask.isActive()).isTrue();
+    assertThat(firstHumanTask.isEnabled()).isFalse();
 
     // (2) one case case execution representing "PI_HumanTask_2"
     CaseExecution secondHumanTask = caseExecutionQuery
         .activityId("PI_HumanTask_2")
         .singleResult();
 
-    assertNotNull(secondHumanTask);
-    assertTrue(secondHumanTask.isActive());
-    assertFalse(secondHumanTask.isEnabled());
+    assertThat(secondHumanTask).isNotNull();
+    assertThat(secondHumanTask.isActive()).isTrue();
+    assertThat(secondHumanTask.isEnabled()).isFalse();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneStageCaseWithManualActivation.cmmn"})
@@ -133,9 +129,9 @@ public class CaseServiceStageTest extends PluggableProcessEngineTest {
 
     // the child case execution is active...
     CaseExecution caseExecution = caseExecutionQuery.singleResult();
-    assertTrue(caseExecution.isActive());
+    assertThat(caseExecution.isActive()).isTrue();
     // ... and not enabled
-    assertFalse(caseExecution.isEnabled());
+    assertThat(caseExecution.isEnabled()).isFalse();
 
     // there exists two new case execution:
 
@@ -180,9 +176,9 @@ public class CaseServiceStageTest extends PluggableProcessEngineTest {
 
     // the child case execution is active...
     CaseExecution caseExecution = caseExecutionQuery.singleResult();
-    assertTrue(caseExecution.isActive());
+    assertThat(caseExecution.isActive()).isTrue();
     // ... and not enabled
-    assertFalse(caseExecution.isEnabled());
+    assertThat(caseExecution.isEnabled()).isFalse();
 
     // (1) one case case execution representing "PI_HumanTask_1"
     verifyTasksState(caseExecutionQuery);
@@ -239,9 +235,9 @@ public class CaseServiceStageTest extends PluggableProcessEngineTest {
 
     // the child case execution is active...
     CaseExecution caseExecution = caseExecutionQuery.singleResult();
-    assertTrue(caseExecution.isActive());
+    assertThat(caseExecution.isActive()).isTrue();
     // ... and not enabled
-    assertFalse(caseExecution.isEnabled());
+    assertThat(caseExecution.isEnabled()).isFalse();
 
     // (1) one case case execution representing "PI_HumanTask_1"
     verifyTasksState(caseExecutionQuery);
@@ -294,9 +290,9 @@ public class CaseServiceStageTest extends PluggableProcessEngineTest {
 
     // the child case execution is active...
     CaseExecution caseExecution = caseExecutionQuery.singleResult();
-    assertTrue(caseExecution.isActive());
+    assertThat(caseExecution.isActive()).isTrue();
     // ... and not enabled
-    assertFalse(caseExecution.isEnabled());
+    assertThat(caseExecution.isEnabled()).isFalse();
 
     // (1) one case case execution representing "PI_HumanTask_1"
     verifyTasksState(caseExecutionQuery);
@@ -313,7 +309,7 @@ public class CaseServiceStageTest extends PluggableProcessEngineTest {
   }
 
   protected void verifyVariables(String caseInstanceId, String caseExecutionId, List<VariableInstance> result) {
-    assertFalse(result.isEmpty());
+    assertThat(result).isNotEmpty();
     assertThat(result).hasSize(2);
 
     for (VariableInstance variable : result) {
@@ -374,9 +370,9 @@ public class CaseServiceStageTest extends PluggableProcessEngineTest {
 
     // the child case execution is active...
     CaseExecution caseExecution = caseExecutionQuery.singleResult();
-    assertTrue(caseExecution.isActive());
+    assertThat(caseExecution.isActive()).isTrue();
     // ... and not enabled
-    assertFalse(caseExecution.isEnabled());
+    assertThat(caseExecution.isEnabled()).isFalse();
 
     // (1) one case case execution representing "PI_HumanTask_1"
     verifyTasksState(caseExecutionQuery);
@@ -457,9 +453,9 @@ public class CaseServiceStageTest extends PluggableProcessEngineTest {
     // then
     CaseExecution caseExecution = caseExecutionQuery.singleResult();
     // the human task is disabled
-    assertFalse(caseExecution.isDisabled());
-    assertFalse(caseExecution.isActive());
-    assertTrue(caseExecution.isEnabled());
+    assertThat(caseExecution.isDisabled()).isFalse();
+    assertThat(caseExecution.isActive()).isFalse();
+    assertThat(caseExecution.isEnabled()).isTrue();
 
   }
 
@@ -524,9 +520,9 @@ public class CaseServiceStageTest extends PluggableProcessEngineTest {
     // then
     CaseExecution caseExecution = caseExecutionQuery.singleResult();
     // the human task is disabled
-    assertTrue(caseExecution.isDisabled());
-    assertFalse(caseExecution.isActive());
-    assertFalse(caseExecution.isEnabled());
+    assertThat(caseExecution.isDisabled()).isTrue();
+    assertThat(caseExecution.isActive()).isFalse();
+    assertThat(caseExecution.isEnabled()).isFalse();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskAndOneStageWithManualActivationCase.cmmn"})
@@ -696,7 +692,7 @@ public class CaseServiceStageTest extends PluggableProcessEngineTest {
         .activityId("PI_Stage_1")
         .singleResult();
 
-    assertNull(caseExecution);
+    assertThat(caseExecution).isNull();
 
     // the case instance has been completed
     CaseInstance caseInstance = caseService
@@ -704,8 +700,8 @@ public class CaseServiceStageTest extends PluggableProcessEngineTest {
         .completed()
         .singleResult();
 
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isCompleted());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isCompleted()).isTrue();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneStageCase.cmmn"})
@@ -748,7 +744,7 @@ public class CaseServiceStageTest extends PluggableProcessEngineTest {
         .activityId("PI_HumanTask_1")
         .singleResult();
 
-    assertNull(caseExecution);
+    assertThat(caseExecution).isNull();
 
     // the case instance has been completed
     CaseInstance caseInstance = caseService
@@ -756,8 +752,8 @@ public class CaseServiceStageTest extends PluggableProcessEngineTest {
         .completed()
         .singleResult();
 
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isCompleted());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isCompleted()).isTrue();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskAndOneStageCase.cmmn"})
@@ -800,7 +796,7 @@ public class CaseServiceStageTest extends PluggableProcessEngineTest {
         .activityId("PI_Stage_1")
         .singleResult();
 
-    assertNull(caseExecution);
+    assertThat(caseExecution).isNull();
 
     // the case instance is still active
     CaseInstance caseInstance = caseService
@@ -808,8 +804,8 @@ public class CaseServiceStageTest extends PluggableProcessEngineTest {
         .active()
         .singleResult();
 
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isActive());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isActive()).isTrue();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneStageCase.cmmn"})
@@ -897,15 +893,15 @@ public class CaseServiceStageTest extends PluggableProcessEngineTest {
         .activityId("PI_Stage_1")
         .singleResult();
 
-    assertNull(caseExecution);
+    assertThat(caseExecution).isNull();
 
     CaseInstance caseInstance = caseService
       .createCaseInstanceQuery()
       .completed()
       .singleResult();
 
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isCompleted());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isCompleted()).isTrue();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneStageCase.cmmn"})
@@ -956,23 +952,23 @@ public class CaseServiceStageTest extends PluggableProcessEngineTest {
 
     // when
     CaseExecution humanTaskExecution1 = queryCaseExecutionByActivityId("PI_HumanTask_1");
-    assertTrue(humanTaskExecution1.isActive());
+    assertThat(humanTaskExecution1.isActive()).isTrue();
     
     CaseExecution humanTaskExecution2 = queryCaseExecutionByActivityId("PI_HumanTask_2");
-    assertTrue(humanTaskExecution2.isActive());
+    assertThat(humanTaskExecution2.isActive()).isTrue();
     
     caseService.withCaseExecution(stageExecution.getId())
       .terminate();
     
     // then
     stageExecution = queryCaseExecutionByActivityId("PI_Stage_1");
-    assertNull(stageExecution);
+    assertThat(stageExecution).isNull();
 
     humanTaskExecution1 = queryCaseExecutionByActivityId("PI_HumanTask_1");
-    assertNull(humanTaskExecution1);
+    assertThat(humanTaskExecution1).isNull();
 
     humanTaskExecution2 = queryCaseExecutionByActivityId("PI_HumanTask_2");
-    assertNull(humanTaskExecution2);
+    assertThat(humanTaskExecution2).isNull();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneStageCase.cmmn"})
@@ -997,7 +993,7 @@ public class CaseServiceStageTest extends PluggableProcessEngineTest {
       
     // then
     stageExecution = queryCaseExecutionByActivityId("PI_Stage_1");
-    assertNull(stageExecution);
+    assertThat(stageExecution).isNull();
     
   }
 

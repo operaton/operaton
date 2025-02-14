@@ -17,8 +17,7 @@
 package org.operaton.bpm.engine.test.bpmn.event.link;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Arrays;
 import java.util.List;
@@ -99,7 +98,7 @@ public class LinkEventTest extends PluggableProcessEngineTest {
       fail("process should not deploy because it contains multiple event link targets which is invalid in the BPMN 2.0 spec");
     }
     catch (ParseException e) {
-      assertTrue(e.getMessage().contains("Multiple Intermediate Catch Events with the same link event name ('LinkA') are not allowed"));
+      assertThat(e.getMessage()).contains("Multiple Intermediate Catch Events with the same link event name ('LinkA') are not allowed");
       assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("IntermediateCatchEvent_2");
     }
   }
@@ -112,7 +111,7 @@ public class LinkEventTest extends PluggableProcessEngineTest {
       fail("process should not deploy because it contains multiple event link targets which is invalid in the BPMN 2.0 spec");
     }
     catch (ParseException e) {
-      assertTrue(e.getMessage().contains("IntermediateCatchLinkEvent is not allowed after an EventBasedGateway."));
+      assertThat(e.getMessage()).contains("IntermediateCatchLinkEvent is not allowed after an EventBasedGateway.");
       assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("IntermediateCatchEvent_2");
     }
   }

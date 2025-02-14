@@ -21,7 +21,7 @@ import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.management.JobDefinition;
 import org.operaton.bpm.engine.runtime.Job;
 
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 public class BatchRestartHelper extends BatchHelper {
@@ -39,7 +39,7 @@ public class BatchRestartHelper extends BatchHelper {
 
   @Override
   public void executeJob(Job job) {
-    assertNotNull("Job to execute does not exist", job);
+    assertThat(job).as("Job to execute does not exist").isNotNull();
     getManagementService().executeJob(job.getId());
   }
 }

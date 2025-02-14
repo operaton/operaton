@@ -17,8 +17,7 @@
 package org.operaton.bpm.engine.test.api.repository.diagram;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import java.io.File;
@@ -144,7 +143,7 @@ public class ProcessDiagramRetrievalTest {
       ProcessDefinition processDefinition = processDefinitionQuery.singleResult();
       InputStream expectedStream = new FileInputStream("src/test/resources/org/operaton/bpm/engine/test/api/repository/diagram/" + xmlFileName);
       InputStream actualStream = repositoryService.getProcessModel(processDefinition.getId());
-      assertTrue(isEqual(expectedStream, actualStream));
+      assertThat(isEqual(expectedStream, actualStream)).isTrue();
     } else {
       // some test diagrams do not contain executable processes
       // and are therefore ignored by the engine
@@ -162,7 +161,7 @@ public class ProcessDiagramRetrievalTest {
       InputStream actualStream = repositoryService.getProcessDiagram(processDefinition.getId());
 //      writeToFile(repositoryService.getProcessDiagram(processDefinition.getId()),
 //              new File("src/test/resources/org/operaton/bpm/engine/test/api/repository/diagram/" + imageFileName + ".actual.png"));
-      assertTrue(isEqual(expectedStream, actualStream));
+      assertThat(isEqual(expectedStream, actualStream)).isTrue();
     } else {
       // some test diagrams do not contain executable processes
       // and are therefore ignored by the engine
@@ -180,8 +179,8 @@ public class ProcessDiagramRetrievalTest {
       InputStream stream = repositoryService.getProcessDiagram(processDefinition.getId());
 
       // then
-      assertNotNull(processDefinition.getDiagramResourceName());
-      assertNotNull(stream);
+      assertThat(processDefinition.getDiagramResourceName()).isNotNull();
+      assertThat(stream).isNotNull();
     } else {
       // some test diagrams do not contain executable processes
       // and are therefore ignored by the engine
@@ -197,7 +196,7 @@ public class ProcessDiagramRetrievalTest {
     DiagramLayout processDiagramLayout;
     if (1 == processDefinitionQuery.count()) {
       ProcessDefinition processDefinition = processDefinitionQuery.singleResult();
-      assertNotNull(processDefinition);
+      assertThat(processDefinition).isNotNull();
       processDiagramLayout = repositoryService.getProcessDiagramLayout(processDefinition.getId());
     } else {
       // some test diagrams do not contain executable processes
@@ -205,8 +204,8 @@ public class ProcessDiagramRetrievalTest {
       final InputStream bpmnXmlStream = new FileInputStream("src/test/resources/org/operaton/bpm/engine/test/api/repository/diagram/" + xmlFileName);
       final InputStream imageStream = new FileInputStream("src/test/resources/org/operaton/bpm/engine/test/api/repository/diagram/" + imageFileName);
 
-      assertNotNull(bpmnXmlStream);
-      assertNotNull(imageStream);
+      assertThat(bpmnXmlStream).isNotNull();
+      assertThat(imageStream).isNotNull();
 
       // we need to run this in the ProcessEngine context
       processDiagramLayout = engineRule.getProcessEngineConfiguration()

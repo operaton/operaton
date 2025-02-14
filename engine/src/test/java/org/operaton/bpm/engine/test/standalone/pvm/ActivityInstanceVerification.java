@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.standalone.pvm;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -105,17 +106,17 @@ public class ActivityInstanceVerification extends Assert implements ExecutionLis
       return;
     }
 
-    assertNotNull(startInstancesForThisAct);
+    assertThat(startInstancesForThisAct).isNotNull();
     Assertions.assertThat(startInstancesForThisAct).hasSize(count);
 
     List<ActivityInstance> endInstancesForThisAct = endedActivityInstances.get(actId);
-    assertNotNull(endInstancesForThisAct);
+    assertThat(endInstancesForThisAct).isNotNull();
 
     for (ActivityInstance startedActInstance : startInstancesForThisAct) {
 
-      assertNotNull("activityInstanceId cannot be null for "+startedActInstance, startedActInstance.id);
-      assertNotNull("executionId cannot be null for "+startedActInstance, startedActInstance.executionId);
-      assertNotNull("parentId cannot be null for "+startedActInstance, startedActInstance.parentId);
+      assertThat(startedActInstance.id).as("activityInstanceId cannot be null for " + startedActInstance).isNotNull();
+      assertThat(startedActInstance.executionId).as("executionId cannot be null for " + startedActInstance).isNotNull();
+      assertThat(startedActInstance.parentId).as("parentId cannot be null for " + startedActInstance).isNotNull();
 
       boolean foundMatchingEnd = false;
       for (ActivityInstance endedActInstance : endInstancesForThisAct) {
@@ -125,7 +126,7 @@ public class ActivityInstanceVerification extends Assert implements ExecutionLis
         }
       }
       if(!foundMatchingEnd) {
-        fail("cannot find matching end activity instance for start activity instance "+startedActInstance.id);
+        fail("cannot find matching end activity instance for start activity instance " + startedActInstance.id);
       }
     }
   }
@@ -160,7 +161,7 @@ public class ActivityInstanceVerification extends Assert implements ExecutionLis
         }
       }
       if(!found) {
-        fail("every instance of '"+actId+"' must have a parent which is an instance of '"+parentId);
+        fail("every instance of '" + actId + "' must have a parent which is an instance of '" + parentId);
       }
     }
   }
@@ -183,7 +184,7 @@ public class ActivityInstanceVerification extends Assert implements ExecutionLis
 
   private void assertCorrectCompletingState(String activityId, int expectedCount, boolean completing) {
     List<ActivityInstance> endActivityInstances = endedActivityInstances.get(activityId);
-    assertNotNull(endActivityInstances);
+    assertThat(endActivityInstances).isNotNull();
 
     for (ActivityInstance instance : endActivityInstances) {
       Assertions.assertThat(instance.isCompleteScope).isEqualTo(completing);

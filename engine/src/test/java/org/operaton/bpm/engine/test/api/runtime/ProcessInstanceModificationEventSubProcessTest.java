@@ -21,9 +21,6 @@ import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeA
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -60,7 +57,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
       .execute();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
@@ -100,7 +97,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
       .execute();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
@@ -135,7 +132,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
       .execute();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
@@ -169,7 +166,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
       .execute();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
@@ -203,7 +200,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
       .execute();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
@@ -243,7 +240,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
       .execute();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
@@ -277,7 +274,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
       .execute();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
@@ -314,7 +311,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
       .execute();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
@@ -351,7 +348,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
       .execute();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
@@ -389,7 +386,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
       .execute();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
@@ -427,7 +424,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
       .execute();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
@@ -468,7 +465,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
       .execute();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
@@ -509,7 +506,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
       .execute();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
@@ -547,7 +544,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
       .execute();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
@@ -582,7 +579,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
       .execute();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
@@ -620,7 +617,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
       .execute();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
@@ -658,7 +655,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
       .execute();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
@@ -701,7 +698,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
 
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
@@ -742,7 +739,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
       .execute();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
@@ -783,7 +780,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
       .execute();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
@@ -817,7 +814,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
 
     Job timerJob = managementService.createJobQuery().singleResult();
-    assertNotNull(timerJob);
+    assertThat(timerJob).isNotNull();
 
     // when the process instance is bare intermediately due to cancellation
     runtimeService
@@ -829,7 +826,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
     // then it is still the same job
 
     Job remainingTimerJob = managementService.createJobQuery().singleResult();
-    assertNotNull(remainingTimerJob);
+    assertThat(remainingTimerJob).isNotNull();
 
     assertThat(remainingTimerJob.getId()).isEqualTo(timerJob.getId());
     assertThat(remainingTimerJob.getDuedate()).isEqualTo(timerJob.getDuedate());
@@ -848,7 +845,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
         .processInstanceId(processInstance.getId())
         .taskDefinitionKey("UserTaskEventSubProcess")
         .singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // when
     runtimeService.createProcessInstanceModification(processInstance.getId())
@@ -856,7 +853,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
       .startAfterActivity("UserTaskEventSubProcess")
       .execute();
 
-    assertNull(runtimeService.createProcessInstanceQuery().singleResult());
+    assertThat(runtimeService.createProcessInstanceQuery().singleResult()).isNull();
   }
 
   protected String getInstanceIdForActivity(ActivityInstance activityInstance, String activityId) {
@@ -885,7 +882,7 @@ public class ProcessInstanceModificationEventSubProcessTest extends PluggablePro
     for (String taskName : taskNames) {
       // complete any task with that name
       List<Task> tasks = taskService.createTaskQuery().taskDefinitionKey(taskName).listPage(0, 1);
-      assertTrue("task for activity " + taskName + " does not exist", !tasks.isEmpty());
+      assertThat(!tasks.isEmpty()).as("task for activity " + taskName + " does not exist").isTrue();
       taskService.complete(tasks.get(0).getId());
     }
   }

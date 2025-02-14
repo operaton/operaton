@@ -18,8 +18,6 @@ package org.operaton.bpm.engine.test.concurrency;
 
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP_STRATEGY_END_TIME_BASED;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -147,11 +145,11 @@ public class ConcurrentProcessEngineJobExecutorHistoryCleanupJobTest extends Con
     thread2.waitForSync();
     thread2.waitUntilDone(true);
 
-    assertNull(thread1.getException());
+    assertThat(thread1.getException()).isNull();
 
-    assertNull(thread2.getException());
-    assertNull(bootstrapCommand.getContextSpy().getThrowable());
-    assertNotNull(ProcessEngines.getProcessEngines().get(PROCESS_ENGINE_NAME));
+    assertThat(thread2.getException()).isNull();
+    assertThat(bootstrapCommand.getContextSpy().getThrowable()).isNull();
+    assertThat(ProcessEngines.getProcessEngines().get(PROCESS_ENGINE_NAME)).isNotNull();
   }
 
   protected static class ControllableProcessEngineBootstrapCommand extends ControllableCommand<Void> {

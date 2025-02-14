@@ -17,10 +17,6 @@
 package org.operaton.bpm.engine.test.cmmn.decisiontask;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import org.operaton.bpm.dmn.engine.DmnDecisionResult;
 import org.operaton.bpm.dmn.engine.DmnDecisionResultEntries;
@@ -52,7 +48,7 @@ public class DmnDecisionTaskResultListenerTest extends CmmnTest {
   public void testNoOutput() {
     startTestCase("no output");
 
-    assertTrue("The decision result 'ruleResult' should be empty", results.isEmpty());
+    assertThat(results.isEmpty()).as("The decision result 'ruleResult' should be empty").isTrue();
   }
 
   @Deployment(resources = { TEST_CASE, TEST_DECISION})
@@ -60,10 +56,10 @@ public class DmnDecisionTaskResultListenerTest extends CmmnTest {
   public void testEmptyOutput() {
     startTestCase("empty output");
 
-    assertFalse("The decision result 'ruleResult' should not be empty", results.isEmpty());
+    assertThat(results.isEmpty()).as("The decision result 'ruleResult' should not be empty").isFalse();
 
     DmnDecisionResultEntries decisionOutput = results.get(0);
-    assertNull(decisionOutput.getFirstEntry());
+    assertThat(decisionOutput.getFirstEntry()).isNull();
   }
 
   @Deployment(resources = { TEST_CASE, TEST_DECISION})
@@ -74,7 +70,7 @@ public class DmnDecisionTaskResultListenerTest extends CmmnTest {
     assertThat(results).hasSize(2);
 
     for (DmnDecisionResultEntries output : results) {
-      assertTrue("The decision output should be empty", output.isEmpty());
+      assertThat(output.isEmpty()).as("The decision output should be empty").isTrue();
     }
   }
 
@@ -94,8 +90,9 @@ public class DmnDecisionTaskResultListenerTest extends CmmnTest {
     startTestCase("multiple entries");
 
     DmnDecisionResultEntries firstOutput = results.get(0);
-    assertThat(firstOutput).containsEntry("result1", "foo");
-    assertThat(firstOutput).containsEntry("result2", "bar");
+    assertThat(firstOutput)
+            .containsEntry("result1", "foo")
+            .containsEntry("result2", "bar");
 
     assertThat(firstOutput.<StringValue>getEntryTyped("result1")).isEqualTo(Variables.stringValue("foo"));
     assertThat(firstOutput.<StringValue>getEntryTyped("result2")).isEqualTo(Variables.stringValue("bar"));
@@ -122,9 +119,10 @@ public class DmnDecisionTaskResultListenerTest extends CmmnTest {
     assertThat(results).hasSize(2);
 
     for (DmnDecisionResultEntries output : results) {
-      assertThat(output).hasSize(2);
-      assertThat(output).containsEntry("result1", "foo");
-      assertThat(output).containsEntry("result2", "bar");
+      assertThat(output)
+              .hasSize(2)
+              .containsEntry("result1", "foo")
+              .containsEntry("result2", "bar");
 
       assertThat(output.<StringValue>getEntryTyped("result1")).isEqualTo(Variables.stringValue("foo"));
       assertThat(output.<StringValue>getEntryTyped("result2")).isEqualTo(Variables.stringValue("bar"));
@@ -148,7 +146,7 @@ public class DmnDecisionTaskResultListenerTest extends CmmnTest {
   public void testCollectSumHitPolicyNoOutput() {
     startTestCase("no output");
 
-    assertTrue("The decision result 'ruleResult' should be empty", results.isEmpty());
+    assertThat(results.isEmpty()).as("The decision result 'ruleResult' should be empty").isTrue();
   }
 
   @Deployment(resources = { TEST_CASE, TEST_DECISION_COLLECT_SUM })
@@ -178,7 +176,7 @@ public class DmnDecisionTaskResultListenerTest extends CmmnTest {
   protected CaseInstance startTestCase(String input) {
     CaseInstance caseInstance = createCaseInstanceByKey("case", Variables.createVariables().putValue("input", input));
     results = DecisionResultTestListener.getDecisionResult();
-    assertNotNull(results);
+    assertThat(results).isNotNull();
     return caseInstance;
   }
 

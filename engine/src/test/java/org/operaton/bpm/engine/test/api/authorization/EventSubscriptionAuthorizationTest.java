@@ -22,7 +22,6 @@ import static org.operaton.bpm.engine.authorization.Permissions.READ_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
 
 import org.operaton.bpm.engine.runtime.EventSubscription;
 import org.operaton.bpm.engine.runtime.EventSubscriptionQuery;
@@ -73,7 +72,7 @@ public class EventSubscriptionAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     EventSubscription eventSubscription = query.singleResult();
-    assertNotNull(eventSubscription);
+    assertThat(eventSubscription).isNotNull();
     assertThat(eventSubscription.getProcessInstanceId()).isEqualTo(processInstanceId);
   }
 
@@ -90,7 +89,7 @@ public class EventSubscriptionAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     EventSubscription eventSubscription = query.singleResult();
-    assertNotNull(eventSubscription);
+    assertThat(eventSubscription).isNotNull();
     assertThat(eventSubscription.getProcessInstanceId()).isEqualTo(processInstanceId);
   }
 
@@ -121,7 +120,7 @@ public class EventSubscriptionAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     EventSubscription eventSubscription = query.singleResult();
-    assertNotNull(eventSubscription);
+    assertThat(eventSubscription).isNotNull();
     assertThat(eventSubscription.getProcessInstanceId()).isEqualTo(processInstanceId);
   }
 
@@ -138,7 +137,7 @@ public class EventSubscriptionAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     EventSubscription eventSubscription = query.singleResult();
-    assertNotNull(eventSubscription);
+    assertThat(eventSubscription).isNotNull();
     assertThat(eventSubscription.getProcessInstanceId()).isEqualTo(processInstanceId);
   }
 
@@ -182,7 +181,7 @@ public class EventSubscriptionAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     EventSubscription eventSubscription = query.singleResult();
-    assertNotNull(eventSubscription);
+    assertThat(eventSubscription).isNotNull();
     assertThat(eventSubscription.getProcessInstanceId()).isEqualTo(processInstanceId);
   }
 

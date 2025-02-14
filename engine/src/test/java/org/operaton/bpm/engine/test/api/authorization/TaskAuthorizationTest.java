@@ -34,10 +34,6 @@ import static org.operaton.bpm.engine.authorization.Resources.TASK;
 import static org.operaton.bpm.engine.authorization.TaskPermissions.UPDATE_VARIABLE;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.List;
@@ -409,7 +405,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     Task task = taskService.newTask();
 
     // then
-    assertNotNull(task);
+    assertThat(task).isNotNull();
   }
 
   // save task (insert) //////////////////////////////////////////////////////////
@@ -440,7 +436,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     task = (TaskEntity) selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
 
     String taskId = task.getId();
@@ -464,7 +460,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     task = (TaskEntity) selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demoNew");
 
     String taskId = task.getId();
@@ -507,7 +503,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
 
     deleteTask(taskId, true);
@@ -548,7 +544,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
   }
 
@@ -566,7 +562,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
   }
 
@@ -584,7 +580,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
   }
 
@@ -602,7 +598,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
   }
 
@@ -620,7 +616,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
   }
 
@@ -638,7 +634,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
   }
 
@@ -656,7 +652,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
   }
 
@@ -691,7 +687,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNull(task);
+    assertThat(task).isNull();
 
     // triggers a db clean up
     deleteTask(taskId, true);
@@ -754,7 +750,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNull(task);
+    assertThat(task).isNull();
 
     // triggers a db clean up
     deleteTask(firstTaskId, true);
@@ -792,7 +788,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
 
     deleteTask(taskId, true);
@@ -811,7 +807,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
 
     deleteTask(taskId, true);
@@ -851,7 +847,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
   }
 
@@ -868,7 +864,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
   }
 
@@ -885,7 +881,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
   }
 
@@ -902,7 +898,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
   }
 
@@ -919,7 +915,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
   }
 
@@ -936,7 +932,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
   }
 
@@ -954,7 +950,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
   }
 
@@ -971,7 +967,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
   }
 
@@ -1006,7 +1002,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getOwner()).isEqualTo("demo");
 
     deleteTask(taskId, true);
@@ -1025,7 +1021,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getOwner()).isEqualTo("demo");
 
     deleteTask(taskId, true);
@@ -1065,7 +1061,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getOwner()).isEqualTo("demo");
   }
 
@@ -1082,7 +1078,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getOwner()).isEqualTo("demo");
   }
 
@@ -1099,7 +1095,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getOwner()).isEqualTo("demo");
   }
 
@@ -1116,7 +1112,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getOwner()).isEqualTo("demo");
   }
 
@@ -1133,7 +1129,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getOwner()).isEqualTo("demo");
   }
 
@@ -1150,7 +1146,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getOwner()).isEqualTo("demo");
   }
 
@@ -1168,7 +1164,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getOwner()).isEqualTo("demo");
   }
 
@@ -1186,7 +1182,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getOwner()).isEqualTo("demo");
   }
 
@@ -1203,7 +1199,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getOwner()).isEqualTo("demo");
   }
 
@@ -1241,11 +1237,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getUserId()).isEqualTo("demo");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -1290,11 +1286,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getUserId()).isEqualTo("demo");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -1333,11 +1329,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getUserId()).isEqualTo("demo");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -1360,11 +1356,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getUserId()).isEqualTo("demo");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -1386,11 +1382,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getUserId()).isEqualTo("demo");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -1412,11 +1408,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getUserId()).isEqualTo("demo");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -1438,11 +1434,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getUserId()).isEqualTo("demo");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -1464,11 +1460,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getUserId()).isEqualTo("demo");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -1491,11 +1487,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getUserId()).isEqualTo("demo");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -1517,11 +1513,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getUserId()).isEqualTo("demo");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -1561,11 +1557,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getGroupId()).isEqualTo("accounting");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -1589,11 +1585,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getGroupId()).isEqualTo("accounting");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -1638,11 +1634,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getGroupId()).isEqualTo("accounting");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -1664,11 +1660,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getGroupId()).isEqualTo("accounting");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -1690,11 +1686,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getGroupId()).isEqualTo("accounting");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -1716,11 +1712,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getGroupId()).isEqualTo("accounting");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -1742,11 +1738,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getGroupId()).isEqualTo("accounting");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -1768,11 +1764,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getGroupId()).isEqualTo("accounting");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -1795,11 +1791,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getGroupId()).isEqualTo("accounting");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -1822,11 +1818,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getGroupId()).isEqualTo("accounting");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -1849,11 +1845,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getGroupId()).isEqualTo("accounting");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -1875,11 +1871,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getGroupId()).isEqualTo("accounting");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -1919,11 +1915,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getUserId()).isEqualTo("demo");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -1946,11 +1942,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     disableAuthorization();
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getUserId()).isEqualTo("demo");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -1995,11 +1991,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getUserId()).isEqualTo("demo");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -2021,11 +2017,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getUserId()).isEqualTo("demo");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -2047,11 +2043,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getUserId()).isEqualTo("demo");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -2073,11 +2069,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getUserId()).isEqualTo("demo");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -2099,11 +2095,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getUserId()).isEqualTo("demo");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -2125,11 +2121,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getUserId()).isEqualTo("demo");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -2152,11 +2148,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getUserId()).isEqualTo("demo");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -2178,11 +2174,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getUserId()).isEqualTo("demo");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -2222,11 +2218,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getGroupId()).isEqualTo("accounting");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -2271,11 +2267,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getGroupId()).isEqualTo("accounting");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -2297,11 +2293,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getGroupId()).isEqualTo("accounting");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -2323,11 +2319,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getGroupId()).isEqualTo("accounting");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -2350,11 +2346,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getGroupId()).isEqualTo("accounting");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -2376,11 +2372,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
+    assertThat(linksForTask).isNotNull();
     assertThat(linksForTask).hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
     assertThat(identityLink.getGroupId()).isEqualTo("accounting");
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -2422,8 +2418,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
 
     deleteTask(taskId, true);
   }
@@ -2445,8 +2441,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
 
     deleteTask(taskId, true);
   }
@@ -2490,8 +2486,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
   }
 
   @Test
@@ -2511,8 +2507,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
   }
 
   @Test
@@ -2532,8 +2528,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
   }
 
   @Test
@@ -2553,8 +2549,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
   }
 
   @Test
@@ -2574,8 +2570,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
   }
 
   @Test
@@ -2595,8 +2591,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
   }
 
   @Test
@@ -2617,8 +2613,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
   }
 
   // delete candidate user ((case) task) /////////////////////////////////////////////
@@ -2638,8 +2634,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
   }
 
   // delete candidate group ((standalone) task) /////////////////////////////////////////////
@@ -2678,8 +2674,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
 
     deleteTask(taskId, true);
   }
@@ -2701,8 +2697,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
 
     deleteTask(taskId, true);
   }
@@ -2746,8 +2742,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
   }
 
   @Test
@@ -2767,8 +2763,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
   }
 
   @Test
@@ -2788,8 +2784,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
   }
 
   @Test
@@ -2809,8 +2805,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
   }
 
   @Test
@@ -2830,8 +2826,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
   }
 
   @Test
@@ -2851,8 +2847,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
   }
 
   @Test
@@ -2873,8 +2869,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
   }
 
   // delete candidate group ((case) task) /////////////////////////////////////////////
@@ -2894,8 +2890,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
   }
 
   // delete user identity link ((standalone) task) /////////////////////////////////////////////
@@ -2934,8 +2930,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
 
     deleteTask(taskId, true);
   }
@@ -2957,8 +2953,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
 
     deleteTask(taskId, true);
   }
@@ -3002,8 +2998,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
   }
 
   @Test
@@ -3023,8 +3019,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
   }
 
   @Test
@@ -3044,8 +3040,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
   }
 
   @Test
@@ -3065,8 +3061,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
   }
 
   @Test
@@ -3086,8 +3082,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
   }
 
   @Test
@@ -3107,8 +3103,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
   }
 
   @Test
@@ -3129,8 +3125,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
   }
 
   @Test
@@ -3151,8 +3147,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
   }
 
   // delete user identity link ((case) task) /////////////////////////////////////////////
@@ -3172,8 +3168,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
   }
 
   // delete group identity link ((standalone) task) /////////////////////////////////////////////
@@ -3212,8 +3208,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
 
     deleteTask(taskId, true);
   }
@@ -3257,8 +3253,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
   }
 
   @Test
@@ -3278,8 +3274,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
   }
 
   @Test
@@ -3299,8 +3295,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
   }
 
   @Test
@@ -3321,8 +3317,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
   }
 
   // delete group identity link ((case) task) /////////////////////////////////////////////
@@ -3342,8 +3338,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertTrue(linksForTask.isEmpty());
+    assertThat(linksForTask).isNotNull();
+    assertThat(linksForTask).isEmpty();
   }
 
   // get identity links ((standalone) task) ////////////////////////////////////////////////
@@ -3378,8 +3374,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> identityLinksForTask = taskService.getIdentityLinksForTask(taskId);
 
     // then
-    assertNotNull(identityLinksForTask);
-    assertFalse(identityLinksForTask.isEmpty());
+    assertThat(identityLinksForTask).isNotNull();
+    assertThat(identityLinksForTask).isNotEmpty();
 
     deleteTask(taskId, true);
   }
@@ -3419,8 +3415,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> identityLinksForTask = taskService.getIdentityLinksForTask(taskId);
 
     // then
-    assertNotNull(identityLinksForTask);
-    assertFalse(identityLinksForTask.isEmpty());
+    assertThat(identityLinksForTask).isNotNull();
+    assertThat(identityLinksForTask).isNotEmpty();
   }
 
   @Test
@@ -3436,8 +3432,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> identityLinksForTask = taskService.getIdentityLinksForTask(taskId);
 
     // then
-    assertNotNull(identityLinksForTask);
-    assertFalse(identityLinksForTask.isEmpty());
+    assertThat(identityLinksForTask).isNotNull();
+    assertThat(identityLinksForTask).isNotEmpty();
   }
 
   @Test
@@ -3453,8 +3449,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> identityLinksForTask = taskService.getIdentityLinksForTask(taskId);
 
     // then
-    assertNotNull(identityLinksForTask);
-    assertFalse(identityLinksForTask.isEmpty());
+    assertThat(identityLinksForTask).isNotNull();
+    assertThat(identityLinksForTask).isNotEmpty();
   }
 
   @Test
@@ -3471,8 +3467,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> identityLinksForTask = taskService.getIdentityLinksForTask(taskId);
 
     // then
-    assertNotNull(identityLinksForTask);
-    assertFalse(identityLinksForTask.isEmpty());
+    assertThat(identityLinksForTask).isNotNull();
+    assertThat(identityLinksForTask).isNotEmpty();
   }
 
   // get identity links ((case) task) ////////////////////////////////////////////////
@@ -3488,8 +3484,8 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> identityLinksForTask = taskService.getIdentityLinksForTask(taskId);
 
     // then
-    assertNotNull(identityLinksForTask);
-    assertFalse(identityLinksForTask.isEmpty());
+    assertThat(identityLinksForTask).isNotNull();
+    assertThat(identityLinksForTask).isNotEmpty();
   }
 
   // claim (standalone) task ////////////////////////////////////////////////////////////
@@ -3523,7 +3519,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
 
     deleteTask(taskId, true);
@@ -3542,7 +3538,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
 
     deleteTask(taskId, true);
@@ -3601,7 +3597,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
   }
 
@@ -3618,7 +3614,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
   }
 
@@ -3636,7 +3632,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
   }
 
@@ -3670,7 +3666,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
   }
 
@@ -3687,7 +3683,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
   }
 
@@ -3704,7 +3700,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
   }
 
@@ -3721,7 +3717,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
 
   }
@@ -3757,7 +3753,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
   }
 
@@ -3774,7 +3770,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
   }
 
@@ -3809,7 +3805,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNull(task);
+    assertThat(task).isNull();
 
     if (!processEngineConfiguration.getHistoryLevel().equals(HistoryLevel.HISTORY_LEVEL_NONE)) {
       historyService.deleteHistoricTaskInstance(taskId);
@@ -3829,7 +3825,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNull(task);
+    assertThat(task).isNull();
 
     if (!processEngineConfiguration.getHistoryLevel().equals(HistoryLevel.HISTORY_LEVEL_NONE)) {
       historyService.deleteHistoricTaskInstance(taskId);
@@ -3870,7 +3866,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNull(task);
+    assertThat(task).isNull();
   }
 
   @Test
@@ -3886,7 +3882,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNull(task);
+    assertThat(task).isNull();
   }
 
   @Test
@@ -3902,7 +3898,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNull(task);
+    assertThat(task).isNull();
   }
 
   @Test
@@ -3918,7 +3914,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNull(task);
+    assertThat(task).isNull();
   }
 
   @Test
@@ -3934,7 +3930,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNull(task);
+    assertThat(task).isNull();
   }
 
   @Test
@@ -3951,7 +3947,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNull(task);
+    assertThat(task).isNull();
   }
 
   // complete (case) task ////////////////////////////////////////////////////////////
@@ -3967,7 +3963,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNull(task);
+    assertThat(task).isNull();
   }
 
   // delegate (standalone) task ///////////////////////////////////////////////////////
@@ -4001,7 +3997,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
 
     deleteTask(taskId, true);
@@ -4020,7 +4016,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
 
     deleteTask(taskId, true);
@@ -4060,7 +4056,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
   }
 
@@ -4077,7 +4073,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
   }
 
@@ -4094,7 +4090,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
   }
 
@@ -4111,7 +4107,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
   }
 
@@ -4128,7 +4124,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
   }
 
@@ -4145,7 +4141,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
   }
 
@@ -4163,7 +4159,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
   }
 
@@ -4181,7 +4177,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
   }
 
@@ -4198,7 +4194,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo("demo");
   }
 
@@ -4235,7 +4231,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo(userId);
 
     deleteTask(taskId, true);
@@ -4277,7 +4273,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo(userId);
   }
 
@@ -4296,7 +4292,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo(userId);
   }
 
@@ -4315,7 +4311,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo(userId);
   }
 
@@ -4335,7 +4331,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo(userId);
   }
 
@@ -4354,7 +4350,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getAssignee()).isEqualTo(userId);
   }
 
@@ -4369,7 +4365,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getPriority()).isEqualTo(80);
   }
 
@@ -4395,7 +4391,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<Task> subTasks = taskService.getSubTasks(parentTaskId);
 
     // then
-    assertTrue(subTasks.isEmpty());
+    assertThat(subTasks).isEmpty();
 
     deleteTask(parentTaskId, true);
   }
@@ -4422,7 +4418,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<Task> subTasks = taskService.getSubTasks(parentTaskId);
 
     // then
-    assertFalse(subTasks.isEmpty());
+    assertThat(subTasks).isNotEmpty();
     assertThat(subTasks).hasSize(1);
 
     assertThat(subTasks.get(0).getId()).isEqualTo("sub1");
@@ -4452,7 +4448,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<Task> subTasks = taskService.getSubTasks(parentTaskId);
 
     // then
-    assertFalse(subTasks.isEmpty());
+    assertThat(subTasks).isNotEmpty();
     assertThat(subTasks).hasSize(2);
 
     deleteTask(parentTaskId, true);
@@ -4480,7 +4476,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<Task> subTasks = taskService.getSubTasks(parentTaskId);
 
     // then
-    assertTrue(subTasks.isEmpty());
+    assertThat(subTasks).isEmpty();
   }
 
   @Test
@@ -4505,7 +4501,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<Task> subTasks = taskService.getSubTasks(parentTaskId);
 
     // then
-    assertFalse(subTasks.isEmpty());
+    assertThat(subTasks).isNotEmpty();
     assertThat(subTasks).hasSize(1);
 
     assertThat(subTasks.get(0).getId()).isEqualTo("sub1");
@@ -4533,7 +4529,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<Task> subTasks = taskService.getSubTasks(parentTaskId);
 
     // then
-    assertFalse(subTasks.isEmpty());
+    assertThat(subTasks).isNotEmpty();
     assertThat(subTasks).hasSize(2);
   }
 
@@ -4559,7 +4555,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<Task> subTasks = taskService.getSubTasks(parentTaskId);
 
     // then
-    assertTrue(subTasks.isEmpty());
+    assertThat(subTasks).isEmpty();
   }
 
   @Test
@@ -4584,7 +4580,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<Task> subTasks = taskService.getSubTasks(parentTaskId);
 
     // then
-    assertFalse(subTasks.isEmpty());
+    assertThat(subTasks).isNotEmpty();
     assertThat(subTasks).hasSize(1);
 
     assertThat(subTasks.get(0).getId()).isEqualTo("sub1");
@@ -4612,7 +4608,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<Task> subTasks = taskService.getSubTasks(parentTaskId);
 
     // then
-    assertFalse(subTasks.isEmpty());
+    assertThat(subTasks).isNotEmpty();
     assertThat(subTasks).hasSize(2);
   }
 
@@ -4631,7 +4627,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
         .resourceId(taskId)
         .singleResult();
     enableAuthorization();
-    assertNotNull(authorization);
+    assertThat(authorization).isNotNull();
 
     // when
     taskService.complete(taskId);
@@ -4644,7 +4640,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNull(authorization);
+    assertThat(authorization).isNull();
 
     deleteTask(taskId, true);
   }
@@ -4664,7 +4660,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
         .resourceId(taskId)
         .singleResult();
     enableAuthorization();
-    assertNotNull(authorization);
+    assertThat(authorization).isNotNull();
 
     // when
     taskService.complete(taskId);
@@ -4677,7 +4673,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNull(authorization);
+    assertThat(authorization).isNull();
   }
 
   // set assignee -> an authorization is available (standalone task) /////////////////////////////////////////
@@ -4701,11 +4697,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNotNull(authorization);
+    assertThat(authorization).isNotNull();
     assertThat(authorization.getResourceType()).isEqualTo(TASK.resourceType());
     assertThat(authorization.getResourceId()).isEqualTo(taskId);
-    assertTrue(authorization.isPermissionGranted(READ));
-    assertTrue(authorization.isPermissionGranted(getDefaultTaskPermissionForUser()));
+    assertThat(authorization.isPermissionGranted(READ)).isTrue();
+    assertThat(authorization.isPermissionGranted(getDefaultTaskPermissionForUser())).isTrue();
 
     deleteTask(taskId, true);
   }
@@ -4730,11 +4726,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNotNull(authorization);
+    assertThat(authorization).isNotNull();
     assertThat(authorization.getResourceType()).isEqualTo(TASK.resourceType());
     assertThat(authorization.getResourceId()).isEqualTo(taskId);
-    assertTrue(authorization.isPermissionGranted(READ));
-    assertTrue(authorization.isPermissionGranted(getDefaultTaskPermissionForUser()));
+    assertThat(authorization.isPermissionGranted(READ)).isTrue();
+    assertThat(authorization.isPermissionGranted(getDefaultTaskPermissionForUser())).isTrue();
 
     deleteTask(taskId, true);
   }
@@ -4761,11 +4757,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNotNull(authorization);
+    assertThat(authorization).isNotNull();
     assertThat(authorization.getResourceType()).isEqualTo(TASK.resourceType());
     assertThat(authorization.getResourceId()).isEqualTo(taskId);
-    assertTrue(authorization.isPermissionGranted(READ));
-    assertTrue(authorization.isPermissionGranted(getDefaultTaskPermissionForUser()));
+    assertThat(authorization.isPermissionGranted(READ)).isTrue();
+    assertThat(authorization.isPermissionGranted(getDefaultTaskPermissionForUser())).isTrue();
 
     deleteTask(taskId, true);
   }
@@ -4787,7 +4783,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     Task task = taskService.createTaskQuery().singleResult();
 
     // then
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getId()).isEqualTo(taskId);
 
     identityService.clearAuthentication();
@@ -4816,11 +4812,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNotNull(authorization);
+    assertThat(authorization).isNotNull();
     assertThat(authorization.getResourceType()).isEqualTo(TASK.resourceType());
     assertThat(authorization.getResourceId()).isEqualTo(taskId);
-    assertTrue(authorization.isPermissionGranted(READ));
-    assertTrue(authorization.isPermissionGranted(getDefaultTaskPermissionForUser()));
+    assertThat(authorization.isPermissionGranted(READ)).isTrue();
+    assertThat(authorization.isPermissionGranted(getDefaultTaskPermissionForUser())).isTrue();
     deleteTask(taskId, true);
   }
 
@@ -4846,11 +4842,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNotNull(authorization);
+    assertThat(authorization).isNotNull();
     assertThat(authorization.getResourceType()).isEqualTo(TASK.resourceType());
     assertThat(authorization.getResourceId()).isEqualTo(taskId);
-    assertTrue(authorization.isPermissionGranted(READ));
-    assertTrue(authorization.isPermissionGranted(getDefaultTaskPermissionForUser()));
+    assertThat(authorization.isPermissionGranted(READ)).isTrue();
+    assertThat(authorization.isPermissionGranted(getDefaultTaskPermissionForUser())).isTrue();
 
     deleteTask(taskId, true);
   }
@@ -4876,11 +4872,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNotNull(authorization);
+    assertThat(authorization).isNotNull();
     assertThat(authorization.getResourceType()).isEqualTo(TASK.resourceType());
     assertThat(authorization.getResourceId()).isEqualTo(taskId);
-    assertTrue(authorization.isPermissionGranted(READ));
-    assertTrue(authorization.isPermissionGranted(getDefaultTaskPermissionForUser()));
+    assertThat(authorization.isPermissionGranted(READ)).isTrue();
+    assertThat(authorization.isPermissionGranted(getDefaultTaskPermissionForUser())).isTrue();
   }
 
   @Test
@@ -4903,11 +4899,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNotNull(authorization);
+    assertThat(authorization).isNotNull();
     assertThat(authorization.getResourceType()).isEqualTo(TASK.resourceType());
     assertThat(authorization.getResourceId()).isEqualTo(taskId);
-    assertTrue(authorization.isPermissionGranted(READ));
-    assertTrue(authorization.isPermissionGranted(getDefaultTaskPermissionForUser()));
+    assertThat(authorization.isPermissionGranted(READ)).isTrue();
+    assertThat(authorization.isPermissionGranted(getDefaultTaskPermissionForUser())).isTrue();
   }
 
   @Test
@@ -4932,11 +4928,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNotNull(authorization);
+    assertThat(authorization).isNotNull();
     assertThat(authorization.getResourceType()).isEqualTo(TASK.resourceType());
     assertThat(authorization.getResourceId()).isEqualTo(taskId);
-    assertTrue(authorization.isPermissionGranted(READ));
-    assertTrue(authorization.isPermissionGranted(getDefaultTaskPermissionForUser()));
+    assertThat(authorization.isPermissionGranted(READ)).isTrue();
+    assertThat(authorization.isPermissionGranted(getDefaultTaskPermissionForUser())).isTrue();
   }
 
   @Test
@@ -4956,7 +4952,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     Task task = taskService.createTaskQuery().singleResult();
 
     // then
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getId()).isEqualTo(taskId);
 
     identityService.clearAuthentication();
@@ -4982,11 +4978,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNotNull(authorization);
+    assertThat(authorization).isNotNull();
     assertThat(authorization.getResourceType()).isEqualTo(TASK.resourceType());
     assertThat(authorization.getResourceId()).isEqualTo(taskId);
-    assertTrue(authorization.isPermissionGranted(READ));
-    assertTrue(authorization.isPermissionGranted(getDefaultTaskPermissionForUser()));
+    assertThat(authorization.isPermissionGranted(READ)).isTrue();
+    assertThat(authorization.isPermissionGranted(getDefaultTaskPermissionForUser())).isTrue();
 
     // demo is able to retrieve the task
     identityService.clearAuthentication();
@@ -4994,7 +4990,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     Task task = taskService.createTaskQuery().singleResult();
 
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getId()).isEqualTo(taskId);
 
     identityService.clearAuthentication();
@@ -5021,7 +5017,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNull(authorization);
+    assertThat(authorization).isNull();
   }
 
   // set owner -> an authorization is available (standalone task) /////////////////////////////////////////
@@ -5045,11 +5041,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNotNull(authorization);
+    assertThat(authorization).isNotNull();
     assertThat(authorization.getResourceType()).isEqualTo(TASK.resourceType());
     assertThat(authorization.getResourceId()).isEqualTo(taskId);
-    assertTrue(authorization.isPermissionGranted(READ));
-    assertTrue(authorization.isPermissionGranted(getDefaultTaskPermissionForUser()));
+    assertThat(authorization.isPermissionGranted(READ)).isTrue();
+    assertThat(authorization.isPermissionGranted(getDefaultTaskPermissionForUser())).isTrue();
 
     deleteTask(taskId, true);
   }
@@ -5074,11 +5070,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNotNull(authorization);
+    assertThat(authorization).isNotNull();
     assertThat(authorization.getResourceType()).isEqualTo(TASK.resourceType());
     assertThat(authorization.getResourceId()).isEqualTo(taskId);
-    assertTrue(authorization.isPermissionGranted(READ));
-    assertTrue(authorization.isPermissionGranted(getDefaultTaskPermissionForUser()));
+    assertThat(authorization.isPermissionGranted(READ)).isTrue();
+    assertThat(authorization.isPermissionGranted(getDefaultTaskPermissionForUser())).isTrue();
 
     deleteTask(taskId, true);
   }
@@ -5099,7 +5095,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     Task task = taskService.createTaskQuery().singleResult();
 
     // then
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getId()).isEqualTo(taskId);
 
     identityService.clearAuthentication();
@@ -5128,11 +5124,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNotNull(authorization);
+    assertThat(authorization).isNotNull();
     assertThat(authorization.getResourceType()).isEqualTo(TASK.resourceType());
     assertThat(authorization.getResourceId()).isEqualTo(taskId);
-    assertTrue(authorization.isPermissionGranted(READ));
-    assertTrue(authorization.isPermissionGranted(getDefaultTaskPermissionForUser()));
+    assertThat(authorization.isPermissionGranted(READ)).isTrue();
+    assertThat(authorization.isPermissionGranted(getDefaultTaskPermissionForUser())).isTrue();
 
     deleteTask(taskId, true);
   }
@@ -5159,11 +5155,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNotNull(authorization);
+    assertThat(authorization).isNotNull();
     assertThat(authorization.getResourceType()).isEqualTo(TASK.resourceType());
     assertThat(authorization.getResourceId()).isEqualTo(taskId);
-    assertTrue(authorization.isPermissionGranted(READ));
-    assertTrue(authorization.isPermissionGranted(getDefaultTaskPermissionForUser()));
+    assertThat(authorization.isPermissionGranted(READ)).isTrue();
+    assertThat(authorization.isPermissionGranted(getDefaultTaskPermissionForUser())).isTrue();
 
     deleteTask(taskId, true);
   }
@@ -5189,11 +5185,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNotNull(authorization);
+    assertThat(authorization).isNotNull();
     assertThat(authorization.getResourceType()).isEqualTo(TASK.resourceType());
     assertThat(authorization.getResourceId()).isEqualTo(taskId);
-    assertTrue(authorization.isPermissionGranted(READ));
-    assertTrue(authorization.isPermissionGranted(getDefaultTaskPermissionForUser()));
+    assertThat(authorization.isPermissionGranted(READ)).isTrue();
+    assertThat(authorization.isPermissionGranted(getDefaultTaskPermissionForUser())).isTrue();
   }
 
   @Test
@@ -5216,11 +5212,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNotNull(authorization);
+    assertThat(authorization).isNotNull();
     assertThat(authorization.getResourceType()).isEqualTo(TASK.resourceType());
     assertThat(authorization.getResourceId()).isEqualTo(taskId);
-    assertTrue(authorization.isPermissionGranted(READ));
-    assertTrue(authorization.isPermissionGranted(getDefaultTaskPermissionForUser()));
+    assertThat(authorization.isPermissionGranted(READ)).isTrue();
+    assertThat(authorization.isPermissionGranted(getDefaultTaskPermissionForUser())).isTrue();
   }
 
   @Test
@@ -5240,7 +5236,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     Task task = taskService.createTaskQuery().singleResult();
 
     // then
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getId()).isEqualTo(taskId);
 
     identityService.clearAuthentication();
@@ -5267,7 +5263,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNull(authorization);
+    assertThat(authorization).isNull();
   }
 
   // add candidate user -> an authorization is available (standalone task) /////////////////
@@ -5290,11 +5286,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNotNull(authorization);
+    assertThat(authorization).isNotNull();
     assertThat(authorization.getResourceType()).isEqualTo(TASK.resourceType());
     assertThat(authorization.getResourceId()).isEqualTo(taskId);
-    assertTrue(authorization.isPermissionGranted(READ));
-    assertTrue(authorization.isPermissionGranted(getDefaultTaskPermissionForUser()));
+    assertThat(authorization.isPermissionGranted(READ)).isTrue();
+    assertThat(authorization.isPermissionGranted(getDefaultTaskPermissionForUser())).isTrue();
 
     deleteTask(taskId, true);
   }
@@ -5319,11 +5315,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNotNull(authorization);
+    assertThat(authorization).isNotNull();
     assertThat(authorization.getResourceType()).isEqualTo(TASK.resourceType());
     assertThat(authorization.getResourceId()).isEqualTo(taskId);
-    assertTrue(authorization.isPermissionGranted(READ));
-    assertTrue(authorization.isPermissionGranted(getDefaultTaskPermissionForUser()));
+    assertThat(authorization.isPermissionGranted(READ)).isTrue();
+    assertThat(authorization.isPermissionGranted(getDefaultTaskPermissionForUser())).isTrue();
 
     deleteTask(taskId, true);
   }
@@ -5346,7 +5342,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     Task task = taskService.createTaskQuery().singleResult();
 
     // then
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getId()).isEqualTo(taskId);
 
     identityService.clearAuthentication();
@@ -5372,7 +5368,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     Task task = taskService.createTaskQuery().singleResult();
 
     // then
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getId()).isEqualTo(taskId);
 
     identityService.clearAuthentication();
@@ -5400,11 +5396,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNotNull(authorization);
+    assertThat(authorization).isNotNull();
     assertThat(authorization.getResourceType()).isEqualTo(TASK.resourceType());
     assertThat(authorization.getResourceId()).isEqualTo(taskId);
-    assertTrue(authorization.isPermissionGranted(READ));
-    assertTrue(authorization.isPermissionGranted(getDefaultTaskPermissionForUser()));
+    assertThat(authorization.isPermissionGranted(READ)).isTrue();
+    assertThat(authorization.isPermissionGranted(getDefaultTaskPermissionForUser())).isTrue();
   }
 
   @Test
@@ -5427,11 +5423,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNotNull(authorization);
+    assertThat(authorization).isNotNull();
     assertThat(authorization.getResourceType()).isEqualTo(TASK.resourceType());
     assertThat(authorization.getResourceId()).isEqualTo(taskId);
-    assertTrue(authorization.isPermissionGranted(READ));
-    assertTrue(authorization.isPermissionGranted(getDefaultTaskPermissionForUser()));
+    assertThat(authorization.isPermissionGranted(READ)).isTrue();
+    assertThat(authorization.isPermissionGranted(getDefaultTaskPermissionForUser())).isTrue();
   }
 
   @Test
@@ -5451,7 +5447,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     Task task = taskService.createTaskQuery().singleResult();
 
     // then
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getId()).isEqualTo(taskId);
 
     identityService.clearAuthentication();
@@ -5477,11 +5473,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNotNull(authorization);
+    assertThat(authorization).isNotNull();
     assertThat(authorization.getResourceType()).isEqualTo(TASK.resourceType());
     assertThat(authorization.getResourceId()).isEqualTo(taskId);
-    assertTrue(authorization.isPermissionGranted(READ));
-    assertTrue(authorization.isPermissionGranted(getDefaultTaskPermissionForUser()));
+    assertThat(authorization.isPermissionGranted(READ)).isTrue();
+    assertThat(authorization.isPermissionGranted(getDefaultTaskPermissionForUser())).isTrue();
 
     // an authorization for test has been created
     disableAuthorization();
@@ -5492,11 +5488,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNotNull(authorization);
+    assertThat(authorization).isNotNull();
     assertThat(authorization.getResourceType()).isEqualTo(TASK.resourceType());
     assertThat(authorization.getResourceId()).isEqualTo(taskId);
-    assertTrue(authorization.isPermissionGranted(READ));
-    assertTrue(authorization.isPermissionGranted(getDefaultTaskPermissionForUser()));
+    assertThat(authorization.isPermissionGranted(READ)).isTrue();
+    assertThat(authorization.isPermissionGranted(getDefaultTaskPermissionForUser())).isTrue();
 
     // demo is able to retrieve the task
     identityService.clearAuthentication();
@@ -5504,7 +5500,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     Task task = taskService.createTaskQuery().singleResult();
 
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getId()).isEqualTo(taskId);
 
     // test is able to retrieve the task
@@ -5513,7 +5509,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     task = taskService.createTaskQuery().singleResult();
 
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getId()).isEqualTo(taskId);
   }
 
@@ -5537,7 +5533,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNull(authorization);
+    assertThat(authorization).isNull();
   }
 
   // add candidate group -> an authorization is available (standalone task) /////////////////
@@ -5560,11 +5556,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNotNull(authorization);
+    assertThat(authorization).isNotNull();
     assertThat(authorization.getResourceType()).isEqualTo(TASK.resourceType());
     assertThat(authorization.getResourceId()).isEqualTo(taskId);
-    assertTrue(authorization.isPermissionGranted(READ));
-    assertTrue(authorization.isPermissionGranted(getDefaultTaskPermissionForUser()));
+    assertThat(authorization.isPermissionGranted(READ)).isTrue();
+    assertThat(authorization.isPermissionGranted(getDefaultTaskPermissionForUser())).isTrue();
 
     deleteTask(taskId, true);
   }
@@ -5589,11 +5585,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNotNull(authorization);
+    assertThat(authorization).isNotNull();
     assertThat(authorization.getResourceType()).isEqualTo(TASK.resourceType());
     assertThat(authorization.getResourceId()).isEqualTo(taskId);
-    assertTrue(authorization.isPermissionGranted(READ));
-    assertTrue(authorization.isPermissionGranted(getDefaultTaskPermissionForUser()));
+    assertThat(authorization.isPermissionGranted(READ)).isTrue();
+    assertThat(authorization.isPermissionGranted(getDefaultTaskPermissionForUser())).isTrue();
 
     deleteTask(taskId, true);
   }
@@ -5616,7 +5612,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     Task task = taskService.createTaskQuery().singleResult();
 
     // then
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getId()).isEqualTo(taskId);
 
     identityService.clearAuthentication();
@@ -5644,11 +5640,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNotNull(authorization);
+    assertThat(authorization).isNotNull();
     assertThat(authorization.getResourceType()).isEqualTo(TASK.resourceType());
     assertThat(authorization.getResourceId()).isEqualTo(taskId);
-    assertTrue(authorization.isPermissionGranted(READ));
-    assertTrue(authorization.isPermissionGranted(getDefaultTaskPermissionForUser()));
+    assertThat(authorization.isPermissionGranted(READ)).isTrue();
+    assertThat(authorization.isPermissionGranted(getDefaultTaskPermissionForUser())).isTrue();
   }
 
   @Test
@@ -5671,11 +5667,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNotNull(authorization);
+    assertThat(authorization).isNotNull();
     assertThat(authorization.getResourceType()).isEqualTo(TASK.resourceType());
     assertThat(authorization.getResourceId()).isEqualTo(taskId);
-    assertTrue(authorization.isPermissionGranted(READ));
-    assertTrue(authorization.isPermissionGranted(getDefaultTaskPermissionForUser()));
+    assertThat(authorization.isPermissionGranted(READ)).isTrue();
+    assertThat(authorization.isPermissionGranted(getDefaultTaskPermissionForUser())).isTrue();
   }
 
   @Test
@@ -5695,7 +5691,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     Task task = taskService.createTaskQuery().singleResult();
 
     // then
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getId()).isEqualTo(taskId);
 
     identityService.clearAuthentication();
@@ -5721,11 +5717,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNotNull(authorization);
+    assertThat(authorization).isNotNull();
     assertThat(authorization.getResourceType()).isEqualTo(TASK.resourceType());
     assertThat(authorization.getResourceId()).isEqualTo(taskId);
-    assertTrue(authorization.isPermissionGranted(READ));
-    assertTrue(authorization.isPermissionGranted(getDefaultTaskPermissionForUser()));
+    assertThat(authorization.isPermissionGranted(READ)).isTrue();
+    assertThat(authorization.isPermissionGranted(getDefaultTaskPermissionForUser())).isTrue();
 
     // an authorization for accounting has been created
     disableAuthorization();
@@ -5735,11 +5731,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNotNull(authorization);
+    assertThat(authorization).isNotNull();
     assertThat(authorization.getResourceType()).isEqualTo(TASK.resourceType());
     assertThat(authorization.getResourceId()).isEqualTo(taskId);
-    assertTrue(authorization.isPermissionGranted(READ));
-    assertTrue(authorization.isPermissionGranted(getDefaultTaskPermissionForUser()));
+    assertThat(authorization.isPermissionGranted(READ)).isTrue();
+    assertThat(authorization.isPermissionGranted(getDefaultTaskPermissionForUser())).isTrue();
 
     // management is able to retrieve the task
     identityService.clearAuthentication();
@@ -5747,7 +5743,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     Task task = taskService.createTaskQuery().singleResult();
 
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getId()).isEqualTo(taskId);
 
     // accounting is able to retrieve the task
@@ -5756,7 +5752,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     task = taskService.createTaskQuery().singleResult();
 
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getId()).isEqualTo(taskId);
   }
 
@@ -5780,7 +5776,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNull(authorization);
+    assertThat(authorization).isNull();
   }
 
   // TaskService#getVariable() (case task) ////////////////////////////////////////////
@@ -5829,7 +5825,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     TypedValue typedValue = taskService.getVariableTyped(taskId, VARIABLE_NAME);
 
     // then
-    assertNotNull(typedValue);
+    assertThat(typedValue).isNotNull();
     assertThat(typedValue.getValue()).isEqualTo(VARIABLE_VALUE);
   }
 
@@ -5849,7 +5845,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     TypedValue typedValue = taskService.getVariableLocalTyped(taskId, VARIABLE_NAME);
 
     // then
-    assertNotNull(typedValue);
+    assertThat(typedValue).isNotNull();
     assertThat(typedValue.getValue()).isEqualTo(VARIABLE_VALUE);
   }
 
@@ -5865,8 +5861,9 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     Map<String, Object> variables = taskService.getVariables(taskId);
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -5888,8 +5885,9 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     Map<String, Object> variables = taskService.getVariablesLocal(taskId);
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -5907,11 +5905,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     VariableMap variables = taskService.getVariablesTyped(taskId);
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
-    assertThat(variables).hasSize(1);
-
-    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
+    assertThat(variables).isNotNull();
+    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   // TaskService#getVariablesLocalTyped() (case task) ////////////////////////////////////////////
@@ -5930,8 +5928,9 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     Map<String, Object> variables = taskService.getVariablesLocalTyped(taskId);
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -5949,8 +5948,9 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     Map<String, Object> variables = taskService.getVariables(taskId, Arrays.asList(VARIABLE_NAME));
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -5972,8 +5972,9 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     Map<String, Object> variables = taskService.getVariablesLocal(taskId, Arrays.asList(VARIABLE_NAME));
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -5991,11 +5992,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     VariableMap variables = taskService.getVariablesTyped(taskId, Arrays.asList(VARIABLE_NAME), false);
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
-    assertThat(variables).hasSize(1);
-
-    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
+    assertThat(variables).isNotNull();
+    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   // TaskService#getVariablesLocal() (case task) ////////////////////////////////////////////
@@ -6014,8 +6015,9 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     Map<String, Object> variables = taskService.getVariablesLocalTyped(taskId, Arrays.asList(VARIABLE_NAME), false);
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -6350,7 +6352,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
       // then
       Authorization auth = authorizationService.createAuthorizationQuery().userIdIn("Horst").singleResult();
-      assertTrue(auth.isPermissionGranted(Permissions.DELETE));
+      assertThat(auth.isPermissionGranted(Permissions.DELETE)).isTrue();
 
       taskService.deleteTask(newTask.getId(), true);
 
@@ -6529,8 +6531,9 @@ public class TaskAuthorizationTest extends AuthorizationTest {
   }
 
   protected void verifyGetVariables(Map<String, Object> variables) {
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);

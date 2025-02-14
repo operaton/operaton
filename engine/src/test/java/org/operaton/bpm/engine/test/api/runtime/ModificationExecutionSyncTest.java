@@ -17,10 +17,9 @@
 package org.operaton.bpm.engine.test.api.runtime;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -292,7 +291,7 @@ public class ModificationExecutionSyncTest {
 
     for (String processInstanceId : processInstanceIds) {
       ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-      assertNotNull(updatedTree);
+      assertThat(updatedTree).isNotNull();
       assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
       assertThat(updatedTree).hasStructure(
@@ -315,7 +314,7 @@ public class ModificationExecutionSyncTest {
 
     for (String processInstanceId : processInstanceIds) {
       ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-      assertNotNull(updatedTree);
+      assertThat(updatedTree).isNotNull();
       assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
       assertThat(updatedTree).hasStructure(describeActivityInstanceTree(definition.getId()).activity("user1").activity("user3").done());
@@ -333,7 +332,7 @@ public class ModificationExecutionSyncTest {
 
     for (String processInstanceId : processInstanceIds) {
       ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-      assertNotNull(updatedTree);
+      assertThat(updatedTree).isNotNull();
       assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
       assertThat(updatedTree).hasStructure(describeActivityInstanceTree(definition.getId()).activity("user1").activity("user2").done());
@@ -349,7 +348,7 @@ public class ModificationExecutionSyncTest {
 
     for (String processInstanceId : processInstanceIds) {
       ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-      assertNull(updatedTree);
+      assertThat(updatedTree).isNull();
     }
   }
 
@@ -364,7 +363,7 @@ public class ModificationExecutionSyncTest {
 
     for (String processInstanceId : processInstanceIds) {
       ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-      assertNotNull(updatedTree);
+      assertThat(updatedTree).isNotNull();
       assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
       assertThat(updatedTree).hasStructure(describeActivityInstanceTree(definition.getId()).activity("user2").done());
@@ -388,13 +387,13 @@ public class ModificationExecutionSyncTest {
     ActivityInstance updatedTree = null;
     String processInstanceId = processInstanceIds.get(0);
     updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
     assertThat(updatedTree).hasStructure(describeActivityInstanceTree(definition.getId()).activity("user2").activity("user3").done());
 
     processInstanceId = processInstanceIds.get(1);
     updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
     assertThat(updatedTree).hasStructure(describeActivityInstanceTree(definition.getId()).activity("user1").activity("user3").done());
   }
@@ -421,7 +420,7 @@ public class ModificationExecutionSyncTest {
       .execute();
 
     // then
-    assertThat(runtimeService.createExecutionQuery().list()).hasSize(0);
+    assertThat(runtimeService.createExecutionQuery().list()).isEmpty();
   }
 
   @Test
@@ -446,7 +445,7 @@ public class ModificationExecutionSyncTest {
       .execute();
 
     // then
-    assertThat(runtimeService.createExecutionQuery().list()).hasSize(0);
+    assertThat(runtimeService.createExecutionQuery().list()).isEmpty();
   }
 
   @Test
@@ -472,7 +471,7 @@ public class ModificationExecutionSyncTest {
 
     // then
     ExecutionEntity execution = (ExecutionEntity) runtimeService.createExecutionQuery().singleResult();
-    assertNotNull(execution);
+    assertThat(execution).isNotNull();
     assertThat(execution.getActivityId()).isEqualTo("user");
   }
 
@@ -500,7 +499,7 @@ public class ModificationExecutionSyncTest {
     // then
     for (String processInstanceId : processInstanceIds) {
       Execution execution = runtimeService.createExecutionQuery().processInstanceId(processInstanceId).singleResult();
-      assertNotNull(execution);
+      assertThat(execution).isNotNull();
       assertThat(((ExecutionEntity) execution).getActivityId()).isEqualTo("user");
     }
   }

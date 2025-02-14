@@ -17,9 +17,6 @@
 package org.operaton.bpm.engine.test.api.form;
 
 import static org.assertj.core.api.InstanceOfAssertFactories.type;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -67,19 +64,19 @@ public class FormDataTest extends PluggableProcessEngineTest {
 
     // validate field 1
     FormField formField1 = formFields.get(0);
-    assertNotNull(formField1);
+    assertThat(formField1).isNotNull();
     assertThat(formField1.getId()).isEqualTo("formField1");
     assertThat(formField1.getLabel()).isEqualTo("Form Field 1");
     assertThat(formField1.getTypeName()).isEqualTo("string");
-    assertNotNull(formField1.getType());
+    assertThat(formField1.getType()).isNotNull();
 
     // validate field 2
     FormField formField2 = formFields.get(1);
-    assertNotNull(formField2);
+    assertThat(formField2).isNotNull();
     assertThat(formField2.getId()).isEqualTo("formField2");
     assertThat(formField2.getLabel()).isEqualTo("Form Field 2");
     assertThat(formField2.getTypeName()).isEqualTo("boolean");
-    assertNotNull(formField1.getType());
+    assertThat(formField1.getType()).isNotNull();
 
   }
 
@@ -98,30 +95,30 @@ public class FormDataTest extends PluggableProcessEngineTest {
 
     // validate string field
     FormField stringField = formFields.get(0);
-    assertNotNull(stringField);
+    assertThat(stringField).isNotNull();
     assertThat(stringField.getTypeName()).isEqualTo("string");
-    assertNotNull(stringField.getType());
+    assertThat(stringField.getType()).isNotNull();
     assertThat(stringField.getDefaultValue()).isEqualTo("someString");
 
     // validate long field
     FormField longField = formFields.get(1);
-    assertNotNull(longField);
+    assertThat(longField).isNotNull();
     assertThat(longField.getTypeName()).isEqualTo("long");
-    assertNotNull(longField.getType());
+    assertThat(longField.getType()).isNotNull();
     assertThat(longField.getDefaultValue()).isEqualTo(1l);
 
     // validate boolean field
     FormField booleanField = formFields.get(2);
-    assertNotNull(booleanField);
+    assertThat(booleanField).isNotNull();
     assertThat(booleanField.getTypeName()).isEqualTo("boolean");
-    assertNotNull(booleanField.getType());
+    assertThat(booleanField.getType()).isNotNull();
     assertThat(booleanField.getDefaultValue()).isEqualTo(Boolean.TRUE);
 
     // validate date field
     FormField dateField = formFields.get(3);
-    assertNotNull(dateField);
+    assertThat(dateField).isNotNull();
     assertThat(dateField.getTypeName()).isEqualTo("date");
-    assertNotNull(dateField.getType());
+    assertThat(dateField.getType()).isNotNull();
     Date dateValue = (Date) dateField.getDefaultValue();
     Calendar calendar = Calendar.getInstance();
     calendar.setTime(dateValue);
@@ -131,9 +128,9 @@ public class FormDataTest extends PluggableProcessEngineTest {
 
     // validate enum field
     FormField enumField = formFields.get(4);
-    assertNotNull(enumField);
+    assertThat(enumField).isNotNull();
     assertThat(enumField.getTypeName()).isEqualTo("enum");
-    assertNotNull(enumField.getType());
+    assertThat(enumField.getType()).isNotNull();
     EnumFormType enumFormType = (EnumFormType) enumField.getType();
     Map<String, String> values = enumFormType.getValues();
     assertThat(values)
@@ -264,16 +261,16 @@ public class FormDataTest extends PluggableProcessEngineTest {
 
     // then taskFormData contains form variables with null as values
     TaskFormData taskFormData = formService.getTaskFormData(task.getId());
-    assertNotNull(taskFormData);
+    assertThat(taskFormData).isNotNull();
     assertThat(taskFormData.getFormFields()).hasSize(5);
     for (FormField field : taskFormData.getFormFields()) {
-      assertNotNull(field);
+      assertThat(field).isNotNull();
 
       if (field.getType() instanceof DateFormType) {
         assertThat(field.getValue().getValue()).isEqualTo("");
 
       } else {
-        assertNull(field.getValue().getValue());
+        assertThat(field.getValue().getValue()).isNull();
 
       }
     }
@@ -291,12 +288,12 @@ public class FormDataTest extends PluggableProcessEngineTest {
 
     // when
     Object renderedStartForm = formService.getRenderedTaskForm(taskWithForm.getId());
-    assertTrue(renderedStartForm instanceof String);
+    assertThat(renderedStartForm instanceof String).isTrue();
 
     // then
     String renderedForm = (String) renderedStartForm;
     String expectedFormValueWithEscapedQuotes = "This is a &quot;Test&quot; message!";
-    assertTrue(renderedForm.contains(expectedFormValueWithEscapedQuotes));
+    assertThat(renderedForm).contains(expectedFormValueWithEscapedQuotes);
 
   }
 

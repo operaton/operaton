@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
@@ -39,11 +38,11 @@ public class IntermediateNoneEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testIntermediateNoneTimerEvent() {    
-    assertFalse(listenerExcecuted);    
+  public void testIntermediateNoneTimerEvent() {
+    assertThat(listenerExcecuted).isFalse();    
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("intermediateNoneEventExample");
     testRule.assertProcessEnded(pi.getProcessInstanceId());
-    assertTrue(listenerExcecuted);    
+    assertThat(listenerExcecuted).isTrue();    
   }
 
 

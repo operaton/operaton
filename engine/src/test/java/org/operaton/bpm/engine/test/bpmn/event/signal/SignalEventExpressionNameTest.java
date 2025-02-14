@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.bpmn.event.signal;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import java.util.HashMap;
@@ -191,14 +191,14 @@ public class SignalEventExpressionNameTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("throwSignalAsync");
     // with an async job to trigger the signal event
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
 
     // when the job is executed
     managementService.executeJob(job.getId());
 
     // then there is a process instance
     ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
     assertThat(processInstance.getProcessDefinitionId()).isEqualTo(catchingProcessDefinition.getId());
 
     // and a task

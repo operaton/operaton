@@ -24,10 +24,7 @@ import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import java.util.Date;
@@ -155,7 +152,7 @@ public class JobAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     Job job = query.singleResult();
-    assertNull(job.getProcessInstanceId());
+    assertThat(job.getProcessInstanceId()).isNull();
     assertThat(job.getProcessDefinitionKey()).isEqualTo(TIMER_START_PROCESS_KEY);
   }
 
@@ -211,9 +208,9 @@ public class JobAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     Job job = query.singleResult();
-    assertNotNull(job);
-    assertNull(job.getProcessInstanceId());
-    assertNull(job.getProcessDefinitionKey());
+    assertThat(job).isNotNull();
+    assertThat(job.getProcessInstanceId()).isNull();
+    assertThat(job.getProcessDefinitionKey()).isNull();
 
     deleteJob(job.getId());
   }
@@ -241,7 +238,7 @@ public class JobAuthorizationTest extends AuthorizationTest {
 
     // then
     JobDefinition jobDefinition = selectJobDefinitionByProcessDefinitionKey(TIMER_START_PROCESS_KEY);
-    assertTrue(jobDefinition.isSuspended());
+    assertThat(jobDefinition.isSuspended()).isTrue();
   }
 
   // delete standalone job ////////////////////////////////
@@ -267,7 +264,7 @@ public class JobAuthorizationTest extends AuthorizationTest {
 
     // then
     Job job = selectJobById(jobId);
-    assertNull(job);
+    assertThat(job).isNull();
   }
 
   // set job retries (standalone) ////////////////////////////////
@@ -321,7 +318,7 @@ public class JobAuthorizationTest extends AuthorizationTest {
 
     // then
     Job job = selectJobById(jobId);
-    assertNull(job.getDuedate());
+    assertThat(job.getDuedate()).isNull();
 
     deleteJob(jobId);
   }
@@ -359,7 +356,7 @@ public class JobAuthorizationTest extends AuthorizationTest {
     String jobExceptionStacktrace = managementService.getJobExceptionStacktrace(jobId);
 
     // then
-    assertNotNull(jobExceptionStacktrace);
+    assertThat(jobExceptionStacktrace).isNotNull();
   }
 
   @Test
@@ -374,7 +371,7 @@ public class JobAuthorizationTest extends AuthorizationTest {
     String jobExceptionStacktrace = managementService.getJobExceptionStacktrace(jobId);
 
     // then
-    assertNotNull(jobExceptionStacktrace);
+    assertThat(jobExceptionStacktrace).isNotNull();
   }
 
   @Test
@@ -389,7 +386,7 @@ public class JobAuthorizationTest extends AuthorizationTest {
     String jobExceptionStacktrace = managementService.getJobExceptionStacktrace(jobId);
 
     // then
-    assertNotNull(jobExceptionStacktrace);
+    assertThat(jobExceptionStacktrace).isNotNull();
   }
 
   @Test
@@ -404,7 +401,7 @@ public class JobAuthorizationTest extends AuthorizationTest {
     String jobExceptionStacktrace = managementService.getJobExceptionStacktrace(jobId);
 
     // then
-    assertNotNull(jobExceptionStacktrace);
+    assertThat(jobExceptionStacktrace).isNotNull();
   }
 
   // get exception stacktrace (standalone) ////////////////////////////////
@@ -429,7 +426,7 @@ public class JobAuthorizationTest extends AuthorizationTest {
     String jobExceptionStacktrace = managementService.getJobExceptionStacktrace(jobId);
 
     // then
-    assertNull(jobExceptionStacktrace);
+    assertThat(jobExceptionStacktrace).isNull();
 
     deleteJob(jobId);
   }
@@ -458,8 +455,8 @@ public class JobAuthorizationTest extends AuthorizationTest {
 
     // then
     Job job = selectJobById(jobId);
-    assertNotNull(job);
-    assertTrue(job.isSuspended());
+    assertThat(job).isNotNull();
+    assertThat(job.isSuspended()).isTrue();
 
     deleteJob(jobId);
   }
@@ -488,8 +485,8 @@ public class JobAuthorizationTest extends AuthorizationTest {
 
     // then
     Job job = selectJobById(jobId);
-    assertNotNull(job);
-    assertFalse(job.isSuspended());
+    assertThat(job).isNotNull();
+    assertThat(job.isSuspended()).isFalse();
 
     deleteJob(jobId);
   }

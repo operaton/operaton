@@ -48,11 +48,10 @@ import org.operaton.commons.testing.WatchLogger;
 import java.util.List;
 import java.util.Locale;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 /**
  *
@@ -329,7 +328,7 @@ public class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
       deploymentBuilder.deploy();
-      fail();
+      fail("");
     } catch (ParseException e) {
       testRule.assertTextPresent("cvc-complex-type.3.2.2:", e.getMessage());
       testRule.assertTextPresent("invalidAttribute", e.getMessage());
@@ -406,7 +405,7 @@ public class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
       deploymentBuilder.deploy();
-      fail();
+      fail("");
     } catch (ParseException e) {
       // fail in "regular" subprocess
       testRule.assertTextPresent("timerEventDefinition is not allowed on start event within a subprocess", e.getMessage());
@@ -446,7 +445,7 @@ public class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
       deploymentBuilder.deploy();
-      fail();
+      fail("");
     } catch (ParseException e) {
       // fail on asyncAfter
       testRule.assertTextPresent("'asyncAfter' not supported for", e.getMessage());
@@ -463,7 +462,7 @@ public class BpmnParseTest {
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
     ProcessDefinitionEntity processDefinitionEntity = commandExecutor.execute(commandContext -> Context.getProcessEngineConfiguration().getDeploymentCache().findDeployedLatestProcessDefinitionByKey("myProcess"));
 
-    assertNotNull(processDefinitionEntity);
+    assertThat(processDefinitionEntity).isNotNull();
     assertThat(processDefinitionEntity.getActivities()).hasSize(7);
 
     // Check if diagram has been created based on Diagram Interchange when it's
@@ -494,7 +493,7 @@ public class BpmnParseTest {
       }
 
       for (PvmTransition sequenceFlow : activity.getOutgoingTransitions()) {
-        assertTrue(((TransitionImpl) sequenceFlow).getWaypoints().size() >= 4);
+        assertThat(((TransitionImpl) sequenceFlow).getWaypoints().size() >= 4).isTrue();
 
         TransitionImpl transitionImpl = (TransitionImpl) sequenceFlow;
         if (transitionImpl.getId().equals("flowStartToTask1")) {
@@ -524,9 +523,9 @@ public class BpmnParseTest {
     ProcessDefinitionEntity processDefinitionEntity = commandExecutor.execute(commandContext -> Context.getProcessEngineConfiguration().getDeploymentCache().findDeployedLatestProcessDefinitionByKey("resolvableNamespacesProcess"));
 
     // Test that the process definition has been deployed
-    assertNotNull(processDefinitionEntity);
+    assertThat(processDefinitionEntity).isNotNull();
     PvmActivity activity = processDefinitionEntity.findActivity("ExclusiveGateway_1");
-    assertNotNull(activity);
+    assertThat(activity).isNotNull();
 
     // Test that the conditions has been resolved
     for (PvmTransition transition : activity.getOutgoingTransitions()) {
@@ -592,35 +591,35 @@ public class BpmnParseTest {
     ActivityImpl innerTask = findActivityInDeployedProcessDefinition("miTask");
     ActivityImpl miBody = innerTask.getParentFlowScopeActivity();
 
-    assertTrue(miBody.isAsyncBefore());
-    assertTrue(miBody.isAsyncAfter());
+    assertThat(miBody.isAsyncBefore()).isTrue();
+    assertThat(miBody.isAsyncAfter()).isTrue();
 
-    assertFalse(innerTask.isAsyncBefore());
-    assertFalse(innerTask.isAsyncAfter());
+    assertThat(innerTask.isAsyncBefore()).isFalse();
+    assertThat(innerTask.isAsyncAfter()).isFalse();
   }
 
   @Deployment
   @Test
   public void testParseAsyncActivityWrappedInMultiInstanceBody(){
     ActivityImpl innerTask = findActivityInDeployedProcessDefinition("miTask");
-    assertTrue(innerTask.isAsyncBefore());
-    assertTrue(innerTask.isAsyncAfter());
+    assertThat(innerTask.isAsyncBefore()).isTrue();
+    assertThat(innerTask.isAsyncAfter()).isTrue();
 
     ActivityImpl miBody = innerTask.getParentFlowScopeActivity();
-    assertFalse(miBody.isAsyncBefore());
-    assertFalse(miBody.isAsyncAfter());
+    assertThat(miBody.isAsyncBefore()).isFalse();
+    assertThat(miBody.isAsyncAfter()).isFalse();
   }
 
   @Deployment
   @Test
   public void testParseAsyncActivityWrappedInMultiInstanceBodyWithAsyncMultiInstance(){
     ActivityImpl innerTask = findActivityInDeployedProcessDefinition("miTask");
-    assertTrue(innerTask.isAsyncBefore());
-    assertFalse(innerTask.isAsyncAfter());
+    assertThat(innerTask.isAsyncBefore()).isTrue();
+    assertThat(innerTask.isAsyncAfter()).isFalse();
 
     ActivityImpl miBody = innerTask.getParentFlowScopeActivity();
-    assertFalse(miBody.isAsyncBefore());
-    assertTrue(miBody.isAsyncAfter());
+    assertThat(miBody.isAsyncBefore()).isFalse();
+    assertThat(miBody.isAsyncAfter()).isTrue();
   }
 
   @Test
@@ -733,11 +732,11 @@ public class BpmnParseTest {
     ActivityImpl conditionalBoundaryEvent1 = findActivityInDeployedProcessDefinition("conditionalBoundaryEvent1");
     ActivityImpl conditionalBoundaryEvent2 = findActivityInDeployedProcessDefinition("conditionalBoundaryEvent2");
 
-    assertTrue(conditionalBoundaryEvent1.isAsyncAfter());
-    assertTrue(conditionalBoundaryEvent1.isAsyncBefore());
+    assertThat(conditionalBoundaryEvent1.isAsyncAfter()).isTrue();
+    assertThat(conditionalBoundaryEvent1.isAsyncBefore()).isTrue();
 
-    assertFalse(conditionalBoundaryEvent2.isAsyncAfter());
-    assertFalse(conditionalBoundaryEvent2.isAsyncBefore());
+    assertThat(conditionalBoundaryEvent2.isAsyncAfter()).isFalse();
+    assertThat(conditionalBoundaryEvent2.isAsyncBefore()).isFalse();
   }
 
   @Test
@@ -785,7 +784,7 @@ public class BpmnParseTest {
 
   protected ActivityImpl findActivityInDeployedProcessDefinition(String activityId) {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
-    assertNotNull(processDefinition);
+    assertThat(processDefinition).isNotNull();
 
     ProcessDefinitionEntity cachedProcessDefinition = processEngineConfiguration.getDeploymentCache()
                                                         .getProcessDefinitionCache()
@@ -1021,25 +1020,25 @@ public class BpmnParseTest {
   @Test
   public void testParseProcessDefinitionTtl() {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
-    assertNotNull(processDefinitions);
+    assertThat(processDefinitions).isNotNull();
     assertThat(processDefinitions).hasSize(1);
 
     Integer timeToLive = processDefinitions.get(0).getHistoryTimeToLive();
-    assertNotNull(timeToLive);
+    assertThat(timeToLive).isNotNull();
     assertThat(timeToLive.intValue()).isEqualTo(5);
 
-    assertTrue(processDefinitions.get(0).isStartableInTasklist());
+    assertThat(processDefinitions.get(0).isStartableInTasklist()).isTrue();
   }
 
   @Deployment
   @Test
   public void testParseProcessDefinitionStringTtl() {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
-    assertNotNull(processDefinitions);
+    assertThat(processDefinitions).isNotNull();
     assertThat(processDefinitions).hasSize(1);
 
     Integer timeToLive = processDefinitions.get(0).getHistoryTimeToLive();
-    assertNotNull(timeToLive);
+    assertThat(timeToLive).isNotNull();
     assertThat(timeToLive.intValue()).isEqualTo(5);
   }
 
@@ -1060,22 +1059,22 @@ public class BpmnParseTest {
   @Test
   public void testParseProcessDefinitionEmptyTtl() {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
-    assertNotNull(processDefinitions);
+    assertThat(processDefinitions).isNotNull();
     assertThat(processDefinitions).hasSize(1);
 
     Integer timeToLive = processDefinitions.get(0).getHistoryTimeToLive();
-    assertNull(timeToLive);
+    assertThat(timeToLive).isNull();
   }
 
   @Deployment
   @Test
   public void testParseProcessDefinitionWithoutTtl() {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
-    assertNotNull(processDefinitions);
+    assertThat(processDefinitions).isNotNull();
     assertThat(processDefinitions).hasSize(1);
 
     Integer timeToLive = processDefinitions.get(0).getHistoryTimeToLive();
-    assertNull(timeToLive);
+    assertThat(timeToLive).isNull();
   }
 
   @Test
@@ -1085,11 +1084,11 @@ public class BpmnParseTest {
       String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseProcessDefinitionWithoutTtl");
       repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
       List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
-      assertNotNull(processDefinitions);
+      assertThat(processDefinitions).isNotNull();
       assertThat(processDefinitions).hasSize(1);
 
       Integer timeToLive = processDefinitions.get(0).getHistoryTimeToLive();
-      assertNotNull(timeToLive);
+      assertThat(timeToLive).isNotNull();
       assertThat(timeToLive.intValue()).isEqualTo(6);
     } finally {
       processEngineConfiguration.setHistoryTimeToLive(null);
@@ -1169,10 +1168,10 @@ public class BpmnParseTest {
   @Test
   public void testParseProcessDefinitionStartable() {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
-    assertNotNull(processDefinitions);
+    assertThat(processDefinitions).isNotNull();
     assertThat(processDefinitions).hasSize(1);
 
-    assertFalse(processDefinitions.get(0).isStartableInTasklist());
+    assertThat(processDefinitions.get(0).isStartableInTasklist()).isFalse();
   }
 
   @Test

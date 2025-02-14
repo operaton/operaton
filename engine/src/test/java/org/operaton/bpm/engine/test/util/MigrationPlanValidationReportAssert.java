@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.util;
 
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,7 +34,7 @@ public class MigrationPlanValidationReportAssert {
   }
 
   public MigrationPlanValidationReportAssert isNotNull() {
-    assertNotNull("Expected report to be not null", actual);
+    assertThat(actual).as("Expected report to be not null").isNotNull();
 
     return this;
   }

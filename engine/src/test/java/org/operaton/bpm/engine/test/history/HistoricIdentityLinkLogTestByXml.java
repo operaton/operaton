@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.history;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
@@ -58,7 +57,7 @@ public class HistoricIdentityLinkLogTestByXml extends PluggableProcessEngineTest
 
     // Pre test
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertThat(historicIdentityLinks).hasSize(0);
+    assertThat(historicIdentityLinks).isEmpty();
 
     // given
     startProcessInstance(PROCESS_DEFINITION_KEY_CANDIDATE_USER);
@@ -76,7 +75,7 @@ public class HistoricIdentityLinkLogTestByXml extends PluggableProcessEngineTest
 
     // Pre test
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertThat(historicIdentityLinks).hasSize(0);
+    assertThat(historicIdentityLinks).isEmpty();
 
     // given
     startProcessInstance(PROCESS_DEFINITION_KEY_ASSIGNEE);
@@ -96,7 +95,7 @@ public class HistoricIdentityLinkLogTestByXml extends PluggableProcessEngineTest
 
     // Pre test
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertThat(historicIdentityLinks).hasSize(0);
+    assertThat(historicIdentityLinks).isEmpty();
 
     // given
     startProcessInstance(PROCESS_DEFINITION_KEY_CANDIDATE_GROUP);
@@ -119,7 +118,7 @@ public class HistoricIdentityLinkLogTestByXml extends PluggableProcessEngineTest
     // given
     ProcessDefinition latestProcessDef = repositoryService.createProcessDefinitionQuery().processDefinitionKey(PROCESS_DEFINITION_KEY_CANDIDATE_STARTER_USER)
         .singleResult();
-    assertNotNull(latestProcessDef);
+    assertThat(latestProcessDef).isNotNull();
 
     List<IdentityLink> links = repositoryService.getIdentityLinksForProcessDefinition(latestProcessDef.getId());
     assertThat(links).hasSize(1);
@@ -141,7 +140,7 @@ public class HistoricIdentityLinkLogTestByXml extends PluggableProcessEngineTest
     // given
     ProcessDefinition latestProcessDef = repositoryService.createProcessDefinitionQuery().processDefinitionKey(PROCESS_DEFINITION_KEY_CANDIDATE_STARTER_GROUP)
         .singleResult();
-    assertNotNull(latestProcessDef);
+    assertThat(latestProcessDef).isNotNull();
 
     List<IdentityLink> links = repositoryService.getIdentityLinksForProcessDefinition(latestProcessDef.getId());
     assertThat(links).hasSize(1);
@@ -167,7 +166,7 @@ public class HistoricIdentityLinkLogTestByXml extends PluggableProcessEngineTest
     assertThat(historicLinks).hasSize(1);
 
     HistoricIdentityLinkLog historicLink = historicLinks.get(0);
-    assertNotNull(historicLink.getTenantId());
+    assertThat(historicLink.getTenantId()).isNotNull();
     assertThat(historicLink.getTenantId()).isEqualTo(TENANT_ONE);
 
     repositoryService.deleteDeployment(deployment.getId(), true);
@@ -186,7 +185,7 @@ public class HistoricIdentityLinkLogTestByXml extends PluggableProcessEngineTest
     assertThat(historicLinks).hasSize(3);
 
     for (HistoricIdentityLinkLog historicLink : historicLinks) {
-      assertNotNull(historicLink.getTenantId());
+      assertThat(historicLink.getTenantId()).isNotNull();
       assertThat(historicLink.getTenantId()).isEqualTo(TENANT_ONE);
     }
 
@@ -206,7 +205,7 @@ public class HistoricIdentityLinkLogTestByXml extends PluggableProcessEngineTest
     assertThat(historicLinks).hasSize(1);
 
       HistoricIdentityLinkLog historicLink = historicLinks.get(0);
-      assertNotNull(historicLink.getTenantId());
+    assertThat(historicLink.getTenantId()).isNotNull();
     assertThat(historicLink.getTenantId()).isEqualTo(TENANT_ONE);
 
       repositoryService.deleteDeployment(deployment.getId(), true);
@@ -225,7 +224,7 @@ public class HistoricIdentityLinkLogTestByXml extends PluggableProcessEngineTest
     assertThat(historicLinks).hasSize(3);
 
     for (HistoricIdentityLinkLog historicLink : historicLinks) {
-      assertNotNull(historicLink.getTenantId());
+      assertThat(historicLink.getTenantId()).isNotNull();
       assertThat(historicLink.getTenantId()).isEqualTo(TENANT_ONE);
     }
 

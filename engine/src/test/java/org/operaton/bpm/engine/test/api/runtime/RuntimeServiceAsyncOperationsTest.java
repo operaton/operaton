@@ -47,8 +47,6 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertNotNull;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 
 
@@ -386,10 +384,10 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
 
     // then
     ProcessInstance superInstance = runtimeService.createProcessInstanceQuery().processInstanceId(processIds.get(0)).singleResult();
-    assertNull(superInstance);
+    assertThat(superInstance).isNull();
 
     ProcessInstance subInstance = runtimeService.createProcessInstanceQuery().processDefinitionKey("called").singleResult();
-    assertNotNull(subInstance);
+    assertThat(subInstance).isNotNull();
   }
 
   @Deployment(resources="org/operaton/bpm/engine/test/api/oneTaskProcessWithIoMappings.bpmn20.xml")
@@ -467,10 +465,10 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
 
     // then
     ProcessInstance superInstance = runtimeService.createProcessInstanceQuery().processInstanceId(processIds.get(0)).singleResult();
-    assertNull(superInstance);
+    assertThat(superInstance).isNull();
 
     ProcessInstance subInstance = runtimeService.createProcessInstanceQuery().processDefinitionKey("called").singleResult();
-    assertNull(subInstance);
+    assertThat(subInstance).isNull();
   }
 
 
@@ -528,7 +526,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
 
     // execute jobs related to the first deployment
     List<String> jobIdsForFirstDeployment = getJobIdsByDeployment(jobs, firstDeploymentId);
-    assertNotNull(jobIdsForFirstDeployment);
+    assertThat(jobIdsForFirstDeployment).isNotNull();
     for (String jobId : jobIdsForFirstDeployment) {
       managementService.executeJob(jobId);
     }
@@ -542,7 +540,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
 
     // execute jobs related to the second deployment
     List<String> jobIdsForSecondDeployment = getJobIdsByDeployment(jobs, secondDeploymentId);
-    assertNotNull(jobIdsForSecondDeployment);
+    assertThat(jobIdsForSecondDeployment).isNotNull();
     for (String jobId : jobIdsForSecondDeployment) {
       managementService.executeJob(jobId);
     }

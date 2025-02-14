@@ -25,8 +25,6 @@ import static org.operaton.bpm.engine.authorization.TaskPermissions.UPDATE_VARIA
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -454,12 +452,12 @@ public class ProcessTaskAuthorizationTest {
 
   protected void verifySetVariables() {
     verifyVariableInstanceCount(1);
-    assertNotNull(runtimeService.createVariableInstanceQuery().singleResult());
+    assertThat(runtimeService.createVariableInstanceQuery().singleResult()).isNotNull();
   }
 
   protected void verifyRemoveVariables() {
     verifyVariableInstanceCount(0);
-    assertNull(runtimeService.createVariableInstanceQuery().singleResult());
+    assertThat(runtimeService.createVariableInstanceQuery().singleResult()).isNull();
     HistoricVariableInstance deletedVariable = engineRule.getHistoryService().createHistoricVariableInstanceQuery().includeDeleted().singleResult();
     assertThat(deletedVariable.getState()).isEqualTo("DELETED");
   }

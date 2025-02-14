@@ -41,7 +41,6 @@ import org.junit.Test.None;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertNotNull;
 
 /**
  * @author Roman Smirnov
@@ -169,7 +168,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     Incident incident = query.singleResult();
-    assertNotNull(incident);
+    assertThat(incident).isNotNull();
     assertThat(incident.getProcessInstanceId()).isEqualTo(processInstanceId);
   }
 
@@ -186,7 +185,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     Incident incident = query.singleResult();
-    assertNotNull(incident);
+    assertThat(incident).isNotNull();
     assertThat(incident.getProcessInstanceId()).isEqualTo(processInstanceId);
   }
 
@@ -204,7 +203,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     Incident incident = query.singleResult();
-    assertNotNull(incident);
+    assertThat(incident).isNotNull();
     assertThat(incident.getProcessInstanceId()).isEqualTo(processInstanceId);
   }
 
@@ -221,7 +220,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     Incident incident = query.singleResult();
-    assertNotNull(incident);
+    assertThat(incident).isNotNull();
     assertThat(incident.getProcessInstanceId()).isEqualTo(processInstanceId);
   }
 
@@ -238,7 +237,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     Incident incident = query.singleResult();
-    assertNotNull(incident);
+    assertThat(incident).isNotNull();
     assertThat(incident.getProcessInstanceId()).isEqualTo(processInstanceId);
   }
 
@@ -296,7 +295,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     Incident incident = query.singleResult();
-    assertNotNull(incident);
+    assertThat(incident).isNotNull();
     assertThat(incident.getProcessInstanceId()).isEqualTo(processInstanceId);
   }
 

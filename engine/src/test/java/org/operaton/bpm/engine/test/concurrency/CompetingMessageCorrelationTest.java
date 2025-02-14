@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.test.concurrency;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
@@ -63,7 +60,7 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
       return null;
     });
 
-    assertThat(processEngine.getHistoryService().createHistoricJobLogQuery().list()).hasSize(0);
+    assertThat(processEngine.getHistoryService().createHistoricJobLogQuery().list()).isEmpty();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/concurrency/CompetingMessageCorrelationTest.catchMessageProcess.bpmn20.xml")
@@ -98,18 +95,18 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
 
     // let the first thread ends its transaction
     thread1.makeContinue();
-    assertNull(thread1.getException());
+    assertThat(thread1.getException()).isNull();
 
     // thread 2 can't continue because the event subscription it tried to lock was deleted
     thread2.waitForSync();
-    assertNotNull(thread2.getException());
-    assertTrue(thread2.getException() instanceof ProcessEngineException);
+    assertThat(thread2.getException()).isNotNull();
+    assertThat(thread2.getException() instanceof ProcessEngineException).isTrue();
     assertThat(thread2.getException().getMessage())
         .contains("does not have a subscription to a message event with name 'Message'");
 
     // the first thread ended successfully without an exception
     thread1.join();
-    assertNull(thread1.getException());
+    assertThat(thread1.getException()).isNull();
 
     // the follow-up task was reached
     Task afterMessageTask = taskService.createTaskQuery().singleResult();
@@ -149,15 +146,15 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
 
     // the first thread ends its transcation
     thread1.waitUntilDone();
-    assertNull(thread1.getException());
+    assertThat(thread1.getException()).isNull();
 
     Task afterMessageTask = taskService.createTaskQuery().singleResult();
     assertThat(afterMessageTask.getTaskDefinitionKey()).isEqualTo("afterMessageUserTask");
 
     // the second thread ends its transaction and fails with optimistic locking exception
     thread2.waitUntilDone();
-    assertNotNull(thread2.getException());
-    assertTrue(thread2.getException() instanceof OptimisticLockingException);
+    assertThat(thread2.getException()).isNotNull();
+    assertThat(thread2.getException() instanceof OptimisticLockingException).isTrue();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/concurrency/CompetingMessageCorrelationTest.catchMessageProcess.bpmn20.xml")
@@ -192,7 +189,7 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
 
     // thread 1 completes successfully
     thread1.waitUntilDone();
-    assertNull(thread1.getException());
+    assertThat(thread1.getException()).isNull();
 
     // thread2 should be able to continue at least after thread1 has finished and released its lock
     thread2.waitForSync();
@@ -202,7 +199,7 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
 
     // thread 2 completes successfully
     thread2.waitUntilDone();
-    assertNull(thread2.getException());
+    assertThat(thread2.getException()).isNull();
 
     // the follow-up task was reached in both instances
     assertThat(taskService.createTaskQuery().taskDefinitionKey("afterMessageUserTask").count()).isEqualTo(2);
@@ -247,11 +244,11 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
 
     // thread 2 completes successfully, even though it acquired its lock after thread 1
     thread2.waitUntilDone();
-    assertNull(thread2.getException());
+    assertThat(thread2.getException()).isNull();
 
     // thread 1 completes successfully
     thread1.waitUntilDone();
-    assertNull(thread1.getException());
+    assertThat(thread1.getException()).isNull();
 
     // the follow-up task was reached in both instances
     assertThat(taskService.createTaskQuery().taskDefinitionKey("afterMessageUserTask").count()).isEqualTo(2);
@@ -288,7 +285,7 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
 
     // the first thread ends its transaction and releases the lock; the event subscription is now gone
     thread1.waitUntilDone();
-    assertNull(thread1.getException());
+    assertThat(thread1.getException()).isNull();
 
     Task afterMessageTask = taskService.createTaskQuery().singleResult();
     assertThat(afterMessageTask.getTaskDefinitionKey()).isEqualTo("afterMessageUserTask");
@@ -297,8 +294,8 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
     thread2.makeContinue();
     thread2.waitForSync();
 
-    assertNotNull(thread2.getException());
-    assertTrue(thread2.getException() instanceof OptimisticLockingException);
+    assertThat(thread2.getException()).isNotNull();
+    assertThat(thread2.getException() instanceof OptimisticLockingException).isTrue();
   }
 
   /**
@@ -342,22 +339,22 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
     // thread one ends its transaction and blocks on flush when it attempts to delete the event subscription
     thread1.makeContinue();
     Thread.sleep(5000);
-    assertNull(thread1.getException());
+    assertThat(thread1.getException()).isNull();
 
     assertThat(taskService.createTaskQuery().count()).isEqualTo(0);
 
     // thread 2 flushes successfully and releases the lock
     thread2.waitUntilDone();
-    assertNull(thread2.getException());
+    assertThat(thread2.getException()).isNull();
 
     Task afterMessageTask = taskService.createTaskQuery().singleResult();
-    assertNotNull(afterMessageTask);
+    assertThat(afterMessageTask).isNotNull();
     assertThat(afterMessageTask.getTaskDefinitionKey()).isEqualTo("afterMessageUserTask");
 
     // thread 1 flush fails with optimistic locking
     thread1.join();
-    assertNotNull(thread1.getException());
-    assertTrue(thread1.getException() instanceof OptimisticLockingException);
+    assertThat(thread1.getException()).isNotNull();
+    assertThat(thread1.getException() instanceof OptimisticLockingException).isTrue();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/concurrency/CompetingMessageCorrelationTest.eventSubprocess.bpmn")
@@ -387,12 +384,12 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
 
     // the first thread ends its transaction
     thread1.waitUntilDone();
-    assertNull(thread1.getException());
+    assertThat(thread1.getException()).isNull();
 
     // the second thread ends its transaction and fails with optimistic locking exception
     thread2.waitUntilDone();
-    assertNotNull(thread2.getException());
-    assertTrue(thread2.getException() instanceof OptimisticLockingException);
+    assertThat(thread2.getException()).isNotNull();
+    assertThat(thread2.getException() instanceof OptimisticLockingException).isTrue();
   }
 
   @Deployment
@@ -421,8 +418,8 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
 
     // the correlation should not have succeeded
     Throwable exception = correlateThread.getException();
-    assertNotNull(exception);
-    assertTrue(exception instanceof OptimisticLockingException);
+    assertThat(exception).isNotNull();
+    assertThat(exception instanceof OptimisticLockingException).isTrue();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/concurrency/CompetingMessageCorrelationTest.testConcurrentMessageCorrelationAndTreeCompaction.bpmn20.xml")
@@ -447,8 +444,8 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
 
     // then it should not have succeeded
     Throwable exception = taskCompletionThread.getException();
-    assertNotNull(exception);
-    assertTrue(exception instanceof OptimisticLockingException);
+    assertThat(exception).isNotNull();
+    assertThat(exception instanceof OptimisticLockingException).isTrue();
   }
 
   @Deployment
@@ -480,8 +477,8 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
 
     // the correlation should not have succeeded
     Throwable exception = correlateThread.getException();
-    assertNotNull(exception);
-    assertTrue(exception instanceof OptimisticLockingException);
+    assertThat(exception).isNotNull();
+    assertThat(exception instanceof OptimisticLockingException).isTrue();
   }
 
   @Deployment
@@ -523,8 +520,8 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
 
     // thread 1 was rolled back with an optimistic locking exception
     Throwable exception = thread1.getException();
-    assertNotNull(exception);
-    assertTrue(exception instanceof OptimisticLockingException);
+    assertThat(exception).isNotNull();
+    assertThat(exception instanceof OptimisticLockingException).isTrue();
 
     // the execution listener was not executed again
     assertThat(InvocationLogListener.getInvocations()).isEqualTo(2);

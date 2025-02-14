@@ -43,7 +43,8 @@ import java.util.Locale;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.fail;
+import static org.junit.Assert.fail;
 
 public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
 
@@ -167,7 +168,7 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
   @Test
   public void testBrokenFoxJobRetryValue() {
     Job job = managementService.createJobQuery().list().get(0);
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     assertThat(job.getRetries()).isEqualTo(3);
 
     waitForExecutedJobWithRetriesLeft(0, job.getId());
@@ -184,14 +185,14 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
     assertThat(jobQuery.count()).isEqualTo(1);
 
     Job job = managementService.createJobQuery().list().get(0);
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     String jobId = job.getId();
 
     waitForExecutedJobWithRetriesLeft(4, jobId);
     stillOneJobWithExceptionAndRetriesLeft(jobId);
 
     job = refreshJob(jobId);
-    assertNotNull(job);
+    assertThat(job).isNotNull();
 
     assertThat(job.getRetries()).isEqualTo(4);
 
@@ -242,7 +243,7 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
 
     try {
       managementService.executeJob(jobId);
-      fail();
+      fail("");
     } catch (Exception e) {
       // expected
     }
@@ -297,7 +298,7 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
     ClockUtil.setCurrentTime(tenMinutesBeforeTimeShift);
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("failedServiceTask");
-    assertNotNull(pi);
+    assertThat(pi).isNotNull();
 
     // a job is acquirable
     List<AcquirableJobEntity> acquirableJobs = findAndLockAcquirableJobs();
@@ -308,13 +309,13 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
 
     // the job lock time is after the current time but before the time shift
     JobEntity job = (JobEntity) fetchJob(pi.getProcessInstanceId());
-    assertTrue(tenMinutesBeforeTimeShift.before(job.getLockExpirationTime()));
+    assertThat(tenMinutesBeforeTimeShift.before(job.getLockExpirationTime())).isTrue();
     assertThat(job.getLockExpirationTime()).isEqualTo(fiveMinutesBeforeTimeShift);
-    assertTrue(twoMinutesBeforeTimeShift.after(job.getLockExpirationTime()));
+    assertThat(twoMinutesBeforeTimeShift.after(job.getLockExpirationTime())).isTrue();
 
     // the job is not acquirable
     acquirableJobs = findAndLockAcquirableJobs();
-    assertThat(acquirableJobs).hasSize(0);
+    assertThat(acquirableJobs).isEmpty();
 
     // set clock to two minutes before time shift
     ClockUtil.setCurrentTime(twoMinutesBeforeTimeShift);
@@ -328,7 +329,7 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
 
     // the job lock time is after the current time
     job = (JobEntity) refreshJob(job.getId());
-    assertTrue(twoMinutesBeforeTimeShift.before(job.getLockExpirationTime()));
+    assertThat(twoMinutesBeforeTimeShift.before(job.getLockExpirationTime())).isTrue();
 
     // the job is not acquirable
     acquirableJobs = findAndLockAcquirableJobs();
@@ -773,11 +774,11 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
         if (job.getRetries() == 1) { // the first job already failed once
           Date expectedDate = simpleDateFormat.parse("2019-01-01T10:11:01");
           assertThat(job.getDuedate()).isEqualTo(expectedDate);
-          assertNull(((JobEntity) job).getLockExpirationTime());
+          assertThat(((JobEntity) job).getLockExpirationTime()).isNull();
         } else if (job.getRetries() == 3) { // the second job is not triggered yet
           Date expectedDate = simpleDateFormat.parse("2019-01-01T10:02:00");
           assertThat(job.getDuedate()).isEqualTo(expectedDate);
-          assertNull(((JobEntity) job).getLockExpirationTime());
+          assertThat(((JobEntity) job).getLockExpirationTime()).isNull();
         } else {
           fail("Unexpected job");
         }
@@ -825,27 +826,27 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
 
     // then the passing service task has been executed
     task = taskService.createTaskQuery().taskDefinitionKey("afterPassing").singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     // and the failing job still have one retry left
     Job failedJob = managementService.createJobQuery().singleResult();
     assertThat(failedJob.getRetries()).isEqualTo(1);
-    assertNull(((JobEntity) failedJob).getLockExpirationTime());
+    assertThat(((JobEntity) failedJob).getLockExpirationTime()).isNull();
   }
 
   protected void assertJobRetriesForActivity(ProcessInstance pi, String activityId) {
-    assertNotNull(pi);
+    assertThat(pi).isNotNull();
 
     waitForExecutedJobWithRetriesLeft(4);
     stillOneJobWithExceptionAndRetriesLeft();
 
     Job job = fetchJob(pi.getProcessInstanceId());
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     assertThat(job.getProcessInstanceId()).isEqualTo(pi.getProcessInstanceId());
 
     assertThat(job.getRetries()).isEqualTo(4);
 
     ExecutionEntity execution = fetchExecutionEntity(pi.getProcessInstanceId(), activityId);
-    assertNotNull(execution);
+    assertThat(execution).isNotNull();
 
     waitForExecutedJobWithRetriesLeft(3);
 

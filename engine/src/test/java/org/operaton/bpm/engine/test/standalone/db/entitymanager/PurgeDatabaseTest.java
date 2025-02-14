@@ -21,7 +21,6 @@ import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GLOB
 import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
 import static org.operaton.bpm.engine.impl.test.TestHelper.assertAndEnsureCleanDbAndCache;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
 
 import java.util.List;
 
@@ -185,7 +184,7 @@ public class PurgeDatabaseTest {
     assertAndEnsureCleanDbAndCache(engineRule.getProcessEngine(), true);
 
     // and report contains deleted data
-    assertFalse(purge.isEmpty());
+    assertThat(purge.isEmpty()).isFalse();
     CachePurgeReport cachePurgeReport = purge.getCachePurgeReport();
     assertThat(cachePurgeReport.getReportValue(CachePurgeReport.PROCESS_DEF_CACHE)).hasSize(1);
 
@@ -303,7 +302,7 @@ public class PurgeDatabaseTest {
     assertAndEnsureCleanDbAndCache(engineRule.getProcessEngine(), true);
 
     // and report contains deleted entities
-    assertFalse(purge.isEmpty());
+    assertThat(purge.isEmpty()).isFalse();
     CachePurgeReport cachePurgeReport = purge.getCachePurgeReport();
     assertThat(cachePurgeReport.getReportValue(CachePurgeReport.CASE_DEF_CACHE)).hasSize(1);
 
@@ -347,7 +346,7 @@ public class PurgeDatabaseTest {
     assertAndEnsureCleanDbAndCache(engineRule.getProcessEngine(), true);
 
     // and report contains deleted entities
-    assertFalse(purge.isEmpty());
+    assertThat(purge.isEmpty()).isFalse();
     CachePurgeReport cachePurgeReport = purge.getCachePurgeReport();
     assertThat(cachePurgeReport.getReportValue(CachePurgeReport.DMN_DEF_CACHE)).hasSize(2);
     assertThat(cachePurgeReport.getReportValue(CachePurgeReport.DMN_REQ_DEF_CACHE)).hasSize(1);

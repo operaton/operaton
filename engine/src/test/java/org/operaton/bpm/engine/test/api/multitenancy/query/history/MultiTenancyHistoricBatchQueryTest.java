@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.test.api.multitenancy.query.history;
 
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicBatchByTenantId;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
@@ -166,7 +167,7 @@ public class MultiTenancyHistoricBatchQueryTest {
     // when
     try {
       historyService.deleteHistoricBatch(tenant2BatchId);
-      Assert.fail("exception expected");
+      fail("exception expected");
     }
     catch (ProcessEngineException e) {
       // then
@@ -184,7 +185,7 @@ public class MultiTenancyHistoricBatchQueryTest {
     HistoricBatch returnedBatch = historyService.createHistoricBatchQuery().tenantIdIn(TENANT_ONE).singleResult();
 
     // then
-    Assert.assertNotNull(returnedBatch);
+    assertThat(returnedBatch).isNotNull();
     assertThat(returnedBatch.getId()).isEqualTo(tenant1Batch.getId());
   }
 
@@ -209,7 +210,7 @@ public class MultiTenancyHistoricBatchQueryTest {
     HistoricBatch returnedBatch = historyService.createHistoricBatchQuery().withoutTenantId().singleResult();
 
     // then
-    Assert.assertNotNull(returnedBatch);
+    assertThat(returnedBatch).isNotNull();
     assertThat(returnedBatch.getId()).isEqualTo(sharedBatch.getId());
   }
 
@@ -220,7 +221,7 @@ public class MultiTenancyHistoricBatchQueryTest {
     var historicBatchQuery = historyService.createHistoricBatchQuery();
     try {
       historicBatchQuery.tenantIdIn(tenantIds);
-      Assert.fail("exception expected");
+      fail("exception expected");
     }
     catch (NullValueException e) {
       // happy path
@@ -234,7 +235,7 @@ public class MultiTenancyHistoricBatchQueryTest {
     var historicBatchQuery = historyService.createHistoricBatchQuery();
     try {
       historicBatchQuery.tenantIdIn(tenantIds);
-      Assert.fail("exception expected");
+      fail("exception expected");
     }
     catch (NullValueException e) {
       // happy path
@@ -270,7 +271,7 @@ public class MultiTenancyHistoricBatchQueryTest {
     }
 
     for (String expectedId : expectedIds) {
-      Assert.assertTrue(actualIds.contains(expectedId));
+      assertThat(actualIds).contains(expectedId);
     }
   }
 }

@@ -15,11 +15,9 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.task;
-
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.variable.Variables.objectValue;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -147,13 +145,13 @@ public class TaskVariablesTest extends PluggableProcessEngineTest {
     assertThat(typedValue.getValue()).isEqualTo(serializableValue);
 
     ObjectValue serializedValue = taskService.getVariableTyped(taskId, "objectVariable", false);
-    assertFalse(serializedValue.isDeserialized());
+    assertThat(serializedValue.isDeserialized()).isFalse();
 
     ObjectValue typedValueLocal = taskService.getVariableLocalTyped(taskId, "objectVariableLocal");
     assertThat(typedValueLocal.getValue()).isEqualTo(serializableValueLocal);
 
     ObjectValue serializedValueLocal = taskService.getVariableLocalTyped(taskId, "objectVariableLocal", false);
-    assertFalse(serializedValueLocal.isDeserialized());
+    assertThat(serializedValueLocal.isDeserialized()).isFalse();
 
     try {
       StringValue val = taskService.getVariableTyped(taskId, "objectVariable");

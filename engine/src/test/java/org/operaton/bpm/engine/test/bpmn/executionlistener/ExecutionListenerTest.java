@@ -16,12 +16,9 @@
  */
 package org.operaton.bpm.engine.test.bpmn.executionlistener;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 import static org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl.HISTORYLEVEL_AUDIT;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.HashMap;
@@ -125,38 +122,38 @@ public class ExecutionListenerTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("executionListenersProcess", "businessKey123");
 
     String varSetInExecutionListener = (String) runtimeService.getVariable(processInstance.getId(), "variableSetInExecutionListener");
-    assertNotNull(varSetInExecutionListener);
+    assertThat(varSetInExecutionListener).isNotNull();
     assertThat(varSetInExecutionListener).isEqualTo("firstValue");
 
     // Check if business key was available in execution listener
     String businessKey = (String) runtimeService.getVariable(processInstance.getId(), "businessKeyInExecution");
-    assertNotNull(businessKey);
+    assertThat(businessKey).isNotNull();
     assertThat(businessKey).isEqualTo("businessKey123");
 
     // Transition take executionListener will set 2 variables
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     taskService.complete(task.getId());
 
     varSetInExecutionListener = (String) runtimeService.getVariable(processInstance.getId(), "variableSetInExecutionListener");
 
-    assertNotNull(varSetInExecutionListener);
+    assertThat(varSetInExecutionListener).isNotNull();
     assertThat(varSetInExecutionListener).isEqualTo("secondValue");
 
     ExampleExecutionListenerPojo myPojo = new ExampleExecutionListenerPojo();
     runtimeService.setVariable(processInstance.getId(), "myPojo", myPojo);
 
     task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     taskService.complete(task.getId());
 
     // First usertask uses a method-expression as executionListener: ${myPojo.myMethod(execution.eventName)}
     ExampleExecutionListenerPojo pojoVariable = (ExampleExecutionListenerPojo) runtimeService.getVariable(processInstance.getId(), "myPojo");
-    assertNotNull(pojoVariable.getReceivedEventName());
+    assertThat(pojoVariable.getReceivedEventName()).isNotNull();
     assertThat(pojoVariable.getReceivedEventName()).isEqualTo("end");
 
     task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     taskService.complete(task.getId());
 
     testRule.assertProcessEnded(processInstance.getId());
@@ -208,8 +205,8 @@ public class ExecutionListenerTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("executionListenersProcess", variables);
 
     Object varSetByListener = runtimeService.getVariable(processInstance.getId(), "var");
-    assertNotNull(varSetByListener);
-    assertTrue(varSetByListener instanceof String);
+    assertThat(varSetByListener).isNotNull();
+    assertThat(varSetByListener instanceof String).isTrue();
 
     // Result is a concatenation of fixed injected field and injected expression
     assertThat(varSetByListener).isEqualTo("Yes, I am listening!");
@@ -272,7 +269,7 @@ public class ExecutionListenerTest {
   @Deployment
   public void testScriptListener() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
-    assertTrue(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isTrue();
 
 
     if (processEngineRule.getProcessEngineConfiguration().getHistoryLevel().getId() >= HISTORYLEVEL_AUDIT) {
@@ -284,8 +281,8 @@ public class ExecutionListenerTest {
       String[] variableNames = new String[]{"start-start", "start-end", "start-take", "end-start", "end-end"};
       for (String variableName : variableNames) {
         variableInstance = query.variableName(variableName).singleResult();
-        assertNotNull("Unable ot find variable with name '" + variableName + "'", variableInstance);
-        assertTrue("Variable '" + variableName + "' should be set to true", (Boolean) variableInstance.getValue());
+        assertThat(variableInstance).as("Unable ot find variable with name '" + variableName + "'").isNotNull();
+        assertThat((Boolean) variableInstance.getValue()).as("Variable '" + variableName + "' should be set to true").isTrue();
       }
     }
   }
@@ -297,7 +294,7 @@ public class ExecutionListenerTest {
   })
   public void testScriptResourceListener() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
-    assertTrue(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isTrue();
 
     if (processEngineRule.getProcessEngineConfiguration().getHistoryLevel().getId() >= HISTORYLEVEL_AUDIT) {
       HistoricVariableInstanceQuery query = historyService.createHistoricVariableInstanceQuery();
@@ -308,8 +305,8 @@ public class ExecutionListenerTest {
       String[] variableNames = new String[]{"start-start", "start-end", "start-take", "end-start", "end-end"};
       for (String variableName : variableNames) {
         variableInstance = query.variableName(variableName).singleResult();
-        assertNotNull("Unable ot find variable with name '" + variableName + "'", variableInstance);
-        assertTrue("Variable '" + variableName + "' should be set to true", (Boolean) variableInstance.getValue());
+        assertThat(variableInstance).as("Unable ot find variable with name '" + variableName + "'").isNotNull();
+        assertThat((Boolean) variableInstance.getValue()).as("Variable '" + variableName + "' should be set to true").isTrue();
       }
     }
   }
@@ -380,7 +377,7 @@ public class ExecutionListenerTest {
     Task task = taskService.createTaskQuery().taskDefinitionKey("userTask1").singleResult();
     taskService.complete(task.getId());
 
-    assertThat(taskService.createTaskQuery().list()).hasSize(0);
+    assertThat(taskService.createTaskQuery().list()).isEmpty();
     List<RecordedEvent> recordedEvents = RecorderExecutionListener.getRecordedEvents();
     assertThat(recordedEvents).hasSize(1);
     assertThat(recordedEvents.get(0).getActivityId()).isEqualTo("endEvent");
@@ -398,7 +395,7 @@ public class ExecutionListenerTest {
     Task task = taskService.createTaskQuery().taskDefinitionKey("userTask1").singleResult();
     taskService.complete(task.getId());
 
-    assertThat(taskService.createTaskQuery().list()).hasSize(0);
+    assertThat(taskService.createTaskQuery().list()).isEmpty();
     List<RecordedEvent> recordedEvents = RecorderExecutionListener.getRecordedEvents();
     assertThat(recordedEvents).hasSize(2);
     assertThat(recordedEvents.get(0).getActivityId()).isEqualTo("sendTask");
@@ -508,9 +505,9 @@ public class ExecutionListenerTest {
           .processInstanceId(processInstance.getId())
           .variableName("finished")
           .singleResult();
-      assertNotNull(endVariable);
-      assertNotNull(endVariable.getValue());
-      assertTrue(Boolean.parseBoolean(String.valueOf(endVariable.getValue())));
+      assertThat(endVariable).isNotNull();
+      assertThat(endVariable.getValue()).isNotNull();
+      assertThat(Boolean.parseBoolean(String.valueOf(endVariable.getValue()))).isTrue();
     }
   }
 
@@ -533,9 +530,9 @@ public class ExecutionListenerTest {
           .processInstanceId(processInstance.getId())
           .variableName("canceled")
           .singleResult();
-      assertNotNull(endVariable);
-      assertNotNull(endVariable.getValue());
-      assertTrue(Boolean.parseBoolean(String.valueOf(endVariable.getValue())));
+      assertThat(endVariable).isNotNull();
+      assertThat(endVariable.getValue()).isNotNull();
+      assertThat(Boolean.parseBoolean(String.valueOf(endVariable.getValue()))).isTrue();
     }
   }
 
@@ -831,7 +828,7 @@ public class ExecutionListenerTest {
 
     // then
     Task afterCatch = taskService.createTaskQuery().singleResult();
-    assertNotNull(afterCatch);
+    assertThat(afterCatch).isNotNull();
     assertThat(afterCatch.getName()).isEqualTo("afterCatch");
     assertThat(ThrowBPMNErrorDelegate.invocations).isEqualTo(1);
 
@@ -1203,7 +1200,7 @@ public class ExecutionListenerTest {
       fail("Expected exception");
     } catch (Exception e) {
       // then
-      assertTrue(e.getMessage().contains("business error"));
+      assertThat(e.getMessage()).contains("business error");
       assertThat(ThrowBPMNErrorDelegate.invocations).isEqualTo(1);
     }
   }
@@ -1271,7 +1268,7 @@ public class ExecutionListenerTest {
       fail("Exception expected");
     } catch (Exception e) {
       // then
-      assertTrue(e.getMessage().contains("business error"));
+      assertThat(e.getMessage()).contains("business error");
       assertThat(ThrowBPMNErrorDelegate.invocations).isEqualTo(1);
     }
   }
@@ -1302,7 +1299,7 @@ public class ExecutionListenerTest {
       runtimeService.startProcessInstanceByKey(PROCESS_KEY);
       fail("Exception expected");
     } catch (Exception e) {
-      assertTrue(e.getMessage().contains("business error"));
+      assertThat(e.getMessage()).contains("business error");
       assertThat(ThrowBPMNErrorDelegate.invocations).isEqualTo(1);
     }
   }

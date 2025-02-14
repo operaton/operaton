@@ -17,8 +17,6 @@
 package org.operaton.bpm.application.impl.deployment;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 import java.util.Map;
 
@@ -39,37 +37,38 @@ public class EmptyProcessesXmlTest {
   public void testDefaultValues() {
 
     ProcessesXml emptyProcessesXml = ProcessesXml.EMPTY_PROCESSES_XML;
-    assertNotNull(emptyProcessesXml);
+    assertThat(emptyProcessesXml).isNotNull();
 
-    assertNotNull(emptyProcessesXml.getProcessEngines());
-    assertThat(emptyProcessesXml.getProcessEngines()).hasSize(0);
+    assertThat(emptyProcessesXml.getProcessEngines()).isNotNull();
+    assertThat(emptyProcessesXml.getProcessEngines()).isEmpty();
 
-    assertNotNull(emptyProcessesXml.getProcessArchives());
+    assertThat(emptyProcessesXml.getProcessArchives()).isNotNull();
     assertThat(emptyProcessesXml.getProcessArchives()).hasSize(1);
 
     ProcessArchiveXml processArchiveXml = emptyProcessesXml.getProcessArchives().get(0);
 
-    assertNull(processArchiveXml.getName());
-    assertNull(processArchiveXml.getProcessEngineName());
+    assertThat(processArchiveXml.getName()).isNull();
+    assertThat(processArchiveXml.getProcessEngineName()).isNull();
 
-    assertNotNull(processArchiveXml.getProcessResourceNames());
+    assertThat(processArchiveXml.getProcessResourceNames()).isNotNull();
     assertThat(processArchiveXml.getProcessResourceNames()).isEmpty();
 
     Map<String, String> properties = processArchiveXml.getProperties();
 
-    assertNotNull(properties);
-    assertThat(properties).hasSize(4);
+    assertThat(properties)
+            .isNotNull()
+            .hasSize(4);
 
     String isDeleteUponUndeploy = properties.get(ProcessArchiveXml.PROP_IS_DELETE_UPON_UNDEPLOY);
-    assertNotNull(isDeleteUponUndeploy);
+    assertThat(isDeleteUponUndeploy).isNotNull();
     assertThat(isDeleteUponUndeploy).isEqualTo(Boolean.FALSE.toString());
 
     String isScanForProcessDefinitions = properties.get(ProcessArchiveXml.PROP_IS_SCAN_FOR_PROCESS_DEFINITIONS);
-    assertNotNull(isScanForProcessDefinitions);
+    assertThat(isScanForProcessDefinitions).isNotNull();
     assertThat(isScanForProcessDefinitions).isEqualTo(Boolean.TRUE.toString());
 
     String isDeployChangedOnly = properties.get(ProcessArchiveXml.PROP_IS_DEPLOY_CHANGED_ONLY);
-    assertNotNull(isDeployChangedOnly);
+    assertThat(isDeployChangedOnly).isNotNull();
     assertThat(isDeployChangedOnly).isEqualTo(Boolean.FALSE.toString());
 
     String resumePreviousBy = properties.get(ProcessArchiveXml.PROP_RESUME_PREVIOUS_BY);

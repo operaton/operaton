@@ -57,9 +57,9 @@ public class DmnDisabledTest {
       .execute(new SchemaOperationsProcessEngineBuild());
 
     assertThat(processEngineImpl.getRepositoryService().createDecisionDefinitionQuery().count()).isEqualTo(0);
-    assertThat(processEngineImpl.getRepositoryService().createDecisionDefinitionQuery().list()).hasSize(0);
+    assertThat(processEngineImpl.getRepositoryService().createDecisionDefinitionQuery().list()).isEmpty();
     assertThat(processEngineImpl.getRepositoryService().createDecisionRequirementsDefinitionQuery().count()).isEqualTo(0);
-    assertThat(processEngineImpl.getRepositoryService().createDecisionRequirementsDefinitionQuery().list()).hasSize(0);
+    assertThat(processEngineImpl.getRepositoryService().createDecisionRequirementsDefinitionQuery().list()).isEmpty();
 
   }
 

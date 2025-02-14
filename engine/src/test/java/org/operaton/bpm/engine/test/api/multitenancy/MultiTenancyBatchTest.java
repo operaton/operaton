@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.test.api.multitenancy;
 
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.List;
 
@@ -37,7 +38,6 @@ import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -97,7 +97,7 @@ public class MultiTenancyBatchTest {
     Batch batch = batchHelper.migrateProcessInstanceAsync(sharedDefinition, sharedDefinition);
 
     // then
-    Assert.assertNull(batch.getTenantId());
+    assertThat(batch.getTenantId()).isNull();
   }
 
   /**
@@ -123,7 +123,7 @@ public class MultiTenancyBatchTest {
     Batch batch = batchHelper.migrateProcessInstanceAsync(sharedDefinition, tenant1Definition);
 
     // then
-    Assert.assertNull(batch.getTenantId());
+    assertThat(batch.getTenantId()).isNull();
   }
 
   @Test
@@ -195,7 +195,7 @@ public class MultiTenancyBatchTest {
     identityService.setAuthentication("user", null, singletonList(TENANT_ONE));
     try {
       managementService.deleteBatch(batchId, true);
-      Assert.fail("exception expected");
+      fail("exception expected");
     }
     catch (ProcessEngineException e) {
       // then
@@ -219,7 +219,7 @@ public class MultiTenancyBatchTest {
 
     // then
     batch = managementService.createBatchQuery().batchId(batch.getId()).singleResult();
-    Assert.assertTrue(batch.isSuspended());
+    assertThat(batch.isSuspended()).isTrue();
   }
 
   @Test
@@ -232,7 +232,7 @@ public class MultiTenancyBatchTest {
     identityService.setAuthentication("user", null, singletonList(TENANT_ONE));
     try {
       managementService.suspendBatchById(batchId);
-      Assert.fail("exception expected");
+      fail("exception expected");
     }
     catch (ProcessEngineException e) {
       // then
@@ -257,7 +257,7 @@ public class MultiTenancyBatchTest {
 
     // then
     batch = managementService.createBatchQuery().batchId(batch.getId()).singleResult();
-    Assert.assertFalse(batch.isSuspended());
+    assertThat(batch.isSuspended()).isFalse();
   }
 
   @Test
@@ -271,7 +271,7 @@ public class MultiTenancyBatchTest {
     identityService.setAuthentication("user", null, singletonList(TENANT_ONE));
     try {
       managementService.activateBatchById(batchId);
-      Assert.fail("exception expected");
+      fail("exception expected");
     }
     catch (ProcessEngineException e) {
       // then

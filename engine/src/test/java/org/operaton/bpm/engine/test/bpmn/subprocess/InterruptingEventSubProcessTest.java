@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.bpmn.subprocess;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import java.util.List;
@@ -48,7 +48,7 @@ public class InterruptingEventSubProcessTest extends PluggableProcessEngineTest 
     EventSubscriptionQuery eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery();
 
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskBeforeInterruptingEventSuprocess");
 
     List<EventSubscription> eventSubscriptions = eventSubscriptionQuery.list();
@@ -57,7 +57,7 @@ public class InterruptingEventSubProcessTest extends PluggableProcessEngineTest 
     runtimeService.messageEventReceived("newMessage", pi.getId());
 
     task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskAfterMessageStartEvent");
 
     assertThat(eventSubscriptionQuery.count()).isEqualTo(0);
@@ -84,7 +84,7 @@ public class InterruptingEventSubProcessTest extends PluggableProcessEngineTest 
     EventSubscriptionQuery eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery();
 
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskBeforeInterruptingEventSuprocess");
 
     List<EventSubscription> eventSubscriptions = eventSubscriptionQuery.list();
@@ -93,7 +93,7 @@ public class InterruptingEventSubProcessTest extends PluggableProcessEngineTest 
     runtimeService.signalEventReceived("newSignal", pi.getId());
 
     task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("tastAfterSignalStartEvent");
 
     assertThat(eventSubscriptionQuery.count()).isEqualTo(0);
@@ -120,16 +120,16 @@ public class InterruptingEventSubProcessTest extends PluggableProcessEngineTest 
     JobQuery jobQuery = managementService.createJobQuery().timers();
 
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskBeforeInterruptingEventSuprocess");
 
     Job timer = jobQuery.singleResult();
-    assertNotNull(timer);
+    assertThat(timer).isNotNull();
 
     runtimeService.messageEventReceived("newMessage", pi.getId());
 
     task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskAfterMessageStartEvent");
 
     assertThat(jobQuery.count()).isEqualTo(0);
@@ -148,7 +148,7 @@ public class InterruptingEventSubProcessTest extends PluggableProcessEngineTest 
     EventSubscriptionQuery eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery();
 
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskBeforeInterruptingEventSuprocess");
 
     List<EventSubscription> eventSubscriptions = eventSubscriptionQuery.list();
@@ -157,7 +157,7 @@ public class InterruptingEventSubProcessTest extends PluggableProcessEngineTest 
     runtimeService.messageEventReceived("newMessage", pi.getId());
 
     task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskAfterMessageStartEvent");
 
     assertThat(eventSubscriptionQuery.count()).isEqualTo(1);

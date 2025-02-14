@@ -17,9 +17,7 @@
 package org.operaton.bpm.engine.test.api.identity;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import java.util.List;
@@ -103,7 +101,7 @@ public class UserQueryTest extends PluggableProcessEngineTest {
 
     try {
       userQuery.userId(null);
-      fail();
+      fail("");
     } catch (ProcessEngineException e) { }
   }
 
@@ -124,7 +122,7 @@ public class UserQueryTest extends PluggableProcessEngineTest {
 
     try {
       userQuery.singleResult();
-      fail();
+      fail("");
     } catch (ProcessEngineException e) { }
   }
 
@@ -148,7 +146,7 @@ public class UserQueryTest extends PluggableProcessEngineTest {
 
     try {
       userQuery.userFirstNameLike(null);
-      fail();
+      fail("");
     } catch (ProcessEngineException e) { }
   }
 
@@ -169,7 +167,7 @@ public class UserQueryTest extends PluggableProcessEngineTest {
 
     try {
       userQuery.singleResult();
-      fail();
+      fail("");
     } catch (ProcessEngineException e) { }
   }
 
@@ -190,7 +188,7 @@ public class UserQueryTest extends PluggableProcessEngineTest {
 
     try {
       userQuery.userLastNameLike(null);
-      fail();
+      fail("");
     } catch (ProcessEngineException e) { }
   }
 
@@ -208,7 +206,7 @@ public class UserQueryTest extends PluggableProcessEngineTest {
 
     try {
       userQuery.singleResult();
-      fail();
+      fail("");
     } catch (ProcessEngineException e) { }
   }
 
@@ -229,7 +227,7 @@ public class UserQueryTest extends PluggableProcessEngineTest {
 
     try {
       userQuery.userEmailLike(null);
-      fail();
+      fail("");
     } catch (ProcessEngineException e) { }
   }
 
@@ -260,13 +258,13 @@ public class UserQueryTest extends PluggableProcessEngineTest {
     var userQuery1 = identityService.createUserQuery().orderByUserId();
     try {
       userQuery1.list();
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {}
 
     var userQuery2 = identityService.createUserQuery().orderByUserId().orderByUserEmail();
     try {
       userQuery2.list();
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {}
   }
 
@@ -290,7 +288,7 @@ public class UserQueryTest extends PluggableProcessEngineTest {
 
     try {
       userQuery.memberOfGroup(null);
-      fail();
+      fail("");
     } catch (ProcessEngineException e) { }
   }
 
@@ -311,18 +309,18 @@ public class UserQueryTest extends PluggableProcessEngineTest {
     assertThat(query.count()).isEqualTo(countExpected);
 
     if (countExpected == 1) {
-      assertNotNull(query.singleResult());
+      assertThat(query.singleResult()).isNotNull();
     } else if (countExpected > 1){
       verifySingleResultFails(query);
     } else if (countExpected == 0) {
-      assertNull(query.singleResult());
+      assertThat(query.singleResult()).isNull();
     }
   }
 
   private void verifySingleResultFails(UserQuery query) {
     try {
       query.singleResult();
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {}
   }
 
@@ -330,7 +328,7 @@ public class UserQueryTest extends PluggableProcessEngineTest {
   public void testQueryByIdIn() {
 
     // empty list
-    assertTrue(identityService.createUserQuery().userIdIn("a", "b").list().isEmpty());
+    assertThat(identityService.createUserQuery().userIdIn("a", "b").list()).isEmpty();
 
 
     // collect all ids
@@ -349,7 +347,7 @@ public class UserQueryTest extends PluggableProcessEngineTest {
         }
       }
       if(!found) {
-        fail("Expected to find user "+user);
+        fail("Expected to find user " + user);
       }
     }
   }

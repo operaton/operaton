@@ -33,7 +33,6 @@ import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -127,10 +126,10 @@ public class JobExecutorShutdownTest {
 
     // but the exclusive follow-up job is not executed and is not locked
     JobEntity secondAsyncJob = (JobEntity) engineRule.getManagementService().createJobQuery().singleResult();
-    Assert.assertNotNull(secondAsyncJob);
-    Assert.assertNotEquals(secondAsyncJob.getId(), firstAsyncJob.getId());
-    Assert.assertNull(secondAsyncJob.getLockOwner());
-    Assert.assertNull(secondAsyncJob.getLockExpirationTime());
+    assertThat(secondAsyncJob).isNotNull();
+    assertThat(firstAsyncJob.getId()).isNotEqualTo(secondAsyncJob.getId());
+    assertThat(secondAsyncJob.getLockOwner()).isNull();
+    assertThat(secondAsyncJob.getLockExpirationTime()).isNull();
 
   }
 
@@ -164,7 +163,7 @@ public class JobExecutorShutdownTest {
     assertThat(lockedJobList).hasSize(2);
     for(Job job : lockedJobList) {
       JobEntity jobEntity = (JobEntity)job;
-      Assert.assertNotNull(jobEntity.getLockOwner());
+      assertThat(jobEntity.getLockOwner()).isNotNull();
     }
 
     // shut down the job executor while first job is executing
@@ -175,10 +174,10 @@ public class JobExecutorShutdownTest {
 
     // check that only one job left, which is not executed nor locked
     JobEntity jobEntity = (JobEntity) engineRule.getManagementService().createJobQuery().singleResult();
-    Assert.assertNotNull(jobEntity);
-    Assert.assertTrue(lockedJobList.get(1).getId().equals(jobEntity.getId()) || lockedJobList.get(0).getId().equals(jobEntity.getId()));
-    Assert.assertNull(jobEntity.getLockOwner());
-    Assert.assertNull(jobEntity.getLockExpirationTime());
+    assertThat(jobEntity).isNotNull();
+    assertThat(lockedJobList.get(1).getId().equals(jobEntity.getId()) || lockedJobList.get(0).getId().equals(jobEntity.getId())).isTrue();
+    assertThat(jobEntity.getLockOwner()).isNull();
+    assertThat(jobEntity.getLockExpirationTime()).isNull();
   }
 
   protected static ControllableJobExecutor buildControllableJobExecutor() {

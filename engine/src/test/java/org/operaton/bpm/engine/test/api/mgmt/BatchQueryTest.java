@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.api.mgmt;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.batchById;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
@@ -91,8 +92,8 @@ public class BatchQueryTest {
       batchIds.add(resultBatch.getId());
     }
 
-    Assert.assertTrue(batchIds.contains(batch1.getId()));
-    Assert.assertTrue(batchIds.contains(batch2.getId()));
+    assertThat(batchIds).contains(batch1);
+    assertThat(batchIds).contains(batch2);
   }
 
   @Test
@@ -105,7 +106,7 @@ public class BatchQueryTest {
     Batch resultBatch = managementService.createBatchQuery().singleResult();
 
     // then
-    Assert.assertNotNull(batch);
+    assertThat(batch).isNotNull();
 
     assertThat(resultBatch.getId()).isEqualTo(batch.getId());
     assertThat(resultBatch.getBatchJobDefinitionId()).isEqualTo(batch.getBatchJobDefinitionId());
@@ -132,7 +133,7 @@ public class BatchQueryTest {
     Batch resultBatch = managementService.createBatchQuery().batchId(batch1.getId()).singleResult();
 
     // then
-    Assert.assertNotNull(resultBatch);
+    assertThat(resultBatch).isNotNull();
     assertThat(resultBatch.getId()).isEqualTo(batch1.getId());
   }
 
@@ -141,7 +142,7 @@ public class BatchQueryTest {
     var batchQuery = managementService.createBatchQuery();
     try {
       batchQuery.batchId(null);
-      Assert.fail("exception expected");
+      fail("exception expected");
     }
     catch (NullValueException e) {
       assertThat(e.getMessage()).contains("Batch id is null");
@@ -178,7 +179,7 @@ public class BatchQueryTest {
     var batchQuery = managementService.createBatchQuery();
     try {
       batchQuery.type(null);
-      Assert.fail("exception expected");
+      fail("exception expected");
     }
     catch (NullValueException e) {
       assertThat(e.getMessage()).contains("Type is null");
@@ -229,7 +230,7 @@ public class BatchQueryTest {
     var batchQuery = managementService.createBatchQuery().orderById();
     try {
       batchQuery.singleResult();
-      Assert.fail("exception expected");
+      fail("exception expected");
     }
     catch (NotValidException e) {
       assertThat(e.getMessage()).contains("Invalid query: "
@@ -242,7 +243,7 @@ public class BatchQueryTest {
     var batchQuery = managementService.createBatchQuery();
     try {
       batchQuery.asc();
-      Assert.fail("exception expected");
+      fail("exception expected");
     }
     catch (NotValidException e) {
       assertThat(e.getMessage()).contains("You should call any of the orderBy methods "

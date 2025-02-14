@@ -39,7 +39,7 @@ public class AsyncEmailTaskTest extends EmailTestCase {
     String procId = runtimeService.startProcessInstanceByKey("simpleTextOnly").getId();
 
     List<WiserMessage> messages = wiser.getMessages();
-    assertThat(messages).hasSize(0);
+    assertThat(messages).isEmpty();
 
     testRule.waitForJobExecutorToProcessAllJobs(5000L);
 
@@ -58,7 +58,7 @@ public class AsyncEmailTaskTest extends EmailTestCase {
     runtimeService.startProcessInstanceByKey("simpleTextOnly");
 
     List<WiserMessage> messages = wiser.getMessages();
-    assertThat(messages).hasSize(0);
+    assertThat(messages).isEmpty();
 
     testRule.waitForJobExecutorToProcessAllJobs(5000L);
 

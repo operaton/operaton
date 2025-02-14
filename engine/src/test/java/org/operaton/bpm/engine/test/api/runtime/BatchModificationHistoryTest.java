@@ -17,9 +17,6 @@
 package org.operaton.bpm.engine.test.api.runtime;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -147,7 +144,7 @@ public class BatchModificationHistoryTest {
 
     // then a historic batch was created
     HistoricBatch historicBatch = helper.getHistoricBatch(batch);
-    assertNotNull(historicBatch);
+    assertThat(historicBatch).isNotNull();
     assertThat(historicBatch.getId()).isEqualTo(batch.getId());
     assertThat(historicBatch.getType()).isEqualTo(batch.getType());
     assertThat(historicBatch.getTotalJobs()).isEqualTo(batch.getTotalJobs());
@@ -157,7 +154,7 @@ public class BatchModificationHistoryTest {
     assertThat(historicBatch.getMonitorJobDefinitionId()).isEqualTo(batch.getMonitorJobDefinitionId());
     assertThat(historicBatch.getBatchJobDefinitionId()).isEqualTo(batch.getBatchJobDefinitionId());
     assertThat(historicBatch.getStartTime()).isEqualTo(START_DATE);
-    assertNull(historicBatch.getEndTime());
+    assertThat(historicBatch.getEndTime()).isNull();
   }
 
   @Test
@@ -174,7 +171,7 @@ public class BatchModificationHistoryTest {
 
     // then the historic batch has an end time set
     HistoricBatch historicBatch = helper.getHistoricBatch(batch);
-    assertNotNull(historicBatch);
+    assertThat(historicBatch).isNotNull();
     assertThat(historicBatch.getEndTime()).isEqualTo(endDate);
   }
 
@@ -186,15 +183,15 @@ public class BatchModificationHistoryTest {
 
     // then a historic job log exists for the seed job
     HistoricJobLog jobLog = helper.getHistoricSeedJobLog(batch).get(0);
-    assertNotNull(jobLog);
-    assertTrue(jobLog.isCreationLog());
+    assertThat(jobLog).isNotNull();
+    assertThat(jobLog.isCreationLog()).isTrue();
     assertThat(jobLog.getJobDefinitionId()).isEqualTo(batch.getSeedJobDefinitionId());
     assertThat(jobLog.getJobDefinitionType()).isEqualTo(BatchSeedJobHandler.TYPE);
     assertThat(jobLog.getJobDefinitionConfiguration()).isEqualTo(batch.getId());
     assertThat(jobLog.getTimestamp()).isEqualTo(START_DATE);
     assertThat(jobLog.getDeploymentId()).isEqualTo(processDefinition.getDeploymentId());
-    assertNull(jobLog.getProcessDefinitionId());
-    assertNull(jobLog.getExecutionId());
+    assertThat(jobLog.getProcessDefinitionId()).isNull();
+    assertThat(jobLog.getExecutionId()).isNull();
     assertThat(jobLog.getJobDueDate()).isEqualTo(currentTime);
 
     // when the seed job is executed
@@ -203,15 +200,15 @@ public class BatchModificationHistoryTest {
 
     // then a new historic job log exists for the seed job
     jobLog = helper.getHistoricSeedJobLog(batch).get(1);
-    assertNotNull(jobLog);
-    assertTrue(jobLog.isSuccessLog());
+    assertThat(jobLog).isNotNull();
+    assertThat(jobLog.isSuccessLog()).isTrue();
     assertThat(jobLog.getJobDefinitionId()).isEqualTo(batch.getSeedJobDefinitionId());
     assertThat(jobLog.getJobDefinitionType()).isEqualTo(BatchSeedJobHandler.TYPE);
     assertThat(jobLog.getJobDefinitionConfiguration()).isEqualTo(batch.getId());
     assertThat(jobLog.getTimestamp()).isEqualTo(executionDate);
     assertThat(jobLog.getDeploymentId()).isEqualTo(processDefinition.getDeploymentId());
-    assertNull(jobLog.getProcessDefinitionId());
-    assertNull(jobLog.getExecutionId());
+    assertThat(jobLog.getProcessDefinitionId()).isNull();
+    assertThat(jobLog.getExecutionId()).isNull();
     assertThat(jobLog.getJobDueDate()).isEqualTo(currentTime);
 
   }
@@ -231,7 +228,7 @@ public class BatchModificationHistoryTest {
     // then a creation historic job log exists for the monitor job without due date
     HistoricJobLog jobLog = jobLogs.get(0);
     assertCommonMonitorJobLogProperties(batch, jobLog);
-    assertTrue(jobLog.isCreationLog());
+    assertThat(jobLog.isCreationLog()).isTrue();
     assertThat(jobLog.getTimestamp()).isEqualTo(START_DATE);
     assertThat(jobLog.getJobDueDate()).isEqualTo(currentTime);
 
@@ -246,7 +243,7 @@ public class BatchModificationHistoryTest {
     // then a success job log was created for the last monitor job
     jobLog = jobLogs.get(1);
     assertCommonMonitorJobLogProperties(batch, jobLog);
-    assertTrue(jobLog.isSuccessLog());
+    assertThat(jobLog.isSuccessLog()).isTrue();
     assertThat(jobLog.getTimestamp()).isEqualTo(executionDate);
     assertThat(jobLog.getJobDueDate()).isEqualTo(currentTime);
 
@@ -257,7 +254,7 @@ public class BatchModificationHistoryTest {
 
     jobLog = jobLogs.get(0);
     assertCommonMonitorJobLogProperties(batch, jobLog);
-    assertTrue(jobLog.isCreationLog());
+    assertThat(jobLog.isCreationLog()).isTrue();
     assertThat(jobLog.getTimestamp()).isEqualTo(executionDate);
     assertThat(jobLog.getJobDueDate()).isEqualTo(monitorJobDueDate);
 
@@ -272,7 +269,7 @@ public class BatchModificationHistoryTest {
     // then a success job log was created for the last monitor job
     jobLog = jobLogs.get(1);
     assertCommonMonitorJobLogProperties(batch, jobLog);
-    assertTrue(jobLog.isSuccessLog());
+    assertThat(jobLog.isSuccessLog()).isTrue();
     assertThat(jobLog.getTimestamp()).isEqualTo(executionDate);
     assertThat(jobLog.getJobDueDate()).isEqualTo(monitorJobDueDate);
   }
@@ -289,27 +286,27 @@ public class BatchModificationHistoryTest {
 
     // then a historic job log exists for the batch job
     HistoricJobLog jobLog = helper.getHistoricBatchJobLog(batch).get(0);
-    assertNotNull(jobLog);
-    assertTrue(jobLog.isCreationLog());
+    assertThat(jobLog).isNotNull();
+    assertThat(jobLog.isCreationLog()).isTrue();
     assertThat(jobLog.getJobDefinitionId()).isEqualTo(batch.getBatchJobDefinitionId());
     assertThat(jobLog.getJobDefinitionType()).isEqualTo(Batch.TYPE_PROCESS_INSTANCE_MODIFICATION);
     assertThat(jobLog.getJobDefinitionConfiguration()).isEqualTo(batch.getId());
     assertThat(jobLog.getTimestamp()).isEqualTo(START_DATE);
     assertThat(jobLog.getDeploymentId()).isEqualTo(processDefinition.getDeploymentId());
-    assertNull(jobLog.getProcessDefinitionId());
-    assertNull(jobLog.getExecutionId());
+    assertThat(jobLog.getProcessDefinitionId()).isNull();
+    assertThat(jobLog.getExecutionId()).isNull();
     assertThat(jobLog.getJobDueDate()).isEqualTo(currentTime);
 
     jobLog = helper.getHistoricBatchJobLog(batch).get(1);
-    assertNotNull(jobLog);
-    assertTrue(jobLog.isSuccessLog());
+    assertThat(jobLog).isNotNull();
+    assertThat(jobLog.isSuccessLog()).isTrue();
     assertThat(jobLog.getJobDefinitionId()).isEqualTo(batch.getBatchJobDefinitionId());
     assertThat(jobLog.getJobDefinitionType()).isEqualTo(Batch.TYPE_PROCESS_INSTANCE_MODIFICATION);
     assertThat(jobLog.getJobDefinitionConfiguration()).isEqualTo(batch.getId());
     assertThat(jobLog.getTimestamp()).isEqualTo(executionDate);
     assertThat(jobLog.getDeploymentId()).isEqualTo(processDefinition.getDeploymentId());
-    assertNull(jobLog.getProcessDefinitionId());
-    assertNull(jobLog.getExecutionId());
+    assertThat(jobLog.getProcessDefinitionId()).isNull();
+    assertThat(jobLog.getExecutionId()).isNull();
     assertThat(jobLog.getJobDueDate()).isEqualTo(currentTime);
   }
 
@@ -324,7 +321,7 @@ public class BatchModificationHistoryTest {
 
     // then the end time was set for the historic batch
     HistoricBatch historicBatch = helper.getHistoricBatch(batch);
-    assertNotNull(historicBatch);
+    assertThat(historicBatch).isNotNull();
     assertThat(historicBatch.getEndTime()).isEqualTo(deletionDate);
   }
 
@@ -339,8 +336,8 @@ public class BatchModificationHistoryTest {
 
     // then a deletion historic job log was added
     HistoricJobLog jobLog = helper.getHistoricSeedJobLog(batch).get(1);
-    assertNotNull(jobLog);
-    assertTrue(jobLog.isDeletionLog());
+    assertThat(jobLog).isNotNull();
+    assertThat(jobLog.isDeletionLog()).isTrue();
     assertThat(jobLog.getTimestamp()).isEqualTo(deletionDate);
   }
 
@@ -356,8 +353,8 @@ public class BatchModificationHistoryTest {
 
     // then a deletion historic job log was added
     HistoricJobLog jobLog = helper.getHistoricMonitorJobLog(batch).get(1);
-    assertNotNull(jobLog);
-    assertTrue(jobLog.isDeletionLog());
+    assertThat(jobLog).isNotNull();
+    assertThat(jobLog.isDeletionLog()).isTrue();
     assertThat(jobLog.getTimestamp()).isEqualTo(deletionDate);
   }
 
@@ -373,8 +370,8 @@ public class BatchModificationHistoryTest {
 
     // then a deletion historic job log was added
     HistoricJobLog jobLog = helper.getHistoricBatchJobLog(batch).get(1);
-    assertNotNull(jobLog);
-    assertTrue(jobLog.isDeletionLog());
+    assertThat(jobLog).isNotNull();
+    assertThat(jobLog.isDeletionLog()).isTrue();
     assertThat(jobLog.getTimestamp()).isEqualTo(deletionDate);
   }
 
@@ -391,10 +388,10 @@ public class BatchModificationHistoryTest {
     rule.getHistoryService().deleteHistoricBatch(historicBatch.getId());
 
     // then the historic batch was removed and all job logs
-    assertNull(helper.getHistoricBatch(batch));
-    assertTrue(helper.getHistoricSeedJobLog(batch).isEmpty());
-    assertTrue(helper.getHistoricMonitorJobLog(batch).isEmpty());
-    assertTrue(helper.getHistoricBatchJobLog(batch).isEmpty());
+    assertThat(helper.getHistoricBatch(batch)).isNull();
+    assertThat(helper.getHistoricSeedJobLog(batch)).isEmpty();
+    assertThat(helper.getHistoricMonitorJobLog(batch)).isEmpty();
+    assertThat(helper.getHistoricBatchJobLog(batch)).isEmpty();
   }
 
   @Test
@@ -456,12 +453,12 @@ public class BatchModificationHistoryTest {
   }
 
   protected void assertCommonMonitorJobLogProperties(Batch batch, HistoricJobLog jobLog) {
-    assertNotNull(jobLog);
+    assertThat(jobLog).isNotNull();
     assertThat(jobLog.getJobDefinitionId()).isEqualTo(batch.getMonitorJobDefinitionId());
     assertThat(jobLog.getJobDefinitionType()).isEqualTo(BatchMonitorJobHandler.TYPE);
     assertThat(jobLog.getJobDefinitionConfiguration()).isEqualTo(batch.getId());
-    assertNull(jobLog.getDeploymentId());
-    assertNull(jobLog.getProcessDefinitionId());
-    assertNull(jobLog.getExecutionId());
+    assertThat(jobLog.getDeploymentId()).isNull();
+    assertThat(jobLog.getProcessDefinitionId()).isNull();
+    assertThat(jobLog.getExecutionId()).isNull();
   }
 }

@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.application.impl.deployment.parser;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
@@ -63,10 +60,10 @@ public class ProcessesXmlParserTest {
       .execute()
       .getProcessesXml();
 
-    assertNotNull(processesXml);
+    assertThat(processesXml).isNotNull();
 
     assertThat(processesXml.getProcessEngines()).hasSize(1);
-    assertThat(processesXml.getProcessArchives()).hasSize(0);
+    assertThat(processesXml.getProcessArchives()).isEmpty();
 
     ProcessEngineXml engineXml = processesXml.getProcessEngines().get(0);
     assertThat(engineXml.getName()).isEqualTo("default");
@@ -75,7 +72,7 @@ public class ProcessesXmlParserTest {
     assertThat(engineXml.getDatasource()).isEqualTo("datasource");
 
     Map<String, String> properties = engineXml.getProperties();
-    assertNotNull(properties);
+    assertThat(properties).isNotNull();
     assertThat(properties)
             .hasSize(2)
             .containsEntry("prop1", "value1")
@@ -91,10 +88,10 @@ public class ProcessesXmlParserTest {
       .execute()
       .getProcessesXml();
 
-    assertNotNull(processesXml);
+    assertThat(processesXml).isNotNull();
 
     assertThat(processesXml.getProcessEngines()).hasSize(2);
-    assertThat(processesXml.getProcessArchives()).hasSize(0);
+    assertThat(processesXml.getProcessArchives()).isEmpty();
 
     ProcessEngineXml engineXml1 = processesXml.getProcessEngines().get(0);
     assertThat(engineXml1.getName()).isEqualTo("engine1");
@@ -102,7 +99,7 @@ public class ProcessesXmlParserTest {
     assertThat(engineXml1.getDatasource()).isEqualTo("datasource");
 
     Map<String, String> properties1 = engineXml1.getProperties();
-    assertNotNull(properties1);
+    assertThat(properties1).isNotNull();
     assertThat(properties1)
             .hasSize(2)
             .containsEntry("prop1", "value1")
@@ -115,7 +112,7 @@ public class ProcessesXmlParserTest {
 
     // the second engine has no properties
     Map<String, String> properties2 = engineXml2.getProperties();
-    assertNotNull(properties2);
+    assertThat(properties2).isNotNull();
     assertThat(properties2).isEmpty();
 
   }
@@ -128,9 +125,9 @@ public class ProcessesXmlParserTest {
       .execute()
       .getProcessesXml();
 
-    assertNotNull(processesXml);
+    assertThat(processesXml).isNotNull();
 
-    assertThat(processesXml.getProcessEngines()).hasSize(0);
+    assertThat(processesXml.getProcessEngines()).isEmpty();
     assertThat(processesXml.getProcessArchives()).hasSize(1);
 
     ProcessArchiveXml archiveXml1 = processesXml.getProcessArchives().get(0);
@@ -143,7 +140,7 @@ public class ProcessesXmlParserTest {
     assertThat(resourceNames.get(1)).isEqualTo("process2.bpmn");
 
     Map<String, String> properties1 = archiveXml1.getProperties();
-    assertNotNull(properties1);
+    assertThat(properties1).isNotNull();
     assertThat(properties1)
             .hasSize(2)
             .containsEntry("prop1", "value1")
@@ -159,9 +156,9 @@ public class ProcessesXmlParserTest {
       .execute()
       .getProcessesXml();
 
-    assertNotNull(processesXml);
+    assertThat(processesXml).isNotNull();
 
-    assertThat(processesXml.getProcessEngines()).hasSize(0);
+    assertThat(processesXml.getProcessEngines()).isEmpty();
     assertThat(processesXml.getProcessArchives()).hasSize(2);
 
 
@@ -175,7 +172,7 @@ public class ProcessesXmlParserTest {
     assertThat(resourceNames.get(1)).isEqualTo("process2.bpmn");
 
     Map<String, String> properties1 = archiveXml1.getProperties();
-    assertNotNull(properties1);
+    assertThat(properties1).isNotNull();
     assertThat(properties1)
             .hasSize(2)
             .containsEntry("prop1", "value1")
@@ -191,7 +188,7 @@ public class ProcessesXmlParserTest {
     assertThat(resourceNames2.get(1)).isEqualTo("process2.bpmn");
 
     Map<String, String> properties2 = archiveXml2.getProperties();
-    assertNotNull(properties2);
+    assertThat(properties2).isNotNull();
     assertThat(properties2).isEmpty();
 
   }
@@ -204,7 +201,7 @@ public class ProcessesXmlParserTest {
       .execute()
       .getProcessesXml();
 
-    assertNotNull(processesXml);
+    assertThat(processesXml).isNotNull();
 
     assertThat(processesXml.getProcessEngines()).hasSize(2);
     assertThat(processesXml.getProcessArchives()).hasSize(2);
@@ -221,7 +218,7 @@ public class ProcessesXmlParserTest {
     assertThat(resourceNames.get(1)).isEqualTo("process2.bpmn");
 
     Map<String, String> properties1 = archiveXml1.getProperties();
-    assertNotNull(properties1);
+    assertThat(properties1).isNotNull();
     assertThat(properties1)
             .hasSize(2)
             .containsEntry("prop1", "value1")
@@ -237,7 +234,7 @@ public class ProcessesXmlParserTest {
     assertThat(resourceNames2.get(1)).isEqualTo("process2.bpmn");
 
     Map<String, String> properties2 = archiveXml2.getProperties();
-    assertNotNull(properties2);
+    assertThat(properties2).isNotNull();
     assertThat(properties2).isEmpty();
 
     // validate engines
@@ -248,7 +245,7 @@ public class ProcessesXmlParserTest {
     assertThat(engineXml1.getDatasource()).isEqualTo("datasource");
 
     properties1 = engineXml1.getProperties();
-    assertNotNull(properties1);
+    assertThat(properties1).isNotNull();
     assertThat(properties1)
             .hasSize(2)
             .containsEntry("prop1", "value1")
@@ -261,7 +258,7 @@ public class ProcessesXmlParserTest {
 
     // the second engine has no properties
     properties2 = engineXml2.getProperties();
-    assertNotNull(properties2);
+    assertThat(properties2).isNotNull();
     assertThat(properties2).isEmpty();
 
   }
@@ -286,7 +283,7 @@ public class ProcessesXmlParserTest {
         .execute()
         .getProcessesXml();
 
-    assertNotNull(processesXml);
+    assertThat(processesXml).isNotNull();
 
     ProcessArchiveXml archiveXml1 = processesXml.getProcessArchives().get(0);
     List<String> resourceNames = archiveXml1.getProcessResourceNames();
@@ -303,7 +300,7 @@ public class ProcessesXmlParserTest {
       .execute()
       .getProcessesXml();
 
-    assertNotNull(processesXml);
+    assertThat(processesXml).isNotNull();
 
     assertThat(processesXml.getProcessEngines()).hasSize(1);
     assertThat(processesXml.getProcessArchives()).hasSize(1);
@@ -318,11 +315,11 @@ public class ProcessesXmlParserTest {
       .execute()
       .getProcessesXml();
 
-    assertNotNull(processesXml);
+    assertThat(processesXml).isNotNull();
     assertThat(processesXml.getProcessArchives()).hasSize(2);
 
     ProcessArchiveXml archiveXmlWithoutTenantId = processesXml.getProcessArchives().get(0);
-    assertNull(archiveXmlWithoutTenantId.getTenantId());
+    assertThat(archiveXmlWithoutTenantId.getTenantId()).isNull();
 
     ProcessArchiveXml archiveXmlWithTenantId = processesXml.getProcessArchives().get(1);
     assertThat(archiveXmlWithTenantId.getTenantId()).isEqualTo("tenant1");

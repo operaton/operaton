@@ -19,10 +19,7 @@ package org.operaton.bpm.engine.test.bpmn.async;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import java.util.Date;
@@ -70,17 +67,17 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
     assertThat(activityInstance.getChildTransitionInstances().length).isEqualTo(1);
     assertThat(activityInstance.getChildActivityInstances().length).isEqualTo(0);
 
-    assertNotNull(activityInstance.getChildTransitionInstances()[0]);
+    assertThat(activityInstance.getChildTransitionInstances()[0]).isNotNull();
 
     // now there should be one job in the database:
     assertThat(managementService.createJobQuery().count()).isEqualTo(1);
     // the service was not invoked:
-    assertFalse(INVOCATION);
+    assertThat(INVOCATION).isFalse();
 
     testRule.executeAvailableJobs();
 
     // the service was invoked
-    assertTrue(INVOCATION);
+    assertThat(INVOCATION).isTrue();
     // and the job is done
     assertThat(managementService.createJobQuery().count()).isEqualTo(0);
   }
@@ -91,7 +88,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
     String pid = runtimeService.startProcessInstanceByKey("asyncService").getProcessInstanceId();
     assertThat(managementService.createJobQuery().count()).isEqualTo(1);
     // the listener was not yet invoked:
-    assertNull(runtimeService.getVariable(pid, "listener"));
+    assertThat(runtimeService.getVariable(pid, "listener")).isNull();
 
     testRule.executeAvailableJobs();
 
@@ -107,12 +104,12 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
     // now there should be one job in the database:
     assertThat(managementService.createJobQuery().count()).isEqualTo(1);
     // the service was not invoked:
-    assertFalse(INVOCATION);
+    assertThat(INVOCATION).isFalse();
 
     testRule.executeAvailableJobs();
 
     // the service was invoked
-    assertTrue(INVOCATION);
+    assertThat(INVOCATION).isTrue();
     // and the job is done
     assertThat(managementService.createJobQuery().count()).isEqualTo(0);
   }
@@ -288,7 +285,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
 
     // then there is one mi body after job
     job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     assertTransitionInstances(processInstance.getId(), "service" + BpmnParse.MULTI_INSTANCE_BODY_ID_SUFFIX, 1);
 
     // when executing this job, the process ends
@@ -335,7 +332,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
 
     // the service failed: the execution is still sitting in the service task:
     Execution execution = runtimeService.createExecutionQuery().singleResult();
-    assertNotNull(execution);
+    assertThat(execution).isNotNull();
     assertThat(runtimeService.getActiveActivityIds(execution.getId()).get(0)).isEqualTo("service");
 
     // there is still a single job because the timer was created in the same transaction as the
@@ -360,7 +357,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
 
     // the service failed: the execution is still sitting in the service task:
     Execution execution = runtimeService.createExecutionQuery().singleResult();
-    assertNotNull(execution);
+    assertThat(execution).isNotNull();
     assertThat(runtimeService.getActiveActivityIds(execution.getId()).get(0)).isEqualTo("service");
 
     // there are two jobs, the message and the timer (the message will not be retried anymore, max retires is reached.)
@@ -371,7 +368,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
     testRule.executeAvailableJobs();
 
     // and we are done:
-    assertNull(runtimeService.createExecutionQuery().singleResult());
+    assertThat(runtimeService.createExecutionQuery().singleResult()).isNull();
     // and there are no more jobs left:
     assertThat(managementService.createJobQuery().count()).isEqualTo(0);
 
@@ -386,13 +383,13 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
     // now there should be two jobs in the database:
     assertThat(managementService.createJobQuery().count()).isEqualTo(2);
     // the service was not invoked:
-    assertFalse(INVOCATION);
+    assertThat(INVOCATION).isFalse();
 
     Job job = managementService.createJobQuery().messages().singleResult();
     managementService.executeJob(job.getId());
 
     // the service was invoked
-    assertTrue(INVOCATION);
+    assertThat(INVOCATION).isTrue();
     // both the timer and the message are cancelled
     assertThat(managementService.createJobQuery().count()).isEqualTo(0);
 
@@ -443,7 +440,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
     assertThat(managementService.createJobQuery().count()).isEqualTo(1);
     // the script was not invoked:
     String eid = runtimeService.createExecutionQuery().singleResult().getId();
-    assertNull(runtimeService.getVariable(eid, "invoked"));
+    assertThat(runtimeService.getVariable(eid, "invoked")).isNull();
 
     testRule.executeAvailableJobs();
 
@@ -479,16 +476,16 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
     // now there should be one job in the database:
     assertThat(managementService.createJobQuery().count()).isEqualTo(1);
     // the listener was not yet invoked:
-    assertNull(runtimeService.getVariable(pid, "listener"));
+    assertThat(runtimeService.getVariable(pid, "listener")).isNull();
     // there is no usertask
-    assertNull(taskService.createTaskQuery().singleResult());
+    assertThat(taskService.createTaskQuery().singleResult()).isNull();
 
     testRule.executeAvailableJobs();
     // the listener was now invoked:
-    assertNotNull(runtimeService.getVariable(pid, "listener"));
+    assertThat(runtimeService.getVariable(pid, "listener")).isNotNull();
 
     // there is a usertask
-    assertNotNull(taskService.createTaskQuery().singleResult());
+    assertThat(taskService.createTaskQuery().singleResult()).isNotNull();
     // and no more job
     assertThat(managementService.createJobQuery().count()).isEqualTo(0);
 
@@ -506,18 +503,18 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
     // now there should be one job in the database:
     assertThat(managementService.createJobQuery().count()).isEqualTo(1);
     // the listener was not yet invoked:
-    assertNull(runtimeService.getVariable(pid, "listener"));
+    assertThat(runtimeService.getVariable(pid, "listener")).isNull();
     // there is no manual Task
-    assertNull(taskService.createTaskQuery().singleResult());
+    assertThat(taskService.createTaskQuery().singleResult()).isNull();
 
     testRule.executeAvailableJobs();
 
     // the listener was invoked now:
-    assertNotNull(runtimeService.getVariable(pid, "listener"));
+    assertThat(runtimeService.getVariable(pid, "listener")).isNotNull();
     // there isn't a job anymore:
     assertThat(managementService.createJobQuery().count()).isEqualTo(0);
     // now there is a userTask
-    assertNotNull(taskService.createTaskQuery().singleResult());
+    assertThat(taskService.createTaskQuery().singleResult()).isNotNull();
 
     String taskId = taskService.createTaskQuery().singleResult().getId();
     taskService.complete(taskId);
@@ -532,19 +529,19 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
     // now there is 1 job in the database:
     assertThat(managementService.createJobQuery().count()).isEqualTo(1);
     // the listener was not invoked now:
-    assertNull(runtimeService.getVariable(pid, "listener"));
+    assertThat(runtimeService.getVariable(pid, "listener")).isNull();
     // there is no intermediate catch event:
-    assertNull(taskService.createTaskQuery().singleResult());
+    assertThat(taskService.createTaskQuery().singleResult()).isNull();
 
     testRule.executeAvailableJobs();
     runtimeService.correlateMessage("testMessage1");
 
     // the listener was now invoked:
-    assertNotNull(runtimeService.getVariable(pid, "listener"));
+    assertThat(runtimeService.getVariable(pid, "listener")).isNotNull();
     // there isn't a job anymore
     assertThat(managementService.createJobQuery().count()).isEqualTo(0);
     // now there is a userTask
-    assertNotNull(taskService.createTaskQuery().singleResult());
+    assertThat(taskService.createTaskQuery().singleResult()).isNotNull();
 
     String taskId = taskService.createTaskQuery().singleResult().getId();
     taskService.complete(taskId);
@@ -560,18 +557,18 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
     // now there is 1 job in the database:
     assertThat(managementService.createJobQuery().count()).isEqualTo(1);
     // the listener was not invoked now:
-    assertNull(runtimeService.getVariable(pid, "listener"));
+    assertThat(runtimeService.getVariable(pid, "listener")).isNull();
     // there is no intermediate throw event:
-    assertNull(taskService.createTaskQuery().singleResult());
+    assertThat(taskService.createTaskQuery().singleResult()).isNull();
 
     testRule.executeAvailableJobs();
 
     // the listener was now invoked:
-    assertNotNull(runtimeService.getVariable(pid, "listener"));
+    assertThat(runtimeService.getVariable(pid, "listener")).isNotNull();
     // there isn't a job anymore
     assertThat(managementService.createJobQuery().count()).isEqualTo(0);
     // now there is a userTask
-    assertNotNull(taskService.createTaskQuery().singleResult());
+    assertThat(taskService.createTaskQuery().singleResult()).isNotNull();
 
     String taskId = taskService.createTaskQuery().singleResult().getId();
     taskService.complete(taskId);
@@ -590,18 +587,18 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
     // now there is 1 job in the database:
     assertThat(managementService.createJobQuery().count()).isEqualTo(1);
     // the listener was not invoked now:
-    assertNull(runtimeService.getVariable(pid, "listener"));
+    assertThat(runtimeService.getVariable(pid, "listener")).isNull();
     // there is no gateway:
-    assertNull(taskService.createTaskQuery().singleResult());
+    assertThat(taskService.createTaskQuery().singleResult()).isNull();
 
     testRule.executeAvailableJobs();
 
     // the listener was now invoked:
-    assertNotNull(runtimeService.getVariable(pid, "listener"));
+    assertThat(runtimeService.getVariable(pid, "listener")).isNotNull();
     // there isn't a job anymore
     assertThat(managementService.createJobQuery().count()).isEqualTo(0);
     // now there is a userTask
-    assertNotNull(taskService.createTaskQuery().singleResult());
+    assertThat(taskService.createTaskQuery().singleResult()).isNotNull();
 
     String taskId = taskService.createTaskQuery().singleResult().getId();
     taskService.complete(taskId);
@@ -616,14 +613,14 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
     // now there is 1 job in the database:
     assertThat(managementService.createJobQuery().count()).isEqualTo(1);
     // the listener was not invoked now:
-    assertNull(runtimeService.getVariable(pid, "listener"));
+    assertThat(runtimeService.getVariable(pid, "listener")).isNull();
     // there is no gateway:
-    assertNull(taskService.createTaskQuery().singleResult());
+    assertThat(taskService.createTaskQuery().singleResult()).isNull();
 
     testRule.executeAvailableJobs();
 
     // the listener was now invoked:
-    assertNotNull(runtimeService.getVariable(pid, "listener"));
+    assertThat(runtimeService.getVariable(pid, "listener")).isNotNull();
     // there isn't a job anymore
     assertThat(managementService.createJobQuery().count()).isEqualTo(0);
     // now there are 2 user tasks
@@ -645,14 +642,14 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
     // now there is a job in the database
     assertThat(managementService.createJobQuery().count()).isEqualTo(1);
     // the listener was not invoked now:
-    assertNull(runtimeService.getVariable(pid, "listener"));
+    assertThat(runtimeService.getVariable(pid, "listener")).isNull();
     // there is no task:
-    assertNull(taskService.createTaskQuery().singleResult());
+    assertThat(taskService.createTaskQuery().singleResult()).isNull();
 
     testRule.executeAvailableJobs();
 
     // the listener was now invoked:
-    assertNotNull(runtimeService.getVariable(pid, "listener"));
+    assertThat(runtimeService.getVariable(pid, "listener")).isNotNull();
     // there isn't a job anymore
     assertThat(managementService.createJobQuery().count()).isEqualTo(0);
 
@@ -660,7 +657,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
     runtimeService.correlateMessage("testMessageDef1");
 
     // now there is a userTask
-    assertNotNull(taskService.createTaskQuery().singleResult());
+    assertThat(taskService.createTaskQuery().singleResult()).isNotNull();
 
     String taskId = taskService.createTaskQuery().singleResult().getId();
     taskService.complete(taskId);
@@ -684,7 +681,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
 
     // then no listeners for the async activity should have been invoked because
     // it was not active yet
-    assertThat(RecorderExecutionListener.getRecordedEvents()).hasSize(0);
+    assertThat(RecorderExecutionListener.getRecordedEvents()).isEmpty();
 
     RecorderExecutionListener.clear();
   }
@@ -711,7 +708,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
     List<RecordedEvent> recordedEvents = RecorderExecutionListener.getRecordedEvents();
     assertThat(recordedEvents).hasSize(2);
     assertThat(recordedEvents.get(0).getActivityId()).isEqualTo("subProcess");
-    assertNull(recordedEvents.get(1).getActivityId()); // process instance end event has no activity id
+    assertThat(recordedEvents.get(1).getActivityId()).isNull(); // process instance end event has no activity id
 
     RecorderExecutionListener.clear();
   }
@@ -786,7 +783,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
 
       // then it should be possible to load the latest process definition
       ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
-      assertNotNull(processInstance);
+      assertThat(processInstance).isNotNull();
 
     } finally {
       for (String deploymentId : deployments) {
@@ -804,7 +801,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
     List<Job> jobList = managementService.createJobQuery().processInstanceId(processInstanceId).list();
 
     // There should be two jobs
-    assertNotNull(jobList);
+    assertThat(jobList).isNotNull();
     assertThat(jobList).hasSize(2);
 
     managementService.executeJob(jobList.get(0).getId());
@@ -823,7 +820,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
 
     // There should be no more jobs
     jobList = managementService.createJobQuery().list();
-    assertThat(jobList).hasSize(0);
+    assertThat(jobList).isEmpty();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/bpmn/async/processGatewayAndTwoEndEventsPlusTimer.bpmn20.xml"})
@@ -835,7 +832,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
     List<Job> jobList = managementService.createJobQuery().processInstanceId(processInstanceId).list();
 
     // There should be two jobs
-    assertNotNull(jobList);
+    assertThat(jobList).isNotNull();
     assertThat(jobList).hasSize(2);
 
     // execute timer first
@@ -857,7 +854,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
 
     // There should be no more jobs
     jobList = managementService.createJobQuery().list();
-    assertThat(jobList).hasSize(0);
+    assertThat(jobList).isEmpty();
   }
 
   @Deployment

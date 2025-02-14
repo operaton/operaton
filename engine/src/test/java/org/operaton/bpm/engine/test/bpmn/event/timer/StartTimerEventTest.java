@@ -43,7 +43,8 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.fail;
+import static org.junit.Assert.assertNotSame;
 
 /**
  * @author Joram Barrez
@@ -156,7 +157,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
 
     // ensure that the deployment Id is set on the new job
     Job job = jobQuery.singleResult();
-    assertNotNull(job.getDeploymentId());
+    assertThat(job.getDeploymentId()).isNotNull();
 
     final ProcessInstanceQuery piq = runtimeService.createProcessInstanceQuery().processDefinitionKey("startTimerEventExampleCycle");
 
@@ -169,7 +170,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
 
     // ensure that the deployment Id is set on the new job
     job = jobQuery.singleResult();
-    assertNotNull(job.getDeploymentId());
+    assertThat(job.getDeploymentId()).isNotNull();
 
     moveByMinutes(5);
     executeAllJobs();
@@ -189,7 +190,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
 
     // ensure that the deployment Id is set on the new job
     Job job = jobQuery.singleResult();
-    assertNotNull(job.getDeploymentId());
+    assertThat(job.getDeploymentId()).isNotNull();
     assertThat(job.getPriority()).isEqualTo(9999);
 
     final ProcessInstanceQuery piq = runtimeService.createProcessInstanceQuery()
@@ -204,7 +205,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
 
     // ensure that the deployment Id is set on the new job
     job = jobQuery.singleResult();
-    assertNotNull(job.getDeploymentId());
+    assertThat(job.getDeploymentId()).isNotNull();
 
     // second job should have the same priority
     assertThat(job.getPriority()).isEqualTo(9999);
@@ -248,8 +249,8 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     assertThat(processInstanceQuery.count()).isEqualTo(0);
 
     Date newDate = jobQuery.singleResult().getDuedate();
-    assertNotEquals(oldDate, newDate);
-    assertTrue(oldDate.before(newDate));
+    assertThat(newDate).isNotEqualTo(oldDate);
+    assertThat(oldDate.before(newDate)).isTrue();
     Date expectedDate = LocalDateTime.fromDateFields(currentTime).plusHours(2).toDate();
     assertThat(newDate).isCloseTo(expectedDate, 1000l);
 
@@ -1245,7 +1246,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     assertThat(jobQuery.count()).isEqualTo(1);
 
     String anotherJobId = jobQuery.singleResult().getId();
-    assertNotEquals(jobId, anotherJobId);
+    assertThat(anotherJobId).isNotEqualTo(jobId);
   }
 
   @Test
@@ -1278,8 +1279,8 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     // then
     Job jobUpdated = jobQuery.singleResult();
     assertThat(jobUpdated.getId()).isEqualTo(jobId);
-    assertNotEquals(oldDuedate, jobUpdated.getDuedate());
-    assertTrue(oldDuedate.before(jobUpdated.getDuedate()));
+    assertThat(jobUpdated.getDuedate()).isNotEqualTo(oldDuedate);
+    assertThat(oldDuedate.before(jobUpdated.getDuedate())).isTrue();
 
     // when
     Mocks.register("cycle", "R/PT10M");
@@ -1288,8 +1289,8 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     // then
     jobUpdated = jobQuery.singleResult();
     assertThat(jobUpdated.getId()).isEqualTo(jobId);
-    assertNotEquals(oldDuedate, jobUpdated.getDuedate());
-    assertTrue(oldDuedate.after(jobUpdated.getDuedate()));
+    assertThat(jobUpdated.getDuedate()).isNotEqualTo(oldDuedate);
+    assertThat(oldDuedate.after(jobUpdated.getDuedate())).isTrue();
 
     Mocks.reset();
   }
@@ -1334,8 +1335,8 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     // then
     jobUpdated = jobQuery.singleResult();
     assertThat(jobUpdated.getId()).isEqualTo(jobId);
-    assertNotEquals(oldDuedate, jobUpdated.getDuedate());
-    assertTrue(oldDuedate.after(jobUpdated.getDuedate()));
+    assertThat(jobUpdated.getDuedate()).isNotEqualTo(oldDuedate);
+    assertThat(oldDuedate.after(jobUpdated.getDuedate())).isTrue();
     expectedDate = LocalDateTime.fromDateFields(jobUpdated.getCreateTime()).plusMinutes(10).toDate();
     assertThat(jobUpdated.getDuedate()).isEqualTo(expectedDate);
 
@@ -1412,7 +1413,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     assertThat(jobQuery.count()).isEqualTo(1);
 
     String anotherJobId = jobQuery.singleResult().getId();
-    assertNotEquals(jobId, anotherJobId);
+    assertThat(anotherJobId).isNotEqualTo(jobId);
   }
 
   @Test
@@ -1546,8 +1547,8 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     // then
     assertThat(jobQuery.count()).isEqualTo(1L);
     Date newDuedate = jobQuery.singleResult().getDuedate();
-    assertNotEquals(oldDueDate, newDuedate);
-    assertTrue(oldDueDate.before(newDuedate));
+    assertThat(newDuedate).isNotEqualTo(oldDueDate);
+    assertThat(oldDueDate.before(newDuedate)).isTrue();
     Date expectedDate = LocalDateTime.fromDateFields(currentTime).plusSeconds(70).toDate();
     assertThat(newDuedate).isCloseTo(expectedDate, 1000l);
 
@@ -1589,7 +1590,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     assertThat(jobQuery.count()).isEqualTo(1L);
     Date newDuedate = jobQuery.singleResult().getDuedate();
     Date expectedDate = LocalDateTime.fromDateFields(jobQuery.singleResult().getCreateTime()).plusMinutes(2).toDate();
-    assertTrue(oldDueDate.before(newDuedate));
+    assertThat(oldDueDate.before(newDuedate)).isTrue();
     assertThat(newDuedate).isEqualTo(expectedDate);
 
     managementService.executeJob(jobId);
@@ -1613,7 +1614,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     // when (1)
     try {
       managementService.executeJob(jobId);
-      fail();
+      fail("");
     } catch (Exception e) {
       // expected
     }

@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.bpmn.event.conditional;
 
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
 
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -768,7 +767,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task is completed
@@ -810,7 +809,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task before service task is completed
@@ -831,7 +830,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
     //given process with compensation and conditional events
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(CONDITIONAL_EVENT_PROCESS_KEY);
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo("Before Cancel");
 
     //when task before cancel is completed

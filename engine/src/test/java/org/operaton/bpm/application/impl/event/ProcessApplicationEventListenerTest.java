@@ -17,7 +17,6 @@
 package org.operaton.bpm.application.impl.event;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -94,8 +93,8 @@ public class ProcessApplicationEventListenerTest {
     // I can start a process event though the process app does not provide an
     // event listener.
     ProcessInstance process = runtimeService.startProcessInstanceByKey("startToEnd");
-    
-    assertTrue(process.isEnded());
+
+    assertThat(process.isEnded()).isTrue();
 
   }
 

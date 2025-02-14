@@ -17,7 +17,6 @@
 package org.operaton.bpm.application.impl.embedded;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.*;
 
 import java.util.List;
 import java.util.Set;
@@ -102,15 +101,15 @@ public class EmbeddedProcessApplicationTest extends PluggableProcessEngineTest {
     processApplication.deploy();
 
     ProcessEngine processEngine = BpmPlatform.getProcessEngineService().getProcessEngine("embeddedEngine");
-    assertNotNull(processEngine);
+    assertThat(processEngine).isNotNull();
     assertThat(processEngine.getName()).isEqualTo("embeddedEngine");
 
     ProcessEngineConfiguration configuration = ((ProcessEngineImpl) processEngine).getProcessEngineConfiguration();
 
     // assert engine properties specified
-    assertTrue(configuration.isJobExecutorDeploymentAware());
-    assertTrue(configuration.isJobExecutorPreferTimerJobs());
-    assertTrue(configuration.isJobExecutorAcquireByDueDate());
+    assertThat(configuration.isJobExecutorDeploymentAware()).isTrue();
+    assertThat(configuration.isJobExecutorPreferTimerJobs()).isTrue();
+    assertThat(configuration.isJobExecutorAcquireByDueDate()).isTrue();
     assertThat(configuration.getJdbcMaxActiveConnections()).isEqualTo(5);
 
     processApplication.undeploy();
@@ -124,17 +123,17 @@ public class EmbeddedProcessApplicationTest extends PluggableProcessEngineTest {
     processApplication.deploy();
 
     ProcessEngine processEngine = BpmPlatform.getProcessEngineService().getProcessEngine("embeddedEngine");
-    assertNotNull(processEngine);
+    assertThat(processEngine).isNotNull();
     assertThat(processEngine.getName()).isEqualTo("embeddedEngine");
 
     ProcessEngineConfigurationImpl configuration = ((ProcessEngineImpl) processEngine).getProcessEngineConfiguration();
 
     // assert engine properties specified
-    assertTrue(configuration.isJobExecutorDeploymentAware());
-    assertTrue(configuration.isJobExecutorPreferTimerJobs());
-    assertTrue(configuration.isJobExecutorAcquireByDueDate());
+    assertThat(configuration.isJobExecutorDeploymentAware()).isTrue();
+    assertThat(configuration.isJobExecutorPreferTimerJobs()).isTrue();
+    assertThat(configuration.isJobExecutorAcquireByDueDate()).isTrue();
     assertThat(configuration.getJdbcMaxActiveConnections()).isEqualTo(5);
-    assertFalse(configuration.isDmnEnabled());
+    assertThat(configuration.isDmnEnabled()).isFalse();
 
     // when
     processApplication.undeploy();
@@ -196,7 +195,7 @@ public class EmbeddedProcessApplicationTest extends PluggableProcessEngineTest {
 
     Deployment deployment = repositoryService.createDeploymentQuery().singleResult();
 
-    assertNotNull(deployment);
+    assertThat(deployment).isNotNull();
 
     List<Resource> deploymentResources = repositoryService.getDeploymentResources(deployment.getId());
     assertThat(deploymentResources).hasSize(4);
@@ -214,7 +213,7 @@ public class EmbeddedProcessApplicationTest extends PluggableProcessEngineTest {
 
     Deployment deployment = repositoryService.createDeploymentQuery().singleResult();
 
-    assertNotNull(deployment);
+    assertThat(deployment).isNotNull();
 
     List<Resource> deploymentResources = repositoryService.getDeploymentResources(deployment.getId());
     assertThat(deploymentResources).hasSize(4);
@@ -232,7 +231,7 @@ public class EmbeddedProcessApplicationTest extends PluggableProcessEngineTest {
 
     Deployment deployment = repositoryService.createDeploymentQuery().singleResult();
 
-    assertNotNull(deployment);
+    assertThat(deployment).isNotNull();
     assertThat(deployment.getSource()).isEqualTo(ProcessApplicationDeployment.PROCESS_APPLICATION_DEPLOYMENT_SOURCE);
 
     processApplication.undeploy();
@@ -246,7 +245,7 @@ public class EmbeddedProcessApplicationTest extends PluggableProcessEngineTest {
 
     Set<String> deployedPAs = runtimeContainerDelegate.getProcessApplicationService().getProcessApplicationNames();
     assertThat(deployedPAs).hasSize(1);
-    assertTrue(deployedPAs.contains(TestApplicationWithCustomName.NAME));
+    assertThat(deployedPAs).contains(TestApplicationWithCustomName.NAME);
 
     pa.undeploy();
   }
@@ -280,8 +279,8 @@ public class EmbeddedProcessApplicationTest extends PluggableProcessEngineTest {
 
     Deployment deployment = repositoryService.createDeploymentQuery().singleResult();
 
-    assertNotNull(deployment);
-    assertNull(deployment.getTenantId());
+    assertThat(deployment).isNotNull();
+    assertThat(deployment.getTenantId()).isNull();
 
     processApplication.undeploy();
   }

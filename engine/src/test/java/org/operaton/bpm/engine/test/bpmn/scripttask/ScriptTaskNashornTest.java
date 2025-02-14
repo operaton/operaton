@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.scripttask;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNull;
 import java.util.Date;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.junit.Test;
@@ -110,7 +109,7 @@ public class ScriptTaskNashornTest extends AbstractScriptTaskTest {
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
     Object variableValue = runtimeService.getVariable(pi.getId(), "foo");
-    assertNull(variableValue);
+    assertThat(variableValue).isNull();
 
   }
 

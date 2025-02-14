@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.cmmn.humantask;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -48,7 +47,7 @@ public class HumanTaskFollowUpDateTest extends PluggableProcessEngineTest {
 
     Task task = taskService.createTaskQuery().caseInstanceId(caseInstanceId).singleResult();
 
-    assertNotNull(task.getFollowUpDate());
+    assertThat(task.getFollowUpDate()).isNotNull();
     assertThat(task.getFollowUpDate()).isEqualTo(date);
   }
 
@@ -63,7 +62,7 @@ public class HumanTaskFollowUpDateTest extends PluggableProcessEngineTest {
 
     Task task = taskService.createTaskQuery().caseInstanceId(caseInstanceId).singleResult();
 
-    assertNotNull(task.getFollowUpDate());
+    assertThat(task.getFollowUpDate()).isNotNull();
     Date date = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse("01-01-2015 12:10:00");
     assertThat(task.getFollowUpDate()).isEqualTo(date);
   }
@@ -79,7 +78,7 @@ public class HumanTaskFollowUpDateTest extends PluggableProcessEngineTest {
     Task task = taskService.createTaskQuery().caseInstanceId(caseInstanceId).singleResult();
 
     Date followUpDate = task.getFollowUpDate();
-    assertNotNull(followUpDate);
+    assertThat(followUpDate).isNotNull();
 
     Period period = new Period(task.getCreateTime().getTime(), followUpDate.getTime());
     assertThat(period.getDays()).isEqualTo(2);

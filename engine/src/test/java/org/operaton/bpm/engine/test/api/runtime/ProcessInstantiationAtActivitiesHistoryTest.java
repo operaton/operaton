@@ -17,10 +17,6 @@
 package org.operaton.bpm.engine.test.api.runtime;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -61,21 +57,21 @@ public class ProcessInstantiationAtActivitiesHistoryTest extends PluggableProces
 
     // then
     HistoricProcessInstance historicInstance = historyService.createHistoricProcessInstanceQuery().singleResult();
-    assertNotNull(historicInstance);
+    assertThat(historicInstance).isNotNull();
     assertThat(historicInstance.getId()).isEqualTo(instance.getId());
-    assertNotNull(historicInstance.getStartTime());
-    assertNull(historicInstance.getEndTime());
+    assertThat(historicInstance.getStartTime()).isNotNull();
+    assertThat(historicInstance.getEndTime()).isNull();
 
     // should be the first activity started
     assertThat(historicInstance.getStartActivityId()).isEqualTo("task1");
 
     HistoricActivityInstance historicActivityInstance = historyService.createHistoricActivityInstanceQuery().singleResult();
-    assertNotNull(historicActivityInstance);
+    assertThat(historicActivityInstance).isNotNull();
     assertThat(historicActivityInstance.getActivityId()).isEqualTo("task1");
-    assertNotNull(historicActivityInstance.getId());
-    assertNotEquals(instance.getId(), historicActivityInstance.getId());
-    assertNotNull(historicActivityInstance.getStartTime());
-    assertNull(historicActivityInstance.getEndTime());
+    assertThat(historicActivityInstance.getId()).isNotNull();
+    assertThat(historicActivityInstance.getId()).isNotEqualTo(instance.getId());
+    assertThat(historicActivityInstance.getStartTime()).isNotNull();
+    assertThat(historicActivityInstance.getEndTime()).isNull();
   }
 
   @Deployment(resources = SUBPROCESS_PROCESS)
@@ -90,10 +86,10 @@ public class ProcessInstantiationAtActivitiesHistoryTest extends PluggableProces
 
     // then
     HistoricProcessInstance historicInstance = historyService.createHistoricProcessInstanceQuery().singleResult();
-    assertNotNull(historicInstance);
+    assertThat(historicInstance).isNotNull();
     assertThat(historicInstance.getId()).isEqualTo(instance.getId());
-    assertNotNull(historicInstance.getStartTime());
-    assertNull(historicInstance.getEndTime());
+    assertThat(historicInstance.getStartTime()).isNotNull();
+    assertThat(historicInstance.getEndTime()).isNull();
 
     // should be the first activity started
     assertThat(historicInstance.getStartActivityId()).isEqualTo("innerTask");
@@ -103,21 +99,21 @@ public class ProcessInstantiationAtActivitiesHistoryTest extends PluggableProces
 
     HistoricActivityInstance subProcessInstance = historyService.createHistoricActivityInstanceQuery()
         .activityId("subProcess").singleResult();
-    assertNotNull(subProcessInstance);
+    assertThat(subProcessInstance).isNotNull();
     assertThat(subProcessInstance.getActivityId()).isEqualTo("subProcess");
-    assertNotNull(subProcessInstance.getId());
-    assertNotEquals(instance.getId(), subProcessInstance.getId());
-    assertNotNull(subProcessInstance.getStartTime());
-    assertNull(subProcessInstance.getEndTime());
+    assertThat(subProcessInstance.getId()).isNotNull();
+    assertThat(subProcessInstance.getId()).isNotEqualTo(instance.getId());
+    assertThat(subProcessInstance.getStartTime()).isNotNull();
+    assertThat(subProcessInstance.getEndTime()).isNull();
 
     HistoricActivityInstance startEventInstance = historyService.createHistoricActivityInstanceQuery()
         .activityId("theSubProcessStart").singleResult();
-    assertNotNull(startEventInstance);
+    assertThat(startEventInstance).isNotNull();
     assertThat(startEventInstance.getActivityId()).isEqualTo("theSubProcessStart");
-    assertNotNull(startEventInstance.getId());
-    assertNotEquals(instance.getId(), startEventInstance.getId());
-    assertNotNull(startEventInstance.getStartTime());
-    assertNotNull(startEventInstance.getEndTime());
+    assertThat(startEventInstance.getId()).isNotNull();
+    assertThat(startEventInstance.getId()).isNotEqualTo(instance.getId());
+    assertThat(startEventInstance.getStartTime()).isNotNull();
+    assertThat(startEventInstance.getEndTime()).isNotNull();
 
     List<HistoricActivityInstance> innerTaskInstances = historyService.createHistoricActivityInstanceQuery()
         .activityId("innerTask").list();
@@ -125,12 +121,12 @@ public class ProcessInstantiationAtActivitiesHistoryTest extends PluggableProces
     assertThat(innerTaskInstances).hasSize(2);
 
     for (HistoricActivityInstance innerTaskInstance : innerTaskInstances) {
-      assertNotNull(innerTaskInstance);
+      assertThat(innerTaskInstance).isNotNull();
       assertThat(innerTaskInstance.getActivityId()).isEqualTo("innerTask");
-      assertNotNull(innerTaskInstance.getId());
-      assertNotEquals(instance.getId(), innerTaskInstance.getId());
-      assertNotNull(innerTaskInstance.getStartTime());
-      assertNull(innerTaskInstance.getEndTime());
+      assertThat(innerTaskInstance.getId()).isNotNull();
+      assertThat(innerTaskInstance.getId()).isNotEqualTo(instance.getId());
+      assertThat(innerTaskInstance.getStartTime()).isNotNull();
+      assertThat(innerTaskInstance.getEndTime()).isNull();
     }
   }
 
@@ -146,10 +142,10 @@ public class ProcessInstantiationAtActivitiesHistoryTest extends PluggableProces
 
     // then
     HistoricProcessInstance historicInstance = historyService.createHistoricProcessInstanceQuery().singleResult();
-    assertNotNull(historicInstance);
+    assertThat(historicInstance).isNotNull();
     assertThat(historicInstance.getId()).isEqualTo(instance.getId());
-    assertNotNull(historicInstance.getStartTime());
-    assertNull(historicInstance.getEndTime());
+    assertThat(historicInstance.getStartTime()).isNotNull();
+    assertThat(historicInstance.getEndTime()).isNull();
 
     // should be the first activity started
     assertThat(historicInstance.getStartActivityId()).isEqualTo("task2");
@@ -164,7 +160,7 @@ public class ProcessInstantiationAtActivitiesHistoryTest extends PluggableProces
         .variableName("aVar")
         .singleResult();
 
-    assertNotNull(historicVariable);
+    assertThat(historicVariable).isNotNull();
     assertThat(historicVariable.getProcessInstanceId()).isEqualTo(instance.getId());
     assertThat(historicVariable.getActivityInstanceId()).isEqualTo(activityInstance.getId());
     assertThat(historicVariable.getName()).isEqualTo("aVar");
@@ -173,10 +169,10 @@ public class ProcessInstantiationAtActivitiesHistoryTest extends PluggableProces
     HistoricDetail historicDetail = historyService.createHistoricDetailQuery()
         .variableInstanceId(historicVariable.getId()).singleResult();
     assertThat(historicDetail.getProcessInstanceId()).isEqualTo(instance.getId());
-    assertNotNull(historicDetail);
+    assertThat(historicDetail).isNotNull();
     // TODO: fix if this is not ok due to CAM-3886
-    assertNull(historicDetail.getActivityInstanceId());
-    assertTrue(historicDetail instanceof HistoricVariableUpdate);
+    assertThat(historicDetail.getActivityInstanceId()).isNull();
+    assertThat(historicDetail instanceof HistoricVariableUpdate).isTrue();
     assertThat(((HistoricVariableUpdate) historicDetail).getVariableName()).isEqualTo("aVar");
     assertThat(((HistoricVariableUpdate) historicDetail).getValue()).isEqualTo("aValue");
   }
@@ -198,7 +194,7 @@ public class ProcessInstantiationAtActivitiesHistoryTest extends PluggableProces
         .variableName("aVar")
         .singleResult();
 
-    assertNotNull(historicVariable);
+    assertThat(historicVariable).isNotNull();
     assertThat(historicVariable.getProcessInstanceId()).isEqualTo(instance.getId());
     assertThat(historicVariable.getActivityInstanceId()).isEqualTo(activityInstance.getId());
     assertThat(historicVariable.getName()).isEqualTo("aVar");
@@ -207,10 +203,10 @@ public class ProcessInstantiationAtActivitiesHistoryTest extends PluggableProces
     HistoricDetail historicDetail = historyService.createHistoricDetailQuery()
         .variableInstanceId(historicVariable.getId()).singleResult();
     assertThat(historicDetail.getProcessInstanceId()).isEqualTo(instance.getId());
-    assertNotNull(historicDetail);
+    assertThat(historicDetail).isNotNull();
     // TODO: fix if this is not ok due to CAM-3886
-    assertNull(historicDetail.getActivityInstanceId());
-    assertTrue(historicDetail instanceof HistoricVariableUpdate);
+    assertThat(historicDetail.getActivityInstanceId()).isNull();
+    assertThat(historicDetail instanceof HistoricVariableUpdate).isTrue();
     assertThat(((HistoricVariableUpdate) historicDetail).getVariableName()).isEqualTo("aVar");
     assertThat(((HistoricVariableUpdate) historicDetail).getValue()).isEqualTo("aValue");
   }
@@ -233,7 +229,7 @@ public class ProcessInstantiationAtActivitiesHistoryTest extends PluggableProces
         .variableName("aVar")
         .singleResult();
 
-    assertNotNull(historicVariable);
+    assertThat(historicVariable).isNotNull();
     assertThat(historicVariable.getProcessInstanceId()).isEqualTo(instance.getId());
     assertThat(historicVariable.getActivityInstanceId()).isEqualTo(activityInstance.getId());
     assertThat(historicVariable.getName()).isEqualTo("aVar");
@@ -242,10 +238,10 @@ public class ProcessInstantiationAtActivitiesHistoryTest extends PluggableProces
     HistoricDetail historicDetail = historyService.createHistoricDetailQuery()
         .variableInstanceId(historicVariable.getId()).singleResult();
     assertThat(historicDetail.getProcessInstanceId()).isEqualTo(instance.getId());
-    assertNotNull(historicDetail);
+    assertThat(historicDetail).isNotNull();
     // TODO: fix if this is not ok due to CAM-3886
     assertThat(historicDetail.getActivityInstanceId()).isEqualTo(instance.getId());
-    assertTrue(historicDetail instanceof HistoricVariableUpdate);
+    assertThat(historicDetail instanceof HistoricVariableUpdate).isTrue();
     assertThat(((HistoricVariableUpdate) historicDetail).getVariableName()).isEqualTo("aVar");
     assertThat(((HistoricVariableUpdate) historicDetail).getValue()).isEqualTo("aValue");
   }
@@ -261,10 +257,10 @@ public class ProcessInstantiationAtActivitiesHistoryTest extends PluggableProces
 
     // then
     HistoricProcessInstance historicInstance = historyService.createHistoricProcessInstanceQuery().singleResult();
-    assertNotNull(historicInstance);
+    assertThat(historicInstance).isNotNull();
     assertThat(historicInstance.getId()).isEqualTo(instance.getId());
-    assertNotNull(historicInstance.getStartTime());
-    assertNotNull(historicInstance.getEndTime());
+    assertThat(historicInstance.getStartTime()).isNotNull();
+    assertThat(historicInstance.getEndTime()).isNotNull();
 
     assertThat(historicInstance.getStartActivityId()).isEqualTo("join");
   }
@@ -284,7 +280,7 @@ public class ProcessInstantiationAtActivitiesHistoryTest extends PluggableProces
         .createHistoricActivityInstanceQuery()
         .activityId("task2")
         .singleResult();
-    assertNotNull(instance);
+    assertThat(instance).isNotNull();
     assertThat(instance.getTaskId()).isEqualTo(task.getId());
     assertThat(instance.getAssignee()).isEqualTo("kermit");
   }
@@ -293,7 +289,7 @@ public class ProcessInstantiationAtActivitiesHistoryTest extends PluggableProces
     for (String taskName : taskNames) {
       // complete any task with that name
       List<Task> tasks = taskService.createTaskQuery().taskDefinitionKey(taskName).listPage(0, 1);
-      assertTrue("task for activity " + taskName + " does not exist", !tasks.isEmpty());
+      assertThat(!tasks.isEmpty()).as("task for activity " + taskName + " does not exist").isTrue();
       taskService.complete(tasks.get(0).getId());
     }
   }

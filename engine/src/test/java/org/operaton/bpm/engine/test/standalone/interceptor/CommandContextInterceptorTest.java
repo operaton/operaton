@@ -17,9 +17,7 @@
 package org.operaton.bpm.engine.test.standalone.interceptor;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -51,7 +49,7 @@ public class CommandContextInterceptorTest extends PluggableProcessEngineTest {
       // OK
     }
 
-    assertNull(Context.getCommandContext());
+    assertThat(Context.getCommandContext()).isNull();
   }
 
   @Test
@@ -73,8 +71,8 @@ public class CommandContextInterceptorTest extends PluggableProcessEngineTest {
       assertThat(e.id).isEqualTo(1);
     }
 
-    assertTrue(innerCommand1.executed);
-    assertFalse(innerCommand2.executed);
+    assertThat(innerCommand1.executed).isTrue();
+    assertThat(innerCommand2.executed).isFalse();
   }
 
   @Test
@@ -89,8 +87,7 @@ public class CommandContextInterceptorTest extends PluggableProcessEngineTest {
         fail("exception expected to pop up during execution of inner command");
       } catch (IdentifiableRuntimeException e) {
         // happy path
-        assertNull("the exception should not have been propagated to this command's context",
-            Context.getCommandInvocationContext().getThrowable());
+        assertThat(Context.getCommandInvocationContext().getThrowable()).as("the exception should not have been propagated to this command's context").isNull();
       }
 
       return null;
@@ -123,8 +120,8 @@ public class CommandContextInterceptorTest extends PluggableProcessEngineTest {
       errorThrown = true;
     }
 
-    assertTrue(ThrowErrorJavaDelegate.executed);
-    assertTrue(errorThrown);
+    assertThat(ThrowErrorJavaDelegate.executed).isTrue();
+    assertThat(errorThrown).isTrue();
 
     // Check data base consistency
     assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(0);

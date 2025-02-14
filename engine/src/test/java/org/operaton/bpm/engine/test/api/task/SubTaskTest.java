@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.task;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
 
 import java.util.HashSet;
 import java.util.List;
@@ -53,12 +52,11 @@ public class SubTaskTest extends PluggableProcessEngineTest {
     taskService.saveTask(subTaskTwo);
 
     String subTaskId = subTaskOne.getId();
-    assertTrue(taskService.getSubTasks(subTaskId).isEmpty());
-    assertTrue(historyService
-            .createHistoricTaskInstanceQuery()
-            .taskParentTaskId(subTaskId)
-            .list()
-            .isEmpty());
+    assertThat(taskService.getSubTasks(subTaskId)).isEmpty();
+    assertThat(historyService
+        .createHistoricTaskInstanceQuery()
+        .taskParentTaskId(subTaskId)
+        .list()).isEmpty();
 
     List<Task> subTasks = taskService.getSubTasks(gonzoTaskId);
     Set<String> subTaskNames = new HashSet<>();

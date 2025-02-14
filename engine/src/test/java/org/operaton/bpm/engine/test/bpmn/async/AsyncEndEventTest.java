@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.async;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -28,7 +27,6 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -58,7 +56,7 @@ public class AsyncEndEventTest extends PluggableProcessEngineTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("asyncEndEvent");
     long count = runtimeService.createProcessInstanceQuery().processInstanceId(pi.getId()).active().count();
 
-    Assert.assertNull(runtimeService.getVariable(pi.getId(), "listener"));
+    assertThat(runtimeService.getVariable(pi.getId(), "listener")).isNull();
     assertThat(runtimeService.createExecutionQuery().activityId("endEvent").count()).isEqualTo(1);
     assertThat(count).isEqualTo(1);
 
@@ -74,7 +72,7 @@ public class AsyncEndEventTest extends PluggableProcessEngineTest {
       HistoricVariableInstanceQuery name = historyService.createHistoricVariableInstanceQuery()
                                                           .processInstanceId(pi.getId())
                                                           .variableName("listener");
-      Assert.assertNotNull(name);
+      assertThat(name).isNotNull();
       assertThat(name.singleResult().getValue()).isEqualTo("listener invoked");
     }
   }
@@ -105,7 +103,7 @@ public class AsyncEndEventTest extends PluggableProcessEngineTest {
       HistoricVariableInstanceQuery name = historyService.createHistoricVariableInstanceQuery()
         .processInstanceId(pi.getId())
         .variableName("message");
-      Assert.assertNotNull(name);
+      assertThat(name).isNotNull();
       assertThat(name.singleResult().getValue()).isEqualTo(true);
 
     }
@@ -124,7 +122,7 @@ public class AsyncEndEventTest extends PluggableProcessEngineTest {
         .processDefinitionKey("sub")
         .singleResult();
 
-    assertTrue(pi instanceof ExecutionEntity);
+    assertThat(pi instanceof ExecutionEntity).isTrue();
 
     assertThat(((ExecutionEntity) pi).getActivityId()).isEqualTo("theSubEnd");
 

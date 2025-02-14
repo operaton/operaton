@@ -27,8 +27,6 @@ import java.util.*;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
 
 /**
  * @author Tom Baeyens
@@ -85,17 +83,17 @@ public class JobExecutorTest extends JobExecutorTestCase {
     ProcessEngineConfiguration engineConfig1 =
         ProcessEngineConfiguration.createStandaloneInMemProcessEngineConfiguration();
 
-    assertTrue("default setting is true", engineConfig1.isHintJobExecutor());
+    assertThat(engineConfig1.isHintJobExecutor()).as("default setting is true").isTrue();
 
     ProcessEngineConfiguration engineConfig2 =
         ProcessEngineConfiguration.createStandaloneInMemProcessEngineConfiguration().setHintJobExecutor(false);
 
-    assertFalse(engineConfig2.isHintJobExecutor());
+    assertThat(engineConfig2.isHintJobExecutor()).isFalse();
 
     ProcessEngineConfiguration engineConfig3 =
         ProcessEngineConfiguration.createStandaloneInMemProcessEngineConfiguration().setHintJobExecutor(true);
 
-    assertTrue(engineConfig3.isHintJobExecutor());
+    assertThat(engineConfig3.isHintJobExecutor()).isTrue();
   }
 
   @Test

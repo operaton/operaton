@@ -29,9 +29,8 @@ import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.TASK;
 import static org.operaton.bpm.engine.authorization.TaskPermissions.READ_VARIABLE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import java.io.InputStream;
@@ -111,7 +110,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
     StartFormData startFormData = formService.getStartFormData(processDefinitionId);
 
     // then
-    assertNotNull(startFormData);
+    assertThat(startFormData).isNotNull();
     assertThat(startFormData.getFormKey()).isEqualTo("deployment:org/operaton/bpm/engine/test/api/form/start.html");
   }
 
@@ -146,7 +145,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
     Object renderedStartForm = formService.getRenderedStartForm(processDefinitionId);
 
     // then
-    assertNotNull(renderedStartForm);
+    assertThat(renderedStartForm).isNotNull();
   }
 
   // get start form variables //////////////////////////////////
@@ -180,7 +179,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
     VariableMap variables = formService.getStartFormVariables(processDefinitionId);
 
     // then
-    assertNotNull(variables);
+    assertThat(variables).isNotNull();
     assertThat(variables).hasSize(1);
   }
 
@@ -254,7 +253,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
     ProcessInstance instance = formService.submitStartForm(processDefinitionId, null);
 
     // then
-    assertNotNull(instance);
+    assertThat(instance).isNotNull();
   }
 
   // get task form data (standalone task) /////////////////////////////////
@@ -309,7 +308,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
 
     // then
     // Standalone task, no TaskFormData available
-    assertNull(taskFormData);
+    assertThat(taskFormData).isNull();
 
     deleteTask(taskId, true);
   }
@@ -327,7 +326,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
 
     // then
     // Standalone task, no TaskFormData available
-    assertNull(taskFormData);
+    assertThat(taskFormData).isNull();
 
     deleteTask(taskId, true);
   }
@@ -387,7 +386,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
     TaskFormData taskFormData = formService.getTaskFormData(taskId);
 
     // then
-    assertNotNull(taskFormData);
+    assertThat(taskFormData).isNotNull();
   }
 
   @Test
@@ -401,7 +400,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
     TaskFormData taskFormData = formService.getTaskFormData(taskId);
 
     // then
-    assertNotNull(taskFormData);
+    assertThat(taskFormData).isNotNull();
   }
 
   @Test
@@ -416,7 +415,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
     TaskFormData taskFormData = formService.getTaskFormData(taskId);
 
     // then
-    assertNotNull(taskFormData);
+    assertThat(taskFormData).isNotNull();
   }
 
   @Test
@@ -431,7 +430,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
     TaskFormData taskFormData = formService.getTaskFormData(taskId);
 
     // then
-    assertNotNull(taskFormData);
+    assertThat(taskFormData).isNotNull();
   }
 
   @Test
@@ -446,7 +445,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
     TaskFormData taskFormData = formService.getTaskFormData(taskId);
 
     // then
-    assertNotNull(taskFormData);
+    assertThat(taskFormData).isNotNull();
   }
 
   // get task form data (case task) /////////////////////////////////
@@ -461,7 +460,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
     TaskFormData taskFormData = formService.getTaskFormData(taskId);
 
     // then
-    assertNotNull(taskFormData);
+    assertThat(taskFormData).isNotNull();
   }
 
   // get rendered task form (standalone task) //////////////////
@@ -589,7 +588,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
     Object taskForm = formService.getRenderedTaskForm(taskId);
 
     // then
-    assertNotNull(taskForm);
+    assertThat(taskForm).isNotNull();
   }
 
   @Test
@@ -603,7 +602,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
     Object taskForm = formService.getRenderedTaskForm(taskId);
 
     // then
-    assertNotNull(taskForm);
+    assertThat(taskForm).isNotNull();
   }
 
   @Test
@@ -618,7 +617,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
     Object taskForm = formService.getRenderedTaskForm(taskId);
 
     // then
-    assertNotNull(taskForm);
+    assertThat(taskForm).isNotNull();
   }
 
   @Test
@@ -633,7 +632,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
     Object taskForm = formService.getRenderedTaskForm(taskId);
 
     // then
-    assertNotNull(taskForm);
+    assertThat(taskForm).isNotNull();
   }
 
   @Test
@@ -648,7 +647,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
     Object taskForm = formService.getRenderedTaskForm(taskId);
 
     // then
-    assertNotNull(taskForm);
+    assertThat(taskForm).isNotNull();
   }
 
   // get rendered task form (case task) /////////////////////////////////
@@ -663,7 +662,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
     Object taskForm = formService.getRenderedTaskForm(taskId);
 
     // then
-    assertNull(taskForm);
+    assertThat(taskForm).isNull();
   }
 
   // get task form variables (standalone task) ////////////////////////
@@ -717,7 +716,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
     VariableMap variables = formService.getTaskFormVariables(taskId);
 
     // then
-    assertNotNull(variables);
+    assertThat(variables).isNotNull();
 
     deleteTask(taskId, true);
   }
@@ -734,7 +733,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
     VariableMap variables = formService.getTaskFormVariables(taskId);
 
     // then
-    assertNotNull(variables);
+    assertThat(variables).isNotNull();
 
     deleteTask(taskId, true);
   }
@@ -794,7 +793,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
     VariableMap variables = formService.getTaskFormVariables(taskId);
 
     // then
-    assertNotNull(variables);
+    assertThat(variables).isNotNull();
     assertThat(variables).hasSize(1);
   }
 
@@ -809,7 +808,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
     VariableMap variables = formService.getTaskFormVariables(taskId);
 
     // then
-    assertNotNull(variables);
+    assertThat(variables).isNotNull();
     assertThat(variables).hasSize(1);
   }
 
@@ -825,7 +824,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
     VariableMap variables = formService.getTaskFormVariables(taskId);
 
     // then
-    assertNotNull(variables);
+    assertThat(variables).isNotNull();
     assertThat(variables).hasSize(1);
   }
 
@@ -841,7 +840,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
     VariableMap variables = formService.getTaskFormVariables(taskId);
 
     // then
-    assertNotNull(variables);
+    assertThat(variables).isNotNull();
     assertThat(variables).hasSize(1);
   }
 
@@ -857,7 +856,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
     VariableMap variables = formService.getTaskFormVariables(taskId);
 
     // then
-    assertNotNull(variables);
+    assertThat(variables).isNotNull();
     assertThat(variables).hasSize(1);
   }
 
@@ -873,8 +872,8 @@ public class FormAuthorizationTest extends AuthorizationTest {
     VariableMap variables = formService.getTaskFormVariables(taskId);
 
     // then
-    assertNotNull(variables);
-    assertThat(variables).hasSize(0);
+    assertThat(variables).isNotNull();
+    assertThat(variables).isEmpty();
   }
 
   // submit task form (standalone task) ////////////////////////////////
@@ -913,7 +912,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNull(task);
+    assertThat(task).isNull();
 
     deleteTask(taskId, true);
   }
@@ -956,7 +955,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNull(task);
+    assertThat(task).isNull();
   }
 
   @Test
@@ -972,7 +971,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNull(task);
+    assertThat(task).isNull();
   }
 
   @Test
@@ -988,7 +987,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNull(task);
+    assertThat(task).isNull();
   }
 
   // submit task form (case task) ////////////////////////////////
@@ -1004,7 +1003,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNull(task);
+    assertThat(task).isNull();
   }
 
   // get start form key ////////////////////////////////////////
@@ -1085,7 +1084,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
 
     // when
     InputStream inputStream = formService.getDeployedStartForm(processDefinitionId);
-    assertNotNull(inputStream);
+    assertThat(inputStream).isNotNull();
   }
 
   @Test
@@ -1118,7 +1117,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
 
     // when
     InputStream inputStream = formService.getDeployedTaskForm(taskId);
-    assertNotNull(inputStream);
+    assertThat(inputStream).isNotNull();
   }
 
   @Test

@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.history;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -58,7 +58,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     List<HistoricActivityStatistics> statistics = query.list();
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(statistics).hasSize(0);
+    assertThat(statistics).isEmpty();
   }
 
   @Deployment
@@ -95,7 +95,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     List<HistoricActivityStatistics> statistics = query.list();
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(statistics).hasSize(0);
+    assertThat(statistics).isEmpty();
   }
 
   @Deployment
@@ -659,7 +659,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
       statistics = query.list();
 
       assertThat(query.count()).isEqualTo(0);
-      assertThat(statistics).hasSize(0);
+      assertThat(statistics).isEmpty();
 
       //check February by started dates
       query = historyService.createHistoricActivityStatisticsQuery(processDefinitionId).includeCanceled().includeFinished()
@@ -715,7 +715,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
       statistics = query.list();
 
       assertThat(query.count()).isEqualTo(0);
-      assertThat(statistics).hasSize(0);
+      assertThat(statistics).isEmpty();
 
       //check whole period by started date
       query = historyService.createHistoricActivityStatisticsQuery(processDefinitionId).includeCanceled().includeFinished()

@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.test.jobexecutor;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -98,7 +96,7 @@ public class JobDefinitionRedeploymentTest {
                             .getId();
 
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
-    assertNotNull(processDefinition);
+    assertThat(processDefinition).isNotNull();
 
     // this parses the process and created the Job definitions:
     List<JobDefinition> jobDefinitions = managementService.createJobDefinitionQuery().list();
@@ -116,7 +114,7 @@ public class JobDefinitionRedeploymentTest {
     // the job has the correct definitionId set:
     List<Job> jobs = managementService.createJobQuery().list();
     for (Job job : jobs) {
-      assertTrue(jobDefinitionIds.contains(job.getJobDefinitionId()));
+      assertThat(jobDefinitionIds).contains(job);
     }
 
     // delete the deployment

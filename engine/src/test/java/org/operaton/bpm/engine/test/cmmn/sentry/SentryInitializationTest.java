@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.test.cmmn.sentry;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
@@ -65,7 +63,7 @@ public class SentryInitializationTest extends CmmnTest {
     assertThat(part.getType()).isEqualTo(CmmnSentryDeclaration.PLAN_ITEM_ON_PART);
     assertThat(part.getSource()).isEqualTo("PI_HumanTask_1");
     assertThat(part.getStandardEvent()).isEqualTo("complete");
-    assertFalse(part.isSatisfied());
+    assertThat(part.isSatisfied()).isFalse();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryInitializationTest.testVariableOnPart.cmmn"})
@@ -97,7 +95,7 @@ public class SentryInitializationTest extends CmmnTest {
     assertThat(part.getType()).isEqualTo(CmmnSentryDeclaration.VARIABLE_ON_PART);
     assertThat(part.getVariableEvent()).isEqualTo(VariableTransition.create.name());
     assertThat(part.getVariableName()).isEqualTo("variable_1");
-    assertFalse(part.isSatisfied());
+    assertThat(part.isSatisfied()).isFalse();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryInitializationTest.testIfPart.cmmn"})
@@ -128,9 +126,9 @@ public class SentryInitializationTest extends CmmnTest {
     assertThat(part.getCaseInstanceId()).isEqualTo(caseInstanceId);
     assertThat(part.getSentryId()).isEqualTo("Sentry_1");
     assertThat(part.getType()).isEqualTo(CmmnSentryDeclaration.IF_PART);
-    assertNull(part.getSource());
-    assertNull(part.getStandardEvent());
-    assertFalse(part.isSatisfied());
+    assertThat(part.getSource()).isNull();
+    assertThat(part.getStandardEvent()).isNull();
+    assertThat(part.isSatisfied()).isFalse();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryInitializationTest.testOnPartIfPartAndVariableOnPart.cmmn"})
@@ -161,9 +159,9 @@ public class SentryInitializationTest extends CmmnTest {
     assertThat(part.getCaseInstanceId()).isEqualTo(caseInstanceId);
     assertThat(part.getSentryId()).isEqualTo("Sentry_1");
     assertThat(part.getType()).isEqualTo(CmmnSentryDeclaration.IF_PART);
-    assertNull(part.getSource());
-    assertNull(part.getStandardEvent());
-    assertFalse(part.isSatisfied());
+    assertThat(part.getSource()).isNull();
+    assertThat(part.getStandardEvent()).isNull();
+    assertThat(part.isSatisfied()).isFalse();
 
     part = query
         .type(CmmnSentryDeclaration.PLAN_ITEM_ON_PART)
@@ -175,7 +173,7 @@ public class SentryInitializationTest extends CmmnTest {
     assertThat(part.getType()).isEqualTo(CmmnSentryDeclaration.PLAN_ITEM_ON_PART);
     assertThat(part.getSource()).isEqualTo("PI_HumanTask_1");
     assertThat(part.getStandardEvent()).isEqualTo("complete");
-    assertFalse(part.isSatisfied());
+    assertThat(part.isSatisfied()).isFalse();
 
     part = query.type(CmmnSentryDeclaration.VARIABLE_ON_PART).singleResult();
 
@@ -185,7 +183,7 @@ public class SentryInitializationTest extends CmmnTest {
     assertThat(part.getType()).isEqualTo(CmmnSentryDeclaration.VARIABLE_ON_PART);
     assertThat(part.getVariableEvent()).isEqualTo(VariableTransition.delete.name());
     assertThat(part.getVariableName()).isEqualTo("variable_1");
-    assertFalse(part.isSatisfied());
+    assertThat(part.isSatisfied()).isFalse();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryInitializationTest.testMultipleSentries.cmmn"})
@@ -217,9 +215,9 @@ public class SentryInitializationTest extends CmmnTest {
     assertThat(part.getCaseInstanceId()).isEqualTo(caseInstanceId);
     assertThat(part.getSentryId()).isEqualTo("Sentry_1");
     assertThat(part.getType()).isEqualTo(CmmnSentryDeclaration.IF_PART);
-    assertNull(part.getSource());
-    assertNull(part.getStandardEvent());
-    assertFalse(part.isSatisfied());
+    assertThat(part.getSource()).isNull();
+    assertThat(part.getStandardEvent()).isNull();
+    assertThat(part.isSatisfied()).isFalse();
 
     part = query
         .sentryId("Sentry_2")
@@ -231,7 +229,7 @@ public class SentryInitializationTest extends CmmnTest {
     assertThat(part.getType()).isEqualTo(CmmnSentryDeclaration.PLAN_ITEM_ON_PART);
     assertThat(part.getSource()).isEqualTo("PI_HumanTask_1");
     assertThat(part.getStandardEvent()).isEqualTo("complete");
-    assertFalse(part.isSatisfied());
+    assertThat(part.isSatisfied()).isFalse();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryInitializationTest.testMultipleSentriesWithinStage.cmmn"})
@@ -273,9 +271,9 @@ public class SentryInitializationTest extends CmmnTest {
     assertThat(part.getCaseExecutionId()).isEqualTo(stageId);
     assertThat(part.getSentryId()).isEqualTo("Sentry_1");
     assertThat(part.getType()).isEqualTo(CmmnSentryDeclaration.IF_PART);
-    assertNull(part.getSource());
-    assertNull(part.getStandardEvent());
-    assertFalse(part.isSatisfied());
+    assertThat(part.getSource()).isNull();
+    assertThat(part.getStandardEvent()).isNull();
+    assertThat(part.isSatisfied()).isFalse();
 
     part = query
         .sentryId("Sentry_2")
@@ -287,7 +285,7 @@ public class SentryInitializationTest extends CmmnTest {
     assertThat(part.getType()).isEqualTo(CmmnSentryDeclaration.PLAN_ITEM_ON_PART);
     assertThat(part.getSource()).isEqualTo("PI_HumanTask_1");
     assertThat(part.getStandardEvent()).isEqualTo("complete");
-    assertFalse(part.isSatisfied());
+    assertThat(part.isSatisfied()).isFalse();
   }
 
 }

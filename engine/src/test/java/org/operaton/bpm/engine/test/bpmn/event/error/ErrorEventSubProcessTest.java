@@ -19,9 +19,6 @@ package org.operaton.bpm.engine.test.bpmn.event.error;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.bpmn.event.error.ThrowErrorDelegate.throwError;
 import static org.operaton.bpm.engine.test.bpmn.event.error.ThrowErrorDelegate.throwException;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.Job;
@@ -118,11 +115,11 @@ public class ErrorEventSubProcessTest extends PluggableProcessEngineTest {
   public void testCatchExceptionThrownByExecuteOfAbstractBpmnActivityBehavior() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess", throwException()).getId();
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertNull(runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat(runtimeService.getVariable(pi, "signaled")).isNull();
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskException");
 
     taskService.complete(userTask.getId());
@@ -135,11 +132,11 @@ public class ErrorEventSubProcessTest extends PluggableProcessEngineTest {
   public void testCatchErrorThrownByExecuteOfAbstractBpmnActivityBehavior() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess", throwError()).getId();
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertNull(runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat(runtimeService.getVariable(pi, "signaled")).isNull();
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskError");
 
     taskService.complete(userTask.getId());
@@ -152,20 +149,20 @@ public class ErrorEventSubProcessTest extends PluggableProcessEngineTest {
   public void testCatchExceptionThrownBySignalOfAbstractBpmnActivityBehavior() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess").getId();
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertNull(runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat(runtimeService.getVariable(pi, "signaled")).isNull();
 
     Execution serviceTask = runtimeService.createExecutionQuery().processInstanceId(pi).activityId("serviceTask").singleResult();
-    assertNotNull(serviceTask);
+    assertThat(serviceTask).isNotNull();
 
     runtimeService.setVariables(pi, throwException());
     runtimeService.signal(serviceTask.getId());
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertTrue((Boolean) runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat((Boolean) runtimeService.getVariable(pi, "signaled")).isTrue();
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskException");
 
     taskService.complete(userTask.getId());
@@ -178,20 +175,20 @@ public class ErrorEventSubProcessTest extends PluggableProcessEngineTest {
   public void testCatchErrorThrownBySignalOfAbstractBpmnActivityBehavior() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess").getId();
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertNull(runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat(runtimeService.getVariable(pi, "signaled")).isNull();
 
     Execution serviceTask = runtimeService.createExecutionQuery().processInstanceId(pi).activityId("serviceTask").singleResult();
-    assertNotNull(serviceTask);
+    assertThat(serviceTask).isNotNull();
 
     runtimeService.setVariables(pi, throwError());
     runtimeService.signal(serviceTask.getId());
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertTrue((Boolean) runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat((Boolean) runtimeService.getVariable(pi, "signaled")).isTrue();
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskError");
 
     taskService.complete(userTask.getId());
@@ -206,11 +203,11 @@ public class ErrorEventSubProcessTest extends PluggableProcessEngineTest {
     variables.putAll(throwException());
     String pi = runtimeService.startProcessInstanceByKey("testProcess", variables).getId();
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertNull(runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat(runtimeService.getVariable(pi, "signaled")).isNull();
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskException");
 
     taskService.complete(userTask.getId());
@@ -225,11 +222,11 @@ public class ErrorEventSubProcessTest extends PluggableProcessEngineTest {
     variables.putAll(throwError());
     String pi = runtimeService.startProcessInstanceByKey("testProcess", variables).getId();
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertNull(runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat(runtimeService.getVariable(pi, "signaled")).isNull();
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskError");
 
     taskService.complete(userTask.getId());
@@ -243,20 +240,20 @@ public class ErrorEventSubProcessTest extends PluggableProcessEngineTest {
     VariableMap variables = Variables.createVariables().putValue("myDelegate", new ThrowErrorDelegate());
     String pi = runtimeService.startProcessInstanceByKey("testProcess", variables).getId();
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertNull(runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat(runtimeService.getVariable(pi, "signaled")).isNull();
 
     Execution serviceTask = runtimeService.createExecutionQuery().processInstanceId(pi).activityId("serviceTask").singleResult();
-    assertNotNull(serviceTask);
+    assertThat(serviceTask).isNotNull();
 
     runtimeService.setVariables(pi, throwException());
     runtimeService.signal(serviceTask.getId());
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertTrue((Boolean) runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat((Boolean) runtimeService.getVariable(pi, "signaled")).isTrue();
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskException");
 
     taskService.complete(userTask.getId());
@@ -270,20 +267,20 @@ public class ErrorEventSubProcessTest extends PluggableProcessEngineTest {
     VariableMap variables = Variables.createVariables().putValue("myDelegate", new ThrowErrorDelegate());
     String pi = runtimeService.startProcessInstanceByKey("testProcess", variables).getId();
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertNull(runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat(runtimeService.getVariable(pi, "signaled")).isNull();
 
     Execution serviceTask = runtimeService.createExecutionQuery().processInstanceId(pi).activityId("serviceTask").singleResult();
-    assertNotNull(serviceTask);
+    assertThat(serviceTask).isNotNull();
 
     runtimeService.setVariables(pi, throwError());
     runtimeService.signal(serviceTask.getId());
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertTrue((Boolean) runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat((Boolean) runtimeService.getVariable(pi, "signaled")).isTrue();
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskError");
 
     taskService.complete(userTask.getId());
@@ -422,26 +419,26 @@ public class ErrorEventSubProcessTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("eventSubProcess");
 
     Task taskBefore = taskService.createTaskQuery().singleResult();
-    assertNotNull(taskBefore);
+    assertThat(taskBefore).isNotNull();
     assertThat(taskBefore.getName()).isEqualTo("inside subprocess");
 
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
 
     //when job is executed task is created
     managementService.executeJob(job.getId());
 
     Task taskDuring = taskService.createTaskQuery().taskName("inside event sub").singleResult();
-    assertNotNull(taskDuring);
+    assertThat(taskDuring).isNotNull();
 
     taskService.complete(taskDuring.getId());
 
     Task taskAfter = taskService.createTaskQuery().singleResult();
-    assertNotNull(taskAfter);
+    assertThat(taskAfter).isNotNull();
     assertThat(taskAfter.getName()).isEqualTo("after catch");
 
     Job jobAfter = managementService.createJobQuery().singleResult();
-    assertNull(jobAfter);
+    assertThat(jobAfter).isNull();
   }
 
   @Deployment
@@ -450,20 +447,20 @@ public class ErrorEventSubProcessTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("eventSubProcess");
 
     Task taskBefore = taskService.createTaskQuery().singleResult();
-    assertNotNull(taskBefore);
+    assertThat(taskBefore).isNotNull();
     assertThat(taskBefore.getName()).isEqualTo("inside subprocess");
 
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
 
     //when job is executed task is created
     managementService.executeJob(job.getId());
 
     Task taskAfter = taskService.createTaskQuery().singleResult();
-    assertNotNull(taskAfter);
+    assertThat(taskAfter).isNotNull();
     assertThat(taskAfter.getName()).isEqualTo("after catch");
 
     Job jobAfter = managementService.createJobQuery().singleResult();
-    assertNull(jobAfter);
+    assertThat(jobAfter).isNull();
   }
 }

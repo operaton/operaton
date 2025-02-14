@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.cmmn.handler.specification;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -44,7 +43,7 @@ public class ClassExecutionListenerSpec extends AbstractExecutionListenerSpec {
 
   @Override
   public void verifyListener(DelegateListener<? extends BaseDelegateExecution> listener) {
-    assertTrue(listener instanceof ClassDelegateCaseExecutionListener);
+    assertThat(listener instanceof ClassDelegateCaseExecutionListener).isTrue();
     ClassDelegateCaseExecutionListener classDelegateListener = (ClassDelegateCaseExecutionListener) listener;
     assertThat(classDelegateListener.getClassName()).isEqualTo(CLASS_NAME);
 

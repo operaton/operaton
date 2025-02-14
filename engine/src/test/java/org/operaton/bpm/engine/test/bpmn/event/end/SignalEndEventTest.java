@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.event.end;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,7 +36,7 @@ public class SignalEndEventTest extends PluggableProcessEngineTest {
   @Test
   public void testCatchSignalEndEventInEmbeddedSubprocess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("catchSignalEndEventInEmbeddedSubprocess");
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
 
     // After process start, usertask in subprocess should exist
     Task task = taskService.createTaskQuery().singleResult();
@@ -61,7 +60,7 @@ public class SignalEndEventTest extends PluggableProcessEngineTest {
   public void testCatchSignalEndEventInCallActivity() {
     // first, start process to wait of the signal event
     ProcessInstance processInstanceCatchEvent = runtimeService.startProcessInstanceByKey("catchSignalEndEvent");
-    assertNotNull(processInstanceCatchEvent);
+    assertThat(processInstanceCatchEvent).isNotNull();
 
     // now we have a subscription for the signal event:
     assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
@@ -69,7 +68,7 @@ public class SignalEndEventTest extends PluggableProcessEngineTest {
 
     // start process which throw the signal end event
     ProcessInstance processInstanceEndEvent = runtimeService.startProcessInstanceByKey("processWithSignalEndEvent");
-    assertNotNull(processInstanceEndEvent);
+    assertThat(processInstanceEndEvent).isNotNull();
     testRule.assertProcessEnded(processInstanceEndEvent.getId());
 
     // user task of process catchSignalEndEvent
@@ -120,7 +119,7 @@ public class SignalEndEventTest extends PluggableProcessEngineTest {
   protected void checkOutput(String processInstanceId) {
     assertThat(taskService.createTaskQuery().taskName("task after catched signal").count()).isEqualTo(1);
     // and set the output variable of the called process to the process
-    assertNotNull(runtimeService.getVariable(processInstanceId, "cancelReason"));
+    assertThat(runtimeService.getVariable(processInstanceId, "cancelReason")).isNotNull();
     assertThat(runtimeService.getVariable(processInstanceId, "input")).isEqualTo(42);
   }
 }

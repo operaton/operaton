@@ -18,8 +18,7 @@ package org.operaton.bpm.engine.test.api.mgmt.metrics;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.fail;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
 import java.util.Date;
@@ -127,7 +126,7 @@ public class MetricsTest {
     long end = managementService.createMetricsQuery()
                                   .name(Metrics.ACTIVTY_INSTANCE_END)
                                   .sum();
-    assertNotEquals(end, start);
+    assertThat(start).isNotEqualTo(end);
     assertEquals(start, managementService.createMetricsQuery().name(Metrics.FLOW_NODE_INSTANCES).sum());
     assertEquals(2, start);
     assertEquals(1, end);
@@ -274,7 +273,7 @@ public class MetricsTest {
     }
     catch (ProcessEngineException e) {
       // then an exception is thrown
-      assertTrue(e.getMessage().contains("Metrics reporting is disabled"));
+      assertThat(e.getMessage()).contains("Metrics reporting is disabled");
     }
     finally {
       // reset metrics setting
@@ -298,7 +297,7 @@ public class MetricsTest {
     }
     catch (ProcessEngineException e) {
       // then an exception is thrown
-      assertTrue(e.getMessage().contains("Metrics reporting to database is disabled"));
+      assertThat(e.getMessage()).contains("Metrics reporting to database is disabled");
     } finally {
       processEngineConfiguration.setMetricsEnabled(defaultIsMetricsEnabled);
       processEngineConfiguration.setDbMetricsReporterActivate(defaultIsMetricsReporterActivate);

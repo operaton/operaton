@@ -23,11 +23,7 @@ import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_MAN
 import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_REPETITION_RULE;
 import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_REQUIRED_RULE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import java.util.List;
@@ -121,7 +117,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertNotEquals(humanTaskName, activity.getName());
+    assertThat(activity.getName()).isNotEqualTo(humanTaskName);
     assertThat(activity.getName()).isEqualTo(planItemName);
   }
 
@@ -172,7 +168,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     CmmnActivityBehavior behavior = activity.getActivityBehavior();
-    assertTrue(behavior instanceof HumanTaskActivityBehavior);
+    assertThat(behavior instanceof HumanTaskActivityBehavior).isTrue();
   }
 
   @Test
@@ -184,7 +180,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Boolean isBlocking = (Boolean) activity.getProperty(PROPERTY_IS_BLOCKING);
-    assertTrue(isBlocking);
+    assertThat(isBlocking).isTrue();
   }
 
   @Test
@@ -203,7 +199,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     // considered a 'manual' Task, i.e.,
     // the Case management system is not
     // tracking the lifecycle of the HumanTask (instance).
-    assertNull(activity);
+    assertThat(activity).isNull();
   }
 
   @Test
@@ -214,7 +210,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertNull(activity.getParent());
+    assertThat(activity.getParent()).isNull();
   }
 
   @Test
@@ -229,7 +225,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     assertThat(activity.getParent()).isEqualTo(parent);
-    assertTrue(parent.getActivities().contains(activity));
+    assertThat(parent.getActivities()).contains(activity);
   }
 
   @Test
@@ -243,7 +239,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     // there exists a taskDecorator
     HumanTaskActivityBehavior behavior = (HumanTaskActivityBehavior) activity.getActivityBehavior();
 
-    assertNotNull(behavior.getTaskDecorator());
+    assertThat(behavior.getTaskDecorator()).isNotNull();
   }
 
   @Test
@@ -257,7 +253,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     // there exists a taskDefinition
     HumanTaskActivityBehavior behavior = (HumanTaskActivityBehavior) activity.getActivityBehavior();
 
-    assertNotNull(behavior.getTaskDefinition());
+    assertThat(behavior.getTaskDefinition()).isNotNull();
   }
 
   @Test
@@ -271,7 +267,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     HumanTaskActivityBehavior behavior = (HumanTaskActivityBehavior) activity.getActivityBehavior();
 
     ExpressionManager expressionManager = behavior.getExpressionManager();
-    assertNotNull(expressionManager);
+    assertThat(expressionManager).isNotNull();
     assertThat(expressionManager).isEqualTo(context.getExpressionManager());
   }
 
@@ -288,7 +284,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     HumanTaskActivityBehavior behavior = (HumanTaskActivityBehavior) activity.getActivityBehavior();
 
     Expression nameExpression = behavior.getTaskDefinition().getNameExpression();
-    assertNotNull(nameExpression);
+    assertThat(nameExpression).isNotNull();
     assertThat(nameExpression.getExpressionText()).isEqualTo("A HumanTask");
   }
 
@@ -309,7 +305,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     TaskDefinition taskDefinition = behavior.getTaskDefinition();
 
     Expression nameExpression = taskDefinition.getNameExpression();
-    assertNotNull(nameExpression);
+    assertThat(nameExpression).isNotNull();
     assertThat(nameExpression.getExpressionText()).isEqualTo("My LocalName");
   }
 
@@ -327,7 +323,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     TaskDefinition taskDefinition = behavior.getTaskDefinition();
 
     Expression dueDateExpression = taskDefinition.getDueDateExpression();
-    assertNotNull(dueDateExpression);
+    assertThat(dueDateExpression).isNotNull();
     assertThat(dueDateExpression.getExpressionText()).isEqualTo(aDueDate);
   }
 
@@ -345,7 +341,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     TaskDefinition taskDefinition = behavior.getTaskDefinition();
 
     Expression followUpDateExpression = taskDefinition.getFollowUpDateExpression();
-    assertNotNull(followUpDateExpression);
+    assertThat(followUpDateExpression).isNotNull();
     assertThat(followUpDateExpression.getExpressionText()).isEqualTo(aFollowUpDate);
   }
 
@@ -363,7 +359,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     TaskDefinition taskDefinition = behavior.getTaskDefinition();
 
     Expression priorityExpression = taskDefinition.getPriorityExpression();
-    assertNotNull(priorityExpression);
+    assertThat(priorityExpression).isNotNull();
     assertThat(priorityExpression.getExpressionText()).isEqualTo(aPriority);
   }
 
@@ -383,7 +379,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     TaskDefinition taskDefinition = behavior.getTaskDefinition();
 
     Expression assigneeExpression = taskDefinition.getAssigneeExpression();
-    assertNotNull(assigneeExpression);
+    assertThat(assigneeExpression).isNotNull();
     assertThat(assigneeExpression.getExpressionText()).isEqualTo("aPerformerRole");
   }
 
@@ -401,7 +397,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     TaskDefinition taskDefinition = behavior.getTaskDefinition();
 
     Expression priorityExpression = taskDefinition.getPriorityExpression();
-    assertNotNull(priorityExpression);
+    assertThat(priorityExpression).isNotNull();
     assertThat(priorityExpression.getExpressionText()).isEqualTo(aPriority);
   }
 
@@ -479,7 +475,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     TaskDefinition taskDefinition = behavior.getTaskDefinition();
 
     Expression formKeyExpression = taskDefinition.getFormKey();
-    assertNotNull(formKeyExpression);
+    assertThat(formKeyExpression).isNotNull();
     assertThat(formKeyExpression.getExpressionText()).isEqualTo(aFormKey);
   }
 
@@ -497,7 +493,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     TaskDefinition taskDefinition = behavior.getTaskDefinition();
 
     Expression descriptionExpression = taskDefinition.getDescriptionExpression();
-    assertNotNull(descriptionExpression);
+    assertThat(descriptionExpression).isNotNull();
     assertThat(descriptionExpression.getExpressionText()).isEqualTo(description);
   }
 
@@ -519,7 +515,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     TaskDefinition taskDefinition = behavior.getTaskDefinition();
 
     Expression descriptionExpression = taskDefinition.getDescriptionExpression();
-    assertNotNull(descriptionExpression);
+    assertThat(descriptionExpression).isNotNull();
     assertThat(descriptionExpression.getExpressionText()).isEqualTo(localDescription);
   }
 
@@ -538,12 +534,12 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertThat(activity.getListeners()).hasSize(0);
+    assertThat(activity.getListeners()).isEmpty();
 
     HumanTaskActivityBehavior behavior = (HumanTaskActivityBehavior) activity.getActivityBehavior();
     TaskDefinition taskDefinition = behavior.getTaskDefinition();
 
-    assertNotNull(taskDefinition);
+    assertThat(taskDefinition).isNotNull();
 
     assertThat(taskDefinition.getTaskListeners()).hasSize(1);
 
@@ -551,11 +547,11 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     assertThat(createListeners).hasSize(1);
     TaskListener listener = createListeners.get(0);
 
-    assertTrue(listener instanceof ClassDelegateTaskListener);
+    assertThat(listener instanceof ClassDelegateTaskListener).isTrue();
 
     ClassDelegateTaskListener classDelegateListener = (ClassDelegateTaskListener) listener;
     assertThat(classDelegateListener.getClassName()).isEqualTo(className);
-    assertTrue(classDelegateListener.getFieldDeclarations().isEmpty());
+    assertThat(classDelegateListener.getFieldDeclarations()).isEmpty();
 
   }
 
@@ -574,12 +570,12 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertThat(activity.getListeners()).hasSize(0);
+    assertThat(activity.getListeners()).isEmpty();
 
     HumanTaskActivityBehavior behavior = (HumanTaskActivityBehavior) activity.getActivityBehavior();
     TaskDefinition taskDefinition = behavior.getTaskDefinition();
 
-    assertNotNull(taskDefinition);
+    assertThat(taskDefinition).isNotNull();
 
     assertThat(taskDefinition.getTaskListeners()).hasSize(1);
 
@@ -587,11 +583,11 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     assertThat(createListeners).hasSize(1);
     TaskListener listener = createListeners.get(0);
 
-    assertTrue(listener instanceof DelegateExpressionTaskListener);
+    assertThat(listener instanceof DelegateExpressionTaskListener).isTrue();
 
     DelegateExpressionTaskListener delegateExpressionListener = (DelegateExpressionTaskListener) listener;
     assertThat(delegateExpressionListener.getExpressionText()).isEqualTo(delegateExpression);
-    assertTrue(delegateExpressionListener.getFieldDeclarations().isEmpty());
+    assertThat(delegateExpressionListener.getFieldDeclarations()).isEmpty();
 
   }
 
@@ -610,12 +606,12 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertThat(activity.getListeners()).hasSize(0);
+    assertThat(activity.getListeners()).isEmpty();
 
     HumanTaskActivityBehavior behavior = (HumanTaskActivityBehavior) activity.getActivityBehavior();
     TaskDefinition taskDefinition = behavior.getTaskDefinition();
 
-    assertNotNull(taskDefinition);
+    assertThat(taskDefinition).isNotNull();
 
     assertThat(taskDefinition.getTaskListeners()).hasSize(1);
 
@@ -623,7 +619,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     assertThat(createListeners).hasSize(1);
     TaskListener listener = createListeners.get(0);
 
-    assertTrue(listener instanceof ExpressionTaskListener);
+    assertThat(listener instanceof ExpressionTaskListener).isTrue();
 
     ExpressionTaskListener expressionListener = (ExpressionTaskListener) listener;
     assertThat(expressionListener.getExpressionText()).isEqualTo(expression);
@@ -645,12 +641,12 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertThat(activity.getListeners()).hasSize(0);
+    assertThat(activity.getListeners()).isEmpty();
 
     HumanTaskActivityBehavior behavior = (HumanTaskActivityBehavior) activity.getActivityBehavior();
     TaskDefinition taskDefinition = behavior.getTaskDefinition();
 
-    assertNotNull(taskDefinition);
+    assertThat(taskDefinition).isNotNull();
 
     assertThat(taskDefinition.getTaskListeners()).hasSize(1);
 
@@ -658,11 +654,11 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     assertThat(createListeners).hasSize(1);
     TaskListener listener = createListeners.get(0);
 
-    assertTrue(listener instanceof ClassDelegateTaskListener);
+    assertThat(listener instanceof ClassDelegateTaskListener).isTrue();
 
     ClassDelegateTaskListener classDelegateListener = (ClassDelegateTaskListener) listener;
     assertThat(classDelegateListener.getClassName()).isEqualTo(className);
-    assertTrue(classDelegateListener.getFieldDeclarations().isEmpty());
+    assertThat(classDelegateListener.getFieldDeclarations()).isEmpty();
 
   }
 
@@ -681,12 +677,12 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertThat(activity.getListeners()).hasSize(0);
+    assertThat(activity.getListeners()).isEmpty();
 
     HumanTaskActivityBehavior behavior = (HumanTaskActivityBehavior) activity.getActivityBehavior();
     TaskDefinition taskDefinition = behavior.getTaskDefinition();
 
-    assertNotNull(taskDefinition);
+    assertThat(taskDefinition).isNotNull();
 
     assertThat(taskDefinition.getTaskListeners()).hasSize(1);
 
@@ -694,11 +690,11 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     assertThat(createListeners).hasSize(1);
     TaskListener listener = createListeners.get(0);
 
-    assertTrue(listener instanceof DelegateExpressionTaskListener);
+    assertThat(listener instanceof DelegateExpressionTaskListener).isTrue();
 
     DelegateExpressionTaskListener delegateExpressionListener = (DelegateExpressionTaskListener) listener;
     assertThat(delegateExpressionListener.getExpressionText()).isEqualTo(delegateExpression);
-    assertTrue(delegateExpressionListener.getFieldDeclarations().isEmpty());
+    assertThat(delegateExpressionListener.getFieldDeclarations()).isEmpty();
 
   }
 
@@ -717,12 +713,12 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertThat(activity.getListeners()).hasSize(0);
+    assertThat(activity.getListeners()).isEmpty();
 
     HumanTaskActivityBehavior behavior = (HumanTaskActivityBehavior) activity.getActivityBehavior();
     TaskDefinition taskDefinition = behavior.getTaskDefinition();
 
-    assertNotNull(taskDefinition);
+    assertThat(taskDefinition).isNotNull();
 
     assertThat(taskDefinition.getTaskListeners()).hasSize(1);
 
@@ -730,7 +726,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     assertThat(createListeners).hasSize(1);
     TaskListener listener = createListeners.get(0);
 
-    assertTrue(listener instanceof ExpressionTaskListener);
+    assertThat(listener instanceof ExpressionTaskListener).isTrue();
 
     ExpressionTaskListener expressionListener = (ExpressionTaskListener) listener;
     assertThat(expressionListener.getExpressionText()).isEqualTo(expression);
@@ -752,12 +748,12 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertThat(activity.getListeners()).hasSize(0);
+    assertThat(activity.getListeners()).isEmpty();
 
     HumanTaskActivityBehavior behavior = (HumanTaskActivityBehavior) activity.getActivityBehavior();
     TaskDefinition taskDefinition = behavior.getTaskDefinition();
 
-    assertNotNull(taskDefinition);
+    assertThat(taskDefinition).isNotNull();
 
     assertThat(taskDefinition.getTaskListeners()).hasSize(1);
 
@@ -765,11 +761,11 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     assertThat(createListeners).hasSize(1);
     TaskListener listener = createListeners.get(0);
 
-    assertTrue(listener instanceof ClassDelegateTaskListener);
+    assertThat(listener instanceof ClassDelegateTaskListener).isTrue();
 
     ClassDelegateTaskListener classDelegateListener = (ClassDelegateTaskListener) listener;
     assertThat(classDelegateListener.getClassName()).isEqualTo(className);
-    assertTrue(classDelegateListener.getFieldDeclarations().isEmpty());
+    assertThat(classDelegateListener.getFieldDeclarations()).isEmpty();
 
   }
 
@@ -788,12 +784,12 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertThat(activity.getListeners()).hasSize(0);
+    assertThat(activity.getListeners()).isEmpty();
 
     HumanTaskActivityBehavior behavior = (HumanTaskActivityBehavior) activity.getActivityBehavior();
     TaskDefinition taskDefinition = behavior.getTaskDefinition();
 
-    assertNotNull(taskDefinition);
+    assertThat(taskDefinition).isNotNull();
 
     assertThat(taskDefinition.getTaskListeners()).hasSize(1);
 
@@ -801,11 +797,11 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     assertThat(createListeners).hasSize(1);
     TaskListener listener = createListeners.get(0);
 
-    assertTrue(listener instanceof DelegateExpressionTaskListener);
+    assertThat(listener instanceof DelegateExpressionTaskListener).isTrue();
 
     DelegateExpressionTaskListener delegateExpressionListener = (DelegateExpressionTaskListener) listener;
     assertThat(delegateExpressionListener.getExpressionText()).isEqualTo(delegateExpression);
-    assertTrue(delegateExpressionListener.getFieldDeclarations().isEmpty());
+    assertThat(delegateExpressionListener.getFieldDeclarations()).isEmpty();
 
   }
 
@@ -824,12 +820,12 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertThat(activity.getListeners()).hasSize(0);
+    assertThat(activity.getListeners()).isEmpty();
 
     HumanTaskActivityBehavior behavior = (HumanTaskActivityBehavior) activity.getActivityBehavior();
     TaskDefinition taskDefinition = behavior.getTaskDefinition();
 
-    assertNotNull(taskDefinition);
+    assertThat(taskDefinition).isNotNull();
 
     assertThat(taskDefinition.getTaskListeners()).hasSize(1);
 
@@ -837,7 +833,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     assertThat(createListeners).hasSize(1);
     TaskListener listener = createListeners.get(0);
 
-    assertTrue(listener instanceof ExpressionTaskListener);
+    assertThat(listener instanceof ExpressionTaskListener).isTrue();
 
     ExpressionTaskListener expressionListener = (ExpressionTaskListener) listener;
     assertThat(expressionListener.getExpressionText()).isEqualTo(expression);
@@ -859,12 +855,12 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertThat(activity.getListeners()).hasSize(0);
+    assertThat(activity.getListeners()).isEmpty();
 
     HumanTaskActivityBehavior behavior = (HumanTaskActivityBehavior) activity.getActivityBehavior();
     TaskDefinition taskDefinition = behavior.getTaskDefinition();
 
-    assertNotNull(taskDefinition);
+    assertThat(taskDefinition).isNotNull();
 
     assertThat(taskDefinition.getTaskListeners()).hasSize(1);
 
@@ -872,11 +868,11 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     assertThat(createListeners).hasSize(1);
     TaskListener listener = createListeners.get(0);
 
-    assertTrue(listener instanceof ClassDelegateTaskListener);
+    assertThat(listener instanceof ClassDelegateTaskListener).isTrue();
 
     ClassDelegateTaskListener classDelegateListener = (ClassDelegateTaskListener) listener;
     assertThat(classDelegateListener.getClassName()).isEqualTo(className);
-    assertTrue(classDelegateListener.getFieldDeclarations().isEmpty());
+    assertThat(classDelegateListener.getFieldDeclarations()).isEmpty();
 
   }
 
@@ -895,12 +891,12 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertThat(activity.getListeners()).hasSize(0);
+    assertThat(activity.getListeners()).isEmpty();
 
     HumanTaskActivityBehavior behavior = (HumanTaskActivityBehavior) activity.getActivityBehavior();
     TaskDefinition taskDefinition = behavior.getTaskDefinition();
 
-    assertNotNull(taskDefinition);
+    assertThat(taskDefinition).isNotNull();
 
     assertThat(taskDefinition.getTaskListeners()).hasSize(1);
 
@@ -908,11 +904,11 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     assertThat(createListeners).hasSize(1);
     TaskListener listener = createListeners.get(0);
 
-    assertTrue(listener instanceof DelegateExpressionTaskListener);
+    assertThat(listener instanceof DelegateExpressionTaskListener).isTrue();
 
     DelegateExpressionTaskListener delegateExpressionListener = (DelegateExpressionTaskListener) listener;
     assertThat(delegateExpressionListener.getExpressionText()).isEqualTo(delegateExpression);
-    assertTrue(delegateExpressionListener.getFieldDeclarations().isEmpty());
+    assertThat(delegateExpressionListener.getFieldDeclarations()).isEmpty();
 
   }
 
@@ -931,12 +927,12 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertThat(activity.getListeners()).hasSize(0);
+    assertThat(activity.getListeners()).isEmpty();
 
     HumanTaskActivityBehavior behavior = (HumanTaskActivityBehavior) activity.getActivityBehavior();
     TaskDefinition taskDefinition = behavior.getTaskDefinition();
 
-    assertNotNull(taskDefinition);
+    assertThat(taskDefinition).isNotNull();
 
     assertThat(taskDefinition.getTaskListeners()).hasSize(1);
 
@@ -944,7 +940,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     assertThat(createListeners).hasSize(1);
     TaskListener listener = createListeners.get(0);
 
-    assertTrue(listener instanceof ExpressionTaskListener);
+    assertThat(listener instanceof ExpressionTaskListener).isTrue();
 
     ExpressionTaskListener expressionListener = (ExpressionTaskListener) listener;
     assertThat(expressionListener.getExpressionText()).isEqualTo(expression);
@@ -966,12 +962,12 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertThat(activity.getListeners()).hasSize(0);
+    assertThat(activity.getListeners()).isEmpty();
 
     HumanTaskActivityBehavior behavior = (HumanTaskActivityBehavior) activity.getActivityBehavior();
     TaskDefinition taskDefinition = behavior.getTaskDefinition();
 
-    assertNotNull(taskDefinition);
+    assertThat(taskDefinition).isNotNull();
 
     assertThat(taskDefinition.getTaskListeners()).hasSize(1);
 
@@ -979,11 +975,11 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     assertThat(createListeners).hasSize(1);
     TaskListener listener = createListeners.get(0);
 
-    assertTrue(listener instanceof ClassDelegateTaskListener);
+    assertThat(listener instanceof ClassDelegateTaskListener).isTrue();
 
     ClassDelegateTaskListener classDelegateListener = (ClassDelegateTaskListener) listener;
     assertThat(classDelegateListener.getClassName()).isEqualTo(className);
-    assertTrue(classDelegateListener.getFieldDeclarations().isEmpty());
+    assertThat(classDelegateListener.getFieldDeclarations()).isEmpty();
 
   }
 
@@ -1002,12 +998,12 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertThat(activity.getListeners()).hasSize(0);
+    assertThat(activity.getListeners()).isEmpty();
 
     HumanTaskActivityBehavior behavior = (HumanTaskActivityBehavior) activity.getActivityBehavior();
     TaskDefinition taskDefinition = behavior.getTaskDefinition();
 
-    assertNotNull(taskDefinition);
+    assertThat(taskDefinition).isNotNull();
 
     assertThat(taskDefinition.getTaskListeners()).hasSize(1);
 
@@ -1015,11 +1011,11 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     assertThat(createListeners).hasSize(1);
     TaskListener listener = createListeners.get(0);
 
-    assertTrue(listener instanceof DelegateExpressionTaskListener);
+    assertThat(listener instanceof DelegateExpressionTaskListener).isTrue();
 
     DelegateExpressionTaskListener delegateExpressionListener = (DelegateExpressionTaskListener) listener;
     assertThat(delegateExpressionListener.getExpressionText()).isEqualTo(delegateExpression);
-    assertTrue(delegateExpressionListener.getFieldDeclarations().isEmpty());
+    assertThat(delegateExpressionListener.getFieldDeclarations()).isEmpty();
 
   }
 
@@ -1038,12 +1034,12 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertThat(activity.getListeners()).hasSize(0);
+    assertThat(activity.getListeners()).isEmpty();
 
     HumanTaskActivityBehavior behavior = (HumanTaskActivityBehavior) activity.getActivityBehavior();
     TaskDefinition taskDefinition = behavior.getTaskDefinition();
 
-    assertNotNull(taskDefinition);
+    assertThat(taskDefinition).isNotNull();
 
     assertThat(taskDefinition.getTaskListeners()).hasSize(1);
 
@@ -1051,7 +1047,7 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     assertThat(createListeners).hasSize(1);
     TaskListener listener = createListeners.get(0);
 
-    assertTrue(listener instanceof ExpressionTaskListener);
+    assertThat(listener instanceof ExpressionTaskListener).isTrue();
 
     ExpressionTaskListener expressionListener = (ExpressionTaskListener) listener;
     assertThat(expressionListener.getExpressionText()).isEqualTo(expression);
@@ -1084,9 +1080,9 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity newActivity = handler.handleElement(planItem, context);
 
     // then
-    assertTrue(newActivity.getEntryCriteria().isEmpty());
+    assertThat(newActivity.getEntryCriteria()).isEmpty();
 
-    assertFalse(newActivity.getExitCriteria().isEmpty());
+    assertThat(newActivity.getExitCriteria()).isNotEmpty();
     assertThat(newActivity.getExitCriteria()).hasSize(1);
 
     assertThat(newActivity.getExitCriteria().get(0)).isEqualTo(sentryDeclaration);
@@ -1131,13 +1127,13 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity newActivity = handler.handleElement(planItem, context);
 
     // then
-    assertTrue(newActivity.getEntryCriteria().isEmpty());
+    assertThat(newActivity.getEntryCriteria()).isEmpty();
 
-    assertFalse(newActivity.getExitCriteria().isEmpty());
+    assertThat(newActivity.getExitCriteria()).isNotEmpty();
     assertThat(newActivity.getExitCriteria()).hasSize(2);
 
-    assertTrue(newActivity.getExitCriteria().contains(firstSentryDeclaration));
-    assertTrue(newActivity.getExitCriteria().contains(secondSentryDeclaration));
+    assertThat(newActivity.getExitCriteria()).contains(firstSentryDeclaration);
+    assertThat(newActivity.getExitCriteria()).contains(secondSentryDeclaration);
 
   }
 
@@ -1167,9 +1163,9 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity newActivity = handler.handleElement(planItem, context);
 
     // then
-    assertTrue(newActivity.getExitCriteria().isEmpty());
+    assertThat(newActivity.getExitCriteria()).isEmpty();
 
-    assertFalse(newActivity.getEntryCriteria().isEmpty());
+    assertThat(newActivity.getEntryCriteria()).isNotEmpty();
     assertThat(newActivity.getEntryCriteria()).hasSize(1);
 
     assertThat(newActivity.getEntryCriteria().get(0)).isEqualTo(sentryDeclaration);
@@ -1214,13 +1210,13 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity newActivity = handler.handleElement(planItem, context);
 
     // then
-    assertTrue(newActivity.getExitCriteria().isEmpty());
+    assertThat(newActivity.getExitCriteria()).isEmpty();
 
-    assertFalse(newActivity.getEntryCriteria().isEmpty());
+    assertThat(newActivity.getEntryCriteria()).isNotEmpty();
     assertThat(newActivity.getEntryCriteria()).hasSize(2);
 
-    assertTrue(newActivity.getEntryCriteria().contains(firstSentryDeclaration));
-    assertTrue(newActivity.getEntryCriteria().contains(secondSentryDeclaration));
+    assertThat(newActivity.getEntryCriteria()).contains(firstSentryDeclaration);
+    assertThat(newActivity.getEntryCriteria()).contains(secondSentryDeclaration);
 
   }
 
@@ -1254,11 +1250,11 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity newActivity = handler.handleElement(planItem, context);
 
     // then
-    assertFalse(newActivity.getExitCriteria().isEmpty());
+    assertThat(newActivity.getExitCriteria()).isNotEmpty();
     assertThat(newActivity.getExitCriteria()).hasSize(1);
     assertThat(newActivity.getExitCriteria().get(0)).isEqualTo(sentryDeclaration);
 
-    assertFalse(newActivity.getEntryCriteria().isEmpty());
+    assertThat(newActivity.getEntryCriteria()).isNotEmpty();
     assertThat(newActivity.getEntryCriteria()).hasSize(1);
     assertThat(newActivity.getEntryCriteria().get(0)).isEqualTo(sentryDeclaration);
 
@@ -1279,8 +1275,8 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_MANUAL_ACTIVATION_RULE);
-    assertNotNull(rule);
-    assertTrue(rule instanceof CaseControlRule);
+    assertThat(rule).isNotNull();
+    assertThat(rule instanceof CaseControlRule).isTrue();
   }
 
   @Test
@@ -1298,8 +1294,8 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_MANUAL_ACTIVATION_RULE);
-    assertNotNull(rule);
-    assertTrue(rule instanceof CaseControlRule);
+    assertThat(rule).isNotNull();
+    assertThat(rule instanceof CaseControlRule).isTrue();
   }
 
   @Test
@@ -1317,8 +1313,8 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_REQUIRED_RULE);
-    assertNotNull(rule);
-    assertTrue(rule instanceof CaseControlRule);
+    assertThat(rule).isNotNull();
+    assertThat(rule instanceof CaseControlRule).isTrue();
   }
 
   @Test
@@ -1336,8 +1332,8 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_REQUIRED_RULE);
-    assertNotNull(rule);
-    assertTrue(rule instanceof CaseControlRule);
+    assertThat(rule).isNotNull();
+    assertThat(rule instanceof CaseControlRule).isTrue();
   }
 
   @Test
@@ -1355,8 +1351,8 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_REPETITION_RULE);
-    assertNotNull(rule);
-    assertTrue(rule instanceof CaseControlRule);
+    assertThat(rule).isNotNull();
+    assertThat(rule instanceof CaseControlRule).isTrue();
   }
 
   @Test
@@ -1374,8 +1370,8 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_REPETITION_RULE);
-    assertNotNull(rule);
-    assertTrue(rule instanceof CaseControlRule);
+    assertThat(rule).isNotNull();
+    assertThat(rule instanceof CaseControlRule).isTrue();
   }
 
   @Test
@@ -1393,10 +1389,11 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     List<String> events = newActivity.getProperties().get(CmmnProperties.REPEAT_ON_STANDARD_EVENTS);
-    assertNotNull(events);
-    assertThat(events).hasSize(2);
-    assertTrue(events.contains(CaseExecutionListener.COMPLETE));
-    assertTrue(events.contains(CaseExecutionListener.TERMINATE));
+    assertThat(events)
+            .isNotNull()
+            .hasSize(2)
+            .contains(CaseExecutionListener.COMPLETE)
+            .contains(CaseExecutionListener.TERMINATE);
   }
 
   @Test
@@ -1414,10 +1411,11 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     List<String> events = newActivity.getProperties().get(CmmnProperties.REPEAT_ON_STANDARD_EVENTS);
-    assertNotNull(events);
-    assertThat(events).hasSize(2);
-    assertTrue(events.contains(CaseExecutionListener.COMPLETE));
-    assertTrue(events.contains(CaseExecutionListener.TERMINATE));
+    assertThat(events)
+            .isNotNull()
+            .hasSize(2)
+            .contains(CaseExecutionListener.COMPLETE)
+            .contains(CaseExecutionListener.TERMINATE);
   }
 
   @Test
@@ -1437,9 +1435,10 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     List<String> events = newActivity.getProperties().get(CmmnProperties.REPEAT_ON_STANDARD_EVENTS);
-    assertNotNull(events);
-    assertThat(events).hasSize(1);
-    assertTrue(events.contains(CaseExecutionListener.DISABLE));
+    assertThat(events)
+            .isNotNull()
+            .hasSize(1)
+            .contains(CaseExecutionListener.DISABLE);
   }
 
   @Test
@@ -1459,9 +1458,10 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     List<String> events = newActivity.getProperties().get(CmmnProperties.REPEAT_ON_STANDARD_EVENTS);
-    assertNotNull(events);
-    assertThat(events).hasSize(1);
-    assertTrue(events.contains(CaseExecutionListener.DISABLE));
+    assertThat(events)
+            .isNotNull()
+            .hasSize(1)
+            .contains(CaseExecutionListener.DISABLE);
   }
 
 }

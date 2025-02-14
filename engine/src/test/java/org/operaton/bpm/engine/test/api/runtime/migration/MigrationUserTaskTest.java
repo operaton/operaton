@@ -49,6 +49,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
@@ -184,7 +185,7 @@ public class MigrationUserTaskTest {
     // when
     try {
       testHelper.createProcessInstanceAndMigrate(migrationPlan);
-      Assert.fail("should not succeed because the userTask2 instance is not mapped");
+      fail("should not succeed because the userTask2 instance is not mapped");
     } catch (MigratingProcessInstanceValidationException e) {
       assertThat(e.getValidationReport())
         .hasActivityInstanceFailures("userTask2", "There is no migration instruction for this instance's activity");
@@ -212,7 +213,7 @@ public class MigrationUserTaskTest {
     // when
     try {
       testHelper.createProcessInstanceAndMigrate(migrationPlan);
-      Assert.fail("should not succeed because the userTask2 instance is not mapped");
+      fail("should not succeed because the userTask2 instance is not mapped");
     } catch (MigratingProcessInstanceValidationException e) {
       assertThat(e.getValidationReport())
         .hasTransitionInstanceFailures("userTask2", "There is no migration instruction for this instance's activity");
@@ -250,7 +251,7 @@ public class MigrationUserTaskTest {
         .done());
 
     Task migratedTask = testHelper.snapshotAfterMigration.getTaskForKey("userTask2");
-    Assert.assertNotNull(migratedTask);
+    assertThat(migratedTask).isNotNull();
     assertThat(migratedTask.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());
     assertThat(migratedTask.getTaskDefinitionKey()).isEqualTo("userTask2");
 
@@ -281,9 +282,9 @@ public class MigrationUserTaskTest {
 
     // then the sub task properties have not been updated (i.e. subtask should not reference the process instance/definition now)
     Task subTaskAfterMigration = rule.getTaskService().createTaskQuery().taskId(subTask.getId()).singleResult();
-    Assert.assertNull(subTaskAfterMigration.getProcessDefinitionId());
-    Assert.assertNull(subTaskAfterMigration.getProcessInstanceId());
-    Assert.assertNull(subTaskAfterMigration.getTaskDefinitionKey());
+    assertThat(subTaskAfterMigration.getProcessDefinitionId()).isNull();
+    assertThat(subTaskAfterMigration.getProcessInstanceId()).isNull();
+    assertThat(subTaskAfterMigration.getTaskDefinitionKey()).isNull();
 
     // the tasks can be completed and the process can be ended
     rule.getTaskService().complete(subTask.getId());

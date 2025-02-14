@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.jobexecutor;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -56,8 +55,8 @@ public class JobExecutorAcquireJobsDefaultTest extends AbstractJobExecutorAcquir
 
   @Test
   public void testProcessEngineConfiguration() {
-    assertFalse(configuration.isJobExecutorPreferTimerJobs());
-    assertFalse(configuration.isJobExecutorAcquireByDueDate());
+    assertThat(configuration.isJobExecutorPreferTimerJobs()).isFalse();
+    assertThat(configuration.isJobExecutorAcquireByDueDate()).isFalse();
     assertThat(configuration.isEnsureJobDueDateNotNull()).isEqualTo(ensureJobDueDateSet);
   }
 

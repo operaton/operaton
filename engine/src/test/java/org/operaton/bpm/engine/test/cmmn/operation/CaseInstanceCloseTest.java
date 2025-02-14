@@ -17,9 +17,7 @@
 package org.operaton.bpm.engine.test.cmmn.operation;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -79,7 +77,7 @@ public class CaseInstanceCloseTest {
     // disable task A -> completes case instance
     taskA.disable();
 
-    assertTrue(caseInstance.isCompleted());
+    assertThat(caseInstance.isCompleted()).isTrue();
 
     // when
 
@@ -95,7 +93,7 @@ public class CaseInstanceCloseTest {
 
     assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
 
-    assertTrue(caseInstance.isClosed());
+    assertThat(caseInstance.isClosed()).isTrue();
   }
 
   /**
@@ -130,7 +128,7 @@ public class CaseInstanceCloseTest {
     caseInstance.create();
 
     caseInstance.terminate();
-    assertTrue(caseInstance.isTerminated());
+    assertThat(caseInstance.isTerminated()).isTrue();
 
     // when
 
@@ -146,7 +144,7 @@ public class CaseInstanceCloseTest {
 
     assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
 
-    assertTrue(caseInstance.isClosed());
+    assertThat(caseInstance.isClosed()).isTrue();
   }
 
   /**
@@ -181,7 +179,7 @@ public class CaseInstanceCloseTest {
     caseInstance.create();
 
     caseInstance.suspend();
-    assertTrue(caseInstance.isSuspended());
+    assertThat(caseInstance.isSuspended()).isTrue();
 
     // when
 
@@ -197,9 +195,9 @@ public class CaseInstanceCloseTest {
 
     assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
 
-    assertTrue(caseInstance.isClosed());
+    assertThat(caseInstance.isClosed()).isTrue();
 
-    assertNull(caseInstance.findCaseExecution("A"));
+    assertThat(caseInstance.findCaseExecution("A")).isNull();
   }
 
 
@@ -234,7 +232,7 @@ public class CaseInstanceCloseTest {
     CmmnCaseInstance caseInstance = caseDefinition.createCaseInstance();
     caseInstance.create();
 
-    assertTrue(caseInstance.isActive());
+    assertThat(caseInstance.isActive()).isTrue();
 
     try {
       // when
@@ -244,11 +242,11 @@ public class CaseInstanceCloseTest {
     }
 
     // then
-    assertTrue(stateTransitionCollector.stateTransitions.isEmpty());
+    assertThat(stateTransitionCollector.stateTransitions).isEmpty();
 
-    assertTrue(caseInstance.isActive());
+    assertThat(caseInstance.isActive()).isTrue();
 
-    assertNotNull(caseInstance.findCaseExecution("A"));
+    assertThat(caseInstance.findCaseExecution("A")).isNotNull();
   }
 
   /**
@@ -293,10 +291,10 @@ public class CaseInstanceCloseTest {
     }
 
     // then
-    assertTrue(stateTransitionCollector.stateTransitions.isEmpty());
+    assertThat(stateTransitionCollector.stateTransitions).isEmpty();
 
-    assertTrue(caseInstance.isActive());
-    assertNotNull(caseInstance.findCaseExecution("A"));
+    assertThat(caseInstance.isActive()).isTrue();
+    assertThat(caseInstance.findCaseExecution("A")).isNotNull();
   }
 
   /**
@@ -351,9 +349,9 @@ public class CaseInstanceCloseTest {
     }
 
     // then
-    assertTrue(stateTransitionCollector.stateTransitions.isEmpty());
+    assertThat(stateTransitionCollector.stateTransitions).isEmpty();
 
-    assertTrue(caseInstance.isActive());
-    assertNotNull(caseInstance.findCaseExecution("X"));
+    assertThat(caseInstance.isActive()).isTrue();
+    assertThat(caseInstance.findCaseExecution("X")).isNotNull();
   }
 }

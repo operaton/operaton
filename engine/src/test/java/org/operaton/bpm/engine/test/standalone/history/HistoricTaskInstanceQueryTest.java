@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.test.standalone.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.Calendar;
 import java.util.Collections;
@@ -735,7 +733,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
             .finishedAfter(Calendar.getInstance().getTime()).list();
 
     // then
-    assertThat(list).hasSize(0);
+    assertThat(list).isEmpty();
 
     // cleanup
     taskService.deleteTask("taskOne",true);

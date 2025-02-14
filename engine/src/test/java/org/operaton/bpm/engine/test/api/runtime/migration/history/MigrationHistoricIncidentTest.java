@@ -39,7 +39,6 @@ import org.operaton.bpm.engine.test.api.runtime.migration.MigrationTestRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.AsyncProcessModels;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -103,7 +102,7 @@ public class MigrationHistoricIncidentTest {
 
     // then
     HistoricIncident historicIncident = historyService.createHistoricIncidentQuery().singleResult();
-    Assert.assertNotNull(historicIncident);
+    assertThat(historicIncident).isNotNull();
 
     assertThat(historicIncident.getActivityId()).isEqualTo("newUserTask");
     assertThat(historicIncident.getJobDefinitionId()).isEqualTo(targetJobDefinition.getId());
@@ -141,7 +140,7 @@ public class MigrationHistoricIncidentTest {
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
 
     HistoricIncident historicIncident = historyService.createHistoricIncidentQuery().singleResult();
-    Assert.assertNotNull(historicIncident);
+    assertThat(historicIncident).isNotNull();
     assertThat(historicIncident.getExecutionId()).isEqualTo(activityInstance.getTransitionInstances("userTask")[0].getExecutionId());
   }
 }

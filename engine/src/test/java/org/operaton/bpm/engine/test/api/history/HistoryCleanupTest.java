@@ -65,10 +65,6 @@ import org.junit.rules.RuleChain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 /**
  * @author Svetlana Dorokhova
  */
@@ -231,7 +227,7 @@ public class HistoryCleanupTest {
         if (historicProcessInstance.getEndTime() != null) {
           Calendar calendar = Calendar.getInstance();
           calendar.setTime(historicProcessInstance.getEndTime());
-          assertTrue(minuteFrom > calendar.get(Calendar.MINUTE) || calendar.get(Calendar.MINUTE) > minuteTo);
+          assertThat(minuteFrom > calendar.get(Calendar.MINUTE) || calendar.get(Calendar.MINUTE) > minuteTo).isTrue();
         }
       }
 
@@ -240,7 +236,7 @@ public class HistoryCleanupTest {
         if (historicDecisionInstance.getEvaluationTime() != null) {
           Calendar calendar = Calendar.getInstance();
           calendar.setTime(historicDecisionInstance.getEvaluationTime());
-          assertTrue(minuteFrom > calendar.get(Calendar.MINUTE) || calendar.get(Calendar.MINUTE) > minuteTo);
+          assertThat(minuteFrom > calendar.get(Calendar.MINUTE) || calendar.get(Calendar.MINUTE) > minuteTo).isTrue();
         }
       }
 
@@ -249,7 +245,7 @@ public class HistoryCleanupTest {
         if (historicCaseInstance.getCloseTime() != null) {
           Calendar calendar = Calendar.getInstance();
           calendar.setTime(historicCaseInstance.getCloseTime());
-          assertTrue(minuteFrom > calendar.get(Calendar.MINUTE) || calendar.get(Calendar.MINUTE) > minuteTo);
+          assertThat(minuteFrom > calendar.get(Calendar.MINUTE) || calendar.get(Calendar.MINUTE) > minuteTo).isTrue();
         }
       }
 
@@ -290,9 +286,9 @@ public class HistoryCleanupTest {
     final long removedDecisionInstances = managementService.createMetricsQuery().name(Metrics.HISTORY_CLEANUP_REMOVED_DECISION_INSTANCES).sum();
     final long removedCaseInstances = managementService.createMetricsQuery().name(Metrics.HISTORY_CLEANUP_REMOVED_CASE_INSTANCES).sum();
 
-    assertTrue(removedProcessInstances > 0);
-    assertTrue(removedDecisionInstances > 0);
-    assertTrue(removedCaseInstances > 0);
+    assertThat(removedProcessInstances > 0).isTrue();
+    assertThat(removedDecisionInstances > 0).isTrue();
+    assertThat(removedCaseInstances > 0).isTrue();
 
     assertThat(removedProcessInstances + removedCaseInstances + removedDecisionInstances).isEqualTo(15);
   }
@@ -600,9 +596,9 @@ public class HistoryCleanupTest {
     //force creation of job
     historyService.cleanUpHistoryAsync(true);
     List<Job> historyCleanupJobs = historyService.findHistoryCleanupJobs();
-    assertFalse(historyCleanupJobs.isEmpty());
+    assertThat(historyCleanupJobs).isNotEmpty();
     for (Job job : historyCleanupJobs) {
-      assertNotNull(job.getDuedate());
+      assertThat(job.getDuedate()).isNotNull();
     }
 
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime(null);
@@ -617,8 +613,8 @@ public class HistoryCleanupTest {
     //then
     historyCleanupJobs = historyService.findHistoryCleanupJobs();
     for (Job job : historyCleanupJobs) {
-      assertTrue(job.isSuspended());
-      assertNull(job.getDuedate());
+      assertThat(job.isSuspended()).isTrue();
+      assertThat(job.getDuedate()).isNull();
     }
 
   }
@@ -681,7 +677,7 @@ public class HistoryCleanupTest {
     assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(0);
 
     for (Job job : historyService.findHistoryCleanupJobs()) {
-      assertTrue(job.isSuspended());
+      assertThat(job.isSuspended()).isTrue();
     }
   }
 
@@ -765,9 +761,9 @@ public class HistoryCleanupTest {
 
       //job rescheduled till current time + delay
       Date nextRun = getNextRunWithDelay(ClockUtil.getCurrentTime(), 0);
-      assertTrue(jobEntity.getDuedate().equals(nextRun) || jobEntity.getDuedate().after(nextRun));
+      assertThat(jobEntity.getDuedate().equals(nextRun) || jobEntity.getDuedate().after(nextRun)).isTrue();
       Date nextRunMax = DateUtils.addSeconds(ClockUtil.getCurrentTime(), HistoryCleanupJobHandlerConfiguration.MAX_DELAY);
-      assertTrue(jobEntity.getDuedate().before(nextRunMax));
+      assertThat(jobEntity.getDuedate().before(nextRunMax)).isTrue();
 
       //countEmptyRuns incremented
       assertThat(configuration.getCountEmptyRuns()).isEqualTo(1);
@@ -816,9 +812,9 @@ public class HistoryCleanupTest {
 
       //job rescheduled till current time + (2 power count)*delay
       Date nextRun = getNextRunWithDelay(ClockUtil.getCurrentTime(), HISTORY_TIME_TO_LIVE);
-      assertTrue(jobEntity.getDuedate().equals(nextRun) || jobEntity.getDuedate().after(nextRun));
+      assertThat(jobEntity.getDuedate().equals(nextRun) || jobEntity.getDuedate().after(nextRun)).isTrue();
       Date nextRunMax = DateUtils.addSeconds(ClockUtil.getCurrentTime(), HistoryCleanupJobHandlerConfiguration.MAX_DELAY);
-      assertTrue(jobEntity.getDuedate().before(nextRunMax));
+      assertThat(jobEntity.getDuedate().before(nextRunMax)).isTrue();
 
       //countEmptyRuns incremented
       assertThat(configuration.getCountEmptyRuns()).isEqualTo(6);
@@ -857,8 +853,8 @@ public class HistoryCleanupTest {
 
       //job rescheduled till current time + max delay
       Date nextRun = getNextRunWithDelay(ClockUtil.getCurrentTime(), 10);
-      assertTrue(jobEntity.getDuedate().equals(nextRun) || jobEntity.getDuedate().after(nextRun));
-      assertTrue(jobEntity.getDuedate().before(getNextRunWithinBatchWindow(now)));
+      assertThat(jobEntity.getDuedate().equals(nextRun) || jobEntity.getDuedate().after(nextRun)).isTrue();
+      assertThat(jobEntity.getDuedate().before(getNextRunWithinBatchWindow(now))).isTrue();
 
       //countEmptyRuns incremented
       assertThat(configuration.getCountEmptyRuns()).isEqualTo(11);
@@ -965,7 +961,7 @@ public class HistoryCleanupTest {
     //job rescheduled till next batch window start
     Date nextRun = getNextRunWithinBatchWindow(ClockUtil.getCurrentTime());
     assertThat(nextRun).isEqualTo(jobEntity.getDuedate());
-    assertTrue(nextRun.after(ClockUtil.getCurrentTime()));
+    assertThat(nextRun.after(ClockUtil.getCurrentTime())).isTrue();
 
     //countEmptyRuns canceled
     assertThat(configuration.getCountEmptyRuns()).isEqualTo(0);
@@ -997,7 +993,7 @@ public class HistoryCleanupTest {
     //job rescheduled till next batch window start
     Date nextRun = getNextRunWithinBatchWindow(ClockUtil.getCurrentTime());
     assertThat(nextRun).isEqualTo(jobEntity.getDuedate());
-    assertTrue(nextRun.after(ClockUtil.getCurrentTime()));
+    assertThat(nextRun.after(ClockUtil.getCurrentTime())).isTrue();
 
     //countEmptyRuns cancelled
     assertThat(configuration.getCountEmptyRuns()).isEqualTo(0);
@@ -1029,9 +1025,9 @@ public class HistoryCleanupTest {
 
       //job rescheduled till current time + delay
       Date nextRun = getNextRunWithDelay(ClockUtil.getCurrentTime(), 0);
-      assertTrue(jobEntity.getDuedate().equals(nextRun) || jobEntity.getDuedate().after(nextRun));
+      assertThat(jobEntity.getDuedate().equals(nextRun) || jobEntity.getDuedate().after(nextRun)).isTrue();
       Date nextRunMax = DateUtils.addSeconds(ClockUtil.getCurrentTime(), HistoryCleanupJobHandlerConfiguration.MAX_DELAY);
-      assertTrue(jobEntity.getDuedate().before(nextRunMax));
+      assertThat(jobEntity.getDuedate().before(nextRunMax)).isTrue();
 
       //countEmptyRuns incremented
       assertThat(configuration.getCountEmptyRuns()).isEqualTo(1);
@@ -1064,9 +1060,9 @@ public class HistoryCleanupTest {
 
       //job rescheduled till current time + delay
       Date nextRun = getNextRunWithDelay(ClockUtil.getCurrentTime(), 0);
-      assertTrue(jobEntity.getDuedate().equals(nextRun) || jobEntity.getDuedate().after(nextRun));
+      assertThat(jobEntity.getDuedate().equals(nextRun) || jobEntity.getDuedate().after(nextRun)).isTrue();
       Date nextRunMax = DateUtils.addSeconds(ClockUtil.getCurrentTime(), HistoryCleanupJobHandlerConfiguration.MAX_DELAY);
-      assertTrue(jobEntity.getDuedate().before(nextRunMax));
+      assertThat(jobEntity.getDuedate().before(nextRunMax)).isTrue();
 
       //countEmptyRuns incremented
       assertThat(configuration.getCountEmptyRuns()).isEqualTo(1);
@@ -1111,7 +1107,7 @@ public class HistoryCleanupTest {
     Date nextRun = getNextRunWithinBatchWindow(ClockUtil.getCurrentTime());
 
     assertThat(nextRun).isEqualTo(jobEntity.getDuedate());
-    assertTrue(nextRun.after(ClockUtil.getCurrentTime()));
+    assertThat(nextRun.after(ClockUtil.getCurrentTime())).isTrue();
 
     //countEmptyRuns canceled
     assertThat(configuration.getCountEmptyRuns()).isEqualTo(0);
@@ -1143,9 +1139,9 @@ public class HistoryCleanupTest {
 
       //job rescheduled till current time + delay
       Date nextRun = getNextRunWithDelay(ClockUtil.getCurrentTime(), 0);
-      assertTrue(jobEntity.getDuedate().equals(nextRun) || jobEntity.getDuedate().after(nextRun));
+      assertThat(jobEntity.getDuedate().equals(nextRun) || jobEntity.getDuedate().after(nextRun)).isTrue();
       Date nextRunMax = DateUtils.addSeconds(ClockUtil.getCurrentTime(), HistoryCleanupJobHandlerConfiguration.MAX_DELAY);
-      assertTrue(jobEntity.getDuedate().before(nextRunMax));
+      assertThat(jobEntity.getDuedate().before(nextRunMax)).isTrue();
 
       //countEmptyRuns incremented
       assertThat(configuration.getCountEmptyRuns()).isEqualTo(1);
@@ -1214,10 +1210,10 @@ public class HistoryCleanupTest {
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
     Date date = dateFormat.parse("2017-09-06T22:15:00+0100");
 
-    assertTrue(HistoryCleanupHelper.isWithinBatchWindow(date, processEngineConfiguration));
+    assertThat(HistoryCleanupHelper.isWithinBatchWindow(date, processEngineConfiguration)).isTrue();
 
     date = dateFormat.parse("2017-09-06T22:15:00+0200");
-    assertFalse(HistoryCleanupHelper.isWithinBatchWindow(date, processEngineConfiguration));
+    assertThat(HistoryCleanupHelper.isWithinBatchWindow(date, processEngineConfiguration)).isFalse();
   }
 
   @Test
@@ -1475,7 +1471,7 @@ public class HistoryCleanupTest {
     long count = historyService.createHistoricProcessInstanceQuery().count()
       + historyService.createHistoricDecisionInstanceQuery().count()
       + historyService.createHistoricCaseInstanceQuery().count();
-    assertTrue(expectedInstanceCount <= count);
+    assertThat(expectedInstanceCount <= count).isTrue();
   }
 
   protected static Date addDays(Date date, int days) {

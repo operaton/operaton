@@ -43,15 +43,17 @@ import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnM
 
 import java.util.*;
 
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 @RunWith(Parameterized.class)
@@ -270,30 +272,30 @@ public class BatchMigrationTest {
 
     // then there exists a seed job definition with the batch id as configuration
     JobDefinition seedJobDefinition = helper.getSeedJobDefinition(batch);
-    assertNotNull(seedJobDefinition);
+    assertThat(seedJobDefinition).isNotNull();
     assertThat(seedJobDefinition.getJobConfiguration()).isEqualTo(batch.getId());
     assertThat(seedJobDefinition.getJobType()).isEqualTo(BatchSeedJobHandler.TYPE);
     assertThat(seedJobDefinition.getDeploymentId()).isEqualTo(helper.sourceProcessDefinition.getDeploymentId());
 
     // and there exists a migration job definition
     JobDefinition migrationJobDefinition = helper.getExecutionJobDefinition(batch);
-    assertNotNull(migrationJobDefinition);
+    assertThat(migrationJobDefinition).isNotNull();
     assertThat(migrationJobDefinition.getJobType()).isEqualTo(Batch.TYPE_PROCESS_INSTANCE_MIGRATION);
 
     // and a seed job with no relation to a process or execution etc.
     Job seedJob = helper.getSeedJob(batch);
-    assertNotNull(seedJob);
+    assertThat(seedJob).isNotNull();
     assertThat(seedJob.getJobDefinitionId()).isEqualTo(seedJobDefinition.getId());
     assertThat(seedJob.getDuedate()).isEqualTo(currentTime);
     assertThat(seedJob.getDeploymentId()).isEqualTo(seedJobDefinition.getDeploymentId());
-    assertNull(seedJob.getProcessDefinitionId());
-    assertNull(seedJob.getProcessDefinitionKey());
-    assertNull(seedJob.getProcessInstanceId());
-    assertNull(seedJob.getExecutionId());
+    assertThat(seedJob.getProcessDefinitionId()).isNull();
+    assertThat(seedJob.getProcessDefinitionKey()).isNull();
+    assertThat(seedJob.getProcessInstanceId()).isNull();
+    assertThat(seedJob.getExecutionId()).isNull();
 
     // but no migration jobs where created
     List<Job> migrationJobs = helper.getExecutionJobs(batch);
-    assertThat(migrationJobs).hasSize(0);
+    assertThat(migrationJobs).isEmpty();
   }
 
   @Test
@@ -319,15 +321,15 @@ public class BatchMigrationTest {
       assertThat(migrationJob.getJobDefinitionId()).isEqualTo(migrationJobDefinition.getId());
       assertThat(migrationJob.getDuedate()).isEqualTo(currentTime);
       assertThat(migrationJob.getDeploymentId()).isEqualTo(sourceDeploymentId);
-      assertNull(migrationJob.getProcessDefinitionId());
-      assertNull(migrationJob.getProcessDefinitionKey());
-      assertNull(migrationJob.getProcessInstanceId());
-      assertNull(migrationJob.getExecutionId());
+      assertThat(migrationJob.getProcessDefinitionId()).isNull();
+      assertThat(migrationJob.getProcessDefinitionKey()).isNull();
+      assertThat(migrationJob.getProcessInstanceId()).isNull();
+      assertThat(migrationJob.getExecutionId()).isNull();
     }
 
     // and the seed job still exists
     Job seedJob = helper.getJobForDefinition(seedJobDefinition);
-    assertNotNull(seedJob);
+    assertThat(seedJob).isNotNull();
   }
 
   @Test
@@ -339,17 +341,17 @@ public class BatchMigrationTest {
 
     // then the seed job definition still exists but the seed job is removed
     JobDefinition seedJobDefinition = helper.getSeedJobDefinition(batch);
-    assertNotNull(seedJobDefinition);
+    assertThat(seedJobDefinition).isNotNull();
 
     Job seedJob = helper.getSeedJob(batch);
-    assertNull(seedJob);
+    assertThat(seedJob).isNull();
 
     // and a monitor job definition and job exists
     JobDefinition monitorJobDefinition = helper.getMonitorJobDefinition(batch);
-    assertNotNull(monitorJobDefinition);
+    assertThat(monitorJobDefinition).isNotNull();
 
     Job monitorJob = helper.getMonitorJob(batch);
-    assertNotNull(monitorJob);
+    assertThat(monitorJob).isNotNull();
   }
 
   @Test
@@ -368,10 +370,10 @@ public class BatchMigrationTest {
     assertThat(helper.countTargetProcessInstances()).isEqualTo(10);
 
     // and the no migration jobs exist
-    assertThat(helper.getExecutionJobs(batch)).hasSize(0);
+    assertThat(helper.getExecutionJobs(batch)).isEmpty();
 
     // but a monitor job exists
-    assertNotNull(helper.getMonitorJob(batch));
+    assertThat(helper.getMonitorJob(batch)).isNotNull();
   }
 
   @Test
@@ -422,7 +424,7 @@ public class BatchMigrationTest {
     assertThat(helper.getExecutionJobs(batch)).hasSize(2 * batch.getBatchJobsPerSeed() + 4);
 
     // and the seed job is removed
-    assertNull(helper.getSeedJob(batch));
+    assertThat(helper.getSeedJob(batch)).isNull();
   }
 
   @Test
@@ -462,7 +464,7 @@ public class BatchMigrationTest {
     assertThat(helper.getExecutionJobs(batch)).hasSize(4);
 
     // and the seed job is removed
-    assertNull(helper.getSeedJob(batch));
+    assertThat(helper.getSeedJob(batch)).isNull();
   }
 
   @Test
@@ -477,7 +479,7 @@ public class BatchMigrationTest {
 
     // then the monitor job has a no due date set
     Job monitorJob = helper.getMonitorJob(batch);
-    assertNotNull(monitorJob);
+    assertThat(monitorJob).isNotNull();
     assertThat(monitorJob.getDuedate()).isEqualTo(currentTime);
 
     // when the monitor job is executed
@@ -746,7 +748,7 @@ public class BatchMigrationTest {
     helper.executeJobs(batch);
 
     // then
-    assertThat(DelegateEvent.getEvents()).hasSize(0);
+    assertThat(DelegateEvent.getEvents()).isEmpty();
   }
 
   @Test
@@ -776,7 +778,7 @@ public class BatchMigrationTest {
 
     // then
     VariableInstance inputVariable = engineRule.getRuntimeService().createVariableInstanceQuery().singleResult();
-    Assert.assertNotNull(inputVariable);
+    assertThat(inputVariable).isNotNull();
     assertThat(inputVariable.getName()).isEqualTo("foo");
     assertThat(inputVariable.getValue()).isEqualTo("bar");
 
@@ -855,7 +857,7 @@ public class BatchMigrationTest {
 
     ByteArrayEntity byteArrayEntity = engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired()
       .execute(new GetByteArrayCommand(byteArrayId));
-    assertNotNull(byteArrayEntity);
+    assertThat(byteArrayEntity).isNotNull();
 
     // when
     managementService.deleteJob(migrationJob.getId());
@@ -863,7 +865,7 @@ public class BatchMigrationTest {
     // then
     byteArrayEntity = engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired()
       .execute(new GetByteArrayCommand(byteArrayId));
-    assertNull(byteArrayEntity);
+    assertThat(byteArrayEntity).isNull();
   }
 
   @Test
@@ -929,8 +931,8 @@ public class BatchMigrationTest {
   }
 
   protected void assertBatchCreated(Batch batch, int processInstanceCount) {
-    assertNotNull(batch);
-    assertNotNull(batch.getId());
+    assertThat(batch).isNotNull();
+    assertThat(batch.getId()).isNotNull();
     assertThat(batch.getType()).isEqualTo("instance-migration");
     assertThat(batch.getTotalJobs()).isEqualTo(processInstanceCount);
     assertThat(batch.getBatchJobsPerSeed()).isEqualTo(defaultBatchJobsPerSeed);

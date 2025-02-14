@@ -17,9 +17,7 @@
 package org.operaton.bpm.application.impl.deployment;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -153,7 +151,7 @@ public class RedeploymentProcessApplicationTest {
     testProvider.createInstanceByDefinitionKey(definitionKey1);
 
     // then
-    assertTrue(application.isCalled());
+    assertThat(application.isCalled()).isTrue();
 
     deploymentsToCleanup.addAll(Arrays.asList(deployment1, deployment2));
   }
@@ -236,8 +234,8 @@ public class RedeploymentProcessApplicationTest {
     testProvider.createInstanceByDefinitionKey(definitionKey1);
 
     // then
-    assertFalse(application1.isCalled());
-    assertTrue(application2.isCalled());
+    assertThat(application1.isCalled()).isFalse();
+    assertThat(application2.isCalled()).isTrue();
 
     deploymentsToCleanup.addAll(Arrays.asList(deployment1, deployment2, deployment3));
   }
@@ -274,7 +272,7 @@ public class RedeploymentProcessApplicationTest {
     testProvider.createInstanceByDefinitionKey(definitionKey1);
 
     // then
-    assertTrue(application1.isCalled());
+    assertThat(application1.isCalled()).isTrue();
 
     deploymentsToCleanup.addAll(Arrays.asList(deployment1, deployment2, deployment3));
   }
@@ -313,8 +311,8 @@ public class RedeploymentProcessApplicationTest {
     testProvider.createInstanceByDefinitionKey(definitionKey1);
 
     // then
-    assertTrue(application1.isCalled());
-    assertFalse(application2.isCalled());
+    assertThat(application1.isCalled()).isTrue();
+    assertThat(application2.isCalled()).isFalse();
 
     deploymentsToCleanup.addAll(Arrays.asList(deployment1, deployment3));
   }
@@ -353,8 +351,8 @@ public class RedeploymentProcessApplicationTest {
     testProvider.createInstanceByDefinitionKey(definitionKey1);
 
     // then
-    assertTrue(application1.isCalled());
-    assertFalse(application2.isCalled());
+    assertThat(application1.isCalled()).isTrue();
+    assertThat(application2.isCalled()).isFalse();
 
     deploymentsToCleanup.addAll(Arrays.asList(deployment1, deployment2, deployment3));
   }
@@ -394,8 +392,8 @@ public class RedeploymentProcessApplicationTest {
     testProvider.createInstanceByDefinitionKey(definitionKey1);
 
     // then (1)
-    assertTrue(application1.isCalled());
-    assertFalse(application2.isCalled());
+    assertThat(application1.isCalled()).isTrue();
+    assertThat(application2.isCalled()).isFalse();
 
     // reset flag
     application1.setCalled(false);
@@ -404,8 +402,8 @@ public class RedeploymentProcessApplicationTest {
     testProvider.createInstanceByDefinitionKey(definitionKey2);
 
     // then (2)
-    assertFalse(application1.isCalled());
-    assertTrue(application2.isCalled());
+    assertThat(application1.isCalled()).isFalse();
+    assertThat(application2.isCalled()).isTrue();
 
     deploymentsToCleanup.addAll(Arrays.asList(deployment1, deployment2, deployment3));
   }
@@ -445,8 +443,8 @@ public class RedeploymentProcessApplicationTest {
     testProvider.createInstanceByDefinitionKey(definitionKey1);
 
     // then (1)
-    assertFalse(application1.isCalled());
-    assertTrue(application2.isCalled());
+    assertThat(application1.isCalled()).isFalse();
+    assertThat(application2.isCalled()).isTrue();
 
     // reset flag
     application2.setCalled(false);
@@ -455,8 +453,8 @@ public class RedeploymentProcessApplicationTest {
     testProvider.createInstanceByDefinitionKey(definitionKey2);
 
     // then (2)
-    assertTrue(application1.isCalled());
-    assertFalse(application2.isCalled());
+    assertThat(application1.isCalled()).isTrue();
+    assertThat(application2.isCalled()).isFalse();
 
     deploymentsToCleanup.addAll(Arrays.asList(deployment1, deployment2, deployment3));
   }

@@ -18,9 +18,6 @@ package org.operaton.bpm.engine.test.jobexecutor;
 
 import static org.operaton.bpm.engine.test.util.ClockTestUtil.incrementClock;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -42,9 +39,9 @@ public class JobExecutorAcquireJobsByTypeTest extends AbstractJobExecutorAcquire
 
   @Test
   public void testProcessEngineConfiguration() {
-    assertTrue(configuration.isJobExecutorPreferTimerJobs());
-    assertFalse(configuration.isJobExecutorAcquireByDueDate());
-    assertFalse(configuration.isJobExecutorAcquireByPriority());
+    assertThat(configuration.isJobExecutorPreferTimerJobs()).isTrue();
+    assertThat(configuration.isJobExecutorAcquireByDueDate()).isFalse();
+    assertThat(configuration.isJobExecutorAcquireByPriority()).isFalse();
   }
 
   @Test
@@ -55,7 +52,7 @@ public class JobExecutorAcquireJobsByTypeTest extends AbstractJobExecutorAcquire
     runtimeService.startProcessInstanceByKey("simpleAsyncProcess");
 
     Job job = managementService.createJobQuery().singleResult();
-    assertNull(job.getDuedate());
+    assertThat(job.getDuedate()).isNull();
   }
 
   @Test
@@ -91,10 +88,10 @@ public class JobExecutorAcquireJobsByTypeTest extends AbstractJobExecutorAcquire
 
     List<AcquirableJobEntity> acquirableJobs = findAcquirableJobs();
     assertThat(acquirableJobs).hasSize(4);
-    assertTrue(findJobById(acquirableJobs.get(0).getId()) instanceof TimerEntity);
-    assertTrue(findJobById(acquirableJobs.get(1).getId()) instanceof TimerEntity);
-    assertTrue(findJobById(acquirableJobs.get(2).getId()) instanceof MessageEntity);
-    assertTrue(findJobById(acquirableJobs.get(3).getId()) instanceof MessageEntity);
+    assertThat(findJobById(acquirableJobs.get(0).getId()) instanceof TimerEntity).isTrue();
+    assertThat(findJobById(acquirableJobs.get(1).getId()) instanceof TimerEntity).isTrue();
+    assertThat(findJobById(acquirableJobs.get(2).getId()) instanceof MessageEntity).isTrue();
+    assertThat(findJobById(acquirableJobs.get(3).getId()) instanceof MessageEntity).isTrue();
   }
 
   @Override

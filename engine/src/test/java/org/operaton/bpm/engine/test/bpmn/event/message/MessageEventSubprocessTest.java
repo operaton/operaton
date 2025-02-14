@@ -23,8 +23,6 @@ import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutio
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.util.List;
@@ -81,7 +79,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
         .executionId(processInstance.getId())
         .messageEventSubscriptionName("newMessage")
         .singleResult();
-    assertNotNull(execution);
+    assertThat(execution).isNotNull();
     assertThat(createEventSubscriptionQuery().count()).isEqualTo(expectedNumberOfEventSubscriptions);
     assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(1);
 
@@ -146,10 +144,10 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
     runtimeService.correlateMessage("message");
 
     Task taskInMainFlow = taskService.createTaskQuery().taskDefinitionKey("taskInMainFlow").singleResult();
-    assertNotNull(taskInMainFlow);
+    assertThat(taskInMainFlow).isNotNull();
 
     Task taskInEventSubProcess = taskService.createTaskQuery().taskDefinitionKey("taskInEventSubProcess").singleResult();
-    assertNotNull(taskInEventSubProcess);
+    assertThat(taskInEventSubProcess).isNotNull();
 
     taskService.complete(taskInMainFlow.getId());
     taskService.complete(taskInEventSubProcess.getId());
@@ -216,10 +214,10 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
     runtimeService.correlateMessage("message");
 
     Task taskInMainFlow = taskService.createTaskQuery().taskDefinitionKey("taskInMainFlow").singleResult();
-    assertNotNull(taskInMainFlow);
+    assertThat(taskInMainFlow).isNotNull();
 
     Task taskInEventSubProcess = taskService.createTaskQuery().taskDefinitionKey("taskInEventSubProcess").singleResult();
-    assertNotNull(taskInEventSubProcess);
+    assertThat(taskInEventSubProcess).isNotNull();
 
     taskService.complete(taskInMainFlow.getId());
     taskService.complete(taskInEventSubProcess.getId());
@@ -291,7 +289,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
         .executionId(processInstance.getId())
         .messageEventSubscriptionName("newMessage")
         .singleResult();
-    assertNotNull(execution);
+    assertThat(execution).isNotNull();
     assertThat(createEventSubscriptionQuery().count()).isEqualTo(1);
     assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(1);
 
@@ -351,7 +349,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
     Execution execution = runtimeService.createExecutionQuery()
         .messageEventSubscriptionName("newMessage")
         .singleResult();
-    assertNotNull(execution);
+    assertThat(execution).isNotNull();
     assertThat(createEventSubscriptionQuery().count()).isEqualTo(1);
     assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(2);
 
@@ -412,7 +410,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
     Execution execution = runtimeService.createExecutionQuery()
         .messageEventSubscriptionName("newMessage")
         .singleResult();
-    assertNotNull(execution);
+    assertThat(execution).isNotNull();
     assertThat(createEventSubscriptionQuery().count()).isEqualTo(1);
 
     // if we trigger the usertask, the process terminates and the event subscription is removed:
@@ -470,11 +468,11 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
     Execution subProcess = runtimeService.createExecutionQuery()
         .messageEventSubscriptionName("newMessage")
         .singleResult();
-    assertNotNull(subProcess);
+    assertThat(subProcess).isNotNull();
     assertThat(createEventSubscriptionQuery().count()).isEqualTo(1);
 
     Task subProcessTask = taskService.createTaskQuery().taskDefinitionKey("subProcessTask").singleResult();
-    assertNotNull(subProcessTask);
+    assertThat(subProcessTask).isNotNull();
 
     // start event sub process multiple times
     for (int i = 1; i < 3; i++) {
@@ -654,7 +652,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
     Task task1 = taskService.createTaskQuery()
         .taskDefinitionKey("eventSubProcessTask")
         .singleResult();
-    assertNotNull(task1);
+    assertThat(task1).isNotNull();
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
 
@@ -678,12 +676,12 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
     task1 = taskService.createTaskQuery()
         .taskDefinitionKey("eventSubProcessTask")
         .singleResult();
-    assertNotNull(task1);
+    assertThat(task1).isNotNull();
 
     Task task2 = taskService.createTaskQuery()
         .taskDefinitionKey("userTask")
         .singleResult();
-    assertNotNull(task2);
+    assertThat(task2).isNotNull();
 
     executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
 
@@ -719,7 +717,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
 
     // then triggering the async job should be successful
     Job asyncJob = managementService.createJobQuery().singleResult();
-    assertNotNull(asyncJob);
+    assertThat(asyncJob).isNotNull();
     managementService.executeJob(asyncJob.getId());
 
     // and there should be two tasks now that can be completed successfully
@@ -727,8 +725,8 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
     Task processTask = taskService.createTaskQuery().taskDefinitionKey("userTask").singleResult();
     Task eventSubprocessTask = taskService.createTaskQuery().taskDefinitionKey("eventSubProcessTask").singleResult();
 
-    assertNotNull(processTask);
-    assertNotNull(eventSubprocessTask);
+    assertThat(processTask).isNotNull();
+    assertThat(eventSubprocessTask).isNotNull();
 
     taskService.complete(processTask.getId());
     taskService.complete(eventSubprocessTask.getId());
@@ -751,14 +749,14 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
     Task task1 = taskService.createTaskQuery()
         .taskDefinitionKey("eventSubProcessTask")
         .singleResult();
-    assertNotNull(task1);
+    assertThat(task1).isNotNull();
 
     Execution task1Execution = runtimeService
         .createExecutionQuery()
         .activityId("eventSubProcessTask")
         .singleResult();
 
-    assertNotEquals(processInstanceId, ((ExecutionEntity) task1Execution).getParentId());
+    assertThat(((ExecutionEntity) task1Execution).getParentId()).isNotEqualTo(processInstanceId);
 
     // when (2)
     runtimeService.correlateMessage("secondMessage");
@@ -769,26 +767,26 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
     task1 = taskService.createTaskQuery()
         .taskDefinitionKey("eventSubProcessTask")
         .singleResult();
-    assertNotNull(task1);
+    assertThat(task1).isNotNull();
 
     task1Execution = runtimeService
         .createExecutionQuery()
         .activityId("eventSubProcessTask")
         .singleResult();
 
-    assertNotEquals(processInstanceId, ((ExecutionEntity) task1Execution).getParentId());
+    assertThat(((ExecutionEntity) task1Execution).getParentId()).isNotEqualTo(processInstanceId);
 
     Task task2 = taskService.createTaskQuery()
         .taskDefinitionKey("userTask")
         .singleResult();
-    assertNotNull(task2);
+    assertThat(task2).isNotNull();
 
     Execution task2Execution = runtimeService
         .createExecutionQuery()
         .activityId("eventSubProcessTask")
         .singleResult();
 
-    assertNotEquals(processInstanceId, ((ExecutionEntity) task2Execution).getParentId());
+    assertThat(((ExecutionEntity) task2Execution).getParentId()).isNotEqualTo(processInstanceId);
 
     // both have the same parent (but it is not the process instance)
     assertThat(((ExecutionEntity) task2Execution).getParentId()).isEqualTo(((ExecutionEntity) task1Execution).getParentId());
@@ -815,26 +813,26 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
     Task task1 = taskService.createTaskQuery()
         .taskDefinitionKey("eventSubProcessTask")
         .singleResult();
-    assertNotNull(task1);
+    assertThat(task1).isNotNull();
 
     Execution task1Execution = runtimeService
         .createExecutionQuery()
         .activityId("eventSubProcessTask")
         .singleResult();
 
-    assertNotEquals(processInstanceId, ((ExecutionEntity) task1Execution).getParentId());
+    assertThat(((ExecutionEntity) task1Execution).getParentId()).isNotEqualTo(processInstanceId);
 
     Task task2 = taskService.createTaskQuery()
         .taskDefinitionKey("task")
         .singleResult();
-    assertNotNull(task2);
+    assertThat(task2).isNotNull();
 
     Execution task2Execution = runtimeService
         .createExecutionQuery()
         .activityId("eventSubProcessTask")
         .singleResult();
 
-    assertNotEquals(processInstanceId, ((ExecutionEntity) task2Execution).getParentId());
+    assertThat(((ExecutionEntity) task2Execution).getParentId()).isNotEqualTo(processInstanceId);
 
     // both have the same parent (but it is not the process instance)
     assertThat(((ExecutionEntity) task2Execution).getParentId()).isEqualTo(((ExecutionEntity) task1Execution).getParentId());
@@ -861,7 +859,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
     Task task1 = taskService.createTaskQuery()
         .taskDefinitionKey("eventSubProcessTask")
         .singleResult();
-    assertNotNull(task1);
+    assertThat(task1).isNotNull();
 
     // when (2)
     runtimeService.correlateMessage("secondMessage");
@@ -872,12 +870,12 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
     task1 = taskService.createTaskQuery()
         .taskDefinitionKey("eventSubProcessTask")
         .singleResult();
-    assertNotNull(task1);
+    assertThat(task1).isNotNull();
 
     Task task2 = taskService.createTaskQuery()
         .taskDefinitionKey("userTask")
         .singleResult();
-    assertNotNull(task2);
+    assertThat(task2).isNotNull();
 
     assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
 

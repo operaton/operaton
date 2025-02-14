@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.concurrency;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assumptions.assumeThat;
-import static org.junit.Assert.assertNull;
 
 import java.sql.Connection;
 
@@ -71,9 +70,9 @@ public class ConcurrentInstallationIdInitializationTest extends ConcurrencyTestC
     thread2.waitForSync();
     thread2.waitUntilDone();
 
-    assertNull(thread1.getException());
+    assertThat(thread1.getException()).isNull();
     Throwable thread2Exception = thread2.getException();
-    assertNull(thread2Exception);
+    assertThat(thread2Exception).isNull();
 
     String id = processEngineConfiguration.getInstallationId();
     assertThat(id)

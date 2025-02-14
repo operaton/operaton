@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
@@ -71,7 +70,7 @@ public class ProcessDefinitionCandidateTest {
     assertThat(links).hasSize(1);
 
     IdentityLink link = links.get(0);
-    assertNotNull(link.getTenantId());
+    assertThat(link.getTenantId()).isNotNull();
     assertThat(link.getTenantId()).isEqualTo(TENANT_ONE);
   }
 
@@ -89,7 +88,7 @@ public class ProcessDefinitionCandidateTest {
     assertThat(links).hasSize(3);
 
     for (IdentityLink link : links) {
-      assertNotNull(link.getTenantId());
+      assertThat(link.getTenantId()).isNotNull();
       assertThat(link.getTenantId()).isEqualTo(TENANT_ONE);
     }
   }
@@ -108,7 +107,7 @@ public class ProcessDefinitionCandidateTest {
     assertThat(links).hasSize(1);
 
     IdentityLink link = links.get(0);
-    assertNotNull(link.getTenantId());
+    assertThat(link.getTenantId()).isNotNull();
     assertThat(link.getTenantId()).isEqualTo(TENANT_ONE);
   }
 
@@ -126,7 +125,7 @@ public class ProcessDefinitionCandidateTest {
     assertThat(links).hasSize(3);
 
     for (IdentityLink link : links) {
-      assertNotNull(link.getTenantId());
+      assertThat(link.getTenantId()).isNotNull();
       assertThat(link.getTenantId()).isEqualTo(TENANT_ONE);
     }
   }

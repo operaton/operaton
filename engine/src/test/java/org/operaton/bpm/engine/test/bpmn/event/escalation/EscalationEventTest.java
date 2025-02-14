@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.event.escalation;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -250,7 +249,7 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
     // when throw an escalation event on called process
 
     Task taskInSuperProcess = taskService.createTaskQuery().taskDefinitionKey("taskAfterCatchedEscalation").singleResult();
-    assertNotNull(taskInSuperProcess);
+    assertThat(taskInSuperProcess).isNotNull();
 
     // (1) the variables has been passed for the first time (from sub process to super process)
     assertThat(runtimeService.getVariable(processInstanceId, "output")).isEqualTo(42);
@@ -301,7 +300,7 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
 
     // the boundary event should catch the escalation event
     Task task = taskService.createTaskQuery().taskName("task after catched escalation").singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // and set the escalationCode of the escalation event to the declared variable
     assertThat(runtimeService.getVariable(task.getExecutionId(), "escalationCodeVar")).isEqualTo("escalationCode");
@@ -315,7 +314,7 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
 
     // the boundary event without escalationCode should catch the escalation event
     Task task = taskService.createTaskQuery().taskName("task after catched escalation").singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // and set the escalationCode of the escalation event to the declared variable
     assertThat(runtimeService.getVariable(task.getExecutionId(), "escalationCodeVar")).isEqualTo("escalationCode");
@@ -329,7 +328,7 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
 
     // the event subprocess without escalationCode should catch the escalation event
     Task task = taskService.createTaskQuery().taskDefinitionKey("taskAfterCatchedEscalation").singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // and set the escalationCode of the escalation event to the declared variable
     assertThat(runtimeService.getVariable(task.getExecutionId(), "escalationCodeVar")).isEqualTo("escalationCode");
@@ -343,7 +342,7 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
 
     // the event subprocess without escalationCode should catch the escalation event
     Task task = taskService.createTaskQuery().taskDefinitionKey("taskAfterCatchedEscalation").singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // and set the escalationCode of the escalation event to the declared variable
     assertThat(runtimeService.getVariable(task.getExecutionId(), "escalationCodeVar")).isEqualTo("escalationCode");
@@ -356,7 +355,7 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
 
     // the event subprocess without escalationCode should catch the escalation event
     Task task = taskService.createTaskQuery().taskDefinitionKey("taskAfterCatchedEscalation").singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // and set the escalationCode of the escalation event to the declared variable
     assertThat(runtimeService.getVariable(task.getExecutionId(), "escalationCodeVar")).isEqualTo("escalationCode");
@@ -370,7 +369,7 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
 
     // the event subprocess without escalationCode should catch the escalation event
     Task task = taskService.createTaskQuery().taskDefinitionKey("taskAfterCatchedEscalation").singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // and set the escalationCode of the escalation event to the declared variable
     assertThat(runtimeService.getVariable(task.getExecutionId(), "escalationCodeVar")).isEqualTo("escalationCode");
@@ -481,7 +480,7 @@ public class EscalationEventTest extends PluggableProcessEngineTest {
   protected void checkOutput(String processInstanceId) {
     assertThat(taskService.createTaskQuery().taskName("task after catched escalation").count()).isEqualTo(1);
     // and set the output variable of the called process to the process
-    assertNotNull(runtimeService.getVariable(processInstanceId, "cancelReason"));
+    assertThat(runtimeService.getVariable(processInstanceId, "cancelReason")).isNotNull();
     assertThat(runtimeService.getVariable(processInstanceId, "output")).isEqualTo(42);
   }
 }

@@ -17,9 +17,7 @@
 package org.operaton.bpm.engine.test.standalone.el;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
@@ -66,8 +64,8 @@ public class ExpressionBeanAccessTest {
       runtimeService.signal(processInstanceId);
       fail("Exception expected");
     } catch(ProcessEngineException ae) {
-      assertNotNull(ae.getCause());
-      assertTrue(ae.getCause() instanceof PropertyNotFoundException);
+      assertThat(ae.getCause()).isNotNull();
+      assertThat(ae.getCause() instanceof PropertyNotFoundException).isTrue();
     }
   }
 }

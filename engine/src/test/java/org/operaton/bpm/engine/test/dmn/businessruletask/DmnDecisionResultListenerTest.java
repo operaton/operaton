@@ -17,10 +17,6 @@
 package org.operaton.bpm.engine.test.dmn.businessruletask;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.Collections;
 
@@ -55,7 +51,7 @@ public class DmnDecisionResultListenerTest extends PluggableProcessEngineTest {
   public void testNoOutput() {
     startTestProcess("no output");
 
-    assertTrue("The decision result 'ruleResult' should be empty", results.isEmpty());
+    assertThat(results.isEmpty()).as("The decision result 'ruleResult' should be empty").isTrue();
   }
 
   @Deployment(resources = { TEST_PROCESS, TEST_DECISION})
@@ -63,10 +59,10 @@ public class DmnDecisionResultListenerTest extends PluggableProcessEngineTest {
   public void testEmptyOutput() {
     startTestProcess("empty output");
 
-    assertFalse("The decision result 'ruleResult' should not be empty", results.isEmpty());
+    assertThat(results.isEmpty()).as("The decision result 'ruleResult' should not be empty").isFalse();
 
     DmnDecisionResultEntries decisionOutput = results.get(0);
-    assertNull(decisionOutput.getFirstEntry());
+    assertThat(decisionOutput.getFirstEntry()).isNull();
   }
 
   @Deployment(resources = { TEST_PROCESS, TEST_DECISION})
@@ -77,7 +73,7 @@ public class DmnDecisionResultListenerTest extends PluggableProcessEngineTest {
     assertThat(results).hasSize(2);
 
     for (DmnDecisionResultEntries output : results) {
-      assertTrue("The decision output should be empty", output.isEmpty());
+      assertThat(output.isEmpty()).as("The decision output should be empty").isTrue();
     }
   }
 
@@ -97,8 +93,9 @@ public class DmnDecisionResultListenerTest extends PluggableProcessEngineTest {
     startTestProcess("multiple entries");
 
     DmnDecisionResultEntries firstOutput = results.get(0);
-    assertThat(firstOutput).containsEntry("result1", "foo");
-    assertThat(firstOutput).containsEntry("result2", "bar");
+    assertThat(firstOutput)
+            .containsEntry("result1", "foo")
+            .containsEntry("result2", "bar");
 
     assertThat(firstOutput.<StringValue>getEntryTyped("result1")).isEqualTo(Variables.stringValue("foo"));
     assertThat(firstOutput.<StringValue>getEntryTyped("result2")).isEqualTo(Variables.stringValue("bar"));
@@ -125,9 +122,10 @@ public class DmnDecisionResultListenerTest extends PluggableProcessEngineTest {
     assertThat(results).hasSize(2);
 
     for (DmnDecisionResultEntries output : results) {
-      assertThat(output).hasSize(2);
-      assertThat(output).containsEntry("result1", "foo");
-      assertThat(output).containsEntry("result2", "bar");
+      assertThat(output)
+              .hasSize(2)
+              .containsEntry("result1", "foo")
+              .containsEntry("result2", "bar");
 
       assertThat(output.<StringValue>getEntryTyped("result1")).isEqualTo(Variables.stringValue("foo"));
       assertThat(output.<StringValue>getEntryTyped("result2")).isEqualTo(Variables.stringValue("bar"));
@@ -151,7 +149,7 @@ public class DmnDecisionResultListenerTest extends PluggableProcessEngineTest {
   public void testCollectSumHitPolicyNoOutput() {
     startTestProcess("no output");
 
-    assertTrue("The decision result 'ruleResult' should be empty", results.isEmpty());
+    assertThat(results.isEmpty()).as("The decision result 'ruleResult' should be empty").isTrue();
   }
 
   @Deployment(resources = { TEST_PROCESS, TEST_DECISION_COLLECT_SUM })
@@ -183,7 +181,7 @@ public class DmnDecisionResultListenerTest extends PluggableProcessEngineTest {
 
     // get the result from an execution listener that is invoked at the end of the business rule activity
     results = DecisionResultTestListener.getDecisionResult();
-    assertNotNull(results);
+    assertThat(results).isNotNull();
 
     return processInstance;
   }

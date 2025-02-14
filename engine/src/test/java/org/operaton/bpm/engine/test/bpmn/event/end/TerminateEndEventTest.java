@@ -17,9 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.event.end;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -138,11 +135,11 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
 
     // then the outer task still exists
     Task outerTask = taskService.createTaskQuery().singleResult();
-    assertNotNull(outerTask);
+    assertThat(outerTask).isNotNull();
     assertThat(outerTask.getTaskDefinitionKey()).isEqualTo("outerTask");
 
     // and the process end listener was not invoked
-    assertTrue(RecorderExecutionListener.getRecordedEvents().isEmpty());
+    assertThat(RecorderExecutionListener.getRecordedEvents()).isEmpty();
 
   }
 
@@ -159,11 +156,11 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
 
     // then the outer task still exists
     Task outerTask = taskService.createTaskQuery().singleResult();
-    assertNotNull(outerTask);
+    assertThat(outerTask).isNotNull();
     assertThat(outerTask.getTaskDefinitionKey()).isEqualTo("outerTask");
 
     // and the process end listener was not invoked
-    assertTrue(RecorderExecutionListener.getRecordedEvents().isEmpty());
+    assertThat(RecorderExecutionListener.getRecordedEvents()).isEmpty();
 
   }
 
@@ -182,10 +179,10 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
     if (processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
       HistoricProcessInstance hpi = historyService.createHistoricProcessInstanceQuery().singleResult();
 
-      assertNotNull(hpi);
-      assertNull(hpi.getEndTime());
-      assertNull(hpi.getDurationInMillis());
-      assertNull(hpi.getDeleteReason());
+      assertThat(hpi).isNotNull();
+      assertThat(hpi.getEndTime()).isNull();
+      assertThat(hpi.getDurationInMillis()).isNull();
+      assertThat(hpi.getDeleteReason()).isNull();
     }
   }
 
@@ -218,10 +215,10 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
     if (processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
       HistoricProcessInstance hpi = historyService.createHistoricProcessInstanceQuery().singleResult();
 
-      assertNotNull(hpi);
-      assertNull(hpi.getEndTime());
-      assertNull(hpi.getDurationInMillis());
-      assertNull(hpi.getDeleteReason());
+      assertThat(hpi).isNotNull();
+      assertThat(hpi.getEndTime()).isNull();
+      assertThat(hpi.getDurationInMillis()).isNull();
+      assertThat(hpi.getDeleteReason()).isNull();
     }
   }
 

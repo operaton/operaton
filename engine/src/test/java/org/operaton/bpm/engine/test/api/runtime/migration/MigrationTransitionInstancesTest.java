@@ -17,11 +17,11 @@
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 import static org.operaton.bpm.engine.test.util.MigratingProcessInstanceValidationReportAssert.assertThat;
-import static org.junit.Assert.assertNotNull;
 
 import java.util.Date;
 import java.util.List;
@@ -459,7 +459,7 @@ public class MigrationTransitionInstancesTest {
     // when
     try {
       testHelper.migrateProcessInstance(migrationPlan, processInstance);
-      Assert.fail("should fail");
+      fail("should fail");
     }
     catch (MigratingProcessInstanceValidationException e) {
       assertThat(e.getValidationReport())
@@ -574,7 +574,7 @@ public class MigrationTransitionInstancesTest {
     // when
     try {
       testHelper.createProcessInstanceAndMigrate(migrationPlan);
-      Assert.fail("should fail");
+      fail("should fail");
     }
     catch (MigratingProcessInstanceValidationException e) {
       assertThat(e.getValidationReport())
@@ -749,7 +749,7 @@ public class MigrationTransitionInstancesTest {
     // then
     Incident incidentAfterMigration = rule.getRuntimeService().createIncidentQuery().singleResult();
 
-    assertNotNull(incidentAfterMigration);
+    assertThat(incidentAfterMigration).isNotNull();
     // and it is still the same incident
     assertThat(incidentAfterMigration.getId()).isEqualTo(incidentBeforeMigration.getId());
     assertThat(incidentAfterMigration.getConfiguration()).isEqualTo(job.getId());
@@ -861,7 +861,7 @@ public class MigrationTransitionInstancesTest {
     // when
     try {
       testHelper.createProcessInstanceAndMigrate(migrationPlan);
-      Assert.fail("should fail");
+      fail("should fail");
     }
     catch (MigratingProcessInstanceValidationException e) {
       // then
@@ -891,7 +891,7 @@ public class MigrationTransitionInstancesTest {
     // when
     try {
       testHelper.migrateProcessInstance(migrationPlan, processInstance);
-      Assert.fail("should fail");
+      fail("should fail");
     }
     catch (MigratingProcessInstanceValidationException e) {
       // then
@@ -915,7 +915,7 @@ public class MigrationTransitionInstancesTest {
     // when
     try {
       testHelper.createProcessInstanceAndMigrate(migrationPlan);
-      Assert.fail("should fail");
+      fail("should fail");
     }
     catch (MigratingProcessInstanceValidationException e) {
       // then
@@ -944,7 +944,7 @@ public class MigrationTransitionInstancesTest {
     // when
     try {
       testHelper.createProcessInstanceAndMigrate(migrationPlan);
-      Assert.fail("should fail");
+      fail("should fail");
     }
     catch (MigratingProcessInstanceValidationException e) {
       // then
@@ -975,7 +975,7 @@ public class MigrationTransitionInstancesTest {
     // when
     try {
       testHelper.migrateProcessInstance(migrationPlan, processInstance);
-      Assert.fail("should fail");
+      fail("should fail");
     }
     catch (MigratingProcessInstanceValidationException e) {
       // then
@@ -1096,11 +1096,11 @@ public class MigrationTransitionInstancesTest {
     try {
       runtimeService.execute();
 
-      Assert.fail("should fail");
+      fail("should fail");
     }
     catch (MigratingProcessInstanceValidationException e) {
       // then
-      Assert.assertTrue(e instanceof MigratingProcessInstanceValidationException);
+      assertThat(e instanceof MigratingProcessInstanceValidationException).isTrue();
     }
   }
 

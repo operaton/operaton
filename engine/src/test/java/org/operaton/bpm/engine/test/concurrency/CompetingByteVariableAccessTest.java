@@ -18,9 +18,7 @@ package org.operaton.bpm.engine.test.concurrency;
 
 import static org.operaton.bpm.engine.variable.Variables.createVariables;
 import static org.operaton.bpm.model.bpmn.Bpmn.createExecutableProcess;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.OptimisticLockingException;
 import org.operaton.bpm.engine.impl.db.entitymanager.cache.CachedDbEntity;
@@ -75,8 +73,8 @@ public class CompetingByteVariableAccessTest extends ConcurrencyTestCase {
     asyncThread.waitUntilDone();
 
     Throwable exception = asyncThread.getException();
-    assertNotNull(exception);
-    assertTrue(exception instanceof OptimisticLockingException);
+    assertThat(exception).isNotNull();
+    assertThat(exception instanceof OptimisticLockingException).isTrue();
 
 
   }
@@ -102,12 +100,12 @@ public class CompetingByteVariableAccessTest extends ConcurrencyTestCase {
       // fetch the variable instance but not the value (make sure the byte array is lazily fetched)
       VariableInstanceEntity varInstance = (VariableInstanceEntity) execution.getVariableInstanceLocal(varName);
       String byteArrayValueId = varInstance.getByteArrayValueId();
-      assertNotNull("Byte array id is expected to be not null", byteArrayValueId);
+      assertThat(byteArrayValueId).as("Byte array id is expected to be not null").isNotNull();
 
       CachedDbEntity cachedByteArray = commandContext.getDbEntityManager().getDbEntityCache()
         .getCachedEntity(ByteArrayEntity.class, byteArrayValueId);
 
-      assertNull("Byte array is expected to be not fetched yet / lazily fetched.", cachedByteArray);
+      assertThat(cachedByteArray).as("Byte array is expected to be not fetched yet / lazily fetched.").isNull();
 
       monitor.sync();
 

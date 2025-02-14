@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.jobexecutor;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
@@ -52,7 +51,7 @@ public class JobDefinitionDeploymentTest extends PluggableProcessEngineTest {
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().processDefinitionKey("testProcess").singleResult();
 
     // then assert
-    assertNotNull(jobDefinition);
+    assertThat(jobDefinition).isNotNull();
     assertThat(jobDefinition.getJobType()).isEqualTo(TimerStartEventJobHandler.TYPE);
     assertThat(jobDefinition.getActivityId()).isEqualTo("theStart");
     assertThat(jobDefinition.getJobConfiguration()).isEqualTo("DATE: 2036-11-14T11:12:22");
@@ -72,7 +71,7 @@ public class JobDefinitionDeploymentTest extends PluggableProcessEngineTest {
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().processDefinitionKey("testProcess").singleResult();
 
     // then assert
-    assertNotNull(jobDefinition);
+    assertThat(jobDefinition).isNotNull();
     assertThat(jobDefinition.getJobType()).isEqualTo(TimerExecuteNestedActivityJobHandler.TYPE);
     assertThat(jobDefinition.getActivityId()).isEqualTo("theBoundaryEvent");
     assertThat(jobDefinition.getJobConfiguration()).isEqualTo("DATE: 2036-11-14T11:12:22");
@@ -91,14 +90,14 @@ public class JobDefinitionDeploymentTest extends PluggableProcessEngineTest {
     assertThat(jobDefinitionQuery.count()).isEqualTo(2);
 
     JobDefinition jobDefinition = jobDefinitionQuery.activityIdIn("theBoundaryEvent1").singleResult();
-    assertNotNull(jobDefinition);
+    assertThat(jobDefinition).isNotNull();
     assertThat(jobDefinition.getJobType()).isEqualTo(TimerExecuteNestedActivityJobHandler.TYPE);
     assertThat(jobDefinition.getActivityId()).isEqualTo("theBoundaryEvent1");
     assertThat(jobDefinition.getJobConfiguration()).isEqualTo("DATE: 2036-11-14T11:12:22");
     assertThat(jobDefinition.getProcessDefinitionId()).isEqualTo(processDefinition.getId());
 
     jobDefinition = jobDefinitionQuery.activityIdIn("theBoundaryEvent2").singleResult();
-    assertNotNull(jobDefinition);
+    assertThat(jobDefinition).isNotNull();
     assertThat(jobDefinition.getJobType()).isEqualTo(TimerExecuteNestedActivityJobHandler.TYPE);
     assertThat(jobDefinition.getActivityId()).isEqualTo("theBoundaryEvent2");
     assertThat(jobDefinition.getJobConfiguration()).isEqualTo("DURATION: PT5M");
@@ -117,14 +116,14 @@ public class JobDefinitionDeploymentTest extends PluggableProcessEngineTest {
     assertThat(jobDefinitionQuery.count()).isEqualTo(2);
 
     JobDefinition jobDefinition = jobDefinitionQuery.activityIdIn("timer1").singleResult();
-    assertNotNull(jobDefinition);
+    assertThat(jobDefinition).isNotNull();
     assertThat(jobDefinition.getJobType()).isEqualTo(TimerCatchIntermediateEventJobHandler.TYPE);
     assertThat(jobDefinition.getActivityId()).isEqualTo("timer1");
     assertThat(jobDefinition.getJobConfiguration()).isEqualTo("DURATION: PT5M");
     assertThat(jobDefinition.getProcessDefinitionId()).isEqualTo(processDefinition.getId());
 
     jobDefinition = jobDefinitionQuery.activityIdIn("timer2").singleResult();
-    assertNotNull(jobDefinition);
+    assertThat(jobDefinition).isNotNull();
     assertThat(jobDefinition.getJobType()).isEqualTo(TimerCatchIntermediateEventJobHandler.TYPE);
     assertThat(jobDefinition.getActivityId()).isEqualTo("timer2");
     assertThat(jobDefinition.getJobConfiguration()).isEqualTo("DURATION: PT10M");
@@ -140,7 +139,7 @@ public class JobDefinitionDeploymentTest extends PluggableProcessEngineTest {
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().processDefinitionKey("testProcess").singleResult();
 
     // then assert
-    assertNotNull(jobDefinition);
+    assertThat(jobDefinition).isNotNull();
     assertThat(jobDefinition.getJobType()).isEqualTo(TimerCatchIntermediateEventJobHandler.TYPE);
     assertThat(jobDefinition.getActivityId()).isEqualTo("timer");
     assertThat(jobDefinition.getJobConfiguration()).isEqualTo("DURATION: PT5M");
@@ -156,7 +155,7 @@ public class JobDefinitionDeploymentTest extends PluggableProcessEngineTest {
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().processDefinitionKey("testProcess").singleResult();
 
     // then assert
-    assertNotNull(jobDefinition);
+    assertThat(jobDefinition).isNotNull();
     assertThat(jobDefinition.getJobType()).isEqualTo(AsyncContinuationJobHandler.TYPE);
     assertThat(jobDefinition.getActivityId()).isEqualTo("theService");
     assertThat(jobDefinition.getJobConfiguration()).isEqualTo(MessageJobDeclaration.ASYNC_BEFORE);
@@ -171,7 +170,7 @@ public class JobDefinitionDeploymentTest extends PluggableProcessEngineTest {
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().processDefinitionKey("testProcess").singleResult();
 
     // then assert
-    assertNotNull(jobDefinition);
+    assertThat(jobDefinition).isNotNull();
     assertThat(jobDefinition.getJobType()).isEqualTo(AsyncContinuationJobHandler.TYPE);
     assertThat(jobDefinition.getActivityId()).isEqualTo("theService" + BpmnParse.MULTI_INSTANCE_BODY_ID_SUFFIX);
     assertThat(jobDefinition.getJobConfiguration()).isEqualTo(MessageJobDeclaration.ASYNC_AFTER);
@@ -186,7 +185,7 @@ public class JobDefinitionDeploymentTest extends PluggableProcessEngineTest {
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().processDefinitionKey("testProcess").singleResult();
 
     // then assert
-    assertNotNull(jobDefinition);
+    assertThat(jobDefinition).isNotNull();
     assertThat(jobDefinition.getJobType()).isEqualTo(AsyncContinuationJobHandler.TYPE);
     assertThat(jobDefinition.getActivityId()).isEqualTo("theService");
     assertThat(jobDefinition.getJobConfiguration()).isEqualTo(MessageJobDeclaration.ASYNC_AFTER);

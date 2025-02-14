@@ -84,7 +84,7 @@ public class MultiTenancyCleanableHistoricDecisionInstanceReportCmdTenantCheckTe
     List<CleanableHistoricDecisionInstanceReportResult> reportResults = historyService.createCleanableHistoricDecisionInstanceReport().list();
 
     // then
-    assertThat(reportResults).hasSize(0);
+    assertThat(reportResults).isEmpty();
   }
 
   @Test
@@ -137,8 +137,8 @@ public class MultiTenancyCleanableHistoricDecisionInstanceReportCmdTenantCheckTe
     List<CleanableHistoricDecisionInstanceReportResult> reportResultsTwo = historyService.createCleanableHistoricDecisionInstanceReport().tenantIdIn(TENANT_TWO).list();
 
     // then
-    assertThat(reportResultsOne).hasSize(0);
-    assertThat(reportResultsTwo).hasSize(0);
+    assertThat(reportResultsOne).isEmpty();
+    assertThat(reportResultsTwo).isEmpty();
   }
 
   @Test
@@ -159,7 +159,7 @@ public class MultiTenancyCleanableHistoricDecisionInstanceReportCmdTenantCheckTe
     // then
     assertThat(reportResultsOne).hasSize(1);
     assertThat(reportResultsOne.get(0).getTenantId()).isEqualTo(TENANT_ONE);
-    assertThat(reportResultsTwo).hasSize(0);
+    assertThat(reportResultsTwo).isEmpty();
   }
 
   @Test

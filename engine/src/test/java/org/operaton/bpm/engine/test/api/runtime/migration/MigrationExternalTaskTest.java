@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
-
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 import static org.operaton.bpm.engine.test.util.MigrationPlanValidationReportAssert.assertThat;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
@@ -276,7 +275,7 @@ public class MigrationExternalTaskTest {
 
     try {
       runtimeService.build();
-      Assert.fail("exception expected");
+      fail("exception expected");
     } catch (MigrationPlanValidationException e) {
       // then
       assertThat(e.getValidationReport())
@@ -357,7 +356,7 @@ public class MigrationExternalTaskTest {
 
     // then the incident has migrated
     Incident incidentAfterMigration = rule.getRuntimeService().createIncidentQuery().singleResult();
-    assertNotNull(incidentAfterMigration);
+    assertThat(incidentAfterMigration).isNotNull();
 
     assertThat(incidentAfterMigration.getId()).isEqualTo(incidentBeforeMigration.getId());
     assertThat(incidentAfterMigration.getIncidentType()).isEqualTo(Incident.EXTERNAL_TASK_HANDLER_TYPE);
@@ -395,14 +394,14 @@ public class MigrationExternalTaskTest {
     rule.getExternalTaskService().setRetries(externalTask.getId(), 0);
 
     Incident incidentBeforeMigration = rule.getRuntimeService().createIncidentQuery().singleResult();
-    assertNotNull(incidentBeforeMigration);
+    assertThat(incidentBeforeMigration).isNotNull();
 
     // when migration is executed
     try {
       testHelper.migrateProcessInstance(migrationPlan, processInstance);
-      Assert.fail("Exception expected!");
+      fail("Exception expected!");
     } catch (Exception ex) {
-      Assert.assertTrue(ex instanceof MigratingProcessInstanceValidationException);
+      assertThat(ex instanceof MigratingProcessInstanceValidationException).isTrue();
     }
   }
 

@@ -16,12 +16,7 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.tuple;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -156,7 +151,7 @@ public class HistoricDetailQueryTest {
     HistoricDetailQuery query = historyService.createHistoricDetailQuery()
             .userOperationId("invalid");
 
-    assertThat(query.list()).hasSize(0);
+    assertThat(query.list()).isEmpty();
     assertThat(query.count()).isEqualTo(0);
 
     try {
@@ -199,7 +194,7 @@ public class HistoricDetailQueryTest {
     HistoricDetailQuery query = historyService.createHistoricDetailQuery()
             .executionId("invalid");
 
-    assertThat(query.list()).hasSize(0);
+    assertThat(query.list()).isEmpty();
     assertThat(query.count()).isEqualTo(0);
   }
 
@@ -305,7 +300,7 @@ public class HistoricDetailQueryTest {
     allowedVariableTypes.add("object");
     for (HistoricDetail detail : query.list()) {
       if (detail instanceof HistoricVariableUpdate variableUpdate) {
-        assertTrue(allowedVariableTypes.contains(variableUpdate.getTypeName()));
+        assertThat(allowedVariableTypes).contains(variableUpdate);
       } else {
         fail("Historic detail should be a variable update!");
       }
@@ -585,8 +580,8 @@ public class HistoricDetailQueryTest {
     expectedProcessInstanceIds.add(processInstance.getId());
     expectedProcessInstanceIds.add(processInstance2.getId());
     assertThat(query.count()).isEqualTo(2);
-    assertTrue(expectedProcessInstanceIds.contains(query.list().get(0).getProcessInstanceId()));
-    assertTrue(expectedProcessInstanceIds.contains(query.list().get(1).getProcessInstanceId()));
+    assertThat(expectedProcessInstanceIds).contains(query.list().get(0));
+    assertThat(expectedProcessInstanceIds).contains(query.list().get(1));
   }
 
   @Test
@@ -797,9 +792,9 @@ public class HistoricDetailQueryTest {
       HistoricVariableUpdateEventEntity detail = (HistoricVariableUpdateEventEntity) historicDetail;
       String variableValue = detail.getTextValue();
       if (variableValue.equals(initalValue)) {
-        assertTrue(detail.isInitial());
+        assertThat(detail.isInitial()).isTrue();
       } else if (variableValue.equals(localValue)) {
-        assertFalse(detail.isInitial());
+        assertThat(detail.isInitial()).isFalse();
       } else {
         fail("illegal variable value:" + variableValue);
       }
@@ -833,9 +828,9 @@ public class HistoricDetailQueryTest {
       String variableValue = detail.getTextValue();
 
       if (variableValue.equals(initalValue)) {
-        assertTrue(detail.isInitial());
+        assertThat(detail.isInitial()).isTrue();
       } else if (variableValue.equals(secondValue)) {
-        assertFalse(detail.isInitial());
+        assertThat(detail.isInitial()).isFalse();
       } else {
         fail("illegal variable value:" + variableValue);
       }
@@ -869,9 +864,9 @@ public class HistoricDetailQueryTest {
       String variableValue = detail.getTextValue();
 
       if (variableValue.equals(initalValue)) {
-        assertTrue(detail.isInitial());
+        assertThat(detail.isInitial()).isTrue();
       } else if (variableValue.equals(secondValue)) {
-        assertFalse(detail.isInitial());
+        assertThat(detail.isInitial()).isFalse();
       } else {
         fail("illegal variable value:" + variableValue);
       }
@@ -899,7 +894,7 @@ public class HistoricDetailQueryTest {
     for (HistoricDetail historicDetail : details) {
       HistoricVariableUpdateEventEntity detail = (HistoricVariableUpdateEventEntity) historicDetail;
 
-      assertTrue(detail.isInitial());
+      assertThat(detail.isInitial()).isTrue();
 
       String variableValue = detail.getTextValue();
       if (variableValue.equals(initalValue)) {
@@ -942,7 +937,7 @@ public class HistoricDetailQueryTest {
     for (HistoricDetail historicDetail : details) {
       HistoricVariableUpdateEventEntity detail = (HistoricVariableUpdateEventEntity) historicDetail;
       String variableValue = detail.getTextValue();
-      assertTrue(detail.isInitial());
+      assertThat(detail.isInitial()).isTrue();
       if (variableValue.equals(initalValue)) {
         assertThat(detail.getVariableName()).isEqualTo("foo");
       } else if (variableValue.equals("listener invoked")) {
@@ -983,7 +978,7 @@ public class HistoricDetailQueryTest {
     for (HistoricDetail historicDetail : details) {
       HistoricVariableUpdateEventEntity detail = (HistoricVariableUpdateEventEntity) historicDetail;
       String variableValue = detail.getTextValue();
-      assertTrue(detail.isInitial());
+      assertThat(detail.isInitial()).isTrue();
       if (variableValue.equals(initalValue)) {
         assertThat(detail.getVariableName()).isEqualTo("foo");
       } else if (variableValue.equals("listener invoked")) {

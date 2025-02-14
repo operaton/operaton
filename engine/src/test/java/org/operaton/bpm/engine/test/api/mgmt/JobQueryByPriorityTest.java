@@ -20,8 +20,6 @@ import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.jobByPriority;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySortingAndCount;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -79,8 +77,8 @@ public class JobQueryByPriorityTest extends PluggableProcessEngineTest {
     processInstanceIds.add(instances.get(2).getId());
 
     for (Job job : jobs) {
-      assertTrue(job.getPriority() <= 2);
-      assertTrue(processInstanceIds.contains(job.getProcessInstanceId()));
+      assertThat(job.getPriority() <= 2).isTrue();
+      assertThat(processInstanceIds).contains(job);
     }
   }
 
@@ -122,8 +120,8 @@ public class JobQueryByPriorityTest extends PluggableProcessEngineTest {
     processInstanceIds.add(instances.get(4).getId());
 
     for (Job job : jobs) {
-      assertTrue(job.getPriority() >= 2);
-      assertTrue(processInstanceIds.contains(job.getProcessInstanceId()));
+      assertThat(job.getPriority() >= 2).isTrue();
+      assertThat(processInstanceIds).contains(job);
     }
   }
 
@@ -142,7 +140,7 @@ public class JobQueryByPriorityTest extends PluggableProcessEngineTest {
     // then the correct job is returned
     Job job = managementService.createJobQuery().priorityHigherThanOrEquals(2L)
         .priorityLowerThanOrEquals(2L).singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     assertThat(job.getPriority()).isEqualTo(2);
     assertThat(job.getProcessInstanceId()).isEqualTo(instances.get(2).getId());
   }

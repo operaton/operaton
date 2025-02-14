@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy.tenantcheck;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
 
@@ -106,7 +104,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
     List<LockedExternalTask> externalTasks = externalTaskService.fetchAndLock(1, WORKER_ID)
       .topic(TOPIC_NAME, LOCK_TIME)
       .execute();
-    assertThat(externalTasks).hasSize(0);
+    assertThat(externalTasks).isEmpty();
 
   }
 
@@ -119,7 +117,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
     List<LockedExternalTask> externalTasks = externalTaskService.fetchAndLock(1, WORKER_ID)
       .topic(TOPIC_NAME, LOCK_TIME)
       .execute();
-    assertThat(externalTasks).hasSize(0);
+    assertThat(externalTasks).isEmpty();
 
   }
 
@@ -148,7 +146,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
       .execute();
 
     // then
-    assertThat(externalTasks).hasSize(0);
+    assertThat(externalTasks).isEmpty();
   }
 
   @Test

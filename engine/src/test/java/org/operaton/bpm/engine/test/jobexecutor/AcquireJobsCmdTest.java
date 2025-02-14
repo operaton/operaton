@@ -30,7 +30,6 @@ import java.util.Date;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
 
 /**
  *
@@ -48,7 +47,7 @@ public class AcquireJobsCmdTest extends PluggableProcessEngineTest {
     // now there is one job:
     Job job = managementService.createJobQuery()
       .singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
 
     makeSureJobDue(job);
 
@@ -73,7 +72,7 @@ public class AcquireJobsCmdTest extends PluggableProcessEngineTest {
     // now there is one job:
     Job job = managementService.createJobQuery()
       .singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
 
     makeSureJobDue(job);
 

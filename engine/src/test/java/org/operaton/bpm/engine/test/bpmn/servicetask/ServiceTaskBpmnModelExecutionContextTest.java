@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.servicetask;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
 
@@ -50,7 +48,7 @@ public class ServiceTaskBpmnModelExecutionContextTest extends PluggableProcessEn
     runtimeService.startProcessInstanceByKey(PROCESS_ID);
 
     BpmnModelInstance modelInstance = ModelExecutionContextServiceTask.modelInstance;
-    assertNotNull(modelInstance);
+    assertThat(modelInstance).isNotNull();
 
     Model model = modelInstance.getModel();
     Collection<ModelElementInstance> events = modelInstance.getModelElementsByType(model.getType(Event.class));
@@ -60,10 +58,10 @@ public class ServiceTaskBpmnModelExecutionContextTest extends PluggableProcessEn
 
     Process process = (Process) modelInstance.getDefinitions().getRootElements().iterator().next();
     assertThat(process.getId()).isEqualTo(PROCESS_ID);
-    assertTrue(process.isExecutable());
+    assertThat(process.isExecutable()).isTrue();
 
     ServiceTask serviceTask = ModelExecutionContextServiceTask.serviceTask;
-    assertNotNull(serviceTask);
+    assertThat(serviceTask).isNotNull();
     assertThat(serviceTask.getOperatonClass()).isEqualTo(ModelExecutionContextServiceTask.class.getName());
   }
 

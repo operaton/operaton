@@ -23,9 +23,6 @@ import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_IS_
 import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_MANUAL_ACTIVATION_RULE;
 import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_REQUIRED_RULE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import org.operaton.bpm.engine.impl.cmmn.CaseControlRule;
 import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnActivityBehavior;
@@ -129,7 +126,7 @@ public class HumanTaskDicretionaryItemHandlerTest extends CmmnElementHandlerTest
 
     // then
     CmmnActivityBehavior behavior = activity.getActivityBehavior();
-    assertTrue(behavior instanceof HumanTaskActivityBehavior);
+    assertThat(behavior instanceof HumanTaskActivityBehavior).isTrue();
   }
 
   @Test
@@ -141,7 +138,7 @@ public class HumanTaskDicretionaryItemHandlerTest extends CmmnElementHandlerTest
 
     // then
     Boolean isBlocking = (Boolean) activity.getProperty(PROPERTY_IS_BLOCKING);
-    assertTrue(isBlocking);
+    assertThat(isBlocking).isTrue();
   }
 
   @Test
@@ -160,7 +157,7 @@ public class HumanTaskDicretionaryItemHandlerTest extends CmmnElementHandlerTest
     // considered a 'manual' Task, i.e.,
     // the Case management system is not
     // tracking the lifecycle of the HumanTask (instance).
-    assertNull(activity);
+    assertThat(activity).isNull();
   }
 
   @Test
@@ -173,7 +170,7 @@ public class HumanTaskDicretionaryItemHandlerTest extends CmmnElementHandlerTest
 
     // then
     Boolean discretionary = (Boolean) activity.getProperty(PROPERTY_DISCRETIONARY);
-    assertTrue(discretionary);
+    assertThat(discretionary).isTrue();
   }
 
   @Test
@@ -184,7 +181,7 @@ public class HumanTaskDicretionaryItemHandlerTest extends CmmnElementHandlerTest
     CmmnActivity activity = handler.handleElement(discretionaryItem, context);
 
     // then
-    assertNull(activity.getParent());
+    assertThat(activity.getParent()).isNull();
   }
 
   @Test
@@ -199,7 +196,7 @@ public class HumanTaskDicretionaryItemHandlerTest extends CmmnElementHandlerTest
 
     // then
     assertThat(activity.getParent()).isEqualTo(parent);
-    assertTrue(parent.getActivities().contains(activity));
+    assertThat(parent.getActivities()).contains(activity);
   }
 
   @Test
@@ -217,8 +214,8 @@ public class HumanTaskDicretionaryItemHandlerTest extends CmmnElementHandlerTest
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_MANUAL_ACTIVATION_RULE);
-    assertNotNull(rule);
-    assertTrue(rule instanceof CaseControlRule);
+    assertThat(rule).isNotNull();
+    assertThat(rule instanceof CaseControlRule).isTrue();
   }
 
   @Test
@@ -236,8 +233,8 @@ public class HumanTaskDicretionaryItemHandlerTest extends CmmnElementHandlerTest
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_MANUAL_ACTIVATION_RULE);
-    assertNotNull(rule);
-    assertTrue(rule instanceof CaseControlRule);
+    assertThat(rule).isNotNull();
+    assertThat(rule instanceof CaseControlRule).isTrue();
   }
 
   @Test
@@ -255,8 +252,8 @@ public class HumanTaskDicretionaryItemHandlerTest extends CmmnElementHandlerTest
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_REQUIRED_RULE);
-    assertNotNull(rule);
-    assertTrue(rule instanceof CaseControlRule);
+    assertThat(rule).isNotNull();
+    assertThat(rule instanceof CaseControlRule).isTrue();
   }
 
   @Test
@@ -274,8 +271,8 @@ public class HumanTaskDicretionaryItemHandlerTest extends CmmnElementHandlerTest
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_REQUIRED_RULE);
-    assertNotNull(rule);
-    assertTrue(rule instanceof CaseControlRule);
+    assertThat(rule).isNotNull();
+    assertThat(rule instanceof CaseControlRule).isTrue();
   }
 
 }

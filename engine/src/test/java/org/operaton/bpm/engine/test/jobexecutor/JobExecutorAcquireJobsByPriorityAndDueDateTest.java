@@ -18,8 +18,6 @@ package org.operaton.bpm.engine.test.jobexecutor;
 
 import static org.operaton.bpm.engine.test.util.ClockTestUtil.incrementClock;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -38,9 +36,9 @@ public class JobExecutorAcquireJobsByPriorityAndDueDateTest extends AbstractJobE
 
   @Test
   public void testProcessEngineConfiguration() {
-    assertFalse(configuration.isJobExecutorPreferTimerJobs());
-    assertTrue(configuration.isJobExecutorAcquireByDueDate());
-    assertTrue(configuration.isJobExecutorAcquireByPriority());
+    assertThat(configuration.isJobExecutorPreferTimerJobs()).isFalse();
+    assertThat(configuration.isJobExecutorAcquireByDueDate()).isTrue();
+    assertThat(configuration.isJobExecutorAcquireByPriority()).isTrue();
   }
 
   @Test

@@ -17,9 +17,6 @@
 package org.operaton.bpm.engine.test.api.task;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.ByteArrayInputStream;
@@ -329,7 +326,7 @@ public class TaskServiceTest {
 
     //make sure the comment is not there.
     Comment shouldBeDeleted = taskService.getTaskComment(taskId, commentId);
-    assertNull(shouldBeDeleted);
+    assertThat(shouldBeDeleted).isNull();
 
     // Finally, delete task
     taskService.deleteTask(taskId, true);
@@ -351,7 +348,7 @@ public class TaskServiceTest {
 
     //make sure the comment is not there.
     Comment shouldBeDeleted = taskService.getTaskComment(taskId, commentId);
-    assertNull(shouldBeDeleted);
+    assertThat(shouldBeDeleted).isNull();
   }
 
   @Test
@@ -402,7 +399,7 @@ public class TaskServiceTest {
 
     //make sure the comment is not there.
     Comment shouldBeDeleted = taskService.getTaskComment(taskId, comment.getId());
-    assertNull(shouldBeDeleted);
+    assertThat(shouldBeDeleted).isNull();
 
     // Finally, delete task
     taskService.deleteTask(taskId, true);
@@ -423,7 +420,7 @@ public class TaskServiceTest {
 
     //make sure the comment is not there.
     Comment shouldBeDeleted = taskService.getTaskComment(taskId, comment.getId());
-    assertNull(shouldBeDeleted);
+    assertThat(shouldBeDeleted).isNull();
   }
 
   @Test
@@ -776,13 +773,13 @@ public class TaskServiceTest {
       identityService.setAuthenticatedUserId("johndoe");
       // Fetch the task again and update
       Comment comment = taskService.createComment(taskId, null, "look at this \n       isn't this great? slkdjf sldkfjs ldkfjs ldkfjs ldkfj sldkfj sldkfj sldkjg laksfg sdfgsd;flgkj ksajdhf skjdfh ksjdhf skjdhf kalskjgh lskh dfialurhg kajsh dfuieqpgkja rzvkfnjviuqerhogiuvysbegkjz lkhf ais liasduh flaisduh ajiasudh vaisudhv nsfd");
-      assertNotNull(comment.getId());
+      assertThat(comment.getId()).isNotNull();
       assertThat(comment.getUserId()).isEqualTo("johndoe");
       assertThat(comment.getTaskId()).isEqualTo(taskId);
-      assertNull(comment.getProcessInstanceId());
+      assertThat(comment.getProcessInstanceId()).isNull();
       assertThat(((Event) comment).getMessage()).isEqualTo("look at this isn't this great? slkdjf sldkfjs ldkfjs ldkfjs ldkfj sldkfj sldkfj sldkjg laksfg sdfgsd;flgkj ksajdhf skjdfh ksjdhf skjdhf kalskjgh lskh dfialurhg ...");
       assertThat(comment.getFullMessage()).isEqualTo("look at this \n       isn't this great? slkdjf sldkfjs ldkfjs ldkfjs ldkfj sldkfj sldkfj sldkjg laksfg sdfgsd;flgkj ksajdhf skjdfh ksjdhf skjdhf kalskjgh lskh dfialurhg kajsh dfuieqpgkja rzvkfnjviuqerhogiuvysbegkjz lkhf ais liasduh flaisduh ajiasudh vaisudhv nsfd");
-      assertNotNull(comment.getTime());
+      assertThat(comment.getTime()).isNotNull();
 
       taskService.createComment(taskId, "pid", "one");
       taskService.createComment(taskId, "pid", "two");
@@ -855,12 +852,12 @@ public class TaskServiceTest {
       assertThat(attachment.getTaskId()).isEqualTo(taskId);
       assertThat(attachment.getProcessInstanceId()).isEqualTo("someprocessinstanceid");
       assertThat(attachment.getUrl()).isEqualTo("http://weather.com");
-      assertNull(taskService.getAttachmentContent(attachment.getId()));
+      assertThat(taskService.getAttachmentContent(attachment.getId())).isNull();
 
       // Finally, clean up
       taskService.deleteTask(taskId);
 
-      assertThat(taskService.getTaskComments(taskId)).hasSize(0);
+      assertThat(taskService.getTaskComments(taskId)).isEmpty();
       assertThat(historyService.createHistoricTaskInstanceQuery().taskId(taskId).list()).hasSize(1);
 
       taskService.deleteTask(taskId, true);
@@ -881,10 +878,10 @@ public class TaskServiceTest {
       assertThat(attachment.getName()).isEqualTo("weatherforcast");
       assertThat(attachment.getDescription()).isEqualTo("temperatures and more");
       assertThat(attachment.getType()).isEqualTo("web page");
-      assertNull(attachment.getTaskId());
+      assertThat(attachment.getTaskId()).isNull();
       assertThat(attachment.getProcessInstanceId()).isEqualTo(processInstance.getId());
       assertThat(attachment.getUrl()).isEqualTo("http://weather.com");
-      assertNull(taskService.getAttachmentContent(attachment.getId()));
+      assertThat(taskService.getAttachmentContent(attachment.getId())).isNull();
     }
   }
 
@@ -902,10 +899,10 @@ public class TaskServiceTest {
       assertThat(attachment.getName()).isEqualTo("weatherforcast");
       assertThat(attachment.getDescription()).isEqualTo("temperatures and more");
       assertThat(attachment.getType()).isEqualTo("web page");
-      assertNull(attachment.getTaskId());
+      assertThat(attachment.getTaskId()).isNull();
       assertThat(attachment.getProcessInstanceId()).isEqualTo(processInstance.getId());
       assertThat(attachment.getUrl()).isEqualTo("http://weather.com");
-      assertNull(taskService.getAttachmentContent(attachment.getId()));
+      assertThat(taskService.getAttachmentContent(attachment.getId())).isNull();
     }
   }
 
@@ -974,8 +971,8 @@ public class TaskServiceTest {
     taskService.saveTask(task);
     task = taskService.createTaskQuery().taskId(taskId).singleResult();
     assertThat(task.getOwner()).isEqualTo("johndoe");
-    assertNull(task.getAssignee());
-    assertNull(task.getDelegationState());
+    assertThat(task.getAssignee()).isNull();
+    assertThat(task.getDelegationState()).isNull();
 
     task.setAssignee("jackblack");
     task.setDelegationState(DelegationState.RESOLVED);
@@ -1087,7 +1084,7 @@ public class TaskServiceTest {
     taskService.deleteTasks(Arrays.asList("unexistingtaskid1", existingTask.getId()), true);
 
     existingTask = taskService.createTaskQuery().taskId(existingTask.getId()).singleResult();
-    assertNull(existingTask);
+    assertThat(existingTask).isNull();
   }
 
   @Test
@@ -1176,7 +1173,7 @@ public class TaskServiceTest {
     taskService.claim(task.getId(), null);
 
     task = taskService.createTaskQuery().taskId(task.getId()).singleResult();
-    assertNull(task.getAssignee());
+    assertThat(task.getAssignee()).isNull();
 
     taskService.deleteTask(task.getId(), true);
     identityService.deleteUser(user.getId());
@@ -1242,7 +1239,7 @@ public class TaskServiceTest {
 
     // Fetch the task again
     task = taskService.createTaskQuery().taskId(taskId).singleResult();
-    assertNull(task);
+    assertThat(task).isNull();
   }
 
   @SuppressWarnings("unchecked")
@@ -1260,7 +1257,7 @@ public class TaskServiceTest {
 
     // Fetch the task again
     task = taskService.createTaskQuery().taskId(taskId).singleResult();
-    assertNull(task);
+    assertThat(task).isNull();
   }
 
 
@@ -1314,11 +1311,13 @@ public class TaskServiceTest {
     // After completion of firstUserTask a script Task sets 'x' = 5
     VariableMap vars = taskService.completeWithVariablesInReturn(firstUserTask.getId(), additionalVariables, true);
 
-    assertThat(vars).hasSize(3);
-    assertThat(vars).containsEntry("x", 5);
+    assertThat(vars)
+            .hasSize(3)
+            .containsEntry("x", 5);
     assertThat(vars.getValueTyped("x").getType()).isEqualTo(ValueType.INTEGER);
-    assertThat(vars).containsEntry(processVarName, processVarValue);
-    assertThat(vars).containsEntry(taskVarName, taskVarValue);
+    assertThat(vars)
+            .containsEntry(processVarName, processVarValue)
+            .containsEntry(taskVarName, taskVarValue);
     assertThat(vars.getValueTyped(taskVarName).getType()).isEqualTo(ValueType.STRING);
 
     additionalVariables = new HashMap<>();
@@ -1326,10 +1325,11 @@ public class TaskServiceTest {
     Task secondUserTask = taskService.createTaskQuery().taskName("Second User Task").singleResult();
 
     vars = taskService.completeWithVariablesInReturn(secondUserTask.getId(), additionalVariables, true);
-    assertThat(vars).hasSize(3);
-    assertThat(vars).containsEntry("x", 7);
-    assertThat(vars).containsEntry(processVarName, processVarValue);
-    assertThat(vars).containsEntry(taskVarName, taskVarValue);
+    assertThat(vars)
+            .hasSize(3)
+            .containsEntry("x", 7)
+            .containsEntry(processVarName, processVarValue)
+            .containsEntry(taskVarName, taskVarValue);
   }
 
   @Test
@@ -1487,11 +1487,11 @@ public class TaskServiceTest {
     caseService.withCaseDefinition(caseDefinitionId).create();
 
     Task task1 = taskService.createTaskQuery().singleResult();
-    assertNotNull(task1);
+    assertThat(task1).isNotNull();
 
     taskService.setVariable(task1.getId(), taskVariableName, taskVariableValue);
     Map<String, Object> vars = taskService.completeWithVariablesInReturn(task1.getId(), null, true);
-    assertNull(vars);
+    assertThat(vars).isNull();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -1513,10 +1513,10 @@ public class TaskServiceTest {
         .activityId("PI_HumanTask_1")
         .singleResult()
         .getId();
-    assertNotNull(caseExecutionId);
+    assertThat(caseExecutionId).isNotNull();
 
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // when
     taskService.complete(task.getId());
@@ -1525,21 +1525,21 @@ public class TaskServiceTest {
 
     task = taskService.createTaskQuery().singleResult();
 
-    assertNull(task);
+    assertThat(task).isNull();
 
     CaseExecution caseExecution = caseService
       .createCaseExecutionQuery()
       .activityId("PI_HumanTask_1")
       .singleResult();
 
-    assertNull(caseExecution);
+    assertThat(caseExecution).isNull();
 
     CaseInstance caseInstance = caseService
         .createCaseInstanceQuery()
         .singleResult();
 
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isCompleted());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isCompleted()).isTrue();
   }
 
   @Test
@@ -1636,7 +1636,7 @@ public class TaskServiceTest {
     identityService.saveUser(user);
 
     Task task = taskService.newTask();
-    assertNull(task.getAssignee());
+    assertThat(task.getAssignee()).isNull();
     taskService.saveTask(task);
 
     // Set assignee
@@ -1890,7 +1890,7 @@ public class TaskServiceTest {
     List<IdentityLink> identityLinks = taskService.getIdentityLinksForTask(taskId);
     assertThat(identityLinks).hasSize(1);
     assertThat(identityLinks.get(0).getUserId()).isEqualTo("kermit");
-    assertNull(identityLinks.get(0).getGroupId());
+    assertThat(identityLinks.get(0).getGroupId()).isNull();
     assertThat(identityLinks.get(0).getType()).isEqualTo(IdentityLinkType.CANDIDATE);
 
     //cleanup
@@ -1910,7 +1910,7 @@ public class TaskServiceTest {
     List<IdentityLink> identityLinks = taskService.getIdentityLinksForTask(taskId);
     assertThat(identityLinks).hasSize(1);
     assertThat(identityLinks.get(0).getGroupId()).isEqualTo("muppets");
-    assertNull(identityLinks.get(0).getUserId());
+    assertThat(identityLinks.get(0).getUserId()).isNull();
     assertThat(identityLinks.get(0).getType()).isEqualTo(IdentityLinkType.CANDIDATE);
 
     //cleanup
@@ -1930,7 +1930,7 @@ public class TaskServiceTest {
     List<IdentityLink> identityLinks = taskService.getIdentityLinksForTask(taskId);
     assertThat(identityLinks).hasSize(1);
     assertThat(identityLinks.get(0).getUserId()).isEqualTo("kermit");
-    assertNull(identityLinks.get(0).getGroupId());
+    assertThat(identityLinks.get(0).getGroupId()).isNull();
     assertThat(identityLinks.get(0).getType()).isEqualTo(IdentityLinkType.ASSIGNEE);
 
     //cleanup
@@ -1948,7 +1948,7 @@ public class TaskServiceTest {
     List<IdentityLink> identityLinks = taskService.getIdentityLinksForTask(taskId);
     assertThat(identityLinks).hasSize(1);
     assertThat(identityLinks.get(0).getUserId()).isEqualTo("nonExistingAssignee");
-    assertNull(identityLinks.get(0).getGroupId());
+    assertThat(identityLinks.get(0).getGroupId()).isNull();
     assertThat(identityLinks.get(0).getType()).isEqualTo(IdentityLinkType.ASSIGNEE);
 
     //cleanup
@@ -1972,12 +1972,12 @@ public class TaskServiceTest {
 
     IdentityLink assignee = identityLinks.get(0);
     assertThat(assignee.getUserId()).isEqualTo("fozzie");
-    assertNull(assignee.getGroupId());
+    assertThat(assignee.getGroupId()).isNull();
     assertThat(assignee.getType()).isEqualTo(IdentityLinkType.ASSIGNEE);
 
     IdentityLink owner = identityLinks.get(1);
     assertThat(owner.getUserId()).isEqualTo("kermit");
-    assertNull(owner.getGroupId());
+    assertThat(owner.getGroupId()).isNull();
     assertThat(owner.getType()).isEqualTo(IdentityLinkType.OWNER);
 
     //cleanup
@@ -1999,12 +1999,12 @@ public class TaskServiceTest {
 
     IdentityLink assignee = identityLinks.get(0);
     assertThat(assignee.getUserId()).isEqualTo("nonExistingAssignee");
-    assertNull(assignee.getGroupId());
+    assertThat(assignee.getGroupId()).isNull();
     assertThat(assignee.getType()).isEqualTo(IdentityLinkType.ASSIGNEE);
 
     IdentityLink owner = identityLinks.get(1);
     assertThat(owner.getUserId()).isEqualTo("nonExistingOwner");
-    assertNull(owner.getGroupId());
+    assertThat(owner.getGroupId()).isNull();
     assertThat(owner.getType()).isEqualTo(IdentityLinkType.OWNER);
 
     //cleanup
@@ -2229,7 +2229,7 @@ public class TaskServiceTest {
 
       List<HistoricDetail> resultSet = historyService.createHistoricDetailQuery().processInstanceId(processInstanceId).list();
       for (HistoricDetail currentHistoricDetail : resultSet) {
-        assertTrue(currentHistoricDetail instanceof HistoricDetailVariableInstanceUpdateEntity);
+        assertThat(currentHistoricDetail instanceof HistoricDetailVariableInstanceUpdateEntity).isTrue();
         HistoricDetailVariableInstanceUpdateEntity historicVariableUpdate = (HistoricDetailVariableInstanceUpdateEntity) currentHistoricDetail;
 
         if (historicVariableUpdate.getName().equals(variableName) && historicVariableUpdate.getValue() == null) {
@@ -2241,7 +2241,7 @@ public class TaskServiceTest {
         }
       }
 
-      assertTrue(deletedVariableUpdateFound);
+      assertThat(deletedVariableUpdateFound).isTrue();
     }
   }
 
@@ -2255,11 +2255,11 @@ public class TaskServiceTest {
 
     taskService.setVariable(currentTask.getId(), "variable1", "value1");
     assertThat(taskService.getVariable(currentTask.getId(), "variable1")).isEqualTo("value1");
-    assertNull(taskService.getVariableLocal(currentTask.getId(), "variable1"));
+    assertThat(taskService.getVariableLocal(currentTask.getId(), "variable1")).isNull();
 
     taskService.removeVariable(currentTask.getId(), "variable1");
 
-    assertNull(taskService.getVariable(currentTask.getId(), "variable1"));
+    assertThat(taskService.getVariable(currentTask.getId(), "variable1")).isNull();
 
     checkHistoricVariableUpdateEntity("variable1", processInstance.getId());
   }
@@ -2291,19 +2291,19 @@ public class TaskServiceTest {
     assertThat(taskService.getVariable(currentTask.getId(), "variable1")).isEqualTo("value1");
     assertThat(taskService.getVariable(currentTask.getId(), "variable2")).isEqualTo("value2");
     assertThat(taskService.getVariable(currentTask.getId(), "variable3")).isEqualTo("value3");
-    assertNull(taskService.getVariableLocal(currentTask.getId(), "variable1"));
-    assertNull(taskService.getVariableLocal(currentTask.getId(), "variable2"));
-    assertNull(taskService.getVariableLocal(currentTask.getId(), "variable3"));
+    assertThat(taskService.getVariableLocal(currentTask.getId(), "variable1")).isNull();
+    assertThat(taskService.getVariableLocal(currentTask.getId(), "variable2")).isNull();
+    assertThat(taskService.getVariableLocal(currentTask.getId(), "variable3")).isNull();
 
     taskService.removeVariables(currentTask.getId(), varsToDelete.keySet());
 
-    assertNull(taskService.getVariable(currentTask.getId(), "variable1"));
-    assertNull(taskService.getVariable(currentTask.getId(), "variable2"));
+    assertThat(taskService.getVariable(currentTask.getId(), "variable1")).isNull();
+    assertThat(taskService.getVariable(currentTask.getId(), "variable2")).isNull();
     assertThat(taskService.getVariable(currentTask.getId(), "variable3")).isEqualTo("value3");
 
-    assertNull(taskService.getVariableLocal(currentTask.getId(), "variable1"));
-    assertNull(taskService.getVariableLocal(currentTask.getId(), "variable2"));
-    assertNull(taskService.getVariableLocal(currentTask.getId(), "variable3"));
+    assertThat(taskService.getVariableLocal(currentTask.getId(), "variable1")).isNull();
+    assertThat(taskService.getVariableLocal(currentTask.getId(), "variable2")).isNull();
+    assertThat(taskService.getVariableLocal(currentTask.getId(), "variable3")).isNull();
 
     checkHistoricVariableUpdateEntity("variable1", processInstance.getId());
     checkHistoricVariableUpdateEntity("variable2", processInstance.getId());
@@ -2334,8 +2334,8 @@ public class TaskServiceTest {
 
     taskService.removeVariableLocal(currentTask.getId(), "variable1");
 
-    assertNull(taskService.getVariable(currentTask.getId(), "variable1"));
-    assertNull(taskService.getVariableLocal(currentTask.getId(), "variable1"));
+    assertThat(taskService.getVariable(currentTask.getId(), "variable1")).isNull();
+    assertThat(taskService.getVariableLocal(currentTask.getId(), "variable1")).isNull();
 
     checkHistoricVariableUpdateEntity("variable1", processInstance.getId());
   }
@@ -2373,12 +2373,12 @@ public class TaskServiceTest {
 
     taskService.removeVariables(currentTask.getId(), varsToDelete.keySet());
 
-    assertNull(taskService.getVariable(currentTask.getId(), "variable1"));
-    assertNull(taskService.getVariable(currentTask.getId(), "variable2"));
+    assertThat(taskService.getVariable(currentTask.getId(), "variable1")).isNull();
+    assertThat(taskService.getVariable(currentTask.getId(), "variable2")).isNull();
     assertThat(taskService.getVariable(currentTask.getId(), "variable3")).isEqualTo("value3");
 
-    assertNull(taskService.getVariableLocal(currentTask.getId(), "variable1"));
-    assertNull(taskService.getVariableLocal(currentTask.getId(), "variable2"));
+    assertThat(taskService.getVariableLocal(currentTask.getId(), "variable1")).isNull();
+    assertThat(taskService.getVariableLocal(currentTask.getId(), "variable2")).isNull();
     assertThat(taskService.getVariableLocal(currentTask.getId(), "variable3")).isEqualTo("value3");
 
     checkHistoricVariableUpdateEntity("variable1", processInstance.getId());
@@ -2426,14 +2426,14 @@ public class TaskServiceTest {
       task.setName("test task");
       taskService.saveTask(task);
 
-      assertNotNull(task.getId());
+      assertThat(task.getId()).isNotNull();
 
       taskService.deleteTask(task.getId(), "deleted for testing purposes");
 
       HistoricTaskInstance historicTaskInstance = historyService.createHistoricTaskInstanceQuery()
         .taskId(task.getId()).singleResult();
 
-      assertNotNull(historicTaskInstance);
+      assertThat(historicTaskInstance).isNotNull();
       assertThat(historicTaskInstance.getDeleteReason()).isEqualTo("deleted for testing purposes");
 
       // Delete historic task that is left behind, will not be cleaned up because this is not part of a process
@@ -2447,7 +2447,7 @@ public class TaskServiceTest {
   public void testDeleteTaskPartOfProcess() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     String taskId = task.getId();
     List<String> taskIds = List.of(taskId);
 
@@ -2509,7 +2509,7 @@ public class TaskServiceTest {
     assertThat(caseExecution).isNotNull();
 
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     String taskId = task.getId();
     var taskIds = Collections.singletonList(task.getId());
 
@@ -2572,12 +2572,12 @@ public class TaskServiceTest {
       // select task comment for task id and comment id
       comment = taskService.getTaskComment(taskId, comment.getId());
       // check returned comment
-      assertNotNull(comment.getId());
+      assertThat(comment.getId()).isNotNull();
       assertThat(comment.getTaskId()).isEqualTo(taskId);
-      assertNull(comment.getProcessInstanceId());
+      assertThat(comment.getProcessInstanceId()).isNull();
       assertThat(((Event) comment).getMessage()).isEqualTo("look at this isn't this great? slkdjf sldkfjs ldkfjs ldkfjs ldkfj sldkfj sldkfj sldkjg laksfg sdfgsd;flgkj ksajdhf skjdfh ksjdhf skjdhf kalskjgh lskh dfialurhg ...");
       assertThat(comment.getFullMessage()).isEqualTo("look at this \n       isn't this great? slkdjf sldkfjs ldkfjs ldkfjs ldkfj sldkfj sldkfj sldkjg laksfg sdfgsd;flgkj ksajdhf skjdfh ksjdhf skjdhf kalskjgh lskh dfialurhg kajsh dfuieqpgkja rzvkfnjviuqerhogiuvysbegkjz lkhf ais liasduh flaisduh ajiasudh vaisudhv nsfd");
-      assertNotNull(comment.getTime());
+      assertThat(comment.getTime()).isNotNull();
 
       // delete task
       taskService.deleteTask(task.getId(), true);
@@ -2609,14 +2609,14 @@ public class TaskServiceTest {
       assertThat(attachment.getTaskId()).isEqualTo(taskId);
       assertThat(attachment.getProcessInstanceId()).isEqualTo("someprocessinstanceid");
       assertThat(attachment.getUrl()).isEqualTo("http://weather.com");
-      assertNull(taskService.getAttachmentContent(attachment.getId()));
+      assertThat(taskService.getAttachmentContent(attachment.getId())).isNull();
       assertThat(attachment.getCreateTime()).isEqualTo(fixedDate);
 
       // delete attachment for taskId and attachmentId
       taskService.deleteTaskAttachment(taskId, attachmentId);
 
       // check if attachment deleted
-      assertNull(taskService.getTaskAttachment(taskId, attachmentId));
+      assertThat(taskService.getTaskAttachment(taskId, attachmentId)).isNull();
 
       taskService.deleteTask(taskId, true);
     }
@@ -2638,7 +2638,7 @@ public class TaskServiceTest {
 
       // get attachment for taskId and attachmentId
       InputStream taskAttachmentContent = taskService.getTaskAttachmentContent(taskId, attachmentId);
-      assertNotNull(taskAttachmentContent);
+      assertThat(taskAttachmentContent).isNotNull();
 
       byte[] byteContent = IoUtil.readInputStream(taskAttachmentContent, "weatherforcast");
       assertThat(new String(byteContent)).isEqualTo("someContent");
@@ -2652,7 +2652,7 @@ public class TaskServiceTest {
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
     if (historyLevel> ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
       Attachment attachment = taskService.getTaskAttachment(null, null);
-      assertNull(attachment);
+      assertThat(attachment).isNull();
     }
   }
 
@@ -2661,7 +2661,7 @@ public class TaskServiceTest {
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
     if (historyLevel> ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
       InputStream content = taskService.getTaskAttachmentContent(null, null);
-      assertNull(content);
+      assertThat(content).isNull();
     }
   }
 
@@ -2787,8 +2787,8 @@ public class TaskServiceTest {
     ((TaskServiceImpl) taskService).updateVariablesLocal(currentTask.getId(), modifications, deletions);
 
     assertThat(taskService.getVariable(currentTask.getId(), "variable1")).isEqualTo("anotherValue1");
-    assertNull(taskService.getVariable(currentTask.getId(), "variable2"));
-    assertNull(taskService.getVariable(currentTask.getId(), "variable3"));
+    assertThat(taskService.getVariable(currentTask.getId(), "variable2")).isNull();
+    assertThat(taskService.getVariable(currentTask.getId(), "variable3")).isNull();
     assertThat(runtimeService.getVariable(processInstance.getId(), "variable4")).isEqualTo("value4");
   }
 
@@ -2857,9 +2857,9 @@ public class TaskServiceTest {
     ((TaskServiceImpl) taskService).updateVariables(currentTask.getId(), modifications, deletions);
 
     assertThat(taskService.getVariable(currentTask.getId(), "variable1")).isEqualTo("anotherValue1");
-    assertNull(taskService.getVariable(currentTask.getId(), "variable2"));
-    assertNull(taskService.getVariable(currentTask.getId(), "variable3"));
-    assertNull(runtimeService.getVariable(processInstance.getId(), "variable4"));
+    assertThat(taskService.getVariable(currentTask.getId(), "variable2")).isNull();
+    assertThat(taskService.getVariable(currentTask.getId(), "variable3")).isNull();
+    assertThat(runtimeService.getVariable(processInstance.getId(), "variable4")).isNull();
   }
 
   @Test
@@ -2949,9 +2949,9 @@ public class TaskServiceTest {
 
     // this works
     VariableMap variablesTyped = taskService.getVariablesTyped(taskId, false);
-    assertNotNull(variablesTyped.getValueTyped("broken"));
+    assertThat(variablesTyped.getValueTyped("broken")).isNotNull();
     variablesTyped = taskService.getVariablesTyped(taskId, List.of("broken"), false);
-    assertNotNull(variablesTyped.getValueTyped("broken"));
+    assertThat(variablesTyped.getValueTyped("broken")).isNotNull();
 
     // this does not
     try {
@@ -2997,9 +2997,9 @@ public class TaskServiceTest {
 
     // this works
     VariableMap variablesTyped = taskService.getVariablesLocalTyped(taskId, false);
-    assertNotNull(variablesTyped.getValueTyped("broken"));
+    assertThat(variablesTyped.getValueTyped("broken")).isNotNull();
     variablesTyped = taskService.getVariablesLocalTyped(taskId, List.of("broken"), false);
-    assertNotNull(variablesTyped.getValueTyped("broken"));
+    assertThat(variablesTyped.getValueTyped("broken")).isNotNull();
 
     // this does not
     try {
@@ -3123,7 +3123,7 @@ public class TaskServiceTest {
       .createVariableInstanceQuery()
       .taskIdIn(taskId)
       .singleResult();
-    assertNotNull(variableInstance);
+    assertThat(variableInstance).isNotNull();
 
     assertThat(variableInstance.getCaseInstanceId()).isEqualTo(caseInstanceId);
     assertThat(variableInstance.getCaseExecutionId()).isEqualTo(humanTaskId);
@@ -3143,8 +3143,8 @@ public class TaskServiceTest {
     Map<String, Object> variables = taskService.getVariables(taskId, new ArrayList<>());
 
     // then
-    assertNotNull(variables);
-    assertTrue(variables.isEmpty());
+    assertThat(variables).isNotNull();
+    assertThat(variables).isEmpty();
   }
 
   @Test
@@ -3161,8 +3161,8 @@ public class TaskServiceTest {
     Map<String, Object> variables = taskService.getVariablesTyped(taskId, new ArrayList<>(), false);
 
     // then
-    assertNotNull(variables);
-    assertTrue(variables.isEmpty());
+    assertThat(variables).isNotNull();
+    assertThat(variables).isEmpty();
   }
 
   @Test
@@ -3179,8 +3179,8 @@ public class TaskServiceTest {
     Map<String, Object> variables = taskService.getVariablesLocal(taskId, new ArrayList<>());
 
     // then
-    assertNotNull(variables);
-    assertTrue(variables.isEmpty());
+    assertThat(variables).isNotNull();
+    assertThat(variables).isEmpty();
   }
 
   @Test
@@ -3197,8 +3197,8 @@ public class TaskServiceTest {
     Map<String, Object> variables = taskService.getVariablesLocalTyped(taskId, new ArrayList<>(), false);
 
     // then
-    assertNotNull(variables);
-    assertTrue(variables.isEmpty());
+    assertThat(variables).isNotNull();
+    assertThat(variables).isEmpty();
   }
 
   @Test
@@ -3232,7 +3232,7 @@ public class TaskServiceTest {
 
     // then
     List<ProcessInstance> processInstances = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).list();
-    assertThat(processInstances).hasSize(0);
+    assertThat(processInstances).isEmpty();
   }
 
   @Test
@@ -3457,7 +3457,7 @@ public class TaskServiceTest {
     for (Task taskAfterThrow : list) {
       if (!taskAfterThrow.getTaskDefinitionKey().equals(task.getTaskDefinitionKey()) && !taskAfterThrow.getTaskDefinitionKey().equals("after-301")) {
         fail("Two task should be active:" + task.getTaskDefinitionKey() + " & "
-                                          + "after-301");
+            + "after-301");
       }
     }
     assertThat(runtimeService.createVariableInstanceQuery().variableName("foo").singleResult().getValue()).isEqualTo("bar");
@@ -3497,7 +3497,7 @@ public class TaskServiceTest {
     for (Task taskAfterThrow : list) {
       if (!taskAfterThrow.getTaskDefinitionKey().equals(task.getTaskDefinitionKey()) && !taskAfterThrow.getTaskDefinitionKey().equals("after-303")) {
         fail("Two task should be active:" + task.getTaskDefinitionKey() + " & "
-                                          + "after-303");
+            + "after-303");
       }
     }
   }
@@ -3537,7 +3537,7 @@ public class TaskServiceTest {
     for (Task taskAfterThrow : list) {
       if (!taskAfterThrow.getTaskDefinitionKey().equals(task.getTaskDefinitionKey()) && !taskAfterThrow.getTaskDefinitionKey().equals("after-305")) {
         fail("Two task should be active:" + task.getTaskDefinitionKey() + " & "
-                                          + "after-305");
+            + "after-305");
       }
     }
   }

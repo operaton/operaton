@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.event.escalation;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -69,7 +67,7 @@ public class EscalationEventSubprocessTest extends PluggableProcessEngineTest {
 
     // second timer job shouldn't be available
     job = managementService.createJobQuery().singleResult();
-    assertNull(job);
+    assertThat(job).isNull();
 
     // there should only be one completed Escalation Catch Boundary Event
     assertThat(historyService.createHistoricActivityInstanceQuery()
@@ -214,7 +212,7 @@ public class EscalationEventSubprocessTest extends PluggableProcessEngineTest {
 
     // the non-interrupting event subprocess inside the subprocess should catch the escalation event
     Task task = taskService.createTaskQuery().taskName("task after catched escalation inside subprocess").singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // when re-throw the escalation event from the escalation event subprocess
     taskService.complete(task.getId());
@@ -234,7 +232,7 @@ public class EscalationEventSubprocessTest extends PluggableProcessEngineTest {
 
     // the non-interrupting event subprocess inside the subprocess should catch the escalation event
     Task task = taskService.createTaskQuery().taskName("task after catched escalation inside subprocess").singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // when re-throw the escalation event from the escalation event subprocess
     taskService.complete(task.getId());
@@ -254,7 +252,7 @@ public class EscalationEventSubprocessTest extends PluggableProcessEngineTest {
 
     // the non-interrupting event subprocess inside the subprocess should catch the escalation event
     Task task = taskService.createTaskQuery().taskName("task after catched escalation inside subprocess").singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // when re-throw the escalation event from the escalation event subprocess
     taskService.complete(task.getId());
@@ -274,7 +272,7 @@ public class EscalationEventSubprocessTest extends PluggableProcessEngineTest {
 
     // the non-interrupting event subprocess inside the subprocess should catch the escalation event
     Task task = taskService.createTaskQuery().taskName("task after catched escalation inside subprocess").singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // when re-throw the escalation event from the escalation event subprocess
     taskService.complete(task.getId());
@@ -332,7 +330,7 @@ public class EscalationEventSubprocessTest extends PluggableProcessEngineTest {
 
     // (1) the variables has been passed for the first time (from sub process to super process)
     Task taskInSuperProcess = taskService.createTaskQuery().taskDefinitionKey("taskAfterCatchedEscalation").singleResult();
-    assertNotNull(taskInSuperProcess);
+    assertThat(taskInSuperProcess).isNotNull();
     assertThat(runtimeService.getVariable(processInstanceId, "output")).isEqualTo(42);
 
     // change variable "input" in sub process
@@ -367,7 +365,7 @@ public class EscalationEventSubprocessTest extends PluggableProcessEngineTest {
 
     // the event subprocess should catch the escalation event
     Task task = taskService.createTaskQuery().taskName("task after catched escalation").singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // and set the escalationCode of the escalation event to the declared variable
     assertThat(runtimeService.getVariable(task.getExecutionId(), "escalationCodeVar")).isEqualTo("escalationCode");
@@ -381,7 +379,7 @@ public class EscalationEventSubprocessTest extends PluggableProcessEngineTest {
 
     // the event subprocess without escalationCode should catch the escalation event
     Task task = taskService.createTaskQuery().taskName("task after catched escalation").singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // and set the escalationCode of the escalation event to the declared variable
     assertThat(runtimeService.getVariable(task.getExecutionId(), "escalationCodeVar")).isEqualTo("escalationCode");
@@ -395,7 +393,7 @@ public class EscalationEventSubprocessTest extends PluggableProcessEngineTest {
 
     // the event subprocess without escalationCode should catch the escalation event
     Task task = taskService.createTaskQuery().taskDefinitionKey("taskAfterCatchedEscalation").singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // and set the escalationCode of the escalation event to the declared variable
     assertThat(runtimeService.getVariable(task.getExecutionId(), "escalationCodeVar")).isEqualTo("escalationCode");
@@ -409,7 +407,7 @@ public class EscalationEventSubprocessTest extends PluggableProcessEngineTest {
 
     // the event subprocess without escalationCode should catch the escalation event
     Task task = taskService.createTaskQuery().taskDefinitionKey("taskAfterCatchedEscalation").singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // and set the escalationCode of the escalation event to the declared variable
     assertThat(runtimeService.getVariable(task.getExecutionId(), "escalationCodeVar")).isEqualTo("escalationCode");
@@ -423,7 +421,7 @@ public class EscalationEventSubprocessTest extends PluggableProcessEngineTest {
 
     // the event subprocess without escalationCode should catch the escalation event
     Task task = taskService.createTaskQuery().taskDefinitionKey("taskAfterCatchedEscalation").singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // and set the escalationCode of the escalation event to the declared variable
     assertThat(runtimeService.getVariable(task.getExecutionId(), "escalationCodeVar")).isEqualTo("escalationCode");
@@ -437,7 +435,7 @@ public class EscalationEventSubprocessTest extends PluggableProcessEngineTest {
 
     // the event subprocess without escalationCode should catch the escalation event
     Task task = taskService.createTaskQuery().taskDefinitionKey("taskAfterCatchedEscalation").singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // and set the escalationCode of the escalation event to the declared variable
     assertThat(runtimeService.getVariable(task.getExecutionId(), "escalationCodeVar")).isEqualTo("escalationCode");

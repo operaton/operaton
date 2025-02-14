@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.cmmn.operation;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +85,7 @@ public class CaseInstanceTest {
     emptyCollector(stateTransitionCollector, expectedStateTransitions);
 
     // case instance is active
-    assertTrue(caseInstance.isActive());
+    assertThat(caseInstance.isActive()).isTrue();
 
     CaseExecutionImpl instance = (CaseExecutionImpl) caseInstance;
 
@@ -97,7 +96,7 @@ public class CaseInstanceTest {
     CaseExecutionImpl planItemA = childPlanItems.get(0);
 
     // the child plan item is enabled
-    assertTrue(planItemA.isEnabled());
+    assertThat(planItemA.isEnabled()).isTrue();
 
     // the parent of the child plan item is the case instance
     assertThat(planItemA.getParent()).isEqualTo(caseInstance);
@@ -111,7 +110,7 @@ public class CaseInstanceTest {
 
     assertThat(stateTransitionCollector.stateTransitions).isEqualTo(expectedStateTransitions);
 
-    assertTrue(planItemA.isActive());
+    assertThat(planItemA.isActive()).isTrue();
   }
 
   /**
@@ -181,7 +180,7 @@ public class CaseInstanceTest {
     planItemX.manualStart();
 
     // X should be active
-    assertTrue(planItemX.isActive());
+    assertThat(planItemX.isActive()).isTrue();
 
     // expected state transitions after a manual start of X:
     // enabled   --manualStart(X)--> active
@@ -206,13 +205,13 @@ public class CaseInstanceTest {
 
     for (CmmnExecution childPlanItem : childPlanItems) {
       // both children should be enabled
-      assertTrue(childPlanItem.isEnabled());
+      assertThat(childPlanItem.isEnabled()).isTrue();
 
       // manual start of a child
       childPlanItem.manualStart();
 
       // the child should be active
-      assertTrue(childPlanItem.isActive());
+      assertThat(childPlanItem.isActive()).isTrue();
 
       // X should be the parent of both children
       assertThat(childPlanItem.getParent()).isEqualTo(planItemX);
@@ -231,7 +230,7 @@ public class CaseInstanceTest {
   protected CaseExecutionImpl assertCaseXState(CmmnCaseInstance caseInstance) {
 
     // case instance is active
-    assertTrue(caseInstance.isActive());
+    assertThat(caseInstance.isActive()).isTrue();
 
     CaseExecutionImpl instance = (CaseExecutionImpl) caseInstance;
 
@@ -245,10 +244,10 @@ public class CaseInstanceTest {
     assertThat(planItemX.getParent()).isEqualTo(caseInstance);
 
     // X should be enabled
-    assertTrue(planItemX.isEnabled());
+    assertThat(planItemX.isEnabled()).isTrue();
 
     // before activation (ie. manual start) X should not have any children
-    assertTrue(planItemX.getCaseExecutions().isEmpty());
+    assertThat(planItemX.getCaseExecutions()).isEmpty();
     return planItemX;
   }
 
@@ -290,7 +289,7 @@ public class CaseInstanceTest {
     planItemX.manualStart();
 
     // X should be active
-    assertTrue(planItemX.isActive());
+    assertThat(planItemX.isActive()).isTrue();
 
     // expected state transitions after a manual start of X:
     expectedStateTransitions.add("enabled --manualStart(X)--> active");
@@ -311,7 +310,7 @@ public class CaseInstanceTest {
 
     for (CmmnExecution childPlanItem : childPlanItems) {
       // both children should be active
-      assertTrue(childPlanItem.isActive());
+      assertThat(childPlanItem.isActive()).isTrue();
 
       // X should be the parent of both children
       assertThat(childPlanItem.getParent()).isEqualTo(planItemX);
@@ -476,7 +475,7 @@ public class CaseInstanceTest {
     CaseExecutionImpl instance = (CaseExecutionImpl) caseInstance;
 
     // the case instance should be active
-    assertTrue(instance.isActive());
+    assertThat(instance.isActive()).isTrue();
 
     // the case instance should have three child plan items (A1, X1, Y)
     List<CaseExecutionImpl> childPlanItems = instance.getCaseExecutions();
@@ -490,13 +489,13 @@ public class CaseInstanceTest {
     assertThat(planItemA1.getParent()).isEqualTo(caseInstance);
 
     // A1 should be enabled
-    assertTrue(planItemA1.isEnabled());
+    assertThat(planItemA1.isEnabled()).isTrue();
 
     // manual start of A1
     planItemA1.manualStart();
 
     // A1 should be active
-    assertTrue(planItemA1.isActive());
+    assertThat(planItemA1.isActive()).isTrue();
 
     // expected state transitions:
     // enabled --manualStart(A1)--> active
@@ -515,13 +514,13 @@ public class CaseInstanceTest {
     assertThat(planItemX1.getParent()).isEqualTo(caseInstance);
 
     // X1 should be enabled
-    assertTrue(planItemX1.isEnabled());
+    assertThat(planItemX1.isEnabled()).isTrue();
 
     // manual start of X1
     planItemX1.manualStart();
 
     // X1 should be active
-    assertTrue(planItemX1.isActive());
+    assertThat(planItemX1.isActive()).isTrue();
 
     // X1 should have two children
     childPlanItems = planItemX1.getCaseExecutions();
@@ -552,13 +551,13 @@ public class CaseInstanceTest {
     assertThat(planItemA2.getParent()).isEqualTo(planItemX1);
 
     // A2 should be enabled
-    assertTrue(planItemA2.isEnabled());
+    assertThat(planItemA2.isEnabled()).isTrue();
 
     // manual start of A2
     planItemA2.manualStart();
 
     // A2 should be active
-    assertTrue(planItemA2.isActive());
+    assertThat(planItemA2.isActive()).isTrue();
 
     // expected state transition after manual start of A2:
     // enabled --manualStart(A2)--> active
@@ -577,13 +576,13 @@ public class CaseInstanceTest {
     assertThat(planItemB1.getParent()).isEqualTo(planItemX1);
 
     // B1 should be enabled
-    assertTrue(planItemB1.isEnabled());
+    assertThat(planItemB1.isEnabled()).isTrue();
 
     // manual start of B1
     planItemB1.manualStart();
 
     // B1 should be active
-    assertTrue(planItemB1.isActive());
+    assertThat(planItemB1.isActive()).isTrue();
 
     // expected state transition after manual start of B1:
     // enabled --manualStart(B1)--> active
@@ -602,13 +601,13 @@ public class CaseInstanceTest {
     assertThat(planItemY.getParent()).isEqualTo(caseInstance);
 
     // Y should be enabled
-    assertTrue(planItemY.isEnabled());
+    assertThat(planItemY.isEnabled()).isTrue();
 
     // manual start of Y
     planItemY.manualStart();
 
     // Y should be active
-    assertTrue(planItemY.isActive());
+    assertThat(planItemY.isActive()).isTrue();
 
     // Y should have two children
     childPlanItems = planItemY.getCaseExecutions();
@@ -639,13 +638,13 @@ public class CaseInstanceTest {
     assertThat(planItemC.getParent()).isEqualTo(planItemY);
 
     // C should be enabled
-    assertTrue(planItemC.isEnabled());
+    assertThat(planItemC.isEnabled()).isTrue();
 
     // manual start of C
     planItemC.manualStart();
 
     // C should be active
-    assertTrue(planItemC.isActive());
+    assertThat(planItemC.isActive()).isTrue();
 
     // expected state transition after manual start of C:
     // enabled --manualStart(C)--> active
@@ -664,13 +663,13 @@ public class CaseInstanceTest {
     assertThat(planItemX2.getParent()).isEqualTo(planItemY);
 
     // X2 should be enabled
-    assertTrue(planItemX2.isEnabled());
+    assertThat(planItemX2.isEnabled()).isTrue();
 
     // manual start of X2
     planItemX2.manualStart();
 
     // X2 should be active
-    assertTrue(planItemX2.isActive());
+    assertThat(planItemX2.isActive()).isTrue();
 
     // X2 should have two children
     childPlanItems = planItemX2.getCaseExecutions();
@@ -701,13 +700,13 @@ public class CaseInstanceTest {
     assertThat(planItemA3.getParent()).isEqualTo(planItemX2);
 
     // A3 should be enabled
-    assertTrue(planItemA3.isEnabled());
+    assertThat(planItemA3.isEnabled()).isTrue();
 
     // manual start of A3
     planItemA3.manualStart();
 
     // A3 should be active
-    assertTrue(planItemA3.isActive());
+    assertThat(planItemA3.isActive()).isTrue();
 
     // expected state transition after manual start of A3:
     // enabled --manualStart(A3)--> active
@@ -726,13 +725,13 @@ public class CaseInstanceTest {
     assertThat(planItemB2.getParent()).isEqualTo(planItemX2);
 
     // B2 should be enabled
-    assertTrue(planItemB2.isEnabled());
+    assertThat(planItemB2.isEnabled()).isTrue();
 
     // manual start of B2
     planItemB2.manualStart();
 
     // B2 should be active
-    assertTrue(planItemB2.isActive());
+    assertThat(planItemB2.isActive()).isTrue();
 
     // expected state transition after manual start of B2:
     // enabled --manualStart(B2)--> active

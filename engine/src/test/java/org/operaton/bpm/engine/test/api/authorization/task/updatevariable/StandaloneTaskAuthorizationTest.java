@@ -23,8 +23,6 @@ import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationS
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.revoke;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -433,12 +431,12 @@ public class StandaloneTaskAuthorizationTest {
 
   protected void verifySetVariables() {
     verifyVariableInstanceCount(1);
-    assertNotNull(runtimeService.createVariableInstanceQuery().singleResult());
+    assertThat(runtimeService.createVariableInstanceQuery().singleResult()).isNotNull();
   }
 
   protected void verifyRemoveVariable() {
     verifyVariableInstanceCount(0);
-    assertNull(runtimeService.createVariableInstanceQuery().singleResult());
+    assertThat(runtimeService.createVariableInstanceQuery().singleResult()).isNull();
     HistoricVariableInstance deletedVariable = historyService.createHistoricVariableInstanceQuery().includeDeleted().singleResult();
     assertThat(deletedVariable.getState()).isEqualTo("DELETED");
   }

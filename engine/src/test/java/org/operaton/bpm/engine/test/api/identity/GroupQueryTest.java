@@ -17,9 +17,7 @@
 package org.operaton.bpm.engine.test.api.identity;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import java.util.List;
@@ -106,7 +104,7 @@ public class GroupQueryTest extends PluggableProcessEngineTest {
 
     try {
       groupQuery.groupId(null);
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).isEqualTo("Provided id is null");
     }
@@ -115,7 +113,7 @@ public class GroupQueryTest extends PluggableProcessEngineTest {
   @Test
   public void testQueryByIdIn() {
     // empty list
-    assertTrue(identityService.createGroupQuery().groupIdIn("a", "b").list().isEmpty());
+    assertThat(identityService.createGroupQuery().groupIdIn("a", "b").list()).isEmpty();
 
     // collect all ids
     List<Group> list = identityService.createGroupQuery().list();
@@ -156,7 +154,7 @@ public class GroupQueryTest extends PluggableProcessEngineTest {
 
     try {
       groupQuery.groupName(null);
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).isEqualTo("Provided name is null");
     }
@@ -185,7 +183,7 @@ public class GroupQueryTest extends PluggableProcessEngineTest {
 
     try {
       groupQuery.groupNameLike(null);
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).isEqualTo("Provided nameLike is null");
     }
@@ -208,7 +206,7 @@ public class GroupQueryTest extends PluggableProcessEngineTest {
 
     try {
       groupQuery.groupType(null);
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).isEqualTo("Provided type is null");
     }
@@ -244,7 +242,7 @@ public class GroupQueryTest extends PluggableProcessEngineTest {
 
     try {
       groupQuery.groupMember(null);
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).isEqualTo("Provided userId is null");
     }
@@ -295,12 +293,12 @@ public class GroupQueryTest extends PluggableProcessEngineTest {
     var groupQuery = identityService.createGroupQuery().orderByGroupId().orderByGroupName();
     try {
       groupQuery.list();
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {}
 
     try {
       groupQuery.list();
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {}
   }
 
@@ -309,18 +307,18 @@ public class GroupQueryTest extends PluggableProcessEngineTest {
     assertThat(query.count()).isEqualTo(countExpected);
 
     if (countExpected == 1) {
-      assertNotNull(query.singleResult());
+      assertThat(query.singleResult()).isNotNull();
     } else if (countExpected > 1){
       verifySingleResultFails(query);
     } else if (countExpected == 0) {
-      assertNull(query.singleResult());
+      assertThat(query.singleResult()).isNull();
     }
   }
 
   private void verifySingleResultFails(GroupQuery query) {
     try {
       query.singleResult();
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {}
   }
 

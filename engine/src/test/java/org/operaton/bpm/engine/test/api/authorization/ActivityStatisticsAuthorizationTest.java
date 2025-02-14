@@ -23,10 +23,6 @@ import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 import org.operaton.bpm.engine.AuthorizationException;
@@ -103,11 +99,11 @@ public class ActivityStatisticsAuthorizationTest extends AuthorizationTest {
     ActivityStatistics statistics = managementService.createActivityStatisticsQuery(processDefinitionId).singleResult();
 
     // then
-    assertNotNull(statistics);
+    assertThat(statistics).isNotNull();
     assertThat(statistics.getId()).isEqualTo("scriptTask");
     assertThat(statistics.getInstances()).isEqualTo(1);
     assertThat(statistics.getFailedJobs()).isEqualTo(0);
-    assertTrue(statistics.getIncidentStatistics().isEmpty());
+    assertThat(statistics.getIncidentStatistics()).isEmpty();
   }
 
   @Test
@@ -127,11 +123,11 @@ public class ActivityStatisticsAuthorizationTest extends AuthorizationTest {
     ActivityStatistics statistics = managementService.createActivityStatisticsQuery(processDefinitionId).singleResult();
 
     // then
-    assertNotNull(statistics);
+    assertThat(statistics).isNotNull();
     assertThat(statistics.getId()).isEqualTo("scriptTask");
     assertThat(statistics.getInstances()).isEqualTo(1);
     assertThat(statistics.getFailedJobs()).isEqualTo(0);
-    assertTrue(statistics.getIncidentStatistics().isEmpty());
+    assertThat(statistics.getIncidentStatistics()).isEmpty();
   }
 
   @Test
@@ -146,11 +142,11 @@ public class ActivityStatisticsAuthorizationTest extends AuthorizationTest {
     ActivityStatistics statistics = managementService.createActivityStatisticsQuery(processDefinitionId).singleResult();
 
     // then
-    assertNotNull(statistics);
+    assertThat(statistics).isNotNull();
     assertThat(statistics.getId()).isEqualTo("scriptTask");
     assertThat(statistics.getInstances()).isEqualTo(3);
     assertThat(statistics.getFailedJobs()).isEqualTo(0);
-    assertTrue(statistics.getIncidentStatistics().isEmpty());
+    assertThat(statistics.getIncidentStatistics()).isEmpty();
   }
 
   @Test
@@ -164,11 +160,11 @@ public class ActivityStatisticsAuthorizationTest extends AuthorizationTest {
     ActivityStatistics statistics = managementService.createActivityStatisticsQuery(processDefinitionId).singleResult();
 
     // then
-    assertNotNull(statistics);
+    assertThat(statistics).isNotNull();
     assertThat(statistics.getId()).isEqualTo("scriptTask");
     assertThat(statistics.getInstances()).isEqualTo(3);
     assertThat(statistics.getFailedJobs()).isEqualTo(0);
-    assertTrue(statistics.getIncidentStatistics().isEmpty());
+    assertThat(statistics.getIncidentStatistics()).isEmpty();
   }
 
   @Test
@@ -202,7 +198,7 @@ public class ActivityStatisticsAuthorizationTest extends AuthorizationTest {
         .singleResult();
 
     // then
-    assertNull(statistics);
+    assertThat(statistics).isNull();
   }
 
   @Test
@@ -224,11 +220,11 @@ public class ActivityStatisticsAuthorizationTest extends AuthorizationTest {
         .singleResult();
 
     // then
-    assertNotNull(statistics);
+    assertThat(statistics).isNotNull();
     assertThat(statistics.getId()).isEqualTo("scriptTask");
     assertThat(statistics.getInstances()).isEqualTo(1);
     assertThat(statistics.getFailedJobs()).isEqualTo(1);
-    assertTrue(statistics.getIncidentStatistics().isEmpty());
+    assertThat(statistics.getIncidentStatistics()).isEmpty();
   }
 
   @Test
@@ -246,11 +242,11 @@ public class ActivityStatisticsAuthorizationTest extends AuthorizationTest {
         .singleResult();
 
     // then
-    assertNotNull(statistics);
+    assertThat(statistics).isNotNull();
     assertThat(statistics.getId()).isEqualTo("scriptTask");
     assertThat(statistics.getInstances()).isEqualTo(3);
     assertThat(statistics.getFailedJobs()).isEqualTo(3);
-    assertTrue(statistics.getIncidentStatistics().isEmpty());
+    assertThat(statistics.getIncidentStatistics()).isEmpty();
   }
 
   @Test
@@ -267,11 +263,11 @@ public class ActivityStatisticsAuthorizationTest extends AuthorizationTest {
         .singleResult();
 
     // then
-    assertNotNull(statistics);
+    assertThat(statistics).isNotNull();
     assertThat(statistics.getId()).isEqualTo("scriptTask");
     assertThat(statistics.getInstances()).isEqualTo(3);
     assertThat(statistics.getFailedJobs()).isEqualTo(3);
-    assertTrue(statistics.getIncidentStatistics().isEmpty());
+    assertThat(statistics.getIncidentStatistics()).isEmpty();
   }
 
   // including incidents //////////////////////////////////////////////////////////////
@@ -290,7 +286,7 @@ public class ActivityStatisticsAuthorizationTest extends AuthorizationTest {
         .singleResult();
 
     // then
-    assertNull(statistics);
+    assertThat(statistics).isNull();
   }
 
   @Test
@@ -312,11 +308,11 @@ public class ActivityStatisticsAuthorizationTest extends AuthorizationTest {
         .singleResult();
 
     // then
-    assertNotNull(statistics);
+    assertThat(statistics).isNotNull();
     assertThat(statistics.getId()).isEqualTo("scriptTask");
     assertThat(statistics.getInstances()).isEqualTo(1);
     assertThat(statistics.getFailedJobs()).isEqualTo(0);
-    assertFalse(statistics.getIncidentStatistics().isEmpty());
+    assertThat(statistics.getIncidentStatistics()).isNotEmpty();
     IncidentStatistics incidentStatistics = statistics.getIncidentStatistics().get(0);
     assertThat(incidentStatistics.getIncidentCount()).isEqualTo(1);
   }
@@ -336,11 +332,11 @@ public class ActivityStatisticsAuthorizationTest extends AuthorizationTest {
         .singleResult();
 
     // then
-    assertNotNull(statistics);
+    assertThat(statistics).isNotNull();
     assertThat(statistics.getId()).isEqualTo("scriptTask");
     assertThat(statistics.getInstances()).isEqualTo(3);
     assertThat(statistics.getFailedJobs()).isEqualTo(0);
-    assertFalse(statistics.getIncidentStatistics().isEmpty());
+    assertThat(statistics.getIncidentStatistics()).isNotEmpty();
     IncidentStatistics incidentStatistics = statistics.getIncidentStatistics().get(0);
     assertThat(incidentStatistics.getIncidentCount()).isEqualTo(3);
   }
@@ -359,11 +355,11 @@ public class ActivityStatisticsAuthorizationTest extends AuthorizationTest {
         .singleResult();
 
     // then
-    assertNotNull(statistics);
+    assertThat(statistics).isNotNull();
     assertThat(statistics.getId()).isEqualTo("scriptTask");
     assertThat(statistics.getInstances()).isEqualTo(3);
     assertThat(statistics.getFailedJobs()).isEqualTo(0);
-    assertFalse(statistics.getIncidentStatistics().isEmpty());
+    assertThat(statistics.getIncidentStatistics()).isNotEmpty();
     IncidentStatistics incidentStatistics = statistics.getIncidentStatistics().get(0);
     assertThat(incidentStatistics.getIncidentCount()).isEqualTo(3);
   }
@@ -385,7 +381,7 @@ public class ActivityStatisticsAuthorizationTest extends AuthorizationTest {
         .singleResult();
 
     // then
-    assertNull(statistics);
+    assertThat(statistics).isNull();
   }
 
   @Test
@@ -408,11 +404,11 @@ public class ActivityStatisticsAuthorizationTest extends AuthorizationTest {
         .singleResult();
 
     // then
-    assertNotNull(statistics);
+    assertThat(statistics).isNotNull();
     assertThat(statistics.getId()).isEqualTo("scriptTask");
     assertThat(statistics.getInstances()).isEqualTo(1);
     assertThat(statistics.getFailedJobs()).isEqualTo(1);
-    assertFalse(statistics.getIncidentStatistics().isEmpty());
+    assertThat(statistics.getIncidentStatistics()).isNotEmpty();
     IncidentStatistics incidentStatistics = statistics.getIncidentStatistics().get(0);
     assertThat(incidentStatistics.getIncidentCount()).isEqualTo(1);
   }
@@ -433,11 +429,11 @@ public class ActivityStatisticsAuthorizationTest extends AuthorizationTest {
         .singleResult();
 
     // then
-    assertNotNull(statistics);
+    assertThat(statistics).isNotNull();
     assertThat(statistics.getId()).isEqualTo("scriptTask");
     assertThat(statistics.getInstances()).isEqualTo(3);
     assertThat(statistics.getFailedJobs()).isEqualTo(3);
-    assertFalse(statistics.getIncidentStatistics().isEmpty());
+    assertThat(statistics.getIncidentStatistics()).isNotEmpty();
     IncidentStatistics incidentStatistics = statistics.getIncidentStatistics().get(0);
     assertThat(incidentStatistics.getIncidentCount()).isEqualTo(3);
   }
@@ -457,11 +453,11 @@ public class ActivityStatisticsAuthorizationTest extends AuthorizationTest {
         .singleResult();
 
     // then
-    assertNotNull(statistics);
+    assertThat(statistics).isNotNull();
     assertThat(statistics.getId()).isEqualTo("scriptTask");
     assertThat(statistics.getInstances()).isEqualTo(3);
     assertThat(statistics.getFailedJobs()).isEqualTo(3);
-    assertFalse(statistics.getIncidentStatistics().isEmpty());
+    assertThat(statistics.getIncidentStatistics()).isNotEmpty();
     IncidentStatistics incidentStatistics = statistics.getIncidentStatistics().get(0);
     assertThat(incidentStatistics.getIncidentCount()).isEqualTo(3);
   }
@@ -486,7 +482,7 @@ public class ActivityStatisticsAuthorizationTest extends AuthorizationTest {
     assertThat(activityResult.getInstances()).isEqualTo(3);
     assertThat(activityResult.getId()).isEqualTo("scriptTask");
     assertThat(activityResult.getFailedJobs()).isEqualTo(3);
-    assertFalse(activityResult.getIncidentStatistics().isEmpty());
+    assertThat(activityResult.getIncidentStatistics()).isNotEmpty();
     IncidentStatistics incidentStatistics = activityResult.getIncidentStatistics().get(0);
     assertThat(incidentStatistics.getIncidentCount()).isEqualTo(3);
   }
@@ -509,7 +505,7 @@ public class ActivityStatisticsAuthorizationTest extends AuthorizationTest {
     assertThat(activityResult.getInstances()).isEqualTo(3);
     assertThat(activityResult.getId()).isEqualTo("scriptTask");
     assertThat(activityResult.getFailedJobs()).isEqualTo(0);
-    assertTrue(activityResult.getIncidentStatistics().isEmpty());
+    assertThat(activityResult.getIncidentStatistics()).isEmpty();
   }
 
 }

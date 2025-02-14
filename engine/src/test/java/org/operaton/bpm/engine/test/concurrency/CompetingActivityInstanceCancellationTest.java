@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.test.concurrency;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import org.operaton.bpm.engine.OptimisticLockingException;
@@ -124,7 +123,7 @@ public class CompetingActivityInstanceCancellationTest {
         task3ActivityInstanceId = id;
       }
       else {
-        fail();
+        fail("");
       }
     }
 
@@ -142,16 +141,16 @@ public class CompetingActivityInstanceCancellationTest {
 
     LOG.debug("test thread notifies thread 1");
     threadOne.proceedAndWaitTillDone();
-    assertNull(threadOne.exception);
+    assertThat(threadOne.exception).isNull();
 
     LOG.debug("test thread notifies thread 2");
     threadTwo.proceedAndWaitTillDone();
-    assertNotNull(threadTwo.exception);
+    assertThat(threadTwo.exception).isNotNull();
     testRule.assertTextPresent("was updated by another transaction concurrently", threadTwo.exception.getMessage());
 
     LOG.debug("test thread notifies thread 3");
     threadThree.proceedAndWaitTillDone();
-    assertNotNull(threadThree.exception);
+    assertThat(threadThree.exception).isNotNull();
     testRule.assertTextPresent("was updated by another transaction concurrently", threadThree.exception.getMessage());
   }
 

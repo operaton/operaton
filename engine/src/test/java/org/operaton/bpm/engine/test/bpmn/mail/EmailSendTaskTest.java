@@ -17,8 +17,7 @@
 package org.operaton.bpm.engine.test.bpmn.mail;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 import javax.activation.DataHandler;
 import javax.mail.MessagingException;
@@ -157,7 +156,7 @@ public class EmailSendTaskTest extends EmailTestCase {
 
     assertThat(mimeMessage.getHeader("Subject", null)).isEqualTo("Your order " + orderId + " has been shipped");
     assertThat(mimeMessage.getHeader("From", null)).isEqualTo(from);
-    assertTrue(mimeMessage.getHeader("To", null).contains(recipient));
+    assertThat(mimeMessage.getHeader("To", null)).contains(recipient);
   }
 
   // Helper
@@ -168,22 +167,22 @@ public class EmailSendTaskTest extends EmailTestCase {
       MimeMessage mimeMessage = emailMessage.getMimeMessage();
 
       if (htmlMail) {
-        assertTrue(mimeMessage.getContentType().contains("multipart/mixed"));
+        assertThat(mimeMessage.getContentType()).contains("multipart/mixed");
       } else {
-        assertTrue(mimeMessage.getContentType().contains("text/plain"));
+        assertThat(mimeMessage.getContentType()).contains("text/plain");
       }
 
       assertThat(mimeMessage.getHeader("Subject", null)).isEqualTo(subject);
       assertThat(mimeMessage.getHeader("From", null)).isEqualTo(from);
-      assertTrue(getMessage(mimeMessage).contains(message));
+      assertThat(getMessage(mimeMessage)).contains(message);
 
       for (String t : to) {
-        assertTrue(mimeMessage.getHeader("To", null).contains(t));
+        assertThat(mimeMessage.getHeader("To", null)).contains(t);
       }
 
       if (cc != null) {
         for (String c : cc) {
-          assertTrue(mimeMessage.getHeader("Cc", null).contains(c));
+          assertThat(mimeMessage.getHeader("Cc", null)).contains(c);
         }
       }
 

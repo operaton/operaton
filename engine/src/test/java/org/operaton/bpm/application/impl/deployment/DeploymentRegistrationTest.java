@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.application.impl.deployment;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
@@ -73,8 +72,8 @@ public class DeploymentRegistrationTest extends PluggableProcessEngineTest {
 
     // accordingly the process definition cache should only contain the latest version now
     Cache cache = processEngineConfiguration.getDeploymentCache().getProcessDefinitionCache();
-    assertNotNull(cache.get(version2.getId()));
-    assertNull(cache.get(version1.getId()));
+    assertThat(cache.get(version2.getId())).isNotNull();
+    assertThat(cache.get(version1.getId())).isNull();
 
     deleteDeployments(deployment1, deployment2);
   }

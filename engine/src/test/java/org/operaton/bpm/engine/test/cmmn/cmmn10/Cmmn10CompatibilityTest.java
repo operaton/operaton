@@ -17,9 +17,7 @@
 package org.operaton.bpm.engine.test.cmmn.cmmn10;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import org.operaton.bpm.engine.exception.NotAllowedException;
@@ -47,8 +45,8 @@ public class Cmmn10CompatibilityTest extends CmmnTest {
 
     CaseExecution taskExecution = queryCaseExecutionByActivityId("PI_HumanTask_1");
 
-    assertNotNull(taskExecution);
-    assertTrue(taskExecution.isRequired());
+    assertThat(taskExecution).isNotNull();
+    assertThat(taskExecution.isRequired()).isTrue();
 
     try {
       caseService.completeCaseExecution(caseInstanceId);
@@ -65,8 +63,8 @@ public class Cmmn10CompatibilityTest extends CmmnTest {
 
     CaseExecution taskExecution = queryCaseExecutionByActivityId("PI_HumanTask_1");
 
-    assertNotNull(taskExecution);
-    assertTrue(taskExecution.isActive());
+    assertThat(taskExecution).isNotNull();
+    assertThat(taskExecution.isActive()).isTrue();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/cmm10/Cmmn10CompatibilityTest.testManualActivationRuleWithoutCondition.cmmn")
@@ -76,8 +74,8 @@ public class Cmmn10CompatibilityTest extends CmmnTest {
 
     CaseExecution taskExecution = queryCaseExecutionByActivityId("PI_HumanTask_1");
 
-    assertNotNull(taskExecution);
-    assertTrue(taskExecution.isEnabled());
+    assertThat(taskExecution).isNotNull();
+    assertThat(taskExecution.isEnabled()).isTrue();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/cmm10/Cmmn10CompatibilityTest.testRepetitionRule.cmmn")
@@ -149,7 +147,7 @@ public class Cmmn10CompatibilityTest extends CmmnTest {
     complete(humanTask);
 
     // then
-    assertTrue(queryCaseExecutionByActivityId("PI_HumanTask_2").isActive());
+    assertThat(queryCaseExecutionByActivityId("PI_HumanTask_2").isActive()).isTrue();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/cmm10/Cmmn10CompatibilityTest.testPlanItemExitCriterion.cmmn")
@@ -164,7 +162,7 @@ public class Cmmn10CompatibilityTest extends CmmnTest {
     complete(humanTask);
 
     // then
-    assertNull(queryCaseExecutionByActivityId("PI_HumanTask_2"));
+    assertThat(queryCaseExecutionByActivityId("PI_HumanTask_2")).isNull();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/cmm10/Cmmn10CompatibilityTest.testCasePlanModelExitCriterion.cmmn")
@@ -179,7 +177,7 @@ public class Cmmn10CompatibilityTest extends CmmnTest {
     complete(humanTask);
 
     // then
-    assertTrue(queryCaseExecutionById(caseInstanceId).isTerminated());
+    assertThat(queryCaseExecutionById(caseInstanceId).isTerminated()).isTrue();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/cmm10/Cmmn10CompatibilityTest.testSentryIfPartCondition.cmmn")
@@ -191,7 +189,7 @@ public class Cmmn10CompatibilityTest extends CmmnTest {
     String humanTask1 = queryCaseExecutionByActivityId("PI_HumanTask_1").getId();
     String humanTask2 = queryCaseExecutionByActivityId("PI_HumanTask_2").getId();
 
-    assertTrue(queryCaseExecutionById(humanTask2).isAvailable());
+    assertThat(queryCaseExecutionById(humanTask2).isAvailable()).isTrue();
 
     // when
     caseService
@@ -200,7 +198,7 @@ public class Cmmn10CompatibilityTest extends CmmnTest {
       .manualStart();
 
     // then
-    assertTrue(queryCaseExecutionById(humanTask2).isEnabled());
+    assertThat(queryCaseExecutionById(humanTask2).isEnabled()).isTrue();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/cmm10/Cmmn10CompatibilityTest.testDescription.cmmn")

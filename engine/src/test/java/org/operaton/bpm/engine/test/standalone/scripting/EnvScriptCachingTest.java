@@ -17,9 +17,6 @@
 package org.operaton.bpm.engine.test.standalone.scripting;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 import java.util.List;
 import java.util.Map;
@@ -60,12 +57,12 @@ public class EnvScriptCachingTest extends AbstractScriptEnvironmentTest {
 
     // then
     Map<String, List<ExecutableScript>> environmentScripts = processApplication.getEnvironmentScripts();
-    assertNotNull(environmentScripts);
+    assertThat(environmentScripts).isNotNull();
 
     List<ExecutableScript> groovyEnvScripts = environmentScripts.get(SCRIPT_LANGUAGE);
 
-    assertNotNull(groovyEnvScripts);
-    assertFalse(groovyEnvScripts.isEmpty());
+    assertThat(groovyEnvScripts).isNotNull();
+    assertThat(groovyEnvScripts).isNotEmpty();
     assertThat(groovyEnvScripts).hasSize(processEngineConfiguration.getEnvScriptResolvers().size());
 
     repositoryService.deleteDeployment(deployment.getId(), true);
@@ -85,8 +82,8 @@ public class EnvScriptCachingTest extends AbstractScriptEnvironmentTest {
 
     // then
     Map<String, List<ExecutableScript>> environmentScripts = processApplication.getEnvironmentScripts();
-    assertNotNull(environmentScripts);
-    assertNull(environmentScripts.get(SCRIPT_LANGUAGE));
+    assertThat(environmentScripts).isNotNull();
+    assertThat(environmentScripts.get(SCRIPT_LANGUAGE)).isNull();
 
     repositoryService.deleteDeployment(deployment.getId(), true);
 

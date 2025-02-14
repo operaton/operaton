@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.test.jobexecutor;
 import static org.operaton.bpm.engine.test.util.JobExecutorWaitUtils.waitForJobExecutionRunnablesToFinish;
 import static org.operaton.bpm.engine.test.util.JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
 
 import java.text.DateFormat.Field;
 import java.util.ArrayList;
@@ -219,7 +218,7 @@ public class SequentialJobAcquisitionTest {
 
     Thread.sleep(2000);
 
-    assertFalse(jobExecutor.getAcquireJobsRunnable().isJobAdded());
+    assertThat(jobExecutor.getAcquireJobsRunnable().isJobAdded()).isFalse();
 
     assertThat(engine1.getManagementService().createJobQuery().count()).isEqualTo(0);
     assertThat(engine2.getManagementService().createJobQuery().count()).isEqualTo(0);

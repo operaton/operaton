@@ -45,14 +45,16 @@ import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeA
 
 import java.util.*;
 
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 @RunWith(Parameterized.class)
@@ -272,30 +274,30 @@ public class ModificationExecutionAsyncTest {
     // then there exists a seed job definition with the batch id as
     // configuration
     JobDefinition seedJobDefinition = helper.getSeedJobDefinition(batch);
-    assertNotNull(seedJobDefinition);
+    assertThat(seedJobDefinition).isNotNull();
     assertThat(seedJobDefinition.getJobConfiguration()).isEqualTo(batch.getId());
     assertThat(seedJobDefinition.getJobType()).isEqualTo(BatchSeedJobHandler.TYPE);
     assertThat(processDefinition.getDeploymentId()).isEqualTo(seedJobDefinition.getDeploymentId());
 
     // and there exists a modification job definition
     JobDefinition modificationJobDefinition = helper.getExecutionJobDefinition(batch);
-    assertNotNull(modificationJobDefinition);
+    assertThat(modificationJobDefinition).isNotNull();
     assertThat(modificationJobDefinition.getJobType()).isEqualTo(Batch.TYPE_PROCESS_INSTANCE_MODIFICATION);
 
     // and a seed job with no relation to a process or execution etc.
     Job seedJob = helper.getSeedJob(batch);
-    assertNotNull(seedJob);
+    assertThat(seedJob).isNotNull();
     assertThat(seedJob.getJobDefinitionId()).isEqualTo(seedJobDefinition.getId());
     assertThat(seedJob.getDuedate()).isEqualTo(currentTime);
     assertThat(seedJob.getDeploymentId()).isEqualTo(seedJobDefinition.getDeploymentId());
-    assertNull(seedJob.getProcessDefinitionId());
-    assertNull(seedJob.getProcessDefinitionKey());
-    assertNull(seedJob.getProcessInstanceId());
-    assertNull(seedJob.getExecutionId());
+    assertThat(seedJob.getProcessDefinitionId()).isNull();
+    assertThat(seedJob.getProcessDefinitionKey()).isNull();
+    assertThat(seedJob.getProcessInstanceId()).isNull();
+    assertThat(seedJob.getExecutionId()).isNull();
 
     // but no modification jobs where created
     List<Job> modificationJobs = helper.getExecutionJobs(batch);
-    assertThat(modificationJobs).hasSize(0);
+    assertThat(modificationJobs).isEmpty();
   }
 
   @Test
@@ -314,15 +316,15 @@ public class ModificationExecutionAsyncTest {
     for (Job modificationJob : modificationJobs) {
       assertThat(modificationJob.getJobDefinitionId()).isEqualTo(modificationJobDefinition.getId());
       assertThat(modificationJob.getDuedate()).isEqualTo(currentTime);
-      assertNull(modificationJob.getProcessDefinitionId());
-      assertNull(modificationJob.getProcessDefinitionKey());
-      assertNull(modificationJob.getProcessInstanceId());
-      assertNull(modificationJob.getExecutionId());
+      assertThat(modificationJob.getProcessDefinitionId()).isNull();
+      assertThat(modificationJob.getProcessDefinitionKey()).isNull();
+      assertThat(modificationJob.getProcessInstanceId()).isNull();
+      assertThat(modificationJob.getExecutionId()).isNull();
     }
 
     // and the seed job still exists
     Job seedJob = helper.getJobForDefinition(seedJobDefinition);
-    assertNotNull(seedJob);
+    assertThat(seedJob).isNotNull();
   }
 
   @Test
@@ -335,17 +337,17 @@ public class ModificationExecutionAsyncTest {
 
     // then the seed job definition still exists but the seed job is removed
     JobDefinition seedJobDefinition = helper.getSeedJobDefinition(batch);
-    assertNotNull(seedJobDefinition);
+    assertThat(seedJobDefinition).isNotNull();
 
     Job seedJob = helper.getSeedJob(batch);
-    assertNull(seedJob);
+    assertThat(seedJob).isNull();
 
     // and a monitor job definition and job exists
     JobDefinition monitorJobDefinition = helper.getMonitorJobDefinition(batch);
-    assertNotNull(monitorJobDefinition);
+    assertThat(monitorJobDefinition).isNotNull();
 
     Job monitorJob = helper.getMonitorJob(batch);
-    assertNotNull(monitorJob);
+    assertThat(monitorJob).isNotNull();
   }
 
   @Test
@@ -365,7 +367,7 @@ public class ModificationExecutionAsyncTest {
     // then all process instances where modified
     for (String processInstanceId : helper.currentProcessInstances) {
       ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-      assertNotNull(updatedTree);
+      assertThat(updatedTree).isNotNull();
       assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
       assertThat(updatedTree).hasStructure(
@@ -377,10 +379,10 @@ public class ModificationExecutionAsyncTest {
     }
 
     // and the no modification jobs exist
-    assertThat(helper.getExecutionJobs(batch)).hasSize(0);
+    assertThat(helper.getExecutionJobs(batch)).isEmpty();
 
     // but a monitor job exists
-    assertNotNull(helper.getMonitorJob(batch));
+    assertThat(helper.getMonitorJob(batch)).isNotNull();
   }
 
   @Test
@@ -400,7 +402,7 @@ public class ModificationExecutionAsyncTest {
     // then all process instances where modified
     for (String processInstanceId : helper.currentProcessInstances) {
       ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-      assertNotNull(updatedTree);
+      assertThat(updatedTree).isNotNull();
       assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
       assertThat(updatedTree).hasStructure(
@@ -412,10 +414,10 @@ public class ModificationExecutionAsyncTest {
     }
 
     // and the no modification jobs exist
-    assertThat(helper.getExecutionJobs(batch)).hasSize(0);
+    assertThat(helper.getExecutionJobs(batch)).isEmpty();
 
     // but a monitor job exists
-    assertNotNull(helper.getMonitorJob(batch));
+    assertThat(helper.getMonitorJob(batch)).isNotNull();
   }
 
   @Test
@@ -435,7 +437,7 @@ public class ModificationExecutionAsyncTest {
     // then all process instances where modified
     for (String processInstanceId : helper.currentProcessInstances) {
       ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-      assertNotNull(updatedTree);
+      assertThat(updatedTree).isNotNull();
       assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
       assertThat(updatedTree).hasStructure(
@@ -447,10 +449,10 @@ public class ModificationExecutionAsyncTest {
     }
 
     // and the no modification jobs exist
-    assertThat(helper.getExecutionJobs(batch)).hasSize(0);
+    assertThat(helper.getExecutionJobs(batch)).isEmpty();
 
     // but a monitor job exists
-    assertNotNull(helper.getMonitorJob(batch));
+    assertThat(helper.getMonitorJob(batch)).isNotNull();
   }
 
   @Test
@@ -468,14 +470,14 @@ public class ModificationExecutionAsyncTest {
     // then all process instances where modified
     for (String processInstanceId : helper.currentProcessInstances) {
       ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-      assertNull(updatedTree);
+      assertThat(updatedTree).isNull();
     }
 
     // and the no modification jobs exist
-    assertThat(helper.getExecutionJobs(batch)).hasSize(0);
+    assertThat(helper.getExecutionJobs(batch)).isEmpty();
 
     // but a monitor job exists
-    assertNotNull(helper.getMonitorJob(batch));
+    assertThat(helper.getMonitorJob(batch)).isNotNull();
   }
 
   @Test
@@ -502,7 +504,7 @@ public class ModificationExecutionAsyncTest {
     // then all process instances where modified
     for (String processInstanceId : helper.currentProcessInstances) {
       ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-      assertNotNull(updatedTree);
+      assertThat(updatedTree).isNotNull();
       assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
       assertThat(updatedTree).hasStructure(
@@ -513,10 +515,10 @@ public class ModificationExecutionAsyncTest {
     }
 
     // and the no modification jobs exist
-    assertThat(helper.getExecutionJobs(batch)).hasSize(0);
+    assertThat(helper.getExecutionJobs(batch)).isEmpty();
 
     // but a monitor job exists
-    assertNotNull(helper.getMonitorJob(batch));
+    assertThat(helper.getMonitorJob(batch)).isNotNull();
   }
 
   @Test
@@ -542,14 +544,14 @@ public class ModificationExecutionAsyncTest {
     // then all process instances where modified
     for (String processInstanceId : helper.currentProcessInstances) {
       ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-      assertNull(updatedTree);
+      assertThat(updatedTree).isNull();
     }
 
     // and the no modification jobs exist
-    assertThat(helper.getExecutionJobs(batch)).hasSize(0);
+    assertThat(helper.getExecutionJobs(batch)).isEmpty();
 
     // but a monitor job exists
-    assertNotNull(helper.getMonitorJob(batch));
+    assertThat(helper.getMonitorJob(batch)).isNotNull();
   }
 
   @Test
@@ -577,7 +579,7 @@ public class ModificationExecutionAsyncTest {
     // then all process instances where modified
     for (String processInstanceId : helper.currentProcessInstances) {
       ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-      assertNotNull(updatedTree);
+      assertThat(updatedTree).isNotNull();
       assertThat(updatedTree).hasStructure(
           describeActivityInstanceTree(
               processDefinition.getId())
@@ -586,10 +588,10 @@ public class ModificationExecutionAsyncTest {
     }
 
     // and the no modification jobs exist
-    assertThat(helper.getExecutionJobs(batch)).hasSize(0);
+    assertThat(helper.getExecutionJobs(batch)).isEmpty();
 
     // but a monitor job exists
-    assertNotNull(helper.getMonitorJob(batch));
+    assertThat(helper.getMonitorJob(batch)).isNotNull();
   }
 
   @Test
@@ -619,20 +621,20 @@ public class ModificationExecutionAsyncTest {
     ActivityInstance updatedTree = null;
     String processInstanceId = processInstanceIds.get(0);
     updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
     assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processDefinition.getId()).activity("user2").activity("user2").done());
 
     processInstanceId = processInstanceIds.get(1);
     updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
     assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processDefinition.getId()).activity("user1").activity("user2").done());
 
     // and the no modification jobs exist
-    assertThat(helper.getExecutionJobs(batch)).hasSize(0);
+    assertThat(helper.getExecutionJobs(batch)).isEmpty();
 
     // but a monitor job exists
-    assertNotNull(helper.getMonitorJob(batch));
+    assertThat(helper.getMonitorJob(batch)).isNotNull();
   }
 
   @Test
@@ -646,7 +648,7 @@ public class ModificationExecutionAsyncTest {
 
     // then the monitor job has a no due date set
     Job monitorJob = helper.getMonitorJob(batch);
-    assertNotNull(monitorJob);
+    assertThat(monitorJob).isNotNull();
     assertThat(monitorJob.getDuedate()).isEqualTo(currentTime);
 
     // when the monitor job is executed
@@ -784,7 +786,7 @@ public class ModificationExecutionAsyncTest {
       // then all process instances where modified
       for (String processInstanceId : helper.currentProcessInstances) {
         ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-        assertNotNull(updatedTree);
+        assertThat(updatedTree).isNotNull();
         assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
         assertThat(updatedTree).hasStructure(
@@ -819,12 +821,12 @@ public class ModificationExecutionAsyncTest {
     for (String processInstanceId : helper.currentProcessInstances) {
       if (processInstanceId.equals(helper.currentProcessInstances.get(0))) {
         ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-        assertNull(updatedTree);
+        assertThat(updatedTree).isNull();
         continue;
       }
 
       ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-      assertNotNull(updatedTree);
+      assertThat(updatedTree).isNotNull();
       assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
       assertThat(updatedTree).hasStructure(
@@ -873,12 +875,12 @@ public class ModificationExecutionAsyncTest {
     for (String processInstanceId : startedInstances) {
       if (processInstanceId.equals(deletedProcessInstanceId)) {
         ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-        assertNull(updatedTree);
+        assertThat(updatedTree).isNull();
         continue;
       }
 
       ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-      assertNotNull(updatedTree);
+      assertThat(updatedTree).isNotNull();
       assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
       assertThat(updatedTree).hasStructure(
@@ -909,7 +911,7 @@ public class ModificationExecutionAsyncTest {
     Task task = taskService.createTaskQuery().processInstanceId(startedInstances.get(0)).singleResult();
     String processDefinitionId = task.getProcessDefinitionId();
     String completedProcessInstanceId = task.getProcessInstanceId();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     taskService.complete(task.getId());
 
     HistoricProcessInstanceQuery historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery().unfinished().processDefinitionId(processDefinitionId);
@@ -931,12 +933,12 @@ public class ModificationExecutionAsyncTest {
     for (String processInstanceId : startedInstances) {
       if (processInstanceId.equals(completedProcessInstanceId)) {
         ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-        assertNull(updatedTree);
+        assertThat(updatedTree).isNull();
         continue;
       }
 
       ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-      assertNotNull(updatedTree);
+      assertThat(updatedTree).isNotNull();
       assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
       assertThat(updatedTree).hasStructure(
@@ -949,7 +951,7 @@ public class ModificationExecutionAsyncTest {
 
     // and one batch job failed and has 2 retries left
     List<Job> modificationJobs = helper.getExecutionJobs(batch);
-    assertThat(modificationJobs).hasSize(0);
+    assertThat(modificationJobs).isEmpty();
   }
 
   @Test
@@ -1004,7 +1006,7 @@ public class ModificationExecutionAsyncTest {
     Task task = taskService.createTaskQuery().processInstanceId(startedInstances.get(0)).singleResult();
     String processDefinitionId = task.getProcessDefinitionId();
     String completedProcessInstanceId = task.getProcessInstanceId();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     taskService.complete(task.getId());
 
     // then
@@ -1023,12 +1025,12 @@ public class ModificationExecutionAsyncTest {
     for (String processInstanceId : startedInstances) {
       if (processInstanceId.equals(completedProcessInstanceId)) {
         ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-        assertNull(updatedTree);
+        assertThat(updatedTree).isNull();
         continue;
       }
 
       ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-      assertNotNull(updatedTree);
+      assertThat(updatedTree).isNotNull();
       assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
       assertThat(updatedTree).hasStructure(
@@ -1060,7 +1062,7 @@ public class ModificationExecutionAsyncTest {
     Task task = taskService.createTaskQuery().processInstanceId(startedInstances.get(0)).singleResult();
     String processDefinitionId = task.getProcessDefinitionId();
     String completedProcessInstanceId = task.getProcessInstanceId();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     taskService.complete(task.getId());
 
     HistoricProcessInstanceQuery historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery().processDefinitionId(processDefinitionId);
@@ -1082,12 +1084,12 @@ public class ModificationExecutionAsyncTest {
     for (String processInstanceId : startedInstances) {
       if (processInstanceId.equals(completedProcessInstanceId)) {
         ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-        assertNull(updatedTree);
+        assertThat(updatedTree).isNull();
         continue;
       }
 
       ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-      assertNotNull(updatedTree);
+      assertThat(updatedTree).isNotNull();
       assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
       assertThat(updatedTree).hasStructure(
@@ -1236,7 +1238,7 @@ public class ModificationExecutionAsyncTest {
     helper.executeJobs(batch);
 
     // then
-    assertThat(DelegateEvent.getEvents()).hasSize(0);
+    assertThat(DelegateEvent.getEvents()).isEmpty();
   }
 
   @Test
@@ -1263,7 +1265,7 @@ public class ModificationExecutionAsyncTest {
 
     // then
     VariableInstance inputVariable = runtimeService.createVariableInstanceQuery().singleResult();
-    Assert.assertNotNull(inputVariable);
+    assertThat(inputVariable).isNotNull();
     assertThat(inputVariable.getName()).isEqualTo("foo");
     assertThat(inputVariable.getValue()).isEqualTo("bar");
 
@@ -1324,7 +1326,7 @@ public class ModificationExecutionAsyncTest {
     helper.executeJobs(batch);
 
     // then
-    assertThat(runtimeService.createExecutionQuery().list()).hasSize(0);
+    assertThat(runtimeService.createExecutionQuery().list()).isEmpty();
   }
 
   @Test
@@ -1352,7 +1354,7 @@ public class ModificationExecutionAsyncTest {
     helper.executeJobs(batch);
 
     // then
-    assertThat(runtimeService.createExecutionQuery().list()).hasSize(0);
+    assertThat(runtimeService.createExecutionQuery().list()).isEmpty();
   }
 
   @Test
@@ -1381,7 +1383,7 @@ public class ModificationExecutionAsyncTest {
 
     // then
     ExecutionEntity execution = (ExecutionEntity) runtimeService.createExecutionQuery().singleResult();
-    assertNotNull(execution);
+    assertThat(execution).isNotNull();
     assertThat(execution.getActivityId()).isEqualTo("user");
   }
 
@@ -1412,7 +1414,7 @@ public class ModificationExecutionAsyncTest {
     // then
     for (String processInstanceId : processInstanceIds) {
       Execution execution = runtimeService.createExecutionQuery().processInstanceId(processInstanceId).singleResult();
-      assertNotNull(execution);
+      assertThat(execution).isNotNull();
       assertThat(((ExecutionEntity) execution).getActivityId()).isEqualTo("user");
     }
   }
@@ -1463,8 +1465,8 @@ public class ModificationExecutionAsyncTest {
   }
 
   protected void assertBatchCreated(Batch batch, int processInstanceCount) {
-    assertNotNull(batch);
-    assertNotNull(batch.getId());
+    assertThat(batch).isNotNull();
+    assertThat(batch.getId()).isNotNull();
     assertThat(batch.getType()).isEqualTo("instance-modification");
     assertThat(batch.getTotalJobs()).isEqualTo(processInstanceCount);
     assertThat(batch.getBatchJobsPerSeed()).isEqualTo(defaultBatchJobsPerSeed);

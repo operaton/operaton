@@ -21,9 +21,6 @@ import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeA
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -209,7 +206,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("compensateProcess");
 
     assertThat(runtimeService.getVariable(processInstance.getId(), "undoBookHotel")).isEqualTo(5);
-    assertNull(runtimeService.getVariable(processInstance.getId(), "undoBookFlight"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "undoBookFlight")).isNull();
 
     runtimeService.signal(processInstance.getId());
     testRule.assertProcessEnded(processInstance.getId());
@@ -225,7 +222,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("compensateProcess");
 
     Task compensationTask = taskService.createTaskQuery().singleResult();
-    assertNotNull(compensationTask);
+    assertThat(compensationTask).isNotNull();
     assertThat(compensationTask.getTaskDefinitionKey()).isEqualTo("undoSubprocess");
 
     taskService.complete(compensationTask.getId());
@@ -247,7 +244,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
     runtimeService.signal(instance.getId());
     // then
     Task compensationTask = taskService.createTaskQuery().singleResult();
-    assertNotNull(compensationTask);
+    assertThat(compensationTask).isNotNull();
     assertThat(compensationTask.getTaskDefinitionKey()).isEqualTo("undoScopeTask");
 
     taskService.complete(compensationTask.getId());
@@ -273,7 +270,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
 
     // then
     Task compensationTask = taskService.createTaskQuery().singleResult();
-    assertNotNull(compensationTask);
+    assertThat(compensationTask).isNotNull();
     assertThat(compensationTask.getTaskDefinitionKey()).isEqualTo("undoScopeTask");
 
     taskService.complete(compensationTask.getId());
@@ -395,7 +392,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
       assertThat(historyService.createHistoricActivityInstanceQuery().activityId("undoBookHotel").count()).isEqualTo(5);
     }
 
-    assertTrue(GetVariablesDelegate.values.containsAll(hotels));
+    assertThat(GetVariablesDelegate.values).containsAll(hotels);
   }
 
   @Deployment
@@ -416,7 +413,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
       assertThat(historyService.createHistoricActivityInstanceQuery().activityId("undoBookHotel").count()).isEqualTo(5);
     }
 
-    assertTrue(GetVariablesDelegate.values.containsAll(hotels));
+    assertThat(GetVariablesDelegate.values).containsAll(hotels);
   }
 
   @Deployment
@@ -950,14 +947,14 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
     // then the compensation handler has been activated
     // and the user task in the sub process can be successfully completed
     Task subProcessTask = taskService.createTaskQuery().singleResult();
-    assertNotNull(subProcessTask);
+    assertThat(subProcessTask).isNotNull();
     assertThat(subProcessTask.getTaskDefinitionKey()).isEqualTo("subProcessTask");
 
     taskService.complete(subProcessTask.getId());
 
     // and the task following compensation can be successfully completed
     Task afterCompensationTask = taskService.createTaskQuery().singleResult();
-    assertNotNull(afterCompensationTask);
+    assertThat(afterCompensationTask).isNotNull();
     assertThat(afterCompensationTask.getTaskDefinitionKey()).isEqualTo("beforeEnd");
 
     taskService.complete(afterCompensationTask.getId());
@@ -1018,7 +1015,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
 
     // then activity instance tree is correct
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("eventSubProcessTask");
   }
 
@@ -1061,14 +1058,14 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
 
     // then there is a message event subscription for the receive task compensation handler
     EventSubscription eventSubscription = runtimeService.createEventSubscriptionQuery().singleResult();
-    assertNotNull(eventSubscription);
+    assertThat(eventSubscription).isNotNull();
     assertThat(eventSubscription.getEventType()).isEqualTo(EventType.MESSAGE.name());
 
     // and triggering the message completes compensation
     runtimeService.correlateMessage("Message");
 
     Task afterCompensationTask = taskService.createTaskQuery().singleResult();
-    assertNotNull(afterCompensationTask);
+    assertThat(afterCompensationTask).isNotNull();
     assertThat(afterCompensationTask.getTaskDefinitionKey()).isEqualTo("beforeEnd");
 
     taskService.complete(afterCompensationTask.getId());
@@ -1201,7 +1198,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
   private void completeTasks(String taskName, int times) {
     List<Task> tasks = taskService.createTaskQuery().taskName(taskName).list();
 
-    assertTrue("Actual there are " + tasks.size() + " open tasks with name '" + taskName + "'. Expected at least " + times, times <= tasks.size());
+    assertThat(times <= tasks.size()).as("Actual there are " + tasks.size() + " open tasks with name '" + taskName + "'. Expected at least " + times).isTrue();
 
     Iterator<Task> taskIterator = tasks.iterator();
     for (int i = 0; i < times; i++) {
@@ -1212,7 +1209,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
 
   private void completeTaskWithVariable(String taskName, String variable, Object value) {
     Task task = taskService.createTaskQuery().taskName(taskName).singleResult();
-    assertNotNull("No open task with name '" + taskName + "'", task);
+    assertThat(task).as("No open task with name '" + taskName + "'").isNotNull();
 
     Map<String, Object> variables = new HashMap<>();
     if (variable != null) {

@@ -17,13 +17,13 @@
 package org.operaton.bpm.engine.test.api.authorization.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import org.junit.Assert;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.authorization.Authorization;
@@ -86,24 +86,24 @@ public class AuthorizationScenarioInstance {
       assertThat(actualMissingAuthorizations).containsExactlyInAnyOrderElementsOf(expectedMissingAuthorizations);
 
       for (Authorization missingAuthorization : missingAuthorizations) {
-        Assert.assertTrue(assertionFailureMessage, message.contains(missingAuthorization.getUserId()));
+        assertThat(message.contains(missingAuthorization.getUserId())).as(assertionFailureMessage).isTrue();
         assertThat(e.getUserId()).isEqualTo(missingAuthorization.getUserId());
 
         Permission[] permissions = AuthorizationTestUtil.getPermissions(missingAuthorization);
         for (Permission permission : permissions) {
           if (permission.getValue() != Permissions.NONE.getValue()) {
-            Assert.assertTrue(assertionFailureMessage, message.contains(permission.getName()));
+            assertThat(message.contains(permission.getName())).as(assertionFailureMessage).isTrue();
             break;
           }
         }
 
         if (!Authorization.ANY.equals(missingAuthorization.getResourceId())) {
           // missing ANY authorizations are not explicitly represented in the error message
-          Assert.assertTrue(assertionFailureMessage, message.contains(missingAuthorization.getResourceId()));
+          assertThat(message.contains(missingAuthorization.getResourceId())).as(assertionFailureMessage).isTrue();
         }
 
         Resource resource = AuthorizationTestUtil.getResourceByType(missingAuthorization.getResourceType());
-        Assert.assertTrue(assertionFailureMessage, message.contains(resource.resourceName()));
+        assertThat(message.contains(resource.resourceName())).as(assertionFailureMessage).isTrue();
       }
     }
     else if (missingAuthorizations.isEmpty() && e == null) {
@@ -111,10 +111,10 @@ public class AuthorizationScenarioInstance {
     }
     else {
       if (e != null) {
-        Assert.fail(describeScenarioFailure("Expected no authorization exception but got one: " + e.getMessage()));
+        fail(describeScenarioFailure("Expected no authorization exception but got one: " + e.getMessage()));
       }
       else {
-        Assert.fail(describeScenarioFailure("Expected failure due to missing authorizations but code under test was successful"));
+        fail(describeScenarioFailure("Expected failure due to missing authorizations but code under test was successful"));
       }
     }
   }

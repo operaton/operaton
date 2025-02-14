@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.form;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
 import java.util.List;
@@ -54,7 +53,7 @@ public class FormPropertyDefaultValueTest extends PluggableProcessEngineTest {
       } else if ("longExpressionProperty".equals(prop.getId())) {
         assertThat(prop.getValue()).isEqualTo("23");
       } else {
-        assertTrue("Invalid form property: " + prop.getId(), false);
+        assertThat(false).as("Invalid form property: " + prop.getId()).isTrue();
       }
     }
 
@@ -94,7 +93,7 @@ public class FormPropertyDefaultValueTest extends PluggableProcessEngineTest {
       } else if ("longExpressionProperty".equals(prop.getId())) {
         assertThat(prop.getValue()).isEqualTo("23");
       } else {
-        assertTrue("Invalid form property: " + prop.getId(), false);
+        assertThat(false).as("Invalid form property: " + prop.getId()).isTrue();
       }
     }
 

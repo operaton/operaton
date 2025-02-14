@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.bpmn.scripttask;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertNull;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -206,7 +205,7 @@ public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
     } else {
       ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
       Object variableValue = runtimeService.getVariable(pi.getId(), "foo");
-      assertNull(variableValue);
+      assertThat(variableValue).isNull();
     }
 
   }

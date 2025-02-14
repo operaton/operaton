@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.application.impl.context;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.eq;
@@ -39,7 +38,6 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -65,7 +63,7 @@ public class ProcessApplicationContextTest extends PluggableProcessEngineTest {
   @Test
   public void testSetPAContextByName() throws ProcessApplicationUnavailableException {
 
-    Assert.assertNull(Context.getCurrentProcessApplication());
+    assertThat(Context.getCurrentProcessApplication()).isNull();
 
     try {
       ProcessApplicationContext.setCurrentProcessApplication(pa.getName());
@@ -75,12 +73,12 @@ public class ProcessApplicationContextTest extends PluggableProcessEngineTest {
       ProcessApplicationContext.clear();
     }
 
-    Assert.assertNull(Context.getCurrentProcessApplication());
+    assertThat(Context.getCurrentProcessApplication()).isNull();
   }
 
   @Test
   public void testExecutionInPAContextByName() throws Exception {
-    Assert.assertNull(Context.getCurrentProcessApplication());
+    assertThat(Context.getCurrentProcessApplication()).isNull();
 
     ProcessApplicationReference contextPA = ProcessApplicationContext.withProcessApplicationContext(
         (Callable<ProcessApplicationReference>) this::getCurrentContextApplication,
@@ -88,12 +86,12 @@ public class ProcessApplicationContextTest extends PluggableProcessEngineTest {
 
     assertThat(pa).isEqualTo(contextPA.getProcessApplication());
 
-    Assert.assertNull(Context.getCurrentProcessApplication());
+    assertThat(Context.getCurrentProcessApplication()).isNull();
   }
 
   @Test
   public void testSetPAContextByReference() throws ProcessApplicationUnavailableException {
-    Assert.assertNull(Context.getCurrentProcessApplication());
+    assertThat(Context.getCurrentProcessApplication()).isNull();
 
     try {
       ProcessApplicationContext.setCurrentProcessApplication(pa.getReference());
@@ -103,12 +101,12 @@ public class ProcessApplicationContextTest extends PluggableProcessEngineTest {
       ProcessApplicationContext.clear();
     }
 
-    Assert.assertNull(Context.getCurrentProcessApplication());
+    assertThat(Context.getCurrentProcessApplication()).isNull();
   }
 
   @Test
   public void testExecutionInPAContextByReference() throws Exception {
-    Assert.assertNull(Context.getCurrentProcessApplication());
+    assertThat(Context.getCurrentProcessApplication()).isNull();
 
     ProcessApplicationReference contextPA = ProcessApplicationContext.withProcessApplicationContext(
         (Callable<ProcessApplicationReference>) this::getCurrentContextApplication,
@@ -116,12 +114,12 @@ public class ProcessApplicationContextTest extends PluggableProcessEngineTest {
 
     assertThat(pa).isEqualTo(contextPA.getProcessApplication());
 
-    Assert.assertNull(Context.getCurrentProcessApplication());
+    assertThat(Context.getCurrentProcessApplication()).isNull();
   }
 
   @Test
   public void testSetPAContextByRawPA() throws ProcessApplicationUnavailableException {
-    Assert.assertNull(Context.getCurrentProcessApplication());
+    assertThat(Context.getCurrentProcessApplication()).isNull();
 
     try {
       ProcessApplicationContext.setCurrentProcessApplication(pa);
@@ -131,12 +129,12 @@ public class ProcessApplicationContextTest extends PluggableProcessEngineTest {
       ProcessApplicationContext.clear();
     }
 
-    Assert.assertNull(Context.getCurrentProcessApplication());
+    assertThat(Context.getCurrentProcessApplication()).isNull();
   }
 
   @Test
   public void testExecutionInPAContextbyRawPA() throws Exception {
-    Assert.assertNull(Context.getCurrentProcessApplication());
+    assertThat(Context.getCurrentProcessApplication()).isNull();
 
     ProcessApplicationReference contextPA = ProcessApplicationContext.withProcessApplicationContext(
         (Callable<ProcessApplicationReference>) this::getCurrentContextApplication,
@@ -144,7 +142,7 @@ public class ProcessApplicationContextTest extends PluggableProcessEngineTest {
 
     assertThat(pa).isEqualTo(contextPA.getProcessApplication());
 
-    Assert.assertNull(Context.getCurrentProcessApplication());
+    assertThat(Context.getCurrentProcessApplication()).isNull();
   }
 
   @Test

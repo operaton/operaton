@@ -48,7 +48,7 @@ public class VariableInstanceQueryForOracleTest {
 
     // then
     List<VariableInstance> variables = engineRule.getRuntimeService().createVariableInstanceQuery().list();
-    assertThat(variables).hasSize(0);
+    assertThat(variables).isEmpty();
   }
 
   @Test

@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.api.multitenancy;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Arrays;
 
@@ -58,7 +59,7 @@ public class MultiTenancyMigrationTest {
     // when
     try {
       runtimeService.build();
-      Assert.fail("exception expected");
+      fail("exception expected");
     } catch (ProcessEngineException e) {
       // then
       assertThat(e.getMessage()).contains(
@@ -79,7 +80,7 @@ public class MultiTenancyMigrationTest {
       .build();
 
     // then
-    Assert.assertNotNull(migrationPlan);
+    assertThat(migrationPlan).isNotNull();
   }
 
   @Test
@@ -95,7 +96,7 @@ public class MultiTenancyMigrationTest {
       .build();
 
     // then
-    Assert.assertNotNull(migrationPlan);
+    assertThat(migrationPlan).isNotNull();
   }
 
   @Test
@@ -110,7 +111,7 @@ public class MultiTenancyMigrationTest {
       .build();
 
     // then
-    Assert.assertNotNull(migrationPlan);
+    assertThat(migrationPlan).isNotNull();
   }
 
   @Test
@@ -151,7 +152,7 @@ public class MultiTenancyMigrationTest {
     // when
     try {
       runtimeService.execute();
-      Assert.fail("exception expected");
+      fail("exception expected");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).contains(
           "Cannot migrate process instance '" + processInstance.getId()

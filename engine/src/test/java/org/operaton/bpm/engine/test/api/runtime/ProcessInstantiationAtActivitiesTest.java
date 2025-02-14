@@ -19,9 +19,7 @@ package org.operaton.bpm.engine.test.api.runtime;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import java.util.List;
@@ -63,10 +61,10 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
       .execute();
 
     // then
-    assertNotNull(instance);
+    assertThat(instance).isNotNull();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(instance.getId());
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
 
     assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(instance.getProcessDefinitionId())
@@ -91,10 +89,10 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
       .execute();
 
     // then
-    assertNotNull(instance);
+    assertThat(instance).isNotNull();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(instance.getId());
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
 
     assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(instance.getProcessDefinitionId())
@@ -117,7 +115,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
       .execute();
 
     // then
-    assertNotNull(instance);
+    assertThat(instance).isNotNull();
     assertThat(instance.getBusinessKey()).isEqualTo("businessKey");
   }
 
@@ -132,7 +130,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
       .execute();
 
     // then
-    assertNotNull(instance);
+    assertThat(instance).isNotNull();
     assertThat(instance.getCaseInstanceId()).isEqualTo("caseInstanceId");
   }
 
@@ -146,10 +144,10 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
       .execute();
 
     // then
-    assertNotNull(instance);
+    assertThat(instance).isNotNull();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(instance.getId());
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
 
     assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(instance.getProcessDefinitionId())
@@ -172,7 +170,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
       .execute();
 
     // then
-    assertNotNull(instance);
+    assertThat(instance).isNotNull();
 
     assertThat(runtimeService.getVariable(instance.getId(), "aVariable")).isEqualTo("aValue");
   }
@@ -206,10 +204,10 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
       .execute();
 
     // then
-    assertNotNull(instance);
+    assertThat(instance).isNotNull();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(instance.getId());
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
 
     assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(instance.getProcessDefinitionId())
@@ -238,18 +236,18 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
     // then
     // variables for task2's execution
     Execution task2Execution = runtimeService.createExecutionQuery().activityId("task2").singleResult();
-    assertNotNull(task2Execution);
-    assertNull(runtimeService.getVariableLocal(task2Execution.getId(), "aVar1"));
+    assertThat(task2Execution).isNotNull();
+    assertThat(runtimeService.getVariableLocal(task2Execution.getId(), "aVar1")).isNull();
     assertThat(runtimeService.getVariableLocal(task2Execution.getId(), "aVar2")).isEqualTo("aValue2");
 
     // variables for task1's execution
     Execution task1Execution = runtimeService.createExecutionQuery().activityId("task1").singleResult();
-    assertNotNull(task1Execution);
+    assertThat(task1Execution).isNotNull();
 
-    assertNull(runtimeService.getVariableLocal(task1Execution.getId(), "aVar2"));
+    assertThat(runtimeService.getVariableLocal(task1Execution.getId(), "aVar2")).isNull();
 
     // this variable is not a local variable on execution1 due to tree expansion
-    assertNull(runtimeService.getVariableLocal(task1Execution.getId(), "aVar1"));
+    assertThat(runtimeService.getVariableLocal(task1Execution.getId(), "aVar1")).isNull();
     assertThat(runtimeService.getVariable(task1Execution.getId(), "aVar1")).isEqualTo("aValue1");
 
   }
@@ -266,10 +264,10 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
       .execute();
 
     // then
-    assertNotNull(instance);
+    assertThat(instance).isNotNull();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(instance.getId());
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
 
     assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(instance.getProcessDefinitionId())
@@ -335,7 +333,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
 
     // then
     ActivityInstance updatedTree = runtimeService.getActivityInstance(instance.getId());
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
 
     assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(instance.getProcessDefinitionId())
@@ -373,7 +371,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
 
     // then
     ActivityInstance updatedTree = runtimeService.getActivityInstance(instance.getId());
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
 
     assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(instance.getProcessDefinitionId())
@@ -382,7 +380,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
       .done());
 
     List<RecordedEvent> events = RecorderExecutionListener.getRecordedEvents();
-    assertThat(events).hasSize(0);
+    assertThat(events).isEmpty();
   }
 
   @Deployment(resources = IO_PROCESS)
@@ -470,10 +468,10 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
       .execute();
 
     // then
-    assertNotNull(instance);
+    assertThat(instance).isNotNull();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(instance.getId());
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
 
     assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(instance.getProcessDefinitionId())
@@ -482,7 +480,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
 
     // and it is possible to end the process
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     managementService.executeJob(job.getId());
 
     completeTasksInOrder("task2");
@@ -503,7 +501,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
       .execute();
 
     // then the request was successful even though the process instance has already ended
-    assertNotNull(instance);
+    assertThat(instance).isNotNull();
     testRule.assertProcessEnded(instance.getId());
 
     // and the execution listener was invoked correctly
@@ -584,14 +582,14 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
         .processInstanceId(processInstance.getId())
         .activityId("Event_0s2zckl")
         .list();
-    assertThat(executions).hasSize(0);
+    assertThat(executions).isEmpty();
   }
 
   protected void completeTasksInOrder(String... taskNames) {
     for (String taskName : taskNames) {
       // complete any task with that name
       List<Task> tasks = taskService.createTaskQuery().taskDefinitionKey(taskName).listPage(0, 1);
-      assertTrue("task for activity " + taskName + " does not exist", !tasks.isEmpty());
+      assertThat(!tasks.isEmpty()).as("task for activity " + taskName + " does not exist").isTrue();
       taskService.complete(tasks.get(0).getId());
     }
   }

@@ -17,8 +17,7 @@
 package org.operaton.bpm.engine.test.bpmn.gateway;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import java.util.Date;
@@ -62,7 +61,7 @@ public class EventBasedGatewayTest extends PluggableProcessEngineTest {
       .taskName("afterSignal")
       .singleResult();
 
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     taskService.complete(task.getId());
 
@@ -93,7 +92,7 @@ public class EventBasedGatewayTest extends PluggableProcessEngineTest {
         .taskName("afterTimer")
         .singleResult();
 
-      assertNotNull(task);
+      assertThat(task).isNotNull();
 
       taskService.complete(task.getId());
     }finally{
@@ -119,7 +118,7 @@ public class EventBasedGatewayTest extends PluggableProcessEngineTest {
       .messageEventSubscriptionName("newInvoice")
       .signalEventSubscriptionName("alert")
       .singleResult();
-    assertNotNull(execution);
+    assertThat(execution).isNotNull();
 
     ClockUtil.setCurrentTime(new Date(ClockUtil.getCurrentTime().getTime() +10000));
     try {
@@ -135,7 +134,7 @@ public class EventBasedGatewayTest extends PluggableProcessEngineTest {
         .taskName("afterMessage")
         .singleResult();
 
-      assertNotNull(task);
+      assertThat(task).isNotNull();
 
       taskService.complete(task.getId());
     }finally{
@@ -152,7 +151,7 @@ public class EventBasedGatewayTest extends PluggableProcessEngineTest {
       deploymentBuilder.deploy();
       fail("exception expected");
     } catch (ParseException e) {
-      assertTrue(e.getMessage().contains("Event based gateway can only be connected to elements of type intermediateCatchEvent"));
+      assertThat(e.getMessage()).contains("Event based gateway can only be connected to elements of type intermediateCatchEvent");
       assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("gw1");
     }
 
@@ -167,7 +166,7 @@ public class EventBasedGatewayTest extends PluggableProcessEngineTest {
       deploymentBuilder.deploy();
       fail("exception expected");
     } catch (ParseException e) {
-      assertTrue(e.getMessage().contains("Invalid incoming sequenceflow for intermediateCatchEvent"));
+      assertThat(e.getMessage()).contains("Invalid incoming sequenceflow for intermediateCatchEvent");
       assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("invalidFlow");
     }
 

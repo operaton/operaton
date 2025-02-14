@@ -42,9 +42,7 @@ import org.joda.time.DateTime;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 /**
@@ -73,7 +71,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
     assertThat(query.count()).isEqualTo(1);
     UserOperationLogEntry complete = query.singleResult();
     assertThat(complete.getProperty()).isEqualTo(DELETE);
-    assertTrue(Boolean.parseBoolean(complete.getNewValue()));
+    assertThat(Boolean.parseBoolean(complete.getNewValue())).isTrue();
     assertThat(complete.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_TASK_WORKER);
   }
 
@@ -334,8 +332,8 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
     // assert: delete
     UserOperationLogEntry log = query.property("delete").singleResult();
-    assertFalse(Boolean.parseBoolean(log.getOrgValue()));
-    assertTrue(Boolean.parseBoolean(log.getNewValue()));
+    assertThat(Boolean.parseBoolean(log.getOrgValue())).isFalse();
+    assertThat(Boolean.parseBoolean(log.getNewValue())).isTrue();
     assertThat(log.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_TASK_WORKER);
 
     testRule.assertProcessEnded(process.getId());
@@ -443,15 +441,15 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
     assertThat(query.count()).isEqualTo(1);
 
     UserOperationLogEntry entry = query.singleResult();
-    assertNotNull(entry);
+    assertThat(entry).isNotNull();
 
     assertThat(entry.getCaseDefinitionId()).isEqualTo(caseDefinition.getId());
     assertThat(entry.getCaseInstanceId()).isEqualTo(caseInstanceId);
     assertThat(entry.getCaseExecutionId()).isEqualTo(humanTaskId);
     assertThat(entry.getDeploymentId()).isEqualTo(caseDefinition.getDeploymentId());
 
-    assertFalse(Boolean.parseBoolean(entry.getOrgValue()));
-    assertTrue(Boolean.parseBoolean(entry.getNewValue()));
+    assertThat(Boolean.parseBoolean(entry.getOrgValue())).isFalse();
+    assertThat(Boolean.parseBoolean(entry.getNewValue())).isTrue();
     assertThat(entry.getProperty()).isEqualTo(DELETE);
     assertThat(entry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_TASK_WORKER);
 
@@ -553,8 +551,8 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
     taskService.complete(taskId);
 
     // then
-    assertTrue((Boolean) runtimeService.getVariable(processInstanceId, "taskListenerCalled"));
-    assertTrue((Boolean) runtimeService.getVariable(processInstanceId, "serviceTaskCalled"));
+    assertThat((Boolean) runtimeService.getVariable(processInstanceId, "taskListenerCalled")).isTrue();
+    assertThat((Boolean) runtimeService.getVariable(processInstanceId, "serviceTaskCalled")).isTrue();
 
     // Filter only task entities, as the process start is also recorded
     UserOperationLogQuery query = historyService

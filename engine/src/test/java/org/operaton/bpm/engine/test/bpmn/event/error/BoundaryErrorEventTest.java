@@ -17,11 +17,9 @@
 package org.operaton.bpm.engine.test.bpmn.event.error;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.bpmn.event.error.ThrowErrorDelegate.throwError;
 import static org.operaton.bpm.engine.test.bpmn.event.error.ThrowErrorDelegate.throwException;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.HashMap;
@@ -270,8 +268,8 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
     // then the called historic process instance should have properly ended
     HistoricProcessInstance historicSubProcessInstance = historyService.createHistoricProcessInstanceQuery().processDefinitionKey("simpleSubProcess").singleResult();
-    assertNotNull(historicSubProcessInstance);
-    assertNull(historicSubProcessInstance.getDeleteReason());
+    assertThat(historicSubProcessInstance).isNotNull();
+    assertThat(historicSubProcessInstance.getDeleteReason()).isNull();
     assertThat(historicSubProcessInstance.getEndActivityId()).isEqualTo("theEnd");
   }
 
@@ -400,7 +398,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
   @Test
   public void testCatchErrorThrownBySignallableActivityBehaviour() {
     String procId = runtimeService.startProcessInstanceByKey("catchErrorThrownBySignallableActivityBehaviour").getId();
-    assertNotNull("Didn't get a process id from runtime service", procId);
+    assertThat(procId).as("Didn't get a process id from runtime service").isNotNull();
     ActivityInstance processActivityInstance = runtimeService.getActivityInstance(procId);
     ActivityInstance serviceTask = processActivityInstance.getChildActivityInstances()[0];
     assertThat(serviceTask.getActivityId()).as("Expected the service task to be active after starting the process").isEqualTo("serviceTask");
@@ -487,11 +485,11 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
   public void testCatchExceptionThrownByExecuteOfAbstractBpmnActivityBehavior() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess", throwException()).getId();
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertNull(runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat(runtimeService.getVariable(pi, "signaled")).isNull();
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskException");
 
     taskService.complete(userTask.getId());
@@ -504,11 +502,11 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
   public void testCatchErrorThrownByExecuteOfAbstractBpmnActivityBehavior() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess", throwError()).getId();
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertNull(runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat(runtimeService.getVariable(pi, "signaled")).isNull();
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskError");
 
     taskService.complete(userTask.getId());
@@ -521,20 +519,20 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
   public void testCatchExceptionThrownBySignalMethodOfAbstractBpmnActivityBehavior() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess").getId();
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertNull(runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat(runtimeService.getVariable(pi, "signaled")).isNull();
 
     Execution serviceTask = runtimeService.createExecutionQuery().processInstanceId(pi).activityId("serviceTask").singleResult();
-    assertNotNull(serviceTask);
+    assertThat(serviceTask).isNotNull();
 
     runtimeService.setVariables(pi, throwException());
     runtimeService.signal(serviceTask.getId());
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertTrue((Boolean) runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat((Boolean) runtimeService.getVariable(pi, "signaled")).isTrue();
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskException");
 
     taskService.complete(userTask.getId());
@@ -551,7 +549,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
       // happy path
     }
 
-    assertNull(taskService.createTaskQuery().singleResult());
+    assertThat(taskService.createTaskQuery().singleResult()).isNull();
   }
 
   @Deployment
@@ -565,7 +563,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
       // happy path
     }
 
-    assertNull(taskService.createTaskQuery().singleResult());
+    assertThat(taskService.createTaskQuery().singleResult()).isNull();
   }
 
   @Deployment
@@ -578,7 +576,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
     } catch (ProcessEngineException e) {
       // happy path
     }
-    assertNull(taskService.createTaskQuery().singleResult());
+    assertThat(taskService.createTaskQuery().singleResult()).isNull();
   }
 
 
@@ -589,20 +587,20 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
   public void testCatchErrorThrownBySignalOfAbstractBpmnActivityBehavior() {
     String pi = runtimeService.startProcessInstanceByKey("testProcess").getId();
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertNull(runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat(runtimeService.getVariable(pi, "signaled")).isNull();
 
     Execution serviceTask = runtimeService.createExecutionQuery().processInstanceId(pi).activityId("serviceTask").singleResult();
-    assertNotNull(serviceTask);
+    assertThat(serviceTask).isNotNull();
 
     runtimeService.setVariables(pi, throwError());
     runtimeService.signal(serviceTask.getId());
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertTrue((Boolean) runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat((Boolean) runtimeService.getVariable(pi, "signaled")).isTrue();
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskError");
 
     taskService.complete(userTask.getId());
@@ -617,11 +615,11 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
     variables.putAll(throwException());
     String pi = runtimeService.startProcessInstanceByKey("testProcess", variables).getId();
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertNull(runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat(runtimeService.getVariable(pi, "signaled")).isNull();
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskException");
 
     taskService.complete(userTask.getId());
@@ -636,11 +634,11 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
     variables.putAll(throwError());
     String pi = runtimeService.startProcessInstanceByKey("testProcess", variables).getId();
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertNull(runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat(runtimeService.getVariable(pi, "signaled")).isNull();
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskError");
 
     taskService.complete(userTask.getId());
@@ -654,20 +652,20 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
     VariableMap variables = Variables.createVariables().putValue("myDelegate", new ThrowErrorDelegate());
     String pi = runtimeService.startProcessInstanceByKey("testProcess", variables).getId();
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertNull(runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat(runtimeService.getVariable(pi, "signaled")).isNull();
 
     Execution serviceTask = runtimeService.createExecutionQuery().processInstanceId(pi).activityId("serviceTask").singleResult();
-    assertNotNull(serviceTask);
+    assertThat(serviceTask).isNotNull();
 
     runtimeService.setVariables(pi, throwException());
     runtimeService.signal(serviceTask.getId());
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertTrue((Boolean) runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat((Boolean) runtimeService.getVariable(pi, "signaled")).isTrue();
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskException");
 
     taskService.complete(userTask.getId());
@@ -681,20 +679,20 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
     VariableMap variables = Variables.createVariables().putValue("myDelegate", new ThrowErrorDelegate());
     String pi = runtimeService.startProcessInstanceByKey("testProcess", variables).getId();
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertNull(runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat(runtimeService.getVariable(pi, "signaled")).isNull();
 
     Execution serviceTask = runtimeService.createExecutionQuery().processInstanceId(pi).activityId("serviceTask").singleResult();
-    assertNotNull(serviceTask);
+    assertThat(serviceTask).isNotNull();
 
     runtimeService.setVariables(pi, throwError());
     runtimeService.signal(serviceTask.getId());
 
-    assertTrue((Boolean) runtimeService.getVariable(pi, "executed"));
-    assertTrue((Boolean) runtimeService.getVariable(pi, "signaled"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
+    assertThat((Boolean) runtimeService.getVariable(pi, "signaled")).isTrue();
 
     Task userTask = taskService.createTaskQuery().processInstanceId(pi).singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("userTaskError");
 
     taskService.complete(userTask.getId());
@@ -873,9 +871,9 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
     // should successfully have reached the task following the boundary event
     Execution taskExecution = runtimeService.createExecutionQuery().activityId("afterBoundaryTask").singleResult();
-    assertNotNull(taskExecution);
+    assertThat(taskExecution).isNotNull();
     Task task = taskService.createTaskQuery().executionId(taskExecution.getId()).singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
   }
 
   @Deployment
@@ -887,9 +885,9 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
     // should successfully have reached the task following the boundary event
     Execution taskExecution = runtimeService.createExecutionQuery().activityId("afterBoundaryTask").singleResult();
-    assertNotNull(taskExecution);
+    assertThat(taskExecution).isNotNull();
     Task task = taskService.createTaskQuery().executionId(taskExecution.getId()).singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
   }
 
   @Deployment
@@ -907,9 +905,9 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
     // should successfully have reached the task following the boundary event
     Execution taskExecution = runtimeService.createExecutionQuery().activityId("afterBoundaryTask").singleResult();
-    assertNotNull(taskExecution);
+    assertThat(taskExecution).isNotNull();
     Task task = taskService.createTaskQuery().executionId(taskExecution.getId()).singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
   }
 
   @Deployment

@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.test.cmmn.sentry;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
 import org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState;
@@ -47,49 +45,49 @@ public class SentryCombinedEntryAndExitCriteriaTest extends CmmnTest {
     CaseExecution firstHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_1");
     String firstHumanTaskId = firstHumanTask.getId();
 
-    assertTrue(firstHumanTask.isEnabled());
+    assertThat(firstHumanTask.isEnabled()).isTrue();
 
     CaseExecution secondHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_2");
     String secondHumanTaskId = secondHumanTask.getId();
 
-    assertTrue(secondHumanTask.isEnabled());
+    assertThat(secondHumanTask.isEnabled()).isTrue();
 
     CaseExecution thirdHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_3");
     String thirdHumanTaskId = thirdHumanTask.getId();
 
-    assertTrue(thirdHumanTask.isAvailable());
+    assertThat(thirdHumanTask.isAvailable()).isTrue();
 
     // (1) when
     suspend(stageId);
 
     // (1) then
     stage = queryCaseExecutionById(stageId);
-    assertTrue(((CaseExecutionEntity)stage).isSuspended());
+    assertThat(((CaseExecutionEntity) stage).isSuspended()).isTrue();
 
     firstHumanTask = queryCaseExecutionById(firstHumanTaskId);
-    assertTrue(((CaseExecutionEntity)firstHumanTask).isSuspended());
+    assertThat(((CaseExecutionEntity) firstHumanTask).isSuspended()).isTrue();
 
     secondHumanTask = queryCaseExecutionById(secondHumanTaskId);
-    assertTrue(((CaseExecutionEntity)secondHumanTask).isSuspended());
+    assertThat(((CaseExecutionEntity) secondHumanTask).isSuspended()).isTrue();
 
     thirdHumanTask = queryCaseExecutionById(thirdHumanTaskId);
-    assertTrue(((CaseExecutionEntity)thirdHumanTask).isSuspended());
+    assertThat(((CaseExecutionEntity) thirdHumanTask).isSuspended()).isTrue();
 
     // (2) when
     resume(stageId);
 
     // (2) then
     stage = queryCaseExecutionById(stageId);
-    assertTrue(stage.isActive());
+    assertThat(stage.isActive()).isTrue();
 
     firstHumanTask = queryCaseExecutionById(firstHumanTaskId);
-    assertTrue(firstHumanTask.isEnabled());
+    assertThat(firstHumanTask.isEnabled()).isTrue();
 
     secondHumanTask = queryCaseExecutionById(secondHumanTaskId);
-    assertNull(secondHumanTask);
+    assertThat(secondHumanTask).isNull();
 
     thirdHumanTask = queryCaseExecutionById(thirdHumanTaskId);
-    assertTrue(thirdHumanTask.isEnabled());
+    assertThat(thirdHumanTask.isEnabled()).isTrue();
 
   }
 
@@ -106,33 +104,33 @@ public class SentryCombinedEntryAndExitCriteriaTest extends CmmnTest {
     CaseExecution firstHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_1");
     String firstHumanTaskId = firstHumanTask.getId();
 
-    assertTrue(firstHumanTask.isEnabled());
+    assertThat(firstHumanTask.isEnabled()).isTrue();
 
     CaseExecution secondHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_2");
     String secondHumanTaskId = secondHumanTask.getId();
 
-    assertTrue(secondHumanTask.isEnabled());
+    assertThat(secondHumanTask.isEnabled()).isTrue();
 
     CaseExecution thirdHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_3");
     String thirdHumanTaskId = thirdHumanTask.getId();
 
-    assertTrue(thirdHumanTask.isAvailable());
+    assertThat(thirdHumanTask.isAvailable()).isTrue();
 
     // when
     suspend(stageId);
 
     // then
     stage = queryCaseExecutionById(stageId);
-    assertTrue(((CaseExecutionEntity)stage).isSuspended());
+    assertThat(((CaseExecutionEntity) stage).isSuspended()).isTrue();
 
     firstHumanTask = queryCaseExecutionById(firstHumanTaskId);
-    assertTrue(((CaseExecutionEntity)firstHumanTask).isSuspended());
+    assertThat(((CaseExecutionEntity) firstHumanTask).isSuspended()).isTrue();
 
     secondHumanTask = queryCaseExecutionById(secondHumanTaskId);
-    assertNull(secondHumanTask);
+    assertThat(secondHumanTask).isNull();
 
     thirdHumanTask = queryCaseExecutionById(thirdHumanTaskId);
-    assertTrue(((CaseExecutionEntity)thirdHumanTask).isSuspended());
+    assertThat(((CaseExecutionEntity) thirdHumanTask).isSuspended()).isTrue();
     assertThat(((CaseExecutionEntity) thirdHumanTask).getPreviousState()).isEqualTo(CaseExecutionState.ENABLED);
 
   }
@@ -150,49 +148,49 @@ public class SentryCombinedEntryAndExitCriteriaTest extends CmmnTest {
     CaseExecution firstHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_1");
     String firstHumanTaskId = firstHumanTask.getId();
 
-    assertTrue(firstHumanTask.isEnabled());
+    assertThat(firstHumanTask.isEnabled()).isTrue();
 
     CaseExecution secondHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_2");
     String secondHumanTaskId = secondHumanTask.getId();
 
-    assertTrue(secondHumanTask.isEnabled());
+    assertThat(secondHumanTask.isEnabled()).isTrue();
 
     CaseExecution thirdHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_3");
     String thirdHumanTaskId = thirdHumanTask.getId();
 
-    assertTrue(thirdHumanTask.isAvailable());
+    assertThat(thirdHumanTask.isAvailable()).isTrue();
 
     // (1) when
     suspend(stageId);
 
     // (1) then
     stage = queryCaseExecutionById(stageId);
-    assertTrue(((CaseExecutionEntity)stage).isSuspended());
+    assertThat(((CaseExecutionEntity) stage).isSuspended()).isTrue();
 
     firstHumanTask = queryCaseExecutionById(firstHumanTaskId);
-    assertTrue(((CaseExecutionEntity)firstHumanTask).isSuspended());
+    assertThat(((CaseExecutionEntity) firstHumanTask).isSuspended()).isTrue();
 
     secondHumanTask = queryCaseExecutionById(secondHumanTaskId);
-    assertTrue(((CaseExecutionEntity)secondHumanTask).isSuspended());
+    assertThat(((CaseExecutionEntity) secondHumanTask).isSuspended()).isTrue();
 
     thirdHumanTask = queryCaseExecutionById(thirdHumanTaskId);
-    assertTrue(((CaseExecutionEntity)thirdHumanTask).isSuspended());
+    assertThat(((CaseExecutionEntity) thirdHumanTask).isSuspended()).isTrue();
 
     // (2) when
     resume(stageId);
 
     // (2) then
     stage = queryCaseExecutionById(stageId);
-    assertTrue(stage.isActive());
+    assertThat(stage.isActive()).isTrue();
 
     firstHumanTask = queryCaseExecutionById(firstHumanTaskId);
-    assertTrue(firstHumanTask.isEnabled());
+    assertThat(firstHumanTask.isEnabled()).isTrue();
 
     secondHumanTask = queryCaseExecutionById(secondHumanTaskId);
-    assertNull(secondHumanTask);
+    assertThat(secondHumanTask).isNull();
 
     thirdHumanTask = queryCaseExecutionById(thirdHumanTaskId);
-    assertTrue(thirdHumanTask.isEnabled());
+    assertThat(thirdHumanTask.isEnabled()).isTrue();
 
   }
 
@@ -209,33 +207,33 @@ public class SentryCombinedEntryAndExitCriteriaTest extends CmmnTest {
     CaseExecution firstHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_1");
     String firstHumanTaskId = firstHumanTask.getId();
 
-    assertTrue(firstHumanTask.isEnabled());
+    assertThat(firstHumanTask.isEnabled()).isTrue();
 
     CaseExecution secondHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_2");
     String secondHumanTaskId = secondHumanTask.getId();
 
-    assertTrue(secondHumanTask.isEnabled());
+    assertThat(secondHumanTask.isEnabled()).isTrue();
 
     CaseExecution thirdHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_3");
     String thirdHumanTaskId = thirdHumanTask.getId();
 
-    assertTrue(thirdHumanTask.isAvailable());
+    assertThat(thirdHumanTask.isAvailable()).isTrue();
 
     // when
     suspend(stageId);
 
     // then
     stage = queryCaseExecutionById(stageId);
-    assertTrue(((CaseExecutionEntity)stage).isSuspended());
+    assertThat(((CaseExecutionEntity) stage).isSuspended()).isTrue();
 
     firstHumanTask = queryCaseExecutionById(firstHumanTaskId);
-    assertTrue(((CaseExecutionEntity)firstHumanTask).isSuspended());
+    assertThat(((CaseExecutionEntity) firstHumanTask).isSuspended()).isTrue();
 
     secondHumanTask = queryCaseExecutionById(secondHumanTaskId);
-    assertNull(secondHumanTask);
+    assertThat(secondHumanTask).isNull();
 
     thirdHumanTask = queryCaseExecutionById(thirdHumanTaskId);
-    assertTrue(((CaseExecutionEntity)thirdHumanTask).isSuspended());
+    assertThat(((CaseExecutionEntity) thirdHumanTask).isSuspended()).isTrue();
     assertThat(((CaseExecutionEntity) thirdHumanTask).getPreviousState()).isEqualTo(CaseExecutionState.ENABLED);
 
   }

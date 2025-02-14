@@ -17,8 +17,7 @@
 package org.operaton.bpm.engine.test.api.task;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import java.util.List;
@@ -82,15 +81,15 @@ public class StandaloneTaskTest extends PluggableProcessEngineTest {
     taskService.claim(taskId, "kermit");
 
     // Tasks shouldn't appear in the candidate tasklists anymore
-    assertTrue(taskService.createTaskQuery().taskCandidateUser("kermit").list().isEmpty());
-    assertTrue(taskService.createTaskQuery().taskCandidateUser("gonzo").list().isEmpty());
+    assertThat(taskService.createTaskQuery().taskCandidateUser("kermit").list()).isEmpty();
+    assertThat(taskService.createTaskQuery().taskCandidateUser("gonzo").list()).isEmpty();
 
     // Complete task
     taskService.deleteTask(taskId, true);
 
     // Task should be removed from runtime data
     // TODO: check for historic data when implemented!
-    assertNull(taskService.createTaskQuery().taskId(taskId).singleResult());
+    assertThat(taskService.createTaskQuery().taskId(taskId).singleResult()).isNull();
   }
 
   @Test

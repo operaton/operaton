@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.test.standalone.pvm;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
@@ -60,7 +58,7 @@ public class PvmBasicLinearExecutionTest {
     processInstance.start();
 
     assertThat(processInstance.findActiveActivityIds()).isEqualTo(new ArrayList<String>());
-    assertTrue(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isTrue();
   }
 
   /**
@@ -89,7 +87,7 @@ public class PvmBasicLinearExecutionTest {
     processInstance.start();
 
     assertThat(processInstance.findActiveActivityIds()).isEqualTo(new ArrayList<String>());
-    assertTrue(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isTrue();
   }
 
   /**
@@ -118,12 +116,12 @@ public class PvmBasicLinearExecutionTest {
     processInstance.start();
 
     PvmExecution activityInstance = processInstance.findExecution("two");
-    assertNotNull(activityInstance);
+    assertThat(activityInstance).isNotNull();
 
     activityInstance.signal(null, null);
 
     assertThat(processInstance.findActiveActivityIds()).isEqualTo(new ArrayList<String>());
-    assertTrue(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isTrue();
   }
 
   /**
@@ -164,15 +162,15 @@ public class PvmBasicLinearExecutionTest {
     processInstance.start();
 
     PvmExecution activityInstance = processInstance.findExecution("one");
-    assertNotNull(activityInstance);
+    assertThat(activityInstance).isNotNull();
     activityInstance.signal(null, null);
 
     activityInstance = processInstance.findExecution("two");
-    assertNotNull(activityInstance);
+    assertThat(activityInstance).isNotNull();
     activityInstance.signal(null, null);
 
     assertThat(processInstance.findActiveActivityIds()).isEqualTo(new ArrayList<String>());
-    assertTrue(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isTrue();
   }
 
   /**
@@ -220,7 +218,7 @@ public class PvmBasicLinearExecutionTest {
     processInstance.start();
 
     assertThat(processInstance.findActiveActivityIds()).isEqualTo(new ArrayList<String>());
-    assertTrue(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isTrue();
   }
 
 }

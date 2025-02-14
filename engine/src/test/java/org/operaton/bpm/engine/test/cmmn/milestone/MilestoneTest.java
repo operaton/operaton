@@ -17,9 +17,6 @@
 package org.operaton.bpm.engine.test.cmmn.milestone;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseInstance;
@@ -50,11 +47,11 @@ public class MilestoneTest extends PluggableProcessEngineTest {
         .caseInstanceId(caseInstanceId)
         .singleResult();
 
-    assertTrue(caseInstance.isCompleted());
+    assertThat(caseInstance.isCompleted()).isTrue();
 
     Object occurVariable = caseService.getVariable(caseInstanceId, "occur");
-    assertNotNull(occurVariable);
-    assertTrue((Boolean) occurVariable);
+    assertThat(occurVariable).isNotNull();
+    assertThat((Boolean) occurVariable).isTrue();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/milestone/MilestoneTest.testWithEntryCriteria.cmmn"})
@@ -77,17 +74,17 @@ public class MilestoneTest extends PluggableProcessEngineTest {
         .singleResult()
         .getId();
 
-    assertTrue(milestone.isAvailable());
+    assertThat(milestone.isAvailable()).isTrue();
 
     // then
-    assertNull(caseService.getVariable(caseInstanceId, "occur"));
+    assertThat(caseService.getVariable(caseInstanceId, "occur")).isNull();
 
     milestone = caseService
         .createCaseExecutionQuery()
         .available()
         .singleResult();
 
-    assertTrue(milestone.isAvailable());
+    assertThat(milestone.isAvailable()).isTrue();
 
     // when
     caseService
@@ -96,22 +93,22 @@ public class MilestoneTest extends PluggableProcessEngineTest {
 
     // then
     Object occurVariable = caseService.getVariable(caseInstanceId, "occur");
-    assertNotNull(occurVariable);
-    assertTrue((Boolean) occurVariable);
+    assertThat(occurVariable).isNotNull();
+    assertThat((Boolean) occurVariable).isTrue();
 
     milestone = caseService
         .createCaseExecutionQuery()
         .available()
         .singleResult();
 
-    assertNull(milestone);
+    assertThat(milestone).isNull();
 
     CaseInstance caseInstance = caseService
         .createCaseInstanceQuery()
         .caseInstanceId(caseInstanceId)
         .singleResult();
 
-    assertTrue(caseInstance.isCompleted());
+    assertThat(caseInstance.isCompleted()).isTrue();
 
   }
 
@@ -135,17 +132,17 @@ public class MilestoneTest extends PluggableProcessEngineTest {
         .singleResult()
         .getId();
 
-    assertTrue(milestone.isAvailable());
+    assertThat(milestone.isAvailable()).isTrue();
 
     // then
-    assertNull(caseService.getVariable(caseInstanceId, "occur"));
+    assertThat(caseService.getVariable(caseInstanceId, "occur")).isNull();
 
     milestone = caseService
         .createCaseExecutionQuery()
         .available()
         .singleResult();
 
-    assertTrue(milestone.isAvailable());
+    assertThat(milestone.isAvailable()).isTrue();
 
     // when
     caseService
@@ -154,22 +151,22 @@ public class MilestoneTest extends PluggableProcessEngineTest {
 
     // then
     Object occurVariable = caseService.getVariable(caseInstanceId, "occur");
-    assertNotNull(occurVariable);
-    assertTrue((Boolean) occurVariable);
+    assertThat(occurVariable).isNotNull();
+    assertThat((Boolean) occurVariable).isTrue();
 
     milestone = caseService
         .createCaseExecutionQuery()
         .available()
         .singleResult();
 
-    assertNull(milestone);
+    assertThat(milestone).isNull();
 
     CaseInstance caseInstance = caseService
         .createCaseInstanceQuery()
         .caseInstanceId(caseInstanceId)
         .singleResult();
 
-    assertTrue(caseInstance.isActive());
+    assertThat(caseInstance.isActive()).isTrue();
 
   }
 

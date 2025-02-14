@@ -38,7 +38,6 @@ import org.junit.*;
 import org.junit.rules.RuleChain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
 
 /**
  * @author Roman Smirnov
@@ -96,8 +95,8 @@ public class LegacyUserOperationLogTest {
       taskService.complete(taskId);
 
       // then
-      assertTrue((Boolean) runtimeService.getVariable(processInstanceId, "taskListenerCalled"));
-      assertTrue((Boolean) runtimeService.getVariable(processInstanceId, "serviceTaskCalled"));
+      assertThat((Boolean) runtimeService.getVariable(processInstanceId, "taskListenerCalled")).isTrue();
+      assertThat((Boolean) runtimeService.getVariable(processInstanceId, "serviceTaskCalled")).isTrue();
 
       UserOperationLogQuery query = userOperationLogQuery().userId(USER_ID);
       assertThat(query.count()).isEqualTo(4);
@@ -122,8 +121,8 @@ public class LegacyUserOperationLogTest {
     taskService.complete(taskId);
 
     // then
-    assertTrue((Boolean) runtimeService.getVariable(processInstanceId, "taskListenerCalled"));
-    assertTrue((Boolean) runtimeService.getVariable(processInstanceId, "serviceTaskCalled"));
+    assertThat((Boolean) runtimeService.getVariable(processInstanceId, "taskListenerCalled")).isTrue();
+    assertThat((Boolean) runtimeService.getVariable(processInstanceId, "serviceTaskCalled")).isTrue();
 
     assertThat(userOperationLogQuery().count()).isEqualTo(5);
     assertThat(userOperationLogQuery().operationType(UserOperationLogEntry.OPERATION_TYPE_COMPLETE).count()).isEqualTo(1);

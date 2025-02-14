@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.operation;
 
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.impl.cmmn.behavior.StageActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
@@ -69,10 +69,10 @@ public class CaseExecutionTerminationTest {
     caseInstance.terminate();
 
     // then
-    assertTrue(caseInstance.isTerminated());
-    assertTrue(stageX.isTerminated());
-    assertTrue(taskA.isTerminated());
-    assertTrue(taskB.isTerminated());
+    assertThat(caseInstance.isTerminated()).isTrue();
+    assertThat(stageX.isTerminated()).isTrue();
+    assertThat(taskA.isTerminated()).isTrue();
+    assertThat(taskB.isTerminated()).isTrue();
   }
 
   @Test
@@ -111,10 +111,10 @@ public class CaseExecutionTerminationTest {
     stageX.terminate();
 
     // then
-    assertTrue(caseInstance.isCompleted());
-    assertTrue(stageX.isTerminated());
-    assertTrue(taskA.isTerminated());
-    assertTrue(taskB.isTerminated());
+    assertThat(caseInstance.isCompleted()).isTrue();
+    assertThat(stageX.isTerminated()).isTrue();
+    assertThat(taskA.isTerminated()).isTrue();
+    assertThat(taskB.isTerminated()).isTrue();
   }
 
   @Test
@@ -154,10 +154,10 @@ public class CaseExecutionTerminationTest {
     taskA.terminate();
 
     // then
-    assertTrue(caseInstance.isActive());
-    assertTrue(stageX.isActive());
-    assertTrue(taskA.isTerminated());
-    assertTrue(taskB.isEnabled());
+    assertThat(caseInstance.isActive()).isTrue();
+    assertThat(stageX.isActive()).isTrue();
+    assertThat(taskA.isTerminated()).isTrue();
+    assertThat(taskB.isEnabled()).isTrue();
   }
 
 }

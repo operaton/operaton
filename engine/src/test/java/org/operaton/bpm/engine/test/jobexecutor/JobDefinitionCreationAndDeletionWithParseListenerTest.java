@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.jobexecutor;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -85,7 +84,7 @@ public class JobDefinitionCreationAndDeletionWithParseListenerTest {
     //then there exists one job definition
     JobDefinitionQuery query = engineRule.getManagementService().createJobDefinitionQuery();
     JobDefinition jobDef = query.singleResult();
-    assertNotNull(jobDef);
+    assertThat(jobDef).isNotNull();
     assertThat(jobDef.getProcessDefinitionKey()).isEqualTo("oneTaskProcess");
     assertThat(jobDef.getActivityId()).isEqualTo("servicetask1");
     assertThat(jobDef.getJobConfiguration()).isEqualTo(MessageJobDeclaration.ASYNC_AFTER);
@@ -105,7 +104,7 @@ public class JobDefinitionCreationAndDeletionWithParseListenerTest {
     //then there exists one job definition
     JobDefinitionQuery query = engineRule.getManagementService().createJobDefinitionQuery();
     JobDefinition jobDef = query.singleResult();
-    assertNotNull(jobDef);
+    assertThat(jobDef).isNotNull();
     assertThat(jobDef.getProcessDefinitionKey()).isEqualTo("oneTaskProcess");
     assertThat(jobDef.getActivityId()).isEqualTo("servicetask1");
     assertThat(jobDef.getJobConfiguration()).isEqualTo(MessageJobDeclaration.ASYNC_AFTER);
@@ -125,7 +124,7 @@ public class JobDefinitionCreationAndDeletionWithParseListenerTest {
     //then there exists one job definition
     JobDefinitionQuery query = engineRule.getManagementService().createJobDefinitionQuery();
     JobDefinition jobDef = query.singleResult();
-    assertNotNull(jobDef);
+    assertThat(jobDef).isNotNull();
     assertThat(jobDef.getProcessDefinitionKey()).isEqualTo("oneTaskProcess");
     assertThat(jobDef.getActivityId()).isEqualTo("servicetask1");
     assertThat(jobDef.getJobConfiguration()).isEqualTo(MessageJobDeclaration.ASYNC_AFTER);

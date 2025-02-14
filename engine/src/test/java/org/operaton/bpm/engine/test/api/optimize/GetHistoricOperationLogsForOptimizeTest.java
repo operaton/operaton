@@ -43,7 +43,6 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.*;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
@@ -256,7 +255,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
     assertThat(userOperationsLog.get(0).getOperationType()).isEqualTo(OPERATION_TYPE_SUSPEND_PROCESS_DEFINITION);
     assertThat(userOperationsLog.get(0).getEntityType()).isEqualTo(EntityTypes.PROCESS_DEFINITION);
     assertThat(userOperationsLog.get(0).getOrgValue()).isNull();
-    assertTrue(newPossibleValue.remove(userOperationsLog.get(0).getNewValue()));
+    assertThat(newPossibleValue.remove(userOperationsLog.get(0).getNewValue())).isTrue();
     assertThat(userOperationsLog.get(0).getTimestamp()).isNotNull();
     assertThat(userOperationsLog.get(0).getProcessDefinitionKey()).isEqualTo("process");
     assertThat(userOperationsLog.get(0).getProcessDefinitionId()).isEqualTo(processInstance.getProcessDefinitionId());
@@ -266,7 +265,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
     assertThat(userOperationsLog.get(1).getOperationType()).isEqualTo(OPERATION_TYPE_SUSPEND_PROCESS_DEFINITION);
     assertThat(userOperationsLog.get(1).getEntityType()).isEqualTo(EntityTypes.PROCESS_DEFINITION);
     assertThat(userOperationsLog.get(1).getOrgValue()).isNull();
-    assertTrue(newPossibleValue.remove(userOperationsLog.get(1).getNewValue()));
+    assertThat(newPossibleValue.remove(userOperationsLog.get(1).getNewValue())).isTrue();
     assertThat(userOperationsLog.get(1).getTimestamp()).isNotNull();
     assertThat(userOperationsLog.get(1).getProcessDefinitionKey()).isEqualTo("process");
     assertThat(userOperationsLog.get(1).getProcessDefinitionId()).isEqualTo(processInstance.getProcessDefinitionId());
@@ -276,7 +275,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
     assertThat(userOperationsLog.get(2).getOperationType()).isEqualTo(OPERATION_TYPE_ACTIVATE_PROCESS_DEFINITION);
     assertThat(userOperationsLog.get(2).getEntityType()).isEqualTo(EntityTypes.PROCESS_DEFINITION);
     assertThat(userOperationsLog.get(2).getOrgValue()).isNull();
-    assertTrue(newPossibleValue.remove(userOperationsLog.get(2).getNewValue()));
+    assertThat(newPossibleValue.remove(userOperationsLog.get(2).getNewValue())).isTrue();
     assertThat(userOperationsLog.get(2).getTimestamp()).isNotNull();
     assertThat(userOperationsLog.get(2).getProcessDefinitionKey()).isEqualTo("process");
     assertThat(userOperationsLog.get(2).getProcessDefinitionId()).isEqualTo(processInstance.getProcessDefinitionId());
@@ -286,7 +285,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
     assertThat(userOperationsLog.get(3).getOperationType()).isEqualTo(OPERATION_TYPE_ACTIVATE_PROCESS_DEFINITION);
     assertThat(userOperationsLog.get(3).getEntityType()).isEqualTo(EntityTypes.PROCESS_DEFINITION);
     assertThat(userOperationsLog.get(3).getOrgValue()).isNull();
-    assertTrue(newPossibleValue.remove(userOperationsLog.get(3).getNewValue()));
+    assertThat(newPossibleValue.remove(userOperationsLog.get(3).getNewValue())).isTrue();
     assertThat(userOperationsLog.get(3).getTimestamp()).isNotNull();
     assertThat(userOperationsLog.get(3).getProcessDefinitionKey()).isEqualTo("process");
     assertThat(userOperationsLog.get(3).getProcessDefinitionId()).isEqualTo(processInstance.getProcessDefinitionId());
@@ -324,7 +323,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
     assertThat(userOperationsLog.get(0).getOperationType()).isEqualTo(OPERATION_TYPE_SUSPEND_PROCESS_DEFINITION);
     assertThat(userOperationsLog.get(0).getEntityType()).isEqualTo(EntityTypes.PROCESS_DEFINITION);
     assertThat(userOperationsLog.get(0).getOrgValue()).isNull();
-    assertTrue(newPossibleValue.remove(userOperationsLog.get(0).getNewValue()));
+    assertThat(newPossibleValue.remove(userOperationsLog.get(0).getNewValue())).isTrue();
     assertThat(userOperationsLog.get(0).getTimestamp()).isNotNull();
     assertThat(userOperationsLog.get(0).getProcessDefinitionKey()).isEqualTo("process");
     assertThat(userOperationsLog.get(0).getProcessDefinitionId()).isNull();
@@ -334,7 +333,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
     assertThat(userOperationsLog.get(1).getOperationType()).isEqualTo(OPERATION_TYPE_SUSPEND_PROCESS_DEFINITION);
     assertThat(userOperationsLog.get(1).getEntityType()).isEqualTo(EntityTypes.PROCESS_DEFINITION);
     assertThat(userOperationsLog.get(1).getOrgValue()).isNull();
-    assertTrue(newPossibleValue.remove(userOperationsLog.get(1).getNewValue()));
+    assertThat(newPossibleValue.remove(userOperationsLog.get(1).getNewValue())).isTrue();
     assertThat(userOperationsLog.get(1).getTimestamp()).isNotNull();
     assertThat(userOperationsLog.get(1).getProcessDefinitionKey()).isEqualTo("process");
     assertThat(userOperationsLog.get(1).getProcessDefinitionId()).isNull();
@@ -344,7 +343,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
     assertThat(userOperationsLog.get(2).getOperationType()).isEqualTo(OPERATION_TYPE_ACTIVATE_PROCESS_DEFINITION);
     assertThat(userOperationsLog.get(2).getEntityType()).isEqualTo(EntityTypes.PROCESS_DEFINITION);
     assertThat(userOperationsLog.get(2).getOrgValue()).isNull();
-    assertTrue(newPossibleValue.remove(userOperationsLog.get(2).getNewValue()));
+    assertThat(newPossibleValue.remove(userOperationsLog.get(2).getNewValue())).isTrue();
     assertThat(userOperationsLog.get(2).getTimestamp()).isNotNull();
     assertThat(userOperationsLog.get(2).getProcessDefinitionKey()).isEqualTo("process");
     assertThat(userOperationsLog.get(2).getProcessDefinitionId()).isNull();
@@ -354,7 +353,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
     assertThat(userOperationsLog.get(3).getOperationType()).isEqualTo(OPERATION_TYPE_ACTIVATE_PROCESS_DEFINITION);
     assertThat(userOperationsLog.get(3).getEntityType()).isEqualTo(EntityTypes.PROCESS_DEFINITION);
     assertThat(userOperationsLog.get(3).getOrgValue()).isNull();
-    assertTrue(newPossibleValue.remove(userOperationsLog.get(3).getNewValue()));
+    assertThat(newPossibleValue.remove(userOperationsLog.get(3).getNewValue())).isTrue();
     assertThat(userOperationsLog.get(3).getTimestamp()).isNotNull();
     assertThat(userOperationsLog.get(3).getProcessDefinitionKey()).isEqualTo("process");
     assertThat(userOperationsLog.get(3).getProcessDefinitionId()).isNull();
@@ -493,8 +492,8 @@ public class GetHistoricOperationLogsForOptimizeTest {
     // then
     Set<String> allowedOperationsTypes = new HashSet<>(Arrays.asList(OPERATION_TYPE_SUSPEND, OPERATION_TYPE_ACTIVATE));
     assertThat(userOperationsLog).hasSize(2);
-    assertTrue(allowedOperationsTypes.contains(userOperationsLog.get(0).getOperationType()));
-    assertTrue(allowedOperationsTypes.contains(userOperationsLog.get(1).getOperationType()));
+    assertThat(allowedOperationsTypes).contains(userOperationsLog.get(0));
+    assertThat(allowedOperationsTypes).contains(userOperationsLog.get(1));
   }
 
   @Test

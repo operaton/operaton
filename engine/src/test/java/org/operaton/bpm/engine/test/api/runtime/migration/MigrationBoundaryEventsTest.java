@@ -20,8 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.impl.migration.validation.instruction.ConditionalEventUpdateEventTriggerValidator.MIGRATION_CONDITIONAL_VALIDATION_ERROR_MSG;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -178,7 +176,7 @@ public class MigrationBoundaryEventsTest {
 
     // a timer job exists
     Job jobBeforeMigration = rule.getManagementService().createJobQuery().singleResult();
-    assertNotNull(jobBeforeMigration);
+    assertThat(jobBeforeMigration).isNotNull();
 
     // if the timer job is triggered the failing delegate fails and an incident is created
     executeJob(jobBeforeMigration);
@@ -195,9 +193,9 @@ public class MigrationBoundaryEventsTest {
 
     // then the job and incident still exists
     Job jobAfterMigration = rule.getManagementService().createJobQuery().jobId(jobBeforeMigration.getId()).singleResult();
-    assertNotNull(jobAfterMigration);
+    assertThat(jobAfterMigration).isNotNull();
     Incident incidentAfterMigration = rule.getRuntimeService().createIncidentQuery().singleResult();
-    assertNotNull(incidentAfterMigration);
+    assertThat(incidentAfterMigration).isNotNull();
 
     // and it is still the same incident
     assertThat(incidentAfterMigration.getId()).isEqualTo(incidentBeforeMigration.getId());
@@ -494,7 +492,7 @@ public class MigrationBoundaryEventsTest {
 
     // and no event subscription for the new message name exists
     EventSubscription eventSubscription = rule.getRuntimeService().createEventSubscriptionQuery().eventName("new" + SIGNAL_NAME).singleResult();
-    assertNull(eventSubscription);
+    assertThat(eventSubscription).isNull();
     assertThat(rule.getRuntimeService().createEventSubscriptionQuery().count()).isEqualTo(1);
 
     // and it is possible to trigger the event with the old message name and successfully complete the migrated instance
@@ -540,7 +538,7 @@ public class MigrationBoundaryEventsTest {
 
     // and no event subscription for the new message name exists
     EventSubscription eventSubscription = rule.getRuntimeService().createEventSubscriptionQuery().eventName("new" + MESSAGE_NAME).singleResult();
-    assertNull(eventSubscription);
+    assertThat(eventSubscription).isNull();
     assertThat(rule.getRuntimeService().createEventSubscriptionQuery().count()).isEqualTo(1);
 
     // and it is possible to trigger the event with the old message name and successfully complete the migrated instance

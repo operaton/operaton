@@ -207,7 +207,7 @@ public class DeleteBatchAuthorizationTest {
       List<UserOperationLogEntry> userOperationLogHistoricEntries = query.operationType(OPERATION_TYPE_DELETE_HISTORY)
         .batchId(batch.getId())
         .list();
-      assertThat(userOperationLogHistoricEntries).hasSize(0);
+      assertThat(userOperationLogHistoricEntries).isEmpty();
     }
   }
 }

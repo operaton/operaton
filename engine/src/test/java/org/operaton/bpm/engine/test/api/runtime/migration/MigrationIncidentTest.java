@@ -17,9 +17,6 @@
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.RuntimeService;
@@ -391,16 +388,16 @@ public class MigrationIncidentTest {
     HistoricIncident historicIncidentAfterMigration = engineRule.getHistoryService()
         .createHistoricIncidentQuery()
         .singleResult();
-    assertNotNull(historicIncidentAfterMigration);
-    assertNull(historicIncidentAfterMigration.getEndTime());
-    assertTrue(historicIncidentAfterMigration.isOpen());
+    assertThat(historicIncidentAfterMigration).isNotNull();
+    assertThat(historicIncidentAfterMigration.getEndTime()).isNull();
+    assertThat(historicIncidentAfterMigration.isOpen()).isTrue();
 
     HistoricProcessInstance historicProcessInstanceAfterMigration = engineRule.getHistoryService()
         .createHistoricProcessInstanceQuery()
         .withIncidents()
         .incidentStatus("open")
         .singleResult();
-    assertNotNull(historicProcessInstanceAfterMigration);
+    assertThat(historicProcessInstanceAfterMigration).isNotNull();
 
     Incident incidentAfterMigration = engineRule.getRuntimeService()
         .createIncidentQuery()

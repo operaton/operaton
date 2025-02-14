@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.usertask;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -65,20 +63,20 @@ public class UserTaskTest extends PluggableProcessEngineTest {
     runtimeService.getActiveActivityIds(processInstance.getId());
 
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task.getId());
+    assertThat(task.getId()).isNotNull();
     assertThat(task.getName()).isEqualTo("my task");
     assertThat(task.getDescription()).isEqualTo("Very important");
-    assertTrue(task.getPriority() > 0);
+    assertThat(task.getPriority() > 0).isTrue();
     assertThat(task.getAssignee()).isEqualTo("kermit");
     assertThat(task.getProcessInstanceId()).isEqualTo(processInstance.getId());
     assertThat(task.getExecutionId()).isEqualTo(processInstance.getId());
-    assertNotNull(task.getProcessDefinitionId());
-    assertNotNull(task.getTaskDefinitionKey());
-    assertNotNull(task.getCreateTime());
+    assertThat(task.getProcessDefinitionId()).isNotNull();
+    assertThat(task.getTaskDefinitionKey()).isNotNull();
+    assertThat(task.getCreateTime()).isNotNull();
 
     // the next test verifies that if an execution creates a task, that no events are created during creation of the task.
     if (processEngineConfiguration.getHistoryLevel().getId() >= ProcessEngineConfigurationImpl.HISTORYLEVEL_ACTIVITY) {
-      assertThat(taskService.getTaskEvents(task.getId())).hasSize(0);
+      assertThat(taskService.getTaskEvents(task.getId())).isEmpty();
     }
   }
 
@@ -97,12 +95,12 @@ public class UserTaskTest extends PluggableProcessEngineTest {
 	  // start the process
     runtimeService.startProcessInstanceByKey("ForkProcess");
     List<Task> taskList = taskService.createTaskQuery().list();
-    assertNotNull(taskList);
+    assertThat(taskList).isNotNull();
     assertThat(taskList).hasSize(2);
 
     // make sure user task exists
     Task task = taskService.createTaskQuery().taskDefinitionKey("SimpleUser").singleResult();
-  	assertNotNull(task);
+    assertThat(task).isNotNull();
 
   	// attempt to complete the task and get PersistenceException pointing to "referential integrity constraint violation"
   	taskService.complete(task.getId());
@@ -114,7 +112,7 @@ public class UserTaskTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("processWithSubProcessesAndParallelGateways");
 
     List<Task> taskList = taskService.createTaskQuery().list();
-    assertNotNull(taskList);
+    assertThat(taskList).isNotNull();
     assertThat(taskList).hasSize(13);
 
   }
@@ -140,7 +138,7 @@ public class UserTaskTest extends PluggableProcessEngineTest {
     taskService.complete(task.getId());
 
     tasks = taskService.createTaskQuery().taskCandidateUser("fozzie").list();
-    assertThat(tasks).hasSize(0);
+    assertThat(tasks).isEmpty();
     tasks = taskService.createTaskQuery().taskCandidateUser("kermit").list();
     assertThat(tasks).hasSize(1);
     assertThat(tasks.get(0).getName()).isEqualTo("Verify monthly financial report");

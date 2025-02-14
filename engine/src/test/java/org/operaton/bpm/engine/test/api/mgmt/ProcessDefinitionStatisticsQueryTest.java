@@ -17,9 +17,7 @@
 package org.operaton.bpm.engine.test.api.mgmt;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import java.util.HashMap;
@@ -82,7 +80,7 @@ public class ProcessDefinitionStatisticsQueryTest extends PluggableProcessEngine
     ProcessDefinitionStatistics definitionResult = statistics.get(0);
     assertThat(definitionResult.getInstances()).isEqualTo(2);
 
-    assertFalse(definitionResult.getIncidentStatistics().isEmpty());
+    assertThat(definitionResult.getIncidentStatistics()).isNotEmpty();
     assertThat(definitionResult.getIncidentStatistics()).hasSize(1);
 
     IncidentStatistics incidentStatistics = definitionResult.getIncidentStatistics().get(0);
@@ -112,7 +110,7 @@ public class ProcessDefinitionStatisticsQueryTest extends PluggableProcessEngine
     ProcessDefinitionStatistics definitionResult = statistics.get(0);
     assertThat(definitionResult.getInstances()).isEqualTo(2);
 
-    assertFalse(definitionResult.getIncidentStatistics().isEmpty());
+    assertThat(definitionResult.getIncidentStatistics()).isNotEmpty();
     assertThat(definitionResult.getIncidentStatistics()).hasSize(1);
 
     IncidentStatistics incidentStatistics = definitionResult.getIncidentStatistics().get(0);
@@ -142,7 +140,7 @@ public class ProcessDefinitionStatisticsQueryTest extends PluggableProcessEngine
     ProcessDefinitionStatistics definitionResult = statistics.get(0);
     assertThat(definitionResult.getInstances()).isEqualTo(2);
 
-    assertTrue(definitionResult.getIncidentStatistics().isEmpty());
+    assertThat(definitionResult.getIncidentStatistics()).isEmpty();
   }
 
   @Test
@@ -169,7 +167,7 @@ public class ProcessDefinitionStatisticsQueryTest extends PluggableProcessEngine
     assertThat(definitionResult.getInstances()).isEqualTo(2);
     assertThat(definitionResult.getFailedJobs()).isEqualTo(1);
 
-    assertFalse(definitionResult.getIncidentStatistics().isEmpty());
+    assertThat(definitionResult.getIncidentStatistics()).isNotEmpty();
     assertThat(definitionResult.getIncidentStatistics()).hasSize(1);
 
     IncidentStatistics incidentStatistics = definitionResult.getIncidentStatistics().get(0);
@@ -196,7 +194,7 @@ public class ProcessDefinitionStatisticsQueryTest extends PluggableProcessEngine
     statistics =
         managementService.createProcessDefinitionStatisticsQuery().includeIncidents().list();
 
-    assertTrue(definitionResult.getIncidentStatistics().isEmpty());
+    assertThat(definitionResult.getIncidentStatistics()).isEmpty();
   }
 
   @Test
@@ -309,13 +307,13 @@ public class ProcessDefinitionStatisticsQueryTest extends PluggableProcessEngine
     assertThat(definitionResult.getInstances()).isEqualTo(1);
     assertThat(definitionResult.getFailedJobs()).isEqualTo(0);
 
-    assertTrue(definitionResult.getIncidentStatistics().isEmpty());
+    assertThat(definitionResult.getIncidentStatistics()).isEmpty();
 
     definitionResult = statistics.get(1);
     assertThat(definitionResult.getInstances()).isEqualTo(1);
     assertThat(definitionResult.getFailedJobs()).isEqualTo(0);
 
-    assertTrue(definitionResult.getIncidentStatistics().isEmpty());
+    assertThat(definitionResult.getIncidentStatistics()).isEmpty();
 
     repositoryService.deleteDeployment(deployment.getId(), true);
   }
@@ -357,7 +355,7 @@ public class ProcessDefinitionStatisticsQueryTest extends PluggableProcessEngine
     assertThat(definitionResult.getFailedJobs()).isEqualTo(1);
 
     List<IncidentStatistics> incidentStatistics = definitionResult.getIncidentStatistics();
-    assertFalse(incidentStatistics.isEmpty());
+    assertThat(incidentStatistics).isNotEmpty();
     assertThat(incidentStatistics).hasSize(1);
 
     IncidentStatistics incident = incidentStatistics.get(0);
@@ -370,7 +368,7 @@ public class ProcessDefinitionStatisticsQueryTest extends PluggableProcessEngine
     assertThat(definitionResult.getFailedJobs()).isEqualTo(1);
 
     incidentStatistics = definitionResult.getIncidentStatistics();
-    assertFalse(incidentStatistics.isEmpty());
+    assertThat(incidentStatistics).isNotEmpty();
     assertThat(incidentStatistics).hasSize(1);
 
     incident = incidentStatistics.get(0);
@@ -414,13 +412,13 @@ public class ProcessDefinitionStatisticsQueryTest extends PluggableProcessEngine
     assertThat(definitionResult.getInstances()).isEqualTo(1);
     assertThat(definitionResult.getFailedJobs()).isEqualTo(0);
 
-    assertTrue(definitionResult.getIncidentStatistics().isEmpty());
+    assertThat(definitionResult.getIncidentStatistics()).isEmpty();
 
     definitionResult = statistics.get(1);
     assertThat(definitionResult.getInstances()).isEqualTo(1);
     assertThat(definitionResult.getFailedJobs()).isEqualTo(0);
 
-    assertTrue(definitionResult.getIncidentStatistics().isEmpty());
+    assertThat(definitionResult.getIncidentStatistics()).isEmpty();
 
     repositoryService.deleteDeployment(deployment.getId(), true);
   }
@@ -480,14 +478,14 @@ public class ProcessDefinitionStatisticsQueryTest extends PluggableProcessEngine
       }
     }
 
-    assertNotNull(callExampleSubProcessStaticstics);
-    assertNotNull(exampleSubProcessStaticstics);
+    assertThat(callExampleSubProcessStaticstics).isNotNull();
+    assertThat(exampleSubProcessStaticstics).isNotNull();
 
     // "super" process definition
     assertThat(callExampleSubProcessStaticstics.getInstances()).isEqualTo(1);
     assertThat(callExampleSubProcessStaticstics.getFailedJobs()).isEqualTo(0);
 
-    assertFalse(callExampleSubProcessStaticstics.getIncidentStatistics().isEmpty());
+    assertThat(callExampleSubProcessStaticstics.getIncidentStatistics()).isNotEmpty();
     assertThat(callExampleSubProcessStaticstics.getIncidentStatistics()).hasSize(1);
 
     IncidentStatistics incidentStatistics = callExampleSubProcessStaticstics.getIncidentStatistics().get(0);
@@ -498,7 +496,7 @@ public class ProcessDefinitionStatisticsQueryTest extends PluggableProcessEngine
     assertThat(exampleSubProcessStaticstics.getInstances()).isEqualTo(1);
     assertThat(exampleSubProcessStaticstics.getFailedJobs()).isEqualTo(1);
 
-    assertFalse(exampleSubProcessStaticstics.getIncidentStatistics().isEmpty());
+    assertThat(exampleSubProcessStaticstics.getIncidentStatistics()).isNotEmpty();
     assertThat(exampleSubProcessStaticstics.getIncidentStatistics()).hasSize(1);
 
     incidentStatistics = exampleSubProcessStaticstics.getIncidentStatistics().get(0);
@@ -638,17 +636,17 @@ public class ProcessDefinitionStatisticsQueryTest extends PluggableProcessEngine
 
       if (definitionResult.getKey().equals("callExampleSubProcess")) {
         // there is no root incidents
-        assertTrue(definitionResult.getIncidentStatistics().isEmpty());
+        assertThat(definitionResult.getIncidentStatistics()).isEmpty();
 
       } else if (definitionResult.getKey().equals("ExampleProcess")) {
         // there is one root incident
-        assertFalse(definitionResult.getIncidentStatistics().isEmpty());
+        assertThat(definitionResult.getIncidentStatistics()).isNotEmpty();
         assertThat(definitionResult.getIncidentStatistics()).hasSize(1);
         assertThat(definitionResult.getIncidentStatistics().get(0).getIncidentCount()).isEqualTo(1);
 
       } else {
         // fail if the process definition key does not match
-        fail();
+        fail("");
       }
     }
   }

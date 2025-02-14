@@ -17,8 +17,7 @@
 package org.operaton.bpm.engine.test.api.history;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -128,33 +127,33 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
     Map<String, UserOperationLogEntry> entries = asMap(opLogEntries);
 
     UserOperationLogEntry asyncEntry = entries.get("async");
-    assertNotNull(asyncEntry);
+    assertThat(asyncEntry).isNotNull();
     assertThat(asyncEntry.getEntityType()).isEqualTo(EntityTypes.DECISION_INSTANCE);
     assertThat(asyncEntry.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_DELETE_HISTORY);
-    assertNull(asyncEntry.getProcessDefinitionId());
-    assertNull(asyncEntry.getProcessDefinitionKey());
-    assertNull(asyncEntry.getProcessInstanceId());
-    assertNull(asyncEntry.getOrgValue());
+    assertThat(asyncEntry.getProcessDefinitionId()).isNull();
+    assertThat(asyncEntry.getProcessDefinitionKey()).isNull();
+    assertThat(asyncEntry.getProcessInstanceId()).isNull();
+    assertThat(asyncEntry.getOrgValue()).isNull();
     assertThat(asyncEntry.getNewValue()).isEqualTo("true");
 
     UserOperationLogEntry numInstancesEntry = entries.get("nrOfInstances");
-    assertNotNull(numInstancesEntry);
+    assertThat(numInstancesEntry).isNotNull();
     assertThat(numInstancesEntry.getEntityType()).isEqualTo(EntityTypes.DECISION_INSTANCE);
     assertThat(numInstancesEntry.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_DELETE_HISTORY);
-    assertNull(numInstancesEntry.getProcessDefinitionId());
-    assertNull(numInstancesEntry.getProcessDefinitionKey());
-    assertNull(numInstancesEntry.getProcessInstanceId());
-    assertNull(numInstancesEntry.getOrgValue());
+    assertThat(numInstancesEntry.getProcessDefinitionId()).isNull();
+    assertThat(numInstancesEntry.getProcessDefinitionKey()).isNull();
+    assertThat(numInstancesEntry.getProcessInstanceId()).isNull();
+    assertThat(numInstancesEntry.getOrgValue()).isNull();
     assertThat(numInstancesEntry.getNewValue()).isEqualTo("10");
 
     UserOperationLogEntry deleteReasonEntry = entries.get("deleteReason");
-    assertNotNull(deleteReasonEntry);
+    assertThat(deleteReasonEntry).isNotNull();
     assertThat(deleteReasonEntry.getEntityType()).isEqualTo(EntityTypes.DECISION_INSTANCE);
     assertThat(deleteReasonEntry.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_DELETE_HISTORY);
-    assertNull(deleteReasonEntry.getProcessDefinitionId());
-    assertNull(deleteReasonEntry.getProcessDefinitionKey());
-    assertNull(deleteReasonEntry.getProcessInstanceId());
-    assertNull(deleteReasonEntry.getOrgValue());
+    assertThat(deleteReasonEntry.getProcessDefinitionId()).isNull();
+    assertThat(deleteReasonEntry.getProcessDefinitionKey()).isNull();
+    assertThat(deleteReasonEntry.getProcessInstanceId()).isNull();
+    assertThat(deleteReasonEntry.getOrgValue()).isNull();
     assertThat(deleteReasonEntry.getNewValue()).isEqualTo("a-delete-reason");
 
     assertThat(asyncEntry.getOperationId()).isEqualTo(numInstancesEntry.getOperationId());
@@ -179,33 +178,33 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
     Map<String, UserOperationLogEntry> entries = asMap(opLogEntries);
 
     UserOperationLogEntry asyncEntry = entries.get("async");
-    assertNotNull(asyncEntry);
+    assertThat(asyncEntry).isNotNull();
     assertThat(asyncEntry.getEntityType()).isEqualTo(EntityTypes.DECISION_INSTANCE);
     assertThat(asyncEntry.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_DELETE_HISTORY);
-    assertNull(asyncEntry.getProcessDefinitionId());
-    assertNull(asyncEntry.getProcessDefinitionKey());
-    assertNull(asyncEntry.getProcessInstanceId());
-    assertNull(asyncEntry.getOrgValue());
+    assertThat(asyncEntry.getProcessDefinitionId()).isNull();
+    assertThat(asyncEntry.getProcessDefinitionKey()).isNull();
+    assertThat(asyncEntry.getProcessInstanceId()).isNull();
+    assertThat(asyncEntry.getOrgValue()).isNull();
     assertThat(asyncEntry.getNewValue()).isEqualTo("true");
 
     UserOperationLogEntry numInstancesEntry = entries.get("nrOfInstances");
-    assertNotNull(numInstancesEntry);
+    assertThat(numInstancesEntry).isNotNull();
     assertThat(numInstancesEntry.getEntityType()).isEqualTo(EntityTypes.DECISION_INSTANCE);
     assertThat(numInstancesEntry.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_DELETE_HISTORY);
-    assertNull(numInstancesEntry.getProcessDefinitionId());
-    assertNull(numInstancesEntry.getProcessDefinitionKey());
-    assertNull(numInstancesEntry.getProcessInstanceId());
-    assertNull(numInstancesEntry.getOrgValue());
+    assertThat(numInstancesEntry.getProcessDefinitionId()).isNull();
+    assertThat(numInstancesEntry.getProcessDefinitionKey()).isNull();
+    assertThat(numInstancesEntry.getProcessInstanceId()).isNull();
+    assertThat(numInstancesEntry.getOrgValue()).isNull();
     assertThat(numInstancesEntry.getNewValue()).isEqualTo("10");
 
     UserOperationLogEntry deleteReasonEntry = entries.get("deleteReason");
-    assertNotNull(deleteReasonEntry);
+    assertThat(deleteReasonEntry).isNotNull();
     assertThat(deleteReasonEntry.getEntityType()).isEqualTo(EntityTypes.DECISION_INSTANCE);
     assertThat(deleteReasonEntry.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_DELETE_HISTORY);
-    assertNull(deleteReasonEntry.getProcessDefinitionId());
-    assertNull(deleteReasonEntry.getProcessDefinitionKey());
-    assertNull(deleteReasonEntry.getProcessInstanceId());
-    assertNull(deleteReasonEntry.getOrgValue());
+    assertThat(deleteReasonEntry.getProcessDefinitionId()).isNull();
+    assertThat(deleteReasonEntry.getProcessDefinitionKey()).isNull();
+    assertThat(deleteReasonEntry.getProcessInstanceId()).isNull();
+    assertThat(deleteReasonEntry.getOrgValue()).isNull();
     assertThat(deleteReasonEntry.getNewValue()).isEqualTo("a-delete-reason");
 
     assertThat(asyncEntry.getOperationId()).isEqualTo(deleteReasonEntry.getOperationId());
@@ -230,33 +229,33 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
     Map<String, UserOperationLogEntry> entries = asMap(opLogEntries);
 
     UserOperationLogEntry asyncEntry = entries.get("async");
-    assertNotNull(asyncEntry);
+    assertThat(asyncEntry).isNotNull();
     assertThat(asyncEntry.getEntityType()).isEqualTo(EntityTypes.DECISION_INSTANCE);
     assertThat(asyncEntry.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_DELETE_HISTORY);
-    assertNull(asyncEntry.getProcessDefinitionId());
-    assertNull(asyncEntry.getProcessDefinitionKey());
-    assertNull(asyncEntry.getProcessInstanceId());
-    assertNull(asyncEntry.getOrgValue());
+    assertThat(asyncEntry.getProcessDefinitionId()).isNull();
+    assertThat(asyncEntry.getProcessDefinitionKey()).isNull();
+    assertThat(asyncEntry.getProcessInstanceId()).isNull();
+    assertThat(asyncEntry.getOrgValue()).isNull();
     assertThat(asyncEntry.getNewValue()).isEqualTo("true");
 
     UserOperationLogEntry numInstancesEntry = entries.get("nrOfInstances");
-    assertNotNull(numInstancesEntry);
+    assertThat(numInstancesEntry).isNotNull();
     assertThat(numInstancesEntry.getEntityType()).isEqualTo(EntityTypes.DECISION_INSTANCE);
     assertThat(numInstancesEntry.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_DELETE_HISTORY);
-    assertNull(numInstancesEntry.getProcessDefinitionId());
-    assertNull(numInstancesEntry.getProcessDefinitionKey());
-    assertNull(numInstancesEntry.getProcessInstanceId());
-    assertNull(numInstancesEntry.getOrgValue());
+    assertThat(numInstancesEntry.getProcessDefinitionId()).isNull();
+    assertThat(numInstancesEntry.getProcessDefinitionKey()).isNull();
+    assertThat(numInstancesEntry.getProcessInstanceId()).isNull();
+    assertThat(numInstancesEntry.getOrgValue()).isNull();
     assertThat(numInstancesEntry.getNewValue()).isEqualTo("10");
 
     UserOperationLogEntry deleteReasonEntry = entries.get("deleteReason");
-    assertNotNull(deleteReasonEntry);
+    assertThat(deleteReasonEntry).isNotNull();
     assertThat(deleteReasonEntry.getEntityType()).isEqualTo(EntityTypes.DECISION_INSTANCE);
     assertThat(deleteReasonEntry.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_DELETE_HISTORY);
-    assertNull(deleteReasonEntry.getProcessDefinitionId());
-    assertNull(deleteReasonEntry.getProcessDefinitionKey());
-    assertNull(deleteReasonEntry.getProcessInstanceId());
-    assertNull(deleteReasonEntry.getOrgValue());
+    assertThat(deleteReasonEntry.getProcessDefinitionId()).isNull();
+    assertThat(deleteReasonEntry.getProcessDefinitionKey()).isNull();
+    assertThat(deleteReasonEntry.getProcessInstanceId()).isNull();
+    assertThat(deleteReasonEntry.getOrgValue()).isNull();
     assertThat(deleteReasonEntry.getNewValue()).isEqualTo("a-delete-reason");
 
     assertThat(asyncEntry.getOperationId()).isEqualTo(deleteReasonEntry.getOperationId());

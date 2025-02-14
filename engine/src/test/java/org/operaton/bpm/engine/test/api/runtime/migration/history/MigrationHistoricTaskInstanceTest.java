@@ -38,7 +38,6 @@ import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.runtime.migration.MigrationTestRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -138,10 +137,10 @@ public class MigrationHistoricTaskInstanceTest {
     HistoricTaskInstance historicSubTaskAfterMigration = historyService
         .createHistoricTaskInstanceQuery().taskId(subTask.getId()).singleResult();
 
-    Assert.assertNotNull(historicSubTaskAfterMigration);
-    Assert.assertNull(historicSubTaskAfterMigration.getProcessDefinitionId());
-    Assert.assertNull(historicSubTaskAfterMigration.getProcessDefinitionKey());
-    Assert.assertNull(historicSubTaskAfterMigration.getExecutionId());
-    Assert.assertNull(historicSubTaskAfterMigration.getActivityInstanceId());
+    assertThat(historicSubTaskAfterMigration).isNotNull();
+    assertThat(historicSubTaskAfterMigration.getProcessDefinitionId()).isNull();
+    assertThat(historicSubTaskAfterMigration.getProcessDefinitionKey()).isNull();
+    assertThat(historicSubTaskAfterMigration.getExecutionId()).isNull();
+    assertThat(historicSubTaskAfterMigration.getActivityInstanceId()).isNull();
   }
 }

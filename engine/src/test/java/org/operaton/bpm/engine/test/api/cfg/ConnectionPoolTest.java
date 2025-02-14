@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.cfg;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
 
 import javax.sql.DataSource;
 
@@ -57,7 +56,7 @@ public class ConnectionPoolTest {
     // Verify that these properties are correctly set in the MyBatis datasource
     Configuration sessionFactoryConfiguration = config.getDbSqlSessionFactory().getSqlSessionFactory().getConfiguration();
     DataSource datasource = sessionFactoryConfiguration.getEnvironment().getDataSource();
-    assertTrue(datasource instanceof PooledDataSource);
+    assertThat(datasource instanceof PooledDataSource).isTrue();
 
     PooledDataSource pooledDataSource = (PooledDataSource) datasource;
     assertThat(pooledDataSource.getPoolMaximumActiveConnections()).isEqualTo(maxActive);

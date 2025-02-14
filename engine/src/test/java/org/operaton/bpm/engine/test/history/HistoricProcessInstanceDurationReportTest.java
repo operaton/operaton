@@ -15,13 +15,10 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.history;
-
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.query.PeriodUnit.MONTH;
 import static org.operaton.bpm.engine.query.PeriodUnit.QUARTER;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.within;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -264,7 +261,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
 
     try {
       report.duration(null);
-      fail();
+      fail("");
     } catch (NotValidException e) {}
   }
 
@@ -334,7 +331,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
 
     try {
       report.startedBefore(null);
-      fail();
+      fail("");
     } catch (NotValidException e) {}
   }
 
@@ -398,7 +395,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
 
     try {
       report.startedAfter(null);
-      fail();
+      fail("");
     } catch (NotValidException e) {}
   }
 
@@ -822,7 +819,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
 
         int period = reportResult.getPeriod();
         Set<String> processInstancesInPeriod = periodToProcessInstancesMap.get(period);
-        assertNotNull("Unexpected report for period " + period, processInstancesInPeriod);
+        assertThat(processInstancesInPeriod).as("Unexpected report for period " + period).isNotNull();
 
         List<HistoricProcessInstance> historicProcessInstances = historyService
             .createHistoricProcessInstanceQuery()

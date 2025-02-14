@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.parse;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -144,7 +143,7 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
     ClockUtil.setCurrentTime(SIMPLE_DATE_FORMAT.parse("2017-01-01T09:55:00"));
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey(PROCESS_ID);
-    assertNotNull(pi);
+    assertThat(pi).isNotNull();
 
     Date currentTime = SIMPLE_DATE_FORMAT.parse("2017-01-01T10:00:00");
     ClockUtil.setCurrentTime(currentTime);
@@ -171,7 +170,7 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
     ClockUtil.setCurrentTime(SIMPLE_DATE_FORMAT.parse("2017-01-01T09:55:00"));
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey(PROCESS_ID);
-    assertNotNull(pi);
+    assertThat(pi).isNotNull();
 
     Date currentTime = SIMPLE_DATE_FORMAT.parse("2017-01-01T10:00:00");
     ClockUtil.setCurrentTime(currentTime);
@@ -209,7 +208,7 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
     ClockUtil.setCurrentTime(SIMPLE_DATE_FORMAT.parse("2017-01-01T09:55:00"));
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey(PROCESS_ID);
-    assertNotNull(pi);
+    assertThat(pi).isNotNull();
 
     Date currentTime = SIMPLE_DATE_FORMAT.parse("2017-01-01T10:00:00");
     ClockUtil.setCurrentTime(currentTime);
@@ -257,7 +256,7 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
     ClockUtil.setCurrentTime(SIMPLE_DATE_FORMAT.parse("2017-01-01T09:55:00"));
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey(PROCESS_ID);
-    assertNotNull(pi);
+    assertThat(pi).isNotNull();
 
     Date currentTime = SIMPLE_DATE_FORMAT.parse("2017-01-01T10:00:00");
     ClockUtil.setCurrentTime(currentTime);
@@ -320,7 +319,7 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
     ClockUtil.setCurrentTime(SIMPLE_DATE_FORMAT.parse("2017-01-01T09:55:00"));
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey(PROCESS_ID);
-    assertNotNull(pi);
+    assertThat(pi).isNotNull();
 
     Date currentTime = SIMPLE_DATE_FORMAT.parse("2017-01-01T10:00:00");
     ClockUtil.setCurrentTime(currentTime);
@@ -375,7 +374,7 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
 
     ClockUtil.setCurrentTime(SIMPLE_DATE_FORMAT.parse("2017-01-01T09:55:00"));
 
-    assertNotNull(pi);
+    assertThat(pi).isNotNull();
 
     Date currentTime = SIMPLE_DATE_FORMAT.parse("2017-01-01T10:00:00");
     ClockUtil.setCurrentTime(currentTime);

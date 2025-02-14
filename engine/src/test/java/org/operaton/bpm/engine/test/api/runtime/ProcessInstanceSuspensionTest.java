@@ -18,9 +18,7 @@ package org.operaton.bpm.engine.test.api.runtime;
 
 import static java.util.Collections.emptyMap;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import java.util.*;
@@ -58,7 +56,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey(processDefinition.getKey());
 
     ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-    assertFalse(processInstance.isSuspended());
+    assertThat(processInstance.isSuspended()).isFalse();
 
   }
 
@@ -69,17 +67,17 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey(processDefinition.getKey());
 
     ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-    assertFalse(processInstance.isSuspended());
+    assertThat(processInstance.isSuspended()).isFalse();
 
     //suspend
     runtimeService.suspendProcessInstanceById(processInstance.getId());
     processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-    assertTrue(processInstance.isSuspended());
+    assertThat(processInstance.isSuspended()).isTrue();
 
     //activate
     runtimeService.activateProcessInstanceById(processInstance.getId());
     processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-    assertFalse(processInstance.isSuspended());
+    assertThat(processInstance.isSuspended()).isFalse();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
@@ -89,17 +87,17 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey(processDefinition.getKey());
 
     ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-    assertFalse(processInstance.isSuspended());
+    assertThat(processInstance.isSuspended()).isFalse();
 
     //suspend
     runtimeService.suspendProcessInstanceByProcessDefinitionId(processDefinition.getId());
     processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-    assertTrue(processInstance.isSuspended());
+    assertThat(processInstance.isSuspended()).isTrue();
 
     //activate
     runtimeService.activateProcessInstanceByProcessDefinitionId(processDefinition.getId());
     processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-    assertFalse(processInstance.isSuspended());
+    assertThat(processInstance.isSuspended()).isFalse();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
@@ -109,17 +107,17 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey(processDefinition.getKey());
 
     ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-    assertFalse(processInstance.isSuspended());
+    assertThat(processInstance.isSuspended()).isFalse();
 
     //suspend
     runtimeService.suspendProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
     processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-    assertTrue(processInstance.isSuspended());
+    assertThat(processInstance.isSuspended()).isTrue();
 
     //activate
     runtimeService.activateProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
     processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-    assertFalse(processInstance.isSuspended());
+    assertThat(processInstance.isSuspended()).isFalse();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
@@ -129,13 +127,13 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey(processDefinition.getKey());
 
     ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-    assertFalse(processInstance.isSuspended());
+    assertThat(processInstance.isSuspended()).isFalse();
 
     try {
       //activate
       runtimeService.activateProcessInstanceById(processInstance.getId());
       processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-      assertFalse(processInstance.isSuspended());
+      assertThat(processInstance.isSuspended()).isFalse();
     } catch (ProcessEngineException e) {
       fail("Should not fail");
     }
@@ -144,7 +142,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
       //activate
       runtimeService.activateProcessInstanceByProcessDefinitionId(processDefinition.getId());
       processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-      assertFalse(processInstance.isSuspended());
+      assertThat(processInstance.isSuspended()).isFalse();
     } catch (ProcessEngineException e) {
       fail("Should not fail");
     }
@@ -153,7 +151,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
       //activate
       runtimeService.activateProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
       processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-      assertFalse(processInstance.isSuspended());
+      assertThat(processInstance.isSuspended()).isFalse();
     } catch (ProcessEngineException e) {
       fail("Should not fail");
     }
@@ -166,14 +164,14 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey(processDefinition.getKey());
 
     ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-    assertFalse(processInstance.isSuspended());
+    assertThat(processInstance.isSuspended()).isFalse();
 
     runtimeService.suspendProcessInstanceById(processInstance.getId());
 
     try {
       runtimeService.suspendProcessInstanceById(processInstance.getId());
       processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-      assertTrue(processInstance.isSuspended());
+      assertThat(processInstance.isSuspended()).isTrue();
     } catch (ProcessEngineException e) {
       fail("Should not fail");
     }
@@ -181,7 +179,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     try {
       runtimeService.suspendProcessInstanceByProcessDefinitionId(processDefinition.getId());
       processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-      assertTrue(processInstance.isSuspended());
+      assertThat(processInstance.isSuspended()).isTrue();
     } catch (ProcessEngineException e) {
       fail("Should not fail");
     }
@@ -189,7 +187,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     try {
       runtimeService.suspendProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
       processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-      assertTrue(processInstance.isSuspended());
+      assertThat(processInstance.isSuspended()).isTrue();
     } catch (ProcessEngineException e) {
       fail("Should not fail");
     }
@@ -295,14 +293,14 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     // Assert that the task is now also suspended
     List<Task> tasks = taskService.createTaskQuery().processInstanceId(processInstance.getId()).list();
     for (Task task : tasks) {
-      assertTrue(task.isSuspended());
+      assertThat(task.isSuspended()).isTrue();
     }
 
     // Activate process instance again
     runtimeService.activateProcessInstanceById(processInstance.getId());
     tasks = taskService.createTaskQuery().processInstanceId(processInstance.getId()).list();
     for (Task task : tasks) {
-      assertFalse(task.isSuspended());
+      assertThat(task.isSuspended()).isFalse();
     }
   }
 
@@ -326,7 +324,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
 
     // assume
-    assertTrue(task.isSuspended());
+    assertThat(task.isSuspended()).isTrue();
 
     // then
     assertThat(task.getCreateTime()).isEqualTo(createTime);
@@ -347,14 +345,14 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     // Assert that the task is now also suspended
     List<Task> tasks = taskService.createTaskQuery().processInstanceId(processInstance.getId()).list();
     for (Task task : tasks) {
-      assertTrue(task.isSuspended());
+      assertThat(task.isSuspended()).isTrue();
     }
 
     // Activate process instance again
     runtimeService.activateProcessInstanceByProcessDefinitionId(processDefinition.getId());
     tasks = taskService.createTaskQuery().processInstanceId(processInstance.getId()).list();
     for (Task task : tasks) {
-      assertFalse(task.isSuspended());
+      assertThat(task.isSuspended()).isFalse();
     }
   }
 
@@ -373,14 +371,14 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     // Assert that the task is now also suspended
     List<Task> tasks = taskService.createTaskQuery().processInstanceId(processInstance.getId()).list();
     for (Task task : tasks) {
-      assertTrue(task.isSuspended());
+      assertThat(task.isSuspended()).isTrue();
     }
 
     // Activate process instance again
     runtimeService.activateProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
     tasks = taskService.createTaskQuery().processInstanceId(processInstance.getId()).list();
     for (Task task : tasks) {
-      assertFalse(task.isSuspended());
+      assertThat(task.isSuspended()).isFalse();
     }
   }
 
@@ -391,10 +389,10 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
 
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     task = taskService.createTaskQuery().active().singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // Suspend
     runtimeService.suspendProcessInstanceById(processInstance.getId());
@@ -421,10 +419,10 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceById(processDefinition.getId());
 
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     task = taskService.createTaskQuery().active().singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // Suspend
     runtimeService.suspendProcessInstanceByProcessDefinitionId(processDefinition.getId());
@@ -451,10 +449,10 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceById(processDefinition.getId());
 
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     task = taskService.createTaskQuery().active().singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // Suspend
     runtimeService.suspendProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
@@ -482,14 +480,14 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
     List<Execution> executions = runtimeService.createExecutionQuery().processInstanceId(processInstance.getId()).list();
     for (Execution execution : executions) {
-      assertTrue(execution.isSuspended());
+      assertThat(execution.isSuspended()).isTrue();
     }
 
     // Activate again
     runtimeService.activateProcessInstanceById(processInstance.getId());
     executions = runtimeService.createExecutionQuery().processInstanceId(processInstance.getId()).list();
     for (Execution execution : executions) {
-      assertFalse(execution.isSuspended());
+      assertThat(execution.isSuspended()).isFalse();
     }
 
     // Finish process
@@ -509,14 +507,14 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
     List<Execution> executions = runtimeService.createExecutionQuery().processInstanceId(processInstance.getId()).list();
     for (Execution execution : executions) {
-      assertTrue(execution.isSuspended());
+      assertThat(execution.isSuspended()).isTrue();
     }
 
     // Activate again
     runtimeService.activateProcessInstanceByProcessDefinitionId(processInstance.getProcessDefinitionId());
     executions = runtimeService.createExecutionQuery().processInstanceId(processInstance.getId()).list();
     for (Execution execution : executions) {
-      assertFalse(execution.isSuspended());
+      assertThat(execution.isSuspended()).isFalse();
     }
 
     // Finish process
@@ -536,14 +534,14 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
     List<Execution> executions = runtimeService.createExecutionQuery().processInstanceId(processInstance.getId()).list();
     for (Execution execution : executions) {
-      assertTrue(execution.isSuspended());
+      assertThat(execution.isSuspended()).isTrue();
     }
 
     // Activate again
     runtimeService.activateProcessInstanceByProcessDefinitionKey("testChildExecutionsSuspended");
     executions = runtimeService.createExecutionQuery().processInstanceId(processInstance.getId()).list();
     for (Execution execution : executions) {
-      assertFalse(execution.isSuspended());
+      assertThat(execution.isSuspended()).isFalse();
     }
 
     // Finish process
@@ -735,7 +733,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
     try {
       formService.submitTaskFormData(taskQuery, emptyProperties);
-      fail();
+      fail("");
     } catch(SuspendedEntityInteractionException e) {
       // This is expected
     }
@@ -751,7 +749,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
     try {
       formService.submitTaskFormData(taskQuery, emptyProperties);
-      fail();
+      fail("");
     } catch(SuspendedEntityInteractionException e) {
       // This is expected
     }
@@ -767,7 +765,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
     try {
       formService.submitTaskFormData(taskQuery, emptyProperties);
-      fail();
+      fail("");
     } catch(SuspendedEntityInteractionException e) {
       // This is expected
     }
@@ -785,7 +783,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
     try {
       runtimeService.signal(processInstanceId);
-      fail();
+      fail("");
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
       testRule.assertTextPresent("is suspended", e.getMessage());
@@ -793,7 +791,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
     try {
       runtimeService.signal(processInstanceId, emptyProcessVariables);
-      fail();
+      fail("");
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
       testRule.assertTextPresent("is suspended", e.getMessage());
@@ -812,7 +810,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
     try {
       runtimeService.signal(processInstanceId);
-      fail();
+      fail("");
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
       testRule.assertTextPresent("is suspended", e.getMessage());
@@ -820,7 +818,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
     try {
       runtimeService.signal(processInstanceId, emptyProcessVariables);
-      fail();
+      fail("");
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
       testRule.assertTextPresent("is suspended", e.getMessage());
@@ -839,7 +837,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
     try {
       runtimeService.signal(processInstanceId);
-      fail();
+      fail("");
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
       testRule.assertTextPresent("is suspended", e.getMessage());
@@ -847,7 +845,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
     try {
       runtimeService.signal(processInstanceId, emptyProcessVariables);
-      fail();
+      fail("");
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
       testRule.assertTextPresent("is suspended", e.getMessage());
@@ -865,7 +863,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
     try {
       runtimeService.messageEventReceived("someMessage", executionId);
-      fail();
+      fail("");
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
       testRule.assertTextPresent("is suspended", e.getMessage());
@@ -873,7 +871,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
     try {
       runtimeService.messageEventReceived("someMessage", executionId, emptyProcessVariables);
-      fail();
+      fail("");
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
       testRule.assertTextPresent("is suspended", e.getMessage());
@@ -891,7 +889,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
     try {
       runtimeService.messageEventReceived("someMessage", executionId);
-      fail();
+      fail("");
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
       testRule.assertTextPresent("is suspended", e.getMessage());
@@ -899,7 +897,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
     try {
       runtimeService.messageEventReceived("someMessage", executionId, emptyProcessVariables);
-      fail();
+      fail("");
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
       testRule.assertTextPresent("is suspended", e.getMessage());
@@ -917,7 +915,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
     try {
       runtimeService.messageEventReceived("someMessage", executionId);
-      fail();
+      fail("");
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
       testRule.assertTextPresent("is suspended", e.getMessage());
@@ -925,7 +923,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
     try {
       runtimeService.messageEventReceived("someMessage", executionId, emptyProcessVariables);
-      fail();
+      fail("");
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
       testRule.assertTextPresent("is suspended", e.getMessage());
@@ -956,7 +954,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     var executionId = subscription.getExecutionId();
     try {
       runtimeService.signalEventReceived(signal, executionId);
-      fail();
+      fail("");
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
       testRule.assertTextPresent("is suspended", e.getMessage());
@@ -964,7 +962,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
     try {
       runtimeService.signalEventReceived(signal, executionId, emptyProcessVariables);
-      fail();
+      fail("");
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
       testRule.assertTextPresent("is suspended", e.getMessage());
@@ -1000,7 +998,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     var executionId = subscription.getExecutionId();
     try {
       runtimeService.signalEventReceived(signal, executionId);
-      fail();
+      fail("");
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
       testRule.assertTextPresent("is suspended", e.getMessage());
@@ -1008,7 +1006,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
     try {
       runtimeService.signalEventReceived(signal, executionId, emptyProcessVariables);
-      fail();
+      fail("");
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
       testRule.assertTextPresent("is suspended", e.getMessage());
@@ -1049,7 +1047,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     var executionId = subscription.getExecutionId();
     try {
       runtimeService.signalEventReceived(signal, executionId);
-      fail();
+      fail("");
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
       testRule.assertTextPresent("is suspended", e.getMessage());
@@ -1057,7 +1055,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
     try {
       runtimeService.signalEventReceived(signal, executionId, emptyProcessVariables);
-      fail();
+      fail("");
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
       testRule.assertTextPresent("is suspended", e.getMessage());
@@ -1077,7 +1075,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
     final Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     var taskId = task.getId();
 
     // Suspend the process instance
@@ -1192,7 +1190,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
     final Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     var taskId = task.getId();
 
     // Suspend the process instance
@@ -1307,7 +1305,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
     final Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     var taskId = task.getId();
 
     // Suspend the process instance
@@ -1479,7 +1477,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
     final Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
     runtimeService.suspendProcessInstanceById(processInstance.getId());
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     try {
       taskService.setVariable(task.getId(), "someVar", "someValue");
@@ -1568,7 +1566,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
     final Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
     runtimeService.suspendProcessInstanceByProcessDefinitionId(processInstance.getProcessDefinitionId());
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     try {
       taskService.setVariable(task.getId(), "someVar", "someValue");
@@ -1657,7 +1655,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
     final Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
     runtimeService.suspendProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     try {
       taskService.setVariable(task.getId(), "someVar", "someValue");
@@ -2055,7 +2053,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
     ExternalTask task1 = externalTaskService.createExternalTaskQuery()
         .processInstanceId(processInstance1.getId()).singleResult();
-    assertFalse(task1.isSuspended());
+    assertThat(task1.isSuspended()).isFalse();
 
     // when the process instance is suspended
     runtimeService.suspendProcessInstanceById(processInstance1.getId());
@@ -2063,12 +2061,12 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     // then the task is suspended
     task1 = externalTaskService.createExternalTaskQuery()
         .processInstanceId(processInstance1.getId()).singleResult();
-    assertTrue(task1.isSuspended());
+    assertThat(task1.isSuspended()).isTrue();
 
     // the other task is not
     ExternalTask task2 = externalTaskService.createExternalTaskQuery()
         .processInstanceId(processInstance2.getId()).singleResult();
-    assertFalse(task2.isSuspended());
+    assertThat(task2.isSuspended()).isFalse();
 
     // when it is activated again
     runtimeService.activateProcessInstanceById(processInstance1.getId());
@@ -2076,7 +2074,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     // then the task is activated too
     task1 = externalTaskService.createExternalTaskQuery()
         .processInstanceId(processInstance1.getId()).singleResult();
-    assertFalse(task1.isSuspended());
+    assertThat(task1.isSuspended()).isFalse();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
@@ -2089,7 +2087,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
     ExternalTask task1 = externalTaskService.createExternalTaskQuery()
         .processInstanceId(processInstance1.getId()).singleResult();
-    assertFalse(task1.isSuspended());
+    assertThat(task1.isSuspended()).isFalse();
 
     // when the process instance is suspended
     runtimeService.suspendProcessInstanceByProcessDefinitionId(processInstance1.getProcessDefinitionId());
@@ -2097,12 +2095,12 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     // then the task is suspended
     task1 = externalTaskService.createExternalTaskQuery()
         .processInstanceId(processInstance1.getId()).singleResult();
-    assertTrue(task1.isSuspended());
+    assertThat(task1.isSuspended()).isTrue();
 
     // the other task is not
     ExternalTask task2 = externalTaskService.createExternalTaskQuery()
         .processInstanceId(processInstance2.getId()).singleResult();
-    assertFalse(task2.isSuspended());
+    assertThat(task2.isSuspended()).isFalse();
 
     // when it is activated again
     runtimeService.activateProcessInstanceByProcessDefinitionId(processInstance1.getProcessDefinitionId());
@@ -2110,7 +2108,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     // then the task is activated too
     task1 = externalTaskService.createExternalTaskQuery()
         .processInstanceId(processInstance1.getId()).singleResult();
-    assertFalse(task1.isSuspended());
+    assertThat(task1.isSuspended()).isFalse();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
@@ -2123,7 +2121,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
     ExternalTask task1 = externalTaskService.createExternalTaskQuery()
         .processInstanceId(processInstance1.getId()).singleResult();
-    assertFalse(task1.isSuspended());
+    assertThat(task1.isSuspended()).isFalse();
 
     // when the process instance is suspended
     runtimeService.suspendProcessInstanceByProcessDefinitionKey("oneExternalTaskProcess");
@@ -2131,12 +2129,12 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     // then the task is suspended
     task1 = externalTaskService.createExternalTaskQuery()
         .processInstanceId(processInstance1.getId()).singleResult();
-    assertTrue(task1.isSuspended());
+    assertThat(task1.isSuspended()).isTrue();
 
     // the other task is not
     ExternalTask task2 = externalTaskService.createExternalTaskQuery()
         .processInstanceId(processInstance2.getId()).singleResult();
-    assertFalse(task2.isSuspended());
+    assertThat(task2.isSuspended()).isFalse();
 
     // when it is activated again
     runtimeService.activateProcessInstanceByProcessDefinitionKey("oneExternalTaskProcess");
@@ -2144,7 +2142,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     // then the task is activated too
     task1 = externalTaskService.createExternalTaskQuery()
         .processInstanceId(processInstance1.getId()).singleResult();
-    assertFalse(task1.isSuspended());
+    assertThat(task1.isSuspended()).isFalse();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
@@ -2153,7 +2151,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-    assertFalse(processInstance.isSuspended());
+    assertThat(processInstance.isSuspended()).isFalse();
 
     //suspend
     runtimeService
@@ -2245,7 +2243,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     Job job = managementService.createJobQuery().processInstanceId(id).singleResult();
 
     // then
-    assertTrue(job.isSuspended());
+    assertThat(job.isSuspended()).isTrue();
   }
 
 }

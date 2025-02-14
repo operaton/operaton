@@ -21,8 +21,7 @@ import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeA
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -437,7 +436,7 @@ public class ProcessInstanceModificationMultiInstanceTest extends PluggableProce
 
     // then the mi variables should be correct
     Execution leafExecution = runtimeService.createExecutionQuery().activityId("miTasks").singleResult();
-    assertNotNull(leafExecution);
+    assertThat(leafExecution).isNotNull();
     assertVariable(leafExecution, "loopCounter", 0);
     assertVariable(leafExecution, "nrOfInstances", 1);
     assertVariable(leafExecution, "nrOfCompletedInstances", 0);
@@ -486,11 +485,11 @@ public class ProcessInstanceModificationMultiInstanceTest extends PluggableProce
     assertThat(statistics).hasSize(2);
 
     ActivityStatistics miTasksStatistics = getStatisticsForActivity(statistics, "miTasks");
-    assertNotNull(miTasksStatistics);
+    assertThat(miTasksStatistics).isNotNull();
     assertThat(miTasksStatistics.getInstances()).isEqualTo(1);
 
     ActivityStatistics beforeTaskStatistics = getStatisticsForActivity(statistics, "beforeTask");
-    assertNotNull(beforeTaskStatistics);
+    assertThat(beforeTaskStatistics).isNotNull();
     assertThat(beforeTaskStatistics.getInstances()).isEqualTo(1);
   }
 
@@ -510,7 +509,7 @@ public class ProcessInstanceModificationMultiInstanceTest extends PluggableProce
 
     // then the mi variables should be correct
     Execution leafExecution = runtimeService.createExecutionQuery().activityId("subProcessTask").singleResult();
-    assertNotNull(leafExecution);
+    assertThat(leafExecution).isNotNull();
     assertVariable(leafExecution, "loopCounter", 0);
     assertVariable(leafExecution, "nrOfInstances", 1);
     assertVariable(leafExecution, "nrOfCompletedInstances", 0);
@@ -562,11 +561,11 @@ public class ProcessInstanceModificationMultiInstanceTest extends PluggableProce
     assertThat(statistics).hasSize(2);
 
     ActivityStatistics miTasksStatistics = getStatisticsForActivity(statistics, "subProcessTask");
-    assertNotNull(miTasksStatistics);
+    assertThat(miTasksStatistics).isNotNull();
     assertThat(miTasksStatistics.getInstances()).isEqualTo(1);
 
     ActivityStatistics beforeTaskStatistics = getStatisticsForActivity(statistics, "beforeTask");
-    assertNotNull(beforeTaskStatistics);
+    assertThat(beforeTaskStatistics).isNotNull();
     assertThat(beforeTaskStatistics.getInstances()).isEqualTo(1);
   }
 
@@ -587,7 +586,7 @@ public class ProcessInstanceModificationMultiInstanceTest extends PluggableProce
 
     // then the mi variables should be correct
     Execution leafExecution = runtimeService.createExecutionQuery().activityId("subProcessTask").singleResult();
-    assertNotNull(leafExecution);
+    assertThat(leafExecution).isNotNull();
     assertVariable(leafExecution, "loopCounter", 0);
     assertVariable(leafExecution, "nrOfInstances", 3);
     assertVariable(leafExecution, "nrOfCompletedInstances", 0);
@@ -689,7 +688,7 @@ public class ProcessInstanceModificationMultiInstanceTest extends PluggableProce
 
     // then the mi variables should be correct
     Execution leafExecution = runtimeService.createExecutionQuery().activityId("miTasks").singleResult();
-    assertNotNull(leafExecution);
+    assertThat(leafExecution).isNotNull();
     assertVariable(leafExecution, "loopCounter", 0);
     assertVariable(leafExecution, "nrOfInstances", 1);
     assertVariable(leafExecution, "nrOfCompletedInstances", 0);
@@ -736,11 +735,11 @@ public class ProcessInstanceModificationMultiInstanceTest extends PluggableProce
     assertThat(statistics).hasSize(2);
 
     ActivityStatistics miTasksStatistics = getStatisticsForActivity(statistics, "miTasks");
-    assertNotNull(miTasksStatistics);
+    assertThat(miTasksStatistics).isNotNull();
     assertThat(miTasksStatistics.getInstances()).isEqualTo(1);
 
     ActivityStatistics beforeTaskStatistics = getStatisticsForActivity(statistics, "beforeTask");
-    assertNotNull(beforeTaskStatistics);
+    assertThat(beforeTaskStatistics).isNotNull();
     assertThat(beforeTaskStatistics.getInstances()).isEqualTo(1);
   }
 
@@ -768,7 +767,7 @@ public class ProcessInstanceModificationMultiInstanceTest extends PluggableProce
 
     // then the mi variables should be correct
     Execution leafExecution = runtimeService.createExecutionQuery().activityId("subProcessTask").singleResult();
-    assertNotNull(leafExecution);
+    assertThat(leafExecution).isNotNull();
     assertVariable(leafExecution, "loopCounter", 0);
     assertVariable(leafExecution, "nrOfInstances", 1);
     assertVariable(leafExecution, "nrOfCompletedInstances", 0);
@@ -818,11 +817,11 @@ public class ProcessInstanceModificationMultiInstanceTest extends PluggableProce
     assertThat(statistics).hasSize(2);
 
     ActivityStatistics miTasksStatistics = getStatisticsForActivity(statistics, "subProcessTask");
-    assertNotNull(miTasksStatistics);
+    assertThat(miTasksStatistics).isNotNull();
     assertThat(miTasksStatistics.getInstances()).isEqualTo(1);
 
     ActivityStatistics beforeTaskStatistics = getStatisticsForActivity(statistics, "beforeTask");
-    assertNotNull(beforeTaskStatistics);
+    assertThat(beforeTaskStatistics).isNotNull();
     assertThat(beforeTaskStatistics.getInstances()).isEqualTo(1);
   }
 
@@ -842,7 +841,7 @@ public class ProcessInstanceModificationMultiInstanceTest extends PluggableProce
 
     // then the mi variables should be correct
     Execution leafExecution = runtimeService.createExecutionQuery().activityId("subProcessTask").singleResult();
-    assertNotNull(leafExecution);
+    assertThat(leafExecution).isNotNull();
     assertVariable(leafExecution, "loopCounter", 0);
     assertVariable(leafExecution, "nrOfInstances", 3);
     assertVariable(leafExecution, "nrOfCompletedInstances", 0);
@@ -882,7 +881,7 @@ public class ProcessInstanceModificationMultiInstanceTest extends PluggableProce
       .done());
 
     leafExecution = runtimeService.createExecutionQuery().activityId("subProcessTask").singleResult();
-    assertNotNull(leafExecution);
+    assertThat(leafExecution).isNotNull();
     assertVariable(leafExecution, "loopCounter", 1);
     assertVariable(leafExecution, "nrOfInstances", 3);
     assertVariable(leafExecution, "nrOfCompletedInstances", 1);
@@ -1178,7 +1177,7 @@ public class ProcessInstanceModificationMultiInstanceTest extends PluggableProce
     for (String taskName : taskNames) {
       // complete any task with that name
       List<Task> tasks = taskService.createTaskQuery().taskDefinitionKey(taskName).listPage(0, 1);
-      assertTrue("task for activity " + taskName + " does not exist", !tasks.isEmpty());
+      assertThat(!tasks.isEmpty()).as("task for activity " + taskName + " does not exist").isTrue();
       taskService.complete(tasks.get(0).getId());
     }
   }
@@ -1198,11 +1197,10 @@ public class ProcessInstanceModificationMultiInstanceTest extends PluggableProce
 
     for (Object expectedValue : expectedValues) {
       boolean valueFound = actualValues.remove(expectedValue);
-      assertTrue("Expected variable value '" + expectedValue + "' not contained in the list of actual values. "
-          + "Unmatched actual values: " + actualValues,
-          valueFound);
+      assertThat(valueFound).as("Expected variable value '" + expectedValue + "' not contained in the list of actual values. "
+          + "Unmatched actual values: " + actualValues).isTrue();
     }
-    assertTrue("There are more actual than expected values.", actualValues.isEmpty());
+    assertThat(actualValues.isEmpty()).as("There are more actual than expected values.").isTrue();
   }
 
 }

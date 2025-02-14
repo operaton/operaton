@@ -17,9 +17,7 @@
 package org.operaton.bpm.engine.test.cmmn.required;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import java.util.Collections;
@@ -48,8 +46,8 @@ public class RequiredRuleTest extends PluggableProcessEngineTest {
         .createCaseExecutionQuery()
         .activityId("PI_HumanTask_1")
         .singleResult();
-    assertNotNull(taskExecution);
-    assertTrue(taskExecution.isRequired());
+    assertThat(taskExecution).isNotNull();
+    assertThat(taskExecution.isRequired()).isTrue();
 
     try {
       caseService.completeCaseExecution(caseInstanceId);
@@ -70,8 +68,8 @@ public class RequiredRuleTest extends PluggableProcessEngineTest {
         .activityId("PI_HumanTask_1")
         .singleResult();
 
-    assertNotNull(taskExecution);
-    assertFalse(taskExecution.isRequired());
+    assertThat(taskExecution).isNotNull();
+    assertThat(taskExecution.isRequired()).isFalse();
 
     // completing manually should be allowed
     caseService.completeCaseExecution(caseInstance.getId());
@@ -89,8 +87,8 @@ public class RequiredRuleTest extends PluggableProcessEngineTest {
         .activityId("PI_HumanTask_1")
         .singleResult();
 
-    assertNotNull(taskExecution);
-    assertTrue(taskExecution.isRequired());
+    assertThat(taskExecution).isNotNull();
+    assertThat(taskExecution.isRequired()).isTrue();
 
     try {
       caseService.completeCaseExecution(caseInstanceId);
@@ -111,8 +109,8 @@ public class RequiredRuleTest extends PluggableProcessEngineTest {
         .activityId("PI_HumanTask_1")
         .singleResult();
 
-    assertNotNull(taskExecution);
-    assertFalse(taskExecution.isRequired());
+    assertThat(taskExecution).isNotNull();
+    assertThat(taskExecution.isRequired()).isFalse();
 
     // completing manually should be allowed
     caseService.completeCaseExecution(caseInstance.getId());

@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 
 import java.util.ArrayList;
@@ -516,7 +517,7 @@ public class MigrationVariablesTest {
       .execute();
 
     VariableInstance variableAfterExpansion = runtimeService.createVariableInstanceQuery().singleResult();
-    Assert.assertNotNull(variableAfterExpansion);
+    assertThat(variableAfterExpansion).isNotNull();
     Assert.assertNotSame(processInstance.getId(), variableAfterExpansion.getExecutionId());
 
   }
@@ -579,7 +580,7 @@ public class MigrationVariablesTest {
     // when
     try {
       testHelper.migrateProcessInstance(migrationPlan, processInstance);
-      Assert.fail("expected exception");
+      fail("expected exception");
     }
     catch (ProcessEngineException e) {
       assertThat(e.getMessage()).contains("The variable 'foo' exists in both, this scope"
@@ -655,8 +656,9 @@ public class MigrationVariablesTest {
       values.add((String) variable.getValue());
     }
 
-    Assert.assertTrue(values.contains("task1Value"));
-    Assert.assertTrue(values.contains("task2Value"));
+    assertThat(values)
+            .contains("task1Value")
+            .contains("task2Value");
   }
 
   @Test
@@ -706,7 +708,7 @@ public class MigrationVariablesTest {
         .get(0)
         .getParent();
 
-    Assert.assertNotNull(testHelper.snapshotAfterMigration.getSingleVariable(subProcessExecution.getId(), "foo"));
+    assertThat(testHelper.snapshotAfterMigration.getSingleVariable(subProcessExecution.getId(), "foo")).isNotNull();
   }
 
   @Test
@@ -749,15 +751,15 @@ public class MigrationVariablesTest {
     assertThat(testHelper.snapshotAfterMigration.getVariables()).hasSize(3);
 
     VariableInstance processScopeVariableAfterMigration = testHelper.snapshotAfterMigration.getVariable(processScopeVariable.getId());
-    Assert.assertNotNull(processScopeVariableAfterMigration);
+    assertThat(processScopeVariableAfterMigration).isNotNull();
     assertThat(processScopeVariableAfterMigration.getValue()).isEqualTo("processInstanceValue");
 
     VariableInstance task1VariableAfterMigration = testHelper.snapshotAfterMigration.getVariable(task1Variable.getId());
-    Assert.assertNotNull(task1VariableAfterMigration);
+    assertThat(task1VariableAfterMigration).isNotNull();
     assertThat(task1VariableAfterMigration.getValue()).isEqualTo("task1Value");
 
     VariableInstance task2VariableAfterMigration = testHelper.snapshotAfterMigration.getVariable(task2Variable.getId());
-    Assert.assertNotNull(task2VariableAfterMigration);
+    assertThat(task2VariableAfterMigration).isNotNull();
     assertThat(task2VariableAfterMigration.getValue()).isEqualTo("task2Value");
 
   }
@@ -803,11 +805,11 @@ public class MigrationVariablesTest {
     assertThat(variables).hasSize(2);
 
     VariableInstance task1VariableAfterMigration = testHelper.snapshotAfterMigration.getVariable(task1Variable.getId());
-    Assert.assertNotNull(task1VariableAfterMigration);
+    assertThat(task1VariableAfterMigration).isNotNull();
     assertThat(task1VariableAfterMigration.getValue()).isEqualTo("task1Value");
 
     VariableInstance task2VariableAfterMigration = testHelper.snapshotAfterMigration.getVariable(task2Variable.getId());
-    Assert.assertNotNull(task2VariableAfterMigration);
+    assertThat(task2VariableAfterMigration).isNotNull();
     assertThat(task2VariableAfterMigration.getValue()).isEqualTo("task2Value");
 
   }

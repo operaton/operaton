@@ -16,9 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy.tenantcheck;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.*;
+import static org.junit.Assert.fail;
 
 import java.util.HashMap;
 import java.util.List;
@@ -96,7 +95,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
       .evaluateStartConditions();
 
     // then
-    assertNotNull(instances);
+    assertThat(instances).isNotNull();
     assertThat(instances).hasSize(1);
 
     identityService.clearAuthentication();
@@ -127,7 +126,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
       .evaluateStartConditions();
 
     // then
-    assertNotNull(processInstances);
+    assertThat(processInstances).isNotNull();
     assertThat(processInstances).hasSize(1);
 
     identityService.clearAuthentication();
@@ -157,7 +156,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
       .evaluateStartConditions();
 
     // then
-    assertNotNull(processInstances);
+    assertThat(processInstances).isNotNull();
     assertThat(processInstances).hasSize(1);
 
     identityService.clearAuthentication();
@@ -234,7 +233,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
       .evaluateStartConditions();
 
     // then
-    assertNotNull(instances);
+    assertThat(instances).isNotNull();
     assertThat(instances).hasSize(1);
     assertThat(instances.get(0).getTenantId()).isEqualTo(TENANT_ONE);
 
@@ -288,7 +287,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
       if (eventSubscriptionEntity.getConfiguration().equals(processDefId2)) {
         assertThat(eventSubscription.getTenantId()).isEqualTo(TENANT_ONE);
       } else if (eventSubscriptionEntity.getConfiguration().equals(processDefId6)) {
-        assertNull(eventSubscription.getTenantId());
+        assertThat(eventSubscription.getTenantId()).isNull();
       } else if (eventSubscriptionEntity.getConfiguration().equals(processDefId7)) {
         assertThat(eventSubscription.getTenantId()).isEqualTo(TENANT_ONE);
       } else {

@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.variables;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
 
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.runtime.Execution;
@@ -61,7 +60,7 @@ public class ExecutionVariablesTest extends PluggableProcessEngineTest {
 
     // then the variable still exists
     VariableInstance variable = runtimeService.createVariableInstanceQuery().singleResult();
-    assertNotNull(variable);
+    assertThat(variable).isNotNull();
     assertThat(variable.getName()).isEqualTo("foo");
     assertThat(variable.getExecutionId()).isEqualTo(processInstance.getId());
   }
@@ -153,7 +152,7 @@ public class ExecutionVariablesTest extends PluggableProcessEngineTest {
 
     // then the variable still exists
     VariableInstance variable = runtimeService.createVariableInstanceQuery().singleResult();
-    assertNotNull(variable);
+    assertThat(variable).isNotNull();
     assertThat(variable.getName()).isEqualTo("foo");
     assertThat(variable.getExecutionId()).isEqualTo(processInstance.getId());
   }
@@ -182,7 +181,7 @@ public class ExecutionVariablesTest extends PluggableProcessEngineTest {
 
     // then the variable still exists on the subprocess scope execution
     VariableInstance variable = runtimeService.createVariableInstanceQuery().singleResult();
-    assertNotNull(variable);
+    assertThat(variable).isNotNull();
     assertThat(variable.getName()).isEqualTo("foo");
     assertThat(variable.getExecutionId()).isEqualTo(subProcessScopeExecutionId);
   }
@@ -211,7 +210,7 @@ public class ExecutionVariablesTest extends PluggableProcessEngineTest {
 
     // then something happens
     VariableInstance variable = runtimeService.createVariableInstanceQuery().singleResult();
-    assertNotNull(variable);
+    assertThat(variable).isNotNull();
     assertThat(variable.getName()).isEqualTo("foo");
     assertThat(variable.getExecutionId()).isEqualTo(processInstance.getId());
   }

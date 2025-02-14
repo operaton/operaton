@@ -21,10 +21,6 @@ import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeA
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -65,7 +61,7 @@ public class ProcessInstanceModificationEventTest extends PluggableProcessEngine
 
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
@@ -88,7 +84,7 @@ public class ProcessInstanceModificationEventTest extends PluggableProcessEngine
 
     // and there is a timer job
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     assertThat(job.getExecutionId()).isEqualTo(catchEventInstance.getExecutionIds()[0]);
 
     completeTasksInOrder("task");
@@ -102,10 +98,10 @@ public class ProcessInstanceModificationEventTest extends PluggableProcessEngine
   public void testStartBeforeMessageStartEvent() {
     runtimeService.correlateMessage("startMessage");
     ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
 
     EventSubscription startEventSubscription = runtimeService.createEventSubscriptionQuery().singleResult();
-    assertNotNull(startEventSubscription);
+    assertThat(startEventSubscription).isNotNull();
 
     String processInstanceId = processInstance.getId();
 
@@ -117,7 +113,7 @@ public class ProcessInstanceModificationEventTest extends PluggableProcessEngine
 
     // then there are two instances of "task"
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
@@ -137,7 +133,7 @@ public class ProcessInstanceModificationEventTest extends PluggableProcessEngine
 
     // and there is only the message start event subscription
     EventSubscription subscription = runtimeService.createEventSubscriptionQuery().singleResult();
-    assertNotNull(subscription);
+    assertThat(subscription).isNotNull();
     assertThat(subscription.getId()).isEqualTo(startEventSubscription.getId());
 
     completeTasksInOrder("task", "task");
@@ -151,7 +147,7 @@ public class ProcessInstanceModificationEventTest extends PluggableProcessEngine
     String processInstanceId = processInstance.getId();
 
     Job startTimerJob = managementService.createJobQuery().singleResult();
-    assertNotNull(startTimerJob);
+    assertThat(startTimerJob).isNotNull();
 
     // when I start before the timer start event
     runtimeService
@@ -161,7 +157,7 @@ public class ProcessInstanceModificationEventTest extends PluggableProcessEngine
 
     // then there are two instances of "task"
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
@@ -181,7 +177,7 @@ public class ProcessInstanceModificationEventTest extends PluggableProcessEngine
 
     // and there is only one timer job
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     assertThat(job.getId()).isEqualTo(startTimerJob.getId());
 
     completeTasksInOrder("task", "task");
@@ -202,7 +198,7 @@ public class ProcessInstanceModificationEventTest extends PluggableProcessEngine
 
     // then there are two instances of "task"
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
@@ -245,7 +241,7 @@ public class ProcessInstanceModificationEventTest extends PluggableProcessEngine
 
     // then there is no effect
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
@@ -278,7 +274,7 @@ public class ProcessInstanceModificationEventTest extends PluggableProcessEngine
 
     // then the process instance is terminated
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNull(updatedTree);
+    assertThat(updatedTree).isNull();
     testRule.assertProcessEnded(processInstanceId);
   }
 
@@ -299,7 +295,7 @@ public class ProcessInstanceModificationEventTest extends PluggableProcessEngine
 
     // then the subprocess instance is cancelled
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
@@ -315,8 +311,8 @@ public class ProcessInstanceModificationEventTest extends PluggableProcessEngine
         .done());
 
     Task afterCancellationTask = taskService.createTaskQuery().singleResult();
-    assertNotNull(afterCancellationTask);
-    assertNotEquals(txTask.getId(), afterCancellationTask.getId());
+    assertThat(afterCancellationTask).isNotNull();
+    assertThat(afterCancellationTask.getId()).isNotEqualTo(txTask.getId());
     assertThat(afterCancellationTask.getTaskDefinitionKey()).isEqualTo("afterCancellation");
   }
 
@@ -343,7 +339,7 @@ public class ProcessInstanceModificationEventTest extends PluggableProcessEngine
 
     // then a new subprocess instance is created and immediately cancelled
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNotNull(updatedTree);
+    assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
@@ -367,7 +363,7 @@ public class ProcessInstanceModificationEventTest extends PluggableProcessEngine
 
     // complete the process
     Task afterCancellationTask = taskService.createTaskQuery().taskDefinitionKey("afterCancellation").singleResult();
-    assertNotNull(afterCancellationTask);
+    assertThat(afterCancellationTask).isNotNull();
 
     taskService.complete(afterCancellationTask.getId());
     taskService.complete(afterSuccessTask.getId());
@@ -389,7 +385,7 @@ public class ProcessInstanceModificationEventTest extends PluggableProcessEngine
     for (String taskName : taskNames) {
       // complete any task with that name
       List<Task> tasks = taskService.createTaskQuery().taskDefinitionKey(taskName).listPage(0, 1);
-      assertTrue("task for activity " + taskName + " does not exist", !tasks.isEmpty());
+      assertThat(!tasks.isEmpty()).as("task for activity " + taskName + " does not exist").isTrue();
       taskService.complete(tasks.get(0).getId());
     }
   }

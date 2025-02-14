@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.standalone.pvm;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,12 +97,12 @@ public class PvmEventScopesTest {
         break;
       }
     }
-    
-    assertTrue(eventScopeFound);
+
+    assertThat(eventScopeFound).isTrue();
     
     processInstance.signal(null, null);
 
-    assertTrue(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isTrue();
          
   }
   
@@ -176,8 +175,8 @@ public class PvmEventScopesTest {
 
     PvmExecution execution = processInstance.findExecution("wait");
     execution.signal(null, null);
-    
-    assertTrue(processInstance.isEnded());
+
+    assertThat(processInstance.isEnded()).isTrue();
     
   }
 

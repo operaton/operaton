@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
 
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.migration.MigrationPlan;
@@ -96,7 +95,7 @@ public class MigrationMessageStartEventTest {
     // then
     EventSubscription eventSubscriptionAfter = runtimeService.createEventSubscriptionQuery().singleResult();
 
-    assertNotNull(eventSubscriptionAfter);
+    assertThat(eventSubscriptionAfter).isNotNull();
     assertThat(eventSubscriptionAfter.getEventName()).isEqualTo(EventSubProcessModels.MESSAGE_NAME);
 
     runtimeService.correlateMessage(EventSubProcessModels.MESSAGE_NAME);
@@ -106,8 +105,8 @@ public class MigrationMessageStartEventTest {
 
   protected void assertEventSubscriptionMigrated(EventSubscription eventSubscriptionBefore, String activityIdAfter, String eventName) {
     EventSubscription eventSubscriptionAfter = runtimeService.createEventSubscriptionQuery().singleResult();
-    assertNotNull("Expected that an event subscription with id '" + eventSubscriptionBefore.getId() + "' "
-        + "exists after migration", eventSubscriptionAfter);
+    assertThat(eventSubscriptionAfter).as("Expected that an event subscription with id '" + eventSubscriptionBefore.getId() + "' "
+        + "exists after migration").isNotNull();
 
     assertThat(eventSubscriptionAfter.getEventType()).isEqualTo(eventSubscriptionBefore.getEventType());
     assertThat(eventSubscriptionAfter.getActivityId()).isEqualTo(activityIdAfter);

@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.bpmn.job;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import java.util.List;
@@ -48,7 +48,7 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
 
     // then
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     assertThat(job.getPriority()).isEqualTo(EXPECTED_DEFAULT_PRIORITY);
   }
 
@@ -66,7 +66,7 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
 
     // then
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     assertThat(job.getPriority()).isEqualTo(EXPECTED_DEFAULT_PRIORITY);
   }
 
@@ -81,7 +81,7 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
 
     // then
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     assertThat(job.getPriority()).isEqualTo(EXPECTED_DEFAULT_PRIORITY);
   }
 
@@ -96,7 +96,7 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
 
     // then
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     assertThat(job.getPriority()).isEqualTo(10);
   }
 
@@ -114,7 +114,7 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
 
     // then
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     assertThat(job.getPriority()).isEqualTo(10);
   }
 
@@ -129,7 +129,7 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
 
     // then
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     assertThat(job.getPriority()).isEqualTo(8);
   }
 
@@ -144,7 +144,7 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
 
     // then
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     assertThat(job.getPriority()).isEqualTo(5);
   }
 
@@ -162,7 +162,7 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
 
     // then
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     assertThat(job.getPriority()).isEqualTo(5);
   }
 
@@ -177,7 +177,7 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
 
     // then
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     assertThat(job.getPriority()).isEqualTo(4);
   }
 
@@ -318,7 +318,7 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
     // then there is an async job for the signal start event with the priority defined in the BPMN XML
     assertThat(managementService.createJobQuery().count()).isEqualTo(1);
     Job signalStartJob = managementService.createJobQuery().singleResult();
-    assertNotNull(signalStartJob);
+    assertThat(signalStartJob).isNotNull();
     assertThat(signalStartJob.getPriority()).isEqualTo(4);
   }
 
@@ -330,7 +330,7 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
     // then there is a job that has the priority as defined on the activity
     assertThat(managementService.createJobQuery().count()).isEqualTo(1);
     Job miBodyJob = managementService.createJobQuery().singleResult();
-    assertNotNull(miBodyJob);
+    assertThat(miBodyJob).isNotNull();
     assertThat(miBodyJob.getPriority()).isEqualTo(5);
   }
 
@@ -345,7 +345,7 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
 
     assertThat(jobs).hasSize(3);
     for (Job job : jobs) {
-      assertNotNull(job);
+      assertThat(job).isNotNull();
       assertThat(job.getPriority()).isEqualTo(5);
     }
   }

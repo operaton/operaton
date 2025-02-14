@@ -21,9 +21,6 @@ import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_ACT
 import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_DISCRETIONARY;
 import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_REQUIRED_RULE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import org.operaton.bpm.engine.impl.cmmn.CaseControlRule;
 import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnActivityBehavior;
@@ -126,7 +123,7 @@ public class MilestoneDiscretionaryItemHandlerTest extends CmmnElementHandlerTes
 
     // then
     CmmnActivityBehavior behavior = activity.getActivityBehavior();
-    assertTrue(behavior instanceof MilestoneActivityBehavior);
+    assertThat(behavior instanceof MilestoneActivityBehavior).isTrue();
   }
 
   @Test
@@ -139,7 +136,7 @@ public class MilestoneDiscretionaryItemHandlerTest extends CmmnElementHandlerTes
 
     // then
     Boolean discretionary = (Boolean) activity.getProperty(PROPERTY_DISCRETIONARY);
-    assertTrue(discretionary);
+    assertThat(discretionary).isTrue();
   }
 
   @Test
@@ -150,7 +147,7 @@ public class MilestoneDiscretionaryItemHandlerTest extends CmmnElementHandlerTes
     CmmnActivity activity = handler.handleElement(discretionaryItem, context);
 
     // then
-    assertNull(activity.getParent());
+    assertThat(activity.getParent()).isNull();
   }
 
   @Test
@@ -165,7 +162,7 @@ public class MilestoneDiscretionaryItemHandlerTest extends CmmnElementHandlerTes
 
     // then
     assertThat(activity.getParent()).isEqualTo(parent);
-    assertTrue(parent.getActivities().contains(activity));
+    assertThat(parent.getActivities()).contains(activity);
   }
 
   @Test
@@ -183,8 +180,8 @@ public class MilestoneDiscretionaryItemHandlerTest extends CmmnElementHandlerTes
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_REQUIRED_RULE);
-    assertNotNull(rule);
-    assertTrue(rule instanceof CaseControlRule);
+    assertThat(rule).isNotNull();
+    assertThat(rule instanceof CaseControlRule).isTrue();
   }
 
   @Test
@@ -202,8 +199,8 @@ public class MilestoneDiscretionaryItemHandlerTest extends CmmnElementHandlerTes
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_REQUIRED_RULE);
-    assertNotNull(rule);
-    assertTrue(rule instanceof CaseControlRule);
+    assertThat(rule).isNotNull();
+    assertThat(rule instanceof CaseControlRule).isTrue();
   }
 
 }

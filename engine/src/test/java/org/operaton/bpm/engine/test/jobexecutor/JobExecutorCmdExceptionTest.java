@@ -34,7 +34,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.fail;
+import static org.junit.Assert.fail;
 
 /**
  * @author Tom Baeyens
@@ -86,7 +87,7 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
 
     // the job execution failed (job.retries = 0)
     Job job = managementService.createJobQuery().noRetriesLeft().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     assertThat(job.getRetries()).isEqualTo(0);
   }
 
@@ -140,7 +141,7 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
 
     // the job execution failed (job.retries = 0)
     job = managementService.createJobQuery().noRetriesLeft().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     assertThat(job.getRetries()).isEqualTo(0);
   }
 
@@ -152,7 +153,7 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
 
     // there should be 1 job created:
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     // with 3 retries
     assertThat(job.getRetries()).isEqualTo(3);
 
@@ -161,7 +162,7 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
 
     // the job is still present
     job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     // but has no more retires
     assertThat(job.getRetries()).isEqualTo(0);
   }
@@ -181,7 +182,7 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
 
     // there should be 1 job created:
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     // with 3 retries
     assertThat(job.getRetries()).isEqualTo(3);
 
@@ -190,14 +191,14 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
 
     // the job is still present
     job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     // but has no more retires
     assertThat(job.getRetries()).isEqualTo(0);
     assertThat(job.getExceptionMessage()).isEqualTo("exception in transaction listener");
 
     String stacktrace = managementService.getJobExceptionStacktrace(job.getId());
-    assertNotNull(stacktrace);
-    assertTrue("unexpected stacktrace, was <" + stacktrace + ">", stacktrace.contains("java.lang.RuntimeException: exception in transaction listener"));
+    assertThat(stacktrace).isNotNull();
+    assertThat(stacktrace.contains("java.lang.RuntimeException: exception in transaction listener")).as("unexpected stacktrace, was <" + stacktrace + ">").isTrue();
   }
 
   protected void createJob(final String handlerType) {

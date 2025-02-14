@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.multitenancy.tenantcheck;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
@@ -82,7 +81,7 @@ public class MultiTenancyActivityCmdsTenantCheckTest {
     identityService.setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
     // then
-    assertNotNull(engineRule.getRuntimeService().getActivityInstance(processInstanceId));
+    assertThat(engineRule.getRuntimeService().getActivityInstance(processInstanceId)).isNotNull();
   }
 
   @Test
@@ -103,7 +102,7 @@ public class MultiTenancyActivityCmdsTenantCheckTest {
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
 
     // then
-    assertNotNull(engineRule.getRuntimeService().getActivityInstance(processInstanceId));
+    assertThat(engineRule.getRuntimeService().getActivityInstance(processInstanceId)).isNotNull();
   }
 
   // get active activity id

@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.event.error;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -68,7 +66,7 @@ public class ErrorEndEventTest {
     // then
     assertThat(taskService.createTaskQuery().taskName("task after catched error").count()).isEqualTo(1);
     // and set the output variable of the called process to the process
-    assertNotNull(runtimeService.getVariable(processInstanceId, "cancelReason"));
+    assertThat(runtimeService.getVariable(processInstanceId, "cancelReason")).isNotNull();
     assertThat(runtimeService.getVariable(processInstanceId, "output")).isEqualTo(42);
   }
 
@@ -115,6 +113,6 @@ public class ErrorEndEventTest {
 
     // then the error message defined in XML is accessible
     assertThat((String) variables.get("errorCode")).isEqualTo("123");
-    assertNull(variables.get("errorMessage"));
+    assertThat(variables.get("errorMessage")).isNull();
   }
 }

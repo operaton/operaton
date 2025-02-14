@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.test.api.runtime;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-import static org.junit.Assert.assertNotNull;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -310,7 +309,7 @@ public class MessageCorrelationByLocalVariablesTest {
   }
 
   protected void checkExecutionMessageCorrelationResult(MessageCorrelationResult result, ProcessInstance processInstance, String activityId) {
-    assertNotNull(result);
+    assertThat(result).isNotNull();
     assertThat(result.getResultType()).isEqualTo(MessageCorrelationResultType.Execution);
     assertThat(result.getExecution().getProcessInstanceId()).isEqualTo(processInstance.getId());
     ExecutionEntity entity = (ExecutionEntity) result.getExecution();

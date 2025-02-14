@@ -17,8 +17,7 @@
 package org.operaton.bpm.engine.test.api.runtime;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import java.util.Arrays;
@@ -94,22 +93,22 @@ public class UpdateSuspendStateUserOperationLogTest {
 
 
     UserOperationLogEntry asyncEntry = entries.get("async");
-    assertNotNull(asyncEntry);
+    assertThat(asyncEntry).isNotNull();
     assertThat(asyncEntry.getEntityType()).isEqualTo("ProcessInstance");
     assertThat(asyncEntry.getOperationType()).isEqualTo("SuspendJob");
-    assertNull(asyncEntry.getProcessInstanceId());
-    assertNull(asyncEntry.getOrgValue());
+    assertThat(asyncEntry.getProcessInstanceId()).isNull();
+    assertThat(asyncEntry.getOrgValue()).isNull();
     assertThat(asyncEntry.getNewValue()).isEqualTo("true");
     assertThat(asyncEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
     UserOperationLogEntry numInstancesEntry = entries.get("nrOfInstances");
-    assertNotNull(numInstancesEntry);
+    assertThat(numInstancesEntry).isNotNull();
     assertThat(numInstancesEntry.getEntityType()).isEqualTo("ProcessInstance");
     assertThat(numInstancesEntry.getOperationType()).isEqualTo("SuspendJob");
-    assertNull(numInstancesEntry.getProcessInstanceId());
-    assertNull(numInstancesEntry.getProcessDefinitionKey());
-    assertNull(numInstancesEntry.getProcessDefinitionId());
-    assertNull(numInstancesEntry.getOrgValue());
+    assertThat(numInstancesEntry.getProcessInstanceId()).isNull();
+    assertThat(numInstancesEntry.getProcessDefinitionKey()).isNull();
+    assertThat(numInstancesEntry.getProcessDefinitionId()).isNull();
+    assertThat(numInstancesEntry.getOrgValue()).isNull();
     assertThat(numInstancesEntry.getNewValue()).isEqualTo("2");
     assertThat(asyncEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 

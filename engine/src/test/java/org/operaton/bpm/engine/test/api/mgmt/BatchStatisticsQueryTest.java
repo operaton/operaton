@@ -23,8 +23,6 @@ import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -89,7 +87,7 @@ public class BatchStatisticsQueryTest {
   @Test
   public void testQuery() {
     List<BatchStatistics> statistics = managementService.createBatchStatisticsQuery().list();
-    assertThat(statistics).hasSize(0);
+    assertThat(statistics).isEmpty();
 
     Batch batch1 = helper.createMigrationBatchWithSize(1);
 
@@ -113,7 +111,7 @@ public class BatchStatisticsQueryTest {
     helper.completeBatch(batch2);
 
     statistics = managementService.createBatchStatisticsQuery().list();
-    assertThat(statistics).hasSize(0);
+    assertThat(statistics).isEmpty();
   }
 
   @Test
@@ -182,7 +180,7 @@ public class BatchStatisticsQueryTest {
       .list();
 
     // then
-    assertThat(statistics).hasSize(0);
+    assertThat(statistics).isEmpty();
   }
 
   @Test
@@ -223,7 +221,7 @@ public class BatchStatisticsQueryTest {
       .list();
 
     // then
-    assertThat(statistics).hasSize(0);
+    assertThat(statistics).isEmpty();
   }
 
   @Test
@@ -564,7 +562,7 @@ public class BatchStatisticsQueryTest {
     // then
     BatchStatistics batchStatistics = managementService.createBatchStatisticsQuery().batchId(batch.getId()).singleResult();
 
-    assertTrue(batchStatistics.isSuspended());
+    assertThat(batchStatistics.isSuspended()).isTrue();
   }
 
   @Test
@@ -579,7 +577,7 @@ public class BatchStatisticsQueryTest {
     // then
     BatchStatistics batchStatistics = managementService.createBatchStatisticsQuery().batchId(batch.getId()).singleResult();
 
-    assertFalse(batchStatistics.isSuspended());
+    assertThat(batchStatistics.isSuspended()).isFalse();
   }
 
   @Test

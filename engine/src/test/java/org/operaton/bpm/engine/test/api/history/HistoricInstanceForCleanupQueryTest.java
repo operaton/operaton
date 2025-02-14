@@ -44,7 +44,6 @@ import org.junit.Test;
 import org.junit.rules.RuleChain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class HistoricInstanceForCleanupQueryTest {
@@ -119,8 +118,8 @@ public class HistoricInstanceForCleanupQueryTest {
       HistoricBatchEntity instance0 = historicBatchManager.findHistoricBatchById(ids.get(0));
       HistoricBatchEntity instance1 = historicBatchManager.findHistoricBatchById(ids.get(1));
       HistoricBatchEntity instance2 = historicBatchManager.findHistoricBatchById(ids.get(2));
-      assertTrue(instance0.getEndTime().before(instance1.getEndTime()));
-      assertTrue(instance1.getEndTime().before(instance2.getEndTime()));
+      assertThat(instance0.getEndTime().before(instance1.getEndTime())).isTrue();
+      assertThat(instance1.getEndTime().before(instance2.getEndTime())).isTrue();
 
       return null;
     });

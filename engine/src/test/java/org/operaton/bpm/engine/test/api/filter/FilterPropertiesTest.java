@@ -30,8 +30,6 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 /**
  * @author Sebastian Menski
@@ -61,7 +59,7 @@ public class FilterPropertiesTest {
   @Test
   public void testPropertiesFromNull() {
     filter.setProperties(null);
-    assertNull(filter.getProperties());
+    assertThat(filter.getProperties()).isNull();
   }
 
   @Test
@@ -109,9 +107,10 @@ public class FilterPropertiesTest {
 
     // then
     Map<String, Object> persistentProperties = filter.getProperties();
-    assertThat(persistentProperties).hasSize(1);
-    assertTrue(persistentProperties.containsKey("null"));
-    assertNull(persistentProperties.get("null"));
+    assertThat(persistentProperties)
+            .hasSize(1)
+            .containsKey("null");
+    assertThat(persistentProperties.get("null")).isNull();
 
   }
 

@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.api.authorization;
 
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.authorization.OptimizePermissions;
@@ -60,8 +60,8 @@ public class OptimizeAuthorizationTest {
     authRule.enableAuthorization(USER_ID);
 
     // then
-    assertTrue(authorizationService.isUserAuthorized(USER_ID, null, OptimizePermissions.EDIT, Resources.OPTIMIZE));
-    assertTrue(authorizationService.isUserAuthorized(USER_ID, null, OptimizePermissions.SHARE, Resources.OPTIMIZE));
+    assertThat(authorizationService.isUserAuthorized(USER_ID, null, OptimizePermissions.EDIT, Resources.OPTIMIZE)).isTrue();
+    assertThat(authorizationService.isUserAuthorized(USER_ID, null, OptimizePermissions.SHARE, Resources.OPTIMIZE)).isTrue();
   }
 
   @After

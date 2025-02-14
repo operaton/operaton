@@ -581,7 +581,7 @@ public class MultiTenancyJobCmdsTenantCheckTest {
     managementService.executeJob(timerJobId);
 
     // then
-    assertThat(taskQuery.list()).hasSize(0);
+    assertThat(taskQuery.list()).isEmpty();
   }
 
   @Test
@@ -628,7 +628,7 @@ public class MultiTenancyJobCmdsTenantCheckTest {
       .processInstanceId(noFailProcessInstanceId);
 
     // then
-    assertThat(taskQuery.list()).hasSize(0);
+    assertThat(taskQuery.list()).isEmpty();
   }
 
   protected Job selectJobByProcessInstanceId(String processInstanceId) {

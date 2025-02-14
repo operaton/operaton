@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.test.standalone.pvm;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -137,7 +135,7 @@ public class PvmEmbeddedSubProcessTest {
     PvmProcessInstance processInstance = processDefinition.createProcessInstance();
     processInstance.start();
 
-    assertTrue(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isTrue();
   }
 
   /**
@@ -199,11 +197,11 @@ public class PvmEmbeddedSubProcessTest {
     PvmProcessInstance processInstance = processDefinition.createProcessInstance();
     processInstance.start();
 
-    assertFalse(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isFalse();
     PvmExecution execution = processInstance.findExecution("wait");
     execution.signal(null, null);
 
-    assertTrue(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isTrue();
   }
 
   /**
@@ -288,7 +286,7 @@ public class PvmEmbeddedSubProcessTest {
     PvmProcessInstance processInstance = processDefinition.createProcessInstance();
     processInstance.start();
 
-    assertTrue(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isTrue();
   }
 
   /**
@@ -331,7 +329,7 @@ public class PvmEmbeddedSubProcessTest {
     PvmProcessInstance processInstance = processDefinition.createProcessInstance();
     processInstance.start();
 
-    assertTrue(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isTrue();
   }
 
 
@@ -367,7 +365,7 @@ public class PvmEmbeddedSubProcessTest {
     PvmProcessInstance processInstance = processDefinition.createProcessInstance();
     processInstance.start();
 
-    assertTrue(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isTrue();
   }
 
 }

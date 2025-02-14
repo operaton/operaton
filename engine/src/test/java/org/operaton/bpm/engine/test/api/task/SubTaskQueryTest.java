@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.task;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNull;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -128,13 +127,13 @@ public class SubTaskQueryTest extends PluggableProcessEngineTest {
     // include subtasks
     query = taskService.createTaskQuery().taskAssignee("kermit");
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list()).hasSize(0);
-    assertNull(query.singleResult());
+    assertThat(query.list()).isEmpty();
+    assertThat(query.singleResult()).isNull();
     // exclude subtasks
     query = taskService.createTaskQuery().taskAssignee("kermit").excludeSubtasks();
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list()).hasSize(0);
-    assertNull(query.singleResult());
+    assertThat(query.list()).isEmpty();
+    assertThat(query.singleResult()).isNull();
   }
 
   /**
@@ -156,13 +155,13 @@ public class SubTaskQueryTest extends PluggableProcessEngineTest {
     // include subtasks
     query = taskService.createTaskQuery().taskAssignee("kermit");
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.listPage(0, 2)).hasSize(0);
-    assertNull(query.singleResult());
+    assertThat(query.listPage(0, 2)).isEmpty();
+    assertThat(query.singleResult()).isNull();
     // exclude subtasks
     query = taskService.createTaskQuery().taskAssignee("kermit").excludeSubtasks();
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.listPage(0, 2)).hasSize(0);
-    assertNull(query.singleResult());
+    assertThat(query.listPage(0, 2)).isEmpty();
+    assertThat(query.singleResult()).isNull();
   }
 
   /**
@@ -190,13 +189,13 @@ public class SubTaskQueryTest extends PluggableProcessEngineTest {
     // include subtasks
     query = taskService.createTaskQuery().taskAssignee("kermit").orderByTaskCreateTime().asc();
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list()).hasSize(0);
-    assertNull(query.singleResult());
+    assertThat(query.list()).isEmpty();
+    assertThat(query.singleResult()).isNull();
     // exclude subtasks
     query = taskService.createTaskQuery().taskAssignee("kermit").excludeSubtasks().orderByTaskCreateTime().desc();
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list()).hasSize(0);
-    assertNull(query.singleResult());
+    assertThat(query.list()).isEmpty();
+    assertThat(query.singleResult()).isNull();
   }
 
   /**
@@ -230,13 +229,13 @@ public class SubTaskQueryTest extends PluggableProcessEngineTest {
     // include subtasks
     query = taskService.createTaskQuery().taskAssignee("kermit").orderByTaskCreateTime().asc();
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.listPage(0, 2)).hasSize(0);
-    assertNull(query.singleResult());
+    assertThat(query.listPage(0, 2)).isEmpty();
+    assertThat(query.singleResult()).isNull();
     // exclude subtasks
     query = taskService.createTaskQuery().taskAssignee("kermit").excludeSubtasks().orderByTaskCreateTime().desc();
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.listPage(0, 2)).hasSize(0);
-    assertNull(query.singleResult());
+    assertThat(query.listPage(0, 2)).isEmpty();
+    assertThat(query.singleResult()).isNull();
   }
 
   /**

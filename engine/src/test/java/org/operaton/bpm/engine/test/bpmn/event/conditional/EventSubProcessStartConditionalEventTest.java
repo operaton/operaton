@@ -18,9 +18,7 @@ package org.operaton.bpm.engine.test.bpmn.event.conditional;
 
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import java.util.Map;
@@ -56,7 +54,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     tasksAfterVariableIsSet = taskQuery.list();
     assertThat(tasksAfterVariableIsSet.get(0).getName()).isEqualTo(TASK_AFTER_CONDITION);
-    assertThat(conditionEventSubscriptionQuery.list()).hasSize(0);
+    assertThat(conditionEventSubscriptionQuery.list()).isEmpty();
   }
 
   @Test
@@ -67,7 +65,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when variable is set on task with condition
@@ -86,7 +84,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when variable is set on task with condition
@@ -111,7 +109,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     tasksAfterVariableIsSet = taskQuery.list();
     assertThat(tasksAfterVariableIsSet.get(0).getName()).isEqualTo(TASK_AFTER_CONDITION);
-    assertThat(conditionEventSubscriptionQuery.list()).hasSize(0);
+    assertThat(conditionEventSubscriptionQuery.list()).isEmpty();
   }
 
   @Test
@@ -122,7 +120,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
     assertThat(conditionEventSubscriptionQuery.list()).hasSize(1);
 
@@ -143,7 +141,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
     assertThat(conditionEventSubscriptionQuery.list()).hasSize(1);
 
@@ -164,7 +162,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when local variable is set on task with condition
@@ -183,7 +181,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when variable is set on task, variable is propagated to process instance
@@ -202,7 +200,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when local variable is set on task execution
@@ -252,7 +250,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
     assertThat(conditionEventSubscriptionQuery.list()).hasSize(1);
 
@@ -263,7 +261,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
     //-> conditional event is triggered and execution stays at user task after condition
     tasksAfterVariableIsSet = taskQuery.list();
     assertThat(tasksAfterVariableIsSet.get(0).getName()).isEqualTo(TASK_AFTER_CONDITION);
-    assertThat(conditionEventSubscriptionQuery.list()).hasSize(0);
+    assertThat(conditionEventSubscriptionQuery.list()).isEmpty();
   }
 
   @Test
@@ -281,7 +279,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
     assertThat(conditionEventSubscriptionQuery.list()).hasSize(1);
 
@@ -328,9 +326,9 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
     //then service task with delegated code is called and variable is set
     //-> conditional event is triggered and process instance ends
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet).hasSize(0);
-    assertThat(conditionEventSubscriptionQuery.list()).hasSize(0);
-    assertNull(runtimeService.createProcessInstanceQuery().singleResult());
+    assertThat(tasksAfterVariableIsSet).isEmpty();
+    assertThat(conditionEventSubscriptionQuery.list()).isEmpty();
+    assertThat(runtimeService.createProcessInstanceQuery().singleResult()).isNull();
   }
 
   @Test
@@ -360,7 +358,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
     assertThat(conditionEventSubscriptionQuery.list()).hasSize(1);
 
@@ -391,7 +389,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task is completed
@@ -420,7 +418,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task before service task is completed
@@ -448,7 +446,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task is completed
@@ -475,7 +473,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task before service task is completed
@@ -508,7 +506,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task is completed
@@ -540,7 +538,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task before service task is completed
@@ -570,7 +568,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task is completed
@@ -599,7 +597,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task is completed
@@ -633,7 +631,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task is completed
@@ -667,7 +665,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task is completed
@@ -701,7 +699,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task is completed
@@ -735,7 +733,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task before service task is completed
@@ -770,7 +768,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task is completed
@@ -803,7 +801,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task is completed
@@ -835,7 +833,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task is completed
@@ -867,7 +865,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task is completed
@@ -903,7 +901,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task is completed
@@ -939,7 +937,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task is completed
@@ -976,7 +974,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task is completed
@@ -1012,7 +1010,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task is completed
@@ -1033,7 +1031,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when variable is set on process instance
@@ -1063,7 +1061,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
     runtimeService.setVariable(processInstanceId, VARIABLE_NAME+1, 1);
 
     //then nothing happens
-    assertTrue(runtimeService.createProcessInstanceQuery().singleResult().isSuspended());
+    assertThat(runtimeService.createProcessInstanceQuery().singleResult().isSuspended()).isTrue();
 
     //when variable which triggers condition is set
     //then exception is expected
@@ -1097,7 +1095,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
     runtimeService.setVariable(processInstanceId, VARIABLE_NAME+1, 1);
 
     //then nothing happens
-    assertTrue(runtimeService.createProcessInstanceQuery().singleResult().isSuspended());
+    assertThat(runtimeService.createProcessInstanceQuery().singleResult().isSuspended()).isTrue();
 
     //when variable which triggers condition is set
     //then exception is expected
@@ -1228,13 +1226,13 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
 
     //then first event sub process is triggered because condition is true
     Task task = taskQuery.taskName(TASK_AFTER_CONDITION + 1).singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(taskService.createTaskQuery().count()).isEqualTo(2);
 
     //when variable is set, second condition becomes true -> second event sub process is triggered
     runtimeService.setVariable(processInstance.getId(), "variable", 1);
     task = taskService.createTaskQuery().taskName(TASK_AFTER_CONDITION).singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     tasksAfterVariableIsSet = taskService.createTaskQuery().list();
     assertThat(tasksAfterVariableIsSet).hasSize(4);
   }

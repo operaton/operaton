@@ -18,7 +18,7 @@ package org.operaton.bpm.engine.test.api.resources;
 
 import static org.operaton.bpm.engine.repository.ResourceTypes.HISTORY;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import java.io.ByteArrayInputStream;
@@ -255,7 +255,7 @@ public class HistoryByteArrayTest {
     // when
     try {
       managementService.executeJob(jobId);
-      fail();
+      fail("");
     } catch (Exception e) {
       // expected
     }
@@ -264,7 +264,7 @@ public class HistoryByteArrayTest {
         .createHistoricJobLogQuery()
         .failureLog()
         .singleResult();
-    assertNotNull(entity);
+    assertThat(entity).isNotNull();
 
     ByteArrayEntity byteArrayEntity = configuration.getCommandExecutorTxRequired().execute(new GetByteArrayCommand(entity.getExceptionByteArrayId()));
 
@@ -294,12 +294,12 @@ public class HistoryByteArrayTest {
       exceptionStackTrace = ExceptionUtils.getStackTrace(e);
       errorMessage = e.getMessage();
     }
-    assertNotNull(exceptionStackTrace);
+    assertThat(exceptionStackTrace).isNotNull();
 
     externalTaskService.handleFailure(task.getId(), WORKER_ID, errorMessage, exceptionStackTrace, 5, 3000L);
 
     HistoricExternalTaskLogEntity entity = (HistoricExternalTaskLogEntity) historyService.createHistoricExternalTaskLogQuery().errorMessage(errorMessage).singleResult();
-    assertNotNull(entity);
+    assertThat(entity).isNotNull();
 
     ByteArrayEntity byteArrayEntity = configuration.getCommandExecutorTxRequired().execute(new GetByteArrayCommand(entity.getErrorDetailsByteArrayId()));
 
@@ -308,8 +308,8 @@ public class HistoryByteArrayTest {
   }
 
   protected void checkBinary(ByteArrayEntity byteArrayEntity) {
-    assertNotNull(byteArrayEntity);
-    assertNotNull(byteArrayEntity.getCreateTime());
+    assertThat(byteArrayEntity).isNotNull();
+    assertThat(byteArrayEntity.getCreateTime()).isNotNull();
     assertThat(byteArrayEntity.getType()).isEqualTo(HISTORY.getValue());
   }
 

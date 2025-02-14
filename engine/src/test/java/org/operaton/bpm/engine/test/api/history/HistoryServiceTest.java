@@ -16,11 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.Assert.fail;
 
 import java.text.SimpleDateFormat;
@@ -57,7 +53,6 @@ import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 
@@ -230,8 +225,8 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
 
     // verify
     HistoricProcessInstance historicProcessInstance = historyService.createHistoricProcessInstanceQuery().superProcessInstanceId(pi.getId()).singleResult();
-    assertNotNull(historicProcessInstance);
-    assertTrue(historicProcessInstance.getProcessDefinitionId().contains("checkCreditProcess"));
+    assertThat(historicProcessInstance).isNotNull();
+    assertThat(historicProcessInstance.getProcessDefinitionId()).contains("checkCreditProcess");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml",
@@ -245,8 +240,8 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("orderProcess");
     HistoricProcessInstance historicProcessInstance = historyService.createHistoricProcessInstanceQuery().processDefinitionKey(processDefinitionKey)
         .singleResult();
-    assertNotNull(historicProcessInstance);
-    assertTrue(historicProcessInstance.getProcessDefinitionId().startsWith(processDefinitionKey));
+    assertThat(historicProcessInstance).isNotNull();
+    assertThat(historicProcessInstance.getProcessDefinitionId()).startsWith(processDefinitionKey);
     assertThat(historicProcessInstance.getStartActivityId()).isEqualTo("theStart");
 
     // now complete the task to end the process instance
@@ -281,11 +276,11 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     assertThat(processInstanceQuery.count()).isEqualTo(5);
 
     List<HistoricProcessInstance> processInstances = processInstanceQuery.list();
-    assertNotNull(processInstances);
+    assertThat(processInstances).isNotNull();
     assertThat(processInstances).hasSize(5);
 
     for (HistoricProcessInstance historicProcessInstance : processInstances) {
-      assertTrue(processInstanceIds.contains(historicProcessInstance.getId()));
+      assertThat(processInstanceIds).contains(historicProcessInstance);
     }
 
     // making a query that has contradicting conditions should succeed
@@ -359,7 +354,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
       fail("expected exception");
     } catch (BadUserRequestException e) {
       // then
-      assertTrue(e.getMessage().contains("Invalid query usage: cannot set both rootProcessInstances and superProcessInstanceId"));
+      assertThat(e.getMessage()).contains("Invalid query usage: cannot set both rootProcessInstances and superProcessInstanceId");
     }
 
     var historicProcessInstanceQuery2 = historyService.createHistoricProcessInstanceQuery()
@@ -371,7 +366,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
       fail("expected exception");
     } catch (BadUserRequestException e) {
       // then
-      assertTrue(e.getMessage().contains("Invalid query usage: cannot set both rootProcessInstances and superProcessInstanceId"));
+      assertThat(e.getMessage()).contains("Invalid query usage: cannot set both rootProcessInstances and superProcessInstanceId");
     }
   }
 
@@ -524,28 +519,28 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     // Query on single short variable, should result in 2 matches
     HistoricProcessInstanceQuery query = historyService.createHistoricProcessInstanceQuery().variableValueEquals("dateVar", date1);
     List<HistoricProcessInstance> processInstances = query.list();
-    Assert.assertNotNull(processInstances);
+    assertThat(processInstances).isNotNull();
     assertThat(processInstances).hasSize(2);
 
     // Query on two short variables, should result in single value
     query = historyService.createHistoricProcessInstanceQuery().variableValueEquals("dateVar", date1).variableValueEquals("dateVar2", date2);
     HistoricProcessInstance resultInstance = query.singleResult();
-    Assert.assertNotNull(resultInstance);
+    assertThat(resultInstance).isNotNull();
     assertThat(resultInstance.getId()).isEqualTo(processInstance2.getId());
 
     // Query with unexisting variable value
     Date unexistingDate = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss").parse("01/01/1989 12:00:00");
     resultInstance = historyService.createHistoricProcessInstanceQuery().variableValueEquals("dateVar", unexistingDate).singleResult();
-    Assert.assertNull(resultInstance);
+    assertThat(resultInstance).isNull();
 
     // Test NOT_EQUALS
     resultInstance = historyService.createHistoricProcessInstanceQuery().variableValueNotEquals("dateVar", date1).singleResult();
-    Assert.assertNotNull(resultInstance);
+    assertThat(resultInstance).isNotNull();
     assertThat(resultInstance.getId()).isEqualTo(processInstance3.getId());
 
     // Test GREATER_THAN
     resultInstance = historyService.createHistoricProcessInstanceQuery().variableValueGreaterThan("dateVar", nextMonth.getTime()).singleResult();
-    Assert.assertNotNull(resultInstance);
+    assertThat(resultInstance).isNotNull();
     assertThat(resultInstance.getId()).isEqualTo(processInstance3.getId());
 
     assertThat(historyService.createHistoricProcessInstanceQuery().variableValueGreaterThan("dateVar", nextYear.getTime()).count()).isEqualTo(0);
@@ -553,11 +548,11 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
 
     // Test GREATER_THAN_OR_EQUAL
     resultInstance = historyService.createHistoricProcessInstanceQuery().variableValueGreaterThanOrEqual("dateVar", nextMonth.getTime()).singleResult();
-    Assert.assertNotNull(resultInstance);
+    assertThat(resultInstance).isNotNull();
     assertThat(resultInstance.getId()).isEqualTo(processInstance3.getId());
 
     resultInstance = historyService.createHistoricProcessInstanceQuery().variableValueGreaterThanOrEqual("dateVar", nextYear.getTime()).singleResult();
-    Assert.assertNotNull(resultInstance);
+    assertThat(resultInstance).isNotNull();
     assertThat(resultInstance.getId()).isEqualTo(processInstance3.getId());
 
     assertThat(historyService.createHistoricProcessInstanceQuery().variableValueGreaterThanOrEqual("dateVar", oneYearAgo.getTime()).count()).isEqualTo(3);
@@ -569,7 +564,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     List<String> expecedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
     List<String> ids = new ArrayList<>(Arrays.asList(processInstances.get(0).getId(), processInstances.get(1).getId()));
     ids.removeAll(expecedIds);
-    assertTrue(ids.isEmpty());
+    assertThat(ids).isEmpty();
 
     assertThat(historyService.createHistoricProcessInstanceQuery().variableValueLessThan("dateVar", date1).count()).isEqualTo(0);
     assertThat(historyService.createHistoricProcessInstanceQuery().variableValueLessThan("dateVar", twoYearsLater.getTime()).count()).isEqualTo(3);
@@ -686,7 +681,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     List<HistoricVariableInstance> variables = historyService.createNativeHistoricVariableInstanceQuery().sql("SELECT * FROM " + managementService.getTableName(HistoricVariableInstance.class)).list();
     assertThat(variables).hasSize(2);
     for (HistoricVariableInstance variable : variables) {
-      assertTrue(vars.containsKey(variable.getName()));
+      assertThat(vars).containsKey(variable);
       assertThat(variable.getValue()).isEqualTo(vars.get(variable.getName()));
       vars.remove(variable.getName());
     }

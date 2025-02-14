@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
@@ -29,7 +30,6 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.GatewayModels;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
@@ -251,7 +251,7 @@ public class MigrationGatewayTest {
 
     try {
       runtimeService.build();
-      Assert.fail("exception expected");
+      fail("exception expected");
     } catch (MigrationPlanValidationException e) {
       // then
       assertThat(e.getValidationReport())
@@ -273,7 +273,7 @@ public class MigrationGatewayTest {
 
     try {
       runtimeService.build();
-      Assert.fail("exception expected");
+      fail("exception expected");
     } catch (MigrationPlanValidationException e) {
       // then
       assertThat(e.getValidationReport())
@@ -300,7 +300,7 @@ public class MigrationGatewayTest {
 
     try {
       runtimeService.build();
-      Assert.fail("exception expected");
+      fail("exception expected");
     } catch (MigrationPlanValidationException e) {
       // then
       assertThat(e.getValidationReport())
@@ -368,7 +368,7 @@ public class MigrationGatewayTest {
 
     try {
       runtimeService.build();
-      Assert.fail("exception expected");
+      fail("exception expected");
     } catch (MigrationPlanValidationException e) {
       // then
       assertThat(e.getValidationReport())
@@ -394,7 +394,7 @@ public class MigrationGatewayTest {
 
     try {
       runtimeService.build();
-      Assert.fail("exception expected");
+      fail("exception expected");
     } catch (MigrationPlanValidationException e) {
       // then
       assertThat(e.getValidationReport())

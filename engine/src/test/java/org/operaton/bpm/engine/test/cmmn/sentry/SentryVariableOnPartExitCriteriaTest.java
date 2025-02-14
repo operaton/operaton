@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.sentry;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.test.Deployment;
@@ -40,11 +38,11 @@ public class SentryVariableOnPartExitCriteriaTest extends CmmnTest {
 
     CaseExecution firstHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_1");
     String firstHumanTaskId = firstHumanTask.getId();
-    assertTrue(firstHumanTask.isActive());
+    assertThat(firstHumanTask.isActive()).isTrue();
 
     CaseExecution secondHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_2");
     String secondHumanTaskId = secondHumanTask.getId();
-    assertTrue(secondHumanTask.isActive());
+    assertThat(secondHumanTask.isActive()).isTrue();
 
     // when
     caseService
@@ -54,10 +52,10 @@ public class SentryVariableOnPartExitCriteriaTest extends CmmnTest {
 
     // then
     firstHumanTask = queryCaseExecutionById(firstHumanTaskId);
-    assertNull(firstHumanTask);
+    assertThat(firstHumanTask).isNull();
 
     secondHumanTask = queryCaseExecutionById(secondHumanTaskId);
-    assertNull(secondHumanTask);
+    assertThat(secondHumanTask).isNull();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryVariableOnPartExitCriteriaTest.testExitTaskWithVariableOnPart.cmmn"})
@@ -68,11 +66,11 @@ public class SentryVariableOnPartExitCriteriaTest extends CmmnTest {
 
     CaseExecution firstHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_1");
     String firstHumanTaskId = firstHumanTask.getId();
-    assertTrue(firstHumanTask.isActive());
+    assertThat(firstHumanTask.isActive()).isTrue();
 
     CaseExecution secondHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_2");
     String secondHumanTaskId = secondHumanTask.getId();
-    assertTrue(secondHumanTask.isActive());
+    assertThat(secondHumanTask.isActive()).isTrue();
 
     // when
     caseService
@@ -82,10 +80,10 @@ public class SentryVariableOnPartExitCriteriaTest extends CmmnTest {
 
     // then
     firstHumanTask = queryCaseExecutionById(firstHumanTaskId);
-    assertNull(firstHumanTask);
+    assertThat(firstHumanTask).isNull();
 
     secondHumanTask = queryCaseExecutionById(secondHumanTaskId);
-    assertTrue(secondHumanTask.isActive());
+    assertThat(secondHumanTask.isActive()).isTrue();
 
   }
 
@@ -98,26 +96,26 @@ public class SentryVariableOnPartExitCriteriaTest extends CmmnTest {
     CaseExecution stageExecution;
 
     CaseExecution humanTask1 = queryCaseExecutionByActivityId("HumanTask_1");
-    assertTrue(humanTask1.isActive());
+    assertThat(humanTask1.isActive()).isTrue();
     
     CaseExecution humanTask2 = queryCaseExecutionByActivityId("HumanTask_2");
-    assertTrue(humanTask2.isActive());
+    assertThat(humanTask2.isActive()).isTrue();
 
     complete(humanTask1.getId());
 
     stageExecution = queryCaseExecutionByActivityId("Stage_1");
     // Still if part and variable on part conditions are yet to be satisfied for the exit criteria
-    assertNotNull(stageExecution);
+    assertThat(stageExecution).isNotNull();
 
     caseService.setVariable(stageExecution.getId(), "value", 99);
     stageExecution = queryCaseExecutionByActivityId("Stage_1");
     // Still if part is yet to be satisfied for the exit criteria
-    assertNotNull(stageExecution);
+    assertThat(stageExecution).isNotNull();
 
     caseService.setVariable(stageExecution.getId(), "value", 101);
     stageExecution = queryCaseExecutionByActivityId("Stage_1");
     // exit criteria satisfied
-    assertNull(stageExecution);
+    assertThat(stageExecution).isNull();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryVariableOnPartExitCriteriaTest.testExitTasksOfDifferentScopes.cmmn"})
@@ -131,10 +129,10 @@ public class SentryVariableOnPartExitCriteriaTest extends CmmnTest {
     caseService.setVariable(stageExecution1.getId(), "value", 101);
 
     stageExecution1 = queryCaseExecutionByActivityId("Stage_1");
-    assertNull(stageExecution1);
+    assertThat(stageExecution1).isNull();
 
     CaseExecution stageExecution2 = queryCaseExecutionByActivityId("Stage_2");
-    assertNull(stageExecution2);
+    assertThat(stageExecution2).isNull();
     
   }
 }

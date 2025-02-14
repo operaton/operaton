@@ -16,12 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.cmmn;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.Assert.fail;
 
 import java.util.HashMap;
@@ -60,7 +55,7 @@ public class CaseServiceCaseTaskTest extends PluggableProcessEngineTest {
     String caseTaskId = queryCaseExecutionByActivityId(CASE_TASK_KEY).getId();
 
     CaseInstance subCaseInstance = queryCaseInstanceByKey(DEFINITION_KEY_2);
-    assertNull(subCaseInstance);
+    assertThat(subCaseInstance).isNull();
 
     // when
     caseService
@@ -69,11 +64,11 @@ public class CaseServiceCaseTaskTest extends PluggableProcessEngineTest {
 
     // then
     subCaseInstance = queryCaseInstanceByKey(DEFINITION_KEY_2);
-    assertNotNull(subCaseInstance);
-    assertTrue(subCaseInstance.isActive());
+    assertThat(subCaseInstance).isNotNull();
+    assertThat(subCaseInstance.isActive()).isTrue();
 
     CaseExecution caseTask = queryCaseExecutionByActivityId(CASE_TASK_KEY);
-    assertTrue(caseTask.isActive());
+    assertThat(caseTask.isActive()).isTrue();
   }
 
   @Deployment(resources={
@@ -87,7 +82,7 @@ public class CaseServiceCaseTaskTest extends PluggableProcessEngineTest {
     String caseTaskId = queryCaseExecutionByActivityId(CASE_TASK_KEY).getId();
 
     CaseInstance subCaseInstance = queryCaseInstanceByKey(DEFINITION_KEY_2);
-    assertNull(subCaseInstance);
+    assertThat(subCaseInstance).isNull();
 
     // when
     caseService
@@ -98,11 +93,11 @@ public class CaseServiceCaseTaskTest extends PluggableProcessEngineTest {
 
     // then
     subCaseInstance = queryCaseInstanceByKey(DEFINITION_KEY_2);
-    assertNotNull(subCaseInstance);
-    assertTrue(subCaseInstance.isActive());
+    assertThat(subCaseInstance).isNotNull();
+    assertThat(subCaseInstance.isActive()).isTrue();
 
     CaseExecution caseTask = queryCaseExecutionByActivityId(CASE_TASK_KEY);
-    assertTrue(caseTask.isActive());
+    assertThat(caseTask.isActive()).isTrue();
 
     // the case instance has two variables:
     // - aVariableName
@@ -111,7 +106,7 @@ public class CaseServiceCaseTaskTest extends PluggableProcessEngineTest {
         .createVariableInstanceQuery()
         .list();
 
-    assertFalse(result.isEmpty());
+    assertThat(result).isNotEmpty();
     assertThat(result).hasSize(2);
 
     verifyVariables(superCaseInstanceId, result);
@@ -129,7 +124,7 @@ public class CaseServiceCaseTaskTest extends PluggableProcessEngineTest {
     String caseTaskId = queryCaseExecutionByActivityId(CASE_TASK_KEY).getId();
 
     CaseInstance subCaseInstance = queryCaseInstanceByKey(DEFINITION_KEY_2);
-    assertNull(subCaseInstance);
+    assertThat(subCaseInstance).isNull();
 
     // variables
     Map<String, Object> variables = new HashMap<>();
@@ -144,11 +139,11 @@ public class CaseServiceCaseTaskTest extends PluggableProcessEngineTest {
 
     // then
     subCaseInstance = queryCaseInstanceByKey(DEFINITION_KEY_2);
-    assertNotNull(subCaseInstance);
-    assertTrue(subCaseInstance.isActive());
+    assertThat(subCaseInstance).isNotNull();
+    assertThat(subCaseInstance.isActive()).isTrue();
 
     CaseExecution caseTask = queryCaseExecutionByActivityId(CASE_TASK_KEY);
-    assertTrue(caseTask.isActive());
+    assertThat(caseTask.isActive()).isTrue();
 
     // the case instance has two variables:
     // - aVariableName
@@ -157,7 +152,7 @@ public class CaseServiceCaseTaskTest extends PluggableProcessEngineTest {
         .createVariableInstanceQuery()
         .list();
 
-    assertFalse(result.isEmpty());
+    assertThat(result).isNotEmpty();
     assertThat(result).hasSize(2);
 
     verifyVariables(superCaseInstanceId, result);
@@ -178,11 +173,11 @@ public class CaseServiceCaseTaskTest extends PluggableProcessEngineTest {
 
     // then
     subCaseInstance = queryCaseInstanceByKey(DEFINITION_KEY_2);
-    assertNotNull(subCaseInstance);
-    assertTrue(subCaseInstance.isActive());
+    assertThat(subCaseInstance).isNotNull();
+    assertThat(subCaseInstance.isActive()).isTrue();
 
     CaseExecution caseTask = queryCaseExecutionByActivityId(CASE_TASK_KEY);
-    assertTrue(caseTask.isActive());
+    assertThat(caseTask.isActive()).isTrue();
   }
 
   @Deployment(resources={
@@ -201,11 +196,11 @@ public class CaseServiceCaseTaskTest extends PluggableProcessEngineTest {
 
     // then
     subCaseInstance = queryCaseInstanceByKey(DEFINITION_KEY_2);
-    assertNotNull(subCaseInstance);
-    assertTrue(subCaseInstance.isActive());
+    assertThat(subCaseInstance).isNotNull();
+    assertThat(subCaseInstance.isActive()).isTrue();
 
     CaseExecution caseTask = queryCaseExecutionByActivityId(CASE_TASK_KEY);
-    assertTrue(caseTask.isActive());
+    assertThat(caseTask.isActive()).isTrue();
 
     // the case instance has two variables:
     // - aVariableName
@@ -214,7 +209,7 @@ public class CaseServiceCaseTaskTest extends PluggableProcessEngineTest {
         .createVariableInstanceQuery()
         .list();
 
-    assertFalse(result.isEmpty());
+    assertThat(result).isNotEmpty();
     assertThat(result).hasSize(2);
 
     verifyVariables(superCaseInstanceId, result);
@@ -239,11 +234,11 @@ public class CaseServiceCaseTaskTest extends PluggableProcessEngineTest {
 
     // then
     subCaseInstance = queryCaseInstanceByKey(DEFINITION_KEY_2);
-    assertNotNull(subCaseInstance);
-    assertTrue(subCaseInstance.isActive());
+    assertThat(subCaseInstance).isNotNull();
+    assertThat(subCaseInstance.isActive()).isTrue();
 
     CaseExecution caseTask = queryCaseExecutionByActivityId(CASE_TASK_KEY);
-    assertTrue(caseTask.isActive());
+    assertThat(caseTask.isActive()).isTrue();
 
     // the case instance has two variables:
     // - aVariableName
@@ -252,7 +247,7 @@ public class CaseServiceCaseTaskTest extends PluggableProcessEngineTest {
         .createVariableInstanceQuery()
         .list();
 
-    assertFalse(result.isEmpty());
+    assertThat(result).isNotEmpty();
     assertThat(result).hasSize(2);
 
     verifyVariables(superCaseInstanceId, result);
@@ -288,7 +283,7 @@ public class CaseServiceCaseTaskTest extends PluggableProcessEngineTest {
     String caseTaskId = queryCaseExecutionByActivityId(CASE_TASK_KEY).getId();
 
     CaseInstance subCaseInstance = queryCaseInstanceByKey(DEFINITION_KEY_2);
-    assertNull(subCaseInstance);
+    assertThat(subCaseInstance).isNull();
 
     // when
     caseService
@@ -299,11 +294,11 @@ public class CaseServiceCaseTaskTest extends PluggableProcessEngineTest {
 
     // then
     subCaseInstance = queryCaseInstanceByKey(DEFINITION_KEY_2);
-    assertNotNull(subCaseInstance);
-    assertTrue(subCaseInstance.isActive());
+    assertThat(subCaseInstance).isNotNull();
+    assertThat(subCaseInstance.isActive()).isTrue();
 
     CaseExecution caseTask = queryCaseExecutionByActivityId(CASE_TASK_KEY);
-    assertTrue(caseTask.isActive());
+    assertThat(caseTask.isActive()).isTrue();
 
     // the case instance has two variables:
     // - aVariableName
@@ -312,7 +307,7 @@ public class CaseServiceCaseTaskTest extends PluggableProcessEngineTest {
         .createVariableInstanceQuery()
         .list();
 
-    assertFalse(result.isEmpty());
+    assertThat(result).isNotEmpty();
     assertThat(result).hasSize(2);
 
     for (VariableInstance variable : result) {
@@ -344,7 +339,7 @@ public class CaseServiceCaseTaskTest extends PluggableProcessEngineTest {
     String caseTaskId = queryCaseExecutionByActivityId(CASE_TASK_KEY).getId();
 
     CaseInstance subCaseInstance = queryCaseInstanceByKey(DEFINITION_KEY_2);
-    assertNull(subCaseInstance);
+    assertThat(subCaseInstance).isNull();
 
     // variables
     Map<String, Object> variables = new HashMap<>();
@@ -360,11 +355,11 @@ public class CaseServiceCaseTaskTest extends PluggableProcessEngineTest {
 
     // then
     subCaseInstance = queryCaseInstanceByKey(DEFINITION_KEY_2);
-    assertNotNull(subCaseInstance);
-    assertTrue(subCaseInstance.isActive());
+    assertThat(subCaseInstance).isNotNull();
+    assertThat(subCaseInstance.isActive()).isTrue();
 
     CaseExecution caseTask = queryCaseExecutionByActivityId(CASE_TASK_KEY);
-    assertTrue(caseTask.isActive());
+    assertThat(caseTask.isActive()).isTrue();
 
     // the case instance has two variables:
     // - aVariableName
@@ -373,7 +368,7 @@ public class CaseServiceCaseTaskTest extends PluggableProcessEngineTest {
         .createVariableInstanceQuery()
         .list();
 
-    assertFalse(result.isEmpty());
+    assertThat(result).isNotEmpty();
     assertThat(result).hasSize(2);
 
     for (VariableInstance variable : result) {
@@ -404,7 +399,7 @@ public class CaseServiceCaseTaskTest extends PluggableProcessEngineTest {
     String caseTaskId = queryCaseExecutionByActivityId(CASE_TASK_KEY).getId();
 
     CaseInstance subCaseInstance = queryCaseInstanceByKey(DEFINITION_KEY_2);
-    assertNull(subCaseInstance);
+    assertThat(subCaseInstance).isNull();
     CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution(caseTaskId);
 
     // when
@@ -425,7 +420,7 @@ public class CaseServiceCaseTaskTest extends PluggableProcessEngineTest {
     String caseTaskId = queryCaseExecutionByActivityId(CASE_TASK_KEY).getId();
 
     CaseInstance subCaseInstance = queryCaseInstanceByKey(DEFINITION_KEY_2);
-    assertNull(subCaseInstance);
+    assertThat(subCaseInstance).isNull();
 
     caseService
       .withCaseExecution(caseTaskId)
@@ -438,7 +433,7 @@ public class CaseServiceCaseTaskTest extends PluggableProcessEngineTest {
 
     // then
     CaseExecution caseTask = queryCaseExecutionByActivityId(CASE_TASK_KEY);
-    assertTrue(caseTask.isEnabled());
+    assertThat(caseTask.isEnabled()).isTrue();
   }
 
   @Deployment(resources={
@@ -467,7 +462,7 @@ public class CaseServiceCaseTaskTest extends PluggableProcessEngineTest {
     String caseTaskId = queryCaseExecutionByActivityId(CASE_TASK_KEY).getId();
 
     CaseInstance subCaseInstance = queryCaseInstanceByKey(DEFINITION_KEY_2);
-    assertNull(subCaseInstance);
+    assertThat(subCaseInstance).isNull();
 
     // when
     caseService
@@ -476,7 +471,7 @@ public class CaseServiceCaseTaskTest extends PluggableProcessEngineTest {
 
     // then
     CaseExecution caseTask = queryCaseExecutionByActivityId(CASE_TASK_KEY);
-    assertTrue(caseTask.isDisabled());
+    assertThat(caseTask.isDisabled()).isTrue();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneCaseTaskAndOneHumanTaskCaseWithManualActivation.cmmn"})
@@ -582,7 +577,7 @@ public class CaseServiceCaseTaskTest extends PluggableProcessEngineTest {
       .complete();
 
     CaseInstance subCaseInstance = queryCaseInstanceByKey(DEFINITION_KEY_2);
-    assertTrue(subCaseInstance.isCompleted());
+    assertThat(subCaseInstance.isCompleted()).isTrue();
 
     // when
     caseService
@@ -591,11 +586,11 @@ public class CaseServiceCaseTaskTest extends PluggableProcessEngineTest {
 
     // then
     CaseExecution caseTask = queryCaseExecutionByActivityId(CASE_TASK_KEY);
-    assertNull(caseTask);
+    assertThat(caseTask).isNull();
 
     CaseInstance superCaseInstance = queryCaseInstanceByKey(DEFINITION_KEY);
-    assertNotNull(superCaseInstance);
-    assertTrue(superCaseInstance.isCompleted());
+    assertThat(superCaseInstance).isNotNull();
+    assertThat(superCaseInstance.isCompleted()).isTrue();
 
   }
 
@@ -616,8 +611,8 @@ public class CaseServiceCaseTaskTest extends PluggableProcessEngineTest {
     assertThat(caseTask).isNull();
     // the case instance has been completed
     CaseInstance superCaseInstance = queryCaseInstanceByKey(DEFINITION_KEY);
-    assertNotNull(superCaseInstance);
-    assertTrue(superCaseInstance.isCompleted());
+    assertThat(superCaseInstance).isNotNull();
+    assertThat(superCaseInstance.isCompleted()).isTrue();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneCaseTaskCaseWithManualActivation.cmmn"})
@@ -683,7 +678,7 @@ public class CaseServiceCaseTaskTest extends PluggableProcessEngineTest {
       .terminate();
 
     caseTaskExecution = queryCaseExecutionByActivityId(CASE_TASK_KEY);
-    assertNull(caseTaskExecution);
+    assertThat(caseTaskExecution).isNull();
   }
 
   @Deployment(resources={
@@ -701,7 +696,7 @@ public class CaseServiceCaseTaskTest extends PluggableProcessEngineTest {
       .terminateCaseExecution(caseTaskExecution.getId());
 
     caseTaskExecution = queryCaseExecutionByActivityId(CASE_TASK_KEY);
-    assertNull(caseTaskExecution);
+    assertThat(caseTaskExecution).isNull();
   }
 
   @Deployment(resources={

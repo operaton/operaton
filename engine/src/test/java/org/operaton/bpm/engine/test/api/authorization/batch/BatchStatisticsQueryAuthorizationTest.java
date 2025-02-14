@@ -202,7 +202,7 @@ public class BatchStatisticsQueryAuthorizationTest {
     authRule.disableAuthorization();
 
     // then
-    assertThat(batches).hasSize(0);
+    assertThat(batches).isEmpty();
   }
 
   protected ProcessInstance createMigrationPlan() {

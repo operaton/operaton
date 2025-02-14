@@ -36,10 +36,6 @@ import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.TASK;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.List;
@@ -121,7 +117,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     ProcessInstance instance = query.singleResult();
-    assertNotNull(instance);
+    assertThat(instance).isNotNull();
     assertThat(instance.getId()).isEqualTo(processInstanceId);
   }
 
@@ -152,7 +148,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     ProcessInstance instance = query.singleResult();
-    assertNotNull(instance);
+    assertThat(instance).isNotNull();
     assertThat(instance.getId()).isEqualTo(processInstanceId);
   }
 
@@ -169,7 +165,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     ProcessInstance instance = query.singleResult();
-    assertNotNull(instance);
+    assertThat(instance).isNotNull();
     assertThat(instance.getId()).isEqualTo(processInstanceId);
   }
 
@@ -186,7 +182,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     ProcessInstance instance = query.singleResult();
-    assertNotNull(instance);
+    assertThat(instance).isNotNull();
     assertThat(instance.getId()).isEqualTo(processInstanceId);
   }
 
@@ -246,7 +242,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     ProcessInstance instance = query.singleResult();
-    assertNotNull(instance);
+    assertThat(instance).isNotNull();
     assertThat(instance.getId()).isEqualTo(processInstanceId);
   }
 
@@ -784,8 +780,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     List<String> activityIds = runtimeService.getActiveActivityIds(processInstanceId);
 
     // then
-    assertNotNull(activityIds);
-    assertFalse(activityIds.isEmpty());
+    assertThat(activityIds)
+            .isNotNull()
+            .isNotEmpty();
   }
 
   @Test
@@ -798,8 +795,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     List<String> activityIds = runtimeService.getActiveActivityIds(processInstanceId);
 
     // then
-    assertNotNull(activityIds);
-    assertFalse(activityIds.isEmpty());
+    assertThat(activityIds)
+            .isNotNull()
+            .isNotEmpty();
   }
 
   @Test
@@ -812,8 +810,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     List<String> activityIds = runtimeService.getActiveActivityIds(processInstanceId);
 
     // then
-    assertNotNull(activityIds);
-    assertFalse(activityIds.isEmpty());
+    assertThat(activityIds)
+            .isNotNull()
+            .isNotEmpty();
   }
 
   @Test
@@ -827,8 +826,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     List<String> activityIds = runtimeService.getActiveActivityIds(processInstanceId);
 
     // then
-    assertNotNull(activityIds);
-    assertFalse(activityIds.isEmpty());
+    assertThat(activityIds)
+            .isNotNull()
+            .isNotEmpty();
   }
 
   // get activity instance ///////////////////////////////////////////
@@ -862,7 +862,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstanceId);
 
     // then
-    assertNotNull(activityInstance);
+    assertThat(activityInstance).isNotNull();
   }
 
   @Test
@@ -875,7 +875,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstanceId);
 
     // then
-    assertNotNull(activityInstance);
+    assertThat(activityInstance).isNotNull();
   }
 
   @Test
@@ -888,7 +888,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstanceId);
 
     // then
-    assertNotNull(activityInstance);
+    assertThat(activityInstance).isNotNull();
   }
 
   @Test
@@ -902,7 +902,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstanceId);
 
     // then
-    assertNotNull(activityInstance);
+    assertThat(activityInstance).isNotNull();
   }
 
   // signal execution ///////////////////////////////////////////
@@ -976,7 +976,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstanceId);
 
     // then
-    assertNotNull(activityInstance);
+    assertThat(activityInstance).isNotNull();
   }
 
   // signal event received //////////////////////////////////////
@@ -1011,7 +1011,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskAfterBoundaryEvent");
   }
 
@@ -1026,7 +1026,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskAfterBoundaryEvent");
   }
 
@@ -1041,7 +1041,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskAfterBoundaryEvent");
   }
 
@@ -1057,7 +1057,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskAfterBoundaryEvent");
   }
 
@@ -1098,7 +1098,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // then
     disableAuthorization();
     List<Task> tasks = taskService.createTaskQuery().list();
-    assertFalse(tasks.isEmpty());
+    assertThat(tasks).isNotEmpty();
     for (Task task : tasks) {
       assertThat(task.getTaskDefinitionKey()).isEqualTo("taskAfterBoundaryEvent");
     }
@@ -1140,7 +1140,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskAfterBoundaryEvent");
   }
 
@@ -1157,7 +1157,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskAfterBoundaryEvent");
   }
 
@@ -1174,7 +1174,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskAfterBoundaryEvent");
   }
 
@@ -1192,7 +1192,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskAfterBoundaryEvent");
   }
 
@@ -1231,7 +1231,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("task");
   }
 
@@ -1262,7 +1262,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("task");
   }
 
@@ -1305,7 +1305,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskAfterBoundaryEvent");
   }
 
@@ -1344,7 +1344,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskAfterBoundaryEvent");
   }
 
@@ -1361,7 +1361,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskAfterBoundaryEvent");
   }
 
@@ -1378,7 +1378,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskAfterBoundaryEvent");
   }
 
@@ -1396,7 +1396,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskAfterBoundaryEvent");
   }
 
@@ -1432,7 +1432,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskAfterBoundaryEvent");
   }
 
@@ -1447,7 +1447,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskAfterBoundaryEvent");
   }
 
@@ -1462,7 +1462,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskAfterBoundaryEvent");
   }
 
@@ -1478,7 +1478,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskAfterBoundaryEvent");
   }
 
@@ -1533,7 +1533,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("task");
   }
 
@@ -1572,7 +1572,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskAfterBoundaryEvent");
   }
 
@@ -1589,7 +1589,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskAfterBoundaryEvent");
   }
 
@@ -1606,7 +1606,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskAfterBoundaryEvent");
   }
 
@@ -1624,7 +1624,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskAfterBoundaryEvent");
   }
 
@@ -1669,7 +1669,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // then
     disableAuthorization();
     List<Task> tasks = taskService.createTaskQuery().list();
-    assertFalse(tasks.isEmpty());
+    assertThat(tasks).isNotEmpty();
     for (Task task : tasks) {
       assertThat(task.getTaskDefinitionKey()).isEqualTo("taskAfterBoundaryEvent");
     }
@@ -1732,7 +1732,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("task");
   }
 
@@ -1770,7 +1770,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     ProcessInstance instance = selectSingleProcessInstance();
-    assertTrue(instance.isSuspended());
+    assertThat(instance.isSuspended()).isTrue();
   }
 
   @Test
@@ -1784,7 +1784,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     ProcessInstance instance = selectSingleProcessInstance();
-    assertTrue(instance.isSuspended());
+    assertThat(instance.isSuspended()).isTrue();
   }
 
   @Test
@@ -1798,7 +1798,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     ProcessInstance instance = selectSingleProcessInstance();
-    assertTrue(instance.isSuspended());
+    assertThat(instance.isSuspended()).isTrue();
   }
 
   @Test
@@ -1813,7 +1813,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     ProcessInstance instance = selectSingleProcessInstance();
-    assertTrue(instance.isSuspended());
+    assertThat(instance.isSuspended()).isTrue();
   }
 
   @Test
@@ -1827,7 +1827,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     ProcessInstance instance = selectSingleProcessInstance();
-    assertTrue(instance.isSuspended());
+    assertThat(instance.isSuspended()).isTrue();
   }
 
   @Test
@@ -1841,7 +1841,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     ProcessInstance instance = selectSingleProcessInstance();
-    assertTrue(instance.isSuspended());
+    assertThat(instance.isSuspended()).isTrue();
   }
 
   @Test
@@ -1855,7 +1855,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     ProcessInstance instance = selectSingleProcessInstance();
-    assertTrue(instance.isSuspended());
+    assertThat(instance.isSuspended()).isTrue();
   }
 
   // activate process instance by id /////////////////////////////
@@ -1894,7 +1894,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     ProcessInstance instance = selectSingleProcessInstance();
-    assertFalse(instance.isSuspended());
+    assertThat(instance.isSuspended()).isFalse();
   }
 
   @Test
@@ -1909,7 +1909,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     ProcessInstance instance = selectSingleProcessInstance();
-    assertFalse(instance.isSuspended());
+    assertThat(instance.isSuspended()).isFalse();
   }
 
   @Test
@@ -1924,7 +1924,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     ProcessInstance instance = selectSingleProcessInstance();
-    assertFalse(instance.isSuspended());
+    assertThat(instance.isSuspended()).isFalse();
   }
 
   @Test
@@ -1940,7 +1940,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     ProcessInstance instance = selectSingleProcessInstance();
-    assertFalse(instance.isSuspended());
+    assertThat(instance.isSuspended()).isFalse();
   }
 
   @Test
@@ -1955,7 +1955,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     ProcessInstance instance = selectSingleProcessInstance();
-    assertFalse(instance.isSuspended());
+    assertThat(instance.isSuspended()).isFalse();
   }
 
   @Test
@@ -1970,7 +1970,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     ProcessInstance instance = selectSingleProcessInstance();
-    assertFalse(instance.isSuspended());
+    assertThat(instance.isSuspended()).isFalse();
   }
 
   @Test
@@ -1985,7 +1985,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     ProcessInstance instance = selectSingleProcessInstance();
-    assertFalse(instance.isSuspended());
+    assertThat(instance.isSuspended()).isFalse();
   }
 
   // suspend process instance by process definition id /////////////////////////////
@@ -2044,7 +2044,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     instance = selectSingleProcessInstance();
-    assertTrue(instance.isSuspended());
+    assertThat(instance.isSuspended()).isTrue();
   }
 
   @Test
@@ -2059,7 +2059,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     instance = selectSingleProcessInstance();
-    assertTrue(instance.isSuspended());
+    assertThat(instance.isSuspended()).isTrue();
   }
 
   @Test
@@ -2077,7 +2077,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     instance = selectSingleProcessInstance();
-    assertTrue(instance.isSuspended());
+    assertThat(instance.isSuspended()).isTrue();
   }
 
   @Test
@@ -2114,7 +2114,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     instance = selectSingleProcessInstance();
-    assertTrue(instance.isSuspended());
+    assertThat(instance.isSuspended()).isTrue();
   }
 
   @Test
@@ -2129,7 +2129,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     instance = selectSingleProcessInstance();
-    assertTrue(instance.isSuspended());
+    assertThat(instance.isSuspended()).isTrue();
   }
 
 
@@ -2197,7 +2197,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     instance = selectSingleProcessInstance();
-    assertFalse(instance.isSuspended());
+    assertThat(instance.isSuspended()).isFalse();
   }
 
   @Test
@@ -2215,7 +2215,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     instance = selectSingleProcessInstance();
-    assertFalse(instance.isSuspended());
+    assertThat(instance.isSuspended()).isFalse();
   }
 
   @Test
@@ -2234,7 +2234,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     instance = selectSingleProcessInstance();
-    assertFalse(instance.isSuspended());
+    assertThat(instance.isSuspended()).isFalse();
   }
 
   @Test
@@ -2276,7 +2276,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     instance = selectSingleProcessInstance();
-    assertFalse(instance.isSuspended());
+    assertThat(instance.isSuspended()).isFalse();
   }
 
   @Test
@@ -2294,7 +2294,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     instance = selectSingleProcessInstance();
-    assertFalse(instance.isSuspended());
+    assertThat(instance.isSuspended()).isFalse();
   }
 
   // suspend process instance by process definition key /////////////////////////////
@@ -2351,7 +2351,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     ProcessInstance instance = selectSingleProcessInstance();
-    assertTrue(instance.isSuspended());
+    assertThat(instance.isSuspended()).isTrue();
   }
 
   @Test
@@ -2365,7 +2365,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     ProcessInstance instance = selectSingleProcessInstance();
-    assertTrue(instance.isSuspended());
+    assertThat(instance.isSuspended()).isTrue();
   }
 
   @Test
@@ -2382,7 +2382,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     instance = selectSingleProcessInstance();
-    assertTrue(instance.isSuspended());
+    assertThat(instance.isSuspended()).isTrue();
   }
 
   @Test
@@ -2417,7 +2417,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     ProcessInstance instance = selectSingleProcessInstance();
-    assertTrue(instance.isSuspended());
+    assertThat(instance.isSuspended()).isTrue();
   }
 
   @Test
@@ -2431,7 +2431,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     ProcessInstance instance = selectSingleProcessInstance();
-    assertTrue(instance.isSuspended());
+    assertThat(instance.isSuspended()).isTrue();
   }
 
   // activate process instance by process definition key /////////////////////////////
@@ -2495,7 +2495,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     instance = selectSingleProcessInstance();
-    assertFalse(instance.isSuspended());
+    assertThat(instance.isSuspended()).isFalse();
   }
 
   @Test
@@ -2512,7 +2512,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     instance = selectSingleProcessInstance();
-    assertFalse(instance.isSuspended());
+    assertThat(instance.isSuspended()).isFalse();
   }
 
   @Test
@@ -2530,7 +2530,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     instance = selectSingleProcessInstance();
-    assertFalse(instance.isSuspended());
+    assertThat(instance.isSuspended()).isFalse();
   }
 
   @Test
@@ -2570,7 +2570,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     instance = selectSingleProcessInstance();
-    assertFalse(instance.isSuspended());
+    assertThat(instance.isSuspended()).isFalse();
   }
 
   @Test
@@ -2587,7 +2587,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     // then
     instance = selectSingleProcessInstance();
-    assertFalse(instance.isSuspended());
+    assertThat(instance.isSuspended()).isFalse();
   }
 
   // modify process instance /////////////////////////////////////
@@ -2628,7 +2628,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     List<Task> tasks = taskService.createTaskQuery().list();
     enableAuthorization();
 
-    assertFalse(tasks.isEmpty());
+    assertThat(tasks).isNotEmpty();
     assertThat(tasks).hasSize(2);
   }
 
@@ -2648,7 +2648,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     List<Task> tasks = taskService.createTaskQuery().list();
     enableAuthorization();
 
-    assertFalse(tasks.isEmpty());
+    assertThat(tasks).isNotEmpty();
     assertThat(tasks).hasSize(2);
   }
 
@@ -2668,7 +2668,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     List<Task> tasks = taskService.createTaskQuery().list();
     enableAuthorization();
 
-    assertFalse(tasks.isEmpty());
+    assertThat(tasks).isNotEmpty();
     assertThat(tasks).hasSize(2);
   }
 
@@ -2689,7 +2689,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     List<Task> tasks = taskService.createTaskQuery().list();
     enableAuthorization();
 
-    assertFalse(tasks.isEmpty());
+    assertThat(tasks).isNotEmpty();
     assertThat(tasks).hasSize(2);
   }
 
@@ -2780,7 +2780,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
         .resourceId(processInstanceId)
         .singleResult();
     enableAuthorization();
-    assertNotNull(authorization);
+    assertThat(authorization).isNotNull();
 
     String taskId = selectSingleTask().getId();
 
@@ -2795,7 +2795,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNull(authorization);
+    assertThat(authorization).isNull();
   }
 
   @Test
@@ -2810,7 +2810,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
         .resourceId(processInstanceId)
         .singleResult();
     enableAuthorization();
-    assertNotNull(authorization);
+    assertThat(authorization).isNotNull();
 
     // when
     runtimeService.deleteProcessInstance(processInstanceId, null);
@@ -2823,7 +2823,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
         .singleResult();
     enableAuthorization();
 
-    assertNull(authorization);
+    assertThat(authorization).isNull();
   }
 
   // RuntimeService#getVariable() ////////////////////////////////////////////
@@ -3095,7 +3095,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     TypedValue typedValue = runtimeService.getVariableTyped(processInstanceId, VARIABLE_NAME);
 
     // then
-    assertNotNull(typedValue);
+    assertThat(typedValue).isNotNull();
     assertThat(typedValue.getValue()).isEqualTo(VARIABLE_VALUE);
   }
 
@@ -3109,7 +3109,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     TypedValue typedValue = runtimeService.getVariableTyped(processInstanceId, VARIABLE_NAME);
 
     // then
-    assertNotNull(typedValue);
+    assertThat(typedValue).isNotNull();
     assertThat(typedValue.getValue()).isEqualTo(VARIABLE_VALUE);
   }
 
@@ -3123,7 +3123,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     TypedValue typedValue = runtimeService.getVariableTyped(processInstanceId, VARIABLE_NAME);
 
     // then
-    assertNotNull(typedValue);
+    assertThat(typedValue).isNotNull();
     assertThat(typedValue.getValue()).isEqualTo(VARIABLE_VALUE);
   }
 
@@ -3137,7 +3137,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     TypedValue typedValue = runtimeService.getVariableTyped(processInstanceId, VARIABLE_NAME);
 
     // then
-    assertNotNull(typedValue);
+    assertThat(typedValue).isNotNull();
     assertThat(typedValue.getValue()).isEqualTo(VARIABLE_VALUE);
   }
 
@@ -3152,7 +3152,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     TypedValue typedValue = runtimeService.getVariableTyped(processInstanceId, VARIABLE_NAME);
 
     // then
-    assertNotNull(typedValue);
+    assertThat(typedValue).isNotNull();
     assertThat(typedValue.getValue()).isEqualTo(VARIABLE_VALUE);
   }
 
@@ -3167,7 +3167,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     TypedValue typedValue = runtimeService.getVariableTyped(processInstanceId, VARIABLE_NAME);
 
     // then
-    assertNotNull(typedValue);
+    assertThat(typedValue).isNotNull();
     assertThat(typedValue.getValue()).isEqualTo(VARIABLE_VALUE);
   }
 
@@ -3215,7 +3215,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     TypedValue typedValue = runtimeService.getVariableLocalTyped(processInstanceId, VARIABLE_NAME);
 
     // then
-    assertNotNull(typedValue);
+    assertThat(typedValue).isNotNull();
     assertThat(typedValue.getValue()).isEqualTo(VARIABLE_VALUE);
   }
 
@@ -3229,7 +3229,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     TypedValue typedValue = runtimeService.getVariableLocalTyped(processInstanceId, VARIABLE_NAME);
 
     // then
-    assertNotNull(typedValue);
+    assertThat(typedValue).isNotNull();
     assertThat(typedValue.getValue()).isEqualTo(VARIABLE_VALUE);
   }
 
@@ -3243,7 +3243,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     TypedValue typedValue = runtimeService.getVariableLocalTyped(processInstanceId, VARIABLE_NAME);
 
     // then
-    assertNotNull(typedValue);
+    assertThat(typedValue).isNotNull();
     assertThat(typedValue.getValue()).isEqualTo(VARIABLE_VALUE);
   }
 
@@ -3257,7 +3257,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     TypedValue typedValue = runtimeService.getVariableLocalTyped(processInstanceId, VARIABLE_NAME);
 
     // then
-    assertNotNull(typedValue);
+    assertThat(typedValue).isNotNull();
     assertThat(typedValue.getValue()).isEqualTo(VARIABLE_VALUE);
   }
 
@@ -3272,7 +3272,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     TypedValue typedValue = runtimeService.getVariableLocalTyped(processInstanceId, VARIABLE_NAME);
 
     // then
-    assertNotNull(typedValue);
+    assertThat(typedValue).isNotNull();
     assertThat(typedValue.getValue()).isEqualTo(VARIABLE_VALUE);
   }
 
@@ -3287,7 +3287,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     TypedValue typedValue = runtimeService.getVariableLocalTyped(processInstanceId, VARIABLE_NAME);
 
     // then
-    assertNotNull(typedValue);
+    assertThat(typedValue).isNotNull();
     assertThat(typedValue.getValue()).isEqualTo(VARIABLE_VALUE);
   }
 
@@ -3335,8 +3335,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     Map<String, Object> variables = runtimeService.getVariables(processInstanceId);
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -3352,8 +3353,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     Map<String, Object> variables = runtimeService.getVariables(processInstanceId);
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -3369,8 +3371,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     Map<String, Object> variables = runtimeService.getVariables(processInstanceId);
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -3386,8 +3389,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     Map<String, Object> variables = runtimeService.getVariables(processInstanceId);
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -3467,8 +3471,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     Map<String, Object> variables = runtimeService.getVariablesLocal(processInstanceId);
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -3484,8 +3489,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     Map<String, Object> variables = runtimeService.getVariablesLocal(processInstanceId);
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -3501,8 +3507,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     Map<String, Object> variables = runtimeService.getVariablesLocal(processInstanceId);
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -3518,8 +3525,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     Map<String, Object> variables = runtimeService.getVariablesLocal(processInstanceId);
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -3599,11 +3607,11 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     VariableMap variables = runtimeService.getVariablesTyped(processInstanceId);
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
-    assertThat(variables).hasSize(1);
-
-    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
+    assertThat(variables).isNotNull();
+    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -3616,11 +3624,11 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     VariableMap variables = runtimeService.getVariablesTyped(processInstanceId);
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
-    assertThat(variables).hasSize(1);
-
-    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
+    assertThat(variables).isNotNull();
+    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -3633,11 +3641,11 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     VariableMap variables = runtimeService.getVariablesTyped(processInstanceId);
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
-    assertThat(variables).hasSize(1);
-
-    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
+    assertThat(variables).isNotNull();
+    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -3650,11 +3658,11 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     VariableMap variables = runtimeService.getVariablesTyped(processInstanceId);
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
-    assertThat(variables).hasSize(1);
-
-    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
+    assertThat(variables).isNotNull();
+    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -3731,11 +3739,11 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     VariableMap variables = runtimeService.getVariablesLocalTyped(processInstanceId);
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
-    assertThat(variables).hasSize(1);
-
-    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
+    assertThat(variables).isNotNull();
+    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -3748,11 +3756,11 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     VariableMap variables = runtimeService.getVariablesLocalTyped(processInstanceId);
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
-    assertThat(variables).hasSize(1);
-
-    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
+    assertThat(variables).isNotNull();
+    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -3765,11 +3773,11 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     VariableMap variables = runtimeService.getVariablesLocalTyped(processInstanceId);
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
-    assertThat(variables).hasSize(1);
-
-    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
+    assertThat(variables).isNotNull();
+    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -3782,11 +3790,11 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     VariableMap variables = runtimeService.getVariablesLocalTyped(processInstanceId);
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
-    assertThat(variables).hasSize(1);
-
-    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
+    assertThat(variables).isNotNull();
+    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -3862,8 +3870,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     Map<String, Object> variables = runtimeService.getVariables(processInstanceId, Arrays.asList(VARIABLE_NAME));
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -3879,8 +3888,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     Map<String, Object> variables = runtimeService.getVariables(processInstanceId, Arrays.asList(VARIABLE_NAME));
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -3896,8 +3906,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     Map<String, Object> variables = runtimeService.getVariables(processInstanceId, Arrays.asList(VARIABLE_NAME));
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -3913,8 +3924,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     Map<String, Object> variables = runtimeService.getVariables(processInstanceId, Arrays.asList(VARIABLE_NAME));
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -3993,8 +4005,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     Map<String, Object> variables = runtimeService.getVariablesLocal(processInstanceId, Arrays.asList(VARIABLE_NAME));
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -4010,8 +4023,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     Map<String, Object> variables = runtimeService.getVariablesLocal(processInstanceId, Arrays.asList(VARIABLE_NAME));
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -4027,8 +4041,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     Map<String, Object> variables = runtimeService.getVariablesLocal(processInstanceId, Arrays.asList(VARIABLE_NAME));
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -4044,8 +4059,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     Map<String, Object> variables = runtimeService.getVariablesLocal(processInstanceId, Arrays.asList(VARIABLE_NAME));
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -4124,11 +4140,11 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     VariableMap variables = runtimeService.getVariablesTyped(processInstanceId, Arrays.asList(VARIABLE_NAME), false);
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
-    assertThat(variables).hasSize(1);
-
-    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
+    assertThat(variables).isNotNull();
+    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -4141,11 +4157,11 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     VariableMap variables = runtimeService.getVariablesTyped(processInstanceId, Arrays.asList(VARIABLE_NAME), false);
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
-    assertThat(variables).hasSize(1);
-
-    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
+    assertThat(variables).isNotNull();
+    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -4158,11 +4174,11 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     VariableMap variables = runtimeService.getVariablesTyped(processInstanceId, Arrays.asList(VARIABLE_NAME), false);
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
-    assertThat(variables).hasSize(1);
-
-    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
+    assertThat(variables).isNotNull();
+    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -4175,11 +4191,11 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     VariableMap variables = runtimeService.getVariablesTyped(processInstanceId, Arrays.asList(VARIABLE_NAME), false);
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
-    assertThat(variables).hasSize(1);
-
-    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
+    assertThat(variables).isNotNull();
+    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -4255,11 +4271,11 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     VariableMap variables = runtimeService.getVariablesLocalTyped(processInstanceId, Arrays.asList(VARIABLE_NAME), false);
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
-    assertThat(variables).hasSize(1);
-
-    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
+    assertThat(variables).isNotNull();
+    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -4272,11 +4288,11 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     VariableMap variables = runtimeService.getVariablesLocalTyped(processInstanceId, Arrays.asList(VARIABLE_NAME), false);
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
-    assertThat(variables).hasSize(1);
-
-    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
+    assertThat(variables).isNotNull();
+    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -4289,11 +4305,11 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     VariableMap variables = runtimeService.getVariablesLocalTyped(processInstanceId, Arrays.asList(VARIABLE_NAME), false);
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
-    assertThat(variables).hasSize(1);
-
-    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
+    assertThat(variables).isNotNull();
+    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -4306,11 +4322,11 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     VariableMap variables = runtimeService.getVariablesLocalTyped(processInstanceId, Arrays.asList(VARIABLE_NAME), false);
 
     // then
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
-    assertThat(variables).hasSize(1);
-
-    assertThat(variables).containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
+    assertThat(variables).isNotNull();
+    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
   @Test
@@ -5392,8 +5408,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   protected void verifyGetVariables(Map<String, Object> variables) {
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);

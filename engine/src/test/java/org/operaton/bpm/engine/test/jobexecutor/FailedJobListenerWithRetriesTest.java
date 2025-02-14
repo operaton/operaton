@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.test.jobexecutor;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -110,11 +108,11 @@ public class FailedJobListenerWithRetriesTest {
     JobEntity jobFinalState = (JobEntity)engineRule.getManagementService().createJobQuery().jobId(job.getId()).list().get(0);
     assertThat(jobFinalState.getRetries()).isEqualTo(jobRetries);
     if (jobLocked) {
-      assertNotNull(jobFinalState.getLockOwner());
-      assertNotNull(jobFinalState.getLockExpirationTime());
+      assertThat(jobFinalState.getLockOwner()).isNotNull();
+      assertThat(jobFinalState.getLockExpirationTime()).isNotNull();
     } else {
-      assertNull(jobFinalState.getLockOwner());
-      assertNull(jobFinalState.getLockExpirationTime());
+      assertThat(jobFinalState.getLockOwner()).isNull();
+      assertThat(jobFinalState.getLockExpirationTime()).isNull();
     }
   }
 

@@ -17,9 +17,7 @@
 package org.operaton.bpm.engine.test.history;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import java.util.Arrays;
@@ -74,7 +72,7 @@ public class HistoricCaseInstanceTest extends CmmnTest {
 
     HistoricCaseInstance historicCaseInstance = queryHistoricCaseInstance(caseInstanceId);
 
-    assertTrue(historicCaseInstance.isActive());
+    assertThat(historicCaseInstance.isActive()).isTrue();
     assertCount(1, historicQuery().active());
     assertCount(1, historicQuery().notClosed());
 
@@ -83,7 +81,7 @@ public class HistoricCaseInstanceTest extends CmmnTest {
     manualStart(stageExecutionId);
 
     historicCaseInstance = queryHistoricCaseInstance(caseInstanceId);
-    assertTrue(historicCaseInstance.isCompleted());
+    assertThat(historicCaseInstance.isCompleted()).isTrue();
     assertCount(1, historicQuery().completed());
     assertCount(1, historicQuery().notClosed());
 
@@ -92,7 +90,7 @@ public class HistoricCaseInstanceTest extends CmmnTest {
     terminate(caseInstanceId);
 
     historicCaseInstance = queryHistoricCaseInstance(caseInstanceId);
-    assertTrue(historicCaseInstance.isTerminated());
+    assertThat(historicCaseInstance.isTerminated()).isTrue();
     assertCount(1, historicQuery().terminated());
     assertCount(1, historicQuery().notClosed());
 
@@ -102,7 +100,7 @@ public class HistoricCaseInstanceTest extends CmmnTest {
 
     historicCaseInstance = queryHistoricCaseInstance(caseInstanceId);
     // not public API
-    assertTrue(((HistoricCaseInstanceEntity) historicCaseInstance).isSuspended());
+    assertThat(((HistoricCaseInstanceEntity) historicCaseInstance).isSuspended()).isTrue();
 //    assertCount(1, historicQuery().suspended());
     assertCount(1, historicQuery().notClosed());
 
@@ -110,7 +108,7 @@ public class HistoricCaseInstanceTest extends CmmnTest {
     close(caseInstanceId);
 
     historicCaseInstance = queryHistoricCaseInstance(caseInstanceId);
-    assertTrue(historicCaseInstance.isClosed());
+    assertThat(historicCaseInstance.isClosed()).isTrue();
     assertCount(1, historicQuery().closed());
     assertCount(0, historicQuery().notClosed());
   }
@@ -144,8 +142,8 @@ public class HistoricCaseInstanceTest extends CmmnTest {
     assertDateSimilar(closed, closeTime);
 
     // test that duration is as expected with a maximal difference of one second
-    assertTrue(durationInMillis >= duration);
-    assertTrue(durationInMillis < duration + 1000);
+    assertThat(durationInMillis >= duration).isTrue();
+    assertThat(durationInMillis < duration + 1000).isTrue();
 
     // test queries
     Date beforeCreate = new Date(created.getTime() - 3600 * 1000);
@@ -198,7 +196,7 @@ public class HistoricCaseInstanceTest extends CmmnTest {
       .superCaseInstanceId(caseInstanceId)
       .singleResult();
 
-    assertNotNull(historicCaseInstance);
+    assertThat(historicCaseInstance).isNotNull();
     assertThat(historicCaseInstance.getSuperCaseInstanceId()).isEqualTo(caseInstanceId);
 
     String superCaseInstanceId = historicQuery()
@@ -543,7 +541,7 @@ public class HistoricCaseInstanceTest extends CmmnTest {
 
     String caseInstanceId = caseInstance.getId();
     HistoricCaseInstance historicInstance = queryHistoricCaseInstance(caseInstanceId);
-    assertNotNull(historicInstance);
+    assertThat(historicInstance).isNotNull();
     var historicInstanceId = historicInstance.getId();
 
     try {
@@ -570,9 +568,9 @@ public class HistoricCaseInstanceTest extends CmmnTest {
       assertThat(entry.getEntityType()).isEqualTo(EntityTypes.CASE_INSTANCE);
       assertThat(entry.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_DELETE_HISTORY);
       assertThat(entry.getCaseInstanceId()).isEqualTo(caseInstanceId);
-      assertNull(entry.getProperty());
-      assertNull(entry.getOrgValue());
-      assertNull(entry.getNewValue());
+      assertThat(entry.getProperty()).isNull();
+      assertThat(entry.getOrgValue()).isNull();
+      assertThat(entry.getNewValue()).isNull();
     }
 
     assertCount(0, historicQuery());
@@ -594,9 +592,9 @@ public class HistoricCaseInstanceTest extends CmmnTest {
     assertThat(query.count()).isEqualTo(1);
 
     HistoricCaseInstance subCaseInstance = query.singleResult();
-    assertNotNull(subCaseInstance);
+    assertThat(subCaseInstance).isNotNull();
     assertThat(subCaseInstance.getSuperProcessInstanceId()).isEqualTo(superProcessInstanceId);
-    assertNull(subCaseInstance.getSuperCaseInstanceId());
+    assertThat(subCaseInstance.getSuperCaseInstanceId()).isNull();
   }
 
   @Test
@@ -606,12 +604,12 @@ public class HistoricCaseInstanceTest extends CmmnTest {
     query.superProcessInstanceId("invalid");
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list()).hasSize(0);
+    assertThat(query.list()).isEmpty();
 
     query.caseInstanceId(null);
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list()).hasSize(0);
+    assertThat(query.list()).isEmpty();
 
   }
 
@@ -637,8 +635,8 @@ public class HistoricCaseInstanceTest extends CmmnTest {
 
     HistoricCaseInstance caseInstance = query.singleResult();
     assertThat(caseInstance.getId()).isEqualTo(superCaseInstanceId);
-    assertNull(caseInstance.getSuperCaseInstanceId());
-    assertNull(caseInstance.getSuperProcessInstanceId());
+    assertThat(caseInstance.getSuperCaseInstanceId()).isNull();
+    assertThat(caseInstance.getSuperProcessInstanceId()).isNull();
   }
 
   @Test
@@ -648,12 +646,12 @@ public class HistoricCaseInstanceTest extends CmmnTest {
     query.subProcessInstanceId("invalid");
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list()).hasSize(0);
+    assertThat(query.list()).isEmpty();
 
     query.caseInstanceId(null);
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list()).hasSize(0);
+    assertThat(query.list()).isEmpty();
 
   }
 
@@ -674,7 +672,7 @@ public class HistoricCaseInstanceTest extends CmmnTest {
 
     HistoricCaseInstance caseInstance = query.singleResult();
     assertThat(caseInstance.getSuperCaseInstanceId()).isEqualTo(superCaseInstanceId);
-    assertNull(caseInstance.getSuperProcessInstanceId());
+    assertThat(caseInstance.getSuperProcessInstanceId()).isNull();
   }
 
   @Test
@@ -684,12 +682,12 @@ public class HistoricCaseInstanceTest extends CmmnTest {
     query.superCaseInstanceId("invalid");
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list()).hasSize(0);
+    assertThat(query.list()).isEmpty();
 
     query.caseInstanceId(null);
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list()).hasSize(0);
+    assertThat(query.list()).isEmpty();
 
   }
 
@@ -716,8 +714,8 @@ public class HistoricCaseInstanceTest extends CmmnTest {
 
     HistoricCaseInstance caseInstance = query.singleResult();
     assertThat(caseInstance.getId()).isEqualTo(superCaseInstanceId);
-    assertNull(caseInstance.getSuperProcessInstanceId());
-    assertNull(caseInstance.getSuperCaseInstanceId());
+    assertThat(caseInstance.getSuperProcessInstanceId()).isNull();
+    assertThat(caseInstance.getSuperCaseInstanceId()).isNull();
   }
 
   @Test
@@ -727,12 +725,12 @@ public class HistoricCaseInstanceTest extends CmmnTest {
     query.subCaseInstanceId("invalid");
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list()).hasSize(0);
+    assertThat(query.list()).isEmpty();
 
     query.caseInstanceId(null);
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list()).hasSize(0);
+    assertThat(query.list()).isEmpty();
   }
 
   @Deployment(resources = {
@@ -848,7 +846,7 @@ public class HistoricCaseInstanceTest extends CmmnTest {
     HistoricCaseInstance historicCaseInstance = historicQuery()
       .caseInstanceId(caseInstanceId)
       .singleResult();
-    assertNotNull(historicCaseInstance);
+    assertThat(historicCaseInstance).isNotNull();
     return historicCaseInstance;
   }
 
@@ -862,7 +860,7 @@ public class HistoricCaseInstanceTest extends CmmnTest {
 
   protected void assertDateSimilar(Date date1, Date date2) {
     long difference = Math.abs(date1.getTime() - date2.getTime());
-    assertTrue(difference < 1000);
+    assertThat(difference < 1000).isTrue();
   }
 
 }

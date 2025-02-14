@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.container.impl.metadata;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.within;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +27,6 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.StandaloneProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.jobexecutor.DefaultJobExecutor;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
-import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -79,9 +77,9 @@ public class PropertyHelperTest {
 
     PropertyHelper.applyProperties(engineConfiguration, propertiesToSet);
 
-    Assert.assertTrue(engineConfiguration.isJobExecutorDeploymentAware());
-    Assert.assertTrue(engineConfiguration.isJobExecutorPreferTimerJobs());
-    Assert.assertTrue(engineConfiguration.isJobExecutorAcquireByDueDate());
+    assertThat(engineConfiguration.isJobExecutorDeploymentAware()).isTrue();
+    assertThat(engineConfiguration.isJobExecutorPreferTimerJobs()).isTrue();
+    assertThat(engineConfiguration.isJobExecutorAcquireByDueDate()).isTrue();
     assertThat(engineConfiguration.getMailServerPort()).isEqualTo(42);
     assertThat(engineConfiguration.getJdbcUrl()).isEqualTo("someUrl");
   }
@@ -119,12 +117,12 @@ public class PropertyHelperTest {
     propertiesToSet.put(DB_IDENTITY_USED_PROP, "false");
     PropertyHelper.applyProperties(engineConfiguration, propertiesToSet);
 
-    Assert.assertFalse(engineConfiguration.isDbIdentityUsed());
+    assertThat(engineConfiguration.isDbIdentityUsed()).isFalse();
 
     propertiesToSet.put(DB_IDENTITY_USED_PROP, "true");
     PropertyHelper.applyProperties(engineConfiguration, propertiesToSet);
 
-    Assert.assertTrue(engineConfiguration.isDbIdentityUsed());
+    assertThat(engineConfiguration.isDbIdentityUsed()).isTrue();
   }
 
   @Test
@@ -135,7 +133,7 @@ public class PropertyHelperTest {
 
     try {
       PropertyHelper.applyProperties(engineConfiguration, propertiesToSet);
-      Assert.fail();
+      fail("");
     } catch (Exception e) {
       // happy path
     }

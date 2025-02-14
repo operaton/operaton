@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.test.concurrency;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.OptimisticLockingException;
@@ -140,11 +139,11 @@ public class CompetingSentrySatisfactionTest {
 
     LOG.debug("test thread notifies thread 1");
     threadOne.proceedAndWaitTillDone();
-    assertNull(threadOne.exception);
+    assertThat(threadOne.exception).isNull();
 
     LOG.debug("test thread notifies thread 2");
     threadTwo.proceedAndWaitTillDone();
-    assertNotNull(threadTwo.exception);
+    assertThat(threadTwo.exception).isNotNull();
 
     String message = threadTwo.exception.getMessage();
     testRule.assertTextPresent("CaseSentryPartEntity", message);
@@ -183,11 +182,11 @@ public class CompetingSentrySatisfactionTest {
 
     LOG.debug("test thread notifies thread 1");
     threadOne.proceedAndWaitTillDone();
-    assertNull(threadOne.exception);
+    assertThat(threadOne.exception).isNull();
 
     LOG.debug("test thread notifies thread 2");
     threadTwo.proceedAndWaitTillDone();
-    assertNotNull(threadTwo.exception);
+    assertThat(threadTwo.exception).isNotNull();
 
     String message = threadTwo.exception.getMessage();
     testRule.assertTextPresent("CaseSentryPartEntity", message);
@@ -226,11 +225,11 @@ public class CompetingSentrySatisfactionTest {
 
     LOG.debug("test thread notifies thread 1");
     threadOne.proceedAndWaitTillDone();
-    assertNull(threadOne.exception);
+    assertThat(threadOne.exception).isNull();
 
     LOG.debug("test thread notifies thread 2");
     threadTwo.proceedAndWaitTillDone();
-    assertNotNull(threadTwo.exception);
+    assertThat(threadTwo.exception).isNotNull();
 
     String message = threadTwo.exception.getMessage();
     testRule.assertTextPresent("CaseExecutionEntity", message);
@@ -277,11 +276,11 @@ public class CompetingSentrySatisfactionTest {
 
     LOG.debug("test thread notifies thread 1");
     threadOne.proceedAndWaitTillDone();
-    assertNull(threadOne.exception);
+    assertThat(threadOne.exception).isNull();
 
     LOG.debug("test thread notifies thread 2");
     threadTwo.proceedAndWaitTillDone();
-    assertNotNull(threadTwo.exception);
+    assertThat(threadTwo.exception).isNotNull();
 
     String message = threadTwo.exception.getMessage();
     testRule.assertTextPresent("CaseExecutionEntity", message);

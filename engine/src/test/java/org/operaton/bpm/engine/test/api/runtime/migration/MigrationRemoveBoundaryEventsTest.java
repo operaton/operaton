@@ -18,8 +18,6 @@ package org.operaton.bpm.engine.test.api.runtime.migration;
 
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.migration.MigrationPlan;
@@ -856,7 +854,7 @@ public class MigrationRemoveBoundaryEventsTest {
 
     // a timer job exists
     Job jobBeforeMigration = rule.getManagementService().createJobQuery().singleResult();
-    assertNotNull(jobBeforeMigration);
+    assertThat(jobBeforeMigration).isNotNull();
 
     // if the timer job is triggered the failing delegate fails and an incident is created
     executeJob(jobBeforeMigration);
@@ -873,7 +871,7 @@ public class MigrationRemoveBoundaryEventsTest {
 
     // then the incident was removed
     Job jobAfterMigration = rule.getManagementService().createJobQuery().jobId(jobBeforeMigration.getId()).singleResult();
-    assertNull(jobAfterMigration);
+    assertThat(jobAfterMigration).isNull();
 
     assertThat(rule.getRuntimeService().createIncidentQuery().count()).isEqualTo(0);
   }

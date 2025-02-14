@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.test.api.multitenancy.query;
 
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.batchByTenantId;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.batchStatisticsByTenantId;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
@@ -191,7 +192,7 @@ public class MultiTenancyBatchQueryTest {
     Batch returnedBatch = managementService.createBatchQuery().tenantIdIn(TENANT_ONE).singleResult();
 
     // then
-    Assert.assertNotNull(returnedBatch);
+    assertThat(returnedBatch).isNotNull();
     assertThat(returnedBatch.getId()).isEqualTo(tenant1Batch.getId());
   }
 
@@ -216,7 +217,7 @@ public class MultiTenancyBatchQueryTest {
     Batch returnedBatch = managementService.createBatchQuery().withoutTenantId().singleResult();
 
     // then
-    Assert.assertNotNull(returnedBatch);
+    assertThat(returnedBatch).isNotNull();
     assertThat(returnedBatch.getId()).isEqualTo(sharedBatch.getId());
   }
 
@@ -227,7 +228,7 @@ public class MultiTenancyBatchQueryTest {
     var batchQuery = managementService.createBatchQuery();
     try {
       batchQuery.tenantIdIn(tenantIds);
-      Assert.fail("exception expected");
+      fail("exception expected");
     }
     catch (NullValueException e) {
       // happy path
@@ -241,7 +242,7 @@ public class MultiTenancyBatchQueryTest {
     var batchQuery = managementService.createBatchQuery();
     try {
       batchQuery.tenantIdIn(tenantIds);
-      Assert.fail("exception expected");
+      fail("exception expected");
     }
     catch (NullValueException e) {
       // happy path
@@ -274,7 +275,7 @@ public class MultiTenancyBatchQueryTest {
     BatchStatistics returnedBatch = managementService.createBatchStatisticsQuery().tenantIdIn(TENANT_ONE).singleResult();
 
     // then
-    Assert.assertNotNull(returnedBatch);
+    assertThat(returnedBatch).isNotNull();
     assertThat(returnedBatch.getId()).isEqualTo(tenant1Batch.getId());
   }
 
@@ -299,7 +300,7 @@ public class MultiTenancyBatchQueryTest {
     BatchStatistics returnedBatch = managementService.createBatchStatisticsQuery().withoutTenantId().singleResult();
 
     // then
-    Assert.assertNotNull(returnedBatch);
+    assertThat(returnedBatch).isNotNull();
     assertThat(returnedBatch.getId()).isEqualTo(sharedBatch.getId());
   }
 
@@ -310,7 +311,7 @@ public class MultiTenancyBatchQueryTest {
     var batchStatisticsQuery = managementService.createBatchStatisticsQuery();
     try {
       batchStatisticsQuery.tenantIdIn(tenantIds);
-      Assert.fail("exception expected");
+      fail("exception expected");
     }
     catch (NullValueException e) {
       // happy path
@@ -324,7 +325,7 @@ public class MultiTenancyBatchQueryTest {
     var batchStatisticsQuery = managementService.createBatchStatisticsQuery();
     try {
       batchStatisticsQuery.tenantIdIn(tenantIds);
-      Assert.fail("exception expected");
+      fail("exception expected");
     }
     catch (NullValueException e) {
       // happy path
@@ -358,7 +359,7 @@ public class MultiTenancyBatchQueryTest {
     }
 
     for (String expectedId : expectedIds) {
-      Assert.assertTrue(actualIds.contains(expectedId));
+      assertThat(actualIds).contains(expectedId);
     }
   }
 }

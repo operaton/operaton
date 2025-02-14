@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.bpmn.el;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertNotNull;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -80,7 +79,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
 
     // Check of the testMethod has been called with the current execution
     String value = (String) runtimeService.getVariable(processInstance.getId(), "testVar");
-    assertNotNull(value);
+    assertThat(value).isNotNull();
     assertThat(value).isEqualTo("myValue");
   }
 
@@ -94,7 +93,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
 
       // Check if the variable that has been set in service-task is the authenticated user
       String value = (String) runtimeService.getVariable(processInstance.getId(), "theUser");
-      assertNotNull(value);
+      assertThat(value).isNotNull();
       assertThat(value).isEqualTo("frederik");
     } finally {
       // Cleanup

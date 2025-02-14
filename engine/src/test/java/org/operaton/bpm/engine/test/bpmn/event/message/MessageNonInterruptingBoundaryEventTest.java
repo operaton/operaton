@@ -21,9 +21,6 @@ import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeA
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
@@ -49,12 +46,12 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
     assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(2);
 
     Task userTask = taskService.createTaskQuery().taskDefinitionKey("task").singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
 
     Execution execution = runtimeService.createExecutionQuery()
       .messageEventSubscriptionName("messageName")
       .singleResult();
-    assertNotNull(execution);
+    assertThat(execution).isNotNull();
 
     // 1. case: message received before completing the task
 
@@ -63,12 +60,12 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
     execution = runtimeService.createExecutionQuery()
             .messageEventSubscriptionName("messageName")
             .singleResult();
-    assertNotNull(execution);
+    assertThat(execution).isNotNull();
 
     assertThat(taskService.createTaskQuery().count()).isEqualTo(2);
 
     userTask = taskService.createTaskQuery().taskDefinitionKey("taskAfterMessage").singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("taskAfterMessage");
     taskService.complete(userTask.getId());
     assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
@@ -79,19 +76,19 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
     execution = runtimeService.createExecutionQuery()
             .messageEventSubscriptionName("messageName")
             .singleResult();
-    assertNotNull(execution);
+    assertThat(execution).isNotNull();
 
     assertThat(taskService.createTaskQuery().count()).isEqualTo(2);
 
     userTask = taskService.createTaskQuery().taskDefinitionKey("taskAfterMessage").singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("taskAfterMessage");
     taskService.complete(userTask.getId());
     assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
 
     // now complete the user task with the message boundary event
     userTask = taskService.createTaskQuery().taskDefinitionKey("task").singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
 
     taskService.complete(userTask.getId());
 
@@ -99,10 +96,10 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
     execution = runtimeService.createExecutionQuery()
             .messageEventSubscriptionName("messageName")
             .singleResult();
-    assertNull(execution);
+    assertThat(execution).isNull();
 
     userTask = taskService.createTaskQuery().taskDefinitionKey("taskAfterTask").singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
 
     taskService.complete(userTask.getId());
 
@@ -113,16 +110,16 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
     runtimeService.startProcessInstanceByKey("process");
 
     userTask = taskService.createTaskQuery().taskDefinitionKey("task").singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     taskService.complete(userTask.getId());
 
     execution = runtimeService.createExecutionQuery()
       .messageEventSubscriptionName("messageName")
       .singleResult();
-    assertNull(execution);
+    assertThat(execution).isNull();
 
     userTask = taskService.createTaskQuery().taskDefinitionKey("taskAfterTask").singleResult();
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("taskAfterTask");
     taskService.complete(userTask.getId());
     assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
@@ -143,7 +140,7 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
     Task task1 = taskService.createTaskQuery()
         .taskDefinitionKey("task1")
         .singleResult();
-    assertNotNull(task1);
+    assertThat(task1).isNotNull();
 
     Execution task1Execution = runtimeService
         .createExecutionQuery()
@@ -161,7 +158,7 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
     task1 = taskService.createTaskQuery()
         .taskDefinitionKey("task1")
         .singleResult();
-    assertNotNull(task1);
+    assertThat(task1).isNotNull();
 
     task1Execution = runtimeService
         .createExecutionQuery()
@@ -173,7 +170,7 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
     Task task2 = taskService.createTaskQuery()
         .taskDefinitionKey("task2")
         .singleResult();
-    assertNotNull(task2);
+    assertThat(task2).isNotNull();
 
     Execution task2Execution = runtimeService
         .createExecutionQuery()
@@ -206,7 +203,7 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
     Task task1 = taskService.createTaskQuery()
         .taskDefinitionKey("task1")
         .singleResult();
-    assertNotNull(task1);
+    assertThat(task1).isNotNull();
 
     Execution task1Execution = runtimeService
         .createExecutionQuery()
@@ -231,7 +228,7 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
     Task task2 = taskService.createTaskQuery()
         .taskDefinitionKey("task2")
         .singleResult();
-    assertNotNull(task2);
+    assertThat(task2).isNotNull();
 
     Execution task2Execution = runtimeService
       .createExecutionQuery()
@@ -272,14 +269,14 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
     Task task1 = taskService.createTaskQuery()
         .taskDefinitionKey("task1")
         .singleResult();
-    assertNotNull(task1);
+    assertThat(task1).isNotNull();
 
     Execution task1Execution = runtimeService
         .createExecutionQuery()
         .activityId("task1")
         .singleResult();
 
-    assertNotEquals(processInstanceId, ((ExecutionEntity) task1Execution).getParentId());
+    assertThat(((ExecutionEntity) task1Execution).getParentId()).isNotEqualTo(processInstanceId);
 
     // when (2)
     runtimeService.correlateMessage("secondMessage");
@@ -290,26 +287,26 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
     task1 = taskService.createTaskQuery()
         .taskDefinitionKey("task1")
         .singleResult();
-    assertNotNull(task1);
+    assertThat(task1).isNotNull();
 
     task1Execution = runtimeService
         .createExecutionQuery()
         .activityId("task1")
         .singleResult();
 
-    assertNotEquals(processInstanceId, ((ExecutionEntity) task1Execution).getParentId());
+    assertThat(((ExecutionEntity) task1Execution).getParentId()).isNotEqualTo(processInstanceId);
 
     Task task2 = taskService.createTaskQuery()
         .taskDefinitionKey("task2")
         .singleResult();
-    assertNotNull(task2);
+    assertThat(task2).isNotNull();
 
     Execution task2Execution = runtimeService
         .createExecutionQuery()
         .activityId("task1")
         .singleResult();
 
-    assertNotEquals(processInstanceId, ((ExecutionEntity) task2Execution).getParentId());
+    assertThat(((ExecutionEntity) task2Execution).getParentId()).isNotEqualTo(processInstanceId);
 
     assertThat(((ExecutionEntity) task2Execution).getParentId()).isEqualTo(((ExecutionEntity) task1Execution).getParentId());
 
@@ -336,12 +333,12 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
     Task task1 = taskService.createTaskQuery()
         .taskDefinitionKey("task1")
         .singleResult();
-    assertNotNull(task1);
+    assertThat(task1).isNotNull();
 
     Task innerTask = taskService.createTaskQuery()
         .taskDefinitionKey("innerTask")
         .singleResult();
-    assertNotNull(innerTask);
+    assertThat(innerTask).isNotNull();
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
     assertThat(executionTree)
@@ -362,13 +359,13 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
     task1 = taskService.createTaskQuery()
         .taskDefinitionKey("task1")
         .singleResult();
-    assertNotNull(task1);
+    assertThat(task1).isNotNull();
 
 
     Task task2 = taskService.createTaskQuery()
         .taskDefinitionKey("task2")
         .singleResult();
-    assertNotNull(task2);
+    assertThat(task2).isNotNull();
 
     assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(0);
 
@@ -402,12 +399,12 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
     Task task1 = taskService.createTaskQuery()
         .taskDefinitionKey("task1")
         .singleResult();
-    assertNotNull(task1);
+    assertThat(task1).isNotNull();
 
     Task innerTask = taskService.createTaskQuery()
         .taskDefinitionKey("innerTask")
         .singleResult();
-    assertNotNull(innerTask);
+    assertThat(innerTask).isNotNull();
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
     assertThat(executionTree)
@@ -427,12 +424,12 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
     task1 = taskService.createTaskQuery()
         .taskDefinitionKey("task1")
         .singleResult();
-    assertNotNull(task1);
+    assertThat(task1).isNotNull();
 
     Task task2 = taskService.createTaskQuery()
         .taskDefinitionKey("task2")
         .singleResult();
-    assertNotNull(task2);
+    assertThat(task2).isNotNull();
 
     executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
     assertThat(executionTree)
@@ -466,7 +463,7 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
     Task task1 = taskService.createTaskQuery()
         .taskDefinitionKey("task1")
         .singleResult();
-    assertNotNull(task1);
+    assertThat(task1).isNotNull();
 
     Execution task1Execution = runtimeService
         .createExecutionQuery()
@@ -478,14 +475,14 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
     Task task2 = taskService.createTaskQuery()
         .taskDefinitionKey("innerTask")
         .singleResult();
-    assertNotNull(task2);
+    assertThat(task2).isNotNull();
 
     Execution task2Execution = runtimeService
         .createExecutionQuery()
         .activityId("innerTask")
         .singleResult();
 
-    assertNotEquals(processInstanceId, ((ExecutionEntity) task2Execution).getParentId());
+    assertThat(((ExecutionEntity) task2Execution).getParentId()).isNotEqualTo(processInstanceId);
 
     // when (2)
     taskService.complete(task2.getId());
@@ -496,7 +493,7 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
     task1 = taskService.createTaskQuery()
         .taskDefinitionKey("task1")
         .singleResult();
-    assertNotNull(task1);
+    assertThat(task1).isNotNull();
 
     task1Execution = runtimeService
         .createExecutionQuery()
@@ -508,7 +505,7 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
     task2 = taskService.createTaskQuery()
         .taskDefinitionKey("task2")
         .singleResult();
-    assertNotNull(task2);
+    assertThat(task2).isNotNull();
 
     task2Execution = runtimeService
         .createExecutionQuery()
@@ -540,14 +537,14 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
     Task innerTask = taskService.createTaskQuery()
         .taskDefinitionKey("innerTask")
         .singleResult();
-    assertNotNull(innerTask);
+    assertThat(innerTask).isNotNull();
 
     Execution innerTaskExecution = runtimeService
         .createExecutionQuery()
         .activityId("innerTask")
         .singleResult();
 
-    assertNotEquals(processInstanceId, ((ExecutionEntity) innerTaskExecution).getParentId());
+    assertThat(((ExecutionEntity) innerTaskExecution).getParentId()).isNotEqualTo(processInstanceId);
 
     // when (2)
     runtimeService.correlateMessage("secondMessage");
@@ -558,25 +555,25 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
     innerTask = taskService.createTaskQuery()
         .taskDefinitionKey("innerTask")
         .singleResult();
-    assertNotNull(innerTask);
+    assertThat(innerTask).isNotNull();
 
     innerTaskExecution = runtimeService
         .createExecutionQuery()
         .activityId("innerTask")
         .singleResult();
 
-    assertNotEquals(processInstanceId, ((ExecutionEntity) innerTaskExecution).getParentId());
+    assertThat(((ExecutionEntity) innerTaskExecution).getParentId()).isNotEqualTo(processInstanceId);
 
     Task task1 = taskService.createTaskQuery()
         .taskDefinitionKey("task1")
         .singleResult();
-    assertNotNull(task1);
+    assertThat(task1).isNotNull();
 
     Execution task1Execution = runtimeService
         .createExecutionQuery()
         .activityId("task1")
         .singleResult();
-    assertNotNull(task1Execution);
+    assertThat(task1Execution).isNotNull();
 
     assertThat(((ExecutionEntity) task1Execution).getParentId()).isEqualTo(processInstanceId);
 
@@ -589,26 +586,26 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
     task1 = taskService.createTaskQuery()
         .taskDefinitionKey("task1")
         .singleResult();
-    assertNotNull(task1);
+    assertThat(task1).isNotNull();
 
     task1Execution = runtimeService
         .createExecutionQuery()
         .activityId("task1")
         .singleResult();
-    assertNotNull(task1Execution);
+    assertThat(task1Execution).isNotNull();
 
     assertThat(((ExecutionEntity) task1Execution).getParentId()).isEqualTo(processInstanceId);
 
     Task task2 = taskService.createTaskQuery()
         .taskDefinitionKey("task2")
         .singleResult();
-    assertNotNull(task2);
+    assertThat(task2).isNotNull();
 
     Execution task2Execution = runtimeService
         .createExecutionQuery()
         .activityId("task2")
         .singleResult();
-    assertNotNull(task2Execution);
+    assertThat(task2Execution).isNotNull();
 
     assertThat(((ExecutionEntity) task2Execution).getParentId()).isEqualTo(processInstanceId);
 
@@ -635,13 +632,13 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
     Task task1 = taskService.createTaskQuery()
         .taskDefinitionKey("task1")
         .singleResult();
-    assertNotNull(task1);
+    assertThat(task1).isNotNull();
 
     Execution task1Execution = runtimeService
         .createExecutionQuery()
         .activityId("task1")
         .singleResult();
-    assertNotNull(task1Execution);
+    assertThat(task1Execution).isNotNull();
 
     assertThat(((ExecutionEntity) task1Execution).getParentId()).isEqualTo(processInstanceId);
 
@@ -654,25 +651,25 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
     Task innerTask = taskService.createTaskQuery()
         .taskDefinitionKey("innerTask")
         .singleResult();
-    assertNotNull(innerTask);
+    assertThat(innerTask).isNotNull();
 
     Execution innerTaskExecution = runtimeService
         .createExecutionQuery()
         .activityId("innerTask")
         .singleResult();
 
-    assertNotEquals(processInstanceId, ((ExecutionEntity) innerTaskExecution).getParentId());
+    assertThat(((ExecutionEntity) innerTaskExecution).getParentId()).isNotEqualTo(processInstanceId);
 
     task1 = taskService.createTaskQuery()
         .taskDefinitionKey("task1")
         .singleResult();
-    assertNotNull(task1);
+    assertThat(task1).isNotNull();
 
     task1Execution = runtimeService
         .createExecutionQuery()
         .activityId("task1")
         .singleResult();
-    assertNotNull(task1Execution);
+    assertThat(task1Execution).isNotNull();
 
     assertThat(((ExecutionEntity) task1Execution).getParentId()).isEqualTo(processInstanceId);
 
@@ -685,26 +682,26 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
     task1 = taskService.createTaskQuery()
         .taskDefinitionKey("task1")
         .singleResult();
-    assertNotNull(task1);
+    assertThat(task1).isNotNull();
 
     task1Execution = runtimeService
         .createExecutionQuery()
         .activityId("task1")
         .singleResult();
-    assertNotNull(task1Execution);
+    assertThat(task1Execution).isNotNull();
 
     assertThat(((ExecutionEntity) task1Execution).getParentId()).isEqualTo(processInstanceId);
 
     Task task2 = taskService.createTaskQuery()
         .taskDefinitionKey("task2")
         .singleResult();
-    assertNotNull(task2);
+    assertThat(task2).isNotNull();
 
     Execution task2Execution = runtimeService
         .createExecutionQuery()
         .activityId("task2")
         .singleResult();
-    assertNotNull(task2Execution);
+    assertThat(task2Execution).isNotNull();
 
     assertThat(((ExecutionEntity) task2Execution).getParentId()).isEqualTo(processInstanceId);
 

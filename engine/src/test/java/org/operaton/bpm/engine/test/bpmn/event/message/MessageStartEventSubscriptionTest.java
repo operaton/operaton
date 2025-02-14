@@ -16,11 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.message;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.Assert.fail;
 
 import java.util.List;
@@ -105,7 +101,7 @@ public class MessageStartEventSubscriptionTest {
       if (processDefinition.getVersion() == 1) {
         for (EventSubscription subscription : newEventSubscriptions) {
           EventSubscriptionEntity subscriptionEntity = (EventSubscriptionEntity) subscription;
-          assertNotEquals(subscriptionEntity.getConfiguration(), processDefinition.getId());
+          assertThat(processDefinition.getId()).isNotEqualTo(subscriptionEntity.getConfiguration());
         }
       } else {
         for (EventSubscription subscription : newEventSubscriptions) {
@@ -114,7 +110,7 @@ public class MessageStartEventSubscriptionTest {
         }
       }
     }
-    assertNotEquals(eventSubscriptions, newEventSubscriptions);
+    assertThat(newEventSubscriptions).isNotEqualTo(eventSubscriptions);
   }
 
   @Test
@@ -122,7 +118,7 @@ public class MessageStartEventSubscriptionTest {
     // given a deployed process
     testRule.deploy(SINGLE_MESSAGE_START_EVENT_XML);
     ProcessDefinition processDefinitionV1 = repositoryService.createProcessDefinitionQuery().singleResult();
-    assertNotNull(processDefinitionV1);
+    assertThat(processDefinitionV1).isNotNull();
 
     // deploy second version of the process
     String deploymentId = testRule.deploy(SINGLE_MESSAGE_START_EVENT_XML).getId();
@@ -135,7 +131,7 @@ public class MessageStartEventSubscriptionTest {
     assertThat(processDefinition.getId()).isEqualTo(processDefinitionV1.getId());
 
     EventSubscriptionEntity eventSubscription = (EventSubscriptionEntity) runtimeService.createEventSubscriptionQuery().singleResult();
-    assertNotNull(eventSubscription);
+    assertThat(eventSubscription).isNotNull();
     assertThat(eventSubscription.getConfiguration()).isEqualTo(processDefinitionV1.getId());
   }
 
@@ -156,9 +152,9 @@ public class MessageStartEventSubscriptionTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByMessage("newInvoiceMessage");
 
     // then
-    assertFalse(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isFalse();
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     taskService.complete(task.getId());
 
@@ -186,10 +182,10 @@ public class MessageStartEventSubscriptionTest {
     // when
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("singleMessageStartEvent");
 
-    assertFalse(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isFalse();
 
     Task  task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     taskService.complete(task.getId());
 

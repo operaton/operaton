@@ -17,11 +17,7 @@
 package org.operaton.bpm.engine.test.standalone.history;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import java.text.SimpleDateFormat;
@@ -124,19 +120,19 @@ public class FullHistoryTest {
       .processInstanceId(processInstance.getId())
       .activityId("theStart")
       .singleResult();
-    assertNotNull(historicStartEvent);
+    assertThat(historicStartEvent).isNotNull();
 
     HistoricActivityInstance waitStateActivity = historyService.createHistoricActivityInstanceQuery()
       .processInstanceId(processInstance.getId())
       .activityId("waitState")
       .singleResult();
-    assertNotNull(waitStateActivity);
+    assertThat(waitStateActivity).isNotNull();
 
     HistoricActivityInstance serviceTaskActivity = historyService.createHistoricActivityInstanceQuery()
       .processInstanceId(processInstance.getId())
       .activityId("serviceTask")
       .singleResult();
-    assertNotNull(serviceTaskActivity);
+    assertThat(serviceTaskActivity).isNotNull();
 
     List<HistoricDetail> historicDetails = historyService
       .createHistoricDetailQuery()
@@ -190,7 +186,7 @@ public class FullHistoryTest {
     assertThat(historicVariableUpdate.getVariableName()).isEqualTo("zVar2");
     assertThat(historicVariableUpdate.getValue()).isEqualTo("Event: take");
     assertThat(historicVariableUpdate.getRevision()).isEqualTo(0);
-    assertNull(historicVariableUpdate.getActivityInstanceId());
+    assertThat(historicVariableUpdate.getActivityInstanceId()).isNull();
 
     // Variable set from activity start execution listener on the servicetask
     historicVariableUpdate = (HistoricVariableUpdate) historicDetails.get(7);
@@ -461,12 +457,13 @@ public class FullHistoryTest {
 
     // Submit form-properties on the created task
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // Out execution only has a single activity waiting, the task
     List<String> activityIds = runtimeService.getActiveActivityIds(task.getExecutionId());
-    assertNotNull(activityIds);
-    assertThat(activityIds).hasSize(1);
+    assertThat(activityIds)
+            .isNotNull()
+            .hasSize(1);
 
     String taskActivityId = activityIds.get(0);
 
@@ -488,7 +485,7 @@ public class FullHistoryTest {
     assertThat(historicProperty1.getPropertyValue()).isEqualTo("Activiti rocks");
     assertThat(historicProperty1.getTime()).isEqualTo(startedDate);
     assertThat(historicProperty1.getProcessInstanceId()).isEqualTo(processInstance.getId());
-    assertNull(historicProperty1.getTaskId());
+    assertThat(historicProperty1.getTaskId()).isNull();
 
     assertThat(historicProperty1.getActivityInstanceId()).isEqualTo(processInstance.getId());
 
@@ -497,7 +494,7 @@ public class FullHistoryTest {
     assertThat(historicProperty2.getPropertyValue()).isEqualTo("12345");
     assertThat(historicProperty2.getTime()).isEqualTo(startedDate);
     assertThat(historicProperty2.getProcessInstanceId()).isEqualTo(processInstance.getId());
-    assertNull(historicProperty2.getTaskId());
+    assertThat(historicProperty2.getTaskId()).isNull();
 
     assertThat(historicProperty2.getActivityInstanceId()).isEqualTo(processInstance.getId());
 
@@ -508,9 +505,9 @@ public class FullHistoryTest {
     assertThat(historicProperty3.getProcessInstanceId()).isEqualTo(processInstance.getId());
     String activityInstanceId = historicProperty3.getActivityInstanceId();
     HistoricActivityInstance historicActivityInstance = historyService.createHistoricActivityInstanceQuery().activityInstanceId(activityInstanceId).singleResult();
-    assertNotNull(historicActivityInstance);
+    assertThat(historicActivityInstance).isNotNull();
     assertThat(historicActivityInstance.getActivityId()).isEqualTo(taskActivityId);
-    assertNotNull(historicProperty3.getTaskId());
+    assertThat(historicProperty3.getTaskId()).isNotNull();
 
     HistoricFormProperty historicProperty4 = (HistoricFormProperty) props.get(3);
     assertThat(historicProperty4.getPropertyId()).isEqualTo("formProp4");
@@ -519,9 +516,9 @@ public class FullHistoryTest {
     assertThat(historicProperty4.getProcessInstanceId()).isEqualTo(processInstance.getId());
     activityInstanceId = historicProperty4.getActivityInstanceId();
     historicActivityInstance = historyService.createHistoricActivityInstanceQuery().activityInstanceId(activityInstanceId).singleResult();
-    assertNotNull(historicActivityInstance);
+    assertThat(historicActivityInstance).isNotNull();
     assertThat(historicActivityInstance.getActivityId()).isEqualTo(taskActivityId);
-    assertNotNull(historicProperty4.getTaskId());
+    assertThat(historicProperty4.getTaskId()).isNotNull();
 
     assertThat(props).hasSize(4);
   }
@@ -574,7 +571,7 @@ public class FullHistoryTest {
 
     // Set a local task-variable
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     taskService.setVariableLocal(task.getId(), "taskVar", "It is I, le Variable");
 
     // Query on process-instance
@@ -701,25 +698,25 @@ public class FullHistoryTest {
 
     assertThat(details).hasSize(4);
 
-    assertTrue(details.get(0) instanceof HistoricFormProperty);
+    assertThat(details.get(0) instanceof HistoricFormProperty).isTrue();
     HistoricFormProperty formProp1 = (HistoricFormProperty) details.get(0);
     assertThat(formProp1.getPropertyId()).isEqualTo("formProp1");
     assertThat(formProp1.getPropertyValue()).isEqualTo("activiti rocks!");
 
-    assertTrue(details.get(1) instanceof HistoricFormProperty);
+    assertThat(details.get(1) instanceof HistoricFormProperty).isTrue();
     HistoricFormProperty formProp2 = (HistoricFormProperty) details.get(1);
     assertThat(formProp2.getPropertyId()).isEqualTo("formProp2");
     assertThat(formProp2.getPropertyValue()).isEqualTo("12345");
 
 
-    assertTrue(details.get(2) instanceof HistoricVariableUpdate);
+    assertThat(details.get(2) instanceof HistoricVariableUpdate).isTrue();
     HistoricVariableUpdate varUpdate1 = (HistoricVariableUpdate) details.get(2);
     assertThat(varUpdate1.getVariableName()).isEqualTo("variable1");
     assertThat(varUpdate1.getValue()).isEqualTo("activiti rocks!");
 
 
     // This variable should be of type LONG since this is defined in the process-definition
-    assertTrue(details.get(3) instanceof HistoricVariableUpdate);
+    assertThat(details.get(3) instanceof HistoricVariableUpdate).isTrue();
     HistoricVariableUpdate varUpdate2 = (HistoricVariableUpdate) details.get(3);
     assertThat(varUpdate2.getVariableName()).isEqualTo("variable2");
     assertThat(varUpdate2.getValue()).isEqualTo(12345L);
@@ -730,14 +727,14 @@ public class FullHistoryTest {
     var historicDetailQuery = historyService.createHistoricDetailQuery();
     try {
       historicDetailQuery.asc();
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
 
     }
 
     try {
       historicDetailQuery.desc();
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
 
     }
@@ -745,7 +742,7 @@ public class FullHistoryTest {
     HistoricDetailQuery queryOrderByProcessInstanceId = historicDetailQuery.orderByProcessInstanceId();
     try {
       queryOrderByProcessInstanceId.list();
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
 
     }
@@ -753,7 +750,7 @@ public class FullHistoryTest {
     HistoricDetailQuery queryOrderByTime = historicDetailQuery.orderByTime();
     try {
       queryOrderByTime.list();
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
 
     }
@@ -761,7 +758,7 @@ public class FullHistoryTest {
     HistoricDetailQuery queryOrderByVariableName = historicDetailQuery.orderByVariableName();
     try {
       queryOrderByVariableName.list();
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
 
     }
@@ -769,7 +766,7 @@ public class FullHistoryTest {
     HistoricDetailQuery queryOrderByVariableRevision = historicDetailQuery.orderByVariableRevision();
     try {
       queryOrderByVariableRevision.list();
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
 
     }
@@ -777,7 +774,7 @@ public class FullHistoryTest {
     HistoricDetailQuery queryByVariableType = historicDetailQuery.orderByVariableType();
     try {
       queryByVariableType.list();
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
 
     }
@@ -816,7 +813,7 @@ public class FullHistoryTest {
       .orderByVariableName().asc()
       .list();
 
-    assertThat(historicTaskVariableUpdates).hasSize(0);
+    assertThat(historicTaskVariableUpdates).isEmpty();
   }
 
   // ACT-592
@@ -837,7 +834,7 @@ public class FullHistoryTest {
     vars.put("anotherProcessVar", new DummySerializable());
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("HistoricTaskInstanceTest", vars);
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
 
     // Set 2 task properties
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -877,7 +874,7 @@ public class FullHistoryTest {
   @Deployment
   public void testDeleteRunningHistoricProcessInstance() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("HistoricTaskInstanceTest");
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
     var processInstanceId = processInstance.getId();
 
     try {
@@ -924,7 +921,7 @@ public class FullHistoryTest {
     variables.put("comeBack", Boolean.TRUE);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("HistoricFormPropertiesProcess", variables);
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
 
     // Submit form on task
     Map<String, String> data = new HashMap<>();
@@ -938,7 +935,7 @@ public class FullHistoryTest {
       .formProperties()
       .processInstanceId(processInstance.getId())
       .list();
-    assertNotNull(details);
+    assertThat(details).isNotNull();
     assertThat(details).hasSize(1);
 
     // Task should be active in the same activity as the previous one
@@ -949,7 +946,7 @@ public class FullHistoryTest {
       .formProperties()
       .processInstanceId(processInstance.getId())
       .list();
-    assertNotNull(details);
+    assertThat(details).isNotNull();
     assertThat(details).hasSize(2);
 
     // Should have 2 different historic activity instance ID's, with the same activityId
@@ -1262,13 +1259,13 @@ public class FullHistoryTest {
     HistoricVariableUpdate update1 = updatesMap.get("1");
     HistoricVariableUpdate update2 = updatesMap.get("2");
 
-    assertNotNull(update1.getActivityInstanceId());
-    assertNotNull(update1.getExecutionId());
+    assertThat(update1.getActivityInstanceId()).isNotNull();
+    assertThat(update1.getExecutionId()).isNotNull();
     HistoricActivityInstance historicActivityInstance1 = historyService.createHistoricActivityInstanceQuery().activityInstanceId(update1.getActivityInstanceId()).singleResult();
     assertThat(update1.getExecutionId()).isEqualTo(historicActivityInstance1.getExecutionId());
     assertThat(historicActivityInstance1.getActivityId()).isEqualTo("usertask1");
 
-    assertNotNull(update2.getActivityInstanceId());
+    assertThat(update2.getActivityInstanceId()).isNotNull();
     HistoricActivityInstance historicActivityInstance2 = historyService.createHistoricActivityInstanceQuery().activityInstanceId(update2.getActivityInstanceId()).singleResult();
     assertThat(historicActivityInstance2.getActivityId()).isEqualTo("usertask2");
 
@@ -1279,7 +1276,7 @@ public class FullHistoryTest {
      * execution id: On which execution it was set
      * activity id: in which activity was the process instance when setting the variable
      */
-    assertNotEquals(historicActivityInstance2.getExecutionId(), update2.getExecutionId());
+    assertThat(update2.getExecutionId()).isNotEqualTo(historicActivityInstance2.getExecutionId());
   }
 
   @Test
@@ -1328,8 +1325,8 @@ public class FullHistoryTest {
     runtimeService.setVariable(pi.getId(), "foo", "bar");
 
     HistoricDetail historicDetail = historyService.createHistoricDetailQuery().singleResult();
-    assertNotNull(historicDetail.getActivityInstanceId());
-    assertNotEquals(pi.getId(), historicDetail.getActivityInstanceId());
+    assertThat(historicDetail.getActivityInstanceId()).isNotNull();
+    assertThat(historicDetail.getActivityInstanceId()).isNotEqualTo(pi.getId());
   }
 
   @Test
@@ -1341,8 +1338,8 @@ public class FullHistoryTest {
     runtimeService.setVariable(pi.getId(), "foo", "bar");
 
     HistoricDetail historicDetail = historyService.createHistoricDetailQuery().singleResult();
-    assertNotNull(historicDetail.getActivityInstanceId());
-    assertNotEquals(pi.getId(), historicDetail.getActivityInstanceId());
+    assertThat(historicDetail.getActivityInstanceId()).isNotNull();
+    assertThat(historicDetail.getActivityInstanceId()).isNotEqualTo(pi.getId());
   }
 
   @Test
@@ -1359,7 +1356,7 @@ public class FullHistoryTest {
       .singleResult();
 
     HistoricDetail resultById = historyService.createHistoricDetailQuery().detailId(result.getId()).singleResult();
-    assertNotNull(resultById);
+    assertThat(resultById).isNotNull();
     assertThat(resultById.getId()).isEqualTo(result.getId());
     assertThat(((HistoricVariableUpdate) resultById).getVariableName()).isEqualTo(variableName);
     assertThat(((HistoricVariableUpdate) resultById).getValue()).isEqualTo(variableValue);
@@ -1380,7 +1377,7 @@ public class FullHistoryTest {
     taskService.setVariable(newTask.getId(), variableName, variableValue);
 
     HistoricDetail result = historyService.createHistoricDetailQuery().detailId("non-existing").singleResult();
-    assertNull(result);
+    assertThat(result).isNull();
 
     taskService.deleteTask(newTask.getId(), true);
   }
@@ -1400,7 +1397,7 @@ public class FullHistoryTest {
       .variableUpdates()
       .singleResult();
 
-    assertNotNull(((HistoricVariableUpdate)result).getValue());
+    assertThat(((HistoricVariableUpdate) result).getValue()).isNotNull();
 
     taskService.deleteTask(newTask.getId(), true);
   }
@@ -1419,7 +1416,7 @@ public class FullHistoryTest {
       .variableUpdates()
       .singleResult();
 
-    assertNull(((HistoricVariableUpdate)result).getValue());
+    assertThat(((HistoricVariableUpdate) result).getValue()).isNull();
 
     taskService.deleteTask(newTask.getId(), true);
   }
@@ -1447,20 +1444,20 @@ public class FullHistoryTest {
         (HistoricVariableUpdate) historyService.createHistoricDetailQuery().singleResult();
 
     // then the binary value is accessible
-    assertNotNull(fileVariableInstance.getValue());
+    assertThat(fileVariableInstance.getValue()).isNotNull();
 
     // when disabling binary fetching
     fileVariableInstance =
         (HistoricVariableUpdate) historyService.createHistoricDetailQuery().disableBinaryFetching().singleResult();
 
     // then the byte value is not fetched
-    assertNotNull(fileVariableInstance);
+    assertThat(fileVariableInstance).isNotNull();
     assertThat(fileVariableInstance.getVariableName()).isEqualTo("fileVar");
 
-    assertNull(fileVariableInstance.getValue());
+    assertThat(fileVariableInstance.getValue()).isNull();
 
     FileValue typedValue = (FileValue) fileVariableInstance.getTypedValue();
-    assertNull(typedValue.getValue());
+    assertThat(typedValue.getValue()).isNull();
 
     // but typed value metadata is accessible
     assertThat(typedValue.getType()).isEqualTo(ValueType.FILE);
@@ -1492,11 +1489,11 @@ public class FullHistoryTest {
 
     for (HistoricDetail update : results) {
       HistoricVariableUpdate variableUpdate = (HistoricVariableUpdate) update;
-      assertNull(variableUpdate.getErrorMessage());
+      assertThat(variableUpdate.getErrorMessage()).isNull();
 
       ObjectValue typedValue = (ObjectValue) variableUpdate.getTypedValue();
-      assertNotNull(typedValue);
-      assertFalse(typedValue.isDeserialized());
+      assertThat(typedValue).isNotNull();
+      assertThat(typedValue.isDeserialized()).isFalse();
       // cannot access the deserialized value
       try {
         typedValue.getValue();
@@ -1504,7 +1501,7 @@ public class FullHistoryTest {
       catch(IllegalStateException e) {
         assertThat(e.getMessage()).contains("Object is not deserialized");
       }
-      assertNotNull(typedValue.getValueSerialized());
+      assertThat(typedValue.getValueSerialized()).isNotNull();
     }
 
     taskService.deleteTask(newTask.getId(), true);
@@ -1524,8 +1521,8 @@ public class FullHistoryTest {
         .variableUpdates()
         .singleResult();
 
-    assertNull(((HistoricVariableUpdate)result).getValue());
-    assertNotNull(((HistoricVariableUpdate)result).getErrorMessage());
+    assertThat(((HistoricVariableUpdate) result).getValue()).isNull();
+    assertThat(((HistoricVariableUpdate) result).getErrorMessage()).isNotNull();
 
     taskService.deleteTask(newTask.getId(), true);
 
@@ -1544,13 +1541,13 @@ public class FullHistoryTest {
     VariableInstance variable = runtimeService
         .createVariableInstanceQuery()
         .singleResult();
-    assertNotNull(variable);
+    assertThat(variable).isNotNull();
 
     HistoricVariableUpdate result = (HistoricVariableUpdate) historyService
         .createHistoricDetailQuery()
         .variableUpdates()
         .singleResult();
-    assertNotNull(result);
+    assertThat(result).isNotNull();
 
     assertThat(result.getVariableInstanceId()).isEqualTo(variable.getId());
 
@@ -1590,14 +1587,14 @@ public class FullHistoryTest {
         .singleResult();
 
     // then (1)
-    assertNotNull(instance.getProcessDefinitionKey());
+    assertThat(instance.getProcessDefinitionKey()).isNotNull();
     assertThat(instance.getProcessDefinitionKey()).isEqualTo(key);
 
-    assertNotNull(instance.getProcessDefinitionId());
+    assertThat(instance.getProcessDefinitionId()).isNotNull();
     assertThat(instance.getProcessDefinitionId()).isEqualTo(processInstance.getProcessDefinitionId());
 
-    assertNull(instance.getCaseDefinitionKey());
-    assertNull(instance.getCaseDefinitionId());
+    assertThat(instance.getCaseDefinitionKey()).isNull();
+    assertThat(instance.getCaseDefinitionId()).isNull();
 
     // when (2)
     instance = (HistoricVariableUpdate) historyService
@@ -1607,14 +1604,14 @@ public class FullHistoryTest {
         .singleResult();
 
     // then (2)
-    assertNotNull(instance.getProcessDefinitionKey());
+    assertThat(instance.getProcessDefinitionKey()).isNotNull();
     assertThat(instance.getProcessDefinitionKey()).isEqualTo(key);
 
-    assertNotNull(instance.getProcessDefinitionId());
+    assertThat(instance.getProcessDefinitionId()).isNotNull();
     assertThat(instance.getProcessDefinitionId()).isEqualTo(processInstance.getProcessDefinitionId());
 
-    assertNull(instance.getCaseDefinitionKey());
-    assertNull(instance.getCaseDefinitionId());
+    assertThat(instance.getCaseDefinitionKey()).isNull();
+    assertThat(instance.getCaseDefinitionId()).isNull();
   }
 
   @Test
@@ -1657,14 +1654,14 @@ public class FullHistoryTest {
         .singleResult();
 
     // then (1)
-    assertNotNull(instance.getCaseDefinitionKey());
+    assertThat(instance.getCaseDefinitionKey()).isNotNull();
     assertThat(instance.getCaseDefinitionKey()).isEqualTo(key);
 
-    assertNotNull(instance.getCaseDefinitionId());
+    assertThat(instance.getCaseDefinitionId()).isNotNull();
     assertThat(instance.getCaseDefinitionId()).isEqualTo(caseInstance.getCaseDefinitionId());
 
-    assertNull(instance.getProcessDefinitionKey());
-    assertNull(instance.getProcessDefinitionId());
+    assertThat(instance.getProcessDefinitionKey()).isNull();
+    assertThat(instance.getProcessDefinitionId()).isNull();
 
     // when (2)
     instance = (HistoricVariableUpdate) historyService
@@ -1674,14 +1671,14 @@ public class FullHistoryTest {
         .singleResult();
 
     // then (2)
-    assertNotNull(instance.getCaseDefinitionKey());
+    assertThat(instance.getCaseDefinitionKey()).isNotNull();
     assertThat(instance.getCaseDefinitionKey()).isEqualTo(key);
 
-    assertNotNull(instance.getCaseDefinitionId());
+    assertThat(instance.getCaseDefinitionId()).isNotNull();
     assertThat(instance.getCaseDefinitionId()).isEqualTo(caseInstance.getCaseDefinitionId());
 
-    assertNull(instance.getProcessDefinitionKey());
-    assertNull(instance.getProcessDefinitionId());
+    assertThat(instance.getProcessDefinitionKey()).isNull();
+    assertThat(instance.getProcessDefinitionId()).isNull();
   }
 
   @Test
@@ -1707,10 +1704,10 @@ public class FullHistoryTest {
         .singleResult();
 
     // then
-    assertNull(instance.getProcessDefinitionKey());
-    assertNull(instance.getProcessDefinitionId());
-    assertNull(instance.getCaseDefinitionKey());
-    assertNull(instance.getCaseDefinitionId());
+    assertThat(instance.getProcessDefinitionKey()).isNull();
+    assertThat(instance.getProcessDefinitionId()).isNull();
+    assertThat(instance.getCaseDefinitionKey()).isNull();
+    assertThat(instance.getCaseDefinitionId()).isNull();
 
     taskService.deleteTask(taskId, true);
   }
@@ -1733,14 +1730,14 @@ public class FullHistoryTest {
         .singleResult();
 
     // then
-    assertNotNull(instance.getProcessDefinitionKey());
+    assertThat(instance.getProcessDefinitionKey()).isNotNull();
     assertThat(instance.getProcessDefinitionKey()).isEqualTo(key);
 
-    assertNotNull(instance.getProcessDefinitionId());
+    assertThat(instance.getProcessDefinitionId()).isNotNull();
     assertThat(instance.getProcessDefinitionId()).isEqualTo(processInstance.getProcessDefinitionId());
 
-    assertNull(instance.getCaseDefinitionKey());
-    assertNull(instance.getCaseDefinitionId());
+    assertThat(instance.getCaseDefinitionKey()).isNull();
+    assertThat(instance.getCaseDefinitionId()).isNull();
   }
 
   @Test
@@ -1757,10 +1754,10 @@ public class FullHistoryTest {
         .createHistoricProcessInstanceQuery()
         .processInstanceId(processInstanceId)
         .singleResult();
-    assertNotNull(instance);
+    assertThat(instance).isNotNull();
 
     assertThat(instance.getId()).isEqualTo(processInstanceId);
-    assertNotNull(instance.getEndTime());
+    assertThat(instance.getEndTime()).isNotNull();
   }
 
 }

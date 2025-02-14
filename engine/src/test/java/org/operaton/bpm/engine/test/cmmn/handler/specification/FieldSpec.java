@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.test.cmmn.handler.specification;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.impl.bpmn.parser.FieldDeclaration;
@@ -49,9 +47,9 @@ public class FieldSpec {
     assertThat(field.getName()).isEqualTo(fieldName);
 
     Object fieldValue = field.getValue();
-    assertNotNull(fieldValue);
+    assertThat(fieldValue).isNotNull();
 
-    assertTrue(fieldValue instanceof Expression);
+    assertThat(fieldValue instanceof Expression).isTrue();
     Expression expressionValue = (Expression) fieldValue;
     assertThat(expressionValue.getExpressionText()).isEqualTo(getExpectedExpression());
   }

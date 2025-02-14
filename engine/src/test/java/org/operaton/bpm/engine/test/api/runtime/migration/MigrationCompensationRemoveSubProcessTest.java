@@ -37,7 +37,6 @@ import org.operaton.bpm.engine.test.bpmn.executionlistener.RecorderExecutionList
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -340,7 +339,7 @@ public class MigrationCompensationRemoveSubProcessTest {
     assertThat(testHelper.snapshotAfterMigration.getVariables()).hasSize(1);
 
     VariableInstance migratedVariable = testHelper.snapshotAfterMigration.getSingleVariable("innerVariable");
-    Assert.assertNotNull(migratedVariable);
+    assertThat(migratedVariable).isNotNull();
     assertThat(migratedVariable.getValue()).isEqualTo("innerValue");
   }
 

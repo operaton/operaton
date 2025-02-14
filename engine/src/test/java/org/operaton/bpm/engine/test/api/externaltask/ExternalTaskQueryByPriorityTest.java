@@ -20,8 +20,6 @@ import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.external
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySortingAndCount;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -75,7 +73,7 @@ public class ExternalTaskQueryByPriorityTest extends PluggableProcessEngineTest 
     assertThat(tasks).hasSize(8);
 
     for (ExternalTask task : tasks) {
-      assertTrue(task.getPriority() <= 2);
+      assertThat(task.getPriority() <= 2).isTrue();
     }
   }
 
@@ -121,8 +119,8 @@ public class ExternalTaskQueryByPriorityTest extends PluggableProcessEngineTest 
     processInstanceIds.add(instances.get(4).getId());
 
     for (ExternalTask task : tasks) {
-      assertTrue(task.getPriority() >= 2);
-      assertTrue(processInstanceIds.contains(task.getProcessInstanceId()));
+      assertThat(task.getPriority() >= 2).isTrue();
+      assertThat(processInstanceIds).contains(task);
     }
   }
 
@@ -143,7 +141,7 @@ public class ExternalTaskQueryByPriorityTest extends PluggableProcessEngineTest 
                                            .priorityHigherThanOrEquals(2L)
                                            .priorityLowerThanOrEquals(2L)
                                            .singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getPriority()).isEqualTo(2);
     assertThat(task.getProcessInstanceId()).isEqualTo(instances.get(2).getId());
   }

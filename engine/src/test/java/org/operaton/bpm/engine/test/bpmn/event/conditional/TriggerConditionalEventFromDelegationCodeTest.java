@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.event.conditional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -129,7 +127,7 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task is completed
@@ -189,7 +187,7 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task is completed
@@ -222,7 +220,7 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task is completed
@@ -256,7 +254,7 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
 
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
 
     //when task is completed
@@ -298,7 +296,7 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
 
     //and job was created
     Job job = engine.getManagementService().createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
 
 
     //when job is executed task is created
@@ -311,8 +309,8 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
 
     //then no task exist and process instance is ended
     tasksAfterVariableIsSet = taskQuery.list();
-    assertThat(tasksAfterVariableIsSet).hasSize(0);
-    assertNull(runtimeService.createProcessInstanceQuery().singleResult());
+    assertThat(tasksAfterVariableIsSet).isEmpty();
+    assertThat(runtimeService.createProcessInstanceQuery().singleResult()).isNull();
   }
 
   @Test

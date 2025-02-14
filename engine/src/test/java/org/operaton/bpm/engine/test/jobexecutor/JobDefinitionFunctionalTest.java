@@ -17,9 +17,6 @@
 package org.operaton.bpm.engine.test.jobexecutor;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -83,8 +80,8 @@ public class JobDefinitionFunctionalTest {
     runtimeService.startProcessInstanceByKey("simpleAsyncProcess");
 
     // then the new job instance is created as suspended:
-    assertNotNull(managementService.createJobQuery().suspended().singleResult());
-    assertNull(managementService.createJobQuery().active().singleResult());
+    assertThat(managementService.createJobQuery().suspended().singleResult()).isNotNull();
+    assertThat(managementService.createJobQuery().active().singleResult()).isNull();
   }
 
   @Test
@@ -97,8 +94,8 @@ public class JobDefinitionFunctionalTest {
     runtimeService.startProcessInstanceByKey("simpleAsyncProcess");
 
     // then the new job instance is created as active:
-    assertNull(managementService.createJobQuery().suspended().singleResult());
-    assertNotNull(managementService.createJobQuery().active().singleResult());
+    assertThat(managementService.createJobQuery().suspended().singleResult()).isNull();
+    assertThat(managementService.createJobQuery().active().singleResult()).isNotNull();
   }
 
   @Test
@@ -156,7 +153,7 @@ public class JobDefinitionFunctionalTest {
     Job job = managementService.createJobQuery()
       .singleResult();
     assertThat(jobDefinition.getId()).isEqualTo(job.getJobDefinitionId());
-    assertTrue(job.isSuspended());
+    assertThat(job.isSuspended()).isTrue();
 
     // if I unsuspend the job definition, the job is executed:
     managementService.activateJobDefinitionById(jobDefinition.getId(), true);

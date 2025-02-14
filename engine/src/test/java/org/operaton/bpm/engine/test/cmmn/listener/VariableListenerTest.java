@@ -17,9 +17,7 @@
 package org.operaton.bpm.engine.test.cmmn.listener;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import java.util.List;
@@ -67,13 +65,13 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
     CaseExecution taskExecution =
         caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1").singleResult();
-    assertNotNull(taskExecution);
+    assertThat(taskExecution).isNotNull();
 
     // when i set a variable on a higher scope
     caseService.withCaseExecution(caseInstance.getId()).setVariable("anInstanceVariable", "anInstanceValue").execute();
 
     // then the listener is not invoked
-    assertTrue(LogVariableListener.getInvocations().isEmpty());
+    assertThat(LogVariableListener.getInvocations()).isEmpty();
 
     // when i set a variable on the human task (ie the source execution matters although the variable ends up in the same place)
     caseService.withCaseExecution(taskExecution.getId()).setVariableLocal("aTaskVariable", "aTaskValue").execute();
@@ -129,7 +127,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
     CaseExecution taskExecution =
         caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1").singleResult();
-    assertNotNull(taskExecution);
+    assertThat(taskExecution).isNotNull();
 
     // when i create a variable on the human task
     caseService.withCaseExecution(taskExecution.getId()).setVariableLocal("aTaskVariable", "aTaskValue").execute();
@@ -150,13 +148,13 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
     caseService.withCaseExecution(taskExecution.getId()).setVariable("aTaskVariable", "aNewTaskValue").execute();
 
     // then the listener is not invoked
-    assertTrue(LogVariableListener.getInvocations().isEmpty());
+    assertThat(LogVariableListener.getInvocations()).isEmpty();
 
     // when i remove the variable from the human task
     caseService.withCaseExecution(taskExecution.getId()).removeVariable("aTaskVariable").execute();
 
     // then the listener is not invoked
-    assertTrue(LogVariableListener.getInvocations().isEmpty());
+    assertThat(LogVariableListener.getInvocations()).isEmpty();
   }
 
   @Deployment
@@ -168,13 +166,13 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
     CaseExecution taskExecution =
         caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1").singleResult();
-    assertNotNull(taskExecution);
+    assertThat(taskExecution).isNotNull();
 
     // when i create a variable on the human task
     caseService.withCaseExecution(taskExecution.getId()).setVariableLocal("aTaskVariable", "aTaskValue").execute();
 
     // then the listener is not invoked
-    assertTrue(LogVariableListener.getInvocations().isEmpty());
+    assertThat(LogVariableListener.getInvocations()).isEmpty();
 
     // when i update the variable on the human task
     caseService.withCaseExecution(taskExecution.getId()).setVariable("aTaskVariable", "aNewTaskValue").execute();
@@ -197,7 +195,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
     caseService.withCaseExecution(taskExecution.getId()).removeVariable("aTaskVariable").execute();
 
     // then the listener is not invoked
-    assertTrue(LogVariableListener.getInvocations().isEmpty());
+    assertThat(LogVariableListener.getInvocations()).isEmpty();
   }
 
 
@@ -210,13 +208,13 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
     CaseExecution taskExecution =
         caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1").singleResult();
-    assertNotNull(taskExecution);
+    assertThat(taskExecution).isNotNull();
 
     // when i create a variable on the case instance
     caseService.withCaseExecution(caseInstance.getId()).setVariable("aTaskVariable", "aTaskValue").execute();
 
     // then the listener is not invoked
-    assertThat(LogVariableListener.getInvocations()).hasSize(0);
+    assertThat(LogVariableListener.getInvocations()).isEmpty();
 
     // when i update the variable from the task execution
     caseService.withCaseExecution(taskExecution.getId()).setVariable("aTaskVariable", "aTaskValue").execute();
@@ -245,19 +243,19 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
     CaseExecution taskExecution =
         caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1").singleResult();
-    assertNotNull(taskExecution);
+    assertThat(taskExecution).isNotNull();
 
     // when i create a variable on the human task
     caseService.withCaseExecution(taskExecution.getId()).setVariableLocal("aTaskVariable", "aTaskValue").execute();
 
     // then the listener is not invoked
-    assertTrue(LogVariableListener.getInvocations().isEmpty());
+    assertThat(LogVariableListener.getInvocations()).isEmpty();
 
     // when i update the variable on the human task
     caseService.withCaseExecution(taskExecution.getId()).setVariable("aTaskVariable", "aNewTaskValue").execute();
 
     // then the listener is not invoked
-    assertTrue(LogVariableListener.getInvocations().isEmpty());
+    assertThat(LogVariableListener.getInvocations()).isEmpty();
 
     // when i remove the variable from the human task
     caseService.withCaseExecution(taskExecution.getId()).removeVariable("aTaskVariable").execute();
@@ -287,7 +285,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
     CaseExecution taskExecution =
         caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1").singleResult();
-    assertNotNull(taskExecution);
+    assertThat(taskExecution).isNotNull();
 
     // when i create a variable on the human task
     caseService.withCaseExecution(taskExecution.getId()).setVariableLocal("aTaskVariable", "aTaskValue").execute();
@@ -317,13 +315,13 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
     CaseExecution taskExecution =
         caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1").singleResult();
-    assertNotNull(taskExecution);
+    assertThat(taskExecution).isNotNull();
 
     // when i create a variable on the human task
     caseService.withCaseExecution(taskExecution.getId()).setVariableLocal("aTaskVariable", "aTaskValue").execute();
 
     // then the listener is invoked
-    assertTrue(simpleBean.wasInvoked());
+    assertThat(simpleBean.wasInvoked()).isTrue();
   }
 
   @Deployment
@@ -335,13 +333,13 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
     CaseExecution taskExecution =
         caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1").singleResult();
-    assertNotNull(taskExecution);
+    assertThat(taskExecution).isNotNull();
 
     // when i create a variable on the human task
     caseService.withCaseExecution(taskExecution.getId()).setVariableLocal("aTaskVariable", "aTaskValue").execute();
 
     // then the listener is invoked
-    assertTrue(SimpleBean.wasStaticallyInvoked());
+    assertThat(SimpleBean.wasStaticallyInvoked()).isTrue();
 
     SimpleBean.reset();
   }
@@ -355,7 +353,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
     CaseExecution taskExecution =
         caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1").singleResult();
-    assertNotNull(taskExecution);
+    assertThat(taskExecution).isNotNull();
 
     // when i set a variable on a deeper scope execution but actually on the parent
     caseService.withCaseExecution(taskExecution.getId()).setVariable("aTaskVariable", "aTaskValue").execute();
@@ -384,7 +382,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
     CaseExecution taskExecution =
         caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1").singleResult();
-    assertNotNull(taskExecution);
+    assertThat(taskExecution).isNotNull();
 
     // when i set a variable on a deeper scope
     caseService.withCaseExecution(taskExecution.getId()).setVariableLocal("aTaskVariable", "aTaskValue").execute();
@@ -413,7 +411,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
     caseService.withCaseExecution(caseInstance.getId()).setVariableLocal("aTaskVariable", "aTaskValue").execute();
 
     // then the listener is not invoked
-    assertThat(LogVariableListener.getInvocations()).hasSize(0);
+    assertThat(LogVariableListener.getInvocations()).isEmpty();
 
     LogVariableListener.reset();
   }
@@ -427,11 +425,11 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
     CaseExecution stageExecution =
         caseService.createCaseExecutionQuery().activityId("PI_Stage_1").singleResult();
-    assertNotNull(stageExecution);
+    assertThat(stageExecution).isNotNull();
 
     CaseExecution taskExecution =
         caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1").singleResult();
-    assertNotNull(taskExecution);
+    assertThat(taskExecution).isNotNull();
 
     // when i set a variable on a deeper scope
     caseService.withCaseExecution(taskExecution.getId()).setVariableLocal("aTaskVariable", "aTaskValue").execute();
@@ -458,7 +456,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
     CaseExecution taskExecution =
         caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1").singleResult();
-    assertNotNull(taskExecution);
+    assertThat(taskExecution).isNotNull();
     var caseExecutionCommandBuilder = caseService
         .withCaseExecution(taskExecution.getId())
         .setVariableLocal("aTaskVariable", "aTaskValue");
@@ -481,7 +479,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
     CaseExecution taskExecution =
         caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1").singleResult();
-    assertNotNull(taskExecution);
+    assertThat(taskExecution).isNotNull();
     var caseExecutionCommandBuilder = caseService
         .withCaseExecution(taskExecution.getId())
         .setVariableLocal("aTaskVariable", "aTaskValue");
@@ -501,13 +499,13 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
     CaseInstance caseInstance = caseService
       .withCaseDefinitionByKey("case")
       .create();
-    assertFalse(ProcessEngineAwareListener.hasFoundValidRuntimeService());
+    assertThat(ProcessEngineAwareListener.hasFoundValidRuntimeService()).isFalse();
 
     // when i set a variable that causes the listener to be notified
     caseService.withCaseExecution(caseInstance.getId()).setVariableLocal("aTaskVariable", "aTaskValue").execute();
 
     // then the listener is invoked and has found process engine services
-    assertTrue(ProcessEngineAwareListener.hasFoundValidRuntimeService());
+    assertThat(ProcessEngineAwareListener.hasFoundValidRuntimeService()).isTrue();
 
     ProcessEngineAwareListener.reset();
   }
@@ -557,7 +555,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
     CaseExecution taskExecution =
         caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1").singleResult();
-    assertNotNull(taskExecution);
+    assertThat(taskExecution).isNotNull();
 
     // when i set a variable and the listener itself sets another variable
     caseService.withCaseExecution(taskExecution.getId()).setVariableLocal("variable", "value1").execute();
@@ -606,7 +604,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
     CaseExecution taskExecution =
         caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1").singleResult();
-    assertNotNull(taskExecution);
+    assertThat(taskExecution).isNotNull();
 
     // when i set a variable
     caseService.withCaseExecution(taskExecution.getId()).setVariableLocal("testVariable", "value1").execute();
@@ -644,7 +642,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
     CaseExecution taskExecution =
         caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1").singleResult();
-    assertNotNull(taskExecution);
+    assertThat(taskExecution).isNotNull();
 
     // when i set a variable
     caseService.withCaseExecution(taskExecution.getId()).setVariableLocal("testVariable", "value1").execute();
@@ -670,7 +668,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
     CaseExecution taskExecution =
         caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1").singleResult();
-    assertNotNull(taskExecution);
+    assertThat(taskExecution).isNotNull();
 
     // when i set a variable
     caseService.withCaseExecution(taskExecution.getId()).setVariableLocal("testVariable", "value1").execute();
@@ -694,7 +692,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
     CaseExecution taskExecution =
         caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1").singleResult();
-    assertNotNull(taskExecution);
+    assertThat(taskExecution).isNotNull();
 
     // when i set a variable
     caseService.withCaseExecution(taskExecution.getId()).setVariableLocal("testVariable", "value1").execute();
@@ -703,7 +701,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
     assertThat(LogExecutionContextListener.getCaseExecutionContexts()).hasSize(1);
     CaseExecutionContext executionContext = LogExecutionContextListener.getCaseExecutionContexts().get(0);
 
-    assertNotNull(executionContext);
+    assertThat(executionContext).isNotNull();
 
     // although this is not inside a command, checking for IDs should be ok
     assertThat(executionContext.getCaseInstance().getId()).isEqualTo(caseInstance.getId());
@@ -732,7 +730,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
     CaseExecution taskExecution =
         caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1").singleResult();
-    assertNotNull(taskExecution);
+    assertThat(taskExecution).isNotNull();
 
     // when i set a variable
     caseService.withCaseExecution(taskExecution.getId()).setVariableLocal("testVariable", "value1").execute();
@@ -741,7 +739,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
     assertThat(LogVariableListener.getInvocations()).hasSize(1);
 
     // but the custom listener is not invoked
-    assertThat(LogExecutionContextListener.getCaseExecutionContexts()).hasSize(0);
+    assertThat(LogExecutionContextListener.getCaseExecutionContexts()).isEmpty();
 
     LogVariableListener.reset();
     LogExecutionContextListener.reset();
@@ -752,7 +750,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
 
   @Test
   public void testDefaultCustomListenerInvocationSetting() {
-    assertTrue(processEngineConfiguration.isInvokeCustomVariableListeners());
+    assertThat(processEngineConfiguration.isInvokeCustomVariableListeners()).isTrue();
   }
 
   @Deployment(resources={

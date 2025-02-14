@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.runtime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.*;
 
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.ConditionalModels.CONDITIONAL_PROCESS_KEY;
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.ConditionalModels.CONDITION_ID;
@@ -119,8 +118,8 @@ public class TransientVariableTest {
     // then
     List<HistoricVariableInstance> historicVariableInstances = historyService.createHistoricVariableInstanceQuery().list();
     List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
-    assertThat(historicVariableInstances).hasSize(0);
-    assertThat(variableInstances).hasSize(0);
+    assertThat(historicVariableInstances).isEmpty();
+    assertThat(variableInstances).isEmpty();
   }
 
   @Test
@@ -155,8 +154,8 @@ public class TransientVariableTest {
     // then
     List<HistoricVariableInstance> historicVariableInstances = historyService.createHistoricVariableInstanceQuery().list();
     List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
-    assertThat(historicVariableInstances).hasSize(0);
-    assertThat(variableInstances).hasSize(0);
+    assertThat(historicVariableInstances).isEmpty();
+    assertThat(variableInstances).isEmpty();
   }
 
   @Test
@@ -178,8 +177,8 @@ public class TransientVariableTest {
     // then
     List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
     List<HistoricVariableInstance> historicVariableInstances = historyService.createHistoricVariableInstanceQuery().list();
-    assertThat(variableInstances).hasSize(0);
-    assertThat(historicVariableInstances).hasSize(0);
+    assertThat(variableInstances).isEmpty();
+    assertThat(historicVariableInstances).isEmpty();
   }
 
   @Test
@@ -203,8 +202,8 @@ public class TransientVariableTest {
     // then
     List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
     List<HistoricVariableInstance> historicVariableInstances = historyService.createHistoricVariableInstanceQuery().list();
-    assertThat(variableInstances).hasSize(0);
-    assertThat(historicVariableInstances).hasSize(0);
+    assertThat(variableInstances).isEmpty();
+    assertThat(historicVariableInstances).isEmpty();
   }
 
   @Test
@@ -227,7 +226,7 @@ public class TransientVariableTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(CONDITIONAL_PROCESS_KEY);
 
     // then
-    assertTrue(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isTrue();
   }
 
 
@@ -272,12 +271,12 @@ public class TransientVariableTest {
     //variable is set after reaching event based gateway
     //after setting variable the conditional event is triggered and evaluated to true
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo("taskAfter");
     //completing this task ends process instance
     taskService.complete(task.getId());
-    assertNull(taskQuery.singleResult());
-    assertNull(runtimeService.createProcessInstanceQuery().singleResult());
+    assertThat(taskQuery.singleResult()).isNull();
+    assertThat(runtimeService.createProcessInstanceQuery().singleResult()).isNull();
   }
 
   @Test
@@ -292,7 +291,7 @@ public class TransientVariableTest {
 
     // then
     List<VariableInstance> variables = runtimeService.createVariableInstanceQuery().list();
-    assertThat(variables).hasSize(0);
+    assertThat(variables).isEmpty();
   }
 
   @Test
@@ -306,7 +305,7 @@ public class TransientVariableTest {
 
     // then
     List<HistoricVariableInstance> variables = historyService.createHistoricVariableInstanceQuery().list();
-    assertThat(variables).hasSize(0);
+    assertThat(variables).isEmpty();
   }
 
   @Test
@@ -421,7 +420,7 @@ public class TransientVariableTest {
 
     // then
     List<VariableInstance> variableInstances = runtimeService.createVariableInstanceQuery().list();
-    assertThat(variableInstances).hasSize(0);
+    assertThat(variableInstances).isEmpty();
     List<HistoricVariableInstance> historicInstances = historyService.createHistoricVariableInstanceQuery().list();
     assertThat(historicInstances).hasSize(1);
     assertThat(historicInstances.get(0).getName()).isEqualTo("abc");
@@ -453,10 +452,10 @@ public class TransientVariableTest {
 
     // then
     VariableInstance variableInstance = runtimeService.createVariableInstanceQuery().singleResult();
-    assertNull(variableInstance);
+    assertThat(variableInstance).isNull();
     HistoricVariableInstance historicVariableInstance = historyService.createHistoricVariableInstanceQuery()
         .variableName("abc").singleResult();
-    assertNotNull(historicVariableInstance);
+    assertThat(historicVariableInstance).isNotNull();
     assertThat(historicVariableInstance.getValue()).isEqualTo("blob");
   }
 
@@ -487,7 +486,7 @@ public class TransientVariableTest {
 
     // then
     List<VariableInstance> variables = runtimeService.createVariableInstanceQuery().list();
-    assertThat(variables).hasSize(0);
+    assertThat(variables).isEmpty();
 
     List<HistoricVariableInstance> historicVariables = historyService.createHistoricVariableInstanceQuery().variableName("abc").list();
     assertThat(historicVariables).hasSize(2);
@@ -504,7 +503,7 @@ public class TransientVariableTest {
 
     // then
     List<VariableInstance> variables = runtimeService.createVariableInstanceQuery().list();
-    assertThat(variables).hasSize(0);
+    assertThat(variables).isEmpty();
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("theTask1");
   }
@@ -778,8 +777,8 @@ public class TransientVariableTest {
         Object value = execution.getVariable("" + i);
         // variable 'j' is a transient null
         if (i != 'j' ) {
-          assertNotNull(value);
-        } else assertNull(value);
+          assertThat(value).isNotNull();
+        } else assertThat(value).isNull();
       }
     }
   }
@@ -789,7 +788,7 @@ public class TransientVariableTest {
     @Override
     public void notify(DelegateExecution execution) throws Exception {
       Object variable = execution.getVariable(VARIABLE_NAME);
-      assertNotNull(variable);
+      assertThat(variable).isNotNull();
     }
   }
 

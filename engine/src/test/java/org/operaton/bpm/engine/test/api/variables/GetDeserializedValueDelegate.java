@@ -19,8 +19,6 @@ package org.operaton.bpm.engine.test.api.variables;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
 
-import org.junit.Assert;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -34,7 +32,7 @@ public class GetDeserializedValueDelegate implements JavaDelegate {
 
     JavaSerializable dataObject = (JavaSerializable) execution.getVariable("varName");
 
-    Assert.assertNotNull(dataObject);
+    assertThat(dataObject).isNotNull();
     assertThat(dataObject.getProperty()).isEqualTo("foo");
 
   }

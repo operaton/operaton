@@ -25,7 +25,6 @@ import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -55,10 +54,10 @@ public class WriteMultipleEntitiesInOneTransactionTest {
 
     // the identity service provider registered with the engine creates a user, a group, and a membership
     // in the following call:
-    Assert.assertTrue(identityService.checkPassword("multipleEntities", "inOneStep"));
+    assertThat(identityService.checkPassword("multipleEntities", "inOneStep")).isTrue();
     User user = identityService.createUserQuery().userId("multipleEntities").singleResult();
 
-    Assert.assertNotNull(user);
+    assertThat(user).isNotNull();
     assertThat(user.getId()).isEqualTo("multipleEntities");
     assertThat(user.getPassword()).isEqualTo("{SHA}pfdzmt+49nwknTy7xhZd7ZW5suI=");
 

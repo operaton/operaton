@@ -16,10 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.filter;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -83,7 +80,7 @@ public class FilterQueryTest extends PluggableProcessEngineTest {
   @Test
   public void testQueryByFilterId() {
     FilterQuery query = filterService.createFilterQuery().filterId(filterIds.get(0));
-    assertNotNull(query.singleResult());
+    assertThat(query.singleResult()).isNotNull();
     assertThat(query.list()).hasSize(1);
     assertThat(query.count()).isEqualTo(1);
   }
@@ -91,8 +88,8 @@ public class FilterQueryTest extends PluggableProcessEngineTest {
   @Test
   public void testQueryByInvalidFilterId() {
     FilterQuery query = filterService.createFilterQuery().filterId("invalid");
-    assertNull(query.singleResult());
-    assertThat(query.list()).hasSize(0);
+    assertThat(query.singleResult()).isNull();
+    assertThat(query.list()).isEmpty();
     assertThat(query.count()).isEqualTo(0);
     FilterQuery filterQuery = filterService.createFilterQuery();
 
@@ -117,8 +114,8 @@ public class FilterQueryTest extends PluggableProcessEngineTest {
   @Test
   public void testQueryByInvalidResourceType() {
     FilterQuery query = filterService.createFilterQuery().filterResourceType("invalid");
-    assertNull(query.singleResult());
-    assertThat(query.list()).hasSize(0);
+    assertThat(query.singleResult()).isNull();
+    assertThat(query.list()).isEmpty();
     assertThat(query.count()).isEqualTo(0);
     FilterQuery filterQuery = filterService.createFilterQuery();
 
@@ -129,7 +126,7 @@ public class FilterQueryTest extends PluggableProcessEngineTest {
   @Test
   public void testQueryByName() {
     FilterQuery query = filterService.createFilterQuery().filterName("a");
-    assertNotNull(query.singleResult());
+    assertThat(query.singleResult()).isNotNull();
     assertThat(query.list()).hasSize(1);
     assertThat(query.count()).isEqualTo(1);
   }
@@ -137,7 +134,7 @@ public class FilterQueryTest extends PluggableProcessEngineTest {
   @Test
   public void testQueryByNameLike() {
     FilterQuery query = filterService.createFilterQuery().filterNameLike("%\\_");
-    assertNotNull(query.singleResult());
+    assertThat(query.singleResult()).isNotNull();
     assertThat(query.list()).hasSize(1);
     assertThat(query.count()).isEqualTo(1);
   }
@@ -145,8 +142,8 @@ public class FilterQueryTest extends PluggableProcessEngineTest {
   @Test
   public void testQueryByInvalidName() {
     FilterQuery query = filterService.createFilterQuery().filterName("invalid");
-    assertNull(query.singleResult());
-    assertThat(query.list()).hasSize(0);
+    assertThat(query.singleResult()).isNull();
+    assertThat(query.list()).isEmpty();
     assertThat(query.count()).isEqualTo(0);
     FilterQuery filterQuery = filterService.createFilterQuery();
 
@@ -157,7 +154,7 @@ public class FilterQueryTest extends PluggableProcessEngineTest {
   @Test
   public void testQueryByOwner() {
     FilterQuery query = filterService.createFilterQuery().filterOwner("a");
-    assertNotNull(query.singleResult());
+    assertThat(query.singleResult()).isNotNull();
     assertThat(query.list()).hasSize(1);
     assertThat(query.count()).isEqualTo(1);
   }
@@ -165,8 +162,8 @@ public class FilterQueryTest extends PluggableProcessEngineTest {
   @Test
   public void testQueryByInvalidOwner() {
     FilterQuery query = filterService.createFilterQuery().filterOwner("invalid");
-    assertNull(query.singleResult());
-    assertThat(query.list()).hasSize(0);
+    assertThat(query.singleResult()).isNull();
+    assertThat(query.list()).isEmpty();
     assertThat(query.count()).isEqualTo(0);
     FilterQuery filterQuery = filterService.createFilterQuery();
 
@@ -190,8 +187,8 @@ public class FilterQueryTest extends PluggableProcessEngineTest {
     assertThat(query.listPage(3, 1)).hasSize(1);
 
     // Verifying odd usages
-    assertThat(query.listPage(-1, -1)).hasSize(0);
-    assertThat(query.listPage(4, 2)).hasSize(0); // 4 is the last index with a result
+    assertThat(query.listPage(-1, -1)).isEmpty();
+    assertThat(query.listPage(4, 2)).isEmpty(); // 4 is the last index with a result
     assertThat(query.listPage(0, 15)).hasSize(4); // there are only 4 tasks
   }
 

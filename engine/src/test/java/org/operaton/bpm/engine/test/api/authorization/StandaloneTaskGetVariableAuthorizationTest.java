@@ -21,8 +21,6 @@ import static org.operaton.bpm.engine.authorization.TaskPermissions.READ_VARIABL
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -178,7 +176,7 @@ public class StandaloneTaskGetVariableAuthorizationTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      assertNotNull(typedValue);
+      assertThat(typedValue).isNotNull();
       assertThat(typedValue.getValue()).isEqualTo(VARIABLE_VALUE);
       deleteAuthorizations();
     }
@@ -202,7 +200,7 @@ public class StandaloneTaskGetVariableAuthorizationTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      assertNotNull(typedValue);
+      assertThat(typedValue).isNotNull();
       assertThat(typedValue.getValue()).isEqualTo(VARIABLE_VALUE);
       deleteAuthorizations();
     }
@@ -413,8 +411,9 @@ public class StandaloneTaskGetVariableAuthorizationTest {
   }
 
   protected void verifyGetVariables(Map<String, Object> variables) {
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);

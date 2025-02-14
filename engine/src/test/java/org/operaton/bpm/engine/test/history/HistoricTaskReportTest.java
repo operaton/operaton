@@ -17,9 +17,7 @@
 package org.operaton.bpm.engine.test.history;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Calendar;
 import java.util.List;
@@ -104,7 +102,7 @@ public class HistoricTaskReportTest {
     assertThat(historicTaskInstanceReportResults.get(0).getProcessDefinitionName()).isEqualTo("name_" + ANOTHER_PROCESS_DEFINITION_KEY);
     assertThat(historicTaskInstanceReportResults.get(0).getTaskName()).isEqualTo(ANOTHER_PROCESS_DEFINITION_KEY + " Task 1");
 
-    assertTrue(historicTaskInstanceReportResults.get(1).getProcessDefinitionId().contains(":2:"));
+    assertThat(historicTaskInstanceReportResults.get(1).getProcessDefinitionId()).contains(":2:");
   }
 
   @Test
@@ -125,7 +123,7 @@ public class HistoricTaskReportTest {
 
     // then
     assertThat(historicTaskInstanceReportResults).hasSize(2);
-    assertTrue(historicTaskInstanceReportResults.get(0).getProcessDefinitionId().contains(":1:"));
+    assertThat(historicTaskInstanceReportResults.get(0).getProcessDefinitionId()).contains(":1:");
     assertThat(historicTaskInstanceReportResults.get(0).getProcessDefinitionName()).isEqualTo("name_" + ANOTHER_PROCESS_DEFINITION_KEY);
 
     assertThat(historicTaskInstanceReportResults.get(0).getProcessDefinitionKey()).isEqualTo(ANOTHER_PROCESS_DEFINITION_KEY);
@@ -181,7 +179,7 @@ public class HistoricTaskReportTest {
 
       fail("Expected NotValidException");
     } catch( NotValidException nve) {
-      assertTrue(nve.getMessage().contains("completedAfter"));
+      assertThat(nve.getMessage()).contains("completedAfter");
     }
   }
 
@@ -193,7 +191,7 @@ public class HistoricTaskReportTest {
 
       fail("Expected NotValidException");
     } catch( NotValidException nve) {
-      assertTrue(nve.getMessage().contains("completedBefore"));
+      assertThat(nve.getMessage()).contains("completedBefore");
     }
   }
 

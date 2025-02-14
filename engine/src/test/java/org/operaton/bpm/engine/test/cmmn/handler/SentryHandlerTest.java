@@ -35,10 +35,6 @@ import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 /**
  * @author Roman Smirnov
@@ -77,12 +73,12 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
     CmmnSentryDeclaration sentryDeclaration = sentryHandler.handleElement(sentry, context);
 
     // then
-    assertNotNull(sentryDeclaration);
+    assertThat(sentryDeclaration).isNotNull();
 
     assertThat(sentryDeclaration.getId()).isEqualTo(sentry.getId());
 
-    assertNull(sentryDeclaration.getIfPart());
-    assertTrue(sentryDeclaration.getOnParts().isEmpty());
+    assertThat(sentryDeclaration.getIfPart()).isNull();
+    assertThat(sentryDeclaration.getOnParts()).isEmpty();
   }
 
   @Test
@@ -98,16 +94,16 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
     CmmnSentryDeclaration sentryDeclaration = sentryHandler.handleElement(sentry, context);
 
     // then
-    assertNotNull(sentryDeclaration);
+    assertThat(sentryDeclaration).isNotNull();
 
     CmmnIfPartDeclaration ifPartDeclaration = sentryDeclaration.getIfPart();
-    assertNotNull(ifPartDeclaration);
+    assertThat(ifPartDeclaration).isNotNull();
 
     Expression condition = ifPartDeclaration.getCondition();
-    assertNotNull(condition);
+    assertThat(condition).isNotNull();
     assertThat(condition.getExpressionText()).isEqualTo(expression);
 
-    assertTrue(sentryDeclaration.getOnParts().isEmpty());
+    assertThat(sentryDeclaration.getOnParts()).isEmpty();
 
   }
 
@@ -130,18 +126,18 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
     CmmnSentryDeclaration sentryDeclaration = sentryHandler.handleElement(sentry, context);
 
     // then
-    assertNotNull(sentryDeclaration);
+    assertThat(sentryDeclaration).isNotNull();
 
     CmmnIfPartDeclaration ifPartDeclaration = sentryDeclaration.getIfPart();
-    assertNotNull(ifPartDeclaration);
+    assertThat(ifPartDeclaration).isNotNull();
 
     Expression condition = ifPartDeclaration.getCondition();
-    assertNotNull(condition);
+    assertThat(condition).isNotNull();
     assertThat(condition.getExpressionText()).isEqualTo(firstExpression);
 
     // the second condition will be ignored!
 
-    assertTrue(sentryDeclaration.getOnParts().isEmpty());
+    assertThat(sentryDeclaration.getOnParts()).isEmpty();
 
   }
 
@@ -158,29 +154,29 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
     sentryHandler.initializeOnParts(sentry, context);
 
     // then
-    assertNotNull(sentryDeclaration);
+    assertThat(sentryDeclaration).isNotNull();
 
     List<CmmnOnPartDeclaration> onParts = sentryDeclaration.getOnParts();
-    assertNotNull(onParts);
-    assertFalse(onParts.isEmpty());
+    assertThat(onParts).isNotNull();
+    assertThat(onParts).isNotEmpty();
     assertThat(onParts).hasSize(1);
 
     List<CmmnOnPartDeclaration> onPartsAssociatedWithSource = sentryDeclaration.getOnParts(source.getId());
-    assertNotNull(onPartsAssociatedWithSource);
-    assertFalse(onPartsAssociatedWithSource.isEmpty());
+    assertThat(onPartsAssociatedWithSource).isNotNull();
+    assertThat(onPartsAssociatedWithSource).isNotEmpty();
     assertThat(onParts).hasSize(1);
 
     CmmnOnPartDeclaration onPartDeclaration = onPartsAssociatedWithSource.get(0);
-    assertNotNull(onPartDeclaration);
+    assertThat(onPartDeclaration).isNotNull();
     // source
     assertThat(onPartDeclaration.getSource()).isEqualTo(source);
     assertThat(onPartDeclaration.getSource().getId()).isEqualTo(onPart.getSource().getId());
     // standardEvent
     assertThat(onPartDeclaration.getStandardEvent()).isEqualTo(onPart.getStandardEvent().name());
     // sentry
-    assertNull(onPartDeclaration.getSentry());
+    assertThat(onPartDeclaration.getSentry()).isNull();
 
-    assertNull(sentryDeclaration.getIfPart());
+    assertThat(sentryDeclaration.getIfPart()).isNull();
 
   }
 
@@ -206,30 +202,30 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
     sentryHandler.initializeOnParts(sentry, context);
 
     // then
-    assertNotNull(sentryDeclaration);
+    assertThat(sentryDeclaration).isNotNull();
 
     List<CmmnOnPartDeclaration> onParts = sentryDeclaration.getOnParts();
-    assertNotNull(onParts);
-    assertFalse(onParts.isEmpty());
+    assertThat(onParts).isNotNull();
+    assertThat(onParts).isNotEmpty();
     assertThat(onParts).hasSize(1);
 
     List<CmmnOnPartDeclaration> onPartsAssociatedWithSource = sentryDeclaration.getOnParts(source.getId());
-    assertNotNull(onPartsAssociatedWithSource);
-    assertFalse(onPartsAssociatedWithSource.isEmpty());
+    assertThat(onPartsAssociatedWithSource).isNotNull();
+    assertThat(onPartsAssociatedWithSource).isNotEmpty();
     assertThat(onParts).hasSize(1);
 
     CmmnOnPartDeclaration onPartDeclaration = onPartsAssociatedWithSource.get(0);
-    assertNotNull(onPartDeclaration);
+    assertThat(onPartDeclaration).isNotNull();
     // source
     assertThat(onPartDeclaration.getSource()).isEqualTo(source);
     assertThat(onPartDeclaration.getSource().getId()).isEqualTo(onPart.getSource().getId());
     // standardEvent
     assertThat(onPartDeclaration.getStandardEvent()).isEqualTo(onPart.getStandardEvent().name());
     // sentry
-    assertNotNull(onPartDeclaration.getSentry());
+    assertThat(onPartDeclaration.getSentry()).isNotNull();
     assertThat(onPartDeclaration.getSentry()).isEqualTo(exitSentryDeclaration);
 
-    assertNull(sentryDeclaration.getIfPart());
+    assertThat(sentryDeclaration.getIfPart()).isNull();
 
   }
 
@@ -246,10 +242,10 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
     CmmnSentryDeclaration sentryDeclaration = sentryHandler.handleElement(sentry, context);
 
     // then
-    assertNotNull(sentryDeclaration);
+    assertThat(sentryDeclaration).isNotNull();
     List<CmmnVariableOnPartDeclaration> variableOnParts = sentryDeclaration.getVariableOnParts();
-    assertNotNull(variableOnParts);
-    assertFalse(variableOnParts.isEmpty());
+    assertThat(variableOnParts).isNotNull();
+    assertThat(variableOnParts).isNotEmpty();
     assertThat(variableOnParts).hasSize(1);
 
     CmmnVariableOnPartDeclaration transformedVariableOnPart = variableOnParts.get(0);
@@ -275,10 +271,10 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
     CmmnSentryDeclaration sentryDeclaration = sentryHandler.handleElement(sentry, context);
 
     // then
-    assertNotNull(sentryDeclaration);
+    assertThat(sentryDeclaration).isNotNull();
     List<CmmnVariableOnPartDeclaration> variableOnParts = sentryDeclaration.getVariableOnParts();
-    assertNotNull(variableOnParts);
-    assertFalse(variableOnParts.isEmpty());
+    assertThat(variableOnParts).isNotNull();
+    assertThat(variableOnParts).isNotEmpty();
     assertThat(variableOnParts).hasSize(2);
 
   }
@@ -300,10 +296,10 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
     CmmnSentryDeclaration sentryDeclaration = sentryHandler.handleElement(sentry, context);
 
     // then
-    assertNotNull(sentryDeclaration);
+    assertThat(sentryDeclaration).isNotNull();
     List<CmmnVariableOnPartDeclaration> variableOnParts = sentryDeclaration.getVariableOnParts();
-    assertNotNull(variableOnParts);
-    assertFalse(variableOnParts.isEmpty());
+    assertThat(variableOnParts).isNotNull();
+    assertThat(variableOnParts).isNotEmpty();
     assertThat(variableOnParts).hasSize(1);
 
   }
@@ -350,10 +346,10 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
     CmmnSentryDeclaration sentryDeclaration = sentryHandler.handleElement(sentry, context);
 
     // then
-    assertNotNull(sentryDeclaration);
+    assertThat(sentryDeclaration).isNotNull();
     List<CmmnVariableOnPartDeclaration> variableOnParts = sentryDeclaration.getVariableOnParts();
-    assertNotNull(variableOnParts);
-    assertFalse(variableOnParts.isEmpty());
+    assertThat(variableOnParts).isNotNull();
+    assertThat(variableOnParts).isNotEmpty();
     assertThat(variableOnParts).hasSize(1);
 
     CmmnVariableOnPartDeclaration transformedVariableOnPart = variableOnParts.get(0);

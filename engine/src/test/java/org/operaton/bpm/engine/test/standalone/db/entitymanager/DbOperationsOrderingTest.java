@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.standalone.db.entitymanager;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -220,13 +219,13 @@ public class DbOperationsOrderingTest {
   protected void assertHappensAfter(DbEntity entity1, DbEntity entity2, List<DbOperation> operations) {
     int idx1 = indexOfEntity(entity1, operations);
     int idx2 = indexOfEntity(entity2, operations);
-    assertTrue("operation for " + entity1 + " should be executed after operation for " + entity2, idx1 > idx2);
+    assertThat(idx1 > idx2).as("operation for " + entity1 + " should be executed after operation for " + entity2).isTrue();
   }
 
   protected void assertHappensBefore(DbEntity entity1, DbEntity entity2, List<DbOperation> operations) {
     int idx1 = indexOfEntity(entity1, operations);
     int idx2 = indexOfEntity(entity2, operations);
-    assertTrue("operation for " + entity1 + " should be executed before operation for " + entity2, idx1 < idx2);
+    assertThat(idx1 < idx2).as("operation for " + entity1 + " should be executed before operation for " + entity2).isTrue();
   }
 
   protected int indexOfEntity(DbEntity entity, List<DbOperation> operations) {

@@ -17,11 +17,9 @@
 package org.operaton.bpm.engine.test.bpmn.subprocess.transaction;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -61,7 +59,7 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
 
     // the task is present:
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // making the tx succeed:
     taskService.setVariable(task.getId(), "confirmed", true);
@@ -70,21 +68,21 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
     // now the process instance execution is sitting in the 'afterSuccess' task
     // -> has left the transaction using the "normal" sequence flow
     List<String> activeActivityIds = runtimeService.getActiveActivityIds(processInstance.getId());
-    assertTrue(activeActivityIds.contains("afterSuccess"));
+    assertThat(activeActivityIds).contains("afterSuccess");
 
     // there is a compensate event subscription for the transaction under the process instance
     EventSubscriptionEntity eventSubscriptionEntity = (EventSubscriptionEntity) runtimeService.createEventSubscriptionQuery()
         .eventType("compensate").activityId("tx").executionId(processInstance.getId()).singleResult();
 
     // there is an event-scope execution associated with the event-subscription:
-    assertNotNull(eventSubscriptionEntity.getConfiguration());
+    assertThat(eventSubscriptionEntity.getConfiguration()).isNotNull();
     Execution eventScopeExecution = runtimeService.createExecutionQuery().executionId(eventSubscriptionEntity.getConfiguration()).singleResult();
-    assertNotNull(eventScopeExecution);
+    assertThat(eventScopeExecution).isNotNull();
 
     // there is a compensate event subscription for the miBody of 'bookHotel' activity
     EventSubscriptionEntity miBodyEventSubscriptionEntity = (EventSubscriptionEntity) runtimeService.createEventSubscriptionQuery()
         .eventType("compensate").activityId("bookHotel" + BpmnParse.MULTI_INSTANCE_BODY_ID_SUFFIX).executionId(eventScopeExecution.getId()).singleResult();
-    assertNotNull(miBodyEventSubscriptionEntity);
+    assertThat(miBodyEventSubscriptionEntity).isNotNull();
     String miBodyEventScopeExecutionId = miBodyEventSubscriptionEntity.getConfiguration();
 
     // we still have compensate event subscriptions for the compensation handlers, only now they are part of the event scope
@@ -93,9 +91,9 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
     assertThat(runtimeService.createEventSubscriptionQuery().eventType("compensate").activityId("undoChargeCard").executionId(eventScopeExecution.getId()).count()).isEqualTo(1);
 
     // assert that the compensation handlers have not been invoked:
-    assertNull(runtimeService.getVariable(processInstance.getId(), "undoBookHotel"));
-    assertNull(runtimeService.getVariable(processInstance.getId(), "undoBookFlight"));
-    assertNull(runtimeService.getVariable(processInstance.getId(), "undoChargeCard"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "undoBookHotel")).isNull();
+    assertThat(runtimeService.getVariable(processInstance.getId(), "undoBookFlight")).isNull();
+    assertThat(runtimeService.getVariable(processInstance.getId(), "undoChargeCard")).isNull();
 
     // end the process instance
     runtimeService.signal(processInstance.getId());
@@ -111,7 +109,7 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
 
     // the tx task is present
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // making the tx succeed
     taskService.setVariable(task.getId(), "confirmed", true);
@@ -137,7 +135,7 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
 
     // the task is present:
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // making the tx fail:
     taskService.setVariable(task.getId(), "confirmed", false);
@@ -178,7 +176,7 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
     // now the process instance execution is sitting in the 'afterCancellation' task
     // -> has left the transaction using the cancel boundary event
     List<String> activeActivityIds = runtimeService.getActiveActivityIds(processInstance.getId());
-    assertTrue(activeActivityIds.contains("afterCancellation"));
+    assertThat(activeActivityIds).contains("afterCancellation");
 
     // we have no more compensate event subscriptions
     assertThat(runtimeService.createEventSubscriptionQuery().eventType("compensate").count()).isEqualTo(0);
@@ -201,7 +199,7 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
 
     // the task is present:
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // making the tx fail:
     taskService.setVariable(task.getId(), "confirmed", false);
@@ -224,7 +222,7 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
     // now the process instance execution is sitting in the 'afterCancellation' task
     // -> has left the transaction using the cancel boundary event
     List<String> activeActivityIds = runtimeService.getActiveActivityIds(processInstance.getId());
-    assertTrue(activeActivityIds.contains("afterCancellation"));
+    assertThat(activeActivityIds).contains("afterCancellation");
 
     // if we have history, we check that the invocation of the compensation handlers is recorded in history.
     if(!processEngineConfiguration.getHistory().equals(ProcessEngineConfiguration.HISTORY_NONE)) {
@@ -260,7 +258,7 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
 
     // the task is present:
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // making the tx fail:
     taskService.setVariable(task.getId(), "confirmed", false);
@@ -282,7 +280,7 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
     // now the process instance execution is sitting in the 'afterCancellation' task
     // -> has left the transaction using the cancel boundary event
     List<String> activeActivityIds = runtimeService.getActiveActivityIds(processInstance.getId());
-    assertTrue(activeActivityIds.contains("afterCancellation"));
+    assertThat(activeActivityIds).contains("afterCancellation");
 
     // if we have history, we check that the invocation of the compensation handlers is recorded in history.
     if(!processEngineConfiguration.getHistory().equals(ProcessEngineConfiguration.HISTORY_NONE)) {
@@ -315,8 +313,8 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
     // the tasks are present:
     Task taskInner = taskService.createTaskQuery().taskDefinitionKey("innerTxaskCustomer").singleResult();
     Task taskOuter = taskService.createTaskQuery().taskDefinitionKey("bookFlight").singleResult();
-    assertNotNull(taskInner);
-    assertNotNull(taskOuter);
+    assertThat(taskInner).isNotNull();
+    assertThat(taskOuter).isNotNull();
 
     // making the tx fail:
     taskService.setVariable(taskInner.getId(), "confirmed", false);
@@ -342,7 +340,7 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
     // now the process instance execution is sitting in the 'afterInnerCancellation' task
     // -> has left the transaction using the cancel boundary event
     List<String> activeActivityIds = runtimeService.getActiveActivityIds(processInstance.getId());
-    assertTrue(activeActivityIds.contains("afterInnerCancellation"));
+    assertThat(activeActivityIds).contains("afterInnerCancellation");
 
     // if we have history, we check that the invocation of the compensation handlers is recorded in history.
     if(!processEngineConfiguration.getHistory().equals(ProcessEngineConfiguration.HISTORY_NONE)) {
@@ -379,15 +377,15 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
     // the tasks are present:
     Task taskInner = taskService.createTaskQuery().taskDefinitionKey("innerTxaskCustomer").singleResult();
     Task taskOuter = taskService.createTaskQuery().taskDefinitionKey("bookFlight").singleResult();
-    assertNotNull(taskInner);
-    assertNotNull(taskOuter);
+    assertThat(taskInner).isNotNull();
+    assertThat(taskOuter).isNotNull();
 
     // making the outer tx fail (invokes cancel end event)
     taskService.complete(taskOuter.getId());
 
     // now the process instance is sitting in 'afterOuterCancellation'
     List<String> activeActivityIds = runtimeService.getActiveActivityIds(processInstance.getId());
-    assertTrue(activeActivityIds.contains("afterOuterCancellation"));
+    assertThat(activeActivityIds).contains("afterOuterCancellation");
 
     // we have no more compensate event subscriptions
     assertThat(runtimeService.createEventSubscriptionQuery().eventType("compensate").activityId("innerTxundoBookHotel").count()).isEqualTo(0);
@@ -395,8 +393,8 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
     assertThat(runtimeService.createEventSubscriptionQuery().eventType("compensate").activityId("undoBookFlight").count()).isEqualTo(0);
 
     // the compensation handlers of the inner tx have not been invoked
-    assertNull(runtimeService.getVariable(processInstance.getId(), "innerTxundoBookHotel"));
-    assertNull(runtimeService.getVariable(processInstance.getId(), "innerTxundoBookFlight"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "innerTxundoBookHotel")).isNull();
+    assertThat(runtimeService.getVariable(processInstance.getId(), "innerTxundoBookFlight")).isNull();
 
     // the compensation handler in the outer tx has been invoked
     assertThat(runtimeService.getVariable(processInstance.getId(), "undoBookFlight")).isEqualTo(1);
@@ -499,7 +497,7 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
 
     // then compensation is triggered
     Task compensationTask = taskService.createTaskQuery().singleResult();
-    assertNotNull(compensationTask);
+    assertThat(compensationTask).isNotNull();
     assertThat(compensationTask.getTaskDefinitionKey()).isEqualTo("undoInnerTask");
     taskService.complete(compensationTask.getId());
 
@@ -522,7 +520,7 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
 
     // then completing compensation works
     Task compensationHandler = taskService.createTaskQuery().singleResult();
-    assertNotNull(compensationHandler);
+    assertThat(compensationHandler).isNotNull();
     assertThat(compensationHandler.getTaskDefinitionKey()).isEqualTo("blackBoxCompensationHandler");
 
     taskService.complete(compensationHandler.getId());
@@ -599,7 +597,7 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
 
     // then compensation for the subprocess is triggered
     Task compensationTask = taskService.createTaskQuery().singleResult();
-    assertNotNull(compensationTask);
+    assertThat(compensationTask).isNotNull();
     assertThat(compensationTask.getTaskDefinitionKey()).isEqualTo("undoInnerTask");
     taskService.complete(compensationTask.getId());
 

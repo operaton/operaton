@@ -17,7 +17,6 @@
 package org.operaton.bpm.application.impl.deployment;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNull;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -130,7 +129,7 @@ public class RedeploymentRegistrationTest {
         .deploy();
 
     // then
-    assertNull(getProcessApplicationForDeployment(deployment2.getId()));
+    assertThat(getProcessApplicationForDeployment(deployment2.getId())).isNull();
   }
 
   @Test
@@ -161,7 +160,7 @@ public class RedeploymentRegistrationTest {
     String definitionId = getLatestDefinitionIdByKey(definitionKey1);
 
     // then
-    assertNull(getProcessApplicationForDefinition(definitionId));
+    assertThat(getProcessApplicationForDefinition(definitionId)).isNull();
   }
 
   @Test
@@ -213,7 +212,7 @@ public class RedeploymentRegistrationTest {
     assertThat(getProcessApplicationForDefinition(definitionId)).isEqualTo(reference);
 
     // and the reference is not cached
-    assertNull(getProcessApplicationForDeployment(deployment2.getId()));
+    assertThat(getProcessApplicationForDeployment(deployment2.getId())).isNull();
   }
 
   @Test
@@ -273,7 +272,7 @@ public class RedeploymentRegistrationTest {
 
     // then
     assertThat(getProcessApplicationForDefinition(firstDefinitionId)).isEqualTo(reference2);
-    assertNull(getProcessApplicationForDefinition(secondDefinitionId));
+    assertThat(getProcessApplicationForDefinition(secondDefinitionId)).isNull();
   }
 
   @Test
@@ -424,7 +423,7 @@ public class RedeploymentRegistrationTest {
     deleteDeployment(deployment2);
 
     // then (2)
-    assertNull(getProcessApplicationForDefinition(firstDefinitionId));
+    assertThat(getProcessApplicationForDefinition(firstDefinitionId)).isNull();
   }
 
   @Test

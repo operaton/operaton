@@ -17,9 +17,6 @@
 package org.operaton.bpm.engine.test.concurrency;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -131,7 +128,7 @@ public class ConcurrentJobExecutorTest {
     // then the job fails with a OLE and the failed job listener throws no NPE
     LOG.debug("test thread notifies thread 1");
     threadOne.proceedAndWaitTillDone();
-    assertTrue(threadOne.exception instanceof OptimisticLockingException);
+    assertThat(threadOne.exception instanceof OptimisticLockingException).isTrue();
   }
 
   @Test
@@ -198,24 +195,24 @@ public class ConcurrentJobExecutorTest {
     // then the first committing thread succeeds
     LOG.debug("test thread notifies thread 1");
     threadOne.proceedAndWaitTillDone();
-    assertNull(threadOne.exception);
+    assertThat(threadOne.exception).isNull();
 
     // then the second committing thread fails with an OptimisticLockingException
     // and the job retries have not been decremented
     LOG.debug("test thread notifies thread 2");
     threadTwo.proceedAndWaitTillDone();
-    assertNotNull(threadTwo.exception);
+    assertThat(threadTwo.exception).isNotNull();
 
     Job remainingJob = managementService.createJobQuery().singleResult();
     assertThat(remainingJob.getRetries()).isEqualTo(currentJobs.get(1).getRetries());
 
-    assertNotNull(remainingJob.getExceptionMessage());
+    assertThat(remainingJob.getExceptionMessage()).isNotNull();
 
     JobEntity jobEntity = (JobEntity) remainingJob;
-    assertNull(jobEntity.getLockOwner());
+    assertThat(jobEntity.getLockOwner()).isNull();
 
     // and there is no lock expiration time due to the default retry strategy
-    assertNull(jobEntity.getLockExpirationTime());
+    assertThat(jobEntity.getLockExpirationTime()).isNull();
   }
 
   @Test
@@ -237,25 +234,25 @@ public class ConcurrentJobExecutorTest {
     // then the first committing thread succeeds
     LOG.debug("test thread notifies thread 1");
     threadOne.proceedAndWaitTillDone();
-    assertNull(threadOne.exception);
+    assertThat(threadOne.exception).isNull();
 
     // then the second committing thread fails with an OptimisticLockingException
     // and the job retries have not been decremented
     LOG.debug("test thread notifies thread 2");
     threadTwo.proceedAndWaitTillDone();
-    assertNotNull(threadTwo.exception);
+    assertThat(threadTwo.exception).isNotNull();
 
     Job remainingJob = managementService.createJobQuery().singleResult();
     // retries are configured as R5/PT5M, so no decrement means 5 retries left
     assertThat(remainingJob.getRetries()).isEqualTo(5);
 
-    assertNotNull(remainingJob.getExceptionMessage());
+    assertThat(remainingJob.getExceptionMessage()).isNotNull();
 
     JobEntity jobEntity = (JobEntity) remainingJob;
-    assertNull(jobEntity.getLockOwner());
+    assertThat(jobEntity.getLockOwner()).isNull();
 
     // and there is a due date time set
-    assertNotNull(jobEntity.getDuedate());
+    assertThat(jobEntity.getDuedate()).isNotNull();
   }
 
   @Test
@@ -277,8 +274,8 @@ public class ConcurrentJobExecutorTest {
     executionthread.proceedAndWaitTillDone();
 
     // then the execution will fail with optimistic locking
-    assertNull(jobSuspensionThread.exception);
-    assertNotNull(executionthread.exception);
+    assertThat(jobSuspensionThread.exception).isNull();
+    assertThat(executionthread.exception).isNotNull();
 
     //--------------------------------------------
 
@@ -294,8 +291,8 @@ public class ConcurrentJobExecutorTest {
     jobSuspensionThread.proceedAndWaitTillDone();
 
     // then there are no optimistic locking exceptions
-    assertNull(jobSuspensionThread.exception);
-    assertNull(executionthread.exception);
+    assertThat(jobSuspensionThread.exception).isNull();
+    assertThat(executionthread.exception).isNull();
   }
 
   @Test
@@ -316,9 +313,9 @@ public class ConcurrentJobExecutorTest {
     acquisitionThread.proceedAndWaitTillDone();
 
     // then the acquisition will not fail with optimistic locking
-    assertNull(jobSuspensionThread.exception);
+    assertThat(jobSuspensionThread.exception).isNull();
 
-    assertNull(acquisitionThread.exception);
+    assertThat(acquisitionThread.exception).isNull();
     // but the job will also not be acquired
     assertThat(acquisitionThread.acquiredJobs.size()).isEqualTo(0);
 
@@ -336,8 +333,8 @@ public class ConcurrentJobExecutorTest {
     jobSuspensionThread.proceedAndWaitTillDone();
 
     // then there are no optimistic locking exceptions
-    assertNull(jobSuspensionThread.exception);
-    assertNull(acquisitionThread.exception);
+    assertThat(jobSuspensionThread.exception).isNull();
+    assertThat(acquisitionThread.exception).isNull();
   }
 
   @Test
@@ -411,7 +408,7 @@ public class ConcurrentJobExecutorTest {
     executionThread.proceedAndWaitTillDone();
 
     long remainingJobCount = managementService.createJobQuery().count();
-    assertNull(executionThread.exception);
+    assertThat(executionThread.exception).isNull();
 
     // and ultimately only one job with an updated priority is left
     assertThat(remainingJobCount).isEqualTo(1L);
@@ -446,7 +443,7 @@ public class ConcurrentJobExecutorTest {
     assertThat(updatedJobs).hasSize(2);
     for (Job job : updatedJobs) {
       assertThat(job.getPriority()).isEqualTo(42);
-      assertTrue(job.isSuspended());
+      assertThat(job.isSuspended()).isTrue();
     }
   }
 

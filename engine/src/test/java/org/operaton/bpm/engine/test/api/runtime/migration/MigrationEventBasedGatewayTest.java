@@ -20,7 +20,6 @@ import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnM
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
 
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
@@ -494,7 +493,7 @@ public class MigrationEventBasedGatewayTest {
     Job jobAfterMigration = testHelper.snapshotAfterMigration.getJobs().get(0);
 
     Incident incidentAfterMigration = rule.getRuntimeService().createIncidentQuery().singleResult();
-    assertNotNull(incidentAfterMigration);
+    assertThat(incidentAfterMigration).isNotNull();
 
     assertThat(incidentAfterMigration.getId()).isEqualTo(incidentBeforeMigration.getId());
     assertThat(incidentAfterMigration.getConfiguration()).isEqualTo(jobAfterMigration.getId());

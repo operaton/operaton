@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.cmmn.decisiontask;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNull;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import org.operaton.bpm.engine.exception.dmn.DecisionDefinitionNotFoundException;
@@ -57,7 +57,7 @@ public class DmnDecisionTaskTest extends CmmnTest {
     CaseInstance caseInstance = createCaseInstanceByKey(CASE_KEY);
 
     // then
-    assertNull(queryCaseExecutionByActivityId(DECISION_TASK));
+    assertThat(queryCaseExecutionByActivityId(DECISION_TASK)).isNull();
     assertThat(getDecisionResult(caseInstance)).isEqualTo("okay");
   }
 
@@ -71,7 +71,7 @@ public class DmnDecisionTaskTest extends CmmnTest {
     CaseInstance caseInstance = createCaseInstanceByKey(CASE_KEY, Variables.createVariables().putValue("testDecision", "testDecision"));
 
     // then
-    assertNull(queryCaseExecutionByActivityId(DECISION_TASK));
+    assertThat(queryCaseExecutionByActivityId(DECISION_TASK)).isNull();
     assertThat(getDecisionResult(caseInstance)).isEqualTo("okay");
   }
 
@@ -85,7 +85,7 @@ public class DmnDecisionTaskTest extends CmmnTest {
     CaseInstance caseInstance = createCaseInstanceByKey(CASE_KEY, Variables.createVariables().putValue("testDecision", "testDecision"));
 
     // then
-    assertNull(queryCaseExecutionByActivityId(DECISION_TASK));
+    assertThat(queryCaseExecutionByActivityId(DECISION_TASK)).isNull();
     assertThat(getDecisionResult(caseInstance)).isEqualTo("okay");
   }
 
@@ -104,7 +104,7 @@ public class DmnDecisionTaskTest extends CmmnTest {
     CaseInstance caseInstance = createCaseInstanceByKey(CASE_KEY);
 
     // then
-    assertNull(queryCaseExecutionByActivityId(DECISION_TASK));
+    assertThat(queryCaseExecutionByActivityId(DECISION_TASK)).isNull();
     assertThat(getDecisionResult(caseInstance)).isEqualTo("not okay");
 
     repositoryService.deleteDeployment(deploymentId, true);
@@ -125,7 +125,7 @@ public class DmnDecisionTaskTest extends CmmnTest {
     CaseInstance caseInstance = createCaseInstanceByKey(CASE_KEY);
 
     // then
-    assertNull(queryCaseExecutionByActivityId(DECISION_TASK));
+    assertThat(queryCaseExecutionByActivityId(DECISION_TASK)).isNull();
     assertThat(getDecisionResult(caseInstance)).isEqualTo("okay");
 
     repositoryService.deleteDeployment(deploymentId, true);
@@ -146,7 +146,7 @@ public class DmnDecisionTaskTest extends CmmnTest {
     CaseInstance caseInstance = createCaseInstanceByKey(CASE_KEY);
 
     // then
-    assertNull(queryCaseExecutionByActivityId(DECISION_TASK));
+    assertThat(queryCaseExecutionByActivityId(DECISION_TASK)).isNull();
     assertThat(getDecisionResult(caseInstance)).isEqualTo("not okay");
 
     repositoryService.deleteDeployment(deploymentId, true);
@@ -167,7 +167,7 @@ public class DmnDecisionTaskTest extends CmmnTest {
     CaseInstance caseInstance = createCaseInstanceByKey(CASE_KEY, Variables.createVariables().putValue("myVersion", 2));
 
     // then
-    assertNull(queryCaseExecutionByActivityId(DECISION_TASK));
+    assertThat(queryCaseExecutionByActivityId(DECISION_TASK)).isNull();
     assertThat(getDecisionResult(caseInstance)).isEqualTo("not okay");
 
     repositoryService.deleteDeployment(deploymentId, true);
@@ -188,7 +188,7 @@ public class DmnDecisionTaskTest extends CmmnTest {
     CaseInstance caseInstance = createCaseInstanceByKey(CASE_KEY, Variables.createVariables().putValue("myVersion", 2));
 
     // then
-    assertNull(queryCaseExecutionByActivityId(DECISION_TASK));
+    assertThat(queryCaseExecutionByActivityId(DECISION_TASK)).isNull();
     assertThat(getDecisionResult(caseInstance)).isEqualTo("not okay");
 
     repositoryService.deleteDeployment(deploymentId, true);
@@ -233,7 +233,7 @@ public class DmnDecisionTaskTest extends CmmnTest {
     CaseInstance caseInstance = createCaseInstanceByKey(CASE_KEY);
 
     // then
-    assertNull(queryCaseExecutionByActivityId(DECISION_TASK));
+    assertThat(queryCaseExecutionByActivityId(DECISION_TASK)).isNull();
     assertThat(getDecisionResult(caseInstance)).isEqualTo("okay");
   }
 
@@ -254,7 +254,7 @@ public class DmnDecisionTaskTest extends CmmnTest {
       .manualStart();
 
     // then
-    assertNull(queryCaseExecutionByActivityId(DECISION_TASK));
+    assertThat(queryCaseExecutionByActivityId(DECISION_TASK)).isNull();
     assertThat(getDecisionResult(caseInstance)).isEqualTo(5);
   }
 
@@ -268,7 +268,7 @@ public class DmnDecisionTaskTest extends CmmnTest {
         .putValue("dayType", "Weekend"));
 
     // then
-    assertNull(queryCaseExecutionByActivityId(DECISION_TASK));
+    assertThat(queryCaseExecutionByActivityId(DECISION_TASK)).isNull();
     assertThat(getDecisionResult(caseInstance)).isEqualTo("Light salad");
   }
 

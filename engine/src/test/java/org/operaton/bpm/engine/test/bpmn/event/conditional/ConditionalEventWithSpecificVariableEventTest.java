@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.bpmn.event.conditional;
 
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -186,14 +185,14 @@ public class ConditionalEventWithSpecificVariableEventTest extends AbstractCondi
     ProcessInstance procInst = runtimeService.startProcessInstanceByKey(CONDITIONAL_EVENT_PROCESS_KEY);
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     //when variable with name `variable1` is set on execution
     taskService.setVariable(task.getId(), VARIABLE_NAME + 1, 1);
 
     //then nothing happens
     task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
     assertThat(conditionEventSubscriptionQuery.list()).hasSize(1);
 
@@ -203,7 +202,7 @@ public class ConditionalEventWithSpecificVariableEventTest extends AbstractCondi
     //then execution is at user task after conditional event
     tasksAfterVariableIsSet = taskQuery.list();
     assertThat(tasksAfterVariableIsSet.get(0).getName()).isEqualTo(TASK_AFTER_CONDITION);
-    assertThat(conditionEventSubscriptionQuery.list()).hasSize(0);
+    assertThat(conditionEventSubscriptionQuery.list()).isEmpty();
   }
 
   @Test
@@ -216,14 +215,14 @@ public class ConditionalEventWithSpecificVariableEventTest extends AbstractCondi
     ProcessInstance procInst = runtimeService.startProcessInstanceByKey(CONDITIONAL_EVENT_PROCESS_KEY);
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     //when variable with name `variable` is set on execution
     taskService.setVariable(task.getId(), VARIABLE_NAME, 1);
 
     //then nothing happens
     task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
     assertThat(conditionEventSubscriptionQuery.list()).hasSize(1);
 
@@ -233,7 +232,7 @@ public class ConditionalEventWithSpecificVariableEventTest extends AbstractCondi
     //then execution is at user task after conditional event
     tasksAfterVariableIsSet = taskQuery.list();
     assertThat(tasksAfterVariableIsSet.get(0).getName()).isEqualTo(TASK_AFTER_CONDITION);
-    assertThat(conditionEventSubscriptionQuery.list()).hasSize(0);
+    assertThat(conditionEventSubscriptionQuery.list()).isEmpty();
   }
 
   @Test
@@ -282,7 +281,7 @@ public class ConditionalEventWithSpecificVariableEventTest extends AbstractCondi
     ProcessInstance procInst = runtimeService.startProcessInstanceByKey(CONDITIONAL_EVENT_PROCESS_KEY);
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     //when variable with name `variable` is set, updated and deleted
     taskService.setVariable(task.getId(), VARIABLE_NAME, 1); //create
@@ -309,14 +308,14 @@ public class ConditionalEventWithSpecificVariableEventTest extends AbstractCondi
     ProcessInstance procInst = runtimeService.startProcessInstanceByKey(CONDITIONAL_EVENT_PROCESS_KEY, variables);
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     //when variable with name `variable` is set on execution
     runtimeService.setVariable(procInst.getId(), VARIABLE_NAME, 1);
 
     //then nothing happens
     task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo(TASK_BEFORE_CONDITION);
     assertThat(conditionEventSubscriptionQuery.list()).hasSize(1);
 
@@ -326,7 +325,7 @@ public class ConditionalEventWithSpecificVariableEventTest extends AbstractCondi
     //then execution is at user task after conditional intermediate event
     tasksAfterVariableIsSet = taskQuery.list();
     assertThat(tasksAfterVariableIsSet.get(0).getName()).isEqualTo(TASK_AFTER_CONDITION);
-    assertThat(conditionEventSubscriptionQuery.list()).hasSize(0);
+    assertThat(conditionEventSubscriptionQuery.list()).isEmpty();
   }
 
   @Test
@@ -339,14 +338,14 @@ public class ConditionalEventWithSpecificVariableEventTest extends AbstractCondi
     ProcessInstance procInst = runtimeService.startProcessInstanceByKey(CONDITIONAL_EVENT_PROCESS_KEY);
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(procInst.getId());
     Task task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     //when variable with name `variable` is set
     taskService.setVariable(task.getId(), VARIABLE_NAME, 1); //create
 
     //then nothing happens
     task = taskQuery.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     //when variable is updated twice
     taskService.setVariable(task.getId(), VARIABLE_NAME, 1); //update

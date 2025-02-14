@@ -17,9 +17,7 @@
 package org.operaton.bpm.engine.test.bpmn.event.signal;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import java.io.ByteArrayInputStream;
@@ -200,7 +198,7 @@ public class SignalEventTest {
     assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
 
     Task taskAfterAbort = taskService.createTaskQuery().taskAssignee("gonzo").singleResult();
-    assertNotNull(taskAfterAbort);
+    assertThat(taskAfterAbort).isNotNull();
     taskService.complete(taskAfterAbort.getId());
 
     runtimeService.startProcessInstanceByKey("throwSignal");
@@ -493,14 +491,14 @@ public class SignalEventTest {
     Job asyncJob = managementService.createJobQuery().singleResult();
     assertThat(asyncJob.getProcessDefinitionId()).isEqualTo(catchingProcessDefinition.getId());
     assertThat(asyncJob.getProcessDefinitionKey()).isEqualTo(catchingProcessDefinition.getKey());
-    assertNull(asyncJob.getExceptionMessage());
-    assertNull(asyncJob.getExecutionId());
-    assertNull(asyncJob.getJobDefinitionId());
+    assertThat(asyncJob.getExceptionMessage()).isNull();
+    assertThat(asyncJob.getExecutionId()).isNull();
+    assertThat(asyncJob.getJobDefinitionId()).isNull();
     assertThat(asyncJob.getPriority()).isEqualTo(0);
-    assertNull(asyncJob.getProcessInstanceId());
+    assertThat(asyncJob.getProcessInstanceId()).isNull();
     assertThat(asyncJob.getRetries()).isEqualTo(3);
-    assertNull(asyncJob.getDuedate());
-    assertNull(asyncJob.getDeploymentId());
+    assertThat(asyncJob.getDuedate()).isNull();
+    assertThat(asyncJob.getDeploymentId()).isNull();
   }
 
   @Deployment(resources = {
@@ -528,14 +526,14 @@ public class SignalEventTest {
     Job asyncJob = managementService.createJobQuery().singleResult();
     assertThat(asyncJob.getProcessDefinitionId()).isEqualTo(catchingProcessDefinition.getId());
     assertThat(asyncJob.getProcessDefinitionKey()).isEqualTo(catchingProcessDefinition.getKey());
-    assertNull(asyncJob.getExceptionMessage());
-    assertNull(asyncJob.getExecutionId());
-    assertNull(asyncJob.getJobDefinitionId());
+    assertThat(asyncJob.getExceptionMessage()).isNull();
+    assertThat(asyncJob.getExecutionId()).isNull();
+    assertThat(asyncJob.getJobDefinitionId()).isNull();
     assertThat(asyncJob.getPriority()).isEqualTo(0);
-    assertNull(asyncJob.getProcessInstanceId());
+    assertThat(asyncJob.getProcessInstanceId()).isNull();
     assertThat(asyncJob.getRetries()).isEqualTo(3);
     assertThat(asyncJob.getDuedate()).isEqualTo(testTime);
-    assertNull(asyncJob.getDeploymentId());
+    assertThat(asyncJob.getDeploymentId()).isNull();
   }
 
   @Deployment(resources = {
@@ -559,7 +557,7 @@ public class SignalEventTest {
 
     // then there is a process instance
     ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
     assertThat(processInstance.getProcessDefinitionId()).isEqualTo(catchingProcessDefinition.getId());
 
     // and a task
@@ -617,11 +615,11 @@ public class SignalEventTest {
 
     // then
     ProcessInstance startedInstance = runtimeService.createProcessInstanceQuery().singleResult();
-    assertNotNull(startedInstance);
+    assertThat(startedInstance).isNotNull();
 
     ObjectValue variableTyped = runtimeService.getVariableTyped(startedInstance.getId(), "var", false);
-    assertNotNull(variableTyped);
-    assertFalse(variableTyped.isDeserialized());
+    assertThat(variableTyped).isNotNull();
+    assertThat(variableTyped.isDeserialized()).isFalse();
     assertThat(variableTyped.getValueSerialized()).isEqualTo(serializedObject);
     assertThat(variableTyped.getObjectTypeName()).isEqualTo(FailingJavaSerializable.class.getName());
     assertThat(variableTyped.getSerializationDataFormat()).isEqualTo(SerializationDataFormats.JAVA.getName());
@@ -642,14 +640,14 @@ public class SignalEventTest {
     runtimeService.startProcessInstanceByKey("throwSignalAsync");
 
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);  // Throws Exception!
+    assertThat(job).isNotNull();  // Throws Exception!
 
     // when the job is executed
     managementService.executeJob(job.getId());
 
     // then there is a process instance
     ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
 //    assertEquals(catchingProcessDefinition.getId(), processInstance.getProcessDefinitionId());
 
     // and a task
@@ -662,21 +660,21 @@ public class SignalEventTest {
     runtimeService.startProcessInstanceByKey("embeddedEventSubprocess");
 
     Task taskBefore = taskService.createTaskQuery().singleResult();
-    assertNotNull(taskBefore);
+    assertThat(taskBefore).isNotNull();
     assertThat(taskBefore.getName()).isEqualTo("task in subprocess");
 
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
 
     //when job is executed task is created
     managementService.executeJob(job.getId());
 
     Task taskAfter = taskService.createTaskQuery().singleResult();
-    assertNotNull(taskAfter);
+    assertThat(taskAfter).isNotNull();
     assertThat(taskAfter.getName()).isEqualTo("after catch");
 
     Job jobAfter = managementService.createJobQuery().singleResult();
-    assertNull(jobAfter);
+    assertThat(jobAfter).isNull();
   }
 
 }

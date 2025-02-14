@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.usertask;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -87,7 +86,7 @@ public class TaskCandidateTest extends PluggableProcessEngineTest {
       .createTaskQuery()
       .taskAssignee(KERMIT)
       .list();
-    assertTrue(tasks.isEmpty());
+    assertThat(tasks).isEmpty();
 
     // The task should be visible in the candidate task list
     tasks = taskService.createTaskQuery().taskCandidateUser(KERMIT).list();
@@ -106,7 +105,7 @@ public class TaskCandidateTest extends PluggableProcessEngineTest {
 
     // The task must now be gone from the candidate task list
     tasks = taskService.createTaskQuery().taskCandidateUser(KERMIT).list();
-    assertTrue(tasks.isEmpty());
+    assertThat(tasks).isEmpty();
 
     // The task will be visible on the personal task list
     tasks = taskService
@@ -136,13 +135,13 @@ public class TaskCandidateTest extends PluggableProcessEngineTest {
       .taskAssignee(KERMIT)
       .list();
 
-    assertTrue(tasks.isEmpty());
+    assertThat(tasks).isEmpty();
     tasks = taskService
       .createTaskQuery()
       .taskAssignee(GONZO)
       .list();
 
-    assertTrue(tasks.isEmpty());
+    assertThat(tasks).isEmpty();
 
     // The task should be visible in the candidate task list of Gonzo and Kermit
     // and anyone in the management/accountancy group
@@ -159,8 +158,8 @@ public class TaskCandidateTest extends PluggableProcessEngineTest {
     taskService.claim(task.getId(), GONZO);
 
     // The task must now be gone from the candidate task lists
-    assertTrue(taskService.createTaskQuery().taskCandidateUser(KERMIT).list().isEmpty());
-    assertTrue(taskService.createTaskQuery().taskCandidateUser(GONZO).list().isEmpty());
+    assertThat(taskService.createTaskQuery().taskCandidateUser(KERMIT).list()).isEmpty();
+    assertThat(taskService.createTaskQuery().taskCandidateUser(GONZO).list()).isEmpty();
     assertThat(taskService.createTaskQuery().taskCandidateGroup(MANAGEMENT).count()).isEqualTo(0);
 
     // The task will be visible on the personal task list of Gonzo

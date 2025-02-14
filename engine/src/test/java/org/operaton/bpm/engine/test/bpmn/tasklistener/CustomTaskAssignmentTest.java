@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.tasklistener;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -82,7 +80,7 @@ public class CustomTaskAssignmentTest extends PluggableProcessEngineTest {
   @Test
   public void testAssigneeAssignment() {
     runtimeService.startProcessInstanceByKey("setAssigneeInListener");
-    assertNotNull(taskService.createTaskQuery().taskAssignee("kermit").singleResult());
+    assertThat(taskService.createTaskQuery().taskAssignee("kermit").singleResult()).isNotNull();
     assertThat(taskService.createTaskQuery().taskAssignee("fozzie").count()).isEqualTo(0);
     assertThat(taskService.createTaskQuery().taskAssignee("gonzo").count()).isEqualTo(0);
   }
@@ -91,7 +89,7 @@ public class CustomTaskAssignmentTest extends PluggableProcessEngineTest {
   @Test
   public void testOverwriteExistingAssignments() {
     runtimeService.startProcessInstanceByKey("overrideAssigneeInListener");
-    assertNotNull(taskService.createTaskQuery().taskAssignee("kermit").singleResult());
+    assertThat(taskService.createTaskQuery().taskAssignee("kermit").singleResult()).isNotNull();
     assertThat(taskService.createTaskQuery().taskAssignee("fozzie").count()).isEqualTo(0);
     assertThat(taskService.createTaskQuery().taskAssignee("gonzo").count()).isEqualTo(0);
   }
@@ -108,9 +106,9 @@ public class CustomTaskAssignmentTest extends PluggableProcessEngineTest {
 
     // start process instance
     runtimeService.startProcessInstanceByKey("customTaskAssignment", variables);
-    
+
     // check task lists
-    assertNotNull(taskService.createTaskQuery().taskAssignee("gonzo").singleResult());
+    assertThat(taskService.createTaskQuery().taskAssignee("gonzo").singleResult()).isNotNull();
     assertThat(taskService.createTaskQuery().taskAssignee("fozzie").count()).isEqualTo(0);
     assertThat(taskService.createTaskQuery().taskAssignee("kermit").count()).isEqualTo(0);
   }
@@ -121,18 +119,18 @@ public class CustomTaskAssignmentTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("releaseTaskProcess");
     
     Task task = taskService.createTaskQuery().taskAssignee("fozzie").singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     String taskId = task.getId();
     
     // Set assignee to null
     taskService.setAssignee(taskId, null);
     
     task = taskService.createTaskQuery().taskAssignee("fozzie").singleResult();
-    assertNull(task);
+    assertThat(task).isNull();
     
     task = taskService.createTaskQuery().taskId(taskId).singleResult();
-    assertNotNull(task);
-    assertNull(task.getAssignee());
+    assertThat(task).isNotNull();
+    assertThat(task.getAssignee()).isNull();
   }
 
 }

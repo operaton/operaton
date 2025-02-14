@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.task;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -115,7 +114,7 @@ public class TaskCountByCandidateGroupsTest {
 
     // then
     for (TaskCountByCandidateGroupResult result : results ) {
-      assertTrue(checkResultName(result));
+      assertThat(checkResultName(result)).isTrue();
     }
   }
 

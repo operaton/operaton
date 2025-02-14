@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
-
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
@@ -83,7 +83,7 @@ public class MigrationRemoveSubprocessTest {
         .done());
 
     Task migratedTask = testHelper.snapshotAfterMigration.getTaskForKey("userTask");
-    Assert.assertNotNull(migratedTask);
+    assertThat(migratedTask).isNotNull();
     assertThat(migratedTask.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());
 
     // and it is possible to successfully complete the migrated instance
@@ -120,7 +120,7 @@ public class MigrationRemoveSubprocessTest {
         .done());
 
     Task migratedTask = testHelper.snapshotAfterMigration.getTaskForKey("userTask");
-    Assert.assertNotNull(migratedTask);
+    assertThat(migratedTask).isNotNull();
     assertThat(migratedTask.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());
 
     // and it is possible to successfully complete the migrated instance
@@ -377,7 +377,7 @@ public class MigrationRemoveSubprocessTest {
     try {
       runtimeService.build();
 
-      Assert.fail("should not validate");
+      fail("should not validate");
     } catch (MigrationPlanValidationException e) {
       MigrationPlanValidationReportAssert.assertThat(e.getValidationReport())
         .hasInstructionFailures("userTask2",
@@ -414,7 +414,7 @@ public class MigrationRemoveSubprocessTest {
         .done());
 
     Task migratedTask = testHelper.snapshotAfterMigration.getTaskForKey("userTask");
-    Assert.assertNotNull(migratedTask);
+    assertThat(migratedTask).isNotNull();
     assertThat(migratedTask.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());
 
     // and it is possible to successfully complete the migrated instance
@@ -483,7 +483,7 @@ public class MigrationRemoveSubprocessTest {
 
     // then
     List<DelegateEvent> recordedEvents = DelegateEvent.getEvents();
-    assertThat(recordedEvents).hasSize(0);
+    assertThat(recordedEvents).isEmpty();
 
     DelegateEvent.clearEvents();
   }
@@ -512,7 +512,7 @@ public class MigrationRemoveSubprocessTest {
 
     // then
     VariableInstance inputVariable = rule.getRuntimeService().createVariableInstanceQuery().singleResult();
-    Assert.assertNotNull(inputVariable);
+    assertThat(inputVariable).isNotNull();
     assertThat(inputVariable.getName()).isEqualTo("foo");
     assertThat(inputVariable.getValue()).isEqualTo("bar");
     assertThat(inputVariable.getActivityInstanceId()).isEqualTo(processInstance.getId());
@@ -563,7 +563,7 @@ public class MigrationRemoveSubprocessTest {
       // subProcess 3 is moved out of the subProcess1 scope (by becoming a subProcess1 itself)
       runtimeService.build();
 
-      Assert.fail("should not validate");
+      fail("should not validate");
     } catch (MigrationPlanValidationException e) {
       MigrationPlanValidationReportAssert.assertThat(e.getValidationReport())
         .hasInstructionFailures("subProcess3",

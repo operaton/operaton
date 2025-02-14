@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.test.api.mgmt;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -137,13 +135,13 @@ public class DeploymentStatisticsQueryTest extends PluggableProcessEngineTest {
     List<DeploymentStatistics> statistics =
         managementService.createDeploymentStatisticsQuery().includeIncidents().list();
 
-    assertFalse(statistics.isEmpty());
+    assertThat(statistics).isNotEmpty();
     assertThat(statistics).hasSize(1);
 
     DeploymentStatistics result = statistics.get(0);
 
     List<IncidentStatistics> incidentStatistics = result.getIncidentStatistics();
-    assertFalse(incidentStatistics.isEmpty());
+    assertThat(incidentStatistics).isNotEmpty();
     assertThat(incidentStatistics).hasSize(1);
 
     IncidentStatistics incident = incidentStatistics.get(0);
@@ -170,13 +168,13 @@ public class DeploymentStatisticsQueryTest extends PluggableProcessEngineTest {
         .includeIncidentsForType("failedJob")
         .list();
 
-    assertFalse(statistics.isEmpty());
+    assertThat(statistics).isNotEmpty();
     assertThat(statistics).hasSize(1);
 
     DeploymentStatistics result = statistics.get(0);
 
     List<IncidentStatistics> incidentStatistics = result.getIncidentStatistics();
-    assertFalse(incidentStatistics.isEmpty());
+    assertThat(incidentStatistics).isNotEmpty();
     assertThat(incidentStatistics).hasSize(1);
 
     IncidentStatistics incident = incidentStatistics.get(0);
@@ -203,13 +201,13 @@ public class DeploymentStatisticsQueryTest extends PluggableProcessEngineTest {
         .includeIncidentsForType("invalid")
         .list();
 
-    assertFalse(statistics.isEmpty());
+    assertThat(statistics).isNotEmpty();
     assertThat(statistics).hasSize(1);
 
     DeploymentStatistics result = statistics.get(0);
 
     List<IncidentStatistics> incidentStatistics = result.getIncidentStatistics();
-    assertTrue(incidentStatistics.isEmpty());
+    assertThat(incidentStatistics).isEmpty();
   }
 
   @Test
@@ -232,7 +230,7 @@ public class DeploymentStatisticsQueryTest extends PluggableProcessEngineTest {
         .includeFailedJobs()
         .list();
 
-    assertFalse(statistics.isEmpty());
+    assertThat(statistics).isNotEmpty();
     assertThat(statistics).hasSize(1);
 
     DeploymentStatistics result = statistics.get(0);
@@ -240,7 +238,7 @@ public class DeploymentStatisticsQueryTest extends PluggableProcessEngineTest {
     assertThat(result.getFailedJobs()).isEqualTo(1);
 
     List<IncidentStatistics> incidentStatistics = result.getIncidentStatistics();
-    assertFalse(incidentStatistics.isEmpty());
+    assertThat(incidentStatistics).isNotEmpty();
     assertThat(incidentStatistics).hasSize(1);
 
     IncidentStatistics incident = incidentStatistics.get(0);
@@ -262,7 +260,7 @@ public class DeploymentStatisticsQueryTest extends PluggableProcessEngineTest {
         .includeFailedJobs()
         .list();
 
-    assertFalse(statistics.isEmpty());
+    assertThat(statistics).isNotEmpty();
     assertThat(statistics).hasSize(1);
 
     DeploymentStatistics result = statistics.get(0);
@@ -271,7 +269,7 @@ public class DeploymentStatisticsQueryTest extends PluggableProcessEngineTest {
     assertThat(result.getFailedJobs()).isEqualTo(1);
 
     List<IncidentStatistics> incidentStatistics = result.getIncidentStatistics();
-    assertFalse(incidentStatistics.isEmpty());
+    assertThat(incidentStatistics).isNotEmpty();
     assertThat(incidentStatistics).hasSize(1);
 
     IncidentStatistics incident = incidentStatistics.get(0);

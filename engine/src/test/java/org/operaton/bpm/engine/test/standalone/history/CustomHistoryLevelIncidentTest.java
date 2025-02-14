@@ -53,7 +53,6 @@ import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
 
 @RunWith(Parameterized.class)
 public class CustomHistoryLevelIncidentTest {
@@ -159,7 +158,7 @@ public class CustomHistoryLevelIncidentTest {
 
     if (eventTypes != null) {
       HistoricIncident historicIncident = historyService.createHistoricIncidentQuery().singleResult();
-      assertNotNull(historicIncident);
+      assertThat(historicIncident).isNotNull();
     }
 
     // when
@@ -170,7 +169,7 @@ public class CustomHistoryLevelIncidentTest {
 
     // then
     List<HistoricIncident> incidents = historyService.createHistoricIncidentQuery().list();
-    assertThat(incidents).hasSize(0);
+    assertThat(incidents).isEmpty();
   }
 
   @Test
@@ -198,7 +197,7 @@ public class CustomHistoryLevelIncidentTest {
     // assume
     if (eventTypes != null) {
       HistoricIncident historicIncident = historyService.createHistoricIncidentQuery().singleResult();
-      assertNotNull(historicIncident);
+      assertThat(historicIncident).isNotNull();
     }
 
     // when
@@ -209,7 +208,7 @@ public class CustomHistoryLevelIncidentTest {
 
     // then
     List<HistoricIncident> incidents = historyService.createHistoricIncidentQuery().list();
-    assertThat(incidents).hasSize(0);
+    assertThat(incidents).isEmpty();
   }
 
   @Test
@@ -230,7 +229,7 @@ public class CustomHistoryLevelIncidentTest {
     // assume
     if (eventTypes != null) {
       HistoricIncident historicIncident = historyService.createHistoricIncidentQuery().singleResult();
-      assertNotNull(historicIncident);
+      assertThat(historicIncident).isNotNull();
     }
 
     // when
@@ -238,7 +237,7 @@ public class CustomHistoryLevelIncidentTest {
 
     // then
     List<HistoricIncident> incidents = historyService.createHistoricIncidentQuery().list();
-    assertThat(incidents).hasSize(0);
+    assertThat(incidents).isEmpty();
   }
 
   protected void executeAvailableJobs() {

@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.multitenancy.tenantcheck;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertNotNull;
 
 import java.util.HashMap;
 import java.util.List;
@@ -98,7 +97,7 @@ public class MultiTenancyFormServiceCmdsTenantCheckTest {
     StartFormData startFormData = formService.getStartFormData(instance.getProcessDefinitionId());
 
     // then
-    assertNotNull(startFormData);
+    assertThat(startFormData).isNotNull();
     assertThat(startFormData.getFormKey()).isEqualTo("aStartFormKey");
   }
 
@@ -135,7 +134,7 @@ public class MultiTenancyFormServiceCmdsTenantCheckTest {
     StartFormData startFormData = formService.getStartFormData(instance.getProcessDefinitionId());
 
     // then
-    assertNotNull(startFormData);
+    assertThat(startFormData).isNotNull();
     assertThat(startFormData.getFormKey()).isEqualTo("aStartFormKey");
 
   }
@@ -153,7 +152,7 @@ public class MultiTenancyFormServiceCmdsTenantCheckTest {
 
     identityService.setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
-    assertNotNull(formService.getRenderedStartForm(processDefinitionId, "juel"));
+    assertThat(formService.getRenderedStartForm(processDefinitionId, "juel")).isNotNull();
   }
 
   @Test
@@ -188,7 +187,7 @@ public class MultiTenancyFormServiceCmdsTenantCheckTest {
     identityService.setAuthentication("aUserId", null);
     processEngineConfiguration.setTenantCheckEnabled(false);
 
-    assertNotNull(formService.getRenderedStartForm(processDefinitionId, "juel"));
+    assertThat(formService.getRenderedStartForm(processDefinitionId, "juel")).isNotNull();
   }
 
   // submitStartForm
@@ -207,7 +206,7 @@ public class MultiTenancyFormServiceCmdsTenantCheckTest {
 
     identityService.setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
-    assertNotNull(formService.submitStartForm(processDefinitionId, properties));
+    assertThat(formService.submitStartForm(processDefinitionId, properties)).isNotNull();
   }
 
   @Test
@@ -250,7 +249,7 @@ public class MultiTenancyFormServiceCmdsTenantCheckTest {
     processEngineConfiguration.setTenantCheckEnabled(false);
 
     // when
-    assertNotNull(formService.submitStartForm(processDefinitionId, properties));
+    assertThat(formService.submitStartForm(processDefinitionId, properties)).isNotNull();
 
   }
 
@@ -313,7 +312,7 @@ public class MultiTenancyFormServiceCmdsTenantCheckTest {
     TaskFormData taskFormData = formService.getTaskFormData(taskId);
 
     // then
-    assertNotNull(taskFormData);
+    assertThat(taskFormData).isNotNull();
     assertThat(taskFormData.getFormKey()).isEqualTo("aTaskFormKey");
   }
 
@@ -350,7 +349,7 @@ public class MultiTenancyFormServiceCmdsTenantCheckTest {
     TaskFormData taskFormData = formService.getTaskFormData(taskId);
 
     // then
-    assertNotNull(taskFormData);
+    assertThat(taskFormData).isNotNull();
     assertThat(taskFormData.getFormKey()).isEqualTo("aTaskFormKey");
 
   }

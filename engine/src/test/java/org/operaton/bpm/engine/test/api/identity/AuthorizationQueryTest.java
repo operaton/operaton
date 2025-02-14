@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.api.identity;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.List;
 
@@ -140,22 +140,22 @@ public class AuthorizationQueryTest extends PluggableProcessEngineTest {
     assertThat(authorizationService.createAuthorizationQuery().userIdIn("user2").list()).hasSize(1);
     assertThat(authorizationService.createAuthorizationQuery().userIdIn("user3").list()).hasSize(1);
     assertThat(authorizationService.createAuthorizationQuery().userIdIn("user1", "user2").list()).hasSize(3);
-    assertThat(authorizationService.createAuthorizationQuery().userIdIn("non-existing").list()).hasSize(0);
+    assertThat(authorizationService.createAuthorizationQuery().userIdIn("non-existing").list()).isEmpty();
 
     // query by group id
     assertThat(authorizationService.createAuthorizationQuery().groupIdIn("group1").list()).hasSize(2);
     assertThat(authorizationService.createAuthorizationQuery().groupIdIn("group2").list()).hasSize(1);
     assertThat(authorizationService.createAuthorizationQuery().groupIdIn("group3").list()).hasSize(1);
     assertThat(authorizationService.createAuthorizationQuery().groupIdIn("group1", "group2").list()).hasSize(3);
-    assertThat(authorizationService.createAuthorizationQuery().groupIdIn("non-existing").list()).hasSize(0);
+    assertThat(authorizationService.createAuthorizationQuery().groupIdIn("non-existing").list()).isEmpty();
 
     // query by resource type
     assertThat(authorizationService.createAuthorizationQuery().resourceType(resource1).list()).hasSize(4);
-    assertThat(authorizationService.createAuthorizationQuery().resourceType(nonExisting).list()).hasSize(0);
+    assertThat(authorizationService.createAuthorizationQuery().resourceType(nonExisting).list()).isEmpty();
 
     // query by resource id
     assertThat(authorizationService.createAuthorizationQuery().resourceId("resource1-2").list()).hasSize(2);
-    assertThat(authorizationService.createAuthorizationQuery().resourceId("non-existing").list()).hasSize(0);
+    assertThat(authorizationService.createAuthorizationQuery().resourceId("non-existing").list()).isEmpty();
 
     // query by permission
     assertThat(authorizationService.createAuthorizationQuery().hasPermission(TestPermissions.ACCESS).list()).hasSize(1);
@@ -165,15 +165,15 @@ public class AuthorizationQueryTest extends PluggableProcessEngineTest {
     // multiple permissions at the same time
     assertThat(authorizationService.createAuthorizationQuery().hasPermission(TestPermissions.READ).hasPermission(TestPermissions.UPDATE).list()).hasSize(2);
     assertThat(authorizationService.createAuthorizationQuery().hasPermission(TestPermissions.UPDATE).hasPermission(TestPermissions.READ).list()).hasSize(2);
-    assertThat(authorizationService.createAuthorizationQuery().hasPermission(TestPermissions.READ).hasPermission(TestPermissions.ACCESS).list()).hasSize(0);
+    assertThat(authorizationService.createAuthorizationQuery().hasPermission(TestPermissions.READ).hasPermission(TestPermissions.ACCESS).list()).isEmpty();
 
     // user id & resource type
     assertThat(authorizationService.createAuthorizationQuery().userIdIn("user1").resourceType(resource1).list()).hasSize(1);
-    assertThat(authorizationService.createAuthorizationQuery().userIdIn("user1").resourceType(nonExisting).list()).hasSize(0);
+    assertThat(authorizationService.createAuthorizationQuery().userIdIn("user1").resourceType(nonExisting).list()).isEmpty();
 
     // group id & resource type
     assertThat(authorizationService.createAuthorizationQuery().groupIdIn("group2").resourceType(resource2).list()).hasSize(1);
-    assertThat(authorizationService.createAuthorizationQuery().groupIdIn("group1").resourceType(nonExisting).list()).hasSize(0);
+    assertThat(authorizationService.createAuthorizationQuery().groupIdIn("group1").resourceType(nonExisting).list()).isEmpty();
   }
 
   @Test

@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.filter;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
 import java.util.List;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.EntityTypes;
@@ -91,7 +88,7 @@ public class FilterAuthorizationsTest extends PluggableProcessEngineTest {
   public void testCreateFilterPermitted() {
     grantCreateFilter();
     Filter filter = filterService.newTaskFilter();
-    assertNotNull(filter);
+    assertThat(filter).isNotNull();
   }
 
   @Test
@@ -110,7 +107,7 @@ public class FilterAuthorizationsTest extends PluggableProcessEngineTest {
 
     filterService.saveFilter(filter);
 
-    assertNotNull(filter.getId());
+    assertThat(filter.getId()).isNotNull();
   }
 
   @Test
@@ -163,7 +160,7 @@ public class FilterAuthorizationsTest extends PluggableProcessEngineTest {
     assertThat(count).isEqualTo(0);
 
     Filter returnedFilter = filterService.createFilterQuery().filterId(filter.getId()).singleResult();
-    assertNull(returnedFilter);
+    assertThat(returnedFilter).isNull();
 
     String filterId = filter.getId();
     assertThatThrownBy(() -> filterService.getFilter(filterId))
@@ -196,26 +193,26 @@ public class FilterAuthorizationsTest extends PluggableProcessEngineTest {
     assertThat(count).isEqualTo(1);
 
     Filter returnedFilter = filterService.createFilterQuery().filterId(filter.getId()).singleResult();
-    assertNotNull(returnedFilter);
+    assertThat(returnedFilter).isNotNull();
 
     returnedFilter = filterService.getFilter(filter.getId());
-    assertNotNull(returnedFilter);
+    assertThat(returnedFilter).isNotNull();
 
     // create test Task
     Task task = taskService.newTask("test");
     taskService.saveTask(task);
 
     Task result = filterService.singleResult(filter.getId());
-    assertNotNull(result);
+    assertThat(result).isNotNull();
     assertThat(result.getId()).isEqualTo(task.getId());
 
     List<Task> resultList = filterService.list(filter.getId());
-    assertNotNull(resultList);
+    assertThat(resultList).isNotNull();
     assertThat(resultList).hasSize(1);
     assertThat(resultList.get(0).getId()).isEqualTo(task.getId());
 
     resultList = filterService.listPage(filter.getId(), 0, 2);
-    assertNotNull(resultList);
+    assertThat(resultList).isNotNull();
     assertThat(resultList).hasSize(1);
     assertThat(resultList.get(0).getId()).isEqualTo(task.getId());
 
@@ -237,7 +234,7 @@ public class FilterAuthorizationsTest extends PluggableProcessEngineTest {
     assertThat(count).isEqualTo(0);
 
     Filter returnedFilter = filterService.createFilterQuery().filterId(filter.getId()).singleResult();
-    assertNull(returnedFilter);
+    assertThat(returnedFilter).isNull();
 
     String filterId1 = filter.getId();
     assertThatThrownBy(() -> filterService.getFilter(filterId1))
@@ -276,10 +273,10 @@ public class FilterAuthorizationsTest extends PluggableProcessEngineTest {
     assertThat(count).isEqualTo(1);
 
     Filter returnedFilter = filterService.createFilterQuery().filterId(filter.getId()).singleResult();
-    assertNotNull(returnedFilter);
+    assertThat(returnedFilter).isNotNull();
 
     returnedFilter = filterService.getFilter(filter.getId());
-    assertNotNull(returnedFilter);
+    assertThat(returnedFilter).isNotNull();
 
     processEngine.getAuthorizationService().deleteAuthorization(authorization.getId());
   }

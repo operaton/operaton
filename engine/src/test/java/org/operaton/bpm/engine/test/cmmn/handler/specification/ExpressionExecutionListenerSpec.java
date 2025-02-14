@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.cmmn.handler.specification;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
 
 import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
 import org.operaton.bpm.engine.delegate.DelegateListener;
@@ -41,7 +40,7 @@ public class ExpressionExecutionListenerSpec extends AbstractExecutionListenerSp
 
   @Override
   public void verifyListener(DelegateListener<? extends BaseDelegateExecution> listener) {
-    assertTrue(listener instanceof ExpressionCaseExecutionListener);
+    assertThat(listener instanceof ExpressionCaseExecutionListener).isTrue();
 
     ExpressionCaseExecutionListener expressionListener = (ExpressionCaseExecutionListener) listener;
     assertThat(expressionListener.getExpressionText()).isEqualTo(EXPRESSION);

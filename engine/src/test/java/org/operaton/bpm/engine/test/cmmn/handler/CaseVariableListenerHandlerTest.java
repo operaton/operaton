@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.cmmn.handler;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -77,7 +76,7 @@ public class CaseVariableListenerHandlerTest extends CmmnElementHandlerTest {
     assertThat(listener.getFieldDeclarations()).hasSize(1);
     assertThat(listener.getFieldDeclarations().get(0).getName()).isEqualTo("fieldName");
     Object fieldValue = listener.getFieldDeclarations().get(0).getValue();
-    assertTrue(fieldValue instanceof Expression);
+    assertThat(fieldValue instanceof Expression).isTrue();
     Expression expressionValue = (Expression) fieldValue;
     assertThat(expressionValue.getExpressionText()).isEqualTo("a string value");
 
@@ -101,8 +100,8 @@ public class CaseVariableListenerHandlerTest extends CmmnElementHandlerTest {
     DelegateExpressionCaseVariableListener listener = (DelegateExpressionCaseVariableListener) listeners.get(0);
     assertThat(listener.getExpressionText()).isEqualTo("${expression}");
 
-    assertThat(activity.getVariableListenersLocal(CaseVariableListener.UPDATE)).hasSize(0);
-    assertThat(activity.getVariableListenersLocal(CaseVariableListener.DELETE)).hasSize(0);
+    assertThat(activity.getVariableListenersLocal(CaseVariableListener.UPDATE)).isEmpty();
+    assertThat(activity.getVariableListenersLocal(CaseVariableListener.DELETE)).isEmpty();
   }
 
   @Test
@@ -121,8 +120,8 @@ public class CaseVariableListenerHandlerTest extends CmmnElementHandlerTest {
     ExpressionCaseVariableListener listener = (ExpressionCaseVariableListener) listeners.get(0);
     assertThat(listener.getExpressionText()).isEqualTo("${expression}");
 
-    assertThat(activity.getVariableListenersLocal(CaseVariableListener.UPDATE)).hasSize(0);
-    assertThat(activity.getVariableListenersLocal(CaseVariableListener.DELETE)).hasSize(0);
+    assertThat(activity.getVariableListenersLocal(CaseVariableListener.UPDATE)).isEmpty();
+    assertThat(activity.getVariableListenersLocal(CaseVariableListener.DELETE)).isEmpty();
   }
 
 }

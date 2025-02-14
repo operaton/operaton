@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.event.compensate;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
 
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
@@ -63,7 +62,7 @@ public class CompensateEventHistoryTest extends PluggableProcessEngineTest {
         .activityId("compensationHandler")
         .singleResult();
 
-    assertNotNull(historicCompensationHandlerInstance);
+    assertThat(historicCompensationHandlerInstance).isNotNull();
     assertThat(historicCompensationHandlerInstance.getId()).isEqualTo(compensationHandlerActivityInstanceId);
     assertThat(historicCompensationHandlerInstance.getParentActivityInstanceId()).isEqualTo(processInstance.getId());
   }
@@ -94,7 +93,7 @@ public class CompensateEventHistoryTest extends PluggableProcessEngineTest {
     // then there is a historic variable instance for the variable set by API
     HistoricVariableInstance historicVariableInstance = historyService.createHistoricVariableInstanceQuery().singleResult();
 
-    assertNotNull(historicVariableInstance);
+    assertThat(historicVariableInstance).isNotNull();
     assertThat(historicVariableInstance.getActivityInstanceId()).isEqualTo(compensationHandlerActivityInstanceId);
   }
 
@@ -127,7 +126,7 @@ public class CompensateEventHistoryTest extends PluggableProcessEngineTest {
         .activityId("compensationHandler")
         .singleResult();
 
-    assertNotNull(historicCompensationHandlerInstance);
+    assertThat(historicCompensationHandlerInstance).isNotNull();
     assertThat(historicCompensationHandlerInstance.getId()).isEqualTo(compensationHandlerActivityInstanceId);
     assertThat(historicCompensationHandlerInstance.getParentActivityInstanceId()).isEqualTo(subProcessActivityInstanceId);
   }
@@ -158,7 +157,7 @@ public class CompensateEventHistoryTest extends PluggableProcessEngineTest {
     // then there is a historic variable instance for the variable set by API
     HistoricVariableInstance historicVariableInstance = historyService.createHistoricVariableInstanceQuery().singleResult();
 
-    assertNotNull(historicVariableInstance);
+    assertThat(historicVariableInstance).isNotNull();
     assertThat(historicVariableInstance.getActivityInstanceId()).isEqualTo(compensationHandlerActivityInstanceId);
   }
 

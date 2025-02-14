@@ -25,8 +25,6 @@ import org.operaton.bpm.engine.impl.pvm.PvmProcessDefinition;
 import org.operaton.bpm.engine.impl.pvm.PvmProcessInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertNotNull;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.Automatic;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.End;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.ParallelGateway;
@@ -72,7 +70,7 @@ public class PvmParallelTest {
     PvmProcessInstance processInstance = processDefinition.createProcessInstance();
     processInstance.start();
 
-    assertTrue(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isTrue();
   }
 
   @Test
@@ -109,10 +107,10 @@ public class PvmParallelTest {
     processInstance.start();
 
     PvmExecution activityInstanceC1 = processInstance.findExecution("c1");
-    assertNotNull(activityInstanceC1);
+    assertThat(activityInstanceC1).isNotNull();
 
     PvmExecution activityInstanceC2 = processInstance.findExecution("c2");
-    assertNotNull(activityInstanceC2);
+    assertThat(activityInstanceC2).isNotNull();
 
     activityInstanceC1.signal(null, null);
     activityInstanceC2.signal(null, null);
@@ -170,7 +168,7 @@ public class PvmParallelTest {
     PvmProcessInstance processInstance = processDefinition.createProcessInstance();
     processInstance.start();
 
-    assertNotNull(processInstance.findExecution("end"));
+    assertThat(processInstance.findExecution("end")).isNotNull();
   }
 
   @Test
@@ -220,7 +218,7 @@ public class PvmParallelTest {
     PvmProcessInstance processInstance = processDefinition.createProcessInstance();
     processInstance.start();
 
-    assertNotNull(processInstance.findExecution("end"));
+    assertThat(processInstance.findExecution("end")).isNotNull();
   }
 
   @Test
@@ -279,6 +277,6 @@ public class PvmParallelTest {
     PvmProcessInstance processInstance = processDefinition.createProcessInstance();
     processInstance.start();
 
-    assertNotNull(processInstance.findExecution("end"));
+    assertThat(processInstance.findExecution("end")).isNotNull();
   }
 }

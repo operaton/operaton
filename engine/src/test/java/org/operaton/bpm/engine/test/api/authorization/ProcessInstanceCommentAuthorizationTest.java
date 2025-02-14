@@ -15,11 +15,9 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.authorization;
-
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.fail;
 
 import java.util.Collections;
 import java.util.List;
@@ -154,7 +152,7 @@ public class ProcessInstanceCommentAuthorizationTest extends AuthorizationTest {
 
     // then
     List<Comment> comments = taskService.getProcessInstanceComments(processInstanceId);
-    assertFalse("The comments list should not be empty", comments.isEmpty());
+    assertThat(comments.isEmpty()).as("The comments list should not be empty").isFalse();
     assertThat(comments.get(0).getFullMessage()).isEqualTo(updatedMessage);
 
     // triggers a db clean up
@@ -259,7 +257,7 @@ public class ProcessInstanceCommentAuthorizationTest extends AuthorizationTest {
 
     // then
     List<Comment> comments = taskService.getProcessInstanceComments(processInstanceId);
-    assertFalse("The comments list should not be empty", comments.isEmpty());
+    assertThat(comments.isEmpty()).as("The comments list should not be empty").isFalse();
     assertThat(comments.get(0).getFullMessage()).isEqualTo(updatedMessage);
   }
 

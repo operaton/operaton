@@ -16,11 +16,7 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.Assert.fail;
 
 import java.text.SimpleDateFormat;
@@ -83,12 +79,12 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     assertThat(historicTaskInstance.getDueDate()).isEqualTo(dueDate);
     assertThat(historicTaskInstance.getAssignee()).isEqualTo("kermit");
     assertThat(historicTaskInstance.getTaskDefinitionKey()).isEqualTo(taskDefinitionKey);
-    assertNull(historicTaskInstance.getEndTime());
-    assertNull(historicTaskInstance.getDurationInMillis());
+    assertThat(historicTaskInstance.getEndTime()).isNull();
+    assertThat(historicTaskInstance.getDurationInMillis()).isNull();
 
-    assertNull(historicTaskInstance.getCaseDefinitionId());
-    assertNull(historicTaskInstance.getCaseInstanceId());
-    assertNull(historicTaskInstance.getCaseExecutionId());
+    assertThat(historicTaskInstance.getCaseDefinitionId()).isNull();
+    assertThat(historicTaskInstance.getCaseInstanceId()).isNull();
+    assertThat(historicTaskInstance.getCaseExecutionId()).isNull();
     assertThat(historicTaskInstance.getTaskState()).isEqualTo("Updated");
 
     // the activity instance id is set
@@ -113,16 +109,16 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     assertThat(historicTaskInstance.getAssignee()).isEqualTo("kermit");
     assertThat(historicTaskInstance.getDeleteReason()).isEqualTo(TaskEntity.DELETE_REASON_COMPLETED);
     assertThat(historicTaskInstance.getTaskDefinitionKey()).isEqualTo(taskDefinitionKey);
-    assertNotNull(historicTaskInstance.getEndTime());
-    assertNotNull(historicTaskInstance.getDurationInMillis());
-    assertTrue(historicTaskInstance.getDurationInMillis() >= 1000);
-    assertTrue(((HistoricTaskInstanceEntity)historicTaskInstance).getDurationRaw() >= 1000);
+    assertThat(historicTaskInstance.getEndTime()).isNotNull();
+    assertThat(historicTaskInstance.getDurationInMillis()).isNotNull();
+    assertThat(historicTaskInstance.getDurationInMillis() >= 1000).isTrue();
+    assertThat(((HistoricTaskInstanceEntity) historicTaskInstance).getDurationRaw() >= 1000).isTrue();
     assertThat(historicTaskInstance.getTaskState()).isEqualTo("Completed");
 
 
-    assertNull(historicTaskInstance.getCaseDefinitionId());
-    assertNull(historicTaskInstance.getCaseInstanceId());
-    assertNull(historicTaskInstance.getCaseExecutionId());
+    assertThat(historicTaskInstance.getCaseDefinitionId()).isNull();
+    assertThat(historicTaskInstance.getCaseInstanceId()).isNull();
+    assertThat(historicTaskInstance.getCaseExecutionId()).isNull();
 
     historyService.deleteHistoricTaskInstance(taskId);
 
@@ -285,7 +281,7 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
           .processVariableValueEquals("hallo", "steffen")
           .singleResult();
 
-      assertNotNull(historicTaskInstance);
+      assertThat(historicTaskInstance).isNotNull();
       assertThat(historicTaskInstance.getId()).isEqualTo(taskId);
 
       taskService.complete(taskId);
@@ -303,7 +299,7 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
 
     // task exists & has no assignee:
     HistoricTaskInstance hti = historyService.createHistoricTaskInstanceQuery().singleResult();
-    assertNull(hti.getAssignee());
+    assertThat(hti.getAssignee()).isNull();
     assertThat(hti.getTaskState()).isEqualTo("Created");
 
     // assign task to jonny:
@@ -312,7 +308,7 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     // should be reflected in history
     hti = historyService.createHistoricTaskInstanceQuery().singleResult();
     assertThat(hti.getAssignee()).isEqualTo("jonny");
-    assertNull(hti.getOwner());
+    assertThat(hti.getOwner()).isNull();
     assertThat(hti.getTaskState()).isEqualTo("Updated");
 
     taskService.deleteTask(task.getId());
@@ -337,7 +333,7 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
 
     HistoricTaskInstance hti = historyService.createHistoricTaskInstanceQuery().singleResult();
     assertThat(hti.getAssignee()).isEqualTo("jonny");
-    assertNull(hti.getOwner());
+    assertThat(hti.getOwner()).isNull();
 
   }
 
@@ -348,7 +344,7 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
 
     // task exists & has no owner:
     HistoricTaskInstance hti = historyService.createHistoricTaskInstanceQuery().singleResult();
-    assertNull(hti.getOwner());
+    assertThat(hti.getOwner()).isNull();
 
     // set owner to jonny:
     taskService.setOwner(task.getId(), "jonny");
@@ -455,14 +451,14 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     HistoricTaskInstanceQuery historicTaskInstanceQuery1 = historyService.createHistoricTaskInstanceQuery();
     try {
       historicTaskInstanceQuery1.asc();
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).isEqualTo("You should call any of the orderBy methods first before specifying a direction: currentOrderingProperty is null");
     }
 
     try {
       historicTaskInstanceQuery1.desc();
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).isEqualTo("You should call any of the orderBy methods first before specifying a direction: currentOrderingProperty is null");
     }
@@ -470,7 +466,7 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     var historicTaskInstanceQuery2 = historicTaskInstanceQuery1.orderByProcessInstanceId();
     try {
       historicTaskInstanceQuery2.list();
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).isEqualTo("Invalid query: call asc() or desc() after using orderByXX(): direction is null");
     }
@@ -618,10 +614,10 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
 
     assertThat(query.count()).isEqualTo(1);
     assertThat(query.list()).hasSize(1);
-    assertNotNull(query.singleResult());
+    assertThat(query.singleResult()).isNotNull();
 
     HistoricTaskInstance task = query.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     assertThat(task.getCaseDefinitionId()).isEqualTo(caseDefinitionId);
     assertThat(task.getCaseInstanceId()).isEqualTo(caseInstanceId);
@@ -635,14 +631,14 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     query.caseDefinitionId("invalid");
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list()).hasSize(0);
-    assertNull(query.singleResult());
+    assertThat(query.list()).isEmpty();
+    assertThat(query.singleResult()).isNull();
 
     query.caseDefinitionId(null);
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list()).hasSize(0);
-    assertNull(query.singleResult());
+    assertThat(query.list()).isEmpty();
+    assertThat(query.singleResult()).isNull();
 
   }
 
@@ -676,10 +672,10 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
 
     assertThat(query.count()).isEqualTo(1);
     assertThat(query.list()).hasSize(1);
-    assertNotNull(query.singleResult());
+    assertThat(query.singleResult()).isNotNull();
 
     HistoricTaskInstance task = query.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     assertThat(task.getCaseDefinitionId()).isEqualTo(caseDefinitionId);
     assertThat(task.getCaseInstanceId()).isEqualTo(caseInstanceId);
@@ -693,14 +689,14 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     query.caseDefinitionKey("invalid");
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list()).hasSize(0);
-    assertNull(query.singleResult());
+    assertThat(query.list()).isEmpty();
+    assertThat(query.singleResult()).isNull();
 
     query.caseDefinitionKey(null);
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list()).hasSize(0);
-    assertNull(query.singleResult());
+    assertThat(query.list()).isEmpty();
+    assertThat(query.singleResult()).isNull();
 
   }
 
@@ -733,10 +729,10 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
 
     assertThat(query.count()).isEqualTo(1);
     assertThat(query.list()).hasSize(1);
-    assertNotNull(query.singleResult());
+    assertThat(query.singleResult()).isNotNull();
 
     HistoricTaskInstance task = query.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     assertThat(task.getCaseDefinitionId()).isEqualTo(caseDefinitionId);
     assertThat(task.getCaseInstanceId()).isEqualTo(caseInstanceId);
@@ -750,14 +746,14 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     query.caseDefinitionName("invalid");
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list()).hasSize(0);
-    assertNull(query.singleResult());
+    assertThat(query.list()).isEmpty();
+    assertThat(query.singleResult()).isNull();
 
     query.caseDefinitionName(null);
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list()).hasSize(0);
-    assertNull(query.singleResult());
+    assertThat(query.list()).isEmpty();
+    assertThat(query.singleResult()).isNull();
 
   }
 
@@ -791,10 +787,10 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
 
     assertThat(query.count()).isEqualTo(1);
     assertThat(query.list()).hasSize(1);
-    assertNotNull(query.singleResult());
+    assertThat(query.singleResult()).isNotNull();
 
     HistoricTaskInstance task = query.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     assertThat(task.getCaseDefinitionId()).isEqualTo(caseDefinitionId);
     assertThat(task.getCaseInstanceId()).isEqualTo(caseInstanceId);
@@ -833,8 +829,8 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     for (HistoricTaskInstance task : query.list()) {
       assertThat(task.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
-      assertNull(task.getCaseDefinitionId());
-      assertNull(task.getCaseExecutionId());
+      assertThat(task.getCaseDefinitionId()).isNull();
+      assertThat(task.getCaseExecutionId()).isNull();
 
       taskService.complete(task.getId());
     }
@@ -845,8 +841,8 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     for (HistoricTaskInstance task : query.list()) {
       assertThat(task.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
-      assertNull(task.getCaseDefinitionId());
-      assertNull(task.getCaseExecutionId());
+      assertThat(task.getCaseDefinitionId()).isNull();
+      assertThat(task.getCaseExecutionId()).isNull();
     }
 
   }
@@ -858,14 +854,14 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     query.caseInstanceId("invalid");
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list()).hasSize(0);
-    assertNull(query.singleResult());
+    assertThat(query.list()).isEmpty();
+    assertThat(query.singleResult()).isNull();
 
     query.caseInstanceId(null);
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list()).hasSize(0);
-    assertNull(query.singleResult());
+    assertThat(query.list()).isEmpty();
+    assertThat(query.singleResult()).isNull();
 
   }
 
@@ -899,10 +895,10 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
 
     assertThat(query.count()).isEqualTo(1);
     assertThat(query.list()).hasSize(1);
-    assertNotNull(query.singleResult());
+    assertThat(query.singleResult()).isNotNull();
 
     HistoricTaskInstance task = query.singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     assertThat(task.getCaseDefinitionId()).isEqualTo(caseDefinitionId);
     assertThat(task.getCaseInstanceId()).isEqualTo(caseInstanceId);
@@ -916,14 +912,14 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     query.caseExecutionId("invalid");
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list()).hasSize(0);
-    assertNull(query.singleResult());
+    assertThat(query.list()).isEmpty();
+    assertThat(query.singleResult()).isNull();
 
     query.caseExecutionId(null);
 
     assertThat(query.count()).isEqualTo(0);
-    assertThat(query.list()).hasSize(0);
-    assertNull(query.singleResult());
+    assertThat(query.list()).isEmpty();
+    assertThat(query.singleResult()).isNull();
 
   }
 
@@ -970,10 +966,10 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
         .singleResult();
 
     // then
-    assertNotNull(task.getProcessDefinitionKey());
+    assertThat(task.getProcessDefinitionKey()).isNotNull();
     assertThat(task.getProcessDefinitionKey()).isEqualTo(key);
 
-    assertNull(task.getCaseDefinitionKey());
+    assertThat(task.getCaseDefinitionKey()).isNull();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn")
@@ -991,10 +987,10 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
         .singleResult();
 
     // then
-    assertNotNull(task.getCaseDefinitionKey());
+    assertThat(task.getCaseDefinitionKey()).isNotNull();
     assertThat(task.getCaseDefinitionKey()).isEqualTo(key);
 
-    assertNull(task.getProcessDefinitionKey());
+    assertThat(task.getProcessDefinitionKey()).isNull();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")

@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.authorization;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentCaptor.forClass;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.eq;
@@ -159,7 +158,7 @@ public class GroupAuthorizationTest extends AuthorizationTest {
       verify(dbEntityManager).selectBoolean(eq("isUserAuthorizedForResource"), authorizationCheckArgument.capture());
 
       AuthorizationCheck authorizationCheck = authorizationCheckArgument.getValue();
-      assertTrue(authorizationCheck.getAuthGroupIds().isEmpty());
+      assertThat(authorizationCheck.getAuthGroupIds()).isEmpty();
 
       return null;
     });
@@ -225,7 +224,7 @@ public class GroupAuthorizationTest extends AuthorizationTest {
       verify(dbEntityManager).selectBoolean(eq("isUserAuthorizedForResource"), authorizationCheckArgument.capture());
 
       AuthorizationCheck authorizationCheck = authorizationCheckArgument.getValue();
-      assertTrue(authorizationCheck.getAuthGroupIds().isEmpty());
+      assertThat(authorizationCheck.getAuthGroupIds()).isEmpty();
 
       return null;
     });

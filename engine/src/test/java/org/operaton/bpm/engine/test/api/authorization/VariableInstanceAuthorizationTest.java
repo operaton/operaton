@@ -26,7 +26,6 @@ import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.TASK;
 import static org.operaton.bpm.engine.authorization.TaskPermissions.READ_VARIABLE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 import org.operaton.bpm.engine.runtime.VariableInstance;
@@ -146,7 +145,7 @@ public class VariableInstanceAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     VariableInstance variable = query.singleResult();
-    assertNotNull(variable);
+    assertThat(variable).isNotNull();
     assertThat(variable.getProcessInstanceId()).isEqualTo(processInstanceId);
   }
 
@@ -163,7 +162,7 @@ public class VariableInstanceAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     VariableInstance variable = query.singleResult();
-    assertNotNull(variable);
+    assertThat(variable).isNotNull();
     assertThat(variable.getProcessInstanceId()).isEqualTo(processInstanceId);
   }
 
@@ -181,7 +180,7 @@ public class VariableInstanceAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     VariableInstance variable = query.singleResult();
-    assertNotNull(variable);
+    assertThat(variable).isNotNull();
     assertThat(variable.getProcessInstanceId()).isEqualTo(processInstanceId);
   }
 
@@ -275,7 +274,7 @@ public class VariableInstanceAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     VariableInstance variable = query.singleResult();
-    assertNotNull(variable);
+    assertThat(variable).isNotNull();
     assertThat(variable.getProcessInstanceId()).isEqualTo(processInstanceId);
   }
 
@@ -294,7 +293,7 @@ public class VariableInstanceAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     VariableInstance variable = query.singleResult();
-    assertNotNull(variable);
+    assertThat(variable).isNotNull();
     assertThat(variable.getProcessInstanceId()).isEqualTo(processInstanceId);
   }
 
@@ -314,7 +313,7 @@ public class VariableInstanceAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     VariableInstance variable = query.singleResult();
-    assertNotNull(variable);
+    assertThat(variable).isNotNull();
     assertThat(variable.getProcessInstanceId()).isEqualTo(processInstanceId);
   }
 
@@ -334,7 +333,7 @@ public class VariableInstanceAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     VariableInstance variable = query.singleResult();
-    assertNotNull(variable);
+    assertThat(variable).isNotNull();
     assertThat(variable.getProcessInstanceId()).isEqualTo(processInstanceId);
   }
 

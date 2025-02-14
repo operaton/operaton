@@ -52,7 +52,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNull;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 /**
@@ -1595,7 +1595,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
     historyService.deleteUserOperationLogEntry(entryId);
 
     // then
-    assertNull(historyService.createUserOperationLogQuery().singleResult());
+    assertThat(historyService.createUserOperationLogQuery().singleResult()).isNull();
 
     deleteTask(taskId, true);
   }
@@ -1616,7 +1616,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
     historyService.deleteUserOperationLogEntry(entryId);
 
     // then
-    assertNull(historyService.createUserOperationLogQuery().singleResult());
+    assertThat(historyService.createUserOperationLogQuery().singleResult()).isNull();
 
     deleteTask(taskId, true);
   }
@@ -1668,7 +1668,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
 
     // then
     disableAuthorization();
-    assertNull(historyService.createUserOperationLogQuery().entityType("Task").singleResult());
+    assertThat(historyService.createUserOperationLogQuery().entityType("Task").singleResult()).isNull();
     enableAuthorization();
   }
 
@@ -1689,7 +1689,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
 
     // then
     disableAuthorization();
-    assertNull(historyService.createUserOperationLogQuery().entityType("Task").singleResult());
+    assertThat(historyService.createUserOperationLogQuery().entityType("Task").singleResult()).isNull();
     enableAuthorization();
   }
 
@@ -1710,7 +1710,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
 
     // then
     disableAuthorization();
-    assertNull(historyService.createUserOperationLogQuery().entityType("Task").singleResult());
+    assertThat(historyService.createUserOperationLogQuery().entityType("Task").singleResult()).isNull();
     enableAuthorization();
   }
 
@@ -1731,7 +1731,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
 
     // then
     disableAuthorization();
-    assertNull(historyService.createUserOperationLogQuery().entityType("Task").singleResult());
+    assertThat(historyService.createUserOperationLogQuery().entityType("Task").singleResult()).isNull();
     enableAuthorization();
   }
 
@@ -1755,7 +1755,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
 
     // then
     disableAuthorization();
-    assertNull(historyService.createUserOperationLogQuery().entityType("Task").singleResult());
+    assertThat(historyService.createUserOperationLogQuery().entityType("Task").singleResult()).isNull();
     enableAuthorization();
 
     disableAuthorization();
@@ -1861,7 +1861,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
     historyService.deleteUserOperationLogEntry(entryId);
 
     // then
-    assertNull(historyService.createUserOperationLogQuery().singleResult());
+    assertThat(historyService.createUserOperationLogQuery().singleResult()).isNull();
   }
 
   @Test
@@ -1881,7 +1881,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
     historyService.deleteUserOperationLogEntry(entryId);
 
     // then
-    assertNull(historyService.createUserOperationLogQuery().singleResult());
+    assertThat(historyService.createUserOperationLogQuery().singleResult()).isNull();
   }
 
   // update user operation log //////////////////////////////

@@ -22,7 +22,6 @@ import static org.operaton.bpm.engine.authorization.UserOperationLogCategoryPerm
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.CATEGORY_ADMIN;
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.CATEGORY_OPERATOR;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNull;
 
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -159,7 +158,7 @@ public class AuthorizationUserOperationLogTest extends AuthorizationTest {
     assertThat(entry.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_UPDATE);
     assertThat(entry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_ADMIN);
     assertThat(entry.getEntityType()).isEqualTo(EntityTypes.AUTHORIZATION);
-    assertNull(entry.getNewValue());
+    assertThat(entry.getNewValue()).isNull();
     assertThat(entry.getOrgValue()).isEqualTo("testUserId");
 
     entry = query.property("groupId").singleResult();
@@ -167,7 +166,7 @@ public class AuthorizationUserOperationLogTest extends AuthorizationTest {
     assertThat(entry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_ADMIN);
     assertThat(entry.getEntityType()).isEqualTo(EntityTypes.AUTHORIZATION);
     assertThat(entry.getNewValue()).isEqualTo("testGroupId");
-    assertNull(entry.getOrgValue());
+    assertThat(entry.getOrgValue()).isNull();
   }
 
   @Test

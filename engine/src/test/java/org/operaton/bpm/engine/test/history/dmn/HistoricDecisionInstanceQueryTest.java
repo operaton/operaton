@@ -42,7 +42,7 @@ import java.util.Date;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Philipp Ossler
@@ -337,7 +337,7 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
 
     try {
       query.decisionDefinitionNameLike(null);
-      fail();
+      fail("");
     } catch (NotValidException e) {
       // Expected exception
     }

@@ -48,9 +48,6 @@ import org.junit.Test;
 import org.junit.rules.RuleChain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 /**
  * @author Thorben Lindhauer
@@ -297,7 +294,7 @@ public class MigrationHistoricVariablesTest {
         Variables.createVariables().putValue("foo", "bar"));
 
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     executeJob(job);
 
     MigrationPlan migrationPlan = rule.getRuntimeService()
@@ -313,7 +310,7 @@ public class MigrationHistoricVariablesTest {
 
     // then the failed job is also migrated
     job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     assertThat(job.getRetries()).isEqualTo(0);
     managementService.setJobRetries(job.getId(), 1);
 
@@ -321,8 +318,8 @@ public class MigrationHistoricVariablesTest {
     executeJob(managementService.createJobQuery().singleResult());
 
     // then job succeeds
-    assertNull(managementService.createJobQuery().singleResult());
-    assertNotNull(runtimeService.createProcessInstanceQuery().activityIdIn(userTask).singleResult());
+    assertThat(managementService.createJobQuery().singleResult()).isNull();
+    assertThat(runtimeService.createProcessInstanceQuery().activityIdIn(userTask).singleResult()).isNotNull();
 
     // and variable history was written
     HistoricVariableInstance migratedInstance = historyService.createHistoricVariableInstanceQuery().singleResult();
@@ -334,8 +331,8 @@ public class MigrationHistoricVariablesTest {
         .processInstanceId(processInstance.getId())
         .singleResult();
 
-    assertNotNull(historicDetail);
-    assertTrue(historicDetail.isInitial());
+    assertThat(historicDetail).isNotNull();
+    assertThat(historicDetail.isInitial()).isTrue();
     assertThat(historicDetail.getVariableName()).isEqualTo("foo");
     assertThat(historicDetail.getTextValue()).isEqualTo("bar");
   }

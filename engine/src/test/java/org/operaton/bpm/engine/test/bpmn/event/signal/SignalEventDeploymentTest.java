@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.event.signal;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
@@ -43,7 +42,7 @@ public class SignalEventDeploymentTest extends PluggableProcessEngineTest {
         .addClasspathResource(SIGNAL_START_EVENT_PROCESS));
 
     EventSubscription eventSubscription = runtimeService.createEventSubscriptionQuery().singleResult();
-    assertNotNull(eventSubscription);
+    assertThat(eventSubscription).isNotNull();
 
     assertThat(eventSubscription.getEventType()).isEqualTo(EventType.SIGNAL.name());
     assertThat(eventSubscription.getEventName()).isEqualTo("alert");
@@ -56,7 +55,7 @@ public class SignalEventDeploymentTest extends PluggableProcessEngineTest {
         .addClasspathResource(SIGNAL_START_EVENT_PROCESS));
 
     EventSubscription eventSubscription = runtimeService.createEventSubscriptionQuery().eventType("signal").singleResult();
-    assertNotNull(eventSubscription);
+    assertThat(eventSubscription).isNotNull();
     assertThat(eventSubscription.getEventName()).isEqualTo("alert");
 
     // deploy a new version of the process with different signal name

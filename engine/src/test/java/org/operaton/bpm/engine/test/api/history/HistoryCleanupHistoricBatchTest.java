@@ -53,7 +53,6 @@ import org.junit.rules.RuleChain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertNull;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class HistoryCleanupHistoricBatchTest {
@@ -216,7 +215,7 @@ public class HistoryCleanupHistoricBatchTest {
     processEngineConfiguration.setBatchOperationsForHistoryCleanup(map);
     processEngineConfiguration.initHistoryCleanup();
 
-    assertNull(processEngineConfiguration.getBatchOperationHistoryTimeToLive());
+    assertThat(processEngineConfiguration.getBatchOperationHistoryTimeToLive()).isNull();
 
     Date startDate = ClockUtil.getCurrentTime();
     int daysInThePast = -11;
@@ -434,7 +433,7 @@ public class HistoryCleanupHistoricBatchTest {
   private void verifyByteArraysWereRemoved(final String... errorDetailsByteArrayIds) {
     engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(commandContext -> {
       for (String errorDetailsByteArrayId : errorDetailsByteArrayIds) {
-        assertNull(commandContext.getDbEntityManager().selectOne("selectByteArray", errorDetailsByteArrayId));
+        assertThat(commandContext.getDbEntityManager().selectOne("selectByteArray", errorDetailsByteArrayId)).isNull();
       }
       return null;
     });

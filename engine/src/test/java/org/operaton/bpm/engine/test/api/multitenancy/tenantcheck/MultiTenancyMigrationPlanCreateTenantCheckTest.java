@@ -26,7 +26,6 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
@@ -60,7 +59,7 @@ public class MultiTenancyMigrationPlanCreateTenantCheckTest {
       .build();
 
     // then
-    Assert.assertNotNull(migrationPlan);
+    assertThat(migrationPlan).isNotNull();
   }
 
   @Test
@@ -128,7 +127,7 @@ public class MultiTenancyMigrationPlanCreateTenantCheckTest {
       .build();
 
     // then
-    Assert.assertNotNull(migrationPlan);
+    assertThat(migrationPlan).isNotNull();
   }
 
 
@@ -147,7 +146,7 @@ public class MultiTenancyMigrationPlanCreateTenantCheckTest {
       .build();
 
     // then
-    Assert.assertNotNull(migrationPlan);
+    assertThat(migrationPlan).isNotNull();
 
   }
 }

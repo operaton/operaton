@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.bpmn.usertask;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.List;
 
@@ -133,7 +133,7 @@ public class TaskAssignmentExtensionsTest extends PluggableProcessEngineTest {
     assertThat(tasks).hasSize(1);
 
     tasks = taskService.createTaskQuery().taskCandidateUser("mispiggy").list();
-    assertThat(tasks).hasSize(0);
+    assertThat(tasks).isEmpty();
   }
 
 }

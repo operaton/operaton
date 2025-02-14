@@ -30,11 +30,7 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.model.bpmn.Bpmn;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.Assert.fail;
 
 /**
@@ -348,7 +344,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
     Object variableValue = runtimeService.getVariable(pi.getId(), "foo");
-    assertNull(variableValue);
+    assertThat(variableValue).isNull();
 
   }
 
@@ -361,7 +357,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
     Object variableValue = runtimeService.getVariable(pi.getId(), "foo");
-    assertNull(variableValue);
+    assertThat(variableValue).isNull();
 
   }
 
@@ -374,7 +370,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
     Object variableValue = runtimeService.getVariable(pi.getId(), "foo");
-    assertNull(variableValue);
+    assertThat(variableValue).isNull();
 
   }
 
@@ -387,7 +383,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
     Object variableValue = runtimeService.getVariable(pi.getId(), "foo");
-    assertNull(variableValue);
+    assertThat(variableValue).isNull();
 
   }
 
@@ -593,12 +589,12 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
     runtimeService.startProcessInstanceByKey("testProcess");
 
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
   }
 
   @Test
   public void testAutoStoreScriptVarsOff() {
-    assertFalse(processEngineConfiguration.isAutoStoreScriptVariables());
+    assertThat(processEngineConfiguration.isAutoStoreScriptVariables()).isFalse();
   }
 
   @org.operaton.bpm.engine.test.Deployment
@@ -606,7 +602,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
   public void testPreviousTaskShouldNotHandleException(){
     try {
       runtimeService.startProcessInstanceByKey("process");
-      fail();
+      fail("");
     }
     // since the NVE extends the ProcessEngineException we have to handle it
     // separately
@@ -654,7 +650,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
 
     // Since 'def' is used, the 'scriptVar' will be script local
     // and not automatically stored as a process variable.
-    assertNull(runtimeService.getVariable(pi.getId(), "scriptVar"));
+    assertThat(runtimeService.getVariable(pi.getId(), "scriptVar")).isNull();
     assertThat(runtimeService.getVariable(pi.getId(), "myVar")).isEqualTo("test123");
   }
 

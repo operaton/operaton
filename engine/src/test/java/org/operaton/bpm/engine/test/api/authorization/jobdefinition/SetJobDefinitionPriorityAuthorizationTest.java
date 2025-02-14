@@ -31,7 +31,6 @@ import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario
 import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -128,7 +127,7 @@ public class SetJobDefinitionPriorityAuthorizationTest {
     // then
     if (authRule.assertScenario(scenario)) {
       JobDefinition updatedJobDefinition = engineRule.getManagementService().createJobDefinitionQuery().singleResult();
-      Assert.assertNull(updatedJobDefinition.getOverridingJobPriority());
+      assertThat(updatedJobDefinition.getOverridingJobPriority()).isNull();
     }
   }
 

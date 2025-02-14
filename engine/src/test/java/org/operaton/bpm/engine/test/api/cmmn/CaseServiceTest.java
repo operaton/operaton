@@ -20,9 +20,7 @@ import static org.operaton.bpm.engine.variable.Variables.booleanValue;
 import static org.operaton.bpm.engine.variable.Variables.createVariables;
 import static org.operaton.bpm.engine.variable.Variables.integerValue;
 import static org.operaton.bpm.engine.variable.Variables.stringValue;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -56,21 +54,21 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
   public void testCreateCaseInstanceQuery() {
     CaseInstanceQuery query = caseService.createCaseInstanceQuery();
 
-    assertNotNull(query);
+    assertThat(query).isNotNull();
   }
 
   @Test
   public void testCreateCaseExecutionQuery() {
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
 
-    assertNotNull(query);
+    assertThat(query).isNotNull();
   }
 
   @Test
   public void testWithCaseExecution() {
     CaseExecutionCommandBuilder builder = caseService.withCaseExecution("aCaseExecutionId");
 
-    assertNotNull(builder);
+    assertThat(builder).isNotNull();
   }
 
   @Test
@@ -160,7 +158,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseExecutionIdIn(caseExecutionId)
         .list();
 
-    assertTrue(result.isEmpty());
+    assertThat(result).isEmpty();
 
     // query by case instance id
     result = runtimeService
@@ -168,7 +166,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseInstanceIdIn(caseInstanceId)
         .list();
 
-    assertFalse(result.isEmpty());
+    assertThat(result).isNotEmpty();
     assertThat(result).hasSize(2);
 
     for (VariableInstance variable : result) {
@@ -225,7 +223,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseExecutionIdIn(caseExecutionId)
         .list();
 
-    assertTrue(result.isEmpty());
+    assertThat(result).isEmpty();
 
     // query by case instance id
     result = runtimeService
@@ -233,7 +231,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseInstanceIdIn(caseInstanceId)
         .list();
 
-    assertFalse(result.isEmpty());
+    assertThat(result).isNotEmpty();
     assertThat(result).hasSize(2);
 
     for (VariableInstance variable : result) {
@@ -293,7 +291,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseExecutionIdIn(caseExecutionId)
         .list();
 
-    assertTrue(result.isEmpty());
+    assertThat(result).isEmpty();
 
     // query by caseInstanceId
     result = runtimeService
@@ -301,7 +299,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseInstanceIdIn(caseInstanceId)
         .list();
 
-    assertFalse(result.isEmpty());
+    assertThat(result).isNotEmpty();
     assertThat(result).hasSize(2);
 
     for (VariableInstance variable : result) {
@@ -361,7 +359,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseExecutionIdIn(caseExecutionId)
         .list();
 
-    assertTrue(result.isEmpty());
+    assertThat(result).isEmpty();
 
     // query by caseInstanceId
     result = runtimeService
@@ -369,7 +367,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseInstanceIdIn(caseInstanceId)
         .list();
 
-    assertFalse(result.isEmpty());
+    assertThat(result).isNotEmpty();
     assertThat(result).hasSize(2);
 
     for (VariableInstance variable : result) {
@@ -430,7 +428,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseExecutionIdIn(caseExecutionId)
         .list();
 
-    assertTrue(result.isEmpty());
+    assertThat(result).isEmpty();
 
     // query by caseInstanceId
     result = runtimeService
@@ -438,7 +436,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseInstanceIdIn(caseInstanceId)
         .list();
 
-    assertFalse(result.isEmpty());
+    assertThat(result).isNotEmpty();
     assertThat(result).hasSize(3);
 
     for (VariableInstance variable : result) {
@@ -503,7 +501,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseExecutionIdIn(caseExecutionId)
         .list();
 
-    assertTrue(result.isEmpty());
+    assertThat(result).isEmpty();
 
     // query by caseInstanceId
     result = runtimeService
@@ -511,7 +509,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseInstanceIdIn(caseInstanceId)
         .list();
 
-    assertFalse(result.isEmpty());
+    assertThat(result).isNotEmpty();
     assertThat(result).hasSize(3);
 
     for (VariableInstance variable : result) {
@@ -571,7 +569,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseExecutionIdIn(caseExecutionId)
         .list();
 
-    assertFalse(result.isEmpty());
+    assertThat(result).isNotEmpty();
     assertThat(result).hasSize(2);
 
     for (VariableInstance variable : result) {
@@ -596,7 +594,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseInstanceIdIn(caseInstanceId)
         .list();
 
-    assertFalse(result.isEmpty());
+    assertThat(result).isNotEmpty();
     assertThat(result).hasSize(2);
 
     for (VariableInstance variable : result) {
@@ -657,7 +655,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseExecutionIdIn(caseExecutionId)
         .list();
 
-    assertFalse(result.isEmpty());
+    assertThat(result).isNotEmpty();
     assertThat(result).hasSize(2);
 
     for (VariableInstance variable : result) {
@@ -682,7 +680,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseInstanceIdIn(caseInstanceId)
         .list();
 
-    assertFalse(result.isEmpty());
+    assertThat(result).isNotEmpty();
     assertThat(result).hasSize(2);
 
     for (VariableInstance variable : result) {
@@ -742,7 +740,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseExecutionIdIn(caseExecutionId)
         .list();
 
-    assertFalse(result.isEmpty());
+    assertThat(result).isNotEmpty();
     assertThat(result).hasSize(2);
 
     for (VariableInstance variable : result) {
@@ -803,7 +801,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseExecutionIdIn(caseExecutionId)
         .list();
 
-    assertFalse(result.isEmpty());
+    assertThat(result).isNotEmpty();
     assertThat(result).hasSize(3);
 
     for (VariableInstance variable : result) {
@@ -831,7 +829,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseInstanceIdIn(caseInstanceId)
         .list();
 
-    assertFalse(result.isEmpty());
+    assertThat(result).isNotEmpty();
     assertThat(result).hasSize(3);
 
     for (VariableInstance variable : result) {
@@ -895,12 +893,12 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseExecutionIdIn(caseExecutionId)
         .list();
 
-    assertFalse(result.isEmpty());
+    assertThat(result).isNotEmpty();
     assertThat(result).hasSize(1);
 
     VariableInstance aThirdVariable = result.get(0);
 
-    assertNotNull(aThirdVariable);
+    assertThat(aThirdVariable).isNotNull();
     assertThat(aThirdVariable.getName()).isEqualTo("aThirdVariable");
     assertThat(aThirdVariable.getValue()).isEqualTo(123);
 
@@ -910,7 +908,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseInstanceIdIn(caseInstanceId)
         .list();
 
-    assertFalse(result.isEmpty());
+    assertThat(result).isNotEmpty();
     assertThat(result).hasSize(3);
 
     for (VariableInstance variable : result) {
@@ -982,7 +980,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseExecutionIdIn(caseExecutionId)
         .list();
 
-    assertTrue(result.isEmpty());
+    assertThat(result).isEmpty();
 
     // query by case instance id
     result = runtimeService
@@ -990,7 +988,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseInstanceIdIn(caseInstanceId)
         .list();
 
-    assertTrue(result.isEmpty());
+    assertThat(result).isEmpty();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -1035,7 +1033,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseExecutionIdIn(caseExecutionId)
         .list();
 
-    assertTrue(result.isEmpty());
+    assertThat(result).isEmpty();
 
     // query by caseInstanceId
     result = runtimeService
@@ -1043,7 +1041,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseInstanceIdIn(caseInstanceId)
         .list();
 
-    assertTrue(result.isEmpty());
+    assertThat(result).isEmpty();
 
   }
 
@@ -1091,7 +1089,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseExecutionIdIn(caseExecutionId)
         .list();
 
-    assertTrue(result.isEmpty());
+    assertThat(result).isEmpty();
 
     // query by caseInstanceId
     result = runtimeService
@@ -1099,7 +1097,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseInstanceIdIn(caseInstanceId)
         .list();
 
-    assertTrue(result.isEmpty());
+    assertThat(result).isEmpty();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -1145,7 +1143,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseExecutionIdIn(caseExecutionId)
         .list();
 
-    assertTrue(result.isEmpty());
+    assertThat(result).isEmpty();
 
     // query by case instance id
     result = runtimeService
@@ -1153,7 +1151,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseInstanceIdIn(caseInstanceId)
         .list();
 
-    assertTrue(result.isEmpty());
+    assertThat(result).isEmpty();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -1202,7 +1200,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseExecutionIdIn(caseExecutionId)
         .list();
 
-    assertTrue(result.isEmpty());
+    assertThat(result).isEmpty();
 
     // query by caseInstanceId
     result = runtimeService
@@ -1210,7 +1208,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseInstanceIdIn(caseInstanceId)
         .list();
 
-    assertTrue(result.isEmpty());
+    assertThat(result).isEmpty();
 
   }
 
@@ -1262,7 +1260,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseExecutionIdIn(caseExecutionId)
         .list();
 
-    assertTrue(result.isEmpty());
+    assertThat(result).isEmpty();
 
     // query by caseInstanceId
     result = runtimeService
@@ -1270,7 +1268,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseInstanceIdIn(caseInstanceId)
         .list();
 
-    assertTrue(result.isEmpty());
+    assertThat(result).isEmpty();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -1321,7 +1319,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseExecutionIdIn(caseExecutionId)
         .list();
 
-    assertTrue(result.isEmpty());
+    assertThat(result).isEmpty();
 
     // query by caseInstanceId
     result = runtimeService
@@ -1329,7 +1327,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseInstanceIdIn(caseInstanceId)
         .list();
 
-    assertTrue(result.isEmpty());
+    assertThat(result).isEmpty();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -1431,9 +1429,10 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
      // when
      Map<String, Object> variables = caseService.getVariables(caseExecutionId);
 
-     // then
-     assertNotNull(variables);
-     assertFalse(variables.isEmpty());
+    // then
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(2)
             .containsEntry("aVariableName", "abc")
@@ -1469,13 +1468,13 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
      // when
      VariableMap variables = caseService.getVariablesTyped(caseExecutionId);
 
-     // then
-     assertNotNull(variables);
-     assertFalse(variables.isEmpty());
-    assertThat(variables).hasSize(2);
-
-    assertThat(variables).containsEntry("aVariableName", "abc");
-    assertThat(variables).containsEntry("anotherVariableName", 999);
+    // then
+    assertThat(variables).isNotNull();
+    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .hasSize(2)
+            .containsEntry("aVariableName", "abc")
+            .containsEntry("anotherVariableName", 999);
 
     assertThat(caseService.getVariablesTyped(caseExecutionId, true)).isEqualTo(variables);
   }
@@ -1530,9 +1529,10 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
      // when
      Map<String, Object> variables = caseService.getVariables(caseExecutionId, names);
 
-     // then
-     assertNotNull(variables);
-     assertFalse(variables.isEmpty());
+    // then
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(2)
             .containsEntry("aVariableName", "abc")
@@ -1574,13 +1574,13 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
      // when
      VariableMap variables = caseService.getVariablesTyped(caseExecutionId, names, true);
 
-     // then
-     assertNotNull(variables);
-     assertFalse(variables.isEmpty());
-    assertThat(variables).hasSize(2);
-
-    assertThat(variables).containsEntry("aVariableName", "abc");
-    assertThat(variables).containsEntry("anotherVariableName", 999);
+    // then
+    assertThat(variables).isNotNull();
+    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .hasSize(2)
+            .containsEntry("aVariableName", "abc")
+            .containsEntry("anotherVariableName", 999);
 
     assertThat(caseService.getVariables(caseExecutionId, names)).isEqualTo(variables);
   }
@@ -1634,9 +1634,10 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
      // when
      Map<String, Object> variables = caseService.getVariablesLocal(caseExecutionId);
 
-     // then
-     assertNotNull(variables);
-     assertFalse(variables.isEmpty());
+    // then
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(2)
             .containsEntry("aVariableName", "abc")
@@ -1676,13 +1677,13 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
      // when
      VariableMap variables = caseService.getVariablesLocalTyped(caseExecutionId);
 
-     // then
-     assertNotNull(variables);
-     assertFalse(variables.isEmpty());
-    assertThat(variables).hasSize(2);
-
-    assertThat(variables).containsEntry("aVariableName", "abc");
-    assertThat(variables).containsEntry("anotherVariableName", 999);
+    // then
+    assertThat(variables).isNotNull();
+    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .hasSize(2)
+            .containsEntry("aVariableName", "abc")
+            .containsEntry("anotherVariableName", 999);
 
     assertThat(caseService.getVariablesLocalTyped(caseExecutionId, true)).isEqualTo(variables);
   }
@@ -1740,9 +1741,10 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
      // when
      Map<String, Object> variables = caseService.getVariablesLocal(caseExecutionId, names);
 
-     // then
-     assertNotNull(variables);
-     assertFalse(variables.isEmpty());
+    // then
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(2)
             .containsEntry("aVariableName", "abc")
@@ -1786,13 +1788,13 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
      // when
      VariableMap variables = caseService.getVariablesLocalTyped(caseExecutionId, names, true);
 
-     // then
-     assertNotNull(variables);
-     assertFalse(variables.isEmpty());
-    assertThat(variables).hasSize(2);
-
-    assertThat(variables).containsEntry("aVariableName", "abc");
-    assertThat(variables).containsEntry("anotherVariableName", 999);
+    // then
+    assertThat(variables).isNotNull();
+    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .hasSize(2)
+            .containsEntry("aVariableName", "abc")
+            .containsEntry("anotherVariableName", 999);
 
     assertThat(caseService.getVariablesLocal(caseExecutionId, names)).isEqualTo(variables);
   }
@@ -1842,9 +1844,10 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
      // when
      Object value = caseService.getVariable(caseExecutionId, "aVariableName");
 
-     // then
-     assertNotNull(value);
-    assertThat(value).isEqualTo("abc");
+    // then
+    assertThat(value)
+            .isNotNull()
+            .isEqualTo("abc");
   }
 
   @Test
@@ -1895,9 +1898,10 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
      // when
      Object value = caseService.getVariableLocal(caseExecutionId, "aVariableName");
 
-     // then
-     assertNotNull(value);
-    assertThat(value).isEqualTo("abc");
+    // then
+    assertThat(value)
+            .isNotNull()
+            .isEqualTo("abc");
   }
 
   @Test
@@ -1947,13 +1951,13 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
      ObjectValue objectValue = caseService.getVariableTyped(caseExecutionId, "aSerializedObject");
      ObjectValue serializedObjectValue = caseService.getVariableTyped(caseExecutionId, "aSerializedObject", false);
 
-     // then
-     assertNotNull(stringValue.getValue());
-     assertNotNull(objectValue.getValue());
-     assertTrue(objectValue.isDeserialized());
+    // then
+    assertThat(stringValue.getValue()).isNotNull();
+    assertThat(objectValue.getValue()).isNotNull();
+    assertThat(objectValue.isDeserialized()).isTrue();
     assertThat(objectValue.getValue()).isEqualTo(Arrays.asList("1", "2"));
-     assertFalse(serializedObjectValue.isDeserialized());
-     assertNotNull(serializedObjectValue.getValueSerialized());
+    assertThat(serializedObjectValue.isDeserialized()).isFalse();
+    assertThat(serializedObjectValue.getValueSerialized()).isNotNull();
   }
 
   @Test
@@ -2001,7 +2005,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseExecutionIdIn(caseExecutionId)
         .list();
 
-    assertTrue(result.isEmpty());
+    assertThat(result).isEmpty();
 
     // query by case instance id
     result = runtimeService
@@ -2009,7 +2013,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseExecutionIdIn(caseInstanceId)
         .list();
 
-    assertFalse(result.isEmpty());
+    assertThat(result).isNotEmpty();
     assertThat(result).hasSize(1);
 
     VariableInstance variable = result.get(0);
@@ -2048,7 +2052,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseExecutionIdIn(caseExecutionId)
         .list();
 
-    assertTrue(result.isEmpty());
+    assertThat(result).isEmpty();
 
     // query by case instance id
     result = runtimeService
@@ -2056,7 +2060,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseExecutionIdIn(caseInstanceId)
         .list();
 
-    assertFalse(result.isEmpty());
+    assertThat(result).isNotEmpty();
     assertThat(result).hasSize(2);
 
     for (VariableInstance variable : result) {
@@ -2108,7 +2112,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseExecutionIdIn(caseInstanceId)
         .list();
 
-    assertTrue(result.isEmpty());
+    assertThat(result).isEmpty();
 
     // query by caseExecutionId
     result = runtimeService
@@ -2116,7 +2120,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseExecutionIdIn(caseExecutionId)
         .list();
 
-    assertFalse(result.isEmpty());
+    assertThat(result).isNotEmpty();
     assertThat(result).hasSize(1);
 
     VariableInstance variable = result.get(0);
@@ -2155,7 +2159,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseExecutionIdIn(caseInstanceId)
         .list();
 
-    assertTrue(result.isEmpty());
+    assertThat(result).isEmpty();
 
     // query by caseExecutionId
     result = runtimeService
@@ -2163,7 +2167,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .caseExecutionIdIn(caseExecutionId)
         .list();
 
-    assertFalse(result.isEmpty());
+    assertThat(result).isNotEmpty();
     assertThat(result).hasSize(2);
 
     for (VariableInstance variable : result) {
@@ -2220,13 +2224,13 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
      ObjectValue objectValue = caseService.getVariableLocalTyped(caseExecutionId, "aSerializedObject");
      ObjectValue serializedObjectValue = caseService.getVariableLocalTyped(caseExecutionId, "aSerializedObject", false);
 
-     // then
-     assertNotNull(stringValue.getValue());
-     assertNotNull(objectValue.getValue());
-     assertTrue(objectValue.isDeserialized());
+    // then
+    assertThat(stringValue.getValue()).isNotNull();
+    assertThat(objectValue.getValue()).isNotNull();
+    assertThat(objectValue.isDeserialized()).isTrue();
     assertThat(objectValue.getValue()).isEqualTo(Arrays.asList("1", "2"));
-     assertFalse(serializedObjectValue.isDeserialized());
-     assertNotNull(serializedObjectValue.getValueSerialized());
+    assertThat(serializedObjectValue.isDeserialized()).isFalse();
+    assertThat(serializedObjectValue.getValueSerialized()).isNotNull();
   }
 
   @Test
@@ -2299,7 +2303,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
 
     // then there should be only one variable left
     VariableInstance variable = runtimeService.createVariableInstanceQuery().singleResult();
-    assertNotNull(variable);
+    assertThat(variable).isNotNull();
     assertThat(variable.getName()).isEqualTo("aThirdVariable");
   }
 
@@ -2371,7 +2375,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
 
     // then there should be only one variable left
     VariableInstance variable = runtimeService.createVariableInstanceQuery().singleResult();
-    assertNotNull(variable);
+    assertThat(variable).isNotNull();
     assertThat(variable.getName()).isEqualTo("aThirdVariable");
   }
 
@@ -2386,7 +2390,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
       .caseDefinitionKey("loanApplication")
       .singleResult();
 
-    assertNotNull(caseDefinition);
+    assertThat(caseDefinition).isNotNull();
 
     // when
     // create a new case instance by id
@@ -2398,7 +2402,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
     // then
     // the returned caseInstance is not null
 
-    assertNotNull(caseInstance);
+    assertThat(caseInstance).isNotNull();
 
     // verify that the case instance is persisted using the API
 
@@ -2407,7 +2411,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
       .caseInstanceId(caseInstance.getId())
       .singleResult();
 
-    assertNotNull(instance);
+    assertThat(instance).isNotNull();
 
   }
 
@@ -2422,7 +2426,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
       .caseDefinitionKey("loanApplication")
       .singleResult();
 
-    assertNotNull(caseDefinition);
+    assertThat(caseDefinition).isNotNull();
 
     // when
     // create a new case instance by key
@@ -2434,7 +2438,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
     // then
     // the returned caseInstance is not null
 
-    assertNotNull(caseInstance);
+    assertThat(caseInstance).isNotNull();
 
     // verify that the case instance is persisted using the API
 
@@ -2443,7 +2447,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
       .caseInstanceId(caseInstance.getId())
       .singleResult();
 
-    assertNotNull(instance);
+    assertThat(instance).isNotNull();
 
   }
 
@@ -2458,7 +2462,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
       .caseDefinitionKey("loanApplication")
       .singleResult();
 
-    assertNotNull(caseDefinition);
+    assertThat(caseDefinition).isNotNull();
 
     // when
     // create a new case instance by key
@@ -2470,7 +2474,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
     // then
     // the returned caseInstance is not null
 
-    assertNotNull(caseInstance);
+    assertThat(caseInstance).isNotNull();
 
     // verify that there are three case execution:
     // - the case instance itself (ie. for the casePlanModel)
@@ -2489,21 +2493,21 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .activityId("CasePlanModel_1")
         .singleResult();
 
-    assertNotNull(casePlanModelExecution);
+    assertThat(casePlanModelExecution).isNotNull();
 
     CaseExecution stageExecution = caseService
         .createCaseExecutionQuery()
         .activityId("PI_Stage_1")
         .singleResult();
 
-    assertNotNull(stageExecution);
+    assertThat(stageExecution).isNotNull();
 
     CaseExecution humanTaskExecution = caseService
         .createCaseExecutionQuery()
         .activityId("PI_HumanTask_6")
         .singleResult();
 
-    assertNotNull(humanTaskExecution);
+    assertThat(humanTaskExecution).isNotNull();
 
   }
 
@@ -2518,7 +2522,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
       .caseDefinitionKey("loanApplication")
       .singleResult();
 
-    assertNotNull(caseDefinition);
+    assertThat(caseDefinition).isNotNull();
 
     // when
     // create a new case instance by key
@@ -2530,7 +2534,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
     // then
     // the returned caseInstance is not null
 
-    assertNotNull(caseInstance);
+    assertThat(caseInstance).isNotNull();
 
     // verify that there is one caseInstance
 
@@ -2553,8 +2557,8 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
     Map<String, Object> variables = caseService.getVariables(caseInstanceId, new ArrayList<>());
 
     // then
-    assertNotNull(variables);
-    assertTrue(variables.isEmpty());
+    assertThat(variables).isNotNull();
+    assertThat(variables).isEmpty();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -2567,8 +2571,8 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
     Map<String, Object> variables = caseService.getVariablesTyped(caseInstanceId, new ArrayList<>(), false);
 
     // then
-    assertNotNull(variables);
-    assertTrue(variables.isEmpty());
+    assertThat(variables).isNotNull();
+    assertThat(variables).isEmpty();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -2581,8 +2585,8 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
     Map<String, Object> variables = caseService.getVariablesLocal(caseInstanceId, new ArrayList<>());
 
     // then
-    assertNotNull(variables);
-    assertTrue(variables.isEmpty());
+    assertThat(variables).isNotNull();
+    assertThat(variables).isEmpty();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -2595,8 +2599,8 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
     Map<String, Object> variables = caseService.getVariablesLocalTyped(caseInstanceId, new ArrayList<>(), false);
 
     // then
-    assertNotNull(variables);
-    assertTrue(variables.isEmpty());
+    assertThat(variables).isNotNull();
+    assertThat(variables).isEmpty();
   }
 
 }

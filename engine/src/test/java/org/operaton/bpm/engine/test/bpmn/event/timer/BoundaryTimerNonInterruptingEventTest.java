@@ -17,8 +17,7 @@
 package org.operaton.bpm.engine.test.bpmn.event.timer;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import java.text.SimpleDateFormat;
@@ -172,7 +171,7 @@ public class BoundaryTimerNonInterruptingEventTest {
     Job job = managementService.createJobQuery()
         .processInstanceId(pi.getId())
         .singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
 
     // execute the timer
     managementService.executeJob(job.getId());
@@ -209,7 +208,7 @@ public class BoundaryTimerNonInterruptingEventTest {
     assertThat(task1.getName()).isEqualTo("Main Task");
 
     Job job = managementService.createJobQuery().processInstanceId(pi.getId()).singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
 
     managementService.executeJob(job.getId());
 
@@ -251,7 +250,7 @@ public class BoundaryTimerNonInterruptingEventTest {
     Job job = managementService.createJobQuery()
         .processInstanceId(pi.getId())
         .singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
 
     // execute the timer
     managementService.executeJob(job.getId());
@@ -469,7 +468,7 @@ public class BoundaryTimerNonInterruptingEventTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("nonInterruptingTimer");
 
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
 
     managementService.executeJob(job.getId());
 
@@ -491,24 +490,24 @@ public class BoundaryTimerNonInterruptingEventTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("nonInterruptingTimer");
 
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
 
     managementService.executeJob(job.getId());
 
     Task task = taskService.createTaskQuery().taskDefinitionKey("innerTask1").singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     taskService.complete(task.getId());
 
     task = taskService.createTaskQuery().taskDefinitionKey("innerTask2").singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     taskService.complete(task.getId());
 
     task = taskService.createTaskQuery().taskDefinitionKey("timerFiredTask1").singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     taskService.complete(task.getId());
 
     task = taskService.createTaskQuery().taskDefinitionKey("timerFiredTask2").singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     taskService.complete(task.getId());
 
     testHelper.assertProcessEnded(pi.getId());
@@ -518,24 +517,24 @@ public class BoundaryTimerNonInterruptingEventTest {
     pi = runtimeService.startProcessInstanceByKey("nonInterruptingTimer");
 
     job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
 
     managementService.executeJob(job.getId());
 
     task = taskService.createTaskQuery().taskDefinitionKey("timerFiredTask1").singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     taskService.complete(task.getId());
 
     task = taskService.createTaskQuery().taskDefinitionKey("timerFiredTask2").singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     taskService.complete(task.getId());
 
     task = taskService.createTaskQuery().taskDefinitionKey("innerTask1").singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     taskService.complete(task.getId());
 
     task = taskService.createTaskQuery().taskDefinitionKey("innerTask2").singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     taskService.complete(task.getId());
 
     testHelper.assertProcessEnded(pi.getId());
@@ -547,7 +546,7 @@ public class BoundaryTimerNonInterruptingEventTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("nonInterruptingTimer");
 
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
 
     managementService.executeJob(job.getId());
 
@@ -580,7 +579,7 @@ public class BoundaryTimerNonInterruptingEventTest {
     assertThat(jobQuery.count()).isEqualTo(1);
 
     String anotherJobId = jobQuery.singleResult().getId();
-    assertNotEquals(jobId, anotherJobId);
+    assertThat(anotherJobId).isNotEqualTo(jobId);
   }
 
   @Deployment
@@ -600,7 +599,7 @@ public class BoundaryTimerNonInterruptingEventTest {
     // when (1)
     try {
       managementService.executeJob(jobId);
-      fail();
+      fail("");
     } catch (Exception e) {
       // expected
     }
@@ -654,7 +653,7 @@ public class BoundaryTimerNonInterruptingEventTest {
 
     // there should be a single timer job (R5/PT1H)
     TimerEntity timerJob = (TimerEntity) managementService.createJobQuery().singleResult();
-    assertNotNull(timerJob);
+    assertThat(timerJob).isNotNull();
     assertThat(timerJob.getRepeat()).isEqualTo("R5/" + sdf.format(ClockUtil.getCurrentTime()) + "/PT1H");
 
     // WHEN

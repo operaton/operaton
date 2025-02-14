@@ -17,9 +17,7 @@
 package org.operaton.bpm.engine.test.api.runtime;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import java.util.Calendar;
@@ -36,7 +34,6 @@ import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -60,7 +57,7 @@ public class EventSubscriptionQueryTest extends PluggableProcessEngineTest {
 
     assertThat(query.count()).isEqualTo(1);
     assertThat(query.list()).hasSize(1);
-    assertNotNull(query.singleResult());
+    assertThat(query.singleResult()).isNotNull();
     var eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery();
 
     try {
@@ -167,7 +164,7 @@ public class EventSubscriptionQueryTest extends PluggableProcessEngineTest {
     EventSubscription subscription = runtimeService.createEventSubscriptionQuery()
       .processInstanceId(processInstance.getId())
       .singleResult();
-    assertNotNull(subscription);
+    assertThat(subscription).isNotNull();
 
     Execution executionWaitingForSignal = runtimeService.createExecutionQuery()
       .activityId("signalEvent")
@@ -178,7 +175,7 @@ public class EventSubscriptionQueryTest extends PluggableProcessEngineTest {
     EventSubscription signalSubscription = runtimeService.createEventSubscriptionQuery()
       .executionId(executionWaitingForSignal.getId())
       .singleResult();
-    assertNotNull(signalSubscription);
+    assertThat(signalSubscription).isNotNull();
 
     assertThat(subscription).isEqualTo(signalSubscription);
     var eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery();
@@ -200,8 +197,8 @@ public class EventSubscriptionQueryTest extends PluggableProcessEngineTest {
     List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().orderByCreated().asc().list();
     assertThat(eventSubscriptions).hasSize(3);
 
-    Assert.assertTrue(eventSubscriptions.get(0).getCreated().compareTo(eventSubscriptions.get(1).getCreated()) < 0);
-    Assert.assertTrue(eventSubscriptions.get(1).getCreated().compareTo(eventSubscriptions.get(2).getCreated()) < 0);
+    assertThat(eventSubscriptions.get(0).getCreated().compareTo(eventSubscriptions.get(1).getCreated()) < 0).isTrue();
+    assertThat(eventSubscriptions.get(1).getCreated().compareTo(eventSubscriptions.get(2).getCreated()) < 0).isTrue();
 
     cleanDb();
   }
@@ -213,7 +210,7 @@ public class EventSubscriptionQueryTest extends PluggableProcessEngineTest {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
 
-    assertTrue(areJobsAvailable());
+    assertThat(areJobsAvailable()).isTrue();
 
     long eventSubscriptionCount = runtimeService.createEventSubscriptionQuery().count();
     assertThat(eventSubscriptionCount).isEqualTo(2);
@@ -222,7 +219,7 @@ public class EventSubscriptionQueryTest extends PluggableProcessEngineTest {
     assertThat(messageEvent.getEventName()).isEqualTo(message);
 
     EventSubscription compensationEvent = runtimeService.createEventSubscriptionQuery().eventType("compensate").singleResult();
-    assertNull(compensationEvent.getEventName());
+    assertThat(compensationEvent.getEventName()).isNull();
 
     runtimeService.createMessageCorrelation(message).processInstanceId(processInstance.getId()).correlate();
 

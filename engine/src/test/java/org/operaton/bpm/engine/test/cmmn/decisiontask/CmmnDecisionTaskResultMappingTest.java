@@ -17,8 +17,7 @@
 package org.operaton.bpm.engine.test.cmmn.decisiontask;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.List;
 import java.util.Map;
@@ -172,7 +171,7 @@ public class CmmnDecisionTaskResultMappingTest extends CmmnTest {
     CaseInstance caseInstance = createTestCase("single entry");
 
     // then the variable should not be available outside the decision task
-    assertNull(caseService.getVariable(caseInstance.getId(), "decisionResult"));
+    assertThat(caseService.getVariable(caseInstance.getId(), "decisionResult")).isNull();
   }
 
   @Deployment(resources = { OVERRIDE_DECISION_RESULT_CMMN, TEST_DECISION })

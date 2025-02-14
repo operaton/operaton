@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.event.timer;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -113,8 +111,8 @@ public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
 
     assertThat(jobQuery.count()).isEqualTo(1);
     job = jobQuery.singleResult();
-    assertNotEquals(firstDate, job.getDuedate());
-    assertTrue(firstDate.after(job.getDuedate()));
+    assertThat(job.getDuedate()).isNotEqualTo(firstDate);
+    assertThat(firstDate.after(job.getDuedate())).isTrue();
     Date expectedDate = LocalDateTime.fromDateFields(currentTime).plusMinutes(15).toDate();
     assertThat(job.getDuedate()).isCloseTo(expectedDate, 1000l);
     
@@ -147,8 +145,8 @@ public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
 
     assertThat(jobQuery.count()).isEqualTo(1);
     job = jobQuery.singleResult();
-    assertNotEquals(firstDate, job.getDuedate());
-    assertTrue(firstDate.after(job.getDuedate()));
+    assertThat(job.getDuedate()).isNotEqualTo(firstDate);
+    assertThat(firstDate.after(job.getDuedate())).isTrue();
     Date expectedDate = LocalDateTime.fromDateFields(job.getCreateTime()).plusMinutes(15).toDate();
     assertThat(job.getDuedate()).isEqualTo(expectedDate);
     
@@ -199,7 +197,7 @@ public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
 
     // then
     assertThat(query.count()).isEqualTo(1);
-    assertTrue(oldDuedate.after(query.singleResult().getDuedate()));
+    assertThat(oldDuedate.after(query.singleResult().getDuedate())).isTrue();
 
     managementService.executeJob(jobId);
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -229,7 +227,7 @@ public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
     // then
     assertThat(query.count()).isEqualTo(1);
     Date newDuedate = query.singleResult().getDuedate();
-    assertTrue(oldDuedate.after(newDuedate));
+    assertThat(oldDuedate.after(newDuedate)).isTrue();
     Date expectedDate = LocalDateTime.fromDateFields(job.getCreateTime()).plusMinutes(10).toDate();
     assertThat(newDuedate).isEqualTo(expectedDate);
 

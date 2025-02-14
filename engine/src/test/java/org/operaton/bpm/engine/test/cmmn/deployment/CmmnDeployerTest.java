@@ -17,9 +17,7 @@
 package org.operaton.bpm.engine.test.cmmn.deployment;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import java.io.InputStream;
@@ -81,7 +79,7 @@ public class CmmnDeployerTest extends PluggableProcessEngineTest {
               .name("duplicateAtTheSameTime");
     try {
       deploymentBuilder.deploy();
-      fail();
+      fail("");
     } catch (Exception e) {
       // Verify that nothing is deployed
       assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(0);
@@ -167,7 +165,7 @@ public class CmmnDeployerTest extends PluggableProcessEngineTest {
     testRule.deploy(repositoryService.createDeployment().addModelInstance("foo.cmmn", modelInstance));
 
     // then
-    assertNotNull(repositoryService.createCaseDefinitionQuery().caseDefinitionResourceName("foo.cmmn").singleResult());
+    assertThat(repositoryService.createCaseDefinitionQuery().caseDefinitionResourceName("foo.cmmn").singleResult()).isNotNull();
   }
 
   protected static CmmnModelInstance createCmmnModelInstance() {
@@ -200,9 +198,9 @@ public class CmmnDeployerTest extends PluggableProcessEngineTest {
     // then deployment contains deployed case definition
     List<CaseDefinition> deployedCaseDefinitions = deployment.getDeployedCaseDefinitions();
     assertThat(deployedCaseDefinitions).hasSize(1);
-    assertNull(deployment.getDeployedProcessDefinitions());
-    assertNull(deployment.getDeployedDecisionDefinitions());
-    assertNull(deployment.getDeployedDecisionRequirementsDefinitions());
+    assertThat(deployment.getDeployedProcessDefinitions()).isNull();
+    assertThat(deployment.getDeployedDecisionDefinitions()).isNull();
+    assertThat(deployment.getDeployedDecisionRequirementsDefinitions()).isNull();
 
     // and persisted case definition is equal to deployed case definition
     CaseDefinition persistedCaseDefinition = repositoryService.createCaseDefinitionQuery().caseDefinitionResourceName("foo.cmmn").singleResult();
@@ -223,10 +221,10 @@ public class CmmnDeployerTest extends PluggableProcessEngineTest {
       .addModelInstance("foo.cmmn", modelInstance));
 
     // then no case definition is deployed
-    assertNull(deployment.getDeployedCaseDefinitions());
+    assertThat(deployment.getDeployedCaseDefinitions()).isNull();
 
     // and there exist not persisted case definition
-    assertNull(repositoryService.createCaseDefinitionQuery().caseDefinitionResourceName("foo.cmmn").singleResult());
+    assertThat(repositoryService.createCaseDefinitionQuery().caseDefinitionResourceName("foo.cmmn").singleResult()).isNull();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testDeployCaseDefinitionWithIntegerHistoryTimeToLive.cmmn")
@@ -234,7 +232,7 @@ public class CmmnDeployerTest extends PluggableProcessEngineTest {
   public void testDeployCaseDefinitionWithIntegerHistoryTimeToLive() {
     CaseDefinition caseDefinition = repositoryService.createCaseDefinitionQuery().singleResult();
     Integer historyTimeToLive = caseDefinition.getHistoryTimeToLive();
-    assertNotNull(historyTimeToLive);
+    assertThat(historyTimeToLive).isNotNull();
     assertThat((int) historyTimeToLive).isEqualTo(5);
   }
 
@@ -243,7 +241,7 @@ public class CmmnDeployerTest extends PluggableProcessEngineTest {
   public void testDeployCaseDefinitionWithStringHistoryTimeToLive() {
     CaseDefinition caseDefinition = repositoryService.createCaseDefinitionQuery().singleResult();
     Integer historyTimeToLive = caseDefinition.getHistoryTimeToLive();
-    assertNotNull(historyTimeToLive);
+    assertThat(historyTimeToLive).isNotNull();
     assertThat((int) historyTimeToLive).isEqualTo(5);
   }
 
@@ -253,7 +251,7 @@ public class CmmnDeployerTest extends PluggableProcessEngineTest {
      testRule.deploy("org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testDeployCaseDefinitionWithMalformedHistoryTimeToLive.cmmn");
       fail("Exception expected");
     } catch (ProcessEngineException e) {
-      assertTrue(e.getCause().getMessage().contains("Cannot parse historyTimeToLive"));
+      assertThat(e.getCause().getMessage()).contains("Cannot parse historyTimeToLive");
     }
   }
 }

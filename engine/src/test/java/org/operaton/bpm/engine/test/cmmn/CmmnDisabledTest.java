@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.cmmn;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
@@ -99,11 +98,11 @@ public class CmmnDisabledTest {
 
     // process is deployed:
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
-    assertNotNull(processDefinition);
+    assertThat(processDefinition).isNotNull();
     assertThat(processDefinition.getVersion()).isEqualTo(1);
 
     List<CaseDefinition> caseDefinitionList = repositoryService.createCaseDefinitionQuery().list();
-    assertThat(caseDefinitionList).hasSize(0);
+    assertThat(caseDefinitionList).isEmpty();
     long caseDefinitionCount =  repositoryService.createCaseDefinitionQuery().count();
     assertThat(caseDefinitionCount).isEqualTo(0);
 
@@ -127,10 +126,10 @@ public class CmmnDisabledTest {
     assertThat(variableInstance.getName()).isEqualTo("my-variable");
 
     // get variable
-    assertNotNull(runtimeService.getVariable(processInstance.getId(), "my-variable"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "my-variable")).isNotNull();
 
     // get variable local
-    assertNotNull(runtimeService.getVariableLocal(processInstance.getId(), "my-variable"));
+    assertThat(runtimeService.getVariableLocal(processInstance.getId(), "my-variable")).isNotNull();
 
     repositoryService.deleteDeployment(deployment.getId(), true);
   }

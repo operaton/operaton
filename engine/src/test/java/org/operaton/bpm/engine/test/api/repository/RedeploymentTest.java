@@ -40,7 +40,8 @@ import org.junit.Test;
 import org.junit.rules.RuleChain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.fail;
+import static org.junit.Assert.fail;
 
 
 /**
@@ -309,7 +310,7 @@ public class RedeploymentTest {
 
     DeploymentQuery query = repositoryService.createDeploymentQuery().deploymentName(DEPLOYMENT_NAME);
 
-    assertNotNull(deployment1.getId());
+    assertThat(deployment1.getId()).isNotNull();
     verifyQueryResults(query, 1);
 
     // when
@@ -319,9 +320,9 @@ public class RedeploymentTest {
         .addDeploymentResources(deployment1.getId()));
 
     // then
-    assertNotNull(deployment2);
-    assertNotNull(deployment2.getId());
-    assertNotEquals(deployment1.getId(), deployment2.getId());
+    assertThat(deployment2).isNotNull();
+    assertThat(deployment2.getId()).isNotNull();
+    assertThat(deployment2.getId()).isNotEqualTo(deployment1.getId());
 
     verifyQueryResults(query, 2);
   }
@@ -368,7 +369,7 @@ public class RedeploymentTest {
         .addDeploymentResources(deployment1.getId()));
 
     // then
-    assertNotNull(deployment2);
+    assertThat(deployment2).isNotNull();
     assertThat(deployment2.getName()).isEqualTo(deployment1.getName());
   }
 
@@ -391,8 +392,8 @@ public class RedeploymentTest {
         .addDeploymentResources(deployment1.getId()));
 
     // then
-    assertNotNull(deployment2);
-    assertNotEquals(deployment1.getName(), deployment2.getName());
+    assertThat(deployment2).isNotNull();
+    assertThat(deployment2.getName()).isNotEqualTo(deployment1.getName());
   }
 
   @Test
@@ -415,8 +416,8 @@ public class RedeploymentTest {
         .addDeploymentResources(deployment1.getId()));
 
     // then
-    assertNotNull(deployment2);
-    assertNull(deployment2.getSource());
+    assertThat(deployment2).isNotNull();
+    assertThat(deployment2.getSource()).isNull();
   }
 
   @Test
@@ -440,7 +441,7 @@ public class RedeploymentTest {
         .source("my-another-deployment-source"));
 
     // then
-    assertNotNull(deployment2);
+    assertThat(deployment2).isNotNull();
     assertThat(deployment2.getSource()).isEqualTo("my-another-deployment-source");
   }
 
@@ -474,11 +475,11 @@ public class RedeploymentTest {
 
     // then
     Resource resource3 = getResourceByName(deployment3.getId(), RESOURCE_NAME);
-    assertNotNull(resource3);
+    assertThat(resource3).isNotNull();
 
     // id
-    assertNotNull(resource3.getId());
-    assertNotEquals(resource1.getId(), resource3.getId());
+    assertThat(resource3.getId()).isNotNull();
+    assertThat(resource3.getId()).isNotEqualTo(resource1.getId());
 
     // deployment id
     assertThat(resource3.getDeploymentId()).isEqualTo(deployment3.getId());
@@ -490,8 +491,8 @@ public class RedeploymentTest {
     byte[] bytes1 = resource1.getBytes();
     byte[] bytes2 = resource2.getBytes();
     byte[] bytes3 = resource3.getBytes();
-    assertArrayEquals(bytes1, bytes3);
-    assertFalse(Arrays.equals(bytes2, bytes3));
+    assertThat(bytes3).containsExactly(bytes1);
+    assertThat(Arrays.equals(bytes2, bytes3)).isFalse();
   }
 
   @Test
@@ -1362,7 +1363,7 @@ public class RedeploymentTest {
     ProcessApplicationRegistration registration = deployment2.getProcessApplicationRegistration();
     Set<String> deploymentIds = registration.getDeploymentIds();
     assertThat(deploymentIds).hasSize(1);
-    assertTrue(deploymentIds.contains(deployment2.getId()));
+    assertThat(deploymentIds).contains(deployment2);
   }
 
   @Test

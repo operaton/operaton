@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.runtime;
 
 import static org.operaton.bpm.engine.test.api.runtime.util.SetBusinessKeyListener.BUSINESS_KEY_VARIABLE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
 
 import java.util.concurrent.TimeUnit;
 
@@ -149,7 +148,7 @@ public class SetBusinessKeyTest {
     completeTask("userTask1");
 
     // assume
-    assertNotNull(taskService.createTaskQuery().taskDefinitionKey("userTask2").singleResult());
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("userTask2").singleResult()).isNotNull();
 
     // then
     checkBusinessKeyChanged(newBusinessKeyValue);
@@ -201,7 +200,7 @@ public class SetBusinessKeyTest {
     completeTask("userTask1");
 
     // assume
-    assertNotNull(taskService.createTaskQuery().taskDefinitionKey("userTask2").singleResult());
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("userTask2").singleResult()).isNotNull();
 
     // then
     checkBusinessKeyChanged(newBusinessKeyValue);
@@ -278,7 +277,7 @@ public class SetBusinessKeyTest {
     completeTask("userTask1");
 
     // assume
-    assertNotNull(taskService.createTaskQuery().taskDefinitionKey("userTask2").singleResult());
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("userTask2").singleResult()).isNotNull();
 
     // then
     checkBusinessKeyChanged(newBusinessKeyValue);
@@ -298,7 +297,7 @@ public class SetBusinessKeyTest {
     completeTask("userTask1");
 
     // assume
-    assertNotNull(taskService.createTaskQuery().taskDefinitionKey("userTask2").singleResult());
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("userTask2").singleResult()).isNotNull();
 
     // then
     checkBusinessKeyChanged(newBusinessKeyValue);
@@ -321,11 +320,11 @@ public class SetBusinessKeyTest {
 
   protected void checkBusinessKeyChanged(String newBusinessKeyValue) {
     ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processDefinitionKey(PROCESS_KEY).singleResult();
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
     assertThat(processInstance.getBusinessKey()).isEqualTo(newBusinessKeyValue);
 
     HistoricProcessInstance historicInstance = historyService.createHistoricProcessInstanceQuery().singleResult();
-    assertNotNull(historicInstance);
+    assertThat(historicInstance).isNotNull();
     assertThat(historicInstance.getBusinessKey()).isEqualTo(newBusinessKeyValue);
   }
 
@@ -352,13 +351,13 @@ public class SetBusinessKeyTest {
 
   protected void executeJob() {
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     managementService.executeJob(job.getId());
   }
 
   protected void completeTask(String key) {
     Task task = taskService.createTaskQuery().taskDefinitionKey(key).singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     taskService.complete(task.getId());
   }
 

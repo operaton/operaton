@@ -17,9 +17,7 @@
 package org.operaton.bpm.engine.test.bpmn.servicetask;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -90,11 +88,11 @@ public class JavaServiceTaskTest extends PluggableProcessEngineTest {
   public void testUnexistingClassDelegation() {
     try {
       runtimeService.startProcessInstanceByKey("unexistingClassDelegation");
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
-      assertTrue(e.getMessage().contains("Exception while instantiating class 'org.operaton.bpm.engine.test.BogusClass'"));
-      assertNotNull(e.getCause());
-      assertTrue(e.getCause() instanceof ClassLoadingException);
+      assertThat(e.getMessage()).contains("Exception while instantiating class 'org.operaton.bpm.engine.test.BogusClass'");
+      assertThat(e.getCause()).isNotNull();
+      assertThat(e.getCause() instanceof ClassLoadingException).isTrue();
     }
   }
 
@@ -103,9 +101,9 @@ public class JavaServiceTaskTest extends PluggableProcessEngineTest {
     var deploymentBuilder = repositoryService.createDeployment().addClasspathResource("org/operaton/bpm/engine/test/bpmn/servicetask/JavaServiceTaskTest.testIllegalUseOfResultVariableName.bpmn20.xml");
     try {
       deploymentBuilder.deploy();
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
-      assertTrue(e.getMessage().contains("resultVariable"));
+      assertThat(e.getMessage()).contains("resultVariable");
     }
   }
 
@@ -137,7 +135,7 @@ public class JavaServiceTaskTest extends PluggableProcessEngineTest {
 
     // Check if business-key was available from the process
     String key = (String) runtimeService.getVariable(processInstance.getId(), "businessKeySetOnExecution");
-    assertNotNull(key);
+    assertThat(key).isNotNull();
     assertThat(key).isEqualTo("1234567890");
 
     // check if BaseDelegateExecution#getBusinessKey() behaves like DelegateExecution#getProcessBusinessKey()

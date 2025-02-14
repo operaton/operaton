@@ -40,7 +40,6 @@ import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.builder.ParallelGatewayBuilder;
 import org.operaton.bpm.model.bpmn.instance.UserTask;
-import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
@@ -88,7 +87,7 @@ public class MigrationAddSubprocessTest {
         .done());
 
     Task migratedTask = testHelper.snapshotAfterMigration.getTaskForKey("userTask");
-    Assert.assertNotNull(migratedTask);
+    assertThat(migratedTask).isNotNull();
     assertThat(migratedTask.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());
 
     // and it is possible to successfully complete the migrated instance
@@ -173,7 +172,7 @@ public class MigrationAddSubprocessTest {
         .done());
 
     Task migratedTask = testHelper.snapshotAfterMigration.getTaskForKey("userTask");
-    Assert.assertNotNull(migratedTask);
+    assertThat(migratedTask).isNotNull();
     assertThat(migratedTask.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());
 
     // and it is possible to successfully complete the migrated instance
@@ -316,7 +315,7 @@ public class MigrationAddSubprocessTest {
         .done());
 
     Task migratedTask = testHelper.snapshotAfterMigration.getTaskForKey("userTask");
-    Assert.assertNotNull(migratedTask);
+    assertThat(migratedTask).isNotNull();
     assertThat(migratedTask.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());
 
     // and it is possible to successfully complete the migrated instance
@@ -356,7 +355,7 @@ public class MigrationAddSubprocessTest {
         .done());
 
     Task migratedTask = testHelper.snapshotAfterMigration.getTaskForKey("userTask");
-    Assert.assertNotNull(migratedTask);
+    assertThat(migratedTask).isNotNull();
     assertThat(migratedTask.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());
 
     // and it is possible to successfully complete the migrated instance
@@ -456,7 +455,7 @@ public class MigrationAddSubprocessTest {
         .done());
 
     Task migratedTask = testHelper.snapshotAfterMigration.getTaskForKey("userTask2");
-    Assert.assertNotNull(migratedTask);
+    assertThat(migratedTask).isNotNull();
     assertThat(migratedTask.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());
 
     // and it is possible to successfully complete the migrated instance
@@ -498,7 +497,7 @@ public class MigrationAddSubprocessTest {
         .done());
 
     Task migratedTask = testHelper.snapshotAfterMigration.getTaskForKey("userTask2");
-    Assert.assertNotNull(migratedTask);
+    assertThat(migratedTask).isNotNull();
     assertThat(migratedTask.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());
 
     // and it is possible to successfully complete the migrated instance
@@ -566,7 +565,7 @@ public class MigrationAddSubprocessTest {
 
     // then
     List<DelegateEvent> recordedEvents = DelegateEvent.getEvents();
-    assertThat(recordedEvents).hasSize(0);
+    assertThat(recordedEvents).isEmpty();
 
     DelegateEvent.clearEvents();
   }
@@ -597,7 +596,7 @@ public class MigrationAddSubprocessTest {
 
     // then
     VariableInstance inputVariable = rule.getRuntimeService().createVariableInstanceQuery().singleResult();
-    Assert.assertNotNull(inputVariable);
+    assertThat(inputVariable).isNotNull();
     assertThat(inputVariable.getName()).isEqualTo("foo");
     assertThat(inputVariable.getValue()).isEqualTo("bar");
 
@@ -713,8 +712,9 @@ public class MigrationAddSubprocessTest {
       collectedElementsVars.add((String) rule.getTaskService().getVariable(migratedTask.getId(), "elementVar"));
     }
 
-    Assert.assertTrue(collectedElementsVars.contains("a"));
-    Assert.assertTrue(collectedElementsVars.contains("b"));
+    assertThat(collectedElementsVars)
+            .contains("a")
+            .contains("b");
 
     // and it is possible to successfully complete the migrated instance
     for (Task migratedTask : migratedTasks) {
@@ -755,7 +755,7 @@ public class MigrationAddSubprocessTest {
         .done());
 
     Task migratedTask = testHelper.snapshotAfterMigration.getTaskForKey("userTask");
-    Assert.assertNotNull(migratedTask);
+    assertThat(migratedTask).isNotNull();
     assertThat(migratedTask.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());
 
     // and it is possible to successfully complete the migrated instance
@@ -844,7 +844,7 @@ public class MigrationAddSubprocessTest {
         .done());
 
     Task migratedTask = testHelper.snapshotAfterMigration.getTaskForKey("userTask");
-    Assert.assertNotNull(migratedTask);
+    assertThat(migratedTask).isNotNull();
 
     // and it is possible to successfully complete the migrated instance
     rule.getTaskService().complete(migratedTask.getId());
@@ -925,7 +925,7 @@ public class MigrationAddSubprocessTest {
             .activity("userTask", testHelper.getSingleActivityInstanceBeforeMigration("userTask").getId())
         .done());
 
-    assertThat(testHelper.snapshotAfterMigration.getJobs()).hasSize(0);
+    assertThat(testHelper.snapshotAfterMigration.getJobs()).isEmpty();
   }
 
 }

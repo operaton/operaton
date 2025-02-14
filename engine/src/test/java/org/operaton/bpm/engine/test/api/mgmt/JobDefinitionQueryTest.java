@@ -17,8 +17,7 @@
 package org.operaton.bpm.engine.test.api.mgmt;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -303,7 +302,7 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
     var jobDefinitionQuery = managementService.createJobDefinitionQuery().orderByJobDefinitionId();
     try {
       jobDefinitionQuery.list();
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
       testRule.assertTextPresent("call asc() or desc() after using orderByXX()", e.getMessage());
     }
@@ -311,7 +310,7 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
     var jobQuery = managementService.createJobQuery();
     try {
       jobQuery.asc();
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
       testRule.assertTextPresent("You should call any of the orderBy methods first before specifying a direction", e.getMessage());
     }
@@ -328,7 +327,7 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
     JobDefinition queriedDefinition = managementService.createJobDefinitionQuery().withOverridingJobPriority().singleResult();
 
     // then
-    assertNotNull(queriedDefinition);
+    assertThat(queriedDefinition).isNotNull();
     assertThat(queriedDefinition.getId()).isEqualTo(jobDefinition.getId());
     assertThat((long) queriedDefinition.getOverridingJobPriority()).isEqualTo(42L);
 
@@ -344,18 +343,18 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
     assertThat(query.count()).isEqualTo(countExpected);
 
     if (countExpected == 1) {
-      assertNotNull(query.singleResult());
+      assertThat(query.singleResult()).isNotNull();
     } else if (countExpected > 1){
       verifySingleResultFails(query);
     } else if (countExpected == 0) {
-      assertNull(query.singleResult());
+      assertThat(query.singleResult()).isNull();
     }
   }
 
   private void verifySingleResultFails(JobDefinitionQuery query) {
     try {
       query.singleResult();
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {}
   }
 

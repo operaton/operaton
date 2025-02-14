@@ -23,7 +23,6 @@ import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION
 
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.InstanceOfAssertFactories.list;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -102,7 +101,7 @@ public class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest 
     verifyQueryResults(query, 1);
 
     HistoricProcessInstance instance = query.singleResult();
-    assertNotNull(instance);
+    assertThat(instance).isNotNull();
     assertThat(instance.getId()).isEqualTo(processInstanceId);
   }
 
@@ -119,7 +118,7 @@ public class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest 
     verifyQueryResults(query, 1);
 
     HistoricProcessInstance instance = query.singleResult();
-    assertNotNull(instance);
+    assertThat(instance).isNotNull();
     assertThat(instance.getId()).isEqualTo(processInstanceId);
   }
 
@@ -550,7 +549,7 @@ public class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest 
       .duration(PeriodUnit.MONTH);
 
     // then
-    assertThat(result).hasSize(0);
+    assertThat(result).isEmpty();
   }
 
   @Test
@@ -585,7 +584,7 @@ public class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest 
       .duration(PeriodUnit.MONTH);
 
     // then
-    assertThat(result).hasSize(0);
+    assertThat(result).isEmpty();
   }
 
   @Test
@@ -615,7 +614,7 @@ public class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest 
     List<CleanableHistoricProcessInstanceReportResult> reportResults = historyService.createCleanableHistoricProcessInstanceReport().list();
 
     // then
-    assertThat(reportResults).hasSize(0);
+    assertThat(reportResults).isEmpty();
   }
 
   @Test
@@ -629,7 +628,7 @@ public class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest 
     List<CleanableHistoricProcessInstanceReportResult> reportResults = historyService.createCleanableHistoricProcessInstanceReport().list();
 
     // then
-    assertThat(reportResults).hasSize(0);
+    assertThat(reportResults).isEmpty();
   }
 
   @Test
@@ -641,7 +640,7 @@ public class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest 
     List<CleanableHistoricProcessInstanceReportResult> reportResults = historyService.createCleanableHistoricProcessInstanceReport().list();
 
     // then
-    assertThat(reportResults).hasSize(0);
+    assertThat(reportResults).isEmpty();
   }
 
   @Test

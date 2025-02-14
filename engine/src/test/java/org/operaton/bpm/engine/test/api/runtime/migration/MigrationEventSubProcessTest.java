@@ -16,15 +16,13 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 import static org.operaton.bpm.engine.impl.migration.validation.instruction.ConditionalEventUpdateEventTriggerValidator.MIGRATION_CONDITIONAL_VALIDATION_ERROR_MSG;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.EventSubProcessModels.CONDITIONAL_EVENT_SUBPROCESS_PROCESS;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 import static org.operaton.bpm.engine.test.util.MigrationPlanValidationReportAssert.assertThat;
-import static org.junit.Assert.assertNotNull;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -140,7 +138,7 @@ public class MigrationEventSubProcessTest {
         .done());
 
     testHelper.assertEventSubscriptionRemoved(EVENT_SUB_PROCESS_START_ID, EventSubProcessModels.MESSAGE_NAME);
-    assertThat(testHelper.snapshotAfterMigration.getEventSubscriptions()).hasSize(0);
+    assertThat(testHelper.snapshotAfterMigration.getEventSubscriptions()).isEmpty();
 
     // and it is possible to complete the process instance
     testHelper.completeTask(USER_TASK_ID);
@@ -413,7 +411,7 @@ public class MigrationEventSubProcessTest {
     try {
       // when
       runtimeService.build();
-      Assert.fail("exception expected");
+      fail("exception expected");
     } catch (MigrationPlanValidationException e) {
       // then
       assertThat(e.getValidationReport())
@@ -446,7 +444,7 @@ public class MigrationEventSubProcessTest {
 
     // then
     Incident incidentAfterMigration = rule.getRuntimeService().createIncidentQuery().singleResult();
-    assertNotNull(incidentAfterMigration);
+    assertThat(incidentAfterMigration).isNotNull();
 
     assertThat(incidentAfterMigration.getId()).isEqualTo(incidentBeforeMigration.getId());
     assertThat(incidentAfterMigration.getConfiguration()).isEqualTo(timerTriggerJob.getId());

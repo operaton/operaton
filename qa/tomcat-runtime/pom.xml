@@ -153,7 +153,6 @@
                   <target>
                     <delete dir="target/server/apache-tomcat-${version.tomcat}/webapps/docs" />
                     <delete dir="target/server/apache-tomcat-${version.tomcat}/webapps/examples" />
-                    <delete dir="target/server/apache-tomcat-${version.tomcat}/webapps/host-manager" />
                     <delete dir="target/server/apache-tomcat-${version.tomcat}/webapps/ROOT" />
                   </target>
                 </configuration>

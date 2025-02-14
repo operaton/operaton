@@ -106,16 +106,6 @@
       <groupId>org.apache.groovy</groupId>
       <artifactId>groovy-datetime</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-core</artifactId>
-      <version>${version.spring.framework6}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-jcl</artifactId>
-      <version>${version.spring.framework6}</version>
-    </dependency>
 
     <dependency>
       <groupId>org.graalvm.js</groupId>
@@ -268,28 +258,6 @@
                   </mapper>
                 </copy>
 
-                <!-- copy spring dependencies to single dir -->
-                <delete dir="target/modules/org/springframework/core" />
-                <copy todir="target/modules" flatten="false">
-                  <fileset refid="maven.project.dependencies" />
-                  <mapper>
-                    <chainedmapper>
-                      <regexpmapper from="^(.*)/([^/]+)/([^/]+)/([^/]*)$$" to="\1/core/main/\4" handledirsep="yes" />
-                      <regexpmapper from="^(org.springframework.spring-core.*/.*.jar)$$" to="\1" handledirsep="yes" />
-                    </chainedmapper>
-                  </mapper>
-                </copy>
-                <copy todir="target/modules" flatten="false">
-                  <fileset refid="maven.project.dependencies" />
-                  <mapper>
-                    <chainedmapper>
-                      <regexpmapper from="^(.*)/([^/]+)/([^/]+)/([^/]*)$$" to="\1/jcl/main/\4" handledirsep="yes" />
-                      <regexpmapper from="^(org.springframework.spring-jcl.*/.*.jar)$$" to="\1" handledirsep="yes" />
-                    </chainedmapper>
-                  </mapper>
-                </copy>
-
-
                 <copy todir="target/modules" flatten="false">
                   <fileset dir="src/main/modules" />
                 </copy>
@@ -359,10 +327,6 @@
                 </replace>
 
                 <replace dir="target/modules" token="@version.icu.icu4j@" value="${version.icu.icu4j}">
-                  <include name="**/module.xml" />
-                </replace>
-
-                <replace dir="target/modules" token="@version.spring@" value="${version.spring.framework6}">
                   <include name="**/module.xml" />
                 </replace>
 

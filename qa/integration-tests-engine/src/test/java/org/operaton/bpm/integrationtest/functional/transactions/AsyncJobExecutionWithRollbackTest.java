@@ -71,7 +71,7 @@ public class AsyncJobExecutionWithRollbackTest extends AbstractFoxPlatformIntegr
 
     // then
     // the job exists with no retries, and an incident is raised
-    Job job = managementService.createJobQuery().singleResult();
+    Job job = managementService.createJobQuery().processDefinitionKey("txRollbackServiceTask").singleResult();
 
     assertNotNull(job);
     assertEquals(0, job.getRetries());
@@ -89,7 +89,7 @@ public class AsyncJobExecutionWithRollbackTest extends AbstractFoxPlatformIntegr
 
     // then
     // the job exists with no retries, and an incident is raised
-    Job job = managementService.createJobQuery().singleResult();
+    Job job = managementService.createJobQuery().processDefinitionKey("txRollbackServiceTaskWithCustomRetryCycle").singleResult();
 
     assertNotNull(job);
     assertEquals(0, job.getRetries());

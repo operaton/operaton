@@ -35,7 +35,8 @@ import static org.junit.Assert.assertTrue;
  */
 @RunWith(Arquillian.class)
 public class ClassloadingDuringJobExecutionTest extends AbstractFoxPlatformIntegrationTest {
-  protected static String process = """
+  protected static String process =
+    """
     <?xml version="1.0" encoding="UTF-8"?>
     <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:operaton="http://operaton.org/schema/1.0/bpmn" targetNamespace="Examples">
       <process id="Process_1" name="ServiceTask_Throw_BMPN_Error" isExecutable="true" operaton:historyTimeToLive="P180D">
@@ -56,7 +57,7 @@ public class ClassloadingDuringJobExecutionTest extends AbstractFoxPlatformInteg
         </serviceTask>
       </process>
     </definitions>
-  """;
+    """;
 
   @Deployment(name="clientDeployment")
   public static WebArchive clientDeployment() {

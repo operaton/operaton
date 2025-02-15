@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.integrationtest.jobexecutor;
 
+import java.util.function.Supplier;
+import org.operaton.bpm.engine.runtime.JobQuery;
 import org.operaton.bpm.integrationtest.jobexecutor.beans.FailingSLSB;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -40,15 +42,16 @@ public class FailedJobCommandTest extends AbstractFoxPlatformIntegrationTest {
   @Test
   public void testJobRetriesDecremented() {
     runtimeService.startProcessInstanceByKey("theProcess");
+    Supplier<JobQuery> createQuery = () -> managementService.createJobQuery().processDefinitionKey("theProcess");
 
-    Assert.assertEquals(1, managementService.createJobQuery().withRetriesLeft().count());
+    Assert.assertEquals(1, createQuery.get().withRetriesLeft().count());
 
     waitForJobExecutorToProcessAllJobs();
 
     // now the retries = 0
 
-    Assert.assertEquals(0, managementService.createJobQuery().withRetriesLeft().count());
-    Assert.assertEquals(1, managementService.createJobQuery().noRetriesLeft().count());
+    Assert.assertEquals(0, createQuery.get().withRetriesLeft().count());
+    Assert.assertEquals(1, createQuery.get().noRetriesLeft().count());
 
   }
 
@@ -58,15 +61,16 @@ public class FailedJobCommandTest extends AbstractFoxPlatformIntegrationTest {
     for(int i = 0; i < 50; i++) {
       runtimeService.startProcessInstanceByKey("theProcess");
     }
+    Supplier<JobQuery> createQuery = () -> managementService.createJobQuery().processDefinitionKey("theProcess");
 
-    Assert.assertEquals(50, managementService.createJobQuery().withRetriesLeft().count());
+    Assert.assertEquals(50, createQuery.get().withRetriesLeft().count());
 
     waitForJobExecutorToProcessAllJobs(6 * 60 * 1000);
 
     // now the retries = 0
 
-    Assert.assertEquals(0, managementService.createJobQuery().withRetriesLeft().count());
-    Assert.assertEquals(51, managementService.createJobQuery().noRetriesLeft().count());
+    Assert.assertEquals(0, createQuery.get().withRetriesLeft().count());
+    Assert.assertEquals(51, createQuery.get().noRetriesLeft().count());
 
   }
 

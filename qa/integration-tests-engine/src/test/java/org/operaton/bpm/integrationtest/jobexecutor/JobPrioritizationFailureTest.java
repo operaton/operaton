@@ -92,7 +92,7 @@ public class JobPrioritizationFailureTest extends AbstractFoxPlatformIntegration
     processInstance = runtimeService.startProcessInstanceByKey("priorityProcess");
 
     // then the job was created successfully and has the default priority on bean evaluation failure
-    Job job = managementService.createJobQuery().singleResult();
+    Job job = managementService.createJobQuery().processInstanceId(processInstance.getId()).singleResult();
     Assert.assertEquals(DefaultJobPriorityProvider.DEFAULT_PRIORITY_ON_RESOLUTION_FAILURE, job.getPriority());
   }
 
@@ -112,7 +112,7 @@ public class JobPrioritizationFailureTest extends AbstractFoxPlatformIntegration
 
     // then the job was created successfully and has the default priority although
     // the bean could not be resolved due to a missing class
-    Job job = managementService.createJobQuery().singleResult();
+    Job job = managementService.createJobQuery().processInstanceId(processInstance.getId()).singleResult();
     Assert.assertEquals(DefaultJobPriorityProvider.DEFAULT_PRIORITY_ON_RESOLUTION_FAILURE, job.getPriority());
   }
 
@@ -132,7 +132,7 @@ public class JobPrioritizationFailureTest extends AbstractFoxPlatformIntegration
 
     // then the job was created successfully and has the default priority although
     // the bean could not be resolved due to a missing class
-    Job job = managementService.createJobQuery().singleResult();
+    Job job = managementService.createJobQuery().processInstanceId(processInstance.getId()).singleResult();
     Assert.assertEquals(DefaultJobPriorityProvider.DEFAULT_PRIORITY_ON_RESOLUTION_FAILURE, job.getPriority());
   }
 

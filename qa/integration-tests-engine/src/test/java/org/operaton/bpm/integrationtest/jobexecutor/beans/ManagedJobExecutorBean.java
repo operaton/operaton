@@ -27,6 +27,7 @@ import org.operaton.bpm.engine.cdi.impl.ManagedJobExecutor;
 
 @Startup
 @Singleton
+@SuppressWarnings("unused")
 public class ManagedJobExecutorBean {
 
   @Resource

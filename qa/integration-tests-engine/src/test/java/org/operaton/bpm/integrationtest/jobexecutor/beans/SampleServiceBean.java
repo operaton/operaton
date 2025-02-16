@@ -35,6 +35,7 @@ public class SampleServiceBean implements JavaDelegate {
     called = true;
   }
 
+  @SuppressWarnings("unused")
   public boolean isCalled() {
     return called;
   }

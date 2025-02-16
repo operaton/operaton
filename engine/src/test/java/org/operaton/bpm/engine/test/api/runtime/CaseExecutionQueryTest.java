@@ -2612,7 +2612,7 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
     assertThat(caseService.createCaseExecutionQuery().variableValueNotEquals("var", Variables.numberValue(123)).count()).isEqualTo(4);
     assertThat(caseService.createCaseExecutionQuery().variableValueGreaterThan("var", Variables.numberValue(123L)).count()).isEqualTo(1);
     assertThat(caseService.createCaseExecutionQuery().variableValueGreaterThanOrEqual("var", Variables.numberValue(123.0d)).count()).isEqualTo(5);
-    assertThat(caseService.createCaseExecutionQuery().variableValueLessThan("var", Variables.numberValue((short) 123)).count()).isEqualTo(0);
+    assertThat(caseService.createCaseExecutionQuery().variableValueLessThan("var", Variables.numberValue((short) 123)).count()).isZero();
     assertThat(caseService.createCaseExecutionQuery().variableValueLessThanOrEqual("var", Variables.numberValue((short) 123)).count()).isEqualTo(4);
 
     // two executions per case instance match the query
@@ -2627,7 +2627,7 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
     assertThat(caseService.createCaseExecutionQuery().caseInstanceVariableValueNotEquals("var", Variables.numberValue(123)).count()).isEqualTo(8);
     assertThat(caseService.createCaseExecutionQuery().caseInstanceVariableValueGreaterThan("var", Variables.numberValue(123L)).count()).isEqualTo(2);
     assertThat(caseService.createCaseExecutionQuery().caseInstanceVariableValueGreaterThanOrEqual("var", Variables.numberValue(123.0d)).count()).isEqualTo(10);
-    assertThat(caseService.createCaseExecutionQuery().caseInstanceVariableValueLessThan("var", Variables.numberValue((short) 123)).count()).isEqualTo(0);
+    assertThat(caseService.createCaseExecutionQuery().caseInstanceVariableValueLessThan("var", Variables.numberValue((short) 123)).count()).isZero();
     assertThat(caseService.createCaseExecutionQuery().caseInstanceVariableValueLessThanOrEqual("var", Variables.numberValue((short) 123)).count()).isEqualTo(8);
 
   }

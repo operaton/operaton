@@ -114,7 +114,7 @@ public class HistoryCleanupDmnDisabledTest {
     engineRule.getManagementService().executeJob(jobId);
 
     //then
-    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isEqualTo(0);
+    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isZero();
   }
 
   private void prepareHistoricProcesses(String businessKey) {

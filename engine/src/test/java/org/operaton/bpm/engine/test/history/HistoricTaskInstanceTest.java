@@ -121,7 +121,7 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
 
     historyService.deleteHistoricTaskInstance(taskId);
 
-    assertThat(historyService.createHistoricTaskInstanceQuery().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricTaskInstanceQuery().count()).isZero();
   }
 
   @Test
@@ -150,65 +150,65 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
 
     // Task id
     assertThat(historyService.createHistoricTaskInstanceQuery().taskId(taskId).count()).isEqualTo(1);
-    assertThat(historyService.createHistoricTaskInstanceQuery().taskId("unexistingtaskid").count()).isEqualTo(0);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskId("unexistingtaskid").count()).isZero();
 
     // Name
     assertThat(historyService.createHistoricTaskInstanceQuery().taskName("Clean_up").count()).isEqualTo(1);
-    assertThat(historyService.createHistoricTaskInstanceQuery().taskName("unexistingname").count()).isEqualTo(0);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskName("unexistingname").count()).isZero();
     assertThat(historyService.createHistoricTaskInstanceQuery().taskNameLike("Clean\\_u%").count()).isEqualTo(1);
     assertThat(historyService.createHistoricTaskInstanceQuery().taskNameLike("%lean\\_up").count()).isEqualTo(1);
     assertThat(historyService.createHistoricTaskInstanceQuery().taskNameLike("%lean\\_u%").count()).isEqualTo(1);
-    assertThat(historyService.createHistoricTaskInstanceQuery().taskNameLike("%unexistingname%").count()).isEqualTo(0);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskNameLike("%unexistingname%").count()).isZero();
 
 
     // Description
     assertThat(historyService.createHistoricTaskInstanceQuery().taskDescription("Historic task_description").count()).isEqualTo(1);
-    assertThat(historyService.createHistoricTaskInstanceQuery().taskDescription("unexistingdescription").count()).isEqualTo(0);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskDescription("unexistingdescription").count()).isZero();
     assertThat(historyService.createHistoricTaskInstanceQuery().taskDescriptionLike("%task\\_description").count()).isEqualTo(1);
     assertThat(historyService.createHistoricTaskInstanceQuery().taskDescriptionLike("Historic task%").count()).isEqualTo(1);
     assertThat(historyService.createHistoricTaskInstanceQuery().taskDescriptionLike("%task%").count()).isEqualTo(1);
-    assertThat(historyService.createHistoricTaskInstanceQuery().taskDescriptionLike("%unexistingdescripton%").count()).isEqualTo(0);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskDescriptionLike("%unexistingdescripton%").count()).isZero();
 
     // Execution id
     assertThat(historyService.createHistoricTaskInstanceQuery().executionId(finishedInstance.getId()).count()).isEqualTo(1);
-    assertThat(historyService.createHistoricTaskInstanceQuery().executionId("unexistingexecution").count()).isEqualTo(0);
+    assertThat(historyService.createHistoricTaskInstanceQuery().executionId("unexistingexecution").count()).isZero();
 
     // Process instance id
     assertThat(historyService.createHistoricTaskInstanceQuery().processInstanceId(finishedInstance.getId()).count()).isEqualTo(1);
-    assertThat(historyService.createHistoricTaskInstanceQuery().processInstanceId("unexistingid").count()).isEqualTo(0);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processInstanceId("unexistingid").count()).isZero();
 
     // Process definition id
     assertThat(historyService.createHistoricTaskInstanceQuery().processDefinitionId(finishedInstance.getProcessDefinitionId()).count()).isEqualTo(1);
-    assertThat(historyService.createHistoricTaskInstanceQuery().processDefinitionId("unexistingdefinitionid").count()).isEqualTo(0);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processDefinitionId("unexistingdefinitionid").count()).isZero();
 
     // Process definition name
     assertThat(historyService.createHistoricTaskInstanceQuery().processDefinitionName("Historic task query test process").count()).isEqualTo(1);
-    assertThat(historyService.createHistoricTaskInstanceQuery().processDefinitionName("unexistingdefinitionname").count()).isEqualTo(0);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processDefinitionName("unexistingdefinitionname").count()).isZero();
 
     // Process definition key
     assertThat(historyService.createHistoricTaskInstanceQuery().processDefinitionKey("HistoricTaskQueryTest").count()).isEqualTo(1);
-    assertThat(historyService.createHistoricTaskInstanceQuery().processDefinitionKey("unexistingdefinitionkey").count()).isEqualTo(0);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processDefinitionKey("unexistingdefinitionkey").count()).isZero();
 
 
     // Assignee
     assertThat(historyService.createHistoricTaskInstanceQuery().taskAssignee("ker_mit").count()).isEqualTo(1);
-    assertThat(historyService.createHistoricTaskInstanceQuery().taskAssignee("johndoe").count()).isEqualTo(0);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskAssignee("johndoe").count()).isZero();
     assertThat(historyService.createHistoricTaskInstanceQuery().taskAssigneeLike("%er\\_mit").count()).isEqualTo(1);
     assertThat(historyService.createHistoricTaskInstanceQuery().taskAssigneeLike("ker\\_mi%").count()).isEqualTo(1);
     assertThat(historyService.createHistoricTaskInstanceQuery().taskAssigneeLike("%er\\_mi%").count()).isEqualTo(1);
-    assertThat(historyService.createHistoricTaskInstanceQuery().taskAssigneeLike("%johndoe%").count()).isEqualTo(0);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskAssigneeLike("%johndoe%").count()).isZero();
 
     // Delete reason
     assertThat(historyService.createHistoricTaskInstanceQuery().taskDeleteReason(TaskEntity.DELETE_REASON_COMPLETED).count()).isEqualTo(1);
-    assertThat(historyService.createHistoricTaskInstanceQuery().taskDeleteReason("deleted").count()).isEqualTo(0);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskDeleteReason("deleted").count()).isZero();
 
     // Task definition ID
     assertThat(historyService.createHistoricTaskInstanceQuery().taskDefinitionKey("task").count()).isEqualTo(1);
-    assertThat(historyService.createHistoricTaskInstanceQuery().taskDefinitionKey("unexistingkey").count()).isEqualTo(0);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskDefinitionKey("unexistingkey").count()).isZero();
 
     // Task priority
     assertThat(historyService.createHistoricTaskInstanceQuery().taskPriority(1234).count()).isEqualTo(1);
-    assertThat(historyService.createHistoricTaskInstanceQuery().taskPriority(5678).count()).isEqualTo(0);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskPriority(5678).count()).isZero();
 
 
     // Due date
@@ -221,22 +221,22 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     anHourLater.add(Calendar.HOUR, 1);
 
     assertThat(historyService.createHistoricTaskInstanceQuery().taskDueDate(dueDate).count()).isEqualTo(1);
-    assertThat(historyService.createHistoricTaskInstanceQuery().taskDueDate(anHourAgo.getTime()).count()).isEqualTo(0);
-    assertThat(historyService.createHistoricTaskInstanceQuery().taskDueDate(anHourLater.getTime()).count()).isEqualTo(0);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskDueDate(anHourAgo.getTime()).count()).isZero();
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskDueDate(anHourLater.getTime()).count()).isZero();
 
     // Due date before
     assertThat(historyService.createHistoricTaskInstanceQuery().taskDueBefore(anHourLater.getTime()).count()).isEqualTo(1);
-    assertThat(historyService.createHistoricTaskInstanceQuery().taskDueBefore(anHourAgo.getTime()).count()).isEqualTo(0);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskDueBefore(anHourAgo.getTime()).count()).isZero();
 
     // Due date after
     assertThat(historyService.createHistoricTaskInstanceQuery().taskDueAfter(anHourAgo.getTime()).count()).isEqualTo(1);
-    assertThat(historyService.createHistoricTaskInstanceQuery().taskDueAfter(anHourLater.getTime()).count()).isEqualTo(0);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskDueAfter(anHourLater.getTime()).count()).isZero();
 
     assertThat(historyService.createHistoricTaskInstanceQuery().taskDueDate(dueDate).taskDueBefore(anHourLater.getTime()).count()).isEqualTo(1);
-    assertThat(historyService.createHistoricTaskInstanceQuery().taskDueDate(dueDate).taskDueBefore(anHourAgo.getTime()).count()).isEqualTo(0);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskDueDate(dueDate).taskDueBefore(anHourAgo.getTime()).count()).isZero();
     assertThat(historyService.createHistoricTaskInstanceQuery().taskDueDate(dueDate).taskDueAfter(anHourAgo.getTime()).count()).isEqualTo(1);
-    assertThat(historyService.createHistoricTaskInstanceQuery().taskDueDate(dueDate).taskDueAfter(anHourLater.getTime()).count()).isEqualTo(0);
-    assertThat(historyService.createHistoricTaskInstanceQuery().taskDueBefore(anHourAgo.getTime()).taskDueAfter(anHourLater.getTime()).count()).isEqualTo(0);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskDueDate(dueDate).taskDueAfter(anHourLater.getTime()).count()).isZero();
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskDueBefore(anHourAgo.getTime()).taskDueAfter(anHourLater.getTime()).count()).isZero();
 
     Calendar hourAgo = Calendar.getInstance();
     hourAgo.add(Calendar.HOUR_OF_DAY, -1);
@@ -244,22 +244,22 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     hourFromNow.add(Calendar.HOUR_OF_DAY, 1);
 
     // Start/end dates
-    assertThat(historyService.createHistoricTaskInstanceQuery().finishedBefore(hourAgo.getTime()).count()).isEqualTo(0);
+    assertThat(historyService.createHistoricTaskInstanceQuery().finishedBefore(hourAgo.getTime()).count()).isZero();
     assertThat(historyService.createHistoricTaskInstanceQuery().finishedBefore(hourFromNow.getTime()).count()).isEqualTo(1);
     assertThat(historyService.createHistoricTaskInstanceQuery().finishedAfter(hourAgo.getTime()).count()).isEqualTo(1);
-    assertThat(historyService.createHistoricTaskInstanceQuery().finishedAfter(hourFromNow.getTime()).count()).isEqualTo(0);
+    assertThat(historyService.createHistoricTaskInstanceQuery().finishedAfter(hourFromNow.getTime()).count()).isZero();
     assertThat(historyService.createHistoricTaskInstanceQuery().startedBefore(hourFromNow.getTime()).count()).isEqualTo(1);
-    assertThat(historyService.createHistoricTaskInstanceQuery().startedBefore(hourAgo.getTime()).count()).isEqualTo(0);
+    assertThat(historyService.createHistoricTaskInstanceQuery().startedBefore(hourAgo.getTime()).count()).isZero();
     assertThat(historyService.createHistoricTaskInstanceQuery().startedAfter(hourAgo.getTime()).count()).isEqualTo(1);
-    assertThat(historyService.createHistoricTaskInstanceQuery().startedAfter(hourFromNow.getTime()).count()).isEqualTo(0);
-    assertThat(historyService.createHistoricTaskInstanceQuery().startedAfter(hourFromNow.getTime()).startedBefore(hourAgo.getTime()).count()).isEqualTo(0);
+    assertThat(historyService.createHistoricTaskInstanceQuery().startedAfter(hourFromNow.getTime()).count()).isZero();
+    assertThat(historyService.createHistoricTaskInstanceQuery().startedAfter(hourFromNow.getTime()).startedBefore(hourAgo.getTime()).count()).isZero();
 
     // Finished and Unfinished - Add anther other instance that has a running task (unfinished)
     runtimeService.startProcessInstanceByKey("HistoricTaskQueryTest");
 
     assertThat(historyService.createHistoricTaskInstanceQuery().finished().count()).isEqualTo(1);
     assertThat(historyService.createHistoricTaskInstanceQuery().unfinished().count()).isEqualTo(1);
-    assertThat(historyService.createHistoricTaskInstanceQuery().unfinished().finished().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricTaskInstanceQuery().unfinished().finished().count()).isZero();
   }
 
   @Deployment
@@ -287,7 +287,7 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
       assertThat(historyService.createHistoricTaskInstanceQuery().taskId(taskId).count()).isEqualTo(1);
 
       historyService.deleteHistoricTaskInstance(taskId);
-      assertThat(historyService.createHistoricTaskInstanceQuery().count()).isEqualTo(0);
+      assertThat(historyService.createHistoricTaskInstanceQuery().count()).isZero();
     }
   }
 
@@ -384,20 +384,20 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
 
     // Running task on running process should be available
     assertThat(historyService.createHistoricTaskInstanceQuery().processUnfinished().count()).isEqualTo(1);
-    assertThat(historyService.createHistoricTaskInstanceQuery().processFinished().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processFinished().count()).isZero();
 
     // Finished and running task on running process should be available
     taskService.complete(task.getId());
     assertThat(historyService.createHistoricTaskInstanceQuery().processUnfinished().count()).isEqualTo(2);
-    assertThat(historyService.createHistoricTaskInstanceQuery().processFinished().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processFinished().count()).isZero();
 
     // 2 finished tasks are found for finished process after completing last task of process
     task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
     taskService.complete(task.getId());
-    assertThat(historyService.createHistoricTaskInstanceQuery().processUnfinished().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processUnfinished().count()).isZero();
     assertThat(historyService.createHistoricTaskInstanceQuery().processFinished().count()).isEqualTo(2);
 
-    assertThat(historyService.createHistoricTaskInstanceQuery().processUnfinished().processFinished().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processUnfinished().processFinished().count()).isZero();
   }
 
   @Deployment
@@ -479,7 +479,7 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("HistoricTaskInstanceTest");
 
     // do not find any task instances with follow up date
-    assertThat(taskService.createTaskQuery().followUpDate(otherDate.getTime()).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().followUpDate(otherDate.getTime()).count()).isZero();
 
     Task task = taskService.createTaskQuery().singleResult();
 
@@ -495,16 +495,16 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     otherDate.setTime(followUpDate);
 
     otherDate.add(Calendar.YEAR, 1);
-    assertThat(historyService.createHistoricTaskInstanceQuery().taskFollowUpDate(otherDate.getTime()).count()).isEqualTo(0);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskFollowUpDate(otherDate.getTime()).count()).isZero();
     assertThat(historyService.createHistoricTaskInstanceQuery().taskFollowUpBefore(otherDate.getTime()).count()).isEqualTo(1);
-    assertThat(historyService.createHistoricTaskInstanceQuery().taskFollowUpAfter(otherDate.getTime()).count()).isEqualTo(0);
-    assertThat(historyService.createHistoricTaskInstanceQuery().taskFollowUpAfter(otherDate.getTime()).taskFollowUpDate(followUpDate).count()).isEqualTo(0);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskFollowUpAfter(otherDate.getTime()).count()).isZero();
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskFollowUpAfter(otherDate.getTime()).taskFollowUpDate(followUpDate).count()).isZero();
 
     otherDate.add(Calendar.YEAR, -2);
     assertThat(historyService.createHistoricTaskInstanceQuery().taskFollowUpAfter(otherDate.getTime()).count()).isEqualTo(1);
-    assertThat(historyService.createHistoricTaskInstanceQuery().taskFollowUpBefore(otherDate.getTime()).count()).isEqualTo(0);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskFollowUpBefore(otherDate.getTime()).count()).isZero();
     assertThat(historyService.createHistoricTaskInstanceQuery().taskId(task.getId()).singleResult().getFollowUpDate()).isEqualTo(followUpDate);
-    assertThat(historyService.createHistoricTaskInstanceQuery().taskFollowUpBefore(otherDate.getTime()).taskFollowUpDate(followUpDate).count()).isEqualTo(0);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskFollowUpBefore(otherDate.getTime()).taskFollowUpDate(followUpDate).count()).isZero();
 
     taskService.complete(task.getId());
 
@@ -560,7 +560,7 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     HistoricTaskInstanceQuery query = historyService.createHistoricTaskInstanceQuery();
 
     query.activityInstanceIdIn("invalid");
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     String[] values = { "a", null, "b" };
 
     try {
@@ -629,13 +629,13 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
 
     query.caseDefinitionId("invalid");
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
     assertThat(query.singleResult()).isNull();
 
     query.caseDefinitionId(null);
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
     assertThat(query.singleResult()).isNull();
 
@@ -687,13 +687,13 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
 
     query.caseDefinitionKey("invalid");
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
     assertThat(query.singleResult()).isNull();
 
     query.caseDefinitionKey(null);
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
     assertThat(query.singleResult()).isNull();
 
@@ -744,13 +744,13 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
 
     query.caseDefinitionName("invalid");
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
     assertThat(query.singleResult()).isNull();
 
     query.caseDefinitionName(null);
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
     assertThat(query.singleResult()).isNull();
 
@@ -852,13 +852,13 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
 
     query.caseInstanceId("invalid");
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
     assertThat(query.singleResult()).isNull();
 
     query.caseInstanceId(null);
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
     assertThat(query.singleResult()).isNull();
 
@@ -910,13 +910,13 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
 
     query.caseExecutionId("invalid");
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
     assertThat(query.singleResult()).isNull();
 
     query.caseExecutionId(null);
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
     assertThat(query.singleResult()).isNull();
 
@@ -1036,7 +1036,7 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     HistoricTaskInstanceQuery query = historyService.createHistoricTaskInstanceQuery();
 
     query.taskDefinitionKeyIn("invalid");
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     String[] values = { "a", null, "b" };
 
     try {
@@ -1072,7 +1072,7 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
 
     // then
     assertThat(query.processInstanceBusinessKey(piBusinessKey1.getBusinessKey()).count()).isEqualTo(1);
-    assertThat(query.processInstanceBusinessKey("unexistingBusinessKey").count()).isEqualTo(0);
+    assertThat(query.processInstanceBusinessKey("unexistingBusinessKey").count()).isZero();
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
@@ -1100,7 +1100,7 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     HistoricTaskInstanceQuery query = historyService.createHistoricTaskInstanceQuery();
 
     query.processInstanceBusinessKeyIn("invalid");
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     String[] values = { "a", null, "b" };
 
     try {
@@ -1138,7 +1138,7 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     assertThat(query.processInstanceBusinessKeyLike("BUSINESS-KEY%").count()).isEqualTo(1);
     assertThat(query.processInstanceBusinessKeyLike("%KEY-1").count()).isEqualTo(1);
     assertThat(query.processInstanceBusinessKeyLike("%KEY%").count()).isEqualTo(1);
-    assertThat(query.processInstanceBusinessKeyLike("BUZINESS-KEY%").count()).isEqualTo(0);
+    assertThat(query.processInstanceBusinessKeyLike("BUZINESS-KEY%").count()).isZero();
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
@@ -1157,7 +1157,7 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     HistoricTaskInstanceQuery query = historyService.createHistoricTaskInstanceQuery();
 
     // then
-    assertThat(query.processInstanceBusinessKeyIn(businessKey1, businessKey2).processInstanceBusinessKey(unexistingBusinessKey).count()).isEqualTo(0);
+    assertThat(query.processInstanceBusinessKeyIn(businessKey1, businessKey2).processInstanceBusinessKey(unexistingBusinessKey).count()).isZero();
     assertThat(query.processInstanceBusinessKeyIn(businessKey2, businessKey3).processInstanceBusinessKey(businessKey2).count()).isEqualTo(1);
   }
 

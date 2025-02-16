@@ -43,7 +43,7 @@ public class ExclusiveTaskTest extends PluggableProcessEngineTest {
     testRule.waitForJobExecutorToProcessAllJobs(6000L);
 
     // all the jobs are done
-    assertThat(managementService.createJobQuery().count()).isEqualTo(0);
+    assertThat(managementService.createJobQuery().count()).isZero();
   }
 
   @Deployment
@@ -59,7 +59,7 @@ public class ExclusiveTaskTest extends PluggableProcessEngineTest {
     testRule.waitForJobExecutorToProcessAllJobs(6000L);
 
     // all the jobs are done
-    assertThat(managementService.createJobQuery().count()).isEqualTo(0);
+    assertThat(managementService.createJobQuery().count()).isZero();
   }
 
   @Deployment
@@ -73,7 +73,7 @@ public class ExclusiveTaskTest extends PluggableProcessEngineTest {
     testRule.waitForJobExecutorToProcessAllJobs(6000L);
 
     // all the jobs are done
-    assertThat(managementService.createJobQuery().count()).isEqualTo(0);
+    assertThat(managementService.createJobQuery().count()).isZero();
   }
 
   @Deployment
@@ -84,7 +84,7 @@ public class ExclusiveTaskTest extends PluggableProcessEngineTest {
 
     testRule.waitForJobExecutorToProcessAllJobs(6000L);
 
-    assertThat(managementService.createJobQuery().count()).isEqualTo(0);
+    assertThat(managementService.createJobQuery().count()).isZero();
   }
 
   @Deployment
@@ -94,7 +94,7 @@ public class ExclusiveTaskTest extends PluggableProcessEngineTest {
 
     testRule.waitForJobExecutorToProcessAllJobs(6000L);
 
-    assertThat(managementService.createJobQuery().count()).isEqualTo(0);
+    assertThat(managementService.createJobQuery().count()).isZero();
   }
 
 }

@@ -391,7 +391,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     taskService.complete(tasks.get(0).getId());
     taskService.complete(tasks.get(1).getId());
     taskService.complete(tasks.get(2).getId());
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().count()).isZero();
     testRule.assertProcessEnded(procId);
   }
 
@@ -402,7 +402,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     String procId = runtimeService.startProcessInstanceByKey("miParallelUserTasksBasedOnCollection",
       CollectionUtil.singletonMap("assigneeList", assigneeList)).getId();
 
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().count()).isZero();
     testRule.assertProcessEnded(procId);
     if (processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
       List<HistoricActivityInstance> activities = historyService

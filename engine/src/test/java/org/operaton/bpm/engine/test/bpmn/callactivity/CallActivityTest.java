@@ -211,7 +211,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
 
     // Completing the second task should end the subprocess and end the whole process instance
     taskService.complete(taskB.getId());
-    assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().count()).isZero();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSequentialSubProcess.bpmn20.xml",
@@ -736,12 +736,14 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("callTwoSubProcesses");
 
     List<ProcessInstance> instanceList = runtimeService.createProcessInstanceQuery().list();
-    assertThat(instanceList).isNotNull();
-    assertThat(instanceList).hasSize(3);
+    assertThat(instanceList)
+            .isNotNull()
+            .hasSize(3);
 
     List<Task> taskList = taskService.createTaskQuery().list();
-    assertThat(taskList).isNotNull();
-    assertThat(taskList).hasSize(2);
+    assertThat(taskList)
+            .isNotNull()
+            .hasSize(2);
 
     runtimeService.deleteProcessInstance(processInstance.getId(), "Test cascading");
 
@@ -1212,7 +1214,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     assertThat(taskInsideCallActivity.getTaskDefinitionKey()).isEqualTo("taskBeforeInterruptingEventSubprocess");
 
     // we should have no event subscriptions for the parent process
-    assertThat(runtimeService.createEventSubscriptionQuery().processInstanceId(processInstance.getId()).count()).isEqualTo(0);
+    assertThat(runtimeService.createEventSubscriptionQuery().processInstanceId(processInstance.getId()).count()).isZero();
     // we should have two event subscriptions for the called process instance, one for message and one for signal
     String calledProcessInstanceId = taskInsideCallActivity.getProcessInstanceId();
     EventSubscriptionQuery eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery().processInstanceId(calledProcessInstanceId);
@@ -1225,7 +1227,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     assertThat(taskAfterMessageStartEvent.getTaskDefinitionKey()).isEqualTo("taskAfterMessageStartEvent");
 
     // no subscriptions left
-    assertThat(eventSubscriptionQuery.count()).isEqualTo(0);
+    assertThat(eventSubscriptionQuery.count()).isZero();
 
     // Complete the task inside the called process instance
     taskService.complete(taskAfterMessageStartEvent.getId());
@@ -1246,7 +1248,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     assertThat(taskInsideCallActivity.getTaskDefinitionKey()).isEqualTo("taskBeforeInterruptingEventSubprocess");
 
     // we should have no event subscriptions for the parent process
-    assertThat(runtimeService.createEventSubscriptionQuery().processInstanceId(processInstance.getId()).count()).isEqualTo(0);
+    assertThat(runtimeService.createEventSubscriptionQuery().processInstanceId(processInstance.getId()).count()).isZero();
     // we should have two event subscriptions for the called process instance, one for message and one for signal
     String calledProcessInstanceId = taskInsideCallActivity.getProcessInstanceId();
     EventSubscriptionQuery eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery().processInstanceId(calledProcessInstanceId);
@@ -1259,7 +1261,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     assertThat(taskAfterSignalStartEvent.getTaskDefinitionKey()).isEqualTo("taskAfterSignalStartEvent");
 
     // no subscriptions left
-    assertThat(eventSubscriptionQuery.count()).isEqualTo(0);
+    assertThat(eventSubscriptionQuery.count()).isZero();
 
     // Complete the task inside the called process instance
     taskService.complete(taskAfterSignalStartEvent.getId());
@@ -1668,8 +1670,9 @@ public class CallActivityTest extends PluggableProcessEngineTest {
 
 
     List<ProcessInstance> instanceList = runtimeService.createProcessInstanceQuery().list();
-    assertThat(instanceList).isNotNull();
-    assertThat(instanceList).hasSize(2);
+    assertThat(instanceList)
+            .isNotNull()
+            .hasSize(2);
 
 
     // when
@@ -1700,12 +1703,14 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("callTwoSubProcesses");
 
     List<ProcessInstance> instanceList = runtimeService.createProcessInstanceQuery().list();
-    assertThat(instanceList).isNotNull();
-    assertThat(instanceList).hasSize(3);
+    assertThat(instanceList)
+            .isNotNull()
+            .hasSize(3);
 
     List<Task> taskList = taskService.createTaskQuery().list();
-    assertThat(taskList).isNotNull();
-    assertThat(taskList).hasSize(2);
+    assertThat(taskList)
+            .isNotNull()
+            .hasSize(2);
 
     List<String> activeActivityIds = runtimeService.getActiveActivityIds(processInstance.getProcessInstanceId());
     assertThat(activeActivityIds)
@@ -1718,8 +1723,9 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // then
     // How many process Instances
     instanceList = runtimeService.createProcessInstanceQuery().list();
-    assertThat(instanceList).isNotNull();
-    assertThat(instanceList).hasSize(2);
+    assertThat(instanceList)
+            .isNotNull()
+            .hasSize(2);
 
     // How man call activities
     activeActivityIds = runtimeService.getActiveActivityIds(processInstance.getProcessInstanceId());
@@ -1757,8 +1763,9 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     Task taskInNestedSubProcess = taskQuery.singleResult();
 
     List<ProcessInstance> instanceList = runtimeService.createProcessInstanceQuery().list();
-    assertThat(instanceList).isNotNull();
-    assertThat(instanceList).hasSize(3);
+    assertThat(instanceList)
+            .isNotNull()
+            .hasSize(3);
 
     // when
     // Delete the ProcessInstance in the sub process
@@ -1814,8 +1821,9 @@ public class CallActivityTest extends PluggableProcessEngineTest {
 
 
     List<ProcessInstance> instanceList = runtimeService.createProcessInstanceQuery().list();
-    assertThat(instanceList).isNotNull();
-    assertThat(instanceList).hasSize(4);
+    assertThat(instanceList)
+            .isNotNull()
+            .hasSize(4);
 
     // when
     // Delete the ProcessInstance in the sub process

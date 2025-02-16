@@ -97,7 +97,7 @@ public class SetExternalTasksRetriesAuthorizationTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
-  public void testSetRetrieSync() {
+  public void testSetRetriesSync() {
 
     // given
     ProcessInstance processInstance1 = engineRule.getRuntimeService().startProcessInstanceByKey("oneExternalTaskProcess");

@@ -237,7 +237,7 @@ public class CleanableHistoricDecisionInstanceReportTest {
     // assume
     List<CleanableHistoricDecisionInstanceReportResult> resultWithZeros = historyService.createCleanableHistoricDecisionInstanceReport().list();
     assertThat(resultWithZeros).hasSize(1);
-    assertThat(resultWithZeros.get(0).getFinishedDecisionInstanceCount()).isEqualTo(0);
+    assertThat(resultWithZeros.get(0).getFinishedDecisionInstanceCount()).isZero();
 
     // when
     long resultCountWithoutZeros = historyService.createCleanableHistoricDecisionInstanceReport().compact().count();

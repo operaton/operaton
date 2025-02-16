@@ -341,7 +341,7 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
     Thread.sleep(5000);
     assertThat(thread1.getException()).isNull();
 
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().count()).isZero();
 
     // thread 2 flushes successfully and releases the lock
     thread2.waitUntilDone();

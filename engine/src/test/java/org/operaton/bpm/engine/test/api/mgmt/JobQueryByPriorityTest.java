@@ -95,7 +95,7 @@ public class JobQueryByPriorityTest extends PluggableProcessEngineTest {
 
     // when making a job query and filtering by disjunctive job priority
     // then the no jobs are returned
-    assertThat(managementService.createJobQuery().priorityLowerThanOrEquals(2).priorityHigherThanOrEquals(3).count()).isEqualTo(0);
+    assertThat(managementService.createJobQuery().priorityLowerThanOrEquals(2).priorityHigherThanOrEquals(3).count()).isZero();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/jobPrioExpressionProcess.bpmn20.xml")

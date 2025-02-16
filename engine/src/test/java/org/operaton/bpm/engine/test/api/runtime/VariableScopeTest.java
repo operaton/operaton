@@ -55,8 +55,9 @@ public class VariableScopeTest {
   @Test
   public void testGetVariablesTyped() {
     VariableMap variables = variableScope.getVariablesTyped();
-    assertThat(variables).isNotNull();
-    assertThat(variables).containsEntry(VAR_NAME, VAR_VALUE_STRING);
+    assertThat(variables)
+            .isNotNull()
+            .containsEntry(VAR_NAME, VAR_VALUE_STRING);
     assertThat(variableScope.getVariablesTyped(true)).isEqualTo(variables);
   }
 

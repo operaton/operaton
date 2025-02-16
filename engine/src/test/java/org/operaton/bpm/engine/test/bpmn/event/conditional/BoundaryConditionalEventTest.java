@@ -1006,7 +1006,7 @@ public class BoundaryConditionalEventTest extends AbstractConditionalEventTestCa
     //-> non interrupting conditional event is triggered
     tasksAfterVariableIsSet = taskQuery.list();
     assertThat(tasksAfterVariableIsSet).hasSize(2);
-    assertThat(conditionEventSubscriptionQuery.count()).isEqualTo(0);
+    assertThat(conditionEventSubscriptionQuery.count()).isZero();
   }
 
   @Test

@@ -86,8 +86,9 @@ public class ConcurrentHistoryCleanupTest extends ConcurrencyTestCase {
 
     //only one history cleanup job exists -> no exception
     List<Job> historyCleanupJobs = processEngine.getHistoryService().findHistoryCleanupJobs();
-    assertThat(historyCleanupJobs).isNotEmpty();
-    assertThat(historyCleanupJobs).hasSize(1);
+    assertThat(historyCleanupJobs)
+            .isNotEmpty()
+            .hasSize(1);
 
     assertThat(thread1.getException()).isNull();
     assertThat(thread2.getException()).isNull();

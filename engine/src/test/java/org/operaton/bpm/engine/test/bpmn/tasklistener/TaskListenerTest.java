@@ -710,7 +710,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     taskService.setVariable(task.getId(), "foo", "bar");
 
     // then
-    assertThat(RecorderTaskListener.getTotalEventCount()).isEqualTo(0);
+    assertThat(RecorderTaskListener.getTotalEventCount()).isZero();
     assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE)).isEqualTo(0);
   }
 

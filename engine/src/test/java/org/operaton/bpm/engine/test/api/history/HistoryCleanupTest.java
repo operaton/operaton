@@ -350,7 +350,7 @@ public class HistoryCleanupTest {
 
     // then
     assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(PROCESS_INSTANCES_COUNT);
-    assertThat(historyService.createHistoricDecisionInstanceQuery().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricDecisionInstanceQuery().count()).isZero();
     assertThat(historyService.createHistoricCaseInstanceQuery().count()).isEqualTo(CASE_INSTANCES_COUNT);
   }
 
@@ -365,7 +365,7 @@ public class HistoryCleanupTest {
     runHistoryCleanup(true);
 
     // then
-    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isZero();
     assertThat(historyService.createHistoricDecisionInstanceQuery().count()).isEqualTo(DECISION_INSTANCES_COUNT + DECISIONS_IN_PROCESS_INSTANCES);
     assertThat(historyService.createHistoricCaseInstanceQuery().count()).isEqualTo(CASE_INSTANCES_COUNT);
   }
@@ -385,7 +385,7 @@ public class HistoryCleanupTest {
     // then
     assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(PROCESS_INSTANCES_COUNT);
     assertThat(historyService.createHistoricDecisionInstanceQuery().count()).isEqualTo(DECISION_INSTANCES_COUNT + DECISIONS_IN_PROCESS_INSTANCES);
-    assertThat(historyService.createHistoricCaseInstanceQuery().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricCaseInstanceQuery().count()).isZero();
   }
 
   @Test
@@ -400,9 +400,9 @@ public class HistoryCleanupTest {
     runHistoryCleanup(true);
 
     // then
-    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isZero();
     assertThat(historyService.createHistoricDecisionInstanceQuery().count()).isEqualTo(DECISION_INSTANCES_COUNT + DECISIONS_IN_PROCESS_INSTANCES);
-    assertThat(historyService.createHistoricCaseInstanceQuery().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricCaseInstanceQuery().count()).isZero();
   }
 
   @Test
@@ -418,8 +418,8 @@ public class HistoryCleanupTest {
 
     // then
     assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(PROCESS_INSTANCES_COUNT);
-    assertThat(historyService.createHistoricDecisionInstanceQuery().count()).isEqualTo(0);
-    assertThat(historyService.createHistoricCaseInstanceQuery().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricDecisionInstanceQuery().count()).isZero();
+    assertThat(historyService.createHistoricCaseInstanceQuery().count()).isZero();
   }
 
   @Test
@@ -435,8 +435,8 @@ public class HistoryCleanupTest {
     runHistoryCleanup(true);
 
     // then
-    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(0);
-    assertThat(historyService.createHistoricDecisionInstanceQuery().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isZero();
+    assertThat(historyService.createHistoricDecisionInstanceQuery().count()).isZero();
     assertThat(historyService.createHistoricCaseInstanceQuery().count()).isEqualTo(CASE_INSTANCES_COUNT);
   }
 
@@ -674,7 +674,7 @@ public class HistoryCleanupTest {
     runHistoryCleanup(true);
 
     //then
-    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(0);
+    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isZero();
 
     for (Job job : historyService.findHistoryCleanupJobs()) {
       assertThat(job.isSuspended()).isTrue();

@@ -68,7 +68,7 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
 
     // the job was successfully executed
     JobQuery query = managementService.createJobQuery().noRetriesLeft();
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
   }
 
   @Test

@@ -263,7 +263,7 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
     }
 
     // non-existing id:
-    assertThat(historyService.createHistoricVariableInstanceQuery().variableId("non-existing").count()).isEqualTo(0);
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableId("non-existing").count()).isZero();
 
     // existing-id
     List<HistoricVariableInstance> variable = historyService.createHistoricVariableInstanceQuery().listPage(0, 1);
@@ -490,7 +490,7 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
   @Test
   public void testQueryByInvalidExecutionIdIn() {
     HistoricVariableInstanceQuery query = historyService.createHistoricVariableInstanceQuery().executionIdIn("invalid");
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     var historicVariableInstanceQuery = historyService.createHistoricVariableInstanceQuery();
 
     try {
@@ -511,7 +511,7 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
   @Test
   public void testQueryByInvalidTaskIdIn() {
     HistoricVariableInstanceQuery query = historyService.createHistoricVariableInstanceQuery().taskIdIn("invalid");
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     var historicVariableInstanceQuery = historyService.createHistoricVariableInstanceQuery();
 
     try {
@@ -560,7 +560,7 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
     HistoricVariableInstanceQuery query = historyService.createHistoricVariableInstanceQuery();
 
     query.taskIdIn("invalid");
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
 
     try {
       query.taskIdIn((String[])null);
@@ -644,7 +644,7 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
     query.variableTypeIn("invalid");
 
     // then
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
 
     try {
       // when
@@ -1767,7 +1767,7 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("process");
 
     // then
-    assertThat(runtimeService.createVariableInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createVariableInstanceQuery().count()).isZero();
 
     HistoricVariableInstance historicVariable = historyService.createHistoricVariableInstanceQuery().singleResult();
     assertThat(historicVariable).isNotNull();
@@ -1781,7 +1781,7 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("process");
 
     // then
-    assertThat(runtimeService.createVariableInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createVariableInstanceQuery().count()).isZero();
 
     HistoricVariableInstance historicVariable = historyService.createHistoricVariableInstanceQuery().singleResult();
     assertThat(historicVariable).isNotNull();
@@ -1795,7 +1795,7 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("process");
 
     // then
-    assertThat(runtimeService.createVariableInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createVariableInstanceQuery().count()).isZero();
 
     HistoricVariableInstance historicVariable = historyService.createHistoricVariableInstanceQuery().singleResult();
     assertThat(historicVariable).isNotNull();
@@ -1809,7 +1809,7 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("process");
 
     // then
-    assertThat(runtimeService.createVariableInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createVariableInstanceQuery().count()).isZero();
 
     HistoricVariableInstance historicVariable = historyService.createHistoricVariableInstanceQuery().singleResult();
     assertThat(historicVariable).isNotNull();
@@ -1927,7 +1927,7 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
     HistoricVariableInstanceQuery query = historyService.createHistoricVariableInstanceQuery();
 
     query.caseActivityIdIn("invalid");
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     String[] values = { "a", null, "b" };
 
     try {
@@ -2066,7 +2066,7 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
     taskService.complete(task.getId());
 
     // assert process instance is ended
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
     if(processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_ACTIVITY) {
       HistoricVariableInstance variable = historyService.createHistoricVariableInstanceQuery().singleResult();
@@ -2108,7 +2108,7 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
     taskService.complete(task.getId());
 
     // assert process instance is ended
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
     if(processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_ACTIVITY) {
 
@@ -2235,7 +2235,7 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
     taskService.complete(task.getId());
 
     // assert process instance is ended
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
     if(processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_ACTIVITY) {
 
@@ -2406,8 +2406,9 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
     .processDefinitionKey("twoTasksProcess").list();
 
     // then
-    assertThat(variables).isNotNull();
-    assertThat(variables).hasSize(4);
+    assertThat(variables)
+            .isNotNull()
+            .hasSize(4);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml", "org/operaton/bpm/engine/test/api/twoTasksProcess.bpmn20.xml"})

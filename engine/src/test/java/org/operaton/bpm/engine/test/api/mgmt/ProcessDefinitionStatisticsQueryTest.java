@@ -354,8 +354,9 @@ public class ProcessDefinitionStatisticsQueryTest extends PluggableProcessEngine
     assertThat(definitionResult.getFailedJobs()).isEqualTo(1);
 
     List<IncidentStatistics> incidentStatistics = definitionResult.getIncidentStatistics();
-    assertThat(incidentStatistics).isNotEmpty();
-    assertThat(incidentStatistics).hasSize(1);
+    assertThat(incidentStatistics)
+            .isNotEmpty()
+            .hasSize(1);
 
     IncidentStatistics incident = incidentStatistics.get(0);
 
@@ -367,8 +368,9 @@ public class ProcessDefinitionStatisticsQueryTest extends PluggableProcessEngine
     assertThat(definitionResult.getFailedJobs()).isEqualTo(1);
 
     incidentStatistics = definitionResult.getIncidentStatistics();
-    assertThat(incidentStatistics).isNotEmpty();
-    assertThat(incidentStatistics).hasSize(1);
+    assertThat(incidentStatistics)
+            .isNotEmpty()
+            .hasSize(1);
 
     incident = incidentStatistics.get(0);
 

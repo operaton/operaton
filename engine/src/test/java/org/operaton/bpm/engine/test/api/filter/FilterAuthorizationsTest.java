@@ -207,13 +207,15 @@ public class FilterAuthorizationsTest extends PluggableProcessEngineTest {
     assertThat(result.getId()).isEqualTo(task.getId());
 
     List<Task> resultList = filterService.list(filter.getId());
-    assertThat(resultList).isNotNull();
-    assertThat(resultList).hasSize(1);
+    assertThat(resultList)
+            .isNotNull()
+            .hasSize(1);
     assertThat(resultList.get(0).getId()).isEqualTo(task.getId());
 
     resultList = filterService.listPage(filter.getId(), 0, 2);
-    assertThat(resultList).isNotNull();
-    assertThat(resultList).hasSize(1);
+    assertThat(resultList)
+            .isNotNull()
+            .hasSize(1);
     assertThat(resultList.get(0).getId()).isEqualTo(task.getId());
 
     count = filterService.count(filter.getId());

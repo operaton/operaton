@@ -106,8 +106,9 @@ public class ActivityInstanceVerification extends Assert implements ExecutionLis
       return;
     }
 
-    Assertions.assertThat(startInstancesForThisAct).isNotNull();
-    Assertions.assertThat(startInstancesForThisAct).hasSize(count);
+    Assertions.assertThat(startInstancesForThisAct)
+            .isNotNull()
+            .hasSize(count);
 
     List<ActivityInstance> endInstancesForThisAct = endedActivityInstances.get(actId);
     Assertions.assertThat(endInstancesForThisAct).isNotNull();

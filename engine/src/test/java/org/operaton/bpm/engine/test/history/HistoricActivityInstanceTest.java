@@ -371,24 +371,24 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
     hourFromNow.add(Calendar.HOUR_OF_DAY, 1);
 
     // Start/end dates
-    assertThat(historyService.createHistoricActivityInstanceQuery().activityId("theTask").finishedBefore(hourAgo.getTime()).count()).isEqualTo(0);
-    assertThat(historyService.createHistoricActivityInstanceQuery().activityId("theTask").finishedBefore(hourFromNow.getTime()).count()).isEqualTo(0);
-    assertThat(historyService.createHistoricActivityInstanceQuery().activityId("theTask").finishedAfter(hourAgo.getTime()).count()).isEqualTo(0);
-    assertThat(historyService.createHistoricActivityInstanceQuery().activityId("theTask").finishedAfter(hourFromNow.getTime()).count()).isEqualTo(0);
+    assertThat(historyService.createHistoricActivityInstanceQuery().activityId("theTask").finishedBefore(hourAgo.getTime()).count()).isZero();
+    assertThat(historyService.createHistoricActivityInstanceQuery().activityId("theTask").finishedBefore(hourFromNow.getTime()).count()).isZero();
+    assertThat(historyService.createHistoricActivityInstanceQuery().activityId("theTask").finishedAfter(hourAgo.getTime()).count()).isZero();
+    assertThat(historyService.createHistoricActivityInstanceQuery().activityId("theTask").finishedAfter(hourFromNow.getTime()).count()).isZero();
     assertThat(historyService.createHistoricActivityInstanceQuery().activityId("theTask").startedBefore(hourFromNow.getTime()).count()).isEqualTo(1);
-    assertThat(historyService.createHistoricActivityInstanceQuery().activityId("theTask").startedBefore(hourAgo.getTime()).count()).isEqualTo(0);
+    assertThat(historyService.createHistoricActivityInstanceQuery().activityId("theTask").startedBefore(hourAgo.getTime()).count()).isZero();
     assertThat(historyService.createHistoricActivityInstanceQuery().activityId("theTask").startedAfter(hourAgo.getTime()).count()).isEqualTo(1);
-    assertThat(historyService.createHistoricActivityInstanceQuery().activityId("theTask").startedAfter(hourFromNow.getTime()).count()).isEqualTo(0);
-    assertThat(historyService.createHistoricActivityInstanceQuery().activityId("theTask").startedAfter(hourFromNow.getTime()).startedBefore(hourAgo.getTime()).count()).isEqualTo(0);
+    assertThat(historyService.createHistoricActivityInstanceQuery().activityId("theTask").startedAfter(hourFromNow.getTime()).count()).isZero();
+    assertThat(historyService.createHistoricActivityInstanceQuery().activityId("theTask").startedAfter(hourFromNow.getTime()).startedBefore(hourAgo.getTime()).count()).isZero();
 
     // After finishing process
     taskService.complete(taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult().getId());
     assertThat(historyService.createHistoricActivityInstanceQuery().activityId("theTask").finished().count()).isEqualTo(1);
-    assertThat(historyService.createHistoricActivityInstanceQuery().activityId("theTask").finishedBefore(hourAgo.getTime()).count()).isEqualTo(0);
+    assertThat(historyService.createHistoricActivityInstanceQuery().activityId("theTask").finishedBefore(hourAgo.getTime()).count()).isZero();
     assertThat(historyService.createHistoricActivityInstanceQuery().activityId("theTask").finishedBefore(hourFromNow.getTime()).count()).isEqualTo(1);
     assertThat(historyService.createHistoricActivityInstanceQuery().activityId("theTask").finishedAfter(hourAgo.getTime()).count()).isEqualTo(1);
-    assertThat(historyService.createHistoricActivityInstanceQuery().activityId("theTask").finishedAfter(hourFromNow.getTime()).count()).isEqualTo(0);
-    assertThat(historyService.createHistoricActivityInstanceQuery().activityId("theTask").finishedBefore(hourAgo.getTime()).finishedAfter(hourFromNow.getTime()).count()).isEqualTo(0);
+    assertThat(historyService.createHistoricActivityInstanceQuery().activityId("theTask").finishedAfter(hourFromNow.getTime()).count()).isZero();
+    assertThat(historyService.createHistoricActivityInstanceQuery().activityId("theTask").finishedBefore(hourAgo.getTime()).finishedAfter(hourFromNow.getTime()).count()).isZero();
   }
 
   @Deployment
@@ -550,7 +550,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
     assertThat(historicActivityInstanceQuery.singleResult().getEndTime()).isNull();
 
     historicActivityInstanceQuery = historyService.createHistoricActivityInstanceQuery().activityId("end1");
-    assertThat(historicActivityInstanceQuery.count()).isEqualTo(0);
+    assertThat(historicActivityInstanceQuery.count()).isZero();
 
     historicActivityInstanceQuery = historyService.createHistoricActivityInstanceQuery().activityId("timer");
     assertThat(historicActivityInstanceQuery.count()).isEqualTo(1);
@@ -746,7 +746,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
 
     // the compensation boundary event should not appear in history!
     query.activityId("compensate");
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
 
     testRule.assertProcessEnded(pi.getId());
   }

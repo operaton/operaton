@@ -103,7 +103,7 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
 
     taskService.complete(userTask.getId());
 
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
     // 2nd. case: complete the user task cancels the message subscription
 
@@ -122,7 +122,7 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
     assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("taskAfterTask");
     taskService.complete(userTask.getId());
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
   @Deployment
@@ -179,7 +179,7 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
 
     assertThat(((ExecutionEntity) task2Execution).getParentId()).isEqualTo(processInstanceId);
 
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isZero();
 
     taskService.complete(task1.getId());
     taskService.complete(task2.getId());
@@ -218,7 +218,7 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
 
     // then (2)
     assertThat(taskService.createTaskQuery().count()).isEqualTo(3);
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isZero();
 
     Task afterFork = taskService.createTaskQuery()
         .taskDefinitionKey("afterFork")
@@ -310,7 +310,7 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
 
     assertThat(((ExecutionEntity) task2Execution).getParentId()).isEqualTo(((ExecutionEntity) task1Execution).getParentId());
 
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isZero();
 
     taskService.complete(task1.getId());
     taskService.complete(task2.getId());
@@ -367,7 +367,7 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
         .singleResult();
     assertThat(task2).isNotNull();
 
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isZero();
 
     executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
     assertThat(executionTree)
@@ -439,7 +439,7 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
       .child("task2").noScope().concurrent()
     .done());
 
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isZero();
 
     taskService.complete(task1.getId());
     taskService.complete(task2.getId());
@@ -514,7 +514,7 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
 
     assertThat(((ExecutionEntity) task1Execution).getParentId()).isEqualTo(processInstanceId);
 
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isZero();
 
     taskService.complete(task1.getId());
     taskService.complete(task2.getId());
@@ -609,7 +609,7 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
 
     assertThat(((ExecutionEntity) task2Execution).getParentId()).isEqualTo(processInstanceId);
 
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isZero();
 
     taskService.complete(task1.getId());
     taskService.complete(task2.getId());
@@ -705,7 +705,7 @@ public class MessageNonInterruptingBoundaryEventTest extends PluggableProcessEng
 
     assertThat(((ExecutionEntity) task2Execution).getParentId()).isEqualTo(processInstanceId);
 
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isZero();
 
     taskService.complete(task1.getId());
     taskService.complete(task2.getId());

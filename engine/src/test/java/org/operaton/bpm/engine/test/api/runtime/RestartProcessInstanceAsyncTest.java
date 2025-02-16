@@ -647,10 +647,10 @@ public class RestartProcessInstanceAsyncTest {
     helper.executeMonitorJob(batch);
 
     // then the batch was completed and removed
-    assertThat(engineRule.getManagementService().createBatchQuery().count()).isEqualTo(0);
+    assertThat(engineRule.getManagementService().createBatchQuery().count()).isZero();
 
     // and the seed jobs was removed
-    assertThat(engineRule.getManagementService().createJobQuery().count()).isEqualTo(0);
+    assertThat(engineRule.getManagementService().createJobQuery().count()).isZero();
   }
 
   @Test
@@ -675,13 +675,13 @@ public class RestartProcessInstanceAsyncTest {
     engineRule.getManagementService().deleteBatch(batch.getId(), true);
 
     // then the batch was deleted
-    assertThat(engineRule.getManagementService().createBatchQuery().count()).isEqualTo(0);
+    assertThat(engineRule.getManagementService().createBatchQuery().count()).isZero();
 
     // and the seed and execution job definition were deleted
-    assertThat(engineRule.getManagementService().createJobDefinitionQuery().count()).isEqualTo(0);
+    assertThat(engineRule.getManagementService().createJobDefinitionQuery().count()).isZero();
 
     // and the seed job and execution jobs were deleted
-    assertThat(engineRule.getManagementService().createJobQuery().count()).isEqualTo(0);
+    assertThat(engineRule.getManagementService().createJobQuery().count()).isZero();
   }
 
   @Test
@@ -706,13 +706,13 @@ public class RestartProcessInstanceAsyncTest {
     engineRule.getManagementService().deleteBatch(batch.getId(), false);
 
     // then the batch was deleted
-    assertThat(engineRule.getManagementService().createBatchQuery().count()).isEqualTo(0);
+    assertThat(engineRule.getManagementService().createBatchQuery().count()).isZero();
 
     // and the seed and execution job definition were deleted
-    assertThat(engineRule.getManagementService().createJobDefinitionQuery().count()).isEqualTo(0);
+    assertThat(engineRule.getManagementService().createJobDefinitionQuery().count()).isZero();
 
     // and the seed job and execution jobs were deleted
-    assertThat(engineRule.getManagementService().createJobQuery().count()).isEqualTo(0);
+    assertThat(engineRule.getManagementService().createJobQuery().count()).isZero();
   }
 
   @Test

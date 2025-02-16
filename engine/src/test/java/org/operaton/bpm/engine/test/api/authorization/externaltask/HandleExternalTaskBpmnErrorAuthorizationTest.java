@@ -37,7 +37,7 @@ public class HandleExternalTaskBpmnErrorAuthorizationTest extends HandleLockedEx
 
   @Override
   public void assertExternalTaskResults() {
-    assertThat(engineRule.getExternalTaskService().createExternalTaskQuery().count()).isEqualTo(0);
+    assertThat(engineRule.getExternalTaskService().createExternalTaskQuery().count()).isZero();
   }
 }
 

@@ -142,8 +142,9 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .createVariableInstanceQuery()
         .list();
 
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(2);
+    assertThat(result)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variable : result) {
 
@@ -223,8 +224,9 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .createVariableInstanceQuery()
         .list();
 
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(2);
+    assertThat(result)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variable : result) {
 
@@ -341,8 +343,9 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .createVariableInstanceQuery()
         .list();
 
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(2);
+    assertThat(result)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variable : result) {
 
@@ -416,8 +419,9 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .createVariableInstanceQuery()
         .list();
 
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(2);
+    assertThat(result)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variable : result) {
 
@@ -493,8 +497,9 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .createVariableInstanceQuery()
         .list();
 
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(2);
+    assertThat(result)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variable : result) {
 
@@ -574,8 +579,9 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .createVariableInstanceQuery()
         .list();
 
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(2);
+    assertThat(result)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variable : result) {
 
@@ -1237,8 +1243,9 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .createVariableInstanceQuery()
         .list();
 
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(2);
+    assertThat(result)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variable : result) {
 

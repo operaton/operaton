@@ -866,7 +866,7 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
 
     // we cannot fetch the user
     assertThat(identityService.createUserQuery().singleResult()).isNull();
-    assertThat(identityService.createUserQuery().count()).isEqualTo(0);
+    assertThat(identityService.createUserQuery().count()).isZero();
 
     processEngineConfiguration.setAuthorizationEnabled(false);
 
@@ -912,7 +912,7 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
 
     // now we cannot fetch the user
     assertThat(identityService.createUserQuery().singleResult()).isNull();
-    assertThat(identityService.createUserQuery().count()).isEqualTo(0);
+    assertThat(identityService.createUserQuery().count()).isZero();
 
 
     // delete our perms
@@ -1116,7 +1116,7 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
 
     // we cannot fetch the group
     assertThat(identityService.createGroupQuery().singleResult()).isNull();
-    assertThat(identityService.createGroupQuery().count()).isEqualTo(0);
+    assertThat(identityService.createGroupQuery().count()).isZero();
 
     // now we add permission for jonny2 to read the group:
     processEngineConfiguration.setAuthorizationEnabled(false);
@@ -1159,7 +1159,7 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
 
     // now we cannot fetch the group
     assertThat(identityService.createGroupQuery().singleResult()).isNull();
-    assertThat(identityService.createGroupQuery().count()).isEqualTo(0);
+    assertThat(identityService.createGroupQuery().count()).isZero();
 
     // delete our perms
     processEngineConfiguration.setAuthorizationEnabled(false);
@@ -1196,7 +1196,7 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
     processEngineConfiguration.setAuthorizationEnabled(true);
 
     // we cannot fetch the tenants
-    assertThat(identityService.createTenantQuery().count()).isEqualTo(0);
+    assertThat(identityService.createTenantQuery().count()).isZero();
 
     // now we add permission for jonny2 to read the tenants:
     processEngineConfiguration.setAuthorizationEnabled(false);
@@ -1236,7 +1236,7 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
     processEngineConfiguration.setAuthorizationEnabled(true);
 
     // now we cannot fetch the tenants
-    assertThat(identityService.createTenantQuery().count()).isEqualTo(0);
+    assertThat(identityService.createTenantQuery().count()).isZero();
 
     // delete our permissions
     processEngineConfiguration.setAuthorizationEnabled(false);

@@ -542,7 +542,7 @@ public class MigrationRemoveSubprocessTest {
       .execute();
 
     // then
-    assertThat(rule.getRuntimeService().createVariableInstanceQuery().count()).isEqualTo(0);
+    assertThat(rule.getRuntimeService().createVariableInstanceQuery().count()).isZero();
   }
 
 

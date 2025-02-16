@@ -334,8 +334,9 @@ public class CmmnTransformerTest {
     assertThat(childPlanItem.getId()).isEqualTo(planItemX1.getId());
 
     List<CmmnActivity> childrenOfX1 = childPlanItem.getActivities();
-    assertThat(childrenOfX1).isNotEmpty();
-    assertThat(childrenOfX1).hasSize(2);
+    assertThat(childrenOfX1)
+            .isNotEmpty()
+            .hasSize(2);
 
     childPlanItem = childrenOfX1.get(0);
     assertThat(childPlanItem.getId()).isEqualTo(planItemA2.getId());
@@ -349,8 +350,9 @@ public class CmmnTransformerTest {
     assertThat(childPlanItem.getId()).isEqualTo(planItemY.getId());
 
     List<CmmnActivity> childrenOfY = childPlanItem.getActivities();
-    assertThat(childrenOfY).isNotEmpty();
-    assertThat(childrenOfY).hasSize(2);
+    assertThat(childrenOfY)
+            .isNotEmpty()
+            .hasSize(2);
 
     childPlanItem = childrenOfY.get(0);
     assertThat(childPlanItem.getId()).isEqualTo(planItemC.getId());
@@ -360,8 +362,9 @@ public class CmmnTransformerTest {
     assertThat(childPlanItem.getId()).isEqualTo(planItemX2.getId());
 
     List<CmmnActivity> childrenOfX2 = childPlanItem.getActivities();
-    assertThat(childrenOfX2).isNotEmpty();
-    assertThat(childrenOfX2).hasSize(2);
+    assertThat(childrenOfX2)
+            .isNotEmpty()
+            .hasSize(2);
 
     childPlanItem = childrenOfX2.get(0);
     assertThat(childPlanItem.getId()).isEqualTo(planItemA2.getId());

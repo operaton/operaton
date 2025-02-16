@@ -324,8 +324,9 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
     List<Resource> resources = repositoryService.getDeploymentResources(deploymentId);
 
     // then
-    assertThat(resources).isNotEmpty();
-    assertThat(resources).hasSize(2);
+    assertThat(resources)
+            .isNotEmpty()
+            .hasSize(2);
   }
 
   @Test
@@ -338,8 +339,9 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
     List<Resource> resources = repositoryService.getDeploymentResources(deploymentId);
 
     // then
-    assertThat(resources).isNotEmpty();
-    assertThat(resources).hasSize(2);
+    assertThat(resources)
+            .isNotEmpty()
+            .hasSize(2);
   }
 
   // get resource as stream //////////////////////////////////

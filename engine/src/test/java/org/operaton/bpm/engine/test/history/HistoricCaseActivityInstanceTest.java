@@ -1233,7 +1233,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseExecutionIdIn(casePlanExecution.getId());
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
   }
 
   @Deployment(resources={

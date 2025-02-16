@@ -54,7 +54,6 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -154,7 +153,7 @@ public class HistoricDetailQueryTest {
             .userOperationId("invalid");
 
     assertThat(query.list()).isEmpty();
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
 
     try {
       query.userOperationId(null);
@@ -197,7 +196,7 @@ public class HistoricDetailQueryTest {
             .executionId("invalid");
 
     assertThat(query.list()).isEmpty();
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
   }
 
   @Test
@@ -325,7 +324,7 @@ public class HistoricDetailQueryTest {
         .variableTypeIn("invalid");
 
     // then
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
 
     try {
       // when
@@ -599,7 +598,7 @@ public class HistoricDetailQueryTest {
         .processInstanceIdIn("foo");
 
     // then
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
   }
 
   @Test
@@ -653,7 +652,7 @@ public class HistoricDetailQueryTest {
 
     // then
     assertThat(query.occurredBefore(hourFromNow.getTime()).count()).isEqualTo(1);
-    assertThat(query.occurredBefore(hourAgo.getTime()).count()).isEqualTo(0);
+    assertThat(query.occurredBefore(hourAgo.getTime()).count()).isZero();
 
   }
 
@@ -678,7 +677,7 @@ public class HistoricDetailQueryTest {
       historyService.createHistoricDetailQuery();
 
     // then
-    assertThat(query.occurredAfter(hourFromNow.getTime()).count()).isEqualTo(0);
+    assertThat(query.occurredAfter(hourFromNow.getTime()).count()).isZero();
     assertThat(query.occurredAfter(hourAgo.getTime()).count()).isEqualTo(1);
   }
 
@@ -703,10 +702,10 @@ public class HistoricDetailQueryTest {
       historyService.createHistoricDetailQuery();
 
     // then
-    assertThat(query.occurredAfter(hourFromNow.getTime()).occurredBefore(hourFromNow.getTime()).count()).isEqualTo(0);
+    assertThat(query.occurredAfter(hourFromNow.getTime()).occurredBefore(hourFromNow.getTime()).count()).isZero();
     assertThat(query.occurredAfter(hourAgo.getTime()).occurredBefore(hourFromNow.getTime()).count()).isEqualTo(1);
-    assertThat(query.occurredAfter(hourFromNow.getTime()).occurredBefore(hourAgo.getTime()).count()).isEqualTo(0);
-    assertThat(query.occurredAfter(hourAgo.getTime()).occurredBefore(hourAgo.getTime()).count()).isEqualTo(0);
+    assertThat(query.occurredAfter(hourFromNow.getTime()).occurredBefore(hourAgo.getTime()).count()).isZero();
+    assertThat(query.occurredAfter(hourAgo.getTime()).occurredBefore(hourAgo.getTime()).count()).isZero();
   }
 
   @Test

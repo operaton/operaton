@@ -81,7 +81,7 @@ public class BulkHistoryDeleteDmnDisabledTest {
     historyService.deleteHistoricProcessInstancesBulk(ids);
 
     //then
-    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey("someProcess").count()).isEqualTo(0);
+    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey("someProcess").count()).isZero();
   }
 
   private List<String> prepareHistoricProcesses(String businessKey) {

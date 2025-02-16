@@ -116,7 +116,7 @@ public class JavaServiceTaskTest extends PluggableProcessEngineTest {
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", "no-exception");
     runtimeService.startProcessInstanceByKey("exceptionHandling", vars);
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
     // If variable value == 'throw-exception', process executes
     // service task, which generates and catches exception,

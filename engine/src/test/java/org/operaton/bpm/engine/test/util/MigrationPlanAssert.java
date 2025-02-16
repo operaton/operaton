@@ -120,7 +120,7 @@ public class MigrationPlanAssert {
       if (!notFound.isEmpty()) {
         builder.append("Migration variables missing:\n\t").append(notFound);
       }
-      Assertions.fail(builder.toString());
+      fail(builder.toString());
     }
     return this;
   }
@@ -154,7 +154,7 @@ public class MigrationPlanAssert {
       if (!notFound.isEmpty()) {
         builder.append("Migration instructions missing:\n\t").append(notFound);
       }
-      Assertions.fail(builder.toString());
+      fail(builder.toString());
     }
 
     return this;

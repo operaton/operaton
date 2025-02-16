@@ -72,7 +72,7 @@ public class ActivateJobTest extends PluggableProcessEngineTest {
     // then
     // the job should be active
     assertThat(jobQuery.active().count()).isEqualTo(1);
-    assertThat(jobQuery.suspended().count()).isEqualTo(0);
+    assertThat(jobQuery.suspended().count()).isZero();
 
     Job activeJob = jobQuery.active().singleResult();
 
@@ -107,7 +107,7 @@ public class ActivateJobTest extends PluggableProcessEngineTest {
 
     // then
     // the job should be activated
-    assertThat(jobQuery.suspended().count()).isEqualTo(0);
+    assertThat(jobQuery.suspended().count()).isZero();
     assertThat(jobQuery.active().count()).isEqualTo(1);
 
     Job activeJob = jobQuery.active().singleResult();
@@ -145,7 +145,7 @@ public class ActivateJobTest extends PluggableProcessEngineTest {
     // then
     // the job should be suspended
     assertThat(jobQuery.active().count()).isEqualTo(1);
-    assertThat(jobQuery.suspended().count()).isEqualTo(0);
+    assertThat(jobQuery.suspended().count()).isZero();
 
     Job suspendedJob = jobQuery.active().singleResult();
 
@@ -181,7 +181,7 @@ public class ActivateJobTest extends PluggableProcessEngineTest {
     // then
     // the job should be active
     assertThat(jobQuery.active().count()).isEqualTo(1);
-    assertThat(jobQuery.suspended().count()).isEqualTo(0);
+    assertThat(jobQuery.suspended().count()).isZero();
 
     Job activeJob = jobQuery.active().singleResult();
 
@@ -215,7 +215,7 @@ public class ActivateJobTest extends PluggableProcessEngineTest {
 
     // then
     // the job should be suspended
-    assertThat(jobQuery.suspended().count()).isEqualTo(0);
+    assertThat(jobQuery.suspended().count()).isZero();
     assertThat(jobQuery.active().count()).isEqualTo(1);
 
     Job activeJob = jobQuery.active().singleResult();
@@ -251,7 +251,7 @@ public class ActivateJobTest extends PluggableProcessEngineTest {
     // the job should be activated
     JobQuery jobQuery = managementService.createJobQuery();
 
-    assertThat(jobQuery.suspended().count()).isEqualTo(0);
+    assertThat(jobQuery.suspended().count()).isZero();
     assertThat(jobQuery.active().count()).isEqualTo(3);
 
     // Clean DB
@@ -288,7 +288,7 @@ public class ActivateJobTest extends PluggableProcessEngineTest {
     // then
     // the job should be active
     assertThat(jobQuery.active().count()).isEqualTo(1);
-    assertThat(jobQuery.suspended().count()).isEqualTo(0);
+    assertThat(jobQuery.suspended().count()).isZero();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
@@ -319,7 +319,7 @@ public class ActivateJobTest extends PluggableProcessEngineTest {
     // then
     // the job should be active
     assertThat(jobQuery.active().count()).isEqualTo(1);
-    assertThat(jobQuery.suspended().count()).isEqualTo(0);
+    assertThat(jobQuery.suspended().count()).isZero();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
@@ -348,7 +348,7 @@ public class ActivateJobTest extends PluggableProcessEngineTest {
     // then
     // the job should be active
     assertThat(jobQuery.active().count()).isEqualTo(1);
-    assertThat(jobQuery.suspended().count()).isEqualTo(0);
+    assertThat(jobQuery.suspended().count()).isZero();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
@@ -379,7 +379,7 @@ public class ActivateJobTest extends PluggableProcessEngineTest {
     // then
     // the job should be active
     assertThat(jobQuery.active().count()).isEqualTo(1);
-    assertThat(jobQuery.suspended().count()).isEqualTo(0);
+    assertThat(jobQuery.suspended().count()).isZero();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
@@ -408,7 +408,7 @@ public class ActivateJobTest extends PluggableProcessEngineTest {
     // then
     // the job should be active
     assertThat(jobQuery.active().count()).isEqualTo(1);
-    assertThat(jobQuery.suspended().count()).isEqualTo(0);
+    assertThat(jobQuery.suspended().count()).isZero();
   }
 
 }

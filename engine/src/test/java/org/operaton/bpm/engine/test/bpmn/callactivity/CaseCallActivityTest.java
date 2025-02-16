@@ -456,8 +456,9 @@ public class CaseCallActivityTest extends CmmnTest {
         .caseInstanceIdIn(subCaseInstance.getId())
         .list();
 
-    assertThat(variables).isNotEmpty();
-    assertThat(variables).hasSize(2);
+    assertThat(variables)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -507,8 +508,9 @@ public class CaseCallActivityTest extends CmmnTest {
         .caseInstanceIdIn(subCaseInstance.getId())
         .list();
 
-    assertThat(variables).isNotEmpty();
-    assertThat(variables).hasSize(2);
+    assertThat(variables)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -552,8 +554,9 @@ public class CaseCallActivityTest extends CmmnTest {
         .caseInstanceIdIn(subCaseInstance.getId())
         .list();
 
-    assertThat(variables).isNotEmpty();
-    assertThat(variables).hasSize(2);
+    assertThat(variables)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -600,8 +603,9 @@ public class CaseCallActivityTest extends CmmnTest {
         .caseInstanceIdIn(subCaseInstance.getId())
         .list();
 
-    assertThat(variables).isNotEmpty();
-    assertThat(variables).hasSize(2);
+    assertThat(variables)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -649,8 +653,9 @@ public class CaseCallActivityTest extends CmmnTest {
       .caseInstanceIdIn(subCaseInstance.getId())
       .list();
 
-    assertThat(variables).isNotEmpty();
-    assertThat(variables).hasSize(2);
+    assertThat(variables)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -698,8 +703,9 @@ public class CaseCallActivityTest extends CmmnTest {
         .caseInstanceIdIn(subCaseInstance.getId())
         .list();
 
-    assertThat(variables).isNotEmpty();
-    assertThat(variables).hasSize(2);
+    assertThat(variables)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -783,8 +789,9 @@ public class CaseCallActivityTest extends CmmnTest {
         .processInstanceIdIn(superProcessInstanceId)
         .list();
 
-    assertThat(variables).isNotEmpty();
-    assertThat(variables).hasSize(2);
+    assertThat(variables)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -836,8 +843,9 @@ public class CaseCallActivityTest extends CmmnTest {
         .processInstanceIdIn(superProcessInstanceId)
         .list();
 
-    assertThat(variables).isNotEmpty();
-    assertThat(variables).hasSize(2);
+    assertThat(variables)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -883,8 +891,9 @@ public class CaseCallActivityTest extends CmmnTest {
         .processInstanceIdIn(superProcessInstanceId)
         .list();
 
-    assertThat(variables).isNotEmpty();
-    assertThat(variables).hasSize(2);
+    assertThat(variables)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -936,8 +945,9 @@ public class CaseCallActivityTest extends CmmnTest {
         .processInstanceIdIn(superProcessInstanceId)
         .list();
 
-    assertThat(variables).isNotEmpty();
-    assertThat(variables).hasSize(2);
+    assertThat(variables)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -989,8 +999,9 @@ public class CaseCallActivityTest extends CmmnTest {
       .processInstanceIdIn(superProcessInstanceId)
       .list();
 
-    assertThat(variables).isNotEmpty();
-    assertThat(variables).hasSize(2);
+    assertThat(variables)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -1042,8 +1053,9 @@ public class CaseCallActivityTest extends CmmnTest {
         .processInstanceIdIn(superProcessInstanceId)
         .list();
 
-    assertThat(variables).isNotEmpty();
-    assertThat(variables).hasSize(2);
+    assertThat(variables)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -1150,8 +1162,9 @@ public class CaseCallActivityTest extends CmmnTest {
         .processInstanceIdIn(superProcessInstanceId)
         .list();
 
-    assertThat(variables).isNotEmpty();
-    assertThat(variables).hasSize(2);
+    assertThat(variables)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -1215,7 +1228,7 @@ public class CaseCallActivityTest extends CmmnTest {
     runtimeService.deleteProcessInstance(superProcessInstanceId, null);
 
     // then
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
     CaseInstance subCaseInstance = queryOneTaskCaseInstance();
     assertThat(subCaseInstance).isNotNull();
@@ -1342,7 +1355,7 @@ public class CaseCallActivityTest extends CmmnTest {
 
     // then (1)
 
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().count()).isZero();
 
     // when (2)
     humanTaskId = queryCaseExecutionByActivityId("PI_HumanTask_2").getId();

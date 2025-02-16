@@ -36,6 +36,6 @@ public class CompleteExternalTaskAuthorizationTest extends HandleLockedExternalT
 
   @Override
   public void assertExternalTaskResults() {
-    assertThat(engineRule.getExternalTaskService().createExternalTaskQuery().count()).isEqualTo(0);
+    assertThat(engineRule.getExternalTaskService().createExternalTaskQuery().count()).isZero();
   }
 }

@@ -103,10 +103,10 @@ public class IncidentQueryTest {
     Calendar hourFromNow = Calendar.getInstance();
     hourFromNow.add(Calendar.HOUR_OF_DAY, 1);
 
-    assertThat(query.incidentTimestampBefore(hourAgo.getTime()).count()).isEqualTo(0);
+    assertThat(query.incidentTimestampBefore(hourAgo.getTime()).count()).isZero();
     assertThat(query.incidentTimestampBefore(hourFromNow.getTime()).count()).isEqualTo(4);
     assertThat(query.incidentTimestampAfter(hourAgo.getTime()).count()).isEqualTo(4);
-    assertThat(query.incidentTimestampAfter(hourFromNow.getTime()).count()).isEqualTo(0);
+    assertThat(query.incidentTimestampAfter(hourFromNow.getTime()).count()).isZero();
     assertThat(query.incidentTimestampBefore(hourFromNow.getTime())
         .incidentTimestampAfter(hourAgo.getTime()).count()).isEqualTo(4);
   }
@@ -117,8 +117,9 @@ public class IncidentQueryTest {
     assertThat(query.count()).isEqualTo(4);
 
     List<Incident> incidents = query.list();
-    assertThat(incidents).isNotEmpty();
-    assertThat(incidents).hasSize(4);
+    assertThat(incidents)
+            .isNotEmpty()
+            .hasSize(4);
   }
 
   @Test
@@ -127,15 +128,16 @@ public class IncidentQueryTest {
     assertThat(query.count()).isEqualTo(4);
 
     List<Incident> incidents = query.list();
-    assertThat(incidents).isNotEmpty();
-    assertThat(incidents).hasSize(4);
+    assertThat(incidents)
+            .isNotEmpty()
+            .hasSize(4);
   }
 
   @Test
   public void testQueryByInvalidIncidentType() {
     IncidentQuery query = runtimeService.createIncidentQuery().incidentType("invalid");
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
 
     List<Incident> incidents = query.list();
     assertThat(incidents).isEmpty();
@@ -150,15 +152,16 @@ public class IncidentQueryTest {
     assertThat(query.count()).isEqualTo(1);
 
     List<Incident> incidents = query.list();
-    assertThat(incidents).isNotEmpty();
-    assertThat(incidents).hasSize(1);
+    assertThat(incidents)
+            .isNotEmpty()
+            .hasSize(1);
   }
 
   @Test
   public void testQueryByInvalidIncidentMessage() {
     IncidentQuery query = runtimeService.createIncidentQuery().incidentMessage("invalid");
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
 
     List<Incident> incidents = query.list();
     assertThat(incidents).isEmpty();
@@ -183,15 +186,16 @@ public class IncidentQueryTest {
     assertThat(query.count()).isEqualTo(4);
 
     List<Incident> incidents = query.list();
-    assertThat(incidents).isNotEmpty();
-    assertThat(incidents).hasSize(4);
+    assertThat(incidents)
+            .isNotEmpty()
+            .hasSize(4);
   }
 
   @Test
   public void testQueryByInvalidProcessDefinitionId() {
     IncidentQuery query = runtimeService.createIncidentQuery().processDefinitionId("invalid");
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
 
     List<Incident> incidents = query.list();
     assertThat(incidents).isEmpty();
@@ -254,8 +258,9 @@ public class IncidentQueryTest {
     assertThat(query.count()).isEqualTo(1);
 
     List<Incident> incidents = query.list();
-    assertThat(incidents).isNotEmpty();
-    assertThat(incidents).hasSize(1);
+    assertThat(incidents)
+            .isNotEmpty()
+            .hasSize(1);
 
     Incident incident = query.singleResult();
     assertThat(incident).isNotNull();
@@ -265,7 +270,7 @@ public class IncidentQueryTest {
   public void testQueryByInvalidProcessInstanceId() {
     IncidentQuery query = runtimeService.createIncidentQuery().processInstanceId("invalid");
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
 
     List<Incident> incidents = query.list();
     assertThat(incidents).isEmpty();
@@ -284,15 +289,16 @@ public class IncidentQueryTest {
     assertThat(query.count()).isEqualTo(1);
 
     List<Incident> incidents = query.list();
-    assertThat(incidents).isNotEmpty();
-    assertThat(incidents).hasSize(1);
+    assertThat(incidents)
+            .isNotEmpty()
+            .hasSize(1);
   }
 
   @Test
   public void testQueryByInvalidIncidentId() {
     IncidentQuery query = runtimeService.createIncidentQuery().incidentId("invalid");
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
 
     List<Incident> incidents = query.list();
     assertThat(incidents).isEmpty();
@@ -311,15 +317,16 @@ public class IncidentQueryTest {
     assertThat(query.count()).isEqualTo(1);
 
     List<Incident> incidents = query.list();
-    assertThat(incidents).isNotEmpty();
-    assertThat(incidents).hasSize(1);
+    assertThat(incidents)
+            .isNotEmpty()
+            .hasSize(1);
   }
 
   @Test
   public void testQueryByInvalidExecutionId() {
     IncidentQuery query = runtimeService.createIncidentQuery().executionId("invalid");
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
 
     List<Incident> incidents = query.list();
     assertThat(incidents).isEmpty();
@@ -334,15 +341,16 @@ public class IncidentQueryTest {
     assertThat(query.count()).isEqualTo(4);
 
     List<Incident> incidents = query.list();
-    assertThat(incidents).isNotEmpty();
-    assertThat(incidents).hasSize(4);
+    assertThat(incidents)
+            .isNotEmpty()
+            .hasSize(4);
   }
 
   @Test
   public void testQueryByInvalidActivityId() {
     IncidentQuery query = runtimeService.createIncidentQuery().activityId("invalid");
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
 
     List<Incident> incidents = query.list();
     assertThat(incidents).isEmpty();
@@ -357,15 +365,16 @@ public class IncidentQueryTest {
     assertThat(query.count()).isEqualTo(4);
 
     List<Incident> incidents = query.list();
-    assertThat(incidents).isNotEmpty();
-    assertThat(incidents).hasSize(4);
+    assertThat(incidents)
+            .isNotEmpty()
+            .hasSize(4);
   }
 
   @Test
   public void testQueryByInvalidFailedActivityId() {
     IncidentQuery query = runtimeService.createIncidentQuery().failedActivityId("invalid");
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
 
     List<Incident> incidents = query.list();
     assertThat(incidents).isEmpty();
@@ -382,15 +391,16 @@ public class IncidentQueryTest {
     assertThat(query.count()).isEqualTo(1);
 
     List<Incident> incidents = query.list();
-    assertThat(incidents).isNotEmpty();
-    assertThat(incidents).hasSize(1);
+    assertThat(incidents)
+            .isNotEmpty()
+            .hasSize(1);
   }
 
   @Test
   public void testQueryByInvalidConfiguration() {
     IncidentQuery query = runtimeService.createIncidentQuery().configuration("invalid");
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
 
     List<Incident> incidents = query.list();
     assertThat(incidents).isEmpty();
@@ -405,14 +415,15 @@ public class IncidentQueryTest {
     assertThat(query.count()).isEqualTo(4);
 
     List<Incident> incidents = query.list();
-    assertThat(incidents).isNotEmpty();
-    assertThat(incidents).hasSize(4);
+    assertThat(incidents)
+            .isNotEmpty()
+            .hasSize(4);
   }
 
   @Test
   public void testQueryByInvalidCauseIncidentId() {
     IncidentQuery query = runtimeService.createIncidentQuery().causeIncidentId("invalid");
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
 
     List<Incident> incidents = query.list();
     assertThat(incidents).isEmpty();
@@ -436,8 +447,9 @@ public class IncidentQueryTest {
     assertThat(query.count()).isEqualTo(2);
 
     List<Incident> incidents = query.list();
-    assertThat(incidents).isNotEmpty();
-    assertThat(incidents).hasSize(2);
+    assertThat(incidents)
+            .isNotEmpty()
+            .hasSize(2);
   }
 
   @Test
@@ -446,14 +458,15 @@ public class IncidentQueryTest {
     assertThat(query.count()).isEqualTo(4);
 
     List<Incident> incidents = query.list();
-    assertThat(incidents).isNotEmpty();
-    assertThat(incidents).hasSize(4);
+    assertThat(incidents)
+            .isNotEmpty()
+            .hasSize(4);
   }
 
   @Test
   public void testQueryByRootInvalidCauseIncidentId() {
     IncidentQuery query = runtimeService.createIncidentQuery().rootCauseIncidentId("invalid");
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
 
     List<Incident> incidents = query.list();
     assertThat(incidents).isEmpty();
@@ -481,8 +494,9 @@ public class IncidentQueryTest {
     assertThat(query.count()).isEqualTo(3);
 
     List<Incident> incidents = query.list();
-    assertThat(incidents).isNotEmpty();
-    assertThat(incidents).hasSize(3);
+    assertThat(incidents)
+            .isNotEmpty()
+            .hasSize(3);
 
     try {
       query.singleResult();
@@ -531,7 +545,7 @@ public class IncidentQueryTest {
   @Test
   public void testQueryByUnknownJobDefinitionId() {
     IncidentQuery query = runtimeService.createIncidentQuery().jobDefinitionIdIn("unknown");
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
 
     List<Incident> incidents = query.list();
     assertThat(incidents).isEmpty();

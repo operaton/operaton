@@ -897,7 +897,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     taskService.complete(task.getId());
 
     // variable does not exist outside of scope
-    assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isEqualTo(0);
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isZero();
   }
 
   @Deployment
@@ -934,7 +934,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     taskService.complete(task.getId());
 
     // variable does not exist outside of scope
-    assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isEqualTo(0);
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isZero();
   }
 
   @Deployment
@@ -971,7 +971,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     }
 
     // variable does not exist outside of scope
-    assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isEqualTo(0);
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isZero();
   }
 
   @Deployment
@@ -1007,7 +1007,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     }
 
     // variable does not exist outside of scope
-    assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isEqualTo(0);
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isZero();
   }
 
   @Test
@@ -1092,13 +1092,13 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskOk");
 
     // then: variable mapped exists
-    assertThat(runtimeService.createVariableInstanceQuery().variableName("localNotMapped").count()).isEqualTo(0);
-    assertThat(runtimeService.createVariableInstanceQuery().variableName("localMapped").count()).isEqualTo(0);
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("localNotMapped").count()).isZero();
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("localMapped").count()).isZero();
     assertThat(runtimeService.createVariableInstanceQuery().variableName("mapped").count()).isEqualTo(1);
 
     taskService.complete(task.getId());
 
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
     // case 2: error occurs
     runtimeService.startProcessInstanceByKey("testProcess", Collections.<String, Object>singletonMap("throwError", true));
@@ -1108,13 +1108,13 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskError");
 
-    assertThat(runtimeService.createVariableInstanceQuery().variableName("localNotMapped").count()).isEqualTo(0);
-    assertThat(runtimeService.createVariableInstanceQuery().variableName("localMapped").count()).isEqualTo(0);
-    assertThat(runtimeService.createVariableInstanceQuery().variableName("mapped").count()).isEqualTo(0);
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("localNotMapped").count()).isZero();
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("localMapped").count()).isZero();
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("mapped").count()).isZero();
 
     taskService.complete(task.getId());
 
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
   @Deployment
@@ -1142,7 +1142,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     taskService.complete(task.getId());
 
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
     // case 2: error occurs
     runtimeService.startProcessInstanceByKey("testProcess", Collections.<String, Object>singletonMap("throwError", true));
@@ -1159,11 +1159,11 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskError");
 
-    assertThat(runtimeService.createVariableInstanceQuery().variableName("mapped").count()).isEqualTo(0);
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("mapped").count()).isZero();
 
     taskService.complete(task.getId());
 
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
   @Deployment
@@ -1191,7 +1191,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
 
     taskService.complete(task.getId());
 
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
     // case 2: error occurs
     runtimeService.startProcessInstanceByKey("testProcess", Collections.<String, Object>singletonMap("throwError", true));
@@ -1210,11 +1210,11 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskError");
 
-    assertThat(runtimeService.createVariableInstanceQuery().variableName("mapped").count()).isEqualTo(0);
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("mapped").count()).isZero();
 
     taskService.complete(task.getId());
 
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
   @Deployment

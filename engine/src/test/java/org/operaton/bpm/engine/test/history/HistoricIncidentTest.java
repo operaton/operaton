@@ -422,7 +422,7 @@ public class HistoricIncidentTest extends PluggableProcessEngineTest {
     List<HistoricJobLog> logs = getHistoricJobLogOrdered(job.getId());
     assertThat(logs).hasSize(2);
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery().processInstanceId(pi.getId());
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
 
     // set retries to 0
     managementService.setJobRetries(job.getId(), 0);

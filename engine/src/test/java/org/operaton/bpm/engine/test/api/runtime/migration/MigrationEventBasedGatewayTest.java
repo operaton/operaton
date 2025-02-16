@@ -530,7 +530,7 @@ public class MigrationEventBasedGatewayTest {
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
     // then the incident is gone
-    assertThat(rule.getRuntimeService().createIncidentQuery().count()).isEqualTo(0);
+    assertThat(rule.getRuntimeService().createIncidentQuery().count()).isZero();
   }
 
 }

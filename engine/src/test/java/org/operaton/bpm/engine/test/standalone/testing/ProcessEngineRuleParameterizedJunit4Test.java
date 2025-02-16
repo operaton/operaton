@@ -68,7 +68,7 @@ public class ProcessEngineRuleParameterizedJunit4Test {
     assertThat(task.getName()).isEqualTo("My Task");
 
     taskService.complete(task.getId());
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
   @Test
@@ -82,7 +82,7 @@ public class ProcessEngineRuleParameterizedJunit4Test {
     assertThat(task.getName()).isEqualTo("My Task");
 
     taskService.complete(task.getId());
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
   /**

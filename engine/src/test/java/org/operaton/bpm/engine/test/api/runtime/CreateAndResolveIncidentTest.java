@@ -227,8 +227,9 @@ public class CreateAndResolveIncidentTest {
     assertThat(incident).isNotNull();
 
     Incident incident2 = runtimeService.createIncidentQuery().singleResult();
-    assertThat(incident2).isNotNull();
-    assertThat(incident2).isEqualTo(incident);
+    assertThat(incident2)
+            .isNotNull()
+            .isEqualTo(incident);
     assertThat(incident.getIncidentType()).isEqualTo("custom");
     assertThat(incident.getConfiguration()).isEqualTo("configuration");
 

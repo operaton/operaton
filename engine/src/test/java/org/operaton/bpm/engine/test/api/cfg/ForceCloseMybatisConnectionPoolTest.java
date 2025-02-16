@@ -55,7 +55,7 @@ public class ForceCloseMybatisConnectionPoolTest {
     processEngine.close();
 
     // the idle connections are closed
-    assertThat(state.getIdleConnectionCount()).isEqualTo(0);
+    assertThat(state.getIdleConnectionCount()).isZero();
 
   }
 
@@ -86,7 +86,7 @@ public class ForceCloseMybatisConnectionPoolTest {
 
     pooledDataSource.forceCloseAll();
 
-    assertThat(state.getIdleConnectionCount()).isEqualTo(0);
+    assertThat(state.getIdleConnectionCount()).isZero();
   }
 
 }

@@ -151,7 +151,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
     // we end the task in the sub process and the sub process instance end is
     // propagated to the parent process
     taskService.complete(tasks.get(0).getId());
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().count()).isZero();
 
     // There is a QA config without history, so we cannot work with this:
     // assertEquals(1,
@@ -330,7 +330,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
     taskService.complete(tasks.get(1).getId());
 
     // then
-    assertThat(runtimeService.createVariableInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createVariableInstanceQuery().count()).isZero();
   }
 
   @Deployment

@@ -218,7 +218,7 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
     job = refreshJob(jobId);
     assertThat(job.getRetries()).isEqualTo(0);
     assertThat(managementService.createJobQuery().withException().count()).isEqualTo(1);
-    assertThat(managementService.createJobQuery().jobId(jobId).withRetriesLeft().count()).isEqualTo(0);
+    assertThat(managementService.createJobQuery().jobId(jobId).withRetriesLeft().count()).isZero();
     assertThat(managementService.createJobQuery().noRetriesLeft().count()).isEqualTo(1);
   }
 
@@ -879,7 +879,7 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
     job = refreshJob(job.getId());
     assertThat(job.getRetries()).isEqualTo(0);
     assertThat(managementService.createJobQuery().withException().count()).isEqualTo(1);
-    assertThat(managementService.createJobQuery().withRetriesLeft().count()).isEqualTo(0);
+    assertThat(managementService.createJobQuery().withRetriesLeft().count()).isZero();
     assertThat(managementService.createJobQuery().noRetriesLeft().count()).isEqualTo(1);
 
     execution = refreshExecutionEntity(execution.getId());

@@ -252,8 +252,9 @@ public class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     HumanTaskActivityBehavior behavior = (HumanTaskActivityBehavior) activity.getActivityBehavior();
 
     ExpressionManager expressionManager = behavior.getExpressionManager();
-    assertThat(expressionManager).isNotNull();
-    assertThat(expressionManager).isEqualTo(context.getExpressionManager());
+    assertThat(expressionManager)
+            .isNotNull()
+            .isEqualTo(context.getExpressionManager());
   }
 
   @Test

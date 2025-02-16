@@ -67,7 +67,6 @@ import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 
-import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -603,7 +602,7 @@ public class CustomHistoryLevelUserOperationLogTest {
     historyService.deleteUserOperationLogEntry(query.singleResult().getId());
 
     // then
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
   }
 
   protected void verifyQueryResults(UserOperationLogQuery query, int countExpected) {
@@ -622,7 +621,7 @@ public class CustomHistoryLevelUserOperationLogTest {
   protected void verifySingleResultFails(UserOperationLogQuery query) {
     try {
       query.singleResult();
-      Assertions.fail("");
+      fail("");
     } catch (ProcessEngineException e) {}
   }
 

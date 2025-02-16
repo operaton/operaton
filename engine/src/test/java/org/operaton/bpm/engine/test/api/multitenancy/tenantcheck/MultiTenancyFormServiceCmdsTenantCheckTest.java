@@ -375,7 +375,7 @@ public class MultiTenancyFormServiceCmdsTenantCheckTest {
     formService.submitTaskForm(taskId, null);
 
     // task gets completed on execution of submitTaskForm
-    assertThat(taskService.createTaskQuery().processDefinitionId(processDefinitionId).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().processDefinitionId(processDefinitionId).count()).isZero();
   }
 
   @Test
@@ -419,7 +419,7 @@ public class MultiTenancyFormServiceCmdsTenantCheckTest {
     formService.submitTaskForm(taskId, null);
 
     // task gets completed on execution of submitTaskForm
-    assertThat(taskService.createTaskQuery().processDefinitionId(processDefinitionId).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().processDefinitionId(processDefinitionId).count()).isZero();
   }
 
   // getRenderedTaskForm

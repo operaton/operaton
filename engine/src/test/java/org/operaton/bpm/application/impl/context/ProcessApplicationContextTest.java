@@ -16,7 +16,8 @@
  */
 package org.operaton.bpm.application.impl.context;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.eq;
@@ -37,6 +38,8 @@ import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import static org.operaton.bpm.application.ProcessApplicationContext.withProcessApplicationContext;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -62,7 +65,6 @@ public class ProcessApplicationContextTest extends PluggableProcessEngineTest {
 
   @Test
   public void testSetPAContextByName() throws ProcessApplicationUnavailableException {
-
     assertThat(Context.getCurrentProcessApplication()).isNull();
 
     try {
@@ -80,9 +82,7 @@ public class ProcessApplicationContextTest extends PluggableProcessEngineTest {
   public void testExecutionInPAContextByName() throws Exception {
     assertThat(Context.getCurrentProcessApplication()).isNull();
 
-    ProcessApplicationReference contextPA = ProcessApplicationContext.withProcessApplicationContext(
-        (Callable<ProcessApplicationReference>) this::getCurrentContextApplication,
-        pa.getName());
+    ProcessApplicationReference contextPA = withProcessApplicationContext(this::getCurrentContextApplication, pa.getName());
 
     assertThat(pa).isEqualTo(contextPA.getProcessApplication());
 
@@ -108,9 +108,7 @@ public class ProcessApplicationContextTest extends PluggableProcessEngineTest {
   public void testExecutionInPAContextByReference() throws Exception {
     assertThat(Context.getCurrentProcessApplication()).isNull();
 
-    ProcessApplicationReference contextPA = ProcessApplicationContext.withProcessApplicationContext(
-        (Callable<ProcessApplicationReference>) this::getCurrentContextApplication,
-        pa.getReference());
+    ProcessApplicationReference contextPA = withProcessApplicationContext(this::getCurrentContextApplication, pa.getReference());
 
     assertThat(pa).isEqualTo(contextPA.getProcessApplication());
 
@@ -133,12 +131,10 @@ public class ProcessApplicationContextTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testExecutionInPAContextbyRawPA() throws Exception {
+  public void testExecutionInPAContextByRawPA() throws Exception {
     assertThat(Context.getCurrentProcessApplication()).isNull();
 
-    ProcessApplicationReference contextPA = ProcessApplicationContext.withProcessApplicationContext(
-        (Callable<ProcessApplicationReference>) this::getCurrentContextApplication,
-        pa);
+    ProcessApplicationReference contextPA = withProcessApplicationContext(this::getCurrentContextApplication, pa);
 
     assertThat(pa).isEqualTo(contextPA.getProcessApplication());
 
@@ -147,7 +143,6 @@ public class ProcessApplicationContextTest extends PluggableProcessEngineTest {
 
   @Test
   public void testCannotSetUnregisteredProcessApplicationName() {
-
     String nonExistingName = pa.getName() + pa.getName();
 
     try {
@@ -174,7 +169,7 @@ public class ProcessApplicationContextTest extends PluggableProcessEngineTest {
       return null;
     };
 
-    assertThatThrownBy(() -> ProcessApplicationContext.withProcessApplicationContext(callable, nonExistingName))
+    assertThatThrownBy(() -> withProcessApplicationContext(callable, nonExistingName))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("A process application with name '" + nonExistingName + "' is not registered");
   }

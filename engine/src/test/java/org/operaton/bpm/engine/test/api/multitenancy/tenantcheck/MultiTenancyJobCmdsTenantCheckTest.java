@@ -206,7 +206,7 @@ public class MultiTenancyJobCmdsTenantCheckTest {
   public void testSetJobDueDateWithAuthenticatedTenant() {
     Job timerJob = managementService.createJobQuery().processInstanceId(processInstance.getId()).singleResult();
 
-    assertThat(managementService.createJobQuery().duedateLowerThan(new Date()).count()).isEqualTo(0);
+    assertThat(managementService.createJobQuery().duedateLowerThan(new Date()).count()).isZero();
 
     Calendar cal = Calendar.getInstance();
     cal.setTime(new Date());
@@ -521,7 +521,7 @@ public class MultiTenancyJobCmdsTenantCheckTest {
     // then
     assertThat(managementService.createJobQuery()
         .processInstanceId(processInstance.getId())
-        .count()).isEqualTo(0);
+        .count()).isZero();
   }
 
   @Test
@@ -555,7 +555,7 @@ public class MultiTenancyJobCmdsTenantCheckTest {
     // then
     assertThat(managementService.createJobQuery()
         .processInstanceId(processInstance.getId())
-        .count()).isEqualTo(0);
+        .count()).isZero();
   }
 
   //executeJobs

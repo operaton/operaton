@@ -46,7 +46,7 @@ public class ExclusiveTimerEventTest extends PluggableProcessEngineTest {
     ClockUtil.setCurrentTime(new Date(startTime.getTime() + ((50 * 60 * 1000) + 5000)));
     testRule.waitForJobExecutorToProcessAllJobs(5000L);
 
-    assertThat(jobQuery.count()).isEqualTo(0);
+    assertThat(jobQuery.count()).isZero();
     testRule.assertProcessEnded(pi.getProcessInstanceId());
 
 

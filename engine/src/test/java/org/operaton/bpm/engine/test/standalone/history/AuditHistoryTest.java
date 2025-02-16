@@ -84,7 +84,7 @@ public class AuditHistoryTest {
     assertThat(newValue.getBytes()).isEqualTo(historicBytesVariable.getValue());
 
     // and no historic details exist
-    assertThat(historyService.createHistoricDetailQuery().variableUpdates().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().count()).isZero();
 
   }
 }

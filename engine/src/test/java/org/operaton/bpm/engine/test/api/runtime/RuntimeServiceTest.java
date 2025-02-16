@@ -188,7 +188,7 @@ public class RuntimeServiceTest {
     assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isEqualTo(1);
 
     runtimeService.deleteProcessInstance(processInstance.getId(), TESTING_INSTANCE_DELETION);
-    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isZero();
 
     // test that the delete reason of the process instance shows up as delete reason of the task in history
     // ACT-848
@@ -435,7 +435,7 @@ public class RuntimeServiceTest {
 
     // Deleting without a reason should be possible
     runtimeService.deleteProcessInstance(processInstance.getId(), null);
-    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isZero();
   }
 
   /**
@@ -462,7 +462,7 @@ public class RuntimeServiceTest {
     final ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("multiInstanceWithSubprocess");
 
     runtimeService.deleteProcessInstance(processInstance.getId(), "some reason");
-    assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).count()).isZero();
   }
 
   @Test
@@ -505,7 +505,7 @@ public class RuntimeServiceTest {
 
     runtimeService.deleteProcessInstancesIfExists(Arrays.asList(instance.getId(), "aFake"), "test", false, false, false);
     //dont't expect exception, existing instances are deleted
-    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isZero();
   }
 
   @Test
@@ -1351,7 +1351,7 @@ public class RuntimeServiceTest {
     runtimeService.signalEventReceived("alert");
     assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(6);
     runtimeService.signalEventReceived("panic");
-    assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().count()).isZero();
 
     //////  test  signalEventReceived(String, String)
     startSignalCatchProcesses();
@@ -3098,7 +3098,7 @@ public class RuntimeServiceTest {
       assertThat(e.getMessage()).isEqualTo("Buzzz");
     }
 
-    assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().count()).isZero();
   }
 
   @Deployment(resources = {
@@ -3115,7 +3115,7 @@ public class RuntimeServiceTest {
       assertThat(e.getMessage()).isEqualTo("Buzzz");
     }
 
-    assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().count()).isZero();
 
   }
 

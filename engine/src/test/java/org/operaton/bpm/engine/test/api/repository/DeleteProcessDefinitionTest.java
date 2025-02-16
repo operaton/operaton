@@ -167,10 +167,10 @@ public class DeleteProcessDefinitionTest {
     repositoryService.deleteProcessDefinition(processDefinition.getId(), true);
 
     //then exist no process instance and no definition
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isZero();
     if (processEngineConfiguration.getHistoryLevel().getId() >= HistoryLevel.HISTORY_LEVEL_ACTIVITY.getId()) {
-      assertThat(engineRule.getHistoryService().createHistoricActivityInstanceQuery().count()).isEqualTo(0);
+      assertThat(engineRule.getHistoryService().createHistoricActivityInstanceQuery().count()).isZero();
     }
   }
 

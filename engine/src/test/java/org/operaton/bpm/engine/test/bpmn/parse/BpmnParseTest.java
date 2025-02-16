@@ -1019,8 +1019,9 @@ public class BpmnParseTest {
   @Test
   public void testParseProcessDefinitionTtl() {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
-    assertThat(processDefinitions).isNotNull();
-    assertThat(processDefinitions).hasSize(1);
+    assertThat(processDefinitions)
+            .isNotNull()
+            .hasSize(1);
 
     Integer timeToLive = processDefinitions.get(0).getHistoryTimeToLive();
     assertThat(timeToLive).isNotNull();
@@ -1033,8 +1034,9 @@ public class BpmnParseTest {
   @Test
   public void testParseProcessDefinitionStringTtl() {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
-    assertThat(processDefinitions).isNotNull();
-    assertThat(processDefinitions).hasSize(1);
+    assertThat(processDefinitions)
+            .isNotNull()
+            .hasSize(1);
 
     Integer timeToLive = processDefinitions.get(0).getHistoryTimeToLive();
     assertThat(timeToLive).isNotNull();
@@ -1058,8 +1060,9 @@ public class BpmnParseTest {
   @Test
   public void testParseProcessDefinitionEmptyTtl() {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
-    assertThat(processDefinitions).isNotNull();
-    assertThat(processDefinitions).hasSize(1);
+    assertThat(processDefinitions)
+            .isNotNull()
+            .hasSize(1);
 
     Integer timeToLive = processDefinitions.get(0).getHistoryTimeToLive();
     assertThat(timeToLive).isNull();
@@ -1069,8 +1072,9 @@ public class BpmnParseTest {
   @Test
   public void testParseProcessDefinitionWithoutTtl() {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
-    assertThat(processDefinitions).isNotNull();
-    assertThat(processDefinitions).hasSize(1);
+    assertThat(processDefinitions)
+            .isNotNull()
+            .hasSize(1);
 
     Integer timeToLive = processDefinitions.get(0).getHistoryTimeToLive();
     assertThat(timeToLive).isNull();
@@ -1083,8 +1087,9 @@ public class BpmnParseTest {
       String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseProcessDefinitionWithoutTtl");
       repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
       List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
-      assertThat(processDefinitions).isNotNull();
-      assertThat(processDefinitions).hasSize(1);
+      assertThat(processDefinitions)
+              .isNotNull()
+              .hasSize(1);
 
       Integer timeToLive = processDefinitions.get(0).getHistoryTimeToLive();
       assertThat(timeToLive).isNotNull();
@@ -1167,8 +1172,9 @@ public class BpmnParseTest {
   @Test
   public void testParseProcessDefinitionStartable() {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
-    assertThat(processDefinitions).isNotNull();
-    assertThat(processDefinitions).hasSize(1);
+    assertThat(processDefinitions)
+            .isNotNull()
+            .hasSize(1);
 
     assertThat(processDefinitions.get(0).isStartableInTasklist()).isFalse();
   }

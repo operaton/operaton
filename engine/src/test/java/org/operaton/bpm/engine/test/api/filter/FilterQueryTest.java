@@ -89,7 +89,7 @@ public class FilterQueryTest extends PluggableProcessEngineTest {
     FilterQuery query = filterService.createFilterQuery().filterId("invalid");
     assertThat(query.singleResult()).isNull();
     assertThat(query.list()).isEmpty();
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     FilterQuery filterQuery = filterService.createFilterQuery();
 
     assertThatThrownBy(() -> filterQuery.filterId(null))
@@ -115,7 +115,7 @@ public class FilterQueryTest extends PluggableProcessEngineTest {
     FilterQuery query = filterService.createFilterQuery().filterResourceType("invalid");
     assertThat(query.singleResult()).isNull();
     assertThat(query.list()).isEmpty();
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     FilterQuery filterQuery = filterService.createFilterQuery();
 
     assertThatThrownBy(() -> filterQuery.filterResourceType(null))
@@ -143,7 +143,7 @@ public class FilterQueryTest extends PluggableProcessEngineTest {
     FilterQuery query = filterService.createFilterQuery().filterName("invalid");
     assertThat(query.singleResult()).isNull();
     assertThat(query.list()).isEmpty();
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     FilterQuery filterQuery = filterService.createFilterQuery();
 
     assertThatThrownBy(() -> filterQuery.filterName(null))
@@ -163,7 +163,7 @@ public class FilterQueryTest extends PluggableProcessEngineTest {
     FilterQuery query = filterService.createFilterQuery().filterOwner("invalid");
     assertThat(query.singleResult()).isNull();
     assertThat(query.list()).isEmpty();
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     FilterQuery filterQuery = filterService.createFilterQuery();
 
     assertThatThrownBy(() -> filterQuery.filterOwner(null))

@@ -370,7 +370,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
     vars.put("throwError", true);
     taskService.complete(tasks.get(1).getId(), vars);
 
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().count()).isZero();
     testRule.assertProcessEnded(procId);
   }
 

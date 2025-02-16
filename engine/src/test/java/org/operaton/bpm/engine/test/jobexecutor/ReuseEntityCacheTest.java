@@ -131,7 +131,7 @@ public class ReuseEntityCacheTest {
     acquisitionThreadControl.waitForSync();
 
     // then the job has been successfully executed
-    assertThat(engineRule.getManagementService().createJobQuery().count()).isEqualTo(0);
+    assertThat(engineRule.getManagementService().createJobQuery().count()).isZero();
   }
 
   protected ProcessEngineConfigurationImpl getEngineConfig() {

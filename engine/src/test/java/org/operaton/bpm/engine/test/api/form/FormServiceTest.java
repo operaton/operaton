@@ -1009,7 +1009,7 @@ public class FormServiceTest {
 
     // then no historic form property event has been written since this is not supported for custom objects
     if(processEngineConfiguration.getHistoryLevel().getId() >= ProcessEngineConfigurationImpl.HISTORYLEVEL_FULL) {
-      assertThat(historyService.createHistoricDetailQuery().formFields().count()).isEqualTo(0);
+      assertThat(historyService.createHistoricDetailQuery().formFields().count()).isZero();
     }
 
   }
@@ -1038,7 +1038,7 @@ public class FormServiceTest {
 
     // then no historic form property event has been written since this is not supported for custom objects
     if(processEngineConfiguration.getHistoryLevel().getId() >= ProcessEngineConfigurationImpl.HISTORYLEVEL_FULL) {
-      assertThat(historyService.createHistoricDetailQuery().formFields().count()).isEqualTo(0);
+      assertThat(historyService.createHistoricDetailQuery().formFields().count()).isZero();
     }
   }
 

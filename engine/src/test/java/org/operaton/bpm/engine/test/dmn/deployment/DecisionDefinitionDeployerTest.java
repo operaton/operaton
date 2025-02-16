@@ -263,7 +263,7 @@ public class DecisionDefinitionDeployerTest {
     assertThat(repositoryService.createDecisionDefinitionQuery().count()).isEqualTo(1);
 
     // then no decision requirements definition should be created
-    assertThat(repositoryService.createDecisionRequirementsDefinitionQuery().count()).isEqualTo(0);
+    assertThat(repositoryService.createDecisionRequirementsDefinitionQuery().count()).isZero();
     // and the decision should not be linked to a decision requirements definition
     DecisionDefinition decisionDefinition = repositoryService.createDecisionDefinitionQuery().singleResult();
     assertThat(decisionDefinition.getDecisionRequirementsDefinitionId()).isNull();
@@ -315,7 +315,7 @@ public class DecisionDefinitionDeployerTest {
     // then create two decision definitions and
     // ignore the duplicated drd id since no drd is created
     assertThat(repositoryService.createDecisionDefinitionQuery().count()).isEqualTo(2);
-    assertThat(repositoryService.createDecisionRequirementsDefinitionQuery().count()).isEqualTo(0);
+    assertThat(repositoryService.createDecisionRequirementsDefinitionQuery().count()).isZero();
   }
 
   @Test

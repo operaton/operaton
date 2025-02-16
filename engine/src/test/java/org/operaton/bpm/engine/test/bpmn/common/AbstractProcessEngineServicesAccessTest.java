@@ -119,7 +119,7 @@ public abstract class AbstractProcessEngineServicesAccessTest extends PluggableP
 
     // then
     // starting the process fails and everything is rolled back:
-    assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().count()).isZero();
   }
 
   protected abstract Class<?> getTestServiceAccessibleClass();

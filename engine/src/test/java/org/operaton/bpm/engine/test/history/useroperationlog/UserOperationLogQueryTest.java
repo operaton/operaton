@@ -91,7 +91,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     assertThat(query().entityType(EntityTypes.IDENTITY_LINK).count()).isEqualTo(4);
     assertThat(query().entityType(EntityTypes.ATTACHMENT).count()).isEqualTo(2);
     assertThat(query().entityType(EntityTypes.PROCESS_INSTANCE).count()).isEqualTo(1);
-    assertThat(query().entityType("unknown entity type").count()).isEqualTo(0);
+    assertThat(query().entityType("unknown entity type").count()).isZero();
 
     // operation type
     assertThat(query().operationType(OPERATION_TYPE_CREATE).count()).isEqualTo(2);
@@ -162,7 +162,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     assertThat(query().afterTimestamp(yesterday).count()).isEqualTo(13);
     // filter by time, created tomorrow
     assertThat(query().afterTimestamp(today).count()).isEqualTo(5);
-    assertThat(query().afterTimestamp(today).beforeTimestamp(yesterday).count()).isEqualTo(0);
+    assertThat(query().afterTimestamp(today).beforeTimestamp(yesterday).count()).isZero();
   }
 
   @Deployment(resources = {ONE_TASK_PROCESS})
@@ -177,7 +177,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     assertThat(query().entityType(ENTITY_TYPE_TASK).count()).isEqualTo(11);
     assertThat(query().entityType(ENTITY_TYPE_IDENTITY_LINK).count()).isEqualTo(4);
     assertThat(query().entityType(ENTITY_TYPE_ATTACHMENT).count()).isEqualTo(2);
-    assertThat(query().entityType("unknown entity type").count()).isEqualTo(0);
+    assertThat(query().entityType("unknown entity type").count()).isZero();
   }
 
   @Deployment(resources = {ONE_TASK_PROCESS})

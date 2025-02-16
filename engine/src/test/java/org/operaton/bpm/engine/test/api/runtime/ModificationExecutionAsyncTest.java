@@ -670,10 +670,10 @@ public class ModificationExecutionAsyncTest {
     helper.executeMonitorJob(batch);
 
     // then the batch was completed and removed
-    assertThat(rule.getManagementService().createBatchQuery().count()).isEqualTo(0);
+    assertThat(rule.getManagementService().createBatchQuery().count()).isZero();
 
     // and the seed jobs was removed
-    assertThat(rule.getManagementService().createJobQuery().count()).isEqualTo(0);
+    assertThat(rule.getManagementService().createJobQuery().count()).isZero();
   }
 
   @Test
@@ -686,13 +686,13 @@ public class ModificationExecutionAsyncTest {
     rule.getManagementService().deleteBatch(batch.getId(), true);
 
     // then the batch was deleted
-    assertThat(rule.getManagementService().createBatchQuery().count()).isEqualTo(0);
+    assertThat(rule.getManagementService().createBatchQuery().count()).isZero();
 
     // and the seed and modification job definition were deleted
-    assertThat(rule.getManagementService().createJobDefinitionQuery().count()).isEqualTo(0);
+    assertThat(rule.getManagementService().createJobDefinitionQuery().count()).isZero();
 
     // and the seed job and modification jobs were deleted
-    assertThat(rule.getManagementService().createJobQuery().count()).isEqualTo(0);
+    assertThat(rule.getManagementService().createJobQuery().count()).isZero();
   }
 
   @Test
@@ -705,13 +705,13 @@ public class ModificationExecutionAsyncTest {
     rule.getManagementService().deleteBatch(batch.getId(), false);
 
     // then the batch was deleted
-    assertThat(rule.getManagementService().createBatchQuery().count()).isEqualTo(0);
+    assertThat(rule.getManagementService().createBatchQuery().count()).isZero();
 
     // and the seed and modification job definition were deleted
-    assertThat(rule.getManagementService().createJobDefinitionQuery().count()).isEqualTo(0);
+    assertThat(rule.getManagementService().createJobDefinitionQuery().count()).isZero();
 
     // and the seed job and modification jobs were deleted
-    assertThat(rule.getManagementService().createJobQuery().count()).isEqualTo(0);
+    assertThat(rule.getManagementService().createJobQuery().count()).isZero();
   }
 
   @Test
@@ -1297,7 +1297,7 @@ public class ModificationExecutionAsyncTest {
     helper.executeJobs(batch);
 
     // then
-    assertThat(runtimeService.createVariableInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createVariableInstanceQuery().count()).isZero();
   }
 
   @Test

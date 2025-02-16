@@ -74,7 +74,7 @@ public class AuthorizationTestRule extends AuthorizationTestBaseRule {
   }
 
   /**
-   * No exception was expected and no was thrown
+   * No exception was expected and none was thrown
    */
   public boolean scenarioSucceeded() {
     return interceptor.getLastException() == null;

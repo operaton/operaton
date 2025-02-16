@@ -126,12 +126,12 @@ public class SubTaskQueryTest extends PluggableProcessEngineTest {
     // kermit has no root tasks and no subtasks assigned
     // include subtasks
     query = taskService.createTaskQuery().taskAssignee("kermit");
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
     assertThat(query.singleResult()).isNull();
     // exclude subtasks
     query = taskService.createTaskQuery().taskAssignee("kermit").excludeSubtasks();
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
     assertThat(query.singleResult()).isNull();
   }
@@ -154,12 +154,12 @@ public class SubTaskQueryTest extends PluggableProcessEngineTest {
     // kermit has no root tasks and no subtasks assigned
     // include subtasks
     query = taskService.createTaskQuery().taskAssignee("kermit");
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.listPage(0, 2)).isEmpty();
     assertThat(query.singleResult()).isNull();
     // exclude subtasks
     query = taskService.createTaskQuery().taskAssignee("kermit").excludeSubtasks();
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.listPage(0, 2)).isEmpty();
     assertThat(query.singleResult()).isNull();
   }
@@ -188,12 +188,12 @@ public class SubTaskQueryTest extends PluggableProcessEngineTest {
     // kermit has no root tasks and no subtasks assigned
     // include subtasks
     query = taskService.createTaskQuery().taskAssignee("kermit").orderByTaskCreateTime().asc();
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
     assertThat(query.singleResult()).isNull();
     // exclude subtasks
     query = taskService.createTaskQuery().taskAssignee("kermit").excludeSubtasks().orderByTaskCreateTime().desc();
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
     assertThat(query.singleResult()).isNull();
   }
@@ -228,12 +228,12 @@ public class SubTaskQueryTest extends PluggableProcessEngineTest {
     // kermit has no root tasks and no subtasks assigned
     // include subtasks
     query = taskService.createTaskQuery().taskAssignee("kermit").orderByTaskCreateTime().asc();
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.listPage(0, 2)).isEmpty();
     assertThat(query.singleResult()).isNull();
     // exclude subtasks
     query = taskService.createTaskQuery().taskAssignee("kermit").excludeSubtasks().orderByTaskCreateTime().desc();
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.listPage(0, 2)).isEmpty();
     assertThat(query.singleResult()).isNull();
   }

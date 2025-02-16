@@ -206,22 +206,22 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
 
     // Invalid Individual Query test
     HistoricIdentityLinkLogQuery query = historyService.createHistoricIdentityLinkLogQuery();
-    assertThat(query.taskId(INVALID_TASK_ID).count()).isEqualTo(0);
+    assertThat(query.taskId(INVALID_TASK_ID).count()).isZero();
 
     query = historyService.createHistoricIdentityLinkLogQuery();
-    assertThat(query.type(INVALID_IDENTITY_LINK_TYPE).count()).isEqualTo(0);
+    assertThat(query.type(INVALID_IDENTITY_LINK_TYPE).count()).isZero();
 
     query = historyService.createHistoricIdentityLinkLogQuery();
-    assertThat(query.userId(INVALID_USER_ID).count()).isEqualTo(0);
+    assertThat(query.userId(INVALID_USER_ID).count()).isZero();
 
     query = historyService.createHistoricIdentityLinkLogQuery();
-    assertThat(query.groupId(INVALID_GROUP_ID).count()).isEqualTo(0);
+    assertThat(query.groupId(INVALID_GROUP_ID).count()).isZero();
 
     query = historyService.createHistoricIdentityLinkLogQuery();
-    assertThat(query.assignerId(INVALID_ASSIGNER_ID).count()).isEqualTo(0);
+    assertThat(query.assignerId(INVALID_ASSIGNER_ID).count()).isZero();
 
     query = historyService.createHistoricIdentityLinkLogQuery();
-    assertThat(query.operationType(INVALID_HISTORY_EVENT_TYPE).count()).isEqualTo(0);
+    assertThat(query.operationType(INVALID_HISTORY_EVENT_TYPE).count()).isZero();
 
   }
 
@@ -243,14 +243,14 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
 
     // Invalid Individual Query test
     HistoricIdentityLinkLogQuery query = historyService.createHistoricIdentityLinkLogQuery();
-    assertThat(query.taskId(INVALID_TASK_ID).count()).isEqualTo(0);
-    assertThat(query.type(INVALID_IDENTITY_LINK_TYPE).count()).isEqualTo(0);
-    assertThat(query.userId(INVALID_USER_ID).count()).isEqualTo(0);
-    assertThat(query.groupId(INVALID_GROUP_ID).count()).isEqualTo(0);
-    assertThat(query.assignerId(INVALID_ASSIGNER_ID).count()).isEqualTo(0);
-    assertThat(query.operationType(INVALID_HISTORY_EVENT_TYPE).count()).isEqualTo(0);
-    assertThat(query.processDefinitionId(INVALID_PROCESS_DEFINITION_ID).count()).isEqualTo(0);
-    assertThat(query.processDefinitionKey(INVALID_PROCESS_DEFINITION_KEY).count()).isEqualTo(0);
+    assertThat(query.taskId(INVALID_TASK_ID).count()).isZero();
+    assertThat(query.type(INVALID_IDENTITY_LINK_TYPE).count()).isZero();
+    assertThat(query.userId(INVALID_USER_ID).count()).isZero();
+    assertThat(query.groupId(INVALID_GROUP_ID).count()).isZero();
+    assertThat(query.assignerId(INVALID_ASSIGNER_ID).count()).isZero();
+    assertThat(query.operationType(INVALID_HISTORY_EVENT_TYPE).count()).isZero();
+    assertThat(query.processDefinitionId(INVALID_PROCESS_DEFINITION_ID).count()).isZero();
+    assertThat(query.processDefinitionKey(INVALID_PROCESS_DEFINITION_KEY).count()).isZero();
   }
 
   /**
@@ -301,13 +301,13 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
     query = historyService.createHistoricIdentityLinkLogQuery();
     assertThat(query.dateBefore(newYearNoon(0)).count()).isEqualTo(6);
     assertThat(query.dateAfter(newYearMorning(1)).count()).isEqualTo(1);
-    assertThat(query.operationType(IDENTITY_LINK_ADD).count()).isEqualTo(0);
+    assertThat(query.operationType(IDENTITY_LINK_ADD).count()).isZero();
     assertThat(query.operationType(IDENTITY_LINK_DELETE).count()).isEqualTo(1);
 
     // Query records with time after 12:45
     query = historyService.createHistoricIdentityLinkLogQuery();
     assertThat(query.dateAfter(newYearNoon(45)).count()).isEqualTo(1);
-    assertThat(query.operationType(IDENTITY_LINK_ADD).count()).isEqualTo(0);
+    assertThat(query.operationType(IDENTITY_LINK_ADD).count()).isZero();
     assertThat(query.operationType(IDENTITY_LINK_DELETE).count()).isEqualTo(1);
 
     ClockUtil.setCurrentTime(new Date());

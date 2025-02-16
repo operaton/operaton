@@ -68,7 +68,7 @@ public class SuspendJobTest extends PluggableProcessEngineTest {
 
     // then
     // the job should be suspended
-    assertThat(jobQuery.active().count()).isEqualTo(0);
+    assertThat(jobQuery.active().count()).isZero();
     assertThat(jobQuery.suspended().count()).isEqualTo(1);
 
     Job suspendedJob = jobQuery.suspended().singleResult();
@@ -101,7 +101,7 @@ public class SuspendJobTest extends PluggableProcessEngineTest {
 
     // then
     // the job should be suspended
-    assertThat(jobQuery.active().count()).isEqualTo(0);
+    assertThat(jobQuery.active().count()).isZero();
     assertThat(jobQuery.suspended().count()).isEqualTo(1);
 
     Job suspendedJob = jobQuery.suspended().singleResult();
@@ -135,7 +135,7 @@ public class SuspendJobTest extends PluggableProcessEngineTest {
 
     // then
     // the job should be suspended
-    assertThat(jobQuery.active().count()).isEqualTo(0);
+    assertThat(jobQuery.active().count()).isZero();
     assertThat(jobQuery.suspended().count()).isEqualTo(1);
 
     Job suspendedJob = jobQuery.suspended().singleResult();
@@ -168,7 +168,7 @@ public class SuspendJobTest extends PluggableProcessEngineTest {
 
     // then
     // the job should be suspended
-    assertThat(jobQuery.active().count()).isEqualTo(0);
+    assertThat(jobQuery.active().count()).isZero();
     assertThat(jobQuery.suspended().count()).isEqualTo(1);
 
     Job suspendedJob = jobQuery.suspended().singleResult();
@@ -200,7 +200,7 @@ public class SuspendJobTest extends PluggableProcessEngineTest {
 
     // then
     // the job should be suspended
-    assertThat(jobQuery.active().count()).isEqualTo(0);
+    assertThat(jobQuery.active().count()).isZero();
     assertThat(jobQuery.suspended().count()).isEqualTo(1);
 
     Job suspendedJob = jobQuery.suspended().singleResult();
@@ -233,7 +233,7 @@ public class SuspendJobTest extends PluggableProcessEngineTest {
     // the job should be suspended
     JobQuery jobQuery = managementService.createJobQuery();
 
-    assertThat(jobQuery.active().count()).isEqualTo(0);
+    assertThat(jobQuery.active().count()).isZero();
     assertThat(jobQuery.suspended().count()).isEqualTo(3);
 
     // Clean DB
@@ -265,7 +265,7 @@ public class SuspendJobTest extends PluggableProcessEngineTest {
 
     // then
     // the job should be suspended
-    assertThat(jobQuery.active().count()).isEqualTo(0);
+    assertThat(jobQuery.active().count()).isZero();
     assertThat(jobQuery.suspended().count()).isEqualTo(1);
   }
 
@@ -293,7 +293,7 @@ public class SuspendJobTest extends PluggableProcessEngineTest {
 
     // then
     // the job should be suspended
-    assertThat(jobQuery.active().count()).isEqualTo(0);
+    assertThat(jobQuery.active().count()).isZero();
     assertThat(jobQuery.suspended().count()).isEqualTo(1);
   }
 
@@ -319,7 +319,7 @@ public class SuspendJobTest extends PluggableProcessEngineTest {
 
     // then
     // the job should be suspended
-    assertThat(jobQuery.active().count()).isEqualTo(0);
+    assertThat(jobQuery.active().count()).isZero();
     assertThat(jobQuery.suspended().count()).isEqualTo(1);
   }
 
@@ -347,7 +347,7 @@ public class SuspendJobTest extends PluggableProcessEngineTest {
 
     // then
     // the job should be suspended
-    assertThat(jobQuery.active().count()).isEqualTo(0);
+    assertThat(jobQuery.active().count()).isZero();
     assertThat(jobQuery.suspended().count()).isEqualTo(1);
   }
 
@@ -373,7 +373,7 @@ public class SuspendJobTest extends PluggableProcessEngineTest {
 
     // then
     // the job should be suspended
-    assertThat(jobQuery.active().count()).isEqualTo(0);
+    assertThat(jobQuery.active().count()).isZero();
     assertThat(jobQuery.suspended().count()).isEqualTo(1);
   }
 

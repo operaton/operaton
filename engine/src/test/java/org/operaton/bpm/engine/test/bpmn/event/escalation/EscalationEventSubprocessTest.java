@@ -60,7 +60,7 @@ public class EscalationEventSubprocessTest extends PluggableProcessEngineTest {
 
     assertThat(taskService.createTaskQuery()
         .processInstanceId(processInstance.getId())
-        .taskName("task in subprocess").count()).isEqualTo(0);
+        .taskName("task in subprocess").count()).isZero();
     assertThat(taskService.createTaskQuery()
         .processInstanceId(processInstance.getId())
         .taskName("task in process").count()).isEqualTo(1);

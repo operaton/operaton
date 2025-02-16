@@ -69,7 +69,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   public void testHistoricProcessInstanceQuery() {
     // With a clean ProcessEngine, no instances should be available
-    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isZero();
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
     assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(1);
 
@@ -84,7 +84,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   public void testHistoricProcessInstanceQueryOrderBy() {
     // With a clean ProcessEngine, no instances should be available
-    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isZero();
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
 
     List<Task> tasks = taskService.createTaskQuery().processInstanceId(processInstance.getId()).list();
@@ -275,15 +275,16 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     assertThat(processInstanceQuery.count()).isEqualTo(5);
 
     List<HistoricProcessInstance> processInstances = processInstanceQuery.list();
-    assertThat(processInstances).isNotNull();
-    assertThat(processInstances).hasSize(5);
+    assertThat(processInstances)
+            .isNotNull()
+            .hasSize(5);
 
     for (HistoricProcessInstance historicProcessInstance : processInstances) {
       assertThat(processInstanceIds).contains(historicProcessInstance.getId());
     }
 
     // making a query that has contradicting conditions should succeed
-    assertThat(processInstanceQuery.processInstanceId("dummy").count()).isEqualTo(0);
+    assertThat(processInstanceQuery.processInstanceId("dummy").count()).isZero();
   }
 
   @Test
@@ -444,7 +445,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     // Test GREATER_THAN_OR_EQUAL, should return 3 results
     processInstances = historyService.createHistoricProcessInstanceQuery().variableValueGreaterThanOrEqual("stringVar", "abcdef").list();
     assertThat(processInstances).extracting("id").containsExactlyInAnyOrder(processInstance1, processInstance2, processInstance3);
-    assertThat(historyService.createHistoricProcessInstanceQuery().variableValueGreaterThanOrEqual("stringVar", "z").count()).isEqualTo(0);
+    assertThat(historyService.createHistoricProcessInstanceQuery().variableValueGreaterThanOrEqual("stringVar", "z").count()).isZero();
 
     // Test LESS_THAN, should return 2 results
     processInstances = historyService.createHistoricProcessInstanceQuery().variableValueLessThan("stringVar", "abcdeg").list();
@@ -460,7 +461,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     processInstances = historyService.createHistoricProcessInstanceQuery().variableValueLessThanOrEqual("stringVar", "z").list();
     assertThat(processInstances).extracting("id").containsExactlyInAnyOrder(processInstance1, processInstance2, processInstance3);
 
-    assertThat(historyService.createHistoricProcessInstanceQuery().variableValueLessThanOrEqual("stringVar", "aa").count()).isEqualTo(0);
+    assertThat(historyService.createHistoricProcessInstanceQuery().variableValueLessThanOrEqual("stringVar", "aa").count()).isZero();
 
     // Test LIKE
     resultInstance = historyService.createHistoricProcessInstanceQuery().variableValueLike("stringVar", "azert%").singleResult();
@@ -474,7 +475,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
 
     processInstances = historyService.createHistoricProcessInstanceQuery().variableValueLike("stringVar", "a%").list();
     assertThat(processInstances).extracting("id").containsExactlyInAnyOrder(processInstance1, processInstance2, processInstance3);
-    assertThat(historyService.createHistoricProcessInstanceQuery().variableValueLike("stringVar", "%x%").count()).isEqualTo(0);
+    assertThat(historyService.createHistoricProcessInstanceQuery().variableValueLike("stringVar", "%x%").count()).isZero();
   }
 
   /**
@@ -518,8 +519,9 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     // Query on single short variable, should result in 2 matches
     HistoricProcessInstanceQuery query = historyService.createHistoricProcessInstanceQuery().variableValueEquals("dateVar", date1);
     List<HistoricProcessInstance> processInstances = query.list();
-    assertThat(processInstances).isNotNull();
-    assertThat(processInstances).hasSize(2);
+    assertThat(processInstances)
+            .isNotNull()
+            .hasSize(2);
 
     // Query on two short variables, should result in single value
     query = historyService.createHistoricProcessInstanceQuery().variableValueEquals("dateVar", date1).variableValueEquals("dateVar2", date2);
@@ -542,7 +544,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     assertThat(resultInstance).isNotNull();
     assertThat(resultInstance.getId()).isEqualTo(processInstance3.getId());
 
-    assertThat(historyService.createHistoricProcessInstanceQuery().variableValueGreaterThan("dateVar", nextYear.getTime()).count()).isEqualTo(0);
+    assertThat(historyService.createHistoricProcessInstanceQuery().variableValueGreaterThan("dateVar", nextYear.getTime()).count()).isZero();
     assertThat(historyService.createHistoricProcessInstanceQuery().variableValueGreaterThan("dateVar", oneYearAgo.getTime()).count()).isEqualTo(3);
 
     // Test GREATER_THAN_OR_EQUAL
@@ -565,14 +567,14 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     ids.removeAll(expecedIds);
     assertThat(ids).isEmpty();
 
-    assertThat(historyService.createHistoricProcessInstanceQuery().variableValueLessThan("dateVar", date1).count()).isEqualTo(0);
+    assertThat(historyService.createHistoricProcessInstanceQuery().variableValueLessThan("dateVar", date1).count()).isZero();
     assertThat(historyService.createHistoricProcessInstanceQuery().variableValueLessThan("dateVar", twoYearsLater.getTime()).count()).isEqualTo(3);
 
     // Test LESS_THAN_OR_EQUAL
     processInstances = historyService.createHistoricProcessInstanceQuery().variableValueLessThanOrEqual("dateVar", nextYear.getTime()).list();
     assertThat(processInstances).hasSize(3);
 
-    assertThat(historyService.createHistoricProcessInstanceQuery().variableValueLessThanOrEqual("dateVar", oneYearAgo.getTime()).count()).isEqualTo(0);
+    assertThat(historyService.createHistoricProcessInstanceQuery().variableValueLessThanOrEqual("dateVar", oneYearAgo.getTime()).count()).isZero();
 
     historyService.deleteHistoricProcessInstance(processInstance1.getId());
     historyService.deleteHistoricProcessInstance(processInstance2.getId());
@@ -736,11 +738,11 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(1);
 
     runtimeService.deleteProcessInstance(processInstance.getId(), null);
-    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isZero();
     assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(1);
 
     historyService.deleteHistoricProcessInstance(processInstance.getId());
-    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isZero();
   }
 
   @Deployment(resources = {
@@ -794,7 +796,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     historyService.deleteHistoricProcessInstances(ids);
 
     //then
-    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(0);
+    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isZero();
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
@@ -825,7 +827,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     historyService.deleteHistoricProcessInstancesIfExists(ids);
 
     //then expect no exception and all instances are deleted
-    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(0);
+    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isZero();
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
@@ -854,7 +856,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     runtimeService.setVariable(executionId, "mySecondVariable", 5L);
 
     runtimeService.deleteProcessInstance(executionId, null);
-    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isZero();
     assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(1);
 
     HistoricVariableInstanceQuery histVariableQuery = historyService.createHistoricVariableInstanceQuery()
@@ -881,9 +883,9 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     historyService.deleteHistoricVariableInstance(variableInstanceId);
 
     // then
-    assertThat(histVariableQuery.count()).isEqualTo(0);
+    assertThat(histVariableQuery.count()).isZero();
     assertThat(secondHistVariableQuery.count()).isEqualTo(1);
-    assertThat(detailsQuery.count()).isEqualTo(0);
+    assertThat(detailsQuery.count()).isZero();
     assertThat(secondDetailsQuery.count()).isEqualTo(1);
   }
 
@@ -920,8 +922,8 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     historyService.deleteHistoricVariableInstance(variableInstanceId);
 
     // then
-    assertThat(histVariableQuery.count()).isEqualTo(0);
-    assertThat(detailsQuery.count()).isEqualTo(0);
+    assertThat(histVariableQuery.count()).isZero();
+    assertThat(detailsQuery.count()).isZero();
     assertThat(variableQuery.count()).isEqualTo(1);
     assertThat(variableQuery.singleResult().getValue()).isEqualTo("testValue3");
   }
@@ -953,8 +955,8 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
 
     historyService.deleteHistoricVariableInstance(variableInstanceId);
 
-    assertThat(histVariableQuery.count()).isEqualTo(0);
-    assertThat(detailsQuery.count()).isEqualTo(0);
+    assertThat(histVariableQuery.count()).isZero();
+    assertThat(detailsQuery.count()).isZero();
     assertThat(variableQuery.count()).isEqualTo(1);
     assertThat(variableQuery.singleResult().getValue()).isEqualTo("testValue3");
 
@@ -989,8 +991,8 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     historyService.deleteHistoricVariableInstance(variableInstance.getId());
 
     // then
-    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(0);
-    assertThat(detailsQuery.count()).isEqualTo(0);
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isZero();
+    assertThat(detailsQuery.count()).isZero();
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
@@ -1008,8 +1010,8 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
         .caseInstanceId(caseInstanceId)
         .variableInstanceId(variableInstance.getId());
     historyService.deleteHistoricVariableInstance(variableInstance.getId());
-    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(0);
-    assertThat(detailsQuery.count()).isEqualTo(0);
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isZero();
+    assertThat(detailsQuery.count()).isZero();
 
     // when
     caseService.setVariable(caseInstanceId, "myVariable", 4);
@@ -1038,8 +1040,8 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     historyService.deleteHistoricVariableInstance(variableInstance.getId());
 
     // then
-    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(0);
-    assertThat(detailsQuery.count()).isEqualTo(0);
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isZero();
+    assertThat(detailsQuery.count()).isZero();
 
     taskService.deleteTask(task.getId(), true);
   }
@@ -1059,8 +1061,8 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
         .variableInstanceId(variableInstance.getId());
 
     historyService.deleteHistoricVariableInstance(variableInstance.getId());
-    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(0);
-    assertThat(detailsQuery.count()).isEqualTo(0);
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isZero();
+    assertThat(detailsQuery.count()).isZero();
 
     // when
     taskService.setVariable(task.getId(), "testVariable", "testValue3");
@@ -1111,7 +1113,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     runtimeService.setVariable(executionId, "mySecondVariable", 7L);
 
     runtimeService.deleteProcessInstance(executionId, null);
-    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isZero();
     assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(1);
 
     HistoricVariableInstanceQuery histVariableQuery = historyService.createHistoricVariableInstanceQuery().processInstanceId(executionId)
@@ -1133,10 +1135,10 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     historyService.deleteHistoricVariableInstancesByProcessInstanceId(executionId);
 
     // then
-    assertThat(histVariableQuery.count()).isEqualTo(0);
-    assertThat(secondHistVariableQuery.count()).isEqualTo(0);
-    assertThat(detailsQuery.count()).isEqualTo(0);
-    assertThat(secondDetailsQuery.count()).isEqualTo(0);
+    assertThat(histVariableQuery.count()).isZero();
+    assertThat(secondHistVariableQuery.count()).isZero();
+    assertThat(detailsQuery.count()).isZero();
+    assertThat(secondDetailsQuery.count()).isZero();
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
@@ -1260,8 +1262,8 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     historyService.deleteHistoricVariableInstancesByProcessInstanceId(executionId);
 
     // then
-    assertThat(histVariableQuery.count()).isEqualTo(0);
-    assertThat(detailsQuery.count()).isEqualTo(0);
+    assertThat(histVariableQuery.count()).isZero();
+    assertThat(detailsQuery.count()).isZero();
   }
 
   @Test

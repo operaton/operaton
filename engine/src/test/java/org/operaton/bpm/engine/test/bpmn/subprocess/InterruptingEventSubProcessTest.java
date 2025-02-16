@@ -56,7 +56,7 @@ public class InterruptingEventSubProcessTest extends PluggableProcessEngineTest 
     assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskAfterMessageStartEvent");
 
-    assertThat(eventSubscriptionQuery.count()).isEqualTo(0);
+    assertThat(eventSubscriptionQuery.count()).isZero();
     var processInstanceId = pi.getId();
 
     try {
@@ -92,7 +92,7 @@ public class InterruptingEventSubProcessTest extends PluggableProcessEngineTest 
     assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("tastAfterSignalStartEvent");
 
-    assertThat(eventSubscriptionQuery.count()).isEqualTo(0);
+    assertThat(eventSubscriptionQuery.count()).isZero();
     var processInstanceId = pi.getId();
 
     try {
@@ -128,7 +128,7 @@ public class InterruptingEventSubProcessTest extends PluggableProcessEngineTest 
     assertThat(task).isNotNull();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskAfterMessageStartEvent");
 
-    assertThat(jobQuery.count()).isEqualTo(0);
+    assertThat(jobQuery.count()).isZero();
 
     taskService.complete(task.getId());
 
@@ -169,7 +169,7 @@ public class InterruptingEventSubProcessTest extends PluggableProcessEngineTest 
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
     EventSubscriptionQuery eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery();
-    assertThat(eventSubscriptionQuery.count()).isEqualTo(0);
+    assertThat(eventSubscriptionQuery.count()).isZero();
 
     TaskQuery taskQuery = taskService.createTaskQuery();
     assertThat(taskQuery.count()).isEqualTo(1);
@@ -182,7 +182,7 @@ public class InterruptingEventSubProcessTest extends PluggableProcessEngineTest 
     String jobId = jobQuery.singleResult().getId();
     managementService.executeJob(jobId);
 
-    assertThat(jobQuery.count()).isEqualTo(0);
+    assertThat(jobQuery.count()).isZero();
 
     assertThat(taskQuery.count()).isEqualTo(1);
     task = taskQuery.singleResult();

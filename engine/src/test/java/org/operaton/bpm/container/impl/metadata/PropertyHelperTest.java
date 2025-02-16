@@ -156,7 +156,7 @@ public class PropertyHelperTest {
   }
 
   @Test
-  public void testResolvePropertyForMultiplePropertes() {
+  public void testResolvePropertyForMultipleProperties() {
     Properties source = new Properties();
     source.put("operaton.test.oneKey", "1234");
     source.put("operaton.test.anotherKey", "5678");
@@ -200,7 +200,7 @@ public class PropertyHelperTest {
     // then
     assertThat(jobExecutor.getBackoffTimeInMillis()).isEqualTo(Integer.MAX_VALUE);
     assertThat(jobExecutor.getWaitIncreaseFactor()).isCloseTo(Float.MAX_VALUE, within(0.0001f));
-    assertThat(engineConfiguration.isDbIdentityUsed()).isEqualTo(true);
+    assertThat(engineConfiguration.isDbIdentityUsed()).isTrue();
     assertThat(engineConfiguration.getJdbcUrl()).isEqualTo("someUrl");
   }
 
@@ -225,7 +225,7 @@ public class PropertyHelperTest {
     // then
     assertThat(jobExecutor.getBackoffTimeInMillis()).isEqualTo(Integer.MAX_VALUE);
     assertThat(jobExecutor.getWaitIncreaseFactor()).isCloseTo(Float.MAX_VALUE, within(0.0001f));
-    assertThat(engineConfiguration.isDbIdentityUsed()).isEqualTo(true);
+    assertThat(engineConfiguration.isDbIdentityUsed()).isTrue();
     assertThat(engineConfiguration.getJdbcUrl()).isEqualTo("someUrl");
   }
 }

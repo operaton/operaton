@@ -584,6 +584,7 @@ public abstract class AuthorizationTest extends PluggableProcessEngineTest {
       query.singleResult();
       fail("");
     } catch (ProcessEngineException e) {
+      // expected
     }
   }
 

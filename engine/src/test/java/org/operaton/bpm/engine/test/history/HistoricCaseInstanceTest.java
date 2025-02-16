@@ -602,12 +602,12 @@ public class HistoricCaseInstanceTest extends CmmnTest {
 
     query.superProcessInstanceId("invalid");
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
 
     query.caseInstanceId(null);
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
 
   }
@@ -644,12 +644,12 @@ public class HistoricCaseInstanceTest extends CmmnTest {
 
     query.subProcessInstanceId("invalid");
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
 
     query.caseInstanceId(null);
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
 
   }
@@ -680,12 +680,12 @@ public class HistoricCaseInstanceTest extends CmmnTest {
 
     query.superCaseInstanceId("invalid");
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
 
     query.caseInstanceId(null);
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
 
   }
@@ -723,12 +723,12 @@ public class HistoricCaseInstanceTest extends CmmnTest {
 
     query.subCaseInstanceId("invalid");
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
 
     query.caseInstanceId(null);
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
   }
 
@@ -793,7 +793,7 @@ public class HistoricCaseInstanceTest extends CmmnTest {
         .createHistoricCaseInstanceQuery()
         .caseActivityIdIn("nonExisting");
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
   }
 
   @Test

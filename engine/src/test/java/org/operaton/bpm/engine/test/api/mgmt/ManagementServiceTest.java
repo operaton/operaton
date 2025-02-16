@@ -403,7 +403,7 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
   public void testSetJobRetriesNullCreatesIncident() {
 
     // initially there is no incident
-    assertThat(runtimeService.createIncidentQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createIncidentQuery().count()).isZero();
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exceptionInJobExecution");
 

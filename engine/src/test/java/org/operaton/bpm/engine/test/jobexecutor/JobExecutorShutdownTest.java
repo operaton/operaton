@@ -122,7 +122,7 @@ public class JobExecutorShutdownTest {
     executionThread.waitUntilDone();
 
     // then the current job has completed successfully
-    assertThat(engineRule.getManagementService().createJobQuery().jobId(firstAsyncJob.getId()).count()).isEqualTo(0);
+    assertThat(engineRule.getManagementService().createJobQuery().jobId(firstAsyncJob.getId()).count()).isZero();
 
     // but the exclusive follow-up job is not executed and is not locked
     JobEntity secondAsyncJob = (JobEntity) engineRule.getManagementService().createJobQuery().singleResult();

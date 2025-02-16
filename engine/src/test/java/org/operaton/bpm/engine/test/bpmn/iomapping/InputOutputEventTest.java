@@ -157,7 +157,7 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
   public void testMessageEndEvent() {
     runtimeService.startProcessInstanceByKey("testProcess");
 
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
     // input mapping
     Map<String, Object> mappedVariables = VariableLogDelegate.LOCAL_VARIABLES;

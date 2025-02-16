@@ -398,9 +398,10 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CallableElement callableElement = behavior.getCallableElement();
 
     List<CallableElementParameter> inputs = callableElement.getInputs();
-    assertThat(inputs).isNotNull();
-    assertThat(inputs).isNotEmpty();
-    assertThat(inputs).hasSize(3);
+    assertThat(inputs)
+            .isNotNull()
+            .isNotEmpty()
+            .hasSize(3);
   }
 
   @Test
@@ -518,9 +519,10 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CallableElement callableElement = behavior.getCallableElement();
 
     List<CallableElementParameter> outputs = callableElement.getOutputs();
-    assertThat(outputs).isNotNull();
-    assertThat(outputs).isNotEmpty();
-    assertThat(outputs).hasSize(3);
+    assertThat(outputs)
+            .isNotNull()
+            .isNotEmpty()
+            .hasSize(3);
   }
 
   @Test

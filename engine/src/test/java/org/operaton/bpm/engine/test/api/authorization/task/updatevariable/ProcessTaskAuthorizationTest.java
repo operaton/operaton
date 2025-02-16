@@ -79,7 +79,7 @@ public class ProcessTaskAuthorizationTest {
   protected RuntimeService runtimeService;
 
   protected boolean ensureSpecificVariablePermission;
-  protected String deploumentId;
+  protected String deploymentId;
 
   @Parameters(name = "Scenario {index}")
   public static Collection<AuthorizationScenario[]> scenarios() {
@@ -126,7 +126,7 @@ public class ProcessTaskAuthorizationTest {
     runtimeService = engineRule.getRuntimeService();
 
     authRule.createUserAndGroup("userId", "groupId");
-    deploumentId = engineRule.getRepositoryService().createDeployment().addClasspathResource(ONE_TASK_PROCESS).deployWithResult().getId();
+    deploymentId = engineRule.getRepositoryService().createDeployment().addClasspathResource(ONE_TASK_PROCESS).deployWithResult().getId();
     ensureSpecificVariablePermission = processEngineConfiguration.isEnforceSpecificVariablePermission();
 
     // prerequisite of the whole test suite
@@ -137,7 +137,7 @@ public class ProcessTaskAuthorizationTest {
   public void tearDown() {
     authRule.deleteUsersAndGroups();
     processEngineConfiguration.setEnforceSpecificVariablePermission(ensureSpecificVariablePermission);
-    engineRule.getRepositoryService().deleteDeployment(deploumentId, true);
+    engineRule.getRepositoryService().deleteDeployment(deploymentId, true);
   }
 
   @Test

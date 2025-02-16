@@ -157,13 +157,15 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
     assertThat(sentryDeclaration).isNotNull();
 
     List<CmmnOnPartDeclaration> onParts = sentryDeclaration.getOnParts();
-    assertThat(onParts).isNotNull();
-    assertThat(onParts).isNotEmpty();
-    assertThat(onParts).hasSize(1);
+    assertThat(onParts)
+            .isNotNull()
+            .isNotEmpty()
+            .hasSize(1);
 
     List<CmmnOnPartDeclaration> onPartsAssociatedWithSource = sentryDeclaration.getOnParts(source.getId());
-    assertThat(onPartsAssociatedWithSource).isNotNull();
-    assertThat(onPartsAssociatedWithSource).isNotEmpty();
+    assertThat(onPartsAssociatedWithSource)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(onParts).hasSize(1);
 
     CmmnOnPartDeclaration onPartDeclaration = onPartsAssociatedWithSource.get(0);
@@ -205,13 +207,15 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
     assertThat(sentryDeclaration).isNotNull();
 
     List<CmmnOnPartDeclaration> onParts = sentryDeclaration.getOnParts();
-    assertThat(onParts).isNotNull();
-    assertThat(onParts).isNotEmpty();
-    assertThat(onParts).hasSize(1);
+    assertThat(onParts)
+            .isNotNull()
+            .isNotEmpty()
+            .hasSize(1);
 
     List<CmmnOnPartDeclaration> onPartsAssociatedWithSource = sentryDeclaration.getOnParts(source.getId());
-    assertThat(onPartsAssociatedWithSource).isNotNull();
-    assertThat(onPartsAssociatedWithSource).isNotEmpty();
+    assertThat(onPartsAssociatedWithSource)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(onParts).hasSize(1);
 
     CmmnOnPartDeclaration onPartDeclaration = onPartsAssociatedWithSource.get(0);
@@ -244,9 +248,10 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
     // then
     assertThat(sentryDeclaration).isNotNull();
     List<CmmnVariableOnPartDeclaration> variableOnParts = sentryDeclaration.getVariableOnParts();
-    assertThat(variableOnParts).isNotNull();
-    assertThat(variableOnParts).isNotEmpty();
-    assertThat(variableOnParts).hasSize(1);
+    assertThat(variableOnParts)
+            .isNotNull()
+            .isNotEmpty()
+            .hasSize(1);
 
     CmmnVariableOnPartDeclaration transformedVariableOnPart = variableOnParts.get(0);
     assertThat(transformedVariableOnPart.getVariableName()).isEqualTo("aVariable");
@@ -273,9 +278,10 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
     // then
     assertThat(sentryDeclaration).isNotNull();
     List<CmmnVariableOnPartDeclaration> variableOnParts = sentryDeclaration.getVariableOnParts();
-    assertThat(variableOnParts).isNotNull();
-    assertThat(variableOnParts).isNotEmpty();
-    assertThat(variableOnParts).hasSize(2);
+    assertThat(variableOnParts)
+            .isNotNull()
+            .isNotEmpty()
+            .hasSize(2);
 
   }
 
@@ -298,9 +304,10 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
     // then
     assertThat(sentryDeclaration).isNotNull();
     List<CmmnVariableOnPartDeclaration> variableOnParts = sentryDeclaration.getVariableOnParts();
-    assertThat(variableOnParts).isNotNull();
-    assertThat(variableOnParts).isNotEmpty();
-    assertThat(variableOnParts).hasSize(1);
+    assertThat(variableOnParts)
+            .isNotNull()
+            .isNotEmpty()
+            .hasSize(1);
 
   }
 
@@ -348,9 +355,10 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
     // then
     assertThat(sentryDeclaration).isNotNull();
     List<CmmnVariableOnPartDeclaration> variableOnParts = sentryDeclaration.getVariableOnParts();
-    assertThat(variableOnParts).isNotNull();
-    assertThat(variableOnParts).isNotEmpty();
-    assertThat(variableOnParts).hasSize(1);
+    assertThat(variableOnParts)
+            .isNotNull()
+            .isNotEmpty()
+            .hasSize(1);
 
     CmmnVariableOnPartDeclaration transformedVariableOnPart = variableOnParts.get(0);
     assertThat(transformedVariableOnPart.getVariableName()).isEqualTo("aVariable");

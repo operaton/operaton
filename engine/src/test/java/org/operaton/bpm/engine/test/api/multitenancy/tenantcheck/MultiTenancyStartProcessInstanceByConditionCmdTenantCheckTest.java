@@ -94,8 +94,9 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
       .evaluateStartConditions();
 
     // then
-    assertThat(instances).isNotNull();
-    assertThat(instances).hasSize(1);
+    assertThat(instances)
+            .isNotNull()
+            .hasSize(1);
 
     identityService.clearAuthentication();
 
@@ -125,14 +126,15 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
       .evaluateStartConditions();
 
     // then
-    assertThat(processInstances).isNotNull();
-    assertThat(processInstances).hasSize(1);
+    assertThat(processInstances)
+            .isNotNull()
+            .hasSize(1);
 
     identityService.clearAuthentication();
 
     ProcessInstanceQuery processInstanceQuery = engineRule.getRuntimeService().createProcessInstanceQuery();
     assertThat(processInstanceQuery.tenantIdIn(TENANT_ONE).count()).isEqualTo(1);
-    assertThat(processInstanceQuery.tenantIdIn(TENANT_TWO).count()).isEqualTo(0);
+    assertThat(processInstanceQuery.tenantIdIn(TENANT_TWO).count()).isZero();
   }
 
   @Test
@@ -155,14 +157,15 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
       .evaluateStartConditions();
 
     // then
-    assertThat(processInstances).isNotNull();
-    assertThat(processInstances).hasSize(1);
+    assertThat(processInstances)
+            .isNotNull()
+            .hasSize(1);
 
     identityService.clearAuthentication();
 
     ProcessInstanceQuery processInstanceQuery = engineRule.getRuntimeService().createProcessInstanceQuery();
     assertThat(processInstanceQuery.tenantIdIn(TENANT_ONE).count()).isEqualTo(1);
-    assertThat(processInstanceQuery.tenantIdIn(TENANT_TWO).count()).isEqualTo(0);
+    assertThat(processInstanceQuery.tenantIdIn(TENANT_TWO).count()).isZero();
   }
 
   @Test
@@ -232,8 +235,9 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
       .evaluateStartConditions();
 
     // then
-    assertThat(instances).isNotNull();
-    assertThat(instances).hasSize(1);
+    assertThat(instances)
+            .isNotNull()
+            .hasSize(1);
     assertThat(instances.get(0).getTenantId()).isEqualTo(TENANT_ONE);
 
     identityService.clearAuthentication();

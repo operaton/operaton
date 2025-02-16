@@ -149,7 +149,7 @@ public class HistoricTaskInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void shouldNottFindTaskWithRevokedReadHistoryPermissionOnProcessDefinition() {
+  public void shouldNotFindTaskWithRevokedReadHistoryPermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     createGrantAuthorization(PROCESS_DEFINITION, ANY, ANY, READ_HISTORY);

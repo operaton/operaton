@@ -123,7 +123,7 @@ public class BulkHistoryDeleteDecisionInstancesAuthorizationTest {
 
     //then
     if (authRule.assertScenario(scenario)) {
-      assertThat(historyService.createHistoricDecisionInstanceQuery().decisionDefinitionKey(DECISION).count()).isEqualTo(0);
+      assertThat(historyService.createHistoricDecisionInstanceQuery().decisionDefinitionKey(DECISION).count()).isZero();
     }
 
   }

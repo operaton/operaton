@@ -197,7 +197,7 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
     processEngineConfiguration.setAuthorizationEnabled(true);
 
     // I can't see it
-    assertThat(authorizationService.createAuthorizationQuery().count()).isEqualTo(0);
+    assertThat(authorizationService.createAuthorizationQuery().count()).isZero();
 
   }
 

@@ -99,7 +99,7 @@ public class SequentialJobAcquisitionTest {
     jobExecutor.start();
     waitForJobExecutorToProcessAllJobs(10000, 100, jobExecutor, engine.getManagementService(), true);
 
-    assertThat(engine.getManagementService().createJobQuery().count()).isEqualTo(0);
+    assertThat(engine.getManagementService().createJobQuery().count()).isZero();
   }
 
   @Test
@@ -157,8 +157,8 @@ public class SequentialJobAcquisitionTest {
     // assert task completed for the second engine
     waitForJobExecutorToProcessAllJobs(10000, 100, jobExecutor, engine2.getManagementService(), true);
 
-    assertThat(engine1.getManagementService().createJobQuery().count()).isEqualTo(0);
-    assertThat(engine2.getManagementService().createJobQuery().count()).isEqualTo(0);
+    assertThat(engine1.getManagementService().createJobQuery().count()).isZero();
+    assertThat(engine2.getManagementService().createJobQuery().count()).isZero();
   }
 
   @Test
@@ -220,8 +220,8 @@ public class SequentialJobAcquisitionTest {
 
     assertThat(jobExecutor.getAcquireJobsRunnable().isJobAdded()).isFalse();
 
-    assertThat(engine1.getManagementService().createJobQuery().count()).isEqualTo(0);
-    assertThat(engine2.getManagementService().createJobQuery().count()).isEqualTo(0);
+    assertThat(engine1.getManagementService().createJobQuery().count()).isZero();
+    assertThat(engine2.getManagementService().createJobQuery().count()).isZero();
   }
 
 }

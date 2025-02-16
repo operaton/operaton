@@ -109,12 +109,12 @@ public class DefaultPermissionForTenantMemberTest {
     assertThat(authorizationService.createAuthorizationQuery()
         .userIdIn(USER_ID)
         .resourceType(Resources.TENANT)
-        .hasPermission(Permissions.READ).count()).isEqualTo(0);
+        .hasPermission(Permissions.READ).count()).isZero();
 
     identityService.setAuthenticatedUserId(USER_ID);
 
     assertThat(identityService.createTenantQuery()
-        .count()).isEqualTo(0);
+        .count()).isZero();
   }
 
   @Test
@@ -166,12 +166,12 @@ public class DefaultPermissionForTenantMemberTest {
     assertThat(authorizationService.createAuthorizationQuery()
         .groupIdIn(GROUP_ID)
         .resourceType(Resources.TENANT)
-        .hasPermission(Permissions.READ).count()).isEqualTo(0);
+        .hasPermission(Permissions.READ).count()).isZero();
 
     identityService.setAuthentication(USER_ID, Collections.singletonList(GROUP_ID));
 
     assertThat(identityService.createTenantQuery()
-        .count()).isEqualTo(0);
+        .count()).isZero();
   }
 
   @Test

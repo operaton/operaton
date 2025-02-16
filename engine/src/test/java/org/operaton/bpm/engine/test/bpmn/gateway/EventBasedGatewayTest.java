@@ -52,9 +52,9 @@ public class EventBasedGatewayTest extends PluggableProcessEngineTest {
 
     runtimeService.startProcessInstanceByKey("throwSignal");
 
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isZero();
     assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
-    assertThat(managementService.createJobQuery().count()).isEqualTo(0);
+    assertThat(managementService.createJobQuery().count()).isZero();
 
     Task task = taskService.createTaskQuery()
       .taskName("afterSignal")
@@ -83,9 +83,9 @@ public class EventBasedGatewayTest extends PluggableProcessEngineTest {
       // wait for timer to fire
       testRule.waitForJobExecutorToProcessAllJobs(10000);
 
-      assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(0);
+      assertThat(runtimeService.createEventSubscriptionQuery().count()).isZero();
       assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
-      assertThat(managementService.createJobQuery().count()).isEqualTo(0);
+      assertThat(managementService.createJobQuery().count()).isZero();
 
       Task task = taskService.createTaskQuery()
         .taskName("afterTimer")
@@ -125,9 +125,9 @@ public class EventBasedGatewayTest extends PluggableProcessEngineTest {
       EventSubscription messageEventSubscription = messageEventSubscriptionQuery.singleResult();
       runtimeService.messageEventReceived(messageEventSubscription.getEventName(), messageEventSubscription.getExecutionId());
 
-      assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(0);
+      assertThat(runtimeService.createEventSubscriptionQuery().count()).isZero();
       assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
-      assertThat(managementService.createJobQuery().count()).isEqualTo(0);
+      assertThat(managementService.createJobQuery().count()).isZero();
 
       Task task = taskService.createTaskQuery()
         .taskName("afterMessage")
@@ -182,7 +182,7 @@ public class EventBasedGatewayTest extends PluggableProcessEngineTest {
     String jobId = jobQuery.singleResult().getId();
     managementService.executeJob(jobId);
 
-    assertThat(jobQuery.count()).isEqualTo(0);
+    assertThat(jobQuery.count()).isZero();
 
     String taskId = taskService.createTaskQuery().singleResult().getId();
     taskService.complete(taskId);

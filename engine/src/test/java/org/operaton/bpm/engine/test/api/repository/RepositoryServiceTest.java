@@ -400,7 +400,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
     assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(1);
     assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(2);
     assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isEqualTo(2);
-    assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isEqualTo(0);
+    assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isZero();
 
     // Shouldn't be able to start a process instance
     try {
@@ -416,7 +416,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
 
     assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(1);
     assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(2);
-    assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isEqualTo(0);
+    assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isZero();
     assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isEqualTo(2);
 
     // Should be able to start process instance
@@ -444,11 +444,11 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
 
     assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
     assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isEqualTo(1);
-    assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isEqualTo(0);
+    assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isZero();
 
     assertThat(managementService.createJobDefinitionQuery().count()).isEqualTo(1);
     assertThat(managementService.createJobDefinitionQuery().suspended().count()).isEqualTo(1);
-    assertThat(managementService.createJobDefinitionQuery().active().count()).isEqualTo(0);
+    assertThat(managementService.createJobDefinitionQuery().active().count()).isZero();
 
     // Shouldn't be able to start a process instance
     try {
@@ -464,11 +464,11 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
     assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(1);
 
     assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
-    assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isEqualTo(0);
+    assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isZero();
     assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isEqualTo(1);
 
     assertThat(managementService.createJobDefinitionQuery().count()).isEqualTo(1);
-    assertThat(managementService.createJobDefinitionQuery().suspended().count()).isEqualTo(0);
+    assertThat(managementService.createJobDefinitionQuery().suspended().count()).isZero();
     assertThat(managementService.createJobDefinitionQuery().active().count()).isEqualTo(1);
 
     // Should be able to start process instance
@@ -791,8 +791,8 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
 
     // Delete the deployment on second process engine
     repositoryService2.deleteDeployment(deploymentId, true);
-    assertThat(repositoryService2.createDeploymentQuery().count()).isEqualTo(0);
-    assertThat(runtimeService2.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(repositoryService2.createDeploymentQuery().count()).isZero();
+    assertThat(runtimeService2.createProcessInstanceQuery().count()).isZero();
 
     // deploy a revised version of the process: start->revisedTask->end on first process engine
     //
@@ -1169,22 +1169,25 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
 
   private CaseDefinition findOnlyCaseDefinition() {
     List<CaseDefinition> caseDefinitions = repositoryService.createCaseDefinitionQuery().list();
-    assertThat(caseDefinitions).isNotNull();
-    assertThat(caseDefinitions).hasSize(1);
+    assertThat(caseDefinitions)
+            .isNotNull()
+            .hasSize(1);
     return caseDefinitions.get(0);
   }
 
   private ProcessDefinition findOnlyProcessDefinition() {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
-    assertThat(processDefinitions).isNotNull();
-    assertThat(processDefinitions).hasSize(1);
+    assertThat(processDefinitions)
+            .isNotNull()
+            .hasSize(1);
     return processDefinitions.get(0);
   }
 
   private DecisionDefinition findOnlyDecisionDefinition() {
     List<DecisionDefinition> decisionDefinitions = repositoryService.createDecisionDefinitionQuery().list();
-    assertThat(decisionDefinitions).isNotNull();
-    assertThat(decisionDefinitions).hasSize(1);
+    assertThat(decisionDefinitions)
+            .isNotNull()
+            .hasSize(1);
     return decisionDefinitions.get(0);
   }
 
@@ -1271,9 +1274,9 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
       .orderByProcessDefinitionVersion().desc()
       .list();
 
-    assertThat(processDefinitions).isNotNull();
-
-    assertThat(processDefinitions).hasSize(5);
+    assertThat(processDefinitions)
+            .isNotNull()
+            .hasSize(5);
 
     ProcessDefinition processDefinition = processDefinitions.get(0);
     assertThat(processDefinition.getKey()).isEqualTo("EN");
@@ -1320,8 +1323,9 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
       .orderByProcessDefinitionVersion().desc()
       .list();
 
-    assertThat(processDefinitions).isNotNull();
-    assertThat(processDefinitions).hasSize(2);
+    assertThat(processDefinitions)
+            .isNotNull()
+            .hasSize(2);
 
     ProcessDefinition processDefinition = processDefinitions.get(0);
     assertThat(processDefinition.getKey()).isEqualTo("IDR");

@@ -102,17 +102,17 @@ public class HistoricIncidentQueryTest {
     hourFromNow.add(Calendar.HOUR_OF_DAY, 1);
 
     // createTime
-    assertThat(query.createTimeBefore(hourAgo.getTime()).count()).isEqualTo(0);
+    assertThat(query.createTimeBefore(hourAgo.getTime()).count()).isZero();
     assertThat(query.createTimeBefore(hourFromNow.getTime()).count()).isEqualTo(2);
     assertThat(query.createTimeAfter(hourAgo.getTime()).count()).isEqualTo(2);
-    assertThat(query.createTimeAfter(hourFromNow.getTime()).count()).isEqualTo(0);
+    assertThat(query.createTimeAfter(hourFromNow.getTime()).count()).isZero();
     assertThat(query.createTimeBefore(hourFromNow.getTime()).createTimeAfter(hourAgo.getTime()).count()).isEqualTo(2);
 
     //endTime
-    assertThat(query.endTimeBefore(hourAgo.getTime()).count()).isEqualTo(0);
+    assertThat(query.endTimeBefore(hourAgo.getTime()).count()).isZero();
     assertThat(query.endTimeBefore(hourFromNow.getTime()).count()).isEqualTo(1);
     assertThat(query.endTimeAfter(hourAgo.getTime()).count()).isEqualTo(1);
-    assertThat(query.endTimeAfter(hourFromNow.getTime()).count()).isEqualTo(0);
+    assertThat(query.endTimeAfter(hourFromNow.getTime()).count()).isZero();
     assertThat(query.endTimeBefore(hourFromNow.getTime()).endTimeAfter(hourAgo.getTime()).count()).isEqualTo(1);
   }
 
@@ -138,7 +138,7 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
     assertThat(query.incidentId("invalid").list()).isEmpty();
-    assertThat(query.incidentId("invalid").count()).isEqualTo(0);
+    assertThat(query.incidentId("invalid").count()).isZero();
 
     try {
       query.incidentId(null);
@@ -163,7 +163,7 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
     assertThat(query.incidentType("invalid").list()).isEmpty();
-    assertThat(query.incidentType("invalid").count()).isEqualTo(0);
+    assertThat(query.incidentType("invalid").count()).isZero();
 
     try {
       query.incidentType(null);
@@ -188,7 +188,7 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
     assertThat(query.incidentMessage("invalid").list()).isEmpty();
-    assertThat(query.incidentMessage("invalid").count()).isEqualTo(0);
+    assertThat(query.incidentMessage("invalid").count()).isZero();
 
     try {
       query.incidentMessage(null);
@@ -228,7 +228,7 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
     assertThat(query.processDefinitionId("invalid").list()).isEmpty();
-    assertThat(query.processDefinitionId("invalid").count()).isEqualTo(0);
+    assertThat(query.processDefinitionId("invalid").count()).isZero();
 
     try {
       query.processDefinitionId(null);
@@ -308,7 +308,7 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
     assertThat(query.processInstanceId("invalid").list()).isEmpty();
-    assertThat(query.processInstanceId("invalid").count()).isEqualTo(0);
+    assertThat(query.processInstanceId("invalid").count()).isZero();
 
     try {
       query.processInstanceId(null);
@@ -335,7 +335,7 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
     assertThat(query.executionId("invalid").list()).isEmpty();
-    assertThat(query.executionId("invalid").count()).isEqualTo(0);
+    assertThat(query.executionId("invalid").count()).isZero();
 
     try {
       query.executionId(null);
@@ -363,7 +363,7 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
     assertThat(query.activityId("invalid").list()).isEmpty();
-    assertThat(query.activityId("invalid").count()).isEqualTo(0);
+    assertThat(query.activityId("invalid").count()).isZero();
 
     try {
       query.activityId(null);
@@ -391,7 +391,7 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
     assertThat(query.failedActivityId("invalid").list()).isEmpty();
-    assertThat(query.failedActivityId("invalid").count()).isEqualTo(0);
+    assertThat(query.failedActivityId("invalid").count()).isZero();
 
     try {
       query.failedActivityId(null);
@@ -426,7 +426,7 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
     assertThat(query.causeIncidentId("invalid").list()).isEmpty();
-    assertThat(query.causeIncidentId("invalid").count()).isEqualTo(0);
+    assertThat(query.causeIncidentId("invalid").count()).isZero();
 
     try {
       query.causeIncidentId(null);
@@ -461,7 +461,7 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
     assertThat(query.rootCauseIncidentId("invalid").list()).isEmpty();
-    assertThat(query.rootCauseIncidentId("invalid").count()).isEqualTo(0);
+    assertThat(query.rootCauseIncidentId("invalid").count()).isZero();
 
     try {
       query.rootCauseIncidentId(null);
@@ -488,7 +488,7 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
     assertThat(query.configuration("invalid").list()).isEmpty();
-    assertThat(query.configuration("invalid").count()).isEqualTo(0);
+    assertThat(query.configuration("invalid").count()).isZero();
 
     try {
       query.configuration(null);
@@ -524,7 +524,7 @@ public class HistoricIncidentQueryTest {
         .historyConfiguration("-1");
 
     assertThat(query.list()).isEmpty();
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
   }
 
   @Test
@@ -532,7 +532,7 @@ public class HistoricIncidentQueryTest {
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
     assertThat(query.historyConfiguration("invalid").list()).isEmpty();
-    assertThat(query.historyConfiguration("invalid").count()).isEqualTo(0);
+    assertThat(query.historyConfiguration("invalid").count()).isZero();
 
     try {
       query.historyConfiguration(null);
@@ -661,7 +661,7 @@ public class HistoricIncidentQueryTest {
       .jobDefinitionIdIn("unknown");
 
     assertThat(query.list()).isEmpty();
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
   }
 
   @Test

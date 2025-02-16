@@ -82,7 +82,7 @@ public class CmmnDeployerTest extends PluggableProcessEngineTest {
       fail("");
     } catch (Exception e) {
       // Verify that nothing is deployed
-      assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(0);
+      assertThat(repositoryService.createDeploymentQuery().count()).isZero();
     }
   }
 

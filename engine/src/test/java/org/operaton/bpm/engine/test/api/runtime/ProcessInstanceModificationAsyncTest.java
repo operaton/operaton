@@ -293,7 +293,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
       .execute();
 
     // then the job has been removed
-    assertThat(managementService.createJobQuery().count()).isEqualTo(0);
+    assertThat(managementService.createJobQuery().count()).isZero();
 
     // and the activity instance and execution trees match
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstance.getId());
@@ -479,7 +479,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
     .done());
 
     // and there should be no job for innerTask1 anymore
-    assertThat(managementService.createJobQuery().activityId("innerTask1").count()).isEqualTo(0);
+    assertThat(managementService.createJobQuery().activityId("innerTask1").count()).isZero();
 
     // and completing the process should succeed
     completeTasksInOrder("innerTask2", "outerTask");
@@ -507,7 +507,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
 
     // then no io mapping is executed and no end listener is executed
     assertThat(RecorderExecutionListener.getRecordedEvents()).isEmpty();
-    assertThat(runtimeService.createVariableInstanceQuery().variableName("outputMappingExecuted").count()).isEqualTo(0);
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("outputMappingExecuted").count()).isZero();
 
     // and the process can be completed successfully
     completeTasksInOrder("outerTask");
@@ -534,7 +534,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
       .execute();
 
     // then the job has been removed
-    assertThat(managementService.createJobQuery().count()).isEqualTo(0);
+    assertThat(managementService.createJobQuery().count()).isZero();
 
     // and the activity instance and execution trees match
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstance.getId());
@@ -571,7 +571,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
       .execute();
 
     // then the job has been removed
-    assertThat(managementService.createJobQuery().count()).isEqualTo(0);
+    assertThat(managementService.createJobQuery().count()).isZero();
 
     // and the activity instance and execution trees match
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstance.getId());
@@ -648,7 +648,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
       .execute();
 
     // then the job has been removed
-    assertThat(managementService.createJobQuery().count()).isEqualTo(0);
+    assertThat(managementService.createJobQuery().count()).isZero();
 
     // and the activity instance and execution trees match
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstance.getId());

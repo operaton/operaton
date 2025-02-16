@@ -60,16 +60,13 @@ public class EmptyProcessesXmlTest {
             .hasSize(4);
 
     String isDeleteUponUndeploy = properties.get(ProcessArchiveXml.PROP_IS_DELETE_UPON_UNDEPLOY);
-    assertThat(isDeleteUponUndeploy).isNotNull();
-    assertThat(isDeleteUponUndeploy).isEqualTo(Boolean.FALSE.toString());
+    assertThat(isDeleteUponUndeploy).isNotNull().isEqualTo(Boolean.FALSE.toString());
 
     String isScanForProcessDefinitions = properties.get(ProcessArchiveXml.PROP_IS_SCAN_FOR_PROCESS_DEFINITIONS);
-    assertThat(isScanForProcessDefinitions).isNotNull();
-    assertThat(isScanForProcessDefinitions).isEqualTo(Boolean.TRUE.toString());
+    assertThat(isScanForProcessDefinitions).isNotNull().isEqualTo(Boolean.TRUE.toString());
 
     String isDeployChangedOnly = properties.get(ProcessArchiveXml.PROP_IS_DEPLOY_CHANGED_ONLY);
-    assertThat(isDeployChangedOnly).isNotNull();
-    assertThat(isDeployChangedOnly).isEqualTo(Boolean.FALSE.toString());
+    assertThat(isDeployChangedOnly).isNotNull().isEqualTo(Boolean.FALSE.toString());
 
     String resumePreviousBy = properties.get(ProcessArchiveXml.PROP_RESUME_PREVIOUS_BY);
     assertThat(resumePreviousBy)

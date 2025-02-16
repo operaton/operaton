@@ -232,7 +232,7 @@ public class ExecutionVariablesTest extends PluggableProcessEngineTest {
     taskService.complete(taskService.createTaskQuery().taskDefinitionKey("task2").singleResult().getId());
 
     // then
-    assertThat(runtimeService.createVariableInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createVariableInstanceQuery().count()).isZero();
   }
 
   @Deployment
@@ -252,7 +252,7 @@ public class ExecutionVariablesTest extends PluggableProcessEngineTest {
     taskService.complete(taskService.createTaskQuery().taskDefinitionKey("task2").singleResult().getId());
 
     // then
-    assertThat(runtimeService.createVariableInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createVariableInstanceQuery().count()).isZero();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/variables/ExecutionVariablesTest.testTreeCompactionForkParallelGateway.bpmn20.xml")

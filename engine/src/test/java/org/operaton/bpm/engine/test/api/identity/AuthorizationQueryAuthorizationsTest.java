@@ -95,7 +95,7 @@ public class AuthorizationQueryAuthorizationsTest {
     assertThat(authResult).isNotNull();
 
     // then
-    assertThat(authorizationService.createAuthorizationQuery().hasPermission(Permissions.CREATE_INSTANCE).count()).isEqualTo(0);
+    assertThat(authorizationService.createAuthorizationQuery().hasPermission(Permissions.CREATE_INSTANCE).count()).isZero();
   }
 
   @Test
@@ -129,9 +129,9 @@ public class AuthorizationQueryAuthorizationsTest {
     assertThat(accessResult).isNotNull();
     assertThat(authorizationService.createAuthorizationQuery().hasPermission(Permissions.ACCESS).count()).isEqualTo(1);
     assertThat(retryJobPDResult).isEmpty();
-    assertThat(authorizationService.createAuthorizationQuery().hasPermission(ProcessDefinitionPermissions.RETRY_JOB).count()).isEqualTo(0);
+    assertThat(authorizationService.createAuthorizationQuery().hasPermission(ProcessDefinitionPermissions.RETRY_JOB).count()).isZero();
     assertThat(retryJobPIResult).isEmpty();
-    assertThat(authorizationService.createAuthorizationQuery().hasPermission(ProcessInstancePermissions.RETRY_JOB).count()).isEqualTo(0);
+    assertThat(authorizationService.createAuthorizationQuery().hasPermission(ProcessInstancePermissions.RETRY_JOB).count()).isZero();
   }
 
   @Test
@@ -154,7 +154,7 @@ public class AuthorizationQueryAuthorizationsTest {
     assertThat(authorizationService.createAuthorizationQuery()
         .resourceType(Resources.BATCH)
         .hasPermission(Permissions.ACCESS)
-        .count()).isEqualTo(0);
+        .count()).isZero();
   }
 
   @Test
@@ -188,7 +188,7 @@ public class AuthorizationQueryAuthorizationsTest {
         .resourceType(Resources.PROCESS_DEFINITION)
         .hasPermission(Permissions.READ)
         .hasPermission(Permissions.ACCESS)
-        .count()).isEqualTo(0);
+        .count()).isZero();
   }
 
   @Test
@@ -212,7 +212,7 @@ public class AuthorizationQueryAuthorizationsTest {
     assertThat(authorizationService.createAuthorizationQuery()
         .hasPermission(Permissions.READ)
         .hasPermission(Permissions.ACCESS)
-        .count()).isEqualTo(0);
+        .count()).isZero();
   }
 
   @Test

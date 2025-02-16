@@ -248,8 +248,9 @@ public class InclusiveGatewayTest extends PluggableProcessEngineTest {
     orders.set(1, new InclusiveGatewayTestOrder(125));
     pi = runtimeService.startProcessInstanceByKey("inclusiveDecisionBasedOnListOrArrayOfBeans", variables);
     List<Task> tasks = taskService.createTaskQuery().processInstanceId(pi.getId()).list();
-    assertThat(tasks).isNotNull();
-    assertThat(tasks).hasSize(2);
+    assertThat(tasks)
+            .isNotNull()
+            .hasSize(2);
     List<String> expectedNames = new ArrayList<>();
     expectedNames.add(BEAN_TASK2_NAME);
     expectedNames.add(BEAN_TASK3_NAME);
@@ -263,8 +264,9 @@ public class InclusiveGatewayTest extends PluggableProcessEngineTest {
     orderArray[1].setPrice(10);
     pi = runtimeService.startProcessInstanceByKey("inclusiveDecisionBasedOnListOrArrayOfBeans", CollectionUtil.singletonMap("orders", orderArray));
     tasks = taskService.createTaskQuery().processInstanceId(pi.getId()).list();
-    assertThat(tasks).isNotNull();
-    assertThat(tasks).hasSize(3);
+    assertThat(tasks)
+            .isNotNull()
+            .hasSize(3);
     expectedNames.clear();
     expectedNames.add(BEAN_TASK1_NAME);
     expectedNames.add(BEAN_TASK2_NAME);
@@ -420,7 +422,7 @@ public class InclusiveGatewayTest extends PluggableProcessEngineTest {
     assertThat(task.getName()).isEqualTo("task C");
 
     taskService.complete(task.getId());
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().count()).isZero();
 
 
     for (Execution execution : runtimeService.createExecutionQuery().list()) {
@@ -716,7 +718,7 @@ public class InclusiveGatewayTest extends PluggableProcessEngineTest {
     taskService.complete(tasks.get(1).getId());
 
     // then
-    assertThat(runtimeService.createVariableInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createVariableInstanceQuery().count()).isZero();
   }
 
   @Deployment

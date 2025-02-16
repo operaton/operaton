@@ -149,7 +149,7 @@ public class TaskCandidateTest extends PluggableProcessEngineTest {
     assertThat(taskService.createTaskQuery().taskCandidateUser(GONZO).list()).hasSize(1);
     assertThat(taskService.createTaskQuery().taskCandidateGroup(MANAGEMENT).count()).isEqualTo(1);
     assertThat(taskService.createTaskQuery().taskCandidateGroup("accountancy").count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskCandidateGroup("sales").count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().taskCandidateGroup("sales").count()).isZero();
 
     // Gonzo claims the task
     tasks = taskService.createTaskQuery().taskCandidateUser(GONZO).list();
@@ -160,7 +160,7 @@ public class TaskCandidateTest extends PluggableProcessEngineTest {
     // The task must now be gone from the candidate task lists
     assertThat(taskService.createTaskQuery().taskCandidateUser(KERMIT).list()).isEmpty();
     assertThat(taskService.createTaskQuery().taskCandidateUser(GONZO).list()).isEmpty();
-    assertThat(taskService.createTaskQuery().taskCandidateGroup(MANAGEMENT).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().taskCandidateGroup(MANAGEMENT).count()).isZero();
 
     // The task will be visible on the personal task list of Gonzo
     assertThat(taskService
@@ -169,7 +169,7 @@ public class TaskCandidateTest extends PluggableProcessEngineTest {
         .count()).isEqualTo(1);
 
     // But not on the personal task list of (for example) Kermit
-    assertThat(taskService.createTaskQuery().taskAssignee(KERMIT).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().taskAssignee(KERMIT).count()).isZero();
 
     // Completing the task ends the process
     taskService.complete(task.getId());

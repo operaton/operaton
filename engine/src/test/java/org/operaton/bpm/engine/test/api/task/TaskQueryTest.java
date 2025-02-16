@@ -147,7 +147,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     TaskQuery query = taskService.createTaskQuery().taskId("invalid");
     assertThat(query.singleResult()).isNull();
     assertThat(query.list()).isEmpty();
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     var taskQuery = taskService.createTaskQuery();
 
     try {
@@ -177,7 +177,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     TaskQuery query = taskService.createTaskQuery().taskName("invalid");
     assertThat(query.singleResult()).isNull();
     assertThat(query.list()).isEmpty();
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     var taskQuery = taskService.createTaskQuery().taskName(null);
 
     try {
@@ -201,7 +201,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     TaskQuery query = taskService.createTaskQuery().taskName("1");
     assertThat(query.singleResult()).isNull();
     assertThat(query.list()).isEmpty();
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     var taskQuery = taskService.createTaskQuery().taskName(null);
 
     try {
@@ -231,7 +231,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     TaskQuery query = taskService.createTaskQuery().taskDescription("invalid");
     assertThat(query.singleResult()).isNull();
     assertThat(query.list()).isEmpty();
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     var taskQuery = taskService.createTaskQuery();
 
     try {
@@ -255,15 +255,17 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
 
     List<Task> tasks = query.list();
-    assertThat(tasks).isNotNull();
-    assertThat(tasks).hasSize(6);
+    assertThat(tasks)
+            .isNotNull()
+            .hasSize(6);
 
     query = taskService.createTaskQuery();
     query.taskName("TeStTaSk");
 
     tasks = query.list();
-    assertThat(tasks).isNotNull();
-    assertThat(tasks).hasSize(6);
+    assertThat(tasks)
+            .isNotNull()
+            .hasSize(6);
   }
 
   /**
@@ -278,15 +280,17 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
 
     List<Task> tasks = query.list();
-    assertThat(tasks).isNotNull();
-    assertThat(tasks).hasSize(10);
+    assertThat(tasks)
+            .isNotNull()
+            .hasSize(10);
 
     query = taskService.createTaskQuery();
     query.taskNameLike("%Task%");
 
     tasks = query.list();
-    assertThat(tasks).isNotNull();
-    assertThat(tasks).hasSize(10);
+    assertThat(tasks)
+            .isNotNull()
+            .hasSize(10);
   }
 
   @Test
@@ -302,7 +306,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     TaskQuery query = taskService.createTaskQuery().taskDescriptionLike("invalid");
     assertThat(query.singleResult()).isNull();
     assertThat(query.list()).isEmpty();
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     var taskQuery = taskService.createTaskQuery();
 
     try {
@@ -329,7 +333,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     query = taskService.createTaskQuery().taskPriority(100);
     assertThat(query.singleResult()).isNull();
     assertThat(query.list()).isEmpty();
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
 
     query = taskService.createTaskQuery().taskMinPriority(50);
     assertThat(query.list()).hasSize(3);
@@ -375,7 +379,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(query.singleResult()).isNotNull();
 
     query = taskService.createTaskQuery().taskAssignee("kermit");
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
     assertThat(query.singleResult()).isNull();
   }
@@ -388,7 +392,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(query.singleResult()).isNotNull();
 
     query = taskService.createTaskQuery().taskAssignee("gonz");
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
     assertThat(query.singleResult()).isNull();
   }
@@ -426,7 +430,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     TaskQuery query = taskService.createTaskQuery().taskAssigneeIn(assignees);
 
     // then
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
   }
 
@@ -484,7 +488,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     TaskQuery query = taskService.createTaskQuery().taskAssigneeNotIn(assignees);
 
     // then
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
   }
 
@@ -570,7 +574,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     // gonzo is candidate for one task, which is already assinged
     query = taskService.createTaskQuery().taskCandidateUser("gonzo");
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
 
     // test including assigned tasks
@@ -696,12 +700,12 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     // sales group is candidate for no tasks
     query = taskService.createTaskQuery().taskCandidateGroup("sales");
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
 
     // test including assigned tasks
     query = taskService.createTaskQuery().taskCandidateGroup("sales").includeAssignedTasks();
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
   }
 
@@ -874,12 +878,12 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     // sales group is candidate for no tasks
     query = taskService.createTaskQuery().taskCandidateGroupIn(groups).taskCandidateGroup("sales");
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
 
     // test including assigned tasks
     query = taskService.createTaskQuery().taskCandidateGroupIn(groups).taskCandidateGroup("sales").includeAssignedTasks();
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
   }
 
@@ -888,7 +892,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     List<String> groups = List.of("accountancy");
     String candidateGroup = "management";
     TaskQuery query = taskService.createTaskQuery().taskCandidateGroupIn(groups).taskCandidateGroup(candidateGroup);
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
   }
 
@@ -916,10 +920,10 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(query.count()).isEqualTo(12);
     assertThat(query.list()).hasSize(12);
     query = taskService.createTaskQuery().taskDelegationState(DelegationState.PENDING);
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
     query = taskService.createTaskQuery().taskDelegationState(DelegationState.RESOLVED);
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
 
     String taskId= taskService.createTaskQuery().taskAssignee("gonzo_").singleResult().getId();
@@ -932,7 +936,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(query.count()).isEqualTo(1);
     assertThat(query.list()).hasSize(1);
     query = taskService.createTaskQuery().taskDelegationState(DelegationState.RESOLVED);
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
 
     taskService.resolveTask(taskId);
@@ -941,7 +945,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(query.count()).isEqualTo(11);
     assertThat(query.list()).hasSize(11);
     query = taskService.createTaskQuery().taskDelegationState(DelegationState.PENDING);
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
     query = taskService.createTaskQuery().taskDelegationState(DelegationState.RESOLVED);
     assertThat(query.count()).isEqualTo(1);
@@ -973,7 +977,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     before = sdf.parse("01/01/2001 01:01:01.000");
     query = taskService.createTaskQuery().taskCreatedBefore(before);
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
   }
 
@@ -990,7 +994,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     after = sdf.parse("05/05/2005 05:05:05.000");
     query = taskService.createTaskQuery().taskCreatedAfter(after);
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
   }
 
@@ -1007,11 +1011,11 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(taskService.createTaskQuery()
         .taskCreatedAfter(oneHourAgo).taskCreatedOn(createTime).taskCreatedBefore(oneHourLater).count()).isEqualTo(6);
     assertThat(taskService.createTaskQuery()
-        .taskCreatedAfter(oneHourLater).taskCreatedOn(createTime).taskCreatedBefore(oneHourAgo).count()).isEqualTo(0);
+        .taskCreatedAfter(oneHourLater).taskCreatedOn(createTime).taskCreatedBefore(oneHourAgo).count()).isZero();
     assertThat(taskService.createTaskQuery()
-        .taskCreatedAfter(oneHourLater).taskCreatedOn(createTime).count()).isEqualTo(0);
+        .taskCreatedAfter(oneHourLater).taskCreatedOn(createTime).count()).isZero();
     assertThat(taskService.createTaskQuery()
-        .taskCreatedOn(createTime).taskCreatedBefore(oneHourAgo).count()).isEqualTo(0);
+        .taskCreatedOn(createTime).taskCreatedBefore(oneHourAgo).count()).isZero();
   }
 
   @Deployment(resources="org/operaton/bpm/engine/test/api/task/taskDefinitionProcess.bpmn20.xml")
@@ -1023,8 +1027,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     // 1 task should exist with key "taskKey_1"
     List<Task> tasks = taskService.createTaskQuery().taskDefinitionKey("taskKey_1").list();
-    assertThat(tasks).isNotNull();
-    assertThat(tasks).hasSize(1);
+    assertThat(tasks)
+            .isNotNull()
+            .hasSize(1);
 
     assertThat(tasks.get(0).getTaskDefinitionKey()).isEqualTo("taskKey_1");
 
@@ -1042,23 +1047,26 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     // Ends with matching, TaskKey_1 and TaskKey_123 match
     List<Task> tasks = taskService.createTaskQuery().taskDefinitionKeyLike("taskKey\\_1%").orderByTaskName().asc().list();
-    assertThat(tasks).isNotNull();
-    assertThat(tasks).hasSize(2);
+    assertThat(tasks)
+            .isNotNull()
+            .hasSize(2);
 
     assertThat(tasks.get(0).getTaskDefinitionKey()).isEqualTo("taskKey_1");
     assertThat(tasks.get(1).getTaskDefinitionKey()).isEqualTo("taskKey_123");
 
     // Starts with matching, TaskKey_123 matches
     tasks = taskService.createTaskQuery().taskDefinitionKeyLike("%\\_123").orderByTaskName().asc().list();
-    assertThat(tasks).isNotNull();
-    assertThat(tasks).hasSize(1);
+    assertThat(tasks)
+            .isNotNull()
+            .hasSize(1);
 
     assertThat(tasks.get(0).getTaskDefinitionKey()).isEqualTo("taskKey_123");
 
     // Contains matching, TaskKey_123 matches
     tasks = taskService.createTaskQuery().taskDefinitionKeyLike("%Key\\_12%").orderByTaskName().asc().list();
-    assertThat(tasks).isNotNull();
-    assertThat(tasks).hasSize(1);
+    assertThat(tasks)
+            .isNotNull()
+            .hasSize(1);
 
     assertThat(tasks.get(0).getTaskDefinitionKey()).isEqualTo("taskKey_123");
 
@@ -1077,23 +1085,26 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     // 1 Task should be found with TaskKey1
     List<Task> tasks = taskService.createTaskQuery().taskDefinitionKeyIn("taskKey_1").list();
-    assertThat(tasks).isNotNull();
-    assertThat(tasks).hasSize(1);
+    assertThat(tasks)
+            .isNotNull()
+            .hasSize(1);
 
     assertThat(tasks.get(0).getTaskDefinitionKey()).isEqualTo("taskKey_1");
 
     // 2 Tasks should be found with TaskKey_1 and TaskKey_123
     tasks = taskService.createTaskQuery().taskDefinitionKeyIn("taskKey_1", "taskKey_123").orderByTaskName().asc().list();
-    assertThat(tasks).isNotNull();
-    assertThat(tasks).hasSize(2);
+    assertThat(tasks)
+            .isNotNull()
+            .hasSize(2);
 
     assertThat(tasks.get(0).getTaskDefinitionKey()).isEqualTo("taskKey_1");
     assertThat(tasks.get(1).getTaskDefinitionKey()).isEqualTo("taskKey_123");
 
     // 2 Tasks should be found with TaskKey1, TaskKey123 and UnexistingKey
     tasks = taskService.createTaskQuery().taskDefinitionKeyIn("taskKey_1", "taskKey_123", "unexistingKey").orderByTaskName().asc().list();
-    assertThat(tasks).isNotNull();
-    assertThat(tasks).hasSize(2);
+    assertThat(tasks)
+            .isNotNull()
+            .hasSize(2);
 
     assertThat(tasks.get(0).getTaskDefinitionKey()).isEqualTo("taskKey_1");
     assertThat(tasks.get(1).getTaskDefinitionKey()).isEqualTo("taskKey_123");
@@ -1118,7 +1129,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     // query for case-insensitive variable name should only return a result if case-insensitive search is used
     assertThat(taskService.createTaskQuery().matchVariableNamesIgnoreCase().taskVariableValueEquals(variableName.toLowerCase(), variableValue).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskVariableValueEquals(variableName.toLowerCase(), variableValue).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().taskVariableValueEquals(variableName.toLowerCase(), variableValue).count()).isZero();
 
     // query should treat all variables case-insensitively, even when flag is set after variable
     assertThat(taskService.createTaskQuery().taskVariableValueEquals(variableName.toLowerCase(), variableValue).matchVariableNamesIgnoreCase().count()).isEqualTo(1);
@@ -1131,7 +1142,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
 
     // No task should be found for an unexisting var
-    assertThat(taskService.createTaskQuery().taskVariableValueEquals("unexistingVar", "value").count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().taskVariableValueEquals("unexistingVar", "value").count()).isZero();
 
     // Create a map with a variable for all default types
     Map<String, Object> variables = new HashMap<>();
@@ -1156,15 +1167,15 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(taskService.createTaskQuery().taskVariableValueEquals("nullVar", null).count()).isEqualTo(1);
 
     // Test query for other values on existing variables
-    assertThat(taskService.createTaskQuery().taskVariableValueEquals("longVar", 999L).count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().taskVariableValueEquals("shortVar", (short) 999).count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().taskVariableValueEquals("integerVar", 999).count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().taskVariableValueEquals("stringVar", "999").count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().taskVariableValueEquals("booleanVar", false).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().taskVariableValueEquals("longVar", 999L).count()).isZero();
+    assertThat(taskService.createTaskQuery().taskVariableValueEquals("shortVar", (short) 999).count()).isZero();
+    assertThat(taskService.createTaskQuery().taskVariableValueEquals("integerVar", 999).count()).isZero();
+    assertThat(taskService.createTaskQuery().taskVariableValueEquals("stringVar", "999").count()).isZero();
+    assertThat(taskService.createTaskQuery().taskVariableValueEquals("booleanVar", false).count()).isZero();
     Calendar otherDate = Calendar.getInstance();
     otherDate.add(Calendar.YEAR, 1);
-    assertThat(taskService.createTaskQuery().taskVariableValueEquals("dateVar", otherDate.getTime()).count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().taskVariableValueEquals("nullVar", "999").count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().taskVariableValueEquals("dateVar", otherDate.getTime()).count()).isZero();
+    assertThat(taskService.createTaskQuery().taskVariableValueEquals("nullVar", "999").count()).isZero();
 
     // Test query for not equals
     assertThat(taskService.createTaskQuery().taskVariableValueNotEquals("longVar", 999L).count()).isEqualTo(1);
@@ -1190,20 +1201,20 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueEquals(variableName, variableValue.toLowerCase()).count()).isEqualTo(1);
 
     // query for non existing variable should return zero results
-    assertThat(taskService.createTaskQuery().taskVariableValueEquals("nonExistentVariable", variableValue.toLowerCase()).count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueEquals("nonExistentVariable", variableValue.toLowerCase()).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().taskVariableValueEquals("nonExistentVariable", variableValue.toLowerCase()).count()).isZero();
+    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueEquals("nonExistentVariable", variableValue.toLowerCase()).count()).isZero();
 
     // query for existing variable with different value should return zero results
-    assertThat(taskService.createTaskQuery().taskVariableValueEquals(variableName, "nonExistentValue").count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueEquals(variableName, "nonExistentValue".toLowerCase()).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().taskVariableValueEquals(variableName, "nonExistentValue").count()).isZero();
+    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueEquals(variableName, "nonExistentValue".toLowerCase()).count()).isZero();
 
     // query for case-insensitive variable value should only return a result when case-insensitive search is used
-    assertThat(taskService.createTaskQuery().taskVariableValueEquals(variableName, variableValue.toLowerCase()).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().taskVariableValueEquals(variableName, variableValue.toLowerCase()).count()).isZero();
     assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueEquals(variableName, variableValue.toLowerCase()).count()).isEqualTo(1);
 
     // query for case-insensitive variable with not equals operator should only return a result when case-sensitive search is used
     assertThat(taskService.createTaskQuery().taskVariableValueNotEquals(variableName, variableValue.toLowerCase()).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueNotEquals(variableName, variableValue.toLowerCase()).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueNotEquals(variableName, variableValue.toLowerCase()).count()).isZero();
 
     // query should treat all variables case-insensitively, even when flag is set after variable
     assertThat(taskService.createTaskQuery().taskVariableValueEquals(variableName, variableValue.toLowerCase()).matchVariableValuesIgnoreCase().count()).isEqualTo(1);
@@ -1221,7 +1232,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     // query for case-insensitive variable name should only return a result if case-insensitive search is used
     assertThat(taskService.createTaskQuery().matchVariableNamesIgnoreCase().matchVariableValuesIgnoreCase().taskVariableValueEquals(variableName.toLowerCase(), variableValue.toLowerCase()).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskVariableValueEquals(variableName.toLowerCase(), variableValue).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().taskVariableValueEquals(variableName.toLowerCase(), variableValue).count()).isZero();
 
     // query should treat all variables case-insensitively, even when flag is set after variable
     assertThat(taskService.createTaskQuery().taskVariableValueEquals(variableName.toLowerCase(), variableValue).matchVariableNamesIgnoreCase().count()).isEqualTo(1);
@@ -1243,12 +1254,12 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(taskService.createTaskQuery().taskVariableValueLike("stringVar", "%ngValue").count()).isEqualTo(1);
     assertThat(taskService.createTaskQuery().taskVariableValueLike("stringVar", "%ngVal%").count()).isEqualTo(1);
 
-    assertThat(taskService.createTaskQuery().taskVariableValueLike("stringVar", "stringVar%").count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().taskVariableValueLike("stringVar", "%ngVar").count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().taskVariableValueLike("stringVar", "%ngVar%").count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().taskVariableValueLike("stringVar", "stringVar%").count()).isZero();
+    assertThat(taskService.createTaskQuery().taskVariableValueLike("stringVar", "%ngVar").count()).isZero();
+    assertThat(taskService.createTaskQuery().taskVariableValueLike("stringVar", "%ngVar%").count()).isZero();
 
-    assertThat(taskService.createTaskQuery().taskVariableValueLike("stringVar", "stringVal").count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().taskVariableValueLike("nonExistingVar", "string%").count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().taskVariableValueLike("stringVar", "stringVal").count()).isZero();
+    assertThat(taskService.createTaskQuery().taskVariableValueLike("nonExistingVar", "string%").count()).isZero();
     var taskQuery = taskService.createTaskQuery();
 
     // test with null value
@@ -1270,17 +1281,17 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     taskService.setVariablesLocal(task.getId(), variables);
 
-    assertThat(taskService.createTaskQuery().taskVariableValueLike("stringVar", "stringVal%".toLowerCase()).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().taskVariableValueLike("stringVar", "stringVal%".toLowerCase()).count()).isZero();
     assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueLike("stringVar", "stringVal%".toLowerCase()).count()).isEqualTo(1);
     assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueLike("stringVar", "%ngValue".toLowerCase()).count()).isEqualTo(1);
     assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueLike("stringVar", "%ngVal%".toLowerCase()).count()).isEqualTo(1);
 
-    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueLike("stringVar", "stringVar%".toLowerCase()).count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueLike("stringVar", "%ngVar".toLowerCase()).count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueLike("stringVar", "%ngVar%".toLowerCase()).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueLike("stringVar", "stringVar%".toLowerCase()).count()).isZero();
+    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueLike("stringVar", "%ngVar".toLowerCase()).count()).isZero();
+    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueLike("stringVar", "%ngVar%".toLowerCase()).count()).isZero();
 
-    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueLike("stringVar", "stringVal".toLowerCase()).count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueLike("nonExistingVar", "stringVal%".toLowerCase()).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueLike("stringVar", "stringVal".toLowerCase()).count()).isZero();
+    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueLike("nonExistingVar", "stringVal%".toLowerCase()).count()).isZero();
     var taskQuery = taskService.createTaskQuery();
 
     // test with null value
@@ -1309,23 +1320,23 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     // test compare methods with numeric values
     assertThat(taskQuery.taskVariableValueGreaterThan("numericVar", 928373).count()).isEqualTo(1);
-    assertThat(taskQuery.taskVariableValueGreaterThan("numericVar", 928374).count()).isEqualTo(0);
-    assertThat(taskQuery.taskVariableValueGreaterThan("numericVar", 928375).count()).isEqualTo(0);
+    assertThat(taskQuery.taskVariableValueGreaterThan("numericVar", 928374).count()).isZero();
+    assertThat(taskQuery.taskVariableValueGreaterThan("numericVar", 928375).count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
     assertThat(taskQuery.taskVariableValueGreaterThanOrEquals("numericVar", 928373).count()).isEqualTo(1);
     assertThat(taskQuery.taskVariableValueGreaterThanOrEquals("numericVar", 928374).count()).isEqualTo(1);
-    assertThat(taskQuery.taskVariableValueGreaterThanOrEquals("numericVar", 928375).count()).isEqualTo(0);
+    assertThat(taskQuery.taskVariableValueGreaterThanOrEquals("numericVar", 928375).count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
     assertThat(taskQuery.taskVariableValueLessThan("numericVar", 928375).count()).isEqualTo(1);
-    assertThat(taskQuery.taskVariableValueLessThan("numericVar", 928374).count()).isEqualTo(0);
-    assertThat(taskQuery.taskVariableValueLessThan("numericVar", 928373).count()).isEqualTo(0);
+    assertThat(taskQuery.taskVariableValueLessThan("numericVar", 928374).count()).isZero();
+    assertThat(taskQuery.taskVariableValueLessThan("numericVar", 928373).count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
     assertThat(taskQuery.taskVariableValueLessThanOrEquals("numericVar", 928375).count()).isEqualTo(1);
     assertThat(taskQuery.taskVariableValueLessThanOrEquals("numericVar", 928374).count()).isEqualTo(1);
-    assertThat(taskQuery.taskVariableValueLessThanOrEquals("numericVar", 928373).count()).isEqualTo(0);
+    assertThat(taskQuery.taskVariableValueLessThanOrEquals("numericVar", 928373).count()).isZero();
 
     // test compare methods with date values
     Date before = new GregorianCalendar(2014, 2, 2, 2, 2, 1).getTime();
@@ -1333,44 +1344,44 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     taskQuery = taskService.createTaskQuery();
     assertThat(taskQuery.taskVariableValueGreaterThan("dateVar", before).count()).isEqualTo(1);
-    assertThat(taskQuery.taskVariableValueGreaterThan("dateVar", date).count()).isEqualTo(0);
-    assertThat(taskQuery.taskVariableValueGreaterThan("dateVar", after).count()).isEqualTo(0);
+    assertThat(taskQuery.taskVariableValueGreaterThan("dateVar", date).count()).isZero();
+    assertThat(taskQuery.taskVariableValueGreaterThan("dateVar", after).count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
     assertThat(taskQuery.taskVariableValueGreaterThanOrEquals("dateVar", before).count()).isEqualTo(1);
     assertThat(taskQuery.taskVariableValueGreaterThanOrEquals("dateVar", date).count()).isEqualTo(1);
-    assertThat(taskQuery.taskVariableValueGreaterThanOrEquals("dateVar", after).count()).isEqualTo(0);
+    assertThat(taskQuery.taskVariableValueGreaterThanOrEquals("dateVar", after).count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
     assertThat(taskQuery.taskVariableValueLessThan("dateVar", after).count()).isEqualTo(1);
-    assertThat(taskQuery.taskVariableValueLessThan("dateVar", date).count()).isEqualTo(0);
-    assertThat(taskQuery.taskVariableValueLessThan("dateVar", before).count()).isEqualTo(0);
+    assertThat(taskQuery.taskVariableValueLessThan("dateVar", date).count()).isZero();
+    assertThat(taskQuery.taskVariableValueLessThan("dateVar", before).count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
     assertThat(taskQuery.taskVariableValueLessThanOrEquals("dateVar", after).count()).isEqualTo(1);
     assertThat(taskQuery.taskVariableValueLessThanOrEquals("dateVar", date).count()).isEqualTo(1);
-    assertThat(taskQuery.taskVariableValueLessThanOrEquals("dateVar", before).count()).isEqualTo(0);
+    assertThat(taskQuery.taskVariableValueLessThanOrEquals("dateVar", before).count()).isZero();
 
     //test with string values
     taskQuery = taskService.createTaskQuery();
     assertThat(taskQuery.taskVariableValueGreaterThan("stringVar", "aa").count()).isEqualTo(1);
-    assertThat(taskQuery.taskVariableValueGreaterThan("stringVar", "ab").count()).isEqualTo(0);
-    assertThat(taskQuery.taskVariableValueGreaterThan("stringVar", "ba").count()).isEqualTo(0);
+    assertThat(taskQuery.taskVariableValueGreaterThan("stringVar", "ab").count()).isZero();
+    assertThat(taskQuery.taskVariableValueGreaterThan("stringVar", "ba").count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
     assertThat(taskQuery.taskVariableValueGreaterThanOrEquals("stringVar", "aa").count()).isEqualTo(1);
     assertThat(taskQuery.taskVariableValueGreaterThanOrEquals("stringVar", "ab").count()).isEqualTo(1);
-    assertThat(taskQuery.taskVariableValueGreaterThanOrEquals("stringVar", "ba").count()).isEqualTo(0);
+    assertThat(taskQuery.taskVariableValueGreaterThanOrEquals("stringVar", "ba").count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
     assertThat(taskQuery.taskVariableValueLessThan("stringVar", "ba").count()).isEqualTo(1);
-    assertThat(taskQuery.taskVariableValueLessThan("stringVar", "ab").count()).isEqualTo(0);
-    assertThat(taskQuery.taskVariableValueLessThan("stringVar", "aa").count()).isEqualTo(0);
+    assertThat(taskQuery.taskVariableValueLessThan("stringVar", "ab").count()).isZero();
+    assertThat(taskQuery.taskVariableValueLessThan("stringVar", "aa").count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
     assertThat(taskQuery.taskVariableValueLessThanOrEquals("stringVar", "ba").count()).isEqualTo(1);
     assertThat(taskQuery.taskVariableValueLessThanOrEquals("stringVar", "ab").count()).isEqualTo(1);
-    assertThat(taskQuery.taskVariableValueLessThanOrEquals("stringVar", "aa").count()).isEqualTo(0);
+    assertThat(taskQuery.taskVariableValueLessThanOrEquals("stringVar", "aa").count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
     // test with null value
@@ -1410,7 +1421,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     } catch (final ProcessEngineException e) {/*OK*/}
 
     // test non existing variable
-    assertThat(taskQuery.taskVariableValueLessThanOrEquals("nonExisting", 123).count()).isEqualTo(0);
+    assertThat(taskQuery.taskVariableValueLessThanOrEquals("nonExisting", 123).count()).isZero();
   }
 
   @Deployment
@@ -1439,24 +1450,24 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(taskService.createTaskQuery().processVariableValueEquals("nullVar", null).count()).isEqualTo(1);
 
     // Test query for other values on existing variables
-    assertThat(taskService.createTaskQuery().processVariableValueEquals("longVar", 999L).count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().processVariableValueEquals("shortVar", (short) 999).count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().processVariableValueEquals("integerVar", 999).count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().processVariableValueEquals("stringVar", "999").count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().processVariableValueEquals("booleanVar", false).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().processVariableValueEquals("longVar", 999L).count()).isZero();
+    assertThat(taskService.createTaskQuery().processVariableValueEquals("shortVar", (short) 999).count()).isZero();
+    assertThat(taskService.createTaskQuery().processVariableValueEquals("integerVar", 999).count()).isZero();
+    assertThat(taskService.createTaskQuery().processVariableValueEquals("stringVar", "999").count()).isZero();
+    assertThat(taskService.createTaskQuery().processVariableValueEquals("booleanVar", false).count()).isZero();
     Calendar otherDate = Calendar.getInstance();
     otherDate.add(Calendar.YEAR, 1);
-    assertThat(taskService.createTaskQuery().processVariableValueEquals("dateVar", otherDate.getTime()).count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().processVariableValueEquals("nullVar", "999").count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().processVariableValueEquals("dateVar", otherDate.getTime()).count()).isZero();
+    assertThat(taskService.createTaskQuery().processVariableValueEquals("nullVar", "999").count()).isZero();
 
     // Test querying for task variables don't match the process-variables
-    assertThat(taskService.createTaskQuery().taskVariableValueEquals("longVar", 928374L).count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().taskVariableValueEquals("shortVar", (short) 123).count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().taskVariableValueEquals("integerVar", 1234).count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().taskVariableValueEquals("stringVar", "stringValue").count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().taskVariableValueEquals("booleanVar", true).count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().taskVariableValueEquals("dateVar", date).count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().taskVariableValueEquals("nullVar", null).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().taskVariableValueEquals("longVar", 928374L).count()).isZero();
+    assertThat(taskService.createTaskQuery().taskVariableValueEquals("shortVar", (short) 123).count()).isZero();
+    assertThat(taskService.createTaskQuery().taskVariableValueEquals("integerVar", 1234).count()).isZero();
+    assertThat(taskService.createTaskQuery().taskVariableValueEquals("stringVar", "stringValue").count()).isZero();
+    assertThat(taskService.createTaskQuery().taskVariableValueEquals("booleanVar", true).count()).isZero();
+    assertThat(taskService.createTaskQuery().taskVariableValueEquals("dateVar", date).count()).isZero();
+    assertThat(taskService.createTaskQuery().taskVariableValueEquals("nullVar", null).count()).isZero();
 
     // Test querying for task variables not equals
     assertThat(taskService.createTaskQuery().processVariableValueNotEquals("longVar", 999L).count()).isEqualTo(1);
@@ -1466,7 +1477,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(taskService.createTaskQuery().processVariableValueNotEquals("booleanVar", false).count()).isEqualTo(1);
 
     // and query for the existing variable with NOT should result in nothing found:
-    assertThat(taskService.createTaskQuery().processVariableValueNotEquals("longVar", 928374L).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().processVariableValueNotEquals("longVar", 928374L).count()).isZero();
 
     // Test combination of task-variable and process-variable
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -1496,7 +1507,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     // query for case-insensitive variable name should only return a result if case-insensitive search is used
     assertThat(taskService.createTaskQuery().matchVariableNamesIgnoreCase().processVariableValueEquals(variableName.toLowerCase(), variableValue).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().processVariableValueEquals(variableName.toLowerCase(), variableValue).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().processVariableValueEquals(variableName.toLowerCase(), variableValue).count()).isZero();
 
     // query should treat all variables case-insensitively, even when flag is set after variable
     assertThat(taskService.createTaskQuery().processVariableValueEquals(variableName.toLowerCase(), variableValue).matchVariableNamesIgnoreCase().count()).isEqualTo(1);
@@ -1517,20 +1528,20 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueEquals(variableName, variableValue.toLowerCase()).count()).isEqualTo(1);
 
     // query for non existing variable should return zero results
-    assertThat(taskService.createTaskQuery().processVariableValueEquals("nonExistentVariable", variableValue.toLowerCase()).count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueEquals("nonExistentVariable", variableValue.toLowerCase()).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().processVariableValueEquals("nonExistentVariable", variableValue.toLowerCase()).count()).isZero();
+    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueEquals("nonExistentVariable", variableValue.toLowerCase()).count()).isZero();
 
     // query for existing variable with different value should return zero results
-    assertThat(taskService.createTaskQuery().processVariableValueEquals(variableName, "nonExistentValue").count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueEquals(variableName, "nonExistentValue".toLowerCase()).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().processVariableValueEquals(variableName, "nonExistentValue").count()).isZero();
+    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueEquals(variableName, "nonExistentValue".toLowerCase()).count()).isZero();
 
     // query for case-insensitive variable value should only return a result when case-insensitive search is used
-    assertThat(taskService.createTaskQuery().processVariableValueEquals(variableName, variableValue.toLowerCase()).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().processVariableValueEquals(variableName, variableValue.toLowerCase()).count()).isZero();
     assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueEquals(variableName, variableValue.toLowerCase()).count()).isEqualTo(1);
 
     // query for case-insensitive variable with not equals operator should only return a result when case-sensitive search is used
     assertThat(taskService.createTaskQuery().processVariableValueNotEquals(variableName, variableValue.toLowerCase()).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotEquals(variableName, variableValue.toLowerCase()).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotEquals(variableName, variableValue.toLowerCase()).count()).isZero();
   }
 
   @Deployment(resources="org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessVariableValueEquals.bpmn20.xml")
@@ -1545,12 +1556,12 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(taskService.createTaskQuery().processVariableValueLike("stringVar", "%ngValue").count()).isEqualTo(1);
     assertThat(taskService.createTaskQuery().processVariableValueLike("stringVar", "%ngVal%").count()).isEqualTo(1);
 
-    assertThat(taskService.createTaskQuery().processVariableValueLike("stringVar", "stringVar%").count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().processVariableValueLike("stringVar", "%ngVar").count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().processVariableValueLike("stringVar", "%ngVar%").count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().processVariableValueLike("stringVar", "stringVar%").count()).isZero();
+    assertThat(taskService.createTaskQuery().processVariableValueLike("stringVar", "%ngVar").count()).isZero();
+    assertThat(taskService.createTaskQuery().processVariableValueLike("stringVar", "%ngVar%").count()).isZero();
 
-    assertThat(taskService.createTaskQuery().processVariableValueLike("stringVar", "stringVal").count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().processVariableValueLike("nonExistingVar", "string%").count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().processVariableValueLike("stringVar", "stringVal").count()).isZero();
+    assertThat(taskService.createTaskQuery().processVariableValueLike("nonExistingVar", "string%").count()).isZero();
     var taskQuery = taskService.createTaskQuery();
 
     // test with null value
@@ -1568,17 +1579,17 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     variables.put("stringVar", "stringValue");
     runtimeService.startProcessInstanceByKey("oneTaskProcess", variables);
 
-    assertThat(taskService.createTaskQuery().processVariableValueLike("stringVar", "stringVal%".toLowerCase()).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().processVariableValueLike("stringVar", "stringVal%".toLowerCase()).count()).isZero();
     assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", "stringVal%".toLowerCase()).count()).isEqualTo(1);
     assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", "%ngValue".toLowerCase()).count()).isEqualTo(1);
     assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", "%ngVal%".toLowerCase()).count()).isEqualTo(1);
 
-    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", "stringVar%".toLowerCase()).count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", "%ngVar".toLowerCase()).count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", "%ngVar%".toLowerCase()).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", "stringVar%".toLowerCase()).count()).isZero();
+    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", "%ngVar".toLowerCase()).count()).isZero();
+    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", "%ngVar%".toLowerCase()).count()).isZero();
 
-    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", "stringVal".toLowerCase()).count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("nonExistingVar", "stringVal%".toLowerCase()).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", "stringVal".toLowerCase()).count()).isZero();
+    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("nonExistingVar", "stringVal%".toLowerCase()).count()).isZero();
     var taskQuery = taskService.createTaskQuery().matchVariableValuesIgnoreCase();
 
     // test with null value
@@ -1597,9 +1608,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("oneTaskProcess", variables);
 
     var taskQuery1 = taskService.createTaskQuery();
-    assertThat(taskQuery1.processVariableValueNotLike("stringVar", "stringVal%").count()).isEqualTo(0);
-    assertThat(taskQuery1.processVariableValueNotLike("stringVar", "%ngValue").count()).isEqualTo(0);
-    assertThat(taskQuery1.processVariableValueNotLike("stringVar", "%ngVal%").count()).isEqualTo(0);
+    assertThat(taskQuery1.processVariableValueNotLike("stringVar", "stringVal%").count()).isZero();
+    assertThat(taskQuery1.processVariableValueNotLike("stringVar", "%ngValue").count()).isZero();
+    assertThat(taskQuery1.processVariableValueNotLike("stringVar", "%ngVal%").count()).isZero();
 
     var taskQuery2 = taskService.createTaskQuery();
     assertThat(taskQuery2.processVariableValueNotLike("stringVar", "stringVar%").count()).isEqualTo(1);
@@ -1608,7 +1619,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     var taskQuery3 = taskService.createTaskQuery();
     assertThat(taskQuery3.processVariableValueNotLike("stringVar", "stringVal").count()).isEqualTo(1);
-    assertThat(taskQuery3.processVariableValueNotLike("nonExistingVar", "string%").count()).isEqualTo(0);
+    assertThat(taskQuery3.processVariableValueNotLike("nonExistingVar", "string%").count()).isZero();
 
     // test with null value
     var taskQuery4 = taskService.createTaskQuery();
@@ -1625,16 +1636,16 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("oneTaskProcess", variables);
 
     assertThat(taskService.createTaskQuery().processVariableValueNotLike("stringVar", "stringVal%".toLowerCase()).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "stringVal%".toLowerCase()).count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "%ngValue".toLowerCase()).count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "%ngVal%".toLowerCase()).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "stringVal%".toLowerCase()).count()).isZero();
+    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "%ngValue".toLowerCase()).count()).isZero();
+    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "%ngVal%".toLowerCase()).count()).isZero();
 
     assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "stringVar%".toLowerCase()).count()).isEqualTo(1);
     assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "%ngVar".toLowerCase()).count()).isEqualTo(1);
     assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "%ngVar%".toLowerCase()).count()).isEqualTo(1);
 
     assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "stringVal".toLowerCase()).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("nonExistingVar", "stringVal%".toLowerCase()).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("nonExistingVar", "stringVal%".toLowerCase()).count()).isZero();
 
     // test with null value
     var taskQuery = taskService.createTaskQuery().matchVariableValuesIgnoreCase();
@@ -1658,23 +1669,23 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     // test compare methods with numeric values
     var taskQuery = taskService.createTaskQuery();
     assertThat(taskQuery.processVariableValueGreaterThan("numericVar", 928373).count()).isEqualTo(1);
-    assertThat(taskQuery.processVariableValueGreaterThan("numericVar", 928374).count()).isEqualTo(0);
-    assertThat(taskQuery.processVariableValueGreaterThan("numericVar", 928375).count()).isEqualTo(0);
+    assertThat(taskQuery.processVariableValueGreaterThan("numericVar", 928374).count()).isZero();
+    assertThat(taskQuery.processVariableValueGreaterThan("numericVar", 928375).count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
     assertThat(taskQuery.processVariableValueGreaterThanOrEquals("numericVar", 928373).count()).isEqualTo(1);
     assertThat(taskQuery.processVariableValueGreaterThanOrEquals("numericVar", 928374).count()).isEqualTo(1);
-    assertThat(taskQuery.processVariableValueGreaterThanOrEquals("numericVar", 928375).count()).isEqualTo(0);
+    assertThat(taskQuery.processVariableValueGreaterThanOrEquals("numericVar", 928375).count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
     assertThat(taskQuery.processVariableValueLessThan("numericVar", 928375).count()).isEqualTo(1);
-    assertThat(taskQuery.processVariableValueLessThan("numericVar", 928374).count()).isEqualTo(0);
-    assertThat(taskQuery.processVariableValueLessThan("numericVar", 928373).count()).isEqualTo(0);
+    assertThat(taskQuery.processVariableValueLessThan("numericVar", 928374).count()).isZero();
+    assertThat(taskQuery.processVariableValueLessThan("numericVar", 928373).count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
     assertThat(taskQuery.processVariableValueLessThanOrEquals("numericVar", 928375).count()).isEqualTo(1);
     assertThat(taskQuery.processVariableValueLessThanOrEquals("numericVar", 928374).count()).isEqualTo(1);
-    assertThat(taskQuery.processVariableValueLessThanOrEquals("numericVar", 928373).count()).isEqualTo(0);
+    assertThat(taskQuery.processVariableValueLessThanOrEquals("numericVar", 928373).count()).isZero();
 
     // test compare methods with date values
     Date before = new GregorianCalendar(2014, 2, 2, 2, 2, 1).getTime();
@@ -1682,44 +1693,44 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     taskQuery = taskService.createTaskQuery();
     assertThat(taskQuery.processVariableValueGreaterThan("dateVar", before).count()).isEqualTo(1);
-    assertThat(taskQuery.processVariableValueGreaterThan("dateVar", date).count()).isEqualTo(0);
-    assertThat(taskQuery.processVariableValueGreaterThan("dateVar", after).count()).isEqualTo(0);
+    assertThat(taskQuery.processVariableValueGreaterThan("dateVar", date).count()).isZero();
+    assertThat(taskQuery.processVariableValueGreaterThan("dateVar", after).count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
     assertThat(taskQuery.processVariableValueGreaterThanOrEquals("dateVar", before).count()).isEqualTo(1);
     assertThat(taskQuery.processVariableValueGreaterThanOrEquals("dateVar", date).count()).isEqualTo(1);
-    assertThat(taskQuery.processVariableValueGreaterThanOrEquals("dateVar", after).count()).isEqualTo(0);
+    assertThat(taskQuery.processVariableValueGreaterThanOrEquals("dateVar", after).count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
     assertThat(taskQuery.processVariableValueLessThan("dateVar", after).count()).isEqualTo(1);
-    assertThat(taskQuery.processVariableValueLessThan("dateVar", date).count()).isEqualTo(0);
-    assertThat(taskQuery.processVariableValueLessThan("dateVar", before).count()).isEqualTo(0);
+    assertThat(taskQuery.processVariableValueLessThan("dateVar", date).count()).isZero();
+    assertThat(taskQuery.processVariableValueLessThan("dateVar", before).count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
     assertThat(taskQuery.processVariableValueLessThanOrEquals("dateVar", after).count()).isEqualTo(1);
     assertThat(taskQuery.processVariableValueLessThanOrEquals("dateVar", date).count()).isEqualTo(1);
-    assertThat(taskQuery.processVariableValueLessThanOrEquals("dateVar", before).count()).isEqualTo(0);
+    assertThat(taskQuery.processVariableValueLessThanOrEquals("dateVar", before).count()).isZero();
 
     //test with string values
     taskQuery = taskService.createTaskQuery();
     assertThat(taskQuery.processVariableValueGreaterThan("stringVar", "aa").count()).isEqualTo(1);
-    assertThat(taskQuery.processVariableValueGreaterThan("stringVar", "ab").count()).isEqualTo(0);
-    assertThat(taskQuery.processVariableValueGreaterThan("stringVar", "ba").count()).isEqualTo(0);
+    assertThat(taskQuery.processVariableValueGreaterThan("stringVar", "ab").count()).isZero();
+    assertThat(taskQuery.processVariableValueGreaterThan("stringVar", "ba").count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
     assertThat(taskQuery.processVariableValueGreaterThanOrEquals("stringVar", "aa").count()).isEqualTo(1);
     assertThat(taskQuery.processVariableValueGreaterThanOrEquals("stringVar", "ab").count()).isEqualTo(1);
-    assertThat(taskQuery.processVariableValueGreaterThanOrEquals("stringVar", "ba").count()).isEqualTo(0);
+    assertThat(taskQuery.processVariableValueGreaterThanOrEquals("stringVar", "ba").count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
     assertThat(taskQuery.processVariableValueLessThan("stringVar", "ba").count()).isEqualTo(1);
-    assertThat(taskQuery.processVariableValueLessThan("stringVar", "ab").count()).isEqualTo(0);
-    assertThat(taskQuery.processVariableValueLessThan("stringVar", "aa").count()).isEqualTo(0);
+    assertThat(taskQuery.processVariableValueLessThan("stringVar", "ab").count()).isZero();
+    assertThat(taskQuery.processVariableValueLessThan("stringVar", "aa").count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
     assertThat(taskQuery.processVariableValueLessThanOrEquals("stringVar", "ba").count()).isEqualTo(1);
     assertThat(taskQuery.processVariableValueLessThanOrEquals("stringVar", "ab").count()).isEqualTo(1);
-    assertThat(taskQuery.processVariableValueLessThanOrEquals("stringVar", "aa").count()).isEqualTo(0);
+    assertThat(taskQuery.processVariableValueLessThanOrEquals("stringVar", "aa").count()).isZero();
 
     taskQuery = taskService.createTaskQuery();
     // test with null value
@@ -1759,7 +1770,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     } catch (final ProcessEngineException e) {/*OK*/}
 
     // test non existing variable
-    assertThat(taskQuery.processVariableValueLessThanOrEquals("nonExisting", 123).count()).isEqualTo(0);
+    assertThat(taskQuery.processVariableValueLessThanOrEquals("nonExisting", 123).count()).isZero();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
@@ -1841,7 +1852,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(taskService.createTaskQuery().processVariableValueNotEquals("var", Variables.numberValue(123)).count()).isEqualTo(4);
     assertThat(taskService.createTaskQuery().processVariableValueGreaterThan("var", Variables.numberValue(123)).count()).isEqualTo(1);
     assertThat(taskService.createTaskQuery().processVariableValueGreaterThanOrEquals("var", Variables.numberValue(123)).count()).isEqualTo(5);
-    assertThat(taskService.createTaskQuery().processVariableValueLessThan("var", Variables.numberValue(123)).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().processVariableValueLessThan("var", Variables.numberValue(123)).count()).isZero();
     assertThat(taskService.createTaskQuery().processVariableValueLessThanOrEquals("var", Variables.numberValue(123)).count()).isEqualTo(4);
   }
 
@@ -1909,13 +1920,13 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
         Variables.createVariables().putValue("var", 42).putValue("var2", 52.4d));
 
     // querying by 42.4 should not match the integer variable 42
-    assertThat(taskService.createTaskQuery().processVariableValueEquals("var", Variables.numberValue(42.4d)).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().processVariableValueEquals("var", Variables.numberValue(42.4d)).count()).isZero();
 
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Collections.singletonMap("var", 42.4d));
 
     // querying by 52 should not find the double variable 52.4
-    assertThat(taskService.createTaskQuery().processVariableValueEquals("var", Variables.numberValue(52)).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().processVariableValueEquals("var", Variables.numberValue(52)).count()).isZero();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
@@ -1927,7 +1938,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(tasks).hasSize(1);
     assertThat(tasks.get(0).getProcessInstanceId()).isEqualTo(processInstance.getId());
 
-    assertThat(taskService.createTaskQuery().processDefinitionId("unexisting").count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().processDefinitionId("unexisting").count()).isZero();
   }
 
 
@@ -1940,7 +1951,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(tasks).hasSize(1);
     assertThat(tasks.get(0).getProcessInstanceId()).isEqualTo(processInstance.getId());
 
-    assertThat(taskService.createTaskQuery().processDefinitionKey("unexisting").count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().processDefinitionKey("unexisting").count()).isZero();
   }
 
   @Deployment(resources = {
@@ -1956,8 +1967,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     // 1 task should be found with oneTaskProcess
     List<Task> tasks = taskService.createTaskQuery().processDefinitionKeyIn("oneTaskProcess").list();
-    assertThat(tasks).isNotNull();
-    assertThat(tasks).hasSize(1);
+    assertThat(tasks)
+            .isNotNull()
+            .hasSize(1);
 
     assertThat(tasks.get(0).getTaskDefinitionKey()).isEqualTo("theTask");
 
@@ -1965,8 +1977,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     tasks = taskService.createTaskQuery()
       .processDefinitionKeyIn("oneTaskProcess", "taskDefinitionKeyProcess")
       .list();
-    assertThat(tasks).isNotNull();
-    assertThat(tasks).hasSize(3);
+    assertThat(tasks)
+            .isNotNull()
+            .hasSize(3);
 
     Set<String> keysFound = new HashSet<>();
     for (Task task : tasks) {
@@ -1978,8 +1991,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     // 1 Tasks should be found with oneTaskProcess,and NonExistingKey
     tasks = taskService.createTaskQuery().processDefinitionKeyIn("oneTaskProcess", "NonExistingKey").orderByTaskName().asc().list();
-    assertThat(tasks).isNotNull();
-    assertThat(tasks).hasSize(1);
+    assertThat(tasks)
+            .isNotNull()
+            .hasSize(1);
 
     assertThat(tasks.get(0).getTaskDefinitionKey()).isEqualTo("theTask");
 
@@ -2001,7 +2015,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(tasks).hasSize(1);
     assertThat(tasks.get(0).getProcessInstanceId()).isEqualTo(processInstance.getId());
 
-    assertThat(taskService.createTaskQuery().processDefinitionName("unexisting").count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().processDefinitionName("unexisting").count()).isZero();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
@@ -2013,8 +2027,8 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(tasks).hasSize(1);
     assertThat(tasks.get(0).getProcessInstanceId()).isEqualTo(processInstance.getId());
 
-    assertThat(taskService.createTaskQuery().processDefinitionNameLike("The One Task").count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().processDefinitionNameLike("The Other Task%").count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().processDefinitionNameLike("The One Task").count()).isZero();
+    assertThat(taskService.createTaskQuery().processDefinitionNameLike("The Other Task%").count()).isZero();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
@@ -2024,7 +2038,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     assertThat(taskService.createTaskQuery().processDefinitionName("The%One%Task%Process").processInstanceBusinessKey("BUSINESS-KEY-1").list()).hasSize(1);
     assertThat(taskService.createTaskQuery().processInstanceBusinessKey("BUSINESS-KEY-1").list()).hasSize(1);
-    assertThat(taskService.createTaskQuery().processInstanceBusinessKey("NON-EXISTING").count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().processInstanceBusinessKey("NON-EXISTING").count()).isZero();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
@@ -2035,8 +2049,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     // 1 task should be found with BUSINESS-KEY-1
     List<Task> tasks = taskService.createTaskQuery().processInstanceBusinessKeyIn("BUSINESS-KEY-1").list();
-    assertThat(tasks).isNotNull();
-    assertThat(tasks).hasSize(1);
+    assertThat(tasks)
+            .isNotNull()
+            .hasSize(1);
 
     assertThat(tasks.get(0).getTaskDefinitionKey()).isEqualTo("theTask");
 
@@ -2044,8 +2059,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     tasks = taskService.createTaskQuery()
       .processInstanceBusinessKeyIn("BUSINESS-KEY-1", "BUSINESS-KEY-2")
       .list();
-    assertThat(tasks).isNotNull();
-    assertThat(tasks).hasSize(2);
+    assertThat(tasks)
+            .isNotNull()
+            .hasSize(2);
 
     for (Task task : tasks) {
       assertThat(task.getTaskDefinitionKey()).isEqualTo("theTask");
@@ -2071,8 +2087,8 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     assertThat(taskService.createTaskQuery().processDefinitionName("The%One%Task%Process").processInstanceBusinessKey("BUSINESS-KEY-1").list()).hasSize(1);
     assertThat(taskService.createTaskQuery().processInstanceBusinessKeyLike("BUSINESS-KEY%").list()).hasSize(1);
-    assertThat(taskService.createTaskQuery().processInstanceBusinessKeyLike("BUSINESS-KEY").count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().processInstanceBusinessKeyLike("BUZINESS-KEY%").count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().processInstanceBusinessKeyLike("BUSINESS-KEY").count()).isZero();
+    assertThat(taskService.createTaskQuery().processInstanceBusinessKeyLike("BUZINESS-KEY%").count()).isZero();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
@@ -2090,7 +2106,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     Calendar otherDate = Calendar.getInstance();
     otherDate.add(Calendar.YEAR, 1);
-    assertThat(taskService.createTaskQuery().dueDate(otherDate.getTime()).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().dueDate(otherDate.getTime()).count()).isZero();
 
     Calendar priorDate = Calendar.getInstance();
     priorDate.setTime(dueDate);
@@ -2122,15 +2138,15 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     oneHourLater.add(Calendar.HOUR, 1);
 
     assertThat(taskService.createTaskQuery().dueBefore(oneHourLater.getTime()).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().dueBefore(oneHourAgo.getTime()).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().dueBefore(oneHourAgo.getTime()).count()).isZero();
 
     // Update due-date to null, shouldn't show up anymore in query that matched before
     task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
     task.setDueDate(null);
     taskService.saveTask(task);
 
-    assertThat(taskService.createTaskQuery().dueBefore(oneHourLater.getTime()).count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().dueBefore(oneHourAgo.getTime()).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().dueBefore(oneHourLater.getTime()).count()).isZero();
+    assertThat(taskService.createTaskQuery().dueBefore(oneHourAgo.getTime()).count()).isZero();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
@@ -2153,15 +2169,15 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     oneHourLater.add(Calendar.HOUR, 1);
 
     assertThat(taskService.createTaskQuery().dueAfter(oneHourAgo.getTime()).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().dueAfter(oneHourLater.getTime()).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().dueAfter(oneHourLater.getTime()).count()).isZero();
 
     // Update due-date to null, shouldn't show up anymore in query that matched before
     task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
     task.setDueDate(null);
     taskService.saveTask(task);
 
-    assertThat(taskService.createTaskQuery().dueAfter(oneHourLater.getTime()).count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().dueAfter(oneHourAgo.getTime()).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().dueAfter(oneHourLater.getTime()).count()).isZero();
+    assertThat(taskService.createTaskQuery().dueAfter(oneHourAgo.getTime()).count()).isZero();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
@@ -2181,11 +2197,11 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(taskService.createTaskQuery()
         .dueAfter(oneHourAgo).dueDate(dueDate).dueBefore(oneHourLater).count()).isEqualTo(1);
     assertThat(taskService.createTaskQuery()
-        .dueAfter(oneHourLater).dueDate(dueDate).dueBefore(oneHourAgo).count()).isEqualTo(0);
+        .dueAfter(oneHourLater).dueDate(dueDate).dueBefore(oneHourAgo).count()).isZero();
     assertThat(taskService.createTaskQuery()
-        .dueAfter(oneHourLater).dueDate(dueDate).count()).isEqualTo(0);
+        .dueAfter(oneHourLater).dueDate(dueDate).count()).isZero();
     assertThat(taskService.createTaskQuery()
-        .dueDate(dueDate).dueBefore(oneHourAgo).count()).isEqualTo(0);
+        .dueDate(dueDate).dueBefore(oneHourAgo).count()).isZero();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
@@ -2260,7 +2276,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     // do not find any task instances with follow up date
-    assertThat(taskService.createTaskQuery().followUpDate(otherDate.getTime()).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().followUpDate(otherDate.getTime()).count()).isZero();
     assertThat(taskService.createTaskQuery().processInstanceId(processInstance.getId())
         // we might have tasks from other test cases - so we limit to the current PI
         .followUpBeforeOrNotExistent(otherDate.getTime()).count()).isEqualTo(1);
@@ -2278,17 +2294,17 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     otherDate.setTime(followUpDate);
 
     otherDate.add(Calendar.YEAR, 1);
-    assertThat(taskService.createTaskQuery().followUpDate(otherDate.getTime()).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().followUpDate(otherDate.getTime()).count()).isZero();
     assertThat(taskService.createTaskQuery().followUpBefore(otherDate.getTime()).count()).isEqualTo(1);
     assertThat(taskService.createTaskQuery().processInstanceId(processInstance.getId()) //
         .followUpBeforeOrNotExistent(otherDate.getTime()).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().followUpAfter(otherDate.getTime()).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().followUpAfter(otherDate.getTime()).count()).isZero();
 
     otherDate.add(Calendar.YEAR, -2);
     assertThat(taskService.createTaskQuery().followUpAfter(otherDate.getTime()).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().followUpBefore(otherDate.getTime()).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().followUpBefore(otherDate.getTime()).count()).isZero();
     assertThat(taskService.createTaskQuery().processInstanceId(processInstance.getId()) //
-        .followUpBeforeOrNotExistent(otherDate.getTime()).count()).isEqualTo(0);
+        .followUpBeforeOrNotExistent(otherDate.getTime()).count()).isZero();
 
     taskService.complete(task.getId());
   }
@@ -2310,11 +2326,11 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(taskService.createTaskQuery()
         .followUpAfter(oneHourAgo).followUpDate(dueDate).followUpBefore(oneHourLater).count()).isEqualTo(1);
     assertThat(taskService.createTaskQuery()
-        .followUpAfter(oneHourLater).followUpDate(dueDate).followUpBefore(oneHourAgo).count()).isEqualTo(0);
+        .followUpAfter(oneHourLater).followUpDate(dueDate).followUpBefore(oneHourAgo).count()).isZero();
     assertThat(taskService.createTaskQuery()
-        .followUpAfter(oneHourLater).followUpDate(dueDate).count()).isEqualTo(0);
+        .followUpAfter(oneHourLater).followUpDate(dueDate).count()).isZero();
     assertThat(taskService.createTaskQuery()
-        .followUpDate(dueDate).followUpBefore(oneHourAgo).count()).isEqualTo(0);
+        .followUpDate(dueDate).followUpBefore(oneHourAgo).count()).isZero();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
@@ -2928,7 +2944,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     // query for case-insensitive variable name should only return a result if case-insensitive search is used
     assertThat(taskService.createTaskQuery().matchVariableNamesIgnoreCase().caseInstanceVariableValueEquals(variableName.toLowerCase(), variableValue).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().caseInstanceVariableValueEquals(variableName.toLowerCase(), variableValue).count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().caseInstanceVariableValueEquals(variableName.toLowerCase(), variableValue).count()).isZero();
 
     // query should treat all variables case-insensitively, even when flag is set after variable
     assertThat(taskService.createTaskQuery().caseInstanceVariableValueEquals(variableName.toLowerCase(), variableValue).matchVariableNamesIgnoreCase().count()).isEqualTo(1);

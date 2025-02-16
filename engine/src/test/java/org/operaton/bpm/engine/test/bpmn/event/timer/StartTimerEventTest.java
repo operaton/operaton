@@ -89,7 +89,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     List<ProcessInstance> pi = runtimeService.createProcessInstanceQuery().processDefinitionKey("startTimerEventExample").list();
     assertThat(pi).hasSize(1);
 
-    assertThat(jobQuery.count()).isEqualTo(0);
+    assertThat(jobQuery.count()).isZero();
 
   }
 
@@ -107,7 +107,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     List<ProcessInstance> pi = runtimeService.createProcessInstanceQuery().processDefinitionKey("startTimerEventExample").list();
     assertThat(pi).hasSize(1);
 
-    assertThat(jobQuery.count()).isEqualTo(0);
+    assertThat(jobQuery.count()).isZero();
 
   }
 
@@ -125,7 +125,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
 
     final ProcessInstanceQuery piq = runtimeService.createProcessInstanceQuery().processDefinitionKey("startTimerEventExample");
 
-    assertThat(piq.count()).isEqualTo(0);
+    assertThat(piq.count()).isZero();
 
     moveByMinutes(5);
     executeAllJobs();
@@ -161,7 +161,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
 
     final ProcessInstanceQuery piq = runtimeService.createProcessInstanceQuery().processDefinitionKey("startTimerEventExampleCycle");
 
-    assertThat(piq.count()).isEqualTo(0);
+    assertThat(piq.count()).isZero();
 
     moveByMinutes(5);
     executeAllJobs();
@@ -175,7 +175,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     moveByMinutes(5);
     executeAllJobs();
     assertThat(piq.count()).isEqualTo(2);
-    assertThat(jobQuery.count()).isEqualTo(0);
+    assertThat(jobQuery.count()).isZero();
 
   }
 
@@ -196,7 +196,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     final ProcessInstanceQuery piq = runtimeService.createProcessInstanceQuery()
       .processDefinitionKey("startTimerEventExampleCycle");
 
-    assertThat(piq.count()).isEqualTo(0);
+    assertThat(piq.count()).isZero();
 
     moveByMinutes(5);
     executeAllJobs();
@@ -224,7 +224,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     List<ProcessInstance> pi = runtimeService.createProcessInstanceQuery().processDefinitionKey("startTimerEventExample").list();
     assertThat(pi).hasSize(1);
 
-    assertThat(jobQuery.count()).isEqualTo(0);
+    assertThat(jobQuery.count()).isZero();
   }
 
   @Deployment
@@ -234,7 +234,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     JobQuery jobQuery = managementService.createJobQuery();
     ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery().processDefinitionKey("startTimerEventExample");
     assertThat(jobQuery.count()).isEqualTo(1);
-    assertThat(processInstanceQuery.count()).isEqualTo(0);
+    assertThat(processInstanceQuery.count()).isZero();
 
     Job job = jobQuery.singleResult();
     Date oldDate = job.getDuedate();
@@ -246,7 +246,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
 
     // then
     assertThat(jobQuery.count()).isEqualTo(1);
-    assertThat(processInstanceQuery.count()).isEqualTo(0);
+    assertThat(processInstanceQuery.count()).isZero();
 
     Date newDate = jobQuery.singleResult().getDuedate();
     assertThat(newDate).isNotEqualTo(oldDate);
@@ -261,7 +261,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     List<ProcessInstance> pi = processInstanceQuery.list();
     assertThat(pi).hasSize(1);
 
-    assertThat(jobQuery.count()).isEqualTo(0);
+    assertThat(jobQuery.count()).isZero();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/timer/StartTimerEventTest.testRecalculateExpressionStartTimerEvent.bpmn20.xml")
@@ -271,7 +271,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     JobQuery jobQuery = managementService.createJobQuery();
     ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery().processDefinitionKey("startTimerEventExample");
     assertThat(jobQuery.count()).isEqualTo(1);
-    assertThat(processInstanceQuery.count()).isEqualTo(0);
+    assertThat(processInstanceQuery.count()).isZero();
 
     // when
     moveByMinutes(1);
@@ -279,7 +279,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
 
     // then due date should be based on the creation time
     assertThat(jobQuery.count()).isEqualTo(1);
-    assertThat(processInstanceQuery.count()).isEqualTo(0);
+    assertThat(processInstanceQuery.count()).isZero();
 
     Job jobUpdated = jobQuery.singleResult();
     Date expectedDate = LocalDateTime.fromDateFields(jobUpdated.getCreateTime()).plusHours(2).toDate();
@@ -292,7 +292,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     List<ProcessInstance> pi = processInstanceQuery.list();
     assertThat(pi).hasSize(1);
 
-    assertThat(jobQuery.count()).isEqualTo(0);
+    assertThat(jobQuery.count()).isZero();
   }
 
   @Deployment
@@ -406,20 +406,20 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     assertThat(jobQuery.count()).isEqualTo(1);
     // execute existing timer job
     managementService.executeJob(managementService.createJobQuery().list().get(0).getId());
-    assertThat(jobQuery.count()).isEqualTo(0);
+    assertThat(jobQuery.count()).isZero();
 
     assertThat(DummyServiceTask.wasExecuted).isEqualTo(true);
 
     // check if user task doesn't exist because timer start event is
     // interrupting
-    assertThat(taskQuery.count()).isEqualTo(0);
+    assertThat(taskQuery.count()).isZero();
 
     // check if execution doesn't exist because timer start event is
     // interrupting
-    assertThat(executionQuery.count()).isEqualTo(0);
+    assertThat(executionQuery.count()).isZero();
 
     ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId());
-    assertThat(processInstanceQuery.count()).isEqualTo(0);
+    assertThat(processInstanceQuery.count()).isZero();
   }
 
   @Test
@@ -459,7 +459,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     assertThat(jobQuery.count()).isEqualTo(1);
     // execute existing job timer
     managementService.executeJob(managementService.createJobQuery().list().get(0).getId());
-    assertThat(jobQuery.count()).isEqualTo(0);
+    assertThat(jobQuery.count()).isZero();
 
     assertThat(DummyServiceTask.wasExecuted).isEqualTo(true);
 
@@ -495,20 +495,20 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     assertThat(jobQuery.count()).isEqualTo(1);
     // execute existing timer job
     managementService.executeJob(managementService.createJobQuery().list().get(0).getId());
-    assertThat(jobQuery.count()).isEqualTo(0);
+    assertThat(jobQuery.count()).isZero();
 
     assertThat(DummyServiceTask.wasExecuted).isEqualTo(true);
 
     // check if user task doesn't exist because timer start event is
     // interrupting
-    assertThat(taskQuery.count()).isEqualTo(0);
+    assertThat(taskQuery.count()).isZero();
 
     // check if execution doesn't exist because timer start event is
     // interrupting
-    assertThat(executionQuery.count()).isEqualTo(0);
+    assertThat(executionQuery.count()).isZero();
 
     ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId());
-    assertThat(processInstanceQuery.count()).isEqualTo(0);
+    assertThat(processInstanceQuery.count()).isZero();
 
   }
 
@@ -532,7 +532,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     assertThat(jobQuery.count()).isEqualTo(1);
     // execute existing timer job
     managementService.executeJob(jobQuery.list().get(0).getId());
-    assertThat(jobQuery.count()).isEqualTo(0);
+    assertThat(jobQuery.count()).isZero();
 
     assertThat(DummyServiceTask.wasExecuted).isEqualTo(true);
 
@@ -569,20 +569,20 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     List<Job> orderedJobList = jobQuery.orderByJobDuedate().asc().list();
     // execute first timer job
     managementService.executeJob(orderedJobList.get(0).getId());
-    assertThat(jobQuery.count()).isEqualTo(0);
+    assertThat(jobQuery.count()).isZero();
 
     // check if user task doesn't exist because timer start event is
     // interrupting
-    assertThat(taskQuery.count()).isEqualTo(0);
+    assertThat(taskQuery.count()).isZero();
 
     // check if execution doesn't exist because timer start event is
     // interrupting
-    assertThat(executionQuery.count()).isEqualTo(0);
+    assertThat(executionQuery.count()).isZero();
 
     // check if process instance doesn't exist because timer start event is
     // interrupting
     ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId());
-    assertThat(processInstanceQuery.count()).isEqualTo(0);
+    assertThat(processInstanceQuery.count()).isZero();
 
   }
 
@@ -624,7 +624,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
 
     // execute second timer job
     managementService.executeJob(orderedJobList.get(1).getId());
-    assertThat(jobQuery.count()).isEqualTo(0);
+    assertThat(jobQuery.count()).isZero();
 
     assertThat(DummyServiceTask.wasExecuted).isEqualTo(true);
 
@@ -656,7 +656,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     List<Job> orderedJobList = jobQuery.orderByJobDuedate().asc().list();
     // execute first timer job
     managementService.executeJob(orderedJobList.get(0).getId());
-    assertThat(jobQuery.count()).isEqualTo(0);
+    assertThat(jobQuery.count()).isZero();
 
     // check if user task of event subprocess named "subProcess" exists
     assertThat(taskQuery.count()).isEqualTo(1);
@@ -692,20 +692,20 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     List<Job> orderedJobList = jobQuery.orderByJobDuedate().asc().list();
     // execute first timer job
     managementService.executeJob(orderedJobList.get(0).getId());
-    assertThat(jobQuery.count()).isEqualTo(0);
+    assertThat(jobQuery.count()).isZero();
 
     // check if user task doesn't exist because timer start event is
     // interrupting
-    assertThat(taskQuery.count()).isEqualTo(0);
+    assertThat(taskQuery.count()).isZero();
 
     // check if execution doesn't exist because timer start event is
     // interrupting
-    assertThat(executionQuery.count()).isEqualTo(0);
+    assertThat(executionQuery.count()).isZero();
 
     // check if process instance doesn't exist because timer start event is
     // interrupting
     ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId());
-    assertThat(processInstanceQuery.count()).isEqualTo(0);
+    assertThat(processInstanceQuery.count()).isZero();
 
   }
 
@@ -748,7 +748,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
 
     // execute second timer job
     managementService.executeJob(orderedJobList.get(1).getId());
-    assertThat(jobQuery.count()).isEqualTo(0);
+    assertThat(jobQuery.count()).isZero();
 
     assertThat(DummyServiceTask.wasExecuted).isEqualTo(true);
 
@@ -796,11 +796,11 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     assertThat(DummyServiceTask.wasExecuted).isEqualTo(true);
 
     // multiInstance loop finished
-    assertThat(jobQuery.count()).isEqualTo(0);
+    assertThat(jobQuery.count()).isZero();
 
     // check if user task doesn't exist because timer start event is
     // interrupting
-    assertThat(taskQuery.count()).isEqualTo(0);
+    assertThat(taskQuery.count()).isZero();
 
     // check if process instance doesn't exist because timer start event is
     // interrupting
@@ -846,7 +846,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     assertThat(DummyServiceTask.wasExecuted).isEqualTo(true);
 
     // multiInstance loop finished
-    assertThat(jobQuery.count()).isEqualTo(0);
+    assertThat(jobQuery.count()).isZero();
 
     // check if user task doesn't exist because timer start event is
     // interrupting
@@ -887,16 +887,16 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
 
     // check if user task doesn't exist because timer start event is
     // interrupting
-    assertThat(taskQuery.count()).isEqualTo(0);
+    assertThat(taskQuery.count()).isZero();
 
     // check if execution doesn't exist because timer start event is
     // interrupting
-    assertThat(executionQuery.count()).isEqualTo(0);
+    assertThat(executionQuery.count()).isZero();
 
     // check if process instance doesn't exist because timer start event is
     // interrupting
     ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId());
-    assertThat(processInstanceQuery.count()).isEqualTo(0);
+    assertThat(processInstanceQuery.count()).isZero();
 
   }
 
@@ -926,7 +926,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
       DummyServiceTask.wasExecuted = false;
     }
 
-    assertThat(jobQuery.count()).isEqualTo(0);
+    assertThat(jobQuery.count()).isZero();
 
     // check if user task doesn't exist because timer start event is
     // interrupting
@@ -1021,8 +1021,8 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     managementService.executeJob(jobQuery.orderByJobDuedate().asc().list().get(0).getId());
 
     // after interrupting boundary timer job execution
-    assertThat(jobQuery.count()).isEqualTo(0);
-    assertThat(taskQuery.count()).isEqualTo(0);
+    assertThat(jobQuery.count()).isZero();
+    assertThat(taskQuery.count()).isZero();
 
     testRule.assertProcessEnded(processInstance.getId());
 
@@ -1066,11 +1066,11 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     managementService.executeJob(jobQuery.orderByJobDuedate().asc().list().get(0).getId());
 
     // after interrupting boundary timer job execution
-    assertThat(jobQuery.count()).isEqualTo(0);
-    assertThat(taskQuery.count()).isEqualTo(0);
-    assertThat(executionQuery.count()).isEqualTo(0);
+    assertThat(jobQuery.count()).isZero();
+    assertThat(taskQuery.count()).isZero();
+    assertThat(executionQuery.count()).isZero();
     ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId());
-    assertThat(processInstanceQuery.count()).isEqualTo(0);
+    assertThat(processInstanceQuery.count()).isZero();
 
   }
 
@@ -1157,9 +1157,9 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     managementService.executeJob(jobQuery.orderByJobDuedate().asc().list().get(0).getId());
 
     // after interrupting boundary timer job execution
-    assertThat(jobQuery.count()).isEqualTo(0);
-    assertThat(taskQuery.count()).isEqualTo(0);
-    assertThat(executionQuery.count()).isEqualTo(0);
+    assertThat(jobQuery.count()).isZero();
+    assertThat(taskQuery.count()).isZero();
+    assertThat(executionQuery.count()).isZero();
 
     testRule.assertProcessEnded(processInstance.getId());
 
@@ -1204,9 +1204,9 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     managementService.executeJob(jobQuery.orderByJobDuedate().asc().list().get(0).getId());
 
     // after interrupting boundary timer job execution
-    assertThat(jobQuery.count()).isEqualTo(0);
-    assertThat(taskQuery.count()).isEqualTo(0);
-    assertThat(executionQuery.count()).isEqualTo(0);
+    assertThat(jobQuery.count()).isZero();
+    assertThat(taskQuery.count()).isZero();
+    assertThat(executionQuery.count()).isZero();
 
     testRule.assertProcessEnded(processInstance.getId());
 
@@ -1222,9 +1222,9 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
       taskService.complete(task.getId());
     }
 
-    assertThat(jobQuery.count()).isEqualTo(0);
-    assertThat(taskQuery.count()).isEqualTo(0);
-    assertThat(executionQuery.count()).isEqualTo(0);
+    assertThat(jobQuery.count()).isZero();
+    assertThat(taskQuery.count()).isZero();
+    assertThat(executionQuery.count()).isZero();
 
     testRule.assertProcessEnded(processInstance.getId());
 
@@ -1373,7 +1373,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     assertThat(query.count()).isEqualTo(2);
 
     assertThat(managementService.createJobQuery().withException().count()).isEqualTo(1);
-    assertThat(managementService.createJobQuery().noRetriesLeft().count()).isEqualTo(0);
+    assertThat(managementService.createJobQuery().noRetriesLeft().count()).isZero();
     assertThat(managementService.createJobQuery().withRetriesLeft().count()).isEqualTo(2);
 
     // when (2)
@@ -1391,7 +1391,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     assertThat(query.count()).isEqualTo(2);
 
     assertThat(managementService.createJobQuery().withException().count()).isEqualTo(1);
-    assertThat(managementService.createJobQuery().noRetriesLeft().count()).isEqualTo(0);
+    assertThat(managementService.createJobQuery().noRetriesLeft().count()).isZero();
     assertThat(managementService.createJobQuery().withRetriesLeft().count()).isEqualTo(2);
   }
 
@@ -1627,7 +1627,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     assertThat(jobQuery.count()).isEqualTo(2);
 
     assertThat(managementService.createJobQuery().withException().count()).isEqualTo(1);
-    assertThat(managementService.createJobQuery().noRetriesLeft().count()).isEqualTo(0);
+    assertThat(managementService.createJobQuery().noRetriesLeft().count()).isZero();
     assertThat(managementService.createJobQuery().withRetriesLeft().count()).isEqualTo(2);
 
     // when (2)
@@ -1645,7 +1645,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     assertThat(jobQuery.count()).isEqualTo(2);
 
     assertThat(managementService.createJobQuery().withException().count()).isEqualTo(1);
-    assertThat(managementService.createJobQuery().noRetriesLeft().count()).isEqualTo(0);
+    assertThat(managementService.createJobQuery().noRetriesLeft().count()).isZero();
     assertThat(managementService.createJobQuery().withRetriesLeft().count()).isEqualTo(2);
   }
 
@@ -1697,7 +1697,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     createAndDeployProcessWithStartTimer();
 
     TaskQuery taskQuery = taskService.createTaskQuery().taskDefinitionKey("aTaskName");
-    assertThat(taskQuery.count()).isEqualTo(0);
+    assertThat(taskQuery.count()).isZero();
     moveByHours(1); // execute first job
     assertThat(taskQuery.count()).isEqualTo(1);
 

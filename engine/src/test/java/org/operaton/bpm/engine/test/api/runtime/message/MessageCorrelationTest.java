@@ -1098,7 +1098,7 @@ public class MessageCorrelationTest {
       .createMessageCorrelation("aMessageName")
       .correlateAll();
 
-    assertThat(runtimeService.createExecutionQuery().activityId("task").count()).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().activityId("task").count()).isZero();
 
     // correlate process instance id
     processInstance1 = runtimeService.startProcessInstanceByKey("process");

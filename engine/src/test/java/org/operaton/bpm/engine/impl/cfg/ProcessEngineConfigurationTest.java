@@ -28,6 +28,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -77,8 +78,7 @@ public class ProcessEngineConfigurationTest {
     // given
     ((PooledDataSource) engineConfiguration.getDataSource()).setDefaultTransactionIsolationLevel(Connection.TRANSACTION_READ_COMMITTED);
     // when
-    engineConfiguration.initDataSource();
-    // then no exception
+    assertThatCode(() -> engineConfiguration.initDataSource()).doesNotThrowAnyException();
   }
 
   @Test

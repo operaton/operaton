@@ -98,7 +98,7 @@ public class DatabaseTablePrefixTest {
         .deploy();
 
       assertThat(engine1.getRepositoryService().createDeploymentQuery().count()).isEqualTo(1);
-      assertThat(engine2.getRepositoryService().createDeploymentQuery().count()).isEqualTo(0);
+      assertThat(engine2.getRepositoryService().createDeploymentQuery().count()).isZero();
 
     } finally {
       engine1.close();

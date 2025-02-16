@@ -96,6 +96,7 @@ public class ConditionStartEventAuthorizationTest extends AuthorizationTest {
         .hasMessageContaining("The user with id 'test' does not have 'CREATE_INSTANCE' permission on resource 'conditionalEventProcess' of type 'ProcessDefinition'.");
   }
 
+  @SuppressWarnings("GrazieInspection")
   @Deployment(resources = { SINGLE_CONDITIONAL_XML })
   @Test
   public void testWithoutProcessInstancePermission() {

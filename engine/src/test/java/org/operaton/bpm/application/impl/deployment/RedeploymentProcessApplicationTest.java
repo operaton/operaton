@@ -159,7 +159,7 @@ public class RedeploymentProcessApplicationTest {
   @Test
   public void redeploymentShouldFailOnNullHTTLAndEnforceHistoryTimeToLiveTrue() {
     // given
-    Deployment deployment1 = null;
+    Deployment deployment1;
     Deployment deployment2 = null;
     // given
     MyEmbeddedProcessApplication application = new MyEmbeddedProcessApplication();

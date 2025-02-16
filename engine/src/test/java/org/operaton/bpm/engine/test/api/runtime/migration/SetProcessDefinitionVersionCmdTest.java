@@ -297,7 +297,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
     runtimeService.signal(execution.getId());
 
     // should be finished now
-    assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(pi.getId()).count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(pi.getId()).count()).isZero();
 
     // undeploy "manually" deployed process definition
     repositoryService.deleteDeployment(deployment.getId(), true);

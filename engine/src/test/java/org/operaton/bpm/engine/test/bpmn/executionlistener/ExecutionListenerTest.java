@@ -834,7 +834,7 @@ public class ExecutionListenerTest {
     // and completing this task ends the process instance
     taskService.complete(afterCatch.getId());
 
-    assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().count()).isZero();
     verifyActivityCanceled("throw");
   }
 
@@ -1123,7 +1123,7 @@ public class ExecutionListenerTest {
     // then
 
     // the process has ended, because the error was not caught
-    assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().count()).isZero();
 
     // the listener was only called once
     assertThat(ThrowBPMNErrorDelegate.invocations).isEqualTo(1);
@@ -1154,7 +1154,7 @@ public class ExecutionListenerTest {
     // then
 
     // the process has ended, because the error was not caught
-    assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().count()).isZero();
 
     // the listener was only called once
     assertThat(ThrowBPMNErrorDelegate.invocations).isEqualTo(1);

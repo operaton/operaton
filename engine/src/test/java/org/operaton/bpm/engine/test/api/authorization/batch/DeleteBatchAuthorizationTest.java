@@ -146,7 +146,7 @@ public class DeleteBatchAuthorizationTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      assertThat(engineRule.getManagementService().createBatchQuery().count()).isEqualTo(0);
+      assertThat(engineRule.getManagementService().createBatchQuery().count()).isZero();
 
       List<UserOperationLogEntry> userOperationLogEntries = engineRule.getHistoryService()
         .createUserOperationLogQuery()
@@ -187,8 +187,8 @@ public class DeleteBatchAuthorizationTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      assertThat(engineRule.getManagementService().createBatchQuery().count()).isEqualTo(0);
-      assertThat(engineRule.getHistoryService().createHistoricBatchQuery().count()).isEqualTo(0);
+      assertThat(engineRule.getManagementService().createBatchQuery().count()).isZero();
+      assertThat(engineRule.getHistoryService().createHistoricBatchQuery().count()).isZero();
 
       UserOperationLogQuery query = engineRule.getHistoryService()
         .createUserOperationLogQuery();

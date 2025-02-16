@@ -33,7 +33,6 @@ import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.READ_HISTORY;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -535,7 +534,7 @@ public class HistoricJobLogAuthorizationTest extends AuthorizationTest {
 
     disableAuthorization();
     batchId =
-        runtimeService.deleteProcessInstancesAsync(Arrays.asList(processInstanceId), "bar")
+        runtimeService.deleteProcessInstancesAsync(List.of(processInstanceId), "bar")
             .getId();
     enableAuthorization();
 
@@ -558,7 +557,7 @@ public class HistoricJobLogAuthorizationTest extends AuthorizationTest {
 
     disableAuthorization();
     batchId =
-        runtimeService.deleteProcessInstancesAsync(Arrays.asList(processInstanceId), "bar")
+        runtimeService.deleteProcessInstancesAsync(List.of(processInstanceId), "bar")
             .getId();
     enableAuthorization();
 

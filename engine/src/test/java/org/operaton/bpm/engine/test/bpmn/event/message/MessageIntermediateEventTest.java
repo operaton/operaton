@@ -120,8 +120,9 @@ public class MessageIntermediateEventTest {
         .messageEventSubscriptionName(messageName)
         .list();
 
-    assertThat(executions).isNotNull();
-    assertThat(executions).hasSize(2);
+    assertThat(executions)
+            .isNotNull()
+            .hasSize(2);
 
     runtimeService.messageEventReceived(messageName, executions.get(0).getId());
 

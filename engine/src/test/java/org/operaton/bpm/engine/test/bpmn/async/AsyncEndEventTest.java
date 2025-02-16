@@ -46,7 +46,7 @@ public class AsyncEndEventTest extends PluggableProcessEngineTest {
     testRule.executeAvailableJobs();
     count = runtimeService.createProcessInstanceQuery().processInstanceId(pi.getId()).count();
 
-    assertThat(runtimeService.createExecutionQuery().activityId("endEvent").active().count()).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().activityId("endEvent").active().count()).isZero();
     assertThat(count).isEqualTo(0);
   }
 
@@ -95,7 +95,7 @@ public class AsyncEndEventTest extends PluggableProcessEngineTest {
     // execute the second one
     managementService.executeJob(jobs.get(0).getId());
     // assert that we have finished our instance now
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
     if(processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_ACTIVITY) {
 

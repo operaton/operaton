@@ -67,7 +67,7 @@ public class ExternalTaskQueryByPriorityTest extends PluggableProcessEngineTest 
           Variables.createVariables().putValue("priority", i)));
     }
 
-    // when making a external task query and filtering by priority
+    // when making an external task query and filtering by priority
     // then the correct external tasks are returned
     List<ExternalTask> tasks = externalTaskService.createExternalTaskQuery().priorityLowerThanOrEquals(2).list();
     assertThat(tasks).hasSize(8);
@@ -88,11 +88,11 @@ public class ExternalTaskQueryByPriorityTest extends PluggableProcessEngineTest 
           Variables.createVariables().putValue("priority", i)));
     }
 
-    // when making a external task query and filtering by disjunctive external task priority
+    // when making an external task query and filtering by disjunctive external task priority
     // then no external task are returned
-    assertThat(externalTaskService.createExternalTaskQuery().priorityLowerThanOrEquals(2).priorityHigherThanOrEquals(3).count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().priorityLowerThanOrEquals(2).priorityHigherThanOrEquals(3).count()).isZero();
 
-    // when making a external task query and filtering by external task priority >= 2 and <= 3
+    // when making an external task query and filtering by external task priority >= 2 and <= 3
     // then two external task are returned
     assertThat(externalTaskService.createExternalTaskQuery().priorityHigherThanOrEquals(2).priorityLowerThanOrEquals(3).count()).isEqualTo(2);
   }
@@ -108,7 +108,7 @@ public class ExternalTaskQueryByPriorityTest extends PluggableProcessEngineTest 
           Variables.createVariables().putValue("priority", i)));
     }
 
-    // when making a external task query and filtering by external task priority
+    // when making an external task query and filtering by external task priority
     // then the correct external task are returned
     List<ExternalTask> tasks = externalTaskService.createExternalTaskQuery().priorityHigherThanOrEquals(2L).list();
     assertThat(tasks).hasSize(3);
@@ -135,7 +135,7 @@ public class ExternalTaskQueryByPriorityTest extends PluggableProcessEngineTest 
           Variables.createVariables().putValue("priority", i)));
     }
 
-    // when making a external task query and filtering by external task priority
+    // when making an external task query and filtering by external task priority
     // then the correct external task is returned
     ExternalTask task = externalTaskService.createExternalTaskQuery()
                                            .priorityHigherThanOrEquals(2L)

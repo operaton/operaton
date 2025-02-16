@@ -137,7 +137,7 @@ public class HistoricIdentityLinkLogTest extends PluggableProcessEngineTest {
     assertThat(query.operationType(IDENTITY_LINK_ADD).count()).isEqualTo(1);
 
     query = historyService.createHistoricIdentityLinkLogQuery();
-    assertThat(query.operationType(IDENTITY_LINK_DELETE).count()).isEqualTo(0);
+    assertThat(query.operationType(IDENTITY_LINK_DELETE).count()).isZero();
 
     query = historyService.createHistoricIdentityLinkLogQuery();
     assertThat(query.type(IdentityLinkType.ASSIGNEE).count()).isEqualTo(1);

@@ -499,7 +499,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
     assertThat(historyService
         .createUserOperationLogQuery()
         .entityType(EntityTypes.TASK)
-        .count()).isEqualTo(0);
+        .count()).isZero();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})

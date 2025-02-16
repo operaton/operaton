@@ -90,14 +90,14 @@ public class MigrationHistoricProcessInstanceTest {
 
     //when
     assertThat(sourceHistoryProcessInstanceQuery.count()).isEqualTo(1);
-    assertThat(targetHistoryProcessInstanceQuery.count()).isEqualTo(0);
+    assertThat(targetHistoryProcessInstanceQuery.count()).isZero();
     ProcessInstanceQuery sourceProcessInstanceQuery = runtimeService.createProcessInstanceQuery().processDefinitionId(sourceProcessDefinition.getId());
     runtimeService.newMigration(migrationPlan)
       .processInstanceQuery(sourceProcessInstanceQuery)
       .execute();
 
     //then
-    assertThat(sourceHistoryProcessInstanceQuery.count()).isEqualTo(0);
+    assertThat(sourceHistoryProcessInstanceQuery.count()).isZero();
     assertThat(targetHistoryProcessInstanceQuery.count()).isEqualTo(1);
 
     HistoricProcessInstance instance = targetHistoryProcessInstanceQuery.singleResult();

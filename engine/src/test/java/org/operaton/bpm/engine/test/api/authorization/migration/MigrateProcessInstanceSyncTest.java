@@ -21,8 +21,8 @@ import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationS
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resources;
@@ -137,7 +137,7 @@ public class MigrateProcessInstanceSyncTest {
       .start();
 
     engineRule.getRuntimeService().newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(Collections.singletonList(processInstance.getId()))
       .execute();
 
     // then

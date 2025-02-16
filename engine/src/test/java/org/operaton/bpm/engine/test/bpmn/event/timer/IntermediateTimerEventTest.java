@@ -54,7 +54,7 @@ public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
     ClockUtil.setCurrentTime(new Date(startTime.getTime() + ((50 * 60 * 1000) + 5000)));
     testRule.waitForJobExecutorToProcessAllJobs(5000L);
 
-    assertThat(jobQuery.count()).isEqualTo(0);
+    assertThat(jobQuery.count()).isZero();
     testRule.assertProcessEnded(pi.getProcessInstanceId());
   }
 
@@ -82,8 +82,8 @@ public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
       managementService.executeJob(job.getId());
     }
 
-    assertThat(managementService.createJobQuery().processInstanceId(pi1.getId()).count()).isEqualTo(0);
-    assertThat(managementService.createJobQuery().processInstanceId(pi2.getId()).count()).isEqualTo(0);
+    assertThat(managementService.createJobQuery().processInstanceId(pi1.getId()).count()).isZero();
+    assertThat(managementService.createJobQuery().processInstanceId(pi2.getId()).count()).isZero();
 
     testRule.assertProcessEnded(pi1.getProcessInstanceId());
     testRule.assertProcessEnded(pi2.getProcessInstanceId());
@@ -120,7 +120,7 @@ public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
     ClockUtil.setCurrentTime(new Date(firstDate.getTime() + TimeUnit.MINUTES.toMillis(16L)));
     testRule.waitForJobExecutorToProcessAllJobs(5000L);
 
-    assertThat(managementService.createJobQuery().processInstanceId(pi1.getId()).count()).isEqualTo(0);
+    assertThat(managementService.createJobQuery().processInstanceId(pi1.getId()).count()).isZero();
     testRule.assertProcessEnded(pi1.getProcessInstanceId());
   }
   
@@ -154,7 +154,7 @@ public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
     ClockUtil.setCurrentTime(new Date(firstDate.getTime() + TimeUnit.MINUTES.toMillis(16L)));
     testRule.waitForJobExecutorToProcessAllJobs(5000L);
 
-    assertThat(managementService.createJobQuery().processInstanceId(pi1.getId()).count()).isEqualTo(0);
+    assertThat(managementService.createJobQuery().processInstanceId(pi1.getId()).count()).isZero();
     testRule.assertProcessEnded(pi1.getProcessInstanceId());
   }
 
@@ -169,7 +169,7 @@ public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
     String jobId = query.singleResult().getId();
     managementService.executeJob(jobId);
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
 
     String taskId = taskService.createTaskQuery().singleResult().getId();
     taskService.complete(taskId);

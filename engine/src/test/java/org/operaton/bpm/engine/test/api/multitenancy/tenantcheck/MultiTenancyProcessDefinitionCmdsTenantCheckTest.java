@@ -272,9 +272,9 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
 
     //then exist no process instance and one definition
     identityService.clearAuthentication();
-    assertThat(engineRule.getRuntimeService().createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(engineRule.getRuntimeService().createProcessInstanceQuery().count()).isZero();
     if (processEngineConfiguration.getHistoryLevel().getId() >= HistoryLevel.HISTORY_LEVEL_ACTIVITY.getId()) {
-      assertThat(engineRule.getHistoryService().createHistoricActivityInstanceQuery().count()).isEqualTo(0);
+      assertThat(engineRule.getHistoryService().createHistoricActivityInstanceQuery().count()).isZero();
     }
     assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1L);
     assertThat(repositoryService.createProcessDefinitionQuery().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
@@ -318,9 +318,9 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
 
     //then exist no process instance and one definition, because test case deployes per default one definition
     identityService.clearAuthentication();
-    assertThat(engineRule.getRuntimeService().createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(engineRule.getRuntimeService().createProcessInstanceQuery().count()).isZero();
     if (processEngineConfiguration.getHistoryLevel().getId() >= HistoryLevel.HISTORY_LEVEL_ACTIVITY.getId()) {
-      assertThat(engineRule.getHistoryService().createHistoricActivityInstanceQuery().count()).isEqualTo(0);
+      assertThat(engineRule.getHistoryService().createHistoricActivityInstanceQuery().count()).isZero();
     }
     assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1L);
     assertThat(repositoryService.createProcessDefinitionQuery().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);

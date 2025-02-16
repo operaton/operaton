@@ -132,7 +132,7 @@ public class HistoryCleanupHistoricBatchTest {
     runHistoryCleanup();
 
     // then
-    assertThat(historyService.createHistoricBatchQuery().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricBatchQuery().count()).isZero();
   }
 
   @Test
@@ -149,8 +149,8 @@ public class HistoryCleanupHistoricBatchTest {
     runHistoryCleanup();
 
     // then
-    assertThat(historyService.createHistoricBatchQuery().count()).isEqualTo(0);
-    assertThat(historyService.createHistoricJobLogQuery().jobDefinitionConfiguration(batchId).count()).isEqualTo(0);
+    assertThat(historyService.createHistoricBatchQuery().count()).isZero();
+    assertThat(historyService.createHistoricJobLogQuery().jobDefinitionConfiguration(batchId).count()).isZero();
   }
 
   @Test
@@ -183,9 +183,9 @@ public class HistoryCleanupHistoricBatchTest {
     // when
     runHistoryCleanup();
 
-    assertThat(historyService.createHistoricBatchQuery().count()).isEqualTo(0);
-    assertThat(historyService.createHistoricJobLogQuery().jobDefinitionConfiguration(batchId).count()).isEqualTo(0);
-    assertThat(historyService.createHistoricIncidentQuery().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricBatchQuery().count()).isZero();
+    assertThat(historyService.createHistoricJobLogQuery().jobDefinitionConfiguration(batchId).count()).isZero();
+    assertThat(historyService.createHistoricIncidentQuery().count()).isZero();
     verifyByteArraysWereRemoved(byteArrayIds.toArray(new String[] {}));
   }
 
@@ -243,9 +243,9 @@ public class HistoryCleanupHistoricBatchTest {
     runHistoryCleanup();
 
     // then
-    assertThat(historyService.createHistoricBatchQuery().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricBatchQuery().count()).isZero();
     for (String batchId : batchIds) {
-      assertThat(historyService.createHistoricJobLogQuery().jobDefinitionConfiguration(batchId).count()).isEqualTo(0);
+      assertThat(historyService.createHistoricJobLogQuery().jobDefinitionConfiguration(batchId).count()).isZero();
     }
   }
 
@@ -298,7 +298,7 @@ public class HistoryCleanupHistoricBatchTest {
     assertThat(historyService.createHistoricJobLogQuery().jobDefinitionConfiguration(modificationBatch.getId()).count()).isEqualTo(2);
     batchIds.remove(modificationBatch.getId());
     for (String batchId : batchIds) {
-      assertThat(historyService.createHistoricJobLogQuery().jobDefinitionConfiguration(batchId).count()).isEqualTo(0);
+      assertThat(historyService.createHistoricJobLogQuery().jobDefinitionConfiguration(batchId).count()).isZero();
     }
   }
 

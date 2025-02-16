@@ -50,7 +50,7 @@ public class AsyncStartEventTest extends PluggableProcessEngineTest {
     testRule.executeAvailableJobs();
     task = taskService.createTaskQuery().singleResult();
 
-    assertThat(runtimeService.createExecutionQuery().activityId("startEvent").count()).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().activityId("startEvent").count()).isZero();
 
     assertThat(task).as("The user task should have been reached").isNotNull();
   }
@@ -97,7 +97,7 @@ public class AsyncStartEventTest extends PluggableProcessEngineTest {
     taskService.complete(task.getId());
 
     // assert process instance is ended
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
   }
 
@@ -133,7 +133,7 @@ public class AsyncStartEventTest extends PluggableProcessEngineTest {
     testRule.executeAvailableJobs();
     task = taskService.createTaskQuery().singleResult();
 
-    assertThat(runtimeService.createExecutionQuery().activityId("StartEvent_2").count()).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().activityId("StartEvent_2").count()).isZero();
     assertThat(task).as("The subprocess user task should have been reached").isNotNull();
   }
 
@@ -170,7 +170,7 @@ public class AsyncStartEventTest extends PluggableProcessEngineTest {
     // the user task after the async continuation is reached successfully
     Task task = taskService.createTaskQuery().singleResult();
 
-    assertThat(runtimeService.createExecutionQuery().activityId("StartEvent_1").count()).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().activityId("StartEvent_1").count()).isZero();
     assertThat(task).as("The user task should have been reached").isNotNull();
 
     // and the event sub process is still active

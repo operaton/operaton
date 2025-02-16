@@ -292,7 +292,7 @@ public class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest 
         .createHistoricProcessInstanceQuery()
         .processInstanceId(processInstanceId)
         .count();
-    assertThat(count).isEqualTo(0);
+    assertThat(count).isZero();
     enableAuthorization();
   }
 
@@ -316,7 +316,7 @@ public class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest 
         .createHistoricProcessInstanceQuery()
         .processInstanceId(processInstanceId)
         .count();
-    assertThat(count).isEqualTo(0);
+    assertThat(count).isZero();
     enableAuthorization();
   }
 
@@ -344,7 +344,7 @@ public class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest 
         .createHistoricProcessInstanceQuery()
         .processInstanceId(processInstanceId)
         .count();
-    assertThat(count).isEqualTo(0);
+    assertThat(count).isZero();
     enableAuthorization();
   }
 
@@ -523,7 +523,7 @@ public class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest 
       // then
       fail("Exception expected: It should not be possible to create a historic process instance report");
     } catch (AuthorizationException e) {
-
+      // expected
     }
   }
 
@@ -655,8 +655,8 @@ public class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest 
     // then
     assertThat(reportResults).hasSize(1);
     assertThat(reportResults.get(0).getProcessDefinitionKey()).isEqualTo(MESSAGE_START_PROCESS_KEY);
-    assertThat(reportResults.get(0).getCleanableProcessInstanceCount()).isEqualTo(0);
-    assertThat(reportResults.get(0).getFinishedProcessInstanceCount()).isEqualTo(0);
+    assertThat(reportResults.get(0).getCleanableProcessInstanceCount()).isZero();
+    assertThat(reportResults.get(0).getFinishedProcessInstanceCount()).isZero();
   }
 
   @Test

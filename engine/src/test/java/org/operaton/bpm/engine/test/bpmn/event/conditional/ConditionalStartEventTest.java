@@ -242,7 +242,7 @@ public class ConditionalStartEventTest {
       .delete();
 
     // then
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isZero();
   }
 
   @Test
@@ -294,7 +294,7 @@ public class ConditionalStartEventTest {
         .delete();
 
     // then
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isZero();
   }
 
   @Test
@@ -310,7 +310,7 @@ public class ConditionalStartEventTest {
         .delete();
 
     // then
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isZero();
   }
 
   @Test
@@ -326,7 +326,7 @@ public class ConditionalStartEventTest {
         .delete();
 
     // then
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isZero();
   }
 
   @Test
@@ -342,7 +342,7 @@ public class ConditionalStartEventTest {
         .delete();
 
     // then
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isZero();
   }
 
   @Test
@@ -358,7 +358,7 @@ public class ConditionalStartEventTest {
         .delete();
 
     // then
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isZero();
   }
 
   @Test
@@ -374,7 +374,7 @@ public class ConditionalStartEventTest {
         .delete();
 
     // then
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isZero();
     assertThat(repositoryService.createProcessDefinitionQuery().singleResult().getId()).isEqualTo(definitionId1);
   }
 

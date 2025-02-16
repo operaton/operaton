@@ -110,8 +110,8 @@ public class SignalEventTest {
 
     runtimeService.startProcessInstanceByKey("throwSignal");
 
-    assertThat(createEventSubscriptionQuery().count()).isEqualTo(0);
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(createEventSubscriptionQuery().count()).isZero();
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
   }
 
@@ -127,8 +127,8 @@ public class SignalEventTest {
 
     runtimeService.startProcessInstanceByKey("throwSignal");
 
-    assertThat(createEventSubscriptionQuery().count()).isEqualTo(0);
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(createEventSubscriptionQuery().count()).isZero();
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
   @Deployment(resources = {
@@ -170,9 +170,9 @@ public class SignalEventTest {
       ClockUtil.setCurrentTime(new Date(System.currentTimeMillis() + 1000));
       testRule.waitForJobExecutorToProcessAllJobs(10000);
 
-      assertThat(createEventSubscriptionQuery().count()).isEqualTo(0);
-      assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
-      assertThat(managementService.createJobQuery().count()).isEqualTo(0);
+      assertThat(createEventSubscriptionQuery().count()).isZero();
+      assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
+      assertThat(managementService.createJobQuery().count()).isZero();
     } finally {
       ClockUtil.setCurrentTime(new Date());
     }
@@ -202,8 +202,8 @@ public class SignalEventTest {
 
     runtimeService.startProcessInstanceByKey("throwSignal");
 
-    assertThat(createEventSubscriptionQuery().count()).isEqualTo(0);
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(createEventSubscriptionQuery().count()).isZero();
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
   /**
@@ -314,11 +314,11 @@ public class SignalEventTest {
 
     // check if user task doesn't exist because signal start event is interrupting
     taskQuery = taskService.createTaskQuery().processInstanceId(processInstance.getId());
-    assertThat(taskQuery.count()).isEqualTo(0);
+    assertThat(taskQuery.count()).isZero();
 
     // check if execution doesn't exist because signal start event is interrupting
     executionQuery = runtimeService.createExecutionQuery().processInstanceId(processInstance.getId());
-    assertThat(executionQuery.count()).isEqualTo(0);
+    assertThat(executionQuery.count()).isZero();
   }
 
   @Deployment
@@ -371,7 +371,7 @@ public class SignalEventTest {
 
     runtimeService.signalEventReceived("alert");
     // the signal should not start a process instance for the suspended process definition
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().count()).isZero();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTest.signalStartEvent.bpmn20.xml",
@@ -411,7 +411,7 @@ public class SignalEventTest {
     // start a process instance to throw a signal
     runtimeService.startProcessInstanceByKey("throwSignal");
     // the signal should not start a new process instance of the suspended process definition
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().count()).isZero();
   }
 
   @Deployment
@@ -442,7 +442,7 @@ public class SignalEventTest {
     assertThat(RecorderExecutionListener.getRecordedEvents()).hasSize(1);
 
     // and instances ended successfully
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
   @Deployment(resources = {
@@ -464,7 +464,7 @@ public class SignalEventTest {
     assertThat(RecorderExecutionListener.getRecordedEvents()).hasSize(1);
 
     // and both instances ended successfully
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
   @Deployment(resources = {
@@ -484,7 +484,7 @@ public class SignalEventTest {
     // where the throwing instance ends immediately
 
     // then there is not yet a catching process instance
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
     // but there is a job for the asynchronous continuation
     Job asyncJob = managementService.createJobQuery().singleResult();
@@ -519,7 +519,7 @@ public class SignalEventTest {
     // where the throwing instance ends immediately
 
     // then there is not yet a catching process instance
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
     // but there is a job for the asynchronous continuation
     Job asyncJob = managementService.createJobQuery().singleResult();
@@ -579,7 +579,7 @@ public class SignalEventTest {
 
     // then execution should not have been continued after the subprocess
     assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskDefinitionKey("afterSubProcessTask").count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("afterSubProcessTask").count()).isZero();
     assertThat(taskService.createTaskQuery().taskDefinitionKey("eventSubProcessTask").count()).isEqualTo(1);
   }
 

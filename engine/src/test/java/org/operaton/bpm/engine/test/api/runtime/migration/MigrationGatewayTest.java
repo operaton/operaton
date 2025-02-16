@@ -69,7 +69,7 @@ public class MigrationGatewayTest {
 
     // then
     assertThat(rule.getTaskService().createTaskQuery().count()).isEqualTo(1);
-    assertThat(rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count()).isEqualTo(0);
+    assertThat(rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count()).isZero();
 
     testHelper.completeTask("parallel1");
     testHelper.completeTask("afterJoin");
@@ -136,7 +136,7 @@ public class MigrationGatewayTest {
 
     // then
     assertThat(rule.getTaskService().createTaskQuery().count()).isEqualTo(1);
-    assertThat(rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count()).isEqualTo(0);
+    assertThat(rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count()).isZero();
 
     testHelper.completeTask("parallel1");
     testHelper.completeTask("afterJoin");
@@ -166,7 +166,7 @@ public class MigrationGatewayTest {
 
     // then
     assertThat(rule.getTaskService().createTaskQuery().count()).isEqualTo(1);
-    assertThat(rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count()).isEqualTo(0);
+    assertThat(rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count()).isZero();
 
     testHelper.completeTask("parallel1");
     testHelper.completeTask("afterJoin");
@@ -233,7 +233,7 @@ public class MigrationGatewayTest {
 
     // then
     assertThat(rule.getTaskService().createTaskQuery().count()).isEqualTo(1);
-    assertThat(rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count()).isEqualTo(0);
+    assertThat(rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count()).isZero();
 
     testHelper.completeTask("parallel1");
     testHelper.completeTask("afterJoin");
@@ -341,12 +341,12 @@ public class MigrationGatewayTest {
 
     // then
     assertThat(rule.getTaskService().createTaskQuery().count()).isEqualTo(1);
-    assertThat(rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count()).isEqualTo(0);
+    assertThat(rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count()).isZero();
 
     rule.getRuntimeService().createProcessInstanceModification(processInstance.getId())
       .startBeforeActivity("join")
       .execute();
-    assertThat(rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count()).isEqualTo(0);
+    assertThat(rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count()).isZero();
 
     testHelper.completeTask("parallel1");
     testHelper.completeTask("afterJoin");

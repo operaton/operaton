@@ -1615,8 +1615,9 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
 
     List<ProcessInstance> instanceList = runtimeService.createProcessInstanceQuery().list();
-    assertThat(instanceList).isNotNull();
-    assertThat(instanceList).hasSize(2);
+    assertThat(instanceList)
+            .isNotNull()
+            .hasSize(2);
 
     ActivityInstance tree = runtimeService.getActivityInstance(taskInSubProcess.getProcessInstanceId());
     // when
@@ -1654,8 +1655,9 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
 
     List<ProcessInstance> instanceList = runtimeService.createProcessInstanceQuery().list();
-    assertThat(instanceList).isNotNull();
-    assertThat(instanceList).hasSize(2);
+    assertThat(instanceList)
+            .isNotNull()
+            .hasSize(2);
 
     ActivityInstance tree = runtimeService.getActivityInstance(taskInSubProcess.getProcessInstanceId());
     // when
@@ -1686,12 +1688,14 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("callTwoSubProcesses");
     List<ProcessInstance> instanceList = runtimeService.createProcessInstanceQuery().list();
-    assertThat(instanceList).isNotNull();
-    assertThat(instanceList).hasSize(3);
+    assertThat(instanceList)
+            .isNotNull()
+            .hasSize(3);
 
     List<Task> taskList = taskService.createTaskQuery().list();
-    assertThat(taskList).isNotNull();
-    assertThat(taskList).hasSize(2);
+    assertThat(taskList)
+            .isNotNull()
+            .hasSize(2);
 
     List<String> activeActivityIds = runtimeService.getActiveActivityIds(processInstance.getProcessInstanceId());
     assertThat(activeActivityIds)
@@ -1710,8 +1714,9 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
     // How many process Instances
     instanceList = runtimeService.createProcessInstanceQuery().list();
-    assertThat(instanceList).isNotNull();
-    assertThat(instanceList).hasSize(2);
+    assertThat(instanceList)
+            .isNotNull()
+            .hasSize(2);
 
     // How man call activities
     activeActivityIds = runtimeService.getActiveActivityIds(processInstance.getProcessInstanceId());
@@ -1749,8 +1754,9 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
     Task taskInNestedSubProcess = taskQuery.singleResult();
 
     List<ProcessInstance> instanceList = runtimeService.createProcessInstanceQuery().list();
-    assertThat(instanceList).isNotNull();
-    assertThat(instanceList).hasSize(3);
+    assertThat(instanceList)
+            .isNotNull()
+            .hasSize(3);
 
     ActivityInstance tree = runtimeService.getActivityInstance(taskInNestedSubProcess.getProcessInstanceId());
 

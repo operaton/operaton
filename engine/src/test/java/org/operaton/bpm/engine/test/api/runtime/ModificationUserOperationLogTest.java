@@ -167,7 +167,7 @@ public class ModificationUserOperationLogTest {
     identityService.clearAuthentication();
 
     // then
-    assertThat(historyService.createUserOperationLogQuery().entityType(EntityTypes.PROCESS_INSTANCE).count()).isEqualTo(0);
+    assertThat(historyService.createUserOperationLogQuery().entityType(EntityTypes.PROCESS_INSTANCE).count()).isZero();
   }
 
   @Test
@@ -186,7 +186,7 @@ public class ModificationUserOperationLogTest {
     testRule.waitForJobExecutorToProcessAllJobs(5000L);
 
     // then
-    assertThat(historyService.createUserOperationLogQuery().count()).isEqualTo(0);
+    assertThat(historyService.createUserOperationLogQuery().count()).isZero();
   }
 
   @Test

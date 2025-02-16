@@ -336,7 +336,7 @@ public class UserOperationLogWithoutUserTest extends PluggableProcessEngineTest 
     historyService.deleteHistoricVariableInstance(historicVariableId);
 
     // then
-    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isZero();
     verifyNoUserOperationLogged();
   }
   
@@ -354,7 +354,7 @@ public class UserOperationLogWithoutUserTest extends PluggableProcessEngineTest 
     historyService.deleteHistoricVariableInstancesByProcessInstanceId(id);
 
     // then
-    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isZero();
     verifyNoUserOperationLogged();
   }
   
@@ -397,7 +397,7 @@ public class UserOperationLogWithoutUserTest extends PluggableProcessEngineTest 
 
   protected void verifyNoUserOperationLogged() {
     UserOperationLogQuery query = historyService.createUserOperationLogQuery();
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
   }
 
 }

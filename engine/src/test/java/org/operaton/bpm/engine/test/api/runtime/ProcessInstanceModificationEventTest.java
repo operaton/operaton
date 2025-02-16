@@ -361,7 +361,7 @@ public class ProcessInstanceModificationEventTest extends PluggableProcessEngine
       .done());
 
     // the compensation for the completed tx has not been triggered
-    assertThat(taskService.createTaskQuery().taskDefinitionKey("undoTxTask").count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("undoTxTask").count()).isZero();
 
     // complete the process
     Task afterCancellationTask = taskService.createTaskQuery().taskDefinitionKey("afterCancellation").singleResult();

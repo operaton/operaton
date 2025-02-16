@@ -286,7 +286,7 @@ public class UserOperationLogTaskServiceAndBeanTest extends AbstractUserOperatio
     taskService.saveTask(task);
 
     UserOperationLogQuery query = queryOperationDetails(OPERATION_TYPE_UPDATE);
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
 
     // set case instance id and save task
     task.setCaseInstanceId("aCaseInstanceId");

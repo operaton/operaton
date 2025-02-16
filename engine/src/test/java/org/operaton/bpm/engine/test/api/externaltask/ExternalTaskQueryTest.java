@@ -276,8 +276,9 @@ public class ExternalTaskQueryTest extends PluggableProcessEngineTest {
       .list();
 
     // then
-    assertThat(tasks).isNotNull();
-    assertThat(tasks).hasSize(1001);
+    assertThat(tasks)
+            .isNotNull()
+            .hasSize(1001);
     for (ExternalTask task : tasks) {
       assertThat(processInstances).contains(task.getProcessInstanceId());
     }
@@ -298,8 +299,9 @@ public class ExternalTaskQueryTest extends PluggableProcessEngineTest {
       .list();
 
     // then
-    assertThat(tasks).isNotNull();
-    assertThat(tasks).hasSize(2);
+    assertThat(tasks)
+            .isNotNull()
+            .hasSize(2);
     for (ExternalTask task : tasks) {
       assertThat(processInstanceIds).contains(task.getProcessInstanceId());
     }
@@ -311,7 +313,7 @@ public class ExternalTaskQueryTest extends PluggableProcessEngineTest {
         .createExternalTaskQuery()
         .processInstanceIdIn("nonExisting");
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
   }
 
   @Test

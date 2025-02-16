@@ -89,8 +89,9 @@ public class IncidentTest extends PluggableProcessEngineTest {
 
     List<Incident> incidents = runtimeService.createIncidentQuery().processInstanceId(processInstance.getId()).list();
 
-    assertThat(incidents).isNotEmpty();
-    assertThat(incidents).hasSize(1);
+    assertThat(incidents)
+            .isNotEmpty()
+            .hasSize(1);
 
     Job job = managementService.createJobQuery().processInstanceId(processInstance.getId()).singleResult();
 
@@ -104,8 +105,9 @@ public class IncidentTest extends PluggableProcessEngineTest {
     incidents = runtimeService.createIncidentQuery().processInstanceId(processInstance.getId()).list();
 
     // There is still one incident
-    assertThat(incidents).isNotEmpty();
-    assertThat(incidents).hasSize(1);
+    assertThat(incidents)
+            .isNotEmpty()
+            .hasSize(1);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn"})
@@ -117,8 +119,9 @@ public class IncidentTest extends PluggableProcessEngineTest {
 
     List<Incident> incidents = runtimeService.createIncidentQuery().processInstanceId(processInstance.getId()).list();
 
-    assertThat(incidents).isNotEmpty();
-    assertThat(incidents).hasSize(1);
+    assertThat(incidents)
+            .isNotEmpty()
+            .hasSize(1);
 
     Job job = managementService.createJobQuery().processInstanceId(processInstance.getId()).singleResult();
 
@@ -136,8 +139,9 @@ public class IncidentTest extends PluggableProcessEngineTest {
     incidents = runtimeService.createIncidentQuery().processInstanceId(processInstance.getId()).list();
 
     // There is still one incident
-    assertThat(incidents).isNotEmpty();
-    assertThat(incidents).hasSize(1);
+    assertThat(incidents)
+            .isNotEmpty()
+            .hasSize(1);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncidentForNestedExecution.bpmn"})
@@ -223,8 +227,9 @@ public class IncidentTest extends PluggableProcessEngineTest {
     testRule.executeAvailableJobs();
 
     List<Incident> incidents = runtimeService.createIncidentQuery().list();
-    assertThat(incidents).isNotEmpty();
-    assertThat(incidents).hasSize(2);
+    assertThat(incidents)
+            .isNotEmpty()
+            .hasSize(2);
 
     ProcessInstance failingProcess = runtimeService.createProcessInstanceQuery().processDefinitionKey("failingProcess").singleResult();
     assertThat(failingProcess).isNotNull();
@@ -283,8 +288,9 @@ public class IncidentTest extends PluggableProcessEngineTest {
     testRule.executeAvailableJobs();
 
     List<Incident> incidents = runtimeService.createIncidentQuery().list();
-    assertThat(incidents).isNotEmpty();
-    assertThat(incidents).hasSize(3);
+    assertThat(incidents)
+            .isNotEmpty()
+            .hasSize(3);
 
     // Root Cause Incident
     ProcessInstance failingProcess = runtimeService.createProcessInstanceQuery().processDefinitionKey("failingProcess").singleResult();

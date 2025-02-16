@@ -257,7 +257,7 @@ public class CleanableHistoricCaseInstanceReportTest {
 
     List<CleanableHistoricCaseInstanceReportResult> resultWithZeros = historyService.createCleanableHistoricCaseInstanceReport().list();
     assertThat(resultWithZeros).hasSize(1);
-    assertThat(resultWithZeros.get(0).getFinishedCaseInstanceCount()).isEqualTo(0);
+    assertThat(resultWithZeros.get(0).getFinishedCaseInstanceCount()).isZero();
 
     // when
     long resultCountWithoutZeros = historyService.createCleanableHistoricCaseInstanceReport().compact().count();

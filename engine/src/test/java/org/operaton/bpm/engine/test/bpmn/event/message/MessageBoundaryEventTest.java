@@ -68,7 +68,7 @@ public class MessageBoundaryEventTest extends PluggableProcessEngineTest {
     assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("taskAfterMessage");
     taskService.complete(userTask.getId());
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
     // 2nd. case: complete the user task cancels the message subscription
 
@@ -87,7 +87,7 @@ public class MessageBoundaryEventTest extends PluggableProcessEngineTest {
     assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("taskAfterTask");
     taskService.complete(userTask.getId());
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
   }
 
@@ -102,7 +102,7 @@ public class MessageBoundaryEventTest extends PluggableProcessEngineTest {
       fail("Deployment should fail because Activiti cannot handle two boundary message events with same messageId.");
     } catch (ParseException e) {
       testRule.assertTextPresent("Cannot have more than one message event subscription with name 'messageName' for scope 'task'", e.getMessage());
-      assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(0);
+      assertThat(repositoryService.createDeploymentQuery().count()).isZero();
       List<Problem> errors = e.getResourceReports().get(0).getErrors();
       assertThat(errors).hasSize(1);
       assertThat(errors.get(0).getMainElementId()).isEqualTo("messageBoundary_2");
@@ -149,7 +149,7 @@ public class MessageBoundaryEventTest extends PluggableProcessEngineTest {
     assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("taskAfterMessage_1");
     taskService.complete(userTask.getId());
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
     /////////////////////////////////////////////////////////////////////
     // 2. complete the user task cancels the message subscriptions
@@ -173,7 +173,7 @@ public class MessageBoundaryEventTest extends PluggableProcessEngineTest {
     assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("taskAfterTask");
     taskService.complete(userTask.getId());
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
   @Deployment
@@ -234,8 +234,9 @@ public class MessageBoundaryEventTest extends PluggableProcessEngineTest {
     assertThat(execution2.getId()).isEqualTo(execution1.getId());
 
     List<Task> userTasks = taskService.createTaskQuery().list();
-    assertThat(userTasks).isNotNull();
-    assertThat(userTasks).hasSize(5);
+    assertThat(userTasks)
+            .isNotNull()
+            .hasSize(5);
 
     // as long as tasks exists, the message subscriptions exist
     for (int i = 0; i < userTasks.size() - 1; i++) {
@@ -302,7 +303,7 @@ public class MessageBoundaryEventTest extends PluggableProcessEngineTest {
     assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("taskAfterMessage");
     taskService.complete(userTask.getId());
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
     ///////////////////////////////////////////////////
     // 2nd. case: complete the user task cancels the message subscription
@@ -322,7 +323,7 @@ public class MessageBoundaryEventTest extends PluggableProcessEngineTest {
     assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("taskAfterTask");
     taskService.complete(userTask.getId());
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
   @Deployment
@@ -487,7 +488,7 @@ public class MessageBoundaryEventTest extends PluggableProcessEngineTest {
     assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("taskAfterMessage_one");
     taskService.complete(userTask.getId());
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
     // 2nd. case: message two received cancels the task
 
@@ -504,7 +505,7 @@ public class MessageBoundaryEventTest extends PluggableProcessEngineTest {
     assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("taskAfterMessage_two");
     taskService.complete(userTask.getId());
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
 
     // 3rd. case: complete the user task cancels the message subscription
@@ -529,7 +530,7 @@ public class MessageBoundaryEventTest extends PluggableProcessEngineTest {
     assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("taskAfterSubProcess");
     taskService.complete(userTask.getId());
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
   }
 
@@ -571,22 +572,25 @@ public class MessageBoundaryEventTest extends PluggableProcessEngineTest {
 
     // 5 user tasks
     List<Task> userTasks = taskService.createTaskQuery().list();
-    assertThat(userTasks).isNotNull();
-    assertThat(userTasks).hasSize(5);
+    assertThat(userTasks)
+            .isNotNull()
+            .hasSize(5);
 
     // there are 5 event subscriptions to the event on the inner user task
     List<Execution> executions = runtimeService.createExecutionQuery()
         .messageEventSubscriptionName("messageName")
         .list();
-    assertThat(executions).isNotNull();
-    assertThat(executions).hasSize(5);
+    assertThat(executions)
+            .isNotNull()
+            .hasSize(5);
 
     // there is a single event subscription for the event on the subprocess
     executions = runtimeService.createExecutionQuery()
         .messageEventSubscriptionName("messageName2")
         .list();
-    assertThat(executions).isNotNull();
-    assertThat(executions).hasSize(1);
+    assertThat(executions)
+            .isNotNull()
+            .hasSize(1);
 
     // if we complete the outer message event, all inner executions are removed
     Execution outerScopeExecution = executions.get(0);
@@ -654,7 +658,7 @@ public class MessageBoundaryEventTest extends PluggableProcessEngineTest {
     assertThat(userTask).isNotNull();
     assertThat(userTask.getTaskDefinitionKey()).isEqualTo("taskAfterMessage");
     taskService.complete(userTask.getId());
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
   }
 

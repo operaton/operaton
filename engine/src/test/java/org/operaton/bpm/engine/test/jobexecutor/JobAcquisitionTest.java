@@ -104,7 +104,7 @@ public class JobAcquisitionTest {
     acquisitionThread1.makeContinueAndWaitForSync();
 
     // then it has not performed waiting since it was able to acquire and execute all jobs
-    assertThat(engineRule.getManagementService().createJobQuery().active().count()).isEqualTo(0);
+    assertThat(engineRule.getManagementService().createJobQuery().active().count()).isZero();
     List<RecordedWaitEvent> jobExecutor1WaitEvents = jobExecutor1.getAcquireJobsRunnable().getWaitEvents();
     assertThat(jobExecutor1WaitEvents).hasSize(1);
     assertThat(jobExecutor1WaitEvents.get(0).getTimeBetweenAcquisitions()).isEqualTo(0);

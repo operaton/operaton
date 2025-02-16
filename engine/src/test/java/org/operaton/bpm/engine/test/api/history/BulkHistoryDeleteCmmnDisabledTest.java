@@ -109,8 +109,8 @@ public class BulkHistoryDeleteCmmnDisabledTest {
     engineRule.getManagementService().executeJob(jobId);
 
     // then
-    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(0);
-    assertThat(historyService.createHistoricDecisionInstanceQuery().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isZero();
+    assertThat(historyService.createHistoricDecisionInstanceQuery().count()).isZero();
   }
 
   private void prepareHistoricProcesses(int instanceCount) {

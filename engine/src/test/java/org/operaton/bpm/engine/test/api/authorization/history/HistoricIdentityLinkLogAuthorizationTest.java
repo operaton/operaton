@@ -61,7 +61,7 @@ public class HistoricIdentityLinkLogAuthorizationTest extends AuthorizationTest 
   // historic identity link query (standalone task) - Authorization
 
   @Test
-  public void testQueryForStandaloneTaskHistoricIdentityLinkWithoutAuthrorization() {
+  public void testQueryForStandaloneTaskHistoricIdentityLinkWithoutAuthorization() {
     // given
     disableAuthorization();
 

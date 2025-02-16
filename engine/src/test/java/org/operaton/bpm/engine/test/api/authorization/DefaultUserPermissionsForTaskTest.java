@@ -22,6 +22,8 @@ import static org.operaton.bpm.engine.authorization.Resources.TASK;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resources;
@@ -191,7 +193,7 @@ public class DefaultUserPermissionsForTaskTest extends AuthorizationTest {
     processEngine.getTaskService().addCandidateGroup(taskId, groupId);
 
     // then
-    assertThat(authorizationService.isUserAuthorized(userId2, Arrays.asList(groupId), Permissions.READ, Resources.TASK, taskId)).isEqualTo(true);
+    assertThat(authorizationService.isUserAuthorized(userId2, List.of(groupId), Permissions.READ, Resources.TASK, taskId)).isEqualTo(true);
     assertThat(authorizationService.isUserAuthorized(userId2, Arrays.asList(groupId), Permissions.TASK_WORK, Resources.TASK, taskId)).isEqualTo(true);
     assertThat(authorizationService.isUserAuthorized(userId2, Arrays.asList(groupId), Permissions.UPDATE, Resources.TASK, taskId)).isEqualTo(false);
 

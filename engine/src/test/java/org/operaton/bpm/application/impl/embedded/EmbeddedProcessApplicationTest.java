@@ -17,6 +17,7 @@
 package org.operaton.bpm.application.impl.embedded;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 import java.util.List;
 import java.util.Set;
@@ -70,12 +71,10 @@ public class EmbeddedProcessApplicationTest extends PluggableProcessEngineTest {
 
   @Test
   public void testDeployAppWithoutEngine() {
-
     TestApplicationWithoutEngine processApplication = new TestApplicationWithoutEngine();
-    processApplication.deploy();
 
-    processApplication.undeploy();
-
+    assertThatCode(processApplication::deploy).doesNotThrowAnyException();
+    assertThatCode(processApplication::undeploy).doesNotThrowAnyException();
   }
 
   @Test
@@ -88,7 +87,7 @@ public class EmbeddedProcessApplicationTest extends PluggableProcessEngineTest {
 
     ProcessEngine processEngine = BpmPlatform.getProcessEngineService().getDefaultProcessEngine();
     long deployments = processEngine.getRepositoryService().createDeploymentQuery().count();
-    assertThat(deployments).isEqualTo(0);
+    assertThat(deployments).isZero();
 
     processApplication.undeploy();
 
@@ -181,7 +180,7 @@ public class EmbeddedProcessApplicationTest extends PluggableProcessEngineTest {
 
     processApplication.undeploy();
 
-    assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(0);
+    assertThat(repositoryService.createDeploymentQuery().count()).isZero();
 
   }
 
@@ -201,7 +200,7 @@ public class EmbeddedProcessApplicationTest extends PluggableProcessEngineTest {
     assertThat(deploymentResources).hasSize(4);
 
     processApplication.undeploy();
-    assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(0);
+    assertThat(repositoryService.createDeploymentQuery().count()).isZero();
   }
 
   @Test
@@ -219,7 +218,7 @@ public class EmbeddedProcessApplicationTest extends PluggableProcessEngineTest {
     assertThat(deploymentResources).hasSize(4);
 
     processApplication.undeploy();
-    assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(0);
+    assertThat(repositoryService.createDeploymentQuery().count()).isZero();
   }
 
   @Test
@@ -244,8 +243,7 @@ public class EmbeddedProcessApplicationTest extends PluggableProcessEngineTest {
     pa.deploy();
 
     Set<String> deployedPAs = runtimeContainerDelegate.getProcessApplicationService().getProcessApplicationNames();
-    assertThat(deployedPAs).hasSize(1);
-    assertThat(deployedPAs).contains(TestApplicationWithCustomName.NAME);
+    assertThat(deployedPAs).containsExactly(TestApplicationWithCustomName.NAME);
 
     pa.undeploy();
   }

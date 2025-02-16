@@ -303,7 +303,7 @@ public class MigrationCompensationRemoveSubProcessTest {
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
     // then
-    assertThat(rule.getRuntimeService().createVariableInstanceQuery().count()).isEqualTo(0);
+    assertThat(rule.getRuntimeService().createVariableInstanceQuery().count()).isZero();
   }
 
   @Test

@@ -163,7 +163,7 @@ public class MBeanServiceContainerTest {
     serviceContainer.startService(service2Name, service2);
 
     List<PlatformService<TestService>> servicesByType1 = serviceContainer.getServiceValuesByType(TestServiceType.TYPE1);
-    assertThat(servicesByType1).containsExactly(service1, service2);
+    assertThat(servicesByType1).containsExactlyInAnyOrder(service1, service2);
 
     List<PlatformService<TestService>> servicesByType2 = serviceContainer.getServicesByType(TestServiceType.TYPE2);
     assertThat(servicesByType2).isEmpty();
@@ -176,7 +176,7 @@ public class MBeanServiceContainerTest {
     assertThat(servicesByType1).hasSize(2);
 
     servicesByType2 = serviceContainer.getServicesByType(TestServiceType.TYPE2);
-    assertThat(servicesByType2).containsExactly(service3, service4);
+    assertThat(servicesByType2).containsExactlyInAnyOrder(service3, service4);
 
   }
 
@@ -188,7 +188,7 @@ public class MBeanServiceContainerTest {
     serviceContainer.startService(service2Name, service2);
 
     Set<String> serviceNames = serviceContainer.getServiceNames(TestServiceType.TYPE1);
-    assertThat(serviceNames).containsExactly(service1Name, service2Name);
+    assertThat(serviceNames).containsExactlyInAnyOrder(service1Name, service2Name);
 
     serviceNames = serviceContainer.getServiceNames(TestServiceType.TYPE2);
     assertThat(serviceNames).isEmpty();
@@ -198,10 +198,10 @@ public class MBeanServiceContainerTest {
     serviceContainer.startService(service4Name, service4);
 
     serviceNames = serviceContainer.getServiceNames(TestServiceType.TYPE1);
-    assertThat(serviceNames).containsExactly(service1Name, service2Name);
+    assertThat(serviceNames).containsExactlyInAnyOrder(service1Name, service2Name);
 
     serviceNames = serviceContainer.<TestService>getServiceNames(TestServiceType.TYPE2);
-    assertThat(serviceNames).containsExactly(service3Name, service4Name);
+    assertThat(serviceNames).containsExactlyInAnyOrder(service3Name, service4Name);
 
   }
 

@@ -208,7 +208,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
     UserOperationLogQuery query = historyService.createUserOperationLogQuery();
 
     // then
-    // "grant all categories" should preceed over "revoke all process definitions"
+    // "grant all categories" should precede over "revoke all process definitions"
     verifyQueryResults(query, 1);
 
     deleteTask(taskId, true);
@@ -968,7 +968,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
     // when
     UserOperationLogQuery query = historyService.createUserOperationLogQuery();
 
-    // then only user operation logs of non standalone jobs are visible
+    // then only user operation logs of non-standalone jobs are visible
     verifyQueryResults(query, 2);
     assertThat(query.list().get(0).getProcessDefinitionKey()).isEqualTo(ONE_TASK_PROCESS_KEY);
     assertThat(query.list().get(1).getProcessDefinitionKey()).isEqualTo(ONE_TASK_PROCESS_KEY);
@@ -999,7 +999,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
     // when
     UserOperationLogQuery query = historyService.createUserOperationLogQuery();
 
-    // then only non-stadalone jobs entries
+    // then only non-standalone jobs entries
     verifyQueryResults(query, 1);
 
     disableAuthorization();

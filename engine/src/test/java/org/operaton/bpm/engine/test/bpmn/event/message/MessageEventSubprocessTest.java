@@ -88,8 +88,8 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
     assertThat(task.getTaskDefinitionKey()).isEqualTo("task");
     taskService.complete(task.getId());
     testRule.assertProcessEnded(processInstance.getId());
-    assertThat(createEventSubscriptionQuery().count()).isEqualTo(0);
-    assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(0);
+    assertThat(createEventSubscriptionQuery().count()).isZero();
+    assertThat(runtimeService.createExecutionQuery().count()).isZero();
 
     // now we start a new instance but this time we trigger the event subprocess:
     processInstance = runtimeService.startProcessInstanceByKey("process");
@@ -99,8 +99,8 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
     assertThat(task.getTaskDefinitionKey()).isEqualTo("eventSubProcessTask");
     taskService.complete(task.getId());
     testRule.assertProcessEnded(processInstance.getId());
-    assertThat(createEventSubscriptionQuery().count()).isEqualTo(0);
-    assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(0);
+    assertThat(createEventSubscriptionQuery().count()).isZero();
+    assertThat(runtimeService.createExecutionQuery().count()).isZero();
   }
 
   @Deployment
@@ -298,8 +298,8 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
     assertThat(task.getTaskDefinitionKey()).isEqualTo("task");
     taskService.complete(task.getId());
     testRule.assertProcessEnded(processInstance.getId());
-    assertThat(createEventSubscriptionQuery().count()).isEqualTo(0);
-    assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(0);
+    assertThat(createEventSubscriptionQuery().count()).isZero();
+    assertThat(runtimeService.createExecutionQuery().count()).isZero();
 
     // ###################### now we start a new instance but this time we trigger the event subprocess:
     processInstance = runtimeService.startProcessInstanceByKey("process");
@@ -318,7 +318,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
     taskService.complete(task.getId());
     // done!
     testRule.assertProcessEnded(processInstance.getId());
-    assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().count()).isZero();
 
     // #################### again, the other way around:
 
@@ -336,7 +336,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
     taskService.complete(task.getId());
     // done!
     testRule.assertProcessEnded(processInstance.getId());
-    assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().count()).isZero();
   }
 
   @Deployment
@@ -358,8 +358,8 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
     assertThat(task.getTaskDefinitionKey()).isEqualTo("task");
     taskService.complete(task.getId());
     testRule.assertProcessEnded(processInstance.getId());
-    assertThat(createEventSubscriptionQuery().count()).isEqualTo(0);
-    assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(0);
+    assertThat(createEventSubscriptionQuery().count()).isZero();
+    assertThat(runtimeService.createExecutionQuery().count()).isZero();
 
     // ###################### now we start a new instance but this time we trigger the event subprocess:
     processInstance = runtimeService.startProcessInstanceByKey("process");
@@ -379,7 +379,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
     taskService.complete(task.getId());
     // done!
     testRule.assertProcessEnded(processInstance.getId());
-    assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().count()).isZero();
 
     // #################### again, the other way around:
 
@@ -397,7 +397,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
     taskService.complete(task.getId());
     // done!
     testRule.assertProcessEnded(processInstance.getId());
-    assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().count()).isZero();
   }
 
   @Deployment
@@ -418,8 +418,8 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
     assertThat(task.getTaskDefinitionKey()).isEqualTo("task");
     taskService.complete(task.getId());
     testRule.assertProcessEnded(processInstance.getId());
-    assertThat(createEventSubscriptionQuery().count()).isEqualTo(0);
-    assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(0);
+    assertThat(createEventSubscriptionQuery().count()).isZero();
+    assertThat(runtimeService.createExecutionQuery().count()).isZero();
 
     // ###################### now we start a new instance but this time we trigger the event subprocess:
     processInstance = runtimeService.startProcessInstanceByKey("process");
@@ -438,7 +438,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
     taskService.complete(task.getId());
     // done!
     testRule.assertProcessEnded(processInstance.getId());
-    assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().count()).isZero();
 
     // #################### again, the other way around:
 
@@ -456,7 +456,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
     taskService.complete(task.getId());
     // done!
     testRule.assertProcessEnded(processInstance.getId());
-    assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().count()).isZero();
   }
 
   @Deployment
@@ -502,10 +502,10 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
     taskService.complete(subProcessTask.getId());
 
     // after complete the sub process task all task should be deleted because of the terminating end event
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().count()).isZero();
 
     // and the process instance should be ended
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
   private EventSubscriptionQueryImpl createEventSubscriptionQuery() {
@@ -533,7 +533,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
     }
 
     // expect: the event subscriptions are removed
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isZero();
 
     // then: complete the last task of the main process
     taskService.complete(taskService.createTaskQuery().singleResult().getId());
@@ -575,7 +575,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
     }
 
     // expect: no subscription is left
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isZero();
 
     // then: complete the last task of the main process
     taskService.complete(taskService.createTaskQuery().singleResult().getId());
@@ -603,7 +603,7 @@ public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
     taskService.complete(taskService.createTaskQuery().taskName("Sub User Task").list().get(0).getId());
 
     // expect: no subscription is left
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isZero();
 
     // then: complete the last task of the main process
     taskService.complete(taskService.createTaskQuery().singleResult().getId());

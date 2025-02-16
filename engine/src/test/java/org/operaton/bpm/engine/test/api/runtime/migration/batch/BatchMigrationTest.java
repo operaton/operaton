@@ -242,7 +242,7 @@ public class BatchMigrationTest {
       .build();
 
     ProcessInstanceQuery emptyProcessInstanceQuery = runtimeService.createProcessInstanceQuery();
-    assertThat(emptyProcessInstanceQuery.count()).isEqualTo(0);
+    assertThat(emptyProcessInstanceQuery.count()).isZero();
     var migrationPlanExecutionBuilder = runtimeService.newMigration(migrationPlan).processInstanceQuery(emptyProcessInstanceQuery);
 
     try {
@@ -500,10 +500,10 @@ public class BatchMigrationTest {
     helper.executeMonitorJob(batch);
 
     // then the batch was completed and removed
-    assertThat(managementService.createBatchQuery().count()).isEqualTo(0);
+    assertThat(managementService.createBatchQuery().count()).isZero();
 
     // and the seed jobs was removed
-    assertThat(managementService.createJobQuery().count()).isEqualTo(0);
+    assertThat(managementService.createJobQuery().count()).isZero();
   }
 
   @Test
@@ -515,13 +515,13 @@ public class BatchMigrationTest {
     managementService.deleteBatch(batch.getId(), true);
 
     // then the batch was deleted
-    assertThat(managementService.createBatchQuery().count()).isEqualTo(0);
+    assertThat(managementService.createBatchQuery().count()).isZero();
 
     // and the seed and migration job definition were deleted
-    assertThat(managementService.createJobDefinitionQuery().count()).isEqualTo(0);
+    assertThat(managementService.createJobDefinitionQuery().count()).isZero();
 
     // and the seed job and migration jobs were deleted
-    assertThat(managementService.createJobQuery().count()).isEqualTo(0);
+    assertThat(managementService.createJobQuery().count()).isZero();
   }
 
   @Test
@@ -533,13 +533,13 @@ public class BatchMigrationTest {
     managementService.deleteBatch(batch.getId(), false);
 
     // then the batch was deleted
-    assertThat(managementService.createBatchQuery().count()).isEqualTo(0);
+    assertThat(managementService.createBatchQuery().count()).isZero();
 
     // and the seed and migration job definition were deleted
-    assertThat(managementService.createJobDefinitionQuery().count()).isEqualTo(0);
+    assertThat(managementService.createJobDefinitionQuery().count()).isZero();
 
     // and the seed job and migration jobs were deleted
-    assertThat(managementService.createJobQuery().count()).isEqualTo(0);
+    assertThat(managementService.createJobQuery().count()).isZero();
   }
 
   @Test
@@ -812,7 +812,7 @@ public class BatchMigrationTest {
     helper.executeJobs(batch);
 
     // then
-    assertThat(engineRule.getRuntimeService().createVariableInstanceQuery().count()).isEqualTo(0);
+    assertThat(engineRule.getRuntimeService().createVariableInstanceQuery().count()).isZero();
   }
 
   @Test

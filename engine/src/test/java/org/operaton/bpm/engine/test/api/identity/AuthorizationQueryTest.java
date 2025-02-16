@@ -90,24 +90,24 @@ public class AuthorizationQueryTest extends PluggableProcessEngineTest {
     assertThat(authorizationService.createAuthorizationQuery().userIdIn("user2").count()).isEqualTo(1);
     assertThat(authorizationService.createAuthorizationQuery().userIdIn("user3").count()).isEqualTo(1);
     assertThat(authorizationService.createAuthorizationQuery().userIdIn("user1", "user2").count()).isEqualTo(3);
-    assertThat(authorizationService.createAuthorizationQuery().userIdIn("non-existing").count()).isEqualTo(0);
+    assertThat(authorizationService.createAuthorizationQuery().userIdIn("non-existing").count()).isZero();
 
     // query by group id
     assertThat(authorizationService.createAuthorizationQuery().groupIdIn("group1").count()).isEqualTo(2);
     assertThat(authorizationService.createAuthorizationQuery().groupIdIn("group2").count()).isEqualTo(1);
     assertThat(authorizationService.createAuthorizationQuery().groupIdIn("group3").count()).isEqualTo(1);
     assertThat(authorizationService.createAuthorizationQuery().groupIdIn("group1", "group2").count()).isEqualTo(3);
-    assertThat(authorizationService.createAuthorizationQuery().groupIdIn("non-existing").count()).isEqualTo(0);
+    assertThat(authorizationService.createAuthorizationQuery().groupIdIn("non-existing").count()).isZero();
 
     // query by resource type
     assertThat(authorizationService.createAuthorizationQuery().resourceType(resource1).count()).isEqualTo(4);
-    assertThat(authorizationService.createAuthorizationQuery().resourceType(nonExisting).count()).isEqualTo(0);
+    assertThat(authorizationService.createAuthorizationQuery().resourceType(nonExisting).count()).isZero();
     assertThat(authorizationService.createAuthorizationQuery().resourceType(resource1.resourceType()).count()).isEqualTo(4);
-    assertThat(authorizationService.createAuthorizationQuery().resourceType(nonExisting.resourceType()).count()).isEqualTo(0);
+    assertThat(authorizationService.createAuthorizationQuery().resourceType(nonExisting.resourceType()).count()).isZero();
 
     // query by resource id
     assertThat(authorizationService.createAuthorizationQuery().resourceId("resource1-2").count()).isEqualTo(2);
-    assertThat(authorizationService.createAuthorizationQuery().resourceId("non-existing").count()).isEqualTo(0);
+    assertThat(authorizationService.createAuthorizationQuery().resourceId("non-existing").count()).isZero();
 
     // query by permission
     assertThat(authorizationService.createAuthorizationQuery().hasPermission(TestPermissions.ACCESS).count()).isEqualTo(1);
@@ -117,15 +117,15 @@ public class AuthorizationQueryTest extends PluggableProcessEngineTest {
     // multiple permissions at the same time
     assertThat(authorizationService.createAuthorizationQuery().hasPermission(TestPermissions.READ).hasPermission(TestPermissions.UPDATE).count()).isEqualTo(2);
     assertThat(authorizationService.createAuthorizationQuery().hasPermission(TestPermissions.UPDATE).hasPermission(TestPermissions.READ).count()).isEqualTo(2);
-    assertThat(authorizationService.createAuthorizationQuery().hasPermission(TestPermissions.READ).hasPermission(TestPermissions.ACCESS).count()).isEqualTo(0);
+    assertThat(authorizationService.createAuthorizationQuery().hasPermission(TestPermissions.READ).hasPermission(TestPermissions.ACCESS).count()).isZero();
 
     // user id & resource type
     assertThat(authorizationService.createAuthorizationQuery().userIdIn("user1").resourceType(resource1).count()).isEqualTo(1);
-    assertThat(authorizationService.createAuthorizationQuery().userIdIn("user1").resourceType(nonExisting).count()).isEqualTo(0);
+    assertThat(authorizationService.createAuthorizationQuery().userIdIn("user1").resourceType(nonExisting).count()).isZero();
 
     // group id & resource type
     assertThat(authorizationService.createAuthorizationQuery().groupIdIn("group2").resourceType(resource2).count()).isEqualTo(1);
-    assertThat(authorizationService.createAuthorizationQuery().groupIdIn("group1").resourceType(nonExisting).count()).isEqualTo(0);
+    assertThat(authorizationService.createAuthorizationQuery().groupIdIn("group1").resourceType(nonExisting).count()).isZero();
   }
 
   @Test

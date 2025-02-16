@@ -564,8 +564,8 @@ public class BatchHistoricDecisionInstanceDeletionTest {
     }
 
     // then
-    assertThat(historyService.createHistoricDecisionInstanceQuery().count()).isEqualTo(0);
-    assertThat(historyService.createHistoricDecisionInstanceQuery().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricDecisionInstanceQuery().count()).isZero();
+    assertThat(historyService.createHistoricDecisionInstanceQuery().count()).isZero();
   }
 
   @Test
@@ -583,7 +583,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
     }
 
     // then
-    assertThat(historyService.createHistoricDecisionInstanceQuery().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricDecisionInstanceQuery().count()).isZero();
   }
 
   @Test
@@ -601,7 +601,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
     }
 
     // then
-    assertThat(historyService.createHistoricDecisionInstanceQuery().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricDecisionInstanceQuery().count()).isZero();
   }
 
   @Test

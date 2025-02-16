@@ -93,12 +93,12 @@ public class SignalEventDeploymentTest extends PluggableProcessEngineTest {
     // then deleting the deployment succeeds
     repositoryService.deleteDeployment(deployment.getId(), true);
 
-    assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(0);
+    assertThat(repositoryService.createDeploymentQuery().count()).isZero();
 
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
     if (historyLevel >= HistoryLevel.HISTORY_LEVEL_FULL.getId()) {
       // and there are no job logs left
-      assertThat(historyService.createHistoricJobLogQuery().count()).isEqualTo(0);
+      assertThat(historyService.createHistoricJobLogQuery().count()).isZero();
     }
 
   }

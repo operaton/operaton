@@ -241,8 +241,9 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
       .asc()
       .list();
 
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(2);
+    assertThat(result)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variableInstance : result) {
       if (variableInstance.getName().equals("aVariableName")) {
@@ -286,8 +287,9 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
       .asc()
       .list();
 
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(2);
+    assertThat(result)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variableInstance : result) {
       if (variableInstance.getName().equals("aVariableName")) {
@@ -332,8 +334,9 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
       .asc()
       .list();
 
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(2);
+    assertThat(result)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variableInstance : result) {
       if (variableInstance.getName().equals("aVariableName")) {
@@ -382,8 +385,9 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
       .asc()
       .list();
 
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(2);
+    assertThat(result)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variableInstance : result) {
       if (variableInstance.getName().equals("aVariableName")) {

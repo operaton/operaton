@@ -151,7 +151,7 @@ public class ProcessInstantiationAtActivitiesHistoryTest extends PluggableProces
     assertThat(historicInstance.getStartActivityId()).isEqualTo("task2");
 
     // task2 wasn't entered yet
-    assertThat(historyService.createHistoricActivityInstanceQuery().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricActivityInstanceQuery().count()).isZero();
 
     // history events for variables exist already
     ActivityInstance activityInstance = runtimeService.getActivityInstance(instance.getId());

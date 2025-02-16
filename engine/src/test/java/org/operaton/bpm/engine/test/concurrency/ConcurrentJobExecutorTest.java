@@ -366,7 +366,7 @@ public class ConcurrentJobExecutorTest {
     // then
     // there should be one suspended job
     assertThat(managementService.createJobQuery().suspended().count()).isEqualTo(1);
-    assertThat(managementService.createJobQuery().active().count()).isEqualTo(0);
+    assertThat(managementService.createJobQuery().active().count()).isZero();
 
     assertThat(runtimeService.createProcessInstanceQuery().active().count()).isEqualTo(1);
 

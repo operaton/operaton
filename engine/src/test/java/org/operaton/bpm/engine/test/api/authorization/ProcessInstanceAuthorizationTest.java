@@ -2628,8 +2628,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     List<Task> tasks = taskService.createTaskQuery().list();
     enableAuthorization();
 
-    assertThat(tasks).isNotEmpty();
-    assertThat(tasks).hasSize(2);
+    assertThat(tasks)
+            .isNotEmpty()
+            .hasSize(2);
   }
 
   @Test
@@ -2648,8 +2649,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     List<Task> tasks = taskService.createTaskQuery().list();
     enableAuthorization();
 
-    assertThat(tasks).isNotEmpty();
-    assertThat(tasks).hasSize(2);
+    assertThat(tasks)
+            .isNotEmpty()
+            .hasSize(2);
   }
 
   @Test
@@ -2668,8 +2670,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     List<Task> tasks = taskService.createTaskQuery().list();
     enableAuthorization();
 
-    assertThat(tasks).isNotEmpty();
-    assertThat(tasks).hasSize(2);
+    assertThat(tasks)
+            .isNotEmpty()
+            .hasSize(2);
   }
 
   @Test
@@ -2689,8 +2692,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     List<Task> tasks = taskService.createTaskQuery().list();
     enableAuthorization();
 
-    assertThat(tasks).isNotEmpty();
-    assertThat(tasks).hasSize(2);
+    assertThat(tasks)
+            .isNotEmpty()
+            .hasSize(2);
   }
 
   @Test
@@ -3607,8 +3611,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     VariableMap variables = runtimeService.getVariablesTyped(processInstanceId);
 
     // then
-    assertThat(variables).isNotNull();
-    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -3624,8 +3629,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     VariableMap variables = runtimeService.getVariablesTyped(processInstanceId);
 
     // then
-    assertThat(variables).isNotNull();
-    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -3641,8 +3647,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     VariableMap variables = runtimeService.getVariablesTyped(processInstanceId);
 
     // then
-    assertThat(variables).isNotNull();
-    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -3658,8 +3665,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     VariableMap variables = runtimeService.getVariablesTyped(processInstanceId);
 
     // then
-    assertThat(variables).isNotNull();
-    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -3739,8 +3747,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     VariableMap variables = runtimeService.getVariablesLocalTyped(processInstanceId);
 
     // then
-    assertThat(variables).isNotNull();
-    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -3756,8 +3765,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     VariableMap variables = runtimeService.getVariablesLocalTyped(processInstanceId);
 
     // then
-    assertThat(variables).isNotNull();
-    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -3773,8 +3783,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     VariableMap variables = runtimeService.getVariablesLocalTyped(processInstanceId);
 
     // then
-    assertThat(variables).isNotNull();
-    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -3790,8 +3801,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     VariableMap variables = runtimeService.getVariablesLocalTyped(processInstanceId);
 
     // then
-    assertThat(variables).isNotNull();
-    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -4140,8 +4152,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     VariableMap variables = runtimeService.getVariablesTyped(processInstanceId, Arrays.asList(VARIABLE_NAME), false);
 
     // then
-    assertThat(variables).isNotNull();
-    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -4157,8 +4170,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     VariableMap variables = runtimeService.getVariablesTyped(processInstanceId, Arrays.asList(VARIABLE_NAME), false);
 
     // then
-    assertThat(variables).isNotNull();
-    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -4174,8 +4188,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     VariableMap variables = runtimeService.getVariablesTyped(processInstanceId, Arrays.asList(VARIABLE_NAME), false);
 
     // then
-    assertThat(variables).isNotNull();
-    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -4191,8 +4206,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     VariableMap variables = runtimeService.getVariablesTyped(processInstanceId, Arrays.asList(VARIABLE_NAME), false);
 
     // then
-    assertThat(variables).isNotNull();
-    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -4271,8 +4287,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     VariableMap variables = runtimeService.getVariablesLocalTyped(processInstanceId, Arrays.asList(VARIABLE_NAME), false);
 
     // then
-    assertThat(variables).isNotNull();
-    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -4288,8 +4305,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     VariableMap variables = runtimeService.getVariablesLocalTyped(processInstanceId, Arrays.asList(VARIABLE_NAME), false);
 
     // then
-    assertThat(variables).isNotNull();
-    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -4305,8 +4323,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     VariableMap variables = runtimeService.getVariablesLocalTyped(processInstanceId, Arrays.asList(VARIABLE_NAME), false);
 
     // then
-    assertThat(variables).isNotNull();
-    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
@@ -4322,8 +4341,9 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     VariableMap variables = runtimeService.getVariablesLocalTyped(processInstanceId, Arrays.asList(VARIABLE_NAME), false);
 
     // then
-    assertThat(variables).isNotNull();
-    assertThat(variables).isNotEmpty();
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
     assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);

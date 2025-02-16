@@ -107,12 +107,12 @@ public class MigrationRemoveMultiInstanceTest {
     testHelper.createProcessInstanceAndMigrate(migrationPlan);
 
     // then
-    assertThat(rule.getRuntimeService().createVariableInstanceQuery().variableName("nrOfInstances").count()).isEqualTo(0);
+    assertThat(rule.getRuntimeService().createVariableInstanceQuery().variableName("nrOfInstances").count()).isZero();
 
     // the MI body variables are gone
-    assertThat(rule.getRuntimeService().createVariableInstanceQuery().variableName("nrOfInstances").count()).isEqualTo(0);
-    assertThat(rule.getRuntimeService().createVariableInstanceQuery().variableName("nrOfActiveInstances").count()).isEqualTo(0);
-    assertThat(rule.getRuntimeService().createVariableInstanceQuery().variableName("nrOfCompletedInstances").count()).isEqualTo(0);
+    assertThat(rule.getRuntimeService().createVariableInstanceQuery().variableName("nrOfInstances").count()).isZero();
+    assertThat(rule.getRuntimeService().createVariableInstanceQuery().variableName("nrOfActiveInstances").count()).isZero();
+    assertThat(rule.getRuntimeService().createVariableInstanceQuery().variableName("nrOfCompletedInstances").count()).isZero();
 
     // and the loop counters are still there (because they logically belong to the inner activity instances)
     assertThat(rule.getRuntimeService().createVariableInstanceQuery().variableName("loopCounter").count()).isEqualTo(3);
@@ -268,7 +268,7 @@ public class MigrationRemoveMultiInstanceTest {
     testHelper.createProcessInstanceAndMigrate(migrationPlan);
 
     // then all MI variables are gone
-    assertThat(rule.getRuntimeService().createVariableInstanceQuery().count()).isEqualTo(0);
+    assertThat(rule.getRuntimeService().createVariableInstanceQuery().count()).isZero();
   }
 
   @Test

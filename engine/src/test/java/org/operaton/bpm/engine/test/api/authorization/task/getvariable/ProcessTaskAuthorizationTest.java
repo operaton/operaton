@@ -66,7 +66,7 @@ public abstract class ProcessTaskAuthorizationTest {
   protected RuntimeService runtimeService;
 
   protected boolean ensureSpecificVariablePermission;
-  protected String deploumentId;
+  protected String deploymentId;
 
 
   @Before
@@ -76,13 +76,13 @@ public abstract class ProcessTaskAuthorizationTest {
     runtimeService = engineRule.getRuntimeService();
 
     authRule.createUserAndGroup("userId", "groupId");
-    deploumentId = engineRule.getRepositoryService().createDeployment().addClasspathResource(ONE_TASK_PROCESS).deployWithResult().getId();
+    deploymentId = engineRule.getRepositoryService().createDeployment().addClasspathResource(ONE_TASK_PROCESS).deployWithResult().getId();
   }
 
   @After
   public void tearDown() {
     authRule.deleteUsersAndGroups();
-    engineRule.getRepositoryService().deleteDeployment(deploumentId, true);
+    engineRule.getRepositoryService().deleteDeployment(deploymentId, true);
   }
 
   @Test

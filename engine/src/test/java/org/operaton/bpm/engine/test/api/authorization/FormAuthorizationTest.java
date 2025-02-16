@@ -178,8 +178,9 @@ public class FormAuthorizationTest extends AuthorizationTest {
     VariableMap variables = formService.getStartFormVariables(processDefinitionId);
 
     // then
-    assertThat(variables).isNotNull();
-    assertThat(variables).hasSize(1);
+    assertThat(variables)
+            .isNotNull()
+            .hasSize(1);
   }
 
   // submit start form /////////////////////////////////////////
@@ -792,8 +793,9 @@ public class FormAuthorizationTest extends AuthorizationTest {
     VariableMap variables = formService.getTaskFormVariables(taskId);
 
     // then
-    assertThat(variables).isNotNull();
-    assertThat(variables).hasSize(1);
+    assertThat(variables)
+            .isNotNull()
+            .hasSize(1);
   }
 
   @Test
@@ -807,8 +809,9 @@ public class FormAuthorizationTest extends AuthorizationTest {
     VariableMap variables = formService.getTaskFormVariables(taskId);
 
     // then
-    assertThat(variables).isNotNull();
-    assertThat(variables).hasSize(1);
+    assertThat(variables)
+            .isNotNull()
+            .hasSize(1);
   }
 
   @Test
@@ -823,8 +826,9 @@ public class FormAuthorizationTest extends AuthorizationTest {
     VariableMap variables = formService.getTaskFormVariables(taskId);
 
     // then
-    assertThat(variables).isNotNull();
-    assertThat(variables).hasSize(1);
+    assertThat(variables)
+            .isNotNull()
+            .hasSize(1);
   }
 
   @Test
@@ -839,8 +843,9 @@ public class FormAuthorizationTest extends AuthorizationTest {
     VariableMap variables = formService.getTaskFormVariables(taskId);
 
     // then
-    assertThat(variables).isNotNull();
-    assertThat(variables).hasSize(1);
+    assertThat(variables)
+            .isNotNull()
+            .hasSize(1);
   }
 
   @Test
@@ -855,8 +860,9 @@ public class FormAuthorizationTest extends AuthorizationTest {
     VariableMap variables = formService.getTaskFormVariables(taskId);
 
     // then
-    assertThat(variables).isNotNull();
-    assertThat(variables).hasSize(1);
+    assertThat(variables)
+            .isNotNull()
+            .hasSize(1);
   }
 
   // get task form variables (case task) /////////////////////////////////

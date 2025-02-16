@@ -95,8 +95,9 @@ public class UserTaskTest extends PluggableProcessEngineTest {
 	  // start the process
     runtimeService.startProcessInstanceByKey("ForkProcess");
     List<Task> taskList = taskService.createTaskQuery().list();
-    assertThat(taskList).isNotNull();
-    assertThat(taskList).hasSize(2);
+    assertThat(taskList)
+            .isNotNull()
+            .hasSize(2);
 
     // make sure user task exists
     Task task = taskService.createTaskQuery().taskDefinitionKey("SimpleUser").singleResult();
@@ -112,8 +113,9 @@ public class UserTaskTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("processWithSubProcessesAndParallelGateways");
 
     List<Task> taskList = taskService.createTaskQuery().list();
-    assertThat(taskList).isNotNull();
-    assertThat(taskList).hasSize(13);
+    assertThat(taskList)
+            .isNotNull()
+            .hasSize(13);
 
   }
 

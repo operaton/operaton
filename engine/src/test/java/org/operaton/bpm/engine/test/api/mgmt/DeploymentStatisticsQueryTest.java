@@ -135,14 +135,16 @@ public class DeploymentStatisticsQueryTest extends PluggableProcessEngineTest {
     List<DeploymentStatistics> statistics =
         managementService.createDeploymentStatisticsQuery().includeIncidents().list();
 
-    assertThat(statistics).isNotEmpty();
-    assertThat(statistics).hasSize(1);
+    assertThat(statistics)
+            .isNotEmpty()
+            .hasSize(1);
 
     DeploymentStatistics result = statistics.get(0);
 
     List<IncidentStatistics> incidentStatistics = result.getIncidentStatistics();
-    assertThat(incidentStatistics).isNotEmpty();
-    assertThat(incidentStatistics).hasSize(1);
+    assertThat(incidentStatistics)
+            .isNotEmpty()
+            .hasSize(1);
 
     IncidentStatistics incident = incidentStatistics.get(0);
     assertThat(incident.getIncidentType()).isEqualTo(Incident.FAILED_JOB_HANDLER_TYPE);
@@ -168,14 +170,16 @@ public class DeploymentStatisticsQueryTest extends PluggableProcessEngineTest {
         .includeIncidentsForType("failedJob")
         .list();
 
-    assertThat(statistics).isNotEmpty();
-    assertThat(statistics).hasSize(1);
+    assertThat(statistics)
+            .isNotEmpty()
+            .hasSize(1);
 
     DeploymentStatistics result = statistics.get(0);
 
     List<IncidentStatistics> incidentStatistics = result.getIncidentStatistics();
-    assertThat(incidentStatistics).isNotEmpty();
-    assertThat(incidentStatistics).hasSize(1);
+    assertThat(incidentStatistics)
+            .isNotEmpty()
+            .hasSize(1);
 
     IncidentStatistics incident = incidentStatistics.get(0);
     assertThat(incident.getIncidentType()).isEqualTo(Incident.FAILED_JOB_HANDLER_TYPE);
@@ -201,8 +205,9 @@ public class DeploymentStatisticsQueryTest extends PluggableProcessEngineTest {
         .includeIncidentsForType("invalid")
         .list();
 
-    assertThat(statistics).isNotEmpty();
-    assertThat(statistics).hasSize(1);
+    assertThat(statistics)
+            .isNotEmpty()
+            .hasSize(1);
 
     DeploymentStatistics result = statistics.get(0);
 
@@ -230,16 +235,18 @@ public class DeploymentStatisticsQueryTest extends PluggableProcessEngineTest {
         .includeFailedJobs()
         .list();
 
-    assertThat(statistics).isNotEmpty();
-    assertThat(statistics).hasSize(1);
+    assertThat(statistics)
+            .isNotEmpty()
+            .hasSize(1);
 
     DeploymentStatistics result = statistics.get(0);
 
     assertThat(result.getFailedJobs()).isEqualTo(1);
 
     List<IncidentStatistics> incidentStatistics = result.getIncidentStatistics();
-    assertThat(incidentStatistics).isNotEmpty();
-    assertThat(incidentStatistics).hasSize(1);
+    assertThat(incidentStatistics)
+            .isNotEmpty()
+            .hasSize(1);
 
     IncidentStatistics incident = incidentStatistics.get(0);
     assertThat(incident.getIncidentType()).isEqualTo(Incident.FAILED_JOB_HANDLER_TYPE);
@@ -260,8 +267,9 @@ public class DeploymentStatisticsQueryTest extends PluggableProcessEngineTest {
         .includeFailedJobs()
         .list();
 
-    assertThat(statistics).isNotEmpty();
-    assertThat(statistics).hasSize(1);
+    assertThat(statistics)
+            .isNotEmpty()
+            .hasSize(1);
 
     DeploymentStatistics result = statistics.get(0);
 
@@ -269,8 +277,9 @@ public class DeploymentStatisticsQueryTest extends PluggableProcessEngineTest {
     assertThat(result.getFailedJobs()).isEqualTo(1);
 
     List<IncidentStatistics> incidentStatistics = result.getIncidentStatistics();
-    assertThat(incidentStatistics).isNotEmpty();
-    assertThat(incidentStatistics).hasSize(1);
+    assertThat(incidentStatistics)
+            .isNotEmpty()
+            .hasSize(1);
 
     IncidentStatistics incident = incidentStatistics.get(0);
     assertThat(incident.getIncidentType()).isEqualTo(Incident.FAILED_JOB_HANDLER_TYPE);

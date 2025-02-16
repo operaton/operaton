@@ -126,7 +126,7 @@ public class CustomHistoryLevelWithoutUserOperationLogTest {
     runtimeService.activateProcessInstanceByProcessDefinitionKey("oneTaskProcess");
 
     // then
-    assertThat(query().entityType(PROCESS_INSTANCE).count()).isEqualTo(0);
+    assertThat(query().entityType(PROCESS_INSTANCE).count()).isZero();
   }
 
   @Test
@@ -140,7 +140,7 @@ public class CustomHistoryLevelWithoutUserOperationLogTest {
     repositoryService.activateProcessDefinitionById(process.getProcessDefinitionId(), true, null);
 
     // then
-    assertThat(query().entityType(PROCESS_DEFINITION).count()).isEqualTo(0);
+    assertThat(query().entityType(PROCESS_DEFINITION).count()).isZero();
   }
 
   @Test
@@ -156,8 +156,8 @@ public class CustomHistoryLevelWithoutUserOperationLogTest {
     managementService.activateJobByProcessInstanceId(process.getId());
 
     // then
-    assertThat(query().entityType(JOB_DEFINITION).count()).isEqualTo(0);
-    assertThat(query().entityType(JOB).count()).isEqualTo(0);
+    assertThat(query().entityType(JOB_DEFINITION).count()).isZero();
+    assertThat(query().entityType(JOB).count()).isZero();
   }
 
   @Test
@@ -170,7 +170,7 @@ public class CustomHistoryLevelWithoutUserOperationLogTest {
     managementService.setJobRetries(job.getId(), 10);
 
     // then
-    assertThat(query().entityType(JOB).operationType(OPERATION_TYPE_SET_JOB_RETRIES).count()).isEqualTo(0);
+    assertThat(query().entityType(JOB).operationType(OPERATION_TYPE_SET_JOB_RETRIES).count()).isZero();
   }
 
   // ----- PROCESS INSTANCE MODIFICATION -----
@@ -192,7 +192,7 @@ public class CustomHistoryLevelWithoutUserOperationLogTest {
       .entityType(EntityTypes.PROCESS_INSTANCE)
       .operationType(UserOperationLogEntry.OPERATION_TYPE_MODIFY_PROCESS_INSTANCE);
 
-    assertThat(logQuery.count()).isEqualTo(0);
+    assertThat(logQuery.count()).isZero();
   }
 
   // ----- ADD VARIABLES -----
@@ -285,7 +285,7 @@ public class CustomHistoryLevelWithoutUserOperationLogTest {
         .createUserOperationLogQuery()
         .entityTypeIn(EntityTypes.TASK, EntityTypes.VARIABLE);
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
   }
 
   // ----- DELETE VARIABLE HISTORY -----
@@ -462,7 +462,7 @@ public class CustomHistoryLevelWithoutUserOperationLogTest {
       .createUserOperationLogQuery()
       .caseDefinitionId(caseDefinitionId);
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
 
     taskService.setAssignee(task.getId(), null);
   }
@@ -482,7 +482,7 @@ public class CustomHistoryLevelWithoutUserOperationLogTest {
         .deploymentId(deploymentId);
 
     // then
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
 
     repositoryService.deleteDeployment(deploymentId, true);
   }
@@ -505,7 +505,7 @@ public class CustomHistoryLevelWithoutUserOperationLogTest {
 
   protected void verifyVariableOperationAsserts(String operationType) {
     UserOperationLogQuery logQuery = query().entityType(EntityTypes.VARIABLE).operationType(operationType);
-    assertThat(logQuery.count()).isEqualTo(0);
+    assertThat(logQuery.count()).isZero();
   }
 
   protected UserOperationLogQuery query() {

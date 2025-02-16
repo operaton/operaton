@@ -775,7 +775,7 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testAllListenerByClass.cmmn"})

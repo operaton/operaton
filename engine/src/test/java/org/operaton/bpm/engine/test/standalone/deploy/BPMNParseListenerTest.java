@@ -97,7 +97,7 @@ public class BPMNParseListenerTest {
 
     // then
     // Check if process-definition has different key
-    assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionKey("oneTaskProcess").count()).isEqualTo(0);
+    assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionKey("oneTaskProcess").count()).isZero();
     assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionKey("oneTaskProcess-modified").count()).isEqualTo(1);
   }
 

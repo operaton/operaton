@@ -330,7 +330,7 @@ public class BoundaryTimerNonInterruptingEventTest {
   public void testTimerWithCycle() {
     runtimeService.startProcessInstanceByKey("nonInterruptingCycle").getId();
     TaskQuery tq = taskService.createTaskQuery().taskDefinitionKey("timerFiredTask");
-    assertThat(tq.count()).isEqualTo(0);
+    assertThat(tq.count()).isZero();
     moveByHours(1);
     assertThat(tq.count()).isEqualTo(1);
     moveByHours(1);
@@ -458,7 +458,7 @@ public class BoundaryTimerNonInterruptingEventTest {
     taskService.complete(task.getId());
     task = taskService.createTaskQuery().taskDefinitionKey("sub2task2").singleResult();
     taskService.complete(task.getId());
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().count()).isZero();
 
     testHelper.assertProcessEnded(procId);
   }
@@ -613,7 +613,7 @@ public class BoundaryTimerNonInterruptingEventTest {
     assertThat(jobQuery.count()).isEqualTo(2);
 
     assertThat(managementService.createJobQuery().withException().count()).isEqualTo(1);
-    assertThat(managementService.createJobQuery().noRetriesLeft().count()).isEqualTo(0);
+    assertThat(managementService.createJobQuery().noRetriesLeft().count()).isZero();
     assertThat(managementService.createJobQuery().withRetriesLeft().count()).isEqualTo(2);
 
     // when (2)
@@ -631,7 +631,7 @@ public class BoundaryTimerNonInterruptingEventTest {
     assertThat(jobQuery.count()).isEqualTo(2);
 
     assertThat(managementService.createJobQuery().withException().count()).isEqualTo(1);
-    assertThat(managementService.createJobQuery().noRetriesLeft().count()).isEqualTo(0);
+    assertThat(managementService.createJobQuery().noRetriesLeft().count()).isZero();
     assertThat(managementService.createJobQuery().withRetriesLeft().count()).isEqualTo(2);
   }
 

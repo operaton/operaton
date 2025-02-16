@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.test.api.authorization.batch;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resources;
@@ -73,12 +73,12 @@ public class BatchQueryAuthorizationTest {
 
     batch1 = engineRule.getRuntimeService()
       .newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(pi.getId()))
+      .processInstanceIds(Collections.singletonList(pi.getId()))
       .executeAsync();
 
     batch2 = engineRule.getRuntimeService()
         .newMigration(migrationPlan)
-        .processInstanceIds(Arrays.asList(pi.getId()))
+        .processInstanceIds(Collections.singletonList(pi.getId()))
         .executeAsync();
   }
 

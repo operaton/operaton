@@ -97,7 +97,7 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
     DeploymentQuery query = repositoryService.createDeploymentQuery().deploymentId("invalid");
     assertThat(query.singleResult()).isNull();
     assertThat(query.list()).isEmpty();
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     var deploymentQuery = repositoryService.createDeploymentQuery();
 
     try {
@@ -121,7 +121,7 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
     DeploymentQuery query = repositoryService.createDeploymentQuery().deploymentName("invalid");
     assertThat(query.singleResult()).isNull();
     assertThat(query.list()).isEmpty();
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     var deploymentQuery = repositoryService.createDeploymentQuery();
 
     try {
@@ -149,7 +149,7 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
     DeploymentQuery query = repositoryService.createDeploymentQuery().deploymentNameLike("invalid");
     assertThat(query.singleResult()).isNull();
     assertThat(query.list()).isEmpty();
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     var deploymentQuery = repositoryService.createDeploymentQuery();
 
     try {
@@ -227,7 +227,7 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
         .deploymentSource("invalid");
 
     assertThat(query.list()).isEmpty();
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
   }
 
   @Test

@@ -98,8 +98,9 @@ public class HistoricBatchQueryTest {
       batchIds.add(resultBatch.getId());
     }
 
-    assertThat(batchIds).contains(batch1.getId());
-    assertThat(batchIds).contains(batch2.getId());
+    assertThat(batchIds)
+            .contains(batch1.getId())
+            .contains(batch2.getId());
   }
 
   @Test

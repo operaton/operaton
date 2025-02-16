@@ -2461,7 +2461,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     assertThat(tasks).isEmpty();
 
     // and no incident exists because there are still retries left
-    assertThat(runtimeService.createIncidentQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createIncidentQuery().count()).isZero();
 
     // but when the retry time expires, the task is available again
     ClockUtil.setCurrentTime(nowPlus(4000L));
@@ -2861,7 +2861,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     externalTaskService.setRetries(lockedTask.getId(), 5);
 
     // then the incident is resolved
-    assertThat(runtimeService.createIncidentQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createIncidentQuery().count()).isZero();
 
     if (processEngineConfiguration.getHistoryLevel().getId() >= HistoryLevel.HISTORY_LEVEL_FULL.getId()) {
 
@@ -2913,7 +2913,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     // and resetting the retries removes the incident again
     externalTaskService.setRetries(lockedTask.getId(), 5);
 
-    assertThat(runtimeService.createIncidentQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createIncidentQuery().count()).isZero();
 
   }
 
@@ -3087,7 +3087,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     runtimeService.correlateMessage("Message");
 
     // then the external task instance has been removed
-    assertThat(externalTaskService.createExternalTaskQuery().count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().count()).isZero();
 
     Task afterBoundaryTask = taskService.createTaskQuery().singleResult();
     assertThat(afterBoundaryTask).isNotNull();
@@ -3105,7 +3105,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     List<LockedExternalTask> externalTasks = helperHandleBpmnError(1, WORKER_ID, TOPIC_NAME, LOCK_TIME,  "ERROR-OCCURED");
     //then
     assertThat(externalTasks).isEmpty();
-    assertThat(externalTaskService.createExternalTaskQuery().count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().count()).isZero();
     Task afterBpmnError = taskService.createTaskQuery().singleResult();
     assertThat(afterBpmnError).isNotNull();
     assertThat(afterBpmnError.getTaskDefinitionKey()).isEqualTo("afterBpmnError");
@@ -3123,7 +3123,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
     //then
     assertThat(externalTasks).isEmpty();
-    assertThat(externalTaskService.createExternalTaskQuery().count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().count()).isZero();
     Task afterBpmnError = taskService.createTaskQuery().singleResult();
     assertThat(afterBpmnError).isNull();
     testRule.assertProcessEnded(processInstance.getId());
@@ -3173,7 +3173,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .execute();
 
     assertThat(externalTasks).isEmpty();
-    assertThat(externalTaskService.createExternalTaskQuery().count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().count()).isZero();
     Task afterBpmnError = taskService.createTaskQuery().singleResult();
     assertThat(afterBpmnError).isNotNull();
     assertThat(afterBpmnError.getTaskDefinitionKey()).isEqualTo("afterBpmnError");
@@ -3336,7 +3336,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
     // then
     assertThat(externalTasks).isEmpty();
-    assertThat(externalTaskService.createExternalTaskQuery().count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().count()).isZero();
     Task afterBpmnError = taskService.createTaskQuery().singleResult();
     assertThat(afterBpmnError).isNotNull();
     assertThat(afterBpmnError.getTaskDefinitionKey()).isEqualTo("afterBpmnError");
@@ -3395,7 +3395,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
     // then
     assertThat(externalTasks).isEmpty();
-    assertThat(externalTaskService.createExternalTaskQuery().count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().count()).isZero();
     Task afterBpmnError = taskService.createTaskQuery().singleResult();
     assertThat(afterBpmnError).isNotNull();
     assertThat(afterBpmnError.getTaskDefinitionKey()).isEqualTo("afterBpmnError");
@@ -3427,7 +3427,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
     // then
     assertThat(externalTasks).isEmpty();
-    assertThat(externalTaskService.createExternalTaskQuery().count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().count()).isZero();
     Task afterBpmnError = taskService.createTaskQuery().singleResult();
     assertThat(afterBpmnError).isNotNull();
     assertThat(afterBpmnError.getTaskDefinitionKey()).isEqualTo("afterBpmnError");
@@ -3677,8 +3677,9 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .execute();
     String externalTaskId = lockedTasks.get(0).getId();
 
-    assertThat(lockedTasks).isNotNull();
-    assertThat(lockedTasks).hasSize(1);
+    assertThat(lockedTasks)
+            .isNotNull()
+            .hasSize(1);
 
     ClockUtil.setCurrentTime(nowPlus(2));
     // when
@@ -3715,8 +3716,9 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .execute();
     String externalTaskId = lockedTasks.get(0).getId();
 
-    assertThat(lockedTasks).isNotNull();
-    assertThat(lockedTasks).hasSize(1);
+    assertThat(lockedTasks)
+            .isNotNull()
+            .hasSize(1);
 
     // when
     assertThatThrownBy(() -> externalTaskService.extendLock(externalTaskId, WORKER_ID, 0))
@@ -3736,8 +3738,9 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .execute();
     String externalTaskId = lockedTasks.get(0).getId();
 
-    assertThat(lockedTasks).isNotNull();
-    assertThat(lockedTasks).hasSize(1);
+    assertThat(lockedTasks)
+            .isNotNull()
+            .hasSize(1);
 
     // when
     assertThatThrownBy(() -> externalTaskService.extendLock(externalTaskId, WORKER_ID, -1))
@@ -3757,8 +3760,9 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .execute();
     String externalTaskId = lockedTasks.get(0).getId();
 
-    assertThat(lockedTasks).isNotNull();
-    assertThat(lockedTasks).hasSize(1);
+    assertThat(lockedTasks)
+            .isNotNull()
+            .hasSize(1);
 
     // when
     assertThatThrownBy(() -> externalTaskService.extendLock(externalTaskId, null, 100))
@@ -3778,8 +3782,9 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .execute();
     String externalTaskId = lockedTasks.get(0).getId();
 
-    assertThat(lockedTasks).isNotNull();
-    assertThat(lockedTasks).hasSize(1);
+    assertThat(lockedTasks)
+            .isNotNull()
+            .hasSize(1);
 
     // when
     assertThatThrownBy(() -> externalTaskService.extendLock(externalTaskId, "anAnotherWorkerId", 100))
@@ -3798,8 +3803,9 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .topic(TOPIC_NAME, 1L)
         .execute();
 
-    assertThat(lockedTasks).isNotNull();
-    assertThat(lockedTasks).hasSize(1);
+    assertThat(lockedTasks)
+            .isNotNull()
+            .hasSize(1);
 
     // when
     assertThatThrownBy(() -> externalTaskService.extendLock(null, WORKER_ID, 100))

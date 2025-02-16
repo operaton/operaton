@@ -86,7 +86,7 @@ public class DefaultAuthorizationProviderTest extends PluggableProcessEngineTest
   @Test
   public void testCreateUser() {
     // initially there are no authorizations for jonny2:
-    assertThat(authorizationService.createAuthorizationQuery().userIdIn("jonny2").count()).isEqualTo(0);
+    assertThat(authorizationService.createAuthorizationQuery().userIdIn("jonny2").count()).isZero();
 
     // create new user
     identityService.saveUser(identityService.newUser("jonny2"));
@@ -103,13 +103,13 @@ public class DefaultAuthorizationProviderTest extends PluggableProcessEngineTest
     identityService.deleteUser("jonny2");
 
     // the authorization is deleted as well:
-    assertThat(authorizationService.createAuthorizationQuery().userIdIn("jonny2").count()).isEqualTo(0);
+    assertThat(authorizationService.createAuthorizationQuery().userIdIn("jonny2").count()).isZero();
   }
 
   @Test
   public void testCreateGroup() {
     // initially there are no authorizations for group "sales":
-    assertThat(authorizationService.createAuthorizationQuery().groupIdIn("sales").count()).isEqualTo(0);
+    assertThat(authorizationService.createAuthorizationQuery().groupIdIn("sales").count()).isZero();
 
     // create new group
     identityService.saveGroup(identityService.newGroup("sales"));
@@ -126,7 +126,7 @@ public class DefaultAuthorizationProviderTest extends PluggableProcessEngineTest
     identityService.deleteGroup("sales");
 
     // the authorization is deleted as well:
-    assertThat(authorizationService.createAuthorizationQuery().groupIdIn("sales").count()).isEqualTo(0);
+    assertThat(authorizationService.createAuthorizationQuery().groupIdIn("sales").count()).isZero();
   }
 
 }

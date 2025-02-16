@@ -140,8 +140,9 @@ public class TaskIdentityLinksTest extends PluggableProcessEngineTest {
     taskService.saveTask(task);
 
     List<IdentityLink> identityLinks = taskService.getIdentityLinksForTask(task.getId());
-    assertThat(identityLinks).isNotNull();
-    assertThat(identityLinks).hasSize(1);
+    assertThat(identityLinks)
+            .isNotNull()
+            .hasSize(1);
 
     IdentityLink identityLink = identityLinks.get(0);
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.ASSIGNEE);
@@ -162,8 +163,9 @@ public class TaskIdentityLinksTest extends PluggableProcessEngineTest {
     taskService.saveTask(task);
 
     List<IdentityLink> identityLinks = taskService.getIdentityLinksForTask(task.getId());
-    assertThat(identityLinks).isNotNull();
-    assertThat(identityLinks).hasSize(1);
+    assertThat(identityLinks)
+            .isNotNull()
+            .hasSize(1);
 
     IdentityLink identityLink = identityLinks.get(0);
     assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.OWNER);

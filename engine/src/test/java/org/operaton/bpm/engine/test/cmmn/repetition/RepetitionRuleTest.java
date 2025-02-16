@@ -338,7 +338,7 @@ public class RepetitionRuleTest extends CmmnTest {
 
     // then (2)
     query = caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1");
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
 
     // then (3)
     query = caseService.createCaseExecutionQuery();
@@ -709,7 +709,7 @@ public class RepetitionRuleTest extends CmmnTest {
         .activityId("PI_HumanTask_2");
     assertThat(query.count()).isEqualTo(3);
     assertThat(query.active().count()).isEqualTo(3);
-    assertThat(query.available().count()).isEqualTo(0);
+    assertThat(query.available().count()).isZero();
   }
 
   @Deployment
@@ -754,7 +754,7 @@ public class RepetitionRuleTest extends CmmnTest {
     query = caseService
         .createCaseExecutionQuery()
         .activityId("PI_HumanTask_1");
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
   }
 
   @Deployment

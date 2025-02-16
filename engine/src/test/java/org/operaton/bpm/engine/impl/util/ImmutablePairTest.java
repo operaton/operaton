@@ -29,7 +29,7 @@ public class ImmutablePairTest {
   @Test
   public void shouldReturnBasicValues() {
     final ImmutablePair<Integer, String> pair = new ImmutablePair<>(0, "foo");
-    assertThat(pair.getLeft().intValue()).isEqualTo(0);
+    assertThat(pair.getLeft().intValue()).isZero();
     assertThat(pair.getRight()).isEqualTo("foo");
     final ImmutablePair<Object, String> pair2 = new ImmutablePair<>(null, "bar");
     assertThat(pair2.getLeft()).isNull();
@@ -42,28 +42,31 @@ public class ImmutablePairTest {
     final HashMap<Integer, String> map = new HashMap<>();
     map.put(0, "foo");
     final Entry<Integer, String> entry = map.entrySet().iterator().next();
-    assertThat(entry).isEqualTo(pair);
-    assertThat(entry.hashCode()).isEqualTo(pair.hashCode());
+    assertThat(entry).isEqualTo(pair).hasSameHashCodeAs(pair);
   }
 
   @Test
   public void shouldCompareWithLeftFirst() {
     final ImmutablePair<String, String> pair1 = new ImmutablePair<>("A", "D");
     final ImmutablePair<String, String> pair2 = new ImmutablePair<>("B", "C");
-    assertThat(pair1.compareTo(pair1)).isEqualTo(0);
-    assertThat(pair1.compareTo(pair2) < 0).isTrue();
-    assertThat(pair2.compareTo(pair2)).isEqualTo(0);
-    assertThat(pair2.compareTo(pair1) > 0).isTrue();
+    assertThat(pair1)
+      .isEqualByComparingTo(pair1)
+      .isLessThan(pair2);
+    assertThat(pair2)
+      .isEqualByComparingTo(pair2)
+      .isGreaterThan(pair1);
   }
 
   @Test
   public void shouldCompareWithRightSecond() {
     final ImmutablePair<String, String> pair1 = new ImmutablePair<>("A", "C");
     final ImmutablePair<String, String> pair2 = new ImmutablePair<>("A", "D");
-    assertThat(pair1.compareTo(pair1)).isEqualTo(0);
-    assertThat(pair1.compareTo(pair2) < 0).isTrue();
-    assertThat(pair2.compareTo(pair2)).isEqualTo(0);
-    assertThat(pair2.compareTo(pair1) > 0).isTrue();
+    assertThat(pair1)
+      .isEqualByComparingTo(pair1)
+      .isLessThan(pair2);
+    assertThat(pair2)
+      .isEqualByComparingTo(pair2)
+      .isGreaterThan(pair1);
   }
 
   @Test
@@ -91,6 +94,6 @@ public class ImmutablePairTest {
 
   @Test
   public void shouldHaveSameHashCodeAsEqualObject() {
-    assertThat(new ImmutablePair<>(null, "foo").hashCode()).isEqualTo(new ImmutablePair<>(null, "foo").hashCode());
+    assertThat(new ImmutablePair<>(null, "foo")).hasSameHashCodeAs(new ImmutablePair<>(null, "foo"));
   }
 }

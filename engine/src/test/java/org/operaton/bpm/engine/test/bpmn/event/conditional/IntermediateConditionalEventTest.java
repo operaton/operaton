@@ -671,7 +671,7 @@ public class IntermediateConditionalEventTest extends AbstractConditionalEventTe
       .activityId(EVENT_BASED_GATEWAY_ID)
       .singleResult();
     assertThat(execution).isNotNull();
-    assertThat(taskQuery.count()).isEqualTo(0);
+    assertThat(taskQuery.count()).isZero();
 
     //when right value is set
     runtimeService.setVariable(procInst.getId(), "var", 2);

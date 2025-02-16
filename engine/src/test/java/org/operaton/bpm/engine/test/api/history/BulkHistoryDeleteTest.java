@@ -161,8 +161,8 @@ public class BulkHistoryDeleteTest {
     historyService.deleteHistoricProcessInstancesBulk(ids);
 
     //then
-    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(0);
-    assertThat(historyService.createHistoricIdentityLinkLogQuery().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isZero();
+    assertThat(historyService.createHistoricIdentityLinkLogQuery().count()).isZero();
   }
 
   @Test
@@ -177,8 +177,8 @@ public class BulkHistoryDeleteTest {
     historyService.deleteHistoricProcessInstancesBulk(ids);
 
     //then
-    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(0);
-    assertThat(historyService.createHistoricActivityInstanceQuery().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isZero();
+    assertThat(historyService.createHistoricActivityInstanceQuery().count()).isZero();
   }
 
   @Test
@@ -200,7 +200,7 @@ public class BulkHistoryDeleteTest {
     historyService.deleteHistoricProcessInstancesBulk(ids);
 
     //then
-    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(0);
+    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isZero();
     assertThat(taskService.getTaskAttachments(taskWithAttachmentId)).isEmpty();
     //check that attachment content was removed
     verifyByteArraysWereRemoved(contentId);
@@ -228,7 +228,7 @@ public class BulkHistoryDeleteTest {
     historyService.deleteHistoricProcessInstancesBulk(ids);
 
     //then
-    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(0);
+    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isZero();
     assertThat(taskService.getProcessInstanceAttachments(processInstanceWithAttachmentId)).isEmpty();
     //check that attachment content was removed
     verifyByteArraysWereRemoved(contentId);
@@ -268,7 +268,7 @@ public class BulkHistoryDeleteTest {
     historyService.deleteHistoricProcessInstancesBulk(ids);
 
     //then
-    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(0);
+    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isZero();
     assertThat(taskService.getTaskComments(taskWithCommentId)).isEmpty();
   }
 
@@ -287,7 +287,7 @@ public class BulkHistoryDeleteTest {
     historyService.deleteHistoricProcessInstancesBulk(ids);
 
     //then
-    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(0);
+    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isZero();
     assertThat(taskService.getProcessInstanceComments(processInstanceWithCommentId)).isEmpty();
   }
 
@@ -308,9 +308,9 @@ public class BulkHistoryDeleteTest {
     historyService.deleteHistoricProcessInstancesBulk(ids);
 
     //then
-    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(0);
-    assertThat(historyService.createHistoricDetailQuery().count()).isEqualTo(0);
-    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isZero();
+    assertThat(historyService.createHistoricDetailQuery().count()).isZero();
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isZero();
   }
 
   @Test
@@ -331,9 +331,9 @@ public class BulkHistoryDeleteTest {
     historyService.deleteHistoricProcessInstancesBulk(ids);
 
     //then
-    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(0);
-    assertThat(historyService.createHistoricDetailQuery().count()).isEqualTo(0);
-    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isZero();
+    assertThat(historyService.createHistoricDetailQuery().count()).isZero();
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isZero();
   }
 
   @Test
@@ -356,8 +356,8 @@ public class BulkHistoryDeleteTest {
     historyService.deleteHistoricProcessInstancesBulk(ids);
 
     //then
-    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(0);
-    assertThat(historyService.createHistoricExternalTaskLogQuery().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isZero();
+    assertThat(historyService.createHistoricExternalTaskLogQuery().count()).isZero();
     //check that ByteArray was removed
     verifyByteArraysWereRemoved(errorDetailsByteArrayId);
   }
@@ -384,8 +384,8 @@ public class BulkHistoryDeleteTest {
     historyService.deleteHistoricProcessInstancesBulk(ids);
 
     //then
-    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey("failingProcess").count()).isEqualTo(0);
-    assertThat(historyService.createHistoricIncidentQuery().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey("failingProcess").count()).isZero();
+    assertThat(historyService.createHistoricIncidentQuery().count()).isZero();
 
   }
 
@@ -406,8 +406,8 @@ public class BulkHistoryDeleteTest {
     historyService.deleteHistoricProcessInstancesBulk(ids);
 
     //then
-    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey("failingProcess").count()).isEqualTo(0);
-    assertThat(historyService.createHistoricJobLogQuery().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey("failingProcess").count()).isZero();
+    assertThat(historyService.createHistoricJobLogQuery().count()).isZero();
 
     verifyByteArraysWereRemoved(byteArrayIds.toArray(new String[] {}));
   }
@@ -447,7 +447,7 @@ public class BulkHistoryDeleteTest {
     historyService.deleteHistoricDecisionInstancesBulk(extractIds(historicDecisionInstances));
 
     //then
-    assertThat(historyService.createHistoricDecisionInstanceQuery().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricDecisionInstanceQuery().count()).isZero();
 
     //check that decision inputs and outputs were removed
     assertDataDeleted(inputIds, inputByteArrayIds, outputIds, outputByteArrayIds);
@@ -476,7 +476,7 @@ public class BulkHistoryDeleteTest {
     historyService.deleteHistoricDecisionInstancesBulk(ids);
 
     //then expect no exception
-    assertThat(historyService.createHistoricDecisionInstanceQuery().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricDecisionInstanceQuery().count()).isZero();
   }
 
   void assertDataDeleted(final List<String> inputIds, final List<String> inputByteArrayIds, final List<String> outputIds,
@@ -522,8 +522,8 @@ public class BulkHistoryDeleteTest {
     historyService.deleteHistoricDecisionInstancesBulk(decisionInstanceIds);
 
     //then
-    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey("testProcess").count()).isEqualTo(0);
-    assertThat(historyService.createHistoricDecisionInstanceQuery().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey("testProcess").count()).isZero();
+    assertThat(historyService.createHistoricDecisionInstanceQuery().count()).isZero();
 
     //check that decision inputs and outputs were removed
     assertDataDeleted(inputIds, inputByteArrayIds, outputIds, outputByteArrayIds);
@@ -658,8 +658,8 @@ public class BulkHistoryDeleteTest {
     historyService.deleteHistoricCaseInstancesBulk(caseInstanceIds);
 
     // then
-    assertThat(historyService.createHistoricCaseInstanceQuery().count()).isEqualTo(0);
-    assertThat(historyService.createHistoricTaskInstanceQuery().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricCaseInstanceQuery().count()).isZero();
+    assertThat(historyService.createHistoricTaskInstanceQuery().count()).isZero();
   }
 
   @Test

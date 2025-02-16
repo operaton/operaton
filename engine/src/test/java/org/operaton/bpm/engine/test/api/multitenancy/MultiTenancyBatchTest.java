@@ -182,7 +182,7 @@ public class MultiTenancyBatchTest {
     identityService.clearAuthentication();
 
     // then
-    assertThat(managementService.createBatchQuery().count()).isEqualTo(0);
+    assertThat(managementService.createBatchQuery().count()).isZero();
   }
 
   @Test

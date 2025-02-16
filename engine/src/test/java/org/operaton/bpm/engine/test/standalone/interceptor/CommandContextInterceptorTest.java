@@ -123,7 +123,7 @@ public class CommandContextInterceptorTest extends PluggableProcessEngineTest {
     assertThat(errorThrown).isTrue();
 
     // Check data base consistency
-    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isZero();
   }
 
   protected class ExceptionThrowingCmd implements Command<Void> {

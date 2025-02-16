@@ -160,7 +160,7 @@ public class JobDefinitionFunctionalTest {
 
     testRule.waitForJobExecutorToProcessAllJobs(10000);
 
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
   protected AcquiredJobs acquireJobs() {

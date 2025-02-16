@@ -228,7 +228,7 @@ public class SelfCancellationTest {
     taskService.complete(task.getId());
 
     // then
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
     checkRecordedEvents("receiveTask", "sendTask", "terminateEnd");
   }
 
@@ -269,7 +269,7 @@ public class SelfCancellationTest {
     taskService.complete(task.getId());
 
     // then
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
     checkRecordedEvents("sendTask", "startSubEvent", "endEventSubEvent");
   }
 

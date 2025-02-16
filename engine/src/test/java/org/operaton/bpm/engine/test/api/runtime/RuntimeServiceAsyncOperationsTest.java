@@ -532,7 +532,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
     }
 
     // the process instances related to the first deployment should be deleted
-    assertThat(runtimeService.createProcessInstanceQuery().deploymentId(firstDeploymentId).count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().deploymentId(firstDeploymentId).count()).isZero();
     assertHistoricTaskDeletionPresent(processInstanceIdsFromFirstDeployment, "test_reason", testRule);
     // and process instances related to the second deployment should not be deleted
     assertThat(runtimeService.createProcessInstanceQuery().deploymentId(secondDeploymentId).count()).isEqualTo(processInstanceIdsFromSecondDeployment.size());
@@ -546,7 +546,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
     }
 
     // all of the process instances should be deleted
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
   @Deployment(resources = {

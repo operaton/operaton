@@ -87,7 +87,7 @@ public class JobDefinitionRedeploymentTest {
   public void testJobDefinitionsAfterRedeploment() {
 
     // initially there are no job definitions:
-    assertThat(managementService.createJobDefinitionQuery().count()).isEqualTo(0);
+    assertThat(managementService.createJobDefinitionQuery().count()).isZero();
 
     // initial deployment
     String deploymentId = repositoryService.createDeployment()

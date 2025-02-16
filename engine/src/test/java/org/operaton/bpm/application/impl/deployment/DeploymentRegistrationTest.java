@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.application.impl.deployment;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.operaton.commons.utils.cache.Cache;
+
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Roman Smirnov
@@ -71,7 +71,7 @@ public class DeploymentRegistrationTest extends PluggableProcessEngineTest {
     ProcessDefinition version2 = repositoryService.createProcessDefinitionQuery().deploymentId(deployment2.getId()).singleResult();
 
     // accordingly the process definition cache should only contain the latest version now
-    Cache cache = processEngineConfiguration.getDeploymentCache().getProcessDefinitionCache();
+    var cache = processEngineConfiguration.getDeploymentCache().getProcessDefinitionCache();
     assertThat(cache.get(version2.getId())).isNotNull();
     assertThat(cache.get(version1.getId())).isNull();
 

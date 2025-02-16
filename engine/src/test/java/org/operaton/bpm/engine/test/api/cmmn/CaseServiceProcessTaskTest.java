@@ -147,8 +147,9 @@ public class CaseServiceProcessTaskTest extends PluggableProcessEngineTest {
         .createVariableInstanceQuery()
         .list();
 
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(2);
+    assertThat(result)
+            .isNotEmpty()
+            .hasSize(2);
 
     verifyVariables(caseInstanceId, result);
 
@@ -190,8 +191,9 @@ public class CaseServiceProcessTaskTest extends PluggableProcessEngineTest {
         .createVariableInstanceQuery()
         .list();
 
-    assertThat(result).isNotEmpty();
-    assertThat(result).hasSize(2);
+    assertThat(result)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variable : result) {
 

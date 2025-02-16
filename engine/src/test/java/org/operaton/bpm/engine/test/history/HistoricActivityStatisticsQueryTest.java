@@ -57,7 +57,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     HistoricActivityStatisticsQuery query = historyService.createHistoricActivityStatisticsQuery(processDefinitionId);
     List<HistoricActivityStatistics> statistics = query.list();
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(statistics).isEmpty();
   }
 
@@ -94,7 +94,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
     HistoricActivityStatisticsQuery query = historyService.createHistoricActivityStatisticsQuery(processDefinitionId);
     List<HistoricActivityStatistics> statistics = query.list();
 
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
     assertThat(statistics).isEmpty();
   }
 
@@ -658,7 +658,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
         .finishedAfter(sdf.parse("01.01.2016 00:00:00")).finishedBefore(sdf.parse("31.01.2016 23:59:59")).orderByActivityId().asc();
       statistics = query.list();
 
-      assertThat(query.count()).isEqualTo(0);
+      assertThat(query.count()).isZero();
       assertThat(statistics).isEmpty();
 
       //check February by started dates
@@ -714,7 +714,7 @@ public class HistoricActivityStatisticsQueryTest extends PluggableProcessEngineT
         .finishedAfter(sdf.parse("01.03.2016 00:00:00")).orderByActivityId().asc();
       statistics = query.list();
 
-      assertThat(query.count()).isEqualTo(0);
+      assertThat(query.count()).isZero();
       assertThat(statistics).isEmpty();
 
       //check whole period by started date

@@ -420,7 +420,7 @@ public class ProcessInstantiationAtActivitiesTest extends PluggableProcessEngine
       .execute(true, true);
 
     // then no io mappings have been executed
-    assertThat(runtimeService.createVariableInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createVariableInstanceQuery().count()).isZero();
   }
 
   @Deployment(resources = SUBPROCESS_PROCESS)

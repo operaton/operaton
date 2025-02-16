@@ -261,7 +261,7 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
     // make sure that if a PI completes in single transaction, JobEntities associated with the execution are deleted.
     // broken before 5.10, see ACT-1133
     runtimeService.startProcessInstanceByKey("timerOnSubprocesses");
-    assertThat(managementService.createJobQuery().count()).isEqualTo(0);
+    assertThat(managementService.createJobQuery().count()).isZero();
   }
 
   @Deployment

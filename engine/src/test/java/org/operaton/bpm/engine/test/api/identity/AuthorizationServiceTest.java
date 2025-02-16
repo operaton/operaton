@@ -151,7 +151,7 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
     Resource resource1 = TestResource.RESOURCE1;
 
     // initially, no authorization exists:
-    assertThat(authorizationService.createAuthorizationQuery().count()).isEqualTo(0);
+    assertThat(authorizationService.createAuthorizationQuery().count()).isZero();
 
     // simple create / delete with userId
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
@@ -165,7 +165,7 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
     // delete the authorization
     authorizationService.deleteAuthorization(authorization.getId());
     // it's gone
-    assertThat(authorizationService.createAuthorizationQuery().count()).isEqualTo(0);
+    assertThat(authorizationService.createAuthorizationQuery().count()).isZero();
 
   }
 
@@ -175,7 +175,7 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
     Resource resource1 = TestResource.RESOURCE1;
 
     // initially, no authorization exists:
-    assertThat(authorizationService.createAuthorizationQuery().count()).isEqualTo(0);
+    assertThat(authorizationService.createAuthorizationQuery().count()).isZero();
 
     // simple create / delete with userId
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
@@ -189,7 +189,7 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
     // delete the authorization
     authorizationService.deleteAuthorization(authorization.getId());
     // it's gone
-    assertThat(authorizationService.createAuthorizationQuery().count()).isEqualTo(0);
+    assertThat(authorizationService.createAuthorizationQuery().count()).isZero();
 
   }
 
@@ -531,14 +531,16 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
     assertThat(authorization.isPermissionGranted(ALL)).isFalse();
     assertThat(authorization.isPermissionGranted(NONE)).isTrue();
     List<Permission> perms = Arrays.asList(authorization.getPermissions(Permissions.values()));
-    assertThat(perms).contains(NONE);
-    assertThat(perms).hasSize(1);
+    assertThat(perms)
+            .contains(NONE)
+            .hasSize(1);
 
     authorization.addPermission(READ);
     perms = Arrays.asList(authorization.getPermissions(Permissions.values()));
-    assertThat(perms).contains(NONE);
-    assertThat(perms).contains(READ);
-    assertThat(perms).hasSize(2);
+    assertThat(perms)
+            .contains(NONE)
+            .contains(READ)
+            .hasSize(2);
     assertThat(authorization.isPermissionGranted(READ)).isTrue();
     assertThat(authorization.isPermissionGranted(NONE)).isTrue(); // (none is always granted => you are always authorized to do nothing)
 
@@ -560,14 +562,16 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
     assertThat(authorization.isPermissionGranted(ALL)).isFalse();
     assertThat(authorization.isPermissionGranted(NONE)).isTrue();
     List<Permission> perms = Arrays.asList(authorization.getPermissions(Permissions.values()));
-    assertThat(perms).contains(NONE);
-    assertThat(perms).hasSize(1);
+    assertThat(perms)
+            .contains(NONE)
+            .hasSize(1);
 
     authorization.addPermission(READ);
     perms = Arrays.asList(authorization.getPermissions(Permissions.values()));
-    assertThat(perms).contains(NONE);
-    assertThat(perms).contains(READ);
-    assertThat(perms).hasSize(2);
+    assertThat(perms)
+            .contains(NONE)
+            .contains(READ)
+            .hasSize(2);
     assertThat(authorization.isPermissionGranted(READ)).isTrue();
     assertThat(authorization.isPermissionGranted(NONE)).isTrue(); // (none is always granted => you are always authorized to do nothing)
 
@@ -592,9 +596,10 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
 
     authorization.removePermission(READ);
     perms = Arrays.asList(authorization.getPermissions(Permissions.values()));
-    assertThat(perms).contains(READ);
-    assertThat(perms).contains(ALL);
-    assertThat(perms).hasSize(2);
+    assertThat(perms)
+            .contains(READ)
+            .contains(ALL)
+            .hasSize(2);
 
     try {
       authorization.isPermissionGranted(READ);

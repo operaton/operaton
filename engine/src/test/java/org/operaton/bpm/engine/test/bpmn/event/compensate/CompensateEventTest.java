@@ -290,7 +290,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
     completeTaskWithVariable("Request Vacation", "accept", false);
 
     // should not compensate activity before multi instance activity is completed
-    assertThat(taskService.createTaskQuery().taskName("Cancel Hotel").count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().taskName("Cancel Hotel").count()).isZero();
 
     // complete last open task and end process instance
     completeTask("Book Hotel");
@@ -309,7 +309,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
     completeTaskWithVariable("Request Vacation", "accept", false);
 
     // should not compensate activity before multi instance activity is completed
-    assertThat(taskService.createTaskQuery().taskName("Cancel Hotel").count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().taskName("Cancel Hotel").count()).isZero();
 
     // complete last open task and end process instance
     completeTask("Book Hotel");
@@ -366,7 +366,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
     runtimeService.signal(processInstance.getId());
     testRule.assertProcessEnded(processInstance.getId());
 
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
     if (!processEngineConfiguration.getHistory().equals(ProcessEngineConfiguration.HISTORY_NONE)) {
       assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(6);
@@ -456,7 +456,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
       assertThat(historicVariableInstanceQuery.list().get(0).getVariableName()).isEqualTo("undoBookHotel");
       assertThat(historicVariableInstanceQuery.list().get(0).getValue()).isEqualTo(5);
 
-      assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstance.getId()).variableName("undoBookFlight").count()).isEqualTo(0);
+      assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstance.getId()).variableName("undoBookFlight").count()).isZero();
     }
   }
 
@@ -475,7 +475,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
       assertThat(historicVariableInstanceQuery.list().get(0).getVariableName()).isEqualTo("undoBookHotel");
       assertThat(historicVariableInstanceQuery.list().get(0).getValue()).isEqualTo(5);
 
-      assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstance.getId()).variableName("undoBookFlight").count()).isEqualTo(0);
+      assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstance.getId()).variableName("undoBookFlight").count()).isZero();
     }
   }
 
@@ -492,9 +492,9 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
       assertThat(historicVariableInstanceQuery.list().get(0).getVariableName()).isEqualTo("undoBookSecondHotel");
       assertThat(historicVariableInstanceQuery.list().get(0).getValue()).isEqualTo(5);
 
-      assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstance.getId()).variableName("undoBookFlight").count()).isEqualTo(0);
+      assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstance.getId()).variableName("undoBookFlight").count()).isZero();
 
-      assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstance.getId()).variableName("undoBookHotel").count()).isEqualTo(0);
+      assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstance.getId()).variableName("undoBookHotel").count()).isZero();
     }
   }
 
@@ -643,7 +643,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
 
     if (!processEngineConfiguration.getHistory().equals(ProcessEngineConfiguration.HISTORY_NONE)) {
       assertThat(historyService.createHistoricActivityInstanceQuery().activityId("undoBookHotel").count()).isEqualTo(5);
-      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("undoBookFlight").count()).isEqualTo(0);
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("undoBookFlight").count()).isZero();
     }
 
     testRule.assertProcessEnded(processInstance.getId());

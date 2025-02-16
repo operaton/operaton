@@ -273,7 +273,7 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
     engineRule.getIdentityService().clearAuthentication();
 
     // then
-    assertThat(engineRule.getHistoryService().createUserOperationLogQuery().entityType(EntityTypes.DECISION_INSTANCE).count()).isEqualTo(0);
+    assertThat(engineRule.getHistoryService().createUserOperationLogQuery().entityType(EntityTypes.DECISION_INSTANCE).count()).isZero();
   }
 
   @Test
@@ -288,7 +288,7 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
     engineRule.getIdentityService().clearAuthentication();
 
     // then
-    assertThat(engineRule.getHistoryService().createUserOperationLogQuery().entityType(EntityTypes.DECISION_INSTANCE).count()).isEqualTo(0);
+    assertThat(engineRule.getHistoryService().createUserOperationLogQuery().entityType(EntityTypes.DECISION_INSTANCE).count()).isZero();
   }
 
   @Test
@@ -303,7 +303,7 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
     engineRule.getIdentityService().clearAuthentication();
 
     // then
-    assertThat(engineRule.getHistoryService().createUserOperationLogQuery().entityType(EntityTypes.DECISION_INSTANCE).count()).isEqualTo(0);
+    assertThat(engineRule.getHistoryService().createUserOperationLogQuery().entityType(EntityTypes.DECISION_INSTANCE).count()).isZero();
   }
 
   @Test
@@ -316,7 +316,7 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
     testRule.waitForJobExecutorToProcessAllJobs(5000L);
 
     // then
-    assertThat(engineRule.getHistoryService().createUserOperationLogQuery().count()).isEqualTo(0);
+    assertThat(engineRule.getHistoryService().createUserOperationLogQuery().count()).isZero();
   }
 
   @Test
@@ -330,7 +330,7 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
     testRule.waitForJobExecutorToProcessAllJobs(5000L);
 
     // then
-    assertThat(engineRule.getHistoryService().createUserOperationLogQuery().count()).isEqualTo(0);
+    assertThat(engineRule.getHistoryService().createUserOperationLogQuery().count()).isZero();
   }
 
   @Test
@@ -344,7 +344,7 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
     testRule.waitForJobExecutorToProcessAllJobs(5000L);
 
     // then
-    assertThat(engineRule.getHistoryService().createUserOperationLogQuery().count()).isEqualTo(0);
+    assertThat(engineRule.getHistoryService().createUserOperationLogQuery().count()).isZero();
   }
 
   protected Map<String, UserOperationLogEntry> asMap(List<UserOperationLogEntry> logEntries) {

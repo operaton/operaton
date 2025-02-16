@@ -100,12 +100,10 @@ public class BpmPlatformXmlParserTest {
     assertThat(engineXml.getJobAcquisitionName()).isEqualTo("default");
 
     Map<String, String> properties = engineXml.getProperties();
-    assertThat(properties).isNotNull();
-    assertThat(properties).isEmpty();
+    assertThat(properties).isNotNull().isEmpty();
 
     List<ProcessEnginePluginXml> plugins = engineXml.getPlugins();
-    assertThat(plugins).isNotNull();
-    assertThat(plugins).isEmpty();
+    assertThat(plugins).isNotNull().isEmpty();
 
   }
 
@@ -133,18 +131,13 @@ public class BpmPlatformXmlParserTest {
     assertThat(plugin1.getPluginClass()).isEqualTo("org.operaton.bpm.MyAwesomePlugin");
 
     Map<String, String> properties = plugin1.getProperties();
-    assertThat(properties)
-            .isNotNull()
-            .hasSize(2);
+    assertThat(properties).isNotNull().hasSize(2);
 
     String val1 = properties.get("prop1");
-    assertThat(val1).isNotNull();
-    assertThat(val1).isEqualTo("val1");
+    assertThat(val1).isNotNull().isEqualTo("val1");
 
     String val2 = properties.get("prop2");
-    assertThat(val2).isNotNull();
-    assertThat(val2).isEqualTo("val2");
-
+    assertThat(val2).isNotNull().isEqualTo("val2");
   }
 
   @Test

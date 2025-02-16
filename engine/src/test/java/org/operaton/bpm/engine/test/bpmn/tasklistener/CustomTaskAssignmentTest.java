@@ -64,7 +64,7 @@ public class CustomTaskAssignmentTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("customTaskAssignment");
     assertThat(taskService.createTaskQuery().taskCandidateGroup("management").count()).isEqualTo(1);
     assertThat(taskService.createTaskQuery().taskCandidateUser("kermit").count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskCandidateUser("fozzie").count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().taskCandidateUser("fozzie").count()).isZero();
   }
   
   @Deployment
@@ -73,7 +73,7 @@ public class CustomTaskAssignmentTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("customTaskAssignment");
     assertThat(taskService.createTaskQuery().taskCandidateUser("kermit").count()).isEqualTo(1);
     assertThat(taskService.createTaskQuery().taskCandidateUser("fozzie").count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskCandidateUser("gonzo").count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().taskCandidateUser("gonzo").count()).isZero();
   }
   
   @Deployment
@@ -81,8 +81,8 @@ public class CustomTaskAssignmentTest extends PluggableProcessEngineTest {
   public void testAssigneeAssignment() {
     runtimeService.startProcessInstanceByKey("setAssigneeInListener");
     assertThat(taskService.createTaskQuery().taskAssignee("kermit").singleResult()).isNotNull();
-    assertThat(taskService.createTaskQuery().taskAssignee("fozzie").count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().taskAssignee("gonzo").count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().taskAssignee("fozzie").count()).isZero();
+    assertThat(taskService.createTaskQuery().taskAssignee("gonzo").count()).isZero();
   }
   
   @Deployment
@@ -90,8 +90,8 @@ public class CustomTaskAssignmentTest extends PluggableProcessEngineTest {
   public void testOverwriteExistingAssignments() {
     runtimeService.startProcessInstanceByKey("overrideAssigneeInListener");
     assertThat(taskService.createTaskQuery().taskAssignee("kermit").singleResult()).isNotNull();
-    assertThat(taskService.createTaskQuery().taskAssignee("fozzie").count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().taskAssignee("gonzo").count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().taskAssignee("fozzie").count()).isZero();
+    assertThat(taskService.createTaskQuery().taskAssignee("gonzo").count()).isZero();
   }
 
   @Deployment
@@ -109,8 +109,8 @@ public class CustomTaskAssignmentTest extends PluggableProcessEngineTest {
 
     // check task lists
     assertThat(taskService.createTaskQuery().taskAssignee("gonzo").singleResult()).isNotNull();
-    assertThat(taskService.createTaskQuery().taskAssignee("fozzie").count()).isEqualTo(0);
-    assertThat(taskService.createTaskQuery().taskAssignee("kermit").count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().taskAssignee("fozzie").count()).isZero();
+    assertThat(taskService.createTaskQuery().taskAssignee("kermit").count()).isZero();
   }
   
   @Deployment

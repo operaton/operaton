@@ -217,7 +217,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     ActivityInstance randomSubProcessInstance = getChildInstanceForActivity(updatedTree, "subProcess");
 
-    // then the command suceeds
+    // then the command succeeds
     runtimeService.createProcessInstanceModification(processInstanceId).startBeforeActivity("innerSubProcessTask", randomSubProcessInstance.getId()).execute();
 
     // and the trees are correct
@@ -410,7 +410,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     ActivityInstance randomSubProcessInstance = getChildInstanceForActivity(updatedTree, "subProcess");
 
-    // then the command suceeds
+    // then the command succeeds
     runtimeService.createProcessInstanceModification(processInstanceId).startTransition("flow5", randomSubProcessInstance.getId()).execute();
 
     // and the trees are correct
@@ -516,7 +516,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
     try {
       processInstanceModificationBuilder.execute();
 
-      fail("should not suceed");
+      fail("should not succeed");
 
     } catch (ProcessEngineException e) {
       // happy path
@@ -603,7 +603,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     ActivityInstance randomSubProcessInstance = getChildInstanceForActivity(updatedTree, "subProcess");
 
-    // then the command suceeds
+    // then the command succeeds
     runtimeService.createProcessInstanceModification(processInstanceId).startAfterActivity("innerSubProcessStart", randomSubProcessInstance.getId()).execute();
 
     // and the trees are correct
@@ -685,7 +685,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
     try {
       processInstanceModificationBuilder.execute();
 
-      fail("should not suceed since 'fork' has more than one outgoing sequence flow");
+      fail("should not succeed since 'fork' has more than one outgoing sequence flow");
 
     } catch (ProcessEngineException e) {
       // happy path
@@ -703,7 +703,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
     try {
       processInstanceModificationBuilder.execute();
 
-      fail("should not suceed since 'theEnd' has no outgoing sequence flow");
+      fail("should not succeed since 'theEnd' has no outgoing sequence flow");
 
     } catch (ProcessEngineException e) {
       // happy path
@@ -826,7 +826,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
     RecorderExecutionListener.clear();
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("subprocess",
-        Collections.<String, Object> singletonMap("listener", new RecorderExecutionListener()));
+        Collections.singletonMap("listener", new RecorderExecutionListener()));
 
     String processInstanceId = processInstance.getId();
 
@@ -873,7 +873,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
     RecorderExecutionListener.clear();
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("subprocess",
-        Collections.<String, Object> singletonMap("listener", new RecorderExecutionListener()));
+        Collections.singletonMap("listener", new RecorderExecutionListener()));
 
     String processInstanceId = processInstance.getId();
 
@@ -1200,7 +1200,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
     runtimeService.createProcessInstanceModification(processInstance.getId()).cancelActivityInstance(getInstanceIdForActivity(tree, "innerTask2")).execute();
 
     // then the innerTask compensation should be removed
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isZero();
   }
 
   @Deployment
@@ -1247,7 +1247,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
     runtimeService.createProcessInstanceModification(processInstance.getId()).cancelActivityInstance(getInstanceIdForActivity(tree, "innerTask")).execute();
 
     // then no compensation event subscription exists
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isZero();
 
     // and the compensation throw event does not trigger compensation handlers
     Task task = taskService.createTaskQuery().singleResult();
@@ -1574,7 +1574,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testCancelNonExistingTranisitionInstance() {
+  public void testCancelNonExistingTransitionInstance() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     var processInstanceModificationBuilder = runtimeService.createProcessInstanceModification(instance.getId()).cancelTransitionInstance("nonExistingActivityInstance");
@@ -1593,7 +1593,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
   @Deployment(resources = { CALL_ACTIVITY_PARENT_PROCESS, CALL_ACTIVITY_CHILD_PROCESS })
   public void FAILING_testCancelCallActivityInstance() {
     // given
-    ProcessInstance parentprocess = runtimeService.startProcessInstanceByKey("parentprocess");
+    ProcessInstance parentProcess = runtimeService.startProcessInstanceByKey("parentprocess");
     ProcessInstance subProcess = runtimeService.createProcessInstanceQuery().processDefinitionKey("subprocess").singleResult();
 
     ActivityInstance subProcessActivityInst = runtimeService.getActivityInstance(subProcess.getId());
@@ -1603,7 +1603,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
         .cancelActivityInstance(getInstanceIdForActivity(subProcessActivityInst, "innerTask")).execute();
 
     // then
-    testRule.assertProcessEnded(parentprocess.getId());
+    testRule.assertProcessEnded(parentProcess.getId());
   }
 
   @Test

@@ -54,7 +54,7 @@ public class AuthorizationUserOperationLogTest extends AuthorizationTest {
     // given
     createGrantAuthorizationWithoutAuthentication(OPERATION_LOG_CATEGORY, CATEGORY_ADMIN, userId, READ);
     UserOperationLogQuery query = historyService.createUserOperationLogQuery();
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
 
     // when
     createGrantAuthorizationGroup(PROCESS_DEFINITION, Authorization.ANY, "testGroupId", ProcessDefinitionPermissions.DELETE);
@@ -106,7 +106,7 @@ public class AuthorizationUserOperationLogTest extends AuthorizationTest {
     Authorization authorization = createGrantAuthorizationWithoutAuthentication(Resources.PROCESS_DEFINITION, Authorization.ANY, "testUserId",
         Permissions.DELETE);
     createGrantAuthorizationWithoutAuthentication(OPERATION_LOG_CATEGORY, CATEGORY_ADMIN, userId, READ);
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
 
     // when
     authorization.addPermission(Permissions.READ);
@@ -176,7 +176,7 @@ public class AuthorizationUserOperationLogTest extends AuthorizationTest {
     Authorization authorization = createGrantAuthorizationWithoutAuthentication(Resources.PROCESS_DEFINITION, Authorization.ANY, "testUserId",
         ProcessDefinitionPermissions.DELETE);
     createGrantAuthorizationWithoutAuthentication(OPERATION_LOG_CATEGORY, CATEGORY_ADMIN, userId, READ);
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
 
     // when
     authorizationService.deleteAuthorization(authorization.getId());
@@ -226,7 +226,7 @@ public class AuthorizationUserOperationLogTest extends AuthorizationTest {
     // given
     createGrantAuthorizationWithoutAuthentication(OPERATION_LOG_CATEGORY, CATEGORY_ADMIN, userId, READ);
     UserOperationLogQuery query = historyService.createUserOperationLogQuery();
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
 
     // when
     PermissionProvider permissionProvider = processEngineConfiguration.getPermissionProvider();
@@ -249,7 +249,7 @@ public class AuthorizationUserOperationLogTest extends AuthorizationTest {
     // given
     createGrantAuthorizationWithoutAuthentication(OPERATION_LOG_CATEGORY, CATEGORY_ADMIN, userId, READ);
     UserOperationLogQuery query = historyService.createUserOperationLogQuery();
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
 
     // when
     PermissionProvider permissionProvider = processEngineConfiguration.getPermissionProvider();
@@ -272,7 +272,7 @@ public class AuthorizationUserOperationLogTest extends AuthorizationTest {
     // given
     createGrantAuthorizationWithoutAuthentication(OPERATION_LOG_CATEGORY, CATEGORY_ADMIN, userId, READ);
     UserOperationLogQuery query = historyService.createUserOperationLogQuery();
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
 
     // when
     PermissionProvider permissionProvider = processEngineConfiguration.getPermissionProvider();
@@ -294,13 +294,13 @@ public class AuthorizationUserOperationLogTest extends AuthorizationTest {
   public void testLogCreatedOnAuthorizationCreationWithoutAuthorization() {
     // given
     UserOperationLogQuery query = historyService.createUserOperationLogQuery();
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
 
     // when
     createGrantAuthorizationGroup(PROCESS_DEFINITION, Authorization.ANY, "testGroupId", ProcessDefinitionPermissions.DELETE);
 
     // then the user is not authorised
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
   }
 
   @Test
@@ -308,7 +308,7 @@ public class AuthorizationUserOperationLogTest extends AuthorizationTest {
     // given
     createGrantAuthorizationWithoutAuthentication(OPERATION_LOG_CATEGORY, Authorization.ANY, userId, READ);
     UserOperationLogQuery query = historyService.createUserOperationLogQuery();
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
 
     // when
     createGrantAuthorizationGroup(PROCESS_DEFINITION, Authorization.ANY, "testGroupId", ProcessDefinitionPermissions.DELETE);
@@ -322,13 +322,13 @@ public class AuthorizationUserOperationLogTest extends AuthorizationTest {
     // given
     createGrantAuthorizationWithoutAuthentication(OPERATION_LOG_CATEGORY, CATEGORY_OPERATOR, userId, READ);
     UserOperationLogQuery query = historyService.createUserOperationLogQuery();
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
 
     // when
     createGrantAuthorizationGroup(PROCESS_DEFINITION, Authorization.ANY, "testGroupId", ProcessDefinitionPermissions.DELETE);
 
     // then the user is not authorised
-    assertThat(query.count()).isEqualTo(0);
+    assertThat(query.count()).isZero();
   }
 
   public static class TestPermissionProvider extends DefaultPermissionProvider {

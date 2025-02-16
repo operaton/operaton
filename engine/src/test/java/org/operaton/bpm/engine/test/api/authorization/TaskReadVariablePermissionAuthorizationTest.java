@@ -226,8 +226,9 @@ public class TaskReadVariablePermissionAuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     authRule.disableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).hasSize(1);
+    assertThat(linksForTask)
+            .isNotNull()
+            .hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertThat(identityLink).isNotNull();
@@ -256,8 +257,9 @@ public class TaskReadVariablePermissionAuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     authRule.disableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).hasSize(1);
+    assertThat(linksForTask)
+            .isNotNull()
+            .hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertThat(identityLink).isNotNull();
@@ -285,8 +287,9 @@ public class TaskReadVariablePermissionAuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     authRule.disableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).hasSize(1);
+    assertThat(linksForTask)
+            .isNotNull()
+            .hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertThat(identityLink).isNotNull();
@@ -316,8 +319,9 @@ public class TaskReadVariablePermissionAuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     authRule.disableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).hasSize(1);
+    assertThat(linksForTask)
+            .isNotNull()
+            .hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
     assertThat(identityLink).isNotNull();

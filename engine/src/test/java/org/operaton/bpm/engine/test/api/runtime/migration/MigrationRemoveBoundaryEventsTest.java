@@ -873,7 +873,7 @@ public class MigrationRemoveBoundaryEventsTest {
     Job jobAfterMigration = rule.getManagementService().createJobQuery().jobId(jobBeforeMigration.getId()).singleResult();
     assertThat(jobAfterMigration).isNull();
 
-    assertThat(rule.getRuntimeService().createIncidentQuery().count()).isEqualTo(0);
+    assertThat(rule.getRuntimeService().createIncidentQuery().count()).isZero();
   }
 
   protected void executeJob(Job job) {

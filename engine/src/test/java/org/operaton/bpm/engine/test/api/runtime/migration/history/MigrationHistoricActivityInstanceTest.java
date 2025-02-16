@@ -89,7 +89,7 @@ public class MigrationHistoricActivityInstanceTest {
 
     //when
     assertThat(sourceHistoryActivityInstanceQuery.count()).isEqualTo(2);
-    assertThat(targetHistoryActivityInstanceQuery.count()).isEqualTo(0);
+    assertThat(targetHistoryActivityInstanceQuery.count()).isZero();
     ProcessInstanceQuery sourceProcessInstanceQuery = runtimeService.createProcessInstanceQuery().processDefinitionId(sourceProcessDefinition.getId());
     runtimeService.newMigration(migrationPlan)
       .processInstanceQuery(sourceProcessInstanceQuery)

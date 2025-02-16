@@ -187,7 +187,7 @@ public class ProcessInstanceQueryTest {
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
     try {
       query.singleResult();
-      fail("");
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       // Exception is expected
     }
@@ -215,7 +215,7 @@ public class ProcessInstanceQueryTest {
 
     try {
       query.singleResult();
-      fail("");
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       // Exception is expected
     }
@@ -283,7 +283,7 @@ public class ProcessInstanceQueryTest {
     try {
       // when
       processInstanceQuery.processDefinitionKeyIn((String) null);
-      fail("");
+      fail("Exception expected");
     } catch(ProcessEngineException expected) {
       // then Exception is expected
     }
@@ -295,7 +295,7 @@ public class ProcessInstanceQueryTest {
     try {
       // when
       processInstanceQuery.processDefinitionKeyIn(PROCESS_DEFINITION_KEY, null);
-      fail("");
+      fail("Exception expected");
     } catch(ProcessEngineException expected) {
       // Exception is expected
     }
@@ -339,7 +339,7 @@ public class ProcessInstanceQueryTest {
     try {
       // when
       processInstanceQuery.processDefinitionKeyNotIn((String) null);
-      fail("");
+      fail("Exception expected");
     } catch(ProcessEngineException expected) {
       // then Exception is expected
     }
@@ -351,7 +351,7 @@ public class ProcessInstanceQueryTest {
     try {
       // when
       processInstanceQuery.processDefinitionKeyNotIn(PROCESS_DEFINITION_KEY, null);
-      fail("");
+      fail("Exception expected");
     } catch(ProcessEngineException expected) {
       // then Exception is expected
     }
@@ -395,7 +395,7 @@ public class ProcessInstanceQueryTest {
 
     try {
       processInstanceQuery.processInstanceBusinessKey(null);
-      fail("");
+      fail("Exception expected");
     } catch(ProcessEngineException ignored) {
       assertThat(ignored.getMessage()).isEqualTo("Business key is null");
     }
@@ -510,7 +510,7 @@ public class ProcessInstanceQueryTest {
     var processInstanceQuery = runtimeService.createProcessInstanceQuery().orderByProcessDefinitionId();
     try {
       processInstanceQuery.list(); // asc - desc not called -> exception
-      fail("");
+      fail("Exception expected");
     }catch (ProcessEngineException ignored) {
       // expected
     }
@@ -1496,7 +1496,7 @@ public class ProcessInstanceQueryTest {
 
     try {
       query.incidentId(null);
-      fail("");
+      fail("Exception expected");
     } catch (ProcessEngineException ignored) {
       // expected
     }
@@ -1529,7 +1529,7 @@ public class ProcessInstanceQueryTest {
 
     try {
       query.incidentType(null);
-      fail("");
+      fail("Exception expected");
     } catch (ProcessEngineException ignored) {
       // expected
     }
@@ -1562,7 +1562,7 @@ public class ProcessInstanceQueryTest {
 
     try {
       query.incidentMessage(null);
-      fail("");
+      fail("Exception expected");
     } catch (ProcessEngineException ignored) {
       // expected
     }
@@ -1593,7 +1593,7 @@ public class ProcessInstanceQueryTest {
 
     try {
       query.incidentMessageLike(null);
-      fail("");
+      fail("Exception expected");
     } catch (ProcessEngineException ignored) {
       // expected
     }
@@ -1855,7 +1855,7 @@ public class ProcessInstanceQueryTest {
 
     try {
       query.superCaseInstanceId(null);
-      fail("");
+      fail("Exception expected");
     } catch (NullValueException e) {
       // expected
     }
@@ -1920,7 +1920,7 @@ public class ProcessInstanceQueryTest {
 
     try {
       query.subCaseInstanceId(null);
-      fail("");
+      fail("Exception expected");
     } catch (NullValueException e) {
       // expected
     }
@@ -2010,7 +2010,7 @@ public class ProcessInstanceQueryTest {
 
     try {
       processInstanceQuery.deploymentId(null);
-      fail("");
+      fail("Exception expected");
     } catch(ProcessEngineException e) {
       assertThat(e.getMessage()).isEqualTo("Deployment id is null");
     }

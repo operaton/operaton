@@ -792,7 +792,7 @@ public class RuntimeServiceTest {
     // there exist two executions: the inactive parent (the process instance) and the child that actually waits in the receive task
     try {
       runtimeService.signal(instanceId);
-      fail("");
+      fail("Exception expected");
     } catch(ProcessEngineException e) {
       // happy path
       testRule.assertTextPresent("cannot signal execution " + instance.getId() + ": it has no current activity", e.getMessage());

@@ -500,7 +500,7 @@ public class IncidentQueryTest {
 
     try {
       query.singleResult();
-      fail("");
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       // Exception is expected
     }

@@ -144,7 +144,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
 
     try {
       query.singleResult();
-      fail("");
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       // expected
     }
@@ -215,7 +215,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     var executionQuery = runtimeService.createExecutionQuery().orderByProcessDefinitionKey();
     try {
       executionQuery.list();
-      fail("");
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       // expected
     }
@@ -1220,7 +1220,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
 
     try {
       query.incidentId(null);
-      fail("");
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       // expected
     }
@@ -1253,7 +1253,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
 
     try {
       query.incidentType(null);
-      fail("");
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       // expected
     }
@@ -1286,7 +1286,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
 
     try {
       query.incidentMessage(null);
-      fail("");
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       // expected
     }
@@ -1317,7 +1317,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
 
     try {
       query.incidentMessageLike(null);
-      fail("");
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       // expected
     }

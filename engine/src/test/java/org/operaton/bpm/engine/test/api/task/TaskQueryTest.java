@@ -206,7 +206,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     try {
       taskQuery.singleResult();
-      fail("");
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       // expected
     }

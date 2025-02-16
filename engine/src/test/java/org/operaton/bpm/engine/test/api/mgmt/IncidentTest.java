@@ -436,7 +436,7 @@ public class IncidentTest extends PluggableProcessEngineTest {
     while(0 != job.getRetries()) {
       try {
         managementService.executeJob(jobId);
-        fail("");
+        fail("Exception expected");
       } catch (Exception e) {
         // expected
       }

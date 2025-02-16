@@ -389,7 +389,7 @@ public class ActivityStatisticsQueryTest extends PluggableProcessEngineTest {
     var activityStatisticsQuery = managementService.createActivityStatisticsQuery(null);
     try {
       activityStatisticsQuery.list();
-      fail("");
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       // expected
     }

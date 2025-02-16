@@ -261,7 +261,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
 
     try {
       report.duration(null);
-      fail("");
+      fail("Exception expected");
     } catch (NotValidException e) {}
   }
 
@@ -331,7 +331,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
 
     try {
       report.startedBefore(null);
-      fail("");
+      fail("Exception expected");
     } catch (NotValidException e) {}
   }
 
@@ -395,7 +395,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
 
     try {
       report.startedAfter(null);
-      fail("");
+      fail("Exception expected");
     } catch (NotValidException e) {}
   }
 

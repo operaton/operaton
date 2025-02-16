@@ -301,7 +301,7 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
     var jobDefinitionQuery = managementService.createJobDefinitionQuery().orderByJobDefinitionId();
     try {
       jobDefinitionQuery.list();
-      fail("");
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       testRule.assertTextPresent("call asc() or desc() after using orderByXX()", e.getMessage());
     }
@@ -309,7 +309,7 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
     var jobQuery = managementService.createJobQuery();
     try {
       jobQuery.asc();
-      fail("");
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       testRule.assertTextPresent("You should call any of the orderBy methods first before specifying a direction", e.getMessage());
     }
@@ -353,7 +353,7 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
   private void verifySingleResultFails(JobDefinitionQuery query) {
     try {
       query.singleResult();
-      fail("");
+      fail("Exception expected");
     } catch (ProcessEngineException e) {}
   }
 

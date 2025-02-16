@@ -196,7 +196,7 @@ public class JobQueryTest {
 
     try {
       jobQuery.activityId(null);
-      fail("");
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).isEqualTo("Provided activity id is null");
     }
@@ -218,7 +218,7 @@ public class JobQueryTest {
 
     try {
       jobQuery.jobDefinitionId(null);
-      fail("");
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).isEqualTo("Provided job definition id is null");
     }
@@ -238,7 +238,7 @@ public class JobQueryTest {
 
     try {
       jobQuery.processInstanceId(null);
-      fail("");
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).isEqualTo("Provided process instance id is null");
     }
@@ -260,7 +260,7 @@ public class JobQueryTest {
 
     try {
       jobQuery.executionId(null);
-      fail("");
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).isEqualTo("Provided execution id is null");
     }
@@ -282,7 +282,7 @@ public class JobQueryTest {
 
     try {
       jobQuery.processDefinitionId(null);
-      fail("");
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).isEqualTo("Provided process definition id is null");
     }
@@ -324,7 +324,7 @@ public class JobQueryTest {
 
     try {
       jobQuery.processDefinitionKey(null);
-      fail("");
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).isEqualTo("Provided process instance key is null");
     }
@@ -391,7 +391,7 @@ public class JobQueryTest {
     var jobQuery = managementService.createJobQuery().timers();
     try {
       jobQuery.messages();
-      fail("");
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).contains("Cannot combine onlyTimers() with onlyMessages() in the same query");
     }
@@ -625,7 +625,7 @@ public class JobQueryTest {
 
     try {
       jobQuery.failedActivityId(null);
-      fail("");
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).isEqualTo("Provided activity id is null");
     }
@@ -868,7 +868,7 @@ public class JobQueryTest {
     var jobQuery = managementService.createJobQuery().orderByJobId();
     try {
       jobQuery.list();
-      fail("");
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).contains("call asc() or desc() after using orderByXX()");
     }
@@ -876,7 +876,7 @@ public class JobQueryTest {
     var jobQuery2 = managementService.createJobQuery();
     try {
       jobQuery2.asc();
-      fail("");
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).contains("You should call any of the orderBy methods first before specifying a direction");
     }
@@ -941,7 +941,7 @@ public class JobQueryTest {
   private void verifySingleResultFails(JobQuery query) {
     try {
       query.singleResult();
-      fail("");
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       // expected
     }

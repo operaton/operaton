@@ -665,14 +665,14 @@ public class HistoricProcessInstanceTest {
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
     try {
       historicProcessInstanceQuery.asc();
-      fail("");
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).isEqualTo("You should call any of the orderBy methods first before specifying a direction: currentOrderingProperty is null");
     }
 
     try {
       historicProcessInstanceQuery.desc();
-      fail("");
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).isEqualTo("You should call any of the orderBy methods first before specifying a direction: currentOrderingProperty is null");
     }
@@ -680,7 +680,7 @@ public class HistoricProcessInstanceTest {
     var historicProcessInstanceQuery1 = historicProcessInstanceQuery.orderByProcessInstanceId();
     try {
       historicProcessInstanceQuery1.list();
-      fail("");
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).isEqualTo("Invalid query: call asc() or desc() after using orderByXX(): direction is null");
     }
@@ -2173,7 +2173,7 @@ public class HistoricProcessInstanceTest {
     try {
       // when
       historicProcessInstanceQuery.processDefinitionKeyIn((String) null);
-      fail("");
+      fail("Exception expected");
     } catch(ProcessEngineException expected) {
       // then Exception is expected
     }
@@ -2185,7 +2185,7 @@ public class HistoricProcessInstanceTest {
     try {
       // when
       historicProcessInstanceQuery.processDefinitionKeyIn(ProcessModels.PROCESS_KEY, null);
-      fail("");
+      fail("Exception expected");
     } catch(ProcessEngineException expected) {
       // then Exception is expected
     }

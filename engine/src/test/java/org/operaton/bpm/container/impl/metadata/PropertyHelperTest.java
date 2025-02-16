@@ -133,7 +133,7 @@ public class PropertyHelperTest {
 
     try {
       PropertyHelper.applyProperties(engineConfiguration, propertiesToSet);
-      fail("");
+      fail("Exception expected");
     } catch (Exception e) {
       // happy path
     }

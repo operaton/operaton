@@ -672,7 +672,7 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
     // Try to delete the job. This should fail.
     try {
       managementService.deleteJob(timerJobId);
-      fail("");
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       // Exception is expected
     }

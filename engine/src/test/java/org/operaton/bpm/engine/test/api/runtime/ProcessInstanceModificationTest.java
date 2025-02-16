@@ -256,7 +256,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
     try {
       processInstanceModificationInstantiationBuilder.execute();
-      fail("");
+      fail("Exception expected");
     } catch (NotValidException e) {
       // happy path
       testRule.assertTextPresent("Cannot perform instruction: " + "Start before activity 'subProcess' with ancestor activity instance 'noValidActivityInstanceId'; "
@@ -266,7 +266,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
     var processInstanceModificationBuilder1 = runtimeService.createProcessInstanceModification(processInstance.getId());
     try {
       processInstanceModificationBuilder1.startBeforeActivity("subProcess", null);
-      fail("");
+      fail("Exception expected");
     } catch (NotValidException e) {
       // happy path
       testRule.assertTextPresent("ancestorActivityInstanceId is null", e.getMessage());
@@ -449,7 +449,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
     try {
       processInstanceModificationInstantiationBuilder1.execute();
-      fail("");
+      fail("Exception expected");
     } catch (NotValidException e) {
       // happy path
       testRule.assertTextPresent("Cannot perform instruction: " + "Start transition 'flow5' with ancestor activity instance 'noValidActivityInstanceId'; "
@@ -459,7 +459,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
     var processInstanceModificationInstantiationBuilder2 = runtimeService.createProcessInstanceModification(processInstanceId);
     try {
       processInstanceModificationInstantiationBuilder2.startTransition("flow5", null);
-      fail("");
+      fail("Exception expected");
     } catch (NotValidException e) {
       // happy path
       testRule.assertTextPresent("ancestorActivityInstanceId is null", e.getMessage());
@@ -642,7 +642,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
     try {
       processInstanceModificationInstantiationBuilder1.execute();
-      fail("");
+      fail("Exception expected");
     } catch (NotValidException e) {
       // happy path
       testRule.assertTextPresent(
@@ -654,7 +654,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
     var processInstanceModificationInstantiationBuilder2 = runtimeService.createProcessInstanceModification(processInstanceId);
     try {
       processInstanceModificationInstantiationBuilder2.startAfterActivity("innerSubProcessStart", null);
-      fail("");
+      fail("Exception expected");
     } catch (NotValidException e) {
       // happy path
       testRule.assertTextPresent("ancestorActivityInstanceId is null", e.getMessage());

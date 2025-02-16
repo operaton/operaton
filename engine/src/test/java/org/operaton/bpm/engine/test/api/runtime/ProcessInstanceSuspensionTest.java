@@ -732,7 +732,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
 
     try {
       formService.submitTaskFormData(taskQuery, emptyProperties);
-      fail("");
+      fail("Exception expected");
     } catch(SuspendedEntityInteractionException e) {
       // This is expected
     }

@@ -39,19 +39,16 @@ public class EmptyProcessesXmlTest {
     ProcessesXml emptyProcessesXml = ProcessesXml.EMPTY_PROCESSES_XML;
     assertThat(emptyProcessesXml).isNotNull();
 
-    assertThat(emptyProcessesXml.getProcessEngines()).isNotNull();
-    assertThat(emptyProcessesXml.getProcessEngines()).isEmpty();
+    assertThat(emptyProcessesXml.getProcessEngines()).isNotNull().isEmpty();
 
-    assertThat(emptyProcessesXml.getProcessArchives()).isNotNull();
-    assertThat(emptyProcessesXml.getProcessArchives()).hasSize(1);
+    assertThat(emptyProcessesXml.getProcessArchives()).isNotNull().hasSize(1);
 
     ProcessArchiveXml processArchiveXml = emptyProcessesXml.getProcessArchives().get(0);
 
     assertThat(processArchiveXml.getName()).isNull();
     assertThat(processArchiveXml.getProcessEngineName()).isNull();
 
-    assertThat(processArchiveXml.getProcessResourceNames()).isNotNull();
-    assertThat(processArchiveXml.getProcessResourceNames()).isEmpty();
+    assertThat(processArchiveXml.getProcessResourceNames()).isNotNull().isEmpty();
 
     Map<String, String> properties = processArchiveXml.getProperties();
 

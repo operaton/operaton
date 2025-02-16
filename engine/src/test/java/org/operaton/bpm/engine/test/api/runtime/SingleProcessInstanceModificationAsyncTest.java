@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.test.api.runtime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
+
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
@@ -432,7 +434,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     try {
       executeSeedAndBatchJobs(modificationBatch);
 
-      fail("should not suceed");
+      fail("should not succeed");
 
     } catch (ProcessEngineException e) {
       // happy path
@@ -566,7 +568,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
     try {
       executeSeedAndBatchJobs(modificationBatch);
-      fail("should not suceed since 'fork' has more than one outgoing sequence flow");
+      fail("should not succeed since 'fork' has more than one outgoing sequence flow");
     } catch (ProcessEngineException e) {
       // happy path
       testRule.assertTextPresent("activity has more than one outgoing sequence flow", e.getMessage());
@@ -586,7 +588,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
     try {
       executeSeedAndBatchJobs(modificationBatch);
-      fail("should not suceed since 'theEnd' has no outgoing sequence flow");
+      fail("should not succeed since 'theEnd' has no outgoing sequence flow");
 
     } catch (ProcessEngineException e) {
       // happy path
@@ -725,7 +727,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
   @Test
   public void testSkipTaskListenerInvocation() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("taskListenerProcess", "brum",
-        Collections.<String, Object>singletonMap("listener", new RecorderTaskListener()));
+        Collections.singletonMap("listener", new RecorderTaskListener()));
 
     String processInstanceId = processInstance.getId();
 
@@ -929,7 +931,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
-  public void testCancelNonExistingTranisitionInstance() {
+  public void testCancelNonExistingTransitionInstance() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     Batch modificationBatch = runtimeService

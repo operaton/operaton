@@ -45,12 +45,7 @@ public class StartProcessInterceptor implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  BusinessProcess businessProcess;
-
-  @Inject
-  public StartProcessInterceptor(BusinessProcess businessProcess) {
-    this.businessProcess = businessProcess;
-  }
+  @Inject BusinessProcess businessProcess;
 
   @AroundInvoke
   public Object invoke(InvocationContext ctx) throws Exception {

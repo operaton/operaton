@@ -30,7 +30,7 @@ import org.operaton.bpm.engine.cdi.annotation.CompleteTask;
 
 /**
  * {@link Interceptor} for handling the {@link CompleteTask}-Annotation
- *
+ * 
  * @author Daniel Meyer
  */
 @Interceptor
@@ -39,12 +39,7 @@ public class CompleteTaskInterceptor implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  BusinessProcess businessProcess;
-
-  @Inject
-  public CompleteTaskInterceptor(BusinessProcess businessProcess) {
-    this.businessProcess = businessProcess;
-  }
+  @Inject BusinessProcess businessProcess;
 
   @AroundInvoke
   public Object invoke(InvocationContext ctx) throws Exception {
@@ -52,8 +47,8 @@ public class CompleteTaskInterceptor implements Serializable {
       Object result = ctx.proceed();
 
       CompleteTask completeTaskAnnotation = ctx.getMethod().getAnnotation(CompleteTask.class);
-      boolean endConversation = completeTaskAnnotation.endConversation();
-      businessProcess.completeTask(endConversation);
+      boolean endConversation = completeTaskAnnotation.endConversation();    
+      businessProcess.completeTask(endConversation);     
 
       return result;
     } catch (InvocationTargetException e) {

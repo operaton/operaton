@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.integrationtest.jobexecutor.beans;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import javax.inject.Inject;
@@ -35,6 +36,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 @Named
 public class TimerExpressionBean implements Serializable {
 
+  @Serial
   private static final long serialVersionUID = 1L;
   
   @Inject
@@ -44,6 +46,7 @@ public class TimerExpressionBean implements Serializable {
   @Inject
   RuntimeService runtimeService;
 
+  @SuppressWarnings("unused")
   public String getTimerDuration() {
     if (timerExpression == null) {
       VariableInstance variable = runtimeService

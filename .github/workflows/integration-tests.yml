@@ -2,7 +2,7 @@
 name: Integration Tests
 
 on:
-  workflow_dispatch:        # Allows manual trigger
+  workflow_dispatch:
     inputs:
       java_version:
         description: 'Java version to use'
@@ -13,7 +13,7 @@ on:
           - '["17"]'
           - '["21"]'
           - '["17", "21"]'
-      test_suite:
+      testsuite:
         description: 'Integration test suite to run'
         type: choice
         required: true
@@ -26,10 +26,13 @@ on:
         description: 'Container to use for integration tests'
         type: choice
         required: true
-        default: '["tomcat"]'
+        default: '["tomcat", "wildfly"]'
         options:
           - '["tomcat"]'
+          - '["tomcat9"]'
           - '["wildfly"]'
+          - '["wildfly26"]'
+          - '["tomcat", "tomcat9", "wildfly", "wildfly26"]'
           - '["tomcat", "wildfly"]'
       database:
         description: 'Database to use for integration tests'
@@ -38,8 +41,8 @@ on:
         default: '["h2"]'
         options:
           - '["h2"]'
-          - '["postgres"]'
-          - '["h2", "postgres"]'
+          - '["postgresql"]'
+          - '["h2", "postgresql"]'
 
 permissions:
   contents: read
@@ -55,9 +58,10 @@ jobs:
     name: Build
     runs-on: ubuntu-24.04
     strategy:
+      fail-fast: false
       matrix:
         java: ${{ fromJson(github.event.inputs.java_version || '["17", "21"]') }}
-        test_suite: ${{ fromJson(github.event.inputs.test_suite || '["engine", "webapps"]') }}
+        testsuite: ${{ fromJson(github.event.inputs.testsuite || '["engine", "webapps"]') }}
         container: ${{ fromJson(github.event.inputs.container || '["tomcat", "wildfly"]') }}
         database: ${{ fromJson(github.event.inputs.database || '["h2", "postgres"]') }}
     steps:
@@ -80,17 +84,25 @@ jobs:
         id: maven-build
         shell: bash
         run: |
-          ./mvnw -P${{ matrix.test_suite }}-integration,${{ matrix.container }},${{ matrix.database }} clean install
+          ./mvnw -DskipTests -Pdistro,distro-webjar,distro-${{ matrix.container }},${{ matrix.container }},h2-in-memory clean install
+      - name: Execute Integration Tests
+        id: maven-integration-tests
+        shell: bash
+        run: |
+          ./mvnw -P${{ matrix.testsuite }}-integration,${{ matrix.container }},${{ matrix.database }} verify -f qa
       - name: Publish Test Report
         if: always()
         uses: mikepenz/action-junit-report@v4
         with:
           report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml
           require_passed_tests: true
-      - name: Upload Surefire Reports
+      - name: Upload Artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: surefire-reports-${{ matrix.test_suite }}-${{ matrix.container }}-${{ matrix.database }}
-          path: ${{ github.workspace }}/**/target/surefire-reports/**
+          name: surefire-reports-${{ matrix.testsuite }}-${{ matrix.container }}-${{ matrix.database }}
+          path: |
+            ${{ github.workspace }}/**/target/surefire-reports/**
+            ${{ github.workspace }}/qa/**/target/**/logs/**
+            ${{ github.workspace }}/**/target/cargo.log
           retention-days: 30

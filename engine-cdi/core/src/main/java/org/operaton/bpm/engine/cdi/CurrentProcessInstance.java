@@ -32,24 +32,20 @@ import org.operaton.bpm.engine.task.Task;
  * Allows to access executions and tasks of a managed process instance via
  * dependency injection. A process instance can be managed, using the
  * {@link BusinessProcess}-bean.
- *
+ * 
  * The producer methods provided by this class have been extracted from the
  * {@link BusinessProcess}-bean in order to allow for specializing it.
- *
+ * 
  * @author Falko Menge
  */
 public class CurrentProcessInstance {
 
-  private final BusinessProcess businessProcess;
-
   @Inject
-  public CurrentProcessInstance(BusinessProcess businessProcess) {
-    this.businessProcess = businessProcess;
-  }
+  private BusinessProcess businessProcess;
 
   /**
    * Returns the {@link ProcessInstance} currently associated or 'null'
-   *
+   * 
    * @throws ProcessEngineCdiException
    *           if no {@link Execution} is associated. Use
    *           {@link BusinessProcess#isAssociated()} to check whether an
@@ -97,7 +93,7 @@ public class CurrentProcessInstance {
 
   /**
    * Returns the currently associated {@link Task} or 'null'
-   *
+   * 
    * @throws ProcessEngineCdiException
    *           if no {@link Task} is associated. Use
    *           {@link BusinessProcess#isTaskAssociated()} to check whether an

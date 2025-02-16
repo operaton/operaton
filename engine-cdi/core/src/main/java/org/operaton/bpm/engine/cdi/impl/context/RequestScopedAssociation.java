@@ -16,17 +16,9 @@
  */
 package org.operaton.bpm.engine.cdi.impl.context;
 
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
-
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
 import java.io.Serializable;
 
 @RequestScoped
 public class RequestScopedAssociation extends ScopedAssociation implements Serializable {
-    @Inject
-    public RequestScopedAssociation(RuntimeService runtimeService, TaskService taskService) {
-        super(runtimeService, taskService);
-    }
 }

@@ -113,7 +113,7 @@ public class MigrationContextSwitchBeansTest extends AbstractFoxPlatformIntegrat
       .execute();
 
     // then
-    Job timerJob = managementService.createJobQuery().singleResult();
+    Job timerJob = managementService.createJobQuery().processDefinitionKey("boundaryProcess").singleResult();
     Assert.assertNotNull(timerJob);
     Assert.assertNotNull(timerJob.getDuedate());
   }

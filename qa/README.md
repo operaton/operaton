@@ -13,31 +13,34 @@ We have different maven profiles for selecting
 
 In order to configure the build, compose the profiles for runtime container, testsuite, database. Example:
 
-```
+```shell
 mvn clean install -Pengine-integration,tomcat,h2
 ```
 
 Here's another example for using wildfly as the runtime container:
 
-```
+```shell
 mvn clean install -Pengine-integration,wildfly,h2
 ```
 
 If you want to test against an XA database, just add the corresponding XA database profile to the mvn cmdline above. Example:
 
-```
+```shell
 mvn clean install -Pengine-integration,wildfly,postgresql,postgresql-xa
 ```
 
 You can select multiple testsuites but only a single database and a single runtime container. This is valid:
 
-```
+```shell
 mvn clean install -Pengine-integration,webapps-integration,tomcat,postgresql
 ```
 
 There is a special profile for Wildfly Application Server:
 
-* Domain mode: `mvn clean install -Pengine-integration,h2,wildfly-domain`
+* Domain mode: 
+```shell
+mvn clean install -Pengine-integration,h2,wildfly-domain`
+```
 
 ### Running tests with the Maven Wrapper
 

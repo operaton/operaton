@@ -1069,28 +1069,28 @@ public class ProcessInstanceQueryTest {
     // Test unsupported operations
     try {
       processInstanceQuery.variableValueGreaterThan("booleanVar", true);
-      fail("Excetion expected");
+      fail("Exception expected");
     } catch(ProcessEngineException ae) {
       assertThat(ae.getMessage()).contains("Booleans and null cannot be used in 'greater than' condition");
     }
 
     try {
       processInstanceQuery.variableValueGreaterThanOrEqual("booleanVar", true);
-      fail("Excetion expected");
+      fail("Exception expected");
     } catch(ProcessEngineException ae) {
       assertThat(ae.getMessage()).contains("Booleans and null cannot be used in 'greater than or equal' condition");
     }
 
     try {
       processInstanceQuery.variableValueLessThan("booleanVar", true);
-      fail("Excetion expected");
+      fail("Exception expected");
     } catch(ProcessEngineException ae) {
       assertThat(ae.getMessage()).contains("Booleans and null cannot be used in 'less than' condition");
     }
 
     try {
       processInstanceQuery.variableValueLessThanOrEqual("booleanVar", true);
-      fail("Excetion expected");
+      fail("Exception expected");
     } catch(ProcessEngineException ae) {
       assertThat(ae.getMessage()).contains("Booleans and null cannot be used in 'less than or equal' condition");
     }
@@ -1189,35 +1189,35 @@ public class ProcessInstanceQueryTest {
     // All other variable queries with null should throw exception
     try {
       processInstanceQuery.variableValueGreaterThan("nullVar", null);
-      fail("Excetion expected");
+      fail("Exception expected");
     } catch(ProcessEngineException ae) {
       assertThat(ae.getMessage()).contains("Booleans and null cannot be used in 'greater than' condition");
     }
 
     try {
       processInstanceQuery.variableValueGreaterThanOrEqual("nullVar", null);
-      fail("Excetion expected");
+      fail("Exception expected");
     } catch(ProcessEngineException ae) {
       assertThat(ae.getMessage()).contains("Booleans and null cannot be used in 'greater than or equal' condition");
     }
 
     try {
       processInstanceQuery.variableValueLessThan("nullVar", null);
-      fail("Excetion expected");
+      fail("Exception expected");
     } catch(ProcessEngineException ae) {
       assertThat(ae.getMessage()).contains("Booleans and null cannot be used in 'less than' condition");
     }
 
     try {
       processInstanceQuery.variableValueLessThanOrEqual("nullVar", null);
-      fail("Excetion expected");
+      fail("Exception expected");
     } catch(ProcessEngineException ae) {
       assertThat(ae.getMessage()).contains("Booleans and null cannot be used in 'less than or equal' condition");
     }
 
     try {
       processInstanceQuery.variableValueLike("nullVar", null);
-      fail("Excetion expected");
+      fail("Exception expected");
     } catch(ProcessEngineException ae) {
       assertThat(ae.getMessage()).contains("Booleans and null cannot be used in 'like' condition");
     }

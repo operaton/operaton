@@ -29,15 +29,11 @@ import javax.inject.Inject;
 
 public class ScopedAssociation {
 
-  private final RuntimeService runtimeService;
-
-  private final TaskService taskService;
+  @Inject
+  private RuntimeService runtimeService;
 
   @Inject
-  public ScopedAssociation(RuntimeService runtimeService, TaskService taskService) {
-    this.runtimeService = runtimeService;
-    this.taskService = taskService;
-  }
+  private TaskService taskService;
 
   protected VariableMap cachedVariables = new VariableMapImpl();
   protected VariableMap cachedVariablesLocal = new VariableMapImpl();

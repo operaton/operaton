@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.api.multitenancy.cmmn;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.runtime.CaseExecution;

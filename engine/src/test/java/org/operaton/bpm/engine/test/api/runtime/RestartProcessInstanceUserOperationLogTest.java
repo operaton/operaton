@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -116,34 +119,34 @@ public class RestartProcessInstanceUserOperationLogTest {
 
     // then
     List<UserOperationLogEntry> opLogEntries = rule.getHistoryService().createUserOperationLogQuery().operationType("RestartProcessInstance").list();
-    Assert.assertEquals(2, opLogEntries.size());
+    assertThat(opLogEntries).hasSize(2);
 
     Map<String, UserOperationLogEntry> entries = asMap(opLogEntries);
 
 
     UserOperationLogEntry asyncEntry = entries.get("async");
-    Assert.assertNotNull(asyncEntry);
-    Assert.assertEquals("ProcessInstance", asyncEntry.getEntityType());
-    Assert.assertEquals("RestartProcessInstance", asyncEntry.getOperationType());
-    Assert.assertEquals(processDefinition.getId(), asyncEntry.getProcessDefinitionId());
-    Assert.assertEquals(processDefinition.getKey(), asyncEntry.getProcessDefinitionKey());
-    Assert.assertNull(asyncEntry.getProcessInstanceId());
-    Assert.assertNull(asyncEntry.getOrgValue());
-    Assert.assertEquals("true", asyncEntry.getNewValue());
-    Assert.assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, asyncEntry.getCategory());
+    assertThat(asyncEntry).isNotNull();
+    assertThat(asyncEntry.getEntityType()).isEqualTo("ProcessInstance");
+    assertThat(asyncEntry.getOperationType()).isEqualTo("RestartProcessInstance");
+    assertThat(asyncEntry.getProcessDefinitionId()).isEqualTo(processDefinition.getId());
+    assertThat(asyncEntry.getProcessDefinitionKey()).isEqualTo(processDefinition.getKey());
+    assertThat(asyncEntry.getProcessInstanceId()).isNull();
+    assertThat(asyncEntry.getOrgValue()).isNull();
+    assertThat(asyncEntry.getNewValue()).isEqualTo("true");
+    assertThat(asyncEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
     UserOperationLogEntry numInstancesEntry = entries.get("nrOfInstances");
-    Assert.assertNotNull(numInstancesEntry);
-    Assert.assertEquals("ProcessInstance", numInstancesEntry.getEntityType());
-    Assert.assertEquals("RestartProcessInstance", numInstancesEntry.getOperationType());
-    Assert.assertEquals(processDefinition.getId(), numInstancesEntry.getProcessDefinitionId());
-    Assert.assertEquals(processDefinition.getKey(), numInstancesEntry.getProcessDefinitionKey());
-    Assert.assertNull(numInstancesEntry.getProcessInstanceId());
-    Assert.assertNull(numInstancesEntry.getOrgValue());
-    Assert.assertEquals("2", numInstancesEntry.getNewValue());
-    Assert.assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, numInstancesEntry.getCategory());
+    assertThat(numInstancesEntry).isNotNull();
+    assertThat(numInstancesEntry.getEntityType()).isEqualTo("ProcessInstance");
+    assertThat(numInstancesEntry.getOperationType()).isEqualTo("RestartProcessInstance");
+    assertThat(numInstancesEntry.getProcessDefinitionId()).isEqualTo(processDefinition.getId());
+    assertThat(numInstancesEntry.getProcessDefinitionKey()).isEqualTo(processDefinition.getKey());
+    assertThat(numInstancesEntry.getProcessInstanceId()).isNull();
+    assertThat(numInstancesEntry.getOrgValue()).isNull();
+    assertThat(numInstancesEntry.getNewValue()).isEqualTo("2");
+    assertThat(numInstancesEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
-    Assert.assertEquals(asyncEntry.getOperationId(), numInstancesEntry.getOperationId());
+    assertThat(numInstancesEntry.getOperationId()).isEqualTo(asyncEntry.getOperationId());
   }
 
   @Test
@@ -164,34 +167,34 @@ public class RestartProcessInstanceUserOperationLogTest {
 
     // then
     List<UserOperationLogEntry> opLogEntries = rule.getHistoryService().createUserOperationLogQuery().operationType("RestartProcessInstance").list();
-    Assert.assertEquals(2, opLogEntries.size());
+    assertThat(opLogEntries).hasSize(2);
 
     Map<String, UserOperationLogEntry> entries = asMap(opLogEntries);
 
 
     UserOperationLogEntry asyncEntry = entries.get("async");
-    Assert.assertNotNull(asyncEntry);
-    Assert.assertEquals("ProcessInstance", asyncEntry.getEntityType());
-    Assert.assertEquals("RestartProcessInstance", asyncEntry.getOperationType());
-    Assert.assertEquals(processDefinition.getId(), asyncEntry.getProcessDefinitionId());
-    Assert.assertEquals(processDefinition.getKey(), asyncEntry.getProcessDefinitionKey());
-    Assert.assertNull(asyncEntry.getProcessInstanceId());
-    Assert.assertNull(asyncEntry.getOrgValue());
-    Assert.assertEquals("false", asyncEntry.getNewValue());
-    Assert.assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, asyncEntry.getCategory());
+    assertThat(asyncEntry).isNotNull();
+    assertThat(asyncEntry.getEntityType()).isEqualTo("ProcessInstance");
+    assertThat(asyncEntry.getOperationType()).isEqualTo("RestartProcessInstance");
+    assertThat(asyncEntry.getProcessDefinitionId()).isEqualTo(processDefinition.getId());
+    assertThat(asyncEntry.getProcessDefinitionKey()).isEqualTo(processDefinition.getKey());
+    assertThat(asyncEntry.getProcessInstanceId()).isNull();
+    assertThat(asyncEntry.getOrgValue()).isNull();
+    assertThat(asyncEntry.getNewValue()).isEqualTo("false");
+    assertThat(asyncEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
     UserOperationLogEntry numInstancesEntry = entries.get("nrOfInstances");
-    Assert.assertNotNull(numInstancesEntry);
-    Assert.assertEquals("ProcessInstance", numInstancesEntry.getEntityType());
-    Assert.assertEquals("RestartProcessInstance", numInstancesEntry.getOperationType());
-    Assert.assertEquals(processDefinition.getId(), numInstancesEntry.getProcessDefinitionId());
-    Assert.assertEquals(processDefinition.getKey(), numInstancesEntry.getProcessDefinitionKey());
-    Assert.assertNull(numInstancesEntry.getProcessInstanceId());
-    Assert.assertNull(numInstancesEntry.getOrgValue());
-    Assert.assertEquals("2", numInstancesEntry.getNewValue());
-    Assert.assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, numInstancesEntry.getCategory());
+    assertThat(numInstancesEntry).isNotNull();
+    assertThat(numInstancesEntry.getEntityType()).isEqualTo("ProcessInstance");
+    assertThat(numInstancesEntry.getOperationType()).isEqualTo("RestartProcessInstance");
+    assertThat(numInstancesEntry.getProcessDefinitionId()).isEqualTo(processDefinition.getId());
+    assertThat(numInstancesEntry.getProcessDefinitionKey()).isEqualTo(processDefinition.getKey());
+    assertThat(numInstancesEntry.getProcessInstanceId()).isNull();
+    assertThat(numInstancesEntry.getOrgValue()).isNull();
+    assertThat(numInstancesEntry.getNewValue()).isEqualTo("2");
+    assertThat(numInstancesEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
-    Assert.assertEquals(asyncEntry.getOperationId(), numInstancesEntry.getOperationId());
+    assertThat(numInstancesEntry.getOperationId()).isEqualTo(asyncEntry.getOperationId());
   }
 
   @Test
@@ -211,7 +214,7 @@ public class RestartProcessInstanceUserOperationLogTest {
     rule.getIdentityService().clearAuthentication();
 
     // then
-    Assert.assertEquals(0, rule.getHistoryService().createUserOperationLogQuery().entityType(EntityTypes.PROCESS_INSTANCE).count());
+    assertThat(rule.getHistoryService().createUserOperationLogQuery().entityType(EntityTypes.PROCESS_INSTANCE).count()).isZero();
   }
 
   @Test
@@ -231,7 +234,7 @@ public class RestartProcessInstanceUserOperationLogTest {
     helper.executeJobs(batch);
 
     // then
-    Assert.assertEquals(0, rule.getHistoryService().createUserOperationLogQuery().entityType(EntityTypes.PROCESS_INSTANCE).count());
+    assertThat(rule.getHistoryService().createUserOperationLogQuery().entityType(EntityTypes.PROCESS_INSTANCE).count()).isZero();
   }
 
   @Test
@@ -250,7 +253,7 @@ public class RestartProcessInstanceUserOperationLogTest {
     testRule.waitForJobExecutorToProcessAllJobs(5000L);
 
     // then
-    Assert.assertEquals(0, rule.getHistoryService().createUserOperationLogQuery().count());
+    assertThat(rule.getHistoryService().createUserOperationLogQuery().count()).isZero();
   }
 
   @Test
@@ -271,7 +274,7 @@ public class RestartProcessInstanceUserOperationLogTest {
     testRule.waitForJobExecutorToProcessAllJobs(5000L);
 
     // then
-    Assert.assertEquals(0, rule.getHistoryService().createUserOperationLogQuery().count());
+    assertThat(rule.getHistoryService().createUserOperationLogQuery().count()).isZero();
   }
 
   protected Map<String, UserOperationLogEntry> asMap(List<UserOperationLogEntry> logEntries) {
@@ -281,7 +284,7 @@ public class RestartProcessInstanceUserOperationLogTest {
 
       UserOperationLogEntry previousValue = map.put(entry.getProperty(), entry);
       if (previousValue != null) {
-        Assert.fail("expected only entry for every property");
+        fail("expected only entry for every property");
       }
     }
 

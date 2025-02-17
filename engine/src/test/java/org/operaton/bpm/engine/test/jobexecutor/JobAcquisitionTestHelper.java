@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.List;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.junit.Assert;
 
 /**
  * @author Thorben Lindhauer
@@ -61,8 +62,7 @@ public class JobAcquisitionTestHelper {
   }
 
   public static void assertInBetween(long minimum, long maximum, long actualValue) {
-    Assert.assertTrue("Expected '" + actualValue + "' to be between '" + minimum + "' and '" + maximum + "'",
-      actualValue >= minimum && actualValue <= maximum);
+    assertThat(actualValue >= minimum && actualValue <= maximum).as("Expected '" + actualValue + "' to be between '" + minimum + "' and '" + maximum + "'").isTrue();
   }
 
 }

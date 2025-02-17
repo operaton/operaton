@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.test.concurrency;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assume.assumeTrue;
 
 import java.sql.Connection;
@@ -88,11 +86,12 @@ public class ConcurrentHistoryCleanupTest extends ConcurrencyTestCase {
 
     //only one history cleanup job exists -> no exception
     List<Job> historyCleanupJobs = processEngine.getHistoryService().findHistoryCleanupJobs();
-    assertFalse(historyCleanupJobs.isEmpty());
-    assertEquals(1, historyCleanupJobs.size());
+    assertThat(historyCleanupJobs)
+            .isNotEmpty()
+            .hasSize(1);
 
-    assertNull(thread1.getException());
-    assertNull(thread2.getException());
+    assertThat(thread1.getException()).isNull();
+    assertThat(thread2.getException()).isNull();
 
   }
 

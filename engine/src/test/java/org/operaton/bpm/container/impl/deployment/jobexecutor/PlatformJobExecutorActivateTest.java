@@ -16,12 +16,6 @@
  */
 package org.operaton.bpm.container.impl.deployment.jobexecutor;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-
 import org.operaton.bpm.container.RuntimeContainerDelegate;
 import org.operaton.bpm.container.impl.RuntimeContainerDelegateImpl;
 import org.operaton.bpm.container.impl.deployment.Attachments;
@@ -31,12 +25,17 @@ import org.operaton.bpm.container.impl.metadata.BpmPlatformXmlImpl;
 import org.operaton.bpm.container.impl.metadata.JobAcquisitionXmlImpl;
 import org.operaton.bpm.container.impl.metadata.JobExecutorXmlImpl;
 import org.operaton.bpm.container.impl.metadata.ProcessEngineXmlImpl;
-import org.operaton.bpm.container.impl.metadata.spi.JobAcquisitionXml;
-import org.operaton.bpm.container.impl.metadata.spi.ProcessEngineXml;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Daniel Meyer
@@ -53,7 +52,7 @@ public class PlatformJobExecutorActivateTest {
     // given
     JobExecutorXmlImpl jobExecutorXml = defineJobExecutor();
     ProcessEngineXmlImpl processEngineXml = defineProcessEngine();
-    BpmPlatformXmlImpl bpmPlatformXml = new BpmPlatformXmlImpl(jobExecutorXml, Collections.<ProcessEngineXml>singletonList(processEngineXml));
+    BpmPlatformXmlImpl bpmPlatformXml = new BpmPlatformXmlImpl(jobExecutorXml, Collections.singletonList(processEngineXml));
 
     // when
     deployPlatform(bpmPlatformXml);
@@ -62,7 +61,7 @@ public class PlatformJobExecutorActivateTest {
       ProcessEngine processEngine = getProcessEngine(ENGINE_NAME);
       ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
       // then
-      assertEquals(true, processEngineConfiguration.getJobExecutor().isActive());
+      assertThat(processEngineConfiguration.getJobExecutor().isActive()).isTrue();
     }
     finally {
       undeployPlatform();
@@ -80,7 +79,7 @@ public class PlatformJobExecutorActivateTest {
     // activate set to false
     processEngineXml.getProperties()
       .put("jobExecutorActivate", "false");
-    BpmPlatformXmlImpl bpmPlatformXml = new BpmPlatformXmlImpl(jobExecutorXml, Collections.<ProcessEngineXml>singletonList(processEngineXml));
+    BpmPlatformXmlImpl bpmPlatformXml = new BpmPlatformXmlImpl(jobExecutorXml, Collections.singletonList(processEngineXml));
 
     // when
     deployPlatform(bpmPlatformXml);
@@ -89,7 +88,7 @@ public class PlatformJobExecutorActivateTest {
       ProcessEngine processEngine = getProcessEngine(ENGINE_NAME);
       ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
       // then
-      assertEquals(false, processEngineConfiguration.getJobExecutor().isActive());
+      assertThat(processEngineConfiguration.getJobExecutor().isActive()).isFalse();
     }
     finally {
       undeployPlatform();
@@ -122,7 +121,7 @@ public class PlatformJobExecutorActivateTest {
     jobAcquisition.setName(ACQUISITION_NAME);
     JobExecutorXmlImpl jobExecutorXml = new JobExecutorXmlImpl();
     jobExecutorXml.setProperties(new HashMap<>());
-    jobExecutorXml.setJobAcquisitions(Collections.<JobAcquisitionXml>singletonList(jobAcquisition));
+    jobExecutorXml.setJobAcquisitions(Collections.singletonList(jobAcquisition));
     return jobExecutorXml;
   }
 

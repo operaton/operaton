@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.test.history.useroperationlog;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Date;
 
@@ -50,25 +48,24 @@ public class UserOperationLogJobDefinitionTest extends AbstractUserOperationLogT
 
     // then an op log entry is written
     UserOperationLogEntry userOperationLogEntry = historyService.createUserOperationLogQuery().singleResult();
-    assertNotNull(userOperationLogEntry);
+    assertThat(userOperationLogEntry).isNotNull();
 
-    assertEquals(EntityTypes.JOB_DEFINITION, userOperationLogEntry.getEntityType());
-    assertEquals(jobDefinition.getId(), userOperationLogEntry.getJobDefinitionId());
+    assertThat(userOperationLogEntry.getEntityType()).isEqualTo(EntityTypes.JOB_DEFINITION);
+    assertThat(userOperationLogEntry.getJobDefinitionId()).isEqualTo(jobDefinition.getId());
 
-    assertEquals(UserOperationLogEntry.OPERATION_TYPE_SET_PRIORITY,
-        userOperationLogEntry.getOperationType());
+    assertThat(userOperationLogEntry.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_SET_PRIORITY);
 
-    assertEquals("overridingPriority", userOperationLogEntry.getProperty());
-    assertEquals("42", userOperationLogEntry.getNewValue());
-    assertEquals(null, userOperationLogEntry.getOrgValue());
+    assertThat(userOperationLogEntry.getProperty()).isEqualTo("overridingPriority");
+    assertThat(userOperationLogEntry.getNewValue()).isEqualTo("42");
+    assertThat(userOperationLogEntry.getOrgValue()).isNull();
 
-    assertEquals(USER_ID, userOperationLogEntry.getUserId());
-    
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, userOperationLogEntry.getCategory());
+    assertThat(userOperationLogEntry.getUserId()).isEqualTo(USER_ID);
 
-    assertEquals(jobDefinition.getProcessDefinitionId(), userOperationLogEntry.getProcessDefinitionId());
-    assertEquals(jobDefinition.getProcessDefinitionKey(), userOperationLogEntry.getProcessDefinitionKey());
-    assertEquals(deploymentId, userOperationLogEntry.getDeploymentId());
+    assertThat(userOperationLogEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
+
+    assertThat(userOperationLogEntry.getProcessDefinitionId()).isEqualTo(jobDefinition.getProcessDefinitionId());
+    assertThat(userOperationLogEntry.getProcessDefinitionKey()).isEqualTo(jobDefinition.getProcessDefinitionKey());
+    assertThat(userOperationLogEntry.getDeploymentId()).isEqualTo(deploymentId);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/asyncTaskProcess.bpmn20.xml"})
@@ -88,19 +85,18 @@ public class UserOperationLogJobDefinitionTest extends AbstractUserOperationLogT
     // then this is accessible via the op log
     UserOperationLogEntry userOperationLogEntry = historyService.createUserOperationLogQuery()
         .orderByTimestamp().desc().listPage(0, 1).get(0);
-    assertNotNull(userOperationLogEntry);
+    assertThat(userOperationLogEntry).isNotNull();
 
-    assertEquals(EntityTypes.JOB_DEFINITION, userOperationLogEntry.getEntityType());
-    assertEquals(jobDefinition.getId(), userOperationLogEntry.getJobDefinitionId());
+    assertThat(userOperationLogEntry.getEntityType()).isEqualTo(EntityTypes.JOB_DEFINITION);
+    assertThat(userOperationLogEntry.getJobDefinitionId()).isEqualTo(jobDefinition.getId());
 
-    assertEquals(UserOperationLogEntry.OPERATION_TYPE_SET_PRIORITY,
-        userOperationLogEntry.getOperationType());
-    
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, userOperationLogEntry.getCategory());
+    assertThat(userOperationLogEntry.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_SET_PRIORITY);
 
-    assertEquals("overridingPriority", userOperationLogEntry.getProperty());
-    assertEquals("43", userOperationLogEntry.getNewValue());
-    assertEquals("42", userOperationLogEntry.getOrgValue());
+    assertThat(userOperationLogEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
+
+    assertThat(userOperationLogEntry.getProperty()).isEqualTo("overridingPriority");
+    assertThat(userOperationLogEntry.getNewValue()).isEqualTo("43");
+    assertThat(userOperationLogEntry.getOrgValue()).isEqualTo("42");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/asyncTaskProcess.bpmn20.xml"})
@@ -123,25 +119,24 @@ public class UserOperationLogJobDefinitionTest extends AbstractUserOperationLogT
     // then this is accessible via the op log
     UserOperationLogEntry userOperationLogEntry = historyService.createUserOperationLogQuery()
         .orderByTimestamp().desc().listPage(0, 1).get(0);
-    assertNotNull(userOperationLogEntry);
+    assertThat(userOperationLogEntry).isNotNull();
 
-    assertEquals(EntityTypes.JOB_DEFINITION, userOperationLogEntry.getEntityType());
-    assertEquals(jobDefinition.getId(), userOperationLogEntry.getJobDefinitionId());
+    assertThat(userOperationLogEntry.getEntityType()).isEqualTo(EntityTypes.JOB_DEFINITION);
+    assertThat(userOperationLogEntry.getJobDefinitionId()).isEqualTo(jobDefinition.getId());
 
-    assertEquals(UserOperationLogEntry.OPERATION_TYPE_SET_PRIORITY,
-        userOperationLogEntry.getOperationType());
+    assertThat(userOperationLogEntry.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_SET_PRIORITY);
 
-    assertEquals("overridingPriority", userOperationLogEntry.getProperty());
-    assertNull(userOperationLogEntry.getNewValue());
-    assertEquals("42", userOperationLogEntry.getOrgValue());
+    assertThat(userOperationLogEntry.getProperty()).isEqualTo("overridingPriority");
+    assertThat(userOperationLogEntry.getNewValue()).isNull();
+    assertThat(userOperationLogEntry.getOrgValue()).isEqualTo("42");
 
-    assertEquals(USER_ID, userOperationLogEntry.getUserId());
-    
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, userOperationLogEntry.getCategory());
+    assertThat(userOperationLogEntry.getUserId()).isEqualTo(USER_ID);
 
-    assertEquals(jobDefinition.getProcessDefinitionId(), userOperationLogEntry.getProcessDefinitionId());
-    assertEquals(jobDefinition.getProcessDefinitionKey(), userOperationLogEntry.getProcessDefinitionKey());
-    assertEquals(deploymentId, userOperationLogEntry.getDeploymentId());
+    assertThat(userOperationLogEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
+
+    assertThat(userOperationLogEntry.getProcessDefinitionId()).isEqualTo(jobDefinition.getProcessDefinitionId());
+    assertThat(userOperationLogEntry.getProcessDefinitionKey()).isEqualTo(jobDefinition.getProcessDefinitionKey());
+    assertThat(userOperationLogEntry.getDeploymentId()).isEqualTo(deploymentId);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/asyncTaskProcess.bpmn20.xml"})
@@ -157,47 +152,44 @@ public class UserOperationLogJobDefinitionTest extends AbstractUserOperationLogT
     managementService.setOverridingJobPriorityForJobDefinition(jobDefinition.getId(), 42, true);
 
     // then there are three op log entries
-    assertEquals(3, historyService.createUserOperationLogQuery().count());
+    assertThat(historyService.createUserOperationLogQuery().count()).isEqualTo(3);
 
     // (1): One for the process instance start
     UserOperationLogEntry processInstanceStartOpLogEntry = historyService.createUserOperationLogQuery()
         .entityType(EntityTypes.PROCESS_INSTANCE).singleResult();
-    assertNotNull(processInstanceStartOpLogEntry);
+    assertThat(processInstanceStartOpLogEntry).isNotNull();
 
     // (2): One for the job definition priority
     UserOperationLogEntry jobDefOpLogEntry = historyService.createUserOperationLogQuery()
         .entityType(EntityTypes.JOB_DEFINITION).singleResult();
-    assertNotNull(jobDefOpLogEntry);
+    assertThat(jobDefOpLogEntry).isNotNull();
 
     // (3): and another one for the job priorities
     UserOperationLogEntry jobOpLogEntry = historyService.createUserOperationLogQuery()
         .entityType(EntityTypes.JOB).singleResult();
-    assertNotNull(jobOpLogEntry);
+    assertThat(jobOpLogEntry).isNotNull();
 
-    assertEquals("the two job related entries should be part of the same operation",
-        jobDefOpLogEntry.getOperationId(), jobOpLogEntry.getOperationId());
+    assertThat(jobOpLogEntry.getOperationId()).as("the two job related entries should be part of the same operation").isEqualTo(jobDefOpLogEntry.getOperationId());
 
-    assertEquals(EntityTypes.JOB, jobOpLogEntry.getEntityType());
-    assertNull("id should null because it is a bulk update operation", jobOpLogEntry.getJobId());
+    assertThat(jobOpLogEntry.getEntityType()).isEqualTo(EntityTypes.JOB);
+    assertThat(jobOpLogEntry.getJobId()).as("id should null because it is a bulk update operation").isNull();
 
-    assertEquals(UserOperationLogEntry.OPERATION_TYPE_SET_PRIORITY, jobOpLogEntry.getOperationType());
+    assertThat(jobOpLogEntry.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_SET_PRIORITY);
 
-    assertEquals("priority", jobOpLogEntry.getProperty());
-    assertEquals("42", jobOpLogEntry.getNewValue());
-    assertNull("Original Value should be null because it is not known for bulk operations",
-        jobOpLogEntry.getOrgValue());
+    assertThat(jobOpLogEntry.getProperty()).isEqualTo("priority");
+    assertThat(jobOpLogEntry.getNewValue()).isEqualTo("42");
+    assertThat(jobOpLogEntry.getOrgValue()).as("Original Value should be null because it is not known for bulk operations").isNull();
 
-    assertEquals(USER_ID, jobOpLogEntry.getUserId());
-    
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, jobOpLogEntry.getCategory());
+    assertThat(jobOpLogEntry.getUserId()).isEqualTo(USER_ID);
+
+    assertThat(jobOpLogEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
     // these properties should be there to narrow down the bulk update (like a SQL WHERE clasue)
-    assertEquals(job.getJobDefinitionId(), jobOpLogEntry.getJobDefinitionId());
-    assertNull("an unspecified set of process instances was affected by the operation",
-        jobOpLogEntry.getProcessInstanceId());
-    assertEquals(job.getProcessDefinitionId(), jobOpLogEntry.getProcessDefinitionId());
-    assertEquals(job.getProcessDefinitionKey(), jobOpLogEntry.getProcessDefinitionKey());
-    assertEquals(deploymentId, jobOpLogEntry.getDeploymentId());
+    assertThat(jobOpLogEntry.getJobDefinitionId()).isEqualTo(job.getJobDefinitionId());
+    assertThat(jobOpLogEntry.getProcessInstanceId()).as("an unspecified set of process instances was affected by the operation").isNull();
+    assertThat(jobOpLogEntry.getProcessDefinitionId()).isEqualTo(job.getProcessDefinitionId());
+    assertThat(jobOpLogEntry.getProcessDefinitionKey()).isEqualTo(job.getProcessDefinitionKey());
+    assertThat(jobOpLogEntry.getDeploymentId()).isEqualTo(deploymentId);
   }
 
 }

@@ -17,9 +17,7 @@
 package org.operaton.bpm.engine.test.api.multitenancy;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -418,8 +416,8 @@ public class MultiTenancyProcessInstantiationTest extends PluggableProcessEngine
     ProcessInstance restartedInstance = runtimeService.createProcessInstanceQuery().active()
         .processDefinitionId(processInstance.getProcessDefinitionId()).singleResult();
 
-    assertNotNull(restartedInstance);
-    assertEquals(TENANT_ONE, restartedInstance.getTenantId());
+    assertThat(restartedInstance).isNotNull();
+    assertThat(restartedInstance.getTenantId()).isEqualTo(TENANT_ONE);
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
@@ -442,8 +440,8 @@ public class MultiTenancyProcessInstantiationTest extends PluggableProcessEngine
     ProcessInstance restartedInstance = runtimeService.createProcessInstanceQuery().active()
       .processDefinitionId(processInstance.getProcessDefinitionId()).singleResult();
 
-    assertNotNull(restartedInstance);
-    assertEquals(TENANT_ONE, restartedInstance.getTenantId());
+    assertThat(restartedInstance).isNotNull();
+    assertThat(restartedInstance.getTenantId()).isEqualTo(TENANT_ONE);
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
@@ -508,8 +506,8 @@ public class MultiTenancyProcessInstantiationTest extends PluggableProcessEngine
     ProcessInstance restartedInstance = runtimeService.createProcessInstanceQuery().active()
       .processDefinitionId(processInstance.getProcessDefinitionId()).singleResult();
 
-    assertNotNull(restartedInstance);
-    assertEquals(TENANT_ONE, restartedInstance.getTenantId());
+    assertThat(restartedInstance).isNotNull();
+    assertThat(restartedInstance.getTenantId()).isEqualTo(TENANT_ONE);
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
@@ -533,8 +531,8 @@ public class MultiTenancyProcessInstantiationTest extends PluggableProcessEngine
     ProcessInstance restartedInstance = runtimeService.createProcessInstanceQuery().active()
       .processDefinitionId(processInstance.getProcessDefinitionId()).singleResult();
 
-    assertNotNull(restartedInstance);
-    assertEquals(TENANT_ONE, restartedInstance.getTenantId());
+    assertThat(restartedInstance).isNotNull();
+    assertThat(restartedInstance.getTenantId()).isEqualTo(TENANT_ONE);
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)

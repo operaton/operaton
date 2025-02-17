@@ -33,7 +33,6 @@ import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.READ_HISTORY;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -41,9 +40,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.tuple;
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * @author Roman Smirnov
@@ -278,7 +275,7 @@ public class HistoricJobLogAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     HistoricJobLog jobLog = query.singleResult();
-    assertNull(jobLog.getProcessDefinitionKey());
+    assertThat(jobLog.getProcessDefinitionKey()).isNull();
 
     deleteDeployment(deploymentId);
 
@@ -337,7 +334,7 @@ public class HistoricJobLogAuthorizationTest extends AuthorizationTest {
     String stacktrace = historyService.getHistoricJobLogExceptionStacktrace(jobLogId);
 
     // then
-    assertNull(stacktrace);
+    assertThat(stacktrace).isNull();
 
     deleteDeployment(deploymentId);
 
@@ -387,7 +384,7 @@ public class HistoricJobLogAuthorizationTest extends AuthorizationTest {
     String stacktrace = historyService.getHistoricJobLogExceptionStacktrace(jobLogId);
 
     // then
-    assertNotNull(stacktrace);
+    assertThat(stacktrace).isNotNull();
   }
 
   @Test
@@ -405,7 +402,7 @@ public class HistoricJobLogAuthorizationTest extends AuthorizationTest {
     String stacktrace = historyService.getHistoricJobLogExceptionStacktrace(jobLogId);
 
     // then
-    assertNotNull(stacktrace);
+    assertThat(stacktrace).isNotNull();
   }
 
   @Test
@@ -537,7 +534,7 @@ public class HistoricJobLogAuthorizationTest extends AuthorizationTest {
 
     disableAuthorization();
     batchId =
-        runtimeService.deleteProcessInstancesAsync(Arrays.asList(processInstanceId), "bar")
+        runtimeService.deleteProcessInstancesAsync(List.of(processInstanceId), "bar")
             .getId();
     enableAuthorization();
 
@@ -560,7 +557,7 @@ public class HistoricJobLogAuthorizationTest extends AuthorizationTest {
 
     disableAuthorization();
     batchId =
-        runtimeService.deleteProcessInstancesAsync(Arrays.asList(processInstanceId), "bar")
+        runtimeService.deleteProcessInstancesAsync(List.of(processInstanceId), "bar")
             .getId();
     enableAuthorization();
 

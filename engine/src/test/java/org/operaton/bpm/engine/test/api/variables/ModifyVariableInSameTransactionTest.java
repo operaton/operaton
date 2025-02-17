@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.variables;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.List;
@@ -65,11 +64,11 @@ public class ModifyVariableInSameTransactionTest {
     engineRule.getTaskService().complete(task.getId());
 
     VariableInstance variable = engineRule.getRuntimeService().createVariableInstanceQuery().processInstanceIdIn(instance.getId()).variableName("listVar").singleResult();
-    assertNotNull(variable);
-    assertEquals("stringValue", variable.getValue());
+    assertThat(variable).isNotNull();
+    assertThat(variable.getValue()).isEqualTo("stringValue");
     HistoricVariableInstance historicVariable = engineRule.getHistoryService().createHistoricVariableInstanceQuery().singleResult();
-    assertEquals(variable.getName(), historicVariable.getName());
-    assertEquals(HistoricVariableInstance.STATE_CREATED, historicVariable.getState());
+    assertThat(historicVariable.getName()).isEqualTo(variable.getName());
+    assertThat(historicVariable.getState()).isEqualTo(HistoricVariableInstance.STATE_CREATED);
   }
 
   @Test
@@ -92,11 +91,11 @@ public class ModifyVariableInSameTransactionTest {
     engineRule.getTaskService().complete(task.getId());
 
     VariableInstance variable = engineRule.getRuntimeService().createVariableInstanceQuery().processInstanceIdIn(instance.getId()).variableName("foo").singleResult();
-    assertNotNull(variable);
-    assertEquals("secondValue", variable.getValue());
+    assertThat(variable).isNotNull();
+    assertThat(variable.getValue()).isEqualTo("secondValue");
     HistoricVariableInstance historicVariable = engineRule.getHistoryService().createHistoricVariableInstanceQuery().singleResult();
-    assertEquals(variable.getName(), historicVariable.getName());
-    assertEquals(HistoricVariableInstance.STATE_CREATED, historicVariable.getState());
+    assertThat(historicVariable.getName()).isEqualTo(variable.getName());
+    assertThat(historicVariable.getState()).isEqualTo(HistoricVariableInstance.STATE_CREATED);
   }
 
   @Test
@@ -120,12 +119,12 @@ public class ModifyVariableInSameTransactionTest {
 
     VariableInstance variable = engineRule.getRuntimeService().createVariableInstanceQuery().processInstanceIdIn(instance.getId()).variableName("foo")
         .singleResult();
-    assertNotNull(variable);
-    assertEquals("bar", variable.getValue());
+    assertThat(variable).isNotNull();
+    assertThat(variable.getValue()).isEqualTo("bar");
     List<HistoricVariableInstance> historyVariables = engineRule.getHistoryService().createHistoricVariableInstanceQuery().list();
     for (HistoricVariableInstance historicVariable : historyVariables) {
       if (variable.getName().equals(historicVariable.getName())) {
-        assertEquals(HistoricVariableInstance.STATE_CREATED, historicVariable.getState());
+        assertThat(historicVariable.getState()).isEqualTo(HistoricVariableInstance.STATE_CREATED);
         break;
       }
     }

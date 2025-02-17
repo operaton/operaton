@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.test.cmmn.handler;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnActivityBehavior;
@@ -29,10 +26,12 @@ import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Roman Smirnov
@@ -72,7 +71,7 @@ public class CaseHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(caseDefinition, context);
 
     // then
-    assertEquals(name, activity.getName());
+    assertThat(activity.getName()).isEqualTo(name);
   }
 
   @Test
@@ -84,7 +83,7 @@ public class CaseHandlerTest extends CmmnElementHandlerTest {
 
     // then
     CmmnActivityBehavior behavior = activity.getActivityBehavior();
-    assertNull(behavior);
+    assertThat(behavior).isNull();
   }
 
   @Test
@@ -95,7 +94,7 @@ public class CaseHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(caseDefinition, context);
 
     // then
-    assertNull(activity.getParent());
+    assertThat(activity.getParent()).isNull();
   }
 
   @Test
@@ -106,7 +105,7 @@ public class CaseHandlerTest extends CmmnElementHandlerTest {
     CaseDefinitionEntity activity = (CaseDefinitionEntity) handler.handleElement(caseDefinition, context);
 
     // then
-    assertEquals(caseDefinition.getId(), activity.getKey());
+    assertThat(activity.getKey()).isEqualTo(caseDefinition.getId());
   }
 
   @Test
@@ -118,7 +117,7 @@ public class CaseHandlerTest extends CmmnElementHandlerTest {
 
     // then
     String deploymentId = context.getDeployment().getId();
-    assertEquals(deploymentId, activity.getDeploymentId());
+    assertThat(activity.getDeploymentId()).isEqualTo(deploymentId);
   }
 
   @Test
@@ -129,7 +128,7 @@ public class CaseHandlerTest extends CmmnElementHandlerTest {
     CaseDefinitionEntity activity = (CaseDefinitionEntity) handler.handleElement(caseDefinition, context);
 
     // then
-    assertNull(activity.getHistoryTimeToLive());
+    assertThat(activity.getHistoryTimeToLive()).isNull();
   }
 
   @Test
@@ -142,7 +141,7 @@ public class CaseHandlerTest extends CmmnElementHandlerTest {
     CaseDefinitionEntity activity = (CaseDefinitionEntity) handler.handleElement(caseDefinition, context);
 
     // then
-    assertEquals(historyTimeToLive, activity.getHistoryTimeToLive());
+    assertThat(activity.getHistoryTimeToLive()).isEqualTo(historyTimeToLive);
   }
 
   @Test
@@ -156,7 +155,7 @@ public class CaseHandlerTest extends CmmnElementHandlerTest {
       handler.handleElement(caseDefinition, context);
       fail("Exception is expected, that negative value is not allowed.");
     } catch (NotValidException ex) {
-      assertTrue(ex.getMessage().contains("negative value is not allowed"));
+      assertThat(ex.getMessage()).contains("negative value is not allowed");
     }
   }
 

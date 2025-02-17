@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt.metrics;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -65,8 +65,8 @@ public class MetricsDisabledTest {
 
     // given
     // that the metrics are disabled (see xml configuration referenced in constructor)
-    assertFalse(processEngineConfiguration.isMetricsEnabled());
-    assertFalse(processEngineConfiguration.isDbMetricsReporterActivate());
+    assertThat(processEngineConfiguration.isMetricsEnabled()).isFalse();
+    assertThat(processEngineConfiguration.isDbMetricsReporterActivate()).isFalse();
 
     // then
     // it is possible to execute a query
@@ -79,7 +79,7 @@ public class MetricsDisabledTest {
 
     // given
     // that the metrics reporter is disabled
-    assertFalse(processEngineConfiguration.isDbMetricsReporterActivate());
+    assertThat(processEngineConfiguration.isDbMetricsReporterActivate()).isFalse();
 
     try {
       // then

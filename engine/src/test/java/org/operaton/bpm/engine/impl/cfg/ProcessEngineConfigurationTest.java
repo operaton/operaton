@@ -28,8 +28,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -78,8 +78,7 @@ public class ProcessEngineConfigurationTest {
     // given
     ((PooledDataSource) engineConfiguration.getDataSource()).setDefaultTransactionIsolationLevel(Connection.TRANSACTION_READ_COMMITTED);
     // when
-    engineConfiguration.initDataSource();
-    // then no exception
+    assertThatCode(() -> engineConfiguration.initDataSource()).doesNotThrowAnyException();
   }
 
   @Test
@@ -109,6 +108,6 @@ public class ProcessEngineConfigurationTest {
     ProcessEngineConfigurationImpl engineCfg = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration
         .createProcessEngineConfigurationFromResource("operaton.cfg.skipIsolationLevelCheckEnabled.xml");
     // then
-    assertTrue(engineCfg.skipIsolationLevelCheck);
+    assertThat(engineCfg.skipIsolationLevelCheck).isTrue();
   }
 }

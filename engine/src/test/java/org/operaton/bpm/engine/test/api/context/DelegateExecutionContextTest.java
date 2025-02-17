@@ -222,8 +222,9 @@ public class DelegateExecutionContextTest {
     public void notify(DelegateExecution execution) throws Exception {
       //then delegation execution context is available
       DelegateExecution delegateExecution = DelegateExecutionContext.getCurrentDelegationExecution();
-      assertThat(delegateExecution).isNotNull();
-      assertThat(delegateExecution).isEqualTo(execution);
+      assertThat(delegateExecution)
+              .isNotNull()
+              .isEqualTo(execution);
     }
   }
 
@@ -233,8 +234,9 @@ public class DelegateExecutionContextTest {
     public void execute(DelegateExecution execution) throws Exception {
       //then delegation execution context is available
       DelegateExecution delegateExecution = DelegateExecutionContext.getCurrentDelegationExecution();
-      assertThat(delegateExecution).isNotNull();
-      assertThat(delegateExecution).isEqualTo(execution);
+      assertThat(delegateExecution)
+              .isNotNull()
+              .isEqualTo(execution);
     }
   }
 

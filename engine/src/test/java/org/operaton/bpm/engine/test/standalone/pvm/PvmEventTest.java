@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.standalone.pvm;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +77,7 @@ public class PvmEventTest {
     expectedEvents.add("end on Activity(end)");
     expectedEvents.add("end on ProcessDefinition(events)");
 
-    assertEquals("expected "+expectedEvents+", but was \n"+eventCollector+"\n", expectedEvents, eventCollector.events);
+    assertThat(eventCollector.events).as("expected " + expectedEvents + ", but was \n" + eventCollector + "\n").isEqualTo(expectedEvents);
   }
 
   /**
@@ -143,7 +143,7 @@ public class PvmEventTest {
     expectedEvents.add("end on Activity(end)");
     expectedEvents.add("end on ProcessDefinition(events)");
 
-    assertEquals("expected "+expectedEvents+", but was \n"+eventCollector+"\n", expectedEvents, eventCollector.events);
+    assertThat(eventCollector.events).as("expected " + expectedEvents + ", but was \n" + eventCollector + "\n").isEqualTo(expectedEvents);
   }
 
 
@@ -227,7 +227,7 @@ public class PvmEventTest {
     expectedEvents.add("end on Activity(end)");
     expectedEvents.add("end on ProcessDefinition(events)");
 
-    assertEquals("expected "+expectedEvents+", but was \n"+eventCollector+"\n", expectedEvents, eventCollector.events);
+    assertThat(eventCollector.events).as("expected " + expectedEvents + ", but was \n" + eventCollector + "\n").isEqualTo(expectedEvents);
   }
 
   /**
@@ -299,6 +299,6 @@ public class PvmEventTest {
     expectedEvents.add("end on Activity(embeddedsubprocess)");
     expectedEvents.add("end on ProcessDefinition(events)");
 
-    assertEquals("expected "+expectedEvents+", but was \n"+eventCollector+"\n", expectedEvents, eventCollector.events);
+    assertThat(eventCollector.events).as("expected " + expectedEvents + ", but was \n" + eventCollector + "\n").isEqualTo(expectedEvents);
   }
 }

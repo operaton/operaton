@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.history.useroperationlog;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.history.HistoricVariableInstance;
@@ -329,14 +329,14 @@ public class UserOperationLogWithoutUserTest extends PluggableProcessEngineTest 
     String id = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
     runtimeService.setVariable(id, "aVariable", "aValue");
     runtimeService.deleteProcessInstance(id, "none");
-    assertEquals(1, historyService.createHistoricVariableInstanceQuery().count());
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(1);
     String historicVariableId = historyService.createHistoricVariableInstanceQuery().singleResult().getId();
     
     // when
     historyService.deleteHistoricVariableInstance(historicVariableId);
 
     // then
-    assertEquals(0, historyService.createHistoricVariableInstanceQuery().count());
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isZero();
     verifyNoUserOperationLogged();
   }
   
@@ -348,13 +348,13 @@ public class UserOperationLogWithoutUserTest extends PluggableProcessEngineTest 
     String id = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
     runtimeService.setVariable(id, "aVariable", "aValue");
     runtimeService.deleteProcessInstance(id, "none");
-    assertEquals(1, historyService.createHistoricVariableInstanceQuery().count());
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(1);
     
     // when
     historyService.deleteHistoricVariableInstancesByProcessInstanceId(id);
 
     // then
-    assertEquals(0, historyService.createHistoricVariableInstanceQuery().count());
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isZero();
     verifyNoUserOperationLogged();
   }
   
@@ -397,7 +397,7 @@ public class UserOperationLogWithoutUserTest extends PluggableProcessEngineTest 
 
   protected void verifyNoUserOperationLogged() {
     UserOperationLogQuery query = historyService.createUserOperationLogQuery();
-    assertEquals(0, query.count());
+    assertThat(query.count()).isZero();
   }
 
 }

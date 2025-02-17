@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.test.concurrency;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.OptimisticLockingException;
 import org.operaton.bpm.engine.RuntimeService;
@@ -91,17 +90,17 @@ public class CompetingJobAcquisitionTest {
 
     LOG.debug("test thread notifies thread 1");
     threadOne.proceedAndWaitTillDone();
-    assertNull(threadOne.exception);
+    assertThat(threadOne.exception).isNull();
     // the job was acquired
-    assertEquals(1, threadOne.jobs.size());
+    assertThat(threadOne.jobs.size()).isEqualTo(1);
 
     LOG.debug("test thread notifies thread 2");
     threadTwo.proceedAndWaitTillDone();
 
     // the acquisition did NOT fail
-    assertNull(threadTwo.exception);
+    assertThat(threadTwo.exception).isNull();
     // but the job was not acquired
-    assertEquals(0, threadTwo.jobs.size());
+    assertThat(threadTwo.jobs.size()).isZero();
   }
 
   public class JobAcquisitionThread extends ControllableThread {

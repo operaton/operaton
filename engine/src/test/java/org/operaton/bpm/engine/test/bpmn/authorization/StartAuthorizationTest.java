@@ -16,13 +16,6 @@
  */
 package org.operaton.bpm.engine.test.bpmn.authorization;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.List;
-
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
@@ -31,7 +24,13 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.IdentityLink;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+
+import java.util.List;
+
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 
 /**
@@ -112,37 +111,37 @@ public class StartAuthorizationTest extends PluggableProcessEngineTest {
       ProcessDefinition latestProcessDef = repositoryService
           .createProcessDefinitionQuery().processDefinitionKey("process1")
           .singleResult();
-      assertNotNull(latestProcessDef);
+      assertThat(latestProcessDef).isNotNull();
       List<IdentityLink> links = repositoryService.getIdentityLinksForProcessDefinition(latestProcessDef.getId());
-      assertEquals(0, links.size());
+      assertThat(links).isEmpty();
       
       latestProcessDef = repositoryService
           .createProcessDefinitionQuery().processDefinitionKey("process2")
           .singleResult();
-      assertNotNull(latestProcessDef);
+      assertThat(latestProcessDef).isNotNull();
       links = repositoryService.getIdentityLinksForProcessDefinition(latestProcessDef.getId());
-      assertEquals(2, links.size());
-      assertEquals(true, containsUserOrGroup("user1", null, links));
-      assertEquals(true, containsUserOrGroup("user2", null, links));
+      assertThat(links).hasSize(2);
+      assertThat(containsUserOrGroup("user1", null, links)).isTrue();
+      assertThat(containsUserOrGroup("user2", null, links)).isTrue();
       
       latestProcessDef = repositoryService
           .createProcessDefinitionQuery().processDefinitionKey("process3")
           .singleResult();
-      assertNotNull(latestProcessDef);
+      assertThat(latestProcessDef).isNotNull();
       links = repositoryService.getIdentityLinksForProcessDefinition(latestProcessDef.getId());
-      assertEquals(1, links.size());
-      assertEquals("user1", links.get(0).getUserId());
+      assertThat(links).hasSize(1);
+      assertThat(links.get(0).getUserId()).isEqualTo("user1");
       
       latestProcessDef = repositoryService
           .createProcessDefinitionQuery().processDefinitionKey("process4")
           .singleResult();
-      assertNotNull(latestProcessDef);
+      assertThat(latestProcessDef).isNotNull();
       links = repositoryService.getIdentityLinksForProcessDefinition(latestProcessDef.getId());
-      assertEquals(4, links.size());
-      assertEquals(true, containsUserOrGroup("userInGroup2", null, links));
-      assertEquals(true, containsUserOrGroup(null, "group1", links));
-      assertEquals(true, containsUserOrGroup(null, "group2", links));
-      assertEquals(true, containsUserOrGroup(null, "group3", links));
+      assertThat(links).hasSize(4);
+      assertThat(containsUserOrGroup("userInGroup2", null, links)).isTrue();
+      assertThat(containsUserOrGroup(null, "group1", links)).isTrue();
+      assertThat(containsUserOrGroup(null, "group2", links)).isTrue();
+      assertThat(containsUserOrGroup(null, "group3", links)).isTrue();
       
     } finally {
       tearDownUsersAndGroups();
@@ -159,33 +158,33 @@ public class StartAuthorizationTest extends PluggableProcessEngineTest {
       ProcessDefinition latestProcessDef = repositoryService
           .createProcessDefinitionQuery().processDefinitionKey("potentialStarterNoDefinition")
           .singleResult();
-      assertNotNull(latestProcessDef);
+      assertThat(latestProcessDef).isNotNull();
       List<IdentityLink> links = repositoryService.getIdentityLinksForProcessDefinition(latestProcessDef.getId());
-      assertEquals(0, links.size());
+      assertThat(links).isEmpty();
       
       repositoryService.addCandidateStarterGroup(latestProcessDef.getId(), "group1");
       links = repositoryService.getIdentityLinksForProcessDefinition(latestProcessDef.getId());
-      assertEquals(1, links.size());
-      assertEquals("group1", links.get(0).getGroupId());
+      assertThat(links).hasSize(1);
+      assertThat(links.get(0).getGroupId()).isEqualTo("group1");
       
       repositoryService.addCandidateStarterUser(latestProcessDef.getId(), "user1");
       links = repositoryService.getIdentityLinksForProcessDefinition(latestProcessDef.getId());
-      assertEquals(2, links.size());
-      assertEquals(true, containsUserOrGroup(null, "group1", links));
-      assertEquals(true, containsUserOrGroup("user1", null, links));
+      assertThat(links).hasSize(2);
+      assertThat(containsUserOrGroup(null, "group1", links)).isTrue();
+      assertThat(containsUserOrGroup("user1", null, links)).isTrue();
       
       repositoryService.deleteCandidateStarterGroup(latestProcessDef.getId(), "nonexisting");
       links = repositoryService.getIdentityLinksForProcessDefinition(latestProcessDef.getId());
-      assertEquals(2, links.size());
+      assertThat(links).hasSize(2);
       
       repositoryService.deleteCandidateStarterGroup(latestProcessDef.getId(), "group1");
       links = repositoryService.getIdentityLinksForProcessDefinition(latestProcessDef.getId());
-      assertEquals(1, links.size());
-      assertEquals("user1", links.get(0).getUserId());
+      assertThat(links).hasSize(1);
+      assertThat(links.get(0).getUserId()).isEqualTo("user1");
       
       repositoryService.deleteCandidateStarterUser(latestProcessDef.getId(), "user1");
       links = repositoryService.getIdentityLinksForProcessDefinition(latestProcessDef.getId());
-      assertEquals(0, links.size());
+      assertThat(links).isEmpty();
       
     } finally {
       tearDownUsersAndGroups();
@@ -221,14 +220,14 @@ public class StartAuthorizationTest extends PluggableProcessEngineTest {
 	      runtimeService.startProcessInstanceByKey("potentialStarter");
 	
 	    }  catch (Exception e) {
-	      fail("No StartAuthorizationException expected, " + e.getClass().getName() + " caught.");
+        fail("No StartAuthorizationException expected, " + e.getClass().getName() + " caught.");
 	    }
 	
 	    // check with an authorized user obviously it should be no problem starting the process
 	    identityService.setAuthenticatedUserId("user1");
 	    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("potentialStarter");
 	    testRule.assertProcessEnded(processInstance.getId());
-	    assertTrue(processInstance.isEnded());
+      assertThat(processInstance.isEnded()).isTrue();
     } finally {
 
       tearDownUsersAndGroups();
@@ -246,9 +245,9 @@ public class StartAuthorizationTest extends PluggableProcessEngineTest {
 
     identityService.setAuthenticatedUserId("someOneFromMars");
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("potentialStarterNoDefinition");
-    assertNotNull(processInstance.getId());
+    assertThat(processInstance.getId()).isNotNull();
     testRule.assertProcessEnded(processInstance.getId());
-    assertTrue(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isTrue();
   }
   
   // this test checks the list without user constraint
@@ -264,75 +263,75 @@ public class StartAuthorizationTest extends PluggableProcessEngineTest {
               .createProcessDefinitionQuery().processDefinitionKey("process1")
               .singleResult();      
       List<User> authorizedUsers = identityService.createUserQuery().potentialStarter(latestProcessDef.getId()).list();
-      assertEquals(0, authorizedUsers.size());
+      assertThat(authorizedUsers).isEmpty();
 
       // user1 and user2 are potential Startes of Process2
       latestProcessDef = repositoryService
               .createProcessDefinitionQuery().processDefinitionKey("process2")
               .singleResult();      
       authorizedUsers =  identityService.createUserQuery().potentialStarter(latestProcessDef.getId()).orderByUserId().asc().list();
-      assertEquals(2, authorizedUsers.size());
-      assertEquals("user1", authorizedUsers.get(0).getId());
-      assertEquals("user2", authorizedUsers.get(1).getId());
+      assertThat(authorizedUsers).hasSize(2);
+      assertThat(authorizedUsers.get(0).getId()).isEqualTo("user1");
+      assertThat(authorizedUsers.get(1).getId()).isEqualTo("user2");
 
       // Process 2 has no potential starter groups
       latestProcessDef = repositoryService
               .createProcessDefinitionQuery().processDefinitionKey("process2")
               .singleResult();      
       List<Group> authorizedGroups = identityService.createGroupQuery().potentialStarter(latestProcessDef.getId()).list();
-      assertEquals(0, authorizedGroups.size());
+      assertThat(authorizedGroups).isEmpty();
       
       // Process 3 has 3 groups as authorized starter groups
       latestProcessDef = repositoryService
               .createProcessDefinitionQuery().processDefinitionKey("process4")
               .singleResult();      
       authorizedGroups = identityService.createGroupQuery().potentialStarter(latestProcessDef.getId()).orderByGroupId().asc().list();
-      assertEquals(3, authorizedGroups.size());
-      assertEquals("group1", authorizedGroups.get(0).getId());
-      assertEquals("group2", authorizedGroups.get(1).getId());
-      assertEquals("group3", authorizedGroups.get(2).getId());
+      assertThat(authorizedGroups).hasSize(3);
+      assertThat(authorizedGroups.get(0).getId()).isEqualTo("group1");
+      assertThat(authorizedGroups.get(1).getId()).isEqualTo("group2");
+      assertThat(authorizedGroups.get(2).getId()).isEqualTo("group3");
 
       // do not mention user, all processes should be selected
       List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery()
           .orderByProcessDefinitionName().asc().list();
 
-      assertEquals(4, processDefinitions.size());
+      assertThat(processDefinitions).hasSize(4);
 
-      assertEquals("process1", processDefinitions.get(0).getKey());
-      assertEquals("process2", processDefinitions.get(1).getKey());
-      assertEquals("process3", processDefinitions.get(2).getKey());
-      assertEquals("process4", processDefinitions.get(3).getKey());
+      assertThat(processDefinitions.get(0).getKey()).isEqualTo("process1");
+      assertThat(processDefinitions.get(1).getKey()).isEqualTo("process2");
+      assertThat(processDefinitions.get(2).getKey()).isEqualTo("process3");
+      assertThat(processDefinitions.get(3).getKey()).isEqualTo("process4");
 
       // check user1, process3 has "user1" as only authorized starter, and
       // process2 has two authorized starters, of which one is "user1"
       processDefinitions = repositoryService.createProcessDefinitionQuery()
           .orderByProcessDefinitionName().asc().startableByUser("user1").list();
 
-      assertEquals(2, processDefinitions.size());
-      assertEquals("process2", processDefinitions.get(0).getKey());
-      assertEquals("process3", processDefinitions.get(1).getKey());
+      assertThat(processDefinitions).hasSize(2);
+      assertThat(processDefinitions.get(0).getKey()).isEqualTo("process2");
+      assertThat(processDefinitions.get(1).getKey()).isEqualTo("process3");
 
 
       // "user2" can only start process2
       processDefinitions = repositoryService.createProcessDefinitionQuery().startableByUser("user2").list();
 
-      assertEquals(1, processDefinitions.size());
-      assertEquals("process2", processDefinitions.get(0).getKey());
+      assertThat(processDefinitions).hasSize(1);
+      assertThat(processDefinitions.get(0).getKey()).isEqualTo("process2");
 
       // no process could be started with "user4"
       processDefinitions = repositoryService.createProcessDefinitionQuery().startableByUser("user4").list();
-      assertEquals(0, processDefinitions.size());
+      assertThat(processDefinitions).isEmpty();
 
       // "userInGroup3" is in "group3" and can start only process4 via group authorization
       processDefinitions = repositoryService.createProcessDefinitionQuery().startableByUser("userInGroup3").list();
-      assertEquals(1, processDefinitions.size());
-      assertEquals("process4", processDefinitions.get(0).getKey());
+      assertThat(processDefinitions).hasSize(1);
+      assertThat(processDefinitions.get(0).getKey()).isEqualTo("process4");
 
       // "userInGroup2" can start process4, via both user and group authorizations
       // but we have to be sure that process4 appears only once
       processDefinitions = repositoryService.createProcessDefinitionQuery().startableByUser("userInGroup2").list();
-      assertEquals(1, processDefinitions.size());
-      assertEquals("process4", processDefinitions.get(0).getKey());
+      assertThat(processDefinitions).hasSize(1);
+      assertThat(processDefinitions.get(0).getKey()).isEqualTo("process4");
     
     } finally {
       tearDownUsersAndGroups();

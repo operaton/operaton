@@ -22,8 +22,10 @@ import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.MigrationPlanValidationReportAssert;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Assert;
+
 import org.junit.Rule;
+
+import static org.assertj.core.api.Assertions.fail;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
 
@@ -56,7 +58,7 @@ public class MigrationHorizontalScopeChangeTest {
     try {
       runtimeService.build();
 
-      Assert.fail("should fail");
+      fail("should fail");
     }
     catch (MigrationPlanValidationException e) {
       MigrationPlanValidationReportAssert.assertThat(e.getValidationReport())

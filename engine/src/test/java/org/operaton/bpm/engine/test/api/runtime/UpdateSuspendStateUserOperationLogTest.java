@@ -16,10 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -87,33 +85,33 @@ public class UpdateSuspendStateUserOperationLogTest {
 
     // then
     List<UserOperationLogEntry> opLogEntries = rule.getHistoryService().createUserOperationLogQuery().list();
-    assertEquals(2, opLogEntries.size());
+    assertThat(opLogEntries).hasSize(2);
 
     Map<String, UserOperationLogEntry> entries = asMap(opLogEntries);
 
 
 
     UserOperationLogEntry asyncEntry = entries.get("async");
-    assertNotNull(asyncEntry);
-    assertEquals("ProcessInstance", asyncEntry.getEntityType());
-    assertEquals("SuspendJob", asyncEntry.getOperationType());
-    assertNull(asyncEntry.getProcessInstanceId());
-    assertNull(asyncEntry.getOrgValue());
-    assertEquals("true", asyncEntry.getNewValue());
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, asyncEntry.getCategory());
+    assertThat(asyncEntry).isNotNull();
+    assertThat(asyncEntry.getEntityType()).isEqualTo("ProcessInstance");
+    assertThat(asyncEntry.getOperationType()).isEqualTo("SuspendJob");
+    assertThat(asyncEntry.getProcessInstanceId()).isNull();
+    assertThat(asyncEntry.getOrgValue()).isNull();
+    assertThat(asyncEntry.getNewValue()).isEqualTo("true");
+    assertThat(asyncEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
     UserOperationLogEntry numInstancesEntry = entries.get("nrOfInstances");
-    assertNotNull(numInstancesEntry);
-    assertEquals("ProcessInstance", numInstancesEntry.getEntityType());
-    assertEquals("SuspendJob", numInstancesEntry.getOperationType());
-    assertNull(numInstancesEntry.getProcessInstanceId());
-    assertNull(numInstancesEntry.getProcessDefinitionKey());
-    assertNull(numInstancesEntry.getProcessDefinitionId());
-    assertNull(numInstancesEntry.getOrgValue());
-    assertEquals("2", numInstancesEntry.getNewValue());
-    assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, asyncEntry.getCategory());
+    assertThat(numInstancesEntry).isNotNull();
+    assertThat(numInstancesEntry.getEntityType()).isEqualTo("ProcessInstance");
+    assertThat(numInstancesEntry.getOperationType()).isEqualTo("SuspendJob");
+    assertThat(numInstancesEntry.getProcessInstanceId()).isNull();
+    assertThat(numInstancesEntry.getProcessDefinitionKey()).isNull();
+    assertThat(numInstancesEntry.getProcessDefinitionId()).isNull();
+    assertThat(numInstancesEntry.getOrgValue()).isNull();
+    assertThat(numInstancesEntry.getNewValue()).isEqualTo("2");
+    assertThat(asyncEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
-    assertEquals(asyncEntry.getOperationId(), numInstancesEntry.getOperationId());
+    assertThat(numInstancesEntry.getOperationId()).isEqualTo(asyncEntry.getOperationId());
   }
 
   @Test
@@ -136,7 +134,7 @@ public class UpdateSuspendStateUserOperationLogTest {
     rule.getIdentityService().clearAuthentication();
 
     // then
-    assertEquals(0, rule.getHistoryService().createUserOperationLogQuery().entityType(EntityTypes.PROCESS_INSTANCE).count());
+    assertThat(rule.getHistoryService().createUserOperationLogQuery().entityType(EntityTypes.PROCESS_INSTANCE).count()).isZero();
   }
 
   protected Map<String, UserOperationLogEntry> asMap(List<UserOperationLogEntry> logEntries) {

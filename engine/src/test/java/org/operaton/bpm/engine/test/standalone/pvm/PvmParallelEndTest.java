@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.standalone.pvm;
 
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.impl.pvm.ProcessDefinitionBuilder;
 import org.operaton.bpm.engine.impl.pvm.PvmProcessDefinition;
@@ -69,6 +69,6 @@ public class PvmParallelEndTest {
     PvmProcessInstance processInstance = processDefinition.createProcessInstance();
     processInstance.start();
 
-    assertTrue(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isTrue();
   }
 }

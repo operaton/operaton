@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.standalone.calendar;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -45,7 +45,7 @@ public class CycleBusinessCalendarTest {
 
     Date expectedDuedate = simpleDateFormat.parse("2011 04 1 - 00:00");
 
-    assertEquals(expectedDuedate, duedate);
+    assertThat(duedate).isEqualTo(expectedDuedate);
   }
 
   @Test
@@ -60,7 +60,7 @@ public class CycleBusinessCalendarTest {
 
     Date expectedDuedate = simpleDateFormat.parse("2010 06 13 - 23:33");
 
-    assertEquals(expectedDuedate, duedate);
+    assertThat(duedate).isEqualTo(expectedDuedate);
   }
 
   @Test
@@ -74,7 +74,7 @@ public class CycleBusinessCalendarTest {
 
     Date expectedDuedate = simpleDateFormat.parse("2011 04 1 - 00:00");
 
-    assertEquals(expectedDuedate, duedate);
+    assertThat(duedate).isEqualTo(expectedDuedate);
   }
 
   @Test
@@ -88,7 +88,7 @@ public class CycleBusinessCalendarTest {
 
     Date expectedDuedate = simpleDateFormat.parse("2010 06 13 - 23:33");
 
-    assertEquals(expectedDuedate, duedate);
+    assertThat(duedate).isEqualTo(expectedDuedate);
   }
 
 }

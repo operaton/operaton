@@ -21,7 +21,7 @@ import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TY
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_DELETE_HISTORY;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -45,7 +45,6 @@ import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -147,19 +146,19 @@ public class DeleteBatchAuthorizationTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      Assert.assertEquals(0, engineRule.getManagementService().createBatchQuery().count());
+      assertThat(engineRule.getManagementService().createBatchQuery().count()).isZero();
 
       List<UserOperationLogEntry> userOperationLogEntries = engineRule.getHistoryService()
         .createUserOperationLogQuery()
         .operationType(OPERATION_TYPE_DELETE)
         .list();
 
-      assertEquals(1, userOperationLogEntries.size());
+      assertThat(userOperationLogEntries).hasSize(1);
 
       UserOperationLogEntry entry = userOperationLogEntries.get(0);
-      assertEquals("cascadeToHistory", entry.getProperty());
-      assertEquals("false", entry.getNewValue());
-      assertEquals(CATEGORY_OPERATOR, entry.getCategory());
+      assertThat(entry.getProperty()).isEqualTo("cascadeToHistory");
+      assertThat(entry.getNewValue()).isEqualTo("false");
+      assertThat(entry.getCategory()).isEqualTo(CATEGORY_OPERATOR);
     }
   }
 
@@ -188,8 +187,8 @@ public class DeleteBatchAuthorizationTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      Assert.assertEquals(0, engineRule.getManagementService().createBatchQuery().count());
-      Assert.assertEquals(0, engineRule.getHistoryService().createHistoricBatchQuery().count());
+      assertThat(engineRule.getManagementService().createBatchQuery().count()).isZero();
+      assertThat(engineRule.getHistoryService().createHistoricBatchQuery().count()).isZero();
 
       UserOperationLogQuery query = engineRule.getHistoryService()
         .createUserOperationLogQuery();
@@ -197,18 +196,18 @@ public class DeleteBatchAuthorizationTest {
       List<UserOperationLogEntry> userOperationLogEntries = query.operationType(OPERATION_TYPE_DELETE)
         .batchId(batch.getId())
         .list();
-      assertEquals(1, userOperationLogEntries.size());
+      assertThat(userOperationLogEntries).hasSize(1);
 
       UserOperationLogEntry entry = userOperationLogEntries.get(0);
-      assertEquals("cascadeToHistory", entry.getProperty());
-      assertEquals("true", entry.getNewValue());
-      assertEquals(CATEGORY_OPERATOR, entry.getCategory());
+      assertThat(entry.getProperty()).isEqualTo("cascadeToHistory");
+      assertThat(entry.getNewValue()).isEqualTo("true");
+      assertThat(entry.getCategory()).isEqualTo(CATEGORY_OPERATOR);
 
       // Ensure that HistoricBatch deletion is not logged
       List<UserOperationLogEntry> userOperationLogHistoricEntries = query.operationType(OPERATION_TYPE_DELETE_HISTORY)
         .batchId(batch.getId())
         .list();
-      assertEquals(0, userOperationLogHistoricEntries.size());
+      assertThat(userOperationLogHistoricEntries).isEmpty();
     }
   }
 }

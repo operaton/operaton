@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.servicetask;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,7 +38,7 @@ public class ExpressionServiceTaskTest extends PluggableProcessEngineTest {
     Map<String,Object> variables = new HashMap<>();
     variables.put("bean", new ValueBean("ok"));
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("setServiceResultToProcessVariables", variables);
-    assertEquals("ok", runtimeService.getVariable(pi.getId(), "result"));
+    assertThat(runtimeService.getVariable(pi.getId(), "result")).isEqualTo("ok");
   }
 
   @Deployment
@@ -47,6 +47,6 @@ public class ExpressionServiceTaskTest extends PluggableProcessEngineTest {
     Map<String,Object> variables = new HashMap<>();
     variables.put("var", "---");
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("BackwardsCompatibleExpressionProcess", variables);
-    assertEquals("...---...", runtimeService.getVariable(pi.getId(), "result"));
+    assertThat(runtimeService.getVariable(pi.getId(), "result")).isEqualTo("...---...");
   }
 }

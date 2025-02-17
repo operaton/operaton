@@ -17,13 +17,8 @@
 package org.operaton.bpm.engine.test.api.mgmt;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.EntityTypes.BATCH;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.HistoryService;
@@ -105,7 +100,7 @@ public class BatchSuspensionTest {
 
     // then
     batch = managementService.createBatchQuery().batchId(batch.getId()).singleResult();
-    assertTrue(batch.isSuspended());
+    assertThat(batch.isSuspended()).isTrue();
   }
 
   @Test
@@ -140,10 +135,10 @@ public class BatchSuspensionTest {
 
     // then
     JobDefinition seedJobDefinition = helper.getSeedJobDefinition(batch);
-    assertTrue(seedJobDefinition.isSuspended());
+    assertThat(seedJobDefinition.isSuspended()).isTrue();
 
     Job seedJob = helper.getSeedJob(batch);
-    assertTrue(seedJob.isSuspended());
+    assertThat(seedJob.isSuspended()).isTrue();
   }
 
   @Test
@@ -157,7 +152,7 @@ public class BatchSuspensionTest {
 
     // then
     Job seedJob = helper.getSeedJob(batch);
-    assertTrue(seedJob.isSuspended());
+    assertThat(seedJob.isSuspended()).isTrue();
   }
 
   @Test
@@ -171,10 +166,10 @@ public class BatchSuspensionTest {
 
     // then
     JobDefinition monitorJobDefinition = helper.getMonitorJobDefinition(batch);
-    assertTrue(monitorJobDefinition.isSuspended());
+    assertThat(monitorJobDefinition.isSuspended()).isTrue();
 
     Job monitorJob = helper.getMonitorJob(batch);
-    assertTrue(monitorJob.isSuspended());
+    assertThat(monitorJob.isSuspended()).isTrue();
   }
 
   @Test
@@ -188,7 +183,7 @@ public class BatchSuspensionTest {
 
     // then
     Job monitorJob = helper.getMonitorJob(batch);
-    assertTrue(monitorJob.isSuspended());
+    assertThat(monitorJob.isSuspended()).isTrue();
   }
 
   @Test
@@ -202,10 +197,10 @@ public class BatchSuspensionTest {
 
     // then
     JobDefinition migrationJobDefinition = helper.getExecutionJobDefinition(batch);
-    assertTrue(migrationJobDefinition.isSuspended());
+    assertThat(migrationJobDefinition.isSuspended()).isTrue();
 
     Job migrationJob = helper.getExecutionJobs(batch).get(0);
-    assertTrue(migrationJob.isSuspended());
+    assertThat(migrationJob.isSuspended()).isTrue();
   }
 
   @Test
@@ -219,7 +214,7 @@ public class BatchSuspensionTest {
 
     // then
     Job migrationJob = helper.getExecutionJobs(batch).get(0);
-    assertTrue(migrationJob.isSuspended());
+    assertThat(migrationJob.isSuspended()).isTrue();
   }
 
   @Test
@@ -237,11 +232,11 @@ public class BatchSuspensionTest {
     UserOperationLogEntry entry = historyService.createUserOperationLogQuery()
       .singleResult();
 
-    assertNotNull(entry);
-    assertEquals(batch.getId(), entry.getBatchId());
-    assertEquals(AbstractSetBatchStateCmd.SUSPENSION_STATE_PROPERTY, entry.getProperty());
-    assertNull(entry.getOrgValue());
-    assertEquals(SuspensionState.SUSPENDED.getName(), entry.getNewValue());
+    assertThat(entry).isNotNull();
+    assertThat(entry.getBatchId()).isEqualTo(batch.getId());
+    assertThat(entry.getProperty()).isEqualTo(AbstractSetBatchStateCmd.SUSPENSION_STATE_PROPERTY);
+    assertThat(entry.getOrgValue()).isNull();
+    assertThat(entry.getNewValue()).isEqualTo(SuspensionState.SUSPENDED.getName());
   }
 
   @Test
@@ -255,7 +250,7 @@ public class BatchSuspensionTest {
 
     // then
     batch = managementService.createBatchQuery().batchId(batch.getId()).singleResult();
-    assertFalse(batch.isSuspended());
+    assertThat(batch.isSuspended()).isFalse();
   }
 
   @Test
@@ -291,10 +286,10 @@ public class BatchSuspensionTest {
 
     // then
     JobDefinition seedJobDefinition = helper.getSeedJobDefinition(batch);
-    assertFalse(seedJobDefinition.isSuspended());
+    assertThat(seedJobDefinition.isSuspended()).isFalse();
 
     Job seedJob = helper.getSeedJob(batch);
-    assertFalse(seedJob.isSuspended());
+    assertThat(seedJob.isSuspended()).isFalse();
   }
 
   @Test
@@ -307,7 +302,7 @@ public class BatchSuspensionTest {
 
     // then
     Job seedJob = helper.getSeedJob(batch);
-    assertFalse(seedJob.isSuspended());
+    assertThat(seedJob.isSuspended()).isFalse();
   }
 
   @Test
@@ -322,10 +317,10 @@ public class BatchSuspensionTest {
 
     // then
     JobDefinition monitorJobDefinition = helper.getMonitorJobDefinition(batch);
-    assertFalse(monitorJobDefinition.isSuspended());
+    assertThat(monitorJobDefinition.isSuspended()).isFalse();
 
     Job monitorJob = helper.getMonitorJob(batch);
-    assertFalse(monitorJob.isSuspended());
+    assertThat(monitorJob.isSuspended()).isFalse();
   }
 
   @Test
@@ -338,7 +333,7 @@ public class BatchSuspensionTest {
 
     // then
     Job monitorJob = helper.getMonitorJob(batch);
-    assertFalse(monitorJob.isSuspended());
+    assertThat(monitorJob.isSuspended()).isFalse();
   }
 
   @Test
@@ -353,10 +348,10 @@ public class BatchSuspensionTest {
 
     // then
     JobDefinition migrationJobDefinition = helper.getExecutionJobDefinition(batch);
-    assertFalse(migrationJobDefinition.isSuspended());
+    assertThat(migrationJobDefinition.isSuspended()).isFalse();
 
     Job migrationJob = helper.getExecutionJobs(batch).get(0);
-    assertFalse(migrationJob.isSuspended());
+    assertThat(migrationJob.isSuspended()).isFalse();
   }
 
   @Test
@@ -369,7 +364,7 @@ public class BatchSuspensionTest {
 
     // then
     Job migrationJob = helper.getExecutionJobs(batch).get(0);
-    assertFalse(migrationJob.isSuspended());
+    assertThat(migrationJob.isSuspended()).isFalse();
   }
 
   @Test
@@ -388,11 +383,11 @@ public class BatchSuspensionTest {
     UserOperationLogEntry entry = historyService.createUserOperationLogQuery()
       .singleResult();
 
-    assertNotNull(entry);
-    assertEquals(batch.getId(), entry.getBatchId());
-    assertEquals(AbstractSetBatchStateCmd.SUSPENSION_STATE_PROPERTY, entry.getProperty());
-    assertNull(entry.getOrgValue());
-    assertEquals(SuspensionState.ACTIVE.getName(), entry.getNewValue());
+    assertThat(entry).isNotNull();
+    assertThat(entry.getBatchId()).isEqualTo(batch.getId());
+    assertThat(entry.getProperty()).isEqualTo(AbstractSetBatchStateCmd.SUSPENSION_STATE_PROPERTY);
+    assertThat(entry.getOrgValue()).isNull();
+    assertThat(entry.getNewValue()).isEqualTo(SuspensionState.ACTIVE.getName());
   }
 
   @Test
@@ -411,8 +406,8 @@ public class BatchSuspensionTest {
 
     // then
     UserOperationLogQuery query = historyService.createUserOperationLogQuery().entityType(BATCH);
-    assertEquals(3, query.count());
-    assertEquals(3, query.list().size());
+    assertThat(query.count()).isEqualTo(3);
+    assertThat(query.list()).hasSize(3);
   }
 
   @Test
@@ -431,12 +426,12 @@ public class BatchSuspensionTest {
 
     // then
     UserOperationLogQuery query = historyService.createUserOperationLogQuery().batchId(batch1.getId());
-    assertEquals(2, query.count());
-    assertEquals(2, query.list().size());
+    assertThat(query.count()).isEqualTo(2);
+    assertThat(query.list()).hasSize(2);
 
     query = historyService.createUserOperationLogQuery().batchId(batch2.getId());
-    assertEquals(1, query.count());
-    assertEquals(1, query.list().size());
+    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
   }
 
 }

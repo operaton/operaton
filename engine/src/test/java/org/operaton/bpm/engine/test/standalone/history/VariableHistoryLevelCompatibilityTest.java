@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.standalone.history;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -52,7 +52,7 @@ public class VariableHistoryLevelCompatibilityTest {
   @Test
   public void testCompatibilty() {
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
-    assertEquals(ProcessEngineConfigurationImpl.HISTORYLEVEL_ACTIVITY, historyLevel);
+    assertThat(historyLevel).isEqualTo(ProcessEngineConfigurationImpl.HISTORYLEVEL_ACTIVITY);
   }
 
 }

@@ -27,7 +27,7 @@ import static org.operaton.bpm.engine.test.api.runtime.migration.models.EventSub
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.EventSubProcessModels.VAR_CONDITION;
 import static org.operaton.bpm.engine.test.util.MigrationPlanAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.MigrationPlanAssert.migrate;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.migration.MigrationInstructionsBuilder;
 import org.operaton.bpm.engine.migration.MigrationPlan;
@@ -929,7 +929,7 @@ public class MigrationPlanGenerationTest {
       .build();
 
     // then
-    assertNotNull(migrationPlan);
+    assertThat(migrationPlan).isNotNull();
   }
 
   @Test

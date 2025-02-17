@@ -16,10 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
 
@@ -355,7 +352,7 @@ public class MultiTenancyMessageCorrelationTest {
     String processDefId9 = testRule.deployForTenantAndGetDefinition(TENANT_ONE, processAnotherKey).getId();
 
     // assume
-    assertEquals(3, engineRule.getRuntimeService().createEventSubscriptionQuery().count());
+    assertThat(engineRule.getRuntimeService().createEventSubscriptionQuery().count()).isEqualTo(3);
 
     // when
     engineRule.getRepositoryService()
@@ -365,15 +362,15 @@ public class MultiTenancyMessageCorrelationTest {
 
     // then
     List<EventSubscription> list = engineRule.getRuntimeService().createEventSubscriptionQuery().list();
-    assertEquals(3, list.size());
+    assertThat(list).hasSize(3);
     for (EventSubscription eventSubscription : list) {
       EventSubscriptionEntity eventSubscriptionEntity = (EventSubscriptionEntity) eventSubscription;
       if (eventSubscriptionEntity.getConfiguration().equals(processDefId2)) {
-        assertEquals(TENANT_ONE, eventSubscription.getTenantId());
+        assertThat(eventSubscription.getTenantId()).isEqualTo(TENANT_ONE);
       } else if (eventSubscriptionEntity.getConfiguration().equals(processDefId6)) {
-        assertEquals(null, eventSubscription.getTenantId());
+        assertThat(eventSubscription.getTenantId()).isNull();
       } else if (eventSubscriptionEntity.getConfiguration().equals(processDefId7)) {
-        assertEquals(TENANT_ONE, eventSubscription.getTenantId());
+        assertThat(eventSubscription.getTenantId()).isEqualTo(TENANT_ONE);
       } else {
         fail("This process definition '" + eventSubscriptionEntity.getConfiguration() + "' and the respective event subscription should not exist.");
       }

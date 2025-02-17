@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 
 import java.util.List;
@@ -28,7 +29,6 @@ import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.MessageReceiveModels;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
@@ -86,11 +86,11 @@ public class MigrationReceiveTaskTest {
     EventSubscription eventSubscriptionBefore = testHelper.snapshotBeforeMigration.getEventSubscriptions().get(0);
 
     List<EventSubscription> eventSubscriptionsAfter = testHelper.snapshotAfterMigration.getEventSubscriptions();
-    Assert.assertEquals(1, eventSubscriptionsAfter.size());
+    assertThat(eventSubscriptionsAfter).hasSize(1);
     EventSubscription eventSubscriptionAfter = eventSubscriptionsAfter.get(0);
-    Assert.assertEquals(eventSubscriptionBefore.getCreated(), eventSubscriptionAfter.getCreated());
-    Assert.assertEquals(eventSubscriptionBefore.getExecutionId(), eventSubscriptionAfter.getExecutionId());
-    Assert.assertEquals(eventSubscriptionBefore.getProcessInstanceId(), eventSubscriptionAfter.getProcessInstanceId());
+    assertThat(eventSubscriptionAfter.getCreated()).isEqualTo(eventSubscriptionBefore.getCreated());
+    assertThat(eventSubscriptionAfter.getExecutionId()).isEqualTo(eventSubscriptionBefore.getExecutionId());
+    assertThat(eventSubscriptionAfter.getProcessInstanceId()).isEqualTo(eventSubscriptionBefore.getProcessInstanceId());
   }
 
   @Test

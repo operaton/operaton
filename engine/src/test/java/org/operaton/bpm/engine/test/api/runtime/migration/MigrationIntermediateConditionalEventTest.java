@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.impl.migration.validation.instruction.ConditionalEventUpdateEventTriggerValidator.MIGRATION_CONDITIONAL_VALIDATION_ERROR_MSG;
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.ConditionalModels.CONDITION_ID;
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.ConditionalModels.USER_TASK_ID;
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.ConditionalModels.VAR_CONDITION;
-import static org.junit.Assert.assertNull;
 
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.migration.MigrationPlanValidationException;
@@ -130,7 +130,7 @@ public class MigrationIntermediateConditionalEventTest {
     testHelper.setVariable(processInstance.getId(), VAR_NAME, "1");
 
     //then nothing happens
-    assertNull(rule.getTaskService().createTaskQuery().singleResult());
+    assertThat(rule.getTaskService().createTaskQuery().singleResult()).isNull();
 
     //when correct value is set
     testHelper.setVariable(processInstance.getId(), VAR_NAME, "2");

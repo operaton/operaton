@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.migration;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
@@ -39,7 +40,6 @@ import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -167,9 +167,9 @@ public class MigrateProcessInstanceAsyncTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      Assert.assertEquals("userId", batch.getCreateUserId());
+      assertThat(batch.getCreateUserId()).isEqualTo("userId");
 
-      Assert.assertEquals(1, engineRule.getManagementService().createBatchQuery().count());
+      assertThat(engineRule.getManagementService().createBatchQuery().count()).isEqualTo(1);
     }
 
   }
@@ -207,7 +207,7 @@ public class MigrateProcessInstanceAsyncTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      Assert.assertEquals(1, engineRule.getManagementService().createBatchQuery().count());
+      assertThat(engineRule.getManagementService().createBatchQuery().count()).isEqualTo(1);
     }
 
   }

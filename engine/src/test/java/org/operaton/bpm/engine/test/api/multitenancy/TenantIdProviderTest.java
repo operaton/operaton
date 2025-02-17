@@ -48,7 +48,6 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
 import static org.operaton.bpm.engine.variable.Variables.stringValue;
 
 /**
@@ -151,7 +150,7 @@ public class TenantIdProviderTest {
     properties.put("employeeName", "demo");
 
     ProcessInstance procInstance = engineRule.getFormService().submitStartForm(processDefinitionId, properties);
-    assertNotNull(procInstance);
+    assertThat(procInstance).isNotNull();
 
     // then the tenant id provider is invoked
     assertThat(tenantIdProvider.parameters).hasSize(1);
@@ -177,7 +176,7 @@ public class TenantIdProviderTest {
     properties.put("employeeName", "demo");
 
     ProcessInstance procInstance = engineRule.getFormService().submitStartForm(processDefinitionId, properties);
-    assertNotNull(procInstance);
+    assertThat(procInstance).isNotNull();
 
     // then the tenant id provider is not invoked
     assertThat(tenantIdProvider.parameters).isEmpty();
@@ -199,7 +198,7 @@ public class TenantIdProviderTest {
                                          .startBeforeActivity("task").execute().getProcessInstanceId();
 
     //then provider is called
-    assertNotNull(engineRule.getRuntimeService().getActivityInstance(processInstanceId));
+    assertThat(engineRule.getRuntimeService().getActivityInstance(processInstanceId)).isNotNull();
     assertThat(tenantIdProvider.parameters).hasSize(1);
   }
 
@@ -219,7 +218,7 @@ public class TenantIdProviderTest {
                                          .startBeforeActivity("task").execute().getProcessInstanceId();
 
     //then provider should not be called
-    assertNotNull(engineRule.getRuntimeService().getActivityInstance(processInstanceId));
+    assertThat(engineRule.getRuntimeService().getActivityInstance(processInstanceId)).isNotNull();
     assertThat(tenantIdProvider.parameters).isEmpty();
   }
 

@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.standalone.deploy;
 
 import static org.operaton.bpm.engine.test.standalone.deploy.TestCmmnTransformListener.numberOfRegistered;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.test.Deployment;
@@ -68,29 +68,29 @@ public class CmmnTransformListenerTest {
   @Test
   public void testListenerInvocation() {
     // Check if case definition has different key
-    assertEquals(0, repositoryService.createCaseDefinitionQuery().caseDefinitionKey("testCase").count());
-    assertEquals(0, repositoryService.createCaseDefinitionQuery().caseDefinitionKey("testCase-modified").count());
-    assertEquals(1, repositoryService.createCaseDefinitionQuery().caseDefinitionKey("testCase-modified-modified").count());
+    assertThat(repositoryService.createCaseDefinitionQuery().caseDefinitionKey("testCase").count()).isZero();
+    assertThat(repositoryService.createCaseDefinitionQuery().caseDefinitionKey("testCase-modified").count()).isZero();
+    assertThat(repositoryService.createCaseDefinitionQuery().caseDefinitionKey("testCase-modified-modified").count()).isEqualTo(1);
 
-    assertEquals(1, numberOfRegistered(Definitions.class));
-    assertEquals(1, numberOfRegistered(Case.class));
-    assertEquals(1, numberOfRegistered(CasePlanModel.class));
-    assertEquals(3, numberOfRegistered(HumanTask.class));
-    assertEquals(1, numberOfRegistered(ProcessTask.class));
-    assertEquals(1, numberOfRegistered(CaseTask.class));
-    assertEquals(1, numberOfRegistered(DecisionTask.class));
+    assertThat(numberOfRegistered(Definitions.class)).isEqualTo(1);
+    assertThat(numberOfRegistered(Case.class)).isEqualTo(1);
+    assertThat(numberOfRegistered(CasePlanModel.class)).isEqualTo(1);
+    assertThat(numberOfRegistered(HumanTask.class)).isEqualTo(3);
+    assertThat(numberOfRegistered(ProcessTask.class)).isEqualTo(1);
+    assertThat(numberOfRegistered(CaseTask.class)).isEqualTo(1);
+    assertThat(numberOfRegistered(DecisionTask.class)).isEqualTo(1);
     // 3x HumanTask, 1x ProcessTask, 1x CaseTask, 1x DecisionTask, 1x Task
-    assertEquals(7, numberOfRegistered(Task.class));
+    assertThat(numberOfRegistered(Task.class)).isEqualTo(7);
     // 1x CasePlanModel, 1x Stage
-    assertEquals(2, numberOfRegistered(Stage.class));
-    assertEquals(1, numberOfRegistered(Milestone.class));
+    assertThat(numberOfRegistered(Stage.class)).isEqualTo(2);
+    assertThat(numberOfRegistered(Milestone.class)).isEqualTo(1);
     // Note: EventListener is currently not supported!
-    assertEquals(0, numberOfRegistered(EventListener.class));
-    assertEquals(3, numberOfRegistered(Sentry.class));
+    assertThat(numberOfRegistered(EventListener.class)).isZero();
+    assertThat(numberOfRegistered(Sentry.class)).isEqualTo(3);
 
-    assertEquals(11, TestCmmnTransformListener.cmmnActivities.size());
-    assertEquals(24, TestCmmnTransformListener.modelElementInstances.size());
-    assertEquals(3, TestCmmnTransformListener.sentryDeclarations.size());
+    assertThat(TestCmmnTransformListener.cmmnActivities).hasSize(11);
+    assertThat(TestCmmnTransformListener.modelElementInstances).hasSize(24);
+    assertThat(TestCmmnTransformListener.sentryDeclarations).hasSize(3);
   }
 
 }

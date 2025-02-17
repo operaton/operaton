@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.task;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.HashSet;
 import java.util.List;
@@ -53,12 +52,11 @@ public class SubTaskTest extends PluggableProcessEngineTest {
     taskService.saveTask(subTaskTwo);
 
     String subTaskId = subTaskOne.getId();
-    assertTrue(taskService.getSubTasks(subTaskId).isEmpty());
-    assertTrue(historyService
-            .createHistoricTaskInstanceQuery()
-            .taskParentTaskId(subTaskId)
-            .list()
-            .isEmpty());
+    assertThat(taskService.getSubTasks(subTaskId)).isEmpty();
+    assertThat(historyService
+        .createHistoricTaskInstanceQuery()
+        .taskParentTaskId(subTaskId)
+        .list()).isEmpty();
 
     List<Task> subTasks = taskService.getSubTasks(gonzoTaskId);
     Set<String> subTaskNames = new HashSet<>();
@@ -71,7 +69,7 @@ public class SubTaskTest extends PluggableProcessEngineTest {
       expectedSubTaskNames.add("subtask one");
       expectedSubTaskNames.add("subtask two");
 
-      assertEquals(expectedSubTaskNames, subTaskNames);
+      assertThat(subTaskNames).isEqualTo(expectedSubTaskNames);
 
       List<HistoricTaskInstance> historicSubTasks = historyService
         .createHistoricTaskInstanceQuery()
@@ -83,7 +81,7 @@ public class SubTaskTest extends PluggableProcessEngineTest {
         subTaskNames.add(historicSubTask.getName());
       }
 
-      assertEquals(expectedSubTaskNames, subTaskNames);
+      assertThat(subTaskNames).isEqualTo(expectedSubTaskNames);
     }
 
     taskService.deleteTask(gonzoTaskId, true);

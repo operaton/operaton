@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.jobdefinition;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
 
@@ -32,7 +33,6 @@ import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario
 import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -127,10 +127,10 @@ public class SetJobDefinitionPriorityCascadeAuthorizationTest {
     // then
     if (authRule.assertScenario(scenario)) {
       jobDefinition = engineRule.getManagementService().createJobDefinitionQuery().singleResult();
-      Assert.assertEquals(42L, (long) jobDefinition.getOverridingJobPriority());
+      assertThat((long) jobDefinition.getOverridingJobPriority()).isEqualTo(42L);
 
       job = engineRule.getManagementService().createJobQuery().singleResult();
-      Assert.assertEquals(42L, job.getPriority());
+      assertThat(job.getPriority()).isEqualTo(42L);
     }
 
   }

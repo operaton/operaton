@@ -31,7 +31,6 @@ import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
@@ -113,10 +112,10 @@ public class MultiTenancyMigrationAsyncTest {
   }
 
   protected void assertMigratedTo(ProcessInstance processInstance, ProcessDefinition targetDefinition) {
-    Assert.assertEquals(1, defaultEngineRule.getRuntimeService()
-      .createProcessInstanceQuery()
-      .processInstanceId(processInstance.getId())
-      .processDefinitionId(targetDefinition.getId())
-      .count());
+    assertThat(defaultEngineRule.getRuntimeService()
+        .createProcessInstanceQuery()
+        .processInstanceId(processInstance.getId())
+        .processDefinitionId(targetDefinition.getId())
+        .count()).isEqualTo(1);
   }
 }

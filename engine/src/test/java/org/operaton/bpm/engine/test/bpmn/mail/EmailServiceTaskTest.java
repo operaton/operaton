@@ -16,9 +16,8 @@
  */
 package org.operaton.bpm.engine.test.bpmn.mail;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import javax.activation.DataHandler;
 import javax.mail.MessagingException;
@@ -51,7 +50,7 @@ public class EmailServiceTaskTest extends EmailTestCase {
     String procId = runtimeService.startProcessInstanceByKey("simpleTextOnly").getId();
 
     List<WiserMessage> messages = wiser.getMessages();
-    assertEquals(1, messages.size());
+    assertThat(messages).hasSize(1);
 
     WiserMessage message = messages.get(0);
     assertEmailSend(message, false, "Hello Kermit!", "This a text only e-mail.", "operaton@localhost",
@@ -66,7 +65,7 @@ public class EmailServiceTaskTest extends EmailTestCase {
 
     // 3 recipients == 3 emails in wiser with different receivers
     List<WiserMessage> messages = wiser.getMessages();
-    assertEquals(3, messages.size());
+    assertThat(messages).hasSize(3);
 
     // sort recipients for easy assertion
     List<String> recipients = new ArrayList<>();
@@ -75,9 +74,9 @@ public class EmailServiceTaskTest extends EmailTestCase {
     }
     Collections.sort(recipients);
 
-    assertEquals("fozzie@operaton.org", recipients.get(0));
-    assertEquals("kermit@operaton.org", recipients.get(1));
-    assertEquals("mispiggy@operaton.org", recipients.get(2));
+    assertThat(recipients.get(0)).isEqualTo("fozzie@operaton.org");
+    assertThat(recipients.get(1)).isEqualTo("kermit@operaton.org");
+    assertThat(recipients.get(2)).isEqualTo("mispiggy@operaton.org");
   }
 
   @Deployment
@@ -98,7 +97,7 @@ public class EmailServiceTaskTest extends EmailTestCase {
     runtimeService.startProcessInstanceByKey("textMailExpressions", vars);
 
     List<WiserMessage> messages = wiser.getMessages();
-    assertEquals(1, messages.size());
+    assertThat(messages).hasSize(1);
 
     WiserMessage message = messages.get(0);
     assertEmailSend(message, false, subject, "Hello " + recipientName + ", this is an e-mail",
@@ -116,7 +115,7 @@ public class EmailServiceTaskTest extends EmailTestCase {
 
     // Bcc is not stored in the header (obviously)
     // so the only way to verify the bcc, is that there are three messages send.
-    assertEquals(3, messages.size());
+    assertThat(messages).hasSize(3);
   }
 
   @Deployment
@@ -125,7 +124,7 @@ public class EmailServiceTaskTest extends EmailTestCase {
     runtimeService.startProcessInstanceByKey("htmlMail", CollectionUtil.singletonMap("gender", "male"));
 
     List<WiserMessage> messages = wiser.getMessages();
-    assertEquals(1, messages.size());
+    assertThat(messages).hasSize(1);
     assertEmailSend(messages.get(0), true, "Test", "Mr. <b>Kermit</b>", "operaton@localhost", Arrays.asList("kermit@operaton.org"), null);
   }
 
@@ -151,14 +150,14 @@ public class EmailServiceTaskTest extends EmailTestCase {
     runtimeService.startProcessInstanceByKey("sendMailExample", vars);
 
     List<WiserMessage> messages = wiser.getMessages();
-    assertEquals(1, messages.size());
+    assertThat(messages).hasSize(1);
 
     WiserMessage message = messages.get(0);
     MimeMessage mimeMessage = message.getMimeMessage();
 
-    assertEquals("Your order " + orderId + " has been shipped", mimeMessage.getHeader("Subject", null));
-    assertEquals(from, mimeMessage.getHeader("From", null));
-    assertTrue(mimeMessage.getHeader("To", null).contains(recipient));
+    assertThat(mimeMessage.getHeader("Subject", null)).isEqualTo("Your order " + orderId + " has been shipped");
+    assertThat(mimeMessage.getHeader("From", null)).isEqualTo(from);
+    assertThat(mimeMessage.getHeader("To", null)).contains(recipient);
   }
 
   // Helper
@@ -169,22 +168,22 @@ public class EmailServiceTaskTest extends EmailTestCase {
       MimeMessage mimeMessage = emailMessage.getMimeMessage();
 
       if (htmlMail) {
-        assertTrue(mimeMessage.getContentType().contains("multipart/mixed"));
+        assertThat(mimeMessage.getContentType()).contains("multipart/mixed");
       } else {
-        assertTrue(mimeMessage.getContentType().contains("text/plain"));
+        assertThat(mimeMessage.getContentType()).contains("text/plain");
       }
 
-      assertEquals(subject, mimeMessage.getHeader("Subject", null));
-      assertEquals(from, mimeMessage.getHeader("From", null));
-      assertTrue(getMessage(mimeMessage).contains(message));
+      assertThat(mimeMessage.getHeader("Subject", null)).isEqualTo(subject);
+      assertThat(mimeMessage.getHeader("From", null)).isEqualTo(from);
+      assertThat(getMessage(mimeMessage)).contains(message);
 
       for (String t : to) {
-        assertTrue(mimeMessage.getHeader("To", null).contains(t));
+        assertThat(mimeMessage.getHeader("To", null)).contains(t);
       }
 
       if (cc != null) {
         for (String c : cc) {
-          assertTrue(mimeMessage.getHeader("Cc", null).contains(c));
+          assertThat(mimeMessage.getHeader("Cc", null)).contains(c);
         }
       }
 

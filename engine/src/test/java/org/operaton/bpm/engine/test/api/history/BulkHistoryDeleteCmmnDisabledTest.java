@@ -42,7 +42,7 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.junit.*;
 import org.junit.rules.RuleChain;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
 public class BulkHistoryDeleteCmmnDisabledTest {
@@ -72,7 +72,7 @@ public class BulkHistoryDeleteCmmnDisabledTest {
 
       List<Job> jobs = engineRule.getManagementService().createJobQuery().list();
       if (!jobs.isEmpty()) {
-        assertEquals(1, jobs.size());
+        assertThat(jobs).hasSize(1);
         String jobId = jobs.get(0).getId();
         commandContext.getJobManager().deleteJob((JobEntity) jobs.get(0));
         commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(jobId);
@@ -109,8 +109,8 @@ public class BulkHistoryDeleteCmmnDisabledTest {
     engineRule.getManagementService().executeJob(jobId);
 
     // then
-    assertEquals(0, historyService.createHistoricProcessInstanceQuery().count());
-    assertEquals(0, historyService.createHistoricDecisionInstanceQuery().count());
+    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isZero();
+    assertThat(historyService.createHistoricDecisionInstanceQuery().count()).isZero();
   }
 
   private void prepareHistoricProcesses(int instanceCount) {
@@ -122,7 +122,7 @@ public class BulkHistoryDeleteCmmnDisabledTest {
       processInstanceIds.add(processInstance.getId());
     }
     List<ProcessDefinition> processDefinitions = engineRule.getRepositoryService().createProcessDefinitionQuery().list();
-    assertEquals(1, processDefinitions.size());
+    assertThat(processDefinitions).hasSize(1);
     engineRule.getRepositoryService().updateProcessDefinitionHistoryTimeToLive(processDefinitions.get(0).getId(), 5);
 
     runtimeService.deleteProcessInstances(processInstanceIds, null, true, true);
@@ -132,7 +132,7 @@ public class BulkHistoryDeleteCmmnDisabledTest {
   private void prepareHistoricDecisions(int instanceCount) {
     Date oldCurrentTime = ClockUtil.getCurrentTime();
     List<DecisionDefinition> decisionDefinitions = engineRule.getRepositoryService().createDecisionDefinitionQuery().decisionDefinitionKey("decision").list();
-    assertEquals(1, decisionDefinitions.size());
+    assertThat(decisionDefinitions).hasSize(1);
     engineRule.getRepositoryService().updateDecisionDefinitionHistoryTimeToLive(decisionDefinitions.get(0).getId(), 5);
 
     ClockUtil.setCurrentTime(DateUtils.addDays(new Date(), -6));

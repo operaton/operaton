@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.deployment;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
 
@@ -34,7 +35,6 @@ import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -120,7 +120,7 @@ public class RedeployDeploymentAuthorizationTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      Assert.assertEquals(2, repositoryService.createDeploymentQuery().count());
+      assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(2);
       deleteDeployments(deployment2);
       deleteAuthorizations();
     }

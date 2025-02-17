@@ -16,9 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Date;
 import java.util.List;
@@ -158,14 +157,14 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
     Execution execution = runtimeService.createExecutionQuery()
       .activityId("waitState1")
       .singleResult();
-    assertNotNull(execution);
+    assertThat(execution).isNotNull();
 
     // deploy new version of the process definition
     org.operaton.bpm.engine.repository.Deployment deployment = repositoryService
       .createDeployment()
       .addClasspathResource(TEST_PROCESS_ACTIVITY_MISSING)
       .deploy();
-    assertEquals(2, repositoryService.createProcessDefinitionQuery().count());
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(2);
 
     // migrate process instance to new process definition version
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
@@ -192,14 +191,14 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
       .processInstanceId(pi.getId())
       .activityId("waitState1")
       .singleResult();
-    assertNotNull(execution);
+    assertThat(execution).isNotNull();
 
     // deploy new version of the process definition
     org.operaton.bpm.engine.repository.Deployment deployment = repositoryService
       .createDeployment()
       .addClasspathResource(TEST_PROCESS)
       .deploy();
-    assertEquals(2, repositoryService.createProcessDefinitionQuery().count());
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(2);
 
     // migrate process instance to new process definition version
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
@@ -217,7 +216,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
       .createProcessInstanceQuery()
       .processInstanceId(pi.getId())
       .singleResult();
-    assertEquals(newProcessDefinition.getId(), pi.getProcessDefinitionId());
+    assertThat(pi.getProcessDefinitionId()).isEqualTo(newProcessDefinition.getId());
 
     // check history
     if (processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
@@ -226,7 +225,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
         .processInstanceId(pi.getId())
         .singleResult();
 
-      assertEquals(newProcessDefinition.getId(), historicPI.getProcessDefinitionId());
+      assertThat(historicPI.getProcessDefinitionId()).isEqualTo(newProcessDefinition.getId());
     }
 
     // undeploy "manually" deployed process definition
@@ -240,14 +239,14 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("forkJoin");
 
     // check that the user tasks have been reached
-    assertEquals(2, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(2);
 
     // deploy new version of the process definition
     org.operaton.bpm.engine.repository.Deployment deployment = repositoryService
       .createDeployment()
       .addClasspathResource(TEST_PROCESS_WITH_PARALLEL_GATEWAY)
       .deploy();
-    assertEquals(2, repositoryService.createProcessDefinitionQuery().count());
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(2);
 
     // migrate process instance to new process definition version
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
@@ -263,7 +262,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
       .processInstanceId(pi.getId())
       .list();
     for (Execution execution : executions) {
-      assertEquals(newProcessDefinition.getId(), ((ExecutionEntity) execution).getProcessDefinitionId());
+      assertThat(((ExecutionEntity) execution).getProcessDefinitionId()).isEqualTo(newProcessDefinition.getId());
     }
 
     // undeploy "manually" deployed process definition
@@ -281,14 +280,14 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
       .activityId("waitState1")
       .processDefinitionKey("childProcess")
       .singleResult();
-    assertNotNull(execution);
+    assertThat(execution).isNotNull();
 
     // deploy new version of the process definition
     org.operaton.bpm.engine.repository.Deployment deployment = repositoryService
       .createDeployment()
       .addClasspathResource(TEST_PROCESS_CALL_ACTIVITY)
       .deploy();
-    assertEquals(2, repositoryService.createProcessDefinitionQuery().processDefinitionKey("parentProcess").count());
+    assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionKey("parentProcess").count()).isEqualTo(2);
 
     // migrate process instance to new process definition version
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
@@ -298,7 +297,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
     runtimeService.signal(execution.getId());
 
     // should be finished now
-    assertEquals(0, runtimeService.createProcessInstanceQuery().processInstanceId(pi.getId()).count());
+    assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(pi.getId()).count()).isZero();
 
     // undeploy "manually" deployed process definition
     repositoryService.deleteDeployment(deployment.getId(), true);
@@ -311,15 +310,15 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
     // start process instance
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("userTask");
 
-    // check that user task has been reached
-    assertEquals(1, taskService.createTaskQuery().processInstanceId(pi.getId()).count());
+      // check that user task has been reached
+      assertThat(taskService.createTaskQuery().processInstanceId(pi.getId()).count()).isEqualTo(1);
 
     // deploy new version of the process definition
     org.operaton.bpm.engine.repository.Deployment deployment = repositoryService
       .createDeployment()
       .addClasspathResource(TEST_PROCESS_USER_TASK_V2)
       .deploy();
-    assertEquals(2, repositoryService.createProcessDefinitionQuery().processDefinitionKey("userTask").count());
+      assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionKey("userTask").count()).isEqualTo(2);
 
     ProcessDefinition newProcessDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionKey("userTask").processDefinitionVersion(2).singleResult();
 
@@ -328,8 +327,8 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
 
     // check UserTask
     Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
-    assertEquals(newProcessDefinition.getId(), task.getProcessDefinitionId());
-    assertEquals("testFormKey", formService.getTaskFormData(task.getId()).getFormKey());
+      assertThat(task.getProcessDefinitionId()).isEqualTo(newProcessDefinition.getId());
+      assertThat(formService.getTaskFormData(task.getId()).getFormKey()).isEqualTo("testFormKey");
 
     // continue
     taskService.complete(task.getId());
@@ -356,14 +355,13 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
 
     // execute job that triggers the migrating service task
     Job migrationJob = managementService.createJobQuery().singleResult();
-    assertNotNull(migrationJob);
+    assertThat(migrationJob).isNotNull();
 
     managementService.executeJob(migrationJob.getId());
 
     Task followUpTask = taskService.createTaskQuery().singleResult();
 
-    assertNotNull("Should have migrated to the new version and immediately executed the correct follow-up activity",
-        followUpTask);
+    assertThat(followUpTask).as("Should have migrated to the new version and immediately executed the correct follow-up activity").isNotNull();
 
     repositoryService.deleteDeployment(secondDeploymentId, true);
   }
@@ -375,7 +373,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("multipleJoins");
 
     // check that the user tasks have been reached
-    assertEquals(2, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(2);
 
     //finish task1
     Task task = taskService.createTaskQuery().taskDefinitionKey("task1").singleResult();
@@ -383,21 +381,21 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
 
     //we have reached task4
     task = taskService.createTaskQuery().taskDefinitionKey("task4").singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     //The timer job has been created
     Job job = managementService.createJobQuery().executionId(task.getExecutionId()).singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
 
     // check there are 2 user tasks task4 and task2
-    assertEquals(2, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(2);
 
     // deploy new version of the process definition
     org.operaton.bpm.engine.repository.Deployment deployment = repositoryService
       .createDeployment()
       .addClasspathResource(TEST_PROCESS_WITH_MULTIPLE_PARENTS)
       .deploy();
-    assertEquals(2, repositoryService.createProcessDefinitionQuery().count());
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(2);
 
     // migrate process instance to new process definition version
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
@@ -413,7 +411,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
       .processInstanceId(pi.getId())
       .list();
     for (Execution execution : executions) {
-    	assertEquals(newProcessDefinition.getId(), ((ExecutionEntity) execution).getProcessDefinitionId());
+      assertThat(((ExecutionEntity) execution).getProcessDefinitionId()).isEqualTo(newProcessDefinition.getId());
     }
 
     // undeploy "manually" deployed process definition
@@ -428,7 +426,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
 
     // with a job
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
 
     // and a second deployment of the process
     org.operaton.bpm.engine.repository.Deployment deployment = repositoryService
@@ -438,7 +436,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
 
     ProcessDefinition newDefinition =
         repositoryService.createProcessDefinitionQuery().deploymentId(deployment.getId()).singleResult();
-    assertNotNull(newDefinition);
+    assertThat(newDefinition).isNotNull();
 
     // when the process instance is migrated
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
@@ -446,15 +444,15 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
 
     // then the job should also be migrated
     Job migratedJob = managementService.createJobQuery().singleResult();
-    assertNotNull(migratedJob);
-    assertEquals(job.getId(), migratedJob.getId());
-    assertEquals(newDefinition.getId(), migratedJob.getProcessDefinitionId());
-    assertEquals(deployment.getId(), migratedJob.getDeploymentId());
+    assertThat(migratedJob).isNotNull();
+    assertThat(migratedJob.getId()).isEqualTo(job.getId());
+    assertThat(migratedJob.getProcessDefinitionId()).isEqualTo(newDefinition.getId());
+    assertThat(migratedJob.getDeploymentId()).isEqualTo(deployment.getId());
 
     JobDefinition newJobDefinition = managementService
         .createJobDefinitionQuery().processDefinitionId(newDefinition.getId()).singleResult();
-    assertNotNull(newJobDefinition);
-    assertEquals(newJobDefinition.getId(), migratedJob.getJobDefinitionId());
+    assertThat(newJobDefinition).isNotNull();
+    assertThat(migratedJob.getJobDefinitionId()).isEqualTo(newJobDefinition.getId());
 
     repositoryService.deleteDeployment(deployment.getId(), true);
   }
@@ -483,7 +481,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
 
     ProcessDefinition newDefinition =
         repositoryService.createProcessDefinitionQuery().deploymentId(deployment.getId()).singleResult();
-    assertNotNull(newDefinition);
+    assertThat(newDefinition).isNotNull();
 
     JobDefinition asnycBeforeJobDefinition =
         managementService.createJobDefinitionQuery()
@@ -496,8 +494,8 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
           .processDefinitionId(newDefinition.getId())
           .singleResult();
 
-    assertNotNull(asnycBeforeJobDefinition);
-    assertNotNull(asnycAfterJobDefinition);
+    assertThat(asnycBeforeJobDefinition).isNotNull();
+    assertThat(asnycAfterJobDefinition).isNotNull();
 
     // when the process instances are migrated
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
@@ -507,15 +505,15 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
     // then the job's definition reference should also be migrated
     Job migratedAsyncBeforeJob = managementService.createJobQuery()
         .processInstanceId(asyncBeforeInstance.getId()).singleResult();
-    assertEquals(asyncBeforeJob.getId(), migratedAsyncBeforeJob.getId());
-    assertNotNull(migratedAsyncBeforeJob);
-    assertEquals(asnycBeforeJobDefinition.getId(), migratedAsyncBeforeJob.getJobDefinitionId());
+    assertThat(migratedAsyncBeforeJob.getId()).isEqualTo(asyncBeforeJob.getId());
+    assertThat(migratedAsyncBeforeJob).isNotNull();
+    assertThat(migratedAsyncBeforeJob.getJobDefinitionId()).isEqualTo(asnycBeforeJobDefinition.getId());
 
     Job migratedAsyncAfterJob = managementService.createJobQuery()
         .processInstanceId(asyncAfterInstance.getId()).singleResult();
-    assertEquals(asyncAfterJob.getId(), migratedAsyncAfterJob.getId());
-    assertNotNull(migratedAsyncAfterJob);
-    assertEquals(asnycAfterJobDefinition.getId(), migratedAsyncAfterJob.getJobDefinitionId());
+    assertThat(migratedAsyncAfterJob.getId()).isEqualTo(asyncAfterJob.getId());
+    assertThat(migratedAsyncAfterJob).isNotNull();
+    assertThat(migratedAsyncAfterJob.getJobDefinitionId()).isEqualTo(asnycAfterJobDefinition.getId());
 
     repositoryService.deleteDeployment(deployment.getId(), true);
   }
@@ -532,7 +530,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
 
     // and an incident
     Incident incident = runtimeService.createIncidentQuery().singleResult();
-    assertNotNull(incident);
+    assertThat(incident).isNotNull();
 
     // and a second deployment of the process
     org.operaton.bpm.engine.repository.Deployment deployment = repositoryService
@@ -542,7 +540,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
 
     ProcessDefinition newDefinition =
         repositoryService.createProcessDefinitionQuery().deploymentId(deployment.getId()).singleResult();
-    assertNotNull(newDefinition);
+    assertThat(newDefinition).isNotNull();
 
     // when the process instance is migrated
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
@@ -550,10 +548,10 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
 
     // then the incident should also be migrated
     Incident migratedIncident = runtimeService.createIncidentQuery().singleResult();
-    assertNotNull(migratedIncident);
-    assertEquals(newDefinition.getId(), migratedIncident.getProcessDefinitionId());
-    assertEquals(instance.getId(), migratedIncident.getProcessInstanceId());
-    assertEquals(instance.getId(), migratedIncident.getExecutionId());
+    assertThat(migratedIncident).isNotNull();
+    assertThat(migratedIncident.getProcessDefinitionId()).isEqualTo(newDefinition.getId());
+    assertThat(migratedIncident.getProcessInstanceId()).isEqualTo(instance.getId());
+    assertThat(migratedIncident.getExecutionId()).isEqualTo(instance.getId());
 
     repositoryService.deleteDeployment(deployment.getId(), true);
   }
@@ -571,7 +569,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
     testRule.executeAvailableJobs();
 
     Incident incident = runtimeService.createIncidentQuery().singleResult();
-    assertNotNull(incident);
+    assertThat(incident).isNotNull();
 
     Date timestamp = incident.getIncidentTimestamp();
 
@@ -582,7 +580,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
 
     ProcessDefinition newDefinition =
         repositoryService.createProcessDefinitionQuery().deploymentId(deployment.getId()).singleResult();
-    assertNotNull(newDefinition);
+    assertThat(newDefinition).isNotNull();
 
     // when
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
@@ -591,7 +589,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
     Incident migratedIncident = runtimeService.createIncidentQuery().singleResult();
 
     // then
-    assertEquals(timestamp, migratedIncident.getIncidentTimestamp());
+    assertThat(migratedIncident.getIncidentTimestamp()).isEqualTo(timestamp);
 
     // cleanup
     repositoryService.deleteDeployment(deployment.getId(), true);
@@ -612,15 +610,15 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
 
     ProcessDefinition newDefinition =
         repositoryService.createProcessDefinitionQuery().deploymentId(deployment.getId()).singleResult();
-    assertNotNull(newDefinition);
+    assertThat(newDefinition).isNotNull();
 
     // when the process instance is migrated
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
     commandExecutor.execute(new SetProcessDefinitionVersionCmd(instance.getId(), 2));
 
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
-    assertEquals(newDefinition.getId(), job.getProcessDefinitionId());
+    assertThat(job).isNotNull();
+    assertThat(job.getProcessDefinitionId()).isEqualTo(newDefinition.getId());
 
     repositoryService.deleteDeployment(deployment.getId(), true);
   }
@@ -663,14 +661,14 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
         .createProcessInstanceQuery()
         .processInstanceId(processInstance.getId())
         .singleResult();
-    assertEquals(processDefinitionV2.getId(), processInstanceAfterMigration.getProcessDefinitionId());
+    assertThat(processInstanceAfterMigration.getProcessDefinitionId()).isEqualTo(processDefinitionV2.getId());
 
     if(processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
       HistoricProcessInstance historicProcessInstance = historyService
           .createHistoricProcessInstanceQuery()
           .processInstanceId(processInstance.getId())
           .singleResult();
-      assertEquals(processDefinitionV2.getId(), historicProcessInstance.getProcessDefinitionId());
+      assertThat(historicProcessInstance.getProcessDefinitionId()).isEqualTo(processDefinitionV2.getId());
     }
 
     // Clean up the test
@@ -718,7 +716,7 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
           .createProcessInstanceQuery()
           .processInstanceId(processInstance.getId())
           .singleResult();
-      assertEquals(processDefinitionV2.getId(), processInstanceAfterMigration.getProcessDefinitionId());
+      assertThat(processInstanceAfterMigration.getProcessDefinitionId()).isEqualTo(processDefinitionV2.getId());
 
       if (processEngineConfiguration.getHistoryLevel().equals(HistoryLevel.HISTORY_LEVEL_FULL)) {
         List<UserOperationLogEntry> userOperations = historyService
@@ -727,12 +725,12 @@ public class SetProcessDefinitionVersionCmdTest extends PluggableProcessEngineTe
             .operationType(UserOperationLogEntry.OPERATION_TYPE_MODIFY_PROCESS_INSTANCE)
             .list();
 
-        assertEquals(1, userOperations.size());
+        assertThat(userOperations).hasSize(1);
 
         UserOperationLogEntry userOperationLogEntry = userOperations.get(0);
-        assertEquals("processDefinitionVersion", userOperationLogEntry.getProperty());
-        assertEquals("1", userOperationLogEntry.getOrgValue());
-        assertEquals("2", userOperationLogEntry.getNewValue());
+        assertThat(userOperationLogEntry.getProperty()).isEqualTo("processDefinitionVersion");
+        assertThat(userOperationLogEntry.getOrgValue()).isEqualTo("1");
+        assertThat(userOperationLogEntry.getNewValue()).isEqualTo("2");
       }
 
       // Clean up the test

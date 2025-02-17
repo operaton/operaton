@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
@@ -36,7 +37,6 @@ import org.operaton.bpm.engine.test.bpmn.executionlistener.RecorderExecutionList
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -303,7 +303,7 @@ public class MigrationCompensationRemoveSubProcessTest {
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
     // then
-    Assert.assertEquals(0, rule.getRuntimeService().createVariableInstanceQuery().count());
+    assertThat(rule.getRuntimeService().createVariableInstanceQuery().count()).isZero();
   }
 
   @Test
@@ -336,11 +336,11 @@ public class MigrationCompensationRemoveSubProcessTest {
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
     // then
-    Assert.assertEquals(1, testHelper.snapshotAfterMigration.getVariables().size());
+    assertThat(testHelper.snapshotAfterMigration.getVariables()).hasSize(1);
 
     VariableInstance migratedVariable = testHelper.snapshotAfterMigration.getSingleVariable("innerVariable");
-    Assert.assertNotNull(migratedVariable);
-    Assert.assertEquals("innerValue", migratedVariable.getValue());
+    assertThat(migratedVariable).isNotNull();
+    assertThat(migratedVariable.getValue()).isEqualTo("innerValue");
   }
 
   @Test
@@ -367,7 +367,7 @@ public class MigrationCompensationRemoveSubProcessTest {
 
     // then
     // the listener was only called once when the sub process completed properly
-    Assert.assertEquals(1, RecorderExecutionListener.getRecordedEvents().size());
+    assertThat(RecorderExecutionListener.getRecordedEvents()).hasSize(1);
   }
 
   @Test
@@ -394,8 +394,8 @@ public class MigrationCompensationRemoveSubProcessTest {
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
     // then "foo" has not been set to "value2"
-    Assert.assertEquals(2, testHelper.snapshotAfterMigration.getVariables().size()); // "foo" and "bar"
+    assertThat(testHelper.snapshotAfterMigration.getVariables()).hasSize(2); // "foo" and "bar"
     VariableInstance variableInstance = testHelper.snapshotAfterMigration.getSingleVariable("foo");
-    Assert.assertEquals("value1", variableInstance.getValue());
+    assertThat(variableInstance.getValue()).isEqualTo("value1");
   }
 }

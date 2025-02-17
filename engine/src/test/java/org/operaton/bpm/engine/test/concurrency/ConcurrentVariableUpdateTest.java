@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.test.concurrency;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collections;
 
@@ -123,12 +122,12 @@ public class ConcurrentVariableUpdateTest {
     thread2.startAndWaitUntilControlIsReturned();
 
     thread1.proceedAndWaitTillDone();
-    assertNull(thread1.exception);
-    assertNull(thread1.optimisticLockingException);
+    assertThat(thread1.exception).isNull();
+    assertThat(thread1.optimisticLockingException).isNull();
 
     thread2.proceedAndWaitTillDone();
-    assertNull(thread2.exception);
-    assertNotNull(thread2.optimisticLockingException);
+    assertThat(thread2.exception).isNull();
+    assertThat(thread2.optimisticLockingException).isNotNull();
 
     // should not fail with FK violation because one of the variables is not deleted.
     taskService.complete(taskId);
@@ -155,8 +154,8 @@ public class ConcurrentVariableUpdateTest {
     thread1.proceedAndWaitTillDone();
     thread2.proceedAndWaitTillDone();
 
-    assertNull(thread1.optimisticLockingException);
-    assertNotNull(thread2.optimisticLockingException);
+    assertThat(thread1.optimisticLockingException).isNull();
+    assertThat(thread2.optimisticLockingException).isNotNull();
 
     // succeeds
     taskService.complete(taskId);
@@ -184,8 +183,8 @@ public class ConcurrentVariableUpdateTest {
     thread1.proceedAndWaitTillDone();
     thread2.proceedAndWaitTillDone();
 
-    assertNull(thread1.optimisticLockingException);
-    assertNotNull(thread2.optimisticLockingException);
+    assertThat(thread1.optimisticLockingException).isNull();
+    assertThat(thread2.optimisticLockingException).isNotNull();
 
     // succeeds
     taskService.complete(taskId);

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.migration;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
@@ -34,7 +35,6 @@ import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -124,7 +124,7 @@ public class CreateMigrationPlanAuthorizationTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      Assert.assertNotNull(migrationPlan);
+      assertThat(migrationPlan).isNotNull();
     }
 
   }

@@ -16,15 +16,11 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -58,8 +54,9 @@ import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import org.assertj.core.api.Assertions;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -116,10 +113,10 @@ public class RestartProcessInstanceSyncTest {
     // then
     ProcessInstance restartedProcessInstance = runtimeService.createProcessInstanceQuery().active().singleResult();
     Task restartedTask = engineRule.getTaskService().createTaskQuery().processInstanceId(restartedProcessInstance.getId()).active().singleResult();
-    Assert.assertEquals(task.getTaskDefinitionKey(), restartedTask.getTaskDefinitionKey());
+    assertThat(restartedTask.getTaskDefinitionKey()).isEqualTo(task.getTaskDefinitionKey());
 
     HistoricProcessInstanceEntity historicProcessInstanceEntity = (HistoricProcessInstanceEntity) historyService.createHistoricProcessInstanceQuery().processInstanceId(restartedProcessInstance.getId()).singleResult();
-    Assert.assertEquals(processInstance.getId(), historicProcessInstanceEntity.getRestartedProcessInstanceId());
+    assertThat(historicProcessInstanceEntity.getRestartedProcessInstanceId()).isEqualTo(processInstance.getId());
 
   }
 
@@ -145,11 +142,11 @@ public class RestartProcessInstanceSyncTest {
     // then
     ProcessInstance restartedProcessInstance = runtimeService.createProcessInstanceQuery().active().singleResult();
     Task restartedTask = taskService.createTaskQuery().processInstanceId(restartedProcessInstance.getId()).active().singleResult();
-    Assert.assertEquals(userTask2.getTaskDefinitionKey(), restartedTask.getTaskDefinitionKey());
+    assertThat(restartedTask.getTaskDefinitionKey()).isEqualTo(userTask2.getTaskDefinitionKey());
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(restartedProcessInstance.getId());
-    assertNotNull(updatedTree);
-    assertEquals(restartedProcessInstance.getId(), updatedTree.getProcessInstanceId());
+    Assertions.assertThat(updatedTree).isNotNull();
+    assertThat(updatedTree.getProcessInstanceId()).isEqualTo(restartedProcessInstance.getId());
     assertThat(updatedTree).hasStructure(
         describeActivityInstanceTree(
             processDefinition.getId())
@@ -175,8 +172,8 @@ public class RestartProcessInstanceSyncTest {
     // then
     ProcessInstance restartedProcessInstance = runtimeService.createProcessInstanceQuery().active().singleResult();
     ActivityInstance updatedTree = runtimeService.getActivityInstance(restartedProcessInstance.getId());
-    assertNotNull(updatedTree);
-    assertEquals(restartedProcessInstance.getId(), updatedTree.getProcessInstanceId());
+    Assertions.assertThat(updatedTree).isNotNull();
+    assertThat(updatedTree.getProcessInstanceId()).isEqualTo(restartedProcessInstance.getId());
     assertThat(updatedTree).hasStructure(
         describeActivityInstanceTree(
             processDefinition.getId())
@@ -201,8 +198,8 @@ public class RestartProcessInstanceSyncTest {
     // then
     ProcessInstance restartedProcessInstance = runtimeService.createProcessInstanceQuery().active().singleResult();
     ActivityInstance updatedTree = runtimeService.getActivityInstance(restartedProcessInstance.getId());
-    assertNotNull(updatedTree);
-    assertEquals(restartedProcessInstance.getId(), updatedTree.getProcessInstanceId());
+    Assertions.assertThat(updatedTree).isNotNull();
+    assertThat(updatedTree.getProcessInstanceId()).isEqualTo(restartedProcessInstance.getId());
     assertThat(updatedTree).hasStructure(
         describeActivityInstanceTree(
             processDefinition.getId())
@@ -243,9 +240,9 @@ public class RestartProcessInstanceSyncTest {
     ProcessInstance restartedProcessInstance = runtimeService.createProcessInstanceQuery().active().singleResult();
     VariableInstance variableInstance = runtimeService.createVariableInstanceQuery().processInstanceIdIn(restartedProcessInstance.getId()).singleResult();
 
-    assertEquals(variableInstance.getExecutionId(), restartedProcessInstance.getId());
-    assertEquals("var", variableInstance.getName());
-    assertEquals("foo", variableInstance.getValue());
+    assertThat(restartedProcessInstance.getId()).isEqualTo(variableInstance.getExecutionId());
+    assertThat(variableInstance.getName()).isEqualTo("var");
+    assertThat(variableInstance.getValue()).isEqualTo("foo");
   }
 
   @Test
@@ -281,9 +278,9 @@ public class RestartProcessInstanceSyncTest {
     ProcessInstance restartedProcessInstance = runtimeService.createProcessInstanceQuery().active().singleResult();
     VariableInstance variableInstance = runtimeService.createVariableInstanceQuery().processInstanceIdIn(restartedProcessInstance.getId()).singleResult();
 
-    assertEquals(variableInstance.getExecutionId(), restartedProcessInstance.getId());
-    assertEquals("var", variableInstance.getName());
-    assertEquals("bar", variableInstance.getValue());
+    assertThat(restartedProcessInstance.getId()).isEqualTo(variableInstance.getExecutionId());
+    assertThat(variableInstance.getName()).isEqualTo("var");
+    assertThat(variableInstance.getValue()).isEqualTo("bar");
   }
 
   @Test
@@ -308,9 +305,9 @@ public class RestartProcessInstanceSyncTest {
     // then
     ProcessInstance restartedProcessInstance = runtimeService.createProcessInstanceQuery().processDefinitionId(processDefinition.getId()).active().singleResult();
     List<VariableInstance> variables = runtimeService.createVariableInstanceQuery().processInstanceIdIn(restartedProcessInstance.getId()).list();
-    assertEquals(1, variables.size());
-    assertEquals("var", variables.get(0).getName());
-    assertEquals("bar", variables.get(0).getValue());
+    assertThat(variables).hasSize(1);
+    assertThat(variables.get(0).getName()).isEqualTo("var");
+    assertThat(variables.get(0).getValue()).isEqualTo("bar");
   }
 
   @Test
@@ -334,9 +331,9 @@ public class RestartProcessInstanceSyncTest {
     // then
     ProcessInstance restartedProcessInstance = runtimeService.createProcessInstanceQuery().processDefinitionId(processDefinition.getId()).active().singleResult();
     List<VariableInstance> variables = runtimeService.createVariableInstanceQuery().processInstanceIdIn(restartedProcessInstance.getId()).list();
-    assertEquals(1, variables.size());
-    assertEquals("var", variables.get(0).getName());
-    assertEquals("bar", variables.get(0).getValue());
+    assertThat(variables).hasSize(1);
+    assertThat(variables.get(0).getName()).isEqualTo("var");
+    assertThat(variables.get(0).getValue()).isEqualTo("bar");
   }
 
   @Test
@@ -358,17 +355,17 @@ public class RestartProcessInstanceSyncTest {
     // then
     ProcessInstance restartedProcessInstance = runtimeService.createProcessInstanceQuery().processDefinitionId(processDefinition.getId()).active().singleResult();
     List<VariableInstance> variables = runtimeService.createVariableInstanceQuery().processInstanceIdIn(restartedProcessInstance.getId()).list();
-    assertEquals(0, variables.size());
+    assertThat(variables).isEmpty();
 
     // details
     HistoricVariableUpdateEventEntity detail = (HistoricVariableUpdateEventEntity) historyService
         .createHistoricDetailQuery()
         .singleResult();
 
-    assertNotNull(detail);
-    assertFalse(detail.isInitial());
-    assertEquals("bar", detail.getVariableName());
-    assertEquals("foo", detail.getTextValue());
+    assertThat(detail).isNotNull();
+    assertThat(detail.isInitial()).isFalse();
+    assertThat(detail.getVariableName()).isEqualTo("bar");
+    assertThat(detail.getTextValue()).isEqualTo("foo");
   }
 
   @Test
@@ -391,19 +388,19 @@ public class RestartProcessInstanceSyncTest {
     // then
     ProcessInstance restartedProcessInstance = runtimeService.createProcessInstanceQuery().processDefinitionId(processDefinition.getId()).active().singleResult();
     List<VariableInstance> variables = runtimeService.createVariableInstanceQuery().processInstanceIdIn(restartedProcessInstance.getId()).list();
-    assertEquals(1, variables.size());
-    assertEquals("var", variables.get(0).getName());
-    assertEquals("bar", variables.get(0).getValue());
+    assertThat(variables).hasSize(1);
+    assertThat(variables.get(0).getName()).isEqualTo("var");
+    assertThat(variables.get(0).getValue()).isEqualTo("bar");
 
     // details
     HistoricVariableUpdateEventEntity detail = (HistoricVariableUpdateEventEntity) historyService.createHistoricDetailQuery()
         .processInstanceId(restartedProcessInstance.getId())
         .singleResult();
 
-    assertNotNull(detail);
-    assertTrue(detail.isInitial());
-    assertEquals("var", detail.getVariableName());
-    assertEquals("bar", detail.getTextValue());
+    assertThat(detail).isNotNull();
+    assertThat(detail.isInitial()).isTrue();
+    assertThat(detail.getVariableName()).isEqualTo("var");
+    assertThat(detail.getTextValue()).isEqualTo("bar");
   }
 
   @Test
@@ -431,19 +428,19 @@ public class RestartProcessInstanceSyncTest {
         .processDefinitionId(processDefinition.getId()).active().singleResult();
     List<VariableInstance> variables = runtimeService.createVariableInstanceQuery()
         .processInstanceIdIn(restartedProcessInstance.getId()).list();
-    assertEquals(1, variables.size());
-    assertEquals("var", variables.get(0).getName());
-    assertEquals("bar", variables.get(0).getValue());
+    assertThat(variables).hasSize(1);
+    assertThat(variables.get(0).getName()).isEqualTo("var");
+    assertThat(variables.get(0).getValue()).isEqualTo("bar");
 
     // details
     HistoricVariableUpdateEventEntity detail = (HistoricVariableUpdateEventEntity) historyService.createHistoricDetailQuery()
         .processInstanceId(restartedProcessInstance.getId())
         .singleResult();
 
-    assertNotNull(detail);
-    assertTrue(detail.isInitial());
-    assertEquals("var", detail.getVariableName());
-    assertEquals("bar", detail.getTextValue());
+    assertThat(detail).isNotNull();
+    assertThat(detail.isInitial()).isTrue();
+    assertThat(detail.getVariableName()).isEqualTo("var");
+    assertThat(detail.getTextValue()).isEqualTo("bar");
   }
 
   @Test
@@ -479,12 +476,12 @@ public class RestartProcessInstanceSyncTest {
         .processDefinitionId(processInstance.getProcessDefinitionId()).active().singleResult();
     List<VariableInstance> variables = runtimeService.createVariableInstanceQuery()
         .processInstanceIdIn(restartedProcessInstance.getId()).variableName("var").list();
-    assertEquals(1, variables.size());
-    assertEquals("bar", variables.get(0).getValue());
+    assertThat(variables).hasSize(1);
+    assertThat(variables.get(0).getValue()).isEqualTo("bar");
     variables = runtimeService.createVariableInstanceQuery()
         .processInstanceIdIn(restartedProcessInstance.getId()).variableName("listener").list();
-    assertEquals(1, variables.size());
-    assertEquals("listener invoked", variables.get(0).getValue());
+    assertThat(variables).hasSize(1);
+    assertThat(variables.get(0).getValue()).isEqualTo("listener invoked");
   }
 
   @Test
@@ -512,12 +509,12 @@ public class RestartProcessInstanceSyncTest {
         .processDefinitionId(processInstance.getProcessDefinitionId()).active().singleResult();
     List<VariableInstance> variables = runtimeService.createVariableInstanceQuery()
         .processInstanceIdIn(restartedProcessInstance.getId()).variableName("var").list();
-    assertEquals(1, variables.size());
-    assertEquals("bar", variables.get(0).getValue());
+    assertThat(variables).hasSize(1);
+    assertThat(variables.get(0).getValue()).isEqualTo("bar");
     variables = runtimeService.createVariableInstanceQuery()
         .processInstanceIdIn(restartedProcessInstance.getId()).variableName("listener").list();
-    assertEquals(1, variables.size());
-    assertEquals("listener invoked", variables.get(0).getValue());
+    assertThat(variables).hasSize(1);
+    assertThat(variables.get(0).getValue()).isEqualTo("listener invoked");
   }
 
   @Test
@@ -544,8 +541,8 @@ public class RestartProcessInstanceSyncTest {
     ProcessInstance restartedProcessInstance = runtimeService.createProcessInstanceQuery().processDefinitionId(processInstance.getProcessDefinitionId()).active().singleResult();
     List<VariableInstance> variables = runtimeService.createVariableInstanceQuery()
         .processInstanceIdIn(restartedProcessInstance.getId()).variableName("var").list();
-    assertEquals(1, variables.size());
-    assertEquals("bar", variables.get(0).getValue());
+    assertThat(variables).hasSize(1);
+    assertThat(variables.get(0).getValue()).isEqualTo("bar");
   }
 
   @Test
@@ -569,8 +566,8 @@ public class RestartProcessInstanceSyncTest {
     ProcessInstance restartedProcessInstance = runtimeService.createProcessInstanceQuery().active().singleResult();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(restartedProcessInstance.getId());
-    assertNotNull(updatedTree);
-    assertEquals(restartedProcessInstance.getId(), updatedTree.getProcessInstanceId());
+    Assertions.assertThat(updatedTree).isNotNull();
+    assertThat(updatedTree.getProcessInstanceId()).isEqualTo(restartedProcessInstance.getId());
     assertThat(updatedTree).hasStructure(
         describeActivityInstanceTree(
             processDefinition.getId())
@@ -674,7 +671,7 @@ public class RestartProcessInstanceSyncTest {
 
     // then
     ProcessInstance restartedProcessInstance = runtimeService.createProcessInstanceQuery().processDefinitionId(processDefinition.getId()).active().singleResult();
-    assertNull(restartedProcessInstance.getBusinessKey());
+    assertThat(restartedProcessInstance.getBusinessKey()).isNull();
   }
 
   @Test
@@ -692,8 +689,8 @@ public class RestartProcessInstanceSyncTest {
 
     // then
     ProcessInstance restartedProcessInstance = runtimeService.createProcessInstanceQuery().processDefinitionId(processDefinition.getId()).active().singleResult();
-    assertNotNull(restartedProcessInstance.getBusinessKey());
-    assertEquals("businessKey", restartedProcessInstance.getBusinessKey());
+    assertThat(restartedProcessInstance.getBusinessKey()).isNotNull();
+    assertThat(restartedProcessInstance.getBusinessKey()).isEqualTo("businessKey");
   }
 
   @Test
@@ -711,7 +708,7 @@ public class RestartProcessInstanceSyncTest {
 
     // then
     ProcessInstance restartedProcessInstance = runtimeService.createProcessInstanceQuery().processDefinitionId(processDefinition.getId()).active().singleResult();
-    assertNull(restartedProcessInstance.getCaseInstanceId());
+    assertThat(restartedProcessInstance.getCaseInstanceId()).isNull();
   }
 
   @Test
@@ -729,8 +726,8 @@ public class RestartProcessInstanceSyncTest {
 
     // then
     ProcessInstance restartedProcessInstance = runtimeService.createProcessInstanceQuery().processDefinitionId(processDefinition.getId()).active().singleResult();
-    assertNotNull(restartedProcessInstance.getTenantId());
-    assertEquals(processInstance.getTenantId(), restartedProcessInstance.getTenantId());
+    assertThat(restartedProcessInstance.getTenantId()).isNotNull();
+    assertThat(restartedProcessInstance.getTenantId()).isEqualTo(processInstance.getTenantId());
   }
 
   @Test
@@ -751,7 +748,7 @@ public class RestartProcessInstanceSyncTest {
     .execute();
 
     // then
-    assertEquals(0, IncrementCounterListener.counter);
+    assertThat(IncrementCounterListener.counter).isZero();
   }
 
   @Test
@@ -772,8 +769,8 @@ public class RestartProcessInstanceSyncTest {
 
     // then
     Execution task1Execution = runtimeService.createExecutionQuery().activityId("userTask1").singleResult();
-    assertNotNull(task1Execution);
-    assertNull(runtimeService.getVariable(task1Execution.getId(), "foo"));
+    assertThat(task1Execution).isNotNull();
+    assertThat(runtimeService.getVariable(task1Execution.getId(), "foo")).isNull();
   }
 
   @Test
@@ -784,7 +781,7 @@ public class RestartProcessInstanceSyncTest {
 
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
-    assertEquals(TestTenantIdProvider.TENANT_ID, processInstance.getTenantId());
+    assertThat(processInstance.getTenantId()).isEqualTo(TestTenantIdProvider.TENANT_ID);
     runtimeService.deleteProcessInstance(processInstance.getId(), "test");
 
     // when
@@ -797,8 +794,8 @@ public class RestartProcessInstanceSyncTest {
     ProcessInstance restartedInstance = runtimeService.createProcessInstanceQuery().active()
         .processDefinitionId(processDefinition.getId()).singleResult();
 
-    assertNotNull(restartedInstance);
-    assertEquals(TestTenantIdProvider.TENANT_ID, restartedInstance.getTenantId());
+    assertThat(restartedInstance).isNotNull();
+    assertThat(restartedInstance.getTenantId()).isEqualTo(TestTenantIdProvider.TENANT_ID);
   }
 
   @Test
@@ -809,7 +806,7 @@ public class RestartProcessInstanceSyncTest {
 
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
-    assertEquals(TestTenantIdProvider.TENANT_ID, processInstance.getTenantId());
+    assertThat(processInstance.getTenantId()).isEqualTo(TestTenantIdProvider.TENANT_ID);
     runtimeService.deleteProcessInstance(processInstance.getId(), "test");
 
     // set tenant id provider to fail to verify it is not called during instantiation
@@ -826,8 +823,8 @@ public class RestartProcessInstanceSyncTest {
     ProcessInstance restartedInstance = runtimeService.createProcessInstanceQuery().active()
       .processDefinitionId(processDefinition.getId()).singleResult();
 
-    assertNotNull(restartedInstance);
-    assertEquals(TestTenantIdProvider.TENANT_ID, restartedInstance.getTenantId());
+    assertThat(restartedInstance).isNotNull();
+    assertThat(restartedInstance.getTenantId()).isEqualTo(TestTenantIdProvider.TENANT_ID);
   }
 
   @Test
@@ -853,7 +850,7 @@ public class RestartProcessInstanceSyncTest {
     // then
     ProcessInstance restartedProcessInstance = runtimeService.createProcessInstanceQuery().processDefinitionId(processDefinition.getId()).singleResult();
     List<VariableInstance> variables = runtimeService.createVariableInstanceQuery().processInstanceIdIn(restartedProcessInstance.getId()).list();
-    assertEquals(0, variables.size());
+    assertThat(variables).isEmpty();
   }
 
   @Test

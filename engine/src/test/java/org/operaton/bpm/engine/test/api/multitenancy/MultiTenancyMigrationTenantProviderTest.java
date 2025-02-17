@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.api.multitenancy;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Arrays;
 
@@ -77,14 +78,14 @@ public class MultiTenancyMigrationTenantProviderTest {
     // when
     try {
       runtimeService.execute();
-      Assert.fail("exception expected");
+      fail("exception expected");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).contains("Cannot migrate process instance '" + processInstance.getId() + "' "
               + "to a process definition of a different tenant ('tenant1' != 'tenant2')");
     }
 
     // then
-    Assert.assertNotNull(migrationPlan);
+    assertThat(migrationPlan).isNotNull();
   }
 
   @Test
@@ -165,11 +166,11 @@ public class MultiTenancyMigrationTenantProviderTest {
   }
 
   protected void assertInstanceOfDefinition(ProcessInstance processInstance, ProcessDefinition targetDefinition) {
-    Assert.assertEquals(1, engineRule.getRuntimeService()
-      .createProcessInstanceQuery()
-      .processInstanceId(processInstance.getId())
-      .processDefinitionId(targetDefinition.getId())
-      .count());
+    assertThat(engineRule.getRuntimeService()
+        .createProcessInstanceQuery()
+        .processInstanceId(processInstance.getId())
+        .processDefinitionId(targetDefinition.getId())
+        .count()).isEqualTo(1);
   }
 
   protected ProcessInstance startInstanceForTenant(ProcessDefinition processDefinition, String tenantId) {

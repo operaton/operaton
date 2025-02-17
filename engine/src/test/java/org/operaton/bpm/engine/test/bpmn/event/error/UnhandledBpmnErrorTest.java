@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.error;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
@@ -92,7 +92,7 @@ public class UnhandledBpmnErrorTest {
     // assume
     // After process start, usertask in subprocess should exist
     Task task = taskService.createTaskQuery().singleResult();
-    assertEquals("subprocessTask", task.getName());
+    assertThat(task.getName()).isEqualTo("subprocessTask");
     String taskId = task.getId();
 
     // when/then
@@ -112,7 +112,7 @@ public class UnhandledBpmnErrorTest {
 
     // assume
     Task task = taskService.createTaskQuery().singleResult();
-    assertEquals("Task in subprocess", task.getName());
+    assertThat(task.getName()).isEqualTo("Task in subprocess");
     String taskId = task.getId();
 
     // when/then
@@ -132,7 +132,7 @@ public class UnhandledBpmnErrorTest {
 
     // assume
     Task task = taskService.createTaskQuery().singleResult();
-    assertEquals("subprocessTask", task.getName());
+    assertThat(task.getName()).isEqualTo("subprocessTask");
     String taskId = task.getId();
 
     // when/then

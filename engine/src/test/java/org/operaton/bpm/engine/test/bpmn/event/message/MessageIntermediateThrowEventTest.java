@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.message;
 
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
@@ -44,7 +44,7 @@ public class MessageIntermediateThrowEventTest extends PluggableProcessEngineTes
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
     testRule.assertProcessEnded(processInstance.getId());
-    assertTrue(DummyServiceTask.wasExecuted);
+    assertThat(DummyServiceTask.wasExecuted).isTrue();
   }
 
 }

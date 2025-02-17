@@ -17,10 +17,6 @@
 package org.operaton.bpm.engine.test.api.variables;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,9 +45,10 @@ public class ImplicitVariableUpdateTest extends PluggableProcessEngineTest {
           .putValue("delegate", new UpdateValueDelegate()));
 
     List<String> list = (List<String>) runtimeService.getVariable(instance.getId(), "listVar");
-    assertNotNull(list);
-    assertEquals(1, list.size());
-    assertEquals(UpdateValueDelegate.NEW_ELEMENT, list.get(0));
+    assertThat(list)
+            .isNotNull()
+            .hasSize(1);
+    assertThat(list.get(0)).isEqualTo(UpdateValueDelegate.NEW_ELEMENT);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/variables/ImplicitVariableUpdateTest.parallel.bpmn20.xml")
@@ -66,9 +63,10 @@ public class ImplicitVariableUpdateTest extends PluggableProcessEngineTest {
           .putValue("delegate", new UpdateValueDelegate()));
 
     List<String> list = (List<String>) runtimeService.getVariable(instance.getId(), "listVar");
-    assertNotNull(list);
-    assertEquals(1, list.size());
-    assertEquals(UpdateValueDelegate.NEW_ELEMENT, list.get(0));
+    assertThat(list)
+            .isNotNull()
+            .hasSize(1);
+    assertThat(list.get(0)).isEqualTo(UpdateValueDelegate.NEW_ELEMENT);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/variables/ImplicitVariableUpdateTest.sequence.bpmn20.xml")
@@ -80,8 +78,8 @@ public class ImplicitVariableUpdateTest extends PluggableProcessEngineTest {
           .putValue("delegate", new ReplaceAndUpdateValueDelegate()));
 
     List<String> list = (List<String>) runtimeService.getVariable(instance.getId(), "listVar");
-    assertNotNull(list);
-    assertTrue(list.isEmpty());
+    assertThat(list).isNotNull();
+    assertThat(list).isEmpty();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/variables/ImplicitVariableUpdateTest.sequence.bpmn20.xml")
@@ -93,7 +91,7 @@ public class ImplicitVariableUpdateTest extends PluggableProcessEngineTest {
           .putValue("delegate", new RemoveAndUpdateValueDelegate()));
 
     Object variableValue = runtimeService.getVariable(instance.getId(), "listVar");
-    assertNull(variableValue);
+    assertThat(variableValue).isNull();
   }
 
   /**

@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.form;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import java.util.Map;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
@@ -33,6 +29,7 @@ import org.operaton.bpm.engine.test.api.runtime.util.TestVariableScope;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
@@ -48,12 +45,13 @@ public class BuiltInValidatorsTest extends PluggableProcessEngineTest {
     FormValidators formValidators = ((ProcessEngineImpl) processEngine).getProcessEngineConfiguration().getFormValidators();
 
     Map<String, Class<? extends FormFieldValidator>> validators = formValidators.getValidators();
-    assertEquals(RequiredValidator.class, validators.get("required"));
-    assertEquals(ReadOnlyValidator.class, validators.get("readonly"));
-    assertEquals(MinValidator.class, validators.get("min"));
-    assertEquals(MaxValidator.class, validators.get("max"));
-    assertEquals(MaxLengthValidator.class, validators.get("maxlength"));
-    assertEquals(MinLengthValidator.class, validators.get("minlength"));
+    assertThat(validators)
+            .containsEntry("required", RequiredValidator.class)
+            .containsEntry("readonly", ReadOnlyValidator.class)
+            .containsEntry("min", MinValidator.class)
+            .containsEntry("max", MaxValidator.class)
+            .containsEntry("maxlength", MaxLengthValidator.class)
+            .containsEntry("minlength", MinLengthValidator.class);
 
   }
 
@@ -62,56 +60,56 @@ public class BuiltInValidatorsTest extends PluggableProcessEngineTest {
     RequiredValidator validator = new RequiredValidator();
     TestValidatorContext validatorContext = new TestValidatorContext(null);
 
-    assertTrue(validator.validate("test", validatorContext));
-    assertTrue(validator.validate(1, validatorContext));
-    assertTrue(validator.validate(true, validatorContext));
+    assertThat(validator.validate("test", validatorContext)).isTrue();
+    assertThat(validator.validate(1, validatorContext)).isTrue();
+    assertThat(validator.validate(true, validatorContext)).isTrue();
 
     // empty string and 'null' are invalid without default
-    assertFalse(validator.validate("", validatorContext));
-    assertFalse(validator.validate(null, validatorContext));
+    assertThat(validator.validate("", validatorContext)).isFalse();
+    assertThat(validator.validate(null, validatorContext)).isFalse();
 
     // can submit null if the value already exists
     validatorContext = new TestValidatorContext(null, "fieldName");
     validatorContext.getVariableScope().setVariable("fieldName", "existingValue");
-    assertTrue(validator.validate(null, validatorContext));
+    assertThat(validator.validate(null, validatorContext)).isTrue();
 
     // can submit null if a default value exists
     validatorContext = new TestValidatorContext(null, "fieldName");
     validatorContext.getFormFieldHandler().setDefaultValueExpression(new FixedValue("defaultValue"));
-    assertTrue(validator.validate(null, validatorContext));
-    assertEquals("defaultValue", validatorContext.getVariableScope().getVariable("fieldName"));
+    assertThat(validator.validate(null, validatorContext)).isTrue();
+    assertThat(validatorContext.getVariableScope().getVariable("fieldName")).isEqualTo("defaultValue");
   }
 
   @Test
   public void testReadOnlyValidator() {
     ReadOnlyValidator validator = new ReadOnlyValidator();
 
-    assertFalse(validator.validate("", null));
-    assertFalse(validator.validate("aaa", null));
-    assertFalse(validator.validate(11, null));
-    assertFalse(validator.validate(2d, null));
-    assertTrue(validator.validate(null, null));
+    assertThat(validator.validate("", null)).isFalse();
+    assertThat(validator.validate("aaa", null)).isFalse();
+    assertThat(validator.validate(11, null)).isFalse();
+    assertThat(validator.validate(2d, null)).isFalse();
+    assertThat(validator.validate(null, null)).isTrue();
   }
 
   @Test
   public void testMinValidator() {
     MinValidator validator = new MinValidator();
 
-    assertTrue(validator.validate(null, null));
+    assertThat(validator.validate(null, null)).isTrue();
 
-    assertTrue(validator.validate(4, new TestValidatorContext("4")));
-    assertFalse(validator.validate(4, new TestValidatorContext("5")));
+    assertThat(validator.validate(4, new TestValidatorContext("4"))).isTrue();
+    assertThat(validator.validate(4, new TestValidatorContext("5"))).isFalse();
 
     TestValidatorContext validatorContext = new TestValidatorContext("4.4");
     assertThatThrownBy(() -> validator.validate(4, validatorContext))
       .isInstanceOf(FormException.class)
       .hasMessageContaining("Cannot validate Integer value 4: configuration 4.4 cannot be parsed as Integer.");
 
-    assertFalse(validator.validate(4d, new TestValidatorContext("4.1")));
-    assertTrue(validator.validate(4.1d, new TestValidatorContext("4.1")));
+    assertThat(validator.validate(4d, new TestValidatorContext("4.1"))).isFalse();
+    assertThat(validator.validate(4.1d, new TestValidatorContext("4.1"))).isTrue();
 
-    assertFalse(validator.validate(4f, new TestValidatorContext("4.1")));
-    assertTrue(validator.validate(4.1f, new TestValidatorContext("4.1")));
+    assertThat(validator.validate(4f, new TestValidatorContext("4.1"))).isFalse();
+    assertThat(validator.validate(4.1f, new TestValidatorContext("4.1"))).isTrue();
 
   }
 
@@ -119,21 +117,21 @@ public class BuiltInValidatorsTest extends PluggableProcessEngineTest {
   public void testMaxValidator() {
     MaxValidator validator = new MaxValidator();
 
-    assertTrue(validator.validate(null, null));
+    assertThat(validator.validate(null, null)).isTrue();
 
-    assertTrue(validator.validate(3, new TestValidatorContext("4")));
-    assertFalse(validator.validate(4, new TestValidatorContext("3")));
+    assertThat(validator.validate(3, new TestValidatorContext("4"))).isTrue();
+    assertThat(validator.validate(4, new TestValidatorContext("3"))).isFalse();
 
     TestValidatorContext validatorContext = new TestValidatorContext("4.4");
     assertThatThrownBy(() -> validator.validate(4, validatorContext))
       .isInstanceOf(FormException.class)
       .hasMessageContaining("Cannot validate Integer value 4: configuration 4.4 cannot be parsed as Integer.");
 
-    assertFalse(validator.validate(4.1d, new TestValidatorContext("4")));
-    assertTrue(validator.validate(4.1d, new TestValidatorContext("4.2")));
+    assertThat(validator.validate(4.1d, new TestValidatorContext("4"))).isFalse();
+    assertThat(validator.validate(4.1d, new TestValidatorContext("4.2"))).isTrue();
 
-    assertFalse(validator.validate(4.1f, new TestValidatorContext("4")));
-    assertTrue(validator.validate(4.1f, new TestValidatorContext("4.2")));
+    assertThat(validator.validate(4.1f, new TestValidatorContext("4"))).isFalse();
+    assertThat(validator.validate(4.1f, new TestValidatorContext("4.2"))).isTrue();
 
   }
 
@@ -141,10 +139,10 @@ public class BuiltInValidatorsTest extends PluggableProcessEngineTest {
   public void testMaxLengthValidator() {
     MaxLengthValidator validator = new MaxLengthValidator();
 
-    assertTrue(validator.validate(null, null));
+    assertThat(validator.validate(null, null)).isTrue();
 
-    assertTrue(validator.validate("test", new TestValidatorContext("4")));
-    assertFalse(validator.validate("test", new TestValidatorContext("3")));
+    assertThat(validator.validate("test", new TestValidatorContext("4"))).isTrue();
+    assertThat(validator.validate("test", new TestValidatorContext("3"))).isFalse();
 
     TestValidatorContext validatorContext = new TestValidatorContext("4.4");
     assertThatThrownBy(() -> validator.validate("test", validatorContext))
@@ -156,10 +154,10 @@ public class BuiltInValidatorsTest extends PluggableProcessEngineTest {
   public void testMinLengthValidator() {
     MinLengthValidator validator = new MinLengthValidator();
 
-    assertTrue(validator.validate(null, null));
+    assertThat(validator.validate(null, null)).isTrue();
 
-    assertTrue(validator.validate("test", new TestValidatorContext("4")));
-    assertFalse(validator.validate("test", new TestValidatorContext("5")));
+    assertThat(validator.validate("test", new TestValidatorContext("4"))).isTrue();
+    assertThat(validator.validate("test", new TestValidatorContext("5"))).isFalse();
 
     TestValidatorContext validatorContext = new TestValidatorContext("4.4");
     assertThatThrownBy(() -> validator.validate("test", validatorContext))

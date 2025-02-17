@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.test.api.authorization.dmn;
 import static org.operaton.bpm.engine.authorization.Resources.DECISION_REQUIREMENTS_DEFINITION;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.InputStream;
 import java.util.Collection;
@@ -111,7 +111,7 @@ public class DecisionRequirementsDefinitionAuthorizationTest {
     DecisionRequirementsDefinition decisionRequirementsDefinition = repositoryService.getDecisionRequirementsDefinition(decisionRequirementsDefinitionId);
 
     if (authRule.assertScenario(scenario)) {
-      assertNotNull(decisionRequirementsDefinition);
+      assertThat(decisionRequirementsDefinition).isNotNull();
     }
   }
 
@@ -131,7 +131,7 @@ public class DecisionRequirementsDefinitionAuthorizationTest {
     InputStream decisionRequirementsModel = repositoryService.getDecisionRequirementsModel(decisionRequirementsDefinitionId);
 
     if (authRule.assertScenario(scenario)) {
-      assertNotNull(decisionRequirementsModel);
+      assertThat(decisionRequirementsModel).isNotNull();
     }
   }
 
@@ -151,7 +151,7 @@ public class DecisionRequirementsDefinitionAuthorizationTest {
     InputStream decisionRequirementsDiagram = repositoryService.getDecisionRequirementsDiagram(decisionRequirementsDefinitionId);
 
     if (authRule.assertScenario(scenario)) {
-      assertNotNull(decisionRequirementsDiagram);
+      assertThat(decisionRequirementsDiagram).isNotNull();
     }
   }
 }

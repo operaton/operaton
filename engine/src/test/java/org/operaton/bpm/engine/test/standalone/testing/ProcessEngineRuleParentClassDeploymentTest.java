@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.standalone.testing;
 
 
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
@@ -32,7 +32,7 @@ public class ProcessEngineRuleParentClassDeploymentTest extends ProcessEngineRul
 
   @Test
   public void testDeploymentOnParentClassLevel() {
-    assertNotNull("process is not deployed",processEngineRule.getRepositoryService().createProcessDefinitionQuery().processDefinitionKey("testHelperDeploymentTest").singleResult());
+    assertThat(processEngineRule.getRepositoryService().createProcessDefinitionQuery().processDefinitionKey("testHelperDeploymentTest").singleResult()).as("process is not deployed").isNotNull();
   }
 
 

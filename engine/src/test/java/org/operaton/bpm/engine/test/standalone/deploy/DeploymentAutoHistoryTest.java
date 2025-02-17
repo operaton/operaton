@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.standalone.deploy;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.repository.DeploymentWithDefinitions;
@@ -55,7 +55,7 @@ public class DeploymentAutoHistoryTest {
          .deployWithResult();
 
      long count = engineRule.getRepositoryService().createDeploymentQuery().count();
-     assertEquals(1, count);
+    assertThat(count).isEqualTo(1);
      engineRule.getRepositoryService().deleteDeployment(deployment.getId(), true);
   }
 

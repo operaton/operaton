@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.servicetask;
 
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.Serializable;
 
@@ -90,8 +90,8 @@ public class ServiceTaskVariablesTest extends PluggableProcessEngineTest {
     testRule.waitForJobExecutorToProcessAllJobs(10000);
     
     synchronized (ServiceTaskVariablesTest.class) {
-      assertTrue(isNullInDelegate2);
-      assertTrue(isNullInDelegate3); 
+      assertThat(isNullInDelegate2).isTrue();
+      assertThat(isNullInDelegate3).isTrue(); 
     }
   }
 
@@ -105,8 +105,8 @@ public class ServiceTaskVariablesTest extends PluggableProcessEngineTest {
     testRule.waitForJobExecutorToProcessAllJobs(10000);
     
     synchronized (ServiceTaskVariablesTest.class) {
-      assertTrue(isNullInDelegate2); 
-      assertTrue(isNullInDelegate3); 
+      assertThat(isNullInDelegate2).isTrue();
+      assertThat(isNullInDelegate3).isTrue(); 
     }
     
   }

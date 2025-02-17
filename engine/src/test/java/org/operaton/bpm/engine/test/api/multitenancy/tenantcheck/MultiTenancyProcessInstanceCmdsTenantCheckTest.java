@@ -16,10 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy.tenantcheck;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
@@ -79,11 +77,10 @@ public class MultiTenancyProcessInstanceCmdsTenantCheckTest {
 
     engineRule.getRuntimeService().deleteProcessInstance(processInstanceId, null);
 
-    assertEquals(0, engineRule.getRuntimeService()
-      .createProcessInstanceQuery()
-      .processInstanceId(processInstanceId)
-      .list()
-      .size());
+    assertThat(engineRule.getRuntimeService()
+        .createProcessInstanceQuery()
+        .processInstanceId(processInstanceId)
+        .list()).isEmpty();
   }
 
   @Test
@@ -109,18 +106,17 @@ public class MultiTenancyProcessInstanceCmdsTenantCheckTest {
     //then
     engineRule.getRuntimeService().deleteProcessInstance(processInstanceId, null);
 
-    assertEquals(0, engineRule.getRuntimeService()
-      .createProcessInstanceQuery()
-      .processInstanceId(processInstanceId)
-      .list()
-      .size());
+    assertThat(engineRule.getRuntimeService()
+        .createProcessInstanceQuery()
+        .processInstanceId(processInstanceId)
+        .list()).isEmpty();
   }
 
   // modify instances
   @Test
   public void modifyProcessInstanceWithAuthenticatedTenant() {
 
-    assertNotNull(engineRule.getRuntimeService().getActivityInstance(processInstanceId));
+    assertThat(engineRule.getRuntimeService().getActivityInstance(processInstanceId)).isNotNull();
 
     engineRule.getIdentityService().setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
@@ -130,7 +126,7 @@ public class MultiTenancyProcessInstanceCmdsTenantCheckTest {
     .cancelAllForActivity("task")
     .execute();
 
-    assertNull(engineRule.getRuntimeService().getActivityInstance(processInstanceId));
+    assertThat(engineRule.getRuntimeService().getActivityInstance(processInstanceId)).isNull();
   }
 
   @Test
@@ -152,7 +148,7 @@ public class MultiTenancyProcessInstanceCmdsTenantCheckTest {
   @Test
   public void modifyProcessInstanceWithDisabledTenantCheck() {
 
-    assertNotNull(engineRule.getRuntimeService().getActivityInstance(processInstanceId));
+    assertThat(engineRule.getRuntimeService().getActivityInstance(processInstanceId)).isNotNull();
 
     engineRule.getIdentityService().setAuthentication("aUserId", null, List.of(TENANT_ONE));
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
@@ -163,6 +159,6 @@ public class MultiTenancyProcessInstanceCmdsTenantCheckTest {
     .cancelAllForActivity("task")
     .execute();
 
-    assertNull(engineRule.getRuntimeService().getActivityInstance(processInstanceId));
+    assertThat(engineRule.getRuntimeService().getActivityInstance(processInstanceId)).isNull();
   }
 }

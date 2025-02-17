@@ -21,12 +21,7 @@ import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_ACT
 import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_IS_BLOCKING;
 import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_MANUAL_ACTIVATION_RULE;
 import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_REQUIRED_RULE;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.impl.cmmn.CaseControlRule;
 import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnActivityBehavior;
@@ -82,7 +77,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertEquals(name, activity.getName());
+    assertThat(activity.getName()).isEqualTo(name);
   }
 
   @Test
@@ -100,8 +95,8 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertNotEquals(taskName, activity.getName());
-    assertEquals(planItemName, activity.getName());
+    assertThat(activity.getName()).isNotEqualTo(taskName);
+    assertThat(activity.getName()).isEqualTo(planItemName);
   }
 
   @Test
@@ -113,7 +108,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     String activityType = (String) activity.getProperty(PROPERTY_ACTIVITY_TYPE);
-    assertEquals("task", activityType);
+    assertThat(activityType).isEqualTo("task");
   }
 
   @Test
@@ -126,7 +121,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertEquals(description, activity.getProperty(PROPERTY_ACTIVITY_DESCRIPTION));
+    assertThat(activity.getProperty(PROPERTY_ACTIVITY_DESCRIPTION)).isEqualTo(description);
   }
 
   @Test
@@ -139,7 +134,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertEquals(description, activity.getProperty(PROPERTY_ACTIVITY_DESCRIPTION));
+    assertThat(activity.getProperty(PROPERTY_ACTIVITY_DESCRIPTION)).isEqualTo(description);
   }
 
   @Test
@@ -151,7 +146,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     CmmnActivityBehavior behavior = activity.getActivityBehavior();
-    assertTrue(behavior instanceof TaskActivityBehavior);
+    assertThat(behavior instanceof TaskActivityBehavior).isTrue();
   }
 
   @Test
@@ -163,7 +158,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Boolean isBlocking = (Boolean) activity.getProperty(PROPERTY_IS_BLOCKING);
-    assertTrue(isBlocking);
+    assertThat(isBlocking).isTrue();
   }
 
   @Test
@@ -177,7 +172,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Boolean isBlocking = (Boolean) activity.getProperty(PROPERTY_IS_BLOCKING);
-    assertFalse(isBlocking);
+    assertThat(isBlocking).isFalse();
   }
 
   @Test
@@ -188,7 +183,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertNull(activity.getParent());
+    assertThat(activity.getParent()).isNull();
   }
 
   @Test
@@ -202,8 +197,8 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertEquals(parent, activity.getParent());
-    assertTrue(parent.getActivities().contains(activity));
+    assertThat(activity.getParent()).isEqualTo(parent);
+    assertThat(parent.getActivities()).contains(activity);
   }
 
   @Test
@@ -231,12 +226,12 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity newActivity = handler.handleElement(planItem, context);
 
     // then
-    assertTrue(newActivity.getEntryCriteria().isEmpty());
+    assertThat(newActivity.getEntryCriteria()).isEmpty();
 
-    assertFalse(newActivity.getExitCriteria().isEmpty());
-    assertEquals(1, newActivity.getExitCriteria().size());
+    assertThat(newActivity.getExitCriteria()).isNotEmpty();
+    assertThat(newActivity.getExitCriteria()).hasSize(1);
 
-    assertEquals(sentryDeclaration, newActivity.getExitCriteria().get(0));
+    assertThat(newActivity.getExitCriteria().get(0)).isEqualTo(sentryDeclaration);
 
   }
 
@@ -276,13 +271,13 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity newActivity = handler.handleElement(planItem, context);
 
     // then
-    assertTrue(newActivity.getEntryCriteria().isEmpty());
+    assertThat(newActivity.getEntryCriteria()).isEmpty();
 
-    assertFalse(newActivity.getExitCriteria().isEmpty());
-    assertEquals(2, newActivity.getExitCriteria().size());
+    assertThat(newActivity.getExitCriteria()).isNotEmpty();
+    assertThat(newActivity.getExitCriteria()).hasSize(2);
 
-    assertTrue(newActivity.getExitCriteria().contains(firstSentryDeclaration));
-    assertTrue(newActivity.getExitCriteria().contains(secondSentryDeclaration));
+    assertThat(newActivity.getExitCriteria()).contains(firstSentryDeclaration);
+    assertThat(newActivity.getExitCriteria()).contains(secondSentryDeclaration);
 
   }
 
@@ -311,12 +306,12 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity newActivity = handler.handleElement(planItem, context);
 
     // then
-    assertTrue(newActivity.getExitCriteria().isEmpty());
+    assertThat(newActivity.getExitCriteria()).isEmpty();
 
-    assertFalse(newActivity.getEntryCriteria().isEmpty());
-    assertEquals(1, newActivity.getEntryCriteria().size());
+    assertThat(newActivity.getEntryCriteria()).isNotEmpty();
+    assertThat(newActivity.getEntryCriteria()).hasSize(1);
 
-    assertEquals(sentryDeclaration, newActivity.getEntryCriteria().get(0));
+    assertThat(newActivity.getEntryCriteria().get(0)).isEqualTo(sentryDeclaration);
 
   }
 
@@ -356,13 +351,13 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity newActivity = handler.handleElement(planItem, context);
 
     // then
-    assertTrue(newActivity.getExitCriteria().isEmpty());
+    assertThat(newActivity.getExitCriteria()).isEmpty();
 
-    assertFalse(newActivity.getEntryCriteria().isEmpty());
-    assertEquals(2, newActivity.getEntryCriteria().size());
+    assertThat(newActivity.getEntryCriteria()).isNotEmpty();
+    assertThat(newActivity.getEntryCriteria()).hasSize(2);
 
-    assertTrue(newActivity.getEntryCriteria().contains(firstSentryDeclaration));
-    assertTrue(newActivity.getEntryCriteria().contains(secondSentryDeclaration));
+    assertThat(newActivity.getEntryCriteria()).contains(firstSentryDeclaration);
+    assertThat(newActivity.getEntryCriteria()).contains(secondSentryDeclaration);
 
   }
 
@@ -393,13 +388,13 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity newActivity = handler.handleElement(planItem, context);
 
     // then
-    assertFalse(newActivity.getExitCriteria().isEmpty());
-    assertEquals(1, newActivity.getExitCriteria().size());
-    assertEquals(sentryDeclaration, newActivity.getExitCriteria().get(0));
+    assertThat(newActivity.getExitCriteria()).isNotEmpty();
+    assertThat(newActivity.getExitCriteria()).hasSize(1);
+    assertThat(newActivity.getExitCriteria().get(0)).isEqualTo(sentryDeclaration);
 
-    assertFalse(newActivity.getEntryCriteria().isEmpty());
-    assertEquals(1, newActivity.getEntryCriteria().size());
-    assertEquals(sentryDeclaration, newActivity.getEntryCriteria().get(0));
+    assertThat(newActivity.getEntryCriteria()).isNotEmpty();
+    assertThat(newActivity.getEntryCriteria()).hasSize(1);
+    assertThat(newActivity.getEntryCriteria().get(0)).isEqualTo(sentryDeclaration);
 
   }
 
@@ -418,8 +413,8 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_MANUAL_ACTIVATION_RULE);
-    assertNotNull(rule);
-    assertTrue(rule instanceof CaseControlRule);
+    assertThat(rule).isNotNull();
+    assertThat(rule instanceof CaseControlRule).isTrue();
   }
 
   @Test
@@ -437,8 +432,8 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_MANUAL_ACTIVATION_RULE);
-    assertNotNull(rule);
-    assertTrue(rule instanceof CaseControlRule);
+    assertThat(rule).isNotNull();
+    assertThat(rule instanceof CaseControlRule).isTrue();
   }
 
   @Test
@@ -456,8 +451,8 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_REQUIRED_RULE);
-    assertNotNull(rule);
-    assertTrue(rule instanceof CaseControlRule);
+    assertThat(rule).isNotNull();
+    assertThat(rule instanceof CaseControlRule).isTrue();
   }
 
   @Test
@@ -475,8 +470,8 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_REQUIRED_RULE);
-    assertNotNull(rule);
-    assertTrue(rule instanceof CaseControlRule);
+    assertThat(rule).isNotNull();
+    assertThat(rule instanceof CaseControlRule).isTrue();
   }
 
 }

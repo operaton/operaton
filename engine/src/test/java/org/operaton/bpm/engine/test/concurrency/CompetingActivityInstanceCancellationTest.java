@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.engine.test.concurrency;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
-
 import org.operaton.bpm.engine.OptimisticLockingException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -30,12 +26,16 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
 import org.slf4j.Logger;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Roman Smirnov
@@ -124,7 +124,7 @@ public class CompetingActivityInstanceCancellationTest {
         task3ActivityInstanceId = id;
       }
       else {
-        fail();
+        fail("");
       }
     }
 
@@ -142,16 +142,16 @@ public class CompetingActivityInstanceCancellationTest {
 
     LOG.debug("test thread notifies thread 1");
     threadOne.proceedAndWaitTillDone();
-    assertNull(threadOne.exception);
+    assertThat(threadOne.exception).isNull();
 
     LOG.debug("test thread notifies thread 2");
     threadTwo.proceedAndWaitTillDone();
-    assertNotNull(threadTwo.exception);
+    assertThat(threadTwo.exception).isNotNull();
     testRule.assertTextPresent("was updated by another transaction concurrently", threadTwo.exception.getMessage());
 
     LOG.debug("test thread notifies thread 3");
     threadThree.proceedAndWaitTillDone();
-    assertNotNull(threadThree.exception);
+    assertThat(threadThree.exception).isNotNull();
     testRule.assertTextPresent("was updated by another transaction concurrently", threadThree.exception.getMessage());
   }
 

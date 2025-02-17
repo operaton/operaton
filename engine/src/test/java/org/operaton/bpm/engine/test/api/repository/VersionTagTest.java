@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.repository;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.repository.DecisionDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
@@ -38,7 +38,7 @@ public class VersionTagTest extends PluggableProcessEngineTest {
       .asc()
       .singleResult();
 
-    assertEquals("ver_tag_1", process.getVersionTag());
+    assertThat(process.getVersionTag()).isEqualTo("ver_tag_1");
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/processOne.bpmn20.xml"})
@@ -50,7 +50,7 @@ public class VersionTagTest extends PluggableProcessEngineTest {
       .asc()
       .singleResult();
 
-    assertEquals(null, process.getVersionTag());
+    assertThat(process.getVersionTag()).isNull();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/versionTag.dmn"})
@@ -62,7 +62,7 @@ public class VersionTagTest extends PluggableProcessEngineTest {
     .asc()
     .singleResult();
 
-    assertEquals("1.0.0", decision.getVersionTag());
+    assertThat(decision.getVersionTag()).isEqualTo("1.0.0");
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/repository/noVersionTag.dmn"})
@@ -74,6 +74,6 @@ public class VersionTagTest extends PluggableProcessEngineTest {
     .asc()
     .singleResult();
 
-    assertEquals(null, decision.getVersionTag());
+    assertThat(decision.getVersionTag()).isNull();
   }
 }

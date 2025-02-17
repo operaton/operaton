@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.test.concurrency;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Map;
 
@@ -114,11 +113,11 @@ public class CompetingCompleteTaskSetVariableTest extends ConcurrencyTestCase {
     thread2.waitUntilDone();
 
     //variable was persisted
-    assertEquals(1, runtimeService.createVariableInstanceQuery().taskIdIn(taskId).count());
+    assertThat(runtimeService.createVariableInstanceQuery().taskIdIn(taskId).count()).isEqualTo(1);
 
     //task was not removed
-    assertNotNull(thread2.exception);
-    assertEquals(1, taskService.createTaskQuery().taskId(taskId).count());
+    assertThat(thread2.exception).isNotNull();
+    assertThat(taskService.createTaskQuery().taskId(taskId).count()).isEqualTo(1);
 
   }
 }

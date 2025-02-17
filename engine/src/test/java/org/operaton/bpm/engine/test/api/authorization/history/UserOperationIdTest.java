@@ -16,11 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.history;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
@@ -157,12 +153,12 @@ public class UserOperationIdTest {
     List<UserOperationLogEntry> userOperationLogEntries = historyService.createUserOperationLogQuery()
         .taskId(taskId)
         .list();
-    assertEquals(0, userOperationLogEntries.size());
+    assertThat(userOperationLogEntries).isEmpty();
     List<HistoricDetail> historicDetails = historyService.createHistoricDetailQuery().list();
-    assertTrue(!historicDetails.isEmpty());
+    assertThat(!historicDetails.isEmpty()).isTrue();
     //history detail records must have null userOperationId as user operation log was not created
     for (HistoricDetail historicDetail: historicDetails) {
-      assertNull(historicDetail.getUserOperationId());
+      assertThat(historicDetail.getUserOperationId()).isNull();
     }
   }
 
@@ -188,7 +184,7 @@ public class UserOperationIdTest {
     //then
     HistoricDetail historicDetail = historyService.createHistoricDetailQuery().singleResult();
     // no user operation log id is set for this update, as it is not written as part of the user operation
-    assertNull(historicDetail.getUserOperationId());
+    assertThat(historicDetail.getUserOperationId()).isNull();
   }
 
   @Test
@@ -207,8 +203,8 @@ public class UserOperationIdTest {
         .list();
     List<HistoricDetail> historicDetails = historyService.createHistoricDetailQuery().list();
 
-    assertFalse(userOperationLogEntries.isEmpty());
-    assertFalse(historicDetails.isEmpty());
+    assertThat(userOperationLogEntries).isNotEmpty();
+    assertThat(historicDetails).isNotEmpty();
     verifySameOperationId(userOperationLogEntries, historicDetails);
   }
 
@@ -231,21 +227,21 @@ public class UserOperationIdTest {
         .list();
     List<HistoricDetail> historicDetails = historyService.createHistoricDetailQuery().list();
 
-    assertFalse(userOperationLogEntries.isEmpty());
-    assertFalse(historicDetails.isEmpty());
+    assertThat(userOperationLogEntries).isNotEmpty();
+    assertThat(historicDetails).isNotEmpty();
     verifySameOperationId(userOperationLogEntries, historicDetails);
   }
 
   private void verifySameOperationId(List<UserOperationLogEntry> userOperationLogEntries, List<HistoricDetail> historicDetails) {
-    assertTrue("Operation log entry must exist", !userOperationLogEntries.isEmpty());
+    assertThat(!userOperationLogEntries.isEmpty()).as("Operation log entry must exist").isTrue();
     String operationId = userOperationLogEntries.get(0).getOperationId();
-    assertNotNull(operationId);
-    assertTrue("Some historic details are expected to be present", !historicDetails.isEmpty());
+    assertThat(operationId).isNotNull();
+    assertThat(!historicDetails.isEmpty()).as("Some historic details are expected to be present").isTrue();
     for (UserOperationLogEntry userOperationLogEntry: userOperationLogEntries) {
-      assertEquals("OperationIds must be the same", operationId, userOperationLogEntry.getOperationId());
+      assertThat(userOperationLogEntry.getOperationId()).as("OperationIds must be the same").isEqualTo(operationId);
     }
     for (HistoricDetail historicDetail : historicDetails) {
-      assertEquals("OperationIds must be the same", operationId, historicDetail.getUserOperationId());
+      assertThat(historicDetail.getUserOperationId()).as("OperationIds must be the same").isEqualTo(operationId);
     }
   }
 

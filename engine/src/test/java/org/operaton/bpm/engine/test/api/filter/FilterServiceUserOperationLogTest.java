@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.filter;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 
@@ -85,7 +84,7 @@ public class FilterServiceUserOperationLogTest {
     identityService.clearAuthentication();
 
     // then
-    assertEquals(1L, historyService.createUserOperationLogQuery().count());
+    assertThat(historyService.createUserOperationLogQuery().count()).isEqualTo(1L);
     UserOperationLogEntry logEntry = historyService.createUserOperationLogQuery().singleResult();
     assertThat(logEntry.getEntityType()).isEqualTo(EntityTypes.FILTER);
     assertThat(logEntry.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_CREATE);
@@ -111,7 +110,7 @@ public class FilterServiceUserOperationLogTest {
     identityService.clearAuthentication();
 
     // then
-    assertEquals(1L, historyService.createUserOperationLogQuery().count());
+    assertThat(historyService.createUserOperationLogQuery().count()).isEqualTo(1L);
     UserOperationLogEntry logEntry = historyService.createUserOperationLogQuery().singleResult();
     assertThat(logEntry.getEntityType()).isEqualTo(EntityTypes.FILTER);
     assertThat(logEntry.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_UPDATE);
@@ -136,7 +135,7 @@ public class FilterServiceUserOperationLogTest {
     identityService.clearAuthentication();
 
     // then
-    assertEquals(1L, historyService.createUserOperationLogQuery().count());
+    assertThat(historyService.createUserOperationLogQuery().count()).isEqualTo(1L);
     UserOperationLogEntry logEntry = historyService.createUserOperationLogQuery().singleResult();
     assertThat(logEntry.getEntityType()).isEqualTo(EntityTypes.FILTER);
     assertThat(logEntry.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_DELETE);

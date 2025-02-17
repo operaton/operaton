@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.bpmn.servicetask;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Collections;
 import java.util.Map;
@@ -44,7 +44,7 @@ public class ServiceTaskExpressionActivityBehaviorTest extends PluggableProcessE
 
     try{
       runtimeService.startProcessInstanceByKey("process", variables);
-      fail();
+      fail("");
       // the EL resolver will wrap the actual exception inside a process engine exception
     }
     //since the NVE extends the ProcessEngineException we have to handle it separately

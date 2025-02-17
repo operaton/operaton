@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.signal;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.HashMap;
 import java.util.List;
@@ -88,13 +88,13 @@ public class SignalEventPayloadTest {
     List<VariableInstance> catchingPiVariables = runtimeService.createVariableInstanceQuery()
       .processInstanceIdIn(catchingPiUserTask.getProcessInstanceId())
       .list();
-    assertEquals(2, catchingPiVariables.size());
+    assertThat(catchingPiVariables).hasSize(2);
 
     for(VariableInstance variable : catchingPiVariables) {
       if(variable.getName().equals("payloadVar1Target")) {
-        assertEquals("payloadVal1", variable.getValue());
+        assertThat(variable.getValue()).isEqualTo("payloadVal1");
       } else {
-        assertEquals("payloadVal2", variable.getValue());
+        assertThat(variable.getValue()).isEqualTo("payloadVal2");
       }
     }
   }
@@ -122,13 +122,13 @@ public class SignalEventPayloadTest {
       .createVariableInstanceQuery()
       .processInstanceIdIn(catchingPI.getId())
       .list();
-    assertEquals(2, catchingPiVariables.size());
+    assertThat(catchingPiVariables).hasSize(2);
 
     for(VariableInstance variable : catchingPiVariables) {
       if(variable.getName().equals("payloadVar1Target")) {
-        assertEquals("payloadVal1", variable.getValue());
+        assertThat(variable.getValue()).isEqualTo("payloadVal1");
       } else {
-        assertEquals("payloadVal2", variable.getValue());
+        assertThat(variable.getValue()).isEqualTo("payloadVal2");
       }
     }
   }
@@ -154,10 +154,10 @@ public class SignalEventPayloadTest {
       .createVariableInstanceQuery()
       .processInstanceIdIn(catchingPI.getId())
       .list();
-    assertEquals(1, catchingPiVariables.size());
+    assertThat(catchingPiVariables).hasSize(1);
 
-    assertEquals("srcExpressionResVal", catchingPiVariables.get(0).getName());
-    assertEquals("sourceVal", catchingPiVariables.get(0).getValue());
+    assertThat(catchingPiVariables.get(0).getName()).isEqualTo("srcExpressionResVal");
+    assertThat(catchingPiVariables.get(0).getValue()).isEqualTo("sourceVal");
   }
 
   /**
@@ -183,13 +183,13 @@ public class SignalEventPayloadTest {
       .createVariableInstanceQuery()
       .processInstanceIdIn(catchingPI.getId())
       .list();
-    assertEquals(2, catchingPiVariables.size());
+    assertThat(catchingPiVariables).hasSize(2);
 
     for(VariableInstance variable : catchingPiVariables) {
       if(variable.getName().equals("payloadVar1")) {
-        assertEquals("payloadVal1", variable.getValue());
+        assertThat(variable.getValue()).isEqualTo("payloadVal1");
       } else {
-        assertEquals("payloadVal2", variable.getValue());
+        assertThat(variable.getValue()).isEqualTo("payloadVal2");
       }
     }
   }
@@ -219,13 +219,13 @@ public class SignalEventPayloadTest {
       .createVariableInstanceQuery()
       .processInstanceIdIn(catchingPI.getId())
       .list();
-    assertEquals(2, catchingPiVariables.size());
+    assertThat(catchingPiVariables).hasSize(2);
 
     for(VariableInstance variable : catchingPiVariables) {
       if(variable.getName().equals(localVar1)) {
-        assertEquals(localVal1, variable.getValue());
+        assertThat(variable.getValue()).isEqualTo(localVal1);
       } else {
-        assertEquals(localVal2, variable.getValue());
+        assertThat(variable.getValue()).isEqualTo(localVal2);
       }
     }
   }
@@ -247,7 +247,7 @@ public class SignalEventPayloadTest {
 
     // then
     ProcessInstance catchingPI = runtimeService.createProcessInstanceQuery().singleResult();
-    assertEquals(businessKey, catchingPI.getBusinessKey());
+    assertThat(catchingPI.getBusinessKey()).isEqualTo(businessKey);
   }
 
   /**
@@ -278,20 +278,20 @@ public class SignalEventPayloadTest {
     // then
     Task catchingPiUserTask = taskService.createTaskQuery().singleResult();
     ProcessInstance catchingPI = runtimeService.createProcessInstanceQuery().processInstanceId(catchingPiUserTask.getProcessInstanceId()).singleResult();
-    assertEquals(businessKey, catchingPI.getBusinessKey());
+    assertThat(catchingPI.getBusinessKey()).isEqualTo(businessKey);
 
     List<VariableInstance> targetVariables = runtimeService.createVariableInstanceQuery().processInstanceIdIn(catchingPiUserTask.getProcessInstanceId()).list();
-    assertEquals(4, targetVariables.size());
+    assertThat(targetVariables).hasSize(4);
 
     for (VariableInstance variable : targetVariables) {
       if (variable.getName().equals(globalVar1 + "Target")) {
-        assertEquals(globalVal1, variable.getValue());
+        assertThat(variable.getValue()).isEqualTo(globalVal1);
       } else if (variable.getName().equals(globalVar2 + "Target")) {
-        assertEquals(globalVal2 + "Source", variable.getValue());
+        assertThat(variable.getValue()).isEqualTo(globalVal2 + "Source");
       } else if (variable.getName().equals(localVar1)) {
-        assertEquals(localVal1, variable.getValue());
+        assertThat(variable.getValue()).isEqualTo(localVal1);
       } else if (variable.getName().equals(localVar2)) {
-        assertEquals(localVal2, variable.getValue());
+        assertThat(variable.getValue()).isEqualTo(localVal2);
       }
     }
   }

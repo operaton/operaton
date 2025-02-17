@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.identity;
-
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GLOBAL;
 import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
@@ -25,9 +25,7 @@ import static org.operaton.bpm.engine.test.api.identity.TestPermissions.CREATE;
 import static org.operaton.bpm.engine.test.api.identity.TestPermissions.DELETE;
 import static org.operaton.bpm.engine.test.api.identity.TestPermissions.READ;
 import static org.operaton.bpm.engine.test.api.identity.TestPermissions.UPDATE;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -69,12 +67,12 @@ public class AuthorizationServiceWithEnabledAuthorizationTest extends PluggableP
     List<String> someOneElsesGroups = Collections.singletonList("marketing");
 
     // if no authorizations are in Db, nothing is authorized
-    assertFalse(authorizationService.isUserAuthorized("jonny", jonnysGroups, ALL, resource1));
-    assertFalse(authorizationService.isUserAuthorized("someone", someOneElsesGroups, CREATE, resource2));
-    assertFalse(authorizationService.isUserAuthorized("someone else", null, DELETE, resource1));
-    assertFalse(authorizationService.isUserAuthorized("jonny", jonnysGroups, ALL, resource1, "someId"));
-    assertFalse(authorizationService.isUserAuthorized("someone", someOneElsesGroups, CREATE, resource2, "someId"));
-    assertFalse(authorizationService.isUserAuthorized("someone else", null, DELETE, resource1, "someOtherId"));
+    assertThat(authorizationService.isUserAuthorized("jonny", jonnysGroups, ALL, resource1)).isFalse();
+    assertThat(authorizationService.isUserAuthorized("someone", someOneElsesGroups, CREATE, resource2)).isFalse();
+    assertThat(authorizationService.isUserAuthorized("someone else", null, DELETE, resource1)).isFalse();
+    assertThat(authorizationService.isUserAuthorized("jonny", jonnysGroups, ALL, resource1, "someId")).isFalse();
+    assertThat(authorizationService.isUserAuthorized("someone", someOneElsesGroups, CREATE, resource2, "someId")).isFalse();
+    assertThat(authorizationService.isUserAuthorized("someone else", null, DELETE, resource1, "someOtherId")).isFalse();
   }
 
   @Test
@@ -100,19 +98,19 @@ public class AuthorizationServiceWithEnabledAuthorizationTest extends PluggableP
     List<String> someOneElsesGroups = Collections.singletonList("marketing");
 
     // jonny does not have ALL permissions
-    assertFalse(authorizationService.isUserAuthorized("jonny", null, ALL, resource1));
-    assertFalse(authorizationService.isUserAuthorized("jonny", jonnysGroups, ALL, resource1));
+    assertThat(authorizationService.isUserAuthorized("jonny", null, ALL, resource1)).isFalse();
+    assertThat(authorizationService.isUserAuthorized("jonny", jonnysGroups, ALL, resource1)).isFalse();
     // jonny can't read
-    assertFalse(authorizationService.isUserAuthorized("jonny", null, READ, resource1));
-    assertFalse(authorizationService.isUserAuthorized("jonny", jonnysGroups, READ, resource1));
+    assertThat(authorizationService.isUserAuthorized("jonny", null, READ, resource1)).isFalse();
+    assertThat(authorizationService.isUserAuthorized("jonny", jonnysGroups, READ, resource1)).isFalse();
     // someone else can
-    assertTrue(authorizationService.isUserAuthorized("someone else", null, ALL, resource1));
-    assertTrue(authorizationService.isUserAuthorized("someone else", someOneElsesGroups, READ, resource1));
-    assertTrue(authorizationService.isUserAuthorized("someone else", null, ALL, resource1));
-    assertTrue(authorizationService.isUserAuthorized("someone else", someOneElsesGroups, READ, resource1));
+    assertThat(authorizationService.isUserAuthorized("someone else", null, ALL, resource1)).isTrue();
+    assertThat(authorizationService.isUserAuthorized("someone else", someOneElsesGroups, READ, resource1)).isTrue();
+    assertThat(authorizationService.isUserAuthorized("someone else", null, ALL, resource1)).isTrue();
+    assertThat(authorizationService.isUserAuthorized("someone else", someOneElsesGroups, READ, resource1)).isTrue();
     // jonny can still delete
-    assertTrue(authorizationService.isUserAuthorized("jonny", null, DELETE, resource1));
-    assertTrue(authorizationService.isUserAuthorized("jonny", jonnysGroups, DELETE, resource1));
+    assertThat(authorizationService.isUserAuthorized("jonny", null, DELETE, resource1)).isTrue();
+    assertThat(authorizationService.isUserAuthorized("jonny", jonnysGroups, DELETE, resource1)).isTrue();
   }
 
   @Test
@@ -138,27 +136,27 @@ public class AuthorizationServiceWithEnabledAuthorizationTest extends PluggableP
     List<String> someOneElsesGroups = Collections.singletonList("marketing");
 
     // jonny does not have ALL permissions if queried with groups
-    assertFalse(authorizationService.isUserAuthorized("jonny", jonnysGroups, ALL, resource1));
+    assertThat(authorizationService.isUserAuthorized("jonny", jonnysGroups, ALL, resource1)).isFalse();
     // if queried without groups he has
-    assertTrue(authorizationService.isUserAuthorized("jonny", null, ALL, resource1));
+    assertThat(authorizationService.isUserAuthorized("jonny", null, ALL, resource1)).isTrue();
 
     // jonny can't read if queried with groups
-    assertFalse(authorizationService.isUserAuthorized("jonny", jonnysGroups, READ, resource1));
+    assertThat(authorizationService.isUserAuthorized("jonny", jonnysGroups, READ, resource1)).isFalse();
     // if queried without groups he has
-    assertTrue(authorizationService.isUserAuthorized("jonny", null, READ, resource1));
+    assertThat(authorizationService.isUserAuthorized("jonny", null, READ, resource1)).isTrue();
 
     // someone else who is in group "marketing" but but not "sales" can
-    assertTrue(authorizationService.isUserAuthorized("someone else", someOneElsesGroups, ALL, resource1));
-    assertTrue(authorizationService.isUserAuthorized("someone else", someOneElsesGroups, READ, resource1));
-    assertTrue(authorizationService.isUserAuthorized("someone else", null, ALL, resource1));
-    assertTrue(authorizationService.isUserAuthorized("someone else", null, READ, resource1));
+    assertThat(authorizationService.isUserAuthorized("someone else", someOneElsesGroups, ALL, resource1)).isTrue();
+    assertThat(authorizationService.isUserAuthorized("someone else", someOneElsesGroups, READ, resource1)).isTrue();
+    assertThat(authorizationService.isUserAuthorized("someone else", null, ALL, resource1)).isTrue();
+    assertThat(authorizationService.isUserAuthorized("someone else", null, READ, resource1)).isTrue();
     // he could'nt if he were in jonny's groups
-    assertFalse(authorizationService.isUserAuthorized("someone else", jonnysGroups, ALL, resource1));
-    assertFalse(authorizationService.isUserAuthorized("someone else", jonnysGroups, READ, resource1));
+    assertThat(authorizationService.isUserAuthorized("someone else", jonnysGroups, ALL, resource1)).isFalse();
+    assertThat(authorizationService.isUserAuthorized("someone else", jonnysGroups, READ, resource1)).isFalse();
 
     // jonny can still delete
-    assertTrue(authorizationService.isUserAuthorized("jonny", jonnysGroups, DELETE, resource1));
-    assertTrue(authorizationService.isUserAuthorized("jonny", null, DELETE, resource1));
+    assertThat(authorizationService.isUserAuthorized("jonny", jonnysGroups, DELETE, resource1)).isTrue();
+    assertThat(authorizationService.isUserAuthorized("jonny", null, DELETE, resource1)).isTrue();
   }
 
   @Test
@@ -181,16 +179,16 @@ public class AuthorizationServiceWithEnabledAuthorizationTest extends PluggableP
     authorizationService.saveAuthorization(localRevoke);
 
     // jonny does not have ALL permissions
-    assertFalse(authorizationService.isUserAuthorized("jonny", null, ALL, resource1));
+    assertThat(authorizationService.isUserAuthorized("jonny", null, ALL, resource1)).isFalse();
     // jonny can read
-    assertTrue(authorizationService.isUserAuthorized("jonny", null, READ, resource1));
+    assertThat(authorizationService.isUserAuthorized("jonny", null, READ, resource1)).isTrue();
     // jonny can't delete
-    assertFalse(authorizationService.isUserAuthorized("jonny", null, DELETE, resource1));
+    assertThat(authorizationService.isUserAuthorized("jonny", null, DELETE, resource1)).isFalse();
 
     // someone else can't do anything
-    assertFalse(authorizationService.isUserAuthorized("someone else", null, ALL, resource1));
-    assertFalse(authorizationService.isUserAuthorized("someone else", null, READ, resource1));
-    assertFalse(authorizationService.isUserAuthorized("someone else", null, DELETE, resource1));
+    assertThat(authorizationService.isUserAuthorized("someone else", null, ALL, resource1)).isFalse();
+    assertThat(authorizationService.isUserAuthorized("someone else", null, READ, resource1)).isFalse();
+    assertThat(authorizationService.isUserAuthorized("someone else", null, DELETE, resource1)).isFalse();
   }
 
   @Test
@@ -199,7 +197,7 @@ public class AuthorizationServiceWithEnabledAuthorizationTest extends PluggableP
       authorizationService.isUserAuthorized(null, null, UPDATE, TestResource.RESOURCE1);
       fail("Expected NullValueException");
     } catch (NullValueException e) {
-      assertTrue(e.getMessage().contains("Authorization must have a 'userId' or/and a 'groupId'"));
+      assertThat(e.getMessage()).contains("Authorization must have a 'userId' or/and a 'groupId'");
     }
   }
 
@@ -209,7 +207,7 @@ public class AuthorizationServiceWithEnabledAuthorizationTest extends PluggableP
       authorizationService.isUserAuthorized("jonny", null, null, TestResource.RESOURCE1);
       fail("Expected NullValueException");
     } catch (NullValueException e) {
-      assertTrue(e.getMessage().contains("Invalid permission for an authorization"));
+      assertThat(e.getMessage()).contains("Invalid permission for an authorization");
     }
   }
 
@@ -219,7 +217,7 @@ public class AuthorizationServiceWithEnabledAuthorizationTest extends PluggableP
       authorizationService.isUserAuthorized("jonny", null, UPDATE, null);
       fail("Expected NullValueException");
     } catch (NullValueException e) {
-      assertTrue(e.getMessage().contains("Invalid resource for an authorization"));
+      assertThat(e.getMessage()).contains("Invalid resource for an authorization");
     }
   }
 
@@ -254,14 +252,14 @@ public class AuthorizationServiceWithEnabledAuthorizationTest extends PluggableP
     List<String> someOneElsesGroups = Collections.singletonList("marketing");
 
     // jonny can read
-    assertTrue(authorizationService.isUserAuthorized("jonny", jonnysGroups, READ, resource1));
-    assertTrue(authorizationService.isUserAuthorized("jonny", null, READ, resource1));
+    assertThat(authorizationService.isUserAuthorized("jonny", jonnysGroups, READ, resource1)).isTrue();
+    assertThat(authorizationService.isUserAuthorized("jonny", null, READ, resource1)).isTrue();
 
     // someone else in the same groups cannot
-    assertFalse(authorizationService.isUserAuthorized("someone else", jonnysGroups, READ, resource1));
+    assertThat(authorizationService.isUserAuthorized("someone else", jonnysGroups, READ, resource1)).isFalse();
 
     // someone else in different groups can
-    assertTrue(authorizationService.isUserAuthorized("someone else", someOneElsesGroups, READ, resource1));
+    assertThat(authorizationService.isUserAuthorized("someone else", someOneElsesGroups, READ, resource1)).isTrue();
   }
 
   @Test
@@ -273,7 +271,7 @@ public class AuthorizationServiceWithEnabledAuthorizationTest extends PluggableP
     boolean isAuthorized = authorizationService.isUserAuthorized("jonny", null, UPDATE, resource1);
 
     // then
-    assertFalse(isAuthorized);
+    assertThat(isAuthorized).isFalse();
   }
 
   protected void cleanupAfterTest() {

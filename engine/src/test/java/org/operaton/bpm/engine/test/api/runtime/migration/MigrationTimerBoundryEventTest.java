@@ -16,10 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -84,7 +81,7 @@ public class MigrationTimerBoundryEventTest {
     ProcessInstance processInstance = rule.getRuntimeService().startProcessInstanceById(sourceProcessDefinition.getId());
 
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     managementService.executeJob(job.getId());
 
     MigrationPlan migrationPlan = runtimeService.createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
@@ -96,9 +93,9 @@ public class MigrationTimerBoundryEventTest {
 
     // then
     List<Job> list = managementService.createJobQuery().list();
-    assertTrue(list.isEmpty());
-    assertEquals(1, taskService.createTaskQuery().taskDefinitionKey("afterTimer").count());
-    assertEquals(1, taskService.createTaskQuery().taskDefinitionKey("userTask").count());
+    assertThat(list).isEmpty();
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("afterTimer").count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("userTask").count()).isEqualTo(1);
   }
 
   @Test
@@ -111,7 +108,7 @@ public class MigrationTimerBoundryEventTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(sourceProcessDefinition.getId());
 
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     managementService.executeJob(job.getId());
 
     MigrationPlan migrationPlan = runtimeService.createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
@@ -123,9 +120,9 @@ public class MigrationTimerBoundryEventTest {
 
     // then
     List<Job> list = managementService.createJobQuery().list();
-    assertTrue(list.isEmpty());
-    assertEquals(1, taskService.createTaskQuery().taskDefinitionKey("afterTimer").count());
-    assertEquals(0, taskService.createTaskQuery().taskDefinitionKey("userTask").count());
+    assertThat(list).isEmpty();
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("afterTimer").count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("userTask").count()).isZero();
   }
 
   @Test
@@ -147,9 +144,9 @@ public class MigrationTimerBoundryEventTest {
 
     // then
     List<Job> list = managementService.createJobQuery().list();
-    assertEquals(1, list.size());
-    assertEquals(0, taskService.createTaskQuery().taskDefinitionKey("afterTimer").count());
-    assertEquals(1, taskService.createTaskQuery().taskDefinitionKey("userTask").count());
+    assertThat(list).hasSize(1);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("afterTimer").count()).isZero();
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("userTask").count()).isEqualTo(1);
   }
 
   @Test
@@ -175,7 +172,7 @@ public class MigrationTimerBoundryEventTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(sourceProcessDefinition.getId());
 
     Job job = managementService.createJobQuery().duedateLowerThan(ClockUtil.getCurrentTime()).singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     managementService.executeJob(job.getId());
 
     MigrationPlan migrationPlan = runtimeService.createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
@@ -187,11 +184,11 @@ public class MigrationTimerBoundryEventTest {
 
     // then
     List<Job> list = managementService.createJobQuery().list();
-    assertEquals(1, list.size());
-    assertEquals(1, managementService.createJobQuery().duedateHigherThan(ClockUtil.getCurrentTime()).count());
-    assertEquals(1, taskService.createTaskQuery().taskDefinitionKey("past").count());
-    assertEquals(0, taskService.createTaskQuery().taskDefinitionKey("future").count());
-    assertEquals(1, taskService.createTaskQuery().taskDefinitionKey("userTask").count());
+    assertThat(list).hasSize(1);
+    assertThat(managementService.createJobQuery().duedateHigherThan(ClockUtil.getCurrentTime()).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("past").count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("future").count()).isZero();
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("userTask").count()).isEqualTo(1);
   }
 
   @Test
@@ -217,9 +214,9 @@ public class MigrationTimerBoundryEventTest {
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
     // then
-    assertEquals(1, taskService.createTaskQuery().taskDefinitionKey("userTask").count());
-    assertEquals(0, taskService.createTaskQuery().taskDefinitionKey("afterTimer").count());
-    assertEquals(1, managementService.createJobQuery().count());
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("userTask").count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("afterTimer").count()).isZero();
+    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
   }
 
   @Test
@@ -238,7 +235,7 @@ public class MigrationTimerBoundryEventTest {
     ProcessInstance processInstance = rule.getRuntimeService().startProcessInstanceById(sourceProcessDefinition.getId());
 
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     managementService.executeJob(job.getId());
 
     MigrationPlan migrationPlan = runtimeService.createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
@@ -250,9 +247,9 @@ public class MigrationTimerBoundryEventTest {
 
     // then
     List<Job> list = managementService.createJobQuery().list();
-    assertTrue(list.isEmpty());
-    assertEquals(1, taskService.createTaskQuery().taskDefinitionKey("userTask").count());
-    assertEquals(1, taskService.createTaskQuery().taskDefinitionKey("afterTimer").count());
+    assertThat(list).isEmpty();
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("userTask").count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("afterTimer").count()).isEqualTo(1);
   }
 
   @Test
@@ -286,7 +283,7 @@ public class MigrationTimerBoundryEventTest {
     ProcessInstance processInstance = rule.getRuntimeService().startProcessInstanceById(sourceProcessDefinition.getId());
 
     Job job = managementService.createJobQuery().activityId("timerPast").singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     managementService.executeJob(job.getId());
 
     MigrationPlan migrationPlan = runtimeService.createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
@@ -300,9 +297,9 @@ public class MigrationTimerBoundryEventTest {
 
     // then
     List<Job> list = managementService.createJobQuery().duedateHigherThan(ClockUtil.getCurrentTime()).list();
-    assertEquals(1, list.size());
-    assertEquals(1, taskService.createTaskQuery().taskDefinitionKey("userTask").count());
-    assertEquals(1, taskService.createTaskQuery().taskDefinitionKey("future").count());
+    assertThat(list).hasSize(1);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("userTask").count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("future").count()).isEqualTo(1);
   }
 
   @Test
@@ -335,7 +332,7 @@ public class MigrationTimerBoundryEventTest {
 
     ProcessInstance processInstance = rule.getRuntimeService().startProcessInstanceById(sourceProcessDefinition.getId());
 
-    assertNull(managementService.createJobQuery().activityId("timerPast").singleResult());
+    assertThat(managementService.createJobQuery().activityId("timerPast").singleResult()).isNull();
 
     MigrationPlan migrationPlan = runtimeService.createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapEqualActivities()
@@ -368,7 +365,7 @@ public class MigrationTimerBoundryEventTest {
     ProcessInstance processInstance = rule.getRuntimeService().startProcessInstanceById(sourceProcessDefinition.getId());
 
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     managementService.executeJob(job.getId());
 
     MigrationPlan migrationPlan = runtimeService.createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
@@ -381,9 +378,9 @@ public class MigrationTimerBoundryEventTest {
 
     // then
     List<Job> list = managementService.createJobQuery().list();
-    assertTrue(list.isEmpty());
-    assertEquals(1, taskService.createTaskQuery().taskDefinitionKey("afterTimer").count());
-    assertEquals(1, taskService.createTaskQuery().taskDefinitionKey("userTask").count());
+    assertThat(list).isEmpty();
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("afterTimer").count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("userTask").count()).isEqualTo(1);
   }
 
   protected BpmnModelInstance createModel(boolean isCancelActivity, String date) {

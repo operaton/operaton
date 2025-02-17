@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.bpmn.usertask;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertNotNull;
 
 import org.operaton.bpm.engine.ParseException;
 import org.operaton.bpm.engine.RepositoryService;
@@ -66,7 +65,7 @@ public class UserTaskOperatonFormDefinitionParseTest {
 
   protected ActivityImpl findActivityInDeployedProcessDefinition(String activityId) {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
-    assertNotNull(processDefinition);
+    assertThat(processDefinition).isNotNull();
 
     ProcessDefinitionEntity cachedProcessDefinition = processEngineConfiguration.getDeploymentCache()
         .getProcessDefinitionCache().get(processDefinition.getId());

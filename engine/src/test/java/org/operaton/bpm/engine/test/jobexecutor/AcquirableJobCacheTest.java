@@ -42,7 +42,7 @@ import org.junit.Test;
 import org.junit.rules.RuleChain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 public class AcquirableJobCacheTest {
 

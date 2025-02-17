@@ -36,7 +36,7 @@ import org.operaton.bpm.engine.test.api.runtime.migration.MigrationTestRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.batch.BatchMigrationHelper;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class JobExecutorBatchTest {
 
@@ -89,7 +89,7 @@ public class JobExecutorBatchTest {
     helper.migrateProcessInstancesAsync(2);
 
     // then the job executor is hinted for the seed job
-    assertEquals(1, jobExecutor.getJobsAdded());
+    assertThat(jobExecutor.getJobsAdded()).isEqualTo(1);
   }
 
   @Test
@@ -105,7 +105,7 @@ public class JobExecutorBatchTest {
     helper.executeSeedJob(batch);
 
     // then the job executor is hinted for the monitor job and 10 execution jobs
-    assertEquals(11, jobExecutor.getJobsAdded());
+    assertThat(jobExecutor.getJobsAdded()).isEqualTo(11);
   }
 
   @Test
@@ -118,7 +118,7 @@ public class JobExecutorBatchTest {
     helper.executeSeedJob(batch);
 
     // then the job executor is hinted for the monitor job and 3 execution jobs
-    assertEquals(4, jobExecutor.getJobsAdded());
+    assertThat(jobExecutor.getJobsAdded()).isEqualTo(4);
   }
 
   @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -147,7 +147,7 @@ public class JobExecutorBatchTest {
     helper.executeSeedJob(batch);
 
     // then the job executor is hinted for the monitor job and 4 execution jobs
-    assertEquals(5, jobExecutor.getJobsAdded());
+    assertThat(jobExecutor.getJobsAdded()).isEqualTo(5);
   }
 
   public class CountingJobExecutor extends JobExecutor {

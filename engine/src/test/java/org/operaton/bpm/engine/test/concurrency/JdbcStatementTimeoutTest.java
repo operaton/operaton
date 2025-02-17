@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.concurrency;
 
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
@@ -112,7 +112,7 @@ public class JdbcStatementTimeoutTest extends ConcurrencyTestHelper {
     // wait for thread 2 to cancel FLUSH because of timeout
     thread2.waitForSync(TEST_TIMEOUT_IN_MILLIS);
 
-    assertNotNull("expected timeout exception", thread2.getException());
+    assertThat(thread2.getException()).as("expected timeout exception").isNotNull();
   }
 
   private void createJobEntity() {

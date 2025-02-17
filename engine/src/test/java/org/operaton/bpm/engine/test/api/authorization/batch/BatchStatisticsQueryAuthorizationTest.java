@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.api.authorization.batch;
 
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.List;
@@ -35,7 +35,6 @@ import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -107,13 +106,13 @@ public class BatchStatisticsQueryAuthorizationTest {
     authRule.disableAuthorization();
 
     // then
-    Assert.assertEquals(1, batches.size());
-    Assert.assertEquals(batch1.getId(), batches.get(0).getId());
+    assertThat(batches).hasSize(1);
+    assertThat(batches.get(0).getId()).isEqualTo(batch1.getId());
 
     // and the visibility of jobs is not restricted
-    Assert.assertEquals(1, batches.get(0).getJobsCreated());
-    Assert.assertEquals(1, batches.get(0).getRemainingJobs());
-    Assert.assertEquals(1, batches.get(0).getTotalJobs());
+    assertThat(batches.get(0).getJobsCreated()).isEqualTo(1);
+    assertThat(batches.get(0).getRemainingJobs()).isEqualTo(1);
+    assertThat(batches.get(0).getTotalJobs()).isEqualTo(1);
   }
 
   @Test
@@ -127,7 +126,7 @@ public class BatchStatisticsQueryAuthorizationTest {
     authRule.disableAuthorization();
 
     // then
-    Assert.assertEquals(1, count);
+    assertThat(count).isEqualTo(1);
   }
 
   @Test
@@ -138,7 +137,7 @@ public class BatchStatisticsQueryAuthorizationTest {
     authRule.disableAuthorization();
 
     // then
-    Assert.assertEquals(0, count);
+    assertThat(count).isZero();
   }
 
   @Test
@@ -152,7 +151,7 @@ public class BatchStatisticsQueryAuthorizationTest {
     authRule.disableAuthorization();
 
     // then
-    Assert.assertEquals(2, batches.size());
+    assertThat(batches).hasSize(2);
   }
 
   @Test
@@ -167,7 +166,7 @@ public class BatchStatisticsQueryAuthorizationTest {
     authRule.disableAuthorization();
 
     // then
-    Assert.assertEquals(2, batches.size());
+    assertThat(batches).hasSize(2);
   }
 
   @Test
@@ -188,7 +187,7 @@ public class BatchStatisticsQueryAuthorizationTest {
 
     // then
     BatchStatistics batchStatistics = engineRule.getManagementService().createBatchStatisticsQuery().batchId(batch3.getId()).singleResult();
-    assertEquals("userId", batchStatistics.getCreateUserId());
+    assertThat(batchStatistics.getCreateUserId()).isEqualTo("userId");
   }
 
   @Test
@@ -203,7 +202,7 @@ public class BatchStatisticsQueryAuthorizationTest {
     authRule.disableAuthorization();
 
     // then
-    Assert.assertEquals(0, batches.size());
+    assertThat(batches).isEmpty();
   }
 
   protected ProcessInstance createMigrationPlan() {

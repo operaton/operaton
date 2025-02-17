@@ -16,12 +16,10 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.impl.migration.validation.instruction.ConditionalEventUpdateEventTriggerValidator.MIGRATION_CONDITIONAL_VALIDATION_ERROR_MSG;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -178,7 +176,7 @@ public class MigrationBoundaryEventsTest {
 
     // a timer job exists
     Job jobBeforeMigration = rule.getManagementService().createJobQuery().singleResult();
-    assertNotNull(jobBeforeMigration);
+    assertThat(jobBeforeMigration).isNotNull();
 
     // if the timer job is triggered the failing delegate fails and an incident is created
     executeJob(jobBeforeMigration);
@@ -195,18 +193,18 @@ public class MigrationBoundaryEventsTest {
 
     // then the job and incident still exists
     Job jobAfterMigration = rule.getManagementService().createJobQuery().jobId(jobBeforeMigration.getId()).singleResult();
-    assertNotNull(jobAfterMigration);
+    assertThat(jobAfterMigration).isNotNull();
     Incident incidentAfterMigration = rule.getRuntimeService().createIncidentQuery().singleResult();
-    assertNotNull(incidentAfterMigration);
+    assertThat(incidentAfterMigration).isNotNull();
 
     // and it is still the same incident
-    assertEquals(incidentBeforeMigration.getId(), incidentAfterMigration.getId());
-    assertEquals(jobAfterMigration.getId(), incidentAfterMigration.getConfiguration());
+    assertThat(incidentAfterMigration.getId()).isEqualTo(incidentBeforeMigration.getId());
+    assertThat(incidentAfterMigration.getConfiguration()).isEqualTo(jobAfterMigration.getId());
 
     // and the activity, process definition and job definition references were updated
-    assertEquals("newBoundary", incidentAfterMigration.getActivityId());
-    assertEquals(targetProcessDefinition.getId(), incidentAfterMigration.getProcessDefinitionId());
-    assertEquals(jobAfterMigration.getJobDefinitionId(), incidentAfterMigration.getJobDefinitionId());
+    assertThat(incidentAfterMigration.getActivityId()).isEqualTo("newBoundary");
+    assertThat(incidentAfterMigration.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());
+    assertThat(incidentAfterMigration.getJobDefinitionId()).isEqualTo(jobAfterMigration.getJobDefinitionId());
   }
 
   @Test
@@ -494,8 +492,8 @@ public class MigrationBoundaryEventsTest {
 
     // and no event subscription for the new message name exists
     EventSubscription eventSubscription = rule.getRuntimeService().createEventSubscriptionQuery().eventName("new" + SIGNAL_NAME).singleResult();
-    assertNull(eventSubscription);
-    assertEquals(1, rule.getRuntimeService().createEventSubscriptionQuery().count());
+    assertThat(eventSubscription).isNull();
+    assertThat(rule.getRuntimeService().createEventSubscriptionQuery().count()).isEqualTo(1);
 
     // and it is possible to trigger the event with the old message name and successfully complete the migrated instance
     rule.getProcessEngine().getRuntimeService().signalEventReceived(SIGNAL_NAME);
@@ -540,8 +538,8 @@ public class MigrationBoundaryEventsTest {
 
     // and no event subscription for the new message name exists
     EventSubscription eventSubscription = rule.getRuntimeService().createEventSubscriptionQuery().eventName("new" + MESSAGE_NAME).singleResult();
-    assertNull(eventSubscription);
-    assertEquals(1, rule.getRuntimeService().createEventSubscriptionQuery().count());
+    assertThat(eventSubscription).isNull();
+    assertThat(rule.getRuntimeService().createEventSubscriptionQuery().count()).isEqualTo(1);
 
     // and it is possible to trigger the event with the old message name and successfully complete the migrated instance
     rule.getProcessEngine().getRuntimeService().correlateMessage(MESSAGE_NAME);

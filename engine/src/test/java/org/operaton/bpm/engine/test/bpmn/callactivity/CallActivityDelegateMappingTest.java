@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.test.bpmn.callactivity;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.fail;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Map;
 
@@ -31,7 +32,6 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -164,8 +164,8 @@ public class CallActivityDelegateMappingTest {
       taskService.complete(taskBeforeSubProcess.getId());
       fail("Exeption expected!");
     } catch (ProcessEngineException pex) { //then
-      Assert.assertTrue(pex.getMessage().equalsIgnoreCase("org.operaton.bpm.engine.ProcessEngineException: New process engine exception.")
-              || pex.getMessage().contains("1234"));
+      assertThat(pex.getMessage().equalsIgnoreCase("org.operaton.bpm.engine.ProcessEngineException: New process engine exception.")
+          || pex.getMessage().contains("1234")).isTrue();
     }
 
     //then process rollback to user task which is before sub process
@@ -233,8 +233,8 @@ public class CallActivityDelegateMappingTest {
       taskService.complete(taskInSubProcess.getId());
       fail("Exeption expected!");
     } catch (ProcessEngineException pex) { //then
-      Assert.assertTrue(pex.getMessage().equalsIgnoreCase("org.operaton.bpm.engine.ProcessEngineException: New process engine exception.")
-              || pex.getMessage().contains("1234"));
+      assertThat(pex.getMessage().equalsIgnoreCase("org.operaton.bpm.engine.ProcessEngineException: New process engine exception.")
+          || pex.getMessage().contains("1234")).isTrue();
     }
 
     //then process rollback to user task which is in sub process

@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.test.dmn.businessruletask;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
@@ -85,10 +85,10 @@ public class DmnBusinessRuleTaskTest {
   @Test
   public void decisionRef() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
-    assertEquals("okay", getDecisionResult(processInstance));
+    assertThat(getDecisionResult(processInstance)).isEqualTo("okay");
 
     processInstance = startExpressionProcess("testDecision", 1);
-    assertEquals("okay", getDecisionResult(processInstance));
+    assertThat(getDecisionResult(processInstance)).isEqualTo("okay");
   }
 
   @Deployment(resources = { DECISION_PROCESS, DECISION_PROCESS_EXPRESSION, DECISION_OKAY_DMN12 })
@@ -129,7 +129,7 @@ public class DmnBusinessRuleTaskTest {
     testRule.deploy(DECISION_NOT_OKAY_DMN);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
-    assertEquals("not okay", getDecisionResult(processInstance));
+    assertThat(getDecisionResult(processInstance)).isEqualTo("not okay");
   }
 
   @Deployment(resources = { DECISION_PROCESS_DEPLOYMENT, DECISION_OKAY_DMN })
@@ -138,7 +138,7 @@ public class DmnBusinessRuleTaskTest {
     testRule.deploy(DECISION_NOT_OKAY_DMN);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
-    assertEquals("okay", getDecisionResult(processInstance));
+    assertThat(getDecisionResult(processInstance)).isEqualTo("okay");
   }
 
   @Deployment(resources = { DECISION_PROCESS_VERSION, DECISION_PROCESS_EXPRESSION, DECISION_OKAY_DMN })
@@ -148,10 +148,10 @@ public class DmnBusinessRuleTaskTest {
     testRule.deploy(DECISION_OKAY_DMN);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
-    assertEquals("not okay", getDecisionResult(processInstance));
+    assertThat(getDecisionResult(processInstance)).isEqualTo("not okay");
 
     processInstance = startExpressionProcess("testDecision", 2);
-    assertEquals("not okay", getDecisionResult(processInstance));
+    assertThat(getDecisionResult(processInstance)).isEqualTo("not okay");
   }
 
   @Test
@@ -166,7 +166,7 @@ public class DmnBusinessRuleTaskTest {
         .execute();
 
     // then
-    assertEquals("A", getDecisionResult(processInstance));
+    assertThat(getDecisionResult(processInstance)).isEqualTo("A");
   }
 
   @Test
@@ -192,7 +192,7 @@ public class DmnBusinessRuleTaskTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variables);
 
     // then
-    assertEquals("A", getDecisionResult(processInstance));
+    assertThat(getDecisionResult(processInstance)).isEqualTo("A");
   }
 
   @Test
@@ -246,7 +246,7 @@ public class DmnBusinessRuleTaskTest {
       .putValue("pojo", new TestPojo("okay", 13.37));
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess", variables);
 
-    assertEquals("okay", getDecisionResult(processInstance));
+    assertThat(getDecisionResult(processInstance)).isEqualTo("okay");
   }
 
   @Deployment( resources = DECISION_LITERAL_EXPRESSION_DMN )
@@ -266,7 +266,7 @@ public class DmnBusinessRuleTaskTest {
         .putValue("a", 2)
         .putValue("b", 3));
 
-    assertEquals(5, getDecisionResult(processInstance));
+    assertThat(getDecisionResult(processInstance)).isEqualTo(5);
   }
 
   @Deployment( resources = DRD_DISH_RESOURCE )
@@ -286,7 +286,7 @@ public class DmnBusinessRuleTaskTest {
         .putValue("temperature", 32)
         .putValue("dayType", "Weekend"));
 
-    assertEquals("Light salad", getDecisionResult(processInstance));
+    assertThat(getDecisionResult(processInstance)).isEqualTo("Light salad");
   }
 
   @Deployment(resources = { DECISION_PROCESS_COMPOSITEEXPRESSION, DECISION_OKAY_DMN})
@@ -296,7 +296,7 @@ public class DmnBusinessRuleTaskTest {
       .putValue("version", 1);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcessCompositeExpression", variables);
 
-    assertEquals("okay", getDecisionResult(processInstance));
+    assertThat(getDecisionResult(processInstance)).isEqualTo("okay");
   }
 
   protected ProcessInstance startExpressionProcess(Object decisionKey, Object version) {

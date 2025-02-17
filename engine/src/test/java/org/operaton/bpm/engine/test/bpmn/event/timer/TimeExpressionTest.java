@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.timer;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -46,11 +46,11 @@ public class TimeExpressionTest extends PluggableProcessEngineTest {
 		  
 		    // After process start, there should be timer created    
 		    ProcessInstance pi1 = runtimeService.startProcessInstanceByKey("intermediateTimerEventExample", variables1);
-		    assertEquals(1, managementService.createJobQuery().processInstanceId(pi1.getId()).count());
+      assertThat(managementService.createJobQuery().processInstanceId(pi1.getId()).count()).isEqualTo(1);
 
 
 		    List<Job> jobs = managementService.createJobQuery().executable().list();
-		    assertEquals(1, jobs.size());
+      assertThat(jobs).hasSize(1);
 		    return jobs.get(0).getDuedate();
 	  }
 	  
@@ -60,7 +60,7 @@ public class TimeExpressionTest extends PluggableProcessEngineTest {
 		    Date dt = new Date();
 		    
 		    Date dueDate = testExpression(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(dt));
-		    assertEquals(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(dt),new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(dueDate));		    	  
+      assertThat(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(dueDate)).isEqualTo(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(dt));		    	  
 	  }
 	  
 	  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/event/timer/IntermediateTimerEventTest.testExpression.bpmn20.xml"})	  
@@ -69,7 +69,7 @@ public class TimeExpressionTest extends PluggableProcessEngineTest {
 		    Date dt = new Date();
 		    
 		    Date dueDate = testExpression(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").format(dt));
-		    assertEquals(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").format(dt),new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").format(dueDate));
+      assertThat(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").format(dueDate)).isEqualTo(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").format(dt));
 	  }
 	  
 	  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/event/timer/IntermediateTimerEventTest.testExpression.bpmn20.xml"})	 
@@ -78,7 +78,7 @@ public class TimeExpressionTest extends PluggableProcessEngineTest {
 		    Date dt = new Date();
 
 		    Date dueDate = testExpression(new SimpleDateFormat("yyyy-MM-dd'T'HH").format(new Date()));
-		    assertEquals(new SimpleDateFormat("yyyy-MM-dd'T'HH").format(dt),new SimpleDateFormat("yyyy-MM-dd'T'HH").format(dueDate));
+      assertThat(new SimpleDateFormat("yyyy-MM-dd'T'HH").format(dueDate)).isEqualTo(new SimpleDateFormat("yyyy-MM-dd'T'HH").format(dt));
 	  }
 	  
 	  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/event/timer/IntermediateTimerEventTest.testExpression.bpmn20.xml"})	  
@@ -87,7 +87,7 @@ public class TimeExpressionTest extends PluggableProcessEngineTest {
 		    Date dt = new Date();
 
 		    Date dueDate = testExpression(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-		    assertEquals(new SimpleDateFormat("yyyy-MM-dd").format(dt),new SimpleDateFormat("yyyy-MM-dd").format(dueDate));
+      assertThat(new SimpleDateFormat("yyyy-MM-dd").format(dueDate)).isEqualTo(new SimpleDateFormat("yyyy-MM-dd").format(dt));
 	  }
 	
 	  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/event/timer/IntermediateTimerEventTest.testExpression.bpmn20.xml"})	  
@@ -96,7 +96,7 @@ public class TimeExpressionTest extends PluggableProcessEngineTest {
 		    Date dt = new Date();
 
 		    Date dueDate = testExpression(new SimpleDateFormat("yyyy-MM").format(new Date()));
-		    assertEquals(new SimpleDateFormat("yyyy-MM").format(dt),new SimpleDateFormat("yyyy-MM").format(dueDate));
+      assertThat(new SimpleDateFormat("yyyy-MM").format(dueDate)).isEqualTo(new SimpleDateFormat("yyyy-MM").format(dt));
 	  }
 	  
 	  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/event/timer/IntermediateTimerEventTest.testExpression.bpmn20.xml"})	  
@@ -105,6 +105,6 @@ public class TimeExpressionTest extends PluggableProcessEngineTest {
 		    Date dt = new Date();
 		    
 		    Date dueDate = testExpression(new SimpleDateFormat("yyyy").format(new Date()));
-		    assertEquals(new SimpleDateFormat("yyyy").format(dt),new SimpleDateFormat("yyyy").format(dueDate));
+      assertThat(new SimpleDateFormat("yyyy").format(dueDate)).isEqualTo(new SimpleDateFormat("yyyy").format(dt));
 	  }
 }

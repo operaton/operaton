@@ -16,10 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.RuntimeService;
@@ -40,7 +37,6 @@ import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
@@ -142,8 +138,8 @@ public class MigrationIncidentTest {
 
     // then
     Incident incidentAfterMigration = engineRule.getRuntimeService().createIncidentQuery().incidentId(incidentInCallingProcess.getId()).singleResult();
-    Assert.assertEquals(callingProcessV2.getId(), incidentAfterMigration.getProcessDefinitionId());
-    Assert.assertEquals("CallActivityV2", incidentAfterMigration.getActivityId());
+    assertThat(incidentAfterMigration.getProcessDefinitionId()).isEqualTo(callingProcessV2.getId());
+    assertThat(incidentAfterMigration.getActivityId()).isEqualTo("CallActivityV2");
 
   }
 
@@ -188,8 +184,8 @@ public class MigrationIncidentTest {
 
     // then
     Incident incidentAfterMigration = engineRule.getRuntimeService().createIncidentQuery().incidentId(incidentInCallingProcess.getId()).singleResult();
-    Assert.assertEquals(callingProcessV2.getId(), incidentAfterMigration.getProcessDefinitionId());
-    Assert.assertEquals("ServiceTask_V2", incidentAfterMigration.getActivityId());
+    assertThat(incidentAfterMigration.getProcessDefinitionId()).isEqualTo(callingProcessV2.getId());
+    assertThat(incidentAfterMigration.getActivityId()).isEqualTo("ServiceTask_V2");
   }
 
 
@@ -235,8 +231,8 @@ public class MigrationIncidentTest {
             .createIncidentQuery()
             .incidentId(incidentInCallingProcess.getId())
             .singleResult();
-    Assert.assertEquals(newProcess.getId(), incidentAfterMigration.getProcessDefinitionId());
-    Assert.assertEquals("callingV2", incidentAfterMigration.getActivityId());
+    assertThat(incidentAfterMigration.getProcessDefinitionId()).isEqualTo(newProcess.getId());
+    assertThat(incidentAfterMigration.getActivityId()).isEqualTo("callingV2");
   }
 
 
@@ -282,8 +278,8 @@ public class MigrationIncidentTest {
             .createIncidentQuery()
             .incidentId(incidentInCallingProcess.getId())
             .singleResult();
-    Assert.assertEquals(newProcess.getId(), incidentAfterMigration.getProcessDefinitionId());
-    Assert.assertEquals("taskV2", incidentAfterMigration.getActivityId());
+    assertThat(incidentAfterMigration.getProcessDefinitionId()).isEqualTo(newProcess.getId());
+    assertThat(incidentAfterMigration.getActivityId()).isEqualTo("taskV2");
 
   }
 
@@ -311,9 +307,9 @@ public class MigrationIncidentTest {
 
     // then
     Incident incident = runtimeService.createIncidentQuery().singleResult();
-    assertEquals(processInstance2.getProcessDefinitionId(), incident.getProcessDefinitionId());
-    assertEquals("custom", incident.getIncidentType());
-    assertEquals(processInstance1.getId(), incident.getExecutionId());
+    assertThat(incident.getProcessDefinitionId()).isEqualTo(processInstance2.getProcessDefinitionId());
+    assertThat(incident.getIncidentType()).isEqualTo("custom");
+    assertThat(incident.getExecutionId()).isEqualTo(processInstance1.getId());
   }
 
   @Test
@@ -340,9 +336,9 @@ public class MigrationIncidentTest {
 
     // then
     Incident incident = runtimeService.createIncidentQuery().singleResult();
-    assertEquals(processInstance2.getProcessDefinitionId(), incident.getProcessDefinitionId());
-    assertEquals("custom", incident.getIncidentType());
-    assertEquals(processInstance1.getId(), incident.getExecutionId());
+    assertThat(incident.getProcessDefinitionId()).isEqualTo(processInstance2.getProcessDefinitionId());
+    assertThat(incident.getIncidentType()).isEqualTo("custom");
+    assertThat(incident.getExecutionId()).isEqualTo(processInstance1.getId());
   }
 
   @Test
@@ -392,22 +388,22 @@ public class MigrationIncidentTest {
     HistoricIncident historicIncidentAfterMigration = engineRule.getHistoryService()
         .createHistoricIncidentQuery()
         .singleResult();
-    assertNotNull(historicIncidentAfterMigration);
-    assertNull(historicIncidentAfterMigration.getEndTime());
-    assertTrue(historicIncidentAfterMigration.isOpen());
+    assertThat(historicIncidentAfterMigration).isNotNull();
+    assertThat(historicIncidentAfterMigration.getEndTime()).isNull();
+    assertThat(historicIncidentAfterMigration.isOpen()).isTrue();
 
     HistoricProcessInstance historicProcessInstanceAfterMigration = engineRule.getHistoryService()
         .createHistoricProcessInstanceQuery()
         .withIncidents()
         .incidentStatus("open")
         .singleResult();
-    assertNotNull(historicProcessInstanceAfterMigration);
+    assertThat(historicProcessInstanceAfterMigration).isNotNull();
 
     Incident incidentAfterMigration = engineRule.getRuntimeService()
         .createIncidentQuery()
         .incidentId(incidentInProcess.getId())
         .singleResult();
-    assertEquals(process2.getId(), incidentAfterMigration.getProcessDefinitionId());
-    assertEquals("ServiceTask_V2", incidentAfterMigration.getActivityId());
+    assertThat(incidentAfterMigration.getProcessDefinitionId()).isEqualTo(process2.getId());
+    assertThat(incidentAfterMigration.getActivityId()).isEqualTo("ServiceTask_V2");
   }
 }

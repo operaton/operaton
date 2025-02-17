@@ -17,9 +17,7 @@
 package org.operaton.bpm.engine.test.jobexecutor;
 
 import static org.operaton.bpm.engine.test.util.ClockTestUtil.incrementClock;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
@@ -38,9 +36,9 @@ public class JobExecutorAcquireJobsByPriorityAndDueDateTest extends AbstractJobE
 
   @Test
   public void testProcessEngineConfiguration() {
-    assertFalse(configuration.isJobExecutorPreferTimerJobs());
-    assertTrue(configuration.isJobExecutorAcquireByDueDate());
-    assertTrue(configuration.isJobExecutorAcquireByPriority());
+    assertThat(configuration.isJobExecutorPreferTimerJobs()).isFalse();
+    assertThat(configuration.isJobExecutorAcquireByDueDate()).isTrue();
+    assertThat(configuration.isJobExecutorAcquireByPriority()).isTrue();
   }
 
   @Test
@@ -65,11 +63,11 @@ public class JobExecutorAcquireJobsByPriorityAndDueDateTest extends AbstractJobE
     String instance4 = startProcess("jobPrioProcess", "task2");
 
     List<AcquirableJobEntity> acquirableJobs = findAcquirableJobs();
-    assertEquals(4, acquirableJobs.size());
-    assertEquals(instance1, acquirableJobs.get(0).getProcessInstanceId());
-    assertEquals(instance3, acquirableJobs.get(1).getProcessInstanceId());
-    assertEquals(instance2, acquirableJobs.get(2).getProcessInstanceId());
-    assertEquals(instance4, acquirableJobs.get(3).getProcessInstanceId());
+    assertThat(acquirableJobs).hasSize(4);
+    assertThat(acquirableJobs.get(0).getProcessInstanceId()).isEqualTo(instance1);
+    assertThat(acquirableJobs.get(1).getProcessInstanceId()).isEqualTo(instance3);
+    assertThat(acquirableJobs.get(2).getProcessInstanceId()).isEqualTo(instance2);
+    assertThat(acquirableJobs.get(3).getProcessInstanceId()).isEqualTo(instance4);
   }
 
 }

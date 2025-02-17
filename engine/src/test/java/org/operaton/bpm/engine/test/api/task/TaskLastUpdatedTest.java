@@ -17,10 +17,10 @@
 package org.operaton.bpm.engine.test.api.task;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Date;
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.operaton.bpm.engine.OptimisticLockingException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
@@ -411,7 +411,7 @@ public class TaskLastUpdatedTest {
     taskService.createComment(task.getId(), null, "");
 
     // when/then
-    Assertions.assertThatThrownBy(() -> taskService.saveTask(task))
+    assertThatThrownBy(() -> taskService.saveTask(task))
       .isInstanceOf(OptimisticLockingException.class);
   }
 

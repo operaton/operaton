@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.operation;
 
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.impl.cmmn.behavior.MilestoneActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionImpl;
@@ -73,14 +72,14 @@ public class CaseExecutionOccurTest {
 
     // then
     // task A is completed ...
-    assertTrue(milestoneA.isCompleted());
+    assertThat(milestoneA.isCompleted()).isTrue();
     // ... and the case instance is also completed
-    assertTrue(caseInstance.isCompleted());
+    assertThat(caseInstance.isCompleted()).isTrue();
 
     // task A is not part of the case instance anymore
-    assertNull(caseInstance.findCaseExecution("A"));
+    assertThat(caseInstance.findCaseExecution("A")).isNull();
     // the case instance has no children
-    assertTrue(((CaseExecutionImpl) caseInstance).getCaseExecutions().isEmpty());
+    assertThat(((CaseExecutionImpl) caseInstance).getCaseExecutions()).isEmpty();
   }
 
 }

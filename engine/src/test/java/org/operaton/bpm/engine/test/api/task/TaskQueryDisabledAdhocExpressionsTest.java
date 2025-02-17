@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.task;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Date;
 
@@ -44,8 +42,8 @@ public class TaskQueryDisabledAdhocExpressionsTest extends PluggableProcessEngin
 
   @Test
   public void testDefaultSetting() {
-    assertTrue(processEngineConfiguration.isEnableExpressionsInStoredQueries());
-    assertFalse(processEngineConfiguration.isEnableExpressionsInAdhocQueries());
+    assertThat(processEngineConfiguration.isEnableExpressionsInStoredQueries()).isTrue();
+    assertThat(processEngineConfiguration.isEnableExpressionsInAdhocQueries()).isFalse();
   }
 
   @Before
@@ -82,8 +80,8 @@ public class TaskQueryDisabledAdhocExpressionsTest extends PluggableProcessEngin
     filterService.saveFilter(filter);
 
     // it is possible to execute the stored query with an expression
-    assertEquals(Long.valueOf(0), filterService.count(filter.getId()));
-    assertEquals(0, filterService.list(filter.getId()).size());
+    assertThat(filterService.count(filter.getId())).isEqualTo(Long.valueOf(0));
+    assertThat(filterService.list(filter.getId())).isEmpty();
 
     // but it is not possible to executed the filter with an extended query that uses expressions
     extendFilterAndValidateFailingQuery(filter, taskService.createTaskQuery().dueAfterExpression(STATE_MANIPULATING_EXPRESSION));
@@ -101,12 +99,12 @@ public class TaskQueryDisabledAdhocExpressionsTest extends PluggableProcessEngin
     filterService.saveFilter(filter);
 
     // it is possible to execute the stored query with an expression
-    assertEquals(Long.valueOf(0), filterService.count(filter.getId()));
-    assertEquals(0, filterService.list(filter.getId()).size());
+    assertThat(filterService.count(filter.getId())).isEqualTo(Long.valueOf(0));
+    assertThat(filterService.list(filter.getId())).isEmpty();
 
     // and it is possible to extend the filter query when not using an expression
-    assertEquals(Long.valueOf(0), filterService.count(filter.getId(), taskService.createTaskQuery().dueAfter(new Date())));
-    assertEquals(0, filterService.list(filter.getId(), taskService.createTaskQuery().dueAfter(new Date())).size());
+    assertThat(filterService.count(filter.getId(), taskService.createTaskQuery().dueAfter(new Date()))).isEqualTo(Long.valueOf(0));
+    assertThat(filterService.list(filter.getId(), taskService.createTaskQuery().dueAfter(new Date()))).isEmpty();
 
     // cleanup
     filterService.deleteFilter(filter.getId());
@@ -123,7 +121,7 @@ public class TaskQueryDisabledAdhocExpressionsTest extends PluggableProcessEngin
       testRule.assertTextPresent(EXPECTED_ADHOC_QUERY_FAILURE_MESSAGE, e.getMessage());
     }
 
-    assertTrue(fieldIsUnchanged());
+    assertThat(fieldIsUnchanged()).isTrue();
 
     try {
       query.count();
@@ -131,7 +129,7 @@ public class TaskQueryDisabledAdhocExpressionsTest extends PluggableProcessEngin
       testRule.assertTextPresent(EXPECTED_ADHOC_QUERY_FAILURE_MESSAGE, e.getMessage());
     }
 
-    assertTrue(fieldIsUnchanged());
+    assertThat(fieldIsUnchanged()).isTrue();
   }
 
   protected void extendFilterAndValidateFailingQuery(Filter filter, TaskQuery query) {
@@ -141,7 +139,7 @@ public class TaskQueryDisabledAdhocExpressionsTest extends PluggableProcessEngin
       testRule.assertTextPresent(EXPECTED_ADHOC_QUERY_FAILURE_MESSAGE, e.getMessage());
     }
 
-    assertTrue(fieldIsUnchanged());
+    assertThat(fieldIsUnchanged()).isTrue();
 
     try {
       filterService.count(filter.getId(), query);
@@ -149,6 +147,6 @@ public class TaskQueryDisabledAdhocExpressionsTest extends PluggableProcessEngin
       testRule.assertTextPresent(EXPECTED_ADHOC_QUERY_FAILURE_MESSAGE, e.getMessage());
     }
 
-    assertTrue(fieldIsUnchanged());
+    assertThat(fieldIsUnchanged()).isTrue();
   }
 }

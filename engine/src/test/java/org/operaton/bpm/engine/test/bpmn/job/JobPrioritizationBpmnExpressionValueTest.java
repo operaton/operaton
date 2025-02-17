@@ -16,11 +16,6 @@
  */
 package org.operaton.bpm.engine.test.bpmn.job;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
@@ -28,10 +23,14 @@ import org.operaton.bpm.engine.impl.jobexecutor.DefaultJobPriorityProvider;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Thorben Lindhauer
@@ -72,8 +71,8 @@ public class JobPrioritizationBpmnExpressionValueTest extends PluggableProcessEn
 
     // then
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
-    assertEquals(15, job.getPriority());
+    assertThat(job).isNotNull();
+    assertThat(job.getPriority()).isEqualTo(15);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/jobPrioExpressionProcess.bpmn20.xml")
@@ -87,8 +86,8 @@ public class JobPrioritizationBpmnExpressionValueTest extends PluggableProcessEn
 
     // then
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
-    assertEquals(16, job.getPriority());
+    assertThat(job).isNotNull();
+    assertThat(job.getPriority()).isEqualTo(16);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/jobPrioExpressionProcess.bpmn20.xml")
@@ -103,8 +102,8 @@ public class JobPrioritizationBpmnExpressionValueTest extends PluggableProcessEn
 
     // then
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
-    assertEquals(22, job.getPriority());
+    assertThat(job).isNotNull();
+    assertThat(job.getPriority()).isEqualTo(22);
   }
 
   /**
@@ -141,8 +140,8 @@ public class JobPrioritizationBpmnExpressionValueTest extends PluggableProcessEn
 
     // then
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
-    assertEquals(25, job.getPriority());
+    assertThat(job).isNotNull();
+    assertThat(job.getPriority()).isEqualTo(25);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/jobPrioExpressionProcess.bpmn20.xml")
@@ -208,8 +207,8 @@ public class JobPrioritizationBpmnExpressionValueTest extends PluggableProcessEn
 
     // then
     Job job = managementService.createJobQuery().activityId("task1").singleResult();
-    assertNotNull(job);
-    assertEquals(14, job.getPriority());
+    assertThat(job).isNotNull();
+    assertThat(job.getPriority()).isEqualTo(14);
   }
 
   /**
@@ -229,7 +228,7 @@ public class JobPrioritizationBpmnExpressionValueTest extends PluggableProcessEn
 
     // then
     Job job = managementService.createJobQuery().singleResult();
-    assertEquals(EXPECTED_DEFAULT_PRIORITY_ON_RESOLUTION_FAILURE, job.getPriority());
+    assertThat(job.getPriority()).isEqualTo(EXPECTED_DEFAULT_PRIORITY_ON_RESOLUTION_FAILURE);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/jobPrioExpressionProcess.bpmn20.xml")
@@ -257,7 +256,7 @@ public class JobPrioritizationBpmnExpressionValueTest extends PluggableProcessEn
   public void testDefaultEngineConfigurationSetting() {
     ProcessEngineConfigurationImpl config = new StandaloneInMemProcessEngineConfiguration();
 
-    assertTrue(config.isEnableGracefulDegradationOnContextSwitchFailure());
+    assertThat(config.isEnableGracefulDegradationOnContextSwitchFailure()).isTrue();
   }
 
 }

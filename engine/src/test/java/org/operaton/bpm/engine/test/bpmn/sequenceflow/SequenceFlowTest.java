@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.sequenceflow;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
@@ -41,9 +41,9 @@ public class SequenceFlowTest extends PluggableProcessEngineTest {
     taskService.complete(task.getId());
 
     // then
-    assertEquals(2, taskService.createTaskQuery().count());
-    assertEquals(1, taskService.createTaskQuery().taskDefinitionKey("task2").count());
-    assertEquals(1, taskService.createTaskQuery().taskDefinitionKey("task3").count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(2);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("task2").count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("task3").count()).isEqualTo(1);
 
     for (Task followUpTask : taskService.createTaskQuery().list()) {
       taskService.complete(followUpTask.getId());
@@ -64,9 +64,9 @@ public class SequenceFlowTest extends PluggableProcessEngineTest {
     taskService.complete(task.getId());
 
     // then
-    assertEquals(2, taskService.createTaskQuery().count());
-    assertEquals(1, taskService.createTaskQuery().taskDefinitionKey("task2").count());
-    assertEquals(1, taskService.createTaskQuery().taskDefinitionKey("task3").count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(2);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("task2").count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("task3").count()).isEqualTo(1);
 
     for (Task followUpTask : taskService.createTaskQuery().list()) {
       taskService.complete(followUpTask.getId());

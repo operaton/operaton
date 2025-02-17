@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration.history;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 
 import java.util.Arrays;
@@ -38,7 +39,6 @@ import org.operaton.bpm.engine.test.api.runtime.migration.MigrationTestRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.AsyncProcessModels;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -102,17 +102,17 @@ public class MigrationHistoricIncidentTest {
 
     // then
     HistoricIncident historicIncident = historyService.createHistoricIncidentQuery().singleResult();
-    Assert.assertNotNull(historicIncident);
+    assertThat(historicIncident).isNotNull();
 
-    Assert.assertEquals("newUserTask", historicIncident.getActivityId());
-    Assert.assertEquals(targetJobDefinition.getId(), historicIncident.getJobDefinitionId());
-    Assert.assertEquals(targetProcess.getId(), historicIncident.getProcessDefinitionId());
-    Assert.assertEquals(targetProcess.getKey(), historicIncident.getProcessDefinitionKey());
-    Assert.assertEquals(processInstance.getId(), historicIncident.getExecutionId());
+    assertThat(historicIncident.getActivityId()).isEqualTo("newUserTask");
+    assertThat(historicIncident.getJobDefinitionId()).isEqualTo(targetJobDefinition.getId());
+    assertThat(historicIncident.getProcessDefinitionId()).isEqualTo(targetProcess.getId());
+    assertThat(historicIncident.getProcessDefinitionKey()).isEqualTo(targetProcess.getKey());
+    assertThat(historicIncident.getExecutionId()).isEqualTo(processInstance.getId());
 
     // and other properties have not changed
-    Assert.assertEquals(incidentBeforeMigration.getCreateTime(), historicIncident.getCreateTime());
-    Assert.assertEquals(incidentBeforeMigration.getProcessInstanceId(), historicIncident.getProcessInstanceId());
+    assertThat(historicIncident.getCreateTime()).isEqualTo(incidentBeforeMigration.getCreateTime());
+    assertThat(historicIncident.getProcessInstanceId()).isEqualTo(incidentBeforeMigration.getProcessInstanceId());
 
   }
 
@@ -140,9 +140,7 @@ public class MigrationHistoricIncidentTest {
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
 
     HistoricIncident historicIncident = historyService.createHistoricIncidentQuery().singleResult();
-    Assert.assertNotNull(historicIncident);
-    Assert.assertEquals(
-        activityInstance.getTransitionInstances("userTask")[0].getExecutionId(),
-        historicIncident.getExecutionId());
+    assertThat(historicIncident).isNotNull();
+    assertThat(historicIncident.getExecutionId()).isEqualTo(activityInstance.getTransitionInstances("userTask")[0].getExecutionId());
   }
 }

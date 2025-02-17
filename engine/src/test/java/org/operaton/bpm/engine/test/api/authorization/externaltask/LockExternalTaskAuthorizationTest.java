@@ -19,7 +19,8 @@ package org.operaton.bpm.engine.test.api.authorization.externaltask;
 import org.operaton.bpm.engine.externaltask.ExternalTask;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.junit.Assert;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -49,7 +50,7 @@ public class LockExternalTaskAuthorizationTest extends HandleExternalTaskAuthori
     // then
     if (authRule.assertScenario(scenario)) {
       ExternalTask lockedTask = engineRule.getExternalTaskService().createExternalTaskQuery().locked().singleResult();
-      Assert.assertNotNull(lockedTask);
+      assertThat(lockedTask).isNotNull();
     }
   }
 }

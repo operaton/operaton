@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.async;
 
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.task.Task;
@@ -39,12 +39,12 @@ public class AsyncCallActivityTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("callAsyncSubProcess");
 
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
 
     managementService.executeJob(job.getId());
 
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     taskService.complete(task.getId());
 
   }

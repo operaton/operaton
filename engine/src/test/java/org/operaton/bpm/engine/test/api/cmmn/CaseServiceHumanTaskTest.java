@@ -15,13 +15,7 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.cmmn;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,6 +30,7 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
@@ -78,9 +73,9 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
 
     // the child case execution is active...
     CaseExecution caseExecution = caseExecutionQuery.singleResult();
-    assertTrue(caseExecution.isActive());
+    assertThat(caseExecution.isActive()).isTrue();
     // ... and not enabled
-    assertFalse(caseExecution.isEnabled());
+    assertThat(caseExecution.isEnabled()).isFalse();
 
     // there exists a task
     Task task = taskService
@@ -88,7 +83,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .caseExecutionId(caseExecutionId)
         .singleResult();
 
-    assertNotNull(task);
+    assertThat(task).isNotNull();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn"})
@@ -128,9 +123,9 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
 
     // the child case execution is active...
     CaseExecution caseExecution = caseExecutionQuery.singleResult();
-    assertTrue(caseExecution.isActive());
+    assertThat(caseExecution.isActive()).isTrue();
     // ... and not enabled
-    assertFalse(caseExecution.isEnabled());
+    assertThat(caseExecution.isEnabled()).isFalse();
 
     // there exists a task
     Task task = taskService
@@ -138,7 +133,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .caseExecutionId(caseExecutionId)
         .singleResult();
 
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // the case instance has two variables:
     // - aVariableName
@@ -147,20 +142,21 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .createVariableInstanceQuery()
         .list();
 
-    assertFalse(result.isEmpty());
-    assertEquals(2, result.size());
+    assertThat(result)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variable : result) {
 
-      assertEquals(caseInstanceId, variable.getCaseExecutionId());
-      assertEquals(caseInstanceId, variable.getCaseInstanceId());
+      assertThat(variable.getCaseExecutionId()).isEqualTo(caseInstanceId);
+      assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
       if (variable.getName().equals("aVariableName")) {
-        assertEquals("aVariableName", variable.getName());
-        assertEquals("abc", variable.getValue());
+        assertThat(variable.getName()).isEqualTo("aVariableName");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if (variable.getName().equals("anotherVariableName")) {
-        assertEquals("anotherVariableName", variable.getName());
-        assertEquals(999, variable.getValue());
+        assertThat(variable.getName()).isEqualTo("anotherVariableName");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else {
         fail("Unexpected variable: " + variable.getName());
       }
@@ -209,9 +205,9 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
 
     // the child case execution is active...
     CaseExecution caseExecution = caseExecutionQuery.singleResult();
-    assertTrue(caseExecution.isActive());
+    assertThat(caseExecution.isActive()).isTrue();
     // ... and not enabled
-    assertFalse(caseExecution.isEnabled());
+    assertThat(caseExecution.isEnabled()).isFalse();
 
     // there exists a task
     Task task = taskService
@@ -219,7 +215,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .caseExecutionId(caseExecutionId)
         .singleResult();
 
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // the case instance has two variables:
     // - aVariableName
@@ -228,20 +224,21 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .createVariableInstanceQuery()
         .list();
 
-    assertFalse(result.isEmpty());
-    assertEquals(2, result.size());
+    assertThat(result)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variable : result) {
 
-      assertEquals(caseInstanceId, variable.getCaseExecutionId());
-      assertEquals(caseInstanceId, variable.getCaseInstanceId());
+      assertThat(variable.getCaseExecutionId()).isEqualTo(caseInstanceId);
+      assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
       if (variable.getName().equals("aVariableName")) {
-        assertEquals("aVariableName", variable.getName());
-        assertEquals("abc", variable.getValue());
+        assertThat(variable.getName()).isEqualTo("aVariableName");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if (variable.getName().equals("anotherVariableName")) {
-        assertEquals("anotherVariableName", variable.getName());
-        assertEquals(999, variable.getValue());
+        assertThat(variable.getName()).isEqualTo("anotherVariableName");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else {
         fail("Unexpected variable: " + variable.getName());
       }
@@ -280,9 +277,9 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
 
     // the child case execution is active...
     CaseExecution caseExecution = caseExecutionQuery.singleResult();
-    assertTrue(caseExecution.isActive());
+    assertThat(caseExecution.isActive()).isTrue();
     // ... and not enabled
-    assertFalse(caseExecution.isEnabled());
+    assertThat(caseExecution.isEnabled()).isFalse();
 
     // there exists a task
     Task task = taskService
@@ -290,7 +287,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
       .caseExecutionId(caseExecutionId)
       .singleResult();
 
-    assertNotNull(task);
+    assertThat(task).isNotNull();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -327,9 +324,9 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
 
     // the child case execution is active...
     CaseExecution caseExecution = caseExecutionQuery.singleResult();
-    assertTrue(caseExecution.isActive());
+    assertThat(caseExecution.isActive()).isTrue();
     // ... and not enabled
-    assertFalse(caseExecution.isEnabled());
+    assertThat(caseExecution.isEnabled()).isFalse();
 
     // there exists a task
     Task task = taskService
@@ -337,7 +334,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .caseExecutionId(caseExecutionId)
         .singleResult();
 
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // the case instance has two variables:
     // - aVariableName
@@ -346,20 +343,21 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .createVariableInstanceQuery()
         .list();
 
-    assertFalse(result.isEmpty());
-    assertEquals(2, result.size());
+    assertThat(result)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variable : result) {
 
-      assertEquals(caseInstanceId, variable.getCaseExecutionId());
-      assertEquals(caseInstanceId, variable.getCaseInstanceId());
+      assertThat(variable.getCaseExecutionId()).isEqualTo(caseInstanceId);
+      assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
       if (variable.getName().equals("aVariableName")) {
-        assertEquals("aVariableName", variable.getName());
-        assertEquals("abc", variable.getValue());
+        assertThat(variable.getName()).isEqualTo("aVariableName");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if (variable.getName().equals("anotherVariableName")) {
-        assertEquals("anotherVariableName", variable.getName());
-        assertEquals(999, variable.getValue());
+        assertThat(variable.getName()).isEqualTo("anotherVariableName");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else {
         fail("Unexpected variable: " + variable.getName());
       }
@@ -402,9 +400,9 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
 
     // the child case execution is active...
     CaseExecution caseExecution = caseExecutionQuery.singleResult();
-    assertTrue(caseExecution.isActive());
+    assertThat(caseExecution.isActive()).isTrue();
     // ... and not enabled
-    assertFalse(caseExecution.isEnabled());
+    assertThat(caseExecution.isEnabled()).isFalse();
 
     // there exists a task
     Task task = taskService
@@ -412,7 +410,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .caseExecutionId(caseExecutionId)
         .singleResult();
 
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // the case instance has two variables:
     // - aVariableName
@@ -421,20 +419,21 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .createVariableInstanceQuery()
         .list();
 
-    assertFalse(result.isEmpty());
-    assertEquals(2, result.size());
+    assertThat(result)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variable : result) {
 
-      assertEquals(caseInstanceId, variable.getCaseExecutionId());
-      assertEquals(caseInstanceId, variable.getCaseInstanceId());
+      assertThat(variable.getCaseExecutionId()).isEqualTo(caseInstanceId);
+      assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
       if (variable.getName().equals("aVariableName")) {
-        assertEquals("aVariableName", variable.getName());
-        assertEquals("abc", variable.getValue());
+        assertThat(variable.getName()).isEqualTo("aVariableName");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if (variable.getName().equals("anotherVariableName")) {
-        assertEquals("anotherVariableName", variable.getName());
-        assertEquals(999, variable.getValue());
+        assertThat(variable.getName()).isEqualTo("anotherVariableName");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else {
         fail("Unexpected variable: " + variable.getName());
       }
@@ -479,9 +478,9 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
 
     // the child case execution is active...
     CaseExecution caseExecution = caseExecutionQuery.singleResult();
-    assertTrue(caseExecution.isActive());
+    assertThat(caseExecution.isActive()).isTrue();
     // ... and not enabled
-    assertFalse(caseExecution.isEnabled());
+    assertThat(caseExecution.isEnabled()).isFalse();
 
     // there exists a task
     Task task = taskService
@@ -489,7 +488,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .caseExecutionId(caseExecutionId)
         .singleResult();
 
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // the case instance has two variables:
     // - aVariableName
@@ -498,20 +497,21 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .createVariableInstanceQuery()
         .list();
 
-    assertFalse(result.isEmpty());
-    assertEquals(2, result.size());
+    assertThat(result)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variable : result) {
 
-      assertEquals(caseExecutionId, variable.getCaseExecutionId());
-      assertEquals(caseInstanceId, variable.getCaseInstanceId());
+      assertThat(variable.getCaseExecutionId()).isEqualTo(caseExecutionId);
+      assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
       if (variable.getName().equals("aVariableName")) {
-        assertEquals("aVariableName", variable.getName());
-        assertEquals("abc", variable.getValue());
+        assertThat(variable.getName()).isEqualTo("aVariableName");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if (variable.getName().equals("anotherVariableName")) {
-        assertEquals("anotherVariableName", variable.getName());
-        assertEquals(999, variable.getValue());
+        assertThat(variable.getName()).isEqualTo("anotherVariableName");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else {
         fail("Unexpected variable: " + variable.getName());
       }
@@ -560,9 +560,9 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
 
     // the child case execution is active...
     CaseExecution caseExecution = caseExecutionQuery.singleResult();
-    assertTrue(caseExecution.isActive());
+    assertThat(caseExecution.isActive()).isTrue();
     // ... and not enabled
-    assertFalse(caseExecution.isEnabled());
+    assertThat(caseExecution.isEnabled()).isFalse();
 
     // there exists a task
     Task task = taskService
@@ -570,7 +570,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .caseExecutionId(caseExecutionId)
         .singleResult();
 
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // the case instance has two variables:
     // - aVariableName
@@ -579,20 +579,21 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .createVariableInstanceQuery()
         .list();
 
-    assertFalse(result.isEmpty());
-    assertEquals(2, result.size());
+    assertThat(result)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variable : result) {
 
-      assertEquals(caseExecutionId, variable.getCaseExecutionId());
-      assertEquals(caseInstanceId, variable.getCaseInstanceId());
+      assertThat(variable.getCaseExecutionId()).isEqualTo(caseExecutionId);
+      assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
       if (variable.getName().equals("aVariableName")) {
-        assertEquals("aVariableName", variable.getName());
-        assertEquals("abc", variable.getValue());
+        assertThat(variable.getName()).isEqualTo("aVariableName");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if (variable.getName().equals("anotherVariableName")) {
-        assertEquals("anotherVariableName", variable.getName());
-        assertEquals(999, variable.getValue());
+        assertThat(variable.getName()).isEqualTo("anotherVariableName");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else {
         fail("Unexpected variable: " + variable.getName());
       }
@@ -665,9 +666,9 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
     // then
     CaseExecution caseExecution = caseExecutionQuery.singleResult();
     // the human task is disabled
-    assertFalse(caseExecution.isDisabled());
-    assertFalse(caseExecution.isActive());
-    assertTrue(caseExecution.isEnabled());
+    assertThat(caseExecution.isDisabled()).isFalse();
+    assertThat(caseExecution.isActive()).isFalse();
+    assertThat(caseExecution.isEnabled()).isTrue();
 
   }
 
@@ -731,9 +732,9 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
     // then
     CaseExecution caseExecution = caseExecutionQuery.singleResult();
     // the human task is disabled
-    assertTrue(caseExecution.isDisabled());
-    assertFalse(caseExecution.isActive());
-    assertFalse(caseExecution.isEnabled());
+    assertThat(caseExecution.isDisabled()).isTrue();
+    assertThat(caseExecution.isActive()).isFalse();
+    assertThat(caseExecution.isEnabled()).isFalse();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/twoTaskCase.cmmn"})
@@ -893,7 +894,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .createTaskQuery()
         .singleResult();
 
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // when
 
@@ -908,7 +909,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .createTaskQuery()
         .singleResult();
 
-    assertNull(task);
+    assertThat(task).isNull();
 
     // the corresponding case execution has been also
     // deleted and completed
@@ -917,7 +918,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .activityId("PI_HumanTask_1")
         .singleResult();
 
-    assertNull(caseExecution);
+    assertThat(caseExecution).isNull();
 
     // the case instance is still active
     CaseInstance caseInstance = caseService
@@ -925,8 +926,8 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .active()
         .singleResult();
 
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isActive());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isActive()).isTrue();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -955,7 +956,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .createTaskQuery()
         .singleResult();
 
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // when
 
@@ -970,7 +971,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .createTaskQuery()
         .singleResult();
 
-    assertNull(task);
+    assertThat(task).isNull();
 
     // the corresponding case execution has been also
     // deleted and completed
@@ -979,7 +980,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .activityId("PI_HumanTask_1")
         .singleResult();
 
-    assertNull(caseExecution);
+    assertThat(caseExecution).isNull();
 
     // the case instance has been completed
     CaseInstance caseInstance = caseService
@@ -987,8 +988,8 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .completed()
         .singleResult();
 
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isCompleted());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isCompleted()).isTrue();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn"})
@@ -1021,7 +1022,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .createTaskQuery()
         .singleResult();
 
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // when
 
@@ -1034,7 +1035,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .createTaskQuery()
         .singleResult();
 
-    assertNull(task);
+    assertThat(task).isNull();
 
     // the corresponding case execution has been also
     // deleted and completed
@@ -1043,7 +1044,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .activityId("PI_HumanTask_1")
         .singleResult();
 
-    assertNull(caseExecution);
+    assertThat(caseExecution).isNull();
 
     // the case instance has been completed
     CaseInstance caseInstance = caseService
@@ -1051,8 +1052,8 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .completed()
         .singleResult();
 
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isCompleted());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isCompleted()).isTrue();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn"})
@@ -1092,7 +1093,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .activityId("PI_HumanTask_1")
         .singleResult();
 
-    assertNull(caseExecution);
+    assertThat(caseExecution).isNull();
 
     // the case instance has been completed
     CaseInstance caseInstance = caseService
@@ -1100,8 +1101,8 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .completed()
         .singleResult();
 
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isCompleted());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isCompleted()).isTrue();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn"})
@@ -1198,7 +1199,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .createTaskQuery()
         .singleResult();
 
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // when
 
@@ -1215,7 +1216,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .createTaskQuery()
         .singleResult();
 
-    assertNull(task);
+    assertThat(task).isNull();
 
     // the corresponding case execution has been also
     // deleted and completed
@@ -1224,7 +1225,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .activityId("PI_HumanTask_1")
         .singleResult();
 
-    assertNull(caseExecution);
+    assertThat(caseExecution).isNull();
 
     // the case instance is still active
     CaseInstance caseInstance = caseService
@@ -1232,8 +1233,8 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .active()
         .singleResult();
 
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isActive());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isActive()).isTrue();
 
     // the case instance has two variables:
     // - aVariableName
@@ -1242,20 +1243,21 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .createVariableInstanceQuery()
         .list();
 
-    assertFalse(result.isEmpty());
-    assertEquals(2, result.size());
+    assertThat(result)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variable : result) {
 
-      assertEquals(caseInstanceId, variable.getCaseExecutionId());
-      assertEquals(caseInstanceId, variable.getCaseInstanceId());
+      assertThat(variable.getCaseExecutionId()).isEqualTo(caseInstanceId);
+      assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
       if (variable.getName().equals("aVariableName")) {
-        assertEquals("aVariableName", variable.getName());
-        assertEquals("abc", variable.getValue());
+        assertThat(variable.getName()).isEqualTo("aVariableName");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if (variable.getName().equals("anotherVariableName")) {
-        assertEquals("anotherVariableName", variable.getName());
-        assertEquals(999, variable.getValue());
+        assertThat(variable.getName()).isEqualTo("anotherVariableName");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else {
         fail("Unexpected variable: " + variable.getName());
       }
@@ -1291,7 +1293,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .createTaskQuery()
         .singleResult();
 
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // when
 
@@ -1308,7 +1310,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .createTaskQuery()
         .singleResult();
 
-    assertNull(task);
+    assertThat(task).isNull();
 
     // the corresponding case execution has been also
     // deleted and completed
@@ -1317,7 +1319,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .activityId("PI_HumanTask_1")
         .singleResult();
 
-    assertNull(caseExecution);
+    assertThat(caseExecution).isNull();
 
     // the case instance is still active
     CaseInstance caseInstance = caseService
@@ -1325,8 +1327,8 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .active()
         .singleResult();
 
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isActive());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isActive()).isTrue();
 
     // the variables has been set and due to the completion
     // also removed in one command
@@ -1334,7 +1336,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .createVariableInstanceQuery()
         .list();
 
-    assertTrue(result.isEmpty());
+    assertThat(result).isEmpty();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/twoTaskCase.cmmn"})
@@ -1368,7 +1370,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .createTaskQuery()
         .singleResult();
 
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // when
 
@@ -1385,7 +1387,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .createTaskQuery()
         .singleResult();
 
-    assertNull(task);
+    assertThat(task).isNull();
 
     // the corresponding case execution has been also
     // deleted and completed
@@ -1394,7 +1396,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .activityId("PI_HumanTask_1")
         .singleResult();
 
-    assertNull(caseExecution);
+    assertThat(caseExecution).isNull();
 
     // the case instance is still active
     CaseInstance caseInstance = caseService
@@ -1402,14 +1404,14 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .active()
         .singleResult();
 
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isActive());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isActive()).isTrue();
 
     List<VariableInstance> result = runtimeService
         .createVariableInstanceQuery()
         .list();
 
-    assertTrue(result.isEmpty());
+    assertThat(result).isEmpty();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/twoTaskCase.cmmn"})
@@ -1443,7 +1445,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .createTaskQuery()
         .singleResult();
 
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // when
 
@@ -1460,7 +1462,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .createTaskQuery()
         .singleResult();
 
-    assertNull(task);
+    assertThat(task).isNull();
 
     // the corresponding case execution has been also
     // deleted and completed
@@ -1469,7 +1471,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .activityId("PI_HumanTask_1")
         .singleResult();
 
-    assertNull(caseExecution);
+    assertThat(caseExecution).isNull();
 
     // the case instance is still active
     CaseInstance caseInstance = caseService
@@ -1477,14 +1479,14 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .active()
         .singleResult();
 
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isActive());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isActive()).isTrue();
 
     List<VariableInstance> result = runtimeService
         .createVariableInstanceQuery()
         .list();
 
-    assertTrue(result.isEmpty());
+    assertThat(result).isEmpty();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -1539,7 +1541,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
     
     // then
     taskExecution = queryCaseExecutionByActivityId("PI_HumanTask_1");
-    assertNull(taskExecution);
+    assertThat(taskExecution).isNull();
     
   }
 
@@ -1564,7 +1566,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
 
     // then
     taskExecution = queryCaseExecutionByActivityId("PI_HumanTask_1");
-    assertNull(taskExecution);
+    assertThat(taskExecution).isNull();
     
   }
 
@@ -1622,9 +1624,9 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
 
     // the child case execution is active...
     CaseExecution caseExecution = caseExecutionQuery.singleResult();
-    assertTrue(caseExecution.isActive());
+    assertThat(caseExecution.isActive()).isTrue();
     // ... and not enabled
-    assertFalse(caseExecution.isEnabled());
+    assertThat(caseExecution.isEnabled()).isFalse();
 
     // there exists a task
     Task task = taskService
@@ -1632,7 +1634,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
       .caseExecutionId(caseExecutionId)
       .singleResult();
 
-    assertNotNull(task);
+    assertThat(task).isNotNull();
   }
 
 
@@ -1670,9 +1672,9 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
 
     // the child case execution is active...
     CaseExecution caseExecution = caseExecutionQuery.singleResult();
-    assertTrue(caseExecution.isActive());
+    assertThat(caseExecution.isActive()).isTrue();
     // ... and not enabled
-    assertFalse(caseExecution.isEnabled());
+    assertThat(caseExecution.isEnabled()).isFalse();
 
     // there exists a task
     Task task = taskService
@@ -1680,16 +1682,16 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
       .caseExecutionId(caseExecutionId)
       .singleResult();
 
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // there is a variable set on the case instance
     VariableInstance variable = runtimeService.createVariableInstanceQuery().singleResult();
 
-    assertNotNull(variable);
-    assertEquals(caseInstanceId, variable.getCaseExecutionId());
-    assertEquals(caseInstanceId, variable.getCaseInstanceId());
-    assertEquals("aVariable", variable.getName());
-    assertEquals("aValue", variable.getValue());
+    assertThat(variable).isNotNull();
+    assertThat(variable.getCaseExecutionId()).isEqualTo(caseInstanceId);
+    assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstanceId);
+    assertThat(variable.getName()).isEqualTo("aVariable");
+    assertThat(variable.getValue()).isEqualTo("aValue");
 
   }
 
@@ -1723,9 +1725,9 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
     // then
     CaseExecution caseExecution = caseExecutionQuery.singleResult();
     // the human task is disabled
-    assertTrue(caseExecution.isDisabled());
-    assertFalse(caseExecution.isActive());
-    assertFalse(caseExecution.isEnabled());
+    assertThat(caseExecution.isDisabled()).isTrue();
+    assertThat(caseExecution.isActive()).isFalse();
+    assertThat(caseExecution.isEnabled()).isFalse();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/twoTaskCase.cmmn"})
@@ -1759,18 +1761,18 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
     // then
     CaseExecution caseExecution = caseExecutionQuery.singleResult();
     // the human task is disabled
-    assertTrue(caseExecution.isDisabled());
-    assertFalse(caseExecution.isActive());
-    assertFalse(caseExecution.isEnabled());
+    assertThat(caseExecution.isDisabled()).isTrue();
+    assertThat(caseExecution.isActive()).isFalse();
+    assertThat(caseExecution.isEnabled()).isFalse();
 
     // there is a variable set on the case instance
     VariableInstance variable = runtimeService.createVariableInstanceQuery().singleResult();
 
-    assertNotNull(variable);
-    assertEquals(caseInstanceId, variable.getCaseExecutionId());
-    assertEquals(caseInstanceId, variable.getCaseInstanceId());
-    assertEquals("aVariable", variable.getName());
-    assertEquals("aValue", variable.getValue());
+    assertThat(variable).isNotNull();
+    assertThat(variable.getCaseExecutionId()).isEqualTo(caseInstanceId);
+    assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstanceId);
+    assertThat(variable.getName()).isEqualTo("aVariable");
+    assertThat(variable.getValue()).isEqualTo("aValue");
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/twoTaskCase.cmmn"})
@@ -1806,9 +1808,9 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
     // then
     CaseExecution caseExecution = caseExecutionQuery.singleResult();
     // the human task is disabled
-    assertFalse(caseExecution.isDisabled());
-    assertFalse(caseExecution.isActive());
-    assertTrue(caseExecution.isEnabled());
+    assertThat(caseExecution.isDisabled()).isFalse();
+    assertThat(caseExecution.isActive()).isFalse();
+    assertThat(caseExecution.isEnabled()).isTrue();
 
   }
 
@@ -1847,18 +1849,18 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
     // then
     CaseExecution caseExecution = caseExecutionQuery.singleResult();
     // the human task is disabled
-    assertFalse(caseExecution.isDisabled());
-    assertFalse(caseExecution.isActive());
-    assertTrue(caseExecution.isEnabled());
+    assertThat(caseExecution.isDisabled()).isFalse();
+    assertThat(caseExecution.isActive()).isFalse();
+    assertThat(caseExecution.isEnabled()).isTrue();
 
     // there is a variable set on the case instance
     VariableInstance variable = runtimeService.createVariableInstanceQuery().singleResult();
 
-    assertNotNull(variable);
-    assertEquals(caseInstanceId, variable.getCaseExecutionId());
-    assertEquals(caseInstanceId, variable.getCaseInstanceId());
-    assertEquals("aVariable", variable.getName());
-    assertEquals("aValue", variable.getValue());
+    assertThat(variable).isNotNull();
+    assertThat(variable.getCaseExecutionId()).isEqualTo(caseInstanceId);
+    assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstanceId);
+    assertThat(variable.getName()).isEqualTo("aVariable");
+    assertThat(variable.getValue()).isEqualTo("aValue");
 
   }
 
@@ -1892,7 +1894,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .createTaskQuery()
         .singleResult();
 
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // when
 
@@ -1905,7 +1907,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .createTaskQuery()
         .singleResult();
 
-    assertNull(task);
+    assertThat(task).isNull();
 
     // the corresponding case execution has been also
     // deleted and completed
@@ -1914,7 +1916,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .activityId("PI_HumanTask_1")
         .singleResult();
 
-    assertNull(caseExecution);
+    assertThat(caseExecution).isNull();
 
     // the case instance is still active
     CaseInstance caseInstance = caseService
@@ -1922,8 +1924,8 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .active()
         .singleResult();
 
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isActive());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isActive()).isTrue();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/twoTaskCase.cmmn"})
@@ -1956,7 +1958,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .createTaskQuery()
         .singleResult();
 
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // when
     Map<String, Object> variables = new HashMap<>();
@@ -1967,7 +1969,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
     // then
 
     // the task has been completed and has been deleted
-    assertNull(taskService.createTaskQuery().singleResult());
+    assertThat(taskService.createTaskQuery().singleResult()).isNull();
 
     // the corresponding case execution has been also
     // deleted and completed
@@ -1976,16 +1978,16 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .activityId("PI_HumanTask_1")
         .singleResult();
 
-    assertNull(caseExecution);
+    assertThat(caseExecution).isNull();
 
     // there is a variable set on the case instance
     VariableInstance variable = runtimeService.createVariableInstanceQuery().singleResult();
 
-    assertNotNull(variable);
-    assertEquals(caseInstanceId, variable.getCaseExecutionId());
-    assertEquals(caseInstanceId, variable.getCaseInstanceId());
-    assertEquals("aVariable", variable.getName());
-    assertEquals("aValue", variable.getValue());
+    assertThat(variable).isNotNull();
+    assertThat(variable.getCaseExecutionId()).isEqualTo(caseInstanceId);
+    assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstanceId);
+    assertThat(variable.getName()).isEqualTo("aVariable");
+    assertThat(variable.getValue()).isEqualTo("aValue");
 
   }
 

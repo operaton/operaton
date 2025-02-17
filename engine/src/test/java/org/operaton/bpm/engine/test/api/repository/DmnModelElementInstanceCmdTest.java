@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.repository;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
 
@@ -45,22 +44,22 @@ public class DmnModelElementInstanceCmdTest extends PluggableProcessEngineTest {
       .getId();
 
     DmnModelInstance modelInstance = repositoryService.getDmnModelInstance(decisionDefinitionId);
-    assertNotNull(modelInstance);
+    assertThat(modelInstance).isNotNull();
 
     Collection<Decision> decisions = modelInstance.getModelElementsByType(Decision.class);
-    assertEquals(1, decisions.size());
+    assertThat(decisions).hasSize(1);
 
     Collection<DecisionTable> decisionTables = modelInstance.getModelElementsByType(DecisionTable.class);
-    assertEquals(1, decisionTables.size());
+    assertThat(decisionTables).hasSize(1);
 
     Collection<Input> inputs = modelInstance.getModelElementsByType(Input.class);
-    assertEquals(1, inputs.size());
+    assertThat(inputs).hasSize(1);
 
     Collection<Output> outputs = modelInstance.getModelElementsByType(Output.class);
-    assertEquals(1, outputs.size());
+    assertThat(outputs).hasSize(1);
 
     Collection<Rule> rules = modelInstance.getModelElementsByType(Rule.class);
-    assertEquals(2, rules.size());
+    assertThat(rules).hasSize(2);
   }
 
 }

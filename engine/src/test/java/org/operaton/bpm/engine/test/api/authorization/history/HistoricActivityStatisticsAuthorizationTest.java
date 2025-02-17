@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.authorization.history;
-
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.READ_HISTORY;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -524,10 +523,10 @@ public class HistoricActivityStatisticsAuthorizationTest extends AuthorizationTe
   // helper ////////////////////////////////////////////////////////
 
   protected void verifyStatisticsResult(HistoricActivityStatistics statistics, int instances, int finished, int canceled, int completeScope) {
-    assertEquals("Instances", instances, statistics.getInstances());
-    assertEquals("Finished", finished, statistics.getFinished());
-    assertEquals("Canceled", canceled, statistics.getCanceled());
-    assertEquals("Complete Scope", completeScope, statistics.getCompleteScope());
+    assertThat(statistics.getInstances()).as("Instances").isEqualTo(instances);
+    assertThat(statistics.getFinished()).as("Finished").isEqualTo(finished);
+    assertThat(statistics.getCanceled()).as("Canceled").isEqualTo(canceled);
+    assertThat(statistics.getCompleteScope()).as("Complete Scope").isEqualTo(completeScope);
   }
 
   protected HistoricActivityStatistics getStatisticsByKey(List<HistoricActivityStatistics> statistics, String key) {

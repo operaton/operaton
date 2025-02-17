@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.usertask;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -48,7 +48,7 @@ public class TaskPriorityExtensionsTest extends PluggableProcessEngineTest {
 
     final Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
 
-    assertEquals(priority, task.getPriority());
+    assertThat(task.getPriority()).isEqualTo(priority);
   }
 
   @Deployment
@@ -56,6 +56,6 @@ public class TaskPriorityExtensionsTest extends PluggableProcessEngineTest {
   public void testPriorityExtensionString() {
     final ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("taskPriorityExtensionString");
     final Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-    assertEquals(42, task.getPriority());
+    assertThat(task.getPriority()).isEqualTo(42);
   }
 }

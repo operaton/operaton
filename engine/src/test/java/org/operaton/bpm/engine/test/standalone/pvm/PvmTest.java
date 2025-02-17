@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.standalone.pvm;
 
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.impl.pvm.ProcessDefinitionBuilder;
 import org.operaton.bpm.engine.impl.pvm.PvmExecution;
@@ -53,17 +53,17 @@ public class PvmTest {
     processInstance.start();
 
     PvmExecution activityInstance = processInstance.findExecution("a");
-    assertNotNull(activityInstance);
+    assertThat(activityInstance).isNotNull();
 
     activityInstance.signal(null, null);
 
     activityInstance = processInstance.findExecution("b");
-    assertNotNull(activityInstance);
+    assertThat(activityInstance).isNotNull();
 
     activityInstance.signal(null, null);
 
     activityInstance = processInstance.findExecution("c");
-    assertNotNull(activityInstance);
+    assertThat(activityInstance).isNotNull();
   }
 
   @Test
@@ -86,7 +86,7 @@ public class PvmTest {
     PvmProcessInstance processInstance = processDefinition.createProcessInstance();
     processInstance.start();
 
-    assertNotNull(processInstance.findExecution("c"));
+    assertThat(processInstance.findExecution("c")).isNotNull();
   }
 
   @Test
@@ -117,16 +117,16 @@ public class PvmTest {
     PvmProcessInstance processInstance = processDefinition.createProcessInstance();
     processInstance.setVariable("creditRating", "Aaa-");
     processInstance.start();
-    assertNotNull(processInstance.findExecution("takeToGolf"));
+    assertThat(processInstance.findExecution("takeToGolf")).isNotNull();
 
     processInstance = processDefinition.createProcessInstance();
     processInstance.setVariable("creditRating", "AAA+");
     processInstance.start();
-    assertNotNull(processInstance.findExecution("askDaughterOut"));
+    assertThat(processInstance.findExecution("askDaughterOut")).isNotNull();
 
     processInstance = processDefinition.createProcessInstance();
     processInstance.setVariable("creditRating", "bb-");
     processInstance.start();
-    assertNotNull(processInstance.findExecution("ignore"));
+    assertThat(processInstance.findExecution("ignore")).isNotNull();
   }
 }

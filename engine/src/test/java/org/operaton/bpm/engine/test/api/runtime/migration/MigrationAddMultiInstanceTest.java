@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.util.MigrationPlanValidationReportAssert.assertThat;
 
 import org.junit.Rule;

@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.jobexecutor;
 
 import static org.operaton.bpm.engine.test.util.ClockTestUtil.incrementClock;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
@@ -53,16 +53,16 @@ public class JobExecutorAcquireJobsByDueDateNotPriorityTest extends AbstractJobE
     String instance4 = startProcess("jobPrioProcess", "task1");
 
     List<AcquirableJobEntity> acquirableJobs = findAcquirableJobs();
-    assertEquals(4, acquirableJobs.size());
+    assertThat(acquirableJobs).hasSize(4);
 
-    assertEquals(5, (int) findJobById(acquirableJobs.get(0).getId()).getPriority());
-    assertEquals(instance1, acquirableJobs.get(0).getProcessInstanceId());
-    assertEquals(10, (int) findJobById(acquirableJobs.get(1).getId()).getPriority());
-    assertEquals(instance2, acquirableJobs.get(1).getProcessInstanceId());
-    assertEquals(5, (int) findJobById(acquirableJobs.get(2).getId()).getPriority());
-    assertEquals(instance3, acquirableJobs.get(2).getProcessInstanceId());
-    assertEquals(10, (int) findJobById(acquirableJobs.get(3).getId()).getPriority());
-    assertEquals(instance4, acquirableJobs.get(3).getProcessInstanceId());
+    assertThat((int) findJobById(acquirableJobs.get(0).getId()).getPriority()).isEqualTo(5);
+    assertThat(acquirableJobs.get(0).getProcessInstanceId()).isEqualTo(instance1);
+    assertThat((int) findJobById(acquirableJobs.get(1).getId()).getPriority()).isEqualTo(10);
+    assertThat(acquirableJobs.get(1).getProcessInstanceId()).isEqualTo(instance2);
+    assertThat((int) findJobById(acquirableJobs.get(2).getId()).getPriority()).isEqualTo(5);
+    assertThat(acquirableJobs.get(2).getProcessInstanceId()).isEqualTo(instance3);
+    assertThat((int) findJobById(acquirableJobs.get(3).getId()).getPriority()).isEqualTo(10);
+    assertThat(acquirableJobs.get(3).getProcessInstanceId()).isEqualTo(instance4);
   }
 
 

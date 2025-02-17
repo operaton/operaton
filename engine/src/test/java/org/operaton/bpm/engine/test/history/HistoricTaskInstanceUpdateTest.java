@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.history.HistoricTaskInstance;
@@ -49,12 +49,12 @@ public class HistoricTaskInstanceUpdateTest extends PluggableProcessEngineTest {
     taskService.saveTask(task);
 
     taskService.complete(task.getId());
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().count());
+    assertThat(historyService.createHistoricTaskInstanceQuery().count()).isEqualTo(1);
 
     HistoricTaskInstance historicTaskInstance = historyService.createHistoricTaskInstanceQuery().singleResult();
-    assertEquals("Updated name", historicTaskInstance.getName());
-    assertEquals("Updated description", historicTaskInstance.getDescription());
-    assertEquals("gonzo", historicTaskInstance.getAssignee());
-    assertEquals("task", historicTaskInstance.getTaskDefinitionKey());
+    assertThat(historicTaskInstance.getName()).isEqualTo("Updated name");
+    assertThat(historicTaskInstance.getDescription()).isEqualTo("Updated description");
+    assertThat(historicTaskInstance.getAssignee()).isEqualTo("gonzo");
+    assertThat(historicTaskInstance.getTaskDefinitionKey()).isEqualTo("task");
   }
 }

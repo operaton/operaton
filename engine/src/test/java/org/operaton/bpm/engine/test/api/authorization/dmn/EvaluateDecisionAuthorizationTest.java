@@ -149,8 +149,9 @@ public class EvaluateDecisionAuthorizationTest {
   }
 
   protected void assertThatDecisionHasExpectedResult(DmnDecisionTableResult decisionResult) {
-    assertThat(decisionResult).isNotNull();
-    assertThat(decisionResult).hasSize(1);
+    assertThat(decisionResult)
+            .isNotNull()
+            .hasSize(1);
     String value = decisionResult.getSingleResult().getFirstEntry();
     assertThat(value).isEqualTo("ok");
   }

@@ -17,10 +17,7 @@
 package org.operaton.bpm.engine.test.bpmn.executionlistener;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
 
@@ -161,25 +158,25 @@ public class ExecutionListenerBpmnModelExecutionContextTest extends PluggablePro
   }
 
   private void assertNotNotified() {
-    assertNull(ModelExecutionContextExecutionListener.modelInstance);
-    assertNull(ModelExecutionContextExecutionListener.flowElement);
+    assertThat(ModelExecutionContextExecutionListener.modelInstance).isNull();
+    assertThat(ModelExecutionContextExecutionListener.flowElement).isNull();
   }
 
   private void assertFlowElementIs(Class<? extends FlowElement> elementClass) {
     BpmnModelInstance modelInstance = ModelExecutionContextExecutionListener.modelInstance;
-    assertNotNull(modelInstance);
+    assertThat(modelInstance).isNotNull();
 
     Model model = modelInstance.getModel();
     Collection<ModelElementInstance> events = modelInstance.getModelElementsByType(model.getType(Event.class));
-    assertEquals(3, events.size());
+    assertThat(events).hasSize(3);
     Collection<ModelElementInstance> gateways = modelInstance.getModelElementsByType(model.getType(Gateway.class));
-    assertEquals(1, gateways.size());
+    assertThat(gateways).hasSize(1);
     Collection<ModelElementInstance> tasks = modelInstance.getModelElementsByType(model.getType(Task.class));
-    assertEquals(1, tasks.size());
+    assertThat(tasks).hasSize(1);
 
     FlowElement flowElement = ModelExecutionContextExecutionListener.flowElement;
-    assertNotNull(flowElement);
-    assertTrue(elementClass.isAssignableFrom(flowElement.getClass()));
+    assertThat(flowElement).isNotNull();
+    assertThat(elementClass.isAssignableFrom(flowElement.getClass())).isTrue();
   }
 
   private void sendMessage() {

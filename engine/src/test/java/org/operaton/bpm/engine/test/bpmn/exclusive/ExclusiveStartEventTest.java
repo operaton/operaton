@@ -16,10 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.exclusive;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.runtime.Job;
@@ -39,13 +36,13 @@ public class ExclusiveStartEventTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("exclusive");
     // now there should be 1 non-exclusive job in the database:
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
-    assertFalse(((JobEntity)job).isExclusive());
+    assertThat(job).isNotNull();
+    assertThat(((JobEntity) job).isExclusive()).isFalse();
 
     testRule.waitForJobExecutorToProcessAllJobs(6000L);
-    
+
     // all the jobs are done
-    assertEquals(0, managementService.createJobQuery().count());      
+    assertThat(managementService.createJobQuery().count()).isZero();
   }
 
   @Deployment
@@ -55,12 +52,12 @@ public class ExclusiveStartEventTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("exclusive");
     // now there should be 1 exclusive job in the database:
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
-    assertTrue(((JobEntity)job).isExclusive());
+    assertThat(job).isNotNull();
+    assertThat(((JobEntity) job).isExclusive()).isTrue();
 
     testRule.waitForJobExecutorToProcessAllJobs(6000L);
-    
+
     // all the jobs are done
-    assertEquals(0, managementService.createJobQuery().count());      
+    assertThat(managementService.createJobQuery().count()).isZero();
   }
 }

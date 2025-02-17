@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -89,7 +87,7 @@ public class JobDefinitionRedeploymentTest {
   public void testJobDefinitionsAfterRedeploment() {
 
     // initially there are no job definitions:
-    assertEquals(0, managementService.createJobDefinitionQuery().count());
+    assertThat(managementService.createJobDefinitionQuery().count()).isZero();
 
     // initial deployment
     String deploymentId = repositoryService.createDeployment()
@@ -98,7 +96,7 @@ public class JobDefinitionRedeploymentTest {
                             .getId();
 
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
-    assertNotNull(processDefinition);
+    assertThat(processDefinition).isNotNull();
 
     // this parses the process and created the Job definitions:
     List<JobDefinition> jobDefinitions = managementService.createJobDefinitionQuery().list();
@@ -111,12 +109,12 @@ public class JobDefinitionRedeploymentTest {
     runtimeService.startProcessInstanceByKey(processDefinition.getKey());
 
     // no new definitions were created
-    assertEquals(jobDefinitions.size(), managementService.createJobDefinitionQuery().count());
+    assertThat(managementService.createJobDefinitionQuery().count()).isEqualTo(jobDefinitions.size());
 
     // the job has the correct definitionId set:
     List<Job> jobs = managementService.createJobQuery().list();
     for (Job job : jobs) {
-      assertTrue(jobDefinitionIds.contains(job.getJobDefinitionId()));
+      assertThat(jobDefinitionIds).contains(job.getJobDefinitionId());
     }
 
     // delete the deployment

@@ -18,7 +18,7 @@ package org.operaton.bpm.engine.test.api.history;
 
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -121,7 +121,7 @@ public class BulkHistoryDeleteProcessInstancesAuthorizationTest {
     historyService.deleteHistoricProcessInstancesBulk(ids);
 
     if (authRule.assertScenario(scenario)) {
-      assertEquals(0, historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count());
+      assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isZero();
     }
 
   }

@@ -47,7 +47,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.*;
 import static org.operaton.bpm.engine.authorization.Resources.*;

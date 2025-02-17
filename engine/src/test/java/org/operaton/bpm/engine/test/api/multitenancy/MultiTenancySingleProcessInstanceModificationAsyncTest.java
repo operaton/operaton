@@ -20,9 +20,7 @@ import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertTha
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
@@ -41,6 +39,8 @@ import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.util.ExecutionTree;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+
+import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -106,23 +106,23 @@ public class MultiTenancySingleProcessInstanceModificationAsyncTest {
     Batch modificationBatch = runtimeService.createProcessInstanceModification(processInstance.getId())
         .cancelActivityInstance(getInstanceIdForActivity(tree, "task1"))
         .executeAsync();
-    assertNotNull(modificationBatch);
-    assertEquals(TENANT_ONE, modificationBatch.getTenantId());
+    assertThat(modificationBatch).isNotNull();
+    assertThat(modificationBatch.getTenantId()).isEqualTo(TENANT_ONE);
     Job job = managementService.createJobQuery().jobDefinitionId(modificationBatch.getSeedJobDefinitionId()).singleResult();
     // seed job
-    assertEquals(TENANT_ONE, job.getTenantId());
+    assertThat(job.getTenantId()).isEqualTo(TENANT_ONE);
     managementService.executeJob(job.getId());
 
     for (Job pending : managementService.createJobQuery().jobDefinitionId(modificationBatch.getBatchJobDefinitionId()).list()) {
       managementService.executeJob(pending.getId());
-      assertEquals(processDefinition.getDeploymentId(), pending.getDeploymentId());
-      assertEquals(TENANT_ONE, pending.getTenantId());
+      assertThat(pending.getDeploymentId()).isEqualTo(processDefinition.getDeploymentId());
+      assertThat(pending.getTenantId()).isEqualTo(TENANT_ONE);
     }
 
     // when
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    assertNotNull(updatedTree);
-    assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
+    Assertions.assertThat(updatedTree).isNotNull();
+    assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task2").done());
 
@@ -162,7 +162,7 @@ public class MultiTenancySingleProcessInstanceModificationAsyncTest {
     for (String taskName : taskNames) {
       // complete any task with that name
       List<Task> tasks = taskService.createTaskQuery().taskDefinitionKey(taskName).listPage(0, 1);
-      assertTrue("task for activity " + taskName + " does not exist", !tasks.isEmpty());
+      assertThat(!tasks.isEmpty()).as("task for activity " + taskName + " does not exist").isTrue();
       taskService.complete(tasks.get(0).getId());
     }
   }

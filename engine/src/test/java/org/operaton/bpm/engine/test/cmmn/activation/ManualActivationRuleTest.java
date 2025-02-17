@@ -17,9 +17,6 @@
 package org.operaton.bpm.engine.test.cmmn.activation;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.Collections;
 
@@ -43,9 +40,9 @@ public class ManualActivationRuleTest extends PluggableProcessEngineTest {
     caseService.createCaseInstanceByKey("case", Collections.<String, Object>singletonMap("manualActivation", true));
 
     CaseExecution taskExecution = caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1").singleResult();
-    assertNotNull(taskExecution);
-    assertTrue(taskExecution.isEnabled());
-    assertFalse(taskExecution.isActive());
+    assertThat(taskExecution).isNotNull();
+    assertThat(taskExecution.isEnabled()).isTrue();
+    assertThat(taskExecution.isActive()).isFalse();
   }
 
   /**
@@ -57,9 +54,9 @@ public class ManualActivationRuleTest extends PluggableProcessEngineTest {
     caseService.createCaseInstanceByKey("case", Collections.<String, Object>singletonMap("manualActivation", false));
 
     CaseExecution taskExecution = caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1").singleResult();
-    assertNotNull(taskExecution);
-    assertFalse(taskExecution.isEnabled());
-    assertTrue(taskExecution.isActive());
+    assertThat(taskExecution).isNotNull();
+    assertThat(taskExecution.isEnabled()).isFalse();
+    assertThat(taskExecution.isActive()).isTrue();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/activation/ManualActivationRuleTest.testDefaultVariableBasedRule.cmmn")
@@ -68,9 +65,9 @@ public class ManualActivationRuleTest extends PluggableProcessEngineTest {
     caseService.createCaseInstanceByKey("case", Collections.<String, Object>singletonMap("manualActivation", true));
 
     CaseExecution taskExecution = caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1").singleResult();
-    assertNotNull(taskExecution);
-    assertTrue(taskExecution.isEnabled());
-    assertFalse(taskExecution.isActive());
+    assertThat(taskExecution).isNotNull();
+    assertThat(taskExecution.isEnabled()).isTrue();
+    assertThat(taskExecution.isActive()).isFalse();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/activation/ManualActivationRuleTest.testDefaultVariableBasedRule.cmmn")
@@ -79,9 +76,9 @@ public class ManualActivationRuleTest extends PluggableProcessEngineTest {
     caseService.createCaseInstanceByKey("case", Collections.<String, Object>singletonMap("manualActivation", false));
 
     CaseExecution taskExecution = caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1").singleResult();
-    assertNotNull(taskExecution);
-    assertFalse(taskExecution.isEnabled());
-    assertTrue(taskExecution.isActive());
+    assertThat(taskExecution).isNotNull();
+    assertThat(taskExecution.isEnabled()).isFalse();
+    assertThat(taskExecution.isActive()).isTrue();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/activation/ManualActivationRuleTest.testActivationWithoutDefinition.cmmn")

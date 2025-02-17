@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.test.api.history;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.revoke;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -180,7 +180,7 @@ public class BatchHistoricDecisionInstanceDeletionAuthorizationTest {
     }
     // then
     if (authRule.assertScenario(scenario)) {
-      assertEquals("userId", batch.getCreateUserId());
+      assertThat(batch.getCreateUserId()).isEqualTo("userId");
     }
   }
 }

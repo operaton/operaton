@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.sentry;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
 import org.operaton.bpm.engine.runtime.CaseExecution;
@@ -41,25 +39,25 @@ public class SentryExitCriteriaTest extends CmmnTest {
 
     CaseExecution firstHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_1");
     String firstHumanTaskId = firstHumanTask.getId();
-    assertTrue(firstHumanTask.isActive());
+    assertThat(firstHumanTask.isActive()).isTrue();
 
     CaseExecution secondHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_2");
     String secondHumanTaskId = secondHumanTask.getId();
 
-    assertTrue(secondHumanTask.isActive());
+    assertThat(secondHumanTask.isActive()).isTrue();
 
-    assertNull(caseService.getVariable(caseInstanceId, "exit"));
+    assertThat(caseService.getVariable(caseInstanceId, "exit")).isNull();
 
     // (1) when
     complete(firstHumanTaskId);
 
     // (2) then
     secondHumanTask = queryCaseExecutionById(secondHumanTaskId);
-    assertNull(secondHumanTask);
+    assertThat(secondHumanTask).isNull();
 
     Object exitVariable = caseService.getVariable(caseInstanceId, "exit");
-    assertNotNull(exitVariable);
-    assertTrue((Boolean) exitVariable);
+    assertThat(exitVariable).isNotNull();
+    assertThat((Boolean) exitVariable).isTrue();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryExitCriteriaTest.testExitStage.cmmn"})
@@ -70,50 +68,50 @@ public class SentryExitCriteriaTest extends CmmnTest {
 
     CaseExecution firstHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_1");
     String firstHumanTaskId = firstHumanTask.getId();
-    assertTrue(firstHumanTask.isActive());
+    assertThat(firstHumanTask.isActive()).isTrue();
 
     CaseExecution stage = queryCaseExecutionByActivityId("PI_Stage_1");
     String stageId = stage.getId();
-    assertTrue(stage.isActive());
+    assertThat(stage.isActive()).isTrue();
 
     stage = queryCaseExecutionById(stageId);
-    assertTrue(stage.isActive());
+    assertThat(stage.isActive()).isTrue();
 
     CaseExecution milestone = queryCaseExecutionByActivityId("PI_Milestone_1");
     String milestoneId = milestone.getId();
-    assertTrue(milestone.isAvailable());
+    assertThat(milestone.isAvailable()).isTrue();
 
     CaseExecution secondHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_2");
     String secondHumanTaskId = secondHumanTask.getId();
-    assertTrue(secondHumanTask.isActive());
+    assertThat(secondHumanTask.isActive()).isTrue();
 
     // (2) then
     stage = queryCaseExecutionById(stageId);
-    assertTrue(stage.isActive());
+    assertThat(stage.isActive()).isTrue();
 
-    assertNull(caseService.getVariable(caseInstanceId, "exit"));
-    assertNull(caseService.getVariable(caseInstanceId, "parentTerminate"));
+    assertThat(caseService.getVariable(caseInstanceId, "exit")).isNull();
+    assertThat(caseService.getVariable(caseInstanceId, "parentTerminate")).isNull();
 
     // (2) when
     complete(firstHumanTaskId);
 
     // (2) then
     stage = queryCaseExecutionById(stageId);
-    assertNull(stage);
+    assertThat(stage).isNull();
 
     milestone = queryCaseExecutionById(milestoneId);
-    assertNull(milestone);
+    assertThat(milestone).isNull();
 
     secondHumanTask = queryCaseExecutionById(secondHumanTaskId);
-    assertNull(secondHumanTask);
+    assertThat(secondHumanTask).isNull();
 
     Object exitVariable = caseService.getVariable(caseInstanceId, "exit");
-    assertNotNull(exitVariable);
-    assertTrue((Boolean) exitVariable);
+    assertThat(exitVariable).isNotNull();
+    assertThat((Boolean) exitVariable).isTrue();
 
     Object parentTerminateVariable = caseService.getVariable(caseInstanceId, "parentTerminate");
-    assertNotNull(parentTerminateVariable);
-    assertTrue((Boolean) parentTerminateVariable);
+    assertThat(parentTerminateVariable).isNotNull();
+    assertThat((Boolean) parentTerminateVariable).isTrue();
 
   }
 
@@ -125,35 +123,35 @@ public class SentryExitCriteriaTest extends CmmnTest {
 
     CaseExecution firstHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_1");
     String firstHumanTaskId = firstHumanTask.getId();
-    assertTrue(firstHumanTask.isActive());
+    assertThat(firstHumanTask.isActive()).isTrue();
 
     CaseExecution secondHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_2");
     String secondHumanTaskId = secondHumanTask.getId();
-    assertTrue(secondHumanTask.isActive());
+    assertThat(secondHumanTask.isActive()).isTrue();
 
     CaseExecution thirdHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_3");
     String thirdHumanTaskId = thirdHumanTask.getId();
-    assertTrue(thirdHumanTask.isActive());
+    assertThat(thirdHumanTask.isActive()).isTrue();
 
     // (1) when
     complete(firstHumanTaskId);
 
     // (1) then
     thirdHumanTask = queryCaseExecutionById(thirdHumanTaskId);
-    assertTrue(thirdHumanTask.isActive());
+    assertThat(thirdHumanTask.isActive()).isTrue();
 
-    assertNull(caseService.getVariable(caseInstanceId, "exit"));
+    assertThat(caseService.getVariable(caseInstanceId, "exit")).isNull();
 
     // (2) when
     complete(secondHumanTaskId);
 
     // (2) then
     thirdHumanTask = queryCaseExecutionById(thirdHumanTaskId);
-    assertNull(thirdHumanTask);
+    assertThat(thirdHumanTask).isNull();
 
     Object exitVariable = caseService.getVariable(caseInstanceId, "exit");
-    assertNotNull(exitVariable);
-    assertTrue((Boolean) exitVariable);
+    assertThat(exitVariable).isNotNull();
+    assertThat((Boolean) exitVariable).isTrue();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryExitCriteriaTest.testAndFork.cmmn"})
@@ -164,25 +162,25 @@ public class SentryExitCriteriaTest extends CmmnTest {
 
     CaseExecution firstHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_1");
     String firstHumanTaskId = firstHumanTask.getId();
-    assertTrue(firstHumanTask.isActive());
+    assertThat(firstHumanTask.isActive()).isTrue();
 
     CaseExecution secondHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_2");
     String secondHumanTaskId = secondHumanTask.getId();
-    assertTrue(secondHumanTask.isActive());
+    assertThat(secondHumanTask.isActive()).isTrue();
 
     CaseExecution thirdHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_3");
     String thirdHumanTaskId = thirdHumanTask.getId();
-    assertTrue(thirdHumanTask.isActive());
+    assertThat(thirdHumanTask.isActive()).isTrue();
 
     // when
     complete(firstHumanTaskId);
 
     // then
     secondHumanTask = queryCaseExecutionById(secondHumanTaskId);
-    assertNull(secondHumanTask);
+    assertThat(secondHumanTask).isNull();
 
     thirdHumanTask = queryCaseExecutionById(thirdHumanTaskId);
-    assertNull(thirdHumanTask);
+    assertThat(thirdHumanTask).isNull();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryExitCriteriaTest.testOrJoin.cmmn"})
@@ -193,33 +191,33 @@ public class SentryExitCriteriaTest extends CmmnTest {
 
     CaseExecution firstHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_1");
     String firstHumanTaskId = firstHumanTask.getId();
-    assertTrue(firstHumanTask.isActive());
+    assertThat(firstHumanTask.isActive()).isTrue();
 
     CaseExecution secondHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_2");
     String secondHumanTaskId = secondHumanTask.getId();
-    assertTrue(secondHumanTask.isActive());
+    assertThat(secondHumanTask.isActive()).isTrue();
 
     CaseExecution thirdHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_3");
     String thirdHumanTaskId = thirdHumanTask.getId();
-    assertTrue(thirdHumanTask.isActive());
+    assertThat(thirdHumanTask.isActive()).isTrue();
 
     // (1) when
     complete(firstHumanTaskId);
 
     // (1) then
     thirdHumanTask = queryCaseExecutionById(thirdHumanTaskId);
-    assertNull(thirdHumanTask);
+    assertThat(thirdHumanTask).isNull();
 
     Object exitVariable = caseService.getVariable(caseInstanceId, "exit");
-    assertNotNull(exitVariable);
-    assertTrue((Boolean) exitVariable);
+    assertThat(exitVariable).isNotNull();
+    assertThat((Boolean) exitVariable).isTrue();
 
     // (2) when
     complete(secondHumanTaskId);
 
     // (2) then
     thirdHumanTask = queryCaseExecutionById(thirdHumanTaskId);
-    assertNull(thirdHumanTask);
+    assertThat(thirdHumanTask).isNull();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryExitCriteriaTest.testOrFork.cmmn"})
@@ -230,15 +228,15 @@ public class SentryExitCriteriaTest extends CmmnTest {
 
     CaseExecution firstHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_1");
     String firstHumanTaskId = firstHumanTask.getId();
-    assertTrue(firstHumanTask.isActive());
+    assertThat(firstHumanTask.isActive()).isTrue();
 
     CaseExecution secondHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_2");
     String secondHumanTaskId = secondHumanTask.getId();
-    assertTrue(secondHumanTask.isActive());
+    assertThat(secondHumanTask.isActive()).isTrue();
 
     CaseExecution thirdHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_3");
     String thirdHumanTaskId = thirdHumanTask.getId();
-    assertTrue(thirdHumanTask.isActive());
+    assertThat(thirdHumanTask.isActive()).isTrue();
 
     // when
     caseService
@@ -248,11 +246,11 @@ public class SentryExitCriteriaTest extends CmmnTest {
 
     // then
     secondHumanTask = queryCaseExecutionById(secondHumanTaskId);
-    assertNotNull(secondHumanTask);
-    assertTrue(secondHumanTask.isActive());
+    assertThat(secondHumanTask).isNotNull();
+    assertThat(secondHumanTask.isActive()).isTrue();
 
     thirdHumanTask = queryCaseExecutionById(thirdHumanTaskId);
-    assertNull(thirdHumanTask);
+    assertThat(thirdHumanTask).isNull();
 
   }
 
@@ -264,28 +262,28 @@ public class SentryExitCriteriaTest extends CmmnTest {
 
     CaseExecution firstHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_1");
     String firstHumanTaskId = firstHumanTask.getId();
-    assertTrue(firstHumanTask.isActive());
+    assertThat(firstHumanTask.isActive()).isTrue();
 
     CaseExecution secondHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_2");
     String secondHumanTaskId = secondHumanTask.getId();
-    assertTrue(secondHumanTask.isActive());
+    assertThat(secondHumanTask.isActive()).isTrue();
 
     CaseExecution thirdHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_3");
     String thirdHumanTaskId = thirdHumanTask.getId();
-    assertTrue(thirdHumanTask.isActive());
+    assertThat(thirdHumanTask.isActive()).isTrue();
 
     // when
     complete(firstHumanTaskId);
 
     // then
     firstHumanTask = queryCaseExecutionById(firstHumanTaskId);
-    assertNull(firstHumanTask);
+    assertThat(firstHumanTask).isNull();
 
     secondHumanTask = queryCaseExecutionById(secondHumanTaskId);
-    assertNull(secondHumanTask);
+    assertThat(secondHumanTask).isNull();
 
     thirdHumanTask = queryCaseExecutionById(thirdHumanTaskId);
-    assertNull(thirdHumanTask);
+    assertThat(thirdHumanTask).isNull();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryExitCriteriaTest.testExitTaskWithIfPart.cmmn"})
@@ -296,11 +294,11 @@ public class SentryExitCriteriaTest extends CmmnTest {
 
     CaseExecution firstHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_1");
     String firstHumanTaskId = firstHumanTask.getId();
-    assertTrue(firstHumanTask.isActive());
+    assertThat(firstHumanTask.isActive()).isTrue();
 
     CaseExecution secondHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_2");
     String secondHumanTaskId = secondHumanTask.getId();
-    assertTrue(secondHumanTask.isActive());
+    assertThat(secondHumanTask.isActive()).isTrue();
 
     // when
     caseService
@@ -310,10 +308,10 @@ public class SentryExitCriteriaTest extends CmmnTest {
 
     // then
     firstHumanTask = queryCaseExecutionById(firstHumanTaskId);
-    assertNull(firstHumanTask);
+    assertThat(firstHumanTask).isNull();
 
     secondHumanTask = queryCaseExecutionById(secondHumanTaskId);
-    assertNull(secondHumanTask);
+    assertThat(secondHumanTask).isNull();
 
   }
 
@@ -325,11 +323,11 @@ public class SentryExitCriteriaTest extends CmmnTest {
 
     CaseExecution firstHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_1");
     String firstHumanTaskId = firstHumanTask.getId();
-    assertTrue(firstHumanTask.isActive());
+    assertThat(firstHumanTask.isActive()).isTrue();
 
     CaseExecution secondHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_2");
     String secondHumanTaskId = secondHumanTask.getId();
-    assertTrue(secondHumanTask.isActive());
+    assertThat(secondHumanTask.isActive()).isTrue();
 
     // when
     caseService
@@ -339,10 +337,10 @@ public class SentryExitCriteriaTest extends CmmnTest {
 
     // then
     firstHumanTask = queryCaseExecutionById(firstHumanTaskId);
-    assertNull(firstHumanTask);
+    assertThat(firstHumanTask).isNull();
 
     secondHumanTask = queryCaseExecutionById(secondHumanTaskId);
-    assertTrue(secondHumanTask.isActive());
+    assertThat(secondHumanTask.isActive()).isTrue();
 
   }
 
@@ -355,14 +353,14 @@ public class SentryExitCriteriaTest extends CmmnTest {
     CaseExecution firstHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_1");
     String firstHumanTaskId = firstHumanTask.getId();
 
-    assertTrue(firstHumanTask.isActive());
+    assertThat(firstHumanTask.isActive()).isTrue();
 
     // when
     complete(firstHumanTaskId);
 
     // then
     CaseExecution caseInstance = queryCaseExecutionById(caseInstanceId);
-    assertTrue(caseInstance.isTerminated());
+    assertThat(caseInstance.isTerminated()).isTrue();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryExitCriteriaTest.testExitOnParentSuspendInsideStage.cmmn"})
@@ -378,25 +376,25 @@ public class SentryExitCriteriaTest extends CmmnTest {
     CaseExecution firstHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_1");
     String firstHumanTaskId = firstHumanTask.getId();
 
-    assertTrue(firstHumanTask.isEnabled());
+    assertThat(firstHumanTask.isEnabled()).isTrue();
 
     CaseExecution secondHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_2");
     String secondHumanTaskId = secondHumanTask.getId();
 
-    assertTrue(secondHumanTask.isEnabled());
+    assertThat(secondHumanTask.isEnabled()).isTrue();
 
     // when
     suspend(stageId);
 
     // then
     stage = queryCaseExecutionById(stageId);
-    assertTrue(((CaseExecutionEntity)stage).isSuspended());
+    assertThat(((CaseExecutionEntity) stage).isSuspended()).isTrue();
 
     firstHumanTask = queryCaseExecutionById(firstHumanTaskId);
-    assertTrue(((CaseExecutionEntity)firstHumanTask).isSuspended());
+    assertThat(((CaseExecutionEntity) firstHumanTask).isSuspended()).isTrue();
 
     secondHumanTask = queryCaseExecutionById(secondHumanTaskId);
-    assertNull(secondHumanTask);
+    assertThat(secondHumanTask).isNull();
 
   }
 
@@ -413,38 +411,38 @@ public class SentryExitCriteriaTest extends CmmnTest {
     CaseExecution firstHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_1");
     String firstHumanTaskId = firstHumanTask.getId();
 
-    assertTrue(firstHumanTask.isEnabled());
+    assertThat(firstHumanTask.isEnabled()).isTrue();
 
     CaseExecution secondHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_2");
     String secondHumanTaskId = secondHumanTask.getId();
 
-    assertTrue(secondHumanTask.isEnabled());
+    assertThat(secondHumanTask.isEnabled()).isTrue();
 
     // (1) when
     suspend(stageId);
 
     // (1) then
     stage = queryCaseExecutionById(stageId);
-    assertTrue(((CaseExecutionEntity)stage).isSuspended());
+    assertThat(((CaseExecutionEntity) stage).isSuspended()).isTrue();
 
     firstHumanTask = queryCaseExecutionById(firstHumanTaskId);
-    assertTrue(((CaseExecutionEntity)firstHumanTask).isSuspended());
+    assertThat(((CaseExecutionEntity) firstHumanTask).isSuspended()).isTrue();
 
     secondHumanTask = queryCaseExecutionById(secondHumanTaskId);
-    assertTrue(((CaseExecutionEntity)secondHumanTask).isSuspended());
+    assertThat(((CaseExecutionEntity) secondHumanTask).isSuspended()).isTrue();
 
     // (2) when
     resume(stageId);
 
     // (2) then
     stage = queryCaseExecutionById(stageId);
-    assertTrue(((CaseExecutionEntity)stage).isActive());
+    assertThat(((CaseExecutionEntity) stage).isActive()).isTrue();
 
     firstHumanTask = queryCaseExecutionById(firstHumanTaskId);
-    assertTrue(firstHumanTask.isEnabled());
+    assertThat(firstHumanTask.isEnabled()).isTrue();
 
     secondHumanTask = queryCaseExecutionById(secondHumanTaskId);
-    assertNull(secondHumanTask);
+    assertThat(secondHumanTask).isNull();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryExitCriteriaTest.testExitActiveTask.cmmn"})
@@ -456,38 +454,38 @@ public class SentryExitCriteriaTest extends CmmnTest {
     CaseExecution firstHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_1");
     String firstHumanTaskId = firstHumanTask.getId();
 
-    assertTrue(firstHumanTask.isEnabled());
+    assertThat(firstHumanTask.isEnabled()).isTrue();
 
     CaseExecution secondHumanTask = queryCaseExecutionByActivityId("PI_HumanTask_2");
     String secondHumanTaskId = secondHumanTask.getId();
 
-    assertTrue(secondHumanTask.isEnabled());
+    assertThat(secondHumanTask.isEnabled()).isTrue();
 
     manualStart(secondHumanTaskId);
 
     secondHumanTask = queryCaseExecutionById(secondHumanTaskId);
-    assertTrue(secondHumanTask.isActive());
+    assertThat(secondHumanTask.isActive()).isTrue();
 
     Task secondTask = taskService
         .createTaskQuery()
         .singleResult();
-    assertNotNull(secondTask);
+    assertThat(secondTask).isNotNull();
 
     // when
     manualStart(firstHumanTaskId);
 
     // then
     firstHumanTask = queryCaseExecutionById(firstHumanTaskId);
-    assertTrue(firstHumanTask.isActive());
+    assertThat(firstHumanTask.isActive()).isTrue();
 
     secondHumanTask = queryCaseExecutionById(secondHumanTaskId);
-    assertNull(secondHumanTask);
+    assertThat(secondHumanTask).isNull();
 
     secondTask = taskService
         .createTaskQuery()
         .taskId(secondTask.getId())
         .singleResult();
-    assertNull(secondTask);
+    assertThat(secondTask).isNull();
 
   }
 }

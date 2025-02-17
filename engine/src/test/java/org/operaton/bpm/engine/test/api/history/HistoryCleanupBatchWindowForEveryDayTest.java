@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.history;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -135,7 +133,7 @@ public class HistoryCleanupBatchWindowForEveryDayTest {
 
       List<Job> jobs = managementService.createJobQuery().list();
       if (!jobs.isEmpty()) {
-        assertEquals(1, jobs.size());
+        assertThat(jobs).hasSize(1);
         String jobId = jobs.get(0).getId();
         commandContext.getJobManager().deleteJob((JobEntity) jobs.get(0));
         commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(jobId);
@@ -156,7 +154,7 @@ public class HistoryCleanupBatchWindowForEveryDayTest {
 
     Job job = historyService.cleanUpHistoryAsync();
 
-    assertFalse(startDateForCheck.after(job.getDuedate())); // job due date is not before start date
-    assertTrue(endDateForCheck.after(job.getDuedate()));
+    assertThat(startDateForCheck.after(job.getDuedate())).isFalse(); // job due date is not before start date
+    assertThat(endDateForCheck.after(job.getDuedate())).isTrue();
   }
 }

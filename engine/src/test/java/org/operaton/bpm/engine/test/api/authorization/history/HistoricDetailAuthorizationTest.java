@@ -22,7 +22,6 @@ import static org.operaton.bpm.engine.authorization.Permissions.READ_HISTORY;
 import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_PROCESS_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_TASK;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
-import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -703,7 +702,7 @@ public class HistoricDetailAuthorizationTest extends AuthorizationTest {
         .list();
 
     // then
-    assertEquals(0, result.size());
+    assertThat(result).isEmpty();
   }
 
   @Test
@@ -724,7 +723,7 @@ public class HistoricDetailAuthorizationTest extends AuthorizationTest {
         .list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result).hasSize(1);
   }
 
   @Test
@@ -745,7 +744,7 @@ public class HistoricDetailAuthorizationTest extends AuthorizationTest {
         .list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result).hasSize(1);
 
     // clear
     deleteTask(taskId, true);
@@ -769,7 +768,7 @@ public class HistoricDetailAuthorizationTest extends AuthorizationTest {
         .list();
 
     // then
-    assertEquals(0, result.size());
+    assertThat(result).isEmpty();
 
     // clear
     deleteTask(taskId, true);
@@ -794,7 +793,7 @@ public class HistoricDetailAuthorizationTest extends AuthorizationTest {
         .list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result).hasSize(1);
   }
 
   @Test
@@ -817,7 +816,7 @@ public class HistoricDetailAuthorizationTest extends AuthorizationTest {
         .list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result).hasSize(1);
   }
 
   @Test
@@ -841,7 +840,7 @@ public class HistoricDetailAuthorizationTest extends AuthorizationTest {
         .list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result).hasSize(1);
   }
 
   @Test
@@ -859,7 +858,7 @@ public class HistoricDetailAuthorizationTest extends AuthorizationTest {
     List<HistoricDetail> result = historyService.createHistoricDetailQuery().list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result).hasSize(1);
   }
 
   @Test
@@ -877,7 +876,7 @@ public class HistoricDetailAuthorizationTest extends AuthorizationTest {
     List<HistoricDetail> result = historyService.createHistoricDetailQuery().list();
 
     // then
-    assertEquals(0, result.size());
+    assertThat(result).isEmpty();
   }
 
   @Test
@@ -895,7 +894,7 @@ public class HistoricDetailAuthorizationTest extends AuthorizationTest {
     List<HistoricDetail> result = historyService.createHistoricDetailQuery().list();
 
     // then
-    assertEquals(0, result.size());
+    assertThat(result).isEmpty();
   }
 
   @Test
@@ -916,7 +915,7 @@ public class HistoricDetailAuthorizationTest extends AuthorizationTest {
     List<HistoricDetail> result = historyService.createHistoricDetailQuery().list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result).hasSize(1);
 
     // clear
     deleteTask(taskId, true);
@@ -940,7 +939,7 @@ public class HistoricDetailAuthorizationTest extends AuthorizationTest {
     List<HistoricDetail> result = historyService.createHistoricDetailQuery().list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result).hasSize(1);
   }
 
   @Test
@@ -963,7 +962,7 @@ public class HistoricDetailAuthorizationTest extends AuthorizationTest {
     List<HistoricDetail> result = historyService.createHistoricDetailQuery().list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result).hasSize(1);
   }
 
   @Test
@@ -986,7 +985,7 @@ public class HistoricDetailAuthorizationTest extends AuthorizationTest {
     List<HistoricDetail> result = historyService.createHistoricDetailQuery().list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result).hasSize(1);
   }
 
   @Test
@@ -1003,7 +1002,7 @@ public class HistoricDetailAuthorizationTest extends AuthorizationTest {
     List<HistoricDetail> result = historyService.createHistoricDetailQuery().list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result).hasSize(1);
   }
 
   @Test
@@ -1020,7 +1019,7 @@ public class HistoricDetailAuthorizationTest extends AuthorizationTest {
     List<HistoricDetail> result = historyService.createHistoricDetailQuery().list();
 
     // then
-    assertEquals(0, result.size());
+    assertThat(result).isEmpty();
   }
 
   @Test
@@ -1037,7 +1036,7 @@ public class HistoricDetailAuthorizationTest extends AuthorizationTest {
     List<HistoricDetail> result = historyService.createHistoricDetailQuery().list();
 
     // then
-    assertEquals(0, result.size());
+    assertThat(result).isEmpty();
   }
 
   @Test
@@ -1056,7 +1055,7 @@ public class HistoricDetailAuthorizationTest extends AuthorizationTest {
         .list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result).hasSize(1);
   }
 
   @Test

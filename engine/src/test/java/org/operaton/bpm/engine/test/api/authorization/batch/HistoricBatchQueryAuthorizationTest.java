@@ -16,10 +16,9 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.batch;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -48,7 +47,10 @@ import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.RuleChain;
 
 /**
@@ -129,8 +131,8 @@ public class HistoricBatchQueryAuthorizationTest {
     authRule.disableAuthorization();
 
     // then
-    Assert.assertEquals(1, batches.size());
-    Assert.assertEquals(batch1.getId(), batches.get(0).getId());
+    assertThat(batches).hasSize(1);
+    assertThat(batches.get(0).getId()).isEqualTo(batch1.getId());
   }
 
   @Test
@@ -144,7 +146,7 @@ public class HistoricBatchQueryAuthorizationTest {
     authRule.disableAuthorization();
 
     // then
-    Assert.assertEquals(1, count);
+    assertThat(count).isEqualTo(1);
   }
 
   @Test
@@ -155,7 +157,7 @@ public class HistoricBatchQueryAuthorizationTest {
     authRule.disableAuthorization();
 
     // then
-    Assert.assertEquals(0, count);
+    assertThat(count).isZero();
   }
 
   @Test
@@ -169,7 +171,7 @@ public class HistoricBatchQueryAuthorizationTest {
     authRule.disableAuthorization();
 
     // then
-    Assert.assertEquals(2, batches.size());
+    assertThat(batches).hasSize(2);
   }
 
   @Test
@@ -184,7 +186,7 @@ public class HistoricBatchQueryAuthorizationTest {
     authRule.disableAuthorization();
 
     // then
-    Assert.assertEquals(2, batches.size());
+    assertThat(batches).hasSize(2);
   }
 
   @Test
@@ -199,7 +201,7 @@ public class HistoricBatchQueryAuthorizationTest {
     authRule.disableAuthorization();
 
     // then
-    Assert.assertTrue(batches.isEmpty());
+    assertThat(batches).isEmpty();
   }
 
   @Test
@@ -214,7 +216,7 @@ public class HistoricBatchQueryAuthorizationTest {
     authRule.disableAuthorization();
 
     // then
-    Assert.assertEquals(0L, batchCount);
+    assertThat(batchCount).isEqualTo(0L);
   }
 
   @Test
@@ -228,7 +230,7 @@ public class HistoricBatchQueryAuthorizationTest {
     CleanableHistoricBatchReportResult result = engineRule.getHistoryService().createCleanableHistoricBatchReport().singleResult();
     authRule.disableAuthorization();
 
-    assertNotNull(result);
+    assertThat(result).isNotNull();
     checkResultNumbers(result, 1, 1, 0);
   }
 
@@ -266,9 +268,9 @@ public class HistoricBatchQueryAuthorizationTest {
   }
 
   private void checkResultNumbers(CleanableHistoricBatchReportResult result, int expectedCleanable, int expectedFinished, Integer expectedTTL) {
-    assertEquals(expectedCleanable, result.getCleanableBatchesCount());
-    assertEquals(expectedFinished, result.getFinishedBatchesCount());
-    assertEquals(expectedTTL, result.getHistoryTimeToLive());
+    assertThat(result.getCleanableBatchesCount()).isEqualTo(expectedCleanable);
+    assertThat(result.getFinishedBatchesCount()).isEqualTo(expectedFinished);
+    assertThat(result.getHistoryTimeToLive()).isEqualTo(expectedTTL);
   }
 
 

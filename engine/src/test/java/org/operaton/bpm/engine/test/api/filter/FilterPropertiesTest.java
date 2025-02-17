@@ -30,9 +30,6 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 /**
  * @author Sebastian Menski
@@ -62,7 +59,7 @@ public class FilterPropertiesTest {
   @Test
   public void testPropertiesFromNull() {
     filter.setProperties(null);
-    assertNull(filter.getProperties());
+    assertThat(filter.getProperties()).isNull();
   }
 
   @Test
@@ -110,9 +107,10 @@ public class FilterPropertiesTest {
 
     // then
     Map<String, Object> persistentProperties = filter.getProperties();
-    assertEquals(1, persistentProperties.size());
-    assertTrue(persistentProperties.containsKey("null"));
-    assertNull(persistentProperties.get("null"));
+    assertThat(persistentProperties)
+            .hasSize(1)
+            .containsKey("null");
+    assertThat(persistentProperties.get("null")).isNull();
 
   }
 
@@ -256,11 +254,12 @@ public class FilterPropertiesTest {
     filter = filterService.getFilter(filter.getId());
 
     Map<String, Object> properties = filter.getProperties();
-    assertEquals(5, properties.size());
-    assertEquals("#123456", properties.get("color"));
-    assertEquals(42, properties.get("priority"));
-    assertEquals(true, properties.get("userDefined"));
-    assertEquals(nestedJsonObject, properties.get("object"));
-    assertEquals(nestedJsonArray, properties.get("array"));
+    assertThat(properties)
+            .hasSize(5)
+            .containsEntry("color", "#123456")
+            .containsEntry("priority", 42)
+            .containsEntry("userDefined", true)
+            .containsEntry("object", nestedJsonObject)
+            .containsEntry("array", nestedJsonArray);
   }
 }

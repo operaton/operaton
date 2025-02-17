@@ -16,9 +16,8 @@
  */
 package org.operaton.bpm.engine.test.bpmn.shell;
 
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertTrue;
 
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
@@ -66,8 +65,8 @@ public class ShellTaskTest extends PluggableProcessEngineTest {
       ProcessInstance pi = runtimeService.startProcessInstanceByKey("echoShellWindows");
   
       String st = (String) runtimeService.getVariable(pi.getId(), "resultVar");
-      assertNotNull(st);
-      assertTrue(st.startsWith("EchoTest"));
+      assertThat(st).isNotNull();
+      assertThat(st).startsWith("EchoTest");
     }
   }
 
@@ -79,8 +78,8 @@ public class ShellTaskTest extends PluggableProcessEngineTest {
       ProcessInstance pi = runtimeService.startProcessInstanceByKey("echoShellLinux");
   
       String st = (String) runtimeService.getVariable(pi.getId(), "resultVar");
-      assertNotNull(st);
-      assertTrue(st.startsWith("EchoTest"));
+      assertThat(st).isNotNull();
+      assertThat(st).startsWith("EchoTest");
     }
   }
   
@@ -92,8 +91,8 @@ public class ShellTaskTest extends PluggableProcessEngineTest {
       ProcessInstance pi = runtimeService.startProcessInstanceByKey("echoShellMac");
   
       String st = (String) runtimeService.getVariable(pi.getId(), "resultVar");
-      assertNotNull(st);
-      assertTrue(st.startsWith("EchoTest"));
+      assertThat(st).isNotNull();
+      assertThat(st).startsWith("EchoTest");
     }
   }
 }

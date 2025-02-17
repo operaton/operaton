@@ -16,9 +16,8 @@
  */
 package org.operaton.bpm.engine.test.cmmn.decisiontask;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.List;
 import java.util.Map;
@@ -28,6 +27,8 @@ import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.cmmn.CmmnTest;
 import org.operaton.bpm.engine.variable.Variables;
+import org.operaton.bpm.engine.variable.value.StringValue;
+
 import org.junit.Test;
 
 /**
@@ -49,8 +50,8 @@ public class CmmnDecisionTaskResultMappingTest extends CmmnTest {
   public void testSingleEntryMapping() {
     CaseInstance caseInstance = createTestCase("single entry");
 
-    assertEquals("foo", caseService.getVariable(caseInstance.getId(), "result"));
-    assertEquals(Variables.stringValue("foo"), caseService.getVariableTyped(caseInstance.getId(), "result"));
+    assertThat(caseService.getVariable(caseInstance.getId(), "result")).isEqualTo("foo");
+    assertThat(caseService.<StringValue>getVariableTyped(caseInstance.getId(), "result")).isEqualTo(Variables.stringValue("foo"));
   }
 
   @SuppressWarnings("unchecked")
@@ -61,9 +62,10 @@ public class CmmnDecisionTaskResultMappingTest extends CmmnTest {
 
     Map<String, Object> output = (Map<String, Object>) caseService.getVariable(caseInstance.getId(), "result");
 
-    assertEquals(2, output.size());
-    assertEquals("foo", output.get("result1"));
-    assertEquals("bar", output.get("result2"));
+    assertThat(output)
+            .hasSize(2)
+            .containsEntry("result1", "foo")
+            .containsEntry("result2", "bar");
   }
 
   @SuppressWarnings("unchecked")
@@ -74,9 +76,9 @@ public class CmmnDecisionTaskResultMappingTest extends CmmnTest {
 
     List<String> output = (List<String>) caseService.getVariable(caseInstance.getId(), "result");
 
-    assertEquals(2, output.size());
-    assertEquals("foo", output.get(0));
-    assertEquals("foo", output.get(1));
+    assertThat(output).hasSize(2);
+    assertThat(output.get(0)).isEqualTo("foo");
+    assertThat(output.get(1)).isEqualTo("foo");
   }
 
   @SuppressWarnings("unchecked")
@@ -86,12 +88,13 @@ public class CmmnDecisionTaskResultMappingTest extends CmmnTest {
     CaseInstance caseInstance = createTestCase("multiple entries list");
 
     List<Map<String, Object>> resultList = (List<Map<String, Object>>) caseService.getVariable(caseInstance.getId(), "result");
-    assertEquals(2, resultList.size());
+    assertThat(resultList).hasSize(2);
 
     for (Map<String, Object> valueMap : resultList) {
-      assertEquals(2, valueMap.size());
-      assertEquals("foo", valueMap.get("result1"));
-      assertEquals("bar", valueMap.get("result2"));
+      assertThat(valueMap)
+              .hasSize(2)
+              .containsEntry("result1", "foo")
+              .containsEntry("result2", "bar");
     }
   }
 
@@ -103,12 +106,13 @@ public class CmmnDecisionTaskResultMappingTest extends CmmnTest {
 
     // default mapping is 'resultList'
     List<Map<String, Object>> resultList = (List<Map<String, Object>>) caseService.getVariable(caseInstance.getId(), "result");
-    assertEquals(2, resultList.size());
+    assertThat(resultList).hasSize(2);
 
     for (Map<String, Object> valueMap : resultList) {
-      assertEquals(2, valueMap.size());
-      assertEquals("foo", valueMap.get("result1"));
-      assertEquals("bar", valueMap.get("result2"));
+      assertThat(valueMap)
+              .hasSize(2)
+              .containsEntry("result1", "foo")
+              .containsEntry("result2", "bar");
     }
   }
 
@@ -167,7 +171,7 @@ public class CmmnDecisionTaskResultMappingTest extends CmmnTest {
     CaseInstance caseInstance = createTestCase("single entry");
 
     // then the variable should not be available outside the decision task
-    assertNull(caseService.getVariable(caseInstance.getId(), "decisionResult"));
+    assertThat(caseService.getVariable(caseInstance.getId(), "decisionResult")).isNull();
   }
 
   @Deployment(resources = { OVERRIDE_DECISION_RESULT_CMMN, TEST_DECISION })

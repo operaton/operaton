@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.standalone.calendar;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -45,7 +44,7 @@ public class DurationHelperTest {
 
 
     ClockUtil.setCurrentTime(new Date(30000));
-    assertNull(dh.getDateAfter());
+    assertThat(dh.getDateAfter()).isNull();
   }
 
   @Test
@@ -58,7 +57,7 @@ public class DurationHelperTest {
 
 
     ClockUtil.setCurrentTime(parse("19700101-00:00:30"));
-    assertNull(dh.getDateAfter());
+    assertThat(dh.getDateAfter()).isNull();
   }
 
   @Test
@@ -79,7 +78,7 @@ public class DurationHelperTest {
   public void shouldNotExceedNumberWithStartDate() throws Exception {
     DurationHelper dh = new DurationHelper("R2/PT10S", new Date(0));
     assertEquals(20000, dh.getDateAfter(new Date(15000)).getTime());
-    assertNull(dh.getDateAfter(new Date(30000)));
+    assertThat(dh.getDateAfter(new Date(30000))).isNull();
   }
 
   @Test
@@ -87,7 +86,7 @@ public class DurationHelperTest {
     DurationHelper dh = new DurationHelper("R2/1970-01-01T00:00:00/1970-01-01T00:00:10", parse("19700101-00:00:00"));
 
     assertEquals(parse("19700101-00:00:20"), dh.getDateAfter(parse("19700101-00:00:15")));
-    assertNull(dh.getDateAfter(parse("19700101-00:00:30")));
+    assertThat(dh.getDateAfter(parse("19700101-00:00:30"))).isNull();
   }
 
   @Test

@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.compensate;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
@@ -63,9 +62,9 @@ public class CompensateEventHistoryTest extends PluggableProcessEngineTest {
         .activityId("compensationHandler")
         .singleResult();
 
-    assertNotNull(historicCompensationHandlerInstance);
-    assertEquals(compensationHandlerActivityInstanceId, historicCompensationHandlerInstance.getId());
-    assertEquals(processInstance.getId(), historicCompensationHandlerInstance.getParentActivityInstanceId());
+    assertThat(historicCompensationHandlerInstance).isNotNull();
+    assertThat(historicCompensationHandlerInstance.getId()).isEqualTo(compensationHandlerActivityInstanceId);
+    assertThat(historicCompensationHandlerInstance.getParentActivityInstanceId()).isEqualTo(processInstance.getId());
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/compensate/CompensateEventHistoryTest.testBoundaryCompensationHandlerHistory.bpmn20.xml")
@@ -94,8 +93,8 @@ public class CompensateEventHistoryTest extends PluggableProcessEngineTest {
     // then there is a historic variable instance for the variable set by API
     HistoricVariableInstance historicVariableInstance = historyService.createHistoricVariableInstanceQuery().singleResult();
 
-    assertNotNull(historicVariableInstance);
-    assertEquals(compensationHandlerActivityInstanceId, historicVariableInstance.getActivityInstanceId());
+    assertThat(historicVariableInstance).isNotNull();
+    assertThat(historicVariableInstance.getActivityInstanceId()).isEqualTo(compensationHandlerActivityInstanceId);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/compensate/CompensateEventHistoryTest.testDefaultCompensationHandlerHistory.bpmn20.xml")
@@ -127,9 +126,9 @@ public class CompensateEventHistoryTest extends PluggableProcessEngineTest {
         .activityId("compensationHandler")
         .singleResult();
 
-    assertNotNull(historicCompensationHandlerInstance);
-    assertEquals(compensationHandlerActivityInstanceId, historicCompensationHandlerInstance.getId());
-    assertEquals(subProcessActivityInstanceId, historicCompensationHandlerInstance.getParentActivityInstanceId());
+    assertThat(historicCompensationHandlerInstance).isNotNull();
+    assertThat(historicCompensationHandlerInstance.getId()).isEqualTo(compensationHandlerActivityInstanceId);
+    assertThat(historicCompensationHandlerInstance.getParentActivityInstanceId()).isEqualTo(subProcessActivityInstanceId);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/compensate/CompensateEventHistoryTest.testDefaultCompensationHandlerHistory.bpmn20.xml")
@@ -158,8 +157,8 @@ public class CompensateEventHistoryTest extends PluggableProcessEngineTest {
     // then there is a historic variable instance for the variable set by API
     HistoricVariableInstance historicVariableInstance = historyService.createHistoricVariableInstanceQuery().singleResult();
 
-    assertNotNull(historicVariableInstance);
-    assertEquals(compensationHandlerActivityInstanceId, historicVariableInstance.getActivityInstanceId());
+    assertThat(historicVariableInstance).isNotNull();
+    assertThat(historicVariableInstance.getActivityInstanceId()).isEqualTo(compensationHandlerActivityInstanceId);
   }
 
 

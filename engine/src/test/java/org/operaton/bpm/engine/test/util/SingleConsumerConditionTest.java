@@ -17,8 +17,10 @@
 package org.operaton.bpm.engine.test.util;
 
 import org.operaton.bpm.engine.impl.util.SingleConsumerCondition;
-import org.junit.Assert;
+
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.fail;
 
 public class SingleConsumerConditionTest {
 
@@ -60,7 +62,7 @@ public class SingleConsumerConditionTest {
     // when then
     try {
       condition.await(0);
-      Assert.fail("expected exception");
+      fail("expected exception");
     }
     catch (RuntimeException e) {
       // expected
@@ -71,7 +73,7 @@ public class SingleConsumerConditionTest {
   public void cannotCreateWithNull() {
     try {
       new SingleConsumerCondition(null);
-      Assert.fail("expected exception");
+      fail("expected exception");
     }
     catch (IllegalArgumentException e) {
       // expected

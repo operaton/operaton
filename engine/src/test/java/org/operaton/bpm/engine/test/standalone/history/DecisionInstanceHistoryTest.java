@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.test.standalone.history;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
@@ -87,14 +86,14 @@ public class DecisionInstanceHistoryTest {
     decisionService.evaluateDecisionTableByKey("testDecision", variables);
 
     List<RecordHistoryLevel.ProducedHistoryEvent> producedHistoryEvents = historyLevel.getProducedHistoryEvents();
-    assertEquals(1, producedHistoryEvents.size());
+    assertThat(producedHistoryEvents).hasSize(1);
 
     RecordHistoryLevel.ProducedHistoryEvent producedHistoryEvent = producedHistoryEvents.get(0);
-    assertEquals(HistoryEventTypes.DMN_DECISION_EVALUATE, producedHistoryEvent.eventType);
+    assertThat(producedHistoryEvent.eventType).isEqualTo(HistoryEventTypes.DMN_DECISION_EVALUATE);
 
     DecisionDefinition entity = (DecisionDefinition) producedHistoryEvent.entity;
-    assertNotNull(entity);
-    assertEquals(decisionDefinition.getId(), entity.getId());
+    assertThat(entity).isNotNull();
+    assertThat(entity.getId()).isEqualTo(decisionDefinition.getId());
   }
 
 }

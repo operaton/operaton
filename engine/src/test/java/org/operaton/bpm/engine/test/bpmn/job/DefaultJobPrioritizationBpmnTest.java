@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.job;
 
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.junit.Test;
@@ -29,7 +29,7 @@ public class DefaultJobPrioritizationBpmnTest extends PluggableProcessEngineTest
 
   @Test
   public void testDefaultProducePrioritizedJobsSetting() {
-    assertTrue(processEngineConfiguration.isProducePrioritizedJobs());
+    assertThat(processEngineConfiguration.isProducePrioritizedJobs()).isTrue();
   }
 
 }

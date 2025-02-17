@@ -30,7 +30,7 @@ import java.util.Date;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class EntitySerializationTest {
 
@@ -54,9 +54,9 @@ public class EntitySerializationTest {
     byte[] data = writeObject(task);
     task = (TaskEntity) readObject(data);
 
-    assertEquals("kermit", task.getAssignee());
-    assertEquals("myTask", task.getName());
-    assertEquals("end", task.getEventName());
+    assertThat(task.getAssignee()).isEqualTo("kermit");
+    assertThat(task.getName()).isEqualTo("myTask");
+    assertThat(task.getEventName()).isEqualTo("end");
   }
 
   @Test
@@ -87,9 +87,9 @@ public class EntitySerializationTest {
    byte[] data = writeObject(execution);
    execution = (ExecutionEntity) readObject(data);
 
-   assertEquals("myBusinessKey", execution.getBusinessKey());
-   assertEquals("no reason", execution.getDeleteReason());
-   assertEquals("123", execution.getActivityInstanceId());
+    assertThat(execution.getBusinessKey()).isEqualTo("myBusinessKey");
+    assertThat(execution.getDeleteReason()).isEqualTo("no reason");
+    assertThat(execution.getActivityInstanceId()).isEqualTo("123");
 
   }
 

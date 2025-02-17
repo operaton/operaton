@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.util;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.operaton.bpm.engine.authorization.Authorization;
@@ -24,7 +26,6 @@ import org.operaton.bpm.engine.authorization.Resource;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.junit.Assert;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 
@@ -64,8 +65,8 @@ public class AuthorizationTestBaseRule extends TestWatcher {
 
     super.finished(description);
 
-    Assert.assertTrue("Users have been created but not deleted", users.isEmpty());
-    Assert.assertTrue("Groups have been created but not deleted", groups.isEmpty());
+    assertThat(users.isEmpty()).as("Users have been created but not deleted").isTrue();
+    assertThat(groups.isEmpty()).as("Groups have been created but not deleted").isTrue();
   }
 
   public void manageAuthorization(Authorization authorization) {

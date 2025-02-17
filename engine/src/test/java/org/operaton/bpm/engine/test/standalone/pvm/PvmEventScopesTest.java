@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.test.standalone.pvm;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,12 +97,12 @@ public class PvmEventScopesTest {
         break;
       }
     }
-    
-    assertTrue(eventScopeFound);
+
+    assertThat(eventScopeFound).isTrue();
     
     processInstance.signal(null, null);
 
-    assertTrue(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isTrue();
          
   }
   
@@ -171,13 +170,13 @@ public class PvmEventScopesTest {
     
     List<String> expectedActiveActivityIds = new ArrayList<>();
     expectedActiveActivityIds.add("wait");
-    assertEquals(expectedActiveActivityIds, processInstance.findActiveActivityIds());
+    assertThat(processInstance.findActiveActivityIds()).isEqualTo(expectedActiveActivityIds);
     
 
     PvmExecution execution = processInstance.findExecution("wait");
     execution.signal(null, null);
-    
-    assertTrue(processInstance.isEnded());
+
+    assertThat(processInstance.isEnded()).isTrue();
     
   }
 

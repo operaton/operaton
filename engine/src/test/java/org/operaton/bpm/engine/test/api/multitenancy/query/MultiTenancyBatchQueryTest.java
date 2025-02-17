@@ -17,6 +17,8 @@
 package org.operaton.bpm.engine.test.api.multitenancy.query;
 
 import static java.util.Collections.singletonList;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.batchByTenantId;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.batchStatisticsByTenantId;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
@@ -97,10 +99,10 @@ public class MultiTenancyBatchQueryTest {
 
     // then
     List<Batch> batches = managementService.createBatchQuery().list();
-    Assert.assertEquals(1, batches.size());
-    Assert.assertEquals(sharedBatch.getId(), batches.get(0).getId());
+    assertThat(batches).hasSize(1);
+    assertThat(batches.get(0).getId()).isEqualTo(sharedBatch.getId());
 
-    Assert.assertEquals(1, managementService.createBatchQuery().count());
+    assertThat(managementService.createBatchQuery().count()).isEqualTo(1);
 
     identityService.clearAuthentication();
   }
@@ -114,10 +116,10 @@ public class MultiTenancyBatchQueryTest {
     List<Batch> batches = managementService.createBatchQuery().list();
 
     // then
-    Assert.assertEquals(2, batches.size());
+    assertThat(batches).hasSize(2);
     assertBatches(batches, tenant1Batch.getId(), sharedBatch.getId());
 
-    Assert.assertEquals(2, managementService.createBatchQuery().count());
+    assertThat(managementService.createBatchQuery().count()).isEqualTo(2);
 
     identityService.clearAuthentication();
   }
@@ -131,8 +133,8 @@ public class MultiTenancyBatchQueryTest {
     List<Batch> batches = managementService.createBatchQuery().list();
 
     // then
-    Assert.assertEquals(3, batches.size());
-    Assert.assertEquals(3, managementService.createBatchQuery().count());
+    assertThat(batches).hasSize(3);
+    assertThat(managementService.createBatchQuery().count()).isEqualTo(3);
 
     identityService.clearAuthentication();
   }
@@ -146,10 +148,10 @@ public class MultiTenancyBatchQueryTest {
     List<BatchStatistics> statistics = managementService.createBatchStatisticsQuery().list();
 
     // then
-    Assert.assertEquals(1, statistics.size());
-    Assert.assertEquals(sharedBatch.getId(), statistics.get(0).getId());
+    assertThat(statistics).hasSize(1);
+    assertThat(statistics.get(0).getId()).isEqualTo(sharedBatch.getId());
 
-    Assert.assertEquals(1, managementService.createBatchStatisticsQuery().count());
+    assertThat(managementService.createBatchStatisticsQuery().count()).isEqualTo(1);
 
     identityService.clearAuthentication();
   }
@@ -163,9 +165,9 @@ public class MultiTenancyBatchQueryTest {
     List<BatchStatistics> statistics = managementService.createBatchStatisticsQuery().list();
 
     // then
-    Assert.assertEquals(2, statistics.size());
+    assertThat(statistics).hasSize(2);
 
-    Assert.assertEquals(2, managementService.createBatchStatisticsQuery().count());
+    assertThat(managementService.createBatchStatisticsQuery().count()).isEqualTo(2);
 
     identityService.clearAuthentication();
   }
@@ -177,9 +179,9 @@ public class MultiTenancyBatchQueryTest {
 
     // then
     List<BatchStatistics> statistics = managementService.createBatchStatisticsQuery().list();
-    Assert.assertEquals(3, statistics.size());
+    assertThat(statistics).hasSize(3);
 
-    Assert.assertEquals(3, managementService.createBatchStatisticsQuery().count());
+    assertThat(managementService.createBatchStatisticsQuery().count()).isEqualTo(3);
 
     identityService.clearAuthentication();
   }
@@ -190,8 +192,8 @@ public class MultiTenancyBatchQueryTest {
     Batch returnedBatch = managementService.createBatchQuery().tenantIdIn(TENANT_ONE).singleResult();
 
     // then
-    Assert.assertNotNull(returnedBatch);
-    Assert.assertEquals(tenant1Batch.getId(), returnedBatch.getId());
+    assertThat(returnedBatch).isNotNull();
+    assertThat(returnedBatch.getId()).isEqualTo(tenant1Batch.getId());
   }
 
   @Test
@@ -204,9 +206,9 @@ public class MultiTenancyBatchQueryTest {
       .list();
 
     // then
-    Assert.assertEquals(2, returnedBatches.size());
-    Assert.assertEquals(tenant1Batch.getId(), returnedBatches.get(0).getId());
-    Assert.assertEquals(tenant2Batch.getId(), returnedBatches.get(1).getId());
+    assertThat(returnedBatches).hasSize(2);
+    assertThat(returnedBatches.get(0).getId()).isEqualTo(tenant1Batch.getId());
+    assertThat(returnedBatches.get(1).getId()).isEqualTo(tenant2Batch.getId());
   }
 
   @Test
@@ -215,8 +217,8 @@ public class MultiTenancyBatchQueryTest {
     Batch returnedBatch = managementService.createBatchQuery().withoutTenantId().singleResult();
 
     // then
-    Assert.assertNotNull(returnedBatch);
-    Assert.assertEquals(sharedBatch.getId(), returnedBatch.getId());
+    assertThat(returnedBatch).isNotNull();
+    assertThat(returnedBatch.getId()).isEqualTo(sharedBatch.getId());
   }
 
   @Test
@@ -226,7 +228,7 @@ public class MultiTenancyBatchQueryTest {
     var batchQuery = managementService.createBatchQuery();
     try {
       batchQuery.tenantIdIn(tenantIds);
-      Assert.fail("exception expected");
+      fail("exception expected");
     }
     catch (NullValueException e) {
       // happy path
@@ -240,7 +242,7 @@ public class MultiTenancyBatchQueryTest {
     var batchQuery = managementService.createBatchQuery();
     try {
       batchQuery.tenantIdIn(tenantIds);
-      Assert.fail("exception expected");
+      fail("exception expected");
     }
     catch (NullValueException e) {
       // happy path
@@ -273,8 +275,8 @@ public class MultiTenancyBatchQueryTest {
     BatchStatistics returnedBatch = managementService.createBatchStatisticsQuery().tenantIdIn(TENANT_ONE).singleResult();
 
     // then
-    Assert.assertNotNull(returnedBatch);
-    Assert.assertEquals(tenant1Batch.getId(), returnedBatch.getId());
+    assertThat(returnedBatch).isNotNull();
+    assertThat(returnedBatch.getId()).isEqualTo(tenant1Batch.getId());
   }
 
   @Test
@@ -287,9 +289,9 @@ public class MultiTenancyBatchQueryTest {
       .list();
 
     // then
-    Assert.assertEquals(2, returnedBatches.size());
-    Assert.assertEquals(tenant1Batch.getId(), returnedBatches.get(0).getId());
-    Assert.assertEquals(tenant2Batch.getId(), returnedBatches.get(1).getId());
+    assertThat(returnedBatches).hasSize(2);
+    assertThat(returnedBatches.get(0).getId()).isEqualTo(tenant1Batch.getId());
+    assertThat(returnedBatches.get(1).getId()).isEqualTo(tenant2Batch.getId());
   }
 
   @Test
@@ -298,8 +300,8 @@ public class MultiTenancyBatchQueryTest {
     BatchStatistics returnedBatch = managementService.createBatchStatisticsQuery().withoutTenantId().singleResult();
 
     // then
-    Assert.assertNotNull(returnedBatch);
-    Assert.assertEquals(sharedBatch.getId(), returnedBatch.getId());
+    assertThat(returnedBatch).isNotNull();
+    assertThat(returnedBatch.getId()).isEqualTo(sharedBatch.getId());
   }
 
   @Test
@@ -309,7 +311,7 @@ public class MultiTenancyBatchQueryTest {
     var batchStatisticsQuery = managementService.createBatchStatisticsQuery();
     try {
       batchStatisticsQuery.tenantIdIn(tenantIds);
-      Assert.fail("exception expected");
+      fail("exception expected");
     }
     catch (NullValueException e) {
       // happy path
@@ -323,7 +325,7 @@ public class MultiTenancyBatchQueryTest {
     var batchStatisticsQuery = managementService.createBatchStatisticsQuery();
     try {
       batchStatisticsQuery.tenantIdIn(tenantIds);
-      Assert.fail("exception expected");
+      fail("exception expected");
     }
     catch (NullValueException e) {
       // happy path
@@ -349,7 +351,7 @@ public class MultiTenancyBatchQueryTest {
   }
 
   protected void assertBatches(List<? extends Batch> actualBatches, String... expectedIds) {
-    Assert.assertEquals(expectedIds.length, actualBatches.size());
+    assertThat(actualBatches).hasSize(expectedIds.length);
 
     Set<String> actualIds = new HashSet<>();
     for (Batch batch : actualBatches) {
@@ -357,7 +359,7 @@ public class MultiTenancyBatchQueryTest {
     }
 
     for (String expectedId : expectedIds) {
-      Assert.assertTrue(actualIds.contains(expectedId));
+      assertThat(actualIds).contains(expectedId);
     }
   }
 }

@@ -18,8 +18,6 @@ package org.operaton.bpm.engine.test.api.variables;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 import java.util.Scanner;
 
@@ -76,7 +74,7 @@ public class FileValueProcessSerializationTest extends PluggableProcessEngineTes
         Variables.createVariables().putValue("fileVar", Variables.fileValue("test.txt").file("ABC".getBytes()).encoding(UTF_8.name()).create()));
 
     FileValue fileVar = runtimeService.getVariableTyped(pi.getId(), "fileVar");
-    assertNull(fileVar.getMimeType());
+    assertThat(fileVar.getMimeType()).isNull();
   }
 
   @Test
@@ -86,8 +84,8 @@ public class FileValueProcessSerializationTest extends PluggableProcessEngineTes
         Variables.createVariables().putValue("fileVar", Variables.fileValue("test.txt").file("ABC".getBytes()).create()));
 
     FileValue fileVar = runtimeService.getVariableTyped(pi.getId(), "fileVar");
-    assertNull(fileVar.getMimeType());
-    assertNull(fileVar.getEncoding());
+    assertThat(fileVar.getMimeType()).isNull();
+    assertThat(fileVar.getEncoding()).isNull();
   }
 
   @Test
@@ -97,7 +95,7 @@ public class FileValueProcessSerializationTest extends PluggableProcessEngineTes
         Variables.createVariables().putValue("fileVar", Variables.fileValue("test.txt").mimeType("some mimetype").file("ABC".getBytes()).create()));
 
     FileValue fileVar = runtimeService.getVariableTyped(pi.getId(), "fileVar");
-    assertNull(fileVar.getEncoding());
+    assertThat(fileVar.getEncoding()).isNull();
   }
 
   @Test
@@ -107,7 +105,7 @@ public class FileValueProcessSerializationTest extends PluggableProcessEngineTes
         Variables.createVariables().putValue("fileVar", Variables.fileValue("test.txt").create()));
 
     FileValue fileVar = runtimeService.getVariableTyped(pi.getId(), "fileVar");
-    assertNull(fileVar.getMimeType());
+    assertThat(fileVar.getMimeType()).isNull();
   }
 
   @Test
@@ -117,7 +115,7 @@ public class FileValueProcessSerializationTest extends PluggableProcessEngineTes
         Variables.createVariables().putValue("fileVar", Variables.fileValue("").create()));
 
     FileValue fileVar = runtimeService.getVariableTyped(pi.getId(), "fileVar");
-    assertEquals("", fileVar.getFilename());
+    assertThat(fileVar.getFilename()).isEmpty();
   }
 
 }

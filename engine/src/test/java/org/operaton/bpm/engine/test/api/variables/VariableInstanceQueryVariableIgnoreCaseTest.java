@@ -16,12 +16,14 @@
  */
 package org.operaton.bpm.engine.test.api.variables;
 
-import org.assertj.core.api.Assertions;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.VariableInstanceQueryImpl;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.test.Deployment;
+
 import org.junit.Before;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml" })
 public class VariableInstanceQueryVariableIgnoreCaseTest extends AbstractVariableIgnoreCaseTest<VariableInstanceQueryImpl, VariableInstance> {
@@ -43,6 +45,6 @@ public class VariableInstanceQueryVariableIgnoreCaseTest extends AbstractVariabl
 
   @Override
   protected void assertThatTwoInstancesAreEqual(VariableInstance one, VariableInstance two) {
-    Assertions.assertThat(one.getId()).isEqualTo(two.getId());
+    assertThat(one.getId()).isEqualTo(two.getId());
   }
 }

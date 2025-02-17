@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.engine.test.util;
 
+import static org.assertj.core.api.Assertions.fail;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.junit.Assert;
 
 /**
  * @author Thorben Lindhauer
@@ -104,7 +104,7 @@ public class ExecutionTreeStructureAssertion implements ExecutionTreeAssertion {
       describe(this, "", errorBuilder);
       errorBuilder.append("Actual tree: \n");
       errorBuilder.append(tree);
-      Assert.fail(errorBuilder.toString());
+      fail(errorBuilder.toString());
     }
   }
 

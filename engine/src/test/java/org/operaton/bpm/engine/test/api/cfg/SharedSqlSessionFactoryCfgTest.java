@@ -16,11 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.cfg;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
 import static org.mockito.Mockito.mock;
 
 import javax.sql.DataSource;
@@ -47,7 +44,7 @@ public class SharedSqlSessionFactoryCfgTest {
 
   @Test
   public void shouldNotReuseSqlSessionFactoryByDefault() {
-    assertFalse(new StandaloneInMemProcessEngineConfiguration().isUseSharedSqlSessionFactory());
+    assertThat(new StandaloneInMemProcessEngineConfiguration().isUseSharedSqlSessionFactory()).isFalse();
   }
 
   @Test
@@ -61,7 +58,7 @@ public class SharedSqlSessionFactoryCfgTest {
     cfg.initSqlSessionFactory();
 
     // then
-    assertNotNull(ProcessEngineConfigurationImpl.cachedSqlSessionFactory);
+    assertThat(ProcessEngineConfigurationImpl.cachedSqlSessionFactory).isNotNull();
   }
 
   @Test
@@ -72,8 +69,8 @@ public class SharedSqlSessionFactoryCfgTest {
     cfg.initSqlSessionFactory();
 
     // then
-    assertNull(ProcessEngineConfigurationImpl.cachedSqlSessionFactory);
-    assertNotNull(cfg.getSqlSessionFactory());
+    assertThat(ProcessEngineConfigurationImpl.cachedSqlSessionFactory).isNull();
+    assertThat(cfg.getSqlSessionFactory()).isNotNull();
   }
 
   @Test
@@ -89,8 +86,8 @@ public class SharedSqlSessionFactoryCfgTest {
     cfg.initSqlSessionFactory();
 
     // then
-    assertSame(existingSessionFactory, ProcessEngineConfigurationImpl.cachedSqlSessionFactory);
-    assertSame(existingSessionFactory, cfg.getSqlSessionFactory());
+    assertThat(ProcessEngineConfigurationImpl.cachedSqlSessionFactory).isSameAs(existingSessionFactory);
+    assertThat(cfg.getSqlSessionFactory()).isSameAs(existingSessionFactory);
   }
 
   @Test
@@ -105,7 +102,7 @@ public class SharedSqlSessionFactoryCfgTest {
     cfg.initSqlSessionFactory();
 
     // then
-    assertSame(existingSessionFactory, ProcessEngineConfigurationImpl.cachedSqlSessionFactory);
+    assertThat(ProcessEngineConfigurationImpl.cachedSqlSessionFactory).isSameAs(existingSessionFactory);
     assertNotSame(existingSessionFactory, cfg.getSqlSessionFactory());
   }
 

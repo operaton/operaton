@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.test.cmmn;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
@@ -100,13 +98,13 @@ public class CmmnDisabledTest {
 
     // process is deployed:
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
-    assertNotNull(processDefinition);
-    assertEquals(1, processDefinition.getVersion());
+    assertThat(processDefinition).isNotNull();
+    assertThat(processDefinition.getVersion()).isEqualTo(1);
 
     List<CaseDefinition> caseDefinitionList = repositoryService.createCaseDefinitionQuery().list();
-    assertEquals(0, caseDefinitionList.size());
+    assertThat(caseDefinitionList).isEmpty();
     long caseDefinitionCount =  repositoryService.createCaseDefinitionQuery().count();
-    assertEquals(0, caseDefinitionCount);
+    assertThat(caseDefinitionCount).isZero();
 
     repositoryService.deleteDeployment(deployment.getId(), true);
   }
@@ -122,16 +120,16 @@ public class CmmnDisabledTest {
 
     // variable instance query
     List<VariableInstance> result = runtimeService.createVariableInstanceQuery().list();
-    assertEquals(1, result.size());
+    assertThat(result).hasSize(1);
 
     VariableInstance variableInstance = result.get(0);
-    assertEquals("my-variable", variableInstance.getName());
+    assertThat(variableInstance.getName()).isEqualTo("my-variable");
 
     // get variable
-    assertNotNull(runtimeService.getVariable(processInstance.getId(), "my-variable"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "my-variable")).isNotNull();
 
     // get variable local
-    assertNotNull(runtimeService.getVariableLocal(processInstance.getId(), "my-variable"));
+    assertThat(runtimeService.getVariableLocal(processInstance.getId(), "my-variable")).isNotNull();
 
     repositoryService.deleteDeployment(deployment.getId(), true);
   }

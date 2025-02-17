@@ -16,10 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.identity;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
@@ -50,7 +48,7 @@ public class ReadOnlyIdentityServiceTest {
   public void setUp() {
     identityService = engineRule.getIdentityService();
 
-    assertTrue(identityService.isReadOnly());
+    assertThat(identityService.isReadOnly()).isTrue();
   }
 
   @Test
@@ -175,14 +173,14 @@ public class ReadOnlyIdentityServiceTest {
 
   @Test
   public void checkPassword() {
-    assertFalse(identityService.checkPassword("user", "password"));
+    assertThat(identityService.checkPassword("user", "password")).isFalse();
   }
 
   @Test
   public void createQuery() {
-    assertNotNull(identityService.createUserQuery().list());
-    assertNotNull(identityService.createGroupQuery().list());
-    assertNotNull(identityService.createTenantQuery().list());
+    assertThat(identityService.createUserQuery().list()).isNotNull();
+    assertThat(identityService.createGroupQuery().list()).isNotNull();
+    assertThat(identityService.createTenantQuery().list()).isNotNull();
   }
 
 }

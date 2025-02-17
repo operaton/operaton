@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.test.concurrency;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.OptimisticLockingException;
 import org.operaton.bpm.engine.RepositoryService;
@@ -156,9 +155,9 @@ public class CompetingSuspensionTest {
     signalExecutionThread.startAndWaitUntilControlIsReturned();
 
     suspensionThread.proceedAndWaitTillDone();
-    assertNull(suspensionThread.exception);
+    assertThat(suspensionThread.exception).isNull();
 
     signalExecutionThread.proceedAndWaitTillDone();
-    assertNotNull(signalExecutionThread.exception);
+    assertThat(signalExecutionThread.exception).isNotNull();
   }
 }

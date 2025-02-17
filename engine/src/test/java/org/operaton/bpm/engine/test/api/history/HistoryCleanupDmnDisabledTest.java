@@ -41,7 +41,7 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.junit.*;
 import org.junit.rules.RuleChain;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Svetlana Dorokhova
@@ -79,7 +79,7 @@ public class HistoryCleanupDmnDisabledTest {
 
       List<Job> jobs = engineRule.getManagementService().createJobQuery().list();
       if (!jobs.isEmpty()) {
-        assertEquals(1, jobs.size());
+        assertThat(jobs).hasSize(1);
         String jobId = jobs.get(0).getId();
         commandContext.getJobManager().deleteJob((JobEntity) jobs.get(0));
         commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(jobId);
@@ -114,7 +114,7 @@ public class HistoryCleanupDmnDisabledTest {
     engineRule.getManagementService().executeJob(jobId);
 
     //then
-    assertEquals(0, historyService.createHistoricProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count());
+    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isZero();
   }
 
   private void prepareHistoricProcesses(String businessKey) {

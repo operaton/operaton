@@ -24,11 +24,6 @@ import static org.operaton.bpm.engine.authorization.Permissions.DELETE;
 import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
 import static org.operaton.bpm.engine.authorization.Resources.DEPLOYMENT;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.io.InputStream;
 import java.util.Collections;
@@ -280,10 +275,11 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
     List<String> names = repositoryService.getDeploymentResourceNames(deploymentId);
 
     // then
-    assertFalse(names.isEmpty());
-    assertEquals(2, names.size());
-    assertTrue(names.contains(FIRST_RESOURCE));
-    assertTrue(names.contains(SECOND_RESOURCE));
+    assertThat(names)
+            .isNotEmpty()
+            .hasSize(2)
+            .contains(FIRST_RESOURCE)
+            .contains(SECOND_RESOURCE);
   }
 
   @Test
@@ -296,10 +292,11 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
     List<String> names = repositoryService.getDeploymentResourceNames(deploymentId);
 
     // then
-    assertFalse(names.isEmpty());
-    assertEquals(2, names.size());
-    assertTrue(names.contains(FIRST_RESOURCE));
-    assertTrue(names.contains(SECOND_RESOURCE));
+    assertThat(names)
+            .isNotEmpty()
+            .hasSize(2)
+            .contains(FIRST_RESOURCE)
+            .contains(SECOND_RESOURCE);
   }
 
   // get deployment resources //////////////////////////////////
@@ -327,8 +324,9 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
     List<Resource> resources = repositoryService.getDeploymentResources(deploymentId);
 
     // then
-    assertFalse(resources.isEmpty());
-    assertEquals(2, resources.size());
+    assertThat(resources)
+            .isNotEmpty()
+            .hasSize(2);
   }
 
   @Test
@@ -341,8 +339,9 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
     List<Resource> resources = repositoryService.getDeploymentResources(deploymentId);
 
     // then
-    assertFalse(resources.isEmpty());
-    assertEquals(2, resources.size());
+    assertThat(resources)
+            .isNotEmpty()
+            .hasSize(2);
   }
 
   // get resource as stream //////////////////////////////////
@@ -369,7 +368,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
     InputStream stream = repositoryService.getResourceAsStream(deploymentId, FIRST_RESOURCE);
 
     // then
-    assertNotNull(stream);
+    assertThat(stream).isNotNull();
   }
 
   @Test
@@ -382,7 +381,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
     InputStream stream = repositoryService.getResourceAsStream(deploymentId, FIRST_RESOURCE);
 
     // then
-    assertNotNull(stream);
+    assertThat(stream).isNotNull();
   }
 
   // get resource as stream by id//////////////////////////////////
@@ -419,7 +418,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
     InputStream stream = repositoryService.getResourceAsStreamById(deploymentId, resourceId);
 
     // then
-    assertNotNull(stream);
+    assertThat(stream).isNotNull();
   }
 
   @Test
@@ -437,7 +436,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
     InputStream stream = repositoryService.getResourceAsStreamById(deploymentId, resourceId);
 
     // then
-    assertNotNull(stream);
+    assertThat(stream).isNotNull();
   }
 
   // should create authorization /////////////////////////////////////
@@ -462,10 +461,10 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
       .singleResult();
 
     // then
-    assertNotNull(authorization);
-    assertTrue(authorization.isPermissionGranted(READ));
-    assertTrue(authorization.isPermissionGranted(DELETE));
-    assertFalse(authorization.isPermissionGranted(UPDATE));
+    assertThat(authorization).isNotNull();
+    assertThat(authorization.isPermissionGranted(READ)).isTrue();
+    assertThat(authorization.isPermissionGranted(DELETE)).isTrue();
+    assertThat(authorization.isPermissionGranted(UPDATE)).isFalse();
   }
 
   // clear authorization /////////////////////////////////////
@@ -487,13 +486,13 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
       .resourceId(deploymentId);
 
     Authorization authorization = query.singleResult();
-    assertNotNull(authorization);
+    assertThat(authorization).isNotNull();
 
     // when
     repositoryService.deleteDeployment(deploymentId);
 
     authorization = query.singleResult();
-    assertNull(authorization);
+    assertThat(authorization).isNull();
   }
 
   // register process application ///////////////////////////////////

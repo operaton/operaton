@@ -23,7 +23,6 @@ import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Permissions.READ_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
-import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 import org.operaton.bpm.engine.externaltask.ExternalTaskQuery;
@@ -80,7 +79,7 @@ public class ExternalTaskQueryAuthorizationTest extends AuthorizationTest {
 
     // then
     verifyQueryResults(query, 1);
-    assertEquals(instance1Id, query.list().get(0).getProcessInstanceId());
+    assertThat(query.list().get(0).getProcessInstanceId()).isEqualTo(instance1Id);
   }
 
   @Test
@@ -105,7 +104,7 @@ public class ExternalTaskQueryAuthorizationTest extends AuthorizationTest {
 
     // then
     verifyQueryResults(query, 1);
-    assertEquals(instance1Id, query.list().get(0).getProcessInstanceId());
+    assertThat(query.list().get(0).getProcessInstanceId()).isEqualTo(instance1Id);
   }
 
   @Test

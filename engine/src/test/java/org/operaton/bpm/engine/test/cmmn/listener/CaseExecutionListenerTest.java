@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.listener;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
 import org.operaton.bpm.engine.runtime.VariableInstance;
@@ -55,13 +53,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
-    assertTrue((Boolean) query.variableName("create").singleResult().getValue());
-    assertEquals(1, query.variableName("createEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("createOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("create").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("createEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("createOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -88,13 +86,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(5, query.count());
+    assertThat(query.count()).isEqualTo(5);
 
-    assertTrue((Boolean) query.variableName("create").singleResult().getValue());
-    assertEquals(1, query.variableName("createEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("createOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("create").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("createEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("createOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -121,13 +119,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(5, query.count());
+    assertThat(query.count()).isEqualTo(5);
 
-    assertTrue((Boolean) query.variableName("create").singleResult().getValue());
-    assertEquals(1, query.variableName("createEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("createOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("create").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("createEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("createOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -153,13 +151,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
-    assertTrue((Boolean) query.variableName("create").singleResult().getValue());
-    assertEquals(1, query.variableName("createEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("createOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("create").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("createEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("createOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -185,13 +183,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
-    assertTrue((Boolean) query.variableName("enable").singleResult().getValue());
-    assertEquals(1, query.variableName("enableEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("enableOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("enable").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("enableEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("enableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -218,13 +216,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(5, query.count());
+    assertThat(query.count()).isEqualTo(5);
 
-    assertTrue((Boolean) query.variableName("enable").singleResult().getValue());
-    assertEquals(1, query.variableName("enableEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("enableOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("enable").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("enableEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("enableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -251,13 +249,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(5, query.count());
+    assertThat(query.count()).isEqualTo(5);
 
-    assertTrue((Boolean) query.variableName("enable").singleResult().getValue());
-    assertEquals(1, query.variableName("enableEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("enableOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("enable").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("enableEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("enableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -283,13 +281,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
-    assertTrue((Boolean) query.variableName("enable").singleResult().getValue());
-    assertEquals(1, query.variableName("enableEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("enableOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("enable").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("enableEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("enableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -318,13 +316,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
-    assertTrue((Boolean) query.variableName("disable").singleResult().getValue());
-    assertEquals(1, query.variableName("disableEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("disableOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("disable").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("disableEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("disableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -354,13 +352,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(5, query.count());
+    assertThat(query.count()).isEqualTo(5);
 
-    assertTrue((Boolean) query.variableName("disable").singleResult().getValue());
-    assertEquals(1, query.variableName("disableEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("disableOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("disable").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("disableEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("disableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -390,13 +388,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(5, query.count());
+    assertThat(query.count()).isEqualTo(5);
 
-    assertTrue((Boolean) query.variableName("disable").singleResult().getValue());
-    assertEquals(1, query.variableName("disableEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("disableOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("disable").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("disableEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("disableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -425,13 +423,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
-    assertTrue((Boolean) query.variableName("disable").singleResult().getValue());
-    assertEquals(1, query.variableName("disableEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("disableOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("disable").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("disableEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("disableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -464,13 +462,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
-    assertTrue((Boolean) query.variableName("reenable").singleResult().getValue());
-    assertEquals(1, query.variableName("reenableEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("reenableOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("reenable").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("reenableEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("reenableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -504,13 +502,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(5, query.count());
+    assertThat(query.count()).isEqualTo(5);
 
-    assertTrue((Boolean) query.variableName("reenable").singleResult().getValue());
-    assertEquals(1, query.variableName("reenableEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("reenableOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("reenable").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("reenableEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("reenableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -544,13 +542,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(5, query.count());
+    assertThat(query.count()).isEqualTo(5);
 
-    assertTrue((Boolean) query.variableName("reenable").singleResult().getValue());
-    assertEquals(1, query.variableName("reenableEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("reenableOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("reenable").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("reenableEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("reenableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -583,13 +581,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
-    assertTrue((Boolean) query.variableName("reenable").singleResult().getValue());
-    assertEquals(1, query.variableName("reenableEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("reenableOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("reenable").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("reenableEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("reenableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -615,13 +613,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
-    assertTrue((Boolean) query.variableName("start").singleResult().getValue());
-    assertEquals(1, query.variableName("startEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("startOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("start").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("startEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("startOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -648,13 +646,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(5, query.count());
+    assertThat(query.count()).isEqualTo(5);
 
-    assertTrue((Boolean) query.variableName("start").singleResult().getValue());
-    assertEquals(1, query.variableName("startEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("startOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("start").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("startEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("startOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -681,13 +679,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(5, query.count());
+    assertThat(query.count()).isEqualTo(5);
 
-    assertTrue((Boolean) query.variableName("start").singleResult().getValue());
-    assertEquals(1, query.variableName("startEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("startOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("start").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("startEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("startOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -713,13 +711,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
-    assertTrue((Boolean) query.variableName("start").singleResult().getValue());
-    assertEquals(1, query.variableName("startEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("startOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("start").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("startEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("startOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -748,13 +746,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
-    assertTrue((Boolean) query.variableName("manualStart").singleResult().getValue());
-    assertEquals(1, query.variableName("manualStartEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("manualStartOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("manualStart").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("manualStartEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("manualStartOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -784,13 +782,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(5, query.count());
+    assertThat(query.count()).isEqualTo(5);
 
-    assertTrue((Boolean) query.variableName("manualStart").singleResult().getValue());
-    assertEquals(1, query.variableName("manualStartEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("manualStartOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("manualStart").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("manualStartEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("manualStartOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -820,13 +818,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(5, query.count());
+    assertThat(query.count()).isEqualTo(5);
 
-    assertTrue((Boolean) query.variableName("manualStart").singleResult().getValue());
-    assertEquals(1, query.variableName("manualStartEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("manualStartOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("manualStart").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("manualStartEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("manualStartOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -855,13 +853,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
-    assertTrue((Boolean) query.variableName("manualStart").singleResult().getValue());
-    assertEquals(1, query.variableName("manualStartEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("manualStartOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("manualStart").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("manualStartEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("manualStartOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -890,13 +888,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
-    assertTrue((Boolean) query.variableName("complete").singleResult().getValue());
-    assertEquals(1, query.variableName("completeEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("completeOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("complete").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("completeEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("completeOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -926,13 +924,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(5, query.count());
+    assertThat(query.count()).isEqualTo(5);
 
-    assertTrue((Boolean) query.variableName("complete").singleResult().getValue());
-    assertEquals(1, query.variableName("completeEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("completeOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("complete").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("completeEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("completeOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -962,13 +960,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(5, query.count());
+    assertThat(query.count()).isEqualTo(5);
 
-    assertTrue((Boolean) query.variableName("complete").singleResult().getValue());
-    assertEquals(1, query.variableName("completeEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("completeOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("complete").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("completeEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("completeOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -997,13 +995,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
-    assertTrue((Boolean) query.variableName("complete").singleResult().getValue());
-    assertEquals(1, query.variableName("completeEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("completeOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("complete").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("completeEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("completeOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -1030,13 +1028,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
-    assertTrue((Boolean) query.variableName("terminate").singleResult().getValue());
-    assertEquals(1, query.variableName("terminateEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("terminateOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("terminate").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("terminateEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("terminateOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -1064,13 +1062,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(5, query.count());
+    assertThat(query.count()).isEqualTo(5);
 
-    assertTrue((Boolean) query.variableName("terminate").singleResult().getValue());
-    assertEquals(1, query.variableName("terminateEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("terminateOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("terminate").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("terminateEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("terminateOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -1098,13 +1096,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(5, query.count());
+    assertThat(query.count()).isEqualTo(5);
 
-    assertTrue((Boolean) query.variableName("terminate").singleResult().getValue());
-    assertEquals(1, query.variableName("terminateEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("terminateOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("terminate").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("terminateEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("terminateOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -1131,13 +1129,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
-    assertTrue((Boolean) query.variableName("terminate").singleResult().getValue());
-    assertEquals(1, query.variableName("terminateEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("terminateOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("terminate").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("terminateEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("terminateOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -1164,13 +1162,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
-    assertTrue((Boolean) query.variableName("exit").singleResult().getValue());
-    assertEquals(1, query.variableName("exitEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("exitOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("exit").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("exitEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("exitOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -1198,13 +1196,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(5, query.count());
+    assertThat(query.count()).isEqualTo(5);
 
-    assertTrue((Boolean) query.variableName("exit").singleResult().getValue());
-    assertEquals(1, query.variableName("exitEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("exitOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("exit").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("exitEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("exitOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -1232,13 +1230,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(5, query.count());
+    assertThat(query.count()).isEqualTo(5);
 
-    assertTrue((Boolean) query.variableName("exit").singleResult().getValue());
-    assertEquals(1, query.variableName("exitEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("exitOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("exit").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("exitEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("exitOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -1265,13 +1263,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
-    assertTrue((Boolean) query.variableName("exit").singleResult().getValue());
-    assertEquals(1, query.variableName("exitEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("exitOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("exit").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("exitEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("exitOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -1298,13 +1296,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
-    assertTrue((Boolean) query.variableName("parentTerminate").singleResult().getValue());
-    assertEquals(1, query.variableName("parentTerminateEventCounter").singleResult().getValue());
-    assertEquals(milestoneId, query.variableName("parentTerminateOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("parentTerminate").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("parentTerminateEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("parentTerminateOnCaseExecutionId").singleResult().getValue()).isEqualTo(milestoneId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -1332,13 +1330,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(5, query.count());
+    assertThat(query.count()).isEqualTo(5);
 
-    assertTrue((Boolean) query.variableName("parentTerminate").singleResult().getValue());
-    assertEquals(1, query.variableName("parentTerminateEventCounter").singleResult().getValue());
-    assertEquals(milestoneId, query.variableName("parentTerminateOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("parentTerminate").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("parentTerminateEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("parentTerminateOnCaseExecutionId").singleResult().getValue()).isEqualTo(milestoneId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -1366,13 +1364,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(5, query.count());
+    assertThat(query.count()).isEqualTo(5);
 
-    assertTrue((Boolean) query.variableName("parentTerminate").singleResult().getValue());
-    assertEquals(1, query.variableName("parentTerminateEventCounter").singleResult().getValue());
-    assertEquals(milestoneId, query.variableName("parentTerminateOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("parentTerminate").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("parentTerminateEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("parentTerminateOnCaseExecutionId").singleResult().getValue()).isEqualTo(milestoneId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -1399,13 +1397,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
-    assertTrue((Boolean) query.variableName("parentTerminate").singleResult().getValue());
-    assertEquals(1, query.variableName("parentTerminateEventCounter").singleResult().getValue());
-    assertEquals(milestoneId, query.variableName("parentTerminateOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("parentTerminate").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("parentTerminateEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("parentTerminateOnCaseExecutionId").singleResult().getValue()).isEqualTo(milestoneId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -1432,13 +1430,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
-    assertTrue((Boolean) query.variableName("suspend").singleResult().getValue());
-    assertEquals(1, query.variableName("suspendEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("suspendOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("suspend").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("suspendEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("suspendOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -1466,13 +1464,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(5, query.count());
+    assertThat(query.count()).isEqualTo(5);
 
-    assertTrue((Boolean) query.variableName("suspend").singleResult().getValue());
-    assertEquals(1, query.variableName("suspendEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("suspendOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("suspend").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("suspendEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("suspendOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -1500,13 +1498,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(5, query.count());
+    assertThat(query.count()).isEqualTo(5);
 
-    assertTrue((Boolean) query.variableName("suspend").singleResult().getValue());
-    assertEquals(1, query.variableName("suspendEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("suspendOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("suspend").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("suspendEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("suspendOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -1533,13 +1531,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
-    assertTrue((Boolean) query.variableName("suspend").singleResult().getValue());
-    assertEquals(1, query.variableName("suspendEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("suspendOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("suspend").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("suspendEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("suspendOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -1566,13 +1564,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
-    assertTrue((Boolean) query.variableName("parentSuspend").singleResult().getValue());
-    assertEquals(1, query.variableName("parentSuspendEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("parentSuspendOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("parentSuspend").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("parentSuspendEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("parentSuspendOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -1600,13 +1598,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(5, query.count());
+    assertThat(query.count()).isEqualTo(5);
 
-    assertTrue((Boolean) query.variableName("parentSuspend").singleResult().getValue());
-    assertEquals(1, query.variableName("parentSuspendEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("parentSuspendOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("parentSuspend").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("parentSuspendEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("parentSuspendOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -1634,13 +1632,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(5, query.count());
+    assertThat(query.count()).isEqualTo(5);
 
-    assertTrue((Boolean) query.variableName("parentSuspend").singleResult().getValue());
-    assertEquals(1, query.variableName("parentSuspendEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("parentSuspendOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("parentSuspend").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("parentSuspendEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("parentSuspendOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -1667,13 +1665,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
-    assertTrue((Boolean) query.variableName("parentSuspend").singleResult().getValue());
-    assertEquals(1, query.variableName("parentSuspendEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("parentSuspendOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("parentSuspend").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("parentSuspendEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("parentSuspendOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -1702,13 +1700,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
-    assertTrue((Boolean) query.variableName("resume").singleResult().getValue());
-    assertEquals(1, query.variableName("resumeEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("resumeOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("resume").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("resumeEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("resumeOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -1738,13 +1736,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(5, query.count());
+    assertThat(query.count()).isEqualTo(5);
 
-    assertTrue((Boolean) query.variableName("resume").singleResult().getValue());
-    assertEquals(1, query.variableName("resumeEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("resumeOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("resume").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("resumeEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("resumeOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -1774,13 +1772,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(5, query.count());
+    assertThat(query.count()).isEqualTo(5);
 
-    assertTrue((Boolean) query.variableName("resume").singleResult().getValue());
-    assertEquals(1, query.variableName("resumeEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("resumeOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("resume").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("resumeEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("resumeOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -1809,13 +1807,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
-    assertTrue((Boolean) query.variableName("resume").singleResult().getValue());
-    assertEquals(1, query.variableName("resumeEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("resumeOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("resume").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("resumeEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("resumeOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -1844,13 +1842,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
-    assertTrue((Boolean) query.variableName("parentResume").singleResult().getValue());
-    assertEquals(1, query.variableName("parentResumeEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("parentResumeOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("parentResume").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("parentResumeEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("parentResumeOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -1880,13 +1878,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(5, query.count());
+    assertThat(query.count()).isEqualTo(5);
 
-    assertTrue((Boolean) query.variableName("parentResume").singleResult().getValue());
-    assertEquals(1, query.variableName("parentResumeEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("parentResumeOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("parentResume").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("parentResumeEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("parentResumeOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -1916,13 +1914,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(5, query.count());
+    assertThat(query.count()).isEqualTo(5);
 
-    assertTrue((Boolean) query.variableName("parentResume").singleResult().getValue());
-    assertEquals(1, query.variableName("parentResumeEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("parentResumeOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("parentResume").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("parentResumeEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("parentResumeOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -1951,13 +1949,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
-    assertTrue((Boolean) query.variableName("parentResume").singleResult().getValue());
-    assertEquals(1, query.variableName("parentResumeEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("parentResumeOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("parentResume").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("parentResumeEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("parentResumeOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -1984,13 +1982,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
-    assertTrue((Boolean) query.variableName("occur").singleResult().getValue());
-    assertEquals(1, query.variableName("occurEventCounter").singleResult().getValue());
-    assertEquals(milestoneId, query.variableName("occurOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("occur").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("occurEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("occurOnCaseExecutionId").singleResult().getValue()).isEqualTo(milestoneId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -2018,13 +2016,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(5, query.count());
+    assertThat(query.count()).isEqualTo(5);
 
-    assertTrue((Boolean) query.variableName("occur").singleResult().getValue());
-    assertEquals(1, query.variableName("occurEventCounter").singleResult().getValue());
-    assertEquals(milestoneId, query.variableName("occurOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("occur").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("occurEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("occurOnCaseExecutionId").singleResult().getValue()).isEqualTo(milestoneId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -2052,13 +2050,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(5, query.count());
+    assertThat(query.count()).isEqualTo(5);
 
-    assertTrue((Boolean) query.variableName("occur").singleResult().getValue());
-    assertEquals(1, query.variableName("occurEventCounter").singleResult().getValue());
-    assertEquals(milestoneId, query.variableName("occurOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("occur").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("occurEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("occurOnCaseExecutionId").singleResult().getValue()).isEqualTo(milestoneId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -2085,13 +2083,13 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
-    assertTrue((Boolean) query.variableName("occur").singleResult().getValue());
-    assertEquals(1, query.variableName("occurEventCounter").singleResult().getValue());
-    assertEquals(milestoneId, query.variableName("occurOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("occur").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("occurEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("occurOnCaseExecutionId").singleResult().getValue()).isEqualTo(milestoneId);
 
-    assertEquals(1, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
   }
 
@@ -2137,41 +2135,41 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(25, query.count());
+    assertThat(query.count()).isEqualTo(25);
 
-    assertTrue((Boolean) query.variableName("create").singleResult().getValue());
-    assertEquals(1, query.variableName("createEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("createOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("create").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("createEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("createOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertTrue((Boolean) query.variableName("enable").singleResult().getValue());
-    assertEquals(1, query.variableName("enableEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("enableOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("enable").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("enableEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("enableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertTrue((Boolean) query.variableName("disable").singleResult().getValue());
-    assertEquals(1, query.variableName("disableEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("disableOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("disable").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("disableEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("disableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertTrue((Boolean) query.variableName("reenable").singleResult().getValue());
-    assertEquals(1, query.variableName("reenableEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("reenableOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("reenable").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("reenableEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("reenableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertTrue((Boolean) query.variableName("manualStart").singleResult().getValue());
-    assertEquals(1, query.variableName("manualStartEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("manualStartOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("manualStart").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("manualStartEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("manualStartOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertTrue((Boolean) query.variableName("suspend").singleResult().getValue());
-    assertEquals(1, query.variableName("suspendEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("suspendOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("suspend").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("suspendEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("suspendOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertTrue((Boolean) query.variableName("resume").singleResult().getValue());
-    assertEquals(1, query.variableName("resumeEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("resumeOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("resume").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("resumeEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("resumeOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertTrue((Boolean) query.variableName("complete").singleResult().getValue());
-    assertEquals(1, query.variableName("completeEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("completeOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("complete").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("completeEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("completeOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(8, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(8);
 
   }
 
@@ -2218,41 +2216,41 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(26, query.count());
+    assertThat(query.count()).isEqualTo(26);
 
-    assertTrue((Boolean) query.variableName("create").singleResult().getValue());
-    assertEquals(1, query.variableName("createEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("createOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("create").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("createEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("createOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertTrue((Boolean) query.variableName("enable").singleResult().getValue());
-    assertEquals(1, query.variableName("enableEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("enableOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("enable").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("enableEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("enableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertTrue((Boolean) query.variableName("disable").singleResult().getValue());
-    assertEquals(1, query.variableName("disableEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("disableOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("disable").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("disableEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("disableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertTrue((Boolean) query.variableName("reenable").singleResult().getValue());
-    assertEquals(1, query.variableName("reenableEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("reenableOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("reenable").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("reenableEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("reenableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertTrue((Boolean) query.variableName("manualStart").singleResult().getValue());
-    assertEquals(1, query.variableName("manualStartEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("manualStartOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("manualStart").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("manualStartEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("manualStartOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertTrue((Boolean) query.variableName("suspend").singleResult().getValue());
-    assertEquals(1, query.variableName("suspendEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("suspendOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("suspend").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("suspendEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("suspendOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertTrue((Boolean) query.variableName("resume").singleResult().getValue());
-    assertEquals(1, query.variableName("resumeEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("resumeOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("resume").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("resumeEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("resumeOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertTrue((Boolean) query.variableName("complete").singleResult().getValue());
-    assertEquals(1, query.variableName("completeEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("completeOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("complete").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("completeEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("completeOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(8, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(8);
 
   }
 
@@ -2299,41 +2297,41 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(26, query.count());
+    assertThat(query.count()).isEqualTo(26);
 
-    assertTrue((Boolean) query.variableName("create").singleResult().getValue());
-    assertEquals(1, query.variableName("createEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("createOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("create").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("createEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("createOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertTrue((Boolean) query.variableName("enable").singleResult().getValue());
-    assertEquals(1, query.variableName("enableEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("enableOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("enable").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("enableEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("enableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertTrue((Boolean) query.variableName("disable").singleResult().getValue());
-    assertEquals(1, query.variableName("disableEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("disableOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("disable").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("disableEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("disableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertTrue((Boolean) query.variableName("reenable").singleResult().getValue());
-    assertEquals(1, query.variableName("reenableEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("reenableOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("reenable").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("reenableEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("reenableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertTrue((Boolean) query.variableName("manualStart").singleResult().getValue());
-    assertEquals(1, query.variableName("manualStartEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("manualStartOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("manualStart").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("manualStartEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("manualStartOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertTrue((Boolean) query.variableName("suspend").singleResult().getValue());
-    assertEquals(1, query.variableName("suspendEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("suspendOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("suspend").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("suspendEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("suspendOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertTrue((Boolean) query.variableName("resume").singleResult().getValue());
-    assertEquals(1, query.variableName("resumeEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("resumeOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("resume").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("resumeEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("resumeOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertTrue((Boolean) query.variableName("complete").singleResult().getValue());
-    assertEquals(1, query.variableName("completeEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("completeOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("complete").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("completeEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("completeOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(8, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(8);
 
   }
 
@@ -2379,41 +2377,41 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(25, query.count());
+    assertThat(query.count()).isEqualTo(25);
 
-    assertTrue((Boolean) query.variableName("create").singleResult().getValue());
-    assertEquals(1, query.variableName("createEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("createOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("create").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("createEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("createOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertTrue((Boolean) query.variableName("enable").singleResult().getValue());
-    assertEquals(1, query.variableName("enableEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("enableOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("enable").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("enableEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("enableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertTrue((Boolean) query.variableName("disable").singleResult().getValue());
-    assertEquals(1, query.variableName("disableEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("disableOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("disable").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("disableEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("disableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertTrue((Boolean) query.variableName("reenable").singleResult().getValue());
-    assertEquals(1, query.variableName("reenableEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("reenableOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("reenable").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("reenableEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("reenableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertTrue((Boolean) query.variableName("manualStart").singleResult().getValue());
-    assertEquals(1, query.variableName("manualStartEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("manualStartOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("manualStart").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("manualStartEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("manualStartOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertTrue((Boolean) query.variableName("suspend").singleResult().getValue());
-    assertEquals(1, query.variableName("suspendEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("suspendOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("suspend").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("suspendEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("suspendOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertTrue((Boolean) query.variableName("resume").singleResult().getValue());
-    assertEquals(1, query.variableName("resumeEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("resumeOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("resume").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("resumeEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("resumeOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertTrue((Boolean) query.variableName("complete").singleResult().getValue());
-    assertEquals(1, query.variableName("completeEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("completeOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("complete").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("completeEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("completeOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(8, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(8);
 
   }
 
@@ -2433,12 +2431,12 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
-    assertEquals("Hello from The Case", query.variableName("greeting").singleResult().getValue());
-    assertEquals("Hello World", query.variableName("helloWorld").singleResult().getValue());
-    assertEquals("ope", query.variableName("prefix").singleResult().getValue());
-    assertEquals("rato", query.variableName("suffix").singleResult().getValue());
+    assertThat(query.variableName("greeting").singleResult().getValue()).isEqualTo("Hello from The Case");
+    assertThat(query.variableName("helloWorld").singleResult().getValue()).isEqualTo("Hello World");
+    assertThat(query.variableName("prefix").singleResult().getValue()).isEqualTo("ope");
+    assertThat(query.variableName("suffix").singleResult().getValue()).isEqualTo("rato");
 
   }
 
@@ -2459,12 +2457,12 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(5, query.count());
+    assertThat(query.count()).isEqualTo(5);
 
-    assertEquals("Hello from The Case", query.variableName("greeting").singleResult().getValue());
-    assertEquals("Hello World", query.variableName("helloWorld").singleResult().getValue());
-    assertEquals("ope", query.variableName("prefix").singleResult().getValue());
-    assertEquals("rato", query.variableName("suffix").singleResult().getValue());
+    assertThat(query.variableName("greeting").singleResult().getValue()).isEqualTo("Hello from The Case");
+    assertThat(query.variableName("helloWorld").singleResult().getValue()).isEqualTo("Hello World");
+    assertThat(query.variableName("prefix").singleResult().getValue()).isEqualTo("ope");
+    assertThat(query.variableName("suffix").singleResult().getValue()).isEqualTo("rato");
 
   }
 
@@ -2504,21 +2502,21 @@ public class CaseExecutionListenerTest extends CmmnTest {
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId);
 
-    assertEquals(10, query.count());
+    assertThat(query.count()).isEqualTo(10);
 
-    assertTrue((Boolean) query.variableName("disable").singleResult().getValue());
-    assertEquals(1, query.variableName("disableEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("disableOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("disable").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("disableEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("disableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertTrue((Boolean) query.variableName("reenable").singleResult().getValue());
-    assertEquals(1, query.variableName("reenableEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("reenableOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("reenable").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("reenableEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("reenableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertTrue((Boolean) query.variableName("manualStart").singleResult().getValue());
-    assertEquals(1, query.variableName("manualStartEventCounter").singleResult().getValue());
-    assertEquals(humanTaskId, query.variableName("manualStartOnCaseExecutionId").singleResult().getValue());
+    assertThat((Boolean) query.variableName("manualStart").singleResult().getValue()).isTrue();
+    assertThat(query.variableName("manualStartEventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName("manualStartOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
-    assertEquals(3, query.variableName("eventCounter").singleResult().getValue());
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(3);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testDoesNotImplementCaseExecutionListenerInterfaceByClass.cmmn"})
@@ -2592,10 +2590,10 @@ public class CaseExecutionListenerTest extends CmmnTest {
     // then
     VariableInstance v1 = runtimeService.createVariableInstanceQuery().variableName("businessKey").singleResult();
     VariableInstance v2 = runtimeService.createVariableInstanceQuery().variableName("caseBusinessKey").singleResult();
-    assertNotNull(v1);
-    assertNotNull(v2);
-    assertEquals("myBusinessKey", v1.getValue());
-    assertEquals(v1.getValue(), v2.getValue());
+    assertThat(v1).isNotNull();
+    assertThat(v2).isNotNull();
+    assertThat(v1.getValue()).isEqualTo("myBusinessKey");
+    assertThat(v2.getValue()).isEqualTo(v1.getValue());
   }
 
 }

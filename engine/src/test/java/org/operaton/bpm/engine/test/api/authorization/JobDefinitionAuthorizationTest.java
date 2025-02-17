@@ -22,10 +22,8 @@ import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.management.JobDefinition;
@@ -147,8 +145,8 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     JobDefinition jobDefinition = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
-    assertNotNull(jobDefinition);
-    assertTrue(jobDefinition.isSuspended());
+    assertThat(jobDefinition).isNotNull();
+    assertThat(jobDefinition.isSuspended()).isTrue();
   }
 
   @Test
@@ -162,8 +160,8 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     JobDefinition jobDefinition = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
-    assertNotNull(jobDefinition);
-    assertTrue(jobDefinition.isSuspended());
+    assertThat(jobDefinition).isNotNull();
+    assertThat(jobDefinition.isSuspended()).isTrue();
   }
 
   // activate job definition by id ///////////////////////////////
@@ -200,8 +198,8 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     JobDefinition jobDefinition = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
-    assertNotNull(jobDefinition);
-    assertFalse(jobDefinition.isSuspended());
+    assertThat(jobDefinition).isNotNull();
+    assertThat(jobDefinition.isSuspended()).isFalse();
   }
 
   @Test
@@ -216,8 +214,8 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     JobDefinition jobDefinition = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
-    assertNotNull(jobDefinition);
-    assertFalse(jobDefinition.isSuspended());
+    assertThat(jobDefinition).isNotNull();
+    assertThat(jobDefinition.isSuspended()).isFalse();
   }
 
   // suspend job definition by id (including jobs) ///////////////////////////////
@@ -284,12 +282,12 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     JobDefinition jobDefinition = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
-    assertNotNull(jobDefinition);
-    assertTrue(jobDefinition.isSuspended());
+    assertThat(jobDefinition).isNotNull();
+    assertThat(jobDefinition.isSuspended()).isTrue();
 
     Job job = selectJobByProcessInstanceId(processInstanceId);
-    assertNotNull(job);
-    assertTrue(job.isSuspended());
+    assertThat(job).isNotNull();
+    assertThat(job.isSuspended()).isTrue();
   }
 
   @Test
@@ -305,12 +303,12 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     JobDefinition jobDefinition = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
-    assertNotNull(jobDefinition);
-    assertTrue(jobDefinition.isSuspended());
+    assertThat(jobDefinition).isNotNull();
+    assertThat(jobDefinition.isSuspended()).isTrue();
 
     Job job = selectJobByProcessInstanceId(processInstanceId);
-    assertNotNull(job);
-    assertTrue(job.isSuspended());
+    assertThat(job).isNotNull();
+    assertThat(job.isSuspended()).isTrue();
   }
 
   @Test
@@ -327,12 +325,12 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     JobDefinition jobDefinition = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
-    assertNotNull(jobDefinition);
-    assertTrue(jobDefinition.isSuspended());
+    assertThat(jobDefinition).isNotNull();
+    assertThat(jobDefinition.isSuspended()).isTrue();
 
     Job job = selectJobByProcessInstanceId(processInstanceId);
-    assertNotNull(job);
-    assertTrue(job.isSuspended());
+    assertThat(job).isNotNull();
+    assertThat(job.isSuspended()).isTrue();
   }
 
   // activate job definition by id (including jobs) ///////////////////////////////
@@ -403,12 +401,12 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     JobDefinition jobDefinition = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
-    assertNotNull(jobDefinition);
-    assertFalse(jobDefinition.isSuspended());
+    assertThat(jobDefinition).isNotNull();
+    assertThat(jobDefinition.isSuspended()).isFalse();
 
     Job job = selectJobByProcessInstanceId(processInstanceId);
-    assertNotNull(job);
-    assertFalse(job.isSuspended());
+    assertThat(job).isNotNull();
+    assertThat(job.isSuspended()).isFalse();
   }
 
   @Test
@@ -425,12 +423,12 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     JobDefinition jobDefinition = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
-    assertNotNull(jobDefinition);
-    assertFalse(jobDefinition.isSuspended());
+    assertThat(jobDefinition).isNotNull();
+    assertThat(jobDefinition.isSuspended()).isFalse();
 
     Job job = selectJobByProcessInstanceId(processInstanceId);
-    assertNotNull(job);
-    assertFalse(job.isSuspended());
+    assertThat(job).isNotNull();
+    assertThat(job.isSuspended()).isFalse();
   }
 
   @Test
@@ -448,12 +446,12 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     JobDefinition jobDefinition = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
-    assertNotNull(jobDefinition);
-    assertFalse(jobDefinition.isSuspended());
+    assertThat(jobDefinition).isNotNull();
+    assertThat(jobDefinition.isSuspended()).isFalse();
 
     Job job = selectJobByProcessInstanceId(processInstanceId);
-    assertNotNull(job);
-    assertFalse(job.isSuspended());
+    assertThat(job).isNotNull();
+    assertThat(job.isSuspended()).isFalse();
   }
 
   // suspend job definition by process definition id ///////////////////////////////
@@ -488,8 +486,8 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     JobDefinition jobDefinition = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
-    assertNotNull(jobDefinition);
-    assertTrue(jobDefinition.isSuspended());
+    assertThat(jobDefinition).isNotNull();
+    assertThat(jobDefinition.isSuspended()).isTrue();
   }
 
   @Test
@@ -503,8 +501,8 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     JobDefinition jobDefinition = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
-    assertNotNull(jobDefinition);
-    assertTrue(jobDefinition.isSuspended());
+    assertThat(jobDefinition).isNotNull();
+    assertThat(jobDefinition.isSuspended()).isTrue();
   }
 
   // activate job definition by process definition id ///////////////////////////////
@@ -541,8 +539,8 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     JobDefinition jobDefinition = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
-    assertNotNull(jobDefinition);
-    assertFalse(jobDefinition.isSuspended());
+    assertThat(jobDefinition).isNotNull();
+    assertThat(jobDefinition.isSuspended()).isFalse();
   }
 
   @Test
@@ -557,8 +555,8 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     JobDefinition jobDefinition = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
-    assertNotNull(jobDefinition);
-    assertFalse(jobDefinition.isSuspended());
+    assertThat(jobDefinition).isNotNull();
+    assertThat(jobDefinition.isSuspended()).isFalse();
   }
 
   // suspend job definition by process definition id (including jobs) ///////////////////////////////
@@ -626,12 +624,12 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     JobDefinition jobDefinition = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
-    assertNotNull(jobDefinition);
-    assertTrue(jobDefinition.isSuspended());
+    assertThat(jobDefinition).isNotNull();
+    assertThat(jobDefinition.isSuspended()).isTrue();
 
     Job job = selectJobByProcessInstanceId(processInstanceId);
-    assertNotNull(job);
-    assertTrue(job.isSuspended());
+    assertThat(job).isNotNull();
+    assertThat(job.isSuspended()).isTrue();
   }
 
   @Test
@@ -647,12 +645,12 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     JobDefinition jobDefinition = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
-    assertNotNull(jobDefinition);
-    assertTrue(jobDefinition.isSuspended());
+    assertThat(jobDefinition).isNotNull();
+    assertThat(jobDefinition.isSuspended()).isTrue();
 
     Job job = selectJobByProcessInstanceId(processInstanceId);
-    assertNotNull(job);
-    assertTrue(job.isSuspended());
+    assertThat(job).isNotNull();
+    assertThat(job.isSuspended()).isTrue();
   }
 
   @Test
@@ -669,12 +667,12 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     JobDefinition jobDefinition = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
-    assertNotNull(jobDefinition);
-    assertTrue(jobDefinition.isSuspended());
+    assertThat(jobDefinition).isNotNull();
+    assertThat(jobDefinition.isSuspended()).isTrue();
 
     Job job = selectJobByProcessInstanceId(processInstanceId);
-    assertNotNull(job);
-    assertTrue(job.isSuspended());
+    assertThat(job).isNotNull();
+    assertThat(job.isSuspended()).isTrue();
   }
 
   // activate job definition by id (including jobs) ///////////////////////////////
@@ -745,12 +743,12 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     JobDefinition jobDefinition = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
-    assertNotNull(jobDefinition);
-    assertFalse(jobDefinition.isSuspended());
+    assertThat(jobDefinition).isNotNull();
+    assertThat(jobDefinition.isSuspended()).isFalse();
 
     Job job = selectJobByProcessInstanceId(processInstanceId);
-    assertNotNull(job);
-    assertFalse(job.isSuspended());
+    assertThat(job).isNotNull();
+    assertThat(job.isSuspended()).isFalse();
   }
 
   @Test
@@ -767,12 +765,12 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     JobDefinition jobDefinition = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
-    assertNotNull(jobDefinition);
-    assertFalse(jobDefinition.isSuspended());
+    assertThat(jobDefinition).isNotNull();
+    assertThat(jobDefinition.isSuspended()).isFalse();
 
     Job job = selectJobByProcessInstanceId(processInstanceId);
-    assertNotNull(job);
-    assertFalse(job.isSuspended());
+    assertThat(job).isNotNull();
+    assertThat(job.isSuspended()).isFalse();
   }
 
   @Test
@@ -790,12 +788,12 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     JobDefinition jobDefinition = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
-    assertNotNull(jobDefinition);
-    assertFalse(jobDefinition.isSuspended());
+    assertThat(jobDefinition).isNotNull();
+    assertThat(jobDefinition.isSuspended()).isFalse();
 
     Job job = selectJobByProcessInstanceId(processInstanceId);
-    assertNotNull(job);
-    assertFalse(job.isSuspended());
+    assertThat(job).isNotNull();
+    assertThat(job.isSuspended()).isFalse();
   }
 
   // suspend job definition by process definition key ///////////////////////////////
@@ -828,8 +826,8 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     JobDefinition jobDefinition = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
-    assertNotNull(jobDefinition);
-    assertTrue(jobDefinition.isSuspended());
+    assertThat(jobDefinition).isNotNull();
+    assertThat(jobDefinition.isSuspended()).isTrue();
   }
 
   @Test
@@ -842,8 +840,8 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     JobDefinition jobDefinition = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
-    assertNotNull(jobDefinition);
-    assertTrue(jobDefinition.isSuspended());
+    assertThat(jobDefinition).isNotNull();
+    assertThat(jobDefinition.isSuspended()).isTrue();
   }
 
   // activate job definition by process definition key ///////////////////////////////
@@ -878,8 +876,8 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     JobDefinition jobDefinition = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
-    assertNotNull(jobDefinition);
-    assertFalse(jobDefinition.isSuspended());
+    assertThat(jobDefinition).isNotNull();
+    assertThat(jobDefinition.isSuspended()).isFalse();
   }
 
   @Test
@@ -893,8 +891,8 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     JobDefinition jobDefinition = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
-    assertNotNull(jobDefinition);
-    assertFalse(jobDefinition.isSuspended());
+    assertThat(jobDefinition).isNotNull();
+    assertThat(jobDefinition.isSuspended()).isFalse();
   }
 
   // suspend job definition by process definition key (including jobs) ///////////////////////////////
@@ -959,12 +957,12 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     JobDefinition jobDefinition = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
-    assertNotNull(jobDefinition);
-    assertTrue(jobDefinition.isSuspended());
+    assertThat(jobDefinition).isNotNull();
+    assertThat(jobDefinition.isSuspended()).isTrue();
 
     Job job = selectJobByProcessInstanceId(processInstanceId);
-    assertNotNull(job);
-    assertTrue(job.isSuspended());
+    assertThat(job).isNotNull();
+    assertThat(job.isSuspended()).isTrue();
   }
 
   @Test
@@ -979,12 +977,12 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     JobDefinition jobDefinition = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
-    assertNotNull(jobDefinition);
-    assertTrue(jobDefinition.isSuspended());
+    assertThat(jobDefinition).isNotNull();
+    assertThat(jobDefinition.isSuspended()).isTrue();
 
     Job job = selectJobByProcessInstanceId(processInstanceId);
-    assertNotNull(job);
-    assertTrue(job.isSuspended());
+    assertThat(job).isNotNull();
+    assertThat(job.isSuspended()).isTrue();
   }
 
   @Test
@@ -1000,12 +998,12 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     JobDefinition jobDefinition = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
-    assertNotNull(jobDefinition);
-    assertTrue(jobDefinition.isSuspended());
+    assertThat(jobDefinition).isNotNull();
+    assertThat(jobDefinition.isSuspended()).isTrue();
 
     Job job = selectJobByProcessInstanceId(processInstanceId);
-    assertNotNull(job);
-    assertTrue(job.isSuspended());
+    assertThat(job).isNotNull();
+    assertThat(job.isSuspended()).isTrue();
   }
 
   // activate job definition by id (including jobs) ///////////////////////////////
@@ -1073,12 +1071,12 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     JobDefinition jobDefinition = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
-    assertNotNull(jobDefinition);
-    assertFalse(jobDefinition.isSuspended());
+    assertThat(jobDefinition).isNotNull();
+    assertThat(jobDefinition.isSuspended()).isFalse();
 
     Job job = selectJobByProcessInstanceId(processInstanceId);
-    assertNotNull(job);
-    assertFalse(job.isSuspended());
+    assertThat(job).isNotNull();
+    assertThat(job.isSuspended()).isFalse();
   }
 
   @Test
@@ -1094,12 +1092,12 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     JobDefinition jobDefinition = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
-    assertNotNull(jobDefinition);
-    assertFalse(jobDefinition.isSuspended());
+    assertThat(jobDefinition).isNotNull();
+    assertThat(jobDefinition.isSuspended()).isFalse();
 
     Job job = selectJobByProcessInstanceId(processInstanceId);
-    assertNotNull(job);
-    assertFalse(job.isSuspended());
+    assertThat(job).isNotNull();
+    assertThat(job.isSuspended()).isFalse();
   }
 
   @Test
@@ -1116,12 +1114,12 @@ public class JobDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     JobDefinition jobDefinition = selectJobDefinitionByProcessDefinitionKey(TIMER_BOUNDARY_PROCESS_KEY);
-    assertNotNull(jobDefinition);
-    assertFalse(jobDefinition.isSuspended());
+    assertThat(jobDefinition).isNotNull();
+    assertThat(jobDefinition.isSuspended()).isFalse();
 
     Job job = selectJobByProcessInstanceId(processInstanceId);
-    assertNotNull(job);
-    assertFalse(job.isSuspended());
+    assertThat(job).isNotNull();
+    assertThat(job.isSuspended()).isFalse();
   }
 
   // helper /////////////////////////////////////////////////////

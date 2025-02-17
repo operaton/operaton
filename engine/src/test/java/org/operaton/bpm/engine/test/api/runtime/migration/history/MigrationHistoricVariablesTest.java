@@ -42,16 +42,12 @@ import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnM
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Thorben Lindhauer
@@ -126,10 +122,10 @@ public class MigrationHistoricVariablesTest {
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
     // then there is still one historic variable instance
-    Assert.assertEquals(1, historyService.createHistoricVariableInstanceQuery().count());
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(1);
 
     // and no additional historic details
-    Assert.assertEquals(1, historyService.createHistoricDetailQuery().count());
+    assertThat(historyService.createHistoricDetailQuery().count()).isEqualTo(1);
   }
 
   @Test
@@ -160,10 +156,10 @@ public class MigrationHistoricVariablesTest {
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
     // then there is still one historic variable instance
-    Assert.assertEquals(1, historyService.createHistoricVariableInstanceQuery().count());
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(1);
 
     // and no additional historic details
-    Assert.assertEquals(1, historyService.createHistoricDetailQuery().count());
+    assertThat(historyService.createHistoricDetailQuery().count()).isEqualTo(1);
   }
 
   @Test
@@ -191,10 +187,10 @@ public class MigrationHistoricVariablesTest {
 
     //then
     HistoricVariableInstance migratedInstance = historyService.createHistoricVariableInstanceQuery().singleResult();
-    assertEquals(targetDefinition.getKey(), migratedInstance.getProcessDefinitionKey());
-    assertEquals(targetDefinition.getId(), migratedInstance.getProcessDefinitionId());
-    assertEquals(instance.getActivityInstanceId(), migratedInstance.getActivityInstanceId());
-    assertEquals(instance.getExecutionId(), migratedInstance.getExecutionId());
+    assertThat(migratedInstance.getProcessDefinitionKey()).isEqualTo(targetDefinition.getKey());
+    assertThat(migratedInstance.getProcessDefinitionId()).isEqualTo(targetDefinition.getId());
+    assertThat(migratedInstance.getActivityInstanceId()).isEqualTo(instance.getActivityInstanceId());
+    assertThat(migratedInstance.getExecutionId()).isEqualTo(instance.getExecutionId());
   }
 
   @Test
@@ -218,11 +214,11 @@ public class MigrationHistoricVariablesTest {
 
     //then
     List<HistoricVariableInstance> migratedVariables = historyService.createHistoricVariableInstanceQuery().list();
-    Assert.assertEquals(6, migratedVariables.size()); // 3 loop counter + nrOfInstance + nrOfActiveInstances + nrOfCompletedInstances
+    assertThat(migratedVariables).hasSize(6); // 3 loop counter + nrOfInstance + nrOfActiveInstances + nrOfCompletedInstances
 
     for (HistoricVariableInstance variable : migratedVariables) {
-      assertEquals(targetDefinition.getKey(), variable.getProcessDefinitionKey());
-      assertEquals(targetDefinition.getId(), variable.getProcessDefinitionId());
+      assertThat(variable.getProcessDefinitionKey()).isEqualTo(targetDefinition.getKey());
+      assertThat(variable.getProcessDefinitionId()).isEqualTo(targetDefinition.getId());
 
     }
   }
@@ -265,7 +261,7 @@ public class MigrationHistoricVariablesTest {
       .createHistoricVariableInstanceQuery()
       .variableId(eventScopeVariable.getId())
       .singleResult();
-    Assert.assertEquals(targetDefinition.getId(), historicVariableInstance.getProcessDefinitionId());
+    assertThat(historicVariableInstance.getProcessDefinitionId()).isEqualTo(targetDefinition.getId());
   }
 
 
@@ -298,7 +294,7 @@ public class MigrationHistoricVariablesTest {
         Variables.createVariables().putValue("foo", "bar"));
 
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     executeJob(job);
 
     MigrationPlan migrationPlan = rule.getRuntimeService()
@@ -314,31 +310,31 @@ public class MigrationHistoricVariablesTest {
 
     // then the failed job is also migrated
     job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
-    assertEquals(0, job.getRetries());
+    assertThat(job).isNotNull();
+    assertThat(job.getRetries()).isZero();
     managementService.setJobRetries(job.getId(), 1);
 
     // when the failed job is executed again
     executeJob(managementService.createJobQuery().singleResult());
 
     // then job succeeds
-    assertNull(managementService.createJobQuery().singleResult());
-    assertNotNull(runtimeService.createProcessInstanceQuery().activityIdIn(userTask).singleResult());
+    assertThat(managementService.createJobQuery().singleResult()).isNull();
+    assertThat(runtimeService.createProcessInstanceQuery().activityIdIn(userTask).singleResult()).isNotNull();
 
     // and variable history was written
     HistoricVariableInstance migratedInstance = historyService.createHistoricVariableInstanceQuery().singleResult();
-    assertEquals(targetDefinition.getKey(), migratedInstance.getProcessDefinitionKey());
-    assertEquals(targetDefinition.getId(), migratedInstance.getProcessDefinitionId());
+    assertThat(migratedInstance.getProcessDefinitionKey()).isEqualTo(targetDefinition.getKey());
+    assertThat(migratedInstance.getProcessDefinitionId()).isEqualTo(targetDefinition.getId());
 
     // details
     HistoricVariableUpdateEventEntity historicDetail = (HistoricVariableUpdateEventEntity) historyService.createHistoricDetailQuery()
         .processInstanceId(processInstance.getId())
         .singleResult();
 
-    assertNotNull(historicDetail);
-    assertTrue(historicDetail.isInitial());
-    assertEquals("foo", historicDetail.getVariableName());
-    assertEquals("bar", historicDetail.getTextValue());
+    assertThat(historicDetail).isNotNull();
+    assertThat(historicDetail.isInitial()).isTrue();
+    assertThat(historicDetail.getVariableName()).isEqualTo("foo");
+    assertThat(historicDetail.getTextValue()).isEqualTo("bar");
   }
 
   @Test
@@ -368,10 +364,10 @@ public class MigrationHistoricVariablesTest {
 
     //then
     HistoricVariableInstance migratedInstance = historyService.createHistoricVariableInstanceQuery().singleResult();
-    assertEquals(targetDefinition.getKey(), migratedInstance.getProcessDefinitionKey());
-    assertEquals(targetDefinition.getId(), migratedInstance.getProcessDefinitionId());
-    assertEquals(instance.getActivityInstanceId(), migratedInstance.getActivityInstanceId());
-    assertEquals(instance.getExecutionId(), migratedInstance.getExecutionId());
+    assertThat(migratedInstance.getProcessDefinitionKey()).isEqualTo(targetDefinition.getKey());
+    assertThat(migratedInstance.getProcessDefinitionId()).isEqualTo(targetDefinition.getId());
+    assertThat(migratedInstance.getActivityInstanceId()).isEqualTo(instance.getActivityInstanceId());
+    assertThat(migratedInstance.getExecutionId()).isEqualTo(instance.getExecutionId());
   }
 
   protected void executeJob(Job job) {

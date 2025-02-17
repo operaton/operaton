@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.authorization.batch;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
-import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -160,12 +159,12 @@ public class DeleteHistoricProcessInstancesBatchAuthorizationTest extends Abstra
   protected void assertScenario() {
     if (authRule.assertScenario(getScenario())) {
       Batch batch = engineRule.getManagementService().createBatchQuery().singleResult();
-      assertEquals("userId", batch.getCreateUserId());
+      assertThat(batch.getCreateUserId()).isEqualTo("userId");
 
       if (testHelper.isHistoryLevelFull()) {
         assertThat(engineRule.getHistoryService().createUserOperationLogQuery().entityType(EntityTypes.PROCESS_INSTANCE).count()).isEqualTo(BATCH_OPERATIONS);
         HistoricBatch historicBatch = engineRule.getHistoryService().createHistoricBatchQuery().list().get(0);
-        assertEquals("userId", historicBatch.getCreateUserId());
+        assertThat(historicBatch.getCreateUserId()).isEqualTo("userId");
       }
       assertThat(historyService.createHistoricProcessInstanceQuery().count()).isZero();
     }

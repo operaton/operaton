@@ -25,8 +25,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Kristin Polenz
@@ -38,7 +37,7 @@ public class MessageEndEventTest extends PluggableProcessEngineTest {
   @Test
   public void testMessageEndEvent() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
     testRule.assertProcessEnded(processInstance.getId());
   }
 
@@ -52,10 +51,10 @@ public class MessageEndEventTest extends PluggableProcessEngineTest {
     variables.put("expressionWasExecuted", false);
     variables.put("delegateExpressionWasExecuted", false);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variables);
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
 
     testRule.assertProcessEnded(processInstance.getId());
-    assertTrue(DummyServiceTask.wasExecuted);
+    assertThat(DummyServiceTask.wasExecuted).isTrue();
 
     // expression
     variables = new HashMap<>();
@@ -64,10 +63,10 @@ public class MessageEndEventTest extends PluggableProcessEngineTest {
     variables.put("delegateExpressionWasExecuted", false);
     variables.put("endEventBean", new EndEventBean());
     processInstance = runtimeService.startProcessInstanceByKey("process", variables);
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
 
     testRule.assertProcessEnded(processInstance.getId());
-    assertTrue(DummyServiceTask.expressionWasExecuted);
+    assertThat(DummyServiceTask.expressionWasExecuted).isTrue();
 
     // delegate expression
     variables = new HashMap<>();
@@ -76,10 +75,10 @@ public class MessageEndEventTest extends PluggableProcessEngineTest {
     variables.put("delegateExpressionWasExecuted", true);
     variables.put("endEventBean", new EndEventBean());
     processInstance = runtimeService.startProcessInstanceByKey("process", variables);
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
 
     testRule.assertProcessEnded(processInstance.getId());
-    assertTrue(DummyServiceTask.delegateExpressionWasExecuted);
+    assertThat(DummyServiceTask.delegateExpressionWasExecuted).isTrue();
   }
 
 }

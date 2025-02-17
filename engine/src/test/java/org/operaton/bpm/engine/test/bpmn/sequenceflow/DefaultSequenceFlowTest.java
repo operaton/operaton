@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.sequenceflow;
 
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.impl.util.CollectionUtil;
 import org.operaton.bpm.engine.test.Deployment;
@@ -37,15 +37,15 @@ public class DefaultSequenceFlowTest extends PluggableProcessEngineTest {
   public void testDefaultSequenceFlowOnTask() {
     String procId = runtimeService.startProcessInstanceByKey("defaultSeqFlow",
             CollectionUtil.singletonMap("input", 2)).getId();
-    assertNotNull(runtimeService.createExecutionQuery().processInstanceId(procId).activityId("task2").singleResult());
+    assertThat(runtimeService.createExecutionQuery().processInstanceId(procId).activityId("task2").singleResult()).isNotNull();
     
     procId = runtimeService.startProcessInstanceByKey("defaultSeqFlow",
             CollectionUtil.singletonMap("input", 3)).getId();
-    assertNotNull(runtimeService.createExecutionQuery().processInstanceId(procId).activityId("task3").singleResult());
+    assertThat(runtimeService.createExecutionQuery().processInstanceId(procId).activityId("task3").singleResult()).isNotNull();
     
     procId = runtimeService.startProcessInstanceByKey("defaultSeqFlow",
             CollectionUtil.singletonMap("input", 123)).getId();
-    assertNotNull(runtimeService.createExecutionQuery().processInstanceId(procId).activityId("task1").singleResult());
+    assertThat(runtimeService.createExecutionQuery().processInstanceId(procId).activityId("task1").singleResult()).isNotNull();
   }
 
 }

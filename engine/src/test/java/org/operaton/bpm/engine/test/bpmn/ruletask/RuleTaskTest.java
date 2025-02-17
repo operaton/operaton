@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.ruletask;
 
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
@@ -36,7 +36,7 @@ public class RuleTaskTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("businessRuleTaskJavaDelegate");
     
     testRule.assertProcessEnded(processInstance.getId());
-    assertTrue(DummyServiceTask.wasExecuted);
+    assertThat(DummyServiceTask.wasExecuted).isTrue();
   }
 
 }

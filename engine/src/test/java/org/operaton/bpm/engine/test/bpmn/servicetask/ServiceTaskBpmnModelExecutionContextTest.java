@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.servicetask;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
 
@@ -50,21 +48,21 @@ public class ServiceTaskBpmnModelExecutionContextTest extends PluggableProcessEn
     runtimeService.startProcessInstanceByKey(PROCESS_ID);
 
     BpmnModelInstance modelInstance = ModelExecutionContextServiceTask.modelInstance;
-    assertNotNull(modelInstance);
+    assertThat(modelInstance).isNotNull();
 
     Model model = modelInstance.getModel();
     Collection<ModelElementInstance> events = modelInstance.getModelElementsByType(model.getType(Event.class));
-    assertEquals(2, events.size());
+    assertThat(events).hasSize(2);
     Collection<ModelElementInstance> tasks = modelInstance.getModelElementsByType(model.getType(Task.class));
-    assertEquals(1, tasks.size());
+    assertThat(tasks).hasSize(1);
 
     Process process = (Process) modelInstance.getDefinitions().getRootElements().iterator().next();
-    assertEquals(PROCESS_ID, process.getId());
-    assertTrue(process.isExecutable());
+    assertThat(process.getId()).isEqualTo(PROCESS_ID);
+    assertThat(process.isExecutable()).isTrue();
 
     ServiceTask serviceTask = ModelExecutionContextServiceTask.serviceTask;
-    assertNotNull(serviceTask);
-    assertEquals(ModelExecutionContextServiceTask.class.getName(), serviceTask.getOperatonClass());
+    assertThat(serviceTask).isNotNull();
+    assertThat(serviceTask.getOperatonClass()).isEqualTo(ModelExecutionContextServiceTask.class.getName());
   }
 
   private void deploy() {

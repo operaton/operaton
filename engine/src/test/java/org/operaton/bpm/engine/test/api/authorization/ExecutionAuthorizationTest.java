@@ -21,8 +21,7 @@ import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Permissions.READ_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ExecutionQuery;
@@ -73,8 +72,8 @@ public class ExecutionAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     Execution execution = query.singleResult();
-    assertNotNull(execution);
-    assertEquals(processInstanceId, execution.getProcessInstanceId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getProcessInstanceId()).isEqualTo(processInstanceId);
   }
 
   @Test
@@ -90,8 +89,8 @@ public class ExecutionAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     Execution execution = query.singleResult();
-    assertNotNull(execution);
-    assertEquals(processInstanceId, execution.getProcessInstanceId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getProcessInstanceId()).isEqualTo(processInstanceId);
   }
 
   @Test
@@ -135,8 +134,8 @@ public class ExecutionAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     Execution execution = query.singleResult();
-    assertNotNull(execution);
-    assertEquals(processInstanceId, execution.getProcessInstanceId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getProcessInstanceId()).isEqualTo(processInstanceId);
   }
 
   @Test
@@ -152,8 +151,8 @@ public class ExecutionAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     Execution execution = query.singleResult();
-    assertNotNull(execution);
-    assertEquals(processInstanceId, execution.getProcessInstanceId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getProcessInstanceId()).isEqualTo(processInstanceId);
   }
 
   @Test
@@ -196,8 +195,8 @@ public class ExecutionAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     Execution execution = query.singleResult();
-    assertNotNull(execution);
-    assertEquals(processInstanceId, execution.getProcessInstanceId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getProcessInstanceId()).isEqualTo(processInstanceId);
   }
 
   @Test

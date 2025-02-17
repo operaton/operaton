@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.usertask;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
@@ -37,7 +37,7 @@ public class InitiatorTest extends PluggableProcessEngineTest {
     } finally {
       identityService.setAuthenticatedUserId(null);
     }
-    
-    assertEquals(1, taskService.createTaskQuery().taskAssignee("bono").count());
+
+    assertThat(taskService.createTaskQuery().taskAssignee("bono").count()).isEqualTo(1);
   }
 }

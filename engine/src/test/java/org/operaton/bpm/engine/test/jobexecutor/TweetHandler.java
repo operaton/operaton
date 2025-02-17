@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +27,6 @@ import org.operaton.bpm.engine.impl.jobexecutor.JobHandlerConfiguration;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.test.jobexecutor.TweetHandler.TweetJobConfiguration;
-import org.junit.Assert;
 
 public class TweetHandler implements JobHandler<TweetJobConfiguration> {
 
@@ -39,7 +40,7 @@ public class TweetHandler implements JobHandler<TweetJobConfiguration> {
   @Override
   public void execute(TweetJobConfiguration configuration, ExecutionEntity execution, CommandContext commandContext, String tenantId) {
     messages.add(configuration.getMessage());
-    Assert.assertNotNull(commandContext);
+    assertThat(commandContext).isNotNull();
   }
 
   public List<String> getMessages() {

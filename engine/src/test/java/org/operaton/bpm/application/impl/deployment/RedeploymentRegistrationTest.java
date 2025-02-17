@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.application.impl.deployment;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -120,7 +119,7 @@ public class RedeploymentRegistrationTest {
       .addClasspathResource(resource1)
       .deploy();
 
-    assertEquals(reference, getProcessApplicationForDeployment(deployment1.getId()));
+    assertThat(getProcessApplicationForDeployment(deployment1.getId())).isEqualTo(reference);
 
     // when
     Deployment deployment2 = repositoryService
@@ -130,7 +129,7 @@ public class RedeploymentRegistrationTest {
         .deploy();
 
     // then
-    assertNull(getProcessApplicationForDeployment(deployment2.getId()));
+    assertThat(getProcessApplicationForDeployment(deployment2.getId())).isNull();
   }
 
   @Test
@@ -161,7 +160,7 @@ public class RedeploymentRegistrationTest {
     String definitionId = getLatestDefinitionIdByKey(definitionKey1);
 
     // then
-    assertNull(getProcessApplicationForDefinition(definitionId));
+    assertThat(getProcessApplicationForDefinition(definitionId)).isNull();
   }
 
   @Test
@@ -175,7 +174,7 @@ public class RedeploymentRegistrationTest {
       .addClasspathResource(resource1)
       .deploy();
 
-    assertEquals(reference1, getProcessApplicationForDeployment(deployment1.getId()));
+    assertThat(getProcessApplicationForDeployment(deployment1.getId())).isEqualTo(reference1);
 
     // when
     ProcessApplicationReference reference2 = processApplication.getReference();
@@ -187,7 +186,7 @@ public class RedeploymentRegistrationTest {
         .deploy();
 
     // then
-    assertEquals(reference2, getProcessApplicationForDeployment(deployment2.getId()));
+    assertThat(getProcessApplicationForDeployment(deployment2.getId())).isEqualTo(reference2);
   }
 
   @Test
@@ -210,10 +209,10 @@ public class RedeploymentRegistrationTest {
     String definitionId = getLatestDefinitionIdByKey(definitionKey1);
 
     // then
-    assertEquals(reference, getProcessApplicationForDefinition(definitionId));
+    assertThat(getProcessApplicationForDefinition(definitionId)).isEqualTo(reference);
 
     // and the reference is not cached
-    assertNull(getProcessApplicationForDeployment(deployment2.getId()));
+    assertThat(getProcessApplicationForDeployment(deployment2.getId())).isNull();
   }
 
   @Test
@@ -237,8 +236,8 @@ public class RedeploymentRegistrationTest {
     String definitionId = getLatestDefinitionIdByKey(definitionKey1);
 
     // then
-    assertEquals(reference2, getProcessApplicationForDefinition(definitionId));
-    assertEquals(reference2, getProcessApplicationForDeployment(deployment2.getId()));
+    assertThat(getProcessApplicationForDefinition(definitionId)).isEqualTo(reference2);
+    assertThat(getProcessApplicationForDeployment(deployment2.getId())).isEqualTo(reference2);
   }
 
   @Test
@@ -272,8 +271,8 @@ public class RedeploymentRegistrationTest {
     String secondDefinitionId = getLatestDefinitionIdByKey(definitionKey2);
 
     // then
-    assertEquals(reference2, getProcessApplicationForDefinition(firstDefinitionId));
-    assertNull(getProcessApplicationForDefinition(secondDefinitionId));
+    assertThat(getProcessApplicationForDefinition(firstDefinitionId)).isEqualTo(reference2);
+    assertThat(getProcessApplicationForDefinition(secondDefinitionId)).isNull();
   }
 
   @Test
@@ -308,8 +307,8 @@ public class RedeploymentRegistrationTest {
     String secondDefinitionId = getLatestDefinitionIdByKey(definitionKey2);
 
     // then
-    assertEquals(reference2, getProcessApplicationForDefinition(firstDefinitionId));
-    assertEquals(reference1, getProcessApplicationForDefinition(secondDefinitionId));
+    assertThat(getProcessApplicationForDefinition(firstDefinitionId)).isEqualTo(reference2);
+    assertThat(getProcessApplicationForDefinition(secondDefinitionId)).isEqualTo(reference1);
   }
 
   @Test
@@ -349,8 +348,8 @@ public class RedeploymentRegistrationTest {
     String secondDefinitionId = getLatestDefinitionIdByKey(definitionKey1);
 
     // then
-    assertEquals(reference1, getProcessApplicationForDefinition(firstDefinitionId));
-    assertEquals(reference1, getProcessApplicationForDefinition(secondDefinitionId));
+    assertThat(getProcessApplicationForDefinition(firstDefinitionId)).isEqualTo(reference1);
+    assertThat(getProcessApplicationForDefinition(secondDefinitionId)).isEqualTo(reference1);
   }
 
   @Test
@@ -384,8 +383,8 @@ public class RedeploymentRegistrationTest {
     String secondDefinitionId = getLatestDefinitionIdByKey(definitionKey2);
 
     // then
-    assertEquals(reference1, getProcessApplicationForDefinition(firstDefinitionId));
-    assertEquals(reference2, getProcessApplicationForDefinition(secondDefinitionId));
+    assertThat(getProcessApplicationForDefinition(firstDefinitionId)).isEqualTo(reference1);
+    assertThat(getProcessApplicationForDefinition(secondDefinitionId)).isEqualTo(reference2);
   }
 
   @Test
@@ -418,13 +417,13 @@ public class RedeploymentRegistrationTest {
     String firstDefinitionId = getLatestDefinitionIdByKey(definitionKey1);
 
     // then (1)
-    assertEquals(reference2, getProcessApplicationForDefinition(firstDefinitionId));
+    assertThat(getProcessApplicationForDefinition(firstDefinitionId)).isEqualTo(reference2);
 
     // when (2)
     deleteDeployment(deployment2);
 
     // then (2)
-    assertNull(getProcessApplicationForDefinition(firstDefinitionId));
+    assertThat(getProcessApplicationForDefinition(firstDefinitionId)).isNull();
   }
 
   @Test
@@ -457,13 +456,13 @@ public class RedeploymentRegistrationTest {
     String firstDefinitionId = getLatestDefinitionIdByKey(definitionKey1);
 
     // then (1)
-    assertEquals(reference2, getProcessApplicationForDefinition(firstDefinitionId));
+    assertThat(getProcessApplicationForDefinition(firstDefinitionId)).isEqualTo(reference2);
 
     // when (2)
     discardDefinitionCache();
 
     // then (2)
-    assertEquals(reference2, getProcessApplicationForDefinition(firstDefinitionId));
+    assertThat(getProcessApplicationForDefinition(firstDefinitionId)).isEqualTo(reference2);
   }
 
   // helper ///////////////////////////////////////////

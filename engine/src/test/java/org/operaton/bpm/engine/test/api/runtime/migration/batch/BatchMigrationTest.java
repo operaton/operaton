@@ -43,18 +43,17 @@ import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnM
 
 import java.util.*;
 
-import org.assertj.core.api.Assertions;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 @RunWith(Parameterized.class)
 public class BatchMigrationTest {
@@ -243,7 +242,7 @@ public class BatchMigrationTest {
       .build();
 
     ProcessInstanceQuery emptyProcessInstanceQuery = runtimeService.createProcessInstanceQuery();
-    assertEquals(0, emptyProcessInstanceQuery.count());
+    assertThat(emptyProcessInstanceQuery.count()).isZero();
     var migrationPlanExecutionBuilder = runtimeService.newMigration(migrationPlan).processInstanceQuery(emptyProcessInstanceQuery);
 
     try {
@@ -272,30 +271,30 @@ public class BatchMigrationTest {
 
     // then there exists a seed job definition with the batch id as configuration
     JobDefinition seedJobDefinition = helper.getSeedJobDefinition(batch);
-    assertNotNull(seedJobDefinition);
-    assertEquals(batch.getId(), seedJobDefinition.getJobConfiguration());
-    assertEquals(BatchSeedJobHandler.TYPE, seedJobDefinition.getJobType());
-    assertEquals(helper.sourceProcessDefinition.getDeploymentId(), seedJobDefinition.getDeploymentId());
+    assertThat(seedJobDefinition).isNotNull();
+    assertThat(seedJobDefinition.getJobConfiguration()).isEqualTo(batch.getId());
+    assertThat(seedJobDefinition.getJobType()).isEqualTo(BatchSeedJobHandler.TYPE);
+    assertThat(seedJobDefinition.getDeploymentId()).isEqualTo(helper.sourceProcessDefinition.getDeploymentId());
 
     // and there exists a migration job definition
     JobDefinition migrationJobDefinition = helper.getExecutionJobDefinition(batch);
-    assertNotNull(migrationJobDefinition);
-    assertEquals(Batch.TYPE_PROCESS_INSTANCE_MIGRATION, migrationJobDefinition.getJobType());
+    assertThat(migrationJobDefinition).isNotNull();
+    assertThat(migrationJobDefinition.getJobType()).isEqualTo(Batch.TYPE_PROCESS_INSTANCE_MIGRATION);
 
     // and a seed job with no relation to a process or execution etc.
     Job seedJob = helper.getSeedJob(batch);
-    assertNotNull(seedJob);
-    assertEquals(seedJobDefinition.getId(), seedJob.getJobDefinitionId());
-    assertEquals(currentTime, seedJob.getDuedate());
-    assertEquals(seedJobDefinition.getDeploymentId(), seedJob.getDeploymentId());
-    assertNull(seedJob.getProcessDefinitionId());
-    assertNull(seedJob.getProcessDefinitionKey());
-    assertNull(seedJob.getProcessInstanceId());
-    assertNull(seedJob.getExecutionId());
+    assertThat(seedJob).isNotNull();
+    assertThat(seedJob.getJobDefinitionId()).isEqualTo(seedJobDefinition.getId());
+    assertThat(seedJob.getDuedate()).isEqualTo(currentTime);
+    assertThat(seedJob.getDeploymentId()).isEqualTo(seedJobDefinition.getDeploymentId());
+    assertThat(seedJob.getProcessDefinitionId()).isNull();
+    assertThat(seedJob.getProcessDefinitionKey()).isNull();
+    assertThat(seedJob.getProcessInstanceId()).isNull();
+    assertThat(seedJob.getExecutionId()).isNull();
 
     // but no migration jobs where created
     List<Job> migrationJobs = helper.getExecutionJobs(batch);
-    assertEquals(0, migrationJobs.size());
+    assertThat(migrationJobs).isEmpty();
   }
 
   @Test
@@ -315,21 +314,21 @@ public class BatchMigrationTest {
 
     // then there exist migration jobs
     List<Job> migrationJobs = helper.getJobsForDefinition(migrationJobDefinition);
-    assertEquals(10, migrationJobs.size());
+    assertThat(migrationJobs).hasSize(10);
 
     for (Job migrationJob : migrationJobs) {
-      assertEquals(migrationJobDefinition.getId(), migrationJob.getJobDefinitionId());
-      assertEquals(currentTime, migrationJob.getDuedate());
-      assertEquals(sourceDeploymentId, migrationJob.getDeploymentId());
-      assertNull(migrationJob.getProcessDefinitionId());
-      assertNull(migrationJob.getProcessDefinitionKey());
-      assertNull(migrationJob.getProcessInstanceId());
-      assertNull(migrationJob.getExecutionId());
+      assertThat(migrationJob.getJobDefinitionId()).isEqualTo(migrationJobDefinition.getId());
+      assertThat(migrationJob.getDuedate()).isEqualTo(currentTime);
+      assertThat(migrationJob.getDeploymentId()).isEqualTo(sourceDeploymentId);
+      assertThat(migrationJob.getProcessDefinitionId()).isNull();
+      assertThat(migrationJob.getProcessDefinitionKey()).isNull();
+      assertThat(migrationJob.getProcessInstanceId()).isNull();
+      assertThat(migrationJob.getExecutionId()).isNull();
     }
 
     // and the seed job still exists
     Job seedJob = helper.getJobForDefinition(seedJobDefinition);
-    assertNotNull(seedJob);
+    assertThat(seedJob).isNotNull();
   }
 
   @Test
@@ -341,17 +340,17 @@ public class BatchMigrationTest {
 
     // then the seed job definition still exists but the seed job is removed
     JobDefinition seedJobDefinition = helper.getSeedJobDefinition(batch);
-    assertNotNull(seedJobDefinition);
+    assertThat(seedJobDefinition).isNotNull();
 
     Job seedJob = helper.getSeedJob(batch);
-    assertNull(seedJob);
+    assertThat(seedJob).isNull();
 
     // and a monitor job definition and job exists
     JobDefinition monitorJobDefinition = helper.getMonitorJobDefinition(batch);
-    assertNotNull(monitorJobDefinition);
+    assertThat(monitorJobDefinition).isNotNull();
 
     Job monitorJob = helper.getMonitorJob(batch);
-    assertNotNull(monitorJob);
+    assertThat(monitorJob).isNotNull();
   }
 
   @Test
@@ -366,14 +365,14 @@ public class BatchMigrationTest {
     }
 
     // then all process instances where migrated
-    assertEquals(0, helper.countSourceProcessInstances());
-    assertEquals(10, helper.countTargetProcessInstances());
+    assertThat(helper.countSourceProcessInstances()).isZero();
+    assertThat(helper.countTargetProcessInstances()).isEqualTo(10);
 
     // and the no migration jobs exist
-    assertEquals(0, helper.getExecutionJobs(batch).size());
+    assertThat(helper.getExecutionJobs(batch)).isEmpty();
 
     // but a monitor job exists
-    assertNotNull(helper.getMonitorJob(batch));
+    assertThat(helper.getMonitorJob(batch)).isNotNull();
   }
 
   @Test
@@ -389,8 +388,8 @@ public class BatchMigrationTest {
       testRule.waitForJobExecutorToProcessAllJobs();
 
       // then all process instances were migrated
-      assertEquals(0, helper.countSourceProcessInstances());
-      assertEquals(10, helper.countTargetProcessInstances());
+      assertThat(helper.countSourceProcessInstances()).isZero();
+      assertThat(helper.countTargetProcessInstances()).isEqualTo(10);
 
     } finally {
       processEngineConfiguration.setAuthorizationEnabled(false);
@@ -409,30 +408,30 @@ public class BatchMigrationTest {
     helper.executeSeedJob(batch);
 
     // then the default number of jobs was created
-    assertEquals(batch.getBatchJobsPerSeed(), helper.getExecutionJobs(batch).size());
+    assertThat(helper.getExecutionJobs(batch)).hasSize(batch.getBatchJobsPerSeed());
 
     // when the seed job is executed a second time
     helper.executeSeedJob(batch);
 
     // then the same amount of jobs was created
-    assertEquals(2 * batch.getBatchJobsPerSeed(), helper.getExecutionJobs(batch).size());
+    assertThat(helper.getExecutionJobs(batch)).hasSize(2 * batch.getBatchJobsPerSeed());
 
     // when the seed job is executed a third time
     helper.executeSeedJob(batch);
 
     // then the all jobs where created
-    assertEquals(2 * batch.getBatchJobsPerSeed() + 4, helper.getExecutionJobs(batch).size());
+    assertThat(helper.getExecutionJobs(batch)).hasSize(2 * batch.getBatchJobsPerSeed() + 4);
 
     // and the seed job is removed
-    assertNull(helper.getSeedJob(batch));
+    assertThat(helper.getSeedJob(batch)).isNull();
   }
 
   @Test
   public void testDefaultBatchConfiguration() {
     ProcessEngineConfigurationImpl cfg = engineRule.getProcessEngineConfiguration();
-    assertEquals(100, cfg.getBatchJobsPerSeed());
-    assertEquals(1, cfg.getInvocationsPerBatchJob());
-    assertEquals(30, cfg.getBatchPollTime());
+    assertThat(cfg.getBatchJobsPerSeed()).isEqualTo(100);
+    assertThat(cfg.getInvocationsPerBatchJob()).isEqualTo(1);
+    assertThat(cfg.getBatchPollTime()).isEqualTo(30);
   }
 
   @Test
@@ -445,26 +444,26 @@ public class BatchMigrationTest {
     Batch batch = helper.migrateProcessInstancesAsync(20);
 
     // then the configuration was saved in the batch job
-    assertEquals(2, batch.getBatchJobsPerSeed());
-    assertEquals(5, batch.getInvocationsPerBatchJob());
+    assertThat(batch.getBatchJobsPerSeed()).isEqualTo(2);
+    assertThat(batch.getInvocationsPerBatchJob()).isEqualTo(5);
 
     // and the size was correctly calculated
-    assertEquals(4, batch.getTotalJobs());
+    assertThat(batch.getTotalJobs()).isEqualTo(4);
 
     // when the seed job is executed
     helper.executeSeedJob(batch);
 
     // then there exist the first batch of migration jobs
-    assertEquals(2, helper.getExecutionJobs(batch).size());
+    assertThat(helper.getExecutionJobs(batch)).hasSize(2);
 
     // when the seed job is executed a second time
     helper.executeSeedJob(batch);
 
     // then the full batch of migration jobs exist
-    assertEquals(4, helper.getExecutionJobs(batch).size());
+    assertThat(helper.getExecutionJobs(batch)).hasSize(4);
 
     // and the seed job is removed
-    assertNull(helper.getSeedJob(batch));
+    assertThat(helper.getSeedJob(batch)).isNull();
   }
 
   @Test
@@ -479,8 +478,8 @@ public class BatchMigrationTest {
 
     // then the monitor job has a no due date set
     Job monitorJob = helper.getMonitorJob(batch);
-    assertNotNull(monitorJob);
-    assertEquals(currentTime, monitorJob.getDuedate());
+    assertThat(monitorJob).isNotNull();
+    assertThat(monitorJob.getDuedate()).isEqualTo(currentTime);
 
     // when the monitor job is executed
     helper.executeMonitorJob(batch);
@@ -488,7 +487,7 @@ public class BatchMigrationTest {
     // then the monitor job has a due date of the default batch poll time
     monitorJob = helper.getMonitorJob(batch);
     Date dueDate = helper.addSeconds(createDate, 30);
-    assertEquals(dueDate, monitorJob.getDuedate());
+    assertThat(monitorJob.getDuedate()).isEqualTo(dueDate);
   }
 
   @Test
@@ -501,10 +500,10 @@ public class BatchMigrationTest {
     helper.executeMonitorJob(batch);
 
     // then the batch was completed and removed
-    assertEquals(0, managementService.createBatchQuery().count());
+    assertThat(managementService.createBatchQuery().count()).isZero();
 
     // and the seed jobs was removed
-    assertEquals(0, managementService.createJobQuery().count());
+    assertThat(managementService.createJobQuery().count()).isZero();
   }
 
   @Test
@@ -516,13 +515,13 @@ public class BatchMigrationTest {
     managementService.deleteBatch(batch.getId(), true);
 
     // then the batch was deleted
-    assertEquals(0, managementService.createBatchQuery().count());
+    assertThat(managementService.createBatchQuery().count()).isZero();
 
     // and the seed and migration job definition were deleted
-    assertEquals(0, managementService.createJobDefinitionQuery().count());
+    assertThat(managementService.createJobDefinitionQuery().count()).isZero();
 
     // and the seed job and migration jobs were deleted
-    assertEquals(0, managementService.createJobQuery().count());
+    assertThat(managementService.createJobQuery().count()).isZero();
   }
 
   @Test
@@ -534,13 +533,13 @@ public class BatchMigrationTest {
     managementService.deleteBatch(batch.getId(), false);
 
     // then the batch was deleted
-    assertEquals(0, managementService.createBatchQuery().count());
+    assertThat(managementService.createBatchQuery().count()).isZero();
 
     // and the seed and migration job definition were deleted
-    assertEquals(0, managementService.createJobDefinitionQuery().count());
+    assertThat(managementService.createJobDefinitionQuery().count()).isZero();
 
     // and the seed job and migration jobs were deleted
-    assertEquals(0, managementService.createJobQuery().count());
+    assertThat(managementService.createJobQuery().count()).isZero();
   }
 
   @Test
@@ -556,7 +555,7 @@ public class BatchMigrationTest {
 
     // then the no historic incidents exists
     long historicIncidents = historyService.createHistoricIncidentQuery().count();
-    assertEquals(0, historicIncidents);
+    assertThat(historicIncidents).isZero();
   }
 
   @Test
@@ -575,7 +574,7 @@ public class BatchMigrationTest {
 
     // then the no historic incidents exists
     long historicIncidents = historyService.createHistoricIncidentQuery().count();
-    assertEquals(0, historicIncidents);
+    assertThat(historicIncidents).isZero();
   }
 
   @Test
@@ -592,7 +591,7 @@ public class BatchMigrationTest {
 
     // then the no historic incidents exists
     long historicIncidents = historyService.createHistoricIncidentQuery().count();
-    assertEquals(0, historicIncidents);
+    assertThat(historicIncidents).isZero();
   }
 
   @Test
@@ -608,15 +607,15 @@ public class BatchMigrationTest {
     helper.executeJobs(batch);
 
     // then the remaining process instance was migrated
-    assertEquals(0, helper.countSourceProcessInstances());
-    assertEquals(1, helper.countTargetProcessInstances());
+    assertThat(helper.countSourceProcessInstances()).isZero();
+    assertThat(helper.countTargetProcessInstances()).isEqualTo(1);
 
     // and one batch job failed and has 2 retries left
     List<Job> migrationJobs = helper.getExecutionJobs(batch);
-    assertEquals(1, migrationJobs.size());
+    assertThat(migrationJobs).hasSize(1);
 
     Job failedJob = migrationJobs.get(0);
-    assertEquals(2, failedJob.getRetries());
+    assertThat(failedJob.getRetries()).isEqualTo(2);
     assertThat(failedJob.getExceptionMessage()).startsWith("ENGINE-23003");
     assertThat(failedJob.getExceptionMessage()).contains("Process instance '" + deletedProcessInstanceId + "' cannot be migrated");
   }
@@ -638,7 +637,7 @@ public class BatchMigrationTest {
       .build();
 
     ProcessInstanceQuery sourceProcessInstanceQuery = runtimeService.createProcessInstanceQuery().processDefinitionId(sourceProcessDefinition.getId());
-    assertEquals(processInstanceCount, sourceProcessInstanceQuery.count());
+    assertThat(sourceProcessInstanceQuery.count()).isEqualTo(processInstanceCount);
 
     // when
     Batch batch = runtimeService.newMigration(migrationPlan)
@@ -669,7 +668,7 @@ public class BatchMigrationTest {
       .build();
 
     ProcessInstanceQuery sourceProcessInstanceQuery = runtimeService.createProcessInstanceQuery().processDefinitionId(sourceProcessDefinition.getId());
-    assertEquals(processInstanceCount, sourceProcessInstanceQuery.count());
+    assertThat(sourceProcessInstanceQuery.count()).isEqualTo(processInstanceCount);
 
     // when
     Batch batch = runtimeService.newMigration(migrationPlan)
@@ -710,11 +709,11 @@ public class BatchMigrationTest {
 
     // then
     List<DelegateEvent> recordedEvents = DelegateEvent.getEvents();
-    assertEquals(1, recordedEvents.size());
+    assertThat(recordedEvents).hasSize(1);
 
     DelegateEvent event = recordedEvents.get(0);
-    assertEquals(targetProcessDefinition.getId(), event.getProcessDefinitionId());
-    assertEquals("subProcess", event.getCurrentActivityId());
+    assertThat(event.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());
+    assertThat(event.getCurrentActivityId()).isEqualTo("subProcess");
 
     DelegateEvent.clearEvents();
   }
@@ -748,7 +747,7 @@ public class BatchMigrationTest {
     helper.executeJobs(batch);
 
     // then
-    assertEquals(0, DelegateEvent.getEvents().size());
+    assertThat(DelegateEvent.getEvents()).isEmpty();
   }
 
   @Test
@@ -778,12 +777,12 @@ public class BatchMigrationTest {
 
     // then
     VariableInstance inputVariable = engineRule.getRuntimeService().createVariableInstanceQuery().singleResult();
-    Assert.assertNotNull(inputVariable);
-    assertEquals("foo", inputVariable.getName());
-    assertEquals("bar", inputVariable.getValue());
+    assertThat(inputVariable).isNotNull();
+    assertThat(inputVariable.getName()).isEqualTo("foo");
+    assertThat(inputVariable.getValue()).isEqualTo("bar");
 
     ActivityInstance activityInstance = engineRule.getRuntimeService().getActivityInstance(processInstance.getId());
-    assertEquals(activityInstance.getActivityInstances("subProcess")[0].getId(), inputVariable.getActivityInstanceId());
+    assertThat(inputVariable.getActivityInstanceId()).isEqualTo(activityInstance.getActivityInstances("subProcess")[0].getId());
   }
 
   @Test
@@ -813,7 +812,7 @@ public class BatchMigrationTest {
     helper.executeJobs(batch);
 
     // then
-    assertEquals(0, engineRule.getRuntimeService().createVariableInstanceQuery().count());
+    assertThat(engineRule.getRuntimeService().createVariableInstanceQuery().count()).isZero();
   }
 
   @Test
@@ -843,7 +842,7 @@ public class BatchMigrationTest {
 
     // then the message event subscription's event name was changed
     EventSubscription eventSubscription = runtimeService.createEventSubscriptionQuery().singleResult();
-    assertEquals(newMessageName, eventSubscription.getEventName());
+    assertThat(eventSubscription.getEventName()).isEqualTo(newMessageName);
   }
 
   @Test
@@ -857,7 +856,7 @@ public class BatchMigrationTest {
 
     ByteArrayEntity byteArrayEntity = engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired()
       .execute(new GetByteArrayCommand(byteArrayId));
-    assertNotNull(byteArrayEntity);
+    assertThat(byteArrayEntity).isNotNull();
 
     // when
     managementService.deleteJob(migrationJob.getId());
@@ -865,7 +864,7 @@ public class BatchMigrationTest {
     // then
     byteArrayEntity = engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired()
       .execute(new GetByteArrayCommand(byteArrayId));
-    assertNull(byteArrayEntity);
+    assertThat(byteArrayEntity).isNull();
   }
 
   @Test
@@ -890,8 +889,8 @@ public class BatchMigrationTest {
     helper.executeMonitorJob(batch);
 
     // then
-    Assert.assertEquals(2, runtimeService.createProcessInstanceQuery()
-        .processDefinitionId(targetDefinition.getId()).count());
+    assertThat(runtimeService.createProcessInstanceQuery()
+        .processDefinitionId(targetDefinition.getId()).count()).isEqualTo(2);
   }
 
   @Test
@@ -926,17 +925,17 @@ public class BatchMigrationTest {
     HistoricBatch historicBatch = historyService.createHistoricBatchQuery().singleResult();
     batch = managementService.createBatchQuery().singleResult();
 
-    Assertions.assertThat(batch.getExecutionStartTime()).isCloseTo(TEST_DATE, 1000);
-    Assertions.assertThat(historicBatch.getExecutionStartTime()).isCloseTo(TEST_DATE, 1000);
+    assertThat(batch.getExecutionStartTime()).isCloseTo(TEST_DATE, 1000);
+    assertThat(historicBatch.getExecutionStartTime()).isCloseTo(TEST_DATE, 1000);
   }
 
   protected void assertBatchCreated(Batch batch, int processInstanceCount) {
-    assertNotNull(batch);
-    assertNotNull(batch.getId());
-    assertEquals("instance-migration", batch.getType());
-    assertEquals(processInstanceCount, batch.getTotalJobs());
-    assertEquals(defaultBatchJobsPerSeed, batch.getBatchJobsPerSeed());
-    assertEquals(defaultInvocationsPerBatchJob, batch.getInvocationsPerBatchJob());
+    assertThat(batch).isNotNull();
+    assertThat(batch.getId()).isNotNull();
+    assertThat(batch.getType()).isEqualTo("instance-migration");
+    assertThat(batch.getTotalJobs()).isEqualTo(processInstanceCount);
+    assertThat(batch.getBatchJobsPerSeed()).isEqualTo(defaultBatchJobsPerSeed);
+    assertThat(batch.getInvocationsPerBatchJob()).isEqualTo(defaultInvocationsPerBatchJob);
   }
 
   public class GetByteArrayCommand implements Command<ByteArrayEntity> {

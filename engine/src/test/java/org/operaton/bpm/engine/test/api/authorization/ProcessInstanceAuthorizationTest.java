@@ -1998,7 +1998,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // when
     assertThatThrownBy(() -> runtimeService.suspendProcessInstanceByProcessDefinitionId(processDefinitionId))
       // then
-      .withFailMessage("Exception expected: It should not be posssible to suspend a process instance.")
+      .withFailMessage("Exception expected: It should not be possible to suspend a process instance.")
       .isInstanceOf(AuthorizationException.class)
       .hasMessageContaining(userId)
       .hasMessageContaining(UPDATE.getName())
@@ -2021,7 +2021,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // when
     assertThatThrownBy(() -> runtimeService.suspendProcessInstanceByProcessDefinitionId(processDefinitionId))
       // then
-      .withFailMessage("Exception expected: It should not be posssible to suspend a process instance.")
+      .withFailMessage("Exception expected: It should not be possible to suspend a process instance.")
       .isInstanceOf(AuthorizationException.class)
       .hasMessageContaining(userId)
       .hasMessageContaining(UPDATE_INSTANCE.getName())
@@ -2091,7 +2091,7 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // when
     assertThatThrownBy(() -> runtimeService.suspendProcessInstanceByProcessDefinitionId(processDefinitionId))
       // then
-      .withFailMessage("Exception expected: It should not be posssible to suspend a process instance.")
+      .withFailMessage("Exception expected: It should not be possible to suspend a process instance.")
       .isInstanceOf(AuthorizationException.class)
       .hasMessageContaining(userId)
       .hasMessageContaining(UPDATE_INSTANCE.getName())
@@ -3341,8 +3341,6 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // then
     assertThat(variables)
             .isNotNull()
-            .isNotEmpty();
-    assertThat(variables)
             .hasSize(1)
             .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }

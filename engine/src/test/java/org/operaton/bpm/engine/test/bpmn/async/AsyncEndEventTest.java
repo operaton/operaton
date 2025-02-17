@@ -68,7 +68,7 @@ public class AsyncEndEventTest extends PluggableProcessEngineTest {
 
     if(processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_ACTIVITY) {
 
-      // after the end event we have a event listener
+      // after the end event we have an event listener
       HistoricVariableInstanceQuery name = historyService.createHistoricVariableInstanceQuery()
                                                           .processInstanceId(pi.getId())
                                                           .variableName("listener");
@@ -99,7 +99,7 @@ public class AsyncEndEventTest extends PluggableProcessEngineTest {
 
     if(processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_ACTIVITY) {
 
-      // after the end event we have a event listener
+      // after the end event we have an event listener
       HistoricVariableInstanceQuery name = historyService.createHistoricVariableInstanceQuery()
         .processInstanceId(pi.getId())
         .variableName("message");

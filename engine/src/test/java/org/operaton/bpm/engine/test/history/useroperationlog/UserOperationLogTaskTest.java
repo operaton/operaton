@@ -514,7 +514,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
     // when null is used as deletion parameter
     try {
       historyService.deleteUserOperationLogEntry(null);
-      fail("exeception expected");
+      fail("exception expected");
     } catch (NotValidException e) {
       // then there should be an exception that signals an illegal input
     }
@@ -522,7 +522,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteOpLogNonExstingEntry() {
+  public void testDeleteOpLogNonExistingEntry() {
     // given
     startTestProcess();
 

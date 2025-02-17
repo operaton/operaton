@@ -1413,7 +1413,7 @@ public class RuntimeServiceTest {
   public void testSignalEventReceivedNonExistingExecution() {
    try {
      runtimeService.signalEventReceived("alert", "nonexistingExecution");
-     fail("exeception expected");
+     fail("exception expected");
    }catch (ProcessEngineException e) {
      // this is good
      assertThat(e.getMessage()).contains("Cannot find execution with id 'nonexistingExecution'");
@@ -1424,7 +1424,7 @@ public class RuntimeServiceTest {
   public void testMessageEventReceivedNonExistingExecution() {
    try {
      runtimeService.messageEventReceived("alert", "nonexistingExecution");
-     fail("exeception expected");
+     fail("exception expected");
    }catch (ProcessEngineException e) {
      // this is good
      assertThat(e.getMessage()).contains("Execution with id 'nonexistingExecution' does not have a subscription to a message event with name 'alert'");
@@ -1443,7 +1443,7 @@ public class RuntimeServiceTest {
    var executionId = execution.getId();
    try {
      runtimeService.signalEventReceived("bogusSignal", executionId);
-     fail("exeception expected");
+     fail("exception expected");
    }catch (ProcessEngineException e) {
      // this is good
      assertThat(e.getMessage()).contains("has not subscribed to a signal event with name 'bogusSignal'");
@@ -2506,7 +2506,7 @@ public class RuntimeServiceTest {
     try {
 		 runtimeService.startProcessInstanceByMessageAndProcessDefinitionId("newStartMessage", processDefinitionId);
 
-      fail("exeception expected");
+      fail("exception expected");
 	 } catch(ProcessEngineException e) {
 		 assertThat(e.getMessage()).contains("Cannot correlate message 'newStartMessage'");
 	 }

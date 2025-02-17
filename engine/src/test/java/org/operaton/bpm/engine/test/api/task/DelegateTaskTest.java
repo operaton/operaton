@@ -52,7 +52,7 @@ public class DelegateTaskTest {
   private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
   private static final String FOLLOW_UP_DATE_STRING = "2019-01-01T01:00:00";
 
-  private static Date FOLLOW_UP_DATE;
+  private static final Date FOLLOW_UP_DATE;
 
   static {
     try {

@@ -136,7 +136,7 @@ public class MigrationMultiInstanceTest {
     Task firstTask = tasks.get(0);
     assertThat(rule.getTaskService().getVariable(firstTask.getId(), NUMBER_OF_INSTANCES)).isEqualTo(3);
     assertThat(rule.getTaskService().getVariable(firstTask.getId(), NUMBER_OF_ACTIVE_INSTANCES)).isEqualTo(3);
-    assertThat(rule.getTaskService().getVariable(firstTask.getId(), NUMBER_OF_COMPLETED_INSTANCES)).isZero();
+    assertThat(rule.getTaskService().getVariable(firstTask.getId(), NUMBER_OF_COMPLETED_INSTANCES)).isEqualTo(0);
 
     for (Task task : tasks) {
       Integer loopCounter = (Integer) rule.getTaskService().getVariable(task.getId(), LOOP_COUNTER);
@@ -303,8 +303,8 @@ public class MigrationMultiInstanceTest {
     Task task = testHelper.snapshotAfterMigration.getTaskForKey("userTask");
     assertThat(rule.getTaskService().getVariable(task.getId(), NUMBER_OF_INSTANCES)).isEqualTo(3);
     assertThat(rule.getTaskService().getVariable(task.getId(), NUMBER_OF_ACTIVE_INSTANCES)).isEqualTo(1);
-    assertThat(rule.getTaskService().getVariable(task.getId(), NUMBER_OF_COMPLETED_INSTANCES)).isZero();
-    assertThat(rule.getTaskService().getVariable(task.getId(), NUMBER_OF_COMPLETED_INSTANCES)).isZero();
+    assertThat(rule.getTaskService().getVariable(task.getId(), NUMBER_OF_COMPLETED_INSTANCES)).isEqualTo(0);
+    assertThat(rule.getTaskService().getVariable(task.getId(), NUMBER_OF_COMPLETED_INSTANCES)).isEqualTo(0);
   }
 
   @Test

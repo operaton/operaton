@@ -874,7 +874,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     Execution miExecution = runtimeService.createExecutionQuery().activityId("miTask").singleResult();
     assertThat(miExecution).isNotNull();
     assertThat(miExecution.getId()).isNotEqualTo(instance.getId());
-    assertThat(runtimeService.getVariable(miExecution.getId(), "loopCounter")).isZero();
+    assertThat(runtimeService.getVariable(miExecution.getId(), "loopCounter")).isEqualTo(0);
 
     // input mapping
     assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isEqualTo(1);
@@ -911,7 +911,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
     // first sequential mi execution
     Execution miScopeExecution = runtimeService.createExecutionQuery().activityId("task").singleResult();
     assertThat(miScopeExecution).isNotNull();
-    assertThat(runtimeService.getVariable(miScopeExecution.getId(), "loopCounter")).isZero();
+    assertThat(runtimeService.getVariable(miScopeExecution.getId(), "loopCounter")).isEqualTo(0);
 
     // input mapping
     assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isEqualTo(1);

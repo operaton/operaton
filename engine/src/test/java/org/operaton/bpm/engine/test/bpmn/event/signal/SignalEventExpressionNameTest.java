@@ -167,7 +167,7 @@ public class SignalEventExpressionNameTest extends PluggableProcessEngineTest {
     runtimeService.signalEventReceived("alert-foo");
 
     // then
-    assertThat(DummyServiceTask.wasExecuted).isEqualTo(true);
+    assertThat(DummyServiceTask.wasExecuted).isTrue();
     // check if user task doesn't exist because signal start event is interrupting
     taskQuery = taskService.createTaskQuery().processInstanceId(processInstance.getId());
     assertThat(taskQuery.count()).isZero();

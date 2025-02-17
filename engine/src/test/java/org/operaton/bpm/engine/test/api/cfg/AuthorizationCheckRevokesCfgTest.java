@@ -96,7 +96,7 @@ public class AuthorizationCheckRevokesCfgTest {
     authorizationManager.configureQuery(query);
 
     // then
-    assertThat(authCheck.isRevokeAuthorizationCheckEnabled()).isEqualTo(true);
+    assertThat(authCheck.isRevokeAuthorizationCheckEnabled()).isTrue();
     verifyNoMoreInteractions(mockedEntityManager);
   }
 
@@ -134,7 +134,7 @@ public class AuthorizationCheckRevokesCfgTest {
     authorizationManager.configureQuery(query);
 
     // then
-    assertThat(authCheck.isRevokeAuthorizationCheckEnabled()).isEqualTo(true);
+    assertThat(authCheck.isRevokeAuthorizationCheckEnabled()).isTrue();
     verify(mockedEntityManager, times(1)).selectBoolean("selectRevokeAuthorization", expectedQueryParams);
   }
 
@@ -176,7 +176,7 @@ public class AuthorizationCheckRevokesCfgTest {
     authorizationManager.configureQuery(query);
 
     // then
-    assertThat(authCheck.isRevokeAuthorizationCheckEnabled()).isEqualTo(true);
+    assertThat(authCheck.isRevokeAuthorizationCheckEnabled()).isTrue();
     verify(mockedEntityManager, times(1)).selectBoolean("selectRevokeAuthorization", expectedQueryParams);
   }
 
@@ -198,7 +198,7 @@ public class AuthorizationCheckRevokesCfgTest {
     authorizationManager.configureQuery(query);
 
     // then
-    assertThat(authCheck.isRevokeAuthorizationCheckEnabled()).isEqualTo(true);
+    assertThat(authCheck.isRevokeAuthorizationCheckEnabled()).isTrue();
     verify(mockedEntityManager, times(1)).selectBoolean("selectRevokeAuthorization", expectedQueryParams);
   }
 

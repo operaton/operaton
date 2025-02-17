@@ -69,8 +69,8 @@ public class DefaultUserPermissionsForTaskTest extends AuthorizationTest {
     processEngine.getTaskService().setAssignee(taskId, userId2);
 
     // then
-    assertThat(authorizationService.isUserAuthorized(userId2, null, Permissions.READ, Resources.TASK, taskId)).isEqualTo(true);
-    assertThat(authorizationService.isUserAuthorized(userId2, null, Permissions.TASK_WORK, Resources.TASK, taskId)).isEqualTo(true);
+    assertThat(authorizationService.isUserAuthorized(userId2, null, Permissions.READ, Resources.TASK, taskId)).isTrue();
+    assertThat(authorizationService.isUserAuthorized(userId2, null, Permissions.TASK_WORK, Resources.TASK, taskId)).isTrue();
     assertThat(authorizationService.isUserAuthorized(userId2, null, Permissions.UPDATE, Resources.TASK, taskId)).isEqualTo(false);
 
     deleteTask(taskId, true);
@@ -90,8 +90,8 @@ public class DefaultUserPermissionsForTaskTest extends AuthorizationTest {
     processEngine.getTaskService().setAssignee(taskId, userId2);
 
     // then
-    assertThat(authorizationService.isUserAuthorized(userId2, null, Permissions.READ, Resources.TASK, taskId)).isEqualTo(true);
-    assertThat(authorizationService.isUserAuthorized(userId2, null, Permissions.UPDATE, Resources.TASK, taskId)).isEqualTo(true);
+    assertThat(authorizationService.isUserAuthorized(userId2, null, Permissions.READ, Resources.TASK, taskId)).isTrue();
+    assertThat(authorizationService.isUserAuthorized(userId2, null, Permissions.UPDATE, Resources.TASK, taskId)).isTrue();
 
     deleteTask(taskId, true);
   }
@@ -110,8 +110,8 @@ public class DefaultUserPermissionsForTaskTest extends AuthorizationTest {
     processEngine.getTaskService().addCandidateUser(taskId, userId2);
 
     // then
-    assertThat(authorizationService.isUserAuthorized(userId2, null, Permissions.READ, Resources.TASK, taskId)).isEqualTo(true);
-    assertThat(authorizationService.isUserAuthorized(userId2, null, Permissions.TASK_WORK, Resources.TASK, taskId)).isEqualTo(true);
+    assertThat(authorizationService.isUserAuthorized(userId2, null, Permissions.READ, Resources.TASK, taskId)).isTrue();
+    assertThat(authorizationService.isUserAuthorized(userId2, null, Permissions.TASK_WORK, Resources.TASK, taskId)).isTrue();
     assertThat(authorizationService.isUserAuthorized(userId2, null, Permissions.UPDATE, Resources.TASK, taskId)).isEqualTo(false);
 
     deleteTask(taskId, true);
@@ -131,8 +131,8 @@ public class DefaultUserPermissionsForTaskTest extends AuthorizationTest {
     processEngine.getTaskService().addCandidateUser(taskId, userId2);
 
     // then
-    assertThat(authorizationService.isUserAuthorized(userId2, null, Permissions.READ, Resources.TASK, taskId)).isEqualTo(true);
-    assertThat(authorizationService.isUserAuthorized(userId2, null, Permissions.UPDATE, Resources.TASK, taskId)).isEqualTo(true);
+    assertThat(authorizationService.isUserAuthorized(userId2, null, Permissions.READ, Resources.TASK, taskId)).isTrue();
+    assertThat(authorizationService.isUserAuthorized(userId2, null, Permissions.UPDATE, Resources.TASK, taskId)).isTrue();
 
     deleteTask(taskId, true);
   }
@@ -151,8 +151,8 @@ public class DefaultUserPermissionsForTaskTest extends AuthorizationTest {
     processEngine.getTaskService().setOwner(taskId, userId2);
 
     // then
-    assertThat(authorizationService.isUserAuthorized(userId2, null, Permissions.READ, Resources.TASK, taskId)).isEqualTo(true);
-    assertThat(authorizationService.isUserAuthorized(userId2, null, Permissions.TASK_WORK, Resources.TASK, taskId)).isEqualTo(true);
+    assertThat(authorizationService.isUserAuthorized(userId2, null, Permissions.READ, Resources.TASK, taskId)).isTrue();
+    assertThat(authorizationService.isUserAuthorized(userId2, null, Permissions.TASK_WORK, Resources.TASK, taskId)).isTrue();
     assertThat(authorizationService.isUserAuthorized(userId2, null, Permissions.UPDATE, Resources.TASK, taskId)).isEqualTo(false);
 
     deleteTask(taskId, true);
@@ -172,8 +172,8 @@ public class DefaultUserPermissionsForTaskTest extends AuthorizationTest {
     processEngine.getTaskService().setOwner(taskId, userId2);
 
     // then
-    assertThat(authorizationService.isUserAuthorized(userId2, null, Permissions.READ, Resources.TASK, taskId)).isEqualTo(true);
-    assertThat(authorizationService.isUserAuthorized(userId2, null, Permissions.UPDATE, Resources.TASK, taskId)).isEqualTo(true);
+    assertThat(authorizationService.isUserAuthorized(userId2, null, Permissions.READ, Resources.TASK, taskId)).isTrue();
+    assertThat(authorizationService.isUserAuthorized(userId2, null, Permissions.UPDATE, Resources.TASK, taskId)).isTrue();
 
     deleteTask(taskId, true);
   }
@@ -193,8 +193,8 @@ public class DefaultUserPermissionsForTaskTest extends AuthorizationTest {
     processEngine.getTaskService().addCandidateGroup(taskId, groupId);
 
     // then
-    assertThat(authorizationService.isUserAuthorized(userId2, List.of(groupId), Permissions.READ, Resources.TASK, taskId)).isEqualTo(true);
-    assertThat(authorizationService.isUserAuthorized(userId2, Arrays.asList(groupId), Permissions.TASK_WORK, Resources.TASK, taskId)).isEqualTo(true);
+    assertThat(authorizationService.isUserAuthorized(userId2, List.of(groupId), Permissions.READ, Resources.TASK, taskId)).isTrue();
+    assertThat(authorizationService.isUserAuthorized(userId2, Arrays.asList(groupId), Permissions.TASK_WORK, Resources.TASK, taskId)).isTrue();
     assertThat(authorizationService.isUserAuthorized(userId2, Arrays.asList(groupId), Permissions.UPDATE, Resources.TASK, taskId)).isEqualTo(false);
 
     deleteTask(taskId, true);
@@ -214,8 +214,8 @@ public class DefaultUserPermissionsForTaskTest extends AuthorizationTest {
     processEngine.getTaskService().addCandidateGroup(taskId, groupId);
 
     // then
-    assertThat(authorizationService.isUserAuthorized(userId2, Arrays.asList(groupId), Permissions.READ, Resources.TASK, taskId)).isEqualTo(true);
-    assertThat(authorizationService.isUserAuthorized(userId2, Arrays.asList(groupId), Permissions.UPDATE, Resources.TASK, taskId)).isEqualTo(true);
+    assertThat(authorizationService.isUserAuthorized(userId2, Arrays.asList(groupId), Permissions.READ, Resources.TASK, taskId)).isTrue();
+    assertThat(authorizationService.isUserAuthorized(userId2, Arrays.asList(groupId), Permissions.UPDATE, Resources.TASK, taskId)).isTrue();
 
     deleteTask(taskId, true);
   }

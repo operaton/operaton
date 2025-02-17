@@ -137,8 +137,8 @@ public class DisabledPermissionsAuthorizationTest {
 
     // then
     // verify that the custom permission with the same value is not affected by disabling the build-in permission
-    assertThat(authorizationService.isUserAuthorized(USER_ID, null, TestPermissions.RANDOM, resource1)).isEqualTo(true);
-    assertThat(authorizationService.isUserAuthorized(USER_ID, null, TestPermissions.RANDOM, resource2, "resource2-1")).isEqualTo(true);
+    assertThat(authorizationService.isUserAuthorized(USER_ID, null, TestPermissions.RANDOM, resource1)).isTrue();
+    assertThat(authorizationService.isUserAuthorized(USER_ID, null, TestPermissions.RANDOM, resource2, "resource2-1")).isTrue();
   }
 
   // specific scenarios //////////////////////////////////////

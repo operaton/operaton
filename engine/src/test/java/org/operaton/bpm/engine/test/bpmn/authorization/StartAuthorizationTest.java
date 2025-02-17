@@ -121,8 +121,8 @@ public class StartAuthorizationTest extends PluggableProcessEngineTest {
       assertThat(latestProcessDef).isNotNull();
       links = repositoryService.getIdentityLinksForProcessDefinition(latestProcessDef.getId());
       assertThat(links).hasSize(2);
-      assertThat(containsUserOrGroup("user1", null, links)).isEqualTo(true);
-      assertThat(containsUserOrGroup("user2", null, links)).isEqualTo(true);
+      assertThat(containsUserOrGroup("user1", null, links)).isTrue();
+      assertThat(containsUserOrGroup("user2", null, links)).isTrue();
       
       latestProcessDef = repositoryService
           .createProcessDefinitionQuery().processDefinitionKey("process3")
@@ -138,10 +138,10 @@ public class StartAuthorizationTest extends PluggableProcessEngineTest {
       assertThat(latestProcessDef).isNotNull();
       links = repositoryService.getIdentityLinksForProcessDefinition(latestProcessDef.getId());
       assertThat(links).hasSize(4);
-      assertThat(containsUserOrGroup("userInGroup2", null, links)).isEqualTo(true);
-      assertThat(containsUserOrGroup(null, "group1", links)).isEqualTo(true);
-      assertThat(containsUserOrGroup(null, "group2", links)).isEqualTo(true);
-      assertThat(containsUserOrGroup(null, "group3", links)).isEqualTo(true);
+      assertThat(containsUserOrGroup("userInGroup2", null, links)).isTrue();
+      assertThat(containsUserOrGroup(null, "group1", links)).isTrue();
+      assertThat(containsUserOrGroup(null, "group2", links)).isTrue();
+      assertThat(containsUserOrGroup(null, "group3", links)).isTrue();
       
     } finally {
       tearDownUsersAndGroups();
@@ -170,8 +170,8 @@ public class StartAuthorizationTest extends PluggableProcessEngineTest {
       repositoryService.addCandidateStarterUser(latestProcessDef.getId(), "user1");
       links = repositoryService.getIdentityLinksForProcessDefinition(latestProcessDef.getId());
       assertThat(links).hasSize(2);
-      assertThat(containsUserOrGroup(null, "group1", links)).isEqualTo(true);
-      assertThat(containsUserOrGroup("user1", null, links)).isEqualTo(true);
+      assertThat(containsUserOrGroup(null, "group1", links)).isTrue();
+      assertThat(containsUserOrGroup("user1", null, links)).isTrue();
       
       repositoryService.deleteCandidateStarterGroup(latestProcessDef.getId(), "nonexisting");
       links = repositoryService.getIdentityLinksForProcessDefinition(latestProcessDef.getId());

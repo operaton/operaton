@@ -880,7 +880,7 @@ public class FormServiceTest {
     assertThat(variables.getValueTyped("someString").getType()).isEqualTo(ValueType.STRING);
 
     assertThat(variables).containsEntry("initialBooleanVariable", true);
-    assertThat(variables.getValueTyped("initialBooleanVariable").getValue()).isEqualTo(true);
+    assertThat(variables.getValueTyped("initialBooleanVariable").getValue()).isTrue();
     assertThat(variables.getValueTyped("initialBooleanVariable").getType()).isEqualTo(ValueType.BOOLEAN);
 
     assertThat(variables).containsEntry("initialLongVariable", 1L);
@@ -912,7 +912,7 @@ public class FormServiceTest {
     assertThat(variables)
             .hasSize(1)
             .containsEntry("initialBooleanVariable", true);
-    assertThat(variables.getValueTyped("initialBooleanVariable").getValue()).isEqualTo(true);
+    assertThat(variables.getValueTyped("initialBooleanVariable").getValue()).isTrue();
     assertThat(variables.getValueTyped("initialBooleanVariable").getType()).isEqualTo(ValueType.BOOLEAN);
 
     // request non-existing variable
@@ -952,7 +952,7 @@ public class FormServiceTest {
     assertThat(variables.getValueTyped("someString").getType()).isEqualTo(ValueType.STRING);
 
     assertThat(variables).containsEntry("initialBooleanVariable", true);
-    assertThat(variables.getValueTyped("initialBooleanVariable").getValue()).isEqualTo(true);
+    assertThat(variables.getValueTyped("initialBooleanVariable").getValue()).isTrue();
     assertThat(variables.getValueTyped("initialBooleanVariable").getType()).isEqualTo(ValueType.BOOLEAN);
 
     assertThat(variables).containsEntry("initialLongVariable", 1L);

@@ -699,7 +699,7 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
     authorizationService.saveAuthorization(authorization);
 
     processEngineConfiguration.setAuthorizationEnabled(true);
-    assertThat(authorizationService.isUserAuthorized(testUserId, Arrays.asList(testGroupId), ALL, REPORT)).isEqualTo(true);
+    assertThat(authorizationService.isUserAuthorized(testUserId, Arrays.asList(testGroupId), ALL, REPORT)).isTrue();
     processEngineConfiguration.setAuthorizationEnabled(false);
   }
 
@@ -716,10 +716,10 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
     authorizationService.saveAuthorization(authorization);
 
     processEngineConfiguration.setAuthorizationEnabled(true);
-    assertThat(authorizationService.isUserAuthorized(testUserId, null, CREATE, REPORT)).isEqualTo(true);
-    assertThat(authorizationService.isUserAuthorized(testUserId, null, READ, REPORT)).isEqualTo(true);
-    assertThat(authorizationService.isUserAuthorized(testUserId, null, UPDATE, REPORT)).isEqualTo(true);
-    assertThat(authorizationService.isUserAuthorized(testUserId, null, DELETE, REPORT)).isEqualTo(true);
+    assertThat(authorizationService.isUserAuthorized(testUserId, null, CREATE, REPORT)).isTrue();
+    assertThat(authorizationService.isUserAuthorized(testUserId, null, READ, REPORT)).isTrue();
+    assertThat(authorizationService.isUserAuthorized(testUserId, null, UPDATE, REPORT)).isTrue();
+    assertThat(authorizationService.isUserAuthorized(testUserId, null, DELETE, REPORT)).isTrue();
     processEngineConfiguration.setAuthorizationEnabled(false);
   }
 
@@ -733,7 +733,7 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
     authorizationService.saveAuthorization(authorization);
 
     processEngineConfiguration.setAuthorizationEnabled(true);
-    assertThat(authorizationService.isUserAuthorized(testUserId, Arrays.asList(testGroupId), ALL, DASHBOARD)).isEqualTo(true);
+    assertThat(authorizationService.isUserAuthorized(testUserId, Arrays.asList(testGroupId), ALL, DASHBOARD)).isTrue();
     processEngineConfiguration.setAuthorizationEnabled(false);
   }
 
@@ -750,10 +750,10 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
     authorizationService.saveAuthorization(authorization);
 
     processEngineConfiguration.setAuthorizationEnabled(true);
-    assertThat(authorizationService.isUserAuthorized(testUserId, null, CREATE, DASHBOARD)).isEqualTo(true);
-    assertThat(authorizationService.isUserAuthorized(testUserId, null, READ, DASHBOARD)).isEqualTo(true);
-    assertThat(authorizationService.isUserAuthorized(testUserId, null, UPDATE, DASHBOARD)).isEqualTo(true);
-    assertThat(authorizationService.isUserAuthorized(testUserId, null, DELETE, DASHBOARD)).isEqualTo(true);
+    assertThat(authorizationService.isUserAuthorized(testUserId, null, CREATE, DASHBOARD)).isTrue();
+    assertThat(authorizationService.isUserAuthorized(testUserId, null, READ, DASHBOARD)).isTrue();
+    assertThat(authorizationService.isUserAuthorized(testUserId, null, UPDATE, DASHBOARD)).isTrue();
+    assertThat(authorizationService.isUserAuthorized(testUserId, null, DELETE, DASHBOARD)).isTrue();
     processEngineConfiguration.setAuthorizationEnabled(false);
   }
 

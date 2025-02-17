@@ -104,7 +104,7 @@ public class AsyncEndEventTest extends PluggableProcessEngineTest {
         .processInstanceId(pi.getId())
         .variableName("message");
       assertThat(name).isNotNull();
-      assertThat(name.singleResult().getValue()).isEqualTo(true);
+      assertThat(name.singleResult().getValue()).isTrue();
 
     }
   }

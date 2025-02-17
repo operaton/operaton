@@ -408,7 +408,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     managementService.executeJob(managementService.createJobQuery().list().get(0).getId());
     assertThat(jobQuery.count()).isZero();
 
-    assertThat(DummyServiceTask.wasExecuted).isEqualTo(true);
+    assertThat(DummyServiceTask.wasExecuted).isTrue();
 
     // check if user task doesn't exist because timer start event is
     // interrupting
@@ -461,7 +461,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     managementService.executeJob(managementService.createJobQuery().list().get(0).getId());
     assertThat(jobQuery.count()).isZero();
 
-    assertThat(DummyServiceTask.wasExecuted).isEqualTo(true);
+    assertThat(DummyServiceTask.wasExecuted).isTrue();
 
     // check if user task still exists because timer start event is non
     // interrupting
@@ -497,7 +497,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     managementService.executeJob(managementService.createJobQuery().list().get(0).getId());
     assertThat(jobQuery.count()).isZero();
 
-    assertThat(DummyServiceTask.wasExecuted).isEqualTo(true);
+    assertThat(DummyServiceTask.wasExecuted).isTrue();
 
     // check if user task doesn't exist because timer start event is
     // interrupting
@@ -534,7 +534,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     managementService.executeJob(jobQuery.list().get(0).getId());
     assertThat(jobQuery.count()).isZero();
 
-    assertThat(DummyServiceTask.wasExecuted).isEqualTo(true);
+    assertThat(DummyServiceTask.wasExecuted).isTrue();
 
     // check if user task still exists because timer start event is non
     // interrupting
@@ -610,7 +610,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     managementService.executeJob(orderedJobList.get(0).getId());
     assertThat(jobQuery.count()).isEqualTo(1);
 
-    assertThat(DummyServiceTask.wasExecuted).isEqualTo(true);
+    assertThat(DummyServiceTask.wasExecuted).isTrue();
 
     DummyServiceTask.wasExecuted = false;
 
@@ -626,7 +626,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     managementService.executeJob(orderedJobList.get(1).getId());
     assertThat(jobQuery.count()).isZero();
 
-    assertThat(DummyServiceTask.wasExecuted).isEqualTo(true);
+    assertThat(DummyServiceTask.wasExecuted).isTrue();
 
     // check if user task still exists because timer start event is non
     // interrupting
@@ -734,7 +734,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     managementService.executeJob(orderedJobList.get(0).getId());
     assertThat(jobQuery.count()).isEqualTo(1);
 
-    assertThat(DummyServiceTask.wasExecuted).isEqualTo(true);
+    assertThat(DummyServiceTask.wasExecuted).isTrue();
 
     DummyServiceTask.wasExecuted = false;
 
@@ -750,7 +750,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     managementService.executeJob(orderedJobList.get(1).getId());
     assertThat(jobQuery.count()).isZero();
 
-    assertThat(DummyServiceTask.wasExecuted).isEqualTo(true);
+    assertThat(DummyServiceTask.wasExecuted).isTrue();
 
     // check if user task still exists because timer start event is non
     // interrupting
@@ -782,7 +782,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     // execute timer job
     managementService.executeJob(jobIdFirstLoop);
 
-    assertThat(DummyServiceTask.wasExecuted).isEqualTo(true);
+    assertThat(DummyServiceTask.wasExecuted).isTrue();
     DummyServiceTask.wasExecuted = false;
 
     // execute multiInstance loop number 2
@@ -793,7 +793,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     // execute timer job
     managementService.executeJob(jobIdSecondLoop);
 
-    assertThat(DummyServiceTask.wasExecuted).isEqualTo(true);
+    assertThat(DummyServiceTask.wasExecuted).isTrue();
 
     // multiInstance loop finished
     assertThat(jobQuery.count()).isZero();
@@ -827,7 +827,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     // execute timer job
     managementService.executeJob(jobIdFirstLoop);
 
-    assertThat(DummyServiceTask.wasExecuted).isEqualTo(true);
+    assertThat(DummyServiceTask.wasExecuted).isTrue();
     DummyServiceTask.wasExecuted = false;
 
     assertThat(taskQuery.count()).isEqualTo(1);
@@ -843,7 +843,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     // execute timer job
     managementService.executeJob(jobIdSecondLoop);
 
-    assertThat(DummyServiceTask.wasExecuted).isEqualTo(true);
+    assertThat(DummyServiceTask.wasExecuted).isTrue();
 
     // multiInstance loop finished
     assertThat(jobQuery.count()).isZero();
@@ -881,7 +881,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     for (Job job : jobQuery.list()) {
       managementService.executeJob(job.getId());
 
-      assertThat(DummyServiceTask.wasExecuted).isEqualTo(true);
+      assertThat(DummyServiceTask.wasExecuted).isTrue();
       DummyServiceTask.wasExecuted = false;
     }
 
@@ -922,7 +922,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     for (Job job : jobQuery.list()) {
       managementService.executeJob(job.getId());
 
-      assertThat(DummyServiceTask.wasExecuted).isEqualTo(true);
+      assertThat(DummyServiceTask.wasExecuted).isTrue();
       DummyServiceTask.wasExecuted = false;
     }
 
@@ -966,7 +966,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     // execute interrupting start timer event subprocess job
     managementService.executeJob(jobQuery.orderByJobDuedate().asc().list().get(1).getId());
 
-    assertThat(DummyServiceTask.wasExecuted).isEqualTo(true);
+    assertThat(DummyServiceTask.wasExecuted).isTrue();
 
     // after first interrupting start timer event sub process execution
     // multiInstance loop number 2
@@ -1010,7 +1010,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     // execute interrupting start timer event subprocess job
     managementService.executeJob(jobQuery.orderByJobDuedate().asc().list().get(1).getId());
 
-    assertThat(DummyServiceTask.wasExecuted).isEqualTo(true);
+    assertThat(DummyServiceTask.wasExecuted).isTrue();
 
     // after first interrupting start timer event sub process execution
     // multiInstance loop number 2
@@ -1051,7 +1051,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     // execute non interrupting start timer event subprocess job
     managementService.executeJob(jobQuery.orderByJobDuedate().asc().list().get(1).getId());
 
-    assertThat(DummyServiceTask.wasExecuted).isEqualTo(true);
+    assertThat(DummyServiceTask.wasExecuted).isTrue();
 
     // complete user task to finish execution of first multiInstance loop
     assertThat(taskQuery.count()).isEqualTo(1);
@@ -1102,7 +1102,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     // execute interrupting timer job
     managementService.executeJob(jobQuery.orderByJobDuedate().asc().list().get(1).getId());
 
-    assertThat(DummyServiceTask.wasExecuted).isEqualTo(true);
+    assertThat(DummyServiceTask.wasExecuted).isTrue();
 
     // after interrupting timer job execution
     assertThat(jobQuery.count()).isEqualTo(2);
@@ -1193,7 +1193,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
     // execute non interrupting timer job
     managementService.executeJob(jobQuery.orderByJobDuedate().asc().list().get(1).getId());
 
-    assertThat(DummyServiceTask.wasExecuted).isEqualTo(true);
+    assertThat(DummyServiceTask.wasExecuted).isTrue();
 
     // after non interrupting timer job execution
     assertThat(jobQuery.count()).isEqualTo(2);

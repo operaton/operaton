@@ -310,7 +310,7 @@ public class SignalEventTest {
     // send interrupting signal to event sub process
     runtimeService.signalEventReceived("alert");
 
-    assertThat(DummyServiceTask.wasExecuted).isEqualTo(true);
+    assertThat(DummyServiceTask.wasExecuted).isTrue();
 
     // check if user task doesn't exist because signal start event is interrupting
     taskQuery = taskService.createTaskQuery().processInstanceId(processInstance.getId());
@@ -338,7 +338,7 @@ public class SignalEventTest {
     // send non interrupting signal to event sub process
     runtimeService.signalEventReceived("alert");
 
-    assertThat(DummyServiceTask.wasExecuted).isEqualTo(true);
+    assertThat(DummyServiceTask.wasExecuted).isTrue();
 
     // check if user task still exists because signal start event is non interrupting
     taskQuery = taskService.createTaskQuery().processInstanceId(processInstance.getId());

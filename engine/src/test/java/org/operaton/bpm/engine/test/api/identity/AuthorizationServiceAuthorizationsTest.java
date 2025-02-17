@@ -369,7 +369,7 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
     processEngineConfiguration.setAuthorizationEnabled(true);
 
     // then
-    assertThat(authorizationService.isUserAuthorized(userId, null, Permissions.ACCESS, Resources.APPLICATION)).isEqualTo(true);
+    assertThat(authorizationService.isUserAuthorized(userId, null, Permissions.ACCESS, Resources.APPLICATION)).isTrue();
     assertThat(authorizationService.isUserAuthorized(userId, null, BatchPermissions.CREATE_BATCH_MIGRATE_PROCESS_INSTANCES, Resources.BATCH)).isEqualTo(false);
     assertThat(authorizationService.isUserAuthorized(userId, null, ProcessDefinitionPermissions.RETRY_JOB, Resources.PROCESS_DEFINITION)).isEqualTo(false);
     assertThat(authorizationService.isUserAuthorized(userId, null, ProcessInstancePermissions.RETRY_JOB, Resources.PROCESS_INSTANCE)).isEqualTo(false);
@@ -412,8 +412,8 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
     processEngineConfiguration.setAuthorizationEnabled(true);
 
     // then
-    assertThat(authorizationService.isUserAuthorized(userId, null, Permissions.READ, Resources.PROCESS_INSTANCE)).isEqualTo(true);
-    assertThat(authorizationService.isUserAuthorized(userId, null, ProcessInstancePermissions.RETRY_JOB, Resources.PROCESS_INSTANCE)).isEqualTo(true);
+    assertThat(authorizationService.isUserAuthorized(userId, null, Permissions.READ, Resources.PROCESS_INSTANCE)).isTrue();
+    assertThat(authorizationService.isUserAuthorized(userId, null, ProcessInstancePermissions.RETRY_JOB, Resources.PROCESS_INSTANCE)).isTrue();
     assertThat(authorizationService.isUserAuthorized(userId, null, BatchPermissions.CREATE_BATCH_MIGRATE_PROCESS_INSTANCES, Resources.BATCH)).isEqualTo(false);
     assertThat(authorizationService.isUserAuthorized(userId, null, ProcessDefinitionPermissions.RETRY_JOB, Resources.PROCESS_DEFINITION)).isEqualTo(false);
     assertThat(authorizationService.isUserAuthorized(userId, null, Permissions.ACCESS, Resources.APPLICATION)).isEqualTo(false);
@@ -441,7 +441,7 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
     processEngineConfiguration.setAuthorizationEnabled(true);
 
     // then
-    assertThat(authorizationService.isUserAuthorized(userId, null, Permissions.ACCESS, resource)).isEqualTo(true);
+    assertThat(authorizationService.isUserAuthorized(userId, null, Permissions.ACCESS, resource)).isTrue();
   }
 
   protected void cleanupAfterTest() {

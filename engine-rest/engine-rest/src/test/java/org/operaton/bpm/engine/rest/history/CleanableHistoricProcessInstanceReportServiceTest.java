@@ -102,8 +102,8 @@ public class CleanableHistoricProcessInstanceReportServiceTest extends AbstractR
     when(anotherReportResult.getProcessDefinitionName()).thenReturn("pdName");
     when(anotherReportResult.getProcessDefinitionVersion()).thenReturn(33);
     when(anotherReportResult.getHistoryTimeToLive()).thenReturn(null);
-    when(anotherReportResult.getFinishedProcessInstanceCount()).thenReturn(13l);
-    when(anotherReportResult.getCleanableProcessInstanceCount()).thenReturn(0l);
+    when(anotherReportResult.getFinishedProcessInstanceCount()).thenReturn(13L);
+    when(anotherReportResult.getCleanableProcessInstanceCount()).thenReturn(0L);
     when(anotherReportResult.getTenantId()).thenReturn(ANOTHER_EXAMPLE_TENANT_ID);
 
     List<CleanableHistoricProcessInstanceReportResult> mocks = new ArrayList<>();

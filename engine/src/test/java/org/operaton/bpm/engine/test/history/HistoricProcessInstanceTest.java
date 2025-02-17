@@ -2144,14 +2144,14 @@ public class HistoricProcessInstanceTest {
     runtimeService.startProcessInstanceByKey("TWO_TASKS_PROCESS");
 
     // assume
-    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(9l);
+    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(9L);
 
     // when
     HistoricProcessInstanceQuery query = historyService.createHistoricProcessInstanceQuery()
       .processDefinitionKeyIn("ONE_TASKS_PROCESS", "TWO_TASKS_PROCESS");
 
     // then
-    assertThat(query.count()).isEqualTo(6l);
+    assertThat(query.count()).isEqualTo(6L);
     assertThat(query.list()).hasSize(6);
   }
 

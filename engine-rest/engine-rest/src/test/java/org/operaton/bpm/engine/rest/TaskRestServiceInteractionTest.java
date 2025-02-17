@@ -381,7 +381,7 @@ public class TaskRestServiceInteractionTest extends
     ProcessDefinitionQuery sampleProcessDefinitionQuery = mock(ProcessDefinitionQuery.class);
     when(sampleProcessDefinitionQuery.listPage(0, 1)).thenReturn(mockDefinitions);
     when(sampleProcessDefinitionQuery.processDefinitionIdIn(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)).thenReturn(sampleProcessDefinitionQuery);
-    when(sampleProcessDefinitionQuery.count()).thenReturn(1l);
+    when(sampleProcessDefinitionQuery.count()).thenReturn(1L);
     when(processEngine.getRepositoryService().createProcessDefinitionQuery()).thenReturn(sampleProcessDefinitionQuery);
 
     // setup case definition query mock
@@ -389,7 +389,7 @@ public class TaskRestServiceInteractionTest extends
     CaseDefinitionQuery sampleCaseDefinitionQuery = mock(CaseDefinitionQuery.class);
     when(sampleCaseDefinitionQuery.listPage(0, 1)).thenReturn(mockCaseDefinitions);
     when(sampleCaseDefinitionQuery.caseDefinitionIdIn(MockProvider.EXAMPLE_CASE_DEFINITION_ID)).thenReturn(sampleCaseDefinitionQuery);
-    when(sampleCaseDefinitionQuery.count()).thenReturn(1l);
+    when(sampleCaseDefinitionQuery.count()).thenReturn(1L);
     when(processEngine.getRepositoryService().createCaseDefinitionQuery()).thenReturn(sampleCaseDefinitionQuery);
 
     Response response = given()

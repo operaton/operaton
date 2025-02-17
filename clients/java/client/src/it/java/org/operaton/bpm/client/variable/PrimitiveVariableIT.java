@@ -73,7 +73,7 @@ public class PrimitiveVariableIT {
   protected static final double VARIABLE_VALUE_DOUBLE = 12.34;
   protected static final String VARIABLE_VALUE_STRING = "bar";
   protected static final boolean VARIABLE_VALUE_BOOLEAN = true;
-  protected static final Date VARIABLE_VALUE_DATE = new Date(1514790000000l);
+  protected static final Date VARIABLE_VALUE_DATE = new Date(1514790000000L);
   protected static final byte[] VARIABLE_VALUE_BYTES = VARIABLE_VALUE_STRING.getBytes();
 //  protected static final InputStream VARIABLE_VALUE_BYTES_INPUTSTREAM = new ByteArrayInputStream(VARIABLE_VALUE_STRING.getBytes());
 

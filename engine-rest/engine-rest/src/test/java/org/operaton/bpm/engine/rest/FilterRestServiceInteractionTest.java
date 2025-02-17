@@ -1014,7 +1014,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
   @Test
   public void testEmptyHalList() {
     when(filterServiceMock.list(any(), any())).thenReturn(Collections.emptyList());
-    when(filterServiceMock.count(any(), any())).thenReturn(0l);
+    when(filterServiceMock.count(any(), any())).thenReturn(0L);
 
     given()
       .header(ACCEPT_HAL_HEADER)

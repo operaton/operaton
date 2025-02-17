@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.rest.dto.externaltask;
 
 import static java.lang.Boolean.TRUE;
-import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
+import static jakarta.ws.rs.core.Response.Status.BAD_REQUEST;
 
 import java.util.Collections;
 import java.util.HashMap;

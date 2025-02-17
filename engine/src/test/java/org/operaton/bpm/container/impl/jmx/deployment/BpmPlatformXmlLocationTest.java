@@ -28,7 +28,6 @@ import javax.naming.NamingException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.operaton.bpm.container.impl.tomcat.deployment.TomcatParseBpmPlatformXmlStep;
-import org.springframework.mock.jndi.SimpleNamingContext;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.Assert.assertEquals;
@@ -64,9 +63,12 @@ public class BpmPlatformXmlLocationTest {
   private static final String BPM_PLATFORM_XML_LOCATION_URL_HTTPS_PROTOCOL = "https://localhost:8080/operaton/" + BPM_PLATFORM_XML_FILE;
 
   @Rule
-  public MockInitialContextRule initialContextRule = new MockInitialContextRule(new SimpleNamingContext());
+  public MockInitialContextRule initialContextRule = new MockInitialContextRule(new InitialContext());
 
-  @Test
+    public BpmPlatformXmlLocationTest() throws NamingException {
+    }
+
+    @Test
   public void checkValidBpmPlatformXmlResourceLocationForUrl() throws MalformedURLException {
     TomcatParseBpmPlatformXmlStep tomcatParseBpmPlatformXmlStep = new TomcatParseBpmPlatformXmlStep();
 

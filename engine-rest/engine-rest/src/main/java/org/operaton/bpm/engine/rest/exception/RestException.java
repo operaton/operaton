@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.rest.exception;
 
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response.Status;
 
 public class RestException extends RuntimeException {
   

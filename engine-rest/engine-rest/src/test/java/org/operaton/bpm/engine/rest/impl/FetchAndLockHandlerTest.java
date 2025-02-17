@@ -38,8 +38,8 @@ import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.exception.RestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
 
-import javax.ws.rs.container.AsyncResponse;
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.container.AsyncResponse;
+import jakarta.ws.rs.core.Response.Status;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;

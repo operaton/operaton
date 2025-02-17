@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import static javax.ws.rs.core.Response.Status;
+import static jakarta.ws.rs.core.Response.Status;
 import static io.restassured.RestAssured.expect;
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;

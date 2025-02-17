@@ -28,17 +28,15 @@ import org.operaton.bpm.engine.rest.AbstractRestServiceTest;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.security.auth.ProcessEngineAuthenticationFilter;
 import org.operaton.bpm.engine.rest.security.auth.impl.HttpBasicAuthenticationProvider;
-
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.ws.rs.core.Response.Status;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.ws.rs.core.Response;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -184,7 +182,7 @@ public class AuthenticationFilterPathMatchingTest extends AbstractRestServiceTes
     request.setServletPath(servletPath);
     applyFilter(request, response, MockProvider.EXAMPLE_USER_ID, MockProvider.EXAMPLE_USER_PASSWORD);
 
-    Assert.assertEquals(Status.OK.getStatusCode(), response.getStatus());
+    Assert.assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
     if (authenticationExpected) {
       verify(identityServiceMock).setAuthentication(MockProvider.EXAMPLE_USER_ID, groupIds, tenantIds);

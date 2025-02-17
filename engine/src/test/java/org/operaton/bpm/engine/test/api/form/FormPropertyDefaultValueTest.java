@@ -62,7 +62,7 @@ public class FormPropertyDefaultValueTest extends PluggableProcessEngineTest {
     formDataUpdate.put("booleanProperty", "false");
     formService.submitTaskFormData(task.getId(), formDataUpdate);
 
-    assertThat(runtimeService.getVariable(processInstance.getId(), "booleanProperty")).isEqualTo(false);
+    assertThat(runtimeService.getVariable(processInstance.getId(), "booleanProperty")).isFalse();
     assertThat(runtimeService.getVariable(processInstance.getId(), "stringProperty")).isEqualTo("someString");
     assertThat(runtimeService.getVariable(processInstance.getId(), "longProperty")).isEqualTo(42L);
     assertThat(runtimeService.getVariable(processInstance.getId(), "longExpressionProperty")).isEqualTo(1L);
@@ -103,7 +103,7 @@ public class FormPropertyDefaultValueTest extends PluggableProcessEngineTest {
     formDataUpdate.put("booleanProperty", "false");
     ProcessInstance processInstance = formService.submitStartFormData(processDefinitionId, formDataUpdate);
 
-    assertThat(runtimeService.getVariable(processInstance.getId(), "booleanProperty")).isEqualTo(false);
+    assertThat(runtimeService.getVariable(processInstance.getId(), "booleanProperty")).isFalse();
     assertThat(runtimeService.getVariable(processInstance.getId(), "stringProperty")).isEqualTo("someString");
     assertThat(runtimeService.getVariable(processInstance.getId(), "longProperty")).isEqualTo(42L);
     assertThat(runtimeService.getVariable(processInstance.getId(), "longExpressionProperty")).isEqualTo(1L);

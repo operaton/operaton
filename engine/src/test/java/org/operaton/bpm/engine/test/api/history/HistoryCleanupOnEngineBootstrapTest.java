@@ -201,7 +201,7 @@ public class HistoryCleanupOnEngineBootstrapTest {
             .isNotEmpty()
             .hasSize(1);
     assertThat(historyCleanupJobs.get(0).getDuedate()).isEqualTo(sdf.parse("2018-05-16T23:00:00"));
-    assertThat(historyCleanupJobs.get(0).isSuspended()).isEqualTo(false);
+    assertThat(historyCleanupJobs.get(0).isSuspended()).isFalse();
 
     engine.close();
 
@@ -218,7 +218,7 @@ public class HistoryCleanupOnEngineBootstrapTest {
             .isNotEmpty()
             .hasSize(1);
     assertThat(historyCleanupJobs.get(0).getDuedate()).isEqualTo(sdf.parse("2018-05-14T23:00:00"));
-    assertThat(historyCleanupJobs.get(0).isSuspended()).isEqualTo(false);
+    assertThat(historyCleanupJobs.get(0).isSuspended()).isFalse();
 
     closeProcessEngine(engine);
   }
@@ -292,7 +292,7 @@ public class HistoryCleanupOnEngineBootstrapTest {
             .isNotEmpty()
             .hasSize(1);
     assertThat(historyCleanupJobs.get(0).getDuedate()).isEqualTo(sdf.parse("2018-05-21T18:00:00"));     //monday next week
-    assertThat(historyCleanupJobs.get(0).isSuspended()).isEqualTo(false);
+    assertThat(historyCleanupJobs.get(0).isSuspended()).isFalse();
 
     //when
     //we're on Monday evening next week, right aftre the end of batch window
@@ -307,7 +307,7 @@ public class HistoryCleanupOnEngineBootstrapTest {
             .isNotEmpty()
             .hasSize(1);
     assertThat(historyCleanupJobs.get(0).getDuedate()).isEqualTo(sdf.parse("2018-05-28T18:00:00"));     //monday next week
-    assertThat(historyCleanupJobs.get(0).isSuspended()).isEqualTo(false);
+    assertThat(historyCleanupJobs.get(0).isSuspended()).isFalse();
 
     closeProcessEngine(engine);
   }
@@ -333,7 +333,7 @@ public class HistoryCleanupOnEngineBootstrapTest {
             .isNotEmpty()
             .hasSize(1);
     assertThat(historyCleanupJobs.get(0).getDuedate()).isEqualTo(sdf.parse("2018-05-14T06:00:00"));
-    assertThat(historyCleanupJobs.get(0).isSuspended()).isEqualTo(false);
+    assertThat(historyCleanupJobs.get(0).isSuspended()).isFalse();
 
     //when
     //we're on Monday afternoon
@@ -348,7 +348,7 @@ public class HistoryCleanupOnEngineBootstrapTest {
             .isNotEmpty()
             .hasSize(1);
     assertThat(sdf.parse("2018-05-15T06:00:00").after(historyCleanupJobs.get(0).getDuedate())).isTrue();
-    assertThat(historyCleanupJobs.get(0).isSuspended()).isEqualTo(false);
+    assertThat(historyCleanupJobs.get(0).isSuspended()).isFalse();
 
     //when
     //we're on Tuesday early morning close to the end of batch window
@@ -363,7 +363,7 @@ public class HistoryCleanupOnEngineBootstrapTest {
             .isNotEmpty()
             .hasSize(1);
     assertThat(sdf.parse("2018-05-15T06:00:00").after(historyCleanupJobs.get(0).getDuedate())).isTrue();
-    assertThat(historyCleanupJobs.get(0).isSuspended()).isEqualTo(false);
+    assertThat(historyCleanupJobs.get(0).isSuspended()).isFalse();
 
     //when
     //we're on Tuesday early morning shortly after the end of batch window
@@ -378,7 +378,7 @@ public class HistoryCleanupOnEngineBootstrapTest {
             .isNotEmpty()
             .hasSize(1);
     assertThat(historyCleanupJobs.get(0).getDuedate()).isEqualTo(sdf.parse("2018-05-21T06:00:00"));
-    assertThat(historyCleanupJobs.get(0).isSuspended()).isEqualTo(false);
+    assertThat(historyCleanupJobs.get(0).isSuspended()).isFalse();
 
     closeProcessEngine(engine);
   }

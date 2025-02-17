@@ -370,9 +370,9 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
 
     // then
     assertThat(authorizationService.isUserAuthorized(userId, null, Permissions.ACCESS, Resources.APPLICATION)).isTrue();
-    assertThat(authorizationService.isUserAuthorized(userId, null, BatchPermissions.CREATE_BATCH_MIGRATE_PROCESS_INSTANCES, Resources.BATCH)).isEqualTo(false);
-    assertThat(authorizationService.isUserAuthorized(userId, null, ProcessDefinitionPermissions.RETRY_JOB, Resources.PROCESS_DEFINITION)).isEqualTo(false);
-    assertThat(authorizationService.isUserAuthorized(userId, null, ProcessInstancePermissions.RETRY_JOB, Resources.PROCESS_INSTANCE)).isEqualTo(false);
+    assertThat(authorizationService.isUserAuthorized(userId, null, BatchPermissions.CREATE_BATCH_MIGRATE_PROCESS_INSTANCES, Resources.BATCH)).isFalse();
+    assertThat(authorizationService.isUserAuthorized(userId, null, ProcessDefinitionPermissions.RETRY_JOB, Resources.PROCESS_DEFINITION)).isFalse();
+    assertThat(authorizationService.isUserAuthorized(userId, null, ProcessInstancePermissions.RETRY_JOB, Resources.PROCESS_INSTANCE)).isFalse();
     try {
       authorizationService.isUserAuthorized(userId, null, BatchPermissions.CREATE_BATCH_MIGRATE_PROCESS_INSTANCES, Resources.APPLICATION);
       fail("expected exception");
@@ -414,9 +414,9 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
     // then
     assertThat(authorizationService.isUserAuthorized(userId, null, Permissions.READ, Resources.PROCESS_INSTANCE)).isTrue();
     assertThat(authorizationService.isUserAuthorized(userId, null, ProcessInstancePermissions.RETRY_JOB, Resources.PROCESS_INSTANCE)).isTrue();
-    assertThat(authorizationService.isUserAuthorized(userId, null, BatchPermissions.CREATE_BATCH_MIGRATE_PROCESS_INSTANCES, Resources.BATCH)).isEqualTo(false);
-    assertThat(authorizationService.isUserAuthorized(userId, null, ProcessDefinitionPermissions.RETRY_JOB, Resources.PROCESS_DEFINITION)).isEqualTo(false);
-    assertThat(authorizationService.isUserAuthorized(userId, null, Permissions.ACCESS, Resources.APPLICATION)).isEqualTo(false);
+    assertThat(authorizationService.isUserAuthorized(userId, null, BatchPermissions.CREATE_BATCH_MIGRATE_PROCESS_INSTANCES, Resources.BATCH)).isFalse();
+    assertThat(authorizationService.isUserAuthorized(userId, null, ProcessDefinitionPermissions.RETRY_JOB, Resources.PROCESS_DEFINITION)).isFalse();
+    assertThat(authorizationService.isUserAuthorized(userId, null, Permissions.ACCESS, Resources.APPLICATION)).isFalse();
     try {
       authorizationService.isUserAuthorized(userId, null, ProcessDefinitionPermissions.RETRY_JOB, Resources.PROCESS_INSTANCE);
       fail("expected exception");

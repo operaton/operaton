@@ -27,10 +27,10 @@ import org.operaton.bpm.webapp.AppRuntimeDelegate;
 import org.operaton.bpm.webapp.plugin.AppPluginRegistry;
 import org.operaton.bpm.webapp.plugin.spi.AppPlugin;
 
-import javax.servlet.ServletContext;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.StreamingOutput;
+import jakarta.servlet.ServletContext;
+import jakarta.ws.rs.core.HttpHeaders;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.StreamingOutput;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

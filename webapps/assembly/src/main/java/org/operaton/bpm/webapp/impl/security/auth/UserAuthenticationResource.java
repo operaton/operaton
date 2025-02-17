@@ -24,12 +24,12 @@ import org.operaton.bpm.webapp.impl.WebappLogger;
 import org.operaton.bpm.webapp.impl.util.ProcessEngineUtil;
 import org.operaton.bpm.webapp.impl.util.ServletContextUtil;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

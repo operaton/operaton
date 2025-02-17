@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.engine.rest.exception;
 
-import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.ExceptionMapper;
-import javax.ws.rs.ext.Provider;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.ext.ExceptionMapper;
+import jakarta.ws.rs.ext.Provider;
 
 /**
  * Translates any {@link Throwable} to a HTTP 500 error and a JSON response.

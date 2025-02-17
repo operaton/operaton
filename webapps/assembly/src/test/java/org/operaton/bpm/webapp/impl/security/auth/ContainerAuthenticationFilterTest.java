@@ -31,10 +31,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.ws.rs.core.Response.Status;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.ws.rs.core.Response.Status;
 
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;

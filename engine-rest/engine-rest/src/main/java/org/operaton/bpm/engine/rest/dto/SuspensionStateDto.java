@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.rest.dto;
 
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response.Status;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;

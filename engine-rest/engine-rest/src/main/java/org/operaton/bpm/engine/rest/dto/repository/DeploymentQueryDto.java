@@ -23,8 +23,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.Response.Status;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.repository.DeploymentQuery;

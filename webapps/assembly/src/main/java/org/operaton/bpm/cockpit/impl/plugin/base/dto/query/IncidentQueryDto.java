@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.cockpit.impl.plugin.base.dto.query;
 
-import javax.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.MultivaluedMap;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -36,8 +36,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response.Status;
 
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
@@ -916,14 +916,14 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "eq");
-    
+
     List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
-    
+
     Map<String, Object> json = new HashMap<>();
     json.put("variableValues", variables);
     json.put("variableValuesIgnoreCase", true);
-    
+
     given()
     .contentType(POST_JSON_CONTENT_TYPE)
     .body(json)
@@ -932,7 +932,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
     .statusCode(Status.OK.getStatusCode())
     .when()
     .post(VARIABLE_INSTANCE_QUERY_URL);
-    
+
     verify(mockedQuery).matchVariableValuesIgnoreCase();
     verify(mockedQuery).variableValueEquals("varName", "varValue");
     verify(mockedQuery).disableBinaryFetching();
@@ -948,14 +948,14 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "neq");
-    
+
     List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
-    
+
     Map<String, Object> json = new HashMap<>();
     json.put("variableValues", variables);
     json.put("variableValuesIgnoreCase", true);
-    
+
     given()
     .contentType(POST_JSON_CONTENT_TYPE)
     .body(json)
@@ -964,7 +964,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
     .statusCode(Status.OK.getStatusCode())
     .when()
     .post(VARIABLE_INSTANCE_QUERY_URL);
-    
+
     verify(mockedQuery).matchVariableValuesIgnoreCase();
     verify(mockedQuery).variableValueNotEquals("varName", "varValue");
     verify(mockedQuery).disableBinaryFetching();
@@ -980,14 +980,14 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "like");
-    
+
     List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
-    
+
     Map<String, Object> json = new HashMap<>();
     json.put("variableValues", variables);
     json.put("variableValuesIgnoreCase", true);
-    
+
     given()
     .contentType(POST_JSON_CONTENT_TYPE)
     .body(json)
@@ -996,7 +996,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
     .statusCode(Status.OK.getStatusCode())
     .when()
     .post(VARIABLE_INSTANCE_QUERY_URL);
-    
+
     verify(mockedQuery).matchVariableValuesIgnoreCase();
     verify(mockedQuery).variableValueLike("varName", "varValue");
     verify(mockedQuery).disableBinaryFetching();
@@ -1013,14 +1013,14 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "eq");
-    
+
     List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
-    
+
     Map<String, Object> json = new HashMap<>();
     json.put("variableValues", variables);
     json.put("variableNamesIgnoreCase", true);
-    
+
     given()
     .contentType(POST_JSON_CONTENT_TYPE)
     .body(json)
@@ -1029,7 +1029,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
     .statusCode(Status.OK.getStatusCode())
     .when()
     .post(VARIABLE_INSTANCE_QUERY_URL);
-    
+
     verify(mockedQuery).matchVariableNamesIgnoreCase();
     verify(mockedQuery).variableValueEquals("varName", "varValue");
     verify(mockedQuery).disableBinaryFetching();
@@ -1045,14 +1045,14 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "neq");
-    
+
     List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
-    
+
     Map<String, Object> json = new HashMap<>();
     json.put("variableValues", variables);
     json.put("variableNamesIgnoreCase", true);
-    
+
     given()
     .contentType(POST_JSON_CONTENT_TYPE)
     .body(json)
@@ -1061,7 +1061,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
     .statusCode(Status.OK.getStatusCode())
     .when()
     .post(VARIABLE_INSTANCE_QUERY_URL);
-    
+
     verify(mockedQuery).matchVariableNamesIgnoreCase();
     verify(mockedQuery).variableValueNotEquals("varName", "varValue");
     verify(mockedQuery).disableBinaryFetching();

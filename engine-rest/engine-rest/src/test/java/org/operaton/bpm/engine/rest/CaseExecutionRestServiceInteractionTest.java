@@ -74,8 +74,8 @@ import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response.Status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;

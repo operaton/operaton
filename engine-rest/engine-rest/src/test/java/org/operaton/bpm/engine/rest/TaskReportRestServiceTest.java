@@ -25,7 +25,7 @@ import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_GROUP_ID;
 import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_TASK_COUNT_BY_CANDIDATE_GROUP;
 import static org.operaton.bpm.engine.rest.helper.MockProvider.createMockTaskCountByCandidateGroupReport;
 
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response.Status;
 import java.util.List;
 
 import io.restassured.http.ContentType;

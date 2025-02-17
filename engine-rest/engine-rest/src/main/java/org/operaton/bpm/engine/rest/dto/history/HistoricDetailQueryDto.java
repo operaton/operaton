@@ -28,8 +28,8 @@ import org.operaton.bpm.engine.rest.dto.converter.StringArrayConverter;
 import org.operaton.bpm.engine.rest.dto.converter.StringListConverter;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

@@ -29,8 +29,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response.Status;
 
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -154,7 +154,7 @@ public class PasswordPolicyServiceQueryTest extends AbstractRestServiceTest {
 
     when(passwordPolicyResultMock.getViolatedRules())
       .thenReturn(Collections.<PasswordPolicyRule>emptyList());
-    
+
     given()
       .header("accept", MediaType.APPLICATION_JSON)
       .contentType(POST_JSON_CONTENT_TYPE)

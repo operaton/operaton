@@ -28,7 +28,7 @@ import static org.mockito.Mockito.when;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response.Status;
 
 import org.operaton.bpm.engine.impl.RuntimeServiceImpl;
 import org.operaton.bpm.engine.rest.helper.variable.EqualsPrimitiveValue;

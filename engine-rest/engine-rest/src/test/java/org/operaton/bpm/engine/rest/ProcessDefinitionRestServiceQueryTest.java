@@ -36,7 +36,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response.Status;
 
 import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
@@ -623,7 +623,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
   public void testQueryByDeployTimeAfter() {
     String deployTime = withTimezone("2020-03-27T01:23:45");
     Date date = DateTimeUtil.parseDate(deployTime);
-    
+
     given().queryParam("deployedAfter", deployTime)
       .then().expect().statusCode(Status.OK.getStatusCode())
       .when().get(PROCESS_DEFINITION_QUERY_URL);
@@ -636,11 +636,11 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
   public void testQueryByDeployTimeAt() {
     String deployTime = withTimezone("2020-03-27T05:43:21");
     Date date = DateTimeUtil.parseDate(deployTime);
-    
+
     given().queryParam("deployedAt", deployTime)
     .then().expect().statusCode(Status.OK.getStatusCode())
     .when().get(PROCESS_DEFINITION_QUERY_URL);
-    
+
     verify(mockedQuery).deployedAt(date);
     verify(mockedQuery).list();
   }

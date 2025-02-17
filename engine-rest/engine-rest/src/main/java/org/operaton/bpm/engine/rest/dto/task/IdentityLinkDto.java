@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.rest.dto.task;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.task.IdentityLink;
 
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response.Status;
 
 public class IdentityLinkDto {
 

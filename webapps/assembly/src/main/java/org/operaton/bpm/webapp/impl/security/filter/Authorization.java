@@ -17,7 +17,7 @@
 package org.operaton.bpm.webapp.impl.security.filter;
 
 import java.util.Collection;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.operaton.bpm.webapp.impl.security.auth.Authentication;
 import org.operaton.bpm.webapp.impl.security.auth.UserAuthentication;

@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.engine.rest.filter;
 
-import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
  * <p>Cache control filter setting "Cache-Control: no-cache" on all GET requests.
- * 
+ *
  * @author Daniel Meyer
  *
  */
@@ -36,14 +36,14 @@ public class CacheControlFilter implements Filter {
 
   @Override
   public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
-    
+
     final HttpServletRequest request = (HttpServletRequest) req;
     final HttpServletResponse response = (HttpServletResponse) resp;
-    
+
     if("GET".equals(request.getMethod()) && !request.getRequestURI().endsWith("xml")) {
       response.setHeader("Cache-Control", "no-cache");
     }
-    
+
     chain.doFilter(req, resp);
   }
 

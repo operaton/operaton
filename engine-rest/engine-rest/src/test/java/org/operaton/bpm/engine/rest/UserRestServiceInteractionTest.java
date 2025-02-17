@@ -33,8 +33,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import javax.ws.rs.HttpMethod;
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.HttpMethod;
+import jakarta.ws.rs.core.Response.Status;
 
 import java.util.List;
 

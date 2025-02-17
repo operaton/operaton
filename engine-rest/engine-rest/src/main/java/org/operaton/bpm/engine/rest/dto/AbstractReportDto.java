@@ -27,15 +27,15 @@ import org.operaton.bpm.engine.query.Report;
 import org.operaton.bpm.engine.rest.dto.converter.PeriodUnitConverter;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author Roman Smirnov
- * @param <T> 
+ * @param <T>
  *
  */
 public abstract class AbstractReportDto<T extends Report> extends AbstractSearchQueryDto {

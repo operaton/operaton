@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.rest.dto.converter.DateConverter;
 import org.operaton.bpm.engine.rest.dto.converter.StringArrayConverter;
 import org.operaton.bpm.engine.rest.dto.converter.VariableListConverter;
 
-import javax.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.MultivaluedMap;
 
 import java.util.*;
 

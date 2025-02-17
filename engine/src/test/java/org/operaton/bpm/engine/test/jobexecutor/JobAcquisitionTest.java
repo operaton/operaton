@@ -107,7 +107,7 @@ public class JobAcquisitionTest {
     assertThat(engineRule.getManagementService().createJobQuery().active().count()).isZero();
     List<RecordedWaitEvent> jobExecutor1WaitEvents = jobExecutor1.getAcquireJobsRunnable().getWaitEvents();
     assertThat(jobExecutor1WaitEvents).hasSize(1);
-    assertThat(jobExecutor1WaitEvents.get(0).getTimeBetweenAcquisitions()).isEqualTo(0);
+    assertThat(jobExecutor1WaitEvents.get(0).getTimeBetweenAcquisitions()).isZero();
 
     // when continuing acquisition thread 2
     acquisitionThread2.makeContinueAndWaitForSync();
@@ -117,6 +117,6 @@ public class JobAcquisitionTest {
     List<RecordedWaitEvent> jobExecutor2WaitEvents = jobExecutor2.getAcquireJobsRunnable().getWaitEvents();
     assertThat(jobExecutor2WaitEvents).hasSize(1);
 
-    assertThat(jobExecutor2WaitEvents.get(0).getTimeBetweenAcquisitions()).isEqualTo(0);
+    assertThat(jobExecutor2WaitEvents.get(0).getTimeBetweenAcquisitions()).isZero();
   }
 }

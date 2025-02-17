@@ -104,7 +104,7 @@ public class CmmnDisabledTest {
     List<CaseDefinition> caseDefinitionList = repositoryService.createCaseDefinitionQuery().list();
     assertThat(caseDefinitionList).isEmpty();
     long caseDefinitionCount =  repositoryService.createCaseDefinitionQuery().count();
-    assertThat(caseDefinitionCount).isEqualTo(0);
+    assertThat(caseDefinitionCount).isZero();
 
     repositoryService.deleteDeployment(deployment.getId(), true);
   }

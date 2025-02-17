@@ -149,7 +149,7 @@ public class FilterAuthorizationsTest extends PluggableProcessEngineTest {
     filterService.deleteFilter(filter.getId());
 
     long count = filterService.createFilterQuery().count();
-    assertThat(count).isEqualTo(0);
+    assertThat(count).isZero();
   }
 
   @Test
@@ -157,7 +157,7 @@ public class FilterAuthorizationsTest extends PluggableProcessEngineTest {
     Filter filter = createTestFilter();
 
     long count = filterService.createFilterQuery().count();
-    assertThat(count).isEqualTo(0);
+    assertThat(count).isZero();
 
     Filter returnedFilter = filterService.createFilterQuery().filterId(filter.getId()).singleResult();
     assertThat(returnedFilter).isNull();
@@ -233,7 +233,7 @@ public class FilterAuthorizationsTest extends PluggableProcessEngineTest {
     revokeReadFilter(filter.getId());
 
     long count = filterService.createFilterQuery().count();
-    assertThat(count).isEqualTo(0);
+    assertThat(count).isZero();
 
     Filter returnedFilter = filterService.createFilterQuery().filterId(filter.getId()).singleResult();
     assertThat(returnedFilter).isNull();

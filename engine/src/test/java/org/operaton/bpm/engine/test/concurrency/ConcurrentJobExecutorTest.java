@@ -317,7 +317,7 @@ public class ConcurrentJobExecutorTest {
 
     assertThat(acquisitionThread.exception).isNull();
     // but the job will also not be acquired
-    assertThat(acquisitionThread.acquiredJobs.size()).isEqualTo(0);
+    assertThat(acquisitionThread.acquiredJobs.size()).isZero();
 
     //--------------------------------------------
 

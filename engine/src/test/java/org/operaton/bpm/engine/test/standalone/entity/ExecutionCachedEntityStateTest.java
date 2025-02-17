@@ -50,7 +50,7 @@ public class ExecutionCachedEntityStateTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("testProcess");
 
     ExecutionEntity processInstance = (ExecutionEntity) runtimeService.createProcessInstanceQuery().singleResult();
-    assertThat(processInstance.getCachedEntityStateRaw()).isEqualTo(0);
+    assertThat(processInstance.getCachedEntityStateRaw()).isZero();
 
     ExecutionEntity execution = (ExecutionEntity) runtimeService.createExecutionQuery().activityId("userTask").singleResult();
     assertThat(execution.getCachedEntityStateRaw()).isEqualTo(BitMaskUtil.getMaskForBit(ExecutionEntity.TASKS_STATE_BIT));
@@ -63,7 +63,7 @@ public class ExecutionCachedEntityStateTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("testProcess");
 
     ExecutionEntity processInstance = (ExecutionEntity) runtimeService.createProcessInstanceQuery().singleResult();
-    assertThat(processInstance.getCachedEntityStateRaw()).isEqualTo(0);
+    assertThat(processInstance.getCachedEntityStateRaw()).isZero();
 
     ExecutionEntity execution = (ExecutionEntity) runtimeService.createExecutionQuery().activityId("userTask").singleResult();
     assertThat(execution.getCachedEntityStateRaw()).isEqualTo(BitMaskUtil.getMaskForBit(ExecutionEntity.TASKS_STATE_BIT));
@@ -76,7 +76,7 @@ public class ExecutionCachedEntityStateTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("testProcess");
 
     ExecutionEntity processInstance = (ExecutionEntity) runtimeService.createProcessInstanceQuery().singleResult();
-    assertThat(processInstance.getCachedEntityStateRaw()).isEqualTo(0);
+    assertThat(processInstance.getCachedEntityStateRaw()).isZero();
 
     List<Execution> executions =  runtimeService.createExecutionQuery().activityId("userTask").list();
     for (Execution execution : executions) {
@@ -107,7 +107,7 @@ public class ExecutionCachedEntityStateTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("testProcess");
 
     ExecutionEntity processInstance = (ExecutionEntity) runtimeService.createProcessInstanceQuery().singleResult();
-    assertThat(processInstance.getCachedEntityStateRaw()).isEqualTo(0);
+    assertThat(processInstance.getCachedEntityStateRaw()).isZero();
 
     ExecutionEntity execution = (ExecutionEntity) runtimeService.createExecutionQuery().activityId("IntermediateCatchEvent_1").singleResult();
     assertThat(execution.getCachedEntityStateRaw()).isEqualTo(BitMaskUtil.getMaskForBit(ExecutionEntity.EVENT_SUBSCRIPTIONS_STATE_BIT));
@@ -121,7 +121,7 @@ public class ExecutionCachedEntityStateTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("testProcess");
 
     ExecutionEntity processInstance = (ExecutionEntity) runtimeService.createProcessInstanceQuery().singleResult();
-    assertThat(processInstance.getCachedEntityStateRaw()).isEqualTo(0);
+    assertThat(processInstance.getCachedEntityStateRaw()).isZero();
 
     List<Execution> executions =  runtimeService.createExecutionQuery().activityId("ReceiveTask_1").list();
     for (Execution execution : executions) {
@@ -153,7 +153,7 @@ public class ExecutionCachedEntityStateTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("testProcess");
 
     ExecutionEntity processInstance = (ExecutionEntity) runtimeService.createProcessInstanceQuery().singleResult();
-    assertThat(processInstance.getCachedEntityStateRaw()).isEqualTo(0);
+    assertThat(processInstance.getCachedEntityStateRaw()).isZero();
 
     ExecutionEntity execution = (ExecutionEntity) runtimeService.createExecutionQuery().activityId("userTask").singleResult();
     assertThat(execution.getCachedEntityStateRaw()).isEqualTo(BitMaskUtil.getMaskForBit(ExecutionEntity.JOBS_STATE_BIT));
@@ -166,7 +166,7 @@ public class ExecutionCachedEntityStateTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("testProcess");
 
     ExecutionEntity processInstance = (ExecutionEntity) runtimeService.createProcessInstanceQuery().singleResult();
-    assertThat(processInstance.getCachedEntityStateRaw()).isEqualTo(0);
+    assertThat(processInstance.getCachedEntityStateRaw()).isZero();
 
     ExecutionEntity execution = (ExecutionEntity) runtimeService.createExecutionQuery().activityId("userTask").singleResult();
     assertThat(execution.getCachedEntityStateRaw()).isEqualTo(BitMaskUtil.getMaskForBit(ExecutionEntity.JOBS_STATE_BIT));
@@ -180,10 +180,10 @@ public class ExecutionCachedEntityStateTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("testProcess");
 
     ExecutionEntity processInstance = (ExecutionEntity) runtimeService.createProcessInstanceQuery().singleResult();
-    assertThat(processInstance.getCachedEntityStateRaw()).isEqualTo(0);
+    assertThat(processInstance.getCachedEntityStateRaw()).isZero();
 
     final ExecutionEntity execution = (ExecutionEntity) runtimeService.createExecutionQuery().activityId("task").singleResult();
-    assertThat(execution.getCachedEntityStateRaw()).isEqualTo(0);
+    assertThat(execution.getCachedEntityStateRaw()).isZero();
 
     processEngineConfiguration.getCommandExecutorTxRequired()
       .execute(commandContext -> {
@@ -208,10 +208,10 @@ public class ExecutionCachedEntityStateTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("testProcess");
 
     ExecutionEntity processInstance = (ExecutionEntity) runtimeService.createProcessInstanceQuery().singleResult();
-    assertThat(processInstance.getCachedEntityStateRaw()).isEqualTo(0);
+    assertThat(processInstance.getCachedEntityStateRaw()).isZero();
 
     final ExecutionEntity execution = (ExecutionEntity) runtimeService.createExecutionQuery().activityId("task").singleResult();
-    assertThat(execution.getCachedEntityStateRaw()).isEqualTo(0);
+    assertThat(execution.getCachedEntityStateRaw()).isZero();
 
     processEngineConfiguration.getCommandExecutorTxRequired()
       .execute(commandContext -> {

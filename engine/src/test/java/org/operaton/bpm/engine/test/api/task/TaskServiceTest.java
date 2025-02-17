@@ -137,7 +137,7 @@ public class TaskServiceTest {
     assertThat(task.getAssignee()).isEqualTo("taskassignee");
     assertThat(task.getOwner()).isEqualTo("taskowner");
     assertThat(task.getDueDate()).isEqualTo(dueDate);
-    assertThat(task.getPriority()).isEqualTo(0);
+    assertThat(task.getPriority()).isZero();
     assertThat(task.getCaseInstanceId()).isEqualTo("taskcaseinstanceid");
     assertThat(task.getTaskState()).isEqualTo("Created");
 
@@ -151,7 +151,7 @@ public class TaskServiceTest {
       assertThat(historicTaskInstance.getAssignee()).isEqualTo("taskassignee");
       assertThat(historicTaskInstance.getOwner()).isEqualTo("taskowner");
       assertThat(historicTaskInstance.getDueDate()).isEqualTo(dueDate);
-      assertThat(historicTaskInstance.getPriority()).isEqualTo(0);
+      assertThat(historicTaskInstance.getPriority()).isZero();
       assertThat(historicTaskInstance.getCaseInstanceId()).isEqualTo("taskcaseinstanceid");
     }
 

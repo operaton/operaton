@@ -120,7 +120,7 @@ public class ScriptTaskNashornTest extends AbstractScriptTaskTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
 
     Date date = (Date) runtimeService.getVariable(pi.getId(), "date");
-    assertThat(date.getTime()).isEqualTo(0);
+    assertThat(date.getTime()).isZero();
 
     deployProcess(NASHORN, "execution.setVariable('myVar', new org.operaton.bpm.engine.test.bpmn.scripttask.MySerializable('test'));");
 

@@ -728,7 +728,7 @@ public class ModificationExecutionAsyncTest {
 
     // then the no historic incidents exists
     long historicIncidents = rule.getHistoryService().createHistoricIncidentQuery().count();
-    assertThat(historicIncidents).isEqualTo(0);
+    assertThat(historicIncidents).isZero();
   }
 
   @Test
@@ -748,7 +748,7 @@ public class ModificationExecutionAsyncTest {
 
     // then the no historic incidents exists
     long historicIncidents = rule.getHistoryService().createHistoricIncidentQuery().count();
-    assertThat(historicIncidents).isEqualTo(0);
+    assertThat(historicIncidents).isZero();
   }
 
   @Test
@@ -766,7 +766,7 @@ public class ModificationExecutionAsyncTest {
 
     // then the no historic incidents exists
     long historicIncidents = rule.getHistoryService().createHistoricIncidentQuery().count();
-    assertThat(historicIncidents).isEqualTo(0);
+    assertThat(historicIncidents).isZero();
   }
 
   @Test

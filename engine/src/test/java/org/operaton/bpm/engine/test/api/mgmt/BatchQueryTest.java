@@ -170,7 +170,7 @@ public class BatchQueryTest {
     long count = managementService.createBatchQuery().type("foo").count();
 
     // then
-    assertThat(count).isEqualTo(0);
+    assertThat(count).isZero();
   }
 
   @Test

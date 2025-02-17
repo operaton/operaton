@@ -96,7 +96,7 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
     ClockUtil.setCurrentTime(currentTime);
 
     jobRetries = executeJob(processInstanceId);
-    assertThat(jobRetries).isEqualTo(0);
+    assertThat(jobRetries).isZero();
   }
 
   @Test
@@ -130,7 +130,7 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
     ClockUtil.setCurrentTime(currentTime);
 
     jobRetries = executeJob(processInstanceId);
-    assertThat(jobRetries).isEqualTo(0);
+    assertThat(jobRetries).isZero();
   }
 
   @Test
@@ -196,7 +196,7 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
     ClockUtil.setCurrentTime(currentTime);
 
     jobRetries = executeJob(processInstanceId);
-    assertThat(jobRetries).isEqualTo(0);
+    assertThat(jobRetries).isZero();
   }
 
   @Test
@@ -222,7 +222,7 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
     ClockUtil.setCurrentTime(currentTime);
 
     jobRetries = executeJob(processInstanceId);
-    assertThat(jobRetries).isEqualTo(0);
+    assertThat(jobRetries).isZero();
   }
 
   @Test
@@ -297,7 +297,7 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
     ClockUtil.setCurrentTime(currentTime);
 
     jobRetries = executeJob(processInstanceId);
-    assertThat(jobRetries).isEqualTo(0);
+    assertThat(jobRetries).isZero();
   }
 
   @Test
@@ -402,7 +402,7 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
     ClockUtil.setCurrentTime(currentTime);
 
     jobRetries = executeJob(processInstanceId);
-    assertThat(jobRetries).isEqualTo(0);
+    assertThat(jobRetries).isZero();
   }
 
   private int executeJob(String processInstanceId) {

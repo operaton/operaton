@@ -175,7 +175,7 @@ public class DeploymentAwareJobExecutorTest extends PluggableProcessEngineTest {
     processEngine.getManagementService().unregisterDeploymentForJobExecutor(deploymentId);
 
     AcquiredJobs acquiredJobs = getExecutableJobs(processEngineConfiguration.getJobExecutor());
-    assertThat(acquiredJobs.size()).isEqualTo(0);
+    assertThat(acquiredJobs.size()).isZero();
   }
 
   @Test

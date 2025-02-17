@@ -153,7 +153,7 @@ public class FilterServiceTest extends PluggableProcessEngineTest {
   public void testDeleteUnknownFilter() {
     filterService.deleteFilter(filter.getId());
     long count = filterService.createFilterQuery().count();
-    assertThat(count).isEqualTo(0);
+    assertThat(count).isZero();
 
     String filterId = filter.getId();
     assertThatThrownBy(() -> filterService.deleteFilter(filterId))

@@ -85,7 +85,7 @@ public class CmmnTransformListenerTest {
     assertThat(numberOfRegistered(Stage.class)).isEqualTo(2);
     assertThat(numberOfRegistered(Milestone.class)).isEqualTo(1);
     // Note: EventListener is currently not supported!
-    assertThat(numberOfRegistered(EventListener.class)).isEqualTo(0);
+    assertThat(numberOfRegistered(EventListener.class)).isZero();
     assertThat(numberOfRegistered(Sentry.class)).isEqualTo(3);
 
     assertThat(TestCmmnTransformListener.cmmnActivities).hasSize(11);

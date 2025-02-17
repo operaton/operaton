@@ -60,7 +60,7 @@ public class ActivityStatisticsQueryTest extends PluggableProcessEngineTest {
     ActivityStatistics activityResult = statistics.get(0);
     assertThat(activityResult.getInstances()).isEqualTo(1);
     assertThat(activityResult.getId()).isEqualTo("theServiceTask");
-    assertThat(activityResult.getFailedJobs()).isEqualTo(0);
+    assertThat(activityResult.getFailedJobs()).isZero();
   }
 
   @Test
@@ -169,7 +169,7 @@ public class ActivityStatisticsQueryTest extends PluggableProcessEngineTest {
     ActivityStatistics activityResult = statistics.get(0);
 
     assertThat(activityResult.getId()).isEqualTo("callSubProcess");
-    assertThat(activityResult.getFailedJobs()).isEqualTo(0); // has no failed jobs
+    assertThat(activityResult.getFailedJobs()).isZero(); // has no failed jobs
 
     List<IncidentStatistics> incidentStatistics = activityResult.getIncidentStatistics();
     assertThat(incidentStatistics)
@@ -200,7 +200,7 @@ public class ActivityStatisticsQueryTest extends PluggableProcessEngineTest {
     ActivityStatistics activityResult = statistics.get(0);
     assertThat(activityResult.getInstances()).isEqualTo(1);
     assertThat(activityResult.getId()).isEqualTo("theTask");
-    assertThat(activityResult.getFailedJobs()).isEqualTo(0);
+    assertThat(activityResult.getFailedJobs()).isZero();
     assertThat(activityResult.getIncidentStatistics()).isEmpty();
   }
 
@@ -243,7 +243,7 @@ public class ActivityStatisticsQueryTest extends PluggableProcessEngineTest {
     ActivityStatistics activityResult = statistics.get(0);
     assertThat(activityResult.getInstances()).isEqualTo(3);
     assertThat(activityResult.getId()).isEqualTo("theTask");
-    assertThat(activityResult.getFailedJobs()).isEqualTo(0);
+    assertThat(activityResult.getFailedJobs()).isZero();
     assertThat(activityResult.getIncidentStatistics()).isEmpty();
   }
 
@@ -266,7 +266,7 @@ public class ActivityStatisticsQueryTest extends PluggableProcessEngineTest {
     ActivityStatistics activityResult = statistics.get(0);
     assertThat(activityResult.getInstances()).isEqualTo(3);
     assertThat(activityResult.getId()).isEqualTo("theTask");
-    assertThat(activityResult.getFailedJobs()).isEqualTo(0);
+    assertThat(activityResult.getFailedJobs()).isZero();
     assertThat(activityResult.getIncidentStatistics()).isEmpty();
   }
 
@@ -287,7 +287,7 @@ public class ActivityStatisticsQueryTest extends PluggableProcessEngineTest {
     ActivityStatistics activityResult = statistics.get(0);
     assertThat(activityResult.getInstances()).isEqualTo(3);
     assertThat(activityResult.getId()).isEqualTo("theTask");
-    assertThat(activityResult.getFailedJobs()).isEqualTo(0);
+    assertThat(activityResult.getFailedJobs()).isZero();
     assertThat(activityResult.getIncidentStatistics()).isEmpty();
   }
 
@@ -338,7 +338,7 @@ public class ActivityStatisticsQueryTest extends PluggableProcessEngineTest {
 
     ActivityStatistics result = statistics.get(0);
     assertThat(result.getInstances()).isEqualTo(1);
-    assertThat(result.getFailedJobs()).isEqualTo(0);
+    assertThat(result.getFailedJobs()).isZero();
     assertThat(result.getIncidentStatistics()).isEmpty();
 
     ProcessDefinition callSubProcessDefinition = repositoryService
@@ -357,7 +357,7 @@ public class ActivityStatisticsQueryTest extends PluggableProcessEngineTest {
 
     result = callSubProcessStatistics.get(0);
     assertThat(result.getInstances()).isEqualTo(1);
-    assertThat(result.getFailedJobs()).isEqualTo(0);
+    assertThat(result.getFailedJobs()).isZero();
     assertThat(result.getIncidentStatistics()).isEmpty();
   }
 
@@ -380,7 +380,7 @@ public class ActivityStatisticsQueryTest extends PluggableProcessEngineTest {
     ActivityStatistics activityResult = statistics.get(0);
     assertThat(activityResult.getInstances()).isEqualTo(1);
     assertThat(activityResult.getId()).isEqualTo("theTimer");
-    assertThat(activityResult.getFailedJobs()).isEqualTo(0);
+    assertThat(activityResult.getFailedJobs()).isZero();
     assertThat(activityResult.getIncidentStatistics()).isEmpty();
   }
 
@@ -522,7 +522,7 @@ public class ActivityStatisticsQueryTest extends PluggableProcessEngineTest {
     assertThat(result.getId()).isEqualTo("theStart");
 
     // there is no running activity instance
-    assertThat(result.getInstances()).isEqualTo(0);
+    assertThat(result.getInstances()).isZero();
 
     List<IncidentStatistics> incidentStatistics = result.getIncidentStatistics();
 
@@ -557,7 +557,7 @@ public class ActivityStatisticsQueryTest extends PluggableProcessEngineTest {
     ActivityStatistics result = statistics.get(0);
 
     // there is no running instance
-    assertThat(result.getInstances()).isEqualTo(0);
+    assertThat(result.getInstances()).isZero();
 
     List<IncidentStatistics> incidentStatistics = result.getIncidentStatistics();
 
@@ -592,7 +592,7 @@ public class ActivityStatisticsQueryTest extends PluggableProcessEngineTest {
     ActivityStatistics result = statistics.get(0);
 
     // there is no running instance
-    assertThat(result.getInstances()).isEqualTo(0);
+    assertThat(result.getInstances()).isZero();
     // but there is one failed timer job
     assertThat(result.getFailedJobs()).isEqualTo(1);
   }
@@ -621,7 +621,7 @@ public class ActivityStatisticsQueryTest extends PluggableProcessEngineTest {
     ActivityStatistics result = statistics.get(0);
 
     // there is no running instance
-    assertThat(result.getInstances()).isEqualTo(0);
+    assertThat(result.getInstances()).isZero();
     // but there is one failed timer job
     assertThat(result.getFailedJobs()).isEqualTo(1);
 
@@ -654,8 +654,8 @@ public class ActivityStatisticsQueryTest extends PluggableProcessEngineTest {
     assertThat(statistics).hasSize(1);
     ActivityStatistics result = statistics.get(0);
     assertThat(result.getId()).isEqualTo("theTask");
-    assertThat(result.getInstances()).isEqualTo(0);
-    assertThat(result.getFailedJobs()).isEqualTo(0);
+    assertThat(result.getInstances()).isZero();
+    assertThat(result.getFailedJobs()).isZero();
 
   }
 }

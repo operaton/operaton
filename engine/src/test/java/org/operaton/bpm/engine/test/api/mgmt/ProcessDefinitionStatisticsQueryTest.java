@@ -187,8 +187,8 @@ public class ProcessDefinitionStatisticsQueryTest extends PluggableProcessEngine
     assertThat(statistics).hasSize(1);
 
     ProcessDefinitionStatistics definitionResult = statistics.get(0);
-    assertThat(definitionResult.getInstances()).isEqualTo(0);
-    assertThat(definitionResult.getFailedJobs()).isEqualTo(0);
+    assertThat(definitionResult.getInstances()).isZero();
+    assertThat(definitionResult.getFailedJobs()).isZero();
 
     statistics =
         managementService.createProcessDefinitionStatisticsQuery().includeIncidents().list();
@@ -266,7 +266,7 @@ public class ProcessDefinitionStatisticsQueryTest extends PluggableProcessEngine
         assertThat(result.getFailedJobs()).isEqualTo(1);
       } else if (result.getKey().equals("callExampleSubProcess")) {
         assertThat(result.getInstances()).isEqualTo(1);
-        assertThat(result.getFailedJobs()).isEqualTo(0);
+        assertThat(result.getFailedJobs()).isZero();
       } else {
         fail(result + " was not expected.");
       }
@@ -304,13 +304,13 @@ public class ProcessDefinitionStatisticsQueryTest extends PluggableProcessEngine
 
     ProcessDefinitionStatistics definitionResult = statistics.get(0);
     assertThat(definitionResult.getInstances()).isEqualTo(1);
-    assertThat(definitionResult.getFailedJobs()).isEqualTo(0);
+    assertThat(definitionResult.getFailedJobs()).isZero();
 
     assertThat(definitionResult.getIncidentStatistics()).isEmpty();
 
     definitionResult = statistics.get(1);
     assertThat(definitionResult.getInstances()).isEqualTo(1);
-    assertThat(definitionResult.getFailedJobs()).isEqualTo(0);
+    assertThat(definitionResult.getFailedJobs()).isZero();
 
     assertThat(definitionResult.getIncidentStatistics()).isEmpty();
 
@@ -411,13 +411,13 @@ public class ProcessDefinitionStatisticsQueryTest extends PluggableProcessEngine
 
     ProcessDefinitionStatistics definitionResult = statistics.get(0);
     assertThat(definitionResult.getInstances()).isEqualTo(1);
-    assertThat(definitionResult.getFailedJobs()).isEqualTo(0);
+    assertThat(definitionResult.getFailedJobs()).isZero();
 
     assertThat(definitionResult.getIncidentStatistics()).isEmpty();
 
     definitionResult = statistics.get(1);
     assertThat(definitionResult.getInstances()).isEqualTo(1);
-    assertThat(definitionResult.getFailedJobs()).isEqualTo(0);
+    assertThat(definitionResult.getFailedJobs()).isZero();
 
     assertThat(definitionResult.getIncidentStatistics()).isEmpty();
 
@@ -484,7 +484,7 @@ public class ProcessDefinitionStatisticsQueryTest extends PluggableProcessEngine
 
     // "super" process definition
     assertThat(callExampleSubProcessStaticstics.getInstances()).isEqualTo(1);
-    assertThat(callExampleSubProcessStaticstics.getFailedJobs()).isEqualTo(0);
+    assertThat(callExampleSubProcessStaticstics.getFailedJobs()).isZero();
 
     assertThat(callExampleSubProcessStaticstics.getIncidentStatistics()).isNotEmpty();
     assertThat(callExampleSubProcessStaticstics.getIncidentStatistics()).hasSize(1);
@@ -522,7 +522,7 @@ public class ProcessDefinitionStatisticsQueryTest extends PluggableProcessEngine
     ProcessDefinitionStatistics result = statistics.get(0);
 
     // there is no running instance
-    assertThat(result.getInstances()).isEqualTo(0);
+    assertThat(result.getInstances()).isZero();
 
     List<IncidentStatistics> incidentStatistics = result.getIncidentStatistics();
 
@@ -551,7 +551,7 @@ public class ProcessDefinitionStatisticsQueryTest extends PluggableProcessEngine
     ProcessDefinitionStatistics result = statistics.get(0);
 
     // there is no running instance
-    assertThat(result.getInstances()).isEqualTo(0);
+    assertThat(result.getInstances()).isZero();
 
     List<IncidentStatistics> incidentStatistics = result.getIncidentStatistics();
 
@@ -580,7 +580,7 @@ public class ProcessDefinitionStatisticsQueryTest extends PluggableProcessEngine
     ProcessDefinitionStatistics result = statistics.get(0);
 
     // there is no running instance
-    assertThat(result.getInstances()).isEqualTo(0);
+    assertThat(result.getInstances()).isZero();
     // but there is one failed timer job
     assertThat(result.getFailedJobs()).isEqualTo(1);
   }
@@ -603,7 +603,7 @@ public class ProcessDefinitionStatisticsQueryTest extends PluggableProcessEngine
     ProcessDefinitionStatistics result = statistics.get(0);
 
     // there is no running instance
-    assertThat(result.getInstances()).isEqualTo(0);
+    assertThat(result.getInstances()).isZero();
     // but there is one failed timer job
     assertThat(result.getFailedJobs()).isEqualTo(1);
 

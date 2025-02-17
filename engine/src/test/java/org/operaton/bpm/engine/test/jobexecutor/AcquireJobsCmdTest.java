@@ -60,7 +60,7 @@ public class AcquireJobsCmdTest extends PluggableProcessEngineTest {
 
     // now, the acquirejobs command does not see the job:
     acquiredJobs = executeAcquireJobsCommand();
-    assertThat(acquiredJobs.size()).isEqualTo(0);
+    assertThat(acquiredJobs.size()).isZero();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/standalone/jobexecutor/oneJobProcess.bpmn20.xml"})
@@ -85,7 +85,7 @@ public class AcquireJobsCmdTest extends PluggableProcessEngineTest {
 
     // now, the acquirejobs command does not see the job:
     acquiredJobs = executeAcquireJobsCommand();
-    assertThat(acquiredJobs.size()).isEqualTo(0);
+    assertThat(acquiredJobs.size()).isZero();
   }
 
   protected void makeSureJobDue(final Job job) {

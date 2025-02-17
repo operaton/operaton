@@ -73,8 +73,8 @@ public class ProcessDefinitionStatisticsAuthorizationTest extends AuthorizationT
 
     ProcessDefinitionStatistics statistics = query.singleResult();
     assertThat(statistics.getKey()).isEqualTo(ONE_TASK_PROCESS_KEY);
-    assertThat(statistics.getInstances()).isEqualTo(0);
-    assertThat(statistics.getFailedJobs()).isEqualTo(0);
+    assertThat(statistics.getInstances()).isZero();
+    assertThat(statistics.getFailedJobs()).isZero();
     assertThat(statistics.getIncidentStatistics()).isEmpty();
   }
 

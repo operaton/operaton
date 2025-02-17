@@ -365,7 +365,7 @@ public class BatchMigrationTest {
     }
 
     // then all process instances where migrated
-    assertThat(helper.countSourceProcessInstances()).isEqualTo(0);
+    assertThat(helper.countSourceProcessInstances()).isZero();
     assertThat(helper.countTargetProcessInstances()).isEqualTo(10);
 
     // and the no migration jobs exist
@@ -388,7 +388,7 @@ public class BatchMigrationTest {
       testRule.waitForJobExecutorToProcessAllJobs();
 
       // then all process instances were migrated
-      assertThat(helper.countSourceProcessInstances()).isEqualTo(0);
+      assertThat(helper.countSourceProcessInstances()).isZero();
       assertThat(helper.countTargetProcessInstances()).isEqualTo(10);
 
     } finally {
@@ -555,7 +555,7 @@ public class BatchMigrationTest {
 
     // then the no historic incidents exists
     long historicIncidents = historyService.createHistoricIncidentQuery().count();
-    assertThat(historicIncidents).isEqualTo(0);
+    assertThat(historicIncidents).isZero();
   }
 
   @Test
@@ -574,7 +574,7 @@ public class BatchMigrationTest {
 
     // then the no historic incidents exists
     long historicIncidents = historyService.createHistoricIncidentQuery().count();
-    assertThat(historicIncidents).isEqualTo(0);
+    assertThat(historicIncidents).isZero();
   }
 
   @Test
@@ -591,7 +591,7 @@ public class BatchMigrationTest {
 
     // then the no historic incidents exists
     long historicIncidents = historyService.createHistoricIncidentQuery().count();
-    assertThat(historicIncidents).isEqualTo(0);
+    assertThat(historicIncidents).isZero();
   }
 
   @Test
@@ -607,7 +607,7 @@ public class BatchMigrationTest {
     helper.executeJobs(batch);
 
     // then the remaining process instance was migrated
-    assertThat(helper.countSourceProcessInstances()).isEqualTo(0);
+    assertThat(helper.countSourceProcessInstances()).isZero();
     assertThat(helper.countTargetProcessInstances()).isEqualTo(1);
 
     // and one batch job failed and has 2 retries left

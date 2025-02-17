@@ -137,7 +137,7 @@ public class BackoffJobAcquisitionStrategyTest {
     assertThat(strategy.getNumJobsToAcquire(ENGINE_NAME)).isEqualTo(NUM_JOBS_TO_ACQUIRE - numJobsRejected);
 
     // without a timeout
-    assertThat(strategy.getWaitTime()).isEqualTo(0);
+    assertThat(strategy.getWaitTime()).isZero();
   }
 
   @Test

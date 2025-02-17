@@ -137,7 +137,7 @@ public class DmnDecisionTaskResultListenerTest extends CmmnTest {
     assertThat(results).hasSize(1);
     DmnDecisionResultEntries firstOutput = results.get(0);
 
-    assertThat((int) firstOutput.getFirstEntry()).isEqualTo(0);
+    assertThat((int) firstOutput.getFirstEntry()).isZero();
     assertThat(firstOutput.<IntegerValue>getFirstEntryTyped()).isEqualTo(Variables.integerValue(0));
   }
 

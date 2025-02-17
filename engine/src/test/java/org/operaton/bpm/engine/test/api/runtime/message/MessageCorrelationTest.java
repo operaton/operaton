@@ -242,7 +242,7 @@ public class MessageCorrelationTest {
         .createExecutionQuery()
         .messageEventSubscriptionName("newInvoiceMessage")
         .count();
-    assertThat(uncorrelatedExecutions).isEqualTo(0);
+    assertThat(uncorrelatedExecutions).isZero();
 
     // the executions that has been correlated should have advanced
     long correlatedExecutions = runtimeService.createExecutionQuery()

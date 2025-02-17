@@ -51,7 +51,7 @@ public class DeploymentStatisticsQueryTest extends PluggableProcessEngineTest {
 
     DeploymentStatistics result = statistics.get(0);
     assertThat(result.getInstances()).isEqualTo(2);
-    assertThat(result.getFailedJobs()).isEqualTo(0);
+    assertThat(result.getFailedJobs()).isZero();
 
     assertThat(result.getId()).isEqualTo(deployment.getId());
     assertThat(result.getName()).isEqualTo(deploymentName);
@@ -297,8 +297,8 @@ public class DeploymentStatisticsQueryTest extends PluggableProcessEngineTest {
     assertThat(statistics).hasSize(1);
 
     DeploymentStatistics result = statistics.get(0);
-    assertThat(result.getInstances()).isEqualTo(0);
-    assertThat(result.getFailedJobs()).isEqualTo(0);
+    assertThat(result.getInstances()).isZero();
+    assertThat(result.getFailedJobs()).isZero();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testFailedTimerStartEvent.bpmn20.xml")
@@ -318,7 +318,7 @@ public class DeploymentStatisticsQueryTest extends PluggableProcessEngineTest {
     DeploymentStatistics result = statistics.get(0);
 
     // there is no running instance
-    assertThat(result.getInstances()).isEqualTo(0);
+    assertThat(result.getInstances()).isZero();
 
     List<IncidentStatistics> incidentStatistics = result.getIncidentStatistics();
 
@@ -347,7 +347,7 @@ public class DeploymentStatisticsQueryTest extends PluggableProcessEngineTest {
     DeploymentStatistics result = statistics.get(0);
 
     // there is no running instance
-    assertThat(result.getInstances()).isEqualTo(0);
+    assertThat(result.getInstances()).isZero();
 
     List<IncidentStatistics> incidentStatistics = result.getIncidentStatistics();
 
@@ -376,7 +376,7 @@ public class DeploymentStatisticsQueryTest extends PluggableProcessEngineTest {
     DeploymentStatistics result = statistics.get(0);
 
     // there is no running instance
-    assertThat(result.getInstances()).isEqualTo(0);
+    assertThat(result.getInstances()).isZero();
     // but there is one failed timer job
     assertThat(result.getFailedJobs()).isEqualTo(1);
   }
@@ -399,7 +399,7 @@ public class DeploymentStatisticsQueryTest extends PluggableProcessEngineTest {
     DeploymentStatistics result = statistics.get(0);
 
     // there is no running instance
-    assertThat(result.getInstances()).isEqualTo(0);
+    assertThat(result.getInstances()).isZero();
     // but there is one failed timer job
     assertThat(result.getFailedJobs()).isEqualTo(1);
 

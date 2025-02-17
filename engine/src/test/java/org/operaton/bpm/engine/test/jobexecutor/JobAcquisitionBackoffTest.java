@@ -116,7 +116,7 @@ public class JobAcquisitionBackoffTest {
     // then it has not performed waiting since it was able to acquire and execute all jobs
     List<RecordedWaitEvent> jobExecutor1WaitEvents = jobExecutor1.getAcquireJobsRunnable().getWaitEvents();
     assertThat(jobExecutor1WaitEvents).hasSize(1);
-    assertThat(jobExecutor1WaitEvents.get(0).getTimeBetweenAcquisitions()).isEqualTo(0);
+    assertThat(jobExecutor1WaitEvents.get(0).getTimeBetweenAcquisitions()).isZero();
 
     // when continuing acquisition thread 2, acquisition fails with an OLE
     acquisitionThread2.makeContinueAndWaitForSync();
@@ -149,7 +149,7 @@ public class JobAcquisitionBackoffTest {
     // and not waited
     jobExecutor1WaitEvents = jobExecutor1.getAcquireJobsRunnable().getWaitEvents();
     assertThat(jobExecutor1WaitEvents).hasSize(2);
-    assertThat(jobExecutor1WaitEvents.get(1).getTimeBetweenAcquisitions()).isEqualTo(0);
+    assertThat(jobExecutor1WaitEvents.get(1).getTimeBetweenAcquisitions()).isZero();
 
     List<RecordedAcquisitionEvent> jobExecutor2AcquisitionEvents = jobExecutor2.getAcquireJobsRunnable().getAcquisitionEvents();
     secondAcquisitionAttempt = jobExecutor2AcquisitionEvents.get(1);
@@ -215,7 +215,7 @@ public class JobAcquisitionBackoffTest {
 
     // it decreases its backoff again
     long lastBackoff = jobExecutor2WaitEvents.get(BACKOFF_DECREASE_THRESHOLD).getTimeBetweenAcquisitions();
-    assertThat(lastBackoff).isEqualTo(0);
+    assertThat(lastBackoff).isZero();
   }
 
 

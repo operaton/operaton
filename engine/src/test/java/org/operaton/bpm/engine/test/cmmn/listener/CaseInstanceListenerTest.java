@@ -582,7 +582,7 @@ public class CaseInstanceListenerTest extends CmmnTest {
     CloseCaseExecutionListener.clear();
 
     assertThat(CloseCaseExecutionListener.EVENT).isNull();
-    assertThat(CloseCaseExecutionListener.COUNTER).isEqualTo(0);
+    assertThat(CloseCaseExecutionListener.COUNTER).isZero();
     assertThat(CloseCaseExecutionListener.ON_CASE_EXECUTION_ID).isNull();
 
     // given
@@ -613,7 +613,7 @@ public class CaseInstanceListenerTest extends CmmnTest {
     CloseCaseExecutionListener.clear();
 
     assertThat(CloseCaseExecutionListener.EVENT).isNull();
-    assertThat(CloseCaseExecutionListener.COUNTER).isEqualTo(0);
+    assertThat(CloseCaseExecutionListener.COUNTER).isZero();
     assertThat(CloseCaseExecutionListener.ON_CASE_EXECUTION_ID).isNull();
 
     // given
@@ -643,7 +643,7 @@ public class CaseInstanceListenerTest extends CmmnTest {
     CloseCaseExecutionListener.clear();
 
     assertThat(CloseCaseExecutionListener.EVENT).isNull();
-    assertThat(CloseCaseExecutionListener.COUNTER).isEqualTo(0);
+    assertThat(CloseCaseExecutionListener.COUNTER).isZero();
     assertThat(CloseCaseExecutionListener.ON_CASE_EXECUTION_ID).isNull();
 
     // given

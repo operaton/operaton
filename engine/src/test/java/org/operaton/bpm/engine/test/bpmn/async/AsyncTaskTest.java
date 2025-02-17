@@ -61,7 +61,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
     // now we have one transition instance below the process instance:
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
     assertThat(activityInstance.getChildTransitionInstances().length).isEqualTo(1);
-    assertThat(activityInstance.getChildActivityInstances().length).isEqualTo(0);
+    assertThat(activityInstance.getChildActivityInstances().length).isZero();
 
     assertThat(activityInstance.getChildTransitionInstances()[0]).isNotNull();
 
@@ -118,7 +118,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("asyncService");
 
     // the service was not invoked:
-    assertThat(NUM_INVOCATIONS).isEqualTo(0);
+    assertThat(NUM_INVOCATIONS).isZero();
 
     // now there should be one job for the multi-instance body to execute:
     testRule.executeAvailableJobs(1);
@@ -138,7 +138,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("asyncService");
 
     // the service was not invoked:
-    assertThat(NUM_INVOCATIONS).isEqualTo(0);
+    assertThat(NUM_INVOCATIONS).isZero();
 
     // now there should be one job for the multi-instance body to execute:
     testRule.executeAvailableJobs(1);
@@ -157,7 +157,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("asyncService");
 
     // the service was not invoked:
-    assertThat(NUM_INVOCATIONS).isEqualTo(0);
+    assertThat(NUM_INVOCATIONS).isZero();
 
     // now there should be one job for the first service task wrapped in the multi-instance body:
     assertThat(managementService.createJobQuery().count()).isEqualTo(1);
@@ -178,7 +178,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("asyncService");
 
     // the service was not invoked:
-    assertThat(NUM_INVOCATIONS).isEqualTo(0);
+    assertThat(NUM_INVOCATIONS).isZero();
 
     // now there should be one job for each service task wrapped in the multi-instance body:
     assertThat(managementService.createJobQuery().count()).isEqualTo(5);
@@ -199,7 +199,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("asyncService");
 
     // the service was not invoked:
-    assertThat(NUM_INVOCATIONS).isEqualTo(0);
+    assertThat(NUM_INVOCATIONS).isZero();
 
     // now there should be one job for each service task wrapped in the multi-instance body:
     assertThat(managementService.createJobQuery().count()).isEqualTo(5);
@@ -220,7 +220,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("asyncService");
 
     // the service was not invoked:
-    assertThat(NUM_INVOCATIONS).isEqualTo(0);
+    assertThat(NUM_INVOCATIONS).isZero();
 
     // now there should be one job for the multi-instance body:
     assertThat(managementService.createJobQuery().count()).isEqualTo(1);
@@ -247,7 +247,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("asyncService");
 
     // the service was not invoked:
-    assertThat(NUM_INVOCATIONS).isEqualTo(0);
+    assertThat(NUM_INVOCATIONS).isZero();
 
     // now there should be one job for the multi-instance body:
     assertThat(managementService.createJobQuery().count()).isEqualTo(1);
@@ -261,7 +261,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
     List<Job> innerBeforeJobs = managementService.createJobQuery().list();
     assertThat(innerBeforeJobs).hasSize(5);
     assertTransitionInstances(processInstance.getId(), "service", 5);
-    assertThat(NUM_INVOCATIONS).isEqualTo(0);
+    assertThat(NUM_INVOCATIONS).isZero();
 
     // when executing all inner jobs
     for (Job innerBeforeJob : innerBeforeJobs) {

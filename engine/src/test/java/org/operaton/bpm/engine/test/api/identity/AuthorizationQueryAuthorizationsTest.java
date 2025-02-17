@@ -250,7 +250,7 @@ public class AuthorizationQueryAuthorizationsTest {
     List<Authorization> authorizations = authQuery.list();
 
     // then
-    assertThat(authorizationsCount).isEqualTo(0);
+    assertThat(authorizationsCount).isZero();
     assertThat(authorizations).isEmpty();
   }
 

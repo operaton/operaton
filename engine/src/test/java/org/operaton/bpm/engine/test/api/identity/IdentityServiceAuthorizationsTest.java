@@ -266,7 +266,7 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
     lockedUser = (UserEntity) identityService.createUserQuery().userId(jonny.getId()).singleResult();
     assertThat(lockedUser).isNotNull();
     assertThat(lockedUser.getLockExpirationTime()).isNull();
-    assertThat(lockedUser.getAttempts()).isEqualTo(0);
+    assertThat(lockedUser.getAttempts()).isZero();
   }
 
   @Test

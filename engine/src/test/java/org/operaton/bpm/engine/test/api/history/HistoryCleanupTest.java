@@ -320,11 +320,11 @@ public class HistoryCleanupTest {
     assertThat(removedCaseInstances).isEqualTo(5);
 
     long noneProcessInstances = processMetricsQuery.startDate(DateUtils.addHours(currentDate, 1)).limit(1).sum();
-    assertThat(noneProcessInstances).isEqualTo(0);
+    assertThat(noneProcessInstances).isZero();
     long noneDecisionInstances = decisionMetricsQuery.startDate(DateUtils.addHours(currentDate, 1)).limit(1).sum();
-    assertThat(noneDecisionInstances).isEqualTo(0);
+    assertThat(noneDecisionInstances).isZero();
     long noneCaseInstances = caseMetricsQuery.startDate(DateUtils.addHours(currentDate, 1)).limit(1).sum();
-    assertThat(noneCaseInstances).isEqualTo(0);
+    assertThat(noneCaseInstances).isZero();
 
     List<MetricIntervalValue> piList = processMetricsQuery.startDate(currentDate).interval(900);
     assertThat(piList).hasSize(1);
@@ -896,7 +896,7 @@ public class HistoryCleanupTest {
       assertThat(nextRun).isEqualTo(jobEntity.getDuedate());
 
       //countEmptyRuns canceled
-      assertThat(configuration.getCountEmptyRuns()).isEqualTo(0);
+      assertThat(configuration.getCountEmptyRuns()).isZero();
     }
 
     //data is still removed
@@ -931,7 +931,7 @@ public class HistoryCleanupTest {
       assertThat(nextRun).isEqualTo(jobEntity.getDuedate());
 
       //countEmptyRuns canceled
-      assertThat(configuration.getCountEmptyRuns()).isEqualTo(0);
+      assertThat(configuration.getCountEmptyRuns()).isZero();
     }
 
     //nothing was removed
@@ -964,7 +964,7 @@ public class HistoryCleanupTest {
     assertThat(nextRun.after(ClockUtil.getCurrentTime())).isTrue();
 
     //countEmptyRuns canceled
-    assertThat(configuration.getCountEmptyRuns()).isEqualTo(0);
+    assertThat(configuration.getCountEmptyRuns()).isZero();
 
     //nothing was removed
     assertResult(5);
@@ -996,7 +996,7 @@ public class HistoryCleanupTest {
     assertThat(nextRun.after(ClockUtil.getCurrentTime())).isTrue();
 
     //countEmptyRuns cancelled
-    assertThat(configuration.getCountEmptyRuns()).isEqualTo(0);
+    assertThat(configuration.getCountEmptyRuns()).isZero();
 
     //nothing was removed
     assertResult(5);
@@ -1110,7 +1110,7 @@ public class HistoryCleanupTest {
     assertThat(nextRun.after(ClockUtil.getCurrentTime())).isTrue();
 
     //countEmptyRuns canceled
-    assertThat(configuration.getCountEmptyRuns()).isEqualTo(0);
+    assertThat(configuration.getCountEmptyRuns()).isZero();
 
     //nothing was removed
     assertResult(5);
@@ -1159,8 +1159,8 @@ public class HistoryCleanupTest {
     Date startTime = processEngineConfiguration.getHistoryCleanupBatchWindowStartTimeAsDate();
     c.setTime(startTime);
     assertThat(c.get(Calendar.HOUR_OF_DAY)).isEqualTo(23);
-    assertThat(c.get(Calendar.MINUTE)).isEqualTo(0);
-    assertThat(c.get(Calendar.SECOND)).isEqualTo(0);
+    assertThat(c.get(Calendar.MINUTE)).isZero();
+    assertThat(c.get(Calendar.SECOND)).isZero();
 
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime("23:00");
     processEngineConfiguration.initHistoryCleanup();
@@ -1168,8 +1168,8 @@ public class HistoryCleanupTest {
     startTime = processEngineConfiguration.getHistoryCleanupBatchWindowStartTimeAsDate();
     c.setTime(startTime);
     assertThat(c.get(Calendar.HOUR_OF_DAY)).isEqualTo(23);
-    assertThat(c.get(Calendar.MINUTE)).isEqualTo(0);
-    assertThat(c.get(Calendar.SECOND)).isEqualTo(0);
+    assertThat(c.get(Calendar.MINUTE)).isZero();
+    assertThat(c.get(Calendar.SECOND)).isZero();
 
     processEngineConfiguration.setHistoryCleanupBatchWindowEndTime("01:35-0800");
     processEngineConfiguration.initHistoryCleanup();
@@ -1178,7 +1178,7 @@ public class HistoryCleanupTest {
     c.setTime(endTime);
     assertThat(c.get(Calendar.HOUR_OF_DAY)).isEqualTo(1);
     assertThat(c.get(Calendar.MINUTE)).isEqualTo(35);
-    assertThat(c.get(Calendar.SECOND)).isEqualTo(0);
+    assertThat(c.get(Calendar.SECOND)).isZero();
 
     processEngineConfiguration.setHistoryCleanupBatchWindowEndTime("01:35");
     processEngineConfiguration.initHistoryCleanup();
@@ -1187,7 +1187,7 @@ public class HistoryCleanupTest {
     c.setTime(endTime);
     assertThat(c.get(Calendar.HOUR_OF_DAY)).isEqualTo(1);
     assertThat(c.get(Calendar.MINUTE)).isEqualTo(35);
-    assertThat(c.get(Calendar.SECOND)).isEqualTo(0);
+    assertThat(c.get(Calendar.SECOND)).isZero();
 
     processEngineConfiguration.setHistoryCleanupBatchSize(500);
     processEngineConfiguration.initHistoryCleanup();

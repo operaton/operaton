@@ -263,7 +263,7 @@ public class CleanableHistoricCaseInstanceReportTest {
     long resultCountWithoutZeros = historyService.createCleanableHistoricCaseInstanceReport().compact().count();
 
     // then
-    assertThat(resultCountWithoutZeros).isEqualTo(0);
+    assertThat(resultCountWithoutZeros).isZero();
   }
 
   @Test

@@ -59,7 +59,7 @@ public class DisabledJobPrioritizationBpmnTest extends PluggableProcessEngineTes
 
     for (Job job : jobs) {
       assertThat(job).isNotNull();
-      assertThat(job.getPriority()).isEqualTo(0);
+      assertThat(job.getPriority()).isZero();
     }
   }
 }

@@ -110,7 +110,7 @@ public class JobDefinitionFunctionalTest {
 
     // then the new job executor will not acquire the job:
     AcquiredJobs acquiredJobs = acquireJobs();
-    assertThat(acquiredJobs.size()).isEqualTo(0);
+    assertThat(acquiredJobs.size()).isZero();
 
     // -------------------------
 

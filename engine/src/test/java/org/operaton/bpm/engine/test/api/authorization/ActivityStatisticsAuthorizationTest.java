@@ -102,7 +102,7 @@ public class ActivityStatisticsAuthorizationTest extends AuthorizationTest {
     assertThat(statistics).isNotNull();
     assertThat(statistics.getId()).isEqualTo("scriptTask");
     assertThat(statistics.getInstances()).isEqualTo(1);
-    assertThat(statistics.getFailedJobs()).isEqualTo(0);
+    assertThat(statistics.getFailedJobs()).isZero();
     assertThat(statistics.getIncidentStatistics()).isEmpty();
   }
 
@@ -126,7 +126,7 @@ public class ActivityStatisticsAuthorizationTest extends AuthorizationTest {
     assertThat(statistics).isNotNull();
     assertThat(statistics.getId()).isEqualTo("scriptTask");
     assertThat(statistics.getInstances()).isEqualTo(1);
-    assertThat(statistics.getFailedJobs()).isEqualTo(0);
+    assertThat(statistics.getFailedJobs()).isZero();
     assertThat(statistics.getIncidentStatistics()).isEmpty();
   }
 
@@ -145,7 +145,7 @@ public class ActivityStatisticsAuthorizationTest extends AuthorizationTest {
     assertThat(statistics).isNotNull();
     assertThat(statistics.getId()).isEqualTo("scriptTask");
     assertThat(statistics.getInstances()).isEqualTo(3);
-    assertThat(statistics.getFailedJobs()).isEqualTo(0);
+    assertThat(statistics.getFailedJobs()).isZero();
     assertThat(statistics.getIncidentStatistics()).isEmpty();
   }
 
@@ -163,7 +163,7 @@ public class ActivityStatisticsAuthorizationTest extends AuthorizationTest {
     assertThat(statistics).isNotNull();
     assertThat(statistics.getId()).isEqualTo("scriptTask");
     assertThat(statistics.getInstances()).isEqualTo(3);
-    assertThat(statistics.getFailedJobs()).isEqualTo(0);
+    assertThat(statistics.getFailedJobs()).isZero();
     assertThat(statistics.getIncidentStatistics()).isEmpty();
   }
 
@@ -311,7 +311,7 @@ public class ActivityStatisticsAuthorizationTest extends AuthorizationTest {
     assertThat(statistics).isNotNull();
     assertThat(statistics.getId()).isEqualTo("scriptTask");
     assertThat(statistics.getInstances()).isEqualTo(1);
-    assertThat(statistics.getFailedJobs()).isEqualTo(0);
+    assertThat(statistics.getFailedJobs()).isZero();
     assertThat(statistics.getIncidentStatistics()).isNotEmpty();
     IncidentStatistics incidentStatistics = statistics.getIncidentStatistics().get(0);
     assertThat(incidentStatistics.getIncidentCount()).isEqualTo(1);
@@ -335,7 +335,7 @@ public class ActivityStatisticsAuthorizationTest extends AuthorizationTest {
     assertThat(statistics).isNotNull();
     assertThat(statistics.getId()).isEqualTo("scriptTask");
     assertThat(statistics.getInstances()).isEqualTo(3);
-    assertThat(statistics.getFailedJobs()).isEqualTo(0);
+    assertThat(statistics.getFailedJobs()).isZero();
     assertThat(statistics.getIncidentStatistics()).isNotEmpty();
     IncidentStatistics incidentStatistics = statistics.getIncidentStatistics().get(0);
     assertThat(incidentStatistics.getIncidentCount()).isEqualTo(3);
@@ -358,7 +358,7 @@ public class ActivityStatisticsAuthorizationTest extends AuthorizationTest {
     assertThat(statistics).isNotNull();
     assertThat(statistics.getId()).isEqualTo("scriptTask");
     assertThat(statistics.getInstances()).isEqualTo(3);
-    assertThat(statistics.getFailedJobs()).isEqualTo(0);
+    assertThat(statistics.getFailedJobs()).isZero();
     assertThat(statistics.getIncidentStatistics()).isNotEmpty();
     IncidentStatistics incidentStatistics = statistics.getIncidentStatistics().get(0);
     assertThat(incidentStatistics.getIncidentCount()).isEqualTo(3);
@@ -504,7 +504,7 @@ public class ActivityStatisticsAuthorizationTest extends AuthorizationTest {
     ActivityStatistics activityResult = statistics.get(0);
     assertThat(activityResult.getInstances()).isEqualTo(3);
     assertThat(activityResult.getId()).isEqualTo("scriptTask");
-    assertThat(activityResult.getFailedJobs()).isEqualTo(0);
+    assertThat(activityResult.getFailedJobs()).isZero();
     assertThat(activityResult.getIncidentStatistics()).isEmpty();
   }
 

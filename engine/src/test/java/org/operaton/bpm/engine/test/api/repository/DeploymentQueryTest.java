@@ -169,7 +169,7 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
     assertThat(count).isEqualTo(2);
 
     count = repositoryService.createDeploymentQuery().deploymentBefore(earlier).count();
-    assertThat(count).isEqualTo(0);
+    assertThat(count).isZero();
     var deploymentQuery = repositoryService.createDeploymentQuery();
 
     try {
@@ -186,7 +186,7 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
     Date earlier = DateTimeUtil.now().minus(10 * 3600).toDate();
 
     long count = repositoryService.createDeploymentQuery().deploymentAfter(later).count();
-    assertThat(count).isEqualTo(0);
+    assertThat(count).isZero();
 
     count = repositoryService.createDeploymentQuery().deploymentAfter(earlier).count();
     assertThat(count).isEqualTo(2);
@@ -246,21 +246,21 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
       .deploymentAfter(later)
       .deploymentBefore(later)
       .count();
-    assertThat(count).isEqualTo(0);
+    assertThat(count).isZero();
 
     count = repositoryService
       .createDeploymentQuery()
       .deploymentAfter(earlier)
       .deploymentBefore(earlier)
       .count();
-    assertThat(count).isEqualTo(0);
+    assertThat(count).isZero();
 
     count = repositoryService
         .createDeploymentQuery()
         .deploymentAfter(later)
         .deploymentBefore(earlier)
         .count();
-    assertThat(count).isEqualTo(0);
+    assertThat(count).isZero();
   }
 
   @Test

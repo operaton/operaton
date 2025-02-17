@@ -748,7 +748,7 @@ public class RestartProcessInstanceSyncTest {
     .execute();
 
     // then
-    assertThat(IncrementCounterListener.counter).isEqualTo(0);
+    assertThat(IncrementCounterListener.counter).isZero();
   }
 
   @Test

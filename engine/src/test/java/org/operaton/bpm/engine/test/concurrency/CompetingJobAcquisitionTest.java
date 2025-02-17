@@ -100,7 +100,7 @@ public class CompetingJobAcquisitionTest {
     // the acquisition did NOT fail
     assertThat(threadTwo.exception).isNull();
     // but the job was not acquired
-    assertThat(threadTwo.jobs.size()).isEqualTo(0);
+    assertThat(threadTwo.jobs.size()).isZero();
   }
 
   public class JobAcquisitionThread extends ControllableThread {

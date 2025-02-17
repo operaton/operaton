@@ -243,7 +243,7 @@ public class CleanableHistoricDecisionInstanceReportTest {
     long resultCountWithoutZeros = historyService.createCleanableHistoricDecisionInstanceReport().compact().count();
 
     // then
-    assertThat(resultCountWithoutZeros).isEqualTo(0);
+    assertThat(resultCountWithoutZeros).isZero();
   }
 
   @Test

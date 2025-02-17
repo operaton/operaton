@@ -3040,7 +3040,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .execute();
     assertThat(externalTasks).hasSize(2);
     LockedExternalTask task = externalTasks.get(1);
-    assertThat(task.getPriority()).isEqualTo(0);
+    assertThat(task.getPriority()).isZero();
     externalTaskService.setPriority(task.getId(), 9);
     // and the lock expires without the task being reclaimed
     ClockUtil.setCurrentTime(new DateTime(ClockUtil.getCurrentTime()).plus(LOCK_TIME * 2).toDate());

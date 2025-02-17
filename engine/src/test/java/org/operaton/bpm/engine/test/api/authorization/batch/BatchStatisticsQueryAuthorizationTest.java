@@ -137,7 +137,7 @@ public class BatchStatisticsQueryAuthorizationTest {
     authRule.disableAuthorization();
 
     // then
-    assertThat(count).isEqualTo(0);
+    assertThat(count).isZero();
   }
 
   @Test

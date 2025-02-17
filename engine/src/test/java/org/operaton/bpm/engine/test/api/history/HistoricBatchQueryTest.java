@@ -184,7 +184,7 @@ public class HistoricBatchQueryTest {
     long count = historyService.createHistoricBatchQuery().type("foo").count();
 
     // then
-    assertThat(count).isEqualTo(0);
+    assertThat(count).isZero();
   }
 
   @Test

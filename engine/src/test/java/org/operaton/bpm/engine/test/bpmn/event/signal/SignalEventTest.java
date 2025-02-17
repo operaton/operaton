@@ -493,7 +493,7 @@ public class SignalEventTest {
     assertThat(asyncJob.getExceptionMessage()).isNull();
     assertThat(asyncJob.getExecutionId()).isNull();
     assertThat(asyncJob.getJobDefinitionId()).isNull();
-    assertThat(asyncJob.getPriority()).isEqualTo(0);
+    assertThat(asyncJob.getPriority()).isZero();
     assertThat(asyncJob.getProcessInstanceId()).isNull();
     assertThat(asyncJob.getRetries()).isEqualTo(3);
     assertThat(asyncJob.getDuedate()).isNull();
@@ -528,7 +528,7 @@ public class SignalEventTest {
     assertThat(asyncJob.getExceptionMessage()).isNull();
     assertThat(asyncJob.getExecutionId()).isNull();
     assertThat(asyncJob.getJobDefinitionId()).isNull();
-    assertThat(asyncJob.getPriority()).isEqualTo(0);
+    assertThat(asyncJob.getPriority()).isZero();
     assertThat(asyncJob.getProcessInstanceId()).isNull();
     assertThat(asyncJob.getRetries()).isEqualTo(3);
     assertThat(asyncJob.getDuedate()).isEqualTo(testTime);

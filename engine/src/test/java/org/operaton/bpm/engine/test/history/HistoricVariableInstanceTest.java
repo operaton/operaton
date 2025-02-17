@@ -865,7 +865,7 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
     HistoricVariableInstanceEntity variableEntity = (HistoricVariableInstanceEntity) variable;
 
     // the revision has to be 0
-    assertThat(variableEntity.getRevision()).isEqualTo(0);
+    assertThat(variableEntity.getRevision()).isZero();
 
     if (isFullHistoryEnabled()) {
       List<HistoricDetail> details = historyService
@@ -876,7 +876,7 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
 
       for (HistoricDetail detail : details) {
         HistoricVariableUpdate variableDetail = (HistoricVariableUpdate) detail;
-        assertThat(variableDetail.getRevision()).isEqualTo(0);
+        assertThat(variableDetail.getRevision()).isZero();
       }
     }
   }

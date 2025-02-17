@@ -185,7 +185,7 @@ public class JobExecutorMetricsTest extends AbstractMetricsTest {
       .name(Metrics.JOB_LOCKED_EXCLUSIVE).sum();
 
     assertThat(jobsSuccessful).isEqualTo(6);
-    assertThat(jobsFailed).isEqualTo(0);
+    assertThat(jobsFailed).isZero();
     // the respective follow-up jobs are exclusive and have been executed right away without
     // acquisition
     assertThat(jobCandidatesForAcquisition).isEqualTo(3);

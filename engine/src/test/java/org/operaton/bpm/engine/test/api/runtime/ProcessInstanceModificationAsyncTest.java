@@ -721,7 +721,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
 
     assertThat(statistics).hasSize(1);
     assertThat(statistics.get(0).getId()).isEqualTo("task1");
-    assertThat(statistics.get(0).getFailedJobs()).isEqualTo(0);
+    assertThat(statistics.get(0).getFailedJobs()).isZero();
     assertThat(statistics.get(0).getIncidentStatistics()).isEmpty();
     assertThat(statistics.get(0).getInstances()).isEqualTo(1);
 
@@ -739,7 +739,7 @@ public class ProcessInstanceModificationAsyncTest extends PluggableProcessEngine
 
     assertThat(statistics).hasSize(1);
     assertThat(statistics.get(0).getId()).isEqualTo("task1");
-    assertThat(statistics.get(0).getFailedJobs()).isEqualTo(0);
+    assertThat(statistics.get(0).getFailedJobs()).isZero();
     assertThat(statistics.get(0).getIncidentStatistics()).isEmpty();
     assertThat(statistics.get(0).getInstances()).isEqualTo(2);
 

@@ -172,7 +172,7 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
 
     waitForExecutedJobWithRetriesLeft(0, job.getId());
     job = refreshJob(job.getId());
-    assertThat(job.getRetries()).isEqualTo(0);
+    assertThat(job.getRetries()).isZero();
     assertThat(managementService.createJobQuery().noRetriesLeft().count()).isEqualTo(1);
   }
 
@@ -216,7 +216,7 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
     waitForExecutedJobWithRetriesLeft(0, jobId);
 
     job = refreshJob(jobId);
-    assertThat(job.getRetries()).isEqualTo(0);
+    assertThat(job.getRetries()).isZero();
     assertThat(managementService.createJobQuery().withException().count()).isEqualTo(1);
     assertThat(managementService.createJobQuery().jobId(jobId).withRetriesLeft().count()).isZero();
     assertThat(managementService.createJobQuery().noRetriesLeft().count()).isEqualTo(1);
@@ -332,7 +332,7 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
 
     // the job is not acquirable
     acquirableJobs = findAndLockAcquirableJobs();
-    assertThat(acquirableJobs.size()).as("Job shouldn't be acquirable").isEqualTo(0);
+    assertThat(acquirableJobs.size()).as("Job shouldn't be acquirable").isZero();
 
     ClockUtil.reset();
   }
@@ -877,7 +877,7 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
     waitForExecutedJobWithRetriesLeft(0);
 
     job = refreshJob(job.getId());
-    assertThat(job.getRetries()).isEqualTo(0);
+    assertThat(job.getRetries()).isZero();
     assertThat(managementService.createJobQuery().withException().count()).isEqualTo(1);
     assertThat(managementService.createJobQuery().withRetriesLeft().count()).isZero();
     assertThat(managementService.createJobQuery().noRetriesLeft().count()).isEqualTo(1);

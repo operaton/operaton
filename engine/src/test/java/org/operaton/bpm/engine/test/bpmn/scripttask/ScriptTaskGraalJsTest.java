@@ -224,7 +224,7 @@ public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
 
       // THEN
       Date date = (Date) runtimeService.getVariable(pi.getId(), "date");
-      assertThat(date.getTime()).isEqualTo(0);
+      assertThat(date.getTime()).isZero();
       MySerializable myVar = (MySerializable) runtimeService.getVariable(pi.getId(), "myVar");
       assertThat(myVar.getName()).isEqualTo("test");
     } else {

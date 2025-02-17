@@ -105,7 +105,7 @@ public class HistoryCleanupOnEngineBootstrapTest {
     assertThat(managementService.createJobQuery().list()).hasSize(1);
 
     Job job = managementService.createJobQuery().singleResult();
-    assertThat(getHistoryCleanupJobHandlerConfiguration(job).getMinuteFrom()).isEqualTo(0);
+    assertThat(getHistoryCleanupJobHandlerConfiguration(job).getMinuteFrom()).isZero();
     assertThat(getHistoryCleanupJobHandlerConfiguration(job).getMinuteTo()).isEqualTo(59);
 
     closeProcessEngine(engine);

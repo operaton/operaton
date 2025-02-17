@@ -87,7 +87,7 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
     // the job execution failed (job.retries = 0)
     Job job = managementService.createJobQuery().noRetriesLeft().singleResult();
     assertThat(job).isNotNull();
-    assertThat(job.getRetries()).isEqualTo(0);
+    assertThat(job.getRetries()).isZero();
   }
 
   @Test
@@ -111,7 +111,7 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
 
     for (Job job : jobList) {
       // all jobs have retries exhausted
-      assertThat(job.getRetries()).isEqualTo(0);
+      assertThat(job.getRetries()).isZero();
     }
   }
 
@@ -141,7 +141,7 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
     // the job execution failed (job.retries = 0)
     job = managementService.createJobQuery().noRetriesLeft().singleResult();
     assertThat(job).isNotNull();
-    assertThat(job.getRetries()).isEqualTo(0);
+    assertThat(job.getRetries()).isZero();
   }
 
   @Deployment(resources="org/operaton/bpm/engine/test/jobexecutor/jobFailingOnFlush.bpmn20.xml")
@@ -163,7 +163,7 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
     job = managementService.createJobQuery().singleResult();
     assertThat(job).isNotNull();
     // but has no more retires
-    assertThat(job.getRetries()).isEqualTo(0);
+    assertThat(job.getRetries()).isZero();
   }
 
   @Test
@@ -192,7 +192,7 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
     job = managementService.createJobQuery().singleResult();
     assertThat(job).isNotNull();
     // but has no more retires
-    assertThat(job.getRetries()).isEqualTo(0);
+    assertThat(job.getRetries()).isZero();
     assertThat(job.getExceptionMessage()).isEqualTo("exception in transaction listener");
 
     String stacktrace = managementService.getJobExceptionStacktrace(job.getId());

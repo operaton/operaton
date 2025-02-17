@@ -448,7 +448,7 @@ public class IncidentTest extends PluggableProcessEngineTest {
     job = jobQuery.singleResult();
     assertThat(job).isNotNull();
 
-    assertThat(job.getRetries()).isEqualTo(0);
+    assertThat(job.getRetries()).isZero();
 
     // incident was created
     Incident incident = runtimeService.createIncidentQuery().configuration(job.getId()).singleResult();
@@ -517,7 +517,7 @@ public class IncidentTest extends PluggableProcessEngineTest {
 
     // it exists a job with 0 retries and an incident
     Job job = managementService.createJobQuery().singleResult();
-    assertThat(job.getRetries()).isEqualTo(0);
+    assertThat(job.getRetries()).isZero();
 
     assertThat(runtimeService.createIncidentQuery().count()).isEqualTo(1);
 
@@ -530,7 +530,7 @@ public class IncidentTest extends PluggableProcessEngineTest {
       return null;
     });
 
-    assertThat(job.getRetries()).isEqualTo(0);
+    assertThat(job.getRetries()).isZero();
     var jobId = job.getJobDefinitionId();
     var jobDefinitionId = job.getJobDefinitionId();
 
@@ -544,7 +544,7 @@ public class IncidentTest extends PluggableProcessEngineTest {
     }
 
     job = managementService.createJobQuery().singleResult();
-    assertThat(job.getRetries()).isEqualTo(0);
+    assertThat(job.getRetries()).isZero();
 
     // also no new incident was created
     assertThat(runtimeService.createIncidentQuery().count()).isEqualTo(1);

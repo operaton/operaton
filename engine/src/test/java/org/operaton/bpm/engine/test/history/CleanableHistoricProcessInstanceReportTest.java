@@ -274,7 +274,7 @@ public class CleanableHistoricProcessInstanceReportTest {
     long resultCountWithoutZeros = historyService.createCleanableHistoricProcessInstanceReport().compact().count();
 
     // then
-    assertThat(resultCountWithoutZeros).isEqualTo(0);
+    assertThat(resultCountWithoutZeros).isZero();
   }
 
   @Test

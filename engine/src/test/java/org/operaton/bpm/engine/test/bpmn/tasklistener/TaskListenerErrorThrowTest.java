@@ -255,7 +255,7 @@ public class TaskListenerErrorThrowTest extends AbstractTaskListenerTest {
       // then
       assertThat(e.getMessage()).contains("business error");
       assertThat(ThrowBPMNErrorListener.INVOCATIONS).isEqualTo(1);
-      assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_DELETE)).isEqualTo(0);
+      assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_DELETE)).isZero();
     }
 
     // cleanup
@@ -295,7 +295,7 @@ public class TaskListenerErrorThrowTest extends AbstractTaskListenerTest {
     assertThat(resultTask).isNotNull();
     assertThat(resultTask.getName()).isEqualTo("mainTask");
     assertThat(ThrowBPMNErrorListener.INVOCATIONS).isEqualTo(1);
-    assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_DELETE)).isEqualTo(0);
+    assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_DELETE)).isZero();
 
     // cleanup
     processEngineConfiguration.setEnableExceptionsAfterUnhandledBpmnError(false);

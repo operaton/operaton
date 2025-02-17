@@ -311,7 +311,7 @@ public class MigrationHistoricVariablesTest {
     // then the failed job is also migrated
     job = managementService.createJobQuery().singleResult();
     assertThat(job).isNotNull();
-    assertThat(job.getRetries()).isEqualTo(0);
+    assertThat(job.getRetries()).isZero();
     managementService.setJobRetries(job.getId(), 1);
 
     // when the failed job is executed again

@@ -740,7 +740,7 @@ public class RestartProcessInstanceAsyncTest {
 
     // then the no historic incidents exists
     long historicIncidents = engineRule.getHistoryService().createHistoricIncidentQuery().count();
-    assertThat(historicIncidents).isEqualTo(0);
+    assertThat(historicIncidents).isZero();
   }
 
   @Test
@@ -772,7 +772,7 @@ public class RestartProcessInstanceAsyncTest {
 
     // then the no historic incidents exists
     long historicIncidents = engineRule.getHistoryService().createHistoricIncidentQuery().count();
-    assertThat(historicIncidents).isEqualTo(0);
+    assertThat(historicIncidents).isZero();
   }
 
   @Test
@@ -802,7 +802,7 @@ public class RestartProcessInstanceAsyncTest {
 
     // then the no historic incidents exists
     long historicIncidents = engineRule.getHistoryService().createHistoricIncidentQuery().count();
-    assertThat(historicIncidents).isEqualTo(0);
+    assertThat(historicIncidents).isZero();
   }
 
   @Test
@@ -1000,7 +1000,7 @@ public class RestartProcessInstanceAsyncTest {
 
     helper.completeBatch(batch);
     // then
-    assertThat(IncrementCounterListener.counter).isEqualTo(0);
+    assertThat(IncrementCounterListener.counter).isZero();
   }
 
   @Test

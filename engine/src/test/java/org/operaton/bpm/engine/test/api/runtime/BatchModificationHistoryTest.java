@@ -410,7 +410,7 @@ public class BatchModificationHistoryTest {
 
     // then the historic incident was deleted
     long historicIncidents = rule.getHistoryService().createHistoricIncidentQuery().count();
-    assertThat(historicIncidents).isEqualTo(0);
+    assertThat(historicIncidents).isZero();
   }
 
   @Test
@@ -430,7 +430,7 @@ public class BatchModificationHistoryTest {
 
     // then the historic incident was deleted
     long historicIncidents = rule.getHistoryService().createHistoricIncidentQuery().count();
-    assertThat(historicIncidents).isEqualTo(0);
+    assertThat(historicIncidents).isZero();
   }
 
   @Test
@@ -449,7 +449,7 @@ public class BatchModificationHistoryTest {
 
     // then the historic incident was deleted
     long historicIncidents = rule.getHistoryService().createHistoricIncidentQuery().count();
-    assertThat(historicIncidents).isEqualTo(0);
+    assertThat(historicIncidents).isZero();
   }
 
   protected void assertCommonMonitorJobLogProperties(Batch batch, HistoricJobLog jobLog) {

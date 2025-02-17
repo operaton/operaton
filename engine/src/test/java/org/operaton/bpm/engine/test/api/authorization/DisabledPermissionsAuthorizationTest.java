@@ -256,7 +256,7 @@ public class DisabledPermissionsAuthorizationTest {
 
     for (DeploymentStatistics deploymentStatistics : statistics) {
       assertThat(deploymentStatistics.getInstances()).as("Instances").isEqualTo(1);
-      assertThat(deploymentStatistics.getFailedJobs()).as("Failed Jobs").isEqualTo(0);
+      assertThat(deploymentStatistics.getFailedJobs()).as("Failed Jobs").isZero();
 
       List<IncidentStatistics> incidentStatistics = deploymentStatistics.getIncidentStatistics();
       assertThat(incidentStatistics.isEmpty()).as("Incidents supposed to be empty").isTrue();
@@ -283,7 +283,7 @@ public class DisabledPermissionsAuthorizationTest {
     assertThat(statistics).isNotNull();
     assertThat(statistics.getId()).isEqualTo("task");
     assertThat(statistics.getInstances()).isEqualTo(1);
-    assertThat(statistics.getFailedJobs()).isEqualTo(0);
+    assertThat(statistics.getFailedJobs()).isZero();
     assertThat(statistics.getIncidentStatistics()).isEmpty();
   }
 

@@ -421,7 +421,7 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
     timerJob = managementService.createJobQuery()
         .processInstanceId(processInstance.getId())
         .singleResult();
-    assertThat(timerJob.getRetries()).isEqualTo(0);
+    assertThat(timerJob.getRetries()).isZero();
 
     assertThat(runtimeService.createIncidentQuery().count()).isEqualTo(1);
 
@@ -467,7 +467,7 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
     Job timerJob = query.singleResult();
 
     assertThat(timerJob).as("No job found for process instance").isNotNull();
-    assertThat(timerJob.getRetries()).isEqualTo(0);
+    assertThat(timerJob.getRetries()).isZero();
 
     managementService.setJobRetriesByJobDefinitionId(jobDefinition.getId(), 5);
 
@@ -918,7 +918,7 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
         .tableName(tablePrefix + "ACT_RU_TASK")
         .listPage(0, 5);
 
-    assertThat(tablePage.getFirstResult()).isEqualTo(0);
+    assertThat(tablePage.getFirstResult()).isZero();
     assertThat(tablePage.getSize()).isEqualTo(5);
     assertThat(tablePage.getRows()).hasSize(5);
     assertThat(tablePage.getTotal()).isEqualTo(20);

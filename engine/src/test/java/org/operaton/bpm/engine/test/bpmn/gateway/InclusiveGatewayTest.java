@@ -429,7 +429,7 @@ public class InclusiveGatewayTest extends PluggableProcessEngineTest {
       System.out.println(((ExecutionEntity) execution).getActivityId());
     }
 
-    assertThat(runtimeService.createExecutionQuery().count()).as("Found executions: " + runtimeService.createExecutionQuery().list()).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().count()).as("Found executions: " + runtimeService.createExecutionQuery().list()).isZero();
     testRule.assertProcessEnded(pi.getId());
   }
 

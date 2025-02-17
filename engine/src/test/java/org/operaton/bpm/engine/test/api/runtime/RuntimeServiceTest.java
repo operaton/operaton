@@ -1509,8 +1509,8 @@ public class RuntimeServiceTest {
     assertThat(childActivityInstance.getActivityType()).isEqualTo("userTask");
     assertThat(childActivityInstance.getChildActivityInstances()).isNotNull();
     assertThat(childActivityInstance.getChildTransitionInstances()).isNotNull();
-    assertThat(childActivityInstance.getChildActivityInstances().length).isEqualTo(0);
-    assertThat(childActivityInstance.getChildTransitionInstances().length).isEqualTo(0);
+    assertThat(childActivityInstance.getChildActivityInstances().length).isZero();
+    assertThat(childActivityInstance.getChildTransitionInstances().length).isZero();
 
   }
 
@@ -1758,7 +1758,7 @@ public class RuntimeServiceTest {
 
     ActivityInstance[] instances = tree.getActivityInstances("aNonExistingActivityId");
     assertThat(instances).isNotNull();
-    assertThat(instances.length).isEqualTo(0);
+    assertThat(instances.length).isZero();
   }
 
   @Deployment
@@ -1777,7 +1777,7 @@ public class RuntimeServiceTest {
     ActivityInstance tree = runtimeService.getActivityInstance(instance.getId());
 
     // then
-    assertThat(tree.getTransitionInstances("subProcess").length).isEqualTo(0);
+    assertThat(tree.getTransitionInstances("subProcess").length).isZero();
     TransitionInstance[] asyncBeforeInstances = tree.getTransitionInstances("innerTask");
     assertThat(asyncBeforeInstances.length).isEqualTo(2);
 
@@ -1814,7 +1814,7 @@ public class RuntimeServiceTest {
 
     TransitionInstance[] instances = tree.getTransitionInstances("aNonExistingActivityId");
     assertThat(instances).isNotNull();
-    assertThat(instances.length).isEqualTo(0);
+    assertThat(instances.length).isZero();
   }
 
 
@@ -1846,7 +1846,7 @@ public class RuntimeServiceTest {
     Incident[] incidents = tree.getActivityInstances("theTask")[0].getIncidents();
 
     // then
-    assertThat(incidents.length).isEqualTo(0);
+    assertThat(incidents.length).isZero();
   }
 
   @Test
@@ -1883,7 +1883,7 @@ public class RuntimeServiceTest {
 
     // then
     String[] incidentIds = tree.getActivityInstances("theTask")[0].getIncidentIds();
-    assertThat(incidentIds.length).isEqualTo(0);
+    assertThat(incidentIds.length).isZero();
   }
 
   @Test
@@ -1996,7 +1996,7 @@ public class RuntimeServiceTest {
         assertThat(incidentIds[0]).isEqualTo(incident.getId());
         innerTaskMatched = true;
       } else {
-        assertThat(activityInstance.getIncidentIds().length).isEqualTo(0);
+        assertThat(activityInstance.getIncidentIds().length).isZero();
       }
     }
 

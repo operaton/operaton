@@ -160,7 +160,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     taskService.complete(task.getId());
 
     // Check that the completion did not execute the delete listener
-    assertThat(TaskDeleteListener.eventCounter).isEqualTo(0);
+    assertThat(TaskDeleteListener.eventCounter).isZero();
     assertThat(TaskDeleteListener.lastTaskDefinitionKey).isNull();
     assertThat(TaskDeleteListener.lastDeleteReason).isNull();
 
@@ -176,7 +176,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     TaskDeleteListener.clear();
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("taskListenerProcess");
 
-    assertThat(TaskDeleteListener.eventCounter).isEqualTo(0);
+    assertThat(TaskDeleteListener.eventCounter).isZero();
     assertThat(TaskDeleteListener.lastTaskDefinitionKey).isNull();
     assertThat(TaskDeleteListener.lastDeleteReason).isNull();
 
@@ -195,7 +195,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
     TaskDeleteListener.clear();
     runtimeService.startProcessInstanceByKey("taskListenerProcess");
 
-    assertThat(TaskDeleteListener.eventCounter).isEqualTo(0);
+    assertThat(TaskDeleteListener.eventCounter).isZero();
     assertThat(TaskDeleteListener.lastTaskDefinitionKey).isNull();
     assertThat(TaskDeleteListener.lastDeleteReason).isNull();
 
@@ -711,7 +711,7 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
 
     // then
     assertThat(RecorderTaskListener.getTotalEventCount()).isZero();
-    assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE)).isEqualTo(0);
+    assertThat(RecorderTaskListener.getEventCount(TaskListener.EVENTNAME_UPDATE)).isZero();
   }
 
   @Test

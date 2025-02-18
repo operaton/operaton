@@ -109,6 +109,23 @@
                   <outputDirectory>target/server/apache-tomcat-${version.tomcat}/lib</outputDirectory>
                 </configuration>
               </execution>
+              <execution>
+                <id>copy-weld-servlet</id>
+                <phase>generate-resources</phase>
+                <goals>
+                  <goal>copy</goal>
+                </goals>
+                <configuration>
+                  <artifactItems>
+                    <artifactItem>
+                      <groupId>org.jboss.weld.servlet</groupId>
+                      <artifactId>weld-servlet-shaded</artifactId>
+                      <version>6.0.0.Final</version>
+                      <outputDirectory>target/server/apache-tomcat-${version.tomcat}/lib</outputDirectory>
+                    </artifactItem>
+                  </artifactItems>
+                </configuration>
+              </execution>
             </executions>
           </plugin>
           <!-- copy filtered configuration resources -->

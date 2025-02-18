@@ -34,7 +34,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(Arquillian.class)
 public class Slf4jClassloadingTest extends AbstractFoxPlatformIntegrationTest {
 
-  public static final String JDK14_LOGGER_FACTORY = "org.slf4j.impl.JDK14LoggerFactory";
+  public static final String JDK14_LOGGER_FACTORY = "org.slf4j.jul.JDK14LoggerFactory";
   public static final String JBOSS_SLF4J_LOGGER_FACTORY = "org.slf4j.impl.Slf4jLoggerFactory";
 
   @Deployment

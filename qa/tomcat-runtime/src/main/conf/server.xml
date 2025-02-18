@@ -73,7 +73,7 @@
               description="Operaton Process Engine Service"
               factory="org.operaton.bpm.container.impl.jndi.ProcessEngineServiceObjectFactory" />
               
-    <Resource name="global/operaton/process-engine/ProcessApplicationService!org.operaton.bpm.ProcessApplicationService" auth="Container"
+    <Resource name="global/operaton-bpm-platform/process-engine/ProcessApplicationService!org.operaton.bpm.ProcessApplicationService" auth="Container"
               type="org.operaton.bpm.ProcessApplicationService"
               description="Operaton Process Application Service"
               factory="org.operaton.bpm.container.impl.jndi.ProcessApplicationServiceObjectFactory" />              

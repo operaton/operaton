@@ -109,6 +109,29 @@
                   <outputDirectory>target/server/apache-tomcat-${version.tomcat}/lib</outputDirectory>
                 </configuration>
               </execution>
+              <execution>
+                <id>copy-additional-libs</id>
+                <phase>generate-resources</phase>
+                <goals>
+                  <goal>copy</goal>
+                </goals>
+                <configuration>
+                  <artifactItems>
+                    <artifactItem>
+                      <groupId>org.jboss.weld.servlet</groupId>
+                      <artifactId>weld-servlet-shaded</artifactId>
+                      <version>6.0.0.Final</version>
+                      <outputDirectory>target/server/apache-tomcat-${version.tomcat}/lib</outputDirectory>
+                    </artifactItem>
+                    <artifactItem>
+                      <groupId>org.assertj</groupId>
+                      <artifactId>assertj-core</artifactId>
+                      <version>${version.assertj}</version>
+                      <outputDirectory>target/server/apache-tomcat-${version.tomcat}/lib</outputDirectory>
+                    </artifactItem>
+                  </artifactItems>
+                </configuration>
+              </execution>
             </executions>
           </plugin>
           <!-- copy filtered configuration resources -->
@@ -131,6 +154,30 @@
                 <configuration>
                   <overwrite>true</overwrite>
                   <outputDirectory>target/server/apache-tomcat-${version.tomcat}</outputDirectory>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <!-- remove unneeded webapps -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <executions>
+              <execution>
+                <id>clean-webapps</id>
+                <phase>process-resources</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <configuration>
+                  <target>
+                    <delete dir="target/server/apache-tomcat-${version.tomcat}/webapps/docs" />
+                    <delete dir="target/server/apache-tomcat-${version.tomcat}/webapps/examples" />
+                    <delete dir="target/server/apache-tomcat-${version.tomcat}/webapps/ROOT" />
+                  </target>
                 </configuration>
               </execution>
             </executions>

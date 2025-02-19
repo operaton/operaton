@@ -80,6 +80,7 @@ public class TaskIdentityLinksTest extends PluggableProcessEngineTest {
 
   @Deployment(resources="org/operaton/bpm/engine/test/api/task/IdentityLinksProcess.bpmn20.xml")
   @Test
+  @SuppressWarnings("deprecation")
   public void testCandidateGroupLink() {
     try {
       identityService.setAuthenticatedUserId("demo");
@@ -179,6 +180,7 @@ public class TaskIdentityLinksTest extends PluggableProcessEngineTest {
     taskService.deleteTask(task.getId(), true);
   }
 
+  @SuppressWarnings("deprecation")
   private Event findTaskEvent(List<Event> taskEvents, String action) {
     for (Event event: taskEvents) {
       if (action.equals(event.getAction())) {

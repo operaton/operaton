@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
@@ -47,7 +48,6 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.joda.time.DateTime;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
@@ -1093,15 +1093,10 @@ public class MigrationTransitionInstancesTest {
         .processInstanceIds(processInstanceId);
 
     // when
-    try {
-      runtimeService.execute();
-
-      fail("should fail");
-    }
-    catch (MigratingProcessInstanceValidationException e) {
-      // then
-      assertThat(e instanceof MigratingProcessInstanceValidationException).isTrue();
-    }
+    assertThatThrownBy(runtimeService::execute)
+      .isInstanceOf(MigratingProcessInstanceValidationException.class)
+      .hasMessageContaining("ENGINE-23004 Cannot migrate process instance")
+      .hasMessageContaining("Process instance contains not migrated incidents");
   }
 
 }

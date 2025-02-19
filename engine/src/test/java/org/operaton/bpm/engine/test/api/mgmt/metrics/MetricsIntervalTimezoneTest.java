@@ -30,9 +30,9 @@ import org.junit.Test;
 /**
  * Represents a test suite for the metrics interval query to check if the
  * timestamps are read in a correct time zone.
- *
+ * <p>
  * This was a problem before the column MILLISECONDS_ was added.
- *
+ * </p>
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public class MetricsIntervalTimezoneTest extends AbstractMetricsIntervalTest {
@@ -45,10 +45,11 @@ public class MetricsIntervalTimezoneTest extends AbstractMetricsIntervalTest {
     List<MetricIntervalValue> metrics = managementService.createMetricsQuery().limit(1).interval();
 
     //then metric interval time should be less than FIRST_INTERVAL + 3 * DEFAULT_INTERVAL
-    long metricIntervalTime = metrics.get(0).getTimestamp().getTime();
-    assertThat(metricIntervalTime < firstInterval.plusMinutes(3 * DEFAULT_INTERVAL).getMillis()).isTrue();
     //and larger than first interval time, if not than we have a timezone problem
-    assertThat(metricIntervalTime > firstInterval.getMillis()).isTrue();
+    long metricIntervalTime = metrics.get(0).getTimestamp().getTime();
+    assertThat(metricIntervalTime)
+      .isLessThan(firstInterval.plusMinutes(3 * DEFAULT_INTERVAL).getMillis())
+      .isGreaterThan(firstInterval.getMillis());
 
     //when current time is used and metric is reported
     Date currentTime = new Date();
@@ -59,6 +60,6 @@ public class MetricsIntervalTimezoneTest extends AbstractMetricsIntervalTest {
 
     //then current time should be larger than metric interval time
     List<MetricIntervalValue> m2 = managementService.createMetricsQuery().limit(1).interval();
-    assertThat(m2.get(0).getTimestamp().getTime() < currentTime.getTime()).isTrue();
+    assertThat(m2.get(0).getTimestamp().getTime()).isLessThan(currentTime.getTime());
   }
 }

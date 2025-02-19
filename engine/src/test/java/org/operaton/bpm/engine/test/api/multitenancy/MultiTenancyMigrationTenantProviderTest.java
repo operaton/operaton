@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.test.api.multitenancy;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
-import java.util.Arrays;
+import java.util.List;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.multitenancy.TenantIdProvider;
@@ -34,7 +34,6 @@ import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -73,7 +72,7 @@ public class MultiTenancyMigrationTenantProviderTest {
         .build();
     var runtimeService = engineRule.getRuntimeService()
         .newMigration(migrationPlan)
-        .processInstanceIds(Arrays.asList(processInstance.getId()));
+        .processInstanceIds(List.of(processInstance.getId()));
 
     // when
     try {
@@ -102,7 +101,7 @@ public class MultiTenancyMigrationTenantProviderTest {
     // when
     engineRule.getRuntimeService()
       .newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .execute();
 
     // then
@@ -125,7 +124,7 @@ public class MultiTenancyMigrationTenantProviderTest {
     ProcessInstance processInstance2 = startInstanceForTenant(sourceDefinition, TENANT_TWO);
 
     // when
-    engineRule.getIdentityService().setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    engineRule.getIdentityService().setAuthentication("user", null, List.of(TENANT_ONE));
     engineRule.getRuntimeService()
       .newMigration(migrationPlan)
       .processInstanceQuery(engineRule.getRuntimeService().createProcessInstanceQuery())
@@ -153,7 +152,7 @@ public class MultiTenancyMigrationTenantProviderTest {
     ProcessInstance processInstance2 = startInstanceForTenant(sourceDefinition, TENANT_TWO);
 
     // when
-    engineRule.getIdentityService().setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
+    engineRule.getIdentityService().setAuthentication("user", null, List.of(TENANT_ONE, TENANT_TWO));
     engineRule.getRuntimeService()
       .newMigration(migrationPlan)
       .processInstanceQuery(engineRule.getRuntimeService().createProcessInstanceQuery())

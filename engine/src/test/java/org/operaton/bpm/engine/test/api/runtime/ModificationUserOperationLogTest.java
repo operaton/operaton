@@ -20,7 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +42,6 @@ import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -156,7 +154,7 @@ public class ModificationUserOperationLogTest {
 
     Batch batch = runtimeService.createModification(processDefinition.getId())
       .startAfterActivity("user2")
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .executeAsync();
 
     helper.completeSeedJobs(batch);
@@ -179,7 +177,7 @@ public class ModificationUserOperationLogTest {
 
     runtimeService.createModification(processDefinition.getId())
       .cancelAllForActivity("user1")
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .executeAsync();
 
     // when
@@ -202,7 +200,7 @@ public class ModificationUserOperationLogTest {
     // when
     runtimeService.createModification(processDefinition.getId())
         .cancelAllForActivity("user1")
-        .processInstanceIds(Arrays.asList(processInstance.getId()))
+        .processInstanceIds(List.of(processInstance.getId()))
         .setAnnotation(annotation)
         .execute();
 
@@ -238,7 +236,7 @@ public class ModificationUserOperationLogTest {
     // when
     runtimeService.createModification(processDefinition.getId())
         .startAfterActivity("user1")
-        .processInstanceIds(Arrays.asList(processInstance.getId()))
+        .processInstanceIds(List.of(processInstance.getId()))
         .setAnnotation(annotation)
         .executeAsync();
 

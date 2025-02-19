@@ -1440,7 +1440,7 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(
         "listenerProcess",
-        Collections.<String, Object>singletonMap("listener", new RecorderExecutionListener()));
+        Collections.singletonMap("listener", new RecorderExecutionListener()));
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
 
@@ -1591,9 +1591,9 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   /**
    * Test case for checking cancellation of process instances in call activity subprocesses
-   *
+   * <p>
    * Test should propagate upward and destroy all process instances
-   *
+   * </p>
    */
   @Deployment(resources = {
     SIMPLE_SUBPROCESS,
@@ -1632,7 +1632,6 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
     // How many process Instances
     instanceList = runtimeService.createProcessInstanceQuery().list();
-    assertThat(instanceList).isNotNull();
     assertThat(instanceList).isEmpty();
   }
 
@@ -1675,9 +1674,9 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   /**
    * Test case for checking cancellation of process instances in call activity subprocesses
-   *
+   * <p>
    * Test that upward cancellation respects other process instances
-   *
+   * </p>
    */
   @Deployment(resources = {
     SIMPLE_SUBPROCESS,
@@ -1727,9 +1726,9 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
 
   /**
    * Test case for checking deletion of process instances in nested call activity subprocesses
-   *
+   * <p>
    * Checking that nested call activities will propagate upward over multiple nested levels
-   *
+   * </p>
    */
   @Deployment(resources = {
     SIMPLE_SUBPROCESS,
@@ -1769,7 +1768,6 @@ public class ProcessInstanceModificationCancellationTest extends PluggableProces
     // then
     // How many process Instances
     instanceList = runtimeService.createProcessInstanceQuery().list();
-    assertThat(instanceList).isNotNull();
     assertThat(instanceList).isEmpty();
   }
 

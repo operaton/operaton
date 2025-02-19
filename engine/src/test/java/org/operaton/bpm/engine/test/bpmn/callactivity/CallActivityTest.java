@@ -748,11 +748,9 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     runtimeService.deleteProcessInstance(processInstance.getId(), "Test cascading");
 
     instanceList = runtimeService.createProcessInstanceQuery().list();
-    assertThat(instanceList).isNotNull();
     assertThat(instanceList).isEmpty();
 
     taskList = taskService.createTaskQuery().list();
-    assertThat(taskList).isNotNull();
     assertThat(taskList).isEmpty();
   }
 
@@ -871,7 +869,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
    * This testcase verifies that <operaton:out variables="all" /> works also in
    * case super process has no variables
    *
-   * https://app.camunda.com/jira/browse/CAM-1617
+   * @see <a href="https://app.camunda.com/jira/browse/CAM-1617">CAM-1617</a>
    *
    */
   @Deployment(resources = {
@@ -1648,7 +1646,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
   }
 
   /**
-   * Test case for checking deletion of process instancess in call activity subprocesses
+   * Test case for checking deletion of process instances in call activity subprocesses
    */
   @Deployment(resources = {
     "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcess.bpmn20.xml",
@@ -1683,16 +1681,15 @@ public class CallActivityTest extends PluggableProcessEngineTest {
 
     // How many process Instances
     instanceList = runtimeService.createProcessInstanceQuery().list();
-    assertThat(instanceList).isNotNull();
     assertThat(instanceList).isEmpty();
   }
 
   /**
    * Test case for checking deletion of process instances in call activity subprocesses
-   *
-   * Checks that deletion of process Instance will resepct other process instances in the scope
+   * <p>
+   * Checks that deletion of process Instance will respect other process instances in the scope
    * and stop its upward deletion propagation will stop at this point
-   *
+   * </p>
    */
   @Deployment(resources = {
     "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testTwoSubProcesses.bpmn20.xml",
@@ -1736,9 +1733,9 @@ public class CallActivityTest extends PluggableProcessEngineTest {
 
   /**
    * Test case for checking deletion of process instances in nested call activity subprocesses
-   *
+   * <p>
    * Checking that nested call activities will propagate upward over multiple nested levels
-   *
+   * </p>
    */
   @Deployment(resources = {
     "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcess.bpmn20.xml",
@@ -1775,21 +1772,21 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // then
     // How many process Instances
     instanceList = runtimeService.createProcessInstanceQuery().list();
-    assertThat(instanceList).isNotNull();
     assertThat(instanceList).isEmpty();
-
   }
 
   /**
    * Test case for checking deletion of process instances in nested call activity subprocesses
-   *
+   * <p>
    * The test defines a process waiting on three nested call activities to complete
-   *
+   * </p>
+   * <p>
    * At each nested level there is only one process instance, which is waiting on the next level to complete
-   *
+   * </p>
+   * <p>
    * When we delete the process instance of the most inner call activity sub process the expected behaviour is that
    * the delete will propagate upward and delete all process instances.
-   *
+   * </p>
    */
   @Deployment(resources = {
     "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcess.bpmn20.xml",
@@ -1833,7 +1830,6 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // then
     // How many process Instances
     instanceList = runtimeService.createProcessInstanceQuery().list();
-    assertThat(instanceList).isNotNull();
     assertThat(instanceList).isEmpty();
 
   }

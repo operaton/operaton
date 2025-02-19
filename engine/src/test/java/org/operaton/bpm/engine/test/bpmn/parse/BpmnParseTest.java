@@ -162,7 +162,7 @@ public class BpmnParseTest {
       deploymentBuilder.deploy();
       fail("Exception expected: Process definition could be parsed, although the sub process contains a signal start event.");
     } catch (ParseException e) {
-      testRule.assertTextPresent("signalEventDefintion only allowed on start event if subprocess is an event subprocess", e.getMessage());
+      testRule.assertTextPresent("signalEventDefinition only allowed on start event if subprocess is an event subprocess", e.getMessage());
       List<Problem> errors = e.getResourceReports().get(0).getErrors();
       assertThat(errors).hasSize(1);
       assertThat(errors.get(0).getMainElementId()).isEqualTo("StartEvent_3");
@@ -269,7 +269,7 @@ public class BpmnParseTest {
       deploymentBuilder.deploy();
       fail("Exception expected: Process definition could be parsed, although the sub process contains a signal start event.");
     } catch (ParseException e) {
-      testRule.assertTextPresent("signalEventDefintion only allowed on start event if subprocess is an event subprocess", e.getMessage());
+      testRule.assertTextPresent("signalEventDefinition only allowed on start event if subprocess is an event subprocess", e.getMessage());
       List<Problem> errors = e.getResourceReports().get(0).getErrors();
       assertThat(errors).hasSize(1);
       assertThat(errors.get(0).getMainElementId()).isEqualTo("StartEvent_2");
@@ -492,7 +492,7 @@ public class BpmnParseTest {
       }
 
       for (PvmTransition sequenceFlow : activity.getOutgoingTransitions()) {
-        assertThat(((TransitionImpl) sequenceFlow).getWaypoints().size() >= 4).isTrue();
+        assertThat(((TransitionImpl) sequenceFlow).getWaypoints()).hasSizeGreaterThanOrEqualTo(4);
 
         TransitionImpl transitionImpl = (TransitionImpl) sequenceFlow;
         if (transitionImpl.getId().equals("flowStartToTask1")) {
@@ -631,6 +631,7 @@ public class BpmnParseTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/compensate/CompensateEventTest.compensationMiActivity.bpmn20.xml")
   @Test
+  @SuppressWarnings("deprecation")
   public void testParseCompensationHandlerOfMiActivity() {
     ActivityImpl miActivity = findActivityInDeployedProcessDefinition("undoBookHotel");
     ScopeImpl flowScope = miActivity.getFlowScope();
@@ -641,6 +642,7 @@ public class BpmnParseTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/compensate/CompensateEventTest.compensationMiSubprocess.bpmn20.xml")
   @Test
+  @SuppressWarnings("deprecation")
   public void testParseCompensationHandlerOfMiSubprocess() {
     ActivityImpl miActivity = findActivityInDeployedProcessDefinition("undoBookHotel");
     ScopeImpl flowScope = miActivity.getFlowScope();
@@ -1343,7 +1345,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testSequenceFlowNoIdAndUnexistantDestination() {
+  public void testSequenceFlowNoIdAndUnexistentDestination() {
     String incorrectSequenceFlow = "<?xml version='1.0' encoding='UTF-8'?>" +
           "<definitions xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'" +
           "  xmlns='http://www.omg.org/spec/BPMN/20100524/MODEL'" +

@@ -179,6 +179,7 @@ public class FormServiceTest {
   }
 
   @Test
+  @SuppressWarnings("deprecation")
   public void testTaskFormPropertyDefaultsAndFormRendering() {
 
     final String deploymentId = testRule.deploy("org/operaton/bpm/engine/test/api/form/FormsProcess.bpmn20.xml",
@@ -315,6 +316,7 @@ public class FormServiceTest {
 
   @Deployment
   @Test
+  @SuppressWarnings("deprecation")
   public void testFormPropertyHandling() {
     Map<String, Object> properties = new HashMap<>();
     properties.put("room", "5b"); // default
@@ -391,9 +393,9 @@ public class FormServiceTest {
     assertThat(variables).isEqualTo(expectedVariables);
   }
 
-  @SuppressWarnings("unchecked")
   @Deployment
   @Test
+  @SuppressWarnings({"unchecked", "deprecation"})
   public void testFormPropertyDetails() {
     String procDefId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
     StartFormData startFormData = formService.getStartFormData(procDefId);
@@ -993,6 +995,7 @@ public class FormServiceTest {
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
   @Test
+  @SuppressWarnings("unchecked")
   public void testSubmitStartFormWithObjectVariables() {
     // given
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -1004,8 +1007,7 @@ public class FormServiceTest {
 
     // then the variable is available as a process variable
     ArrayList<String> variable = (ArrayList<String>) runtimeService.getVariable(processInstance.getId(), "var");
-    assertThat(variable).isNotNull();
-    assertThat(variable).isEmpty();
+    assertThat(variable).isNotNull().isEmpty();
 
     // then no historic form property event has been written since this is not supported for custom objects
     if(processEngineConfiguration.getHistoryLevel().getId() >= ProcessEngineConfigurationImpl.HISTORYLEVEL_FULL) {
@@ -1016,6 +1018,7 @@ public class FormServiceTest {
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/twoTasksProcess.bpmn20.xml" })
   @Test
+  @SuppressWarnings("unchecked")
   public void testSubmitTaskFormWithObjectVariables() {
     // given
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
@@ -1033,8 +1036,7 @@ public class FormServiceTest {
 
     // then the variable is available as a process variable
     ArrayList<String> variable = (ArrayList<String>) runtimeService.getVariable(processInstance.getId(), "var");
-    assertThat(variable).isNotNull();
-    assertThat(variable).isEmpty();
+    assertThat(variable).isNotNull().isEmpty();
 
     // then no historic form property event has been written since this is not supported for custom objects
     if(processEngineConfiguration.getHistoryLevel().getId() >= ProcessEngineConfigurationImpl.HISTORYLEVEL_FULL) {
@@ -1169,7 +1171,7 @@ public class FormServiceTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/twoTasksProcess.bpmn20.xml")
-  public void testSubmitTaskFormWithVarialbesInReturnShouldDeserializeObjectValue()
+  public void testSubmitTaskFormWithVariablesInReturnShouldDeserializeObjectValue()
   {
     // given
     ObjectValue value = Variables.objectValue("value").create();
@@ -1190,7 +1192,7 @@ public class FormServiceTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/twoTasksProcess.bpmn20.xml")
-  public void testSubmitTaskFormWithVarialbesInReturnShouldNotDeserializeObjectValue()
+  public void testSubmitTaskFormWithVariablesInReturnShouldNotDeserializeObjectValue()
   {
     // given
     ObjectValue value = Variables.objectValue("value").create();
@@ -1307,6 +1309,7 @@ public class FormServiceTest {
     "org/operaton/bpm/engine/test/api/form/util/request.html",
     "org/operaton/bpm/engine/test/api/form/util/adjustRequest.html" })
   @Test
+  @SuppressWarnings("deprecation")
   public void testTaskFormsWithVacationRequestProcess() {
 
     // Get start form

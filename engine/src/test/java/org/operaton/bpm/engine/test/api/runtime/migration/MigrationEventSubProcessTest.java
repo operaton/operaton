@@ -43,7 +43,6 @@ import org.operaton.bpm.engine.test.util.MigrationPlanValidationReportAssert;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.joda.time.DateTime;
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;

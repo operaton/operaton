@@ -91,7 +91,7 @@ public class CasePlanModelHandlerTest extends CmmnElementHandlerTest {
 
     // then
     CmmnActivityBehavior behavior = activity.getActivityBehavior();
-    assertThat(behavior instanceof StageActivityBehavior).isTrue();
+    assertThat(behavior).isInstanceOf(StageActivityBehavior.class);
   }
 
   @Test

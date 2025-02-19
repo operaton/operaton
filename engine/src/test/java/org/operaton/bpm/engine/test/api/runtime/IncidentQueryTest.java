@@ -48,8 +48,8 @@ import org.junit.rules.RuleChain;
  */
 public class IncidentQueryTest {
 
-  public static String PROCESS_DEFINITION_KEY = "oneFailingServiceTaskProcess";
-  public static BpmnModelInstance FAILING_SERVICE_TASK_MODEL  = Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
+  public static final String PROCESS_DEFINITION_KEY = "oneFailingServiceTaskProcess";
+  public static final BpmnModelInstance FAILING_SERVICE_TASK_MODEL  = Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
     .startEvent("start")
     .serviceTask("task")
       .operatonAsyncBefore()
@@ -427,7 +427,6 @@ public class IncidentQueryTest {
 
     List<Incident> incidents = query.list();
     assertThat(incidents).isEmpty();
-    assertThat(incidents).isEmpty();
   }
 
   @Test
@@ -469,7 +468,6 @@ public class IncidentQueryTest {
     assertThat(query.count()).isZero();
 
     List<Incident> incidents = query.list();
-    assertThat(incidents).isEmpty();
     assertThat(incidents).isEmpty();
   }
 

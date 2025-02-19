@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.bpmn.servicetask;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 
 import java.util.HashMap;
@@ -86,14 +87,10 @@ public class JavaServiceTaskTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testUnexistingClassDelegation() {
-    try {
-      runtimeService.startProcessInstanceByKey("unexistingClassDelegation");
-      fail("");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("Exception while instantiating class 'org.operaton.bpm.engine.test.BogusClass'");
-      assertThat(e.getCause()).isNotNull();
-      assertThat(e.getCause() instanceof ClassLoadingException).isTrue();
-    }
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("unexistingClassDelegation"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Exception while instantiating class 'org.operaton.bpm.engine.test.BogusClass'")
+      .hasCauseInstanceOf(ClassLoadingException.class);
   }
 
   @Test
@@ -112,7 +109,7 @@ public class JavaServiceTaskTest extends PluggableProcessEngineTest {
   public void testExceptionHandling() {
 
     // If variable value is != 'throw-exception', process goes
-    // through service task and ends immidiately
+    // through service task and ends immediately
     Map<String, Object> vars = new HashMap<>();
     vars.put("var", "no-exception");
     runtimeService.startProcessInstanceByKey("exceptionHandling", vars);
@@ -135,8 +132,7 @@ public class JavaServiceTaskTest extends PluggableProcessEngineTest {
 
     // Check if business-key was available from the process
     String key = (String) runtimeService.getVariable(processInstance.getId(), "businessKeySetOnExecution");
-    assertThat(key).isNotNull();
-    assertThat(key).isEqualTo("1234567890");
+    assertThat(key).isNotNull().isEqualTo("1234567890");
 
     // check if BaseDelegateExecution#getBusinessKey() behaves like DelegateExecution#getProcessBusinessKey()
     String key2 = (String) runtimeService.getVariable(processInstance.getId(), "businessKeyAsProcessBusinessKey");

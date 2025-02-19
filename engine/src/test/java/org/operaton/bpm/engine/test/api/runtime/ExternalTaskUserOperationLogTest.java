@@ -41,7 +41,6 @@ import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -61,8 +60,8 @@ public class ExternalTaskUserOperationLogTest {
   @Rule
   public RuleChain ruleChain = RuleChain.outerRule(rule).around(testRule);
 
-  private static String PROCESS_DEFINITION_KEY = "oneExternalTaskProcess";
-  private static String PROCESS_DEFINITION_KEY_2 = "twoExternalTaskWithPriorityProcess";
+  private static final String PROCESS_DEFINITION_KEY = "oneExternalTaskProcess";
+  private static final String PROCESS_DEFINITION_KEY_2 = "twoExternalTaskWithPriorityProcess";
 
   protected RuntimeService runtimeService;
   protected ExternalTaskService externalTaskService;
@@ -237,7 +236,7 @@ public class ExternalTaskUserOperationLogTest {
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/externalTaskPriorityExpression.bpmn20.xml")
   public void testSetPriorityLogCreation() {
     // given
-    runtimeService.startProcessInstanceByKey(PROCESS_DEFINITION_KEY_2, Collections.<String, Object>singletonMap("priority", 14));
+    runtimeService.startProcessInstanceByKey(PROCESS_DEFINITION_KEY_2, Collections.singletonMap("priority", 14));
     ExternalTask externalTask = externalTaskService.createExternalTaskQuery().priorityHigherThanOrEquals(1).singleResult();
     
     // when

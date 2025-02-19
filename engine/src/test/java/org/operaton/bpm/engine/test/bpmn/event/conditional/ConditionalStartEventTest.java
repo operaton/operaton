@@ -536,7 +536,6 @@ public class ConditionalStartEventTest {
       .setVariable("foo", 0)
       .evaluateStartConditions();
 
-    assertThat(processes).isNotNull();
     assertThat(processes).isEmpty();
 
     assertThat(runtimeService.createVariableInstanceQuery().singleResult()).isNull();

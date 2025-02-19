@@ -77,7 +77,7 @@ public class JobExecutorMetricsTest extends AbstractMetricsTest {
 
     // then
     long acquisitionAttempts = managementService.createMetricsQuery().name(Metrics.JOB_ACQUISITION_ATTEMPT).sum();
-    assertThat(acquisitionAttempts >= 1).isTrue();
+    assertThat(acquisitionAttempts).isPositive();
 
     long acquiredJobs = managementService.createMetricsQuery()
         .name(Metrics.JOB_ACQUIRED_SUCCESS).sum();

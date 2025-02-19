@@ -975,7 +975,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
   @Test
   public void testSkipTaskListenerInvocation() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("taskListenerProcess",
-        Collections.<String, Object> singletonMap("listener", new RecorderTaskListener()));
+        Collections.singletonMap("listener", new RecorderTaskListener()));
 
     String processInstanceId = processInstance.getId();
 
@@ -1144,7 +1144,7 @@ public class ProcessInstanceModificationTest extends PluggableProcessEngineTest 
 
     ActivityInstance task2Instance = getChildInstanceForActivity(updatedTree, "task2");
     Assertions.assertThat(task2Instance).isNotNull();
-    assertThat(task2Instance.getExecutionIds().length).isEqualTo(1);
+    assertThat(task2Instance.getExecutionIds()).hasSize(1);
     String task2ExecutionId = task2Instance.getExecutionIds()[0];
 
     assertThat(runtimeService.createVariableInstanceQuery().count()).isEqualTo(4);

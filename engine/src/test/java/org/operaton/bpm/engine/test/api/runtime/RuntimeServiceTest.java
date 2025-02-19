@@ -467,13 +467,9 @@ public class RuntimeServiceTest {
 
   @Test
   public void testDeleteProcessInstanceWithFake() {
-    try {
-      runtimeService.deleteProcessInstance("aFake", null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("No process instance found for id", e.getMessage());
-      assertThat(e instanceof NotFoundException).isTrue();
-    }
+    assertThatThrownBy(() -> runtimeService.deleteProcessInstance("aFake", null))
+      .isInstanceOf(NotFoundException.class)
+      .hasMessageContaining("No process instance found for id");
   }
 
   @Test
@@ -488,14 +484,11 @@ public class RuntimeServiceTest {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     var processInstanceIds = Arrays.asList(instance.getId(), "aFake");
 
-    try {
-      runtimeService.deleteProcessInstances(processInstanceIds, "test", false, false, false, false);
-      fail("ProcessEngineException expected");
-    }catch (ProcessEngineException e) {
-      //expected
-      assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isEqualTo(1);
-      assertThat(e instanceof NotFoundException).isTrue();
-    }
+    assertThatThrownBy(() -> runtimeService.deleteProcessInstances(processInstanceIds, "test", false, false, false, false))
+      .isInstanceOf(NotFoundException.class)
+      .hasMessageContaining("No process instance found for id");
+
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isEqualTo(1);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -515,7 +508,7 @@ public class RuntimeServiceTest {
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException ae) {
       testRule.assertTextPresent("processInstanceId is null", ae.getMessage());
-      assertThat(ae instanceof BadUserRequestException).isTrue();
+      assertThat(ae).isInstanceOf(BadUserRequestException.class);
     }
   }
 
@@ -631,7 +624,7 @@ public class RuntimeServiceTest {
   }
 
   /**
-   * Testcase to reproduce ACT-950 (https://jira.codehaus.org/browse/ACT-950)
+   * Testcase to reproduce ACT-950 (<a href="https://jira.codehaus.org/browse/ACT-950">ACT-950</a>)
    */
   @Deployment
   @Test
@@ -713,24 +706,16 @@ public class RuntimeServiceTest {
 
   @Test
   public void testSignalUnexistingExecutionId() {
-    try {
-      runtimeService.signal("unexistingExecutionId");
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("execution unexistingExecutionId doesn't exist", ae.getMessage());
-      assertThat(ae instanceof BadUserRequestException).isTrue();
-    }
+    assertThatThrownBy(() -> runtimeService.signal("unexistingExecutionId"))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("execution unexistingExecutionId doesn't exist");
   }
 
   @Test
   public void testSignalNullExecutionId() {
-    try {
-      runtimeService.signal(null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("executionId is null", ae.getMessage());
-      assertThat(ae instanceof BadUserRequestException).isTrue();
-    }
+    assertThatThrownBy(() -> runtimeService.signal(null))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("executionId is null");
   }
 
   @Deployment
@@ -1035,7 +1020,7 @@ public class RuntimeServiceTest {
 
       List<HistoricDetail> resultSet = historyService.createHistoricDetailQuery().processInstanceId(processInstanceId).list();
       for (HistoricDetail currentHistoricDetail : resultSet) {
-        assertThat(currentHistoricDetail instanceof HistoricDetailVariableInstanceUpdateEntity).isTrue();
+        assertThat(currentHistoricDetail).isInstanceOf(HistoricDetailVariableInstanceUpdateEntity.class);
         HistoricDetailVariableInstanceUpdateEntity historicVariableUpdate = (HistoricDetailVariableInstanceUpdateEntity) currentHistoricDetail;
 
         if (historicVariableUpdate.getName().equals(variableName) && historicVariableUpdate.getValue() == null) {
@@ -1509,8 +1494,8 @@ public class RuntimeServiceTest {
     assertThat(childActivityInstance.getActivityType()).isEqualTo("userTask");
     assertThat(childActivityInstance.getChildActivityInstances()).isNotNull();
     assertThat(childActivityInstance.getChildTransitionInstances()).isNotNull();
-    assertThat(childActivityInstance.getChildActivityInstances().length).isZero();
-    assertThat(childActivityInstance.getChildTransitionInstances().length).isZero();
+    assertThat(childActivityInstance.getChildActivityInstances()).isEmpty();
+    assertThat(childActivityInstance.getChildTransitionInstances()).isEmpty();
 
   }
 
@@ -1718,7 +1703,7 @@ public class RuntimeServiceTest {
 
     // then
     ActivityInstance[] processActivityInstances = tree.getActivityInstances(definition.getId());
-    assertThat(processActivityInstances.length).isEqualTo(1);
+    assertThat(processActivityInstances).hasSize(1);
     assertThat(processActivityInstances[0].getId()).isEqualTo(tree.getId());
     assertThat(processActivityInstances[0].getActivityId()).isEqualTo(definition.getId());
 
@@ -1730,7 +1715,7 @@ public class RuntimeServiceTest {
     assertActivityInstances(subProcessInstance.getActivityInstances("subProcess"), 1, "subProcess");
 
     ActivityInstance[] childInstances = subProcessInstance.getActivityInstances("innerTask");
-    assertThat(childInstances.length).isEqualTo(1);
+    assertThat(childInstances).hasSize(1);
     assertThat(childInstances[0].getId()).isEqualTo(subProcessInstance.getChildActivityInstances()[0].getId());
   }
 
@@ -1757,8 +1742,7 @@ public class RuntimeServiceTest {
     ActivityInstance tree = runtimeService.getActivityInstance(instance.getId());
 
     ActivityInstance[] instances = tree.getActivityInstances("aNonExistingActivityId");
-    assertThat(instances).isNotNull();
-    assertThat(instances.length).isZero();
+    assertThat(instances).isEmpty();
   }
 
   @Deployment
@@ -1777,16 +1761,16 @@ public class RuntimeServiceTest {
     ActivityInstance tree = runtimeService.getActivityInstance(instance.getId());
 
     // then
-    assertThat(tree.getTransitionInstances("subProcess").length).isZero();
+    assertThat(tree.getTransitionInstances("subProcess")).isEmpty();
     TransitionInstance[] asyncBeforeInstances = tree.getTransitionInstances("innerTask");
-    assertThat(asyncBeforeInstances.length).isEqualTo(2);
+    assertThat(asyncBeforeInstances).hasSize(2);
 
     assertThat(asyncBeforeInstances[0].getActivityId()).isEqualTo("innerTask");
     assertThat(asyncBeforeInstances[1].getActivityId()).isEqualTo("innerTask");
     assertThat(asyncBeforeInstances[1].getId()).isNotEqualTo(asyncBeforeInstances[0].getId());
 
     TransitionInstance[] asyncEndEventInstances = tree.getTransitionInstances("theSubProcessEnd");
-    assertThat(asyncEndEventInstances.length).isEqualTo(1);
+    assertThat(asyncEndEventInstances).hasSize(1);
     assertThat(asyncEndEventInstances[0].getActivityId()).isEqualTo("theSubProcessEnd");
   }
 
@@ -1813,13 +1797,12 @@ public class RuntimeServiceTest {
     ActivityInstance tree = runtimeService.getActivityInstance(instance.getId());
 
     TransitionInstance[] instances = tree.getTransitionInstances("aNonExistingActivityId");
-    assertThat(instances).isNotNull();
-    assertThat(instances.length).isZero();
+    assertThat(instances).isEmpty();
   }
 
 
   protected void assertActivityInstances(ActivityInstance[] instances, int expectedAmount, String expectedActivityId) {
-    assertThat(instances.length).isEqualTo(expectedAmount);
+    assertThat(instances).hasSize(expectedAmount);
 
     Set<String> instanceIds = new HashSet<>();
 
@@ -1846,7 +1829,7 @@ public class RuntimeServiceTest {
     Incident[] incidents = tree.getActivityInstances("theTask")[0].getIncidents();
 
     // then
-    assertThat(incidents.length).isZero();
+    assertThat(incidents).isEmpty();
   }
 
   @Test
@@ -1867,7 +1850,7 @@ public class RuntimeServiceTest {
     Incident[] incidents = tree.getActivityInstances("theTask")[0].getIncidents();
 
     // then
-    assertThat(incidents.length).isEqualTo(1);
+    assertThat(incidents).hasSize(1);
     assertThat(incidents[0]).isEqualTo(incident);
   }
 
@@ -1883,7 +1866,7 @@ public class RuntimeServiceTest {
 
     // then
     String[] incidentIds = tree.getActivityInstances("theTask")[0].getIncidentIds();
-    assertThat(incidentIds.length).isZero();
+    assertThat(incidentIds).isEmpty();
   }
 
   @Test
@@ -1901,9 +1884,9 @@ public class RuntimeServiceTest {
     // then
     ActivityInstanceAssert.assertThat(tree).hasTotalIncidents(1);
 
-    assertThat(tree.getActivityInstances("theTask").length).isEqualTo(1);
+    assertThat(tree.getActivityInstances("theTask")).hasSize(1);
     String[] incidentIds = tree.getActivityInstances("theTask")[0].getIncidentIds();
-    assertThat(incidentIds.length).isEqualTo(1);
+    assertThat(incidentIds).hasSize(1);
     assertThat(incidentIds[0]).isEqualTo(incident.getId());
   }
 
@@ -1926,14 +1909,14 @@ public class RuntimeServiceTest {
     // then
     ActivityInstanceAssert.assertThat(tree).hasTotalIncidents(3);
 
-    assertThat(tree.getActivityInstances("theTask").length).isEqualTo(1);
+    assertThat(tree.getActivityInstances("theTask")).hasSize(1);
     String[] incidentIds = tree.getActivityInstances("theTask")[0].getIncidentIds();
-    assertThat(incidentIds.length).isEqualTo(1);
+    assertThat(incidentIds).hasSize(1);
     assertThat(incidentIds[0]).isEqualTo(theTaskIncident.getId());
 
-    assertThat(tree.getActivityInstances("asyncTask").length).isEqualTo(1);
+    assertThat(tree.getActivityInstances("asyncTask")).hasSize(1);
     incidentIds = tree.getActivityInstances("asyncTask")[0].getIncidentIds();
-    assertThat(incidentIds.length).isEqualTo(2);
+    assertThat(incidentIds).hasSize(2);
     for (String incidentId : incidentIds) {
       if (!incidentId.equals(asyncTaskIncident.getId())
           && !incidentId.equals(anotherIncident.getId())) {
@@ -1960,14 +1943,14 @@ public class RuntimeServiceTest {
     // then
     ActivityInstanceAssert.assertThat(tree).hasTotalIncidents(2);
 
-    assertThat(tree.getActivityInstances("outerTask").length).isEqualTo(1);
+    assertThat(tree.getActivityInstances("outerTask")).hasSize(1);
     String[] incidentIds = tree.getActivityInstances("outerTask")[0].getIncidentIds();
-    assertThat(incidentIds.length).isEqualTo(1);
+    assertThat(incidentIds).hasSize(1);
     assertThat(incidentIds[0]).isEqualTo(outerTaskIncident.getId());
 
-    assertThat(tree.getActivityInstances("innerTask").length).isEqualTo(1);
+    assertThat(tree.getActivityInstances("innerTask")).hasSize(1);
     incidentIds = tree.getActivityInstances("innerTask")[0].getIncidentIds();
-    assertThat(incidentIds.length).isEqualTo(1);
+    assertThat(incidentIds).hasSize(1);
     assertThat(incidentIds[0]).isEqualTo(innerTaskIncident.getId());
   }
 
@@ -1992,11 +1975,11 @@ public class RuntimeServiceTest {
     for (ActivityInstance activityInstance : tree.getActivityInstances("innerTask")) {
       if(activityInstance.getExecutionIds()[0].equals(executionId)) {
         String[] incidentIds = activityInstance.getIncidentIds();
-        assertThat(incidentIds.length).isEqualTo(1);
+        assertThat(incidentIds).hasSize(1);
         assertThat(incidentIds[0]).isEqualTo(incident.getId());
         innerTaskMatched = true;
       } else {
-        assertThat(activityInstance.getIncidentIds().length).isZero();
+        assertThat(activityInstance.getIncidentIds()).isEmpty();
       }
     }
 
@@ -2529,7 +2512,7 @@ public class RuntimeServiceTest {
 
     // then
     ActivityInstance[] activityInstances = tree.getActivityInstances("theTask");
-    assertThat(activityInstances.length).isEqualTo(1);
+    assertThat(activityInstances).hasSize(1);
 
     ActivityInstance task = activityInstances[0];
     assertThat(task).isNotNull();
@@ -3285,7 +3268,6 @@ public class RuntimeServiceTest {
     Map<String, Object> variables = runtimeService.getVariables(processInstanceId, new ArrayList<>());
 
     // then
-    assertThat(variables).isNotNull();
     assertThat(variables).isEmpty();
   }
 
@@ -3299,7 +3281,6 @@ public class RuntimeServiceTest {
     Map<String, Object> variables = runtimeService.getVariablesTyped(processInstanceId, new ArrayList<>(), false);
 
     // then
-    assertThat(variables).isNotNull();
     assertThat(variables).isEmpty();
   }
 
@@ -3313,7 +3294,6 @@ public class RuntimeServiceTest {
     Map<String, Object> variables = runtimeService.getVariablesLocal(processInstanceId, new ArrayList<>());
 
     // then
-    assertThat(variables).isNotNull();
     assertThat(variables).isEmpty();
   }
 
@@ -3327,7 +3307,6 @@ public class RuntimeServiceTest {
     Map<String, Object> variables = runtimeService.getVariablesLocalTyped(processInstanceId, new ArrayList<>(), false);
 
     // then
-    assertThat(variables).isNotNull();
     assertThat(variables).isEmpty();
   }
 

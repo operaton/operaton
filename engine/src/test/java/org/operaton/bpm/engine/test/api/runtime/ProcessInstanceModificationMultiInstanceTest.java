@@ -1199,7 +1199,7 @@ public class ProcessInstanceModificationMultiInstanceTest extends PluggableProce
       assertThat(valueFound).as("Expected variable value '" + expectedValue + "' not contained in the list of actual values. "
           + "Unmatched actual values: " + actualValues).isTrue();
     }
-    assertThat(actualValues.isEmpty()).as("There are more actual than expected values.").isTrue();
+    assertThat(actualValues).as("There are more actual than expected values.").isEmpty();
   }
 
 }

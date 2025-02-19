@@ -102,7 +102,7 @@ public class CmmnDeployerTest extends PluggableProcessEngineTest {
     final InputStream diagramStream = repositoryService.getResourceAsStream(deploymentId,
         "org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testCaseDiagramResource.png");
     final byte[] diagramBytes = IoUtil.readInputStream(diagramStream, "diagram stream");
-    assertThat(diagramBytes.length).isEqualTo(2540);
+    assertThat(diagramBytes).hasSize(2540);
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testMultipleDiagramResourcesProvided.cmmn",

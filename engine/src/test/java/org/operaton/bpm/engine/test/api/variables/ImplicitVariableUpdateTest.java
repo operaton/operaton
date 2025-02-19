@@ -44,6 +44,7 @@ public class ImplicitVariableUpdateTest extends PluggableProcessEngineTest {
           .putValue("listVar", new ArrayList<String>())
           .putValue("delegate", new UpdateValueDelegate()));
 
+    @SuppressWarnings("unchecked")
     List<String> list = (List<String>) runtimeService.getVariable(instance.getId(), "listVar");
     assertThat(list)
             .isNotNull()
@@ -62,6 +63,7 @@ public class ImplicitVariableUpdateTest extends PluggableProcessEngineTest {
           .putValue("listVar", new ArrayList<String>())
           .putValue("delegate", new UpdateValueDelegate()));
 
+    @SuppressWarnings("unchecked")
     List<String> list = (List<String>) runtimeService.getVariable(instance.getId(), "listVar");
     assertThat(list)
             .isNotNull()
@@ -77,8 +79,8 @@ public class ImplicitVariableUpdateTest extends PluggableProcessEngineTest {
           .putValue("listVar", new ArrayList<String>())
           .putValue("delegate", new ReplaceAndUpdateValueDelegate()));
 
+    @SuppressWarnings("unchecked")
     List<String> list = (List<String>) runtimeService.getVariable(instance.getId(), "listVar");
-    assertThat(list).isNotNull();
     assertThat(list).isEmpty();
   }
 

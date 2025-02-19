@@ -60,8 +60,8 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
 
     // now we have one transition instance below the process instance:
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(activityInstance.getChildTransitionInstances().length).isEqualTo(1);
-    assertThat(activityInstance.getChildActivityInstances().length).isZero();
+    assertThat(activityInstance.getChildTransitionInstances()).hasSize(1);
+    assertThat(activityInstance.getChildActivityInstances()).isEmpty();
 
     assertThat(activityInstance.getChildTransitionInstances()[0]).isNotNull();
 
@@ -236,7 +236,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
   protected void assertTransitionInstances(String processInstanceId, String activityId, int numInstances) {
     ActivityInstance tree = runtimeService.getActivityInstance(processInstanceId);
 
-    assertThat(tree.getTransitionInstances(activityId).length).isEqualTo(numInstances);
+    assertThat(tree.getTransitionInstances(activityId)).hasSize(numInstances);
   }
 
   @Deployment
@@ -480,7 +480,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
     // the listener was now invoked:
     assertThat(runtimeService.getVariable(pid, "listener")).isNotNull();
 
-    // there is a usertask
+    // there is an usertask
     assertThat(taskService.createTaskQuery().singleResult()).isNotNull();
     // and no more job
     assertThat(managementService.createJobQuery().count()).isZero();

@@ -207,7 +207,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
   public void testMeterQueryCustomIntervalWhereReporterNotExist() {
     //given metric data
 
-    //when query metric interval data with custom interval and non existing reporter in where clause
+    //when query metric interval data with custom interval and non-existing reporter in where clause
     List<MetricIntervalValue> metrics = managementService.createMetricsQuery().reporter("notExist").interval(300);
 
     //then result contains no metrics from given reporter
@@ -243,7 +243,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
   public void testMeterQueryDefaultIntervalWhereNameNotExist() {
     //given metric data
 
-    //when query metric interval data with non existing name in where clause
+    //when query metric interval data with non-existing name in where clause
     List<MetricIntervalValue> metrics = managementService.createMetricsQuery().name("notExist").interval();
 
     //then result contains no metrics with given name
@@ -279,7 +279,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
   public void testMeterQueryCustomIntervalWhereNameNotExist() {
     //given metric data
 
-    //when query metric interval data with custom interval and non existing name in where clause
+    //when query metric interval data with custom interval and non-existing name in where clause
     List<MetricIntervalValue> metrics = managementService.createMetricsQuery().name("notExist").interval(300);
 
     //then result contains no metrics from given name
@@ -563,7 +563,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
     List<MetricIntervalValue> aggregatedMetrics = managementService.createMetricsQuery().name(Metrics.ACTIVTY_INSTANCE_START).limit(limit).aggregateByReporter().interval();
 
     // then aggregatedMetrics contains wider time interval
-    assertThat(metrics.get(limit - 1).getTimestamp().getTime() > aggregatedMetrics.get(limit - 1).getTimestamp().getTime()).isTrue();
+    assertThat(metrics.get(limit - 1).getTimestamp().getTime()).isGreaterThan(aggregatedMetrics.get(limit - 1).getTimestamp().getTime());
     assertEquals(metrics.size(), aggregatedMetrics.size());
   }
 

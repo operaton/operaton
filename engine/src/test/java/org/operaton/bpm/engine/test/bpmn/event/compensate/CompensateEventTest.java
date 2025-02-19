@@ -70,13 +70,13 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
     org.operaton.bpm.engine.repository.Deployment deployment1 = repositoryService.createDeployment()
             .addClasspathResource(PROCESS_MODEL_WITH_REF_BEFORE)
             .deploy();
-    //then no problem will occure
+    //then no problem will occur
 
     //when model with ref after is deployed
     org.operaton.bpm.engine.repository.Deployment deployment2 = repositoryService.createDeployment()
             .addClasspathResource(PROCESS_MODEL_WITH_REF_AFTER)
             .deploy();
-    //then also no problem should occure
+    //then also no problem should occur
 
     //clean up
     repositoryService.deleteDeployment(deployment1.getId());
@@ -444,6 +444,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/bpmn/event/compensate/CompensateEventTest.testCompensationTriggeredByEventSubProcessActivityRef.bpmn20.xml" })
   @Test
+  @SuppressWarnings("deprecation")
   public void testCompensateActivityRefTriggeredByEventSubprocess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("compensateProcess");
     testRule.assertProcessEnded(processInstance.getId());
@@ -463,6 +464,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/bpmn/event/compensate/CompensateEventTest.testCompensationTriggeredByEventSubProcessInSubProcessActivityRef.bpmn20.xml" })
   @Test
+  @SuppressWarnings("deprecation")
   public void testCompensateActivityRefTriggeredByEventSubprocessInSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("compensateProcess");
     testRule.assertProcessEnded(processInstance.getId());
@@ -481,6 +483,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/event/compensate/CompensateEventTest.testCompensationInEventSubProcessActivityRef.bpmn20.xml" })
   @Test
+  @SuppressWarnings("deprecation")
   public void testCompensateActivityRefInEventSubprocess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("compensateProcess");
     testRule.assertProcessEnded(processInstance.getId());
@@ -505,6 +508,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
    */
   @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/event/compensate/CompensateEventTest.testCompensationInEventSubProcess.bpmn20.xml" })
   @Test
+  @SuppressWarnings("deprecation")
   public void testCompensateInEventSubprocess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("compensateProcess");
     testRule.assertProcessEnded(processInstance.getId());
@@ -1198,7 +1202,9 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
   private void completeTasks(String taskName, int times) {
     List<Task> tasks = taskService.createTaskQuery().taskName(taskName).list();
 
-    assertThat(times <= tasks.size()).as("Actual there are " + tasks.size() + " open tasks with name '" + taskName + "'. Expected at least " + times).isTrue();
+    assertThat(times)
+      .as("Actual there are " + tasks.size() + " open tasks with name '" + taskName + "'. Expected at least " + times)
+      .isLessThanOrEqualTo(tasks.size());
 
     Iterator<Task> taskIterator = tasks.iterator();
     for (int i = 0; i < times; i++) {

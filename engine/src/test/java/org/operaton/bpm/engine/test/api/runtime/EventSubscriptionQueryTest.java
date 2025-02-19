@@ -196,8 +196,8 @@ public class EventSubscriptionQueryTest extends PluggableProcessEngineTest {
     List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().orderByCreated().asc().list();
     assertThat(eventSubscriptions).hasSize(3);
 
-    assertThat(eventSubscriptions.get(0).getCreated().compareTo(eventSubscriptions.get(1).getCreated()) < 0).isTrue();
-    assertThat(eventSubscriptions.get(1).getCreated().compareTo(eventSubscriptions.get(2).getCreated()) < 0).isTrue();
+    assertThat(eventSubscriptions.get(0).getCreated()).isBefore(eventSubscriptions.get(1).getCreated());
+    assertThat(eventSubscriptions.get(1).getCreated()).isBefore(eventSubscriptions.get(2).getCreated());
 
     cleanDb();
   }

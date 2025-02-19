@@ -179,7 +179,7 @@ public class InclusiveGatewayTest extends PluggableProcessEngineTest {
     Task lastTask = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
     taskService.complete(lastTask.getId());
 
-    assertThat(runtimeService.createProcessInstanceQuery().active().count()).isEqualTo(0L);
+    assertThat(runtimeService.createProcessInstanceQuery().active().count()).isZero();
   }
 
   /**
@@ -406,11 +406,12 @@ public class InclusiveGatewayTest extends PluggableProcessEngineTest {
     assertThat(expectedNames).isEmpty();
   }
 
-  /** This test the isReachable() check thaty is done to check if
+  /** This test the isReachable() check that is done to check if
    * upstream tokens can reach the inclusive gateway.
-   *
+   * <p>
    * In case of loops, special care needs to be taken in the algorithm,
    * or else stackoverflows will happen very quickly.
+   * </p>
    */
   @Deployment
   @Test

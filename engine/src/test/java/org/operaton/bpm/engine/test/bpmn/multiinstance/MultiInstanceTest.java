@@ -231,8 +231,8 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
       Task task = taskService.createTaskQuery().taskAssignee("kermit").singleResult();
       assertThat(task.getName()).isEqualTo("My Task");
       ActivityInstance processInstance = runtimeService.getActivityInstance(procId);
-      List<ActivityInstance> instancesForActivitiyId = getInstancesForActivityId(processInstance, "miTasks");
-      assertThat(instancesForActivitiyId).hasSize(1);
+      List<ActivityInstance> instancesForActivityId = getInstancesForActivityId(processInstance, "miTasks");
+      assertThat(instancesForActivityId).hasSize(1);
       taskService.complete(task.getId());
     }
 
@@ -252,18 +252,18 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     assertThat(tasks.get(2).getName()).isEqualTo("My Task 2");
 
     ActivityInstance processInstance = runtimeService.getActivityInstance(procId);
-    assertThat(processInstance.getActivityInstances("miTasks").length).isEqualTo(3);
+    assertThat(processInstance.getActivityInstances("miTasks")).hasSize(3);
 
     taskService.complete(tasks.get(0).getId());
 
     processInstance = runtimeService.getActivityInstance(procId);
 
-    assertThat(processInstance.getActivityInstances("miTasks").length).isEqualTo(2);
+    assertThat(processInstance.getActivityInstances("miTasks")).hasSize(2);
 
     taskService.complete(tasks.get(1).getId());
 
     processInstance = runtimeService.getActivityInstance(procId);
-    assertThat(processInstance.getActivityInstances("miTasks").length).isEqualTo(1);
+    assertThat(processInstance.getActivityInstances("miTasks")).hasSize(1);
 
     taskService.complete(tasks.get(2).getId());
     testRule.assertProcessEnded(procId);
@@ -982,8 +982,8 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     String procId = runtimeService.startProcessInstanceByKey("miParallelCallActivity").getId();
     List<Task> tasks = taskService.createTaskQuery().list();
     assertThat(tasks).hasSize(12);
-    for (int i = 0; i < tasks.size(); i++) {
-      taskService.complete(tasks.get(i).getId());
+    for (Task task : tasks) {
+      taskService.complete(task.getId());
     }
 
     testRule.assertProcessEnded(procId);
@@ -996,8 +996,8 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("miParallelCallActivity");
     List<Task> tasks = taskService.createTaskQuery().list();
     assertThat(tasks).hasSize(12);
-    for (int i = 0; i < tasks.size(); i++) {
-      taskService.complete(tasks.get(i).getId());
+    for (Task task : tasks) {
+      taskService.complete(task.getId());
     }
 
     if (processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {

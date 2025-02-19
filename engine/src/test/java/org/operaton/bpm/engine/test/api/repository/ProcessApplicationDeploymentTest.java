@@ -641,8 +641,7 @@ public class ProcessApplicationDeploymentTest {
     // old deployment was resumed
     ProcessApplicationRegistration registration = deployment2.getProcessApplicationRegistration();
     Set<String> paDeploymentIds = registration.getDeploymentIds();
-    assertThat(paDeploymentIds).hasSize(1);
-    assertThat(paDeploymentIds).contains(deployment2.getId());
+    assertThat(paDeploymentIds).containsExactly(deployment2.getId());
     assertThat(registration.getProcessEngineName()).isEqualTo(processEngine.getName());
   }
 
@@ -1196,7 +1195,7 @@ public class ProcessApplicationDeploymentTest {
     managementService.registerProcessApplication(deployment.getId(),
                                                  processApplication.getReference());
 
-    // when deleting the deploymen
+    // when deleting the deployment
     repositoryService.deleteDeployment(deployment.getId(), true);
 
     // then the registration is removed

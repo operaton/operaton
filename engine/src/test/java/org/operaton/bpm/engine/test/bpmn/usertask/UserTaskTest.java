@@ -66,7 +66,7 @@ public class UserTaskTest extends PluggableProcessEngineTest {
     assertThat(task.getId()).isNotNull();
     assertThat(task.getName()).isEqualTo("my task");
     assertThat(task.getDescription()).isEqualTo("Very important");
-    assertThat(task.getPriority() > 0).isTrue();
+    assertThat(task.getPriority()).isPositive();
     assertThat(task.getAssignee()).isEqualTo("kermit");
     assertThat(task.getProcessInstanceId()).isEqualTo(processInstance.getId());
     assertThat(task.getExecutionId()).isEqualTo(processInstance.getId());

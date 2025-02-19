@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
 import org.joda.time.DateTime;
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
@@ -280,7 +279,7 @@ public class MigrationUserTaskTest {
     // when
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
-    // then the sub task properties have not been updated (i.e. subtask should not reference the process instance/definition now)
+    // then the sub-task properties have not been updated (i.e. subtask should not reference the process instance/definition now)
     Task subTaskAfterMigration = rule.getTaskService().createTaskQuery().taskId(subTask.getId()).singleResult();
     assertThat(subTaskAfterMigration.getProcessDefinitionId()).isNull();
     assertThat(subTaskAfterMigration.getProcessInstanceId()).isNull();

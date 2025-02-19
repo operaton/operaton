@@ -272,10 +272,10 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
 
     // then
     VariableMap collectedVariables = VariablesCollectingListener.getCollectedVariables();
-    assertThat(collectedVariables).isNotNull();
     assertThat(collectedVariables)
-            .hasSize(1)
-            .containsEntry("foo", "bar");
+      .isNotNull()
+      .hasSize(1)
+      .containsEntry("foo", "bar");
   }
 
   // Expression & Scripts Task Listener tests

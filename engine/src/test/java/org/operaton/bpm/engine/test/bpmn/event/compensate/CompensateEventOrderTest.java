@@ -93,7 +93,9 @@ public class CompensateEventOrderTest {
     assertThat(indexA).isNotEqualTo(-1);
     assertThat(indexB).isNotEqualTo(-1);
 
-    assertThat(indexA > indexB).as("Compensation activities were executed in wrong order.").isTrue();
+    assertThat(indexA)
+      .as("Compensation activities were executed in wrong order.")
+      .isGreaterThan(indexB);
 
   }
 

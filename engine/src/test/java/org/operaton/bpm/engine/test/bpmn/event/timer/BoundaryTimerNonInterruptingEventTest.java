@@ -135,7 +135,7 @@ public class BoundaryTimerNonInterruptingEventTest {
     testHelper.waitForJobExecutorToProcessAllJobs(5000L);
 
     // no more timers to fire
-    assertThat(jobQuery.count()).isEqualTo(0L);
+    assertThat(jobQuery.count()).isZero();
 
     // and we are still in the first state, but in the next escalation state as well
     assertThat(taskService.createTaskQuery().count()).isEqualTo(2L);
@@ -705,7 +705,7 @@ public class BoundaryTimerNonInterruptingEventTest {
                                      .startEvent()
                                        .operatonAsyncBefore()
                                      .userTask("user-task-with-timer")
-                                       .boundaryEvent("non-interuption-timer")
+                                       .boundaryEvent("non-interruption-timer")
                                          .cancelActivity(false)
                                          .timerWithDuration("R/PT3S")
                                        .endEvent()
@@ -721,7 +721,7 @@ public class BoundaryTimerNonInterruptingEventTest {
     // then
     Job timerJob = managementService.createJobQuery()
                                     .timers()
-                                    .activityId("non-interuption-timer")
+                                    .activityId("non-interruption-timer")
                                     .singleResult();
     Task userTask = taskService.createTaskQuery().singleResult();
 
@@ -737,7 +737,7 @@ public class BoundaryTimerNonInterruptingEventTest {
     Date currentTime = ClockTestUtil.setClockToDateWithoutMilliseconds();
     Date timerDueDate = Date.from(currentTime.toInstant().plusMillis(3000L));
 
-    BpmnModelInstance instance = Bpmn.createExecutableProcess("timoutProcess")
+    BpmnModelInstance instance = Bpmn.createExecutableProcess("timeoutProcess")
                                      .startEvent()
                                        .operatonAsyncBefore()
                                      .userTask("user-task-with-timer")
@@ -748,7 +748,7 @@ public class BoundaryTimerNonInterruptingEventTest {
                                      .endEvent()
                                      .done();
     testHelper.deploy(instance);
-    runtimeService.startProcessInstanceByKey("timoutProcess");
+    runtimeService.startProcessInstanceByKey("timeoutProcess");
 
     // when
     testHelper.waitForJobExecutorToProcessAllJobs(6000L);

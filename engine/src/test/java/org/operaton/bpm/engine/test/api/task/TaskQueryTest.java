@@ -245,8 +245,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   /**
    * CAM-6363
-   *
-   * Verify that search by name returns case insensitive results
+   * <p>
+   * Verify that search by name returns case-insensitive results
+   * </p>
    */
   @Test
   public void testTaskQueryLookupByNameCaseInsensitive() {
@@ -270,8 +271,9 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
   /**
    * CAM-6165
-   *
-   * Verify that search by name like returns case insensitive results
+   * <p>
+   * Verify that search by name like returns case-insensitive results
+   * </p>
    */
   @Test
   public void testTaskQueryLookupByNameLikeCaseInsensitive() {
@@ -572,7 +574,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(query.count()).isEqualTo(3);
     assertThat(query.list()).hasSize(3);
 
-    // gonzo is candidate for one task, which is already assinged
+    // gonzo is candidate for one task, which is already assigned
     query = taskService.createTaskQuery().taskCandidateUser("gonzo");
     assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
@@ -829,7 +831,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(query.list()).hasSize(5);
 
     // Unexisting groups or groups that don't have candidate tasks shouldn't influence other results
-    groups = Arrays.asList("management", "accountancy", "sales", "unexising");
+    groups = Arrays.asList("management", "accountancy", "sales", "unexisting");
     query = taskService.createTaskQuery().taskCandidateGroupIn(groups);
     assertThat(query.count()).isEqualTo(4);
     assertThat(query.list()).hasSize(4);
@@ -860,7 +862,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(query.list()).hasSize(3);
 
     // Unexisting groups or groups that don't have candidate tasks shouldn't influence other results
-    groups = Arrays.asList("management", "accountancy", "sales", "unexising");
+    groups = Arrays.asList("management", "accountancy", "sales", "unexisting");
     query = taskService.createTaskQuery().taskCandidateGroupIn(groups).taskCandidateGroup(candidateGroup);
     assertThat(query.count()).isEqualTo(2);
     assertThat(query.list()).hasSize(2);
@@ -1034,8 +1036,8 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(tasks.get(0).getTaskDefinitionKey()).isEqualTo("taskKey_1");
 
     // No task should be found with unexisting key
-    Long count = taskService.createTaskQuery().taskDefinitionKey("unexistingKey").count();
-    assertThat(count.longValue()).isEqualTo(0L);
+    long count = taskService.createTaskQuery().taskDefinitionKey("unexistingKey").count();
+    assertThat(count).isZero();
   }
 
   @Deployment(resources="org/operaton/bpm/engine/test/api/task/taskDefinitionProcess.bpmn20.xml")
@@ -1072,8 +1074,8 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
 
     // No task should be found with unexisting key
-    Long count = taskService.createTaskQuery().taskDefinitionKeyLike("%unexistingKey%").count();
-    assertThat(count.longValue()).isEqualTo(0L);
+    long count = taskService.createTaskQuery().taskDefinitionKeyLike("%unexistingKey%").count();
+    assertThat(count).isZero();
   }
 
   @Deployment(resources="org/operaton/bpm/engine/test/api/task/taskDefinitionProcess.bpmn20.xml")
@@ -1110,11 +1112,11 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(tasks.get(1).getTaskDefinitionKey()).isEqualTo("taskKey_123");
 
     // No task should be found with UnexistingKey
-    Long count = taskService.createTaskQuery().taskDefinitionKeyIn("unexistingKey").count();
-    assertThat(count.longValue()).isEqualTo(0L);
+    long count = taskService.createTaskQuery().taskDefinitionKeyIn("unexistingKey").count();
+    assertThat(count).isZero();
 
     count = taskService.createTaskQuery().taskDefinitionKey("unexistingKey").taskDefinitionKeyIn("taskKey1").count();
-    assertThat(count.longValue()).isEqualTo(0L);
+    assertThat(count).isZero();
   }
 
   @Deployment(resources="org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
@@ -1985,9 +1987,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     for (Task task : tasks) {
       keysFound.add(task.getTaskDefinitionKey());
     }
-    assertThat(keysFound).contains("taskKey_123");
-    assertThat(keysFound).contains("theTask");
-    assertThat(keysFound).contains("taskKey_1");
+    assertThat(keysFound).containsExactlyInAnyOrder("taskKey_123", "theTask", "taskKey_1");
 
     // 1 Tasks should be found with oneTaskProcess,and NonExistingKey
     tasks = taskService.createTaskQuery().processDefinitionKeyIn("oneTaskProcess", "NonExistingKey").orderByTaskName().asc().list();
@@ -1998,12 +1998,12 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(tasks.get(0).getTaskDefinitionKey()).isEqualTo("theTask");
 
     // No task should be found with NonExistingKey
-    Long count = taskService.createTaskQuery().processDefinitionKeyIn("NonExistingKey").count();
-    assertThat(count.longValue()).isEqualTo(0L);
+    long count = taskService.createTaskQuery().processDefinitionKeyIn("NonExistingKey").count();
+    assertThat(count).isZero();
 
     count = taskService.createTaskQuery()
         .processDefinitionKeyIn("oneTaskProcess").processDefinitionKey("NonExistingKey").count();
-    assertThat(count.longValue()).isEqualTo(0L);
+    assertThat(count).isZero();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
@@ -2077,7 +2077,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     long count = taskService.createTaskQuery().processInstanceBusinessKeyIn("BUSINESS-KEY-1").processInstanceBusinessKey("NON-EXISTING-KEY")
         .count();
-    assertThat(count).isEqualTo(0L);
+    assertThat(count).isZero();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/task/TaskQueryTest.testProcessDefinition.bpmn20.xml"})
@@ -5419,7 +5419,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     // then
     String[] processDefinitionKeys = ((TaskQueryImpl) result).getProcessDefinitionKeys();
-    assertThat(processDefinitionKeys.length).isEqualTo(1);
+    assertThat(processDefinitionKeys).hasSize(1);
     assertThat(processDefinitionKeys[0]).isEqualTo(processDefinitionKey);
   }
 
@@ -5438,7 +5438,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     // then
     String[] processDefinitionKeys = ((TaskQueryImpl) result).getProcessDefinitionKeys();
-    assertThat(processDefinitionKeys.length).isEqualTo(1);
+    assertThat(processDefinitionKeys).hasSize(1);
     assertThat(processDefinitionKeys[0]).isEqualTo(processDefinitionKey);
   }
 
@@ -5457,7 +5457,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     // then
     String[] key = ((TaskQueryImpl) result).getKeys();
-    assertThat(key.length).isEqualTo(1);
+    assertThat(key).hasSize(1);
     assertThat(key[0]).isEqualTo(taskDefinitionKey);
   }
 
@@ -5476,7 +5476,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     // then
     String[] key = ((TaskQueryImpl) result).getKeys();
-    assertThat(key.length).isEqualTo(1);
+    assertThat(key).hasSize(1);
     assertThat(key[0]).isEqualTo(taskDefinitionKey);
   }
 

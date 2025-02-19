@@ -20,7 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +33,7 @@ import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Assert;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
@@ -71,7 +70,7 @@ public class MigrationUserOperationLogTest {
     rule.getIdentityService().setAuthenticatedUserId(USER_ID);
     rule.getRuntimeService()
       .newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .execute();
     rule.getIdentityService().clearAuthentication();
 

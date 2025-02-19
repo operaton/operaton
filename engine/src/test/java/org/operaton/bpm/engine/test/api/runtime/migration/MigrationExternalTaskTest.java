@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
@@ -39,7 +40,7 @@ import org.operaton.bpm.engine.test.api.runtime.migration.models.ExternalTaskMod
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ServiceTaskModels;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Assert;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
@@ -397,12 +398,8 @@ public class MigrationExternalTaskTest {
     assertThat(incidentBeforeMigration).isNotNull();
 
     // when migration is executed
-    try {
-      testHelper.migrateProcessInstance(migrationPlan, processInstance);
-      fail("Exception expected!");
-    } catch (Exception ex) {
-      assertThat(ex instanceof MigratingProcessInstanceValidationException).isTrue();
-    }
+    assertThatThrownBy(() -> testHelper.migrateProcessInstance(migrationPlan, processInstance))
+      .isInstanceOf(MigratingProcessInstanceValidationException.class);
   }
 
   @Test

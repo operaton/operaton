@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.test.api.multitenancy;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
-import java.util.Arrays;
+import java.util.List;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.migration.MigrationPlan;
@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Assert;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
@@ -128,7 +128,7 @@ public class MultiTenancyMigrationTest {
     // when
     engineRule.getRuntimeService()
       .newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .execute();
 
     // then
@@ -147,7 +147,7 @@ public class MultiTenancyMigrationTest {
         .build();
     var runtimeService = engineRule.getRuntimeService()
         .newMigration(migrationPlan)
-        .processInstanceIds(Arrays.asList(processInstance.getId()));
+        .processInstanceIds(List.of(processInstance.getId()));
 
     // when
     try {
@@ -174,7 +174,7 @@ public class MultiTenancyMigrationTest {
     // when
     engineRule.getRuntimeService()
       .newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .execute();
 
     // then

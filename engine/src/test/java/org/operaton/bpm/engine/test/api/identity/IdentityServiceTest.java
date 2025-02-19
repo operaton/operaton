@@ -887,19 +887,19 @@ public class IdentityServiceTest {
     identityService.createMembership("jackblack", "development");
 
     List<Group> groups = identityService.createGroupQuery().groupMember("johndoe").list();
-    assertThat(getGroupIds(groups)).isEqualTo(createStringSet("sales"));
+    assertThat(getGroupIds(groups)).containsExactly("sales");
 
     groups = identityService.createGroupQuery().groupMember("joesmoe").list();
-    assertThat(getGroupIds(groups)).isEqualTo(createStringSet("sales", "development"));
+    assertThat(getGroupIds(groups)).containsExactlyInAnyOrder("sales", "development");
 
     groups = identityService.createGroupQuery().groupMember("jackblack").list();
-    assertThat(getGroupIds(groups)).isEqualTo(createStringSet("development"));
+    assertThat(getGroupIds(groups)).containsExactly("development");
 
     List<User> users = identityService.createUserQuery().memberOfGroup("sales").list();
-    assertThat(getUserIds(users)).isEqualTo(createStringSet("johndoe", "joesmoe"));
+    assertThat(getUserIds(users)).containsExactlyInAnyOrder("johndoe", "joesmoe");
 
     users = identityService.createUserQuery().memberOfGroup("development").list();
-    assertThat(getUserIds(users)).isEqualTo(createStringSet("joesmoe", "jackblack"));
+    assertThat(getUserIds(users)).containsExactly("joesmoe", "jackblack");
 
     identityService.deleteGroup("sales");
     identityService.deleteGroup("development");
@@ -1098,11 +1098,6 @@ public class IdentityServiceTest {
       .doesNotContain(salt)
       .doesNotContain(hashedPassword);
 
-  }
-
-  private Object createStringSet(String... strings) {
-    Set<String> stringSet = new HashSet<>(Arrays.asList(strings));
-    return stringSet;
   }
 
   protected Set<String> getGroupIds(List<Group> groups) {

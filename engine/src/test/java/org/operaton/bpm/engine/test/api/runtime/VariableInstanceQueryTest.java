@@ -55,7 +55,7 @@ import static org.assertj.core.groups.Tuple.tuple;
  */
 public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
 
-  protected static String PROC_DEF_KEY = "oneTaskProcess";
+  protected static final String PROC_DEF_KEY = "oneTaskProcess";
 
   @Test
   @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
@@ -463,7 +463,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     for (VariableInstance variableInstance : result) {
       assertThat(variableInstance.getName()).isEqualTo("stringVar");
       assertThat(variableInstance.getTypeName()).isEqualTo("string");
-      assertThat(expected.contains(variableInstance.getValue())).as("Unexpected value found: " + variableInstance.getValue()).isTrue();
+      assertThat(expected).contains(variableInstance.getValue().toString());
     }
   }
 
@@ -2148,7 +2148,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
     assertThat(tree).isNotNull();
     ActivityInstance[] subprocessInstances = tree.getActivityInstances("SubProcess_1");
-    assertThat(subprocessInstances.length).isEqualTo(5);
+    assertThat(subprocessInstances).hasSize(5);
 
     //when
     String activityInstanceId1 = subprocessInstances[0].getId();
@@ -2232,7 +2232,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
     assertThat(tree).isNotNull();
-    assertThat(tree.getChildActivityInstances().length).isEqualTo(1);
+    assertThat(tree.getChildActivityInstances()).hasSize(1);
 
     // when
     VariableInstanceQuery query1 = runtimeService.createVariableInstanceQuery().activityInstanceIdIn(tree.getId());
@@ -2277,7 +2277,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     runtimeService.setVariableLocal(execution.getId(), "aLocalVariable", "aLocalValue");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(tree.getChildActivityInstances().length).isEqualTo(2);
+    assertThat(tree.getChildActivityInstances()).hasSize(2);
     ActivityInstance task1Instance = tree.getActivityInstances("task1")[0];
 
     VariableInstanceQuery query = runtimeService
@@ -2293,7 +2293,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     taskService.complete(task.getId());
 
     tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(tree.getChildActivityInstances().length).isEqualTo(2);
+    assertThat(tree.getChildActivityInstances()).hasSize(2);
     ActivityInstance task3Instance = tree.getActivityInstances("task3")[0];
 
     query = runtimeService
@@ -2318,7 +2318,7 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
     runtimeService.setVariableLocal(task.getExecutionId(), "aLocalVariable", "aLocalValue");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(tree.getChildActivityInstances().length).isEqualTo(1);
+    assertThat(tree.getChildActivityInstances()).hasSize(1);
     ActivityInstance subProcessInstance = tree.getActivityInstances("SubProcess_1")[0];
 
     // then the local variable has activity instance id of the subprocess
@@ -2476,8 +2476,9 @@ public class VariableInstanceQueryTest extends PluggableProcessEngineTest {
 
     for (VariableInstance variableInstance : results) {
       if(variableInstance.getName().equals("customSerializable")) {
-        assertThat(variableInstance.getValue()).isNotNull();
-        assertThat(variableInstance.getValue() instanceof CustomSerializable).isTrue();
+        assertThat(variableInstance.getValue())
+          .isNotNull()
+          .isInstanceOf(CustomSerializable.class);
       }
       if(variableInstance.getName().equals("failingSerializable")) {
         // no value was fetched

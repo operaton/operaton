@@ -52,11 +52,9 @@ public class SendTaskTest extends PluggableProcessEngineTest {
 
     assertThat(DummyActivityBehavior.wasExecuted).isTrue();
 
-    assertThat(DummyActivityBehavior.currentActivityName).isNotNull();
-    assertThat(DummyActivityBehavior.currentActivityName).isEqualTo("Task");
+    assertThat(DummyActivityBehavior.currentActivityName).isNotNull().isEqualTo("Task");
 
-    assertThat(DummyActivityBehavior.currentActivityId).isNotNull();
-    assertThat(DummyActivityBehavior.currentActivityId).isEqualTo("task");
+    assertThat(DummyActivityBehavior.currentActivityId).isNotNull().isEqualTo("task");
   }
 
 }

@@ -57,6 +57,7 @@ public class ImplicitVariableUpdateDisabledTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/variables/ImplicitVariableUpdateTest.sequence.bpmn20.xml")
   @Test
+  @SuppressWarnings("unchecked")
   public void testUpdate() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("serviceTaskProcess",
         Variables.createVariables()
@@ -64,8 +65,6 @@ public class ImplicitVariableUpdateDisabledTest {
             .putValue("delegate", new UpdateValueDelegate()));
 
     List<String> list = (List<String>) runtimeService.getVariable(instance.getId(), "listVar");
-
-    assertThat(list).isNotNull();
 
     assertThat(list).isEmpty(); // implicit update of 'listVar' in the java delegate was not detected.
   }

@@ -39,7 +39,7 @@ public class DecisionMetricsTest extends AbstractMetricsTest {
   public static final String DRD_DISH_DECISION_TABLE = "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml";
   public static final String DMN_DECISION_LITERAL_EXPRESSION = "org/operaton/bpm/engine/test/api/dmn/DecisionWithLiteralExpression.dmn";
   public static final String DMN_FILE = "org/operaton/bpm/engine/test/api/mgmt/metrics/ExecutedDecisionElementsTest.dmn11.xml";
-  public static VariableMap VARIABLES = Variables.createVariables().putValue("status", "").putValue("sum", 100);
+  public static final VariableMap VARIABLES = Variables.createVariables().putValue("status", "").putValue("sum", 100);
 
   protected DecisionService decisionService;
 
@@ -88,27 +88,27 @@ public class DecisionMetricsTest extends AbstractMetricsTest {
         .addModelInstance("process.bpmn", modelInstance)
         .addClasspathResource(DMN_FILE));
 
-    assertThat(getExecutedDecisionInstances()).isEqualTo(0l);
-    assertThat(getDecisionInstances()).isEqualTo(0l);
-    assertThat(getExecutedDecisionElements()).isEqualTo(0l);
-    assertThat(getExecutedDecisionInstancesFromDmnEngine()).isEqualTo(0l);
-    assertThat(getExecutedDecisionElementsFromDmnEngine()).isEqualTo(0l);
+    assertThat(getExecutedDecisionInstances()).isZero();
+    assertThat(getDecisionInstances()).isZero();
+    assertThat(getExecutedDecisionElements()).isZero();
+    assertThat(getExecutedDecisionInstancesFromDmnEngine()).isZero();
+    assertThat(getExecutedDecisionElementsFromDmnEngine()).isZero();
 
     runtimeService.startProcessInstanceByKey("testProcess", VARIABLES);
 
-    assertThat(getExecutedDecisionInstances()).isEqualTo(1l);
-    assertThat(getDecisionInstances()).isEqualTo(1l);
-    assertThat(getExecutedDecisionElements()).isEqualTo(16l);
-    assertThat(getExecutedDecisionInstancesFromDmnEngine()).isEqualTo(1l);
-    assertThat(getExecutedDecisionElementsFromDmnEngine()).isEqualTo(16l);
+    assertThat(getExecutedDecisionInstances()).isEqualTo(1L);
+    assertThat(getDecisionInstances()).isEqualTo(1L);
+    assertThat(getExecutedDecisionElements()).isEqualTo(16L);
+    assertThat(getExecutedDecisionInstancesFromDmnEngine()).isEqualTo(1L);
+    assertThat(getExecutedDecisionElementsFromDmnEngine()).isEqualTo(16L);
 
     processEngineConfiguration.getDbMetricsReporter().reportNow();
 
-    assertThat(getExecutedDecisionInstances()).isEqualTo(1l);
-    assertThat(getDecisionInstances()).isEqualTo(1l);
-    assertThat(getExecutedDecisionElements()).isEqualTo(16l);
-    assertThat(getExecutedDecisionInstancesFromDmnEngine()).isEqualTo(1l);
-    assertThat(getExecutedDecisionElementsFromDmnEngine()).isEqualTo(16l);
+    assertThat(getExecutedDecisionInstances()).isEqualTo(1L);
+    assertThat(getDecisionInstances()).isEqualTo(1L);
+    assertThat(getExecutedDecisionElements()).isEqualTo(16L);
+    assertThat(getExecutedDecisionInstancesFromDmnEngine()).isEqualTo(1L);
+    assertThat(getExecutedDecisionElementsFromDmnEngine()).isEqualTo(16L);
   }
 
   @Test
@@ -123,13 +123,13 @@ public class DecisionMetricsTest extends AbstractMetricsTest {
         .evaluate();
 
     // then
-    assertThat(getExecutedDecisionInstances()).isEqualTo(1l);
-    assertThat(getDecisionInstances()).isEqualTo(1l);
+    assertThat(getExecutedDecisionInstances()).isEqualTo(1L);
+    assertThat(getDecisionInstances()).isEqualTo(1L);
 
     processEngineConfiguration.getDbMetricsReporter().reportNow();
 
-    assertThat(getExecutedDecisionInstances()).isEqualTo(1l);
-    assertThat(getDecisionInstances()).isEqualTo(1l);
+    assertThat(getExecutedDecisionInstances()).isEqualTo(1L);
+    assertThat(getDecisionInstances()).isEqualTo(1L);
   }
 
   @Test
@@ -146,13 +146,13 @@ public class DecisionMetricsTest extends AbstractMetricsTest {
         .evaluate();
 
     // then
-    assertThat(getExecutedDecisionInstances()).isEqualTo(3l);
-    assertThat(getDecisionInstances()).isEqualTo(3l);
+    assertThat(getExecutedDecisionInstances()).isEqualTo(3L);
+    assertThat(getDecisionInstances()).isEqualTo(3L);
 
     processEngineConfiguration.getDbMetricsReporter().reportNow();
 
-    assertThat(getExecutedDecisionInstances()).isEqualTo(3l);
-    assertThat(getDecisionInstances()).isEqualTo(3l);
+    assertThat(getExecutedDecisionInstances()).isEqualTo(3L);
+    assertThat(getDecisionInstances()).isEqualTo(3L);
   }
 
   protected long getExecutedDecisionInstances() {

@@ -206,6 +206,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
+  @SuppressWarnings("deprecation")
   public void testDeeplyNestedErrorThrownOnlyAutomaticSteps() {
     // input == 1 -> error2 is thrown -> caught on subprocess2 -> end event in subprocess -> proc inst end 1
     String procId = runtimeService.startProcessInstanceByKey("deeplyNestedErrorThrown",
@@ -254,6 +255,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
       "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorOnCallActivity-parent.bpmn20.xml",
       "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.subprocess.bpmn20.xml"
   })
+  @SuppressWarnings("deprecation")
   public void FAILING_testCatchErrorOnCallActivityShouldEndCalledProcessProperly() {
     // given a process instance that has instantiated (called) a sub process instance
     runtimeService.startProcessInstanceByKey("catchErrorOnCallActivity").getId();
@@ -1001,7 +1003,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
     Task provideDetailsTask = taskService.createTaskQuery().taskAssignee("kermit").singleResult();
     assertThat(provideDetailsTask.getName()).isEqualTo("Provide additional details");
 
-    // Providing more details (ie. completing the task), will activate the subprocess again
+    // Providing more details (i.e. completing the task), will activate the subprocess again
     taskService.complete(provideDetailsTask.getId());
     List<Task> reviewTasks = taskService.createTaskQuery().orderByTaskName().asc().list();
     assertThat(reviewTasks.get(0).getName()).isEqualTo("Review customer rating");

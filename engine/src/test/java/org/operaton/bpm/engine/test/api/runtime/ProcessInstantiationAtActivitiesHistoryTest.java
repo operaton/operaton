@@ -172,7 +172,7 @@ public class ProcessInstantiationAtActivitiesHistoryTest extends PluggableProces
     assertThat(historicDetail).isNotNull();
     // TODO: fix if this is not ok due to CAM-3886
     assertThat(historicDetail.getActivityInstanceId()).isNull();
-    assertThat(historicDetail instanceof HistoricVariableUpdate).isTrue();
+    assertThat(historicDetail).isInstanceOf(HistoricVariableUpdate.class);
     assertThat(((HistoricVariableUpdate) historicDetail).getVariableName()).isEqualTo("aVar");
     assertThat(((HistoricVariableUpdate) historicDetail).getValue()).isEqualTo("aValue");
   }
@@ -206,7 +206,7 @@ public class ProcessInstantiationAtActivitiesHistoryTest extends PluggableProces
     assertThat(historicDetail).isNotNull();
     // TODO: fix if this is not ok due to CAM-3886
     assertThat(historicDetail.getActivityInstanceId()).isNull();
-    assertThat(historicDetail instanceof HistoricVariableUpdate).isTrue();
+    assertThat(historicDetail).isInstanceOf(HistoricVariableUpdate.class);
     assertThat(((HistoricVariableUpdate) historicDetail).getVariableName()).isEqualTo("aVar");
     assertThat(((HistoricVariableUpdate) historicDetail).getValue()).isEqualTo("aValue");
   }
@@ -241,7 +241,7 @@ public class ProcessInstantiationAtActivitiesHistoryTest extends PluggableProces
     assertThat(historicDetail).isNotNull();
     // TODO: fix if this is not ok due to CAM-3886
     assertThat(historicDetail.getActivityInstanceId()).isEqualTo(instance.getId());
-    assertThat(historicDetail instanceof HistoricVariableUpdate).isTrue();
+    assertThat(historicDetail).isInstanceOf(HistoricVariableUpdate.class);
     assertThat(((HistoricVariableUpdate) historicDetail).getVariableName()).isEqualTo("aVar");
     assertThat(((HistoricVariableUpdate) historicDetail).getValue()).isEqualTo("aValue");
   }

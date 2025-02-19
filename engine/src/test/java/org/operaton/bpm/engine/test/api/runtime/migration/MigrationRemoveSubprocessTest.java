@@ -21,7 +21,6 @@ import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeA
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.operaton.bpm.engine.delegate.ExecutionListener;
@@ -37,7 +36,7 @@ import org.operaton.bpm.engine.test.bpmn.multiinstance.DelegateEvent;
 import org.operaton.bpm.engine.test.bpmn.multiinstance.DelegateExecutionListener;
 import org.operaton.bpm.engine.test.util.MigrationPlanValidationReportAssert;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Assert;
+
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
@@ -477,7 +476,7 @@ public class MigrationRemoveSubprocessTest {
         .startProcessInstanceById(migrationPlan.getSourceProcessDefinitionId());
     rule.getRuntimeService()
       .newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .skipCustomListeners()
       .execute();
 
@@ -507,7 +506,7 @@ public class MigrationRemoveSubprocessTest {
       .startProcessInstanceById(migrationPlan.getSourceProcessDefinitionId());
     rule.getRuntimeService()
       .newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .execute();
 
     // then
@@ -537,7 +536,7 @@ public class MigrationRemoveSubprocessTest {
       .startProcessInstanceById(migrationPlan.getSourceProcessDefinitionId());
     rule.getRuntimeService()
       .newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .skipIoMappings()
       .execute();
 

@@ -235,7 +235,7 @@ public class MigrationTestRule extends ProcessEngineTestRule {
 
   public void assertJobsCreated(String activityId, String handlerType, int countJobs) {
     List<JobDefinition> jobDefinitionsAfter = snapshotAfterMigration.getJobDefinitionsForActivityIdAndType(activityId, handlerType);
-    assertThat(jobDefinitionsAfter.size()).as("Expected that " + countJobs + "job definitions for activity '" + activityId + "' exist after migration, but found " + jobDefinitionsAfter.size()).isEqualTo(countJobs);
+    assertThat(jobDefinitionsAfter).as("Expected that " + countJobs + "job definitions for activity '" + activityId + "' exist after migration, but found " + jobDefinitionsAfter.size()).hasSize(countJobs);
 
     for (JobDefinition jobDefinitionAfter : jobDefinitionsAfter) {
       Job jobAfter = snapshotAfterMigration.getJobForDefinitionId(jobDefinitionAfter.getId());

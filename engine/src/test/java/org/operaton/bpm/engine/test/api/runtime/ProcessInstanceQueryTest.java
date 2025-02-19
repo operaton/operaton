@@ -176,8 +176,9 @@ public class ProcessInstanceQueryTest {
       return ((ProcessInstanceQueryImpl) query).listDeploymentIdMappings();
     });
     // then
-    assertThat(mappings).hasSize(6);
-    assertThat(mappings).containsExactlyInAnyOrder(expectedMappings.toArray(new ImmutablePair[0]));
+    assertThat(mappings)
+      .hasSize(6)
+      .containsExactlyInAnyOrder(expectedMappings.toArray(new ImmutablePair[0]));
     // ... and the items are sorted in ascending order by deployment id
     assertThat(mappings.get(mappings.size() - 1)).isEqualTo(newMapping);
   }
@@ -241,8 +242,9 @@ public class ProcessInstanceQueryTest {
       return ((ProcessInstanceQueryImpl)query).listDeploymentIdMappings();
     });
     // then
-    assertThat(mappings).hasSize(4);
-    assertThat(mappings).containsExactlyInAnyOrder(expectedMappings.toArray(new ImmutablePair[0]));
+    assertThat(mappings)
+      .hasSize(4)
+      .containsExactlyInAnyOrder(expectedMappings.toArray(new ImmutablePair[0]));
   }
 
   @Test

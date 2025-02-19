@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.bpmn.subprocess;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -58,11 +57,11 @@ public class SubProcessTest extends PluggableProcessEngineTest {
     ActivityInstance rootActivityInstance = runtimeService.getActivityInstance(pi.getProcessInstanceId());
     assertThat(rootActivityInstance.getActivityId()).isEqualTo(pi.getProcessDefinitionId());
     //subprocess
-    assertThat(rootActivityInstance.getChildActivityInstances().length).isEqualTo(1);
+    assertThat(rootActivityInstance.getChildActivityInstances()).hasSize(1);
     ActivityInstance subProcessInstance = rootActivityInstance.getChildActivityInstances()[0];
     assertThat(subProcessInstance.getActivityId()).isEqualTo("subProcess");
     // usertask
-    assertThat(subProcessInstance.getChildActivityInstances().length).isEqualTo(1);
+    assertThat(subProcessInstance.getChildActivityInstances()).hasSize(1);
     ActivityInstance userTaskInstance = subProcessInstance.getChildActivityInstances()[0];
     assertThat(userTaskInstance.getActivityId()).isEqualTo("subProcessTask");
 
@@ -101,11 +100,11 @@ public class SubProcessTest extends PluggableProcessEngineTest {
     ActivityInstance rootActivityInstance = runtimeService.getActivityInstance(pi.getProcessInstanceId());
     assertThat(rootActivityInstance.getActivityId()).isEqualTo(pi.getProcessDefinitionId());
     //subprocess
-    assertThat(rootActivityInstance.getChildActivityInstances().length).isEqualTo(1);
+    assertThat(rootActivityInstance.getChildActivityInstances()).hasSize(1);
     ActivityInstance subProcessInstance = rootActivityInstance.getChildActivityInstances()[0];
     assertThat(subProcessInstance.getActivityId()).isEqualTo("subProcess");
     // usertask
-    assertThat(subProcessInstance.getChildActivityInstances().length).isEqualTo(1);
+    assertThat(subProcessInstance.getChildActivityInstances()).hasSize(1);
     ActivityInstance userTaskInstance = subProcessInstance.getChildActivityInstances()[0];
     assertThat(userTaskInstance.getActivityId()).isEqualTo("subProcessTask");
 
@@ -177,15 +176,15 @@ public class SubProcessTest extends PluggableProcessEngineTest {
     ActivityInstance rootActivityInstance = runtimeService.getActivityInstance(pi.getProcessInstanceId());
     assertThat(rootActivityInstance.getActivityId()).isEqualTo(pi.getProcessDefinitionId());
     //subprocess1
-    assertThat(rootActivityInstance.getChildActivityInstances().length).isEqualTo(1);
+    assertThat(rootActivityInstance.getChildActivityInstances()).hasSize(1);
     ActivityInstance subProcessInstance1 = rootActivityInstance.getChildActivityInstances()[0];
     assertThat(subProcessInstance1.getActivityId()).isEqualTo("outerSubProcess");
     //subprocess2
-    assertThat(rootActivityInstance.getChildActivityInstances().length).isEqualTo(1);
+    assertThat(rootActivityInstance.getChildActivityInstances()).hasSize(1);
     ActivityInstance subProcessInstance2 = subProcessInstance1.getChildActivityInstances()[0];
     assertThat(subProcessInstance2.getActivityId()).isEqualTo("innerSubProcess");
     // usertask
-    assertThat(subProcessInstance2.getChildActivityInstances().length).isEqualTo(1);
+    assertThat(subProcessInstance2.getChildActivityInstances()).hasSize(1);
     ActivityInstance userTaskInstance = subProcessInstance2.getChildActivityInstances()[0];
     assertThat(userTaskInstance.getActivityId()).isEqualTo("innerSubProcessTask");
 
@@ -214,15 +213,15 @@ public class SubProcessTest extends PluggableProcessEngineTest {
     ActivityInstance rootActivityInstance = runtimeService.getActivityInstance(pi.getProcessInstanceId());
     assertThat(rootActivityInstance.getActivityId()).isEqualTo(pi.getProcessDefinitionId());
     //subprocess1
-    assertThat(rootActivityInstance.getChildActivityInstances().length).isEqualTo(1);
+    assertThat(rootActivityInstance.getChildActivityInstances()).hasSize(1);
     ActivityInstance subProcessInstance1 = rootActivityInstance.getChildActivityInstances()[0];
     assertThat(subProcessInstance1.getActivityId()).isEqualTo("outerSubProcess");
     //subprocess2
-    assertThat(rootActivityInstance.getChildActivityInstances().length).isEqualTo(1);
+    assertThat(rootActivityInstance.getChildActivityInstances()).hasSize(1);
     ActivityInstance subProcessInstance2 = subProcessInstance1.getChildActivityInstances()[0];
     assertThat(subProcessInstance2.getActivityId()).isEqualTo("innerSubProcess");
     // usertask
-    assertThat(subProcessInstance2.getChildActivityInstances().length).isEqualTo(1);
+    assertThat(subProcessInstance2.getChildActivityInstances()).hasSize(1);
     ActivityInstance userTaskInstance = subProcessInstance2.getChildActivityInstances()[0];
     assertThat(userTaskInstance.getActivityId()).isEqualTo("innerSubProcessTask");
 
@@ -230,7 +229,7 @@ public class SubProcessTest extends PluggableProcessEngineTest {
     ClockUtil.setCurrentTime(new Date(startTime.getTime() + ( 60 * 60 * 1000 ) + 1000));
     testRule.waitForJobExecutorToProcessAllJobs(5000L);
 
-    // The inner subprocess should be destoyed, and the escalated task should be active
+    // The inner subprocess should be destroyed, and the escalated task should be active
     Task escalationTask = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
     assertThat(escalationTask.getName()).isEqualTo("Escalated task");
 
@@ -239,11 +238,11 @@ public class SubProcessTest extends PluggableProcessEngineTest {
     rootActivityInstance = runtimeService.getActivityInstance(pi.getProcessInstanceId());
     assertThat(rootActivityInstance.getActivityId()).isEqualTo(pi.getProcessDefinitionId());
     //subprocess1
-    assertThat(rootActivityInstance.getChildActivityInstances().length).isEqualTo(1);
+    assertThat(rootActivityInstance.getChildActivityInstances()).hasSize(1);
     subProcessInstance1 = rootActivityInstance.getChildActivityInstances()[0];
     assertThat(subProcessInstance1.getActivityId()).isEqualTo("outerSubProcess");
     //subprocess2
-    assertThat(rootActivityInstance.getChildActivityInstances().length).isEqualTo(1);
+    assertThat(rootActivityInstance.getChildActivityInstances()).hasSize(1);
     ActivityInstance escalationTaskInst = subProcessInstance1.getChildActivityInstances()[0];
     assertThat(escalationTaskInst.getActivityId()).isEqualTo("escalationTask");
 
@@ -289,11 +288,11 @@ public class SubProcessTest extends PluggableProcessEngineTest {
     ActivityInstance rootActivityInstance = runtimeService.getActivityInstance(pi.getProcessInstanceId());
     assertThat(rootActivityInstance.getActivityId()).isEqualTo(pi.getProcessDefinitionId());
     //subprocess1
-    assertThat(rootActivityInstance.getChildActivityInstances().length).isEqualTo(1);
+    assertThat(rootActivityInstance.getChildActivityInstances()).hasSize(1);
     ActivityInstance subProcessInstance = rootActivityInstance.getChildActivityInstances()[0];
     assertThat(subProcessInstance.getActivityId()).isEqualTo("subProcess");
     // 2 tasks are present
-    assertThat(subProcessInstance.getChildActivityInstances().length).isEqualTo(2);
+    assertThat(subProcessInstance.getChildActivityInstances()).hasSize(2);
 
     // Completing both tasks, should destroy the subprocess and activate the task after the subprocess
     taskService.complete(taskA.getId());
@@ -302,7 +301,7 @@ public class SubProcessTest extends PluggableProcessEngineTest {
     assertThat(rootActivityInstance.getActivityId()).isEqualTo(pi.getProcessDefinitionId());
     subProcessInstance = rootActivityInstance.getChildActivityInstances()[0];
     // 1 task + 1 join
-    assertThat(subProcessInstance.getChildActivityInstances().length).isEqualTo(2);
+    assertThat(subProcessInstance.getChildActivityInstances()).hasSize(2);
 
     taskService.complete(taskB.getId());
     Task taskAfterSubProcess = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
@@ -330,7 +329,7 @@ public class SubProcessTest extends PluggableProcessEngineTest {
 
     managementService.executeJob(job.getId());
 
-    // The inner subprocess should be destoyed, and the tsk after the timer should be active
+    // The inner subprocess should be destroyed, and the tsk after the timer should be active
     Task taskAfterTimer = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
     assertThat(taskAfterTimer.getName()).isEqualTo("Task after timer");
 
@@ -357,12 +356,12 @@ public class SubProcessTest extends PluggableProcessEngineTest {
     // validate activity instance tree
     ActivityInstance rootActivityInstance = runtimeService.getActivityInstance(pi.getProcessInstanceId());
     assertThat(rootActivityInstance.getActivityId()).isEqualTo(pi.getProcessDefinitionId());
-    assertThat(rootActivityInstance.getChildActivityInstances().length).isEqualTo(2);
+    assertThat(rootActivityInstance.getChildActivityInstances()).hasSize(2);
     ActivityInstance[] childActivityInstances = rootActivityInstance.getChildActivityInstances();
     for (ActivityInstance activityInstance : childActivityInstances) {
       assertThat(List.of("subProcessA", "subProcessB")).contains(activityInstance.getActivityId());
       ActivityInstance[] subProcessChildren = activityInstance.getChildActivityInstances();
-      assertThat(subProcessChildren.length).isEqualTo(1);
+      assertThat(subProcessChildren).hasSize(1);
       assertThat(List.of("subProcessATask", "subProcessBTask")).contains(subProcessChildren[0].getActivityId());
     }
 

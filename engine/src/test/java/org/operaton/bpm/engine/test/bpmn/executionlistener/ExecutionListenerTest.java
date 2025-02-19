@@ -121,13 +121,11 @@ public class ExecutionListenerTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("executionListenersProcess", "businessKey123");
 
     String varSetInExecutionListener = (String) runtimeService.getVariable(processInstance.getId(), "variableSetInExecutionListener");
-    assertThat(varSetInExecutionListener).isNotNull();
-    assertThat(varSetInExecutionListener).isEqualTo("firstValue");
+    assertThat(varSetInExecutionListener).isNotNull().isEqualTo("firstValue");
 
     // Check if business key was available in execution listener
     String businessKey = (String) runtimeService.getVariable(processInstance.getId(), "businessKeyInExecution");
-    assertThat(businessKey).isNotNull();
-    assertThat(businessKey).isEqualTo("businessKey123");
+    assertThat(businessKey).isNotNull().isEqualTo("businessKey123");
 
     // Transition take executionListener will set 2 variables
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -136,8 +134,7 @@ public class ExecutionListenerTest {
 
     varSetInExecutionListener = (String) runtimeService.getVariable(processInstance.getId(), "variableSetInExecutionListener");
 
-    assertThat(varSetInExecutionListener).isNotNull();
-    assertThat(varSetInExecutionListener).isEqualTo("secondValue");
+    assertThat(varSetInExecutionListener).isNotNull().isEqualTo("secondValue");
 
     ExampleExecutionListenerPojo myPojo = new ExampleExecutionListenerPojo();
     runtimeService.setVariable(processInstance.getId(), "myPojo", myPojo);
@@ -204,11 +201,10 @@ public class ExecutionListenerTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("executionListenersProcess", variables);
 
     Object varSetByListener = runtimeService.getVariable(processInstance.getId(), "var");
-    assertThat(varSetByListener).isNotNull();
-    assertThat(varSetByListener instanceof String).isTrue();
-
-    // Result is a concatenation of fixed injected field and injected expression
-    assertThat(varSetByListener).isEqualTo("Yes, I am listening!");
+    assertThat(varSetByListener)
+      .isInstanceOf(String.class)
+      // Result is a concatenation of fixed injected field and injected expression
+      .isEqualTo("Yes, I am listening!");
   }
 
   @Test
@@ -481,7 +477,7 @@ public class ExecutionListenerTest {
     taskService.complete(taskQuery.singleResult().getId());
 
     //then end listener sets variable and triggers conditional event
-    //end listener should called only once
+    //end listener should be called only once
     assertThat(RecorderExecutionListener.getRecordedEvents()).hasSize(1);
   }
 

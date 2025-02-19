@@ -64,7 +64,7 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
     // After setting the clock to time '1 hour and 5 seconds', the second timer should fire
     ClockUtil.setCurrentTime(new Date(startTime.getTime() + ((60 * 60 * 1000) + 5000)));
     testRule.waitForJobExecutorToProcessAllJobs(5000L);
-    assertThat(jobQuery.count()).isEqualTo(0L);
+    assertThat(jobQuery.count()).isZero();
 
     // which means that the third task is reached
     Task task = taskService.createTaskQuery().singleResult();
@@ -107,7 +107,7 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
     // After setting the clock to time '1 hour and 5 seconds', the second timer should fire
     ClockUtil.setCurrentTime(new Date(startTime.getTime() + ((60 * 60 * 1000) + 5000)));
     testRule.waitForJobExecutorToProcessAllJobs(5000L);
-    assertThat(jobQuery.count()).isEqualTo(0L);
+    assertThat(jobQuery.count()).isZero();
 
     // which means the process has ended
     testRule.assertProcessEnded(pi.getId());
@@ -140,12 +140,12 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
     assertThat(jobUpdated.getDuedate()).isNotEqualTo(oldDate);
     assertThat(oldDate.before(jobUpdated.getDuedate())).isTrue();
     Date expectedDate = LocalDateTime.fromDateFields(currentTime).plusHours(1).toDate();
-    assertThat(jobUpdated.getDuedate()).isCloseTo(expectedDate, 1000l);
+    assertThat(jobUpdated.getDuedate()).isCloseTo(expectedDate, 1000L);
 
     // After setting the clock to time '1 hour and 6 min', the second timer should fire
     ClockUtil.setCurrentTime(new Date(startTime.getTime() + TimeUnit.HOURS.toMillis(1L) + TimeUnit.MINUTES.toMillis(6L)));
     testRule.waitForJobExecutorToProcessAllJobs(5000L);
-    assertThat(jobQuery.count()).isEqualTo(0L);
+    assertThat(jobQuery.count()).isZero();
 
     // which means the process has ended
     testRule.assertProcessEnded(pi.getId());
@@ -179,7 +179,7 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
     // After setting the clock to time '1 hour and 15 seconds', the second timer should fire
     ClockUtil.setCurrentTime(new Date(startTime.getTime() + TimeUnit.HOURS.toMillis(1L) + TimeUnit.SECONDS.toMillis(15L)));
     testRule.waitForJobExecutorToProcessAllJobs(5000L);
-    assertThat(jobQuery.count()).isEqualTo(0L);
+    assertThat(jobQuery.count()).isZero();
 
     // which means the process has ended
     testRule.assertProcessEnded(pi.getId());
@@ -214,7 +214,7 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
     // After setting the clock to time '16 minutes', the timer should fire
     ClockUtil.setCurrentTime(new Date(startTime.getTime() + TimeUnit.HOURS.toMillis(2L)));
     testRule.waitForJobExecutorToProcessAllJobs(5000L);
-    assertThat(jobQuery.count()).isEqualTo(0L);
+    assertThat(jobQuery.count()).isZero();
 
     // which means the process has ended
     testRule.assertProcessEnded(pi.getId());
@@ -249,7 +249,7 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
     // After setting the clock to time '16 minutes', the timer should fire
     ClockUtil.setCurrentTime(new Date(startTime.getTime() + TimeUnit.MINUTES.toMillis(16L)));
     testRule.waitForJobExecutorToProcessAllJobs(5000L);
-    assertThat(jobQuery.count()).isEqualTo(0L);
+    assertThat(jobQuery.count()).isZero();
 
     // which means the process has ended
     testRule.assertProcessEnded(pi.getId());

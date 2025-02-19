@@ -47,7 +47,7 @@ public class ActivityInstanceCountMetricsTest extends AbstractMetricsTest {
     // that no activity instances have been executed
     assertThat(managementService.createMetricsQuery()
         .name(Metrics.ACTIVTY_INSTANCE_START)
-        .sum()).isEqualTo(0l);
+        .sum()).isZero();
 
     // if
     // a process instance is started
@@ -57,7 +57,7 @@ public class ActivityInstanceCountMetricsTest extends AbstractMetricsTest {
     // the increased count is immediately visible
     assertThat(managementService.createMetricsQuery()
         .name(Metrics.ACTIVTY_INSTANCE_START)
-        .sum()).isEqualTo(3l);
+        .sum()).isEqualTo(3L);
 
     // and force the db metrics reporter to report
     processEngineConfiguration.getDbMetricsReporter().reportNow();
@@ -65,12 +65,12 @@ public class ActivityInstanceCountMetricsTest extends AbstractMetricsTest {
     // still 3
     assertThat(managementService.createMetricsQuery()
         .name(Metrics.ACTIVTY_INSTANCE_START)
-        .sum()).isEqualTo(3l);
+        .sum()).isEqualTo(3L);
 
     // still 3 with the new metric name
     assertThat(managementService.createMetricsQuery()
         .name(Metrics.FLOW_NODE_INSTANCES)
-        .sum()).isEqualTo(3l);
+        .sum()).isEqualTo(3L);
   }
 
   @Test
@@ -80,7 +80,7 @@ public class ActivityInstanceCountMetricsTest extends AbstractMetricsTest {
     // that no activity instances have been executed
     assertThat(managementService.createMetricsQuery()
         .name(Metrics.ACTIVTY_INSTANCE_START)
-        .sum()).isEqualTo(0l);
+        .sum()).isZero();
 
     // if
     // I complete a standalone task
@@ -91,7 +91,7 @@ public class ActivityInstanceCountMetricsTest extends AbstractMetricsTest {
     // the increased count is immediately visible
     assertThat(managementService.createMetricsQuery()
         .name(Metrics.ACTIVTY_INSTANCE_START)
-        .sum()).isEqualTo(1l);
+        .sum()).isEqualTo(1L);
 
     // and force the db metrics reporter to report
     processEngineConfiguration.getDbMetricsReporter().reportNow();
@@ -99,7 +99,7 @@ public class ActivityInstanceCountMetricsTest extends AbstractMetricsTest {
     // still 1
     assertThat(managementService.createMetricsQuery()
         .name(Metrics.ACTIVTY_INSTANCE_START)
-        .sum()).isEqualTo(1l);
+        .sum()).isEqualTo(1L);
 
     taskService.deleteTask(task.getId());
 
@@ -112,18 +112,18 @@ public class ActivityInstanceCountMetricsTest extends AbstractMetricsTest {
 
   @Deployment
   @Test
-  public void testCmmnActivitiyInstances() {
+  public void testCmmnActivityInstances() {
     // given
     // that no activity instances have been executed
     assertThat(managementService.createMetricsQuery()
         .name(Metrics.ACTIVTY_INSTANCE_START)
-        .sum()).isEqualTo(0l);
+        .sum()).isZero();
 
     caseService.createCaseInstanceByKey("case");
 
     assertThat(managementService.createMetricsQuery()
         .name(Metrics.ACTIVTY_INSTANCE_START)
-        .sum()).isEqualTo(1l);
+        .sum()).isEqualTo(1L);
 
     // start PI_HumanTask_1 and PI_Milestone_1
     List<CaseExecution> list = caseService.createCaseExecutionQuery().enabled().list();
@@ -134,7 +134,7 @@ public class ActivityInstanceCountMetricsTest extends AbstractMetricsTest {
 
     assertThat(managementService.createMetricsQuery()
         .name(Metrics.ACTIVTY_INSTANCE_START)
-        .sum()).isEqualTo(2l);
+        .sum()).isEqualTo(2L);
 
     // and force the db metrics reporter to report
     processEngineConfiguration.getDbMetricsReporter().reportNow();
@@ -142,7 +142,7 @@ public class ActivityInstanceCountMetricsTest extends AbstractMetricsTest {
     // still 2
     assertThat(managementService.createMetricsQuery()
         .name(Metrics.ACTIVTY_INSTANCE_START)
-        .sum()).isEqualTo(2l);
+        .sum()).isEqualTo(2L);
 
     // trigger the milestone
     CaseExecution taskExecution = caseService.createCaseExecutionQuery().activityId("PI_HumanTask_1").singleResult();
@@ -151,7 +151,7 @@ public class ActivityInstanceCountMetricsTest extends AbstractMetricsTest {
     // milestone is counted
     assertThat(managementService.createMetricsQuery()
         .name(Metrics.ACTIVTY_INSTANCE_START)
-        .sum()).isEqualTo(3l);
+        .sum()).isEqualTo(3L);
 
   }
 

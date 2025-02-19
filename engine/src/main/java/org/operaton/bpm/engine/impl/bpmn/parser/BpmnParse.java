@@ -1192,7 +1192,7 @@ public class BpmnParse extends Parse {
         addError("messageEventDefinition only allowed on start event if subprocess is an event subprocess", messageEventDefinition, startEventActivity.getId());
       }
       if (signalEventDefinition != null) {
-        addError("signalEventDefintion only allowed on start event if subprocess is an event subprocess", signalEventDefinition, startEventActivity.getId());
+        addError("signalEventDefinition only allowed on start event if subprocess is an event subprocess", signalEventDefinition, startEventActivity.getId());
       }
 
       startEventActivity.setActivityBehavior(new NoneStartEventActivityBehavior());
@@ -1251,7 +1251,7 @@ public class BpmnParse extends Parse {
    * @param errorEventDefinition
    *          the XML errorEventDefinition tag
    * @param definition
-   *          the errorEventDefintion that can get the errorCodeVariable value
+   *          the errorEventDefinition that can get the errorCodeVariable value
    */
   protected void setErrorCodeVariableOnErrorEventDefinition(Element errorEventDefinition, ErrorEventDefinition definition) {
     String errorCodeVar = errorEventDefinition.attributeNS(OPERATON_BPMN_EXTENSIONS_NS, "errorCodeVariable");
@@ -1267,7 +1267,7 @@ public class BpmnParse extends Parse {
    * @param errorEventDefinition
    *          the XML errorEventDefinition tag
    * @param definition
-   *          the errorEventDefintion that can get the errorMessageVariable value
+   *          the errorEventDefinition that can get the errorMessageVariable value
    */
   protected void setErrorMessageVariableOnErrorEventDefinition(Element errorEventDefinition, ErrorEventDefinition definition) {
     String errorMessageVariable = errorEventDefinition.attributeNS(OPERATON_BPMN_EXTENSIONS_NS, "errorMessageVariable");

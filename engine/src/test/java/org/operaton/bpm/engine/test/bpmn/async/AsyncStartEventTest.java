@@ -114,7 +114,7 @@ public class AsyncStartEventTest extends PluggableProcessEngineTest {
         .processDefinitionKey("sub")
         .singleResult();
 
-    assertThat(pi instanceof ExecutionEntity).isTrue();
+    assertThat(pi).isInstanceOf(ExecutionEntity.class);
 
     assertThat(((ExecutionEntity) pi).getActivityId()).isEqualTo("theSubStart");
 

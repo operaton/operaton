@@ -41,8 +41,7 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
     String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");
-    assertThat(greeting).isNotNull();
-    assertThat(greeting).isEqualTo("Greetings Operaton speaking");
+    assertThat(greeting).isNotNull().isEqualTo("Greetings Operaton speaking");
   }
 
   @Deployment
@@ -53,8 +52,7 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variables);
 
     String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");
-    assertThat(greeting).isNotNull();
-    assertThat(greeting).isEqualTo("Greetings Operaton speaking");
+    assertThat(greeting).isNotNull().isEqualTo("Greetings Operaton speaking");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/scripttask/ExternalScriptTaskTest.testDefaultExternalScriptAsVariable.bpmn20.xml"})
@@ -77,8 +75,7 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variables);
 
     String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");
-    assertThat(greeting).isNotNull();
-    assertThat(greeting).isEqualTo("Greetings Operaton speaking");
+    assertThat(greeting).isNotNull().isEqualTo("Greetings Operaton speaking");
   }
 
   @Deployment
@@ -87,8 +84,7 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
     String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");
-    assertThat(greeting).isNotNull();
-    assertThat(greeting).isEqualTo("Greetings Operaton speaking");
+    assertThat(greeting).isNotNull().isEqualTo("Greetings Operaton speaking");
   }
 
   @Deployment
@@ -99,8 +95,7 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variables);
 
     String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");
-    assertThat(greeting).isNotNull();
-    assertThat(greeting).isEqualTo("Greetings Operaton speaking");
+    assertThat(greeting).isNotNull().isEqualTo("Greetings Operaton speaking");
   }
 
   @Deployment
@@ -111,8 +106,7 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variables);
 
     String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");
-    assertThat(greeting).isNotNull();
-    assertThat(greeting).isEqualTo("Greetings Operaton speaking");
+    assertThat(greeting).isNotNull().isEqualTo("Greetings Operaton speaking");
   }
 
   @Deployment
@@ -136,8 +130,7 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
     String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");
-    assertThat(greeting).isNotNull();
-    assertThat(greeting).isEqualTo("Greetings Operaton speaking");
+    assertThat(greeting).isNotNull().isEqualTo("Greetings Operaton speaking");
   }
 
   @Deployment(resources = {
@@ -151,8 +144,7 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
     String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");
-    assertThat(greeting).isNotNull();
-    assertThat(greeting).isEqualTo("Greetings Operaton speaking");
+    assertThat(greeting).isNotNull().isEqualTo("Greetings Operaton speaking");
   }
 
   @Deployment(resources = {
@@ -166,8 +158,7 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variables);
 
     String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");
-    assertThat(greeting).isNotNull();
-    assertThat(greeting).isEqualTo("Greetings Operaton speaking");
+    assertThat(greeting).isNotNull().isEqualTo("Greetings Operaton speaking");
   }
 
   @Deployment(resources = {
@@ -181,8 +172,7 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variables);
 
     String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");
-    assertThat(greeting).isNotNull();
-    assertThat(greeting).isEqualTo("Greetings Operaton speaking");
+    assertThat(greeting).isNotNull().isEqualTo("Greetings Operaton speaking");
   }
 
   @Deployment

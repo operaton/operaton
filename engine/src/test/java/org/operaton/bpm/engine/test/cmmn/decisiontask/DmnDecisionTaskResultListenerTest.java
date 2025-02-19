@@ -48,7 +48,7 @@ public class DmnDecisionTaskResultListenerTest extends CmmnTest {
   public void testNoOutput() {
     startTestCase("no output");
 
-    assertThat(results.isEmpty()).as("The decision result 'ruleResult' should be empty").isTrue();
+    assertThat(results).as("The decision result 'ruleResult' should be empty").isEmpty();
   }
 
   @Deployment(resources = { TEST_CASE, TEST_DECISION})
@@ -146,7 +146,7 @@ public class DmnDecisionTaskResultListenerTest extends CmmnTest {
   public void testCollectSumHitPolicyNoOutput() {
     startTestCase("no output");
 
-    assertThat(results.isEmpty()).as("The decision result 'ruleResult' should be empty").isTrue();
+    assertThat(results).as("The decision result 'ruleResult' should be empty").isEmpty();
   }
 
   @Deployment(resources = { TEST_CASE, TEST_DECISION_COLLECT_SUM })

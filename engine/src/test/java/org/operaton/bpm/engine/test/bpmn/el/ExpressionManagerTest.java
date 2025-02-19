@@ -79,8 +79,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
 
     // Check of the testMethod has been called with the current execution
     String value = (String) runtimeService.getVariable(processInstance.getId(), "testVar");
-    assertThat(value).isNotNull();
-    assertThat(value).isEqualTo("myValue");
+    assertThat(value).isNotNull().isEqualTo("myValue");
   }
 
   @Deployment

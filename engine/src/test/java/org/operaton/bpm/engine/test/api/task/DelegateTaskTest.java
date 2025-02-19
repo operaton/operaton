@@ -87,15 +87,11 @@ public class DelegateTaskTest {
 
     @SuppressWarnings("unchecked")
     Set<String> candidateUsers = (Set<String>) taskService.getVariable(task.getId(), DelegateTaskTestTaskListener.VARNAME_CANDIDATE_USERS);
-    assertThat(candidateUsers).hasSize(2);
-    assertThat(candidateUsers).contains("kermit");
-    assertThat(candidateUsers).contains("gonzo");
+    assertThat(candidateUsers).containsExactlyInAnyOrder("kermit", "gonzo");
 
     @SuppressWarnings("unchecked")
     Set<String> candidateGroups = (Set<String>) taskService.getVariable(task.getId(), DelegateTaskTestTaskListener.VARNAME_CANDIDATE_GROUPS);
-    assertThat(candidateGroups).hasSize(2);
-    assertThat(candidateGroups).contains("management");
-    assertThat(candidateGroups).contains("accountancy");
+    assertThat(candidateGroups).containsExactlyInAnyOrder("management", "accountancy");
   }
 
   @Test

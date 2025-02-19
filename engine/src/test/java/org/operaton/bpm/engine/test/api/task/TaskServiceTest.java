@@ -738,6 +738,7 @@ public class TaskServiceTest {
   }
 
   @Test
+  @SuppressWarnings("deprecation")
   public void testTaskComments() {
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
     if (historyLevel> ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
@@ -2205,7 +2206,7 @@ public class TaskServiceTest {
 
       List<HistoricDetail> resultSet = historyService.createHistoricDetailQuery().processInstanceId(processInstanceId).list();
       for (HistoricDetail currentHistoricDetail : resultSet) {
-        assertThat(currentHistoricDetail instanceof HistoricDetailVariableInstanceUpdateEntity).isTrue();
+        assertThat(currentHistoricDetail).isInstanceOf(HistoricDetailVariableInstanceUpdateEntity.class);
         HistoricDetailVariableInstanceUpdateEntity historicVariableUpdate = (HistoricDetailVariableInstanceUpdateEntity) currentHistoricDetail;
 
         if (historicVariableUpdate.getName().equals(variableName) && historicVariableUpdate.getValue() == null) {
@@ -2534,6 +2535,7 @@ public class TaskServiceTest {
   }
 
   @Test
+  @SuppressWarnings("deprecation")
   public void testGetTaskCommentByTaskIdAndCommentId() {
     if (processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
       // create and save new task
@@ -3119,7 +3121,6 @@ public class TaskServiceTest {
     Map<String, Object> variables = taskService.getVariables(taskId, new ArrayList<>());
 
     // then
-    assertThat(variables).isNotNull();
     assertThat(variables).isEmpty();
   }
 
@@ -3137,7 +3138,6 @@ public class TaskServiceTest {
     Map<String, Object> variables = taskService.getVariablesTyped(taskId, new ArrayList<>(), false);
 
     // then
-    assertThat(variables).isNotNull();
     assertThat(variables).isEmpty();
   }
 
@@ -3155,7 +3155,6 @@ public class TaskServiceTest {
     Map<String, Object> variables = taskService.getVariablesLocal(taskId, new ArrayList<>());
 
     // then
-    assertThat(variables).isNotNull();
     assertThat(variables).isEmpty();
   }
 
@@ -3173,7 +3172,6 @@ public class TaskServiceTest {
     Map<String, Object> variables = taskService.getVariablesLocalTyped(taskId, new ArrayList<>(), false);
 
     // then
-    assertThat(variables).isNotNull();
     assertThat(variables).isEmpty();
   }
 

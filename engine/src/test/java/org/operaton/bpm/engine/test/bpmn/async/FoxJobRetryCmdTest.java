@@ -332,7 +332,7 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
 
     // the job is not acquirable
     acquirableJobs = findAndLockAcquirableJobs();
-    assertThat(acquirableJobs.size()).as("Job shouldn't be acquirable").isZero();
+    assertThat(acquirableJobs).as("Job shouldn't be acquirable").isEmpty();
 
     ClockUtil.reset();
   }
@@ -734,7 +734,7 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testFailingIntermidiateBoundaryTimerJobWithCustomRetries() throws ParseException {
+  public void testFailingIntermediateBoundaryTimerJobWithCustomRetries() throws ParseException {
     try {
       // given
       BpmnModelInstance bpmnModelInstance = Bpmn.createExecutableProcess("process")
@@ -898,6 +898,7 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
     try {
       managementService.executeJob(job.getId());
     } catch (Exception e) {
+      // ignore
     }
 
     // update job

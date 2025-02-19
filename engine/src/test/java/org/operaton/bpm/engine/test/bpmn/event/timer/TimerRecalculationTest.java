@@ -115,7 +115,7 @@ public class TimerRecalculationTest extends PluggableProcessEngineTest {
     managementService.recalculateJobDuedate(jobId, false);
     // run the job, finish the process
     managementService.executeJob(jobId);
-    assertThat(managementService.createJobQuery().processInstanceId(pi1.getId()).count()).isEqualTo(0L);
+    assertThat(managementService.createJobQuery().processInstanceId(pi1.getId()).count()).isZero();
     testRule.assertProcessEnded(pi1.getProcessInstanceId());
     
     try {

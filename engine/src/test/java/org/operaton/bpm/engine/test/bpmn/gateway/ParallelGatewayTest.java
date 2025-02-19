@@ -86,12 +86,12 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
   public void testNestedForkJoin() {
     String pid = runtimeService.startProcessInstanceByKey("nestedForkJoin").getId();
 
-    // After process startm, only task 0 should be active
+    // After process start, only task 0 should be active
     TaskQuery query = taskService.createTaskQuery().orderByTaskName().asc();
     List<Task> tasks = query.list();
     assertThat(tasks).hasSize(1);
     assertThat(tasks.get(0).getName()).isEqualTo("Task 0");
-    assertThat(runtimeService.getActivityInstance(pid).getChildActivityInstances().length).isEqualTo(1);
+    assertThat(runtimeService.getActivityInstance(pid).getChildActivityInstances()).hasSize(1);
 
     // Completing task 0 will create Task A and B
     taskService.complete(tasks.get(0).getId());
@@ -99,14 +99,14 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
     assertThat(tasks).hasSize(2);
     assertThat(tasks.get(0).getName()).isEqualTo("Task A");
     assertThat(tasks.get(1).getName()).isEqualTo("Task B");
-    assertThat(runtimeService.getActivityInstance(pid).getChildActivityInstances().length).isEqualTo(2);
+    assertThat(runtimeService.getActivityInstance(pid).getChildActivityInstances()).hasSize(2);
 
     // Completing task A should not trigger any new tasks
     taskService.complete(tasks.get(0).getId());
     tasks = query.list();
     assertThat(tasks).hasSize(1);
     assertThat(tasks.get(0).getName()).isEqualTo("Task B");
-    assertThat(runtimeService.getActivityInstance(pid).getChildActivityInstances().length).isEqualTo(2);
+    assertThat(runtimeService.getActivityInstance(pid).getChildActivityInstances()).hasSize(2);
 
     // Completing task B creates tasks B1 and B2
     taskService.complete(tasks.get(0).getId());
@@ -114,7 +114,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
     assertThat(tasks).hasSize(2);
     assertThat(tasks.get(0).getName()).isEqualTo("Task B1");
     assertThat(tasks.get(1).getName()).isEqualTo("Task B2");
-    assertThat(runtimeService.getActivityInstance(pid).getChildActivityInstances().length).isEqualTo(3);
+    assertThat(runtimeService.getActivityInstance(pid).getChildActivityInstances()).hasSize(3);
 
     // Completing B1 and B2 will activate both joins, and process reaches task C
     taskService.complete(tasks.get(0).getId());
@@ -122,11 +122,11 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
     tasks = query.list();
     assertThat(tasks).hasSize(1);
     assertThat(tasks.get(0).getName()).isEqualTo("Task C");
-    assertThat(runtimeService.getActivityInstance(pid).getChildActivityInstances().length).isEqualTo(1);
+    assertThat(runtimeService.getActivityInstance(pid).getChildActivityInstances()).hasSize(1);
   }
 
   /**
-   * http://jira.codehaus.org/browse/ACT-1222
+   * <a href="http://jira.codehaus.org/browse/ACT-1222">ACT-1222</a>
    */
   @Deployment
   @Test
@@ -142,7 +142,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
     assertThat(tasks.get(1).getName()).isEqualTo("Some Task");
 
     // we complete the task from the parent process, the root execution is
-    // receycled, the task in the sub process is still there
+    // recycled, the task in the sub process is still there
     taskService.complete(tasks.get(1).getId());
     tasks = query.list();
     assertThat(tasks).hasSize(1);
@@ -296,7 +296,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
     Task task4 = tasks.get(1);
     assertThat(task4.getName()).isEqualTo("Task 4");
 
-    // Completing the remaing tasks should trigger the second join and end the process
+    // Completing the remaining tasks should trigger the second join and end the process
     taskService.complete(task3.getId());
     taskService.complete(task4.getId());
 

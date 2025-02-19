@@ -56,7 +56,7 @@ public class ConnectionPoolTest {
     // Verify that these properties are correctly set in the MyBatis datasource
     Configuration sessionFactoryConfiguration = config.getDbSqlSessionFactory().getSqlSessionFactory().getConfiguration();
     DataSource datasource = sessionFactoryConfiguration.getEnvironment().getDataSource();
-    assertThat(datasource instanceof PooledDataSource).isTrue();
+    assertThat(datasource).isInstanceOf(PooledDataSource.class);
 
     PooledDataSource pooledDataSource = (PooledDataSource) datasource;
     assertThat(pooledDataSource.getPoolMaximumActiveConnections()).isEqualTo(maxActive);

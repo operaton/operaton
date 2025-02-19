@@ -45,7 +45,6 @@ import org.operaton.bpm.engine.impl.VariableOrderProperty;
 import org.operaton.bpm.engine.impl.json.JsonTaskQueryConverter;
 import org.operaton.bpm.engine.impl.persistence.entity.FilterEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.SuspensionState;
-import org.operaton.bpm.engine.query.Query;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.DelegationState;
@@ -293,12 +292,12 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     assertThat(query.isWithoutCandidateUsers()).isTrue();
     assertThat(query.getExpressions()).containsEntry("taskCandidateGroupIn", testString);
     assertThat(query.getProcessInstanceId()).isEqualTo(testString);
-    assertThat(query.getProcessInstanceIdIn().length).isEqualTo(testInstances.length);
+    assertThat(query.getProcessInstanceIdIn()).hasSameSizeAs(testInstances);
     for (int i = 0; i < query.getProcessInstanceIdIn().length; i++) {
       assertThat(query.getProcessInstanceIdIn()[i]).isEqualTo(testInstances[i]);
     }
     assertThat(query.getExecutionId()).isEqualTo(testString);
-    assertThat(query.getActivityInstanceIdIn().length).isEqualTo(testActivityInstances.length);
+    assertThat(query.getActivityInstanceIdIn()).hasSameSizeAs(testActivityInstances);
     for (int i = 0; i < query.getActivityInstanceIdIn().length; i++) {
       assertThat(query.getActivityInstanceIdIn()[i]).isEqualTo(testActivityInstances[i]);
     }
@@ -311,7 +310,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     assertThat(query.getUpdatedAfter()).isEqualTo(testDate);
     assertThat(query.getExpressions()).containsEntry("taskUpdatedAfter", testString);
     assertThat(query.getKey()).isEqualTo(testString);
-    assertThat(query.getKeys().length).isEqualTo(testKeys.length);
+    assertThat(query.getKeys()).hasSameSizeAs(testKeys);
     for (int i = 0; i < query.getKeys().length; i++) {
       assertThat(query.getKeys()[i]).isEqualTo(testKeys[i]);
     }
@@ -388,9 +387,8 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
       if (expectedRelationConditions != null && actualRelationConditions != null) {
         assertThat(actualRelationConditions).hasSize(expectedRelationConditions.size());
 
-        for (int j = 0; j < expectedRelationConditions.size(); j++) {
-          QueryEntityRelationCondition expectedFilteringProperty = expectedRelationConditions.get(j);
-          QueryEntityRelationCondition actualFilteringProperty = expectedRelationConditions.get(j);
+        for (QueryEntityRelationCondition expectedFilteringProperty : expectedRelationConditions) {
+          QueryEntityRelationCondition actualFilteringProperty = expectedFilteringProperty;
 
           assertThat(actualFilteringProperty.getProperty()).isEqualTo(expectedFilteringProperty.getProperty());
           assertThat(actualFilteringProperty.getComparisonProperty()).isEqualTo(expectedFilteringProperty.getComparisonProperty());
@@ -1000,7 +998,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
 
   @Test
   public void testExtendTaskQueryWithCandidateGroupInAndCandidateGroup() {
-    // create an query with candidate group in and save it as a filter
+    // create a query with candidate group in and save it as a filter
     TaskQueryImpl candidateGroupInQuery = (TaskQueryImpl)taskService.createTaskQuery().taskCandidateGroupIn(Arrays.asList("testGroup", "testGroup2"));
     assertThat(candidateGroupInQuery.getCandidateGroups()).hasSize(2);
     assertThat(candidateGroupInQuery.getCandidateGroups().get(0)).isEqualTo("testGroup");
@@ -1021,7 +1019,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
 
   @Test
   public void testTaskQueryWithCandidateGroupInExpressionAndCandidateGroup() {
-    // create an query with candidate group in expression and candidate group at once
+    // create a query with candidate group in expression and candidate group at once
     TaskQueryImpl candidateGroupInQuery = (TaskQueryImpl)taskService.createTaskQuery().taskCandidateGroupInExpression("${'test'}").taskCandidateGroup("testGroup");
     assertThat(candidateGroupInQuery.getExpressions()).containsEntry("taskCandidateGroupIn", "${'test'}");
     assertThat(candidateGroupInQuery.getCandidateGroup()).isEqualTo("testGroup");
@@ -1029,7 +1027,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
 
   @Test
   public void testTaskQueryWithCandidateGroupInAndCandidateGroupExpression() {
-    // create an query with candidate group in and candidate group expression
+    // create a query with candidate group in and candidate group expression
     TaskQueryImpl candidateGroupInQuery = (TaskQueryImpl)taskService.createTaskQuery().taskCandidateGroupIn(Arrays.asList("testGroup", "testGroup2")).taskCandidateGroupExpression("${'test'}");
     assertThat(candidateGroupInQuery.getExpressions()).containsEntry("taskCandidateGroup", "${'test'}");
     assertThat(candidateGroupInQuery.getCandidateGroups()).hasSize(2);
@@ -1152,8 +1150,9 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
 
   /**
    * CAM-6363
-   *
-   * Verify that search by name returns case insensitive results
+   * <p>
+   * Verify that search by name returns case-insensitive results
+   * </p>
    */
   @Test
   public void testTaskQueryLookupByNameCaseInsensitive() {
@@ -1178,8 +1177,9 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
 
   /**
    * CAM-12186
-   *
-   * Verify that search by description returns case insensitive results
+   * <p>
+   * Verify that search by description returns case-insensitive results
+   * </p>
    */
   @Test
   public void testTaskQueryLookupByDescriptionCaseInsensitive() {
@@ -1193,7 +1193,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
             .hasSize(1);
 
     query = taskService.createTaskQuery();
-    query.taskDescription("dEscription 2");
+    query.taskDescription("description 2");
     saveQuery(query);
 
     tasks = filterService.list(testFilter.getId());
@@ -1204,8 +1204,9 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
 
   /**
    * CAM-6165
-   *
-   * Verify that search by name like returns case insensitive results
+   * <p>
+   * Verify that search by name like returns case-insensitive results
+   * </p>
    */
   @Test
   public void testTaskQueryLookupByNameLikeCaseInsensitive() {
@@ -1274,7 +1275,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
 
     saveQuery(query);
 
-    long count = filterService.count(testFilter.getId(), (Query<?, ?>) null);
+    long count = filterService.count(testFilter.getId(), null);
     assertThat(count).isEqualTo(3);
   }
 
@@ -1327,7 +1328,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     String sortByNameAsc = "RES." + TaskQueryProperty.NAME.getName() + " " + Direction.ASCENDING.getName();
 
     JsonTaskQueryConverter converter = (JsonTaskQueryConverter) FilterEntity.queryConverter.get(EntityTypes.TASK);
-    JsonObject queryJson = converter.toJsonObject(testFilter.<TaskQuery>getQuery());
+    JsonObject queryJson = converter.toJsonObject(testFilter.getQuery());
 
     // when I apply a specific ordering by one dimension
     queryJson.addProperty(JsonTaskQueryConverter.ORDER_BY, sortByNameAsc);
@@ -1357,7 +1358,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     String secondaryOrdering = sortByNameAsc + ", RES." + TaskQueryProperty.ASSIGNEE.getName() + " " + Direction.DESCENDING.getName();
 
     JsonTaskQueryConverter converter = (JsonTaskQueryConverter) FilterEntity.queryConverter.get(EntityTypes.TASK);
-    JsonObject queryJson = converter.toJsonObject(testFilter.<TaskQuery>getQuery());
+    JsonObject queryJson = converter.toJsonObject(testFilter.getQuery());
 
     // when I apply a secondary ordering
     queryJson.addProperty(JsonTaskQueryConverter.ORDER_BY, secondaryOrdering);
@@ -1394,7 +1395,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     String orderingWithFunction = "LOWER(RES." + TaskQueryProperty.NAME.getName() + ") asc";
 
     JsonTaskQueryConverter converter = (JsonTaskQueryConverter) FilterEntity.queryConverter.get(EntityTypes.TASK);
-    JsonObject queryJson = converter.toJsonObject(testFilter.<TaskQuery>getQuery());
+    JsonObject queryJson = converter.toJsonObject(testFilter.getQuery());
 
     // when I apply an ordering with a function
     queryJson.addProperty(JsonTaskQueryConverter.ORDER_BY, orderingWithFunction);
@@ -2028,7 +2029,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     verifyOrderingProperties(expectedOrderingProperties, ((TaskQueryImpl) filter.getQuery()).getOrderingProperties());
 
     for (QueryOrderingProperty prop : ((TaskQueryImpl) filter.getQuery()).getOrderingProperties()) {
-      assertThat(prop instanceof VariableOrderProperty).isTrue();
+      assertThat(prop).isInstanceOf(VariableOrderProperty.class);
     }
   }
 

@@ -247,7 +247,7 @@ public class ProcessDefinitionStatisticsAuthorizationTest extends AuthorizationT
 
     List<IncidentStatistics> incidentStatistics = statistics.getIncidentStatistics();
     if (incidents == 0) {
-      assertThat(incidentStatistics.isEmpty()).as("Incidents supposed to be empty").isTrue();
+      assertThat(incidentStatistics).as("Incidents supposed to be empty").isEmpty();
     }
     else {
       // the test does have only one type of incidents

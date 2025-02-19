@@ -46,10 +46,10 @@ import static org.assertj.core.api.Assertions.*;
  */
 public class IdentityServiceTest {
 
-  private final String INVALID_ID_MESSAGE = "%s has an invalid id: '%s' is not a valid resource identifier.";
+  private static final String INVALID_ID_MESSAGE = "%s has an invalid id: '%s' is not a valid resource identifier.";
 
   private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-  private static final String INDENTITY_LOGGER = "org.operaton.bpm.engine.identity";
+  private static final String IDENTITY_LOGGER = "org.operaton.bpm.engine.identity";
 
   @Rule
   public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
@@ -119,6 +119,7 @@ public class IdentityServiceTest {
   }
 
   @Test
+  @SuppressWarnings("deprecation")
   public void testUserAccount() {
     User user = identityService.newUser("testuser");
     identityService.saveUser(user);
@@ -170,6 +171,7 @@ public class IdentityServiceTest {
   }
 
   @Test
+  @SuppressWarnings("deprecation")
   public void testUserAccountDetails() {
     User user = identityService.newUser("testuser");
     identityService.saveUser(user);
@@ -401,8 +403,7 @@ public class IdentityServiceTest {
   @Test
   public void testFindUsersByGroupUnexistingGroup() {
     List<User> users = identityService.createUserQuery().memberOfGroup("unexistinggroup").list();
-    assertThat(users).isNotNull();
-    assertThat(users).isEmpty();
+    assertThat(users).isNotNull().isEmpty();
   }
 
   @Test
@@ -692,8 +693,8 @@ public class IdentityServiceTest {
   }
 
   @Test
-  @WatchLogger(loggerNames = {INDENTITY_LOGGER}, level = "INFO")
-  public void testUsuccessfulAttemptsResultInBlockedUser() throws ParseException {
+  @WatchLogger(loggerNames = {IDENTITY_LOGGER}, level = "INFO")
+  public void testUnsuccessfulAttemptsResultInBlockedUser() throws ParseException {
     // given
     User user = identityService.newUser("johndoe");
     user.setPassword("xxx");
@@ -710,7 +711,7 @@ public class IdentityServiceTest {
     }
 
     // then
-    assertThat(loggingRule.getFilteredLog(INDENTITY_LOGGER, "The user with id 'johndoe' is permanently locked.")).hasSize(1);
+    assertThat(loggingRule.getFilteredLog(IDENTITY_LOGGER, "The user with id 'johndoe' is permanently locked.")).hasSize(1);
   }
 
   @Test
@@ -729,7 +730,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  @WatchLogger(loggerNames = {INDENTITY_LOGGER}, level = "INFO")
+  @WatchLogger(loggerNames = {IDENTITY_LOGGER}, level = "INFO")
   public void testSuccessfulLoginAfterFailureWithoutDelay() {
     // given
     User user = identityService.newUser("johndoe");
@@ -742,7 +743,7 @@ public class IdentityServiceTest {
     assertThat(identityService.checkPassword("johndoe", "xxx")).isFalse();
 
     // assume
-    assertThat(loggingRule.getFilteredLog(INDENTITY_LOGGER, "The user with id 'johndoe' is locked.")).hasSize(1);
+    assertThat(loggingRule.getFilteredLog(IDENTITY_LOGGER, "The user with id 'johndoe' is locked.")).hasSize(1);
 
     // when
     ClockUtil.setCurrentTime(DateUtils.addSeconds(now, 30));
@@ -753,7 +754,7 @@ public class IdentityServiceTest {
   }
 
   @Test
-  @WatchLogger(loggerNames = {INDENTITY_LOGGER}, level = "INFO")
+  @WatchLogger(loggerNames = {IDENTITY_LOGGER}, level = "INFO")
   public void testUnsuccessfulLoginAfterFailureWithoutDelay() {
     // given
     User user = identityService.newUser("johndoe");
@@ -771,7 +772,7 @@ public class IdentityServiceTest {
     assertThat(identityService.checkPassword("johndoe", "invalid pwd")).isFalse();
 
     // then
-    assertThat(loggingRule.getFilteredLog(INDENTITY_LOGGER, "The lock will expire at " + expectedLockExpitation)).hasSize(1);
+    assertThat(loggingRule.getFilteredLog(IDENTITY_LOGGER, "The lock will expire at " + expectedLockExpitation)).hasSize(1);
   }
 
   @Test
@@ -1100,10 +1101,7 @@ public class IdentityServiceTest {
   }
 
   private Object createStringSet(String... strings) {
-    Set<String> stringSet = new HashSet<>();
-    for (String string : strings) {
-      stringSet.add(string);
-    }
+    Set<String> stringSet = new HashSet<>(Arrays.asList(strings));
     return stringSet;
   }
 

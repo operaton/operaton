@@ -152,7 +152,7 @@ public class ProcessInstanceCommentAuthorizationTest extends AuthorizationTest {
 
     // then
     List<Comment> comments = taskService.getProcessInstanceComments(processInstanceId);
-    assertThat(comments.isEmpty()).as("The comments list should not be empty").isFalse();
+    assertThat(comments).as("The comments list should not be empty").isNotEmpty();
     assertThat(comments.get(0).getFullMessage()).isEqualTo(updatedMessage);
 
     // triggers a db clean up
@@ -257,7 +257,7 @@ public class ProcessInstanceCommentAuthorizationTest extends AuthorizationTest {
 
     // then
     List<Comment> comments = taskService.getProcessInstanceComments(processInstanceId);
-    assertThat(comments.isEmpty()).as("The comments list should not be empty").isFalse();
+    assertThat(comments).as("The comments list should not be empty").isNotEmpty();
     assertThat(comments.get(0).getFullMessage()).isEqualTo(updatedMessage);
   }
 

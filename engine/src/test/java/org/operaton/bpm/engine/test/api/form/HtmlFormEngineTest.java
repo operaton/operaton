@@ -42,7 +42,7 @@ public class HtmlFormEngineTest extends PluggableProcessEngineTest {
 
     // make sure the html form engine is the default form engine:
     Map<String, FormEngine> formEngines = processEngineConfiguration.getFormEngines();
-    assertThat(formEngines.get(null) instanceof HtmlFormEngine).isTrue();
+    assertThat(formEngines.get(null)).isInstanceOf(HtmlFormEngine.class);
 
   }
 

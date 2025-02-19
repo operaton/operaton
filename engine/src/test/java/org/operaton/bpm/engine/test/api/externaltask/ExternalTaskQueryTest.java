@@ -396,13 +396,13 @@ public class ExternalTaskQueryTest extends PluggableProcessEngineTest {
     assertThat(lockedExpirationBeforeTasks).hasSize(3);
     for (ExternalTask task : lockedExpirationBeforeTasks) {
       assertThat(task.getLockExpirationTime()).isNotNull();
-      assertThat(task.getLockExpirationTime().getTime() < lockDate.getTime()).isTrue();
+      assertThat(task.getLockExpirationTime().getTime()).isLessThan(lockDate.getTime());
     }
 
     assertThat(lockedExpirationAfterTasks).hasSize(4);
     for (ExternalTask task : lockedExpirationAfterTasks) {
       assertThat(task.getLockExpirationTime()).isNotNull();
-      assertThat(task.getLockExpirationTime().getTime() > lockDate.getTime()).isTrue();
+      assertThat(task.getLockExpirationTime().getTime()).isGreaterThan(lockDate.getTime());
     }
   }
 

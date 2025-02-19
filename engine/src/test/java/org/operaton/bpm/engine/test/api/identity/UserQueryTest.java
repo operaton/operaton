@@ -101,7 +101,9 @@ public class UserQueryTest extends PluggableProcessEngineTest {
     try {
       userQuery.userId(null);
       fail("Exception expected");
-    } catch (ProcessEngineException e) { }
+    } catch (ProcessEngineException e) {
+      // expected
+    }
   }
 
   @Test
@@ -122,7 +124,9 @@ public class UserQueryTest extends PluggableProcessEngineTest {
     try {
       userQuery.singleResult();
       fail("Exception expected");
-    } catch (ProcessEngineException e) { }
+    } catch (ProcessEngineException e) {
+      // expected
+    }
   }
 
   @Test
@@ -146,7 +150,9 @@ public class UserQueryTest extends PluggableProcessEngineTest {
     try {
       userQuery.userFirstNameLike(null);
       fail("Exception expected");
-    } catch (ProcessEngineException e) { }
+    } catch (ProcessEngineException e) {
+      // expected
+    }
   }
 
   @Test
@@ -167,7 +173,9 @@ public class UserQueryTest extends PluggableProcessEngineTest {
     try {
       userQuery.singleResult();
       fail("Exception expected");
-    } catch (ProcessEngineException e) { }
+    } catch (ProcessEngineException e) {
+      // expected
+    }
   }
 
   @Test
@@ -188,7 +196,9 @@ public class UserQueryTest extends PluggableProcessEngineTest {
     try {
       userQuery.userLastNameLike(null);
       fail("Exception expected");
-    } catch (ProcessEngineException e) { }
+    } catch (ProcessEngineException e) {
+      // expected
+    }
   }
 
   @Test
@@ -206,7 +216,9 @@ public class UserQueryTest extends PluggableProcessEngineTest {
     try {
       userQuery.singleResult();
       fail("Exception expected");
-    } catch (ProcessEngineException e) { }
+    } catch (ProcessEngineException e) {
+      // expected
+    }
   }
 
   @Test
@@ -227,7 +239,9 @@ public class UserQueryTest extends PluggableProcessEngineTest {
     try {
       userQuery.userEmailLike(null);
       fail("Exception expected");
-    } catch (ProcessEngineException e) { }
+    } catch (ProcessEngineException e) {
+      // expected
+    }
   }
 
   @Test
@@ -258,13 +272,17 @@ public class UserQueryTest extends PluggableProcessEngineTest {
     try {
       userQuery1.list();
       fail("Exception expected");
-    } catch (ProcessEngineException e) {}
+    } catch (ProcessEngineException e) {
+      // expected
+    }
 
     var userQuery2 = identityService.createUserQuery().orderByUserId().orderByUserEmail();
     try {
       userQuery2.list();
       fail("Exception expected");
-    } catch (ProcessEngineException e) {}
+    } catch (ProcessEngineException e) {
+      // expected
+    }
   }
 
   @Test
@@ -280,7 +298,7 @@ public class UserQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByInvalidMemberOfGoup() {
+  public void testQueryByInvalidMemberOfGroup() {
     UserQuery query = identityService.createUserQuery().memberOfGroup("invalid");
     verifyQueryResults(query, 0);
     var userQuery = identityService.createUserQuery();
@@ -288,7 +306,9 @@ public class UserQueryTest extends PluggableProcessEngineTest {
     try {
       userQuery.memberOfGroup(null);
       fail("Exception expected");
-    } catch (ProcessEngineException e) { }
+    } catch (ProcessEngineException e) {
+      // expected
+    }
   }
 
   @Test
@@ -320,7 +340,9 @@ public class UserQueryTest extends PluggableProcessEngineTest {
     try {
       query.singleResult();
       fail("Exception expected");
-    } catch (ProcessEngineException e) {}
+    } catch (ProcessEngineException e) {
+      // expected
+    }
   }
 
   @Test

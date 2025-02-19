@@ -123,7 +123,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     List<HistoricTaskInstance> historicTasks = historyService.createHistoricTaskInstanceQuery().taskName("my task").list();
     assertThat(historicTasks).hasSize(1);
 
-    // CAM-12186: check that query is case insensitive
+    // CAM-12186: check that query is case-insensitive
     List<HistoricTaskInstance> historicTasksUcFirst = historyService.createHistoricTaskInstanceQuery().taskName("My task").list();
     assertThat(historicTasksUcFirst).hasSize(1);
   }
@@ -143,7 +143,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     List<HistoricTaskInstance> historicTasks = historyService.createHistoricTaskInstanceQuery().taskNameLike("my task").list();
     assertThat(historicTasks).hasSize(1);
 
-    // CAM-12186: check that query is case insensitive
+    // CAM-12186: check that query is case-insensitive
     List<HistoricTaskInstance> historicTasksUcFirst = historyService.createHistoricTaskInstanceQuery().taskNameLike("My task").list();
     assertThat(historicTasksUcFirst).hasSize(1);
   }
@@ -163,7 +163,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     List<HistoricTaskInstance> historicTasks = historyService.createHistoricTaskInstanceQuery().taskDescription("my description").list();
     assertThat(historicTasks).hasSize(1);
 
-    // CAM-12186: check that query is case insensitive
+    // CAM-12186: check that query is case-insensitive
     List<HistoricTaskInstance> historicTasksUcFirst = historyService.createHistoricTaskInstanceQuery().taskDescription("My description").list();
     assertThat(historicTasksUcFirst).hasSize(1);
   }
@@ -183,7 +183,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     List<HistoricTaskInstance> historicTasks = historyService.createHistoricTaskInstanceQuery().taskDescriptionLike("my description").list();
     assertThat(historicTasks).hasSize(1);
 
-    // CAM-12186: check that query is case insensitive
+    // CAM-12186: check that query is case-insensitive
     List<HistoricTaskInstance> historicTasksUcFirst = historyService.createHistoricTaskInstanceQuery().taskDescriptionLike("My description").list();
     assertThat(historicTasksUcFirst).hasSize(1);
   }
@@ -693,34 +693,34 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
   public void testProcessVariableValueEqualsNumber() {
     // long
     runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS,
-        Collections.<String, Object>singletonMap("var", 123L));
+        Collections.singletonMap("var", 123L));
 
     // non-matching long
     runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS,
-        Collections.<String, Object>singletonMap("var", 12345L));
+        Collections.singletonMap("var", 12345L));
 
     // short
     runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS,
-        Collections.<String, Object>singletonMap("var", (short) 123));
+        Collections.singletonMap("var", (short) 123));
 
     // double
     runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS,
-        Collections.<String, Object>singletonMap("var", 123.0d));
+        Collections.singletonMap("var", 123.0d));
 
     // integer
     runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS,
-        Collections.<String, Object>singletonMap("var", 123));
+        Collections.singletonMap("var", 123));
 
     // untyped null (should not match)
     runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS,
-        Collections.<String, Object>singletonMap("var", null));
+        Collections.singletonMap("var", null));
 
     // typed null (should not match)
     runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS,
-        Collections.<String, Object>singletonMap("var", Variables.longValue(null)));
+        Collections.singletonMap("var", Variables.longValue(null)));
 
     runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS,
-        Collections.<String, Object>singletonMap("var", "123"));
+        Collections.singletonMap("var", "123"));
 
     assertThat(historyService.createHistoricProcessInstanceQuery().variableValueEquals("var", Variables.numberValue(123)).count()).isEqualTo(4);
     assertThat(historyService.createHistoricProcessInstanceQuery().variableValueEquals("var", Variables.numberValue(123L)).count()).isEqualTo(4);
@@ -1182,12 +1182,12 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     // then
     HistoricVariableInstanceQuery allHistVariableQuery = historyService.createHistoricVariableInstanceQuery().processInstanceId(executionId);
     HistoricDetailQuery allDetailsQuery = historyService.createHistoricDetailQuery().processInstanceId(executionId);
-    assertThat(histVariableQuery.count()).isEqualTo(0L);
-    assertThat(secondHistVariableQuery.count()).isEqualTo(0L);
-    assertThat(allHistVariableQuery.count()).isEqualTo(0L);
-    assertThat(detailsQuery.count()).isEqualTo(0L);
-    assertThat(secondDetailsQuery.count()).isEqualTo(0L);
-    assertThat(allDetailsQuery.count()).isEqualTo(0L);
+    assertThat(histVariableQuery.count()).isZero();
+    assertThat(secondHistVariableQuery.count()).isZero();
+    assertThat(allHistVariableQuery.count()).isZero();
+    assertThat(detailsQuery.count()).isZero();
+    assertThat(secondDetailsQuery.count()).isZero();
+    assertThat(allDetailsQuery.count()).isZero();
     assertThat(variableQuery.count()).isEqualTo(1L);
     assertThat(variableQuery.singleResult().getValue()).isEqualTo("testValue3");
     assertThat(secondVariableQuery.singleResult().getValue()).isEqualTo("testValue2");
@@ -1211,8 +1211,8 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     VariableInstanceQuery secondVariableQuery = runtimeService.createVariableInstanceQuery().processInstanceIdIn(executionId).variableName("mySecondVariable");
     HistoricVariableInstanceQuery allHistVariableQuery = historyService.createHistoricVariableInstanceQuery().processInstanceId(executionId);
     HistoricDetailQuery allDetailsQuery = historyService.createHistoricDetailQuery().processInstanceId(executionId);
-    assertThat(allHistVariableQuery.count()).isEqualTo(0L);
-    assertThat(allDetailsQuery.count()).isEqualTo(0L);
+    assertThat(allHistVariableQuery.count()).isZero();
+    assertThat(allDetailsQuery.count()).isZero();
     assertThat(variableQuery.count()).isEqualTo(1L);
     assertThat(secondVariableQuery.count()).isEqualTo(1L);
     assertThat(variableQuery.singleResult().getValue()).isEqualTo("testValue2");
@@ -1249,14 +1249,14 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(1L);
 
     runtimeService.deleteProcessInstance(executionId, null);
-    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(0L);
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isZero();
     assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(1L);
 
     HistoricVariableInstanceQuery histVariableQuery = historyService.createHistoricVariableInstanceQuery().processInstanceId(executionId);
-    assertThat(histVariableQuery.count()).isEqualTo(0L);
+    assertThat(histVariableQuery.count()).isZero();
 
     HistoricDetailQuery detailsQuery = historyService.createHistoricDetailQuery().processInstanceId(executionId);
-    assertThat(detailsQuery.count()).isEqualTo(0L);
+    assertThat(detailsQuery.count()).isZero();
 
     // when
     historyService.deleteHistoricVariableInstancesByProcessInstanceId(executionId);

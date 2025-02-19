@@ -151,7 +151,7 @@ public class TaskCommentAuthorizationTest extends AuthorizationTest {
 
     // then
     List<Comment> comments = taskService.getTaskComments(TASK_ID);
-    assertThat(comments.isEmpty()).as("The comments list should not be empty").isFalse();
+    assertThat(comments).as("The comments list should not be empty").isNotEmpty();
     assertThat(comments.get(0).getFullMessage()).isEqualTo(updatedMessage);
 
     // triggers a db clean up
@@ -274,7 +274,7 @@ public class TaskCommentAuthorizationTest extends AuthorizationTest {
 
     // then
     List<Comment> comments = taskService.getTaskComments(task.getId());
-    assertThat(comments.isEmpty()).as("The comments list should not be empty").isFalse();
+    assertThat(comments).as("The comments list should not be empty").isNotEmpty();
     assertThat(comments.get(0).getFullMessage()).isEqualTo(updatedMessage);
   }
 

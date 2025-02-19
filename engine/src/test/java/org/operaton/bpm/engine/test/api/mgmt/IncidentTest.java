@@ -412,7 +412,7 @@ public class IncidentTest extends PluggableProcessEngineTest {
 
     // Update process instance
     processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).singleResult();
-    assertThat(processInstance instanceof ExecutionEntity).isTrue();
+    assertThat(processInstance).isInstanceOf(ExecutionEntity.class);
 
     // should stay in the user task
     ExecutionEntity exec = (ExecutionEntity) processInstance;
@@ -700,7 +700,7 @@ public class IncidentTest extends PluggableProcessEngineTest {
     assertThat(incident.getAnnotation()).isEqualTo(annotation);
 
     // clean up
-    cleanupStandalonIncident(jobId);
+    cleanupStandaloneIncident(jobId);
   }
 
   @Test
@@ -763,7 +763,7 @@ public class IncidentTest extends PluggableProcessEngineTest {
     assertThat(incident.getAnnotation()).isNull();
 
     // cleanup
-    cleanupStandalonIncident(jobId);
+    cleanupStandaloneIncident(jobId);
   }
 
   @Test
@@ -815,7 +815,7 @@ public class IncidentTest extends PluggableProcessEngineTest {
     return jobId;
   }
 
-  protected void cleanupStandalonIncident(String jobId) {
+  protected void cleanupStandaloneIncident(String jobId) {
     managementService.deleteJob(jobId);
     Removable.of(processEngine).remove(HistoricIncident.class);
   }

@@ -634,8 +634,8 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
 
   protected void verifyVariablesDeleted() {
     disableAuthorization();
-    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(0L);
-    assertThat(historyService.createHistoricDetailQuery().count()).isEqualTo(0L);
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isZero();
+    assertThat(historyService.createHistoricDetailQuery().count()).isZero();
     enableAuthorization();
   }
 

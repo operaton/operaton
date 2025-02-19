@@ -82,7 +82,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testCompleteInvalidCaseExeuction() {
+  public void testCompleteInvalidCaseExecution() {
     CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution("invalid");
     assertThatThrownBy(commandBuilder::complete)
       .withFailMessage("The case execution should not be found.")
@@ -95,7 +95,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testCloseInvalidCaseExeuction() {
+  public void testCloseInvalidCaseExecution() {
     CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution("invalid");
     assertThatThrownBy(commandBuilder::close)
       .withFailMessage("The case execution should not be found.")
@@ -108,7 +108,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testTerminateInvalidCaseExeuction() {
+  public void testTerminateInvalidCaseExecution() {
     CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution("invalid");
     assertThatThrownBy(commandBuilder::terminate)
       .withFailMessage("The case execution should not be found.")
@@ -1444,13 +1444,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
      Map<String, Object> variables = caseService.getVariables(caseExecutionId);
 
     // then
-    assertThat(variables)
-            .isNotNull()
-            .isNotEmpty();
-    assertThat(variables)
-            .hasSize(2)
-            .containsEntry("aVariableName", "abc")
-            .containsEntry("anotherVariableName", 999);
+    verifyGetVariables(variables);
 
     assertThat(caseService.getVariablesTyped(caseExecutionId, true)).isEqualTo(variables);
   }
@@ -1483,13 +1477,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
      VariableMap variables = caseService.getVariablesTyped(caseExecutionId);
 
     // then
-    assertThat(variables)
-            .isNotNull()
-            .isNotEmpty();
-    assertThat(variables)
-            .hasSize(2)
-            .containsEntry("aVariableName", "abc")
-            .containsEntry("anotherVariableName", 999);
+    verifyGetVariables(variables);
 
     assertThat(caseService.getVariablesTyped(caseExecutionId, true)).isEqualTo(variables);
   }
@@ -1501,14 +1489,14 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
       caseService.getVariables("invalid");
       fail("The case execution should not be found.");
     } catch (NotFoundException e) {
-
+      // expected
     }
 
     try {
       caseService.getVariables(null);
       fail("The case execution should not be found.");
     } catch (NotValidException e) {
-
+      // expected
     }
   }
 
@@ -1527,7 +1515,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .withCaseDefinition(caseDefinitionId)
         .setVariable("aVariableName", "abc")
         .setVariable("anotherVariableName", 999)
-        .setVariable("thirVariable", "xyz")
+        .setVariable("thirdVariable", "xyz")
         .create()
         .getId();
 
@@ -1545,13 +1533,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
      Map<String, Object> variables = caseService.getVariables(caseExecutionId, names);
 
     // then
-    assertThat(variables)
-            .isNotNull()
-            .isNotEmpty();
-    assertThat(variables)
-            .hasSize(2)
-            .containsEntry("aVariableName", "abc")
-            .containsEntry("anotherVariableName", 999);
+    verifyGetVariables(variables);
 
     assertThat(caseService.getVariables(caseExecutionId, names)).isEqualTo(variables);
   }
@@ -1572,7 +1554,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .withCaseDefinition(caseDefinitionId)
         .setVariable("aVariableName", "abc")
         .setVariable("anotherVariableName", 999)
-        .setVariable("thirVariable", "xyz")
+        .setVariable("thirdVariable", "xyz")
         .create()
         .getId();
 
@@ -1590,13 +1572,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
      VariableMap variables = caseService.getVariablesTyped(caseExecutionId, names, true);
 
     // then
-    assertThat(variables)
-            .isNotNull()
-            .isNotEmpty();
-    assertThat(variables)
-            .hasSize(2)
-            .containsEntry("aVariableName", "abc")
-            .containsEntry("anotherVariableName", 999);
+    verifyGetVariables(variables);
 
     assertThat(caseService.getVariables(caseExecutionId, names)).isEqualTo(variables);
   }
@@ -1608,14 +1584,14 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
       caseService.getVariables("invalid", null);
       fail("The case execution should not be found.");
     } catch (NotFoundException e) {
-
+      // expected
     }
 
     try {
       caseService.getVariables(null, null);
       fail("The case execution should not be found.");
     } catch (NotValidException e) {
-
+      // expected
     }
   }
 
@@ -1651,13 +1627,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
      Map<String, Object> variables = caseService.getVariablesLocal(caseExecutionId);
 
     // then
-    assertThat(variables)
-            .isNotNull()
-            .isNotEmpty();
-    assertThat(variables)
-            .hasSize(2)
-            .containsEntry("aVariableName", "abc")
-            .containsEntry("anotherVariableName", 999);
+    verifyGetVariables(variables);
 
     assertThat(caseService.getVariablesLocal(caseExecutionId)).isEqualTo(variables);
   }
@@ -1694,13 +1664,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
      VariableMap variables = caseService.getVariablesLocalTyped(caseExecutionId);
 
     // then
-    assertThat(variables)
-            .isNotNull()
-            .isNotEmpty();
-    assertThat(variables)
-            .hasSize(2)
-            .containsEntry("aVariableName", "abc")
-            .containsEntry("anotherVariableName", 999);
+    verifyGetVariables(variables);
 
     assertThat(caseService.getVariablesLocalTyped(caseExecutionId, true)).isEqualTo(variables);
   }
@@ -1712,14 +1676,14 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
       caseService.getVariablesLocal("invalid");
       fail("The case execution should not be found.");
     } catch (NotFoundException e) {
-
+      // expected
     }
 
     try {
       caseService.getVariablesLocal(null);
       fail("The case execution should not be found.");
     } catch (NotValidException e) {
-
+      // expected
     }
   }
 
@@ -1759,13 +1723,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
      Map<String, Object> variables = caseService.getVariablesLocal(caseExecutionId, names);
 
     // then
-    assertThat(variables)
-            .isNotNull()
-            .isNotEmpty();
-    assertThat(variables)
-            .hasSize(2)
-            .containsEntry("aVariableName", "abc")
-            .containsEntry("anotherVariableName", 999);
+    verifyGetVariables(variables);
 
     assertThat(caseService.getVariablesLocal(caseExecutionId, names)).isEqualTo(variables);
   }
@@ -1806,13 +1764,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
      VariableMap variables = caseService.getVariablesLocalTyped(caseExecutionId, names, true);
 
     // then
-    assertThat(variables)
-            .isNotNull()
-            .isNotEmpty();
-    assertThat(variables)
-            .hasSize(2)
-            .containsEntry("aVariableName", "abc")
-            .containsEntry("anotherVariableName", 999);
+    verifyGetVariables(variables);
 
     assertThat(caseService.getVariablesLocal(caseExecutionId, names)).isEqualTo(variables);
   }
@@ -1823,14 +1775,14 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
       caseService.getVariablesLocal("invalid", null);
       fail("The case execution should not be found.");
     } catch (NotFoundException e) {
-
+      // expected
     }
 
     try {
       caseService.getVariablesLocal(null, null);
       fail("The case execution should not be found.");
     } catch (NotValidException e) {
-
+      // expected
     }
   }
 
@@ -1849,7 +1801,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .withCaseDefinition(caseDefinitionId)
         .setVariable("aVariableName", "abc")
         .setVariable("anotherVariableName", 999)
-        .setVariable("thirVariable", "xyz")
+        .setVariable("thirdVariable", "xyz")
         .create()
         .getId();
 
@@ -1874,14 +1826,14 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
       caseService.getVariable("invalid", "aVariableName");
       fail("The case execution should not be found.");
     } catch (NotFoundException e) {
-
+      // expected
     }
 
     try {
       caseService.getVariable(null, "aVariableName");
       fail("The case execution should not be found.");
     } catch (NotValidException e) {
-
+      // expected
     }
   }
 
@@ -1928,14 +1880,14 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
       caseService.getVariableLocal("invalid", "aVariableName");
       fail("The case execution should not be found.");
     } catch (NotFoundException e) {
-
+      // expected
     }
 
     try {
       caseService.getVariableLocal(null, "aVariableName");
       fail("The case execution should not be found.");
     } catch (NotValidException e) {
-
+      // expected
     }
   }
 
@@ -1984,14 +1936,14 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
       caseService.getVariableTyped("invalid", "aVariableName");
       fail("The case execution should not be found.");
     } catch (NotFoundException e) {
-
+      // expected
     }
 
     try {
       caseService.getVariableTyped(null, "aVariableName");
       fail("The case execution should not be found.");
     } catch (NotValidException e) {
-
+      // expected
     }
   }
 
@@ -2261,14 +2213,14 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
       caseService.getVariableLocalTyped("invalid", "aVariableName");
       fail("The case execution should not be found.");
     } catch (NotFoundException e) {
-
+      // expected
     }
 
     try {
       caseService.getVariableLocalTyped(null, "aVariableName");
       fail("The case execution should not be found.");
     } catch (NotValidException e) {
-
+      // expected
     }
   }
 
@@ -2499,7 +2451,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
     assertThat(caseInstance).isNotNull();
 
     // verify that there are three case execution:
-    // - the case instance itself (ie. for the casePlanModel)
+    // - the case instance itself (i.e. for the casePlanModel)
     // - a case execution for the stage
     // - a case execution for the humanTask
 
@@ -2579,8 +2531,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
     Map<String, Object> variables = caseService.getVariables(caseInstanceId, new ArrayList<>());
 
     // then
-    assertThat(variables).isNotNull();
-    assertThat(variables).isEmpty();
+    assertThat(variables).isNotNull().isEmpty();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -2593,8 +2544,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
     Map<String, Object> variables = caseService.getVariablesTyped(caseInstanceId, new ArrayList<>(), false);
 
     // then
-    assertThat(variables).isNotNull();
-    assertThat(variables).isEmpty();
+    assertThat(variables).isNotNull().isEmpty();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -2607,8 +2557,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
     Map<String, Object> variables = caseService.getVariablesLocal(caseInstanceId, new ArrayList<>());
 
     // then
-    assertThat(variables).isNotNull();
-    assertThat(variables).isEmpty();
+    assertThat(variables).isNotNull().isEmpty();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -2621,8 +2570,16 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
     Map<String, Object> variables = caseService.getVariablesLocalTyped(caseInstanceId, new ArrayList<>(), false);
 
     // then
-    assertThat(variables).isNotNull();
-    assertThat(variables).isEmpty();
+    assertThat(variables).isNotNull().isEmpty();
+  }
+
+  protected void verifyGetVariables(Map<String, Object> variables) {
+    assertThat(variables)
+      .isNotNull()
+      .isNotEmpty()
+      .hasSize(2)
+      .containsEntry("aVariableName", "abc")
+      .containsEntry("anotherVariableName", 999);
   }
 
 }

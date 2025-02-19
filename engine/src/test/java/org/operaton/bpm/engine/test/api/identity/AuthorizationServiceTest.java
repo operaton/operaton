@@ -37,7 +37,6 @@ import static org.operaton.bpm.engine.authorization.Resources.DASHBOARD;
 import static org.operaton.bpm.engine.authorization.Resources.REPORT;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.*;
 
@@ -137,10 +136,10 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
   public void testDeleteNonExistingAuthorization() {
 
     try {
-      authorizationService.deleteAuthorization("nonExisiting");
+      authorizationService.deleteAuthorization("nonExisting");
       fail("");
     } catch (Exception e) {
-      testRule.assertTextPresent("Authorization for Id 'nonExisiting' does not exist: authorization is null", e.getMessage());
+      testRule.assertTextPresent("Authorization for Id 'nonExisting' does not exist: authorization is null", e.getMessage());
     }
 
   }
@@ -465,7 +464,7 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     authorization.setResource(Resources.USER);
 
-    assertThat(authorization.getPermissions(Permissions.values()).length).isEqualTo(1);
+    assertThat(authorization.getPermissions(Permissions.values())).hasSize(1);
 
     assertThat(authorization.isPermissionGranted(CREATE)).isFalse();
     assertThat(authorization.isPermissionGranted(DELETE)).isFalse();
@@ -530,13 +529,13 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
 
     assertThat(authorization.isPermissionGranted(ALL)).isFalse();
     assertThat(authorization.isPermissionGranted(NONE)).isTrue();
-    List<Permission> perms = Arrays.asList(authorization.getPermissions(Permissions.values()));
+    List<Permission> perms = List.of(authorization.getPermissions(Permissions.values()));
     assertThat(perms)
             .contains(NONE)
             .hasSize(1);
 
     authorization.addPermission(READ);
-    perms = Arrays.asList(authorization.getPermissions(Permissions.values()));
+    perms = List.of(authorization.getPermissions(Permissions.values()));
     assertThat(perms)
             .contains(NONE)
             .contains(READ)
@@ -561,13 +560,13 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
 
     assertThat(authorization.isPermissionGranted(ALL)).isFalse();
     assertThat(authorization.isPermissionGranted(NONE)).isTrue();
-    List<Permission> perms = Arrays.asList(authorization.getPermissions(Permissions.values()));
+    List<Permission> perms = List.of(authorization.getPermissions(Permissions.values()));
     assertThat(perms)
             .contains(NONE)
             .hasSize(1);
 
     authorization.addPermission(READ);
-    perms = Arrays.asList(authorization.getPermissions(Permissions.values()));
+    perms = List.of(authorization.getPermissions(Permissions.values()));
     assertThat(perms)
             .contains(NONE)
             .contains(READ)
@@ -591,11 +590,11 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
     authorization.setResource(Resources.DEPLOYMENT);
 
     assertThat(authorization.isPermissionRevoked(ALL)).isFalse();
-    List<Permission> perms = Arrays.asList(authorization.getPermissions(Permissions.values()));
+    List<Permission> perms = List.of(authorization.getPermissions(Permissions.values()));
     assertThat(perms).isEmpty();
 
     authorization.removePermission(READ);
-    perms = Arrays.asList(authorization.getPermissions(Permissions.values()));
+    perms = List.of(authorization.getPermissions(Permissions.values()));
     assertThat(perms)
             .contains(READ)
             .contains(ALL)
@@ -621,8 +620,8 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
     globalAuth.addPermission(TestPermissions.ALL);
     authorizationService.saveAuthorization(globalAuth);
 
-    List<String> jonnysGroups = Arrays.asList(new String[]{"sales", "marketing"});
-    List<String> someOneElsesGroups = Arrays.asList(new String[]{"marketing"});
+    List<String> jonnysGroups = List.of("sales", "marketing");
+    List<String> someOneElsesGroups = List.of("marketing");
 
     // this authorizes any user to do anything in this resource:
     processEngineConfiguration.setAuthorizationEnabled(true);
@@ -699,7 +698,7 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
     authorizationService.saveAuthorization(authorization);
 
     processEngineConfiguration.setAuthorizationEnabled(true);
-    assertThat(authorizationService.isUserAuthorized(testUserId, Arrays.asList(testGroupId), ALL, REPORT)).isTrue();
+    assertThat(authorizationService.isUserAuthorized(testUserId, List.of(testGroupId), ALL, REPORT)).isTrue();
     processEngineConfiguration.setAuthorizationEnabled(false);
   }
 
@@ -733,7 +732,7 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
     authorizationService.saveAuthorization(authorization);
 
     processEngineConfiguration.setAuthorizationEnabled(true);
-    assertThat(authorizationService.isUserAuthorized(testUserId, Arrays.asList(testGroupId), ALL, DASHBOARD)).isTrue();
+    assertThat(authorizationService.isUserAuthorized(testUserId, List.of(testGroupId), ALL, DASHBOARD)).isTrue();
     processEngineConfiguration.setAuthorizationEnabled(false);
   }
 

@@ -39,7 +39,6 @@ import org.operaton.bpm.engine.test.api.runtime.migration.MigrationTestRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.batch.BatchMigrationHelper;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

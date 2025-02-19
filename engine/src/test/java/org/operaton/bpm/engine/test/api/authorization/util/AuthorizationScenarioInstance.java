@@ -86,24 +86,24 @@ public class AuthorizationScenarioInstance {
       assertThat(actualMissingAuthorizations).containsExactlyInAnyOrderElementsOf(expectedMissingAuthorizations);
 
       for (Authorization missingAuthorization : missingAuthorizations) {
-        assertThat(message.contains(missingAuthorization.getUserId())).as(assertionFailureMessage).isTrue();
+        assertThat(message).contains(missingAuthorization.getUserId());
         assertThat(e.getUserId()).isEqualTo(missingAuthorization.getUserId());
 
         Permission[] permissions = AuthorizationTestUtil.getPermissions(missingAuthorization);
         for (Permission permission : permissions) {
           if (permission.getValue() != Permissions.NONE.getValue()) {
-            assertThat(message.contains(permission.getName())).as(assertionFailureMessage).isTrue();
+            assertThat(message).contains(permission.getName());
             break;
           }
         }
 
         if (!Authorization.ANY.equals(missingAuthorization.getResourceId())) {
           // missing ANY authorizations are not explicitly represented in the error message
-          assertThat(message.contains(missingAuthorization.getResourceId())).as(assertionFailureMessage).isTrue();
+          assertThat(message).contains(missingAuthorization.getResourceId());
         }
 
         Resource resource = AuthorizationTestUtil.getResourceByType(missingAuthorization.getResourceType());
-        assertThat(message.contains(resource.resourceName())).as(assertionFailureMessage).isTrue();
+        assertThat(message).contains(resource.resourceName());
       }
     }
     else if (missingAuthorizations.isEmpty() && e == null) {

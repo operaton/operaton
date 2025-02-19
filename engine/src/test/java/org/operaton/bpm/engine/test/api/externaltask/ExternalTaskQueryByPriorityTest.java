@@ -73,7 +73,7 @@ public class ExternalTaskQueryByPriorityTest extends PluggableProcessEngineTest 
     assertThat(tasks).hasSize(8);
 
     for (ExternalTask task : tasks) {
-      assertThat(task.getPriority() <= 2).isTrue();
+      assertThat(task.getPriority()).isLessThanOrEqualTo(2);
     }
   }
 
@@ -119,7 +119,7 @@ public class ExternalTaskQueryByPriorityTest extends PluggableProcessEngineTest 
     processInstanceIds.add(instances.get(4).getId());
 
     for (ExternalTask task : tasks) {
-      assertThat(task.getPriority() >= 2).isTrue();
+      assertThat(task.getPriority()).isGreaterThanOrEqualTo(2);
       assertThat(processInstanceIds).contains(task.getProcessInstanceId());
     }
   }

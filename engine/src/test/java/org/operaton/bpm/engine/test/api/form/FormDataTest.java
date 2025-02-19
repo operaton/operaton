@@ -42,7 +42,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
- * <p>Testcase verifying support for form matadata provided using
+ * <p>Testcase verifying support for form metadata provided using
  * custom extension elements in BPMN Xml</p>
  *
  * @author Daniel Meyer
@@ -82,6 +82,7 @@ public class FormDataTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
+  @SuppressWarnings("deprecation")
   public void testGetFormFieldBuiltInTypes() {
 
     runtimeService.startProcessInstanceByKey("FormDataTest.testGetFormFieldBuiltInTypes");
@@ -105,7 +106,7 @@ public class FormDataTest extends PluggableProcessEngineTest {
     assertThat(longField).isNotNull();
     assertThat(longField.getTypeName()).isEqualTo("long");
     assertThat(longField.getType()).isNotNull();
-    assertThat(longField.getDefaultValue()).isEqualTo(1l);
+    assertThat(longField.getDefaultValue()).isEqualTo(1L);
 
     // validate boolean field
     FormField booleanField = formFields.get(2);
@@ -288,7 +289,7 @@ public class FormDataTest extends PluggableProcessEngineTest {
 
     // when
     Object renderedStartForm = formService.getRenderedTaskForm(taskWithForm.getId());
-    assertThat(renderedStartForm instanceof String).isTrue();
+    assertThat(renderedStartForm).isInstanceOf(String.class);
 
     // then
     String renderedForm = (String) renderedStartForm;

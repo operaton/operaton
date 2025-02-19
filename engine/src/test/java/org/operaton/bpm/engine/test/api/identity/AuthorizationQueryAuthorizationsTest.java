@@ -192,7 +192,7 @@ public class AuthorizationQueryAuthorizationsTest {
   }
 
   @Test
-  public void testQueryCorrectAndIncorrectPersmission() {
+  public void testQueryCorrectAndIncorrectPermission() {
     // given
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     authorization.setUserId("userId");

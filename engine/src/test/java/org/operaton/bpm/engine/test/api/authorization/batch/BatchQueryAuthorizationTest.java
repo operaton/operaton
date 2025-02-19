@@ -189,6 +189,6 @@ public class BatchQueryAuthorizationTest {
     authRule.disableAuthorization();
 
     // then
-    assertThat(batchCount).isEqualTo(0L);
+    assertThat(batchCount).isZero();
   }
 }

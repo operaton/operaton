@@ -20,7 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -89,12 +88,12 @@ public class HistoricBatchQueryAuthorizationTest {
 
     batch1 = engineRule.getRuntimeService()
       .newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(pi.getId()))
+      .processInstanceIds(List.of(pi.getId()))
       .executeAsync();
 
     batch2 = engineRule.getRuntimeService()
         .newMigration(migrationPlan)
-        .processInstanceIds(Arrays.asList(pi.getId()))
+        .processInstanceIds(List.of(pi.getId()))
         .executeAsync();
   }
 
@@ -216,7 +215,7 @@ public class HistoricBatchQueryAuthorizationTest {
     authRule.disableAuthorization();
 
     // then
-    assertThat(batchCount).isEqualTo(0L);
+    assertThat(batchCount).isZero();
   }
 
   @Test
@@ -286,7 +285,7 @@ public class HistoricBatchQueryAuthorizationTest {
 
      Batch batch = engineRule.getRuntimeService()
       .newMigration(plan)
-      .processInstanceIds(Arrays.asList(pi.getId()))
+      .processInstanceIds(List.of(pi.getId()))
       .executeAsync();
 
      return batch.getId();

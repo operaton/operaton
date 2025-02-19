@@ -35,7 +35,6 @@ import static org.operaton.bpm.engine.authorization.TaskPermissions.UPDATE_VARIA
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import org.operaton.bpm.engine.AuthorizationException;
@@ -746,7 +745,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     createGrantAuthorization(TASK, ANY, userId, DELETE);
 
     // when
-    taskService.deleteTasks(Arrays.asList(firstTaskId, secondTaskId));
+    taskService.deleteTasks(List.of(firstTaskId, secondTaskId));
 
     // then
     Task task = selectSingleTask();
@@ -835,7 +834,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskSetAssigneeWithUpdatePersmissionOnTask() {
+  public void testProcessTaskSetAssigneeWithUpdatePermissionOnTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -869,7 +868,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskSetAssigneeWithUpdatePersmissionOnAnyTask() {
+  public void testProcessTaskSetAssigneeWithUpdatePermissionOnAnyTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -903,7 +902,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskSetAssigneeWithUpdateTasksPersmissionOnProcessDefinition() {
+  public void testProcessTaskSetAssigneeWithUpdateTasksPermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -1049,7 +1048,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskSetOwnerWithUpdatePersmissionOnTask() {
+  public void testProcessTaskSetOwnerWithUpdatePermissionOnTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -1083,7 +1082,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskSetOwnerWithUpdatePersmissionOnAnyTask() {
+  public void testProcessTaskSetOwnerWithUpdatePermissionOnAnyTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -1117,7 +1116,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskSetOwnerWithUpdateTasksPersmissionOnProcessDefinition() {
+  public void testProcessTaskSetOwnerWithUpdateTasksPermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -1272,7 +1271,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskAddCandidateUserWithUpdatePersmissionOnTask() {
+  public void testProcessTaskAddCandidateUserWithUpdatePermissionOnTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -1371,7 +1370,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskAddCandidateUserWithUpdatePersmissionOnAnyTask() {
+  public void testProcessTaskAddCandidateUserWithUpdatePermissionOnAnyTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -1398,7 +1397,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskAddCandidateUserWithTaskAssignPersmissionOnAnyTask() {
+  public void testProcessTaskAddCandidateUserWithTaskAssignPermissionOnAnyTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -1425,7 +1424,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskAddCandidateUserWithUpdateTasksPersmissionOnProcessDefinition() {
+  public void testProcessTaskAddCandidateUserWithUpdateTasksPermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -1631,7 +1630,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskAddCandidateGroupWithUpdatePersmissionOnTask() {
+  public void testProcessTaskAddCandidateGroupWithUpdatePermissionOnTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -1685,7 +1684,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskAddCandidateGroupWithUpdatePersmissionOnAnyTask() {
+  public void testProcessTaskAddCandidateGroupWithUpdatePermissionOnAnyTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -1739,7 +1738,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskAddCandidateGroupWithUpdateTasksPersmissionOnProcessDefinition() {
+  public void testProcessTaskAddCandidateGroupWithUpdateTasksPermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -1766,7 +1765,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskAddCandidateGroupWithTaskAssignPersmissionOnProcessDefinition() {
+  public void testProcessTaskAddCandidateGroupWithTaskAssignPermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -2000,7 +1999,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskAddUserIdentityLinkWithUpdatePersmissionOnTask() {
+  public void testProcessTaskAddUserIdentityLinkWithUpdatePermissionOnTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -2054,7 +2053,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskAddUserIdentityLinkWithUpdatePersmissionOnAnyTask() {
+  public void testProcessTaskAddUserIdentityLinkWithUpdatePermissionOnAnyTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -2081,7 +2080,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskAddUserIdentityLinkWithTaskAssignPersmissionOnAnyTask() {
+  public void testProcessTaskAddUserIdentityLinkWithTaskAssignPermissionOnAnyTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -2108,7 +2107,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskAddUserIdentityLinkWithUpdateTasksPersmissionOnProcessDefinition() {
+  public void testProcessTaskAddUserIdentityLinkWithUpdateTasksPermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -2285,7 +2284,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskAddGroupIdentityLinkWithUpdatePersmissionOnTask() {
+  public void testProcessTaskAddGroupIdentityLinkWithUpdatePermissionOnTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -2312,7 +2311,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskAddGroupIdentityLinkWithUpdatePersmissionOnAnyTask() {
+  public void testProcessTaskAddGroupIdentityLinkWithUpdatePermissionOnAnyTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -2339,7 +2338,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskAddGroupIdentityLinkWithUpdateTasksPersmissionOnProcessDefinition() {
+  public void testProcessTaskAddGroupIdentityLinkWithUpdateTasksPermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -2456,8 +2455,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
 
     deleteTask(taskId, true);
   }
@@ -2479,8 +2477,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
 
     deleteTask(taskId, true);
   }
@@ -2508,7 +2505,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskDeleteCandidateUserWithUpdatePersmissionOnTask() {
+  public void testProcessTaskDeleteCandidateUserWithUpdatePermissionOnTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -2524,8 +2521,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
   }
 
   @Test
@@ -2545,12 +2541,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
   }
 
   @Test
-  public void testProcessTaskDeleteCandidateUserWithUpdatePersmissionOnAnyTask() {
+  public void testProcessTaskDeleteCandidateUserWithUpdatePermissionOnAnyTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -2566,8 +2561,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
   }
 
   @Test
@@ -2587,12 +2581,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
   }
 
   @Test
-  public void testProcessTaskDeleteCandidateUserWithUpdateTasksPersmissionOnProcessDefinition() {
+  public void testProcessTaskDeleteCandidateUserWithUpdateTasksPermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -2608,12 +2601,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
   }
 
   @Test
-  public void testProcessTaskDeleteCandidateUserWithTaskAssignPersmissionOnProcessDefinition() {
+  public void testProcessTaskDeleteCandidateUserWithTaskAssignPermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -2629,8 +2621,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
   }
 
   @Test
@@ -2651,8 +2642,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
   }
 
   // delete candidate user ((case) task) /////////////////////////////////////////////
@@ -2672,8 +2662,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
   }
 
   // delete candidate group ((standalone) task) /////////////////////////////////////////////
@@ -2712,8 +2701,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
 
     deleteTask(taskId, true);
   }
@@ -2735,8 +2723,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
 
     deleteTask(taskId, true);
   }
@@ -2764,7 +2751,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskDeleteCandidateGroupWithUpdatePersmissionOnTask() {
+  public void testProcessTaskDeleteCandidateGroupWithUpdatePermissionOnTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -2780,8 +2767,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
   }
 
   @Test
@@ -2801,12 +2787,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
   }
 
   @Test
-  public void testProcessTaskDeleteCandidateGroupWithUpdatePersmissionOnAnyTask() {
+  public void testProcessTaskDeleteCandidateGroupWithUpdatePermissionOnAnyTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -2822,12 +2807,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
   }
 
   @Test
-  public void testProcessTaskDeleteCandidateGroupWithTaskAssignPersmissionOnAnyTask() {
+  public void testProcessTaskDeleteCandidateGroupWithTaskAssignPermissionOnAnyTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -2843,12 +2827,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
   }
 
   @Test
-  public void testProcessTaskDeleteCandidateGroupWithUpdateTasksPersmissionOnProcessDefinition() {
+  public void testProcessTaskDeleteCandidateGroupWithUpdateTasksPermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -2864,8 +2847,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
   }
 
   @Test
@@ -2885,8 +2867,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
   }
 
   @Test
@@ -2907,8 +2888,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
   }
 
   // delete candidate group ((case) task) /////////////////////////////////////////////
@@ -2928,8 +2908,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
   }
 
   // delete user identity link ((standalone) task) /////////////////////////////////////////////
@@ -2968,8 +2947,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
 
     deleteTask(taskId, true);
   }
@@ -2991,8 +2969,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
 
     deleteTask(taskId, true);
   }
@@ -3020,7 +2997,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskDeleteUserIdentityLinkWithUpdatePersmissionOnTask() {
+  public void testProcessTaskDeleteUserIdentityLinkWithUpdatePermissionOnTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -3036,12 +3013,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
   }
 
   @Test
-  public void testProcessTaskDeleteUserIdentityLinkWithTaskAssignPersmissionOnTask() {
+  public void testProcessTaskDeleteUserIdentityLinkWithTaskAssignPermissionOnTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -3057,12 +3033,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
   }
 
   @Test
-  public void testProcessTaskDeleteUserIdentityLinkWithUpdatePersmissionOnAnyTask() {
+  public void testProcessTaskDeleteUserIdentityLinkWithUpdatePermissionOnAnyTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -3078,12 +3053,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
   }
 
   @Test
-  public void testProcessTaskDeleteUserIdentityLinkWithTaskAssignPersmissionOnAnyTask() {
+  public void testProcessTaskDeleteUserIdentityLinkWithTaskAssignPermissionOnAnyTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -3099,12 +3073,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
   }
 
   @Test
-  public void testProcessTaskDeleteUserIdentityLinkWithUpdateTasksPersmissionOnProcessDefinition() {
+  public void testProcessTaskDeleteUserIdentityLinkWithUpdateTasksPermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -3120,12 +3093,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
   }
 
   @Test
-  public void testProcessTaskDeleteUserIdentityLinkWithTaskAssignPersmissionOnProcessDefinition() {
+  public void testProcessTaskDeleteUserIdentityLinkWithTaskAssignPermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -3141,8 +3113,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
   }
 
   @Test
@@ -3163,8 +3134,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
   }
 
   @Test
@@ -3185,8 +3155,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
   }
 
   // delete user identity link ((case) task) /////////////////////////////////////////////
@@ -3206,8 +3175,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
   }
 
   // delete group identity link ((standalone) task) /////////////////////////////////////////////
@@ -3246,8 +3214,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
 
     deleteTask(taskId, true);
   }
@@ -3275,7 +3242,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskDeleteGroupIdentityLinkWithUpdatePersmissionOnTask() {
+  public void testProcessTaskDeleteGroupIdentityLinkWithUpdatePermissionOnTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -3291,12 +3258,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
   }
 
   @Test
-  public void testProcessTaskDeleteGroupIdentityLinkWithUpdatePersmissionOnAnyTask() {
+  public void testProcessTaskDeleteGroupIdentityLinkWithUpdatePermissionOnAnyTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -3312,12 +3278,11 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
   }
 
   @Test
-  public void testProcessTaskDeleteGroupIdentityLinkWithUpdateTasksPersmissionOnProcessDefinition() {
+  public void testProcessTaskDeleteGroupIdentityLinkWithUpdateTasksPermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -3333,8 +3298,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
   }
 
   @Test
@@ -3355,8 +3319,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
   }
 
   // delete group identity link ((case) task) /////////////////////////////////////////////
@@ -3376,8 +3339,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     enableAuthorization();
 
-    assertThat(linksForTask).isNotNull();
-    assertThat(linksForTask).isEmpty();
+    assertThat(linksForTask).isNotNull().isEmpty();
   }
 
   // get identity links ((standalone) task) ////////////////////////////////////////////////
@@ -3442,7 +3404,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskGetIdentityLinksWithReadPersmissionOnTask() {
+  public void testProcessTaskGetIdentityLinksWithReadPermissionOnTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -3460,7 +3422,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskGetIdentityLinksWithReadPersmissionOnAnyTask() {
+  public void testProcessTaskGetIdentityLinksWithReadPermissionOnAnyTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -3478,7 +3440,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
-  public void testProcessTaskGetIdentityLinksWithReadTasksPersmissionOnProcessDefinition() {
+  public void testProcessTaskGetIdentityLinksWithReadTasksPermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -4837,7 +4799,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     assertThat(task.getId()).isEqualTo(taskId);
 
     identityService.clearAuthentication();
-    identityService.setAuthentication(userId, Arrays.asList(groupId));
+    identityService.setAuthentication(userId, List.of(groupId));
     deleteTask(taskId, true);
   }
 
@@ -5006,7 +4968,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     assertThat(task.getId()).isEqualTo(taskId);
 
     identityService.clearAuthentication();
-    identityService.setAuthentication(userId, Arrays.asList(groupId));
+    identityService.setAuthentication(userId, List.of(groupId));
   }
 
   @Test
@@ -5044,7 +5006,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     assertThat(task.getId()).isEqualTo(taskId);
 
     identityService.clearAuthentication();
-    identityService.setAuthentication(userId, Arrays.asList(groupId));
+    identityService.setAuthentication(userId, List.of(groupId));
   }
 
   // set assignee -> should not create an authorization (case task) /////////////////////////////////////////
@@ -5149,7 +5111,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     assertThat(task.getId()).isEqualTo(taskId);
 
     identityService.clearAuthentication();
-    identityService.setAuthentication(userId, Arrays.asList(groupId));
+    identityService.setAuthentication(userId, List.of(groupId));
     deleteTask(taskId, true);
   }
 
@@ -5290,7 +5252,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     assertThat(task.getId()).isEqualTo(taskId);
 
     identityService.clearAuthentication();
-    identityService.setAuthentication(userId, Arrays.asList(groupId));
+    identityService.setAuthentication(userId, List.of(groupId));
   }
 
   // set owner -> should not create an authorization  (case task) /////////////////////////////////
@@ -5396,7 +5358,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     assertThat(task.getId()).isEqualTo(taskId);
 
     identityService.clearAuthentication();
-    identityService.setAuthentication(userId, Arrays.asList(groupId));
+    identityService.setAuthentication(userId, List.of(groupId));
     deleteTask(taskId, true);
   }
 
@@ -5422,7 +5384,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     assertThat(task.getId()).isEqualTo(taskId);
 
     identityService.clearAuthentication();
-    identityService.setAuthentication(userId, Arrays.asList(groupId));
+    identityService.setAuthentication(userId, List.of(groupId));
     deleteTask(taskId, true);
   }
 
@@ -5501,7 +5463,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     assertThat(task.getId()).isEqualTo(taskId);
 
     identityService.clearAuthentication();
-    identityService.setAuthentication(userId, Arrays.asList(groupId));
+    identityService.setAuthentication(userId, List.of(groupId));
   }
 
   @Test
@@ -5555,7 +5517,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // test is able to retrieve the task
     identityService.clearAuthentication();
-    identityService.setAuthentication(userId, Arrays.asList(groupId));
+    identityService.setAuthentication(userId, List.of(groupId));
 
     task = taskService.createTaskQuery().singleResult();
 
@@ -5656,7 +5618,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     taskService.addCandidateGroup(taskId, "management");
 
     identityService.clearAuthentication();
-    identityService.setAuthentication("demo", Arrays.asList("management"));
+    identityService.setAuthentication("demo", List.of("management"));
 
     // when
     Task task = taskService.createTaskQuery().singleResult();
@@ -5666,7 +5628,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     assertThat(task.getId()).isEqualTo(taskId);
 
     identityService.clearAuthentication();
-    identityService.setAuthentication(userId, Arrays.asList(groupId));
+    identityService.setAuthentication(userId, List.of(groupId));
     deleteTask(taskId, true);
   }
 
@@ -5735,7 +5697,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     taskService.addCandidateGroup(taskId, "management");
 
     identityService.clearAuthentication();
-    identityService.setAuthentication("demo", Arrays.asList("management"));
+    identityService.setAuthentication("demo", List.of("management"));
 
     // when
     Task task = taskService.createTaskQuery().singleResult();
@@ -5745,7 +5707,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     assertThat(task.getId()).isEqualTo(taskId);
 
     identityService.clearAuthentication();
-    identityService.setAuthentication(userId, Arrays.asList(groupId));
+    identityService.setAuthentication(userId, List.of(groupId));
   }
 
   @Test
@@ -5789,7 +5751,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // management is able to retrieve the task
     identityService.clearAuthentication();
-    identityService.setAuthentication("demo", Arrays.asList("management"));
+    identityService.setAuthentication("demo", List.of("management"));
 
     Task task = taskService.createTaskQuery().singleResult();
 
@@ -5798,7 +5760,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
     // accounting is able to retrieve the task
     identityService.clearAuthentication();
-    identityService.setAuthentication(userId, Arrays.asList(groupId));
+    identityService.setAuthentication(userId, List.of(groupId));
 
     task = taskService.createTaskQuery().singleResult();
 
@@ -5911,13 +5873,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     Map<String, Object> variables = taskService.getVariables(taskId);
 
     // then
-    assertThat(variables)
-            .isNotNull()
-            .isNotEmpty();
-    assertThat(variables)
-            .hasSize(1)
-            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
-  }
+verifyGetVariables(variables);  }
 
   // TaskService#getVariablesLocal() (case task) ////////////////////////////////////////////
 
@@ -5935,13 +5891,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     Map<String, Object> variables = taskService.getVariablesLocal(taskId);
 
     // then
-    assertThat(variables)
-            .isNotNull()
-            .isNotEmpty();
-    assertThat(variables)
-            .hasSize(1)
-            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
-  }
+verifyGetVariables(variables);  }
 
   // TaskService#getVariablesTyped() (case task) ////////////////////////////////////////////
 
@@ -5955,13 +5905,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     VariableMap variables = taskService.getVariablesTyped(taskId);
 
     // then
-    assertThat(variables)
-            .isNotNull()
-            .isNotEmpty();
-    assertThat(variables)
-            .hasSize(1)
-            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
-  }
+verifyGetVariables(variables);  }
 
   // TaskService#getVariablesLocalTyped() (case task) ////////////////////////////////////////////
 
@@ -5979,13 +5923,7 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     Map<String, Object> variables = taskService.getVariablesLocalTyped(taskId);
 
     // then
-    assertThat(variables)
-            .isNotNull()
-            .isNotEmpty();
-    assertThat(variables)
-            .hasSize(1)
-            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
-  }
+verifyGetVariables(variables);  }
 
   // TaskService#getVariables() (case task) ////////////////////////////////////////////
 
@@ -5996,16 +5934,10 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     String taskId = selectSingleTask().getId();
 
     // when
-    Map<String, Object> variables = taskService.getVariables(taskId, Arrays.asList(VARIABLE_NAME));
+    Map<String, Object> variables = taskService.getVariables(taskId, List.of(VARIABLE_NAME));
 
     // then
-    assertThat(variables)
-            .isNotNull()
-            .isNotEmpty();
-    assertThat(variables)
-            .hasSize(1)
-            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
-  }
+verifyGetVariables(variables);  }
 
   // TaskService#getVariablesLocal() (case task) ////////////////////////////////////////////
 
@@ -6020,16 +5952,10 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     // when
-    Map<String, Object> variables = taskService.getVariablesLocal(taskId, Arrays.asList(VARIABLE_NAME));
+    Map<String, Object> variables = taskService.getVariablesLocal(taskId, List.of(VARIABLE_NAME));
 
     // then
-    assertThat(variables)
-            .isNotNull()
-            .isNotEmpty();
-    assertThat(variables)
-            .hasSize(1)
-            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
-  }
+verifyGetVariables(variables);  }
 
   // TaskService#getVariables() (case task) ////////////////////////////////////////////
 
@@ -6040,16 +5966,10 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     String taskId = selectSingleTask().getId();
 
     // when
-    VariableMap variables = taskService.getVariablesTyped(taskId, Arrays.asList(VARIABLE_NAME), false);
+    VariableMap variables = taskService.getVariablesTyped(taskId, List.of(VARIABLE_NAME), false);
 
     // then
-    assertThat(variables)
-            .isNotNull()
-            .isNotEmpty();
-    assertThat(variables)
-            .hasSize(1)
-            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
-  }
+verifyGetVariables(variables);  }
 
   // TaskService#getVariablesLocal() (case task) ////////////////////////////////////////////
 
@@ -6064,16 +5984,10 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     // when
-    Map<String, Object> variables = taskService.getVariablesLocalTyped(taskId, Arrays.asList(VARIABLE_NAME), false);
+    Map<String, Object> variables = taskService.getVariablesLocalTyped(taskId, List.of(VARIABLE_NAME), false);
 
     // then
-    assertThat(variables)
-            .isNotNull()
-            .isNotEmpty();
-    assertThat(variables)
-            .hasSize(1)
-            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
-  }
+verifyGetVariables(variables);  }
 
   // TaskService#setVariable() (case task) /////////////////////////////////////
 
@@ -6529,14 +6443,14 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
   protected void verifyRemoveVariables(String taskId) {
     // when
-    taskService.removeVariables(taskId, Arrays.asList(VARIABLE_NAME));
+    taskService.removeVariables(taskId, List.of(VARIABLE_NAME));
 
     verifyVariableInstanceCountDisabledAuthorization(0);
   }
 
   protected void verifyRemoveVariablesLocal(String taskId) {
     // when
-    taskService.removeVariablesLocal(taskId, Arrays.asList(VARIABLE_NAME));
+    taskService.removeVariablesLocal(taskId, List.of(VARIABLE_NAME));
 
     // then
     verifyVariableInstanceCountDisabledAuthorization(0);
@@ -6550,13 +6464,13 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     verifyVariableInstanceCountDisabledAuthorization(1);
 
     // when (2)
-    ((TaskServiceImpl) taskService).updateVariables(taskId, null, Arrays.asList(VARIABLE_NAME));
+    ((TaskServiceImpl) taskService).updateVariables(taskId, null, List.of(VARIABLE_NAME));
 
     // then (2)
     verifyVariableInstanceCountDisabledAuthorization(0);
 
     // when (3)
-    ((TaskServiceImpl) taskService).updateVariables(taskId, getVariables(), Arrays.asList(VARIABLE_NAME));
+    ((TaskServiceImpl) taskService).updateVariables(taskId, getVariables(), List.of(VARIABLE_NAME));
 
     // then (3)
     verifyVariableInstanceCountDisabledAuthorization(0);
@@ -6570,13 +6484,13 @@ public class TaskAuthorizationTest extends AuthorizationTest {
     verifyVariableInstanceCountDisabledAuthorization(1);
 
     // when (2)
-    ((TaskServiceImpl) taskService).updateVariablesLocal(taskId, null, Arrays.asList(VARIABLE_NAME));
+    ((TaskServiceImpl) taskService).updateVariablesLocal(taskId, null, List.of(VARIABLE_NAME));
 
     // then (2)
     verifyVariableInstanceCountDisabledAuthorization(0);
 
     // when (3)
-    ((TaskServiceImpl) taskService).updateVariablesLocal(taskId, getVariables(), Arrays.asList(VARIABLE_NAME));
+    ((TaskServiceImpl) taskService).updateVariablesLocal(taskId, getVariables(), List.of(VARIABLE_NAME));
 
     // then (3)
     verifyVariableInstanceCountDisabledAuthorization(0);
@@ -6584,11 +6498,10 @@ public class TaskAuthorizationTest extends AuthorizationTest {
 
   protected void verifyGetVariables(Map<String, Object> variables) {
     assertThat(variables)
-            .isNotNull()
-            .isNotEmpty();
-    assertThat(variables)
-            .hasSize(1)
-            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
+      .isNotNull()
+      .isNotEmpty()
+      .hasSize(1)
+      .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
 }

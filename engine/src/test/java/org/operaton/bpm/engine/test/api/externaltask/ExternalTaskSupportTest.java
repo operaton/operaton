@@ -100,7 +100,7 @@ public class ExternalTaskSupportTest {
     // and it is possible to complete the external task successfully and end the process instance
     rule.getExternalTaskService().complete(externalTasks.get(0).getId(), "aWorker");
 
-    assertThat(rule.getRuntimeService().createProcessInstanceQuery().count()).isEqualTo(0L);
+    assertThat(rule.getRuntimeService().createProcessInstanceQuery().count()).isZero();
   }
 
   @Test

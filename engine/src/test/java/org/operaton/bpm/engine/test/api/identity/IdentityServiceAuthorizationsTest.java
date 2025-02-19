@@ -55,7 +55,6 @@ import org.operaton.bpm.engine.impl.persistence.entity.UserEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -813,7 +812,7 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
   }
 
   @Test
-  public void testTenanGroupMembershipDeleteAuthorizations() {
+  public void testTenantGroupMembershipDeleteAuthorizations() {
 
     Group group1 = identityService.newGroup("group1");
     identityService.saveGroup(group1);
@@ -1086,7 +1085,7 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
 
     for (User user : managementUser) {
       if (!user.getId().equals("demo") && !user.getId().equals("peter")) {
-        fail("Unexpected user for group managment: " + user.getId());
+        fail("Unexpected user for group management: " + user.getId());
       }
     }
   }

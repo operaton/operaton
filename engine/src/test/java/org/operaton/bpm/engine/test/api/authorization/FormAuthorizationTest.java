@@ -877,8 +877,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
     VariableMap variables = formService.getTaskFormVariables(taskId);
 
     // then
-    assertThat(variables).isNotNull();
-    assertThat(variables).isEmpty();
+    assertThat(variables).isNotNull().isEmpty();
   }
 
   // submit task form (standalone task) ////////////////////////////////

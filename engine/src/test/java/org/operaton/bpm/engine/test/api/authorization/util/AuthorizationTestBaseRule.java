@@ -65,8 +65,8 @@ public class AuthorizationTestBaseRule extends TestWatcher {
 
     super.finished(description);
 
-    assertThat(users.isEmpty()).as("Users have been created but not deleted").isTrue();
-    assertThat(groups.isEmpty()).as("Groups have been created but not deleted").isTrue();
+    assertThat(users).as("Users have been created but not deleted").isEmpty();
+    assertThat(groups).as("Groups have been created but not deleted").isEmpty();
   }
 
   public void manageAuthorization(Authorization authorization) {

@@ -218,8 +218,7 @@ public class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest 
     String stacktrace = historyService.getHistoricExternalTaskLogErrorDetails(failedHistoricExternalTaskLogId);
 
     // then
-    assertThat(stacktrace).isNotNull();
-    assertThat(stacktrace).isEqualTo(ERROR_DETAILS);
+    assertThat(stacktrace).isNotNull().isEqualTo(ERROR_DETAILS);
   }
 
   @Test
@@ -240,8 +239,7 @@ public class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest 
     String stacktrace = historyService.getHistoricExternalTaskLogErrorDetails(failedHistoricExternalTaskLogId);
 
     // then
-    assertThat(stacktrace).isNotNull();
-    assertThat(stacktrace).isEqualTo(ERROR_DETAILS);
+    assertThat(stacktrace).isNotNull().isEqualTo(ERROR_DETAILS);
   }
 
   @Test

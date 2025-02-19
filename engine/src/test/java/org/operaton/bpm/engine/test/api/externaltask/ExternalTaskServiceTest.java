@@ -503,7 +503,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
     // then
     assertThat(externalTasks).hasSize(2);
-    assertThat(externalTasks.get(0).getPriority() > externalTasks.get(1).getPriority()).isTrue();
+    assertThat(externalTasks.get(0).getPriority()).isGreaterThan(externalTasks.get(1).getPriority());
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskWithPriorityProcess.bpmn20.xml")
@@ -529,7 +529,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .topic(TOPIC_NAME, LOCK_TIME)
         .execute();
     assertThat(externalTasks).hasSize(1);
-    assertThat(firstPrio >= externalTasks.get(0).getPriority()).isTrue();
+    assertThat(firstPrio).isGreaterThanOrEqualTo(externalTasks.get(0).getPriority());
 
     // the expiration time expires
     ClockUtil.setCurrentTime(new DateTime(ClockUtil.getCurrentTime()).plus(LOCK_TIME * 2).toDate());
@@ -1000,9 +1000,10 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
   /**
    * Note: this does not test a hard API guarantee, i.e. the test is stricter than the API (Javadoc).
    * Its purpose is to ensure that the API implementation is less error-prone to use.
-   *
+   * <p>
    * Bottom line: if there is good reason to change behavior such that this test breaks, it may
    * be ok to change the test.
+   * </p>
    */
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   @Test
@@ -4364,7 +4365,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.testFetchMultipleTopics.bpmn20.xml"})
   @Test
-  public void testGetTopicNamesisDistinct(){
+  public void testGetTopicNamesAreDistinct(){
     //given
     runtimeService.startProcessInstanceByKey("parallelExternalTaskProcess");
     runtimeService.startProcessInstanceByKey("parallelExternalTaskProcess");

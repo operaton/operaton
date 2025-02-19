@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.api.form;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,6 +36,7 @@ public class FormPropertyDefaultValueTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
+  @SuppressWarnings("deprecation")
   public void testDefaultValue() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("FormPropertyDefaultValueTest.testDefaultValue");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -53,7 +55,7 @@ public class FormPropertyDefaultValueTest extends PluggableProcessEngineTest {
       } else if ("longExpressionProperty".equals(prop.getId())) {
         assertThat(prop.getValue()).isEqualTo("23");
       } else {
-        assertThat(false).as("Invalid form property: " + prop.getId()).isTrue();
+        fail("Invalid form property: " + prop.getId());
       }
     }
 
@@ -70,6 +72,7 @@ public class FormPropertyDefaultValueTest extends PluggableProcessEngineTest {
   
   @Deployment
   @Test
+  @SuppressWarnings("deprecation")
   public void testStartFormDefaultValue() {
     String processDefinitionId = repositoryService.createProcessDefinitionQuery()
       .processDefinitionKey("FormPropertyDefaultValueTest.testDefaultValue")
@@ -93,7 +96,7 @@ public class FormPropertyDefaultValueTest extends PluggableProcessEngineTest {
       } else if ("longExpressionProperty".equals(prop.getId())) {
         assertThat(prop.getValue()).isEqualTo("23");
       } else {
-        assertThat(false).as("Invalid form property: " + prop.getId()).isTrue();
+        fail("Invalid form property: " + prop.getId());
       }
     }
 

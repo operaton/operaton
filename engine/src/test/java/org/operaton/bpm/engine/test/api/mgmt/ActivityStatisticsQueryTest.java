@@ -32,7 +32,7 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Assert;
+
 import org.junit.Ignore;
 import org.junit.Test;
 

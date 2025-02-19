@@ -44,7 +44,6 @@ import org.operaton.bpm.engine.test.api.runtime.migration.batch.BatchMigrationHe
 import org.operaton.bpm.engine.test.util.ClockTestUtil;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

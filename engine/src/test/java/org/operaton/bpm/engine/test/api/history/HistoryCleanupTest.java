@@ -286,9 +286,9 @@ public class HistoryCleanupTest {
     final long removedDecisionInstances = managementService.createMetricsQuery().name(Metrics.HISTORY_CLEANUP_REMOVED_DECISION_INSTANCES).sum();
     final long removedCaseInstances = managementService.createMetricsQuery().name(Metrics.HISTORY_CLEANUP_REMOVED_CASE_INSTANCES).sum();
 
-    assertThat(removedProcessInstances > 0).isTrue();
-    assertThat(removedDecisionInstances > 0).isTrue();
-    assertThat(removedCaseInstances > 0).isTrue();
+    assertThat(removedProcessInstances).isPositive();
+    assertThat(removedDecisionInstances).isPositive();
+    assertThat(removedCaseInstances).isPositive();
 
     assertThat(removedProcessInstances + removedCaseInstances + removedDecisionInstances).isEqualTo(15);
   }
@@ -684,7 +684,7 @@ public class HistoryCleanupTest {
   @Test
   public void testNotEnoughTimeToDeleteEverything() {
     //given
-    //we have something to cleanup
+    //we have something to clean up
     prepareData(80);
     //we call history cleanup within batch window
     Date now = new Date();
@@ -712,7 +712,7 @@ public class HistoryCleanupTest {
   @Test
   public void testManualRunDoesNotRespectBatchWindow() {
     //given
-    //we have something to cleanup
+    //we have something to clean up
     int processInstanceCount = 40;
     prepareData(processInstanceCount);
 
@@ -1471,7 +1471,7 @@ public class HistoryCleanupTest {
     long count = historyService.createHistoricProcessInstanceQuery().count()
       + historyService.createHistoricDecisionInstanceQuery().count()
       + historyService.createHistoricCaseInstanceQuery().count();
-    assertThat(expectedInstanceCount <= count).isTrue();
+    assertThat(expectedInstanceCount).isLessThanOrEqualTo(count);
   }
 
   protected static Date addDays(Date date, int days) {

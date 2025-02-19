@@ -242,7 +242,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testProcessTaskAddUserIdentityLinkWithUpdatePersmissionOnTask() {
+  public void testProcessTaskAddUserIdentityLinkWithUpdatePermissionOnTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -304,7 +304,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testProcessTaskAddGroupIdentityLinkWithUpdatePersmissionOnTask() {
+  public void testProcessTaskAddGroupIdentityLinkWithUpdatePermissionOnTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();

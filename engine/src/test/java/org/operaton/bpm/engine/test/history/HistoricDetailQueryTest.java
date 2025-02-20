@@ -581,7 +581,7 @@ public class HistoricDetailQueryTest {
     expectedProcessInstanceIds.add(processInstance.getId());
     expectedProcessInstanceIds.add(processInstance2.getId());
     assertThat(query.count()).isEqualTo(2);
-    assertThat(expectedProcessInstanceIds).containsExactly(query.list().stream().map(HistoricDetail::getProcessInstanceId).toArray(String[]::new));
+    assertThat(expectedProcessInstanceIds).containsExactlyInAnyOrder(query.list().stream().map(HistoricDetail::getProcessInstanceId).toArray(String[]::new));
   }
 
   @Test

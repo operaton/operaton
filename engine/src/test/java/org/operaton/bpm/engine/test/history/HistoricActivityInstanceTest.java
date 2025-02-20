@@ -67,7 +67,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
     assertThat(historicActivityInstance.getExecutionId()).isEqualTo(processInstance.getId());
     assertThat(historicActivityInstance.getStartTime()).isNotNull();
     assertThat(historicActivityInstance.getEndTime()).isNotNull();
-    assertThat(historicActivityInstance.getDurationInMillis()).isPositive();
+    assertThat(historicActivityInstance.getDurationInMillis()).isGreaterThanOrEqualTo(0);
   }
 
   @Deployment

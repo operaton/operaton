@@ -572,7 +572,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testActivateJobDefinitionByProcessDefinitionKeyIncludingInstaces() {
+  public void testActivateJobDefinitionByProcessDefinitionKeyIncludingInstances() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("includeJobs", true);
@@ -616,7 +616,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testDelayedActivateJobDefinitionByProcessDefinitionKeyIncludingInstaces() {
+  public void testDelayedActivateJobDefinitionByProcessDefinitionKeyIncludingInstances() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("includeJobs", true);
@@ -769,7 +769,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testSuspendJobDefinitionByProcessDefinitionKeyIncludingInstaces() {
+  public void testSuspendJobDefinitionByProcessDefinitionKeyIncludingInstances() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("includeJobs", true);
@@ -813,7 +813,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testDelayedSuspendJobDefinitionByProcessDefinitionKeyIncludingInstaces() {
+  public void testDelayedSuspendJobDefinitionByProcessDefinitionKeyIncludingInstances() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("includeJobs", true);
@@ -966,7 +966,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testActivateJobDefinitionByProcessDefinitionIdIncludingInstaces() {
+  public void testActivateJobDefinitionByProcessDefinitionIdIncludingInstances() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("includeJobs", true);
@@ -1010,7 +1010,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testDelayedActivateJobDefinitionByProcessDefinitionIdIncludingInstaces() {
+  public void testDelayedActivateJobDefinitionByProcessDefinitionIdIncludingInstances() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("includeJobs", true);
@@ -1121,7 +1121,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testSuspendJobDefinitionByProcessDefinitionIdIncludingInstaces() {
+  public void testSuspendJobDefinitionByProcessDefinitionIdIncludingInstances() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("includeJobs", true);
@@ -1165,7 +1165,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testDelayedSuspendJobDefinitionByProcessDefinitionIdIncludingInstaces() {
+  public void testDelayedSuspendJobDefinitionByProcessDefinitionIdIncludingInstances() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("includeJobs", true);

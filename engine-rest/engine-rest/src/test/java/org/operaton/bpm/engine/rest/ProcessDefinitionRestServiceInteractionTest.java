@@ -64,7 +64,6 @@ import org.junit.ClassRule;
 import org.junit.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import static io.restassured.RestAssured.given;
@@ -161,7 +160,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
     repositoryServiceMock = mock(RepositoryService.class);
     when(processEngine.getRepositoryService()).thenReturn(repositoryServiceMock);
     when(repositoryServiceMock.getProcessDefinition(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)).thenReturn(mockDefinition);
-    when(repositoryServiceMock.getProcessModel(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)).thenReturn(createMockProcessDefinionBpmn20Xml());
+    when(repositoryServiceMock.getProcessModel(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)).thenReturn(createMockProcessDefinitionBpmn20Xml());
 
     DeleteProcessDefinitionsSelectBuilder deleteProcessDefinitionsSelectBuilder = mock(DeleteProcessDefinitionsSelectBuilder.class, RETURNS_DEEP_STUBS);
     when(repositoryServiceMock.deleteProcessDefinitions()).thenReturn(deleteProcessDefinitionsSelectBuilder);
@@ -181,7 +180,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
 
   }
 
-  private InputStream createMockProcessDefinionBpmn20Xml() {
+  private InputStream createMockProcessDefinitionBpmn20Xml() {
     // do not close the input stream, will be done in implementation
     InputStream bpmn20XmlIn = null;
     bpmn20XmlIn = ReflectUtil.getResourceAsStream("processes/fox-invoice_en_long_id.bpmn");
@@ -953,7 +952,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
                     equalTo(ArrayList.class.getName()))
             .body("variables." + MockProvider.EXAMPLE_VARIABLE_INSTANCE_NAME + ".valueInfo.serializationDataFormat",
                     equalTo(MockProvider.FORMAT_APPLICATION_JSON))
-            //deserialized variable should also returned as serialized variable
+            //deserialized variable should also be returned as serialized variable
             .body("variables." + MockProvider.EXAMPLE_DESERIALIZED_VARIABLE_INSTANCE_NAME + ".value",
                     equalTo(MockProvider.EXAMPLE_VARIABLE_INSTANCE_SERIALIZED_VALUE))
             .body("variables." + MockProvider.EXAMPLE_DESERIALIZED_VARIABLE_INSTANCE_NAME + ".type",
@@ -1051,12 +1050,9 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
 
     final VariableMap varMap = new VariableMapImpl();
 
-    when(mockInstantiationBuilder.setVariables(anyMap())).thenAnswer(new Answer<ProcessInstantiationBuilder>() {
-      @Override
-      public ProcessInstantiationBuilder answer(InvocationOnMock invocation) throws Throwable {
-        varMap.putAll((VariableMap) invocation.getArguments()[0]);
-        return mockInstantiationBuilder;
-      }
+    when(mockInstantiationBuilder.setVariables(anyMap())).thenAnswer((Answer<ProcessInstantiationBuilder>) invocation -> {
+      varMap.putAll((VariableMap) invocation.getArguments()[0]);
+      return mockInstantiationBuilder;
     });
 
     given().pathParam("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
@@ -1200,7 +1196,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
                     equalTo(ArrayList.class.getName()))
             .body("variables." + MockProvider.EXAMPLE_VARIABLE_INSTANCE_NAME + ".valueInfo.serializationDataFormat",
                     equalTo(MockProvider.FORMAT_APPLICATION_JSON))
-            //deserialized variable should also returned as serialized variable
+            //deserialized variable should also be returned as serialized variable
             .body("variables." + MockProvider.EXAMPLE_DESERIALIZED_VARIABLE_INSTANCE_NAME + ".value",
                     equalTo(MockProvider.EXAMPLE_VARIABLE_INSTANCE_SERIALIZED_VALUE))
             .body("variables." + MockProvider.EXAMPLE_DESERIALIZED_VARIABLE_INSTANCE_NAME + ".type",
@@ -1391,7 +1387,6 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
       .post(START_PROCESS_INSTANCE_URL);
   }
 
-  @SuppressWarnings("unchecked")
   protected ProcessInstantiationBuilder setUpMockInstantiationBuilder() {
     ProcessInstanceWithVariables resultInstanceWithVariables = MockProvider.createMockInstanceWithVariables();
     ProcessInstantiationBuilder processInstantiationBuilder = mock(ProcessInstantiationBuilder.class);
@@ -2352,7 +2347,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
   }
 
   @Test
-  public void testActivateProcessDefinitionByKeyIncludingInstaces() {
+  public void testActivateProcessDefinitionByKeyIncludingInstances() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("includeProcessInstances", true);
@@ -2392,7 +2387,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
   }
 
   @Test
-  public void testDelayedActivateProcessDefinitionByKeyIncludingInstaces() {
+  public void testDelayedActivateProcessDefinitionByKeyIncludingInstances() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", false);
     params.put("includeProcessInstances", true);
@@ -2497,7 +2492,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
   }
 
   @Test
-  public void testSuspendProcessDefinitionByKeyIncludingInstaces() {
+  public void testSuspendProcessDefinitionByKeyIncludingInstances() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("includeProcessInstances", true);
@@ -2537,7 +2532,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
   }
 
   @Test
-  public void testDelayedSuspendProcessDefinitionByKeyIncludingInstaces() {
+  public void testDelayedSuspendProcessDefinitionByKeyIncludingInstances() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
     params.put("includeProcessInstances", true);

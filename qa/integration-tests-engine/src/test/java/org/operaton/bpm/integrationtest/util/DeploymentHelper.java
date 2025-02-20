@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.util;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 
@@ -58,16 +57,6 @@ public class DeploymentHelper extends AbstractDeploymentHelper {
         return CACHED_WELD_ASSETS;
       }
     }
-  }
-
-  protected static JavaArchive[] resolveDependenciesFromPomXml(String engineCdiArtifactName, String... dependencyNames) {
-    JavaArchive[] result = new JavaArchive[0];
-    for (String dependencyName : dependencyNames) {
-      JavaArchive[] archive = resolveDependenciesFromPomXml(engineCdiArtifactName, dependencyName);
-      result = (JavaArchive[]) ArrayUtils.addAll(result, archive);
-    }
-
-    return result;
   }
 
   protected static JavaArchive[] resolveDependenciesFromPomXml(String engineCdiArtifactName, String dependencyName) {

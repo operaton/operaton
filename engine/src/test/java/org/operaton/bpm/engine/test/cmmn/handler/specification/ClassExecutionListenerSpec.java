@@ -43,7 +43,7 @@ public class ClassExecutionListenerSpec extends AbstractExecutionListenerSpec {
 
   @Override
   public void verifyListener(DelegateListener<? extends BaseDelegateExecution> listener) {
-    assertThat(listener instanceof ClassDelegateCaseExecutionListener).isTrue();
+    assertThat(listener).isInstanceOf(ClassDelegateCaseExecutionListener.class);
     ClassDelegateCaseExecutionListener classDelegateListener = (ClassDelegateCaseExecutionListener) listener;
     assertThat(classDelegateListener.getClassName()).isEqualTo(CLASS_NAME);
 

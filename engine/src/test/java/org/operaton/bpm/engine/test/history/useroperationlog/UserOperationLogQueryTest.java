@@ -33,10 +33,7 @@ import org.operaton.bpm.engine.runtime.*;
 import org.operaton.bpm.engine.task.Attachment;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import static org.operaton.bpm.engine.EntityTypes.JOB;
-import static org.operaton.bpm.engine.EntityTypes.JOB_DEFINITION;
-import static org.operaton.bpm.engine.EntityTypes.PROCESS_DEFINITION;
-import static org.operaton.bpm.engine.EntityTypes.PROCESS_INSTANCE;
+import static org.operaton.bpm.engine.EntityTypes.*;
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.*;
 import static org.operaton.bpm.engine.impl.cmd.AbstractSetBatchStateCmd.SUSPENSION_STATE_PROPERTY;
 import static org.operaton.bpm.engine.impl.cmd.AbstractSetProcessDefinitionStateCmd.INCLUDE_PROCESS_INSTANCES_PROPERTY;
@@ -87,9 +84,9 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     assertThat(query().count()).isEqualTo(18);
 
     // entity type
-    assertThat(query().entityType(EntityTypes.TASK).count()).isEqualTo(11);
-    assertThat(query().entityType(EntityTypes.IDENTITY_LINK).count()).isEqualTo(4);
-    assertThat(query().entityType(EntityTypes.ATTACHMENT).count()).isEqualTo(2);
+    assertThat(query().entityType(TASK).count()).isEqualTo(11);
+    assertThat(query().entityType(IDENTITY_LINK).count()).isEqualTo(4);
+    assertThat(query().entityType(ATTACHMENT).count()).isEqualTo(2);
     assertThat(query().entityType(EntityTypes.PROCESS_INSTANCE).count()).isEqualTo(1);
     assertThat(query().entityType("unknown entity type").count()).isZero();
 
@@ -133,25 +130,25 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     // ascending order results by time
     List<UserOperationLogEntry> ascLog = query().orderByTimestamp().asc().list();
     for (int i = 0; i < 5; i++) {
-      assertThat(yesterday.getTime() <= ascLog.get(i).getTimestamp().getTime()).isTrue();
+      assertThat(yesterday.getTime()).isLessThanOrEqualTo(ascLog.get(i).getTimestamp().getTime());
     }
     for (int i = 5; i < 13; i++) {
-      assertThat(today.getTime() <= ascLog.get(i).getTimestamp().getTime()).isTrue();
+      assertThat(today.getTime()).isLessThanOrEqualTo(ascLog.get(i).getTimestamp().getTime());
     }
     for (int i = 13; i < 18; i++) {
-      assertThat(tomorrow.getTime() <= ascLog.get(i).getTimestamp().getTime()).isTrue();
+      assertThat(tomorrow.getTime()).isLessThanOrEqualTo(ascLog.get(i).getTimestamp().getTime());
     }
 
     // descending order results by time
     List<UserOperationLogEntry> descLog = query().orderByTimestamp().desc().list();
     for (int i = 0; i < 4; i++) {
-      assertThat(tomorrow.getTime() <= descLog.get(i).getTimestamp().getTime()).isTrue();
+      assertThat(tomorrow.getTime()).isLessThanOrEqualTo(descLog.get(i).getTimestamp().getTime());
     }
     for (int i = 4; i < 11; i++) {
-      assertThat(today.getTime() <= descLog.get(i).getTimestamp().getTime()).isTrue();
+      assertThat(today.getTime()).isLessThanOrEqualTo(descLog.get(i).getTimestamp().getTime());
     }
     for (int i = 11; i < 18; i++) {
-      assertThat(yesterday.getTime() <= descLog.get(i).getTimestamp().getTime()).isTrue();
+      assertThat(yesterday.getTime()).isLessThanOrEqualTo(descLog.get(i).getTimestamp().getTime());
     }
 
     // filter by time, created yesterday
@@ -174,9 +171,9 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     assertThat(query().count()).isEqualTo(18);
 
     // entity type
-    assertThat(query().entityType(ENTITY_TYPE_TASK).count()).isEqualTo(11);
-    assertThat(query().entityType(ENTITY_TYPE_IDENTITY_LINK).count()).isEqualTo(4);
-    assertThat(query().entityType(ENTITY_TYPE_ATTACHMENT).count()).isEqualTo(2);
+    assertThat(query().entityType(TASK).count()).isEqualTo(11);
+    assertThat(query().entityType(IDENTITY_LINK).count()).isEqualTo(4);
+    assertThat(query().entityType(ATTACHMENT).count()).isEqualTo(2);
     assertThat(query().entityType("unknown entity type").count()).isZero();
   }
 
@@ -863,14 +860,14 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
 
     // then
     // there is a user log entry for the activation
-    Long jobDefinitionEntryCount = query()
+    long jobDefinitionEntryCount = query()
       .entityType(JOB_DEFINITION)
       .operationType(UserOperationLogEntry.OPERATION_TYPE_ACTIVATE_JOB_DEFINITION)
       .processDefinitionId(processDefinitionId)
       .category(UserOperationLogEntry.CATEGORY_OPERATOR)
       .count();
 
-    assertThat(jobDefinitionEntryCount.longValue()).isEqualTo(1);
+    assertThat(jobDefinitionEntryCount).isEqualTo(1);
 
     // there exists a job for the delayed activation execution
     JobQuery jobQuery = managementService.createJobQuery();
@@ -888,7 +885,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
       .category(UserOperationLogEntry.CATEGORY_OPERATOR)
       .count();
 
-    assertThat(jobDefinitionEntryCount.longValue()).isEqualTo(1);
+    assertThat(jobDefinitionEntryCount).isEqualTo(1);
 
     // Clean up db
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
@@ -922,7 +919,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     assertThat(timerToSuspendProcessDefinition).isNotNull();
 
     // there is a user log entry for the activation
-    Long processDefinitionEntryCount = query()
+    long processDefinitionEntryCount = query()
       .entityType(PROCESS_DEFINITION)
       .operationType(UserOperationLogEntry.OPERATION_TYPE_SUSPEND_PROCESS_DEFINITION)
       .processDefinitionKey(key)
@@ -930,7 +927,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
       .property(SUSPENSION_STATE_PROPERTY)
       .count();
 
-    assertThat(processDefinitionEntryCount.longValue()).isEqualTo(1);
+    assertThat(processDefinitionEntryCount).isEqualTo(1);
 
     // when
     // execute job
@@ -946,7 +943,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
       .property(SUSPENSION_STATE_PROPERTY)
       .count();
 
-    assertThat(processDefinitionEntryCount.longValue()).isEqualTo(1);
+    assertThat(processDefinitionEntryCount).isEqualTo(1);
 
     // clean up op log
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
@@ -1210,7 +1207,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     // then
     UserOperationLogQuery query = historyService
         .createUserOperationLogQuery()
-        .entityTypeIn(EntityTypes.TASK, EntityTypes.VARIABLE);
+        .entityTypeIn(TASK, EntityTypes.VARIABLE);
 
     verifyQueryResults(query, 2);
   }
@@ -1231,7 +1228,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     }
 
     try {
-      query.entityTypeIn(EntityTypes.TASK, null, EntityTypes.VARIABLE);
+      query.entityTypeIn(TASK, null, EntityTypes.VARIABLE);
       fail("");
     } catch (ProcessEngineException e) {
       // expected
@@ -1393,7 +1390,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     historyService.deleteHistoricVariableInstance(variableInstance.getId());
 
     // then
-    verfiySingleCaseVariableOperationAsserts(caseInstance);
+    verifySingleCaseVariableOperationAsserts(caseInstance);
     verifySingleVariableOperationPropertyChange("name", "myVariable", UserOperationLogEntry.OPERATION_TYPE_DELETE_HISTORY);
   }
 
@@ -1411,7 +1408,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     // when
     historyService.deleteHistoricVariableInstance(variableInstance.getId());
 
-    verfiySingleCaseVariableOperationAsserts(caseInstance);
+    verifySingleCaseVariableOperationAsserts(caseInstance);
     verifySingleVariableOperationPropertyChange("name", "myVariable", UserOperationLogEntry.OPERATION_TYPE_DELETE_HISTORY);
   }
 
@@ -1695,7 +1692,9 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     try {
       query.singleResult();
       fail("");
-    } catch (ProcessEngineException e) {}
+    } catch (ProcessEngineException e) {
+      // expected
+    }
   }
 
   private Map<String, Object> createMapForVariableAddition() {
@@ -1771,7 +1770,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     assertThat(logEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
   }
 
-  private void verfiySingleCaseVariableOperationAsserts(CaseInstance caseInstance) {
+  private void verifySingleCaseVariableOperationAsserts(CaseInstance caseInstance) {
     String deploymentId = repositoryService.createDeploymentQuery().singleResult().getId();
     String operationType = UserOperationLogEntry.OPERATION_TYPE_DELETE_HISTORY;
     UserOperationLogQuery logQuery = query().entityType(EntityTypes.VARIABLE).operationType(operationType);

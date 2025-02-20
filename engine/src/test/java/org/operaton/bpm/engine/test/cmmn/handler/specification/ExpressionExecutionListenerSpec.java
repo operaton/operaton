@@ -40,7 +40,7 @@ public class ExpressionExecutionListenerSpec extends AbstractExecutionListenerSp
 
   @Override
   public void verifyListener(DelegateListener<? extends BaseDelegateExecution> listener) {
-    assertThat(listener instanceof ExpressionCaseExecutionListener).isTrue();
+    assertThat(listener).isInstanceOf(ExpressionCaseExecutionListener.class);
 
     ExpressionCaseExecutionListener expressionListener = (ExpressionCaseExecutionListener) listener;
     assertThat(expressionListener.getExpressionText()).isEqualTo(EXPRESSION);

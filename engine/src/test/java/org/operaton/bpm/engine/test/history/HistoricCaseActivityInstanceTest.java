@@ -101,7 +101,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
     String taskInstanceId2 = queryCaseExecutionByActivityId(humanTaskId2).getId();
     String taskInstanceId3 = queryCaseExecutionByActivityId(humanTaskId3).getId();
 
-    // human task 1 should enabled and human task 2 and 3 will be available cause the sentry is not fulfilled
+    // human task 1 should be enabled and human task 2 and 3 will be available cause the sentry is not fulfilled
     assertHistoricState(humanTaskId1, ENABLED);
     assertHistoricState(humanTaskId2, AVAILABLE);
     assertHistoricState(humanTaskId3, AVAILABLE);
@@ -313,7 +313,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
     ClockUtil.setCurrentTime(ended);
     terminate(caseInstanceId);
 
-    // then human task 3 and milestone 3 should be terminated and a end time is set
+    // then human task 3 and milestone 3 should be terminated and an end time is set
     assertHistoricEndTime(taskId3, ended);
     assertHistoricEndTime(milestoneId3, ended);
     assertHistoricDuration(taskId3, duration);
@@ -676,7 +676,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/required/RequiredRuleTest.testVariableBasedRule.cmmn")
   @Test
   public void testRequiredRuleEvaluatesToTrue() {
-    caseService.createCaseInstanceByKey("case", Collections.<String, Object>singletonMap("required", true));
+    caseService.createCaseInstanceByKey("case", Collections.singletonMap("required", true));
 
     HistoricCaseActivityInstance task = historyService
         .createHistoricCaseActivityInstanceQuery()
@@ -690,7 +690,8 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/required/RequiredRuleTest.testVariableBasedRule.cmmn")
   @Test
   public void testRequiredRuleEvaluatesToFalse() {
-    caseService.createCaseInstanceByKey("case", Collections.<String, Object>singletonMap("required", false));
+    caseService.createCaseInstanceByKey("case", Collections.
+      singletonMap("required", false));
 
     HistoricCaseActivityInstance task = historyService
         .createHistoricCaseActivityInstanceQuery()
@@ -704,7 +705,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/required/RequiredRuleTest.testVariableBasedRule.cmmn")
   @Test
   public void testQueryByRequired() {
-    caseService.createCaseInstanceByKey("case", Collections.<String, Object>singletonMap("required", true));
+    caseService.createCaseInstanceByKey("case", Collections.singletonMap("required", true));
 
     HistoricCaseActivityInstanceQuery query = historyService
         .createHistoricCaseActivityInstanceQuery()
@@ -904,12 +905,16 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
     try {
       historicCaseActivityInstanceQuery.caseActivityInstanceIdIn((String[])null);
       fail("A NotValidException was expected.");
-    } catch (NotValidException e) {}
+    } catch (NotValidException e) {
+      // expected
+    }
 
     try {
       historicCaseActivityInstanceQuery.caseActivityInstanceIdIn((String)null);
       fail("A NotValidException was expected.");
-    } catch (NotValidException e) {}
+    } catch (NotValidException e) {
+      // expected
+    }
   }
 
   @Deployment(resources = {
@@ -943,12 +948,16 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
     try {
       historicCaseActivityInstanceQuery.caseActivityIdIn((String[])null);
       fail("A NotValidException was expected.");
-    } catch (NotValidException e) {}
+    } catch (NotValidException e) {
+      // expected
+    }
 
     try {
       historicCaseActivityInstanceQuery.caseActivityIdIn((String)null);
       fail("A NotValidException was expected.");
-    } catch (NotValidException e) {}
+    } catch (NotValidException e) {
+      // expected
+    }
   }
 
   protected HistoricCaseActivityInstanceQuery historicQuery() {
@@ -985,15 +994,15 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
   protected void assertSimilarDate(Date expectedDate, Date actualDate) {
     long difference = Math.abs(expectedDate.getTime() - actualDate.getTime());
     // assert that the dates don't differ more than a second
-    assertThat(difference < 1000).isTrue();
+    assertThat(difference).isLessThan(1000);
   }
 
   protected void assertHistoricDuration(String activityId, long expectedDuration) {
     Long actualDuration = queryHistoricActivityCaseInstance(activityId).getDurationInMillis();
     assertThat(actualDuration).isNotNull();
     // test that duration is as expected with a maximal difference of one second
-    assertThat(actualDuration >= expectedDuration).isTrue();
-    assertThat(actualDuration < expectedDuration + 1000).isTrue();
+    assertThat(actualDuration).isGreaterThanOrEqualTo(expectedDuration);
+    assertThat(actualDuration).isLessThan(expectedDuration + 1000);
   }
 
   protected void assertCount(long count, Query<?, ?> historicQuery) {
@@ -1022,11 +1031,8 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
   }
 
   protected class CaseExecutionStateCountMap extends HashMap<CaseExecutionState, Long> {
-
-    private static final long serialVersionUID = 1L;
-
-    public final Collection<CaseExecutionState> ALL_STATES = CaseExecutionState.CASE_EXECUTION_STATES.values();
-    public final Collection<CaseExecutionState> ENDED_STATES = Arrays.asList(COMPLETED, TERMINATED);
+    public static final Collection<CaseExecutionState> ALL_STATES = CaseExecutionState.CASE_EXECUTION_STATES.values();
+    public static final Collection<CaseExecutionState> ENDED_STATES = Arrays.asList(COMPLETED, TERMINATED);
     public final Collection<CaseExecutionState> NOT_ENDED_STATES;
 
     public CaseExecutionStateCountMap() {
@@ -1035,7 +1041,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
     }
 
     public Long get(CaseExecutionState state) {
-      return state != null && containsKey(state) ? super.get(state) : 0l;
+      return state != null && containsKey(state) ? super.get(state) : 0L;
     }
 
     public Long count() {

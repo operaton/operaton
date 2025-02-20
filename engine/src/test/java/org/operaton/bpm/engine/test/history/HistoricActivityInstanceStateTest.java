@@ -507,7 +507,7 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
       }
     }
 
-    assertThat(found > 0).as("contains entry for activity <" + activityId + ">").isTrue();
+    assertThat(found).as("contains entry for activity <" + activityId + ">").isPositive();
 
     if (expectedCount != -1) {
       assertThat(expectedCount).as("contains <" + expectedCount + "> entries for activity <" + activityId + ">").isEqualTo(found);
@@ -540,7 +540,7 @@ public class HistoricActivityInstanceStateTest extends PluggableProcessEngineTes
       }
     }
 
-    assertThat(found > 0).as("contains entry for activity <" + activityId + ">").isTrue();
+    assertThat(found).as("contains entry for activity <" + activityId + ">").isPositive();
 
     if (expectedCount != -1) {
       assertThat(expectedCount).as("contains <" + expectedCount + "> entries for activity <" + activityId + ">").isEqualTo(found);

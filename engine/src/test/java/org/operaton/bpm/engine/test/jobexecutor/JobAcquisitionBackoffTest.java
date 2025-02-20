@@ -141,7 +141,7 @@ public class JobAcquisitionBackoffTest {
     // while thread 2 again fails with OLE
     acquisitionThread2.makeContinueAndWaitForSync();
 
-    // then thread 1 has tried to acquired 3 jobs again
+    // then thread 1 has tried to acquire 3 jobs again
     List<RecordedAcquisitionEvent> jobExecutor1AcquisitionEvents = jobExecutor1.getAcquireJobsRunnable().getAcquisitionEvents();
     RecordedAcquisitionEvent secondAcquisitionAttempt = jobExecutor1AcquisitionEvents.get(1);
     assertThat(secondAcquisitionAttempt.getNumJobsToAcquire()).isEqualTo(3);
@@ -201,13 +201,13 @@ public class JobAcquisitionBackoffTest {
     JobAcquisitionTestHelper.activateInstances(engineRule.getProcessEngine(), 12);
 
     // backoff has not decreased yet;
-    assertThat(jobExecutor2WaitEvents.get(0).getTimeBetweenAcquisitions() > 0).isTrue();
+    assertThat(jobExecutor2WaitEvents.get(0).getTimeBetweenAcquisitions()).isPositive();
     acquisitionThread2.makeContinueAndWaitForSync(); // acquire
     acquisitionThread2.makeContinueAndWaitForSync(); // continue after acquisition with next cycle
 
     for (int i = 1; i < BACKOFF_DECREASE_THRESHOLD; i++) {
       // backoff has not decreased yet
-      assertThat(jobExecutor2WaitEvents.get(i).getTimeBetweenAcquisitions() > 0).isTrue();
+      assertThat(jobExecutor2WaitEvents.get(i).getTimeBetweenAcquisitions()).isPositive();
 
       acquisitionThread2.makeContinueAndWaitForSync(); // acquire
       acquisitionThread2.makeContinueAndWaitForSync(); // continue after acquisition with next cycle

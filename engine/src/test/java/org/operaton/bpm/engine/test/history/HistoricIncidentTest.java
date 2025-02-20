@@ -43,7 +43,7 @@ import org.junit.Test;
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class HistoricIncidentTest extends PluggableProcessEngineTest {
 
-  private static String PROCESS_DEFINITION_KEY = "oneFailingServiceTaskProcess";
+  private static final String PROCESS_DEFINITION_KEY = "oneFailingServiceTaskProcess";
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
   @Test
@@ -394,7 +394,7 @@ public class HistoricIncidentTest extends PluggableProcessEngineTest {
     List<HistoricJobLog> logsNew = getHistoricJobLogOrdered(jobId);
     assertThat(incidentNew.getId()).isEqualTo(incident.getId());
     assertThat(incidentNew.getHistoryConfiguration()).isEqualTo(incident.getHistoryConfiguration());
-    assertThat(logsNew.size() > logs.size()).isTrue();
+    assertThat(logsNew).hasSizeGreaterThan(logs.size());
 
     // execute the available job (should fail again)
     testRule.executeAvailableJobs(false);
@@ -403,7 +403,7 @@ public class HistoricIncidentTest extends PluggableProcessEngineTest {
     assertThat(query.count()).isEqualTo(1);
     incidentNew = query.singleResult();
     logsNew = getHistoricJobLogOrdered(jobId);
-    assertThat(logsNew.size() > logs.size()).isTrue();
+    assertThat(logsNew).hasSizeGreaterThan(logs.size());
     assertThat(incidentNew.getId()).isEqualTo(incident.getId());
     assertThat(incidentNew.getHistoryConfiguration()).isNotEqualTo(incident.getHistoryConfiguration());
     assertThat(incidentNew.getHistoryConfiguration()).isEqualTo(logsNew.get(0).getId());

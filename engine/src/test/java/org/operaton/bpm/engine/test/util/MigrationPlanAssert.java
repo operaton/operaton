@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.util;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
 import java.util.ArrayList;
@@ -164,7 +163,7 @@ public class MigrationPlanAssert {
     isNotNull();
 
     List<MigrationInstruction> instructions = actual.getInstructions();
-    Assertions.assertThat(instructions.isEmpty()).as("Expected migration plan has no instructions but has: " + instructions).isTrue();
+    Assertions.assertThat(instructions).as("Expected migration plan has no instructions but has: " + instructions).isEmpty();
 
     return this;
   }

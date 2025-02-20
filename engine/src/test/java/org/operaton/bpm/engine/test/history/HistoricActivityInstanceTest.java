@@ -67,7 +67,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
     assertThat(historicActivityInstance.getExecutionId()).isEqualTo(processInstance.getId());
     assertThat(historicActivityInstance.getStartTime()).isNotNull();
     assertThat(historicActivityInstance.getEndTime()).isNotNull();
-    assertThat(historicActivityInstance.getDurationInMillis() >= 0).isTrue();
+    assertThat(historicActivityInstance.getDurationInMillis()).isPositive();
   }
 
   @Deployment
@@ -101,8 +101,8 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
     assertThat(historicActivityInstance.getProcessInstanceId()).isEqualTo(processInstance.getId());
     assertThat(historicActivityInstance.getExecutionId()).isEqualTo(processInstance.getId());
     assertThat(historicActivityInstance.getStartTime()).isNotNull();
-    assertThat(historicActivityInstance.getDurationInMillis() >= 1000).isTrue();
-    assertThat(((HistoricActivityInstanceEventEntity) historicActivityInstance).getDurationRaw() >= 1000).isTrue();
+    assertThat(historicActivityInstance.getDurationInMillis()).isGreaterThanOrEqualTo(1000);
+    assertThat(((HistoricActivityInstanceEventEntity) historicActivityInstance).getDurationRaw()).isGreaterThanOrEqualTo(1000);
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/history/HistoricActivityInstanceTest.testHistoricActivityInstanceReceive.bpmn20.xml" })
@@ -144,8 +144,8 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
     assertThat(historicActivityInstance.getProcessInstanceId()).isEqualTo(processInstance.getId());
     assertThat(historicActivityInstance.getExecutionId()).isEqualTo(processInstance.getId());
     assertThat(historicActivityInstance.getStartTime()).isNotNull();
-    assertThat(historicActivityInstance.getDurationInMillis() >= ONE_YEAR).isTrue();
-    assertThat(((HistoricActivityInstanceEventEntity) historicActivityInstance).getDurationRaw() >= ONE_YEAR).isTrue();
+    assertThat(historicActivityInstance.getDurationInMillis()).isGreaterThanOrEqualTo(ONE_YEAR);
+    assertThat(((HistoricActivityInstanceEventEntity) historicActivityInstance).getDurationRaw()).isGreaterThanOrEqualTo(ONE_YEAR);
   }
 
   @Deployment
@@ -340,21 +340,21 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
       historicActivityInstanceQuery.list();
       fail("");
     } catch (ProcessEngineException e) {
-
+      // expected
     }
 
     try {
       historicActivityInstanceQuery.list();
       fail("");
     } catch (ProcessEngineException e) {
-
+      // expected
     }
 
     try {
       historicActivityInstanceQuery.list();
       fail("");
     } catch (ProcessEngineException e) {
-
+      // expected
     }
   }
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
@@ -453,7 +453,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
   }
 
   /**
-   * https://app.camunda.com/jira/browse/CAM-1537
+   * <a href="https://app.camunda.com/jira/browse/CAM-1537">CAM-1537</a>
    */
   @Deployment
   @Test
@@ -938,7 +938,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
   }
 
   private HistoricActivityInstanceQuery startEventTestProcess(String message) {
-    if(message.equals("")) {
+    if(message.isEmpty()) {
       runtimeService.startProcessInstanceByKey("testEvents");
     } else {
       runtimeService.startProcessInstanceByMessage("CAM-2365");

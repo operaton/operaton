@@ -33,14 +33,14 @@ public class SchemaLogUpgradeScriptPatternTest extends SchemaLogTestCase {
 
   @Test
   public void testOnlyValidUpgradeFilePatterns() {
-    /**
+    /*
      * valid patterns:
      * h2_engine_7.2_to_7.3.sql,
      * oracle_engine_7.3_patch_7.3.0_to_7.3.1.sql,
      * postgres_engine_7.3_patch_7.3.2_to_7.3.3_1.sql,
      */
     for (String file : folderContents.get(UPGRADE_SCRIPT_FOLDER)) {
-      assertThat(file.endsWith(".sql")).as("unexpected file format for file: " + file).isTrue();
+      assertThat(file).endsWith(".sql");
       // get rid of the .sql ending as it makes splitting easier
       file = file.substring(0, file.length() - 4);
 

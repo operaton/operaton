@@ -76,7 +76,7 @@ public class CaseVariableListenerHandlerTest extends CmmnElementHandlerTest {
     assertThat(listener.getFieldDeclarations()).hasSize(1);
     assertThat(listener.getFieldDeclarations().get(0).getName()).isEqualTo("fieldName");
     Object fieldValue = listener.getFieldDeclarations().get(0).getValue();
-    assertThat(fieldValue instanceof Expression).isTrue();
+    assertThat(fieldValue).isInstanceOf(Expression.class);
     Expression expressionValue = (Expression) fieldValue;
     assertThat(expressionValue.getExpressionText()).isEqualTo("a string value");
 

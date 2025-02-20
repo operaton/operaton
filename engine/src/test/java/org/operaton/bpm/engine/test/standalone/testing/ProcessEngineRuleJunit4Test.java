@@ -31,10 +31,11 @@ import org.junit.Test;
 
 
 /**
- * Test runners follow the this rule:
- *   - if the class extends Testcase, run as Junit 3
- *   - otherwise use Junit 4
- *
+ * Test runners follow this rule:
+ * <ul>
+ *   <li>if the class extends Testcase, run as Junit 3</li>
+ *   <li>otherwise use Junit 4</li>
+ * </ul>
  * So this test can be included in the regular test suite without problems.
  *
  * @author Joram Barrez

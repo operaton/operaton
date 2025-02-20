@@ -89,6 +89,7 @@ public class MilestoneDiscretionaryItemHandlerTest extends CmmnElementHandlerTes
   }
 
   @Test
+  @SuppressWarnings("deprecation")
   public void testMilestoneDescription() {
     // given
     String description = "This is a milestone";
@@ -102,6 +103,7 @@ public class MilestoneDiscretionaryItemHandlerTest extends CmmnElementHandlerTes
   }
 
   @Test
+  @SuppressWarnings("deprecation")
   public void testDiscretionaryItemDescription() {
     // given
     String description = "This is a discretionaryItem";
@@ -123,7 +125,7 @@ public class MilestoneDiscretionaryItemHandlerTest extends CmmnElementHandlerTes
 
     // then
     CmmnActivityBehavior behavior = activity.getActivityBehavior();
-    assertThat(behavior instanceof MilestoneActivityBehavior).isTrue();
+    assertThat(behavior).isInstanceOf(MilestoneActivityBehavior.class);
   }
 
   @Test
@@ -180,8 +182,7 @@ public class MilestoneDiscretionaryItemHandlerTest extends CmmnElementHandlerTes
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_REQUIRED_RULE);
-    assertThat(rule).isNotNull();
-    assertThat(rule instanceof CaseControlRule).isTrue();
+    assertThat(rule).isInstanceOf(CaseControlRule.class);
   }
 
   @Test
@@ -199,8 +200,7 @@ public class MilestoneDiscretionaryItemHandlerTest extends CmmnElementHandlerTes
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_REQUIRED_RULE);
-    assertThat(rule).isNotNull();
-    assertThat(rule instanceof CaseControlRule).isTrue();
+    assertThat(rule).isInstanceOf(CaseControlRule.class);
   }
 
 }

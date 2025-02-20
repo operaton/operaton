@@ -95,7 +95,8 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testSetVariableOnProcessIntanceStartAndSetVariableLocalOnUserTask() {
+  @SuppressWarnings("deprecation")
+  public void testSetVariableOnProcessInstanceStartAndSetVariableLocalOnUserTask() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("testVar", "testValue");
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("oneTaskProcess", variables);

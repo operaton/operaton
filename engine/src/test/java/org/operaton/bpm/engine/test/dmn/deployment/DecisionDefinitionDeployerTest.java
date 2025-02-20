@@ -201,7 +201,7 @@ public class DecisionDefinitionDeployerTest {
 
     InputStream diagramStream = repositoryService.getResourceAsStream(decisionDefinition.getDeploymentId(), diagramResourceName);
     final byte[] diagramBytes = IoUtil.readInputStream(diagramStream, "diagram stream");
-    assertThat(diagramBytes.length).isEqualTo(2540);
+    assertThat(diagramBytes).hasSize(2540);
   }
 
   @Deployment(resources = {
@@ -376,6 +376,7 @@ public class DecisionDefinitionDeployerTest {
     }
   }
 
+  @SuppressWarnings("deprecation")
   protected static DmnModelInstance createDmnModelInstanceNegativeHistoryTimeToLive() {
     DmnModelInstance modelInstance = Dmn.createEmptyModel();
     Definitions definitions = modelInstance.newInstance(Definitions.class);
@@ -393,6 +394,7 @@ public class DecisionDefinitionDeployerTest {
     return modelInstance;
   }
 
+  @SuppressWarnings("deprecation")
   protected static DmnModelInstance createDmnModelInstance() {
     DmnModelInstance modelInstance = Dmn.createEmptyModel();
     Definitions definitions = modelInstance.newInstance(Definitions.class);

@@ -18,10 +18,7 @@ package org.operaton.bpm.engine.test.history.useroperationlog;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.time.DateUtils;
@@ -158,7 +155,7 @@ public class UserOperationLogJobTest extends AbstractUserOperationLogTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // when I set the job retries
-    Batch batch = managementService.setJobRetriesAsync(Arrays.asList(job.getId()), 4);
+    Batch batch = managementService.setJobRetriesAsync(List.of(job.getId()), 4);
 
     // then three op log entries are written
     UserOperationLogQuery query = historyService
@@ -237,7 +234,7 @@ public class UserOperationLogJobTest extends AbstractUserOperationLogTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // when I set the job retries
-    Batch batch = managementService.setJobRetriesAsync(Arrays.asList(processInstance.getId()), (ProcessInstanceQuery) null, 4);
+    Batch batch = managementService.setJobRetriesAsync(List.of(processInstance.getId()), (ProcessInstanceQuery) null, 4);
 
     // then three op log entries are written
     UserOperationLogQuery query = historyService
@@ -456,11 +453,11 @@ public class UserOperationLogJobTest extends AbstractUserOperationLogTest {
     testRule.waitForJobExecutorToProcessAllJobs(TimeUnit.MILLISECONDS.convert(5L, TimeUnit.SECONDS));
 
     // then no op log entry is written
-    assertThat(managementService.createJobQuery().count()).isEqualTo(0L);
+    assertThat(managementService.createJobQuery().count()).isZero();
     long logEntriesCount = historyService
             .createUserOperationLogQuery()
             .operationType(UserOperationLogEntry.OPERATION_TYPE_EXECUTE)
             .count();
-    assertThat(logEntriesCount).isEqualTo(0L);
+    assertThat(logEntriesCount).isZero();
   }
 }

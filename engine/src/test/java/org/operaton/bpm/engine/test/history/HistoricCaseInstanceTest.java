@@ -141,8 +141,8 @@ public class HistoricCaseInstanceTest extends CmmnTest {
     assertDateSimilar(closed, closeTime);
 
     // test that duration is as expected with a maximal difference of one second
-    assertThat(durationInMillis >= duration).isTrue();
-    assertThat(durationInMillis < duration + 1000).isTrue();
+    assertThat(durationInMillis).isGreaterThanOrEqualTo(duration);
+    assertThat(durationInMillis).isLessThan(duration + 1000);
 
     // test queries
     Date beforeCreate = new Date(created.getTime() - 3600 * 1000);
@@ -233,10 +233,10 @@ public class HistoricCaseInstanceTest extends CmmnTest {
 
     assertCount(1, historicQuery().caseDefinitionKey("oneTaskCase"));
 
-    assertCount(3, historicQuery().caseDefinitionKeyNotIn(Arrays.asList("unknown")));
-    assertCount(2, historicQuery().caseDefinitionKeyNotIn(Arrays.asList("oneTaskCase")));
-    assertCount(1, historicQuery().caseDefinitionKeyNotIn(Arrays.asList("oneTaskCase", "twoTaskCase")));
-    assertCount(0, historicQuery().caseDefinitionKeyNotIn(Arrays.asList("oneTaskCase")).caseDefinitionKey("oneTaskCase"));
+    assertCount(3, historicQuery().caseDefinitionKeyNotIn(List.of("unknown")));
+    assertCount(2, historicQuery().caseDefinitionKeyNotIn(List.of("oneTaskCase")));
+    assertCount(1, historicQuery().caseDefinitionKeyNotIn(List.of("oneTaskCase", "twoTaskCase")));
+    assertCount(0, historicQuery().caseDefinitionKeyNotIn(List.of("oneTaskCase")).caseDefinitionKey("oneTaskCase"));
     var emptyCaseDefinitionKeys = List.of("");
     var historicCaseInstanceQuery = historicQuery();
 
@@ -389,6 +389,7 @@ public class HistoricCaseInstanceTest extends CmmnTest {
     HistoricCaseInstance twoCaseInstance = queryHistoricCaseInstance(twoCaseInstanceId);
 
     // sort by case instance ids
+    @SuppressWarnings("rawtypes")
     List<? extends Comparable> sortedList = Arrays.asList(oneCaseInstance.getId(), twoCaseInstance.getId());
     Collections.sort(sortedList);
 
@@ -804,6 +805,7 @@ public class HistoricCaseInstanceTest extends CmmnTest {
 
       fail("expected exception");
     } catch (NullValueException e) {
+      // expected
     }
   }
 
@@ -859,7 +861,7 @@ public class HistoricCaseInstanceTest extends CmmnTest {
 
   protected void assertDateSimilar(Date date1, Date date2) {
     long difference = Math.abs(date1.getTime() - date2.getTime());
-    assertThat(difference < 1000).isTrue();
+    assertThat(difference).isLessThan(1000);
   }
 
 }

@@ -22,7 +22,7 @@ import org.operaton.bpm.engine.query.Query;
 /**
  * Programmatic querying for {@link HistoricVariableInstance}s.
  *
- * @author Christian Lipphardt (operaton)
+ * @author Christian Lipphardt (Camunda)
  */
 public interface HistoricVariableInstanceQuery extends Query<HistoricVariableInstanceQuery, HistoricVariableInstance> {
 

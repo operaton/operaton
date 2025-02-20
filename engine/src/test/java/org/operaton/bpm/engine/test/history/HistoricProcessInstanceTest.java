@@ -159,7 +159,7 @@ public class HistoricProcessInstanceTest {
     assertThat(historicProcessInstance.getStartTime()).isEqualTo(noon);
     assertThat(historicProcessInstance.getEndTime()).isEqualTo(twentyFiveSecsAfterNoon);
     assertThat(historicProcessInstance.getDurationInMillis()).isEqualTo(Long.valueOf(25 * 1000));
-    assertThat(((HistoricProcessInstanceEventEntity) historicProcessInstance).getDurationRaw() >= 25000).isTrue();
+    assertThat(((HistoricProcessInstanceEventEntity) historicProcessInstance).getDurationRaw()).isGreaterThanOrEqualTo(25000);
     assertThat(historicProcessInstance.getCaseInstanceId()).isNull();
 
     assertThat(historyService.createHistoricProcessInstanceQuery().unfinished().count()).isZero();
@@ -206,8 +206,8 @@ public class HistoricProcessInstanceTest {
 
     assertThat(historicProcessInstance.getStartTime()).isEqualTo(now);
     assertThat(historicProcessInstance.getEndTime()).isEqualTo(oneYearLater);
-    assertThat(historicProcessInstance.getDurationInMillis() >= ONE_YEAR).isTrue();
-    assertThat(((HistoricProcessInstanceEventEntity) historicProcessInstance).getDurationRaw() >= ONE_YEAR).isTrue();
+    assertThat(historicProcessInstance.getDurationInMillis()).isGreaterThanOrEqualTo(ONE_YEAR);
+    assertThat(((HistoricProcessInstanceEventEntity) historicProcessInstance).getDurationRaw()).isGreaterThanOrEqualTo(ONE_YEAR);
 
     assertThat(historyService.createHistoricProcessInstanceQuery().unfinished().count()).isZero();
     assertThat(historyService.createHistoricProcessInstanceQuery().finished().count()).isEqualTo(1);
@@ -292,6 +292,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
+  @SuppressWarnings("deprecation")
   public void testHistoricProcessInstanceStartDate() {
     ClockUtil.setCurrentTime(new Date());
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
@@ -309,6 +310,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
+  @SuppressWarnings("deprecation")
   public void testHistoricProcessInstanceFinishDateUnfinished() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
@@ -324,6 +326,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
+  @SuppressWarnings("deprecation")
   public void testHistoricProcessInstanceFinishDateFinished() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
@@ -354,7 +357,7 @@ public class HistoricProcessInstanceTest {
     assertThat(historicProcessInstance.getEndTime()).isNotNull();
   }
 
-  /** See: https://app.camunda.com/jira/browse/CAM-1324 */
+  /** See: <a href="https://app.camunda.com/jira/browse/CAM-1324">CAM-1324</a> */
   @Test
   @Deployment
   public void testHistoricProcessInstanceDeleteAsync() {
@@ -974,6 +977,7 @@ public class HistoricProcessInstanceTest {
 
   @Test
   @Deployment
+  @SuppressWarnings("deprecation")
   public void testEndTimeAndEndActivity() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
@@ -1762,7 +1766,7 @@ public class HistoricProcessInstanceTest {
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   public void shouldQueryWithActivityIdsWithOneId() {
     // given
-    String USER_TASK_1 = "userTask1";
+    String userTask1 = "userTask1";
     deployment(ProcessModels.TWO_TASKS_PROCESS);
     runtimeService.startProcessInstanceByKey("Process");
     runtimeService.startProcessInstanceByKey("Process");
@@ -1774,7 +1778,7 @@ public class HistoricProcessInstanceTest {
     // when
     List<HistoricProcessInstance> result = historyService
         .createHistoricProcessInstanceQuery()
-        .activityIdIn(USER_TASK_1)
+        .activityIdIn(userTask1)
         .list();
 
     // then
@@ -1786,8 +1790,8 @@ public class HistoricProcessInstanceTest {
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   public void shouldQueryWithActivityIdsWithMultipleIds() {
     // given
-    String USER_TASK_1 = "userTask1";
-    String USER_TASK_2 = "userTask2";
+    String userTask1 = "userTask1";
+    String userTask2 = "userTask2";
     deployment(ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("Process");
@@ -1799,7 +1803,7 @@ public class HistoricProcessInstanceTest {
     // when
     List<HistoricProcessInstance> result = historyService
         .createHistoricProcessInstanceQuery()
-        .activityIdIn(USER_TASK_1, USER_TASK_2)
+        .activityIdIn(userTask1, userTask2)
         .list();
 
     // then
@@ -1811,8 +1815,8 @@ public class HistoricProcessInstanceTest {
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   public void shouldQueryWithActivityIdsWhenDeletedCompetedInstancesExist() {
     // given
-    String USER_TASK_1 = "userTask1";
-    String USER_TASK_2 = "userTask2";
+    String userTask1 = "userTask1";
+    String userTask2 = "userTask2";
     deployment(ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("Process");
@@ -1834,7 +1838,7 @@ public class HistoricProcessInstanceTest {
     // when
     List<HistoricProcessInstance> result = historyService
         .createHistoricProcessInstanceQuery()
-        .activityIdIn(USER_TASK_1, USER_TASK_2)
+        .activityIdIn(userTask1, userTask2)
         .list();
 
     // then

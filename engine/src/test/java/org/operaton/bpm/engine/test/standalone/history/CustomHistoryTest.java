@@ -17,9 +17,6 @@
 package org.operaton.bpm.engine.test.standalone.history;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
-
-import java.util.Arrays;
 
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.RuntimeService;

@@ -41,7 +41,7 @@ import static org.junit.Assert.assertNotSame;
 /**
  * @author Daniel Meyer (operaton)
  * @author Kristin Polenz (operaton)
- * @author Christian Lipphardt (operaton)
+ * @author Christian Lipphardt (Camunda)
  */
 public class MessageBoundaryEventTest extends PluggableProcessEngineTest {
 

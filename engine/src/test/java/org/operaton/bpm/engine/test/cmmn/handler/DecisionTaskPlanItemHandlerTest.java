@@ -126,6 +126,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
+  @SuppressWarnings("deprecation")
   public void testDescriptionProperty() {
     // given
     String description = "This is a decisionTask";
@@ -139,6 +140,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
+  @SuppressWarnings("deprecation")
   public void testPlanItemDescriptionProperty() {
     // given
     String description = "This is a planItem";
@@ -154,7 +156,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   @Test
   public void testDocumentation() {
     // given
-    String description = "This is a documenation";
+    String description = "This is a documentation";
     Documentation documentation = createElement(decisionTask, Documentation.class);
     documentation.setTextContent(description);
 
@@ -188,7 +190,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     CmmnActivityBehavior behavior = activity.getActivityBehavior();
-    assertThat(behavior instanceof DmnDecisionTaskActivityBehavior).isTrue();
+    assertThat(behavior).isInstanceOf(DmnDecisionTaskActivityBehavior.class);
   }
 
   @Test
@@ -430,8 +432,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_MANUAL_ACTIVATION_RULE);
-    assertThat(rule).isNotNull();
-    assertThat(rule instanceof CaseControlRule).isTrue();
+    assertThat(rule).isInstanceOf(CaseControlRule.class);
   }
 
   @Test
@@ -449,8 +450,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_MANUAL_ACTIVATION_RULE);
-    assertThat(rule).isNotNull();
-    assertThat(rule instanceof CaseControlRule).isTrue();
+    assertThat(rule).isInstanceOf(CaseControlRule.class);
   }
 
   @Test
@@ -468,8 +468,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_REQUIRED_RULE);
-    assertThat(rule).isNotNull();
-    assertThat(rule instanceof CaseControlRule).isTrue();
+    assertThat(rule).isInstanceOf(CaseControlRule.class);
   }
 
   @Test
@@ -487,15 +486,14 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_REQUIRED_RULE);
-    assertThat(rule).isNotNull();
-    assertThat(rule instanceof CaseControlRule).isTrue();
+    assertThat(rule).isInstanceOf(CaseControlRule.class);
   }
 
   @Test
   public void testRepetitionRuleStandardEvents() {
     // given
     ItemControl itemControl = createElement(planItem, "ItemControl_1", ItemControl.class);
-    RepetitionRule repetitionRule = createElement(itemControl, "RepititionRule_1", RepetitionRule.class);
+    RepetitionRule repetitionRule = createElement(itemControl, "RepetitionRule_1", RepetitionRule.class);
     ConditionExpression expression = createElement(repetitionRule, "Expression_1", ConditionExpression.class);
     expression.setText("${true}");
 
@@ -517,7 +515,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   public void testRepetitionRuleStandardEventsByDefaultPlanItemControl() {
     // given
     PlanItemControl defaultControl = createElement(decisionTask, "DefaultControl_1", DefaultControl.class);
-    RepetitionRule repetitionRule = createElement(defaultControl, "RepititionRule_1", RepetitionRule.class);
+    RepetitionRule repetitionRule = createElement(defaultControl, "RepetitionRule_1", RepetitionRule.class);
     ConditionExpression expression = createElement(repetitionRule, "Expression_1", ConditionExpression.class);
     expression.setText("${true}");
 
@@ -539,7 +537,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   public void testRepetitionRuleCustomStandardEvents() {
     // given
     ItemControl itemControl = createElement(planItem, "ItemControl_1", ItemControl.class);
-    RepetitionRule repetitionRule = createElement(itemControl, "RepititionRule_1", RepetitionRule.class);
+    RepetitionRule repetitionRule = createElement(itemControl, "RepetitionRule_1", RepetitionRule.class);
     ConditionExpression expression = createElement(repetitionRule, "Expression_1", ConditionExpression.class);
     expression.setText("${true}");
 
@@ -562,7 +560,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   public void testRepetitionRuleCustomStandardEventsByDefaultPlanItemControl() {
     // given
     PlanItemControl defaultControl = createElement(decisionTask, "DefaultControl_1", DefaultControl.class);
-    RepetitionRule repetitionRule = createElement(defaultControl, "RepititionRule_1", RepetitionRule.class);
+    RepetitionRule repetitionRule = createElement(defaultControl, "RepetitionRule_1", RepetitionRule.class);
     ConditionExpression expression = createElement(repetitionRule, "Expression_1", ConditionExpression.class);
     expression.setText("${true}");
 
@@ -632,9 +630,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     BaseCallableElement callableElement = behavior.getCallableElement();
 
     ParameterValueProvider decisionRefValueProvider = callableElement.getDefinitionKeyValueProvider();
-    assertThat(decisionRefValueProvider).isNotNull();
-
-    assertThat(decisionRefValueProvider instanceof ConstantValueProvider).isTrue();
+    assertThat(decisionRefValueProvider).isInstanceOf(ConstantValueProvider.class);
     ConstantValueProvider valueProvider = (ConstantValueProvider) decisionRefValueProvider;
     assertThat(valueProvider.getValue(null)).isEqualTo(decisionRef);
   }
@@ -653,9 +649,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     BaseCallableElement callableElement = behavior.getCallableElement();
 
     ParameterValueProvider caseRefValueProvider = callableElement.getDefinitionKeyValueProvider();
-    assertThat(caseRefValueProvider).isNotNull();
-
-    assertThat(caseRefValueProvider instanceof ElValueProvider).isTrue();
+    assertThat(caseRefValueProvider).isInstanceOf(ElValueProvider.class);
     ElValueProvider valueProvider = (ElValueProvider) caseRefValueProvider;
     assertThat(valueProvider.getExpression().getExpressionText()).isEqualTo(decisionRef);
   }
@@ -675,9 +669,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     BaseCallableElement callableElement = behavior.getCallableElement();
 
     ParameterValueProvider decisionRefValueProvider = callableElement.getDefinitionKeyValueProvider();
-    assertThat(decisionRefValueProvider).isNotNull();
-
-    assertThat(decisionRefValueProvider instanceof ConstantValueProvider).isTrue();
+    assertThat(decisionRefValueProvider).isInstanceOf(ConstantValueProvider.class);
     ConstantValueProvider valueProvider = (ConstantValueProvider) decisionRefValueProvider;
     assertThat(valueProvider.getValue(null)).isEqualTo(decision);
   }
@@ -697,9 +689,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     BaseCallableElement callableElement = behavior.getCallableElement();
 
     ParameterValueProvider caseRefValueProvider = callableElement.getDefinitionKeyValueProvider();
-    assertThat(caseRefValueProvider).isNotNull();
-
-    assertThat(caseRefValueProvider instanceof ElValueProvider).isTrue();
+    assertThat(caseRefValueProvider).isInstanceOf(ElValueProvider.class);
     ElValueProvider valueProvider = (ElValueProvider) caseRefValueProvider;
     assertThat(valueProvider.getExpression().getExpressionText()).isEqualTo(decision);
   }
@@ -718,8 +708,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     BaseCallableElement callableElement = behavior.getCallableElement();
 
     CallableElementBinding binding = callableElement.getBinding();
-    assertThat(binding).isNotNull();
-    assertThat(binding).isEqualTo(caseBinding);
+    assertThat(binding).isNotNull().isEqualTo(caseBinding);
   }
 
   @Test
@@ -736,9 +725,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     BaseCallableElement callableElement = behavior.getCallableElement();
 
     ParameterValueProvider caseVersionValueProvider = callableElement.getVersionValueProvider();
-    assertThat(caseVersionValueProvider).isNotNull();
-
-    assertThat(caseVersionValueProvider instanceof ConstantValueProvider).isTrue();
+    assertThat(caseVersionValueProvider).isInstanceOf(ConstantValueProvider.class);
     assertThat(caseVersionValueProvider.getValue(null)).isEqualTo(caseVersion);
   }
 
@@ -756,9 +743,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     BaseCallableElement callableElement = behavior.getCallableElement();
 
     ParameterValueProvider caseVersionValueProvider = callableElement.getVersionValueProvider();
-    assertThat(caseVersionValueProvider).isNotNull();
-
-    assertThat(caseVersionValueProvider instanceof ElValueProvider).isTrue();
+    assertThat(caseVersionValueProvider).isInstanceOf(ElValueProvider.class);
     ElValueProvider valueProvider = (ElValueProvider) caseVersionValueProvider;
     assertThat(valueProvider.getExpression().getExpressionText()).isEqualTo(caseVersion);
   }
@@ -786,7 +771,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     // then
     DmnDecisionTaskActivityBehavior behavior = (DmnDecisionTaskActivityBehavior) activity.getActivityBehavior();
     DecisionResultMapper mapper = behavior.getDecisionTableResultMapper();
-    assertThat(mapper instanceof ResultListDecisionTableResultMapper).isTrue();
+    assertThat(mapper).isInstanceOf(ResultListDecisionTableResultMapper.class);
   }
 
   @Test
@@ -800,7 +785,7 @@ public class DecisionTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     // then
     DmnDecisionTaskActivityBehavior behavior = (DmnDecisionTaskActivityBehavior) activity.getActivityBehavior();
     DecisionResultMapper mapper = behavior.getDecisionTableResultMapper();
-    assertThat(mapper instanceof SingleResultDecisionResultMapper).isTrue();
+    assertThat(mapper).isInstanceOf(SingleResultDecisionResultMapper.class);
   }
 
 }

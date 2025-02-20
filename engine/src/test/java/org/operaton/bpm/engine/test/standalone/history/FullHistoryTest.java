@@ -20,7 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -76,7 +75,7 @@ import org.junit.rules.RuleChain;
  * @author Tom Baeyens
  * @author Frederik Heremans
  * @author Joram Barrez
- * @author Christian Lipphardt (operaton)
+ * @author Christian Lipphardt (Camunda)
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class FullHistoryTest {
@@ -106,6 +105,7 @@ public class FullHistoryTest {
 
   @Test
   @Deployment
+  @SuppressWarnings("deprecation")
   public void testVariableUpdates() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("number", "one");
@@ -258,6 +258,7 @@ public class FullHistoryTest {
 
   @Test
   @Deployment(resources="org/operaton/bpm/engine/test/standalone/history/FullHistoryTest.testVariableUpdates.bpmn20.xml")
+  @SuppressWarnings("deprecation")
   public void testHistoricVariableInstanceQuery() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("process", "one");
@@ -285,13 +286,13 @@ public class FullHistoryTest {
     assertThat(historicProcessVariable.getTypedValue().getType().getName()).isEqualTo(historicProcessVariable.getTypeName());
 
     Map<String, Object> variables3 = new HashMap<>();
-    variables3.put("long", 1000l);
+    variables3.put("long", 1000L);
     variables3.put("double", 25.43d);
     ProcessInstance processInstance3 = runtimeService.startProcessInstanceByKey("receiveTask", variables3);
     runtimeService.signal(processInstance3.getProcessInstanceId());
 
     assertThat(historyService.createHistoricVariableInstanceQuery().variableName("long").count()).isEqualTo(1);
-    assertThat(historyService.createHistoricVariableInstanceQuery().variableValueEquals("long", 1000l).count()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableValueEquals("long", 1000L).count()).isEqualTo(1);
     assertThat(historyService.createHistoricVariableInstanceQuery().variableName("double").count()).isEqualTo(1);
     assertThat(historyService.createHistoricVariableInstanceQuery().variableValueEquals("double", 25.43d).count()).isEqualTo(1);
 
@@ -299,6 +300,7 @@ public class FullHistoryTest {
 
   @Test
   @Deployment
+  @SuppressWarnings("deprecation")
   public void testHistoricVariableUpdatesAllTypes() throws Exception {
 
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss SSS");
@@ -331,7 +333,7 @@ public class FullHistoryTest {
     assertThat(startVarUpdate.getValue()).isEqualTo("initial value");
     assertThat(startVarUpdate.getRevision()).isZero();
     assertThat(startVarUpdate.getProcessInstanceId()).isEqualTo(processInstance.getId());
-    // Date should the the one set when starting
+    // Date should the one set when starting
     assertThat(startVarUpdate.getTime()).isEqualTo(startedDate);
 
     HistoricVariableUpdate updatedStringVariable = (HistoricVariableUpdate) details.get(1);
@@ -442,6 +444,7 @@ public class FullHistoryTest {
 
   @Test
   @Deployment
+  @SuppressWarnings("deprecation")
   public void testHistoricFormProperties() throws Exception {
     Date startedDate = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss SSS").parse("01/01/2001 01:23:46 000");
 
@@ -589,6 +592,7 @@ public class FullHistoryTest {
   @Test
   @Deployment(
     resources={"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
+  @SuppressWarnings("deprecation")
   public void testHistoricFormPropertiesQuery() {
     Map<String, String> formProperties = new HashMap<>();
     formProperties.put("stringVar", "activiti rocks!");
@@ -653,6 +657,7 @@ public class FullHistoryTest {
   @Test
   @Deployment(
     resources={"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
+  @SuppressWarnings("deprecation")
   public void testHistoricFormPropertySorting() {
 
     Map<String, String> formProperties = new HashMap<>();
@@ -681,6 +686,7 @@ public class FullHistoryTest {
 
   @Test
   @Deployment
+  @SuppressWarnings("deprecation")
   public void testHistoricDetailQueryMixed() {
 
     Map<String, String> formProperties = new HashMap<>();
@@ -698,25 +704,25 @@ public class FullHistoryTest {
 
     assertThat(details).hasSize(4);
 
-    assertThat(details.get(0) instanceof HistoricFormProperty).isTrue();
+    assertThat(details.get(0)).isInstanceOf(HistoricFormProperty.class);
     HistoricFormProperty formProp1 = (HistoricFormProperty) details.get(0);
     assertThat(formProp1.getPropertyId()).isEqualTo("formProp1");
     assertThat(formProp1.getPropertyValue()).isEqualTo("activiti rocks!");
 
-    assertThat(details.get(1) instanceof HistoricFormProperty).isTrue();
+    assertThat(details.get(1)).isInstanceOf(HistoricFormProperty.class);
     HistoricFormProperty formProp2 = (HistoricFormProperty) details.get(1);
     assertThat(formProp2.getPropertyId()).isEqualTo("formProp2");
     assertThat(formProp2.getPropertyValue()).isEqualTo("12345");
 
 
-    assertThat(details.get(2) instanceof HistoricVariableUpdate).isTrue();
+    assertThat(details.get(2)).isInstanceOf(HistoricVariableUpdate.class);
     HistoricVariableUpdate varUpdate1 = (HistoricVariableUpdate) details.get(2);
     assertThat(varUpdate1.getVariableName()).isEqualTo("variable1");
     assertThat(varUpdate1.getValue()).isEqualTo("activiti rocks!");
 
 
     // This variable should be of type LONG since this is defined in the process-definition
-    assertThat(details.get(3) instanceof HistoricVariableUpdate).isTrue();
+    assertThat(details.get(3)).isInstanceOf(HistoricVariableUpdate.class);
     HistoricVariableUpdate varUpdate2 = (HistoricVariableUpdate) details.get(3);
     assertThat(varUpdate2.getVariableName()).isEqualTo("variable2");
     assertThat(varUpdate2.getValue()).isEqualTo(12345L);
@@ -729,14 +735,14 @@ public class FullHistoryTest {
       historicDetailQuery.asc();
       fail("");
     } catch (ProcessEngineException e) {
-
+      // expected
     }
 
     try {
       historicDetailQuery.desc();
       fail("");
     } catch (ProcessEngineException e) {
-
+      // expected
     }
 
     HistoricDetailQuery queryOrderByProcessInstanceId = historicDetailQuery.orderByProcessInstanceId();
@@ -744,7 +750,7 @@ public class FullHistoryTest {
       queryOrderByProcessInstanceId.list();
       fail("");
     } catch (ProcessEngineException e) {
-
+      // expected
     }
 
     HistoricDetailQuery queryOrderByTime = historicDetailQuery.orderByTime();
@@ -752,7 +758,7 @@ public class FullHistoryTest {
       queryOrderByTime.list();
       fail("");
     } catch (ProcessEngineException e) {
-
+      // expected
     }
 
     HistoricDetailQuery queryOrderByVariableName = historicDetailQuery.orderByVariableName();
@@ -760,7 +766,7 @@ public class FullHistoryTest {
       queryOrderByVariableName.list();
       fail("");
     } catch (ProcessEngineException e) {
-
+      // expected
     }
 
     HistoricDetailQuery queryOrderByVariableRevision = historicDetailQuery.orderByVariableRevision();
@@ -768,7 +774,7 @@ public class FullHistoryTest {
       queryOrderByVariableRevision.list();
       fail("");
     } catch (ProcessEngineException e) {
-
+      // expected
     }
 
     HistoricDetailQuery queryByVariableType = historicDetailQuery.orderByVariableType();
@@ -776,7 +782,7 @@ public class FullHistoryTest {
       queryByVariableType.list();
       fail("");
     } catch (ProcessEngineException e) {
-
+      // expected
     }
   }
 
@@ -894,13 +900,13 @@ public class FullHistoryTest {
 
 
     engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(commandContext -> {
-      Map<String, Object> formProperties = new HashMap<String, Object>();
+      Map<String, Object> formProperties = new HashMap<>();
       formProperties.put("formProp1", "value1");
 
       ProcessInstance processInstance = new SubmitStartFormCmd(processDefinitionId, null, formProperties).execute(commandContext);
 
       // two historic details should be in cache: one form property and one variable update
-      commandContext.getHistoricDetailManager().deleteHistoricDetailsByProcessInstanceIds(Arrays.asList(processInstance.getId()));
+      commandContext.getHistoricDetailManager().deleteHistoricDetailsByProcessInstanceIds(List.of(processInstance.getId()));
       return null;
     });
 
@@ -916,6 +922,7 @@ public class FullHistoryTest {
    */
   @Test
   @Deployment
+  @SuppressWarnings("deprecation")
   public void testHistoricFormPropertiesOnReEnteringActivity() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("comeBack", Boolean.TRUE);
@@ -1272,7 +1279,7 @@ public class FullHistoryTest {
     assertThat(historicActivityInstance2.getActivityId()).isEqualTo("usertask2");
 
     /*
-     * This is OK! The variable is set on the root execution, on a execution never run through the activity, where the process instances
+     * This is OK! The variable is set on the root execution, on an execution never run through the activity, where the process instances
      * stands when calling the set Variable. But the ActivityId of this flow node is used. So the execution id's doesn't have to be equal.
      *
      * execution id: On which execution it was set
@@ -1309,14 +1316,14 @@ public class FullHistoryTest {
 
     try {
       query.variableInstanceId(null);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (ProcessEngineException e) {
       // expected
     }
 
     try {
       query.variableInstanceId((String)null);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (ProcessEngineException e) {
       // expected
     }
@@ -1349,6 +1356,7 @@ public class FullHistoryTest {
   }
 
   @Test
+  @SuppressWarnings("deprecation")
   public void testHistoricDetailQueryById() {
 
     Task newTask = taskService.newTask();

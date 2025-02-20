@@ -110,8 +110,8 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
     assertThat(historicTaskInstance.getTaskDefinitionKey()).isEqualTo(taskDefinitionKey);
     assertThat(historicTaskInstance.getEndTime()).isNotNull();
     assertThat(historicTaskInstance.getDurationInMillis()).isNotNull();
-    assertThat(historicTaskInstance.getDurationInMillis() >= 1000).isTrue();
-    assertThat(((HistoricTaskInstanceEntity) historicTaskInstance).getDurationRaw() >= 1000).isTrue();
+    assertThat(historicTaskInstance.getDurationInMillis()).isGreaterThanOrEqualTo(1000);
+    assertThat(((HistoricTaskInstanceEntity) historicTaskInstance).getDurationRaw()).isGreaterThanOrEqualTo(1000);
     assertThat(historicTaskInstance.getTaskState()).isEqualTo("Completed");
 
 
@@ -565,21 +565,21 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
 
     try {
       query.activityInstanceIdIn(null);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (ProcessEngineException e) {
       // expected
     }
 
     try {
       query.activityInstanceIdIn((String)null);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (ProcessEngineException e) {
       // expected
     }
 
     try {
       query.activityInstanceIdIn(values);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (ProcessEngineException e) {
       // expected
     }
@@ -1041,21 +1041,21 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
 
     try {
       query.taskDefinitionKeyIn(null);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (NotValidException e) {
       // expected
     }
 
     try {
       query.taskDefinitionKeyIn((String)null);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (NotValidException e) {
       // expected
     }
 
     try {
       query.taskDefinitionKeyIn(values);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (NotValidException e) {
       // expected
     }
@@ -1105,21 +1105,21 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
 
     try {
       query.processInstanceBusinessKeyIn(null);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (ProcessEngineException e) {
       // expected
     }
 
     try {
       query.processInstanceBusinessKeyIn((String)null);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (ProcessEngineException e) {
       // expected
     }
 
     try {
       query.processInstanceBusinessKeyIn(values);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (ProcessEngineException e) {
       // expected
     }

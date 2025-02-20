@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.history;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
+
 import static org.operaton.bpm.engine.query.PeriodUnit.MONTH;
 import static org.operaton.bpm.engine.query.PeriodUnit.QUARTER;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -54,7 +55,7 @@ import org.junit.Test;
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
 public class HistoricProcessInstanceDurationReportTest extends PluggableProcessEngineTest {
 
-  private Random random = new Random();
+  private final Random random = new Random();
 
   @Test
   public void testDurationReportByMonth() {
@@ -262,7 +263,9 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
     try {
       report.duration(null);
       fail("Exception expected");
-    } catch (NotValidException e) {}
+    } catch (NotValidException e) {
+      // expected
+    }
   }
 
   @Test
@@ -332,7 +335,9 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
     try {
       report.startedBefore(null);
       fail("Exception expected");
-    } catch (NotValidException e) {}
+    } catch (NotValidException e) {
+      // expected
+    }
   }
 
   @Test
@@ -396,7 +401,9 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
     try {
       report.startedAfter(null);
       fail("Exception expected");
-    } catch (NotValidException e) {}
+    } catch (NotValidException e) {
+      // expected
+    }
   }
 
   @Test
@@ -619,13 +626,11 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
   public void testReportByInvalidProcessDefinitionId() {
     HistoricProcessInstanceReport report = historyService.createHistoricProcessInstanceReport();
 
-    try {
-      report.processDefinitionIdIn((String) null);
-    } catch (NotValidException e) {}
+    assertThatThrownBy(() -> report.processDefinitionIdIn((String) null))
+      .isInstanceOf(NotValidException.class);
 
-    try {
-      report.processDefinitionIdIn("abc", (String) null, "def");
-    } catch (NotValidException e) {}
+    assertThatThrownBy(() -> report.processDefinitionIdIn("abc", null, "def"))
+      .isInstanceOf(NotValidException.class);
   }
 
   @Test
@@ -724,11 +729,15 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
 
     try {
       report.processDefinitionKeyIn((String) null);
-    } catch (NotValidException e) {}
+    } catch (NotValidException e) {
+      // expected
+    }
 
     try {
-      report.processDefinitionKeyIn("abc", (String) null, "def");
-    } catch (NotValidException e) {}
+      report.processDefinitionKeyIn("abc", null, "def");
+    } catch (NotValidException e) {
+      // expected
+    }
   }
 
   protected BpmnModelInstance createProcessWithUserTask(String key) {
@@ -797,11 +806,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
     protected Map<Integer, Set<String>> periodToProcessInstancesMap = new HashMap<>();
 
     public DurationReportResultAssertion addDurationReportResult(int period, String processInstanceId) {
-      Set<String> processInstances = periodToProcessInstancesMap.get(period);
-      if (processInstances == null) {
-        processInstances = new HashSet<>();
-        periodToProcessInstancesMap.put(period, processInstances);
-      }
+      Set<String> processInstances = periodToProcessInstancesMap.computeIfAbsent(period, k -> new HashSet<>());
       processInstances.add(processInstanceId);
       return this;
     }
@@ -812,7 +817,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
     }
 
     public void assertReportResults(List<DurationReportResult> actual) {
-      Assertions.assertThat(actual.size()).as("Report size").isEqualTo(periodToProcessInstancesMap.size());
+      Assertions.assertThat(actual).as("Report size").hasSize(periodToProcessInstancesMap.size());
 
       for (DurationReportResult reportResult : actual) {
         Assertions.assertThat(reportResult.getPeriodUnit()).as("Period unit").isEqualTo(periodUnit);

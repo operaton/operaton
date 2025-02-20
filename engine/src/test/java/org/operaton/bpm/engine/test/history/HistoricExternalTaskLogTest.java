@@ -53,10 +53,10 @@ import org.junit.rules.RuleChain;
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class HistoricExternalTaskLogTest {
 
-  protected final String WORKER_ID = "aWorkerId";
-  protected final String ERROR_MESSAGE = "This is an error!";
-  protected final String ERROR_DETAILS = "These are the error details!";
-  protected final long LOCK_DURATION = 5 * 60L * 1000L;
+  protected static final String WORKER_ID = "aWorkerId";
+  protected static final String ERROR_MESSAGE = "This is an error!";
+  protected static final String ERROR_DETAILS = "These are the error details!";
+  protected static final long LOCK_DURATION = 5 * 60L * 1000L;
 
   protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
   protected AuthorizationTestRule authRule = new AuthorizationTestRule(engineRule);
@@ -273,8 +273,7 @@ public class HistoricExternalTaskLogTest {
 
     // then
     assertNotNull(failedLog);
-    assertThat(errorMessage).hasSize(ExternalTaskEntity.MAX_EXCEPTION_MESSAGE_LENGTH);
-    assertThat(errorMessage).isEqualTo(expectedErrorMessage);
+    assertThat(errorMessage).hasSize(ExternalTaskEntity.MAX_EXCEPTION_MESSAGE_LENGTH).isEqualTo(expectedErrorMessage);
 
   }
 

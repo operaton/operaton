@@ -128,7 +128,7 @@ public class ConcurrentJobExecutorTest {
     // then the job fails with a OLE and the failed job listener throws no NPE
     LOG.debug("test thread notifies thread 1");
     threadOne.proceedAndWaitTillDone();
-    assertThat(threadOne.exception instanceof OptimisticLockingException).isTrue();
+    assertThat(threadOne.exception).isInstanceOf(OptimisticLockingException.class);
   }
 
   @Test
@@ -474,7 +474,7 @@ public class ConcurrentJobExecutorTest {
       catch (OptimisticLockingException e) {
         this.exception = e;
       }
-      LOG.debug(getName() + " ends");
+      LOG.debug("{} ends", getName());
     }
   }
 
@@ -496,7 +496,7 @@ public class ConcurrentJobExecutorTest {
       } catch (OptimisticLockingException e) {
         this.exception = e;
       }
-      LOG.debug(getName()+" ends");
+      LOG.debug("{} ends", getName());
     }
   }
 
@@ -523,7 +523,7 @@ public class ConcurrentJobExecutorTest {
       } catch (OptimisticLockingException e) {
         this.exception = e;
       }
-      LOG.debug(getName()+" ends");
+      LOG.debug("{} ends", getName());
     }
 
     protected Command<Void> createSuspendJobCommand() {
@@ -558,7 +558,7 @@ public class ConcurrentJobExecutorTest {
       } catch (OptimisticLockingException e) {
         this.exception = e;
       }
-      LOG.debug(getName()+" ends");
+      LOG.debug("{} ends", getName());
     }
 
     protected SuspendJobCmd createSuspendJobCommand() {

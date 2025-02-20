@@ -49,7 +49,7 @@ public class FieldSpec {
     Object fieldValue = field.getValue();
     assertThat(fieldValue).isNotNull();
 
-    assertThat(fieldValue instanceof Expression).isTrue();
+    assertThat(fieldValue).isInstanceOf(Expression.class);
     Expression expressionValue = (Expression) fieldValue;
     assertThat(expressionValue.getExpressionText()).isEqualTo(getExpectedExpression());
   }

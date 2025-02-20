@@ -64,7 +64,7 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
 
     try {
       jobDefinitionQuery.jobDefinitionId(null);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (ProcessEngineException e) {}
   }
 
@@ -93,14 +93,14 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
 
     try {
       jobDefinitionQuery.activityIdIn(null);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).isEqualTo("Activity ids is null");
     }
 
     try {
       jobDefinitionQuery.activityIdIn((String)null);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).isEqualTo("Activity ids contains null value");
     }
@@ -124,7 +124,7 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
 
     try {
       jobDefinitionQuery.processDefinitionId(null);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (ProcessEngineException e) {}
   }
 
@@ -146,7 +146,7 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
 
     try {
       jobDefinitionQuery.processDefinitionKey(null);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (ProcessEngineException e) {}
   }
 
@@ -175,7 +175,7 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
 
     try {
       jobDefinitionQuery.jobType(null);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (ProcessEngineException e) {}
   }
 
@@ -188,7 +188,7 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
 
     try {
       jobDefinitionQuery.jobConfiguration(null);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (ProcessEngineException e) {}
   }
 

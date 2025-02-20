@@ -24,7 +24,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -71,7 +70,7 @@ import org.junit.Test;
 
 
 /**
- * @author Christian Lipphardt (operaton)
+ * @author Christian Lipphardt (Camunda)
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
 public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
@@ -495,14 +494,14 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
 
     try {
       historicVariableInstanceQuery.executionIdIn((String[])null);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (ProcessEngineException e) {
       // expected
     }
 
     try {
       historicVariableInstanceQuery.executionIdIn((String)null);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (ProcessEngineException e) {
       // expected
     }
@@ -516,14 +515,14 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
 
     try {
       historicVariableInstanceQuery.taskIdIn((String[])null);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (ProcessEngineException e) {
       // expected
     }
 
     try {
       historicVariableInstanceQuery.taskIdIn((String)null);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (ProcessEngineException e) {
       // expected
     }
@@ -564,14 +563,14 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
 
     try {
       query.taskIdIn((String[])null);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (ProcessEngineException e) {
       // expected
     }
 
     try {
       query.taskIdIn((String)null);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (ProcessEngineException e) {
       // expected
     }
@@ -1024,7 +1023,6 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
         .variableName("listVar").singleResult();
 
     List<String> historicList = (List<String>) historicVariableInstance.getValue();
-    assertThat(historicList).isNotNull();
     assertThat(historicList).isEmpty();
 
     if (isFullHistoryEnabled()) {
@@ -1082,7 +1080,6 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
     assertThat(typedValue.getValue()).isEqualTo("newValue");
   }
 
-  @SuppressWarnings("serial")
   public static class CustomVar implements Serializable {
     private String value;
 
@@ -1120,7 +1117,6 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
         .variableName("listVar").singleResult();
 
     List<String> historicList = (List<String>) historicVariableInstance.getValue();
-    assertThat(historicList).isNotNull();
     assertThat(historicList).isEmpty();
 
     if (isFullHistoryEnabled()) {
@@ -1159,12 +1155,7 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
           .orderPartiallyByOccurrence().asc()
           .list();
 
-      Iterator<HistoricDetail> detailsIt = historicDetails.iterator();
-      while(detailsIt.hasNext()) {
-        if (!"listVar".equals(((HistoricVariableUpdate) detailsIt.next()).getVariableName())) {
-          detailsIt.remove();
-        }
-      }
+      historicDetails.removeIf(historicDetail -> !"listVar".equals(((HistoricVariableUpdate) historicDetail).getVariableName()));
 
       // one for creation, one for deletion, none for update
       assertThat(historicDetails).hasSize(2);
@@ -1221,7 +1212,6 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
     @SuppressWarnings("unchecked")
     List<String> value1 = (List<String>) update1.getValue();
 
-    assertThat(value1).isNotNull();
     assertThat(value1).isEmpty();
   }
 
@@ -1261,11 +1251,11 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
 
       HistoricVariableUpdate secondUpdate = (HistoricVariableUpdate) details.get(1);
       assertThat(secondUpdate.getValue()).isEqualTo(2);
-      assertThat(((HistoryEvent) secondUpdate).getSequenceCounter() > ((HistoryEvent) firstUpdate).getSequenceCounter()).isTrue();
+      assertThat(((HistoryEvent) secondUpdate).getSequenceCounter()).isGreaterThan(((HistoryEvent) firstUpdate).getSequenceCounter());
 
       HistoricVariableUpdate thirdUpdate = (HistoricVariableUpdate) details.get(2);
       assertThat(thirdUpdate.getValue()).isEqualTo(3);
-      assertThat(((HistoryEvent) thirdUpdate).getSequenceCounter() > ((HistoryEvent) secondUpdate).getSequenceCounter()).isTrue();
+      assertThat(((HistoryEvent) thirdUpdate).getSequenceCounter()).isGreaterThan(((HistoryEvent) secondUpdate).getSequenceCounter());
     }
 
   }
@@ -1304,11 +1294,11 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
 
       HistoricVariableUpdate secondUpdate = (HistoricVariableUpdate) details.get(1);
       assertThat(secondUpdate.getValue()).isEqualTo(2);
-      assertThat(((HistoryEvent) secondUpdate).getSequenceCounter() > ((HistoryEvent) firstUpdate).getSequenceCounter()).isTrue();
+      assertThat(((HistoryEvent) secondUpdate).getSequenceCounter()).isGreaterThan(((HistoryEvent) firstUpdate).getSequenceCounter());
 
       HistoricVariableUpdate thirdUpdate = (HistoricVariableUpdate) details.get(2);
       assertThat(thirdUpdate.getValue()).isEqualTo(3);
-      assertThat(((HistoryEvent) thirdUpdate).getSequenceCounter() > ((HistoryEvent) secondUpdate).getSequenceCounter()).isTrue();
+      assertThat(((HistoryEvent) thirdUpdate).getSequenceCounter()).isGreaterThan(((HistoryEvent) secondUpdate).getSequenceCounter());
     }
 
   }
@@ -1350,11 +1340,11 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
 
       HistoricVariableUpdate secondUpdate = (HistoricVariableUpdate) details.get(1);
       assertThat(secondUpdate.getValue()).isEqualTo(2);
-      assertThat(((HistoryEvent) secondUpdate).getSequenceCounter() > ((HistoryEvent) firstUpdate).getSequenceCounter()).isTrue();
+      assertThat(((HistoryEvent) secondUpdate).getSequenceCounter()).isGreaterThan(((HistoryEvent) firstUpdate).getSequenceCounter());
 
       HistoricVariableUpdate thirdUpdate = (HistoricVariableUpdate) details.get(2);
       assertThat(thirdUpdate.getValue()).isEqualTo(3);
-      assertThat(((HistoryEvent) thirdUpdate).getSequenceCounter() > ((HistoryEvent) secondUpdate).getSequenceCounter()).isTrue();
+      assertThat(((HistoryEvent) thirdUpdate).getSequenceCounter()).isGreaterThan(((HistoryEvent) secondUpdate).getSequenceCounter());
     }
 
     // when (2)
@@ -1382,15 +1372,15 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
 
       HistoricVariableUpdate secondUpdate = (HistoricVariableUpdate) details.get(1);
       assertThat(secondUpdate.getValue()).isEqualTo(2);
-      assertThat(((HistoryEvent) secondUpdate).getSequenceCounter() > ((HistoryEvent) firstUpdate).getSequenceCounter()).isTrue();
+      assertThat(((HistoryEvent) secondUpdate).getSequenceCounter()).isGreaterThan(((HistoryEvent) firstUpdate).getSequenceCounter());
 
       HistoricVariableUpdate thirdUpdate = (HistoricVariableUpdate) details.get(2);
       assertThat(thirdUpdate.getValue()).isEqualTo(3);
-      assertThat(((HistoryEvent) thirdUpdate).getSequenceCounter() > ((HistoryEvent) secondUpdate).getSequenceCounter()).isTrue();
+      assertThat(((HistoryEvent) thirdUpdate).getSequenceCounter()).isGreaterThan(((HistoryEvent) secondUpdate).getSequenceCounter());
 
       HistoricVariableUpdate fourthUpdate = (HistoricVariableUpdate) details.get(3);
       assertThat(fourthUpdate.getValue()).isEqualTo("abc");
-      assertThat(((HistoryEvent) fourthUpdate).getSequenceCounter() > ((HistoryEvent) thirdUpdate).getSequenceCounter()).isTrue();
+      assertThat(((HistoryEvent) fourthUpdate).getSequenceCounter()).isGreaterThan(((HistoryEvent) thirdUpdate).getSequenceCounter());
     }
 
     // when (3)
@@ -1418,19 +1408,19 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
 
       HistoricVariableUpdate secondUpdate = (HistoricVariableUpdate) details.get(1);
       assertThat(secondUpdate.getValue()).isEqualTo(2);
-      assertThat(((HistoryEvent) secondUpdate).getSequenceCounter() > ((HistoryEvent) firstUpdate).getSequenceCounter()).isTrue();
+      assertThat(((HistoryEvent) secondUpdate).getSequenceCounter()).isGreaterThan(((HistoryEvent) firstUpdate).getSequenceCounter());
 
       HistoricVariableUpdate thirdUpdate = (HistoricVariableUpdate) details.get(2);
       assertThat(thirdUpdate.getValue()).isEqualTo(3);
-      assertThat(((HistoryEvent) thirdUpdate).getSequenceCounter() > ((HistoryEvent) secondUpdate).getSequenceCounter()).isTrue();
+      assertThat(((HistoryEvent) thirdUpdate).getSequenceCounter()).isGreaterThan(((HistoryEvent) secondUpdate).getSequenceCounter());
 
       HistoricVariableUpdate fourthUpdate = (HistoricVariableUpdate) details.get(3);
       assertThat(fourthUpdate.getValue()).isEqualTo("abc");
-      assertThat(((HistoryEvent) fourthUpdate).getSequenceCounter() > ((HistoryEvent) thirdUpdate).getSequenceCounter()).isTrue();
+      assertThat(((HistoryEvent) fourthUpdate).getSequenceCounter()).isGreaterThan(((HistoryEvent) thirdUpdate).getSequenceCounter());
 
       HistoricVariableUpdate fifthUpdate = (HistoricVariableUpdate) details.get(4);
       assertThat(fifthUpdate.getValue()).isNull();
-      assertThat(((HistoryEvent) fifthUpdate).getSequenceCounter() > ((HistoryEvent) fourthUpdate).getSequenceCounter()).isTrue();
+      assertThat(((HistoryEvent) fifthUpdate).getSequenceCounter()).isGreaterThan(((HistoryEvent) fourthUpdate).getSequenceCounter());
     }
 
   }
@@ -1470,11 +1460,11 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
 
       HistoricVariableUpdate secondUpdate = (HistoricVariableUpdate) details.get(1);
       assertThat(secondUpdate.getValue()).isEqualTo(2);
-      assertThat(((HistoryEvent) secondUpdate).getSequenceCounter() > ((HistoryEvent) firstUpdate).getSequenceCounter()).isTrue();
+      assertThat(((HistoryEvent) secondUpdate).getSequenceCounter()).isGreaterThan(((HistoryEvent) firstUpdate).getSequenceCounter());
 
       HistoricVariableUpdate thirdUpdate = (HistoricVariableUpdate) details.get(2);
       assertThat(thirdUpdate.getValue()).isEqualTo(3);
-      assertThat(((HistoryEvent) thirdUpdate).getSequenceCounter() > ((HistoryEvent) secondUpdate).getSequenceCounter()).isTrue();
+      assertThat(((HistoryEvent) thirdUpdate).getSequenceCounter()).isGreaterThan(((HistoryEvent) secondUpdate).getSequenceCounter());
     }
 
     // when (2)
@@ -1502,15 +1492,15 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
 
       HistoricVariableUpdate secondUpdate = (HistoricVariableUpdate) details.get(1);
       assertThat(secondUpdate.getValue()).isEqualTo(2);
-      assertThat(((HistoryEvent) secondUpdate).getSequenceCounter() > ((HistoryEvent) firstUpdate).getSequenceCounter()).isTrue();
+      assertThat(((HistoryEvent) secondUpdate).getSequenceCounter()).isGreaterThan(((HistoryEvent) firstUpdate).getSequenceCounter());
 
       HistoricVariableUpdate thirdUpdate = (HistoricVariableUpdate) details.get(2);
       assertThat(thirdUpdate.getValue()).isEqualTo(3);
-      assertThat(((HistoryEvent) thirdUpdate).getSequenceCounter() > ((HistoryEvent) secondUpdate).getSequenceCounter()).isTrue();
+      assertThat(((HistoryEvent) thirdUpdate).getSequenceCounter()).isGreaterThan(((HistoryEvent) secondUpdate).getSequenceCounter());
 
       HistoricVariableUpdate fourthUpdate = (HistoricVariableUpdate) details.get(3);
       assertThat(fourthUpdate.getValue()).isEqualTo("abc");
-      assertThat(((HistoryEvent) fourthUpdate).getSequenceCounter() > ((HistoryEvent) thirdUpdate).getSequenceCounter()).isTrue();
+      assertThat(((HistoryEvent) fourthUpdate).getSequenceCounter()).isGreaterThan(((HistoryEvent) thirdUpdate).getSequenceCounter());
     }
 
     // when (3)
@@ -1538,19 +1528,19 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
 
       HistoricVariableUpdate secondUpdate = (HistoricVariableUpdate) details.get(1);
       assertThat(secondUpdate.getValue()).isEqualTo(2);
-      assertThat(((HistoryEvent) secondUpdate).getSequenceCounter() > ((HistoryEvent) firstUpdate).getSequenceCounter()).isTrue();
+      assertThat(((HistoryEvent) secondUpdate).getSequenceCounter()).isGreaterThan(((HistoryEvent) firstUpdate).getSequenceCounter());
 
       HistoricVariableUpdate thirdUpdate = (HistoricVariableUpdate) details.get(2);
       assertThat(thirdUpdate.getValue()).isEqualTo(3);
-      assertThat(((HistoryEvent) thirdUpdate).getSequenceCounter() > ((HistoryEvent) secondUpdate).getSequenceCounter()).isTrue();
+      assertThat(((HistoryEvent) thirdUpdate).getSequenceCounter()).isGreaterThan(((HistoryEvent) secondUpdate).getSequenceCounter());
 
       HistoricVariableUpdate fourthUpdate = (HistoricVariableUpdate) details.get(3);
       assertThat(fourthUpdate.getValue()).isEqualTo("abc");
-      assertThat(((HistoryEvent) fourthUpdate).getSequenceCounter() > ((HistoryEvent) thirdUpdate).getSequenceCounter()).isTrue();
+      assertThat(((HistoryEvent) fourthUpdate).getSequenceCounter()).isGreaterThan(((HistoryEvent) thirdUpdate).getSequenceCounter());
 
       HistoricVariableUpdate fifthUpdate = (HistoricVariableUpdate) details.get(4);
       assertThat(fifthUpdate.getValue()).isNull();
-      assertThat(((HistoryEvent) fifthUpdate).getSequenceCounter() > ((HistoryEvent) fourthUpdate).getSequenceCounter()).isTrue();
+      assertThat(((HistoryEvent) fifthUpdate).getSequenceCounter()).isGreaterThan(((HistoryEvent) fourthUpdate).getSequenceCounter());
     }
 
   }
@@ -1592,11 +1582,11 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
 
       HistoricVariableUpdate secondUpdate = (HistoricVariableUpdate) details.get(1);
       assertThat(secondUpdate.getValue()).isEqualTo(1);
-      assertThat(((HistoryEvent) secondUpdate).getSequenceCounter() > ((HistoryEvent) firstUpdate).getSequenceCounter()).isTrue();
+      assertThat(((HistoryEvent) secondUpdate).getSequenceCounter()).isGreaterThan(((HistoryEvent) firstUpdate).getSequenceCounter());
 
       HistoricVariableUpdate thirdUpdate = (HistoricVariableUpdate) details.get(2);
       assertThat(thirdUpdate.getValue()).isEqualTo(2);
-      assertThat(((HistoryEvent) thirdUpdate).getSequenceCounter() > ((HistoryEvent) secondUpdate).getSequenceCounter()).isTrue();
+      assertThat(((HistoryEvent) thirdUpdate).getSequenceCounter()).isGreaterThan(((HistoryEvent) secondUpdate).getSequenceCounter());
     }
 
   }
@@ -1932,21 +1922,21 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
 
     try {
       query.caseActivityIdIn((String[])null);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (NullValueException e) {
       // expected
     }
 
     try {
       query.caseActivityIdIn((String)null);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (NullValueException e) {
       // expected
     }
 
     try {
       query.caseActivityIdIn(values);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (NullValueException e) {
       // expected
     }

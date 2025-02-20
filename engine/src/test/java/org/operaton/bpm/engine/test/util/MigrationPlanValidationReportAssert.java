@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.test.util;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

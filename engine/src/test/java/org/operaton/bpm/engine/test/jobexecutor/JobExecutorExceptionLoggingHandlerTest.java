@@ -80,7 +80,7 @@ public class JobExecutorExceptionLoggingHandlerTest {
     Throwable collectedException = collectingHandler.collectedExceptions.get(jobId);
 
     // then
-    assertThat(collectedException instanceof RuntimeException).isTrue();
+    assertThat(collectedException).isInstanceOf(RuntimeException.class);
     assertThat(collectedException.getMessage()).isEqualTo("Expected Exception");
   }
 

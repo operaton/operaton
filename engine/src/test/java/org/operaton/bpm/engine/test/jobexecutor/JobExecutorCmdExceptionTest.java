@@ -73,7 +73,7 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
 
   @Test
   public void testJobCommandsWith3Exceptions() {
-    // set the execptionsRemaining to 3 so that
+    // set the exceptionsRemaining to 3 so that
     // the created job will fail 3 times and a failed
     // job exists
     tweetExceptionHandler.setExceptionsRemaining(3);
@@ -92,7 +92,7 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
 
   @Test
   public void testMultipleFailingJobs() {
-    // set the execptionsRemaining to 600 so that
+    // set the exceptionsRemaining to 600 so that
     // each created job will fail 3 times and 40 failed
     // job exists
     tweetExceptionHandler.setExceptionsRemaining(600);
@@ -197,7 +197,7 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
 
     String stacktrace = managementService.getJobExceptionStacktrace(job.getId());
     assertThat(stacktrace).isNotNull();
-    assertThat(stacktrace.contains("java.lang.RuntimeException: exception in transaction listener")).as("unexpected stacktrace, was <" + stacktrace + ">").isTrue();
+    assertThat(stacktrace).contains("java.lang.RuntimeException: exception in transaction listener");
   }
 
   protected void createJob(final String handlerType) {

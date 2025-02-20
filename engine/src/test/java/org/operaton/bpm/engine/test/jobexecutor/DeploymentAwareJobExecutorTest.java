@@ -77,8 +77,7 @@ public class DeploymentAwareJobExecutorTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("simpleAsyncProcess");
 
     Set<String> registeredDeployments = managementService.getRegisteredDeployments();
-    assertThat(registeredDeployments).hasSize(1);
-    assertThat(registeredDeployments).contains(deploymentId);
+    assertThat(registeredDeployments).containsExactly(deploymentId);
 
     Job executableJob = managementService.createJobQuery().singleResult();
 
@@ -93,8 +92,7 @@ public class DeploymentAwareJobExecutorTest extends PluggableProcessEngineTest {
     jobDeploymentIds.add(jobs.get(0).getDeploymentId());
     jobDeploymentIds.add(jobs.get(1).getDeploymentId());
 
-    assertThat(jobDeploymentIds).contains(deploymentId);
-    assertThat(jobDeploymentIds).contains(otherDeploymentId);
+    assertThat(jobDeploymentIds).containsExactlyInAnyOrder(deploymentId, otherDeploymentId);
 
     // select executable jobs for executor of first engine
     AcquiredJobs acquiredJobs = getExecutableJobs(processEngineConfiguration.getJobExecutor());

@@ -100,7 +100,7 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
     // thread 2 can't continue because the event subscription it tried to lock was deleted
     thread2.waitForSync();
     assertThat(thread2.getException()).isNotNull();
-    assertThat(thread2.getException() instanceof ProcessEngineException).isTrue();
+    assertThat(thread2.getException()).isInstanceOf(ProcessEngineException.class);
     assertThat(thread2.getException().getMessage())
         .contains("does not have a subscription to a message event with name 'Message'");
 
@@ -144,7 +144,7 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
     // the service task was executed twice
     assertThat(InvocationLogListener.getInvocations()).isEqualTo(2);
 
-    // the first thread ends its transcation
+    // the first thread ends its transaction
     thread1.waitUntilDone();
     assertThat(thread1.getException()).isNull();
 
@@ -153,8 +153,7 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
 
     // the second thread ends its transaction and fails with optimistic locking exception
     thread2.waitUntilDone();
-    assertThat(thread2.getException()).isNotNull();
-    assertThat(thread2.getException() instanceof OptimisticLockingException).isTrue();
+    assertThat(thread2.getException()).isInstanceOf(OptimisticLockingException.class);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/concurrency/CompetingMessageCorrelationTest.catchMessageProcess.bpmn20.xml")
@@ -295,7 +294,7 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
     thread2.waitForSync();
 
     assertThat(thread2.getException()).isNotNull();
-    assertThat(thread2.getException() instanceof OptimisticLockingException).isTrue();
+    assertThat(thread2.getException()).isInstanceOf(OptimisticLockingException.class);
   }
 
   /**
@@ -354,7 +353,7 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
     // thread 1 flush fails with optimistic locking
     thread1.join();
     assertThat(thread1.getException()).isNotNull();
-    assertThat(thread1.getException() instanceof OptimisticLockingException).isTrue();
+    assertThat(thread1.getException()).isInstanceOf(OptimisticLockingException.class);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/concurrency/CompetingMessageCorrelationTest.eventSubprocess.bpmn")
@@ -389,7 +388,7 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
     // the second thread ends its transaction and fails with optimistic locking exception
     thread2.waitUntilDone();
     assertThat(thread2.getException()).isNotNull();
-    assertThat(thread2.getException() instanceof OptimisticLockingException).isTrue();
+    assertThat(thread2.getException()).isInstanceOf(OptimisticLockingException.class);
   }
 
   @Deployment
@@ -418,8 +417,7 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
 
     // the correlation should not have succeeded
     Throwable exception = correlateThread.getException();
-    assertThat(exception).isNotNull();
-    assertThat(exception instanceof OptimisticLockingException).isTrue();
+    assertThat(exception).isInstanceOf(OptimisticLockingException.class);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/concurrency/CompetingMessageCorrelationTest.testConcurrentMessageCorrelationAndTreeCompaction.bpmn20.xml")
@@ -444,8 +442,7 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
 
     // then it should not have succeeded
     Throwable exception = taskCompletionThread.getException();
-    assertThat(exception).isNotNull();
-    assertThat(exception instanceof OptimisticLockingException).isTrue();
+    assertThat(exception).isInstanceOf(OptimisticLockingException.class);
   }
 
   @Deployment
@@ -477,8 +474,7 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
 
     // the correlation should not have succeeded
     Throwable exception = correlateThread.getException();
-    assertThat(exception).isNotNull();
-    assertThat(exception instanceof OptimisticLockingException).isTrue();
+    assertThat(exception).isInstanceOf(OptimisticLockingException.class);
   }
 
   @Deployment
@@ -520,8 +516,7 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
 
     // thread 1 was rolled back with an optimistic locking exception
     Throwable exception = thread1.getException();
-    assertThat(exception).isNotNull();
-    assertThat(exception instanceof OptimisticLockingException).isTrue();
+    assertThat(exception).isInstanceOf(OptimisticLockingException.class);
 
     // the execution listener was not executed again
     assertThat(InvocationLogListener.getInvocations()).isEqualTo(2);

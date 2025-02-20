@@ -116,13 +116,13 @@ public class BPMNParseListenerTest {
     ProcessDefinitionImpl processDefinition = ((ProcessInstanceWithVariablesImpl) processInstance).getExecutionEntity().getProcessDefinition();
 
     ActivityImpl cancelThrowEvent = processDefinition.findActivity("CancelthrowEvent");
-    assertThat(cancelThrowEvent.getActivityBehavior() instanceof TestBPMNParseListener.TestCompensationEventActivityBehavior).isTrue();
+    assertThat(cancelThrowEvent.getActivityBehavior()).isInstanceOf(TestBPMNParseListener.TestCompensationEventActivityBehavior.class);
 
     ActivityImpl startEvent = processDefinition.findActivity("theStart");
-    assertThat(startEvent.getActivityBehavior() instanceof TestBPMNParseListener.TestNoneStartEventActivityBehavior).isTrue();
+    assertThat(startEvent.getActivityBehavior()).isInstanceOf(TestBPMNParseListener.TestNoneStartEventActivityBehavior.class);
 
     ActivityImpl endEvent = processDefinition.findActivity("theEnd");
-    assertThat(endEvent.getActivityBehavior() instanceof TestBPMNParseListener.TestNoneEndEventActivityBehavior).isTrue();
+    assertThat(endEvent.getActivityBehavior()).isInstanceOf(TestBPMNParseListener.TestNoneEndEventActivityBehavior.class);
   }
 
   @Test

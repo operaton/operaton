@@ -88,10 +88,10 @@ public class JobExecutorAcquireJobsByTypeTest extends AbstractJobExecutorAcquire
 
     List<AcquirableJobEntity> acquirableJobs = findAcquirableJobs();
     assertThat(acquirableJobs).hasSize(4);
-    assertThat(findJobById(acquirableJobs.get(0).getId()) instanceof TimerEntity).isTrue();
-    assertThat(findJobById(acquirableJobs.get(1).getId()) instanceof TimerEntity).isTrue();
-    assertThat(findJobById(acquirableJobs.get(2).getId()) instanceof MessageEntity).isTrue();
-    assertThat(findJobById(acquirableJobs.get(3).getId()) instanceof MessageEntity).isTrue();
+    assertThat(findJobById(acquirableJobs.get(0).getId())).isInstanceOf(TimerEntity.class);
+    assertThat(findJobById(acquirableJobs.get(1).getId())).isInstanceOf(TimerEntity.class);
+    assertThat(findJobById(acquirableJobs.get(2).getId())).isInstanceOf(MessageEntity.class);
+    assertThat(findJobById(acquirableJobs.get(3).getId())).isInstanceOf(MessageEntity.class);
   }
 
   @Override

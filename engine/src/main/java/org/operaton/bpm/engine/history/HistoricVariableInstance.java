@@ -24,7 +24,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  * A single process variable containing the last value when its process instance has finished.
  * It is only available when HISTORY_LEVEL is set >= AUDIT
  *
- * @author Christian Lipphardt (operaton)
+ * @author Christian Lipphardt (Camunda)
  * @author ruecker
  */
 public interface HistoricVariableInstance {

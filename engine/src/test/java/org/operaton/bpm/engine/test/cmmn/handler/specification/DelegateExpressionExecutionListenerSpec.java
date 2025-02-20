@@ -42,7 +42,7 @@ public class DelegateExpressionExecutionListenerSpec extends AbstractExecutionLi
 
   @Override
   public void verifyListener(DelegateListener<? extends BaseDelegateExecution> listener) {
-    assertThat(listener instanceof DelegateExpressionCaseExecutionListener).isTrue();
+    assertThat(listener).isInstanceOf(DelegateExpressionCaseExecutionListener.class);
 
     DelegateExpressionCaseExecutionListener delegateExpressionListener = (DelegateExpressionCaseExecutionListener) listener;
     assertThat(delegateExpressionListener.getExpressionText()).isEqualTo(DELEGATE_EXPRESSION);

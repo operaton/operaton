@@ -29,6 +29,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
 import org.junit.Test;
 
 /**
+ * <pre>
  * thread1:
  *  t=1: fetch byte variable
  *  t=4: update byte variable value
@@ -36,15 +37,14 @@ import org.junit.Test;
  * thread2:
  *  t=2: fetch and delete byte variable and entity
  *  t=3: commit transaction
- *
+ * </pre>
+ * 
  * This test ensures that thread1's command fails with an OptimisticLockingException,
  * not with a NullPointerException or something in that direction.
  *
  * @author Thorben Lindhauer
  */
 public class CompetingByteVariableAccessTest extends ConcurrencyTestCase {
-
-  private ThreadControl asyncThread;
 
   @Test
   public void testConcurrentVariableRemoval() {
@@ -59,7 +59,7 @@ public class CompetingByteVariableAccessTest extends ConcurrencyTestCase {
     String pid = runtimeService.startProcessInstanceByKey("test", createVariables().putValue("byteVar", byteVar)).getId();
 
     // start a controlled Fetch and Update variable command
-    asyncThread = executeControllableCommand(new FetchAndUpdateVariableCmd(pid, "byteVar", "bsd".getBytes()));
+    ThreadControl asyncThread = executeControllableCommand(new FetchAndUpdateVariableCmd(pid, "byteVar", "bsd".getBytes()));
 
     asyncThread.waitForSync();
 
@@ -73,10 +73,7 @@ public class CompetingByteVariableAccessTest extends ConcurrencyTestCase {
     asyncThread.waitUntilDone();
 
     Throwable exception = asyncThread.getException();
-    assertThat(exception).isNotNull();
-    assertThat(exception instanceof OptimisticLockingException).isTrue();
-
-
+    assertThat(exception).isInstanceOf(OptimisticLockingException.class);
   }
 
   static class FetchAndUpdateVariableCmd extends ControllableCommand<Void> {

@@ -2702,7 +2702,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
   }
 
   @Test
-  public void testSuspendProcessDefinitionThrowsAuthorizationExcpetion() {
+  public void testSuspendProcessDefinitionThrowsInvalidRequestException() {
     Map<String, Object> params = new HashMap<>();
     params.put("suspended", true);
 

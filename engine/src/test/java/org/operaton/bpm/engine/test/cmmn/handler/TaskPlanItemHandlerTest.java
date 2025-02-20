@@ -112,6 +112,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
+  @SuppressWarnings("deprecation")
   public void testTaskDescription() {
     // given
     String description = "This is a task";
@@ -125,6 +126,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
+  @SuppressWarnings("deprecation")
   public void testPlanItemDescription() {
     // given
     String description = "This is a planItem";
@@ -146,7 +148,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     CmmnActivityBehavior behavior = activity.getActivityBehavior();
-    assertThat(behavior instanceof TaskActivityBehavior).isTrue();
+    assertThat(behavior).isInstanceOf(TaskActivityBehavior.class);
   }
 
   @Test
@@ -413,8 +415,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_MANUAL_ACTIVATION_RULE);
-    assertThat(rule).isNotNull();
-    assertThat(rule instanceof CaseControlRule).isTrue();
+    assertThat(rule).isInstanceOf(CaseControlRule.class);
   }
 
   @Test
@@ -432,8 +433,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_MANUAL_ACTIVATION_RULE);
-    assertThat(rule).isNotNull();
-    assertThat(rule instanceof CaseControlRule).isTrue();
+    assertThat(rule).isInstanceOf(CaseControlRule.class);
   }
 
   @Test
@@ -451,8 +451,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_REQUIRED_RULE);
-    assertThat(rule).isNotNull();
-    assertThat(rule instanceof CaseControlRule).isTrue();
+    assertThat(rule).isInstanceOf(CaseControlRule.class);
   }
 
   @Test
@@ -470,8 +469,7 @@ public class TaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_REQUIRED_RULE);
-    assertThat(rule).isNotNull();
-    assertThat(rule instanceof CaseControlRule).isTrue();
+    assertThat(rule).isInstanceOf(CaseControlRule.class);
   }
 
 }

@@ -64,8 +64,7 @@ public class ExpressionBeanAccessTest {
       runtimeService.signal(processInstanceId);
       fail("Exception expected");
     } catch(ProcessEngineException ae) {
-      assertThat(ae.getCause()).isNotNull();
-      assertThat(ae.getCause() instanceof PropertyNotFoundException).isTrue();
+      assertThat(ae.getCause()).isInstanceOf(PropertyNotFoundException.class);
     }
   }
 }

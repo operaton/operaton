@@ -34,7 +34,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @author Christian Lipphardt (operaton)
+ * @author Christian Lipphardt (Camunda)
  */
 public class HistoricVariableInstanceEntity implements ValueFields, HistoricVariableInstance, DbEntity, HasDbRevision, HistoricEntity, Serializable, DbEntityLifecycleAware {
 

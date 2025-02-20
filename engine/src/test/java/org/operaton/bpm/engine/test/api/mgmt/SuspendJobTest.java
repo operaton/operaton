@@ -42,7 +42,7 @@ public class SuspendJobTest extends PluggableProcessEngineTest {
   public void testSuspensionById_shouldThrowProcessEngineException() {
     try {
       managementService.suspendJobById(null);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (ProcessEngineException e) {
     }
   }

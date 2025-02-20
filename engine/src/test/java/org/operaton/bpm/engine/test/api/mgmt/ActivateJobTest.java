@@ -42,7 +42,7 @@ public class ActivateJobTest extends PluggableProcessEngineTest {
   public void testActivationById_shouldThrowProcessEngineException() {
     try {
       managementService.activateJobById(null);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (ProcessEngineException e) {
     }
   }

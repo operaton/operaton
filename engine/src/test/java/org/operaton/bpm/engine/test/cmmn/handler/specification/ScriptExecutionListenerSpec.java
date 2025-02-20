@@ -45,7 +45,7 @@ public class ScriptExecutionListenerSpec extends AbstractExecutionListenerSpec {
 
   @Override
   public void verifyListener(DelegateListener<? extends BaseDelegateExecution> listener) {
-    assertThat(listener instanceof ScriptCaseExecutionListener).isTrue();
+    assertThat(listener).isInstanceOf(ScriptCaseExecutionListener.class);
 
     ScriptCaseExecutionListener scriptListener = (ScriptCaseExecutionListener) listener;
     ExecutableScript executableScript = scriptListener.getScript();

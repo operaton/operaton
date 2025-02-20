@@ -18,7 +18,7 @@ package org.operaton.bpm.engine.test.jobexecutor;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Arrays;
+import java.util.List;
 
 import org.operaton.bpm.engine.impl.jobexecutor.AcquiredJobs;
 import org.operaton.bpm.engine.impl.jobexecutor.BackoffJobAcquisitionStrategy;
@@ -113,7 +113,7 @@ public class BackoffJobAcquisitionStrategyTest {
     strategy.reconfigure(context);
 
     // then the idle wait time has been reset
-    assertThat(strategy.getWaitTime()).isEqualTo(0L);
+    assertThat(strategy.getWaitTime()).isZero();
   }
 
   @Test
@@ -167,7 +167,7 @@ public class BackoffJobAcquisitionStrategyTest {
   protected AcquiredJobs buildAcquiredJobs(int numJobsToAcquire, int numJobsAcquired, int numJobsFailedToLock) {
     AcquiredJobs acquiredJobs = new AcquiredJobs(numJobsToAcquire);
     for (int i = 0; i < numJobsAcquired; i++) {
-      acquiredJobs.addJobIdBatch(Arrays.asList(Integer.toString(i)));
+      acquiredJobs.addJobIdBatch(List.of(Integer.toString(i)));
     }
 
     for (int i = 0; i < numJobsFailedToLock; i++) {

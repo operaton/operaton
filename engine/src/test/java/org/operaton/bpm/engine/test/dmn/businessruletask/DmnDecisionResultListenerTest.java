@@ -51,7 +51,7 @@ public class DmnDecisionResultListenerTest extends PluggableProcessEngineTest {
   public void testNoOutput() {
     startTestProcess("no output");
 
-    assertThat(results.isEmpty()).as("The decision result 'ruleResult' should be empty").isTrue();
+    assertThat(results).as("The decision result 'ruleResult' should be empty").isEmpty();
   }
 
   @Deployment(resources = { TEST_PROCESS, TEST_DECISION})
@@ -59,7 +59,7 @@ public class DmnDecisionResultListenerTest extends PluggableProcessEngineTest {
   public void testEmptyOutput() {
     startTestProcess("empty output");
 
-    assertThat(results.isEmpty()).as("The decision result 'ruleResult' should not be empty").isFalse();
+    assertThat(results).as("The decision result 'ruleResult' should not be empty").isNotEmpty();
 
     DmnDecisionResultEntries decisionOutput = results.get(0);
     assertThat(decisionOutput.<Object>getFirstEntry()).isNull();
@@ -73,7 +73,7 @@ public class DmnDecisionResultListenerTest extends PluggableProcessEngineTest {
     assertThat(results).hasSize(2);
 
     for (DmnDecisionResultEntries output : results) {
-      assertThat(output.isEmpty()).as("The decision output should be empty").isTrue();
+      assertThat(output).as("The decision output should be empty").isEmpty();
     }
   }
 
@@ -149,7 +149,7 @@ public class DmnDecisionResultListenerTest extends PluggableProcessEngineTest {
   public void testCollectSumHitPolicyNoOutput() {
     startTestProcess("no output");
 
-    assertThat(results.isEmpty()).as("The decision result 'ruleResult' should be empty").isTrue();
+    assertThat(results).as("The decision result 'ruleResult' should be empty").isEmpty();
   }
 
   @Deployment(resources = { TEST_PROCESS, TEST_DECISION_COLLECT_SUM })
@@ -177,7 +177,7 @@ public class DmnDecisionResultListenerTest extends PluggableProcessEngineTest {
   }
 
   protected ProcessInstance startTestProcess(String input) {
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess", Collections.<String, Object>singletonMap("input", input));
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess", Collections.singletonMap("input", input));
 
     // get the result from an execution listener that is invoked at the end of the business rule activity
     results = DecisionResultTestListener.getDecisionResult();

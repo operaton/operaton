@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.test.standalone.pvm;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -88,11 +85,7 @@ public class ActivityInstanceVerification extends Assert implements ExecutionLis
     String executionId = String.valueOf(System.identityHashCode(execution));
 
     // add to instance map
-    List<ActivityInstance> instancesForThisAct = instanceMap.get(actId);
-    if(instancesForThisAct == null) {
-      instancesForThisAct = new ArrayList<>();
-      instanceMap.put(actId, instancesForThisAct);
-    }
+    List<ActivityInstance> instancesForThisAct = instanceMap.computeIfAbsent(actId, k -> new ArrayList<>());
     ActivityInstance activityInstance = new ActivityInstance(executionId, actInstanceId, parentActInstanceId, execution.isCompleteScope());
     instancesForThisAct.add(activityInstance);
   }
@@ -156,8 +149,8 @@ public class ActivityInstanceVerification extends Assert implements ExecutionLis
 
     for (ActivityInstance activityInstance : actInstanceList) {
       boolean found = false;
-      for (ActivityInstance parentIntance : parentInstances) {
-        if(activityInstance.parentId.equals(parentIntance.id)) {
+      for (ActivityInstance parentInstance : parentInstances) {
+        if(activityInstance.parentId.equals(parentInstance.id)) {
           found = true;
         }
       }

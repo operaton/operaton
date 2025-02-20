@@ -196,8 +196,7 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
     assertThat(job.getExceptionMessage()).isEqualTo("exception in transaction listener");
 
     String stacktrace = managementService.getJobExceptionStacktrace(job.getId());
-    assertThat(stacktrace).isNotNull();
-    assertThat(stacktrace).contains("java.lang.RuntimeException: exception in transaction listener");
+    assertThat(stacktrace).isNotNull().contains("java.lang.RuntimeException: exception in transaction listener");
   }
 
   protected void createJob(final String handlerType) {

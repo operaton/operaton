@@ -91,6 +91,7 @@ public class StageDiscretionaryItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
+  @SuppressWarnings("deprecation")
   public void testStageDescription() {
     // given
     String description = "This is a stage";
@@ -104,6 +105,7 @@ public class StageDiscretionaryItemHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
+  @SuppressWarnings("deprecation")
   public void testDiscretionaryItemDescription() {
     // given
     String description = "This is a discretionaryItem";
@@ -125,7 +127,7 @@ public class StageDiscretionaryItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     CmmnActivityBehavior behavior = activity.getActivityBehavior();
-    assertThat(behavior instanceof StageActivityBehavior).isTrue();
+    assertThat(behavior).isInstanceOf(StageActivityBehavior.class);
   }
 
   @Test
@@ -170,7 +172,7 @@ public class StageDiscretionaryItemHandlerTest extends CmmnElementHandlerTest {
     // then
     Object rule = newActivity.getProperty(PROPERTY_MANUAL_ACTIVATION_RULE);
     assertThat(rule).isNotNull();
-    assertThat(rule instanceof CaseControlRule).isTrue();
+    assertThat(rule).isInstanceOf(CaseControlRule.class);
   }
 
   @Test
@@ -189,7 +191,7 @@ public class StageDiscretionaryItemHandlerTest extends CmmnElementHandlerTest {
     // then
     Object rule = newActivity.getProperty(PROPERTY_MANUAL_ACTIVATION_RULE);
     assertThat(rule).isNotNull();
-    assertThat(rule instanceof CaseControlRule).isTrue();
+    assertThat(rule).isInstanceOf(CaseControlRule.class);
   }
 
   @Test
@@ -208,7 +210,7 @@ public class StageDiscretionaryItemHandlerTest extends CmmnElementHandlerTest {
     // then
     Object rule = newActivity.getProperty(PROPERTY_REQUIRED_RULE);
     assertThat(rule).isNotNull();
-    assertThat(rule instanceof CaseControlRule).isTrue();
+    assertThat(rule).isInstanceOf(CaseControlRule.class);
   }
 
   @Test
@@ -227,7 +229,7 @@ public class StageDiscretionaryItemHandlerTest extends CmmnElementHandlerTest {
     // then
     Object rule = newActivity.getProperty(PROPERTY_REQUIRED_RULE);
     assertThat(rule).isNotNull();
-    assertThat(rule instanceof CaseControlRule).isTrue();
+    assertThat(rule).isInstanceOf(CaseControlRule.class);
   }
 
   @Test

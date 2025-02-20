@@ -141,8 +141,9 @@ public class HistoricCaseInstanceTest extends CmmnTest {
     assertDateSimilar(closed, closeTime);
 
     // test that duration is as expected with a maximal difference of one second
-    assertThat(durationInMillis).isGreaterThanOrEqualTo(duration);
-    assertThat(durationInMillis).isLessThan(duration + 1000);
+    assertThat(durationInMillis)
+      .isGreaterThanOrEqualTo(duration)
+      .isLessThan(duration + 1000);
 
     // test queries
     Date beforeCreate = new Date(created.getTime() - 3600 * 1000);

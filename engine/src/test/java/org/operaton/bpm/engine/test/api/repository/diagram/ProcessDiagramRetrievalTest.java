@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -220,10 +221,10 @@ public class ProcessDiagramRetrievalTest {
     File htmlFile = new File("src/test/resources/org/operaton/bpm/engine/test/api/repository/diagram/" + imageFileName + ".html");
     try {
       if (OVERWRITE_EXPECTED_HTML_FILES) {
-        FileUtils.writeStringToFile(htmlFile, html);
+        FileUtils.writeStringToFile(htmlFile, html, StandardCharsets.UTF_8);
         fail("The assertions of this test only work if ProcessDiagramRetrievalTest#OVERWRITE_EXPECTED_HTML_FILES is set to false.");
       }
-      assertThat(html).isEqualTo(FileUtils.readFileToString(htmlFile).replace("\r", "")); // remove carriage returns in case the files have been fetched via Git on Windows
+      assertThat(html).isEqualTo(FileUtils.readFileToString(htmlFile, StandardCharsets.UTF_8).replace("\r", "")); // remove carriage returns in case the files have been fetched via Git on Windows
     } catch (IOException e) {
       fail("Could not read or write file: " + e.getMessage());
     }

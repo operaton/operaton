@@ -17,9 +17,7 @@
 package org.operaton.bpm.engine.test.jobexecutor;
 
 import static org.operaton.bpm.engine.test.util.ClockTestUtil.incrementClock;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
@@ -37,9 +35,9 @@ public class JobExecutorAcquireJobsByPriorityTest extends AbstractJobExecutorAcq
 
   @Test
   public void testProcessEngineConfiguration() {
-    assertFalse(configuration.isJobExecutorPreferTimerJobs());
-    assertFalse(configuration.isJobExecutorAcquireByDueDate());
-    assertTrue(configuration.isJobExecutorAcquireByPriority());
+    assertThat(configuration.isJobExecutorPreferTimerJobs()).isFalse();
+    assertThat(configuration.isJobExecutorAcquireByDueDate()).isFalse();
+    assertThat(configuration.isJobExecutorAcquireByPriority()).isTrue();
   }
 
   @Test
@@ -64,21 +62,21 @@ public class JobExecutorAcquireJobsByPriorityTest extends AbstractJobExecutorAcq
     incrementClock(61);
 
     List<AcquirableJobEntity> acquirableJobs = findAcquirableJobs();
-    assertEquals(20, acquirableJobs.size());
+    assertThat(acquirableJobs).hasSize(20);
     for (int i = 0; i < 5; i++) {
-      assertEquals(10, findJobById(acquirableJobs.get(i).getId()).getPriority());
+      assertThat(findJobById(acquirableJobs.get(i).getId()).getPriority()).isEqualTo(10);
     }
 
     for (int i = 5; i < 10; i++) {
-      assertEquals(8, findJobById(acquirableJobs.get(i).getId()).getPriority());
+      assertThat(findJobById(acquirableJobs.get(i).getId()).getPriority()).isEqualTo(8);
     }
 
     for (int i = 10; i < 15; i++) {
-      assertEquals(5, findJobById(acquirableJobs.get(i).getId()).getPriority());
+      assertThat(findJobById(acquirableJobs.get(i).getId()).getPriority()).isEqualTo(5);
     }
 
     for (int i = 15; i < 20; i++) {
-      assertEquals(4, findJobById(acquirableJobs.get(i).getId()).getPriority());
+      assertThat(findJobById(acquirableJobs.get(i).getId()).getPriority()).isEqualTo(4);
     }
   }
 

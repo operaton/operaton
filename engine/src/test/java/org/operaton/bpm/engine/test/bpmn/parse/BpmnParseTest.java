@@ -48,11 +48,9 @@ import org.operaton.commons.testing.WatchLogger;
 import java.util.List;
 import java.util.Locale;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -164,7 +162,7 @@ public class BpmnParseTest {
       deploymentBuilder.deploy();
       fail("Exception expected: Process definition could be parsed, although the sub process contains a signal start event.");
     } catch (ParseException e) {
-      testRule.assertTextPresent("signalEventDefintion only allowed on start event if subprocess is an event subprocess", e.getMessage());
+      testRule.assertTextPresent("signalEventDefinition only allowed on start event if subprocess is an event subprocess", e.getMessage());
       List<Problem> errors = e.getResourceReports().get(0).getErrors();
       assertThat(errors).hasSize(1);
       assertThat(errors.get(0).getMainElementId()).isEqualTo("StartEvent_3");
@@ -271,7 +269,7 @@ public class BpmnParseTest {
       deploymentBuilder.deploy();
       fail("Exception expected: Process definition could be parsed, although the sub process contains a signal start event.");
     } catch (ParseException e) {
-      testRule.assertTextPresent("signalEventDefintion only allowed on start event if subprocess is an event subprocess", e.getMessage());
+      testRule.assertTextPresent("signalEventDefinition only allowed on start event if subprocess is an event subprocess", e.getMessage());
       List<Problem> errors = e.getResourceReports().get(0).getErrors();
       assertThat(errors).hasSize(1);
       assertThat(errors.get(0).getMainElementId()).isEqualTo("StartEvent_2");
@@ -329,7 +327,7 @@ public class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
       deploymentBuilder.deploy();
-      fail();
+      fail("");
     } catch (ParseException e) {
       testRule.assertTextPresent("cvc-complex-type.3.2.2:", e.getMessage());
       testRule.assertTextPresent("invalidAttribute", e.getMessage());
@@ -406,7 +404,7 @@ public class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
       deploymentBuilder.deploy();
-      fail();
+      fail("");
     } catch (ParseException e) {
       // fail in "regular" subprocess
       testRule.assertTextPresent("timerEventDefinition is not allowed on start event within a subprocess", e.getMessage());
@@ -424,20 +422,20 @@ public class BpmnParseTest {
   public void testParseWithBpmnNamespacePrefix() {
     repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/parse/BpmnParseTest.testParseWithBpmnNamespacePrefix.bpmn20.xml").deploy();
-    assertEquals(1, repositoryService.createProcessDefinitionQuery().count());
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
   }
 
   @Test
   public void testParseWithMultipleDocumentation() {
     repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/parse/BpmnParseTest.testParseWithMultipleDocumentation.bpmn20.xml").deploy();
-    assertEquals(1, repositoryService.createProcessDefinitionQuery().count());
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
   }
 
   @Test
   public void testParseCollaborationPlane() {
     repositoryService.createDeployment().addClasspathResource("org/operaton/bpm/engine/test/bpmn/parse/BpmnParseTest.testParseCollaborationPlane.bpmn").deploy();
-    assertEquals(1, repositoryService.createProcessDefinitionQuery().count());
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
   }
 
   @Test
@@ -446,7 +444,7 @@ public class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
     try {
       deploymentBuilder.deploy();
-      fail();
+      fail("");
     } catch (ParseException e) {
       // fail on asyncAfter
       testRule.assertTextPresent("'asyncAfter' not supported for", e.getMessage());
@@ -463,16 +461,16 @@ public class BpmnParseTest {
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
     ProcessDefinitionEntity processDefinitionEntity = commandExecutor.execute(commandContext -> Context.getProcessEngineConfiguration().getDeploymentCache().findDeployedLatestProcessDefinitionByKey("myProcess"));
 
-    assertNotNull(processDefinitionEntity);
-    assertEquals(7, processDefinitionEntity.getActivities().size());
+    assertThat(processDefinitionEntity).isNotNull();
+    assertThat(processDefinitionEntity.getActivities()).hasSize(7);
 
     // Check if diagram has been created based on Diagram Interchange when it's
     // not a headless instance
     List<String> resourceNames = repositoryService.getDeploymentResourceNames(processDefinitionEntity.getDeploymentId());
     if (processEngineConfiguration.isCreateDiagramOnDeploy()) {
-      assertEquals(2, resourceNames.size());
+      assertThat(resourceNames).hasSize(2);
     } else {
-      assertEquals(1, resourceNames.size());
+      assertThat(resourceNames).hasSize(1);
     }
 
     for (ActivityImpl activity : processDefinitionEntity.getActivities()) {
@@ -494,7 +492,7 @@ public class BpmnParseTest {
       }
 
       for (PvmTransition sequenceFlow : activity.getOutgoingTransitions()) {
-        assertTrue(((TransitionImpl) sequenceFlow).getWaypoints().size() >= 4);
+        assertThat(((TransitionImpl) sequenceFlow).getWaypoints()).hasSizeGreaterThanOrEqualTo(4);
 
         TransitionImpl transitionImpl = (TransitionImpl) sequenceFlow;
         if (transitionImpl.getId().equals("flowStartToTask1")) {
@@ -524,16 +522,16 @@ public class BpmnParseTest {
     ProcessDefinitionEntity processDefinitionEntity = commandExecutor.execute(commandContext -> Context.getProcessEngineConfiguration().getDeploymentCache().findDeployedLatestProcessDefinitionByKey("resolvableNamespacesProcess"));
 
     // Test that the process definition has been deployed
-    assertNotNull(processDefinitionEntity);
+    assertThat(processDefinitionEntity).isNotNull();
     PvmActivity activity = processDefinitionEntity.findActivity("ExclusiveGateway_1");
-    assertNotNull(activity);
+    assertThat(activity).isNotNull();
 
     // Test that the conditions has been resolved
     for (PvmTransition transition : activity.getOutgoingTransitions()) {
       if (transition.getDestination().getId().equals("Task_2")) {
-        assertEquals("#{approved}", transition.getProperty("conditionText"));
+        assertThat(transition.getProperty("conditionText")).isEqualTo("#{approved}");
       } else if (transition.getDestination().getId().equals("Task_3")) {
-        assertEquals("#{!approved}", transition.getProperty("conditionText"));
+        assertThat(transition.getProperty("conditionText")).isEqualTo("#{!approved}");
       } else {
         fail("Something went wrong");
       }
@@ -566,9 +564,9 @@ public class BpmnParseTest {
   public void testParseCompensationEndEvent() {
     ActivityImpl endEvent = findActivityInDeployedProcessDefinition("end");
 
-    assertEquals("compensationEndEvent", endEvent.getProperty("type"));
-    assertEquals(Boolean.TRUE, endEvent.getProperty(BpmnParse.PROPERTYNAME_THROWS_COMPENSATION));
-    assertEquals(CompensationEventActivityBehavior.class, endEvent.getActivityBehavior().getClass());
+    assertThat(endEvent.getProperty("type")).isEqualTo("compensationEndEvent");
+    assertThat(endEvent.getProperty(BpmnParse.PROPERTYNAME_THROWS_COMPENSATION)).isEqualTo(Boolean.TRUE);
+    assertThat(endEvent.getActivityBehavior().getClass()).isEqualTo(CompensationEventActivityBehavior.class);
   }
 
   @Deployment
@@ -576,14 +574,14 @@ public class BpmnParseTest {
   public void testParseCompensationStartEvent() {
     ActivityImpl compensationStartEvent = findActivityInDeployedProcessDefinition("compensationStartEvent");
 
-    assertEquals("compensationStartEvent", compensationStartEvent.getProperty("type"));
-    assertEquals(EventSubProcessStartEventActivityBehavior.class, compensationStartEvent.getActivityBehavior().getClass());
+    assertThat(compensationStartEvent.getProperty("type")).isEqualTo("compensationStartEvent");
+    assertThat(compensationStartEvent.getActivityBehavior().getClass()).isEqualTo(EventSubProcessStartEventActivityBehavior.class);
 
     ActivityImpl compensationEventSubProcess = (ActivityImpl) compensationStartEvent.getFlowScope();
-    assertEquals(Boolean.TRUE, compensationEventSubProcess.getProperty(BpmnParse.PROPERTYNAME_IS_FOR_COMPENSATION));
+    assertThat(compensationEventSubProcess.getProperty(BpmnParse.PROPERTYNAME_IS_FOR_COMPENSATION)).isEqualTo(Boolean.TRUE);
 
     ScopeImpl subprocess = compensationEventSubProcess.getFlowScope();
-    assertEquals(compensationEventSubProcess.getActivityId(), subprocess.getProperty(BpmnParse.PROPERTYNAME_COMPENSATION_HANDLER_ID));
+    assertThat(subprocess.getProperty(BpmnParse.PROPERTYNAME_COMPENSATION_HANDLER_ID)).isEqualTo(compensationEventSubProcess.getActivityId());
   }
 
   @Deployment
@@ -592,35 +590,35 @@ public class BpmnParseTest {
     ActivityImpl innerTask = findActivityInDeployedProcessDefinition("miTask");
     ActivityImpl miBody = innerTask.getParentFlowScopeActivity();
 
-    assertTrue(miBody.isAsyncBefore());
-    assertTrue(miBody.isAsyncAfter());
+    assertThat(miBody.isAsyncBefore()).isTrue();
+    assertThat(miBody.isAsyncAfter()).isTrue();
 
-    assertFalse(innerTask.isAsyncBefore());
-    assertFalse(innerTask.isAsyncAfter());
+    assertThat(innerTask.isAsyncBefore()).isFalse();
+    assertThat(innerTask.isAsyncAfter()).isFalse();
   }
 
   @Deployment
   @Test
   public void testParseAsyncActivityWrappedInMultiInstanceBody(){
     ActivityImpl innerTask = findActivityInDeployedProcessDefinition("miTask");
-    assertTrue(innerTask.isAsyncBefore());
-    assertTrue(innerTask.isAsyncAfter());
+    assertThat(innerTask.isAsyncBefore()).isTrue();
+    assertThat(innerTask.isAsyncAfter()).isTrue();
 
     ActivityImpl miBody = innerTask.getParentFlowScopeActivity();
-    assertFalse(miBody.isAsyncBefore());
-    assertFalse(miBody.isAsyncAfter());
+    assertThat(miBody.isAsyncBefore()).isFalse();
+    assertThat(miBody.isAsyncAfter()).isFalse();
   }
 
   @Deployment
   @Test
   public void testParseAsyncActivityWrappedInMultiInstanceBodyWithAsyncMultiInstance(){
     ActivityImpl innerTask = findActivityInDeployedProcessDefinition("miTask");
-    assertTrue(innerTask.isAsyncBefore());
-    assertFalse(innerTask.isAsyncAfter());
+    assertThat(innerTask.isAsyncBefore()).isTrue();
+    assertThat(innerTask.isAsyncAfter()).isFalse();
 
     ActivityImpl miBody = innerTask.getParentFlowScopeActivity();
-    assertFalse(miBody.isAsyncBefore());
-    assertTrue(miBody.isAsyncAfter());
+    assertThat(miBody.isAsyncBefore()).isFalse();
+    assertThat(miBody.isAsyncAfter()).isTrue();
   }
 
   @Test
@@ -628,27 +626,29 @@ public class BpmnParseTest {
     repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/parse/BpmnParseTest.testParseSwitchedSourceAndTargetRefsForAssociations.bpmn20.xml").deploy();
 
-    assertEquals(1, repositoryService.createProcessDefinitionQuery().count());
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/compensate/CompensateEventTest.compensationMiActivity.bpmn20.xml")
   @Test
+  @SuppressWarnings("deprecation")
   public void testParseCompensationHandlerOfMiActivity() {
     ActivityImpl miActivity = findActivityInDeployedProcessDefinition("undoBookHotel");
     ScopeImpl flowScope = miActivity.getFlowScope();
 
-    assertEquals(ActivityTypes.MULTI_INSTANCE_BODY, flowScope.getProperty(BpmnParse.PROPERTYNAME_TYPE));
-    assertEquals("bookHotel" + BpmnParse.MULTI_INSTANCE_BODY_ID_SUFFIX, ((ActivityImpl) flowScope).getActivityId());
+    assertThat(flowScope.getProperty(BpmnParse.PROPERTYNAME_TYPE)).isEqualTo(ActivityTypes.MULTI_INSTANCE_BODY);
+    assertThat(((ActivityImpl) flowScope).getActivityId()).isEqualTo("bookHotel" + BpmnParse.MULTI_INSTANCE_BODY_ID_SUFFIX);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/compensate/CompensateEventTest.compensationMiSubprocess.bpmn20.xml")
   @Test
+  @SuppressWarnings("deprecation")
   public void testParseCompensationHandlerOfMiSubprocess() {
     ActivityImpl miActivity = findActivityInDeployedProcessDefinition("undoBookHotel");
     ScopeImpl flowScope = miActivity.getFlowScope();
 
-    assertEquals(ActivityTypes.MULTI_INSTANCE_BODY, flowScope.getProperty(BpmnParse.PROPERTYNAME_TYPE));
-    assertEquals("scope" + BpmnParse.MULTI_INSTANCE_BODY_ID_SUFFIX, ((ActivityImpl) flowScope).getActivityId());
+    assertThat(flowScope.getProperty(BpmnParse.PROPERTYNAME_TYPE)).isEqualTo(ActivityTypes.MULTI_INSTANCE_BODY);
+    assertThat(((ActivityImpl) flowScope).getActivityId()).isEqualTo("scope" + BpmnParse.MULTI_INSTANCE_BODY_ID_SUFFIX);
   }
 
   @Deployment
@@ -656,8 +656,8 @@ public class BpmnParseTest {
   public void testParseSignalStartEvent(){
     ActivityImpl signalStartActivity = findActivityInDeployedProcessDefinition("start");
 
-    assertEquals(ActivityTypes.START_EVENT_SIGNAL, signalStartActivity.getProperty("type"));
-    assertEquals(NoneStartEventActivityBehavior.class, signalStartActivity.getActivityBehavior().getClass());
+    assertThat(signalStartActivity.getProperty("type")).isEqualTo(ActivityTypes.START_EVENT_SIGNAL);
+    assertThat(signalStartActivity.getActivityBehavior().getClass()).isEqualTo(NoneStartEventActivityBehavior.class);
   }
 
   @Deployment
@@ -665,8 +665,8 @@ public class BpmnParseTest {
   public void testParseEscalationBoundaryEvent() {
     ActivityImpl escalationBoundaryEvent = findActivityInDeployedProcessDefinition("escalationBoundaryEvent");
 
-    assertEquals(ActivityTypes.BOUNDARY_ESCALATION, escalationBoundaryEvent.getProperties().get(BpmnProperties.TYPE));
-    assertEquals(BoundaryEventActivityBehavior.class, escalationBoundaryEvent.getActivityBehavior().getClass());
+    assertThat(escalationBoundaryEvent.getProperties().get(BpmnProperties.TYPE)).isEqualTo(ActivityTypes.BOUNDARY_ESCALATION);
+    assertThat(escalationBoundaryEvent.getActivityBehavior().getClass()).isEqualTo(BoundaryEventActivityBehavior.class);
   }
 
   @Deployment
@@ -674,8 +674,8 @@ public class BpmnParseTest {
   public void testParseEscalationIntermediateThrowingEvent() {
     ActivityImpl escalationThrowingEvent = findActivityInDeployedProcessDefinition("escalationThrowingEvent");
 
-    assertEquals(ActivityTypes.INTERMEDIATE_EVENT_ESCALATION_THROW, escalationThrowingEvent.getProperties().get(BpmnProperties.TYPE));
-    assertEquals(ThrowEscalationEventActivityBehavior.class, escalationThrowingEvent.getActivityBehavior().getClass());
+    assertThat(escalationThrowingEvent.getProperties().get(BpmnProperties.TYPE)).isEqualTo(ActivityTypes.INTERMEDIATE_EVENT_ESCALATION_THROW);
+    assertThat(escalationThrowingEvent.getActivityBehavior().getClass()).isEqualTo(ThrowEscalationEventActivityBehavior.class);
   }
 
   @Deployment
@@ -683,8 +683,8 @@ public class BpmnParseTest {
   public void testParseEscalationEndEvent() {
     ActivityImpl escalationEndEvent = findActivityInDeployedProcessDefinition("escalationEndEvent");
 
-    assertEquals(ActivityTypes.END_EVENT_ESCALATION, escalationEndEvent.getProperties().get(BpmnProperties.TYPE));
-    assertEquals(ThrowEscalationEventActivityBehavior.class, escalationEndEvent.getActivityBehavior().getClass());
+    assertThat(escalationEndEvent.getProperties().get(BpmnProperties.TYPE)).isEqualTo(ActivityTypes.END_EVENT_ESCALATION);
+    assertThat(escalationEndEvent.getActivityBehavior().getClass()).isEqualTo(ThrowEscalationEventActivityBehavior.class);
   }
 
   @Deployment
@@ -692,8 +692,8 @@ public class BpmnParseTest {
   public void testParseEscalationStartEvent() {
     ActivityImpl escalationStartEvent = findActivityInDeployedProcessDefinition("escalationStartEvent");
 
-    assertEquals(ActivityTypes.START_EVENT_ESCALATION, escalationStartEvent.getProperties().get(BpmnProperties.TYPE));
-    assertEquals(EventSubProcessStartEventActivityBehavior.class, escalationStartEvent.getActivityBehavior().getClass());
+    assertThat(escalationStartEvent.getProperties().get(BpmnProperties.TYPE)).isEqualTo(ActivityTypes.START_EVENT_ESCALATION);
+    assertThat(escalationStartEvent.getActivityBehavior().getClass()).isEqualTo(EventSubProcessStartEventActivityBehavior.class);
   }
 
 
@@ -723,8 +723,8 @@ public class BpmnParseTest {
   public void testParseConditionalBoundaryEvent() {
     ActivityImpl conditionalBoundaryEvent = findActivityInDeployedProcessDefinition("conditionalBoundaryEvent");
 
-    assertEquals(ActivityTypes.BOUNDARY_CONDITIONAL, conditionalBoundaryEvent.getProperties().get(BpmnProperties.TYPE));
-    assertEquals(BoundaryConditionalEventActivityBehavior.class, conditionalBoundaryEvent.getActivityBehavior().getClass());
+    assertThat(conditionalBoundaryEvent.getProperties().get(BpmnProperties.TYPE)).isEqualTo(ActivityTypes.BOUNDARY_CONDITIONAL);
+    assertThat(conditionalBoundaryEvent.getActivityBehavior().getClass()).isEqualTo(BoundaryConditionalEventActivityBehavior.class);
   }
 
   @Deployment
@@ -733,11 +733,11 @@ public class BpmnParseTest {
     ActivityImpl conditionalBoundaryEvent1 = findActivityInDeployedProcessDefinition("conditionalBoundaryEvent1");
     ActivityImpl conditionalBoundaryEvent2 = findActivityInDeployedProcessDefinition("conditionalBoundaryEvent2");
 
-    assertTrue(conditionalBoundaryEvent1.isAsyncAfter());
-    assertTrue(conditionalBoundaryEvent1.isAsyncBefore());
+    assertThat(conditionalBoundaryEvent1.isAsyncAfter()).isTrue();
+    assertThat(conditionalBoundaryEvent1.isAsyncBefore()).isTrue();
 
-    assertFalse(conditionalBoundaryEvent2.isAsyncAfter());
-    assertFalse(conditionalBoundaryEvent2.isAsyncBefore());
+    assertThat(conditionalBoundaryEvent2.isAsyncAfter()).isFalse();
+    assertThat(conditionalBoundaryEvent2.isAsyncBefore()).isFalse();
   }
 
   @Test
@@ -750,8 +750,8 @@ public class BpmnParseTest {
   public void testParseIntermediateConditionalEvent() {
     ActivityImpl intermediateConditionalEvent = findActivityInDeployedProcessDefinition("intermediateConditionalEvent");
 
-    assertEquals(ActivityTypes.INTERMEDIATE_EVENT_CONDITIONAL, intermediateConditionalEvent.getProperties().get(BpmnProperties.TYPE));
-    assertEquals(IntermediateConditionalEventBehavior.class, intermediateConditionalEvent.getActivityBehavior().getClass());
+    assertThat(intermediateConditionalEvent.getProperties().get(BpmnProperties.TYPE)).isEqualTo(ActivityTypes.INTERMEDIATE_EVENT_CONDITIONAL);
+    assertThat(intermediateConditionalEvent.getActivityBehavior().getClass()).isEqualTo(IntermediateConditionalEventBehavior.class);
   }
 
   @Test
@@ -764,28 +764,28 @@ public class BpmnParseTest {
   public void testParseEventSubprocessConditionalStartEvent() {
     ActivityImpl conditionalStartEventSubProcess = findActivityInDeployedProcessDefinition("conditionalStartEventSubProcess");
 
-    assertEquals(ActivityTypes.START_EVENT_CONDITIONAL, conditionalStartEventSubProcess.getProperties().get(BpmnProperties.TYPE));
-    assertEquals(EventSubProcessStartConditionalEventActivityBehavior.class, conditionalStartEventSubProcess.getActivityBehavior().getClass());
+    assertThat(conditionalStartEventSubProcess.getProperties().get(BpmnProperties.TYPE)).isEqualTo(ActivityTypes.START_EVENT_CONDITIONAL);
+    assertThat(conditionalStartEventSubProcess.getActivityBehavior().getClass()).isEqualTo(EventSubProcessStartConditionalEventActivityBehavior.class);
 
   }
 
   protected void assertActivityBounds(ActivityImpl activity, int x, int y, int width, int height) {
-    assertEquals(x, activity.getX());
-    assertEquals(y, activity.getY());
-    assertEquals(width, activity.getWidth());
-    assertEquals(height, activity.getHeight());
+    assertThat(activity.getX()).isEqualTo(x);
+    assertThat(activity.getY()).isEqualTo(y);
+    assertThat(activity.getWidth()).isEqualTo(width);
+    assertThat(activity.getHeight()).isEqualTo(height);
   }
 
   protected void assertSequenceFlowWayPoints(TransitionImpl sequenceFlow, Integer... waypoints) {
-    assertEquals(waypoints.length, sequenceFlow.getWaypoints().size());
+    assertThat(sequenceFlow.getWaypoints()).hasSize(waypoints.length);
     for (int i = 0; i < waypoints.length; i++) {
-      assertEquals(waypoints[i], sequenceFlow.getWaypoints().get(i));
+      assertThat(sequenceFlow.getWaypoints().get(i)).isEqualTo(waypoints[i]);
     }
   }
 
   protected ActivityImpl findActivityInDeployedProcessDefinition(String activityId) {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
-    assertNotNull(processDefinition);
+    assertThat(processDefinition).isNotNull();
 
     ProcessDefinitionEntity cachedProcessDefinition = processEngineConfiguration.getDeploymentCache()
                                                         .getProcessDefinitionCache()
@@ -1021,26 +1021,28 @@ public class BpmnParseTest {
   @Test
   public void testParseProcessDefinitionTtl() {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
-    assertNotNull(processDefinitions);
-    assertEquals(1, processDefinitions.size());
+    assertThat(processDefinitions)
+            .isNotNull()
+            .hasSize(1);
 
     Integer timeToLive = processDefinitions.get(0).getHistoryTimeToLive();
-    assertNotNull(timeToLive);
-    assertEquals(5, timeToLive.intValue());
+    assertThat(timeToLive).isNotNull();
+    assertThat(timeToLive.intValue()).isEqualTo(5);
 
-    assertTrue(processDefinitions.get(0).isStartableInTasklist());
+    assertThat(processDefinitions.get(0).isStartableInTasklist()).isTrue();
   }
 
   @Deployment
   @Test
   public void testParseProcessDefinitionStringTtl() {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
-    assertNotNull(processDefinitions);
-    assertEquals(1, processDefinitions.size());
+    assertThat(processDefinitions)
+            .isNotNull()
+            .hasSize(1);
 
     Integer timeToLive = processDefinitions.get(0).getHistoryTimeToLive();
-    assertNotNull(timeToLive);
-    assertEquals(5, timeToLive.intValue());
+    assertThat(timeToLive).isNotNull();
+    assertThat(timeToLive.intValue()).isEqualTo(5);
   }
 
   @Test
@@ -1060,22 +1062,24 @@ public class BpmnParseTest {
   @Test
   public void testParseProcessDefinitionEmptyTtl() {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
-    assertNotNull(processDefinitions);
-    assertEquals(1, processDefinitions.size());
+    assertThat(processDefinitions)
+            .isNotNull()
+            .hasSize(1);
 
     Integer timeToLive = processDefinitions.get(0).getHistoryTimeToLive();
-    assertNull(timeToLive);
+    assertThat(timeToLive).isNull();
   }
 
   @Deployment
   @Test
   public void testParseProcessDefinitionWithoutTtl() {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
-    assertNotNull(processDefinitions);
-    assertEquals(1, processDefinitions.size());
+    assertThat(processDefinitions)
+            .isNotNull()
+            .hasSize(1);
 
     Integer timeToLive = processDefinitions.get(0).getHistoryTimeToLive();
-    assertNull(timeToLive);
+    assertThat(timeToLive).isNull();
   }
 
   @Test
@@ -1085,12 +1089,13 @@ public class BpmnParseTest {
       String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseProcessDefinitionWithoutTtl");
       repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
       List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
-      assertNotNull(processDefinitions);
-      assertEquals(1, processDefinitions.size());
+      assertThat(processDefinitions)
+              .isNotNull()
+              .hasSize(1);
 
       Integer timeToLive = processDefinitions.get(0).getHistoryTimeToLive();
-      assertNotNull(timeToLive);
-      assertEquals(6, timeToLive.intValue());
+      assertThat(timeToLive).isNotNull();
+      assertThat(timeToLive.intValue()).isEqualTo(6);
     } finally {
       processEngineConfiguration.setHistoryTimeToLive(null);
     }
@@ -1169,10 +1174,11 @@ public class BpmnParseTest {
   @Test
   public void testParseProcessDefinitionStartable() {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
-    assertNotNull(processDefinitions);
-    assertEquals(1, processDefinitions.size());
+    assertThat(processDefinitions)
+            .isNotNull()
+            .hasSize(1);
 
-    assertFalse(processDefinitions.get(0).isStartableInTasklist());
+    assertThat(processDefinitions.get(0).isStartableInTasklist()).isFalse();
   }
 
   @Test
@@ -1266,7 +1272,7 @@ public class BpmnParseTest {
     testRule.deploy(deploymentBuilder);
 
     // then
-    assertEquals(1, repositoryService.createProcessDefinitionQuery().count());
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
   }
 
   @Test
@@ -1339,7 +1345,7 @@ public class BpmnParseTest {
   }
 
   @Test
-  public void testSequenceFlowNoIdAndUnexistantDestination() {
+  public void testSequenceFlowNoIdAndUnexistentDestination() {
     String incorrectSequenceFlow = "<?xml version='1.0' encoding='UTF-8'?>" +
           "<definitions xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'" +
           "  xmlns='http://www.omg.org/spec/BPMN/20100524/MODEL'" +

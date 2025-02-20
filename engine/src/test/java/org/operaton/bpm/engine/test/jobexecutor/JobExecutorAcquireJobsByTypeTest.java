@@ -17,10 +17,7 @@
 package org.operaton.bpm.engine.test.jobexecutor;
 
 import static org.operaton.bpm.engine.test.util.ClockTestUtil.incrementClock;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
@@ -42,9 +39,9 @@ public class JobExecutorAcquireJobsByTypeTest extends AbstractJobExecutorAcquire
 
   @Test
   public void testProcessEngineConfiguration() {
-    assertTrue(configuration.isJobExecutorPreferTimerJobs());
-    assertFalse(configuration.isJobExecutorAcquireByDueDate());
-    assertFalse(configuration.isJobExecutorAcquireByPriority());
+    assertThat(configuration.isJobExecutorPreferTimerJobs()).isTrue();
+    assertThat(configuration.isJobExecutorAcquireByDueDate()).isFalse();
+    assertThat(configuration.isJobExecutorAcquireByPriority()).isFalse();
   }
 
   @Test
@@ -55,7 +52,7 @@ public class JobExecutorAcquireJobsByTypeTest extends AbstractJobExecutorAcquire
     runtimeService.startProcessInstanceByKey("simpleAsyncProcess");
 
     Job job = managementService.createJobQuery().singleResult();
-    assertNull(job.getDuedate());
+    assertThat(job.getDuedate()).isNull();
   }
 
   @Test
@@ -68,7 +65,7 @@ public class JobExecutorAcquireJobsByTypeTest extends AbstractJobExecutorAcquire
     Job job = managementService.createJobQuery().singleResult();
 
     // time is fixed for the purposes of the test
-    assertEquals(ClockUtil.getCurrentTime(), job.getDuedate());
+    assertThat(job.getDuedate()).isEqualTo(ClockUtil.getCurrentTime());
   }
 
   @Test
@@ -90,11 +87,11 @@ public class JobExecutorAcquireJobsByTypeTest extends AbstractJobExecutorAcquire
     incrementClock(70);
 
     List<AcquirableJobEntity> acquirableJobs = findAcquirableJobs();
-    assertEquals(4, acquirableJobs.size());
-    assertTrue(findJobById(acquirableJobs.get(0).getId()) instanceof TimerEntity);
-    assertTrue(findJobById(acquirableJobs.get(1).getId()) instanceof TimerEntity);
-    assertTrue(findJobById(acquirableJobs.get(2).getId()) instanceof MessageEntity);
-    assertTrue(findJobById(acquirableJobs.get(3).getId()) instanceof MessageEntity);
+    assertThat(acquirableJobs).hasSize(4);
+    assertThat(findJobById(acquirableJobs.get(0).getId())).isInstanceOf(TimerEntity.class);
+    assertThat(findJobById(acquirableJobs.get(1).getId())).isInstanceOf(TimerEntity.class);
+    assertThat(findJobById(acquirableJobs.get(2).getId())).isInstanceOf(MessageEntity.class);
+    assertThat(findJobById(acquirableJobs.get(3).getId())).isInstanceOf(MessageEntity.class);
   }
 
   @Override

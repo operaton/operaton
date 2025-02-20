@@ -17,8 +17,9 @@
 package org.operaton.bpm.engine.test.api.multitenancy;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
-import java.util.Arrays;
+import java.util.List;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.multitenancy.TenantIdProvider;
@@ -33,7 +34,6 @@ import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -72,19 +72,19 @@ public class MultiTenancyMigrationTenantProviderTest {
         .build();
     var runtimeService = engineRule.getRuntimeService()
         .newMigration(migrationPlan)
-        .processInstanceIds(Arrays.asList(processInstance.getId()));
+        .processInstanceIds(List.of(processInstance.getId()));
 
     // when
     try {
       runtimeService.execute();
-      Assert.fail("exception expected");
+      fail("exception expected");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).contains("Cannot migrate process instance '" + processInstance.getId() + "' "
               + "to a process definition of a different tenant ('tenant1' != 'tenant2')");
     }
 
     // then
-    Assert.assertNotNull(migrationPlan);
+    assertThat(migrationPlan).isNotNull();
   }
 
   @Test
@@ -101,7 +101,7 @@ public class MultiTenancyMigrationTenantProviderTest {
     // when
     engineRule.getRuntimeService()
       .newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .execute();
 
     // then
@@ -124,7 +124,7 @@ public class MultiTenancyMigrationTenantProviderTest {
     ProcessInstance processInstance2 = startInstanceForTenant(sourceDefinition, TENANT_TWO);
 
     // when
-    engineRule.getIdentityService().setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    engineRule.getIdentityService().setAuthentication("user", null, List.of(TENANT_ONE));
     engineRule.getRuntimeService()
       .newMigration(migrationPlan)
       .processInstanceQuery(engineRule.getRuntimeService().createProcessInstanceQuery())
@@ -152,7 +152,7 @@ public class MultiTenancyMigrationTenantProviderTest {
     ProcessInstance processInstance2 = startInstanceForTenant(sourceDefinition, TENANT_TWO);
 
     // when
-    engineRule.getIdentityService().setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
+    engineRule.getIdentityService().setAuthentication("user", null, List.of(TENANT_ONE, TENANT_TWO));
     engineRule.getRuntimeService()
       .newMigration(migrationPlan)
       .processInstanceQuery(engineRule.getRuntimeService().createProcessInstanceQuery())
@@ -165,11 +165,11 @@ public class MultiTenancyMigrationTenantProviderTest {
   }
 
   protected void assertInstanceOfDefinition(ProcessInstance processInstance, ProcessDefinition targetDefinition) {
-    Assert.assertEquals(1, engineRule.getRuntimeService()
-      .createProcessInstanceQuery()
-      .processInstanceId(processInstance.getId())
-      .processDefinitionId(targetDefinition.getId())
-      .count());
+    assertThat(engineRule.getRuntimeService()
+        .createProcessInstanceQuery()
+        .processInstanceId(processInstance.getId())
+        .processDefinitionId(targetDefinition.getId())
+        .count()).isEqualTo(1);
   }
 
   protected ProcessInstance startInstanceForTenant(ProcessDefinition processDefinition, String tenantId) {

@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.job;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
@@ -56,11 +55,11 @@ public class DisabledJobPrioritizationBpmnTest extends PluggableProcessEngineTes
 
     // then
     List<Job> jobs = managementService.createJobQuery().list();
-    assertEquals(2, jobs.size());
+    assertThat(jobs).hasSize(2);
 
     for (Job job : jobs) {
-      assertNotNull(job);
-      assertEquals(0, job.getPriority());
+      assertThat(job).isNotNull();
+      assertThat(job.getPriority()).isZero();
     }
   }
 }

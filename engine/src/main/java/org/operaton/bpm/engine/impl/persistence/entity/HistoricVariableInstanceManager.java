@@ -32,7 +32,7 @@ import org.operaton.bpm.engine.impl.persistence.AbstractHistoricManager;
 
 
 /**
- * @author Christian Lipphardt (operaton)
+ * @author Christian Lipphardt (Camunda)
  */
 public class HistoricVariableInstanceManager extends AbstractHistoricManager {
 

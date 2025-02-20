@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.multitenancy.tenantcheck;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -273,9 +272,9 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
 
     //then exist no process instance and one definition
     identityService.clearAuthentication();
-    assertEquals(0, engineRule.getRuntimeService().createProcessInstanceQuery().count());
+    assertThat(engineRule.getRuntimeService().createProcessInstanceQuery().count()).isZero();
     if (processEngineConfiguration.getHistoryLevel().getId() >= HistoryLevel.HISTORY_LEVEL_ACTIVITY.getId()) {
-      assertEquals(0, engineRule.getHistoryService().createHistoricActivityInstanceQuery().count());
+      assertThat(engineRule.getHistoryService().createHistoricActivityInstanceQuery().count()).isZero();
     }
     assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1L);
     assertThat(repositoryService.createProcessDefinitionQuery().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
@@ -319,9 +318,9 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
 
     //then exist no process instance and one definition, because test case deployes per default one definition
     identityService.clearAuthentication();
-    assertEquals(0, engineRule.getRuntimeService().createProcessInstanceQuery().count());
+    assertThat(engineRule.getRuntimeService().createProcessInstanceQuery().count()).isZero();
     if (processEngineConfiguration.getHistoryLevel().getId() >= HistoryLevel.HISTORY_LEVEL_ACTIVITY.getId()) {
-      assertEquals(0, engineRule.getHistoryService().createHistoricActivityInstanceQuery().count());
+      assertThat(engineRule.getHistoryService().createHistoricActivityInstanceQuery().count()).isZero();
     }
     assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1L);
     assertThat(repositoryService.createProcessDefinitionQuery().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);

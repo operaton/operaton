@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.operation;
 
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.impl.cmmn.behavior.StageActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
@@ -64,20 +64,20 @@ public class CaseExecutionResumeTest {
 
     // a case execution associated with Task A
     CmmnActivityExecution taskA = caseInstance.findCaseExecution("A");
-    assertTrue(taskA.isSuspended());
+    assertThat(taskA.isSuspended()).isTrue();
 
     // a case execution associated with Task B
     CmmnActivityExecution taskB = caseInstance.findCaseExecution("B");
-    assertTrue(taskB.isSuspended());
+    assertThat(taskB.isSuspended()).isTrue();
 
     // when
     stageX.resume();
 
     // then
-    assertTrue(caseInstance.isActive());
-    assertTrue(stageX.isActive());
-    assertTrue(taskA.isEnabled());
-    assertTrue(taskB.isEnabled());
+    assertThat(caseInstance.isActive()).isTrue();
+    assertThat(stageX.isActive()).isTrue();
+    assertThat(taskA.isEnabled()).isTrue();
+    assertThat(taskB.isEnabled()).isTrue();
   }
 
   @Test
@@ -117,10 +117,10 @@ public class CaseExecutionResumeTest {
     taskA.resume();
 
     // then
-    assertTrue(caseInstance.isActive());
-    assertTrue(stageX.isActive());
-    assertTrue(taskA.isActive());
-    assertTrue(taskB.isEnabled());
+    assertThat(caseInstance.isActive()).isTrue();
+    assertThat(stageX.isActive()).isTrue();
+    assertThat(taskA.isActive()).isTrue();
+    assertThat(taskB.isEnabled()).isTrue();
   }
 
 }

@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.standalone.testing;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -65,10 +65,10 @@ public class ProcessEngineRuleParameterizedJunit4Test {
 
     TaskService taskService = engineRule.getTaskService();
     Task task = taskService.createTaskQuery().singleResult();
-    assertEquals("My Task", task.getName());
+    assertThat(task.getName()).isEqualTo("My Task");
 
     taskService.complete(task.getId());
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
   @Test
@@ -79,10 +79,10 @@ public class ProcessEngineRuleParameterizedJunit4Test {
 
     TaskService taskService = engineRule.getTaskService();
     Task task = taskService.createTaskQuery().singleResult();
-    assertEquals("My Task", task.getName());
+    assertThat(task.getName()).isEqualTo("My Task");
 
     taskService.complete(task.getId());
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
   /**
@@ -90,7 +90,7 @@ public class ProcessEngineRuleParameterizedJunit4Test {
    */
   @Test
   public void testWithoutDeploymentAnnotation() {
-    assertEquals("aString", "aString");
+    assertThat("aString").isEqualTo("aString");
   }
 
 }

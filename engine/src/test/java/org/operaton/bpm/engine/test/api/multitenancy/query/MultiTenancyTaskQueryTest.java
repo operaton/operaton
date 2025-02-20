@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.api.multitenancy.query;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;

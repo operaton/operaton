@@ -16,10 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.end;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
@@ -68,7 +65,7 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("terminateEndEventExample");
 
     long executionEntities = runtimeService.createExecutionQuery().processInstanceId(pi.getId()).count();
-    assertEquals(3, executionEntities);
+    assertThat(executionEntities).isEqualTo(3);
 
     Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).taskDefinitionKey("preTerminateTask").singleResult();
     taskService.complete(task.getId());
@@ -83,7 +80,7 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
 
     // should terminate the process and
     long executionEntities = runtimeService.createExecutionQuery().processInstanceId(pi.getId()).count();
-    assertEquals(4, executionEntities);
+    assertThat(executionEntities).isEqualTo(4);
 
     Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).taskDefinitionKey("preTerminateEnd").singleResult();
     taskService.complete(task.getId());
@@ -100,7 +97,7 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("terminateEndEventExample");
 
     long executionEntities = runtimeService.createExecutionQuery().processInstanceId(pi.getId()).count();
-    assertEquals(4, executionEntities);
+    assertThat(executionEntities).isEqualTo(4);
 
     Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).taskDefinitionKey("preTerminateEnd").singleResult();
     taskService.complete(task.getId());
@@ -117,7 +114,7 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
 
     // should terminate the subprocess and continue the parent
     long executionEntities = runtimeService.createExecutionQuery().processInstanceId(pi.getId()).count();
-    assertEquals(1, executionEntities);
+    assertThat(executionEntities).isEqualTo(1);
 
     Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).taskDefinitionKey("preNormalEnd").singleResult();
     taskService.complete(task.getId());
@@ -138,11 +135,11 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
 
     // then the outer task still exists
     Task outerTask = taskService.createTaskQuery().singleResult();
-    assertNotNull(outerTask);
-    assertEquals("outerTask", outerTask.getTaskDefinitionKey());
+    assertThat(outerTask).isNotNull();
+    assertThat(outerTask.getTaskDefinitionKey()).isEqualTo("outerTask");
 
     // and the process end listener was not invoked
-    assertTrue(RecorderExecutionListener.getRecordedEvents().isEmpty());
+    assertThat(RecorderExecutionListener.getRecordedEvents()).isEmpty();
 
   }
 
@@ -159,11 +156,11 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
 
     // then the outer task still exists
     Task outerTask = taskService.createTaskQuery().singleResult();
-    assertNotNull(outerTask);
-    assertEquals("outerTask", outerTask.getTaskDefinitionKey());
+    assertThat(outerTask).isNotNull();
+    assertThat(outerTask.getTaskDefinitionKey()).isEqualTo("outerTask");
 
     // and the process end listener was not invoked
-    assertTrue(RecorderExecutionListener.getRecordedEvents().isEmpty());
+    assertThat(RecorderExecutionListener.getRecordedEvents()).isEmpty();
 
   }
 
@@ -182,10 +179,10 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
     if (processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
       HistoricProcessInstance hpi = historyService.createHistoricProcessInstanceQuery().singleResult();
 
-      assertNotNull(hpi);
-      assertNull(hpi.getEndTime());
-      assertNull(hpi.getDurationInMillis());
-      assertNull(hpi.getDeleteReason());
+      assertThat(hpi).isNotNull();
+      assertThat(hpi.getEndTime()).isNull();
+      assertThat(hpi.getDurationInMillis()).isNull();
+      assertThat(hpi.getDeleteReason()).isNull();
     }
   }
 
@@ -195,7 +192,7 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("terminateEndEventExample");
 
     long executionEntities = runtimeService.createExecutionQuery().count();
-    assertEquals(1, executionEntities);
+    assertThat(executionEntities).isEqualTo(1);
 
     Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).taskDefinitionKey("preNormalEnd").singleResult();
     taskService.complete(task.getId());
@@ -218,10 +215,10 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
     if (processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
       HistoricProcessInstance hpi = historyService.createHistoricProcessInstanceQuery().singleResult();
 
-      assertNotNull(hpi);
-      assertNull(hpi.getEndTime());
-      assertNull(hpi.getDurationInMillis());
-      assertNull(hpi.getDeleteReason());
+      assertThat(hpi).isNotNull();
+      assertThat(hpi.getEndTime()).isNull();
+      assertThat(hpi.getDurationInMillis()).isNull();
+      assertThat(hpi.getDeleteReason()).isNull();
     }
   }
 
@@ -233,13 +230,13 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("terminateEndEventExample");
 
     long executionEntities = runtimeService.createExecutionQuery().count();
-    assertEquals(12, executionEntities);
+    assertThat(executionEntities).isEqualTo(12);
 
     Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).taskDefinitionKey("preNormalEnd").singleResult();
     taskService.complete(task.getId());
 
     long executionEntities2 = runtimeService.createExecutionQuery().count();
-    assertEquals(10, executionEntities2);
+    assertThat(executionEntities2).isEqualTo(10);
 
     List<Task> tasks = taskService.createTaskQuery().list();
     for (Task t : tasks) {
@@ -257,7 +254,7 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("terminateEndEventExample");
 
     long executionEntities = runtimeService.createExecutionQuery().count();
-    assertEquals(1, executionEntities);
+    assertThat(executionEntities).isEqualTo(1);
 
     Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).taskDefinitionKey("preNormalEnd").singleResult();
     taskService.complete(task.getId());
@@ -278,10 +275,10 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
     long remainingExecutions = runtimeService.createExecutionQuery().count();
 
     // outer execution still available
-    assertEquals(1, remainingExecutions);
+    assertThat(remainingExecutions).isEqualTo(1);
 
     // three finished
-    assertEquals(3, serviceTaskInvokedCount2);
+    assertThat(serviceTaskInvokedCount2).isEqualTo(3);
 
     Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).taskDefinitionKey("preNormalEnd").singleResult();
     taskService.complete(task.getId());
@@ -300,7 +297,7 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
 
     // should terminate the called process and continue the parent
     long executionEntities = runtimeService.createExecutionQuery().count();
-    assertEquals(1, executionEntities);
+    assertThat(executionEntities).isEqualTo(1);
 
     Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).taskDefinitionKey("preNormalEnd").singleResult();
     taskService.complete(task.getId());
@@ -318,7 +315,7 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
 
     // should terminate the called process and continue the parent
     long executionEntities = runtimeService.createExecutionQuery().count();
-    assertEquals(1, executionEntities);
+    assertThat(executionEntities).isEqualTo(1);
 
     Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).taskDefinitionKey("preNormalEnd").singleResult();
     taskService.complete(task.getId());
@@ -336,7 +333,7 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
 
     // should terminate the called process and continue the parent
     long executionEntities = runtimeService.createExecutionQuery().count();
-    assertEquals(1, executionEntities);
+    assertThat(executionEntities).isEqualTo(1);
 
     Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).taskDefinitionKey("preNormalEnd").singleResult();
     taskService.complete(task.getId());
@@ -354,7 +351,7 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
 
     // should terminate the called process and continue the parent
     long executionEntities = runtimeService.createExecutionQuery().count();
-    assertEquals(1, executionEntities);
+    assertThat(executionEntities).isEqualTo(1);
 
     Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).taskDefinitionKey("preNormalEnd").singleResult();
     taskService.complete(task.getId());

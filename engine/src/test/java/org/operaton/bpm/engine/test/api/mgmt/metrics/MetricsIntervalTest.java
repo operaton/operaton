@@ -17,11 +17,9 @@
 package org.operaton.bpm.engine.test.api.mgmt.metrics;
 
 import static junit.framework.TestCase.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.management.Metrics.ACTIVTY_INSTANCE_START;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
 import java.util.List;
@@ -33,7 +31,6 @@ import org.operaton.bpm.engine.management.MetricIntervalValue;
 import org.operaton.bpm.engine.management.Metrics;
 import org.operaton.bpm.engine.management.MetricsQuery;
 import org.joda.time.DateTime;
-import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -210,7 +207,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
   public void testMeterQueryCustomIntervalWhereReporterNotExist() {
     //given metric data
 
-    //when query metric interval data with custom interval and non existing reporter in where clause
+    //when query metric interval data with custom interval and non-existing reporter in where clause
     List<MetricIntervalValue> metrics = managementService.createMetricsQuery().reporter("notExist").interval(300);
 
     //then result contains no metrics from given reporter
@@ -246,7 +243,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
   public void testMeterQueryDefaultIntervalWhereNameNotExist() {
     //given metric data
 
-    //when query metric interval data with non existing name in where clause
+    //when query metric interval data with non-existing name in where clause
     List<MetricIntervalValue> metrics = managementService.createMetricsQuery().name("notExist").interval();
 
     //then result contains no metrics with given name
@@ -282,7 +279,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
   public void testMeterQueryCustomIntervalWhereNameNotExist() {
     //given metric data
 
-    //when query metric interval data with custom interval and non existing name in where clause
+    //when query metric interval data with custom interval and non-existing name in where clause
     List<MetricIntervalValue> metrics = managementService.createMetricsQuery().name("notExist").interval(300);
 
     //then result contains no metrics from given name
@@ -439,14 +436,14 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
     //on query with name
      metrics = managementService.createMetricsQuery().name(ACTIVTY_INSTANCE_START).limit(1).interval();
     long newValue = metrics.get(0).getValue();
-    Assert.assertEquals(value + 3, newValue);
+    assertThat(newValue).isEqualTo(value + 3);
 
     //on query without name also
      metrics = managementService.createMetricsQuery().interval();
      for (MetricIntervalValue intervalValue : metrics) {
        if (intervalValue.getName().equalsIgnoreCase(ACTIVTY_INSTANCE_START)) {
         newValue = intervalValue.getValue();
-         Assert.assertEquals(value + 3, newValue);
+         assertThat(newValue).isEqualTo(value + 3);
         break;
        }
      }
@@ -470,7 +467,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
 
     //then query returns more results
     List<MetricIntervalValue> newMetrics = managementService.createMetricsQuery().interval();
-    assertNotEquals(metrics.size(), newMetrics.size());
+    assertThat(newMetrics.size()).isNotEqualTo(metrics.size());
     assertEquals(metrics.size() + metricsCount, newMetrics.size());
     assertEquals(newMetrics.get(0).getTimestamp().getTime(), metrics.get(0).getTimestamp().getTime() + DEFAULT_INTERVAL_MILLIS);
   }
@@ -495,7 +492,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
       .name(ACTIVTY_INSTANCE_START)
       .startDate(new Date(0))
       .endDate(new Date(DEFAULT_INTERVAL_MILLIS * 200)).interval();
-    assertNotEquals(metrics.size(), newMetrics.size());
+    assertThat(newMetrics.size()).isNotEqualTo(metrics.size());
     assertEquals(newMetrics.get(0).getTimestamp().getTime(), metrics.get(0).getTimestamp().getTime() + DEFAULT_INTERVAL_MILLIS);
     assertEquals(metrics.get(0).getValue(), newMetrics.get(1).getValue());
 
@@ -511,7 +508,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
     List<MetricIntervalValue> metrics = managementService.createMetricsQuery().interval();
 
     // assume
-    assertTrue(!metrics.isEmpty());
+    assertThat(!metrics.isEmpty()).isTrue();
 
     // when
     List<MetricIntervalValue> aggregatedMetrics = managementService.createMetricsQuery().aggregateByReporter().interval();
@@ -519,7 +516,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
     // then
     assertEquals(metrics.size(), aggregatedMetrics.size());
     for (MetricIntervalValue metricIntervalValue : aggregatedMetrics) {
-      assertNull(metricIntervalValue.getReporter());
+      assertThat(metricIntervalValue.getReporter()).isNull();
     }
   }
 
@@ -543,7 +540,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
     // multiply by 3 because there are three reporters: 'REPORTER_ID' (check the #initMetrics()), reporter1 and reporter2
     assertEquals(metrics.size(), aggregatedMetrics.size() * 3);
     for (MetricIntervalValue metricIntervalValue : aggregatedMetrics) {
-      assertNull(metricIntervalValue.getReporter());
+      assertThat(metricIntervalValue.getReporter()).isNull();
     }
   }
 
@@ -566,7 +563,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
     List<MetricIntervalValue> aggregatedMetrics = managementService.createMetricsQuery().name(Metrics.ACTIVTY_INSTANCE_START).limit(limit).aggregateByReporter().interval();
 
     // then aggregatedMetrics contains wider time interval
-    assertTrue(metrics.get(limit - 1).getTimestamp().getTime() > aggregatedMetrics.get(limit - 1).getTimestamp().getTime());
+    assertThat(metrics.get(limit - 1).getTimestamp().getTime()).isGreaterThan(aggregatedMetrics.get(limit - 1).getTimestamp().getTime());
     assertEquals(metrics.size(), aggregatedMetrics.size());
   }
 

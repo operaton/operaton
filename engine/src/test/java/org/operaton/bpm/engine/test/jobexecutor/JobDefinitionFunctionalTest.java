@@ -16,10 +16,7 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -83,8 +80,8 @@ public class JobDefinitionFunctionalTest {
     runtimeService.startProcessInstanceByKey("simpleAsyncProcess");
 
     // then the new job instance is created as suspended:
-    assertNotNull(managementService.createJobQuery().suspended().singleResult());
-    assertNull(managementService.createJobQuery().active().singleResult());
+    assertThat(managementService.createJobQuery().suspended().singleResult()).isNotNull();
+    assertThat(managementService.createJobQuery().active().singleResult()).isNull();
   }
 
   @Test
@@ -97,8 +94,8 @@ public class JobDefinitionFunctionalTest {
     runtimeService.startProcessInstanceByKey("simpleAsyncProcess");
 
     // then the new job instance is created as active:
-    assertNull(managementService.createJobQuery().suspended().singleResult());
-    assertNotNull(managementService.createJobQuery().active().singleResult());
+    assertThat(managementService.createJobQuery().suspended().singleResult()).isNull();
+    assertThat(managementService.createJobQuery().active().singleResult()).isNotNull();
   }
 
   @Test
@@ -113,7 +110,7 @@ public class JobDefinitionFunctionalTest {
 
     // then the new job executor will not acquire the job:
     AcquiredJobs acquiredJobs = acquireJobs();
-    assertEquals(0, acquiredJobs.size());
+    assertThat(acquiredJobs.size()).isZero();
 
     // -------------------------
 
@@ -122,7 +119,7 @@ public class JobDefinitionFunctionalTest {
 
     // then the new job executor will not acquire the job:
     acquiredJobs = acquireJobs();
-    assertEquals(1, acquiredJobs.size());
+    assertThat(acquiredJobs.size()).isEqualTo(1);
   }
 
   @Test
@@ -151,19 +148,19 @@ public class JobDefinitionFunctionalTest {
     testRule.waitForJobExecutorToProcessAllJobs(10000);
 
     // then the second task is not executed
-    assertEquals(1, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
     // there is a suspended job instance
     Job job = managementService.createJobQuery()
       .singleResult();
-    assertEquals(job.getJobDefinitionId(), jobDefinition.getId());
-    assertTrue(job.isSuspended());
+    assertThat(jobDefinition.getId()).isEqualTo(job.getJobDefinitionId());
+    assertThat(job.isSuspended()).isTrue();
 
     // if I unsuspend the job definition, the job is executed:
     managementService.activateJobDefinitionById(jobDefinition.getId(), true);
 
     testRule.waitForJobExecutorToProcessAllJobs(10000);
 
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
   protected AcquiredJobs acquireJobs() {

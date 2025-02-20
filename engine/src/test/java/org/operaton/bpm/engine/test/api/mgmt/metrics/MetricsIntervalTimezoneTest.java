@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt.metrics;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.management.Metrics.ACTIVTY_INSTANCE_START;
 
 import java.util.Date;
@@ -24,15 +25,14 @@ import java.util.List;
 import org.operaton.bpm.engine.impl.metrics.MetricsRegistry;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.management.MetricIntervalValue;
-import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * Represents a test suite for the metrics interval query to check if the
  * timestamps are read in a correct time zone.
- *
+ * <p>
  * This was a problem before the column MILLISECONDS_ was added.
- *
+ * </p>
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public class MetricsIntervalTimezoneTest extends AbstractMetricsIntervalTest {
@@ -45,10 +45,11 @@ public class MetricsIntervalTimezoneTest extends AbstractMetricsIntervalTest {
     List<MetricIntervalValue> metrics = managementService.createMetricsQuery().limit(1).interval();
 
     //then metric interval time should be less than FIRST_INTERVAL + 3 * DEFAULT_INTERVAL
-    long metricIntervalTime = metrics.get(0).getTimestamp().getTime();
-    Assert.assertTrue(metricIntervalTime < firstInterval.plusMinutes(3 * DEFAULT_INTERVAL).getMillis());
     //and larger than first interval time, if not than we have a timezone problem
-    Assert.assertTrue(metricIntervalTime > firstInterval.getMillis());
+    long metricIntervalTime = metrics.get(0).getTimestamp().getTime();
+    assertThat(metricIntervalTime)
+      .isLessThan(firstInterval.plusMinutes(3 * DEFAULT_INTERVAL).getMillis())
+      .isGreaterThan(firstInterval.getMillis());
 
     //when current time is used and metric is reported
     Date currentTime = new Date();
@@ -59,6 +60,6 @@ public class MetricsIntervalTimezoneTest extends AbstractMetricsIntervalTest {
 
     //then current time should be larger than metric interval time
     List<MetricIntervalValue> m2 = managementService.createMetricsQuery().limit(1).interval();
-    Assert.assertTrue(m2.get(0).getTimestamp().getTime() < currentTime.getTime());
+    assertThat(m2.get(0).getTimestamp().getTime()).isLessThan(currentTime.getTime());
   }
 }

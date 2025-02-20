@@ -44,17 +44,14 @@ import org.operaton.bpm.engine.test.bpmn.executionlistener.RecorderExecutionList
 import org.operaton.bpm.engine.test.bpmn.executionlistener.RecorderExecutionListener.RecordedEvent;
 import org.operaton.bpm.engine.test.bpmn.tasklistener.util.RecorderTaskListener;
 import org.operaton.bpm.engine.test.history.SerializableVariable;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.operaton.bpm.engine.test.util.TestExecutionListener;
+import org.operaton.bpm.engine.test.util.*;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.ValueType;
+import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.builder.SubProcessBuilder;
-import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutableProcessUtil.USER_TASK_PROCESS;
 import static org.operaton.bpm.engine.variable.Variables.createVariables;
@@ -69,9 +66,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * @author Frederik Heremans
@@ -152,7 +147,7 @@ public class RuntimeServiceTest {
   @Test
   public void testStartProcessInstanceByIdNullVariables() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess", (Map<String, Object>) null);
-    assertEquals(1, runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count());
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isEqualTo(1);
   }
 
   @Test
@@ -163,26 +158,26 @@ public class RuntimeServiceTest {
 
     // by key
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess", "123");
-    assertNotNull(processInstance);
-    assertEquals("123", processInstance.getBusinessKey());
-    assertEquals(1, runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count());
+    assertThat(processInstance).isNotNull();
+    assertThat(processInstance.getBusinessKey()).isEqualTo("123");
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isEqualTo(1);
 
     // by key with variables
     processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess", "456", CollectionUtil.singletonMap("var", "value"));
-    assertNotNull(processInstance);
-    assertEquals(2, runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count());
-    assertEquals("value", runtimeService.getVariable(processInstance.getId(), "var"));
+    assertThat(processInstance).isNotNull();
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isEqualTo(2);
+    assertThat(runtimeService.getVariable(processInstance.getId(), "var")).isEqualTo("value");
 
     // by id
     processInstance = runtimeService.startProcessInstanceById(processDefinition.getId(), "789");
-    assertNotNull(processInstance);
-    assertEquals(3, runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count());
+    assertThat(processInstance).isNotNull();
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isEqualTo(3);
 
     // by id with variables
     processInstance = runtimeService.startProcessInstanceById(processDefinition.getId(), "101123", CollectionUtil.singletonMap("var", "value2"));
-    assertNotNull(processInstance);
-    assertEquals(4, runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count());
-    assertEquals("value2", runtimeService.getVariable(processInstance.getId(), "var"));
+    assertThat(processInstance).isNotNull();
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isEqualTo(4);
+    assertThat(runtimeService.getVariable(processInstance.getId(), "var")).isEqualTo("value2");
   }
 
   @Deployment(resources={
@@ -190,10 +185,10 @@ public class RuntimeServiceTest {
   @Test
   public void testDeleteProcessInstance() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
-    assertEquals(1, runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count());
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isEqualTo(1);
 
     runtimeService.deleteProcessInstance(processInstance.getId(), TESTING_INSTANCE_DELETION);
-    assertEquals(0, runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count());
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isZero();
 
     // test that the delete reason of the process instance shows up as delete reason of the task in history
     // ACT-848
@@ -204,7 +199,7 @@ public class RuntimeServiceTest {
               .processInstanceId(processInstance.getId())
               .singleResult();
 
-      assertEquals(TESTING_INSTANCE_DELETION, historicTaskInstance.getDeleteReason());
+      assertThat(historicTaskInstance.getDeleteReason()).isEqualTo(TESTING_INSTANCE_DELETION);
     }
   }
 
@@ -234,7 +229,7 @@ public class RuntimeServiceTest {
 
     // then
     List<RecordedEvent> recordedEvents = RecorderExecutionListener.getRecordedEvents();
-    assertEquals(10, recordedEvents.size());
+    assertThat(recordedEvents).hasSize(10);
 
     Set<RecordedEvent> startEvents = new HashSet<>();
     Set<RecordedEvent> endEvents = new HashSet<>();
@@ -279,7 +274,7 @@ public class RuntimeServiceTest {
       // verify that all historic activity instances are ended
       List<HistoricActivityInstance> hais = historyService.createHistoricActivityInstanceQuery().list();
       for (HistoricActivityInstance hai : hais) {
-        assertNotNull(hai.getEndTime());
+        assertThat(hai.getEndTime()).isNotNull();
       }
     }
   }
@@ -293,7 +288,7 @@ public class RuntimeServiceTest {
     // if we do not skip the custom listeners,
     runtimeService.deleteProcessInstance(processInstance.getId(), null, false);
     // the custom listener is invoked
-    assertEquals(1, TestExecutionListener.collectedEvents.size());
+    assertThat(TestExecutionListener.collectedEvents).hasSize(1);
     TestExecutionListener.reset();
 
     processInstance = runtimeService.startProcessInstanceByKey("testProcess");
@@ -301,7 +296,7 @@ public class RuntimeServiceTest {
     // if we DO skip the custom listeners,
     runtimeService.deleteProcessInstance(processInstance.getId(), null, true);
     // the custom listener is not invoked
-    assertTrue(TestExecutionListener.collectedEvents.isEmpty());
+    assertThat(TestExecutionListener.collectedEvents).isEmpty();
     TestExecutionListener.reset();
   }
 
@@ -314,7 +309,7 @@ public class RuntimeServiceTest {
     // if we do not skip the custom listeners,
     runtimeService.deleteProcessInstance(processInstance.getId(), null, false);
     // the custom listener is invoked
-    assertEquals(1, TestExecutionListener.collectedEvents.size());
+    assertThat(TestExecutionListener.collectedEvents).hasSize(1);
     TestExecutionListener.reset();
 
     processInstance = runtimeService.startProcessInstanceByKey("testProcess");
@@ -322,7 +317,7 @@ public class RuntimeServiceTest {
     // if we DO skip the custom listeners,
     runtimeService.deleteProcessInstance(processInstance.getId(), null, true);
     // the custom listener is not invoked
-    assertTrue(TestExecutionListener.collectedEvents.isEmpty());
+    assertThat(TestExecutionListener.collectedEvents).isEmpty();
     TestExecutionListener.reset();
   }
 
@@ -340,8 +335,8 @@ public class RuntimeServiceTest {
     runtimeService.deleteProcessInstance(instance.getId(), null, false);
 
     // then the custom listener is invoked
-    assertEquals(1, RecorderTaskListener.getRecordedEvents().size());
-    assertEquals(TaskListener.EVENTNAME_DELETE, RecorderTaskListener.getRecordedEvents().get(0).getEvent());
+    assertThat(RecorderTaskListener.getRecordedEvents()).hasSize(1);
+    assertThat(RecorderTaskListener.getRecordedEvents().get(0).getEvent()).isEqualTo(TaskListener.EVENTNAME_DELETE);
 
     // if we do skip the custom listeners
     instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
@@ -350,7 +345,7 @@ public class RuntimeServiceTest {
     runtimeService.deleteProcessInstance(instance.getId(), null, true);
 
     // then the custom listener is not invoked
-    assertTrue(RecorderTaskListener.getRecordedEvents().isEmpty());
+    assertThat(RecorderTaskListener.getRecordedEvents()).isEmpty();
   }
 
   @Deployment(resources={
@@ -367,8 +362,8 @@ public class RuntimeServiceTest {
 
     // then
     testRule.assertProcessEnded(instance.getId());
-    assertEquals(1, historyService.createHistoricVariableInstanceQuery().processInstanceId(instance.getId()).list().size());
-    assertEquals(1, historyService.createHistoricVariableInstanceQuery().variableName("inputMappingExecuted").count());
+    assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(instance.getId()).list()).hasSize(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableName("inputMappingExecuted").count()).isEqualTo(1);
   }
 
   @Deployment(resources = {
@@ -385,9 +380,9 @@ public class RuntimeServiceTest {
 
     // then
     testRule.assertProcessEnded(instance.getId());
-    assertEquals(2, historyService.createHistoricVariableInstanceQuery().processInstanceId(instance.getId()).list().size());
-    assertEquals(1, historyService.createHistoricVariableInstanceQuery().variableName("inputMappingExecuted").count());
-    assertEquals(1, historyService.createHistoricVariableInstanceQuery().variableName("outputMappingExecuted").count());
+    assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(instance.getId()).list()).hasSize(2);
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableName("inputMappingExecuted").count()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableName("outputMappingExecuted").count()).isEqualTo(1);
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testCascadingDeleteSubprocessInstanceSkipIoMappings.Calling.bpmn20.xml",
@@ -406,8 +401,8 @@ public class RuntimeServiceTest {
 
     // then
     testRule.assertProcessEnded(instance.getId());
-    assertEquals(1, historyService.createHistoricVariableInstanceQuery().processInstanceId(instance2.getId()).list().size());
-    assertEquals(1, historyService.createHistoricVariableInstanceQuery().variableName("inputMappingExecuted").count());
+    assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(instance2.getId()).list()).hasSize(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableName("inputMappingExecuted").count()).isEqualTo(1);
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testCascadingDeleteSubprocessInstanceSkipIoMappings.Calling.bpmn20.xml",
@@ -426,9 +421,9 @@ public class RuntimeServiceTest {
 
     // then
     testRule.assertProcessEnded(instance.getId());
-    assertEquals(2, historyService.createHistoricVariableInstanceQuery().processInstanceId(instance2.getId()).list().size());
-    assertEquals(1, historyService.createHistoricVariableInstanceQuery().variableName("inputMappingExecuted").count());
-    assertEquals(1, historyService.createHistoricVariableInstanceQuery().variableName("outputMappingExecuted").count());
+    assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(instance2.getId()).list()).hasSize(2);
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableName("inputMappingExecuted").count()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableName("outputMappingExecuted").count()).isEqualTo(1);
   }
 
   @Deployment(resources={
@@ -436,11 +431,11 @@ public class RuntimeServiceTest {
   @Test
   public void testDeleteProcessInstanceNullReason() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
-    assertEquals(1, runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count());
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isEqualTo(1);
 
     // Deleting without a reason should be possible
     runtimeService.deleteProcessInstance(processInstance.getId(), null);
-    assertEquals(0, runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count());
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isZero();
   }
 
   /**
@@ -467,18 +462,14 @@ public class RuntimeServiceTest {
     final ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("multiInstanceWithSubprocess");
 
     runtimeService.deleteProcessInstance(processInstance.getId(), "some reason");
-    assertEquals(0, runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).count());
+    assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).count()).isZero();
   }
 
   @Test
   public void testDeleteProcessInstanceWithFake() {
-    try {
-      runtimeService.deleteProcessInstance("aFake", null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("No process instance found for id", e.getMessage());
-      assertTrue(e instanceof NotFoundException);
-    }
+    assertThatThrownBy(() -> runtimeService.deleteProcessInstance("aFake", null))
+      .isInstanceOf(NotFoundException.class)
+      .hasMessageContaining("No process instance found for id");
   }
 
   @Test
@@ -493,14 +484,11 @@ public class RuntimeServiceTest {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     var processInstanceIds = Arrays.asList(instance.getId(), "aFake");
 
-    try {
-      runtimeService.deleteProcessInstances(processInstanceIds, "test", false, false, false, false);
-      fail("ProcessEngineException expected");
-    }catch (ProcessEngineException e) {
-      //expected
-      assertEquals(1, runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count());
-      assertTrue(e instanceof NotFoundException);
-    }
+    assertThatThrownBy(() -> runtimeService.deleteProcessInstances(processInstanceIds, "test", false, false, false, false))
+      .isInstanceOf(NotFoundException.class)
+      .hasMessageContaining("No process instance found for id");
+
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isEqualTo(1);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -510,7 +498,7 @@ public class RuntimeServiceTest {
 
     runtimeService.deleteProcessInstancesIfExists(Arrays.asList(instance.getId(), "aFake"), "test", false, false, false);
     //dont't expect exception, existing instances are deleted
-    assertEquals(0, runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count());
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isZero();
   }
 
   @Test
@@ -520,7 +508,7 @@ public class RuntimeServiceTest {
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException ae) {
       testRule.assertTextPresent("processInstanceId is null", ae.getMessage());
-      assertTrue(ae instanceof BadUserRequestException);
+      assertThat(ae).isInstanceOf(BadUserRequestException.class);
     }
   }
 
@@ -534,13 +522,13 @@ public class RuntimeServiceTest {
     taskService.complete(innerTask.getId());
 
     Task afterSubProcessTask = taskService.createTaskQuery().singleResult();
-    assertEquals("taskAfterSubprocess", afterSubProcessTask.getTaskDefinitionKey());
+    assertThat(afterSubProcessTask.getTaskDefinitionKey()).isEqualTo("taskAfterSubprocess");
     taskService.complete(afterSubProcessTask.getId());
 
     // when
     // there are two compensation tasks
-    assertEquals(1, taskService.createTaskQuery().taskDefinitionKey("outerAfterBoundaryTask").count());
-    assertEquals(1, taskService.createTaskQuery().taskDefinitionKey("innerAfterBoundaryTask").count());
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("outerAfterBoundaryTask").count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("innerAfterBoundaryTask").count()).isEqualTo(1);
 
     // when the process instance is deleted
     runtimeService.deleteProcessInstance(instance.getId(), "");
@@ -599,8 +587,8 @@ public class RuntimeServiceTest {
 
     runtimeService.deleteProcessInstance(subprocessId, TESTING_INSTANCE_DELETION);
 
-    assertEquals(TESTING_INSTANCE_DELETION, historyService.createHistoricProcessInstanceQuery().processInstanceId(subprocessId).singleResult().getDeleteReason());
-    assertEquals(TESTING_INSTANCE_DELETION, historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstanceId).singleResult().getDeleteReason());
+    assertThat(historyService.createHistoricProcessInstanceQuery().processInstanceId(subprocessId).singleResult().getDeleteReason()).isEqualTo(TESTING_INSTANCE_DELETION);
+    assertThat(historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstanceId).singleResult().getDeleteReason()).isEqualTo(TESTING_INSTANCE_DELETION);
   }
 
   @Deployment(resources={
@@ -610,8 +598,9 @@ public class RuntimeServiceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     List<String> activities = runtimeService.getActiveActivityIds(processInstance.getId());
-    assertNotNull(activities);
-    assertEquals(1, activities.size());
+    assertThat(activities)
+            .isNotNull()
+            .hasSize(1);
   }
 
   @Test
@@ -635,7 +624,7 @@ public class RuntimeServiceTest {
   }
 
   /**
-   * Testcase to reproduce ACT-950 (https://jira.codehaus.org/browse/ACT-950)
+   * Testcase to reproduce ACT-950 (<a href="https://jira.codehaus.org/browse/ACT-950">ACT-950</a>)
    */
   @Deployment
   @Test
@@ -643,10 +632,10 @@ public class RuntimeServiceTest {
     ProcessInstance processInstance = engineRule.getProcessEngine().getRuntimeService().startProcessInstanceByKey("errorEventSubprocess");
 
     List<String> activeActivities = runtimeService.getActiveActivityIds(processInstance.getId());
-    assertEquals(3, activeActivities.size());
+    assertThat(activeActivities).hasSize(3);
 
     List<Task> tasks = taskService.createTaskQuery().list();
-    assertEquals(2, tasks.size());
+    assertThat(tasks).hasSize(2);
 
     Task parallelUserTask = null;
     for (Task task : tasks) {
@@ -657,7 +646,7 @@ public class RuntimeServiceTest {
         parallelUserTask = task;
       }
     }
-    assertNotNull(parallelUserTask);
+    assertThat(parallelUserTask).isNotNull();
 
     taskService.complete(parallelUserTask.getId());
 
@@ -665,10 +654,10 @@ public class RuntimeServiceTest {
     runtimeService.signal(execution.getId());
 
     activeActivities = runtimeService.getActiveActivityIds(processInstance.getId());
-    assertEquals(2, activeActivities.size());
+    assertThat(activeActivities).hasSize(2);
 
     tasks = taskService.createTaskQuery().list();
-    assertEquals(2, tasks.size());
+    assertThat(tasks).hasSize(2);
 
     Task beforeErrorUserTask = null;
     for (Task task : tasks) {
@@ -679,15 +668,15 @@ public class RuntimeServiceTest {
         beforeErrorUserTask = task;
       }
     }
-    assertNotNull(beforeErrorUserTask);
+    assertThat(beforeErrorUserTask).isNotNull();
 
     taskService.complete(beforeErrorUserTask.getId());
 
     activeActivities = runtimeService.getActiveActivityIds(processInstance.getId());
-    assertEquals(2, activeActivities.size());
+    assertThat(activeActivities).hasSize(2);
 
     tasks = taskService.createTaskQuery().list();
-    assertEquals(2, tasks.size());
+    assertThat(tasks).hasSize(2);
 
     Task afterErrorUserTask = null;
     for (Task task : tasks) {
@@ -698,17 +687,17 @@ public class RuntimeServiceTest {
         afterErrorUserTask = task;
       }
     }
-    assertNotNull(afterErrorUserTask);
+    assertThat(afterErrorUserTask).isNotNull();
 
     taskService.complete(afterErrorUserTask.getId());
 
     tasks = taskService.createTaskQuery().list();
-    assertEquals(1, tasks.size());
-    assertEquals("MainUserTask", tasks.get(0).getName());
+    assertThat(tasks).hasSize(1);
+    assertThat(tasks.get(0).getName()).isEqualTo("MainUserTask");
 
     activeActivities = runtimeService.getActiveActivityIds(processInstance.getId());
-    assertEquals(1, activeActivities.size());
-    assertEquals("MainUserTask", activeActivities.get(0));
+    assertThat(activeActivities).hasSize(1);
+    assertThat(activeActivities.get(0)).isEqualTo("MainUserTask");
 
     taskService.complete(tasks.get(0).getId());
 
@@ -717,24 +706,16 @@ public class RuntimeServiceTest {
 
   @Test
   public void testSignalUnexistingExecutionId() {
-    try {
-      runtimeService.signal("unexistingExecutionId");
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("execution unexistingExecutionId doesn't exist", ae.getMessage());
-      assertTrue(ae instanceof BadUserRequestException);
-    }
+    assertThatThrownBy(() -> runtimeService.signal("unexistingExecutionId"))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("execution unexistingExecutionId doesn't exist");
   }
 
   @Test
   public void testSignalNullExecutionId() {
-    try {
-      runtimeService.signal(null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("executionId is null", ae.getMessage());
-      assertTrue(ae instanceof BadUserRequestException);
-    }
+    assertThatThrownBy(() -> runtimeService.signal(null))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("executionId is null");
   }
 
   @Deployment
@@ -749,7 +730,7 @@ public class RuntimeServiceTest {
     runtimeService.signal(processInstance.getId(), processVariables);
 
     Map<String, Object> variables = runtimeService.getVariables(processInstance.getId());
-    assertEquals(variables, processVariables);
+    assertThat(processVariables).isEqualTo(variables);
 
   }
 
@@ -766,7 +747,7 @@ public class RuntimeServiceTest {
     runtimeService.signal(processInstance.getId(), "dummySignalName", "SignalData", processVariables);
 
     Map<String, Object> variables = runtimeService.getVariables(processInstance.getId());
-    assertEquals(variables, processVariables);
+    assertThat(processVariables).isEqualTo(variables);
 
   }
 
@@ -783,7 +764,7 @@ public class RuntimeServiceTest {
     runtimeService.signal(processInstance.getId(), null, null, processVariables);
 
     Map<String, Object> variables = runtimeService.getVariables(processInstance.getId());
-    assertEquals(processVariables, variables);
+    assertThat(variables).isEqualTo(processVariables);
 
   }
 
@@ -796,7 +777,7 @@ public class RuntimeServiceTest {
     // there exist two executions: the inactive parent (the process instance) and the child that actually waits in the receive task
     try {
       runtimeService.signal(instanceId);
-      fail();
+      fail("Exception expected");
     } catch(ProcessEngineException e) {
       // happy path
       testRule.assertTextPresent("cannot signal execution " + instance.getId() + ": it has no current activity", e.getMessage());
@@ -852,7 +833,7 @@ public class RuntimeServiceTest {
   public void testGetVariableUnexistingVariableName() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Object variableValue = runtimeService.getVariable(processInstance.getId(), "unexistingVariable");
-    assertNull(variableValue);
+    assertThat(variableValue).isNull();
   }
 
   @Test
@@ -900,8 +881,8 @@ public class RuntimeServiceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     runtimeService.setVariables(processInstance.getId(), vars);
 
-    assertEquals("value1", runtimeService.getVariable(processInstance.getId(), "variable1"));
-    assertEquals("value2", runtimeService.getVariable(processInstance.getId(), "variable2"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "variable1")).isEqualTo("value1");
+    assertThat(runtimeService.getVariable(processInstance.getId(), "variable2")).isEqualTo("value2");
   }
 
   @Deployment(resources={
@@ -914,7 +895,7 @@ public class RuntimeServiceTest {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess", vars);
     VariableMap variablesTyped = runtimeService.getVariablesTyped(processInstance.getId());
-    assertEquals(vars, variablesTyped);
+    assertThat(variablesTyped).isEqualTo(vars);
   }
 
   @Deployment(resources={
@@ -930,9 +911,9 @@ public class RuntimeServiceTest {
 
     // this works
     VariableMap variablesTyped = runtimeService.getVariablesTyped(processInstance.getId(), false);
-    assertNotNull(variablesTyped.getValueTyped("broken"));
+    assertThat(variablesTyped.<ObjectValue>getValueTyped("broken")).isNotNull();
     variablesTyped = runtimeService.getVariablesTyped(processInstance.getId(), List.of("broken"), false);
-    assertNotNull(variablesTyped.getValueTyped("broken"));
+    assertThat(variablesTyped.<ObjectValue>getValueTyped("broken")).isNotNull();
 
     // this does not
     try {
@@ -959,7 +940,7 @@ public class RuntimeServiceTest {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess", vars);
     VariableMap variablesTyped = runtimeService.getVariablesLocalTyped(processInstance.getId());
-    assertEquals(vars, variablesTyped);
+    assertThat(variablesTyped).isEqualTo(vars);
   }
 
   @Deployment(resources={
@@ -975,9 +956,9 @@ public class RuntimeServiceTest {
 
     // this works
     VariableMap variablesTyped = runtimeService.getVariablesLocalTyped(processInstance.getId(), false);
-    assertNotNull(variablesTyped.getValueTyped("broken"));
+    assertThat(variablesTyped.<ObjectValue>getValueTyped("broken")).isNotNull();
     variablesTyped = runtimeService.getVariablesLocalTyped(processInstance.getId(), List.of("broken"), false);
-    assertNotNull(variablesTyped.getValueTyped("broken"));
+    assertThat(variablesTyped.<ObjectValue>getValueTyped("broken")).isNotNull();
 
     // this does not
     try {
@@ -1039,7 +1020,7 @@ public class RuntimeServiceTest {
 
       List<HistoricDetail> resultSet = historyService.createHistoricDetailQuery().processInstanceId(processInstanceId).list();
       for (HistoricDetail currentHistoricDetail : resultSet) {
-        assertTrue(currentHistoricDetail instanceof HistoricDetailVariableInstanceUpdateEntity);
+        assertThat(currentHistoricDetail).isInstanceOf(HistoricDetailVariableInstanceUpdateEntity.class);
         HistoricDetailVariableInstanceUpdateEntity historicVariableUpdate = (HistoricDetailVariableInstanceUpdateEntity) currentHistoricDetail;
 
         if (historicVariableUpdate.getName().equals(variableName) && historicVariableUpdate.getValue() == null) {
@@ -1051,7 +1032,7 @@ public class RuntimeServiceTest {
         }
       }
 
-      assertTrue(deletedVariableUpdateFound);
+      assertThat(deletedVariableUpdateFound).isTrue();
     }
   }
 
@@ -1068,9 +1049,9 @@ public class RuntimeServiceTest {
 
     runtimeService.removeVariable(processInstance.getId(), "variable1");
 
-    assertNull(runtimeService.getVariable(processInstance.getId(), "variable1"));
-    assertNull(runtimeService.getVariableLocal(processInstance.getId(), "variable1"));
-    assertEquals("value2", runtimeService.getVariable(processInstance.getId(), "variable2"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "variable1")).isNull();
+    assertThat(runtimeService.getVariableLocal(processInstance.getId(), "variable1")).isNull();
+    assertThat(runtimeService.getVariable(processInstance.getId(), "variable2")).isEqualTo("value2");
 
     checkHistoricVariableUpdateEntity("variable1", processInstance.getId());
   }
@@ -1088,8 +1069,8 @@ public class RuntimeServiceTest {
 
     runtimeService.removeVariable(currentTask.getExecutionId(), "variable1");
 
-    assertNull(runtimeService.getVariable(processInstance.getId(), "variable1"));
-    assertEquals("value2", runtimeService.getVariable(processInstance.getId(), "variable2"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "variable1")).isNull();
+    assertThat(runtimeService.getVariable(processInstance.getId(), "variable2")).isEqualTo("value2");
 
     checkHistoricVariableUpdateEntity("variable1", processInstance.getId());
   }
@@ -1116,9 +1097,9 @@ public class RuntimeServiceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess", vars);
     runtimeService.removeVariableLocal(processInstance.getId(), "variable1");
 
-    assertNull(runtimeService.getVariable(processInstance.getId(), "variable1"));
-    assertNull(runtimeService.getVariableLocal(processInstance.getId(), "variable1"));
-    assertEquals("value2", runtimeService.getVariable(processInstance.getId(), "variable2"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "variable1")).isNull();
+    assertThat(runtimeService.getVariableLocal(processInstance.getId(), "variable1")).isNull();
+    assertThat(runtimeService.getVariable(processInstance.getId(), "variable2")).isEqualTo("value2");
 
     checkHistoricVariableUpdateEntity("variable1", processInstance.getId());
   }
@@ -1135,18 +1116,18 @@ public class RuntimeServiceTest {
     Task currentTask = taskService.createTaskQuery().singleResult();
     runtimeService.setVariableLocal(currentTask.getExecutionId(), "localVariable", "local value");
 
-    assertEquals("local value", runtimeService.getVariableLocal(currentTask.getExecutionId(), "localVariable"));
+    assertThat(runtimeService.getVariableLocal(currentTask.getExecutionId(), "localVariable")).isEqualTo("local value");
 
     runtimeService.removeVariableLocal(currentTask.getExecutionId(), "localVariable");
 
-    assertNull(runtimeService.getVariable(currentTask.getExecutionId(), "localVariable"));
-    assertNull(runtimeService.getVariableLocal(currentTask.getExecutionId(), "localVariable"));
+    assertThat(runtimeService.getVariable(currentTask.getExecutionId(), "localVariable")).isNull();
+    assertThat(runtimeService.getVariableLocal(currentTask.getExecutionId(), "localVariable")).isNull();
 
-    assertEquals("value1", runtimeService.getVariable(processInstance.getId(), "variable1"));
-    assertEquals("value2", runtimeService.getVariable(processInstance.getId(), "variable2"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "variable1")).isEqualTo("value1");
+    assertThat(runtimeService.getVariable(processInstance.getId(), "variable2")).isEqualTo("value2");
 
-    assertEquals("value1", runtimeService.getVariable(currentTask.getExecutionId(), "variable1"));
-    assertEquals("value2", runtimeService.getVariable(currentTask.getExecutionId(), "variable2"));
+    assertThat(runtimeService.getVariable(currentTask.getExecutionId(), "variable1")).isEqualTo("value1");
+    assertThat(runtimeService.getVariable(currentTask.getExecutionId(), "variable2")).isEqualTo("value2");
 
     checkHistoricVariableUpdateEntity("localVariable", processInstance.getId());
   }
@@ -1175,13 +1156,13 @@ public class RuntimeServiceTest {
 
     runtimeService.removeVariables(processInstance.getId(), vars.keySet());
 
-    assertNull(runtimeService.getVariable(processInstance.getId(), "variable1"));
-    assertNull(runtimeService.getVariableLocal(processInstance.getId(), "variable1"));
-    assertNull(runtimeService.getVariable(processInstance.getId(), "variable2"));
-    assertNull(runtimeService.getVariableLocal(processInstance.getId(), "variable2"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "variable1")).isNull();
+    assertThat(runtimeService.getVariableLocal(processInstance.getId(), "variable1")).isNull();
+    assertThat(runtimeService.getVariable(processInstance.getId(), "variable2")).isNull();
+    assertThat(runtimeService.getVariableLocal(processInstance.getId(), "variable2")).isNull();
 
-    assertEquals("value3", runtimeService.getVariable(processInstance.getId(), "variable3"));
-    assertEquals("value3", runtimeService.getVariableLocal(processInstance.getId(), "variable3"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "variable3")).isEqualTo("value3");
+    assertThat(runtimeService.getVariableLocal(processInstance.getId(), "variable3")).isEqualTo("value3");
 
     checkHistoricVariableUpdateEntity("variable1", processInstance.getId());
     checkHistoricVariableUpdateEntity("variable2", processInstance.getId());
@@ -1202,18 +1183,18 @@ public class RuntimeServiceTest {
 
     runtimeService.removeVariables(currentTask.getExecutionId(), vars.keySet());
 
-    assertNull(runtimeService.getVariable(processInstance.getId(), "variable1"));
-    assertNull(runtimeService.getVariableLocal(processInstance.getId(), "variable1"));
-    assertNull(runtimeService.getVariable(processInstance.getId(), "variable2"));
-    assertNull(runtimeService.getVariableLocal(processInstance.getId(), "variable2"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "variable1")).isNull();
+    assertThat(runtimeService.getVariableLocal(processInstance.getId(), "variable1")).isNull();
+    assertThat(runtimeService.getVariable(processInstance.getId(), "variable2")).isNull();
+    assertThat(runtimeService.getVariableLocal(processInstance.getId(), "variable2")).isNull();
 
-    assertEquals("value3", runtimeService.getVariable(processInstance.getId(), "variable3"));
-    assertEquals("value3", runtimeService.getVariableLocal(processInstance.getId(), "variable3"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "variable3")).isEqualTo("value3");
+    assertThat(runtimeService.getVariableLocal(processInstance.getId(), "variable3")).isEqualTo("value3");
 
-    assertNull(runtimeService.getVariable(currentTask.getExecutionId(), "variable1"));
-    assertNull(runtimeService.getVariable(currentTask.getExecutionId(), "variable2"));
+    assertThat(runtimeService.getVariable(currentTask.getExecutionId(), "variable1")).isNull();
+    assertThat(runtimeService.getVariable(currentTask.getExecutionId(), "variable2")).isNull();
 
-    assertEquals("value3", runtimeService.getVariable(currentTask.getExecutionId(), "variable3"));
+    assertThat(runtimeService.getVariable(currentTask.getExecutionId(), "variable3")).isEqualTo("value3");
 
     checkHistoricVariableUpdateEntity("variable1", processInstance.getId());
     checkHistoricVariableUpdateEntity("variable2", processInstance.getId());
@@ -1248,29 +1229,29 @@ public class RuntimeServiceTest {
     runtimeService.setVariablesLocal(currentTask.getExecutionId(), varsToDelete);
     runtimeService.setVariableLocal(currentTask.getExecutionId(), "variable6", "value6");
 
-    assertEquals("value3", runtimeService.getVariable(currentTask.getExecutionId(), "variable3"));
-    assertEquals("value3", runtimeService.getVariableLocal(currentTask.getExecutionId(), "variable3"));
-    assertEquals("value4", runtimeService.getVariable(currentTask.getExecutionId(), "variable4"));
-    assertEquals("value4", runtimeService.getVariableLocal(currentTask.getExecutionId(), "variable4"));
-    assertEquals("value5", runtimeService.getVariable(currentTask.getExecutionId(), "variable5"));
-    assertEquals("value5", runtimeService.getVariableLocal(currentTask.getExecutionId(), "variable5"));
-    assertEquals("value6", runtimeService.getVariable(currentTask.getExecutionId(), "variable6"));
-    assertEquals("value6", runtimeService.getVariableLocal(currentTask.getExecutionId(), "variable6"));
+    assertThat(runtimeService.getVariable(currentTask.getExecutionId(), "variable3")).isEqualTo("value3");
+    assertThat(runtimeService.getVariableLocal(currentTask.getExecutionId(), "variable3")).isEqualTo("value3");
+    assertThat(runtimeService.getVariable(currentTask.getExecutionId(), "variable4")).isEqualTo("value4");
+    assertThat(runtimeService.getVariableLocal(currentTask.getExecutionId(), "variable4")).isEqualTo("value4");
+    assertThat(runtimeService.getVariable(currentTask.getExecutionId(), "variable5")).isEqualTo("value5");
+    assertThat(runtimeService.getVariableLocal(currentTask.getExecutionId(), "variable5")).isEqualTo("value5");
+    assertThat(runtimeService.getVariable(currentTask.getExecutionId(), "variable6")).isEqualTo("value6");
+    assertThat(runtimeService.getVariableLocal(currentTask.getExecutionId(), "variable6")).isEqualTo("value6");
 
     runtimeService.removeVariablesLocal(currentTask.getExecutionId(), varsToDelete.keySet());
 
-    assertEquals("value1", runtimeService.getVariable(currentTask.getExecutionId(), "variable1"));
-    assertEquals("value2", runtimeService.getVariable(currentTask.getExecutionId(), "variable2"));
+    assertThat(runtimeService.getVariable(currentTask.getExecutionId(), "variable1")).isEqualTo("value1");
+    assertThat(runtimeService.getVariable(currentTask.getExecutionId(), "variable2")).isEqualTo("value2");
 
-    assertNull(runtimeService.getVariable(currentTask.getExecutionId(), "variable3"));
-    assertNull(runtimeService.getVariableLocal(currentTask.getExecutionId(), "variable3"));
-    assertNull(runtimeService.getVariable(currentTask.getExecutionId(), "variable4"));
-    assertNull(runtimeService.getVariableLocal(currentTask.getExecutionId(), "variable4"));
-    assertNull(runtimeService.getVariable(currentTask.getExecutionId(), "variable5"));
-    assertNull(runtimeService.getVariableLocal(currentTask.getExecutionId(), "variable5"));
+    assertThat(runtimeService.getVariable(currentTask.getExecutionId(), "variable3")).isNull();
+    assertThat(runtimeService.getVariableLocal(currentTask.getExecutionId(), "variable3")).isNull();
+    assertThat(runtimeService.getVariable(currentTask.getExecutionId(), "variable4")).isNull();
+    assertThat(runtimeService.getVariableLocal(currentTask.getExecutionId(), "variable4")).isNull();
+    assertThat(runtimeService.getVariable(currentTask.getExecutionId(), "variable5")).isNull();
+    assertThat(runtimeService.getVariableLocal(currentTask.getExecutionId(), "variable5")).isNull();
 
-    assertEquals("value6", runtimeService.getVariable(currentTask.getExecutionId(), "variable6"));
-    assertEquals("value6", runtimeService.getVariableLocal(currentTask.getExecutionId(), "variable6"));
+    assertThat(runtimeService.getVariable(currentTask.getExecutionId(), "variable6")).isEqualTo("value6");
+    assertThat(runtimeService.getVariableLocal(currentTask.getExecutionId(), "variable6")).isEqualTo("value6");
 
     checkHistoricVariableUpdateEntity("variable3", processInstance.getId());
     checkHistoricVariableUpdateEntity("variable4", processInstance.getId());
@@ -1304,8 +1285,8 @@ public class RuntimeServiceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess", initialVariables);
     ((RuntimeServiceImpl) runtimeService).updateVariables(processInstance.getId(), modifications, deletions);
 
-    assertNull(runtimeService.getVariable(processInstance.getId(), "variable1"));
-    assertEquals("value2", runtimeService.getVariable(processInstance.getId(), "variable2"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "variable1")).isNull();
+    assertThat(runtimeService.getVariable(processInstance.getId(), "variable2")).isEqualTo("value2");
   }
 
   @Deployment(resources={
@@ -1334,10 +1315,10 @@ public class RuntimeServiceTest {
 
     ((RuntimeServiceImpl) runtimeService).updateVariablesLocal(currentTask.getExecutionId(), modifications, deletions);
 
-    assertEquals("anotherValue1", runtimeService.getVariable(currentTask.getExecutionId(), "variable1"));
-    assertNull(runtimeService.getVariable(currentTask.getExecutionId(), "variable2"));
-    assertNull(runtimeService.getVariable(currentTask.getExecutionId(), "variable3"));
-    assertEquals("value4", runtimeService.getVariable(processInstance.getId(), "variable4"));
+    assertThat(runtimeService.getVariable(currentTask.getExecutionId(), "variable1")).isEqualTo("anotherValue1");
+    assertThat(runtimeService.getVariable(currentTask.getExecutionId(), "variable2")).isNull();
+    assertThat(runtimeService.getVariable(currentTask.getExecutionId(), "variable3")).isNull();
+    assertThat(runtimeService.getVariable(processInstance.getId(), "variable4")).isEqualTo("value4");
   }
 
   @Deployment(resources={
@@ -1351,11 +1332,11 @@ public class RuntimeServiceTest {
 
     startSignalCatchProcesses();
     // 12, because the signal catch is a scope
-    assertEquals(12, runtimeService.createExecutionQuery().count());
+    assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(12);
     runtimeService.signalEventReceived("alert");
-    assertEquals(6, runtimeService.createExecutionQuery().count());
+    assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(6);
     runtimeService.signalEventReceived("panic");
-    assertEquals(0, runtimeService.createExecutionQuery().count());
+    assertThat(runtimeService.createExecutionQuery().count()).isZero();
 
     //////  test  signalEventReceived(String, String)
     startSignalCatchProcesses();
@@ -1367,7 +1348,7 @@ public class RuntimeServiceTest {
         .listPage(0, 1);
       runtimeService.signalEventReceived("alert", page.get(0).getId());
 
-      assertEquals(executions-1, runtimeService.createExecutionQuery().signalEventSubscriptionName("alert").count());
+      assertThat(runtimeService.createExecutionQuery().signalEventSubscriptionName("alert").count()).isEqualTo(executions - 1);
     }
 
     for (int executions = 3; executions > 0; executions-- ) {
@@ -1376,7 +1357,7 @@ public class RuntimeServiceTest {
         .listPage(0, 1);
       runtimeService.signalEventReceived("panic", page.get(0).getId());
 
-      assertEquals(executions-1, runtimeService.createExecutionQuery().signalEventSubscriptionName("panic").count());
+      assertThat(runtimeService.createExecutionQuery().signalEventSubscriptionName("panic").count()).isEqualTo(executions - 1);
     }
 
   }
@@ -1390,7 +1371,7 @@ public class RuntimeServiceTest {
 
     startMessageCatchProcesses();
     // 12, because the signal catch is a scope
-    assertEquals(12, runtimeService.createExecutionQuery().count());
+    assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(12);
 
     // signal the executions one at a time:
     for (int executions = 3; executions > 0; executions--) {
@@ -1399,7 +1380,7 @@ public class RuntimeServiceTest {
         .listPage(0, 1);
       runtimeService.messageEventReceived("alert", page.get(0).getId());
 
-      assertEquals(executions-1, runtimeService.createExecutionQuery().messageEventSubscriptionName("alert").count());
+      assertThat(runtimeService.createExecutionQuery().messageEventSubscriptionName("alert").count()).isEqualTo(executions - 1);
     }
 
     for (int executions = 3; executions > 0; executions-- ) {
@@ -1408,7 +1389,7 @@ public class RuntimeServiceTest {
         .listPage(0, 1);
       runtimeService.messageEventReceived("panic", page.get(0).getId());
 
-      assertEquals(executions-1, runtimeService.createExecutionQuery().messageEventSubscriptionName("panic").count());
+      assertThat(runtimeService.createExecutionQuery().messageEventSubscriptionName("panic").count()).isEqualTo(executions - 1);
     }
 
   }
@@ -1417,10 +1398,10 @@ public class RuntimeServiceTest {
   public void testSignalEventReceivedNonExistingExecution() {
    try {
      runtimeService.signalEventReceived("alert", "nonexistingExecution");
-     fail("exeception expected");
+     fail("exception expected");
    }catch (ProcessEngineException e) {
      // this is good
-     assertTrue(e.getMessage().contains("Cannot find execution with id 'nonexistingExecution'"));
+     assertThat(e.getMessage()).contains("Cannot find execution with id 'nonexistingExecution'");
    }
   }
 
@@ -1428,10 +1409,10 @@ public class RuntimeServiceTest {
   public void testMessageEventReceivedNonExistingExecution() {
    try {
      runtimeService.messageEventReceived("alert", "nonexistingExecution");
-     fail("exeception expected");
+     fail("exception expected");
    }catch (ProcessEngineException e) {
      // this is good
-     assertTrue(e.getMessage().contains("Execution with id 'nonexistingExecution' does not have a subscription to a message event with name 'alert'"));
+     assertThat(e.getMessage()).contains("Execution with id 'nonexistingExecution' does not have a subscription to a message event with name 'alert'");
    }
   }
 
@@ -1447,10 +1428,10 @@ public class RuntimeServiceTest {
    var executionId = execution.getId();
    try {
      runtimeService.signalEventReceived("bogusSignal", executionId);
-     fail("exeception expected");
+     fail("exception expected");
    }catch (ProcessEngineException e) {
      // this is good
-     assertTrue(e.getMessage().contains("has not subscribed to a signal event with name 'bogusSignal'"));
+     assertThat(e.getMessage()).contains("has not subscribed to a signal event with name 'bogusSignal'");
    }
   }
 
@@ -1472,7 +1453,7 @@ public class RuntimeServiceTest {
 
   @Test
   public void testActivityInstanceForNonExistingProcessInstanceId() {
-    assertNull(runtimeService.getActivityInstance("some-nonexisting-id"));
+    assertThat(runtimeService.getActivityInstance("some-nonexisting-id")).isNull();
   }
 
   @Test
@@ -1481,7 +1462,7 @@ public class RuntimeServiceTest {
       runtimeService.getActivityInstance(null);
       fail("PEE expected!");
     } catch (ProcessEngineException engineException) {
-      assertTrue(engineException.getMessage().contains("processInstanceId is null"));
+      assertThat(engineException.getMessage()).contains("processInstanceId is null");
     }
   }
 
@@ -1493,28 +1474,28 @@ public class RuntimeServiceTest {
 
     // validate properties of root
     ActivityInstance rootActInstance = runtimeService.getActivityInstance(processInstance.getId());
-    assertEquals(processInstance.getId(), rootActInstance.getProcessInstanceId());
-    assertEquals(processInstance.getProcessDefinitionId(), rootActInstance.getProcessDefinitionId());
-    assertEquals(processInstance.getId(), rootActInstance.getProcessInstanceId());
-    assertEquals(rootActInstance.getExecutionIds()[0], processInstance.getId());
-    assertEquals(rootActInstance.getProcessDefinitionId(), rootActInstance.getActivityId());
-    assertNull(rootActInstance.getParentActivityInstanceId());
-    assertEquals("processDefinition", rootActInstance.getActivityType());
+    assertThat(rootActInstance.getProcessInstanceId()).isEqualTo(processInstance.getId());
+    assertThat(rootActInstance.getProcessDefinitionId()).isEqualTo(processInstance.getProcessDefinitionId());
+    assertThat(rootActInstance.getProcessInstanceId()).isEqualTo(processInstance.getId());
+    assertThat(processInstance.getId()).isEqualTo(rootActInstance.getExecutionIds()[0]);
+    assertThat(rootActInstance.getActivityId()).isEqualTo(rootActInstance.getProcessDefinitionId());
+    assertThat(rootActInstance.getParentActivityInstanceId()).isNull();
+    assertThat(rootActInstance.getActivityType()).isEqualTo("processDefinition");
 
     // validate properties of child:
     Task task = taskService.createTaskQuery().singleResult();
     ActivityInstance childActivityInstance = rootActInstance.getChildActivityInstances()[0];
-    assertEquals(processInstance.getId(), childActivityInstance.getProcessInstanceId());
-    assertEquals(processInstance.getProcessDefinitionId(), childActivityInstance.getProcessDefinitionId());
-    assertEquals(processInstance.getId(), childActivityInstance.getProcessInstanceId());
-    assertEquals(childActivityInstance.getExecutionIds()[0], task.getExecutionId());
-    assertEquals("theTask", childActivityInstance.getActivityId());
-    assertEquals(rootActInstance.getId(), childActivityInstance.getParentActivityInstanceId());
-    assertEquals("userTask", childActivityInstance.getActivityType());
-    assertNotNull(childActivityInstance.getChildActivityInstances());
-    assertNotNull(childActivityInstance.getChildTransitionInstances());
-    assertEquals(0, childActivityInstance.getChildActivityInstances().length);
-    assertEquals(0, childActivityInstance.getChildTransitionInstances().length);
+    assertThat(childActivityInstance.getProcessInstanceId()).isEqualTo(processInstance.getId());
+    assertThat(childActivityInstance.getProcessDefinitionId()).isEqualTo(processInstance.getProcessDefinitionId());
+    assertThat(childActivityInstance.getProcessInstanceId()).isEqualTo(processInstance.getId());
+    assertThat(task.getExecutionId()).isEqualTo(childActivityInstance.getExecutionIds()[0]);
+    assertThat(childActivityInstance.getActivityId()).isEqualTo("theTask");
+    assertThat(childActivityInstance.getParentActivityInstanceId()).isEqualTo(rootActInstance.getId());
+    assertThat(childActivityInstance.getActivityType()).isEqualTo("userTask");
+    assertThat(childActivityInstance.getChildActivityInstances()).isNotNull();
+    assertThat(childActivityInstance.getChildTransitionInstances()).isNotNull();
+    assertThat(childActivityInstance.getChildActivityInstances()).isEmpty();
+    assertThat(childActivityInstance.getChildTransitionInstances()).isEmpty();
 
   }
 
@@ -1524,13 +1505,13 @@ public class RuntimeServiceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(tree).hasStructure(
+    ActivityInstanceAssert.assertThat(tree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId())
           .transition("theTask")
         .done());
 
     TransitionInstance asyncBeforeTransitionInstance = tree.getChildTransitionInstances()[0];
-    assertEquals(processInstance.getId(), asyncBeforeTransitionInstance.getExecutionId());
+    assertThat(asyncBeforeTransitionInstance.getExecutionId()).isEqualTo(processInstance.getId());
   }
 
   @Deployment
@@ -1539,7 +1520,7 @@ public class RuntimeServiceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("concurrentTasksProcess");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(tree).hasStructure(
+    ActivityInstanceAssert.assertThat(tree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId())
           .activity("theTask")
           .transition("asyncTask")
@@ -1547,7 +1528,7 @@ public class RuntimeServiceTest {
 
     TransitionInstance asyncBeforeTransitionInstance = tree.getChildTransitionInstances()[0];
     String asyncExecutionId = managementService.createJobQuery().singleResult().getExecutionId();
-    assertEquals(asyncExecutionId, asyncBeforeTransitionInstance.getExecutionId());
+    assertThat(asyncBeforeTransitionInstance.getExecutionId()).isEqualTo(asyncExecutionId);
   }
 
   @Deployment
@@ -1556,13 +1537,13 @@ public class RuntimeServiceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(tree).hasStructure(
+    ActivityInstanceAssert.assertThat(tree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId())
           .transition("theStart")
         .done());
 
     TransitionInstance asyncBeforeTransitionInstance = tree.getChildTransitionInstances()[0];
-    assertEquals(processInstance.getId(), asyncBeforeTransitionInstance.getExecutionId());
+    assertThat(asyncBeforeTransitionInstance.getExecutionId()).isEqualTo(processInstance.getId());
   }
 
   @Deployment
@@ -1575,13 +1556,13 @@ public class RuntimeServiceTest {
 
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(tree).hasStructure(
+    ActivityInstanceAssert.assertThat(tree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId())
           .transition("theTask")
         .done());
 
     TransitionInstance asyncAfterTransitionInstance = tree.getChildTransitionInstances()[0];
-    assertEquals(processInstance.getId(), asyncAfterTransitionInstance.getExecutionId());
+    assertThat(asyncAfterTransitionInstance.getExecutionId()).isEqualTo(processInstance.getId());
   }
 
   @Deployment
@@ -1590,11 +1571,11 @@ public class RuntimeServiceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("concurrentTasksProcess");
 
     Task asyncTask = taskService.createTaskQuery().taskDefinitionKey("asyncTask").singleResult();
-    assertNotNull(asyncTask);
+    assertThat(asyncTask).isNotNull();
     taskService.complete(asyncTask.getId());
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(tree).hasStructure(
+    ActivityInstanceAssert.assertThat(tree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId())
           .activity("theTask")
           .transition("asyncTask")
@@ -1602,7 +1583,7 @@ public class RuntimeServiceTest {
 
     TransitionInstance asyncBeforeTransitionInstance = tree.getChildTransitionInstances()[0];
     String asyncExecutionId = managementService.createJobQuery().singleResult().getExecutionId();
-    assertEquals(asyncExecutionId, asyncBeforeTransitionInstance.getExecutionId());
+    assertThat(asyncBeforeTransitionInstance.getExecutionId()).isEqualTo(asyncExecutionId);
   }
 
   @Deployment
@@ -1611,13 +1592,13 @@ public class RuntimeServiceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("asyncEndEventProcess");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(tree).hasStructure(
+    ActivityInstanceAssert.assertThat(tree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId())
           .transition("theEnd")
         .done());
 
     TransitionInstance asyncAfterTransitionInstance = tree.getChildTransitionInstances()[0];
-    assertEquals(processInstance.getId(), asyncAfterTransitionInstance.getExecutionId());
+    assertThat(asyncAfterTransitionInstance.getExecutionId()).isEqualTo(processInstance.getId());
   }
 
   @Deployment
@@ -1626,7 +1607,7 @@ public class RuntimeServiceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(tree).hasStructure(
+    ActivityInstanceAssert.assertThat(tree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId())
           .beginScope("subProcess")
             .transition("theTask")
@@ -1635,7 +1616,7 @@ public class RuntimeServiceTest {
     TransitionInstance asyncBeforeTransitionInstance = tree.getChildActivityInstances()[0]
         .getChildTransitionInstances()[0];
     String asyncExecutionId = managementService.createJobQuery().singleResult().getExecutionId();
-    assertEquals(asyncExecutionId, asyncBeforeTransitionInstance.getExecutionId());
+    assertThat(asyncBeforeTransitionInstance.getExecutionId()).isEqualTo(asyncExecutionId);
   }
 
   @Deployment
@@ -1644,7 +1625,7 @@ public class RuntimeServiceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(tree).hasStructure(
+    ActivityInstanceAssert.assertThat(tree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId())
           .beginScope("subProcess")
             .transition("theSubProcessStart")
@@ -1661,7 +1642,7 @@ public class RuntimeServiceTest {
 
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(tree).hasStructure(
+    ActivityInstanceAssert.assertThat(tree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId())
           .beginScope("subProcess")
             .transition("theTask")
@@ -1670,7 +1651,7 @@ public class RuntimeServiceTest {
     TransitionInstance asyncAfterTransitionInstance = tree.getChildActivityInstances()[0]
         .getChildTransitionInstances()[0];
     String asyncExecutionId = managementService.createJobQuery().singleResult().getExecutionId();
-    assertEquals(asyncExecutionId, asyncAfterTransitionInstance.getExecutionId());
+    assertThat(asyncAfterTransitionInstance.getExecutionId()).isEqualTo(asyncExecutionId);
   }
 
   @Deployment
@@ -1679,7 +1660,7 @@ public class RuntimeServiceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("asyncEndEventProcess");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertThat(tree).hasStructure(
+    ActivityInstanceAssert.assertThat(tree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId())
           .beginScope("subProcess")
             .transition("theSubProcessEnd")
@@ -1688,7 +1669,7 @@ public class RuntimeServiceTest {
     TransitionInstance asyncAfterTransitionInstance = tree.getChildActivityInstances()[0]
         .getChildTransitionInstances()[0];
     String asyncExecutionId = managementService.createJobQuery().singleResult().getExecutionId();
-    assertEquals(asyncExecutionId, asyncAfterTransitionInstance.getExecutionId());
+    assertThat(asyncAfterTransitionInstance.getExecutionId()).isEqualTo(asyncExecutionId);
   }
 
   /**
@@ -1700,9 +1681,9 @@ public class RuntimeServiceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("concurrentSubProcess");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertNotNull(tree);
+    assertThat(tree).isNotNull();
 
-    assertThat(tree).hasStructure(
+    ActivityInstanceAssert.assertThat(tree).hasStructure(
         describeActivityInstanceTree(processInstance.getProcessDefinitionId())
           .activity("outerTask")
           .beginScope("subProcess")
@@ -1722,9 +1703,9 @@ public class RuntimeServiceTest {
 
     // then
     ActivityInstance[] processActivityInstances = tree.getActivityInstances(definition.getId());
-    assertEquals(1, processActivityInstances.length);
-    assertEquals(tree.getId(), processActivityInstances[0].getId());
-    assertEquals(definition.getId(), processActivityInstances[0].getActivityId());
+    assertThat(processActivityInstances).hasSize(1);
+    assertThat(processActivityInstances[0].getId()).isEqualTo(tree.getId());
+    assertThat(processActivityInstances[0].getActivityId()).isEqualTo(definition.getId());
 
     assertActivityInstances(tree.getActivityInstances("subProcess#multiInstanceBody"), 1, "subProcess#multiInstanceBody");
     assertActivityInstances(tree.getActivityInstances("subProcess"), 3, "subProcess");
@@ -1734,8 +1715,8 @@ public class RuntimeServiceTest {
     assertActivityInstances(subProcessInstance.getActivityInstances("subProcess"), 1, "subProcess");
 
     ActivityInstance[] childInstances = subProcessInstance.getActivityInstances("innerTask");
-    assertEquals(1, childInstances.length);
-    assertEquals(subProcessInstance.getChildActivityInstances()[0].getId(), childInstances[0].getId());
+    assertThat(childInstances).hasSize(1);
+    assertThat(childInstances[0].getId()).isEqualTo(subProcessInstance.getChildActivityInstances()[0].getId());
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testGetActivityInstancesForActivity.bpmn20.xml")
@@ -1761,8 +1742,7 @@ public class RuntimeServiceTest {
     ActivityInstance tree = runtimeService.getActivityInstance(instance.getId());
 
     ActivityInstance[] instances = tree.getActivityInstances("aNonExistingActivityId");
-    assertNotNull(instances);
-    assertEquals(0, instances.length);
+    assertThat(instances).isEmpty();
   }
 
   @Deployment
@@ -1781,17 +1761,17 @@ public class RuntimeServiceTest {
     ActivityInstance tree = runtimeService.getActivityInstance(instance.getId());
 
     // then
-    assertEquals(0, tree.getTransitionInstances("subProcess").length);
+    assertThat(tree.getTransitionInstances("subProcess")).isEmpty();
     TransitionInstance[] asyncBeforeInstances = tree.getTransitionInstances("innerTask");
-    assertEquals(2, asyncBeforeInstances.length);
+    assertThat(asyncBeforeInstances).hasSize(2);
 
-    assertEquals("innerTask", asyncBeforeInstances[0].getActivityId());
-    assertEquals("innerTask", asyncBeforeInstances[1].getActivityId());
-    assertNotEquals(asyncBeforeInstances[0].getId(), asyncBeforeInstances[1].getId());
+    assertThat(asyncBeforeInstances[0].getActivityId()).isEqualTo("innerTask");
+    assertThat(asyncBeforeInstances[1].getActivityId()).isEqualTo("innerTask");
+    assertThat(asyncBeforeInstances[1].getId()).isNotEqualTo(asyncBeforeInstances[0].getId());
 
     TransitionInstance[] asyncEndEventInstances = tree.getTransitionInstances("theSubProcessEnd");
-    assertEquals(1, asyncEndEventInstances.length);
-    assertEquals("theSubProcessEnd", asyncEndEventInstances[0].getActivityId());
+    assertThat(asyncEndEventInstances).hasSize(1);
+    assertThat(asyncEndEventInstances[0].getActivityId()).isEqualTo("theSubProcessEnd");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testGetTransitionInstancesForActivity.bpmn20.xml")
@@ -1817,23 +1797,22 @@ public class RuntimeServiceTest {
     ActivityInstance tree = runtimeService.getActivityInstance(instance.getId());
 
     TransitionInstance[] instances = tree.getTransitionInstances("aNonExistingActivityId");
-    assertNotNull(instances);
-    assertEquals(0, instances.length);
+    assertThat(instances).isEmpty();
   }
 
 
   protected void assertActivityInstances(ActivityInstance[] instances, int expectedAmount, String expectedActivityId) {
-    assertEquals(expectedAmount, instances.length);
+    assertThat(instances).hasSize(expectedAmount);
 
     Set<String> instanceIds = new HashSet<>();
 
     for (ActivityInstance instance : instances) {
-      assertEquals(expectedActivityId, instance.getActivityId());
+      assertThat(instance.getActivityId()).isEqualTo(expectedActivityId);
       instanceIds.add(instance.getId());
     }
 
     // ensure that all instances are unique
-    assertEquals(expectedAmount, instanceIds.size());
+    assertThat(instanceIds).hasSize(expectedAmount);
   }
 
   @Test
@@ -1845,12 +1824,12 @@ public class RuntimeServiceTest {
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
 
     // when
-    assertNotNull(tree);
+    assertThat(tree).isNotNull();
 
     Incident[] incidents = tree.getActivityInstances("theTask")[0].getIncidents();
 
     // then
-    assertEquals(0, incidents.length);
+    assertThat(incidents).isEmpty();
   }
 
   @Test
@@ -1863,16 +1842,16 @@ public class RuntimeServiceTest {
 
     // when
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertNotNull(tree);
+    assertThat(tree).isNotNull();
 
     // assume
-    assertThat(tree).hasTotalIncidents(1);
+    ActivityInstanceAssert.assertThat(tree).hasTotalIncidents(1);
 
     Incident[] incidents = tree.getActivityInstances("theTask")[0].getIncidents();
 
     // then
-    assertEquals(1, incidents.length);
-    assertEquals(incident, incidents[0]);
+    assertThat(incidents).hasSize(1);
+    assertThat(incidents[0]).isEqualTo(incident);
   }
 
   @Test
@@ -1883,11 +1862,11 @@ public class RuntimeServiceTest {
 
     // when
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertNotNull(tree);
+    assertThat(tree).isNotNull();
 
     // then
     String[] incidentIds = tree.getActivityInstances("theTask")[0].getIncidentIds();
-    assertEquals(0, incidentIds.length);
+    assertThat(incidentIds).isEmpty();
   }
 
   @Test
@@ -1900,15 +1879,15 @@ public class RuntimeServiceTest {
 
     // when
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertNotNull(tree);
+    assertThat(tree).isNotNull();
 
     // then
-    assertThat(tree).hasTotalIncidents(1);
+    ActivityInstanceAssert.assertThat(tree).hasTotalIncidents(1);
 
-    assertEquals(1, tree.getActivityInstances("theTask").length);
+    assertThat(tree.getActivityInstances("theTask")).hasSize(1);
     String[] incidentIds = tree.getActivityInstances("theTask")[0].getIncidentIds();
-    assertEquals(1, incidentIds.length);
-    assertEquals(incident.getId(), incidentIds[0]);
+    assertThat(incidentIds).hasSize(1);
+    assertThat(incidentIds[0]).isEqualTo(incident.getId());
   }
 
   @Test
@@ -1925,19 +1904,19 @@ public class RuntimeServiceTest {
 
     // when
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertNotNull(tree);
+    assertThat(tree).isNotNull();
 
     // then
-    assertThat(tree).hasTotalIncidents(3);
+    ActivityInstanceAssert.assertThat(tree).hasTotalIncidents(3);
 
-    assertEquals(1, tree.getActivityInstances("theTask").length);
+    assertThat(tree.getActivityInstances("theTask")).hasSize(1);
     String[] incidentIds = tree.getActivityInstances("theTask")[0].getIncidentIds();
-    assertEquals(1, incidentIds.length);
-    assertEquals(theTaskIncident.getId(), incidentIds[0]);
+    assertThat(incidentIds).hasSize(1);
+    assertThat(incidentIds[0]).isEqualTo(theTaskIncident.getId());
 
-    assertEquals(1, tree.getActivityInstances("asyncTask").length);
+    assertThat(tree.getActivityInstances("asyncTask")).hasSize(1);
     incidentIds = tree.getActivityInstances("asyncTask")[0].getIncidentIds();
-    assertEquals(2, incidentIds.length);
+    assertThat(incidentIds).hasSize(2);
     for (String incidentId : incidentIds) {
       if (!incidentId.equals(asyncTaskIncident.getId())
           && !incidentId.equals(anotherIncident.getId())) {
@@ -1959,20 +1938,20 @@ public class RuntimeServiceTest {
 
     // when
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertNotNull(tree);
+    assertThat(tree).isNotNull();
 
     // then
-    assertThat(tree).hasTotalIncidents(2);
+    ActivityInstanceAssert.assertThat(tree).hasTotalIncidents(2);
 
-    assertEquals(1, tree.getActivityInstances("outerTask").length);
+    assertThat(tree.getActivityInstances("outerTask")).hasSize(1);
     String[] incidentIds = tree.getActivityInstances("outerTask")[0].getIncidentIds();
-    assertEquals(1, incidentIds.length);
-    assertEquals(outerTaskIncident.getId(), incidentIds[0]);
+    assertThat(incidentIds).hasSize(1);
+    assertThat(incidentIds[0]).isEqualTo(outerTaskIncident.getId());
 
-    assertEquals(1, tree.getActivityInstances("innerTask").length);
+    assertThat(tree.getActivityInstances("innerTask")).hasSize(1);
     incidentIds = tree.getActivityInstances("innerTask")[0].getIncidentIds();
-    assertEquals(1, incidentIds.length);
-    assertEquals(innerTaskIncident.getId(), incidentIds[0]);
+    assertThat(incidentIds).hasSize(1);
+    assertThat(incidentIds[0]).isEqualTo(innerTaskIncident.getId());
   }
 
   @Test
@@ -1986,25 +1965,25 @@ public class RuntimeServiceTest {
 
     // when
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    assertNotNull(tree);
+    assertThat(tree).isNotNull();
 
     // then
-    assertThat(tree).hasTotalIncidents(1);
+    ActivityInstanceAssert.assertThat(tree).hasTotalIncidents(1);
 
     boolean innerTaskMatched = false;
 
     for (ActivityInstance activityInstance : tree.getActivityInstances("innerTask")) {
       if(activityInstance.getExecutionIds()[0].equals(executionId)) {
         String[] incidentIds = activityInstance.getIncidentIds();
-        assertEquals(1, incidentIds.length);
-        assertEquals(incident.getId(), incidentIds[0]);
+        assertThat(incidentIds).hasSize(1);
+        assertThat(incidentIds[0]).isEqualTo(incident.getId());
         innerTaskMatched = true;
       } else {
-        assertEquals(0, activityInstance.getIncidentIds().length);
+        assertThat(activityInstance.getIncidentIds()).isEmpty();
       }
     }
 
-    assertTrue(innerTaskMatched);
+    assertThat(innerTaskMatched).isTrue();
   }
 
   @Test
@@ -2022,7 +2001,7 @@ public class RuntimeServiceTest {
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
 
     // then
-    assertThat(activityInstance).hasTotalIncidents(1);
+    ActivityInstanceAssert.assertThat(activityInstance).hasTotalIncidents(1);
 
     TransitionInstance transitionInstance = activityInstance.getTransitionInstances("theTask")[0];
     String[] incidents = transitionInstance.getIncidentIds();
@@ -2058,7 +2037,7 @@ public class RuntimeServiceTest {
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
 
     // then
-    assertThat(activityInstance).hasTotalIncidents(1);
+    ActivityInstanceAssert.assertThat(activityInstance).hasTotalIncidents(1);
 
     TransitionInstance transitionInstance = activityInstance.getTransitionInstances("task")[0];
     String[] incidents = transitionInstance.getIncidentIds();
@@ -2096,7 +2075,7 @@ public class RuntimeServiceTest {
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
 
     // then
-    assertThat(activityInstance).hasTotalIncidents(1);
+    ActivityInstanceAssert.assertThat(activityInstance).hasTotalIncidents(1);
 
     ActivityInstance subProcessInstance = activityInstance.getActivityInstances("subProcess")[0];
     String[] incidents = subProcessInstance.getIncidentIds();
@@ -2128,7 +2107,7 @@ public class RuntimeServiceTest {
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
 
     // then
-    assertThat(activityInstance).hasTotalIncidents(1);
+    ActivityInstanceAssert.assertThat(activityInstance).hasTotalIncidents(1);
 
     // while the incident references the sub process, the sub process
     // execution represents both the sub process and the user task (compacted tree).
@@ -2178,7 +2157,7 @@ public class RuntimeServiceTest {
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
 
     // then
-    assertThat(activityInstance).hasStructure(
+    ActivityInstanceAssert.assertThat(activityInstance).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
         .beginMiBody("subprocess")
           .transition("subprocess")
@@ -2208,7 +2187,7 @@ public class RuntimeServiceTest {
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
 
     // then
-    assertThat(activityInstance).hasStructure(
+    ActivityInstanceAssert.assertThat(activityInstance).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
         .beginMiBody("task")
           .transition("task")
@@ -2243,7 +2222,7 @@ public class RuntimeServiceTest {
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
 
     // then
-    assertThat(activityInstance).hasStructure(
+    ActivityInstanceAssert.assertThat(activityInstance).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
       .beginMiBody("subprocess")
         .transition("subprocess")
@@ -2278,7 +2257,7 @@ public class RuntimeServiceTest {
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
 
     // then
-    assertThat(activityInstance).hasStructure(
+    ActivityInstanceAssert.assertThat(activityInstance).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
       .beginScope("subprocess")
         .transition("task")
@@ -2309,7 +2288,7 @@ public class RuntimeServiceTest {
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
 
     // then
-    assertThat(activityInstance).hasStructure(
+    ActivityInstanceAssert.assertThat(activityInstance).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
       .beginScope("subprocess")
         .transition("task")
@@ -2341,7 +2320,7 @@ public class RuntimeServiceTest {
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
 
     // then
-    assertThat(activityInstance).hasStructure(
+    ActivityInstanceAssert.assertThat(activityInstance).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
       .beginScope("subprocess")
         .transition("task")
@@ -2360,8 +2339,8 @@ public class RuntimeServiceTest {
 
     VariableInstance variableInstance = runtimeService.createVariableInstanceQuery().singleResult();
 
-    assertEquals(47, variableInstance.getValue());
-    assertEquals(ValueType.INTEGER.getName(), variableInstance.getTypeName());
+    assertThat(variableInstance.getValue()).isEqualTo(47);
+    assertThat(variableInstance.getTypeName()).isEqualTo(ValueType.INTEGER.getName());
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
@@ -2371,7 +2350,7 @@ public class RuntimeServiceTest {
 
     ProcessInstance firstInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess", null, caseInstanceId);
 
-    assertEquals(caseInstanceId, firstInstance.getCaseInstanceId());
+    assertThat(firstInstance.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
     // load process instance from db
     firstInstance = runtimeService
@@ -2379,15 +2358,15 @@ public class RuntimeServiceTest {
         .processInstanceId(firstInstance.getId())
         .singleResult();
 
-    assertNotNull(firstInstance);
+    assertThat(firstInstance).isNotNull();
 
-    assertEquals(caseInstanceId, firstInstance.getCaseInstanceId());
+    assertThat(firstInstance.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
     // the second possibility to start a process instance /////////////////////////////////////////////
 
     ProcessInstance secondInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess", null, caseInstanceId, null);
 
-    assertEquals(caseInstanceId, secondInstance.getCaseInstanceId());
+    assertThat(secondInstance.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
     // load process instance from db
     secondInstance = runtimeService
@@ -2395,9 +2374,9 @@ public class RuntimeServiceTest {
         .processInstanceId(secondInstance.getId())
         .singleResult();
 
-    assertNotNull(secondInstance);
+    assertThat(secondInstance).isNotNull();
 
-    assertEquals(caseInstanceId, secondInstance.getCaseInstanceId());
+    assertThat(secondInstance.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
   }
 
@@ -2413,7 +2392,7 @@ public class RuntimeServiceTest {
     String caseInstanceId = "aCaseInstanceId";
     ProcessInstance firstInstance = runtimeService.startProcessInstanceById(processDefinitionId, null, caseInstanceId);
 
-    assertEquals(caseInstanceId, firstInstance.getCaseInstanceId());
+    assertThat(firstInstance.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
     // load process instance from db
     firstInstance = runtimeService
@@ -2421,15 +2400,15 @@ public class RuntimeServiceTest {
         .processInstanceId(firstInstance.getId())
         .singleResult();
 
-    assertNotNull(firstInstance);
+    assertThat(firstInstance).isNotNull();
 
-    assertEquals(caseInstanceId, firstInstance.getCaseInstanceId());
+    assertThat(firstInstance.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
     // the second possibility to start a process instance /////////////////////////////////////////////
 
     ProcessInstance secondInstance = runtimeService.startProcessInstanceById(processDefinitionId, null, caseInstanceId, null);
 
-    assertEquals(caseInstanceId, secondInstance.getCaseInstanceId());
+    assertThat(secondInstance.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
     // load process instance from db
     secondInstance = runtimeService
@@ -2437,9 +2416,9 @@ public class RuntimeServiceTest {
         .processInstanceId(secondInstance.getId())
         .singleResult();
 
-    assertNotNull(secondInstance);
+    assertThat(secondInstance).isNotNull();
 
-    assertEquals(caseInstanceId, secondInstance.getCaseInstanceId());
+    assertThat(secondInstance.getCaseInstanceId()).isEqualTo(caseInstanceId);
 
   }
 
@@ -2510,7 +2489,7 @@ public class RuntimeServiceTest {
     try {
 		 runtimeService.startProcessInstanceByMessageAndProcessDefinitionId("newStartMessage", processDefinitionId);
 
-		 fail("exeception expected");
+      fail("exception expected");
 	 } catch(ProcessEngineException e) {
 		 assertThat(e.getMessage()).contains("Cannot correlate message 'newStartMessage'");
 	 }
@@ -2533,12 +2512,12 @@ public class RuntimeServiceTest {
 
     // then
     ActivityInstance[] activityInstances = tree.getActivityInstances("theTask");
-    assertEquals(1, activityInstances.length);
+    assertThat(activityInstances).hasSize(1);
 
     ActivityInstance task = activityInstances[0];
-    assertNotNull(task);
-    assertNotNull(task.getActivityName());
-    assertEquals("my task", task.getActivityName());
+    assertThat(task).isNotNull();
+    assertThat(task.getActivityName()).isNotNull();
+    assertThat(task.getActivityName()).isEqualTo("my task");
   }
 
   @Deployment
@@ -2553,15 +2532,15 @@ public class RuntimeServiceTest {
     // then
     TransitionInstance[] instances = tree.getTransitionInstances("firstServiceTask");
     TransitionInstance task = instances[0];
-    assertNotNull(task);
-    assertNotNull(task.getActivityName());
-    assertEquals("First Service Task", task.getActivityName());
+    assertThat(task).isNotNull();
+    assertThat(task.getActivityName()).isNotNull();
+    assertThat(task.getActivityName()).isEqualTo("First Service Task");
 
     instances = tree.getTransitionInstances("secondServiceTask");
     task = instances[0];
-    assertNotNull(task);
-    assertNotNull(task.getActivityName());
-    assertEquals("Second Service Task", task.getActivityName());
+    assertThat(task).isNotNull();
+    assertThat(task.getActivityName()).isNotNull();
+    assertThat(task.getActivityName()).isEqualTo("Second Service Task");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testTransitionInstanceActivityNamePropertyBeforeTask.bpmn20.xml")
@@ -2576,15 +2555,15 @@ public class RuntimeServiceTest {
     // then
     TransitionInstance[] instances = tree.getTransitionInstances("firstServiceTask");
     TransitionInstance task = instances[0];
-    assertNotNull(task);
-    assertNotNull(task.getActivityType());
-    assertEquals("serviceTask", task.getActivityType());
+    assertThat(task).isNotNull();
+    assertThat(task.getActivityType()).isNotNull();
+    assertThat(task.getActivityType()).isEqualTo("serviceTask");
 
     instances = tree.getTransitionInstances("secondServiceTask");
     task = instances[0];
-    assertNotNull(task);
-    assertNotNull(task.getActivityType());
-    assertEquals("serviceTask", task.getActivityType());
+    assertThat(task).isNotNull();
+    assertThat(task.getActivityType()).isNotNull();
+    assertThat(task.getActivityType()).isEqualTo("serviceTask");
   }
 
   @Deployment
@@ -2599,15 +2578,15 @@ public class RuntimeServiceTest {
     // then
     TransitionInstance[] instances = tree.getTransitionInstances("firstServiceTask");
     TransitionInstance task = instances[0];
-    assertNotNull(task);
-    assertNotNull(task.getActivityName());
-    assertEquals("First Service Task", task.getActivityName());
+    assertThat(task).isNotNull();
+    assertThat(task.getActivityName()).isNotNull();
+    assertThat(task.getActivityName()).isEqualTo("First Service Task");
 
     instances = tree.getTransitionInstances("secondServiceTask");
     task = instances[0];
-    assertNotNull(task);
-    assertNotNull(task.getActivityName());
-    assertEquals("Second Service Task", task.getActivityName());
+    assertThat(task).isNotNull();
+    assertThat(task.getActivityName()).isNotNull();
+    assertThat(task.getActivityName()).isEqualTo("Second Service Task");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testTransitionInstanceActivityNamePropertyAfterTask.bpmn20.xml")
@@ -2622,15 +2601,15 @@ public class RuntimeServiceTest {
     // then
     TransitionInstance[] instances = tree.getTransitionInstances("firstServiceTask");
     TransitionInstance task = instances[0];
-    assertNotNull(task);
-    assertNotNull(task.getActivityType());
-    assertEquals("serviceTask", task.getActivityType());
+    assertThat(task).isNotNull();
+    assertThat(task.getActivityType()).isNotNull();
+    assertThat(task.getActivityType()).isEqualTo("serviceTask");
 
     instances = tree.getTransitionInstances("secondServiceTask");
     task = instances[0];
-    assertNotNull(task);
-    assertNotNull(task.getActivityType());
-    assertEquals("serviceTask", task.getActivityType());
+    assertThat(task).isNotNull();
+    assertThat(task.getActivityType()).isNotNull();
+    assertThat(task.getActivityType()).isEqualTo("serviceTask");
   }
 
   @Deployment
@@ -2645,9 +2624,9 @@ public class RuntimeServiceTest {
     // then
     TransitionInstance[] instances = tree.getTransitionInstances("start");
     TransitionInstance task = instances[0];
-    assertNotNull(task);
-    assertNotNull(task.getActivityName());
-    assertEquals("The Start Event", task.getActivityName());
+    assertThat(task).isNotNull();
+    assertThat(task.getActivityName()).isNotNull();
+    assertThat(task.getActivityName()).isEqualTo("The Start Event");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testTransitionInstanceActivityNamePropertyBeforeStartEvent.bpmn20.xml")
@@ -2662,9 +2641,9 @@ public class RuntimeServiceTest {
     // then
     TransitionInstance[] instances = tree.getTransitionInstances("start");
     TransitionInstance task = instances[0];
-    assertNotNull(task);
-    assertNotNull(task.getActivityType());
-    assertEquals("startEvent", task.getActivityType());
+    assertThat(task).isNotNull();
+    assertThat(task.getActivityType()).isNotNull();
+    assertThat(task.getActivityType()).isEqualTo("startEvent");
   }
 
   @Deployment
@@ -2679,9 +2658,9 @@ public class RuntimeServiceTest {
     // then
     TransitionInstance[] instances = tree.getTransitionInstances("start");
     TransitionInstance task = instances[0];
-    assertNotNull(task);
-    assertNotNull(task.getActivityName());
-    assertEquals("The Start Event", task.getActivityName());
+    assertThat(task).isNotNull();
+    assertThat(task.getActivityName()).isNotNull();
+    assertThat(task.getActivityName()).isEqualTo("The Start Event");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testTransitionInstanceActivityNamePropertyAfterStartEvent.bpmn20.xml")
@@ -2696,9 +2675,9 @@ public class RuntimeServiceTest {
     // then
     TransitionInstance[] instances = tree.getTransitionInstances("start");
     TransitionInstance task = instances[0];
-    assertNotNull(task);
-    assertNotNull(task.getActivityType());
-    assertEquals("startEvent", task.getActivityType());
+    assertThat(task).isNotNull();
+    assertThat(task.getActivityType()).isNotNull();
+    assertThat(task.getActivityType()).isEqualTo("startEvent");
   }
 
   //Test for a bug: when the process engine is rebooted the
@@ -2738,16 +2717,16 @@ public class RuntimeServiceTest {
       .createProcessDefinitionQuery()
       .list();
 
-    assertEquals(1, processDefinitions.size());
+    assertThat(processDefinitions).hasSize(1);
 
     // Start a new Process instance
     ProcessInstance processInstance = processEngine.getRuntimeService().startProcessInstanceById(processDefinitions.get(0).getId());
     String processInstanceId = processInstance.getId();
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
 
     // Close the process engine
     processEngine.close();
-    assertNotNull(processEngine.getRuntimeService());
+    assertThat(processEngine.getRuntimeService()).isNotNull();
 
     // Reboot the process engine
     processEngine = new StandaloneProcessEngineConfiguration()
@@ -2764,7 +2743,7 @@ public class RuntimeServiceTest {
       .processInstanceId(processInstanceId)
       .singleResult();
 
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
 
     // Complete the task.  That will end the process instance
     TaskService processEngineTaskService = processEngine.getTaskService();
@@ -2781,11 +2760,11 @@ public class RuntimeServiceTest {
       .createProcessInstanceQuery()
       .processInstanceId(processInstanceId)
       .singleResult();
-    assertNull(processInstance);
+    assertThat(processInstance).isNull();
 
     // Extra check to see if a new process instance can be started as well
     processInstance = processEngine.getRuntimeService().startProcessInstanceById(processDefinitions.get(0).getId());
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
 
     // close the process engine
     processEngine.close();
@@ -2805,35 +2784,35 @@ public class RuntimeServiceTest {
     Task subProcessTask = taskService.createTaskQuery()
         .processInstanceId(pi.getId())
         .singleResult();
-    assertEquals("Task in subprocess", subProcessTask.getName());
+    assertThat(subProcessTask.getName()).isEqualTo("Task in subprocess");
 
     // get variables for execution id user task, should return the new value of variable test --> test2
-    assertEquals("test2", runtimeService.getVariable(subProcessTask.getExecutionId(), "test"));
-    assertEquals("test2", runtimeService.getVariables(subProcessTask.getExecutionId()).get("test"));
+    assertThat(runtimeService.getVariable(subProcessTask.getExecutionId(), "test")).isEqualTo("test2");
+    assertThat(runtimeService.getVariables(subProcessTask.getExecutionId())).containsEntry("test", "test2");
 
     // get variables for process instance id, should return the initial value of variable test --> test
-    assertEquals("test", runtimeService.getVariable(pi.getId(), "test"));
-    assertEquals("test", runtimeService.getVariables(pi.getId()).get("test"));
+    assertThat(runtimeService.getVariable(pi.getId(), "test")).isEqualTo("test");
+    assertThat(runtimeService.getVariables(pi.getId())).containsEntry("test", "test");
 
     runtimeService.setVariableLocal(subProcessTask.getExecutionId(), "test", "test3");
 
     // get variables for execution id user task, should return the new value of variable test --> test3
-    assertEquals("test3", runtimeService.getVariable(subProcessTask.getExecutionId(), "test"));
-    assertEquals("test3", runtimeService.getVariables(subProcessTask.getExecutionId()).get("test"));
+    assertThat(runtimeService.getVariable(subProcessTask.getExecutionId(), "test")).isEqualTo("test3");
+    assertThat(runtimeService.getVariables(subProcessTask.getExecutionId())).containsEntry("test", "test3");
 
     // get variables for process instance id, should still return the initial value of variable test --> test
-    assertEquals("test", runtimeService.getVariable(pi.getId(), "test"));
-    assertEquals("test", runtimeService.getVariables(pi.getId()).get("test"));
+    assertThat(runtimeService.getVariable(pi.getId(), "test")).isEqualTo("test");
+    assertThat(runtimeService.getVariables(pi.getId())).containsEntry("test", "test");
 
     runtimeService.setVariable(pi.getId(), "test", "test4");
 
     // get variables for execution id user task, should return the old value of variable test --> test3
-    assertEquals("test3", runtimeService.getVariable(subProcessTask.getExecutionId(), "test"));
-    assertEquals("test3", runtimeService.getVariables(subProcessTask.getExecutionId()).get("test"));
+    assertThat(runtimeService.getVariable(subProcessTask.getExecutionId(), "test")).isEqualTo("test3");
+    assertThat(runtimeService.getVariables(subProcessTask.getExecutionId())).containsEntry("test", "test3");
 
     // get variables for process instance id, should also return the initial value of variable test --> test4
-    assertEquals("test4", runtimeService.getVariable(pi.getId(), "test"));
-    assertEquals("test4", runtimeService.getVariables(pi.getId()).get("test"));
+    assertThat(runtimeService.getVariable(pi.getId(), "test")).isEqualTo("test4");
+    assertThat(runtimeService.getVariables(pi.getId())).containsEntry("test", "test4");
 
     // After completing the task in the subprocess,
     // the subprocess scope is destroyed and the complete process ends
@@ -2866,16 +2845,17 @@ public class RuntimeServiceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("taskAssigneeProcess", variables);
 
     variables = runtimeService.getVariables(processInstance.getId());
-    assertEquals("coca-cola", variables.get("stringVar"));
-    assertEquals(928374L, variables.get("longVar"));
-    assertEquals((short) 123, variables.get("shortVar"));
-    assertEquals(1234, variables.get("integerVar"));
-    assertEquals(now, variables.get("dateVar"));
-    assertNull(variables.get("nullVar"));
-    assertEquals(serializable, variables.get("serializableVar"));
-    assertArrayEquals(bytes, (byte[]) variables.get("bytesVar"));
-    assertArrayEquals(streamBytes, (byte[]) variables.get("byteStreamVar"));
-    assertEquals(9, variables.size());
+    assertThat(variables)
+            .containsEntry("stringVar", "coca-cola")
+            .containsEntry("longVar", 928374L)
+            .containsEntry("shortVar", (short) 123)
+            .containsEntry("integerVar", 1234)
+            .containsEntry("dateVar", now);
+    assertThat(variables.get("nullVar")).isNull();
+    assertThat(variables).containsEntry("serializableVar", serializable);
+    assertThat((byte[]) variables.get("bytesVar")).containsExactly(bytes);
+    assertThat((byte[]) variables.get("byteStreamVar")).containsExactly(streamBytes);
+    assertThat(variables).hasSize(9);
 
     // Set all existing variables values to null
     runtimeService.setVariable(processInstance.getId(), "longVar", null);
@@ -2889,16 +2869,16 @@ public class RuntimeServiceTest {
     runtimeService.setVariable(processInstance.getId(), "byteStreamVar", null);
 
     variables = runtimeService.getVariables(processInstance.getId());
-    assertNull(variables.get("longVar"));
-    assertNull(variables.get("shortVar"));
-    assertNull(variables.get("integerVar"));
-    assertNull(variables.get("stringVar"));
-    assertNull(variables.get("dateVar"));
-    assertNull(variables.get("nullVar"));
-    assertNull(variables.get("serializableVar"));
-    assertNull(variables.get("bytesVar"));
-    assertNull(variables.get("byteStreamVar"));
-    assertEquals(9, variables.size());
+    assertThat(variables.get("longVar")).isNull();
+    assertThat(variables.get("shortVar")).isNull();
+    assertThat(variables.get("integerVar")).isNull();
+    assertThat(variables.get("stringVar")).isNull();
+    assertThat(variables.get("dateVar")).isNull();
+    assertThat(variables.get("nullVar")).isNull();
+    assertThat(variables.get("serializableVar")).isNull();
+    assertThat(variables.get("bytesVar")).isNull();
+    assertThat(variables.get("byteStreamVar")).isNull();
+    assertThat(variables).hasSize(9);
 
     // Update existing variable values again, and add a new variable
     runtimeService.setVariable(processInstance.getId(), "new var", "hi");
@@ -2912,42 +2892,45 @@ public class RuntimeServiceTest {
     runtimeService.setVariable(processInstance.getId(), "byteStreamVar", new ByteArrayInputStream(streamBytes));
 
     variables = runtimeService.getVariables(processInstance.getId());
-    assertEquals("hi", variables.get("new var"));
-    assertEquals(9987L, variables.get("longVar"));
-    assertEquals((short)456, variables.get("shortVar"));
-    assertEquals(4567, variables.get("integerVar"));
-    assertEquals("colgate", variables.get("stringVar"));
-    assertEquals(now, variables.get("dateVar"));
-    assertNull(variables.get("nullVar"));
-    assertEquals(serializable, variables.get("serializableVar"));
-    assertArrayEquals(bytes, (byte[]) variables.get("bytesVar"));
-    assertArrayEquals(streamBytes, (byte[]) variables.get("byteStreamVar"));
-    assertEquals(10, variables.size());
+    assertThat(variables)
+            .containsEntry("new var", "hi")
+            .containsEntry("longVar", 9987L)
+            .containsEntry("shortVar", (short) 456)
+            .containsEntry("integerVar", 4567)
+            .containsEntry("stringVar", "colgate")
+            .containsEntry("dateVar", now);
+    assertThat(variables.get("nullVar")).isNull();
+    assertThat(variables).containsEntry("serializableVar", serializable);
+    assertThat((byte[]) variables.get("bytesVar")).containsExactly(bytes);
+    assertThat((byte[]) variables.get("byteStreamVar")).containsExactly(streamBytes);
+    assertThat(variables).hasSize(10);
 
     Collection<String> varFilter = new ArrayList<>(2);
     varFilter.add("stringVar");
     varFilter.add("integerVar");
 
     Map<String, Object> filteredVariables = runtimeService.getVariables(processInstance.getId(), varFilter);
-    assertEquals(2, filteredVariables.size());
-    assertTrue(filteredVariables.containsKey("stringVar"));
-    assertTrue(filteredVariables.containsKey("integerVar"));
+    assertThat(filteredVariables)
+            .hasSize(2)
+            .containsKey("stringVar")
+            .containsKey("integerVar");
 
     // Try setting the value of the variable that was initially created with value 'null'
     runtimeService.setVariable(processInstance.getId(), "nullVar", "a value");
     Object newValue = runtimeService.getVariable(processInstance.getId(), "nullVar");
-    assertNotNull(newValue);
-    assertEquals("a value", newValue);
+    assertThat(newValue)
+            .isNotNull()
+            .isEqualTo("a value");
 
     // Try setting the value of the serializableVar to an integer value
     runtimeService.setVariable(processInstance.getId(), "serializableVar", 100);
     variables = runtimeService.getVariables(processInstance.getId());
-    assertEquals(100, variables.get("serializableVar"));
+    assertThat(variables).containsEntry("serializableVar", 100);
 
     // Try setting the value of the serializableVar back to a serializable value
     runtimeService.setVariable(processInstance.getId(), "serializableVar", serializable);
     variables = runtimeService.getVariables(processInstance.getId());
-    assertEquals(serializable, variables.get("serializableVar"));
+    assertThat(variables).containsEntry("serializableVar", serializable);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testBasicVariableOperations.bpmn20.xml"})
@@ -2960,15 +2943,15 @@ public class RuntimeServiceTest {
     VariableInstanceQuery query = runtimeService.createVariableInstanceQuery().variableName("aVariable");
 
     VariableInstance variable = query.singleResult();
-    assertEquals(ValueType.INTEGER.getName(), variable.getTypeName());
+    assertThat(variable.getTypeName()).isEqualTo(ValueType.INTEGER.getName());
 
     runtimeService.setVariable(pi.getId(), "aVariable", 1234L);
     variable = query.singleResult();
-    assertEquals(ValueType.LONG.getName(), variable.getTypeName());
+    assertThat(variable.getTypeName()).isEqualTo(ValueType.LONG.getName());
 
     runtimeService.setVariable(pi.getId(), "aVariable", (short)1234);
     variable = query.singleResult();
-    assertEquals(ValueType.SHORT.getName(), variable.getTypeName());
+    assertThat(variable.getTypeName()).isEqualTo(ValueType.SHORT.getName());
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testBasicVariableOperations.bpmn20.xml"})
@@ -2982,11 +2965,11 @@ public class RuntimeServiceTest {
     VariableInstanceQuery query = runtimeService.createVariableInstanceQuery().variableName("aVariable");
 
     VariableInstance variable = query.singleResult();
-    assertEquals(ValueType.OBJECT.getName(), variable.getTypeName());
+    assertThat(variable.getTypeName()).isEqualTo(ValueType.OBJECT.getName());
 
     runtimeService.setVariable(pi.getId(), "aVariable", null);
     variable = query.singleResult();
-    assertEquals(ValueType.NULL.getName(), variable.getTypeName());
+    assertThat(variable.getTypeName()).isEqualTo(ValueType.NULL.getName());
 
   }
 
@@ -2999,7 +2982,7 @@ public class RuntimeServiceTest {
     Task task = taskService.createTaskQuery().singleResult();
 
     SerializableVariable variable = (SerializableVariable) taskService.getVariable(task.getId(), "variableName");
-    assertNotNull(variable);
+    assertThat(variable).isNotNull();
 
   }
 
@@ -3013,11 +2996,11 @@ public class RuntimeServiceTest {
     VariableInstanceQuery query = runtimeService.createVariableInstanceQuery().variableName("aVariable");
 
     VariableInstance variable = query.singleResult();
-    assertEquals(ValueType.STRING.getName(), variable.getTypeName());
+    assertThat(variable.getTypeName()).isEqualTo(ValueType.STRING.getName());
 
     runtimeService.setVariable(processInstance.getId(), "aVariable", new SerializableVariable("foo"));
     variable = query.singleResult();
-    assertEquals(ValueType.OBJECT.getName(), variable.getTypeName());
+    assertThat(variable.getTypeName()).isEqualTo(ValueType.OBJECT.getName());
 
   }
 
@@ -3045,8 +3028,8 @@ public class RuntimeServiceTest {
 
     // then there should be only the "shouldExplicitlyUpdateVariable" variable
     VariableInstance variableInstance = runtimeService.createVariableInstanceQuery().singleResult();
-    assertNotNull(variableInstance);
-    assertEquals("shouldExplicitlyUpdateVariable", variableInstance.getName());
+    assertThat(variableInstance).isNotNull();
+    assertThat(variableInstance.getName()).isEqualTo("shouldExplicitlyUpdateVariable");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testSetVariableInScope.bpmn20.xml")
@@ -3058,8 +3041,8 @@ public class RuntimeServiceTest {
 
     // then there should be only the "shouldExplicitlyUpdateVariable" variable
     VariableInstance variableInstance = runtimeService.createVariableInstanceQuery().singleResult();
-    assertNotNull(variableInstance);
-    assertEquals("shouldExplicitlyUpdateVariable", variableInstance.getName());
+    assertThat(variableInstance).isNotNull();
+    assertThat(variableInstance.getName()).isEqualTo("shouldExplicitlyUpdateVariable");
   }
 
   @Deployment
@@ -3071,7 +3054,7 @@ public class RuntimeServiceTest {
 
     // then it should succeeds successfully
     ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-    assertNull(processInstance);
+    assertThat(processInstance).isNull();
   }
 
   @Deployment
@@ -3083,7 +3066,7 @@ public class RuntimeServiceTest {
 
     // then it should wait at the user task
     ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
   }
 
   @Deployment
@@ -3095,10 +3078,10 @@ public class RuntimeServiceTest {
       fail("Starting the process instance should throw an exception");
 
     } catch (Exception e) {
-      assertEquals("Buzzz", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Buzzz");
     }
 
-    assertEquals(0, runtimeService.createExecutionQuery().count());
+    assertThat(runtimeService.createExecutionQuery().count()).isZero();
   }
 
   @Deployment(resources = {
@@ -3112,10 +3095,10 @@ public class RuntimeServiceTest {
       fail("Starting the process instance should throw an exception");
 
     } catch (Exception e) {
-      assertEquals("Buzzz", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Buzzz");
     }
 
-    assertEquals(0, runtimeService.createExecutionQuery().count());
+    assertThat(runtimeService.createExecutionQuery().count()).isZero();
 
   }
 
@@ -3150,7 +3133,7 @@ public class RuntimeServiceTest {
     // then
     boolean activityInstanceNull =
         (Boolean) runtimeService.getVariable(deletingInstance.getId(), "activityInstanceNull");
-    assertTrue(activityInstanceNull);
+    assertThat(activityInstanceNull).isTrue();
   }
 
   public static class DeleteInstanceDelegate implements JavaDelegate {
@@ -3285,8 +3268,7 @@ public class RuntimeServiceTest {
     Map<String, Object> variables = runtimeService.getVariables(processInstanceId, new ArrayList<>());
 
     // then
-    assertNotNull(variables);
-    assertTrue(variables.isEmpty());
+    assertThat(variables).isEmpty();
   }
 
   @Test
@@ -3299,8 +3281,7 @@ public class RuntimeServiceTest {
     Map<String, Object> variables = runtimeService.getVariablesTyped(processInstanceId, new ArrayList<>(), false);
 
     // then
-    assertNotNull(variables);
-    assertTrue(variables.isEmpty());
+    assertThat(variables).isEmpty();
   }
 
   @Test
@@ -3313,8 +3294,7 @@ public class RuntimeServiceTest {
     Map<String, Object> variables = runtimeService.getVariablesLocal(processInstanceId, new ArrayList<>());
 
     // then
-    assertNotNull(variables);
-    assertTrue(variables.isEmpty());
+    assertThat(variables).isEmpty();
   }
 
   @Test
@@ -3327,8 +3307,7 @@ public class RuntimeServiceTest {
     Map<String, Object> variables = runtimeService.getVariablesLocalTyped(processInstanceId, new ArrayList<>(), false);
 
     // then
-    assertNotNull(variables);
-    assertTrue(variables.isEmpty());
+    assertThat(variables).isEmpty();
   }
 
   private BpmnModelInstance prepareComplexProcess(String calledProcessA,String calledProcessB,String calledProcessC) {

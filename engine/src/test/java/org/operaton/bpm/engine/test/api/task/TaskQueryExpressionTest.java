@@ -43,11 +43,7 @@ import org.joda.time.DateTime;
 import org.junit.*;
 import org.junit.rules.RuleChain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * @author Sebastian Menski
@@ -441,19 +437,19 @@ public class TaskQueryExpressionTest {
     // execute query so expression will be evaluated
     taskQuery.count();
 
-    assertEquals(expressionString, taskQuery.getAssignee());
-    assertEquals(expressionString, taskQuery.getAssigneeLike());
-    assertEquals(expressionString, taskQuery.getOwner());
-    assertEquals(expressionString, taskQuery.getInvolvedUser());
-    assertTrue(taskQuery.getCreateTimeBefore().after(queryDate));
-    assertTrue(taskQuery.getCreateTime().after(queryDate));
-    assertTrue(taskQuery.getCreateTimeAfter().after(queryDate));
-    assertTrue(taskQuery.getDueBefore().after(queryDate));
-    assertTrue(taskQuery.getDueDate().after(queryDate));
-    assertTrue(taskQuery.getDueAfter().after(queryDate));
-    assertTrue(taskQuery.getFollowUpBefore().after(queryDate));
-    assertTrue(taskQuery.getFollowUpDate().after(queryDate));
-    assertTrue(taskQuery.getFollowUpAfter().after(queryDate));
+    assertThat(taskQuery.getAssignee()).isEqualTo(expressionString);
+    assertThat(taskQuery.getAssigneeLike()).isEqualTo(expressionString);
+    assertThat(taskQuery.getOwner()).isEqualTo(expressionString);
+    assertThat(taskQuery.getInvolvedUser()).isEqualTo(expressionString);
+    assertThat(taskQuery.getCreateTimeBefore().after(queryDate)).isTrue();
+    assertThat(taskQuery.getCreateTime().after(queryDate)).isTrue();
+    assertThat(taskQuery.getCreateTimeAfter().after(queryDate)).isTrue();
+    assertThat(taskQuery.getDueBefore().after(queryDate)).isTrue();
+    assertThat(taskQuery.getDueDate().after(queryDate)).isTrue();
+    assertThat(taskQuery.getDueAfter().after(queryDate)).isTrue();
+    assertThat(taskQuery.getFollowUpBefore().after(queryDate)).isTrue();
+    assertThat(taskQuery.getFollowUpDate().after(queryDate)).isTrue();
+    assertThat(taskQuery.getFollowUpAfter().after(queryDate)).isTrue();
 
     // candidates has to be tested separately because they have to be set exclusively
 
@@ -464,7 +460,7 @@ public class TaskQueryExpressionTest {
     // execute query so expression will be evaluated
     taskQuery.count();
 
-    assertEquals(expressionString, taskQuery.getCandidateGroup());
+    assertThat(taskQuery.getCandidateGroup()).isEqualTo(expressionString);
 
     taskQuery = (TaskQueryImpl) taskQuery()
       .taskCandidateUser(queryString)
@@ -473,7 +469,7 @@ public class TaskQueryExpressionTest {
     // execute query so expression will be evaluated
     taskQuery.count();
 
-    assertEquals(expressionString, taskQuery.getCandidateUser());
+    assertThat(taskQuery.getCandidateUser()).isEqualTo(expressionString);
 
     setCurrentUser(testUser);
     List<String> queryList = List.of("query");
@@ -486,7 +482,7 @@ public class TaskQueryExpressionTest {
     // execute query so expression will be evaluated
     taskQuery.count();
 
-    assertEquals(2, taskQuery.getCandidateGroups().size());
+    assertThat(taskQuery.getCandidateGroups()).hasSize(2);
   }
 
   @Test
@@ -621,7 +617,7 @@ public class TaskQueryExpressionTest {
       .list();
 
     // then
-    assertEquals(2, tasks.size());
+    assertThat(tasks).hasSize(2);
   }
 
   @Test
@@ -697,7 +693,7 @@ public class TaskQueryExpressionTest {
   }
 
   protected void assertCount(Query query, long count) {
-    assertEquals(count, query.count());
+    assertThat(query.count()).isEqualTo(count);
   }
 
   protected void setCurrentUser(User user) {

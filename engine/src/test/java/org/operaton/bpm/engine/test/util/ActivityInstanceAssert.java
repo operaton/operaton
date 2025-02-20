@@ -16,19 +16,17 @@
  */
 package org.operaton.bpm.engine.test.util;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Stack;
-
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
 import org.operaton.bpm.engine.impl.persistence.entity.ActivityInstanceImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.TransitionInstanceImpl;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.TransitionInstance;
-import org.junit.Assert;
+
+import java.util.*;
+
+import org.assertj.core.api.Assertions;
+
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Daniel Meyer
@@ -67,13 +65,13 @@ public class ActivityInstanceAssert {
         }
       }
 
-      Assert.assertEquals(expected, actualIncidents);
+      Assertions.assertThat(actualIncidents).isEqualTo(expected);
     }
 
     protected void assertTreeMatch(ActivityInstance expected, ActivityInstance actual) {
       boolean treesMatch = isTreeMatched(expected, actual);
       if (!treesMatch) {
-        Assert.fail("Could not match expected tree \n" + expected +" \n\n with actual tree \n\n "+actual);
+        fail("Could not match expected tree \n" + expected + " \n\n with actual tree \n\n " + actual);
       }
 
     }

@@ -19,9 +19,7 @@ package org.operaton.bpm.engine.test.api.externaltask;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.externalTaskByPriority;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySortingAndCount;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -69,13 +67,13 @@ public class ExternalTaskQueryByPriorityTest extends PluggableProcessEngineTest 
           Variables.createVariables().putValue("priority", i)));
     }
 
-    // when making a external task query and filtering by priority
+    // when making an external task query and filtering by priority
     // then the correct external tasks are returned
     List<ExternalTask> tasks = externalTaskService.createExternalTaskQuery().priorityLowerThanOrEquals(2).list();
-    assertEquals(8, tasks.size());
+    assertThat(tasks).hasSize(8);
 
     for (ExternalTask task : tasks) {
-      assertTrue(task.getPriority() <= 2);
+      assertThat(task.getPriority()).isLessThanOrEqualTo(2);
     }
   }
 
@@ -90,13 +88,13 @@ public class ExternalTaskQueryByPriorityTest extends PluggableProcessEngineTest 
           Variables.createVariables().putValue("priority", i)));
     }
 
-    // when making a external task query and filtering by disjunctive external task priority
+    // when making an external task query and filtering by disjunctive external task priority
     // then no external task are returned
-    assertEquals(0, externalTaskService.createExternalTaskQuery().priorityLowerThanOrEquals(2).priorityHigherThanOrEquals(3).count());
-    
-    // when making a external task query and filtering by external task priority >= 2 and <= 3
+    assertThat(externalTaskService.createExternalTaskQuery().priorityLowerThanOrEquals(2).priorityHigherThanOrEquals(3).count()).isZero();
+
+    // when making an external task query and filtering by external task priority >= 2 and <= 3
     // then two external task are returned
-    assertEquals(2, externalTaskService.createExternalTaskQuery().priorityHigherThanOrEquals(2).priorityLowerThanOrEquals(3).count());
+    assertThat(externalTaskService.createExternalTaskQuery().priorityHigherThanOrEquals(2).priorityLowerThanOrEquals(3).count()).isEqualTo(2);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/externalTaskPriorityExpression.bpmn20.xml")
@@ -110,10 +108,10 @@ public class ExternalTaskQueryByPriorityTest extends PluggableProcessEngineTest 
           Variables.createVariables().putValue("priority", i)));
     }
 
-    // when making a external task query and filtering by external task priority
+    // when making an external task query and filtering by external task priority
     // then the correct external task are returned
     List<ExternalTask> tasks = externalTaskService.createExternalTaskQuery().priorityHigherThanOrEquals(2L).list();
-    assertEquals(3, tasks.size());
+    assertThat(tasks).hasSize(3);
 
     Set<String> processInstanceIds = new HashSet<>();
     processInstanceIds.add(instances.get(2).getId());
@@ -121,8 +119,8 @@ public class ExternalTaskQueryByPriorityTest extends PluggableProcessEngineTest 
     processInstanceIds.add(instances.get(4).getId());
 
     for (ExternalTask task : tasks) {
-      assertTrue(task.getPriority() >= 2);
-      assertTrue(processInstanceIds.contains(task.getProcessInstanceId()));
+      assertThat(task.getPriority()).isGreaterThanOrEqualTo(2);
+      assertThat(processInstanceIds).contains(task.getProcessInstanceId());
     }
   }
 
@@ -137,14 +135,14 @@ public class ExternalTaskQueryByPriorityTest extends PluggableProcessEngineTest 
           Variables.createVariables().putValue("priority", i)));
     }
 
-    // when making a external task query and filtering by external task priority
+    // when making an external task query and filtering by external task priority
     // then the correct external task is returned
     ExternalTask task = externalTaskService.createExternalTaskQuery()
                                            .priorityHigherThanOrEquals(2L)
                                            .priorityLowerThanOrEquals(2L)
                                            .singleResult();
-    assertNotNull(task);
-    assertEquals(2, task.getPriority());
-    assertEquals(instances.get(2).getId(), task.getProcessInstanceId());
+    assertThat(task).isNotNull();
+    assertThat(task.getPriority()).isEqualTo(2);
+    assertThat(task.getProcessInstanceId()).isEqualTo(instances.get(2).getId());
   }
 }

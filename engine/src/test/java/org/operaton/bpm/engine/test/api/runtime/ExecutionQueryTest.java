@@ -22,13 +22,9 @@ import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.executio
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.hierarchical;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -52,7 +48,6 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.engine.variable.Variables;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -97,59 +92,59 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
   @Test
   public void testQueryByProcessDefinitionKey() {
     // Concurrent process with 3 executions for each process instance
-    assertEquals(12, runtimeService.createExecutionQuery().processDefinitionKey(CONCURRENT_PROCESS_KEY).list().size());
-    assertEquals(1, runtimeService.createExecutionQuery().processDefinitionKey(SEQUENTIAL_PROCESS_KEY).list().size());
+    assertThat(runtimeService.createExecutionQuery().processDefinitionKey(CONCURRENT_PROCESS_KEY).list()).hasSize(12);
+    assertThat(runtimeService.createExecutionQuery().processDefinitionKey(SEQUENTIAL_PROCESS_KEY).list()).hasSize(1);
   }
 
   @Test
   public void testQueryByInvalidProcessDefinitionKey() {
     ExecutionQuery query = runtimeService.createExecutionQuery().processDefinitionKey("invalid");
-    assertNull(query.singleResult());
-    assertEquals(0, query.list().size());
-    assertEquals(0, query.count());
+    assertThat(query.singleResult()).isNull();
+    assertThat(query.list()).isEmpty();
+    assertThat(query.count()).isZero();
   }
 
   @Test
   public void testQueryByProcessInstanceId() {
     for (String processInstanceId : concurrentProcessInstanceIds) {
       ExecutionQuery query =  runtimeService.createExecutionQuery().processInstanceId(processInstanceId);
-      assertEquals(3, query.list().size());
-      assertEquals(3, query.count());
+      assertThat(query.list()).hasSize(3);
+      assertThat(query.count()).isEqualTo(3);
     }
-    assertEquals(1, runtimeService.createExecutionQuery().processInstanceId(sequentialProcessInstanceIds.get(0)).list().size());
+    assertThat(runtimeService.createExecutionQuery().processInstanceId(sequentialProcessInstanceIds.get(0)).list()).hasSize(1);
   }
 
   @Test
   public void testQueryByInvalidProcessInstanceId() {
     ExecutionQuery query = runtimeService.createExecutionQuery().processInstanceId("invalid");
-    assertNull(query.singleResult());
-    assertEquals(0, query.list().size());
-    assertEquals(0, query.count());
+    assertThat(query.singleResult()).isNull();
+    assertThat(query.list()).isEmpty();
+    assertThat(query.count()).isZero();
   }
 
   @Test
   public void testQueryExecutionId() {
     Execution execution = runtimeService.createExecutionQuery().processDefinitionKey(SEQUENTIAL_PROCESS_KEY).singleResult();
-    assertNotNull(runtimeService.createExecutionQuery().executionId(execution.getId()));
+    assertThat(runtimeService.createExecutionQuery().executionId(execution.getId())).isNotNull();
   }
 
   @Test
   public void testQueryByInvalidExecutionId() {
     ExecutionQuery query = runtimeService.createExecutionQuery().executionId("invalid");
-    assertNull(query.singleResult());
-    assertEquals(0, query.list().size());
-    assertEquals(0, query.count());
+    assertThat(query.singleResult()).isNull();
+    assertThat(query.list()).isEmpty();
+    assertThat(query.count()).isZero();
   }
 
   @Test
   public void testQueryByActivityId() {
     ExecutionQuery query = runtimeService.createExecutionQuery().activityId("receivePayment");
-    assertEquals(4, query.list().size());
-    assertEquals(4, query.count());
+    assertThat(query.list()).hasSize(4);
+    assertThat(query.count()).isEqualTo(4);
 
     try {
       query.singleResult();
-      fail();
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       // expected
     }
@@ -158,18 +153,18 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
   @Test
   public void testQueryByInvalidActivityId() {
     ExecutionQuery query = runtimeService.createExecutionQuery().activityId("invalid");
-    assertNull(query.singleResult());
-    assertEquals(0, query.list().size());
-    assertEquals(0, query.count());
+    assertThat(query.singleResult()).isNull();
+    assertThat(query.list()).isEmpty();
+    assertThat(query.count()).isZero();
   }
 
   @Test
   public void testQueryPaging() {
-    assertEquals(13, runtimeService.createExecutionQuery().count());
-    assertEquals(4, runtimeService.createExecutionQuery().processDefinitionKey(CONCURRENT_PROCESS_KEY).listPage(0, 4).size());
-    assertEquals(1, runtimeService.createExecutionQuery().processDefinitionKey(CONCURRENT_PROCESS_KEY).listPage(2, 1).size());
-    assertEquals(10, runtimeService.createExecutionQuery().processDefinitionKey(CONCURRENT_PROCESS_KEY).listPage(1, 10).size());
-    assertEquals(12, runtimeService.createExecutionQuery().processDefinitionKey(CONCURRENT_PROCESS_KEY).listPage(0, 20).size());
+    assertThat(runtimeService.createExecutionQuery().count()).isEqualTo(13);
+    assertThat(runtimeService.createExecutionQuery().processDefinitionKey(CONCURRENT_PROCESS_KEY).listPage(0, 4)).hasSize(4);
+    assertThat(runtimeService.createExecutionQuery().processDefinitionKey(CONCURRENT_PROCESS_KEY).listPage(2, 1)).hasSize(1);
+    assertThat(runtimeService.createExecutionQuery().processDefinitionKey(CONCURRENT_PROCESS_KEY).listPage(1, 10)).hasSize(10);
+    assertThat(runtimeService.createExecutionQuery().processDefinitionKey(CONCURRENT_PROCESS_KEY).listPage(0, 20)).hasSize(12);
   }
 
   @SuppressWarnings("unchecked")
@@ -178,40 +173,40 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
 
     // 13 executions: 3 for each concurrent, 1 for the sequential
     List<Execution> executions = runtimeService.createExecutionQuery().orderByProcessInstanceId().asc().list();
-    assertEquals(13, executions.size());
+    assertThat(executions).hasSize(13);
     verifySorting(executions, executionByProcessInstanceId());
 
     executions = runtimeService.createExecutionQuery().orderByProcessDefinitionId().asc().list();
-    assertEquals(13, executions.size());
+    assertThat(executions).hasSize(13);
     verifySorting(executions, executionByProcessDefinitionId());
 
     executions = runtimeService.createExecutionQuery().orderByProcessDefinitionKey().asc().list();
-    assertEquals(13, executions.size());
+    assertThat(executions).hasSize(13);
     verifySorting(executions, executionByProcessDefinitionKey(processEngine));
 
     executions = runtimeService.createExecutionQuery().orderByProcessInstanceId().desc().list();
-    assertEquals(13, executions.size());
+    assertThat(executions).hasSize(13);
     verifySorting(executions, inverted(executionByProcessInstanceId()));
 
     executions = runtimeService.createExecutionQuery().orderByProcessDefinitionId().desc().list();
-    assertEquals(13, executions.size());
+    assertThat(executions).hasSize(13);
     verifySorting(executions, inverted(executionByProcessDefinitionId()));
 
     executions = runtimeService.createExecutionQuery().orderByProcessDefinitionKey().desc().list();
-    assertEquals(13, executions.size());
+    assertThat(executions).hasSize(13);
     verifySorting(executions, inverted(executionByProcessDefinitionKey(processEngine)));
 
     executions = runtimeService.createExecutionQuery().processDefinitionKey(CONCURRENT_PROCESS_KEY).orderByProcessDefinitionId().asc().list();
-    assertEquals(12, executions.size());
+    assertThat(executions).hasSize(12);
     verifySorting(executions, executionByProcessDefinitionId());
 
     executions = runtimeService.createExecutionQuery().processDefinitionKey(CONCURRENT_PROCESS_KEY).orderByProcessDefinitionId().desc().list();
-    assertEquals(12, executions.size());
+    assertThat(executions).hasSize(12);
     verifySorting(executions, executionByProcessDefinitionId());
 
     executions = runtimeService.createExecutionQuery().processDefinitionKey(CONCURRENT_PROCESS_KEY).orderByProcessDefinitionKey().asc()
         .orderByProcessInstanceId().desc().list();
-    assertEquals(12, executions.size());
+    assertThat(executions).hasSize(12);
     verifySorting(executions, hierarchical(executionByProcessDefinitionKey(processEngine), inverted(executionByProcessInstanceId())));
   }
 
@@ -220,7 +215,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     var executionQuery = runtimeService.createExecutionQuery().orderByProcessDefinitionKey();
     try {
       executionQuery.list();
-      fail();
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       // expected
     }
@@ -228,9 +223,9 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
 
   @Test
   public void testQueryByBusinessKey() {
-    assertEquals(3, runtimeService.createExecutionQuery().processDefinitionKey(CONCURRENT_PROCESS_KEY).processInstanceBusinessKey("BUSINESS-KEY-1").list().size());
-    assertEquals(3, runtimeService.createExecutionQuery().processDefinitionKey(CONCURRENT_PROCESS_KEY).processInstanceBusinessKey("BUSINESS-KEY-2").list().size());
-    assertEquals(0, runtimeService.createExecutionQuery().processDefinitionKey(CONCURRENT_PROCESS_KEY).processInstanceBusinessKey("NON-EXISTING").list().size());
+    assertThat(runtimeService.createExecutionQuery().processDefinitionKey(CONCURRENT_PROCESS_KEY).processInstanceBusinessKey("BUSINESS-KEY-1").list()).hasSize(3);
+    assertThat(runtimeService.createExecutionQuery().processDefinitionKey(CONCURRENT_PROCESS_KEY).processInstanceBusinessKey("BUSINESS-KEY-2").list()).hasSize(3);
+    assertThat(runtimeService.createExecutionQuery().processDefinitionKey(CONCURRENT_PROCESS_KEY).processInstanceBusinessKey("NON-EXISTING").list()).isEmpty();
   }
 
   @Deployment(resources={
@@ -253,69 +248,70 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     // Test EQUAL on single string variable, should result in 2 matches
     ExecutionQuery query = runtimeService.createExecutionQuery().variableValueEquals("stringVar", "abcdef");
     List<Execution> executions = query.list();
-    Assert.assertNotNull(executions);
-    Assert.assertEquals(2, executions.size());
+    assertThat(executions)
+            .isNotNull()
+            .hasSize(2);
 
     // Test EQUAL on two string variables, should result in single match
     query = runtimeService.createExecutionQuery().variableValueEquals("stringVar", "abcdef").variableValueEquals("stringVar2", "ghijkl");
     Execution execution = query.singleResult();
-    Assert.assertNotNull(execution);
-    Assert.assertEquals(processInstance2.getId(), execution.getId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getId()).isEqualTo(processInstance2.getId());
 
     // Test NOT_EQUAL, should return only 1 execution
     execution = runtimeService.createExecutionQuery().variableValueNotEquals("stringVar", "abcdef").singleResult();
-    Assert.assertNotNull(execution);
-    Assert.assertEquals(processInstance3.getId(), execution.getId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getId()).isEqualTo(processInstance3.getId());
 
     // Test GREATER_THAN, should return only matching 'azerty'
     execution = runtimeService.createExecutionQuery().variableValueGreaterThan("stringVar", "abcdef").singleResult();
-    Assert.assertNotNull(execution);
-    Assert.assertEquals(processInstance3.getId(), execution.getId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getId()).isEqualTo(processInstance3.getId());
 
     execution = runtimeService.createExecutionQuery().variableValueGreaterThan("stringVar", "z").singleResult();
-    Assert.assertNull(execution);
+    assertThat(execution).isNull();
 
     // Test GREATER_THAN_OR_EQUAL, should return 3 results
-    assertEquals(3, runtimeService.createExecutionQuery().variableValueGreaterThanOrEqual("stringVar", "abcdef").count());
-    assertEquals(0, runtimeService.createExecutionQuery().variableValueGreaterThanOrEqual("stringVar", "z").count());
+    assertThat(runtimeService.createExecutionQuery().variableValueGreaterThanOrEqual("stringVar", "abcdef").count()).isEqualTo(3);
+    assertThat(runtimeService.createExecutionQuery().variableValueGreaterThanOrEqual("stringVar", "z").count()).isZero();
 
     // Test LESS_THAN, should return 2 results
     executions = runtimeService.createExecutionQuery().variableValueLessThan("stringVar", "abcdeg").list();
-    Assert.assertEquals(2, executions.size());
-    List<String> expecedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
+    assertThat(executions).hasSize(2);
+    List<String> expectedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
     List<String> ids = new ArrayList<>(Arrays.asList(executions.get(0).getId(), executions.get(1).getId()));
-    ids.removeAll(expecedIds);
-    assertTrue(ids.isEmpty());
+    ids.removeAll(expectedIds);
+    assertThat(ids).isEmpty();
 
-    assertEquals(0, runtimeService.createExecutionQuery().variableValueLessThan("stringVar", "abcdef").count());
-    assertEquals(3, runtimeService.createExecutionQuery().variableValueLessThanOrEqual("stringVar", "z").count());
+    assertThat(runtimeService.createExecutionQuery().variableValueLessThan("stringVar", "abcdef").count()).isZero();
+    assertThat(runtimeService.createExecutionQuery().variableValueLessThanOrEqual("stringVar", "z").count()).isEqualTo(3);
 
     // Test LESS_THAN_OR_EQUAL
     executions = runtimeService.createExecutionQuery().variableValueLessThanOrEqual("stringVar", "abcdef").list();
-    Assert.assertEquals(2, executions.size());
-    expecedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
+    assertThat(executions).hasSize(2);
+    expectedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
     ids = new ArrayList<>(Arrays.asList(executions.get(0).getId(), executions.get(1).getId()));
-    ids.removeAll(expecedIds);
-    assertTrue(ids.isEmpty());
+    ids.removeAll(expectedIds);
+    assertThat(ids).isEmpty();
 
-    assertEquals(3, runtimeService.createExecutionQuery().variableValueLessThanOrEqual("stringVar", "z").count());
-    assertEquals(0, runtimeService.createExecutionQuery().variableValueLessThanOrEqual("stringVar", "aa").count());
+    assertThat(runtimeService.createExecutionQuery().variableValueLessThanOrEqual("stringVar", "z").count()).isEqualTo(3);
+    assertThat(runtimeService.createExecutionQuery().variableValueLessThanOrEqual("stringVar", "aa").count()).isZero();
 
     // Test LIKE
     execution = runtimeService.createExecutionQuery().variableValueLike("stringVar", "azert%").singleResult();
-    assertNotNull(execution);
-    assertEquals(processInstance3.getId(), execution.getId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getId()).isEqualTo(processInstance3.getId());
 
     execution = runtimeService.createExecutionQuery().variableValueLike("stringVar", "%y").singleResult();
-    assertNotNull(execution);
-    assertEquals(processInstance3.getId(), execution.getId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getId()).isEqualTo(processInstance3.getId());
 
     execution = runtimeService.createExecutionQuery().variableValueLike("stringVar", "%zer%").singleResult();
-    assertNotNull(execution);
-    assertEquals(processInstance3.getId(), execution.getId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getId()).isEqualTo(processInstance3.getId());
 
-    assertEquals(3, runtimeService.createExecutionQuery().variableValueLike("stringVar", "a%").count());
-    assertEquals(0, runtimeService.createExecutionQuery().variableValueLike("stringVar", "%x%").count());
+    assertThat(runtimeService.createExecutionQuery().variableValueLike("stringVar", "a%").count()).isEqualTo(3);
+    assertThat(runtimeService.createExecutionQuery().variableValueLike("stringVar", "%x%").count()).isZero();
 
     runtimeService.deleteProcessInstance(processInstance1.getId(), "test");
     runtimeService.deleteProcessInstance(processInstance2.getId(), "test");
@@ -342,60 +338,61 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     // Query on single long variable, should result in 2 matches
     ExecutionQuery query = runtimeService.createExecutionQuery().variableValueEquals("longVar", 12345L);
     List<Execution> executions = query.list();
-    Assert.assertNotNull(executions);
-    Assert.assertEquals(2, executions.size());
+    assertThat(executions)
+            .isNotNull()
+            .hasSize(2);
 
     // Query on two long variables, should result in single match
     query = runtimeService.createExecutionQuery().variableValueEquals("longVar", 12345L).variableValueEquals("longVar2", 67890L);
     Execution execution = query.singleResult();
-    Assert.assertNotNull(execution);
-    Assert.assertEquals(processInstance2.getId(), execution.getId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getId()).isEqualTo(processInstance2.getId());
 
     // Query with unexisting variable value
     execution = runtimeService.createExecutionQuery().variableValueEquals("longVar", 999L).singleResult();
-    Assert.assertNull(execution);
+    assertThat(execution).isNull();
 
     // Test NOT_EQUALS
     execution = runtimeService.createExecutionQuery().variableValueNotEquals("longVar", 12345L).singleResult();
-    Assert.assertNotNull(execution);
-    Assert.assertEquals(processInstance3.getId(), execution.getId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getId()).isEqualTo(processInstance3.getId());
 
     // Test GREATER_THAN
     execution = runtimeService.createExecutionQuery().variableValueGreaterThan("longVar", 44444L).singleResult();
-    Assert.assertNotNull(execution);
-    Assert.assertEquals(processInstance3.getId(), execution.getId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getId()).isEqualTo(processInstance3.getId());
 
-    Assert.assertEquals(0, runtimeService.createExecutionQuery().variableValueGreaterThan("longVar", 55555L).count());
-    Assert.assertEquals(3, runtimeService.createExecutionQuery().variableValueGreaterThan("longVar",1L).count());
+    assertThat(runtimeService.createExecutionQuery().variableValueGreaterThan("longVar", 55555L).count()).isZero();
+    assertThat(runtimeService.createExecutionQuery().variableValueGreaterThan("longVar", 1L).count()).isEqualTo(3);
 
     // Test GREATER_THAN_OR_EQUAL
     execution = runtimeService.createExecutionQuery().variableValueGreaterThanOrEqual("longVar", 44444L).singleResult();
-    Assert.assertNotNull(execution);
-    Assert.assertEquals(processInstance3.getId(), execution.getId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getId()).isEqualTo(processInstance3.getId());
 
     execution = runtimeService.createExecutionQuery().variableValueGreaterThanOrEqual("longVar", 55555L).singleResult();
-    Assert.assertNotNull(execution);
-    Assert.assertEquals(processInstance3.getId(), execution.getId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getId()).isEqualTo(processInstance3.getId());
 
-    Assert.assertEquals(3, runtimeService.createExecutionQuery().variableValueGreaterThanOrEqual("longVar",1L).count());
+    assertThat(runtimeService.createExecutionQuery().variableValueGreaterThanOrEqual("longVar", 1L).count()).isEqualTo(3);
 
     // Test LESS_THAN
     executions = runtimeService.createExecutionQuery().variableValueLessThan("longVar", 55555L).list();
-    Assert.assertEquals(2, executions.size());
+    assertThat(executions).hasSize(2);
 
-    List<String> expecedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
+    List<String> expectedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
     List<String> ids = new ArrayList<>(Arrays.asList(executions.get(0).getId(), executions.get(1).getId()));
-    ids.removeAll(expecedIds);
-    assertTrue(ids.isEmpty());
+    ids.removeAll(expectedIds);
+    assertThat(ids).isEmpty();
 
-    Assert.assertEquals(0, runtimeService.createExecutionQuery().variableValueLessThan("longVar", 12345L).count());
-    Assert.assertEquals(3, runtimeService.createExecutionQuery().variableValueLessThan("longVar",66666L).count());
+    assertThat(runtimeService.createExecutionQuery().variableValueLessThan("longVar", 12345L).count()).isZero();
+    assertThat(runtimeService.createExecutionQuery().variableValueLessThan("longVar", 66666L).count()).isEqualTo(3);
 
     // Test LESS_THAN_OR_EQUAL
     executions = runtimeService.createExecutionQuery().variableValueLessThanOrEqual("longVar", 55555L).list();
-    Assert.assertEquals(3, executions.size());
+    assertThat(executions).hasSize(3);
 
-    Assert.assertEquals(0, runtimeService.createExecutionQuery().variableValueLessThanOrEqual("longVar", 12344L).count());
+    assertThat(runtimeService.createExecutionQuery().variableValueLessThanOrEqual("longVar", 12344L).count()).isZero();
 
     runtimeService.deleteProcessInstance(processInstance1.getId(), "test");
     runtimeService.deleteProcessInstance(processInstance2.getId(), "test");
@@ -422,60 +419,61 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     // Query on single double variable, should result in 2 matches
     ExecutionQuery query = runtimeService.createExecutionQuery().variableValueEquals("doubleVar", 12345.6789);
     List<Execution> executions = query.list();
-    Assert.assertNotNull(executions);
-    Assert.assertEquals(2, executions.size());
+    assertThat(executions)
+            .isNotNull()
+            .hasSize(2);
 
     // Query on two double variables, should result in single value
     query = runtimeService.createExecutionQuery().variableValueEquals("doubleVar", 12345.6789).variableValueEquals("doubleVar2", 9876.54321);
     Execution execution = query.singleResult();
-    Assert.assertNotNull(execution);
-    Assert.assertEquals(processInstance2.getId(), execution.getId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getId()).isEqualTo(processInstance2.getId());
 
     // Query with unexisting variable value
     execution = runtimeService.createExecutionQuery().variableValueEquals("doubleVar", 9999.99).singleResult();
-    Assert.assertNull(execution);
+    assertThat(execution).isNull();
 
     // Test NOT_EQUALS
     execution = runtimeService.createExecutionQuery().variableValueNotEquals("doubleVar", 12345.6789).singleResult();
-    Assert.assertNotNull(execution);
-    Assert.assertEquals(processInstance3.getId(), execution.getId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getId()).isEqualTo(processInstance3.getId());
 
     // Test GREATER_THAN
     execution = runtimeService.createExecutionQuery().variableValueGreaterThan("doubleVar", 44444.4444).singleResult();
-    Assert.assertNotNull(execution);
-    Assert.assertEquals(processInstance3.getId(), execution.getId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getId()).isEqualTo(processInstance3.getId());
 
-    Assert.assertEquals(0, runtimeService.createExecutionQuery().variableValueGreaterThan("doubleVar", 55555.5555).count());
-    Assert.assertEquals(3, runtimeService.createExecutionQuery().variableValueGreaterThan("doubleVar",1.234).count());
+    assertThat(runtimeService.createExecutionQuery().variableValueGreaterThan("doubleVar", 55555.5555).count()).isZero();
+    assertThat(runtimeService.createExecutionQuery().variableValueGreaterThan("doubleVar", 1.234).count()).isEqualTo(3);
 
     // Test GREATER_THAN_OR_EQUAL
     execution = runtimeService.createExecutionQuery().variableValueGreaterThanOrEqual("doubleVar", 44444.4444).singleResult();
-    Assert.assertNotNull(execution);
-    Assert.assertEquals(processInstance3.getId(), execution.getId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getId()).isEqualTo(processInstance3.getId());
 
     execution = runtimeService.createExecutionQuery().variableValueGreaterThanOrEqual("doubleVar", 55555.5555).singleResult();
-    Assert.assertNotNull(execution);
-    Assert.assertEquals(processInstance3.getId(), execution.getId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getId()).isEqualTo(processInstance3.getId());
 
-    Assert.assertEquals(3, runtimeService.createExecutionQuery().variableValueGreaterThanOrEqual("doubleVar",1.234).count());
+    assertThat(runtimeService.createExecutionQuery().variableValueGreaterThanOrEqual("doubleVar", 1.234).count()).isEqualTo(3);
 
     // Test LESS_THAN
     executions = runtimeService.createExecutionQuery().variableValueLessThan("doubleVar", 55555.5555).list();
-    Assert.assertEquals(2, executions.size());
+    assertThat(executions).hasSize(2);
 
-    List<String> expecedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
+    List<String> expectedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
     List<String> ids = new ArrayList<>(Arrays.asList(executions.get(0).getId(), executions.get(1).getId()));
-    ids.removeAll(expecedIds);
-    assertTrue(ids.isEmpty());
+    ids.removeAll(expectedIds);
+    assertThat(ids).isEmpty();
 
-    Assert.assertEquals(0, runtimeService.createExecutionQuery().variableValueLessThan("doubleVar", 12345.6789).count());
-    Assert.assertEquals(3, runtimeService.createExecutionQuery().variableValueLessThan("doubleVar",66666.6666).count());
+    assertThat(runtimeService.createExecutionQuery().variableValueLessThan("doubleVar", 12345.6789).count()).isZero();
+    assertThat(runtimeService.createExecutionQuery().variableValueLessThan("doubleVar", 66666.6666).count()).isEqualTo(3);
 
     // Test LESS_THAN_OR_EQUAL
     executions = runtimeService.createExecutionQuery().variableValueLessThanOrEqual("doubleVar", 55555.5555).list();
-    Assert.assertEquals(3, executions.size());
+    assertThat(executions).hasSize(3);
 
-    Assert.assertEquals(0, runtimeService.createExecutionQuery().variableValueLessThanOrEqual("doubleVar", 12344.6789).count());
+    assertThat(runtimeService.createExecutionQuery().variableValueLessThanOrEqual("doubleVar", 12344.6789).count()).isZero();
 
     runtimeService.deleteProcessInstance(processInstance1.getId(), "test");
     runtimeService.deleteProcessInstance(processInstance2.getId(), "test");
@@ -502,60 +500,61 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     // Query on single integer variable, should result in 2 matches
     ExecutionQuery query = runtimeService.createExecutionQuery().variableValueEquals("integerVar", 12345);
     List<Execution> executions = query.list();
-    Assert.assertNotNull(executions);
-    Assert.assertEquals(2, executions.size());
+    assertThat(executions)
+            .isNotNull()
+            .hasSize(2);
 
     // Query on two integer variables, should result in single value
     query = runtimeService.createExecutionQuery().variableValueEquals("integerVar", 12345).variableValueEquals("integerVar2", 67890);
     Execution execution = query.singleResult();
-    Assert.assertNotNull(execution);
-    Assert.assertEquals(processInstance2.getId(), execution.getId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getId()).isEqualTo(processInstance2.getId());
 
     // Query with unexisting variable value
     execution = runtimeService.createExecutionQuery().variableValueEquals("integerVar", 9999).singleResult();
-    Assert.assertNull(execution);
+    assertThat(execution).isNull();
 
     // Test NOT_EQUALS
     execution = runtimeService.createExecutionQuery().variableValueNotEquals("integerVar", 12345).singleResult();
-    Assert.assertNotNull(execution);
-    Assert.assertEquals(processInstance3.getId(), execution.getId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getId()).isEqualTo(processInstance3.getId());
 
     // Test GREATER_THAN
     execution = runtimeService.createExecutionQuery().variableValueGreaterThan("integerVar", 44444).singleResult();
-    Assert.assertNotNull(execution);
-    Assert.assertEquals(processInstance3.getId(), execution.getId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getId()).isEqualTo(processInstance3.getId());
 
-    Assert.assertEquals(0, runtimeService.createExecutionQuery().variableValueGreaterThan("integerVar", 55555).count());
-    Assert.assertEquals(3, runtimeService.createExecutionQuery().variableValueGreaterThan("integerVar",1).count());
+    assertThat(runtimeService.createExecutionQuery().variableValueGreaterThan("integerVar", 55555).count()).isZero();
+    assertThat(runtimeService.createExecutionQuery().variableValueGreaterThan("integerVar", 1).count()).isEqualTo(3);
 
     // Test GREATER_THAN_OR_EQUAL
     execution = runtimeService.createExecutionQuery().variableValueGreaterThanOrEqual("integerVar", 44444).singleResult();
-    Assert.assertNotNull(execution);
-    Assert.assertEquals(processInstance3.getId(), execution.getId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getId()).isEqualTo(processInstance3.getId());
 
     execution = runtimeService.createExecutionQuery().variableValueGreaterThanOrEqual("integerVar", 55555).singleResult();
-    Assert.assertNotNull(execution);
-    Assert.assertEquals(processInstance3.getId(), execution.getId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getId()).isEqualTo(processInstance3.getId());
 
-    Assert.assertEquals(3, runtimeService.createExecutionQuery().variableValueGreaterThanOrEqual("integerVar",1).count());
+    assertThat(runtimeService.createExecutionQuery().variableValueGreaterThanOrEqual("integerVar", 1).count()).isEqualTo(3);
 
     // Test LESS_THAN
     executions = runtimeService.createExecutionQuery().variableValueLessThan("integerVar", 55555).list();
-    Assert.assertEquals(2, executions.size());
+    assertThat(executions).hasSize(2);
 
-    List<String> expecedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
+    List<String> expectedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
     List<String> ids = new ArrayList<>(Arrays.asList(executions.get(0).getId(), executions.get(1).getId()));
-    ids.removeAll(expecedIds);
-    assertTrue(ids.isEmpty());
+    ids.removeAll(expectedIds);
+    assertThat(ids).isEmpty();
 
-    Assert.assertEquals(0, runtimeService.createExecutionQuery().variableValueLessThan("integerVar", 12345).count());
-    Assert.assertEquals(3, runtimeService.createExecutionQuery().variableValueLessThan("integerVar",66666).count());
+    assertThat(runtimeService.createExecutionQuery().variableValueLessThan("integerVar", 12345).count()).isZero();
+    assertThat(runtimeService.createExecutionQuery().variableValueLessThan("integerVar", 66666).count()).isEqualTo(3);
 
     // Test LESS_THAN_OR_EQUAL
     executions = runtimeService.createExecutionQuery().variableValueLessThanOrEqual("integerVar", 55555).list();
-    Assert.assertEquals(3, executions.size());
+    assertThat(executions).hasSize(3);
 
-    Assert.assertEquals(0, runtimeService.createExecutionQuery().variableValueLessThanOrEqual("integerVar", 12344).count());
+    assertThat(runtimeService.createExecutionQuery().variableValueLessThanOrEqual("integerVar", 12344).count()).isZero();
 
     runtimeService.deleteProcessInstance(processInstance1.getId(), "test");
     runtimeService.deleteProcessInstance(processInstance2.getId(), "test");
@@ -584,61 +583,62 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     // Query on single short variable, should result in 2 matches
     ExecutionQuery query = runtimeService.createExecutionQuery().variableValueEquals("shortVar", shortVar);
     List<Execution> executions = query.list();
-    Assert.assertNotNull(executions);
-    Assert.assertEquals(2, executions.size());
+    assertThat(executions)
+            .isNotNull()
+            .hasSize(2);
 
     // Query on two short variables, should result in single value
     query = runtimeService.createExecutionQuery().variableValueEquals("shortVar", shortVar).variableValueEquals("shortVar2", shortVar2);
     Execution execution = query.singleResult();
-    Assert.assertNotNull(execution);
-    Assert.assertEquals(processInstance2.getId(), execution.getId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getId()).isEqualTo(processInstance2.getId());
 
     // Query with unexisting variable value
     short unexistingValue = (short)9999;
     execution = runtimeService.createExecutionQuery().variableValueEquals("shortVar", unexistingValue).singleResult();
-    Assert.assertNull(execution);
+    assertThat(execution).isNull();
 
     // Test NOT_EQUALS
     execution = runtimeService.createExecutionQuery().variableValueNotEquals("shortVar", (short)1234).singleResult();
-    Assert.assertNotNull(execution);
-    Assert.assertEquals(processInstance3.getId(), execution.getId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getId()).isEqualTo(processInstance3.getId());
 
     // Test GREATER_THAN
     execution = runtimeService.createExecutionQuery().variableValueGreaterThan("shortVar", (short)4444).singleResult();
-    Assert.assertNotNull(execution);
-    Assert.assertEquals(processInstance3.getId(), execution.getId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getId()).isEqualTo(processInstance3.getId());
 
-    Assert.assertEquals(0, runtimeService.createExecutionQuery().variableValueGreaterThan("shortVar", (short)5555).count());
-    Assert.assertEquals(3, runtimeService.createExecutionQuery().variableValueGreaterThan("shortVar",(short)1).count());
+    assertThat(runtimeService.createExecutionQuery().variableValueGreaterThan("shortVar", (short) 5555).count()).isZero();
+    assertThat(runtimeService.createExecutionQuery().variableValueGreaterThan("shortVar", (short) 1).count()).isEqualTo(3);
 
     // Test GREATER_THAN_OR_EQUAL
     execution = runtimeService.createExecutionQuery().variableValueGreaterThanOrEqual("shortVar", (short)4444).singleResult();
-    Assert.assertNotNull(execution);
-    Assert.assertEquals(processInstance3.getId(), execution.getId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getId()).isEqualTo(processInstance3.getId());
 
     execution = runtimeService.createExecutionQuery().variableValueGreaterThanOrEqual("shortVar", (short)5555).singleResult();
-    Assert.assertNotNull(execution);
-    Assert.assertEquals(processInstance3.getId(), execution.getId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getId()).isEqualTo(processInstance3.getId());
 
-    Assert.assertEquals(3, runtimeService.createExecutionQuery().variableValueGreaterThanOrEqual("shortVar",(short)1).count());
+    assertThat(runtimeService.createExecutionQuery().variableValueGreaterThanOrEqual("shortVar", (short) 1).count()).isEqualTo(3);
 
     // Test LESS_THAN
     executions = runtimeService.createExecutionQuery().variableValueLessThan("shortVar", (short)5555).list();
-    Assert.assertEquals(2, executions.size());
+    assertThat(executions).hasSize(2);
 
-    List<String> expecedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
+    List<String> expectedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
     List<String> ids = new ArrayList<>(Arrays.asList(executions.get(0).getId(), executions.get(1).getId()));
-    ids.removeAll(expecedIds);
-    assertTrue(ids.isEmpty());
+    ids.removeAll(expectedIds);
+    assertThat(ids).isEmpty();
 
-    Assert.assertEquals(0, runtimeService.createExecutionQuery().variableValueLessThan("shortVar", (short)1234).count());
-    Assert.assertEquals(3, runtimeService.createExecutionQuery().variableValueLessThan("shortVar",(short)6666).count());
+    assertThat(runtimeService.createExecutionQuery().variableValueLessThan("shortVar", (short) 1234).count()).isZero();
+    assertThat(runtimeService.createExecutionQuery().variableValueLessThan("shortVar", (short) 6666).count()).isEqualTo(3);
 
     // Test LESS_THAN_OR_EQUAL
     executions = runtimeService.createExecutionQuery().variableValueLessThanOrEqual("shortVar", (short)5555).list();
-    Assert.assertEquals(3, executions.size());
+    assertThat(executions).hasSize(3);
 
-    Assert.assertEquals(0, runtimeService.createExecutionQuery().variableValueLessThanOrEqual("shortVar", (short)1233).count());
+    assertThat(runtimeService.createExecutionQuery().variableValueLessThanOrEqual("shortVar", (short) 1233).count()).isZero();
 
     runtimeService.deleteProcessInstance(processInstance1.getId(), "test");
     runtimeService.deleteProcessInstance(processInstance2.getId(), "test");
@@ -679,61 +679,62 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     // Query on single short variable, should result in 2 matches
     ExecutionQuery query = runtimeService.createExecutionQuery().variableValueEquals("dateVar", date1);
     List<Execution> executions = query.list();
-    Assert.assertNotNull(executions);
-    Assert.assertEquals(2, executions.size());
+    assertThat(executions)
+            .isNotNull()
+            .hasSize(2);
 
     // Query on two short variables, should result in single value
     query = runtimeService.createExecutionQuery().variableValueEquals("dateVar", date1).variableValueEquals("dateVar2", date2);
     Execution execution = query.singleResult();
-    Assert.assertNotNull(execution);
-    Assert.assertEquals(processInstance2.getId(), execution.getId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getId()).isEqualTo(processInstance2.getId());
 
     // Query with unexisting variable value
     Date unexistingDate = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss").parse("01/01/1989 12:00:00");
     execution = runtimeService.createExecutionQuery().variableValueEquals("dateVar", unexistingDate).singleResult();
-    Assert.assertNull(execution);
+    assertThat(execution).isNull();
 
     // Test NOT_EQUALS
     execution = runtimeService.createExecutionQuery().variableValueNotEquals("dateVar", date1).singleResult();
-    Assert.assertNotNull(execution);
-    Assert.assertEquals(processInstance3.getId(), execution.getId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getId()).isEqualTo(processInstance3.getId());
 
     // Test GREATER_THAN
     execution = runtimeService.createExecutionQuery().variableValueGreaterThan("dateVar", nextMonth.getTime()).singleResult();
-    Assert.assertNotNull(execution);
-    Assert.assertEquals(processInstance3.getId(), execution.getId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getId()).isEqualTo(processInstance3.getId());
 
-    Assert.assertEquals(0, runtimeService.createExecutionQuery().variableValueGreaterThan("dateVar", nextYear.getTime()).count());
-    Assert.assertEquals(3, runtimeService.createExecutionQuery().variableValueGreaterThan("dateVar", oneYearAgo.getTime()).count());
+    assertThat(runtimeService.createExecutionQuery().variableValueGreaterThan("dateVar", nextYear.getTime()).count()).isZero();
+    assertThat(runtimeService.createExecutionQuery().variableValueGreaterThan("dateVar", oneYearAgo.getTime()).count()).isEqualTo(3);
 
     // Test GREATER_THAN_OR_EQUAL
     execution = runtimeService.createExecutionQuery().variableValueGreaterThanOrEqual("dateVar", nextMonth.getTime()).singleResult();
-    Assert.assertNotNull(execution);
-    Assert.assertEquals(processInstance3.getId(), execution.getId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getId()).isEqualTo(processInstance3.getId());
 
     execution = runtimeService.createExecutionQuery().variableValueGreaterThanOrEqual("dateVar", nextYear.getTime()).singleResult();
-    Assert.assertNotNull(execution);
-    Assert.assertEquals(processInstance3.getId(), execution.getId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getId()).isEqualTo(processInstance3.getId());
 
-    Assert.assertEquals(3, runtimeService.createExecutionQuery().variableValueGreaterThanOrEqual("dateVar",oneYearAgo.getTime()).count());
+    assertThat(runtimeService.createExecutionQuery().variableValueGreaterThanOrEqual("dateVar", oneYearAgo.getTime()).count()).isEqualTo(3);
 
     // Test LESS_THAN
     executions = runtimeService.createExecutionQuery().variableValueLessThan("dateVar", nextYear.getTime()).list();
-    Assert.assertEquals(2, executions.size());
+    assertThat(executions).hasSize(2);
 
-    List<String> expecedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
+    List<String> expectedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
     List<String> ids = new ArrayList<>(Arrays.asList(executions.get(0).getId(), executions.get(1).getId()));
-    ids.removeAll(expecedIds);
-    assertTrue(ids.isEmpty());
+    ids.removeAll(expectedIds);
+    assertThat(ids).isEmpty();
 
-    Assert.assertEquals(0, runtimeService.createExecutionQuery().variableValueLessThan("dateVar", date1).count());
-    Assert.assertEquals(3, runtimeService.createExecutionQuery().variableValueLessThan("dateVar", twoYearsLater.getTime()).count());
+    assertThat(runtimeService.createExecutionQuery().variableValueLessThan("dateVar", date1).count()).isZero();
+    assertThat(runtimeService.createExecutionQuery().variableValueLessThan("dateVar", twoYearsLater.getTime()).count()).isEqualTo(3);
 
     // Test LESS_THAN_OR_EQUAL
     executions = runtimeService.createExecutionQuery().variableValueLessThanOrEqual("dateVar", nextYear.getTime()).list();
-    Assert.assertEquals(3, executions.size());
+    assertThat(executions).hasSize(3);
 
-    Assert.assertEquals(0, runtimeService.createExecutionQuery().variableValueLessThanOrEqual("dateVar", oneYearAgo.getTime()).count());
+    assertThat(runtimeService.createExecutionQuery().variableValueLessThanOrEqual("dateVar", oneYearAgo.getTime()).count()).isZero();
 
     runtimeService.deleteProcessInstance(processInstance1.getId(), "test");
     runtimeService.deleteProcessInstance(processInstance2.getId(), "test");
@@ -756,55 +757,59 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
 
     List<ProcessInstance> instances = runtimeService.createProcessInstanceQuery().variableValueEquals("booleanVar", true).list();
 
-    assertNotNull(instances);
-    assertEquals(1, instances.size());
-    assertEquals(processInstance1.getId(), instances.get(0).getId());
+    assertThat(instances)
+            .isNotNull()
+            .hasSize(1);
+    assertThat(instances.get(0).getId()).isEqualTo(processInstance1.getId());
 
     instances = runtimeService.createProcessInstanceQuery().variableValueEquals("booleanVar", false).list();
 
-    assertNotNull(instances);
-    assertEquals(1, instances.size());
-    assertEquals(processInstance2.getId(), instances.get(0).getId());
+    assertThat(instances)
+            .isNotNull()
+            .hasSize(1);
+    assertThat(instances.get(0).getId()).isEqualTo(processInstance2.getId());
 
     // TEST NOT_EQUALS
     instances = runtimeService.createProcessInstanceQuery().variableValueNotEquals("booleanVar", true).list();
 
-    assertNotNull(instances);
-    assertEquals(1, instances.size());
-    assertEquals(processInstance2.getId(), instances.get(0).getId());
+    assertThat(instances)
+            .isNotNull()
+            .hasSize(1);
+    assertThat(instances.get(0).getId()).isEqualTo(processInstance2.getId());
 
     instances = runtimeService.createProcessInstanceQuery().variableValueNotEquals("booleanVar", false).list();
 
-    assertNotNull(instances);
-    assertEquals(1, instances.size());
-    assertEquals(processInstance1.getId(), instances.get(0).getId());
+    assertThat(instances)
+            .isNotNull()
+            .hasSize(1);
+    assertThat(instances.get(0).getId()).isEqualTo(processInstance1.getId());
     var processInstanceQuery = runtimeService.createProcessInstanceQuery();
 
     // Test unsupported operations
     try {
       processInstanceQuery.variableValueGreaterThan("booleanVar", true);
-      fail("Excetion expected");
+      fail("Exception expected");
     } catch(ProcessEngineException ae) {
       testRule.assertTextPresent("Booleans and null cannot be used in 'greater than' condition", ae.getMessage());
     }
 
     try {
       processInstanceQuery.variableValueGreaterThanOrEqual("booleanVar", true);
-      fail("Excetion expected");
+      fail("Exception expected");
     } catch(ProcessEngineException ae) {
       testRule.assertTextPresent("Booleans and null cannot be used in 'greater than or equal' condition", ae.getMessage());
     }
 
     try {
       processInstanceQuery.variableValueLessThan("booleanVar", true);
-      fail("Excetion expected");
+      fail("Exception expected");
     } catch(ProcessEngineException ae) {
       testRule.assertTextPresent("Booleans and null cannot be used in 'less than' condition", ae.getMessage());
     }
 
     try {
       processInstanceQuery.variableValueLessThanOrEqual("booleanVar", true);
-      fail("Excetion expected");
+      fail("Exception expected");
     } catch(ProcessEngineException ae) {
       testRule.assertTextPresent("Booleans and null cannot be used in 'less than or equal' condition", ae.getMessage());
     }
@@ -844,8 +849,8 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     .variableValueNotEquals("booleanVar", null)
     .variableValueNotEquals("dateVar", null);
 
-    assertNull(query.singleResult());
-    assertNotNull(notQuery.singleResult());
+    assertThat(query.singleResult()).isNull();
+    assertThat(notQuery.singleResult()).isNotNull();
 
     // Set all existing variables values to null
     runtimeService.setVariable(processInstance.getId(), "longVar", null);
@@ -857,9 +862,9 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     runtimeService.setVariable(processInstance.getId(), "nullVar", null);
 
     Execution queryResult = query.singleResult();
-    assertNotNull(queryResult);
-    assertEquals(processInstance.getId(), queryResult.getId());
-    assertNull(notQuery.singleResult());
+    assertThat(queryResult).isNotNull();
+    assertThat(queryResult.getId()).isEqualTo(processInstance.getId());
+    assertThat(notQuery.singleResult()).isNull();
   }
 
   @Deployment(resources={
@@ -889,50 +894,51 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     // Query on null value, should return one value
     ExecutionQuery query = runtimeService.createExecutionQuery().variableValueEquals("nullVar", null);
     List<Execution> executions = query.list();
-    Assert.assertNotNull(executions);
-    Assert.assertEquals(1, executions.size());
-    Assert.assertEquals(processInstance1.getId(), executions.get(0).getId());
+    assertThat(executions)
+            .isNotNull()
+            .hasSize(1);
+    assertThat(executions.get(0).getId()).isEqualTo(processInstance1.getId());
 
     // Test NOT_EQUALS null
-    Assert.assertEquals(1, runtimeService.createExecutionQuery().variableValueNotEquals("nullVar", null).count());
-    Assert.assertEquals(1, runtimeService.createExecutionQuery().variableValueNotEquals("nullVarLong", null).count());
-    Assert.assertEquals(1, runtimeService.createExecutionQuery().variableValueNotEquals("nullVarDouble", null).count());
-    // When a byte-array refrence is present, the variable is not considered null
-    Assert.assertEquals(1, runtimeService.createExecutionQuery().variableValueNotEquals("nullVarByte", null).count());
+    assertThat(runtimeService.createExecutionQuery().variableValueNotEquals("nullVar", null).count()).isEqualTo(1);
+    assertThat(runtimeService.createExecutionQuery().variableValueNotEquals("nullVarLong", null).count()).isEqualTo(1);
+    assertThat(runtimeService.createExecutionQuery().variableValueNotEquals("nullVarDouble", null).count()).isEqualTo(1);
+    // When a byte-array reference is present, the variable is not considered null
+    assertThat(runtimeService.createExecutionQuery().variableValueNotEquals("nullVarByte", null).count()).isEqualTo(1);
     var executionQuery = runtimeService.createExecutionQuery();
 
     // All other variable queries with null should throw exception
     try {
       executionQuery.variableValueGreaterThan("nullVar", null);
-      fail("Excetion expected");
+      fail("Exception expected");
     } catch(ProcessEngineException ae) {
       testRule.assertTextPresent("Booleans and null cannot be used in 'greater than' condition", ae.getMessage());
     }
 
     try {
       executionQuery.variableValueGreaterThanOrEqual("nullVar", null);
-      fail("Excetion expected");
+      fail("Exception expected");
     } catch(ProcessEngineException ae) {
       testRule.assertTextPresent("Booleans and null cannot be used in 'greater than or equal' condition", ae.getMessage());
     }
 
     try {
       executionQuery.variableValueLessThan("nullVar", null);
-      fail("Excetion expected");
+      fail("Exception expected");
     } catch(ProcessEngineException ae) {
       testRule.assertTextPresent("Booleans and null cannot be used in 'less than' condition", ae.getMessage());
     }
 
     try {
       executionQuery.variableValueLessThanOrEqual("nullVar", null);
-      fail("Excetion expected");
+      fail("Exception expected");
     } catch(ProcessEngineException ae) {
       testRule.assertTextPresent("Booleans and null cannot be used in 'less than or equal' condition", ae.getMessage());
     }
 
     try {
       executionQuery.variableValueLike("nullVar", null);
-      fail("Excetion expected");
+      fail("Exception expected");
     } catch(ProcessEngineException ae) {
       testRule.assertTextPresent("Booleans and null cannot be used in 'like' condition", ae.getMessage());
     }
@@ -1047,9 +1053,10 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
       .variableValueEquals("shortVar", (short) 123);
 
     List<Execution> executions = query.list();
-    Assert.assertNotNull(executions);
-    Assert.assertEquals(1, executions.size());
-    Assert.assertEquals(processInstance.getId(), executions.get(0).getId());
+    assertThat(executions)
+            .isNotNull()
+            .hasSize(1);
+    assertThat(executions.get(0).getId()).isEqualTo(processInstance.getId());
 
     runtimeService.deleteProcessInstance(processInstance.getId(), "test");
   }
@@ -1073,8 +1080,8 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     .variableValueEquals("var", 1234L)
     .list();
 
-    assertEquals(1, executions.size());
-    assertEquals(processInstance.getId(), executions.get(0).getProcessInstanceId());
+    assertThat(executions).hasSize(1);
+    assertThat(executions.get(0).getProcessInstanceId()).isEqualTo(processInstance.getId());
 
     runtimeService.deleteProcessInstance(processInstance.getId(), "test");
     runtimeService.deleteProcessInstance(processInstance2.getId(), "test");
@@ -1082,6 +1089,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
+  @SuppressWarnings("deprecation")
   public void testQueryBySignalSubscriptionName() {
     runtimeService.startProcessInstanceByKey("catchSignal");
 
@@ -1089,21 +1097,22 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     Execution execution = runtimeService.createExecutionQuery()
       .signalEventSubscription("alert")
       .singleResult();
-    assertNotNull(execution);
+    assertThat(execution).isNotNull();
 
     // test query for nonexisting subscription
     execution = runtimeService.createExecutionQuery()
-            .signalEventSubscription("nonExisitng")
+            .signalEventSubscription("nonExisting")
             .singleResult();
-    assertNull(execution);
+    assertThat(execution).isNull();
 
     // it finds more than one
     runtimeService.startProcessInstanceByKey("catchSignal");
-    assertEquals(2, runtimeService.createExecutionQuery().signalEventSubscription("alert").count());
+    assertThat(runtimeService.createExecutionQuery().signalEventSubscription("alert").count()).isEqualTo(2);
   }
 
   @Deployment
   @Test
+  @SuppressWarnings("deprecation")
   public void testQueryBySignalSubscriptionNameBoundary() {
     runtimeService.startProcessInstanceByKey("signalProces");
 
@@ -1111,35 +1120,35 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     Execution execution = runtimeService.createExecutionQuery()
       .signalEventSubscription("Test signal")
       .singleResult();
-    assertNotNull(execution);
+    assertThat(execution).isNotNull();
 
-    // test query for nonexisting subscription
+    // test query for non-existing subscription
     execution = runtimeService.createExecutionQuery()
-            .signalEventSubscription("nonExisitng")
+            .signalEventSubscription("nonExisting")
             .singleResult();
-    assertNull(execution);
+    assertThat(execution).isNull();
 
     // it finds more than one
     runtimeService.startProcessInstanceByKey("signalProces");
-    assertEquals(2, runtimeService.createExecutionQuery().signalEventSubscription("Test signal").count());
+    assertThat(runtimeService.createExecutionQuery().signalEventSubscription("Test signal").count()).isEqualTo(2);
   }
 
   @Test
   public void testNativeQuery() {
     String tablePrefix = processEngineConfiguration.getDatabaseTablePrefix();
     // just test that the query will be constructed and executed, details are tested in the TaskQueryTest
-    assertEquals(tablePrefix + "ACT_RU_EXECUTION", managementService.getTableName(Execution.class));
+    assertThat(managementService.getTableName(Execution.class)).isEqualTo(tablePrefix + "ACT_RU_EXECUTION");
 
     long executionCount = runtimeService.createExecutionQuery().count();
 
-    assertEquals(executionCount, runtimeService.createNativeExecutionQuery().sql("SELECT * FROM " + managementService.getTableName(Execution.class)).list().size());
-    assertEquals(executionCount, runtimeService.createNativeExecutionQuery().sql("SELECT count(*) FROM " + managementService.getTableName(Execution.class)).count());
+    assertThat(runtimeService.createNativeExecutionQuery().sql("SELECT * FROM " + managementService.getTableName(Execution.class)).list()).hasSize((int)executionCount);
+    assertThat(runtimeService.createNativeExecutionQuery().sql("SELECT count(*) FROM " + managementService.getTableName(Execution.class)).count()).isEqualTo(executionCount);
   }
 
   @Test
   public void testNativeQueryPaging() {
-    assertEquals(5, runtimeService.createNativeExecutionQuery().sql("SELECT * FROM " + managementService.getTableName(Execution.class)).listPage(1, 5).size());
-    assertEquals(1, runtimeService.createNativeExecutionQuery().sql("SELECT * FROM " + managementService.getTableName(Execution.class)).listPage(2, 1).size());
+    assertThat(runtimeService.createNativeExecutionQuery().sql("SELECT * FROM " + managementService.getTableName(Execution.class)).listPage(1, 5)).hasSize(5);
+    assertThat(runtimeService.createNativeExecutionQuery().sql("SELECT * FROM " + managementService.getTableName(Execution.class)).listPage(2, 1)).hasSize(1);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/concurrentExecution.bpmn20.xml"})
@@ -1150,7 +1159,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("concurrent", variables);
 
     List<Execution> concurrentExecutions = runtimeService.createExecutionQuery().processInstanceId(pi.getId()).list();
-    assertEquals(3, concurrentExecutions.size());
+    assertThat(concurrentExecutions).hasSize(3);
     for (Execution execution : concurrentExecutions) {
       if (!((ExecutionEntity)execution).isProcessInstanceExecution()) {
         // only the concurrent executions, not the root one, would be cooler to query that directly, see http://jira.codehaus.org/browse/ACT-1373
@@ -1158,31 +1167,31 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
       }
     }
 
-    assertEquals(2, runtimeService.createExecutionQuery().processInstanceId(pi.getId()).variableValueEquals("x", "child").count());
-    assertEquals(1, runtimeService.createExecutionQuery().processInstanceId(pi.getId()).variableValueEquals("x", "parent").count());
+    assertThat(runtimeService.createExecutionQuery().processInstanceId(pi.getId()).variableValueEquals("x", "child").count()).isEqualTo(2);
+    assertThat(runtimeService.createExecutionQuery().processInstanceId(pi.getId()).variableValueEquals("x", "parent").count()).isEqualTo(1);
 
-    assertEquals(3, runtimeService.createExecutionQuery().processInstanceId(pi.getId()).processVariableValueEquals("x", "parent").count());
-    assertEquals(3, runtimeService.createExecutionQuery().processInstanceId(pi.getId()).processVariableValueNotEquals("x", "xxx").count());
+    assertThat(runtimeService.createExecutionQuery().processInstanceId(pi.getId()).processVariableValueEquals("x", "parent").count()).isEqualTo(3);
+    assertThat(runtimeService.createExecutionQuery().processInstanceId(pi.getId()).processVariableValueNotEquals("x", "xxx").count()).isEqualTo(3);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/concurrentExecution.bpmn20.xml"})
   @Test
   public void testExecutionQueryForSuspendedExecutions() {
     List<Execution> suspendedExecutions = runtimeService.createExecutionQuery().suspended().list();
-    assertEquals(0, suspendedExecutions.size());
+    assertThat(suspendedExecutions).isEmpty();
 
     for (String instanceId : concurrentProcessInstanceIds) {
       runtimeService.suspendProcessInstanceById(instanceId);
     }
 
     suspendedExecutions = runtimeService.createExecutionQuery().suspended().list();
-    assertEquals(12, suspendedExecutions.size());
+    assertThat(suspendedExecutions).hasSize(12);
 
     List<Execution> activeExecutions = runtimeService.createExecutionQuery().active().list();
-    assertEquals(1, activeExecutions.size());
+    assertThat(activeExecutions).hasSize(1);
 
     for (Execution activeExecution : activeExecutions) {
-      assertEquals(activeExecution.getProcessInstanceId(), sequentialProcessInstanceIds.get(0));
+      assertThat(sequentialProcessInstanceIds.get(0)).isEqualTo(activeExecution.getProcessInstanceId());
     }
   }
 
@@ -1194,7 +1203,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     testRule.executeAvailableJobs();
 
     List<Incident> incidentList = runtimeService.createIncidentQuery().list();
-    assertEquals(1, incidentList.size());
+    assertThat(incidentList).hasSize(1);
 
     Incident incident = runtimeService.createIncidentQuery().processInstanceId(processInstance.getId()).singleResult();
 
@@ -1202,18 +1211,18 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
         .createExecutionQuery()
         .incidentId(incident.getId()).list();
 
-    assertEquals(1, executionList.size());
+    assertThat(executionList).hasSize(1);
   }
 
   @Test
   public void testQueryByInvalidIncidentId() {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
-    assertEquals(0, query.incidentId("invalid").count());
+    assertThat(query.incidentId("invalid").count()).isZero();
 
     try {
       query.incidentId(null);
-      fail();
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       // expected
     }
@@ -1227,7 +1236,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     testRule.executeAvailableJobs();
 
     List<Incident> incidentList = runtimeService.createIncidentQuery().list();
-    assertEquals(1, incidentList.size());
+    assertThat(incidentList).hasSize(1);
 
     Incident incident = runtimeService.createIncidentQuery().processInstanceId(processInstance.getId()).singleResult();
 
@@ -1235,18 +1244,18 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
         .createExecutionQuery()
         .incidentType(incident.getIncidentType()).list();
 
-    assertEquals(1, executionList.size());
+    assertThat(executionList).hasSize(1);
   }
 
   @Test
   public void testQueryByInvalidIncidentType() {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
-    assertEquals(0, query.incidentType("invalid").count());
+    assertThat(query.incidentType("invalid").count()).isZero();
 
     try {
       query.incidentType(null);
-      fail();
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       // expected
     }
@@ -1260,7 +1269,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     testRule.executeAvailableJobs();
 
     List<Incident> incidentList = runtimeService.createIncidentQuery().list();
-    assertEquals(1, incidentList.size());
+    assertThat(incidentList).hasSize(1);
 
     Incident incident = runtimeService.createIncidentQuery().processInstanceId(processInstance.getId()).singleResult();
 
@@ -1268,18 +1277,18 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
         .createExecutionQuery()
         .incidentMessage(incident.getIncidentMessage()).list();
 
-    assertEquals(1, executionList.size());
+    assertThat(executionList).hasSize(1);
   }
 
   @Test
   public void testQueryByInvalidIncidentMessage() {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
-    assertEquals(0, query.incidentMessage("invalid").count());
+    assertThat(query.incidentMessage("invalid").count()).isZero();
 
     try {
       query.incidentMessage(null);
-      fail();
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       // expected
     }
@@ -1293,24 +1302,24 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     testRule.executeAvailableJobs();
 
     List<Incident> incidentList = runtimeService.createIncidentQuery().list();
-    assertEquals(1, incidentList.size());
+    assertThat(incidentList).hasSize(1);
 
     List<Execution> executionList = runtimeService
         .createExecutionQuery()
         .incidentMessageLike("%\\_exception%").list();
 
-    assertEquals(1, executionList.size());
+    assertThat(executionList).hasSize(1);
   }
 
   @Test
   public void testQueryByInvalidIncidentMessageLike() {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
-    assertEquals(0, query.incidentMessageLike("invalid").count());
+    assertThat(query.incidentMessageLike("invalid").count()).isZero();
 
     try {
       query.incidentMessageLike(null);
-      fail();
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       // expected
     }
@@ -1324,7 +1333,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     testRule.executeAvailableJobs();
 
     List<Incident> incidentList = runtimeService.createIncidentQuery().list();
-    assertEquals(1, incidentList.size());
+    assertThat(incidentList).hasSize(1);
 
     Incident incident = runtimeService.createIncidentQuery().processInstanceId(processInstance.getId()).singleResult();
 
@@ -1332,7 +1341,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
         .createExecutionQuery()
         .incidentId(incident.getId()).list();
 
-    assertEquals(1, executionList.size());
+    assertThat(executionList).hasSize(1);
     // execution id of subprocess != process instance id
     assertNotSame(processInstance.getId(), executionList.get(0).getId());
   }
@@ -1345,7 +1354,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     testRule.executeAvailableJobs();
 
     List<Incident> incidentList = runtimeService.createIncidentQuery().list();
-    assertEquals(1, incidentList.size());
+    assertThat(incidentList).hasSize(1);
 
     Incident incident = runtimeService.createIncidentQuery().processInstanceId(processInstance.getId()).singleResult();
 
@@ -1353,7 +1362,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
         .createExecutionQuery()
         .incidentType(incident.getIncidentType()).list();
 
-    assertEquals(1, executionList.size());
+    assertThat(executionList).hasSize(1);
     // execution id of subprocess != process instance id
     assertNotSame(processInstance.getId(), executionList.get(0).getId());
   }
@@ -1366,7 +1375,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     testRule.executeAvailableJobs();
 
     List<Incident> incidentList = runtimeService.createIncidentQuery().list();
-    assertEquals(1, incidentList.size());
+    assertThat(incidentList).hasSize(1);
 
     Incident incident = runtimeService.createIncidentQuery().processInstanceId(processInstance.getId()).singleResult();
 
@@ -1374,7 +1383,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
         .createExecutionQuery()
         .incidentMessage(incident.getIncidentMessage()).list();
 
-    assertEquals(1, executionList.size());
+    assertThat(executionList).hasSize(1);
     // execution id of subprocess != process instance id
     assertNotSame(processInstance.getId(), executionList.get(0).getId());
   }
@@ -1387,7 +1396,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     testRule.executeAvailableJobs();
 
     List<Incident> incidentList = runtimeService.createIncidentQuery().list();
-    assertEquals(1, incidentList.size());
+    assertThat(incidentList).hasSize(1);
 
     runtimeService.createIncidentQuery().processInstanceId(processInstance.getId()).singleResult();
 
@@ -1395,7 +1404,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
         .createExecutionQuery()
         .incidentMessageLike("%exception%").list();
 
-    assertEquals(1, executionList.size());
+    assertThat(executionList).hasSize(1);
     // execution id of subprocess != process instance id
     assertNotSame(processInstance.getId(), executionList.get(0).getId());
   }
@@ -1412,13 +1421,13 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     List<Execution> executions = runtimeService.createExecutionQuery()
         .messageEventSubscription().orderByProcessInstanceId().asc().list();
 
-    assertEquals(2, executions.size());
+    assertThat(executions).hasSize(2);
     if (instance1.getId().compareTo(instance2.getId()) < 0) {
-      assertEquals(instance1.getId(), executions.get(0).getProcessInstanceId());
-      assertEquals(instance2.getId(), executions.get(1).getProcessInstanceId());
+      assertThat(executions.get(0).getProcessInstanceId()).isEqualTo(instance1.getId());
+      assertThat(executions.get(1).getProcessInstanceId()).isEqualTo(instance2.getId());
     } else {
-      assertEquals(instance2.getId(), executions.get(0).getProcessInstanceId());
-      assertEquals(instance1.getId(), executions.get(1).getProcessInstanceId());
+      assertThat(executions.get(0).getProcessInstanceId()).isEqualTo(instance2.getId());
+      assertThat(executions.get(1).getProcessInstanceId()).isEqualTo(instance1.getId());
     }
 
   }
@@ -1435,8 +1444,8 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
       .messageEventSubscription()
       .singleResult();
 
-    assertNotNull(execution);
-    assertEquals(instance.getId(), execution.getProcessInstanceId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getProcessInstanceId()).isEqualTo(instance.getId());
 
     runtimeService
       .createExecutionQuery()
@@ -1444,8 +1453,8 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
       .messageEventSubscriptionName("newInvoiceMessage")
       .list();
 
-    assertNotNull(execution);
-    assertEquals(instance.getId(), execution.getProcessInstanceId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getProcessInstanceId()).isEqualTo(instance.getId());
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/twoBoundaryEventSubscriptions.bpmn20.xml")
@@ -1456,8 +1465,8 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
 
     List<EventSubscription> subscriptions =
         runtimeService.createEventSubscriptionQuery().processInstanceId(instance.getId()).list();
-    assertEquals(2, subscriptions.size());
-    assertEquals(subscriptions.get(0).getExecutionId(), subscriptions.get(1).getExecutionId());
+    assertThat(subscriptions).hasSize(2);
+    assertThat(subscriptions.get(1).getExecutionId()).isEqualTo(subscriptions.get(0).getExecutionId());
 
     // should return the execution once (not twice)
     Execution execution = runtimeService
@@ -1465,8 +1474,8 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
       .messageEventSubscription()
       .singleResult();
 
-    assertNotNull(execution);
-    assertEquals(instance.getId(), execution.getProcessInstanceId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getProcessInstanceId()).isEqualTo(instance.getId());
 
     // should return the execution once
     execution = runtimeService
@@ -1474,8 +1483,8 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
       .messageEventSubscriptionName("messageName_1")
       .singleResult();
 
-    assertNotNull(execution);
-    assertEquals(instance.getId(), execution.getProcessInstanceId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getProcessInstanceId()).isEqualTo(instance.getId());
 
     // should return the execution once
     execution = runtimeService
@@ -1483,8 +1492,8 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
       .messageEventSubscriptionName("messageName_2")
       .singleResult();
 
-    assertNotNull(execution);
-    assertEquals(instance.getId(), execution.getProcessInstanceId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getProcessInstanceId()).isEqualTo(instance.getId());
 
     // should return the execution once
     execution = runtimeService
@@ -1493,8 +1502,8 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
       .messageEventSubscriptionName("messageName_2")
       .singleResult();
 
-    assertNotNull(execution);
-    assertEquals(instance.getId(), execution.getProcessInstanceId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getProcessInstanceId()).isEqualTo(instance.getId());
 
     // should not return the execution
     execution = runtimeService
@@ -1504,7 +1513,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
       .messageEventSubscriptionName("another")
       .singleResult();
 
-    assertNull(execution);
+    assertThat(execution).isNull();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
@@ -1541,19 +1550,19 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Collections.singletonMap("var", "123"));
 
-    assertEquals(4, runtimeService.createExecutionQuery().processVariableValueEquals("var", Variables.numberValue(123)).count());
-    assertEquals(4, runtimeService.createExecutionQuery().processVariableValueEquals("var", Variables.numberValue(123L)).count());
-    assertEquals(4, runtimeService.createExecutionQuery().processVariableValueEquals("var", Variables.numberValue(123.0d)).count());
-    assertEquals(4, runtimeService.createExecutionQuery().processVariableValueEquals("var", Variables.numberValue((short) 123)).count());
+    assertThat(runtimeService.createExecutionQuery().processVariableValueEquals("var", Variables.numberValue(123)).count()).isEqualTo(4);
+    assertThat(runtimeService.createExecutionQuery().processVariableValueEquals("var", Variables.numberValue(123L)).count()).isEqualTo(4);
+    assertThat(runtimeService.createExecutionQuery().processVariableValueEquals("var", Variables.numberValue(123.0d)).count()).isEqualTo(4);
+    assertThat(runtimeService.createExecutionQuery().processVariableValueEquals("var", Variables.numberValue((short) 123)).count()).isEqualTo(4);
 
-    assertEquals(1, runtimeService.createExecutionQuery().processVariableValueEquals("var", Variables.numberValue(null)).count());
+    assertThat(runtimeService.createExecutionQuery().processVariableValueEquals("var", Variables.numberValue(null)).count()).isEqualTo(1);
 
-    assertEquals(4, runtimeService.createExecutionQuery().variableValueEquals("var", Variables.numberValue(123)).count());
-    assertEquals(4, runtimeService.createExecutionQuery().variableValueEquals("var", Variables.numberValue(123L)).count());
-    assertEquals(4, runtimeService.createExecutionQuery().variableValueEquals("var", Variables.numberValue(123.0d)).count());
-    assertEquals(4, runtimeService.createExecutionQuery().variableValueEquals("var", Variables.numberValue((short) 123)).count());
+    assertThat(runtimeService.createExecutionQuery().variableValueEquals("var", Variables.numberValue(123)).count()).isEqualTo(4);
+    assertThat(runtimeService.createExecutionQuery().variableValueEquals("var", Variables.numberValue(123L)).count()).isEqualTo(4);
+    assertThat(runtimeService.createExecutionQuery().variableValueEquals("var", Variables.numberValue(123.0d)).count()).isEqualTo(4);
+    assertThat(runtimeService.createExecutionQuery().variableValueEquals("var", Variables.numberValue((short) 123)).count()).isEqualTo(4);
 
-    assertEquals(1, runtimeService.createExecutionQuery().variableValueEquals("var", Variables.numberValue(null)).count());
+    assertThat(runtimeService.createExecutionQuery().variableValueEquals("var", Variables.numberValue(null)).count()).isEqualTo(1);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
@@ -1590,7 +1599,7 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Collections.singletonMap("var", "123"));
 
-    assertEquals(4, runtimeService.createExecutionQuery().processVariableValueNotEquals("var", Variables.numberValue(123)).count());
+    assertThat(runtimeService.createExecutionQuery().processVariableValueNotEquals("var", Variables.numberValue(123)).count()).isEqualTo(4);
   }
 
   @Test
@@ -1599,9 +1608,9 @@ public class ExecutionQueryTest extends PluggableProcessEngineTest {
     List<Execution> executions = runtimeService.createExecutionQuery().processInstanceId(processInstance.getId()).list();
     for (Execution e : executions) {
       if (((ExecutionEntity) e).isProcessInstanceExecution()) {
-        assertEquals("76545", ((ExecutionEntity) e).getBusinessKeyWithoutCascade());
+        assertThat(((ExecutionEntity) e).getBusinessKeyWithoutCascade()).isEqualTo("76545");
       } else {
-        assertNull(((ExecutionEntity) e).getBusinessKeyWithoutCascade());
+        assertThat(((ExecutionEntity) e).getBusinessKeyWithoutCascade()).isNull();
       }
     }
   }

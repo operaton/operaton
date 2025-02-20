@@ -16,10 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.repository;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Date;
 import java.util.List;
@@ -75,90 +73,90 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
   @Test
   public void testQueryNoCriteria() {
     DeploymentQuery query = repositoryService.createDeploymentQuery();
-    assertEquals(2, query.list().size());
-    assertEquals(2, query.count());
+    assertThat(query.list()).hasSize(2);
+    assertThat(query.count()).isEqualTo(2);
 
     try {
       query.singleResult();
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
-      assertEquals("Query return 2 results instead of max 1", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Query return 2 results instead of max 1");
     }
   }
 
   @Test
   public void testQueryByDeploymentId() {
     DeploymentQuery query = repositoryService.createDeploymentQuery().deploymentId(deploymentOneId);
-    assertNotNull(query.singleResult());
-    assertEquals(1, query.list().size());
-    assertEquals(1, query.count());
+    assertThat(query.singleResult()).isNotNull();
+    assertThat(query.list()).hasSize(1);
+    assertThat(query.count()).isEqualTo(1);
   }
 
   @Test
   public void testQueryByInvalidDeploymentId() {
     DeploymentQuery query = repositoryService.createDeploymentQuery().deploymentId("invalid");
-    assertNull(query.singleResult());
-    assertEquals(0, query.list().size());
-    assertEquals(0, query.count());
+    assertThat(query.singleResult()).isNull();
+    assertThat(query.list()).isEmpty();
+    assertThat(query.count()).isZero();
     var deploymentQuery = repositoryService.createDeploymentQuery();
 
     try {
       deploymentQuery.deploymentId(null);
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
-      assertEquals("Deployment id is null", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Deployment id is null");
     }
   }
 
   @Test
   public void testQueryByName() {
     DeploymentQuery query = repositoryService.createDeploymentQuery().deploymentName("org/operaton/bpm/engine/test/repository/two_.bpmn20.xml");
-    assertNotNull(query.singleResult());
-    assertEquals(1, query.list().size());
-    assertEquals(1, query.count());
+    assertThat(query.singleResult()).isNotNull();
+    assertThat(query.list()).hasSize(1);
+    assertThat(query.count()).isEqualTo(1);
   }
 
   @Test
   public void testQueryByInvalidName() {
     DeploymentQuery query = repositoryService.createDeploymentQuery().deploymentName("invalid");
-    assertNull(query.singleResult());
-    assertEquals(0, query.list().size());
-    assertEquals(0, query.count());
+    assertThat(query.singleResult()).isNull();
+    assertThat(query.list()).isEmpty();
+    assertThat(query.count()).isZero();
     var deploymentQuery = repositoryService.createDeploymentQuery();
 
     try {
       deploymentQuery.deploymentName(null);
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
-      assertEquals("deploymentName is null", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("deploymentName is null");
     }
   }
 
   @Test
   public void testQueryByNameLike() {
     DeploymentQuery query = repositoryService.createDeploymentQuery().deploymentNameLike("%operaton%");
-    assertEquals(2, query.list().size());
-    assertEquals(2, query.count());
+    assertThat(query.list()).hasSize(2);
+    assertThat(query.count()).isEqualTo(2);
 
     query = repositoryService.createDeploymentQuery().deploymentNameLike("%two\\_%");
-    assertEquals(1, query.list().size());
-    assertEquals(1, query.count());
-    assertEquals("org/operaton/bpm/engine/test/repository/two_.bpmn20.xml", query.singleResult().getName());
+    assertThat(query.list()).hasSize(1);
+    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.singleResult().getName()).isEqualTo("org/operaton/bpm/engine/test/repository/two_.bpmn20.xml");
   }
 
   @Test
   public void testQueryByInvalidNameLike() {
     DeploymentQuery query = repositoryService.createDeploymentQuery().deploymentNameLike("invalid");
-    assertNull(query.singleResult());
-    assertEquals(0, query.list().size());
-    assertEquals(0, query.count());
+    assertThat(query.singleResult()).isNull();
+    assertThat(query.list()).isEmpty();
+    assertThat(query.count()).isZero();
     var deploymentQuery = repositoryService.createDeploymentQuery();
 
     try {
       deploymentQuery.deploymentNameLike(null);
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
-      assertEquals("deploymentNameLike is null", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("deploymentNameLike is null");
     }
   }
 
@@ -168,10 +166,10 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
     Date earlier = DateTimeUtil.now().minus(10 * 3600).toDate();
 
     long count = repositoryService.createDeploymentQuery().deploymentBefore(later).count();
-    assertEquals(2, count);
+    assertThat(count).isEqualTo(2);
 
     count = repositoryService.createDeploymentQuery().deploymentBefore(earlier).count();
-    assertEquals(0, count);
+    assertThat(count).isZero();
     var deploymentQuery = repositoryService.createDeploymentQuery();
 
     try {
@@ -188,10 +186,10 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
     Date earlier = DateTimeUtil.now().minus(10 * 3600).toDate();
 
     long count = repositoryService.createDeploymentQuery().deploymentAfter(later).count();
-    assertEquals(0, count);
+    assertThat(count).isZero();
 
     count = repositoryService.createDeploymentQuery().deploymentAfter(earlier).count();
-    assertEquals(2, count);
+    assertThat(count).isEqualTo(2);
     var deploymentQuery = repositoryService.createDeploymentQuery();
 
     try {
@@ -208,8 +206,8 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
         .createDeploymentQuery()
         .deploymentSource(ProcessApplicationDeployment.PROCESS_APPLICATION_DEPLOYMENT_SOURCE);
 
-    assertEquals(1, query.list().size());
-    assertEquals(1, query.count());
+    assertThat(query.list()).hasSize(1);
+    assertThat(query.count()).isEqualTo(1);
   }
 
   @Test
@@ -218,8 +216,8 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
         .createDeploymentQuery()
         .deploymentSource(null);
 
-    assertEquals(1, query.list().size());
-    assertEquals(1, query.count());
+    assertThat(query.list()).hasSize(1);
+    assertThat(query.count()).isEqualTo(1);
   }
 
   @Test
@@ -228,8 +226,8 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
         .createDeploymentQuery()
         .deploymentSource("invalid");
 
-    assertEquals(0, query.list().size());
-    assertEquals(0, query.count());
+    assertThat(query.list()).isEmpty();
+    assertThat(query.count()).isZero();
   }
 
   @Test
@@ -241,28 +239,28 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
         .createDeploymentQuery()
         .deploymentAfter(earlier)
         .deploymentBefore(later).count();
-    assertEquals(2, count);
+    assertThat(count).isEqualTo(2);
 
     count = repositoryService
       .createDeploymentQuery()
       .deploymentAfter(later)
       .deploymentBefore(later)
       .count();
-    assertEquals(0, count);
+    assertThat(count).isZero();
 
     count = repositoryService
       .createDeploymentQuery()
       .deploymentAfter(earlier)
       .deploymentBefore(earlier)
       .count();
-    assertEquals(0, count);
+    assertThat(count).isZero();
 
     count = repositoryService
         .createDeploymentQuery()
         .deploymentAfter(later)
         .deploymentBefore(earlier)
         .count();
-    assertEquals(0, count);
+    assertThat(count).isZero();
   }
 
   @Test
@@ -273,43 +271,39 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
       .list();
 
     Deployment deploymentOne = deployments.get(0);
-    assertEquals("org/operaton/bpm/engine/test/repository/one.bpmn20.xml", deploymentOne.getName());
-    assertEquals(deploymentOneId, deploymentOne.getId());
-    assertEquals(ProcessApplicationDeployment.PROCESS_APPLICATION_DEPLOYMENT_SOURCE, deploymentOne.getSource());
-    assertNull(deploymentOne.getTenantId());
+    assertThat(deploymentOne.getName()).isEqualTo("org/operaton/bpm/engine/test/repository/one.bpmn20.xml");
+    assertThat(deploymentOne.getId()).isEqualTo(deploymentOneId);
+    assertThat(deploymentOne.getSource()).isEqualTo(ProcessApplicationDeployment.PROCESS_APPLICATION_DEPLOYMENT_SOURCE);
+    assertThat(deploymentOne.getTenantId()).isNull();
 
     Deployment deploymentTwo = deployments.get(1);
-    assertEquals("org/operaton/bpm/engine/test/repository/two_.bpmn20.xml", deploymentTwo.getName());
-    assertEquals(deploymentTwoId, deploymentTwo.getId());
-    assertNull(deploymentTwo.getSource());
-    assertNull(deploymentTwo.getTenantId());
+    assertThat(deploymentTwo.getName()).isEqualTo("org/operaton/bpm/engine/test/repository/two_.bpmn20.xml");
+    assertThat(deploymentTwo.getId()).isEqualTo(deploymentTwoId);
+    assertThat(deploymentTwo.getSource()).isNull();
+    assertThat(deploymentTwo.getTenantId()).isNull();
   }
 
   @Test
   public void testQuerySorting() {
-    assertEquals(2, repositoryService.createDeploymentQuery()
+    assertThat(repositoryService.createDeploymentQuery()
         .orderByDeploymentName()
         .asc()
-        .list()
-        .size());
+        .list()).hasSize(2);
 
-    assertEquals(2, repositoryService.createDeploymentQuery()
-      .orderByDeploymentId()
-      .asc()
-      .list()
-      .size());
+    assertThat(repositoryService.createDeploymentQuery()
+        .orderByDeploymentId()
+        .asc()
+        .list()).hasSize(2);
 
-    assertEquals(2, repositoryService.createDeploymentQuery()
-      .orderByDeploymenTime()
-      .asc()
-      .list()
-      .size());
+    assertThat(repositoryService.createDeploymentQuery()
+        .orderByDeploymenTime()
+        .asc()
+        .list()).hasSize(2);
 
-    assertEquals(2, repositoryService.createDeploymentQuery()
-      .orderByDeploymentTime()
-      .asc()
-      .list()
-      .size());
+    assertThat(repositoryService.createDeploymentQuery()
+        .orderByDeploymentTime()
+        .asc()
+        .list()).hasSize(2);
   }
 
 }

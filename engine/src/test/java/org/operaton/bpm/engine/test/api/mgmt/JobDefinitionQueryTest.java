@@ -16,10 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.jobexecutor.AsyncContinuationJobHandler;
@@ -54,7 +52,7 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
 
     verifyQueryResults(query, 1);
 
-    assertEquals(jobDefinition.getId(), query.singleResult().getId());
+    assertThat(query.singleResult().getId()).isEqualTo(jobDefinition.getId());
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/JobDefinitionQueryTest.testBase.bpmn"})
@@ -66,7 +64,7 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
 
     try {
       jobDefinitionQuery.jobDefinitionId(null);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (ProcessEngineException e) {}
   }
 
@@ -95,16 +93,16 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
 
     try {
       jobDefinitionQuery.activityIdIn(null);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (ProcessEngineException e) {
-      assertEquals("Activity ids is null", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Activity ids is null");
     }
 
     try {
       jobDefinitionQuery.activityIdIn((String)null);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (ProcessEngineException e) {
-      assertEquals("Activity ids contains null value", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Activity ids contains null value");
     }
   }
 
@@ -126,7 +124,7 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
 
     try {
       jobDefinitionQuery.processDefinitionId(null);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (ProcessEngineException e) {}
   }
 
@@ -148,7 +146,7 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
 
     try {
       jobDefinitionQuery.processDefinitionKey(null);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (ProcessEngineException e) {}
   }
 
@@ -177,7 +175,7 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
 
     try {
       jobDefinitionQuery.jobType(null);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (ProcessEngineException e) {}
   }
 
@@ -190,7 +188,7 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
 
     try {
       jobDefinitionQuery.jobConfiguration(null);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (ProcessEngineException e) {}
   }
 
@@ -269,10 +267,10 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/JobDefinitionQueryTest.testBase.bpmn"})
   @Test
   public void testQueryPaging() {
-    assertEquals(4, managementService.createJobDefinitionQuery().listPage(0, 4).size());
-    assertEquals(1, managementService.createJobDefinitionQuery().listPage(2, 1).size());
-    assertEquals(2, managementService.createJobDefinitionQuery().listPage(1, 2).size());
-    assertEquals(3, managementService.createJobDefinitionQuery().listPage(1, 4).size());
+    assertThat(managementService.createJobDefinitionQuery().listPage(0, 4)).hasSize(4);
+    assertThat(managementService.createJobDefinitionQuery().listPage(2, 1)).hasSize(1);
+    assertThat(managementService.createJobDefinitionQuery().listPage(1, 2)).hasSize(2);
+    assertThat(managementService.createJobDefinitionQuery().listPage(1, 4)).hasSize(3);
   }
 
   // Sorting /////////////////////////////////////////////////////////////
@@ -281,20 +279,20 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
   @Test
   public void testQuerySorting() {
     // asc
-    assertEquals(4, managementService.createJobDefinitionQuery().orderByActivityId().asc().list().size());
-    assertEquals(4, managementService.createJobDefinitionQuery().orderByJobConfiguration().asc().list().size());
-    assertEquals(4, managementService.createJobDefinitionQuery().orderByJobDefinitionId().asc().list().size());
-    assertEquals(4, managementService.createJobDefinitionQuery().orderByJobType().asc().list().size());
-    assertEquals(4, managementService.createJobDefinitionQuery().orderByProcessDefinitionId().asc().list().size());
-    assertEquals(4, managementService.createJobDefinitionQuery().orderByProcessDefinitionKey().asc().list().size());
+    assertThat(managementService.createJobDefinitionQuery().orderByActivityId().asc().list()).hasSize(4);
+    assertThat(managementService.createJobDefinitionQuery().orderByJobConfiguration().asc().list()).hasSize(4);
+    assertThat(managementService.createJobDefinitionQuery().orderByJobDefinitionId().asc().list()).hasSize(4);
+    assertThat(managementService.createJobDefinitionQuery().orderByJobType().asc().list()).hasSize(4);
+    assertThat(managementService.createJobDefinitionQuery().orderByProcessDefinitionId().asc().list()).hasSize(4);
+    assertThat(managementService.createJobDefinitionQuery().orderByProcessDefinitionKey().asc().list()).hasSize(4);
 
     // desc
-    assertEquals(4, managementService.createJobDefinitionQuery().orderByActivityId().desc().list().size());
-    assertEquals(4, managementService.createJobDefinitionQuery().orderByJobConfiguration().desc().list().size());
-    assertEquals(4, managementService.createJobDefinitionQuery().orderByJobDefinitionId().desc().list().size());
-    assertEquals(4, managementService.createJobDefinitionQuery().orderByJobType().desc().list().size());
-    assertEquals(4, managementService.createJobDefinitionQuery().orderByProcessDefinitionId().desc().list().size());
-    assertEquals(4, managementService.createJobDefinitionQuery().orderByProcessDefinitionKey().desc().list().size());
+    assertThat(managementService.createJobDefinitionQuery().orderByActivityId().desc().list()).hasSize(4);
+    assertThat(managementService.createJobDefinitionQuery().orderByJobConfiguration().desc().list()).hasSize(4);
+    assertThat(managementService.createJobDefinitionQuery().orderByJobDefinitionId().desc().list()).hasSize(4);
+    assertThat(managementService.createJobDefinitionQuery().orderByJobType().desc().list()).hasSize(4);
+    assertThat(managementService.createJobDefinitionQuery().orderByProcessDefinitionId().desc().list()).hasSize(4);
+    assertThat(managementService.createJobDefinitionQuery().orderByProcessDefinitionKey().desc().list()).hasSize(4);
 
   }
 
@@ -303,7 +301,7 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
     var jobDefinitionQuery = managementService.createJobDefinitionQuery().orderByJobDefinitionId();
     try {
       jobDefinitionQuery.list();
-      fail();
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       testRule.assertTextPresent("call asc() or desc() after using orderByXX()", e.getMessage());
     }
@@ -311,7 +309,7 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
     var jobQuery = managementService.createJobQuery();
     try {
       jobQuery.asc();
-      fail();
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       testRule.assertTextPresent("You should call any of the orderBy methods first before specifying a direction", e.getMessage());
     }
@@ -328,34 +326,34 @@ public class JobDefinitionQueryTest extends PluggableProcessEngineTest {
     JobDefinition queriedDefinition = managementService.createJobDefinitionQuery().withOverridingJobPriority().singleResult();
 
     // then
-    assertNotNull(queriedDefinition);
-    assertEquals(jobDefinition.getId(), queriedDefinition.getId());
-    assertEquals(42L, (long) queriedDefinition.getOverridingJobPriority());
+    assertThat(queriedDefinition).isNotNull();
+    assertThat(queriedDefinition.getId()).isEqualTo(jobDefinition.getId());
+    assertThat((long) queriedDefinition.getOverridingJobPriority()).isEqualTo(42L);
 
     // and
-    assertEquals(1, managementService.createJobDefinitionQuery().withOverridingJobPriority().count());
+    assertThat(managementService.createJobDefinitionQuery().withOverridingJobPriority().count()).isEqualTo(1);
 
   }
 
   // Test Helpers ////////////////////////////////////////////////////////
 
   private void verifyQueryResults(JobDefinitionQuery query, int countExpected) {
-    assertEquals(countExpected, query.list().size());
-    assertEquals(countExpected, query.count());
+    assertThat(query.list()).hasSize(countExpected);
+    assertThat(query.count()).isEqualTo(countExpected);
 
     if (countExpected == 1) {
-      assertNotNull(query.singleResult());
+      assertThat(query.singleResult()).isNotNull();
     } else if (countExpected > 1){
       verifySingleResultFails(query);
     } else if (countExpected == 0) {
-      assertNull(query.singleResult());
+      assertThat(query.singleResult()).isNull();
     }
   }
 
   private void verifySingleResultFails(JobDefinitionQuery query) {
     try {
       query.singleResult();
-      fail();
+      fail("Exception expected");
     } catch (ProcessEngineException e) {}
   }
 

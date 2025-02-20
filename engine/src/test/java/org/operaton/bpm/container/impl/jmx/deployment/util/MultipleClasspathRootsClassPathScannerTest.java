@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.container.impl.jmx.deployment.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -52,23 +51,23 @@ public class MultipleClasspathRootsClassPathScannerTest {
 
     scanner.scanPaResourceRootPath(classLoader, null, "classpath:directory/",scanResult);
 
-    assertTrue("'testDeployProcessArchive.bpmn20.xml' not found", contains(scanResult, "testDeployProcessArchive.bpmn20.xml"));
-    assertTrue("'testDeployProcessArchive.png' not found", contains(scanResult, "testDeployProcessArchive.png"));
-    assertEquals(2, scanResult.size()); // only finds two files since the resource name of the processes (and diagrams) is the same
+    assertThat(contains(scanResult, "testDeployProcessArchive.bpmn20.xml")).as("'testDeployProcessArchive.bpmn20.xml' not found").isTrue();
+    assertThat(contains(scanResult, "testDeployProcessArchive.png")).as("'testDeployProcessArchive.png' not found").isTrue();
+    assertThat(scanResult).hasSize(2); // only finds two files since the resource name of the processes (and diagrams) is the same
 
     scanResult.clear();
     scanner.scanPaResourceRootPath(classLoader, null, "directory/", scanResult);
 
-    assertTrue("'testDeployProcessArchive.bpmn20.xml' not found", contains(scanResult, "testDeployProcessArchive.bpmn20.xml"));
-    assertTrue("'testDeployProcessArchive.png' not found", contains(scanResult, "testDeployProcessArchive.png"));
-    assertEquals(2, scanResult.size()); // only finds two files since the resource name of the processes (and diagrams) is the same
+    assertThat(contains(scanResult, "testDeployProcessArchive.bpmn20.xml")).as("'testDeployProcessArchive.bpmn20.xml' not found").isTrue();
+    assertThat(contains(scanResult, "testDeployProcessArchive.png")).as("'testDeployProcessArchive.png' not found").isTrue();
+    assertThat(scanResult).hasSize(2); // only finds two files since the resource name of the processes (and diagrams) is the same
 
     scanResult.clear();
     scanner.scanPaResourceRootPath(classLoader, new URL("file:src/test/resources/org/operaton/bpm/container/impl/jmx/deployment/util/ClassPathScannerTest.testScanClassPathWithFilesRecursive/META-INF/processes.xml"), "pa:directory/", scanResult);
 
-    assertTrue("'testDeployProcessArchive.bpmn20.xml' not found", contains(scanResult, "testDeployProcessArchive.bpmn20.xml"));
-    assertTrue("'testDeployProcessArchive.png' not found", contains(scanResult, "testDeployProcessArchive.png"));
-    assertEquals(2, scanResult.size()); // only finds two files since a PA-local resource root path is provided
+    assertThat(contains(scanResult, "testDeployProcessArchive.bpmn20.xml")).as("'testDeployProcessArchive.bpmn20.xml' not found").isTrue();
+    assertThat(contains(scanResult, "testDeployProcessArchive.png")).as("'testDeployProcessArchive.png' not found").isTrue();
+    assertThat(scanResult).hasSize(2); // only finds two files since a PA-local resource root path is provided
 
   }
 

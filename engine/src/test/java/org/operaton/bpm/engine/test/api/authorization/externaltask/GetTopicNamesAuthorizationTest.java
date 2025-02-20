@@ -21,7 +21,7 @@ import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Permissions.READ_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
@@ -52,7 +52,7 @@ public class GetTopicNamesAuthorizationTest extends AuthorizationTest {
     List<String> result = externalTaskService.getTopicNames();
 
     // then
-    assertEquals(0,result.size());
+    assertThat(result).isEmpty();
   }
 
   @Test
@@ -64,8 +64,8 @@ public class GetTopicNamesAuthorizationTest extends AuthorizationTest {
     List<String> result = externalTaskService.getTopicNames();
 
     // then
-    assertEquals(1, result.size());
-    assertEquals("externalTaskTopic", result.get(0));
+    assertThat(result).hasSize(1);
+    assertThat(result.get(0)).isEqualTo("externalTaskTopic");
   }
 
   @Test
@@ -77,7 +77,7 @@ public class GetTopicNamesAuthorizationTest extends AuthorizationTest {
     List<String> result = externalTaskService.getTopicNames();
 
     // then
-    assertEquals(4, result.size());
+    assertThat(result).hasSize(4);
   }
 
   @Test
@@ -89,7 +89,7 @@ public class GetTopicNamesAuthorizationTest extends AuthorizationTest {
     List<String> result = externalTaskService.getTopicNames();
 
     // then
-    assertEquals(4, result.size());
+    assertThat(result).hasSize(4);
   }
 
   @Test
@@ -101,8 +101,8 @@ public class GetTopicNamesAuthorizationTest extends AuthorizationTest {
     List<String> result = externalTaskService.getTopicNames();
 
     // then
-    assertEquals(1, result.size());
-    assertEquals("externalTaskTopic", result.get(0));
+    assertThat(result).hasSize(1);
+    assertThat(result.get(0)).isEqualTo("externalTaskTopic");
   }
 
   @Test
@@ -116,6 +116,6 @@ public class GetTopicNamesAuthorizationTest extends AuthorizationTest {
     List<String> result = externalTaskService.getTopicNames();
 
     // then
-    assertEquals(4, result.size());
+    assertThat(result).hasSize(4);
   }
 }

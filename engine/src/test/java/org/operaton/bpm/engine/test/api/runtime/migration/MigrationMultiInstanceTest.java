@@ -19,8 +19,8 @@ package org.operaton.bpm.engine.test.api.runtime.migration;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 import static org.operaton.bpm.engine.test.util.MigrationPlanValidationReportAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,7 +36,6 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.MultiInstanceProcessModels;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
@@ -95,9 +94,9 @@ public class MigrationMultiInstanceTest {
         .done());
 
     List<Task> migratedTasks = testHelper.snapshotAfterMigration.getTasks();
-    Assert.assertEquals(3, migratedTasks.size());
+    assertThat(migratedTasks).hasSize(3);
     for (Task migratedTask : migratedTasks) {
-      assertEquals(targetProcessDefinition.getId(), migratedTask.getProcessDefinitionId());
+      assertThat(migratedTask.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());
     }
 
     // and it is possible to successfully complete the migrated instance
@@ -135,14 +134,14 @@ public class MigrationMultiInstanceTest {
     // then
     List<Task> tasks = testHelper.snapshotAfterMigration.getTasks();
     Task firstTask = tasks.get(0);
-    Assert.assertEquals(3, rule.getTaskService().getVariable(firstTask.getId(), NUMBER_OF_INSTANCES));
-    Assert.assertEquals(3, rule.getTaskService().getVariable(firstTask.getId(), NUMBER_OF_ACTIVE_INSTANCES));
-    Assert.assertEquals(0, rule.getTaskService().getVariable(firstTask.getId(), NUMBER_OF_COMPLETED_INSTANCES));
+    assertThat(rule.getTaskService().getVariable(firstTask.getId(), NUMBER_OF_INSTANCES)).isEqualTo(3);
+    assertThat(rule.getTaskService().getVariable(firstTask.getId(), NUMBER_OF_ACTIVE_INSTANCES)).isEqualTo(3);
+    assertThat(rule.getTaskService().getVariable(firstTask.getId(), NUMBER_OF_COMPLETED_INSTANCES)).isEqualTo(0);
 
     for (Task task : tasks) {
       Integer loopCounter = (Integer) rule.getTaskService().getVariable(task.getId(), LOOP_COUNTER);
-      Assert.assertNotNull(loopCounter);
-      Assert.assertEquals(loopCounterDistribution.get(task.getId()), loopCounter);
+      assertThat(loopCounter).isNotNull();
+      assertThat(loopCounter).isEqualTo(loopCounterDistribution.get(task.getId()));
     }
   }
 
@@ -187,9 +186,9 @@ public class MigrationMultiInstanceTest {
         .done());
 
     List<Task> migratedTasks = testHelper.snapshotAfterMigration.getTasks();
-    Assert.assertEquals(2, migratedTasks.size());
+    assertThat(migratedTasks).hasSize(2);
     for (Task migratedTask : migratedTasks) {
-      assertEquals(targetProcessDefinition.getId(), migratedTask.getProcessDefinitionId());
+      assertThat(migratedTask.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());
     }
 
     // and it is possible to successfully complete the migrated instance
@@ -275,8 +274,8 @@ public class MigrationMultiInstanceTest {
         .done());
 
     Task migratedTask = testHelper.snapshotAfterMigration.getTaskForKey("userTask");
-    Assert.assertNotNull(migratedTask);
-    assertEquals(targetProcessDefinition.getId(), migratedTask.getProcessDefinitionId());
+    assertThat(migratedTask).isNotNull();
+    assertThat(migratedTask.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());
 
     // and it is possible to successfully complete the migrated instance
     testHelper.completeTask("userTask");
@@ -302,10 +301,10 @@ public class MigrationMultiInstanceTest {
 
     // then
     Task task = testHelper.snapshotAfterMigration.getTaskForKey("userTask");
-    Assert.assertEquals(3, rule.getTaskService().getVariable(task.getId(), NUMBER_OF_INSTANCES));
-    Assert.assertEquals(1, rule.getTaskService().getVariable(task.getId(), NUMBER_OF_ACTIVE_INSTANCES));
-    Assert.assertEquals(0, rule.getTaskService().getVariable(task.getId(), NUMBER_OF_COMPLETED_INSTANCES));
-    Assert.assertEquals(0, rule.getTaskService().getVariable(task.getId(), NUMBER_OF_COMPLETED_INSTANCES));
+    assertThat(rule.getTaskService().getVariable(task.getId(), NUMBER_OF_INSTANCES)).isEqualTo(3);
+    assertThat(rule.getTaskService().getVariable(task.getId(), NUMBER_OF_ACTIVE_INSTANCES)).isEqualTo(1);
+    assertThat(rule.getTaskService().getVariable(task.getId(), NUMBER_OF_COMPLETED_INSTANCES)).isEqualTo(0);
+    assertThat(rule.getTaskService().getVariable(task.getId(), NUMBER_OF_COMPLETED_INSTANCES)).isEqualTo(0);
   }
 
   @Test

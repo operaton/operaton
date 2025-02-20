@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.task;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -218,7 +217,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertEquals(0, tasks.size());
+    assertThat(tasks).isEmpty();
   }
 
   @Test
@@ -234,7 +233,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertEquals(2, tasks.size());
+    assertThat(tasks).hasSize(2);
   }
 
   @Test
@@ -257,7 +256,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertEquals(2, tasks.size());
+    assertThat(tasks).hasSize(2);
   }
 
   @Test
@@ -282,7 +281,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertEquals(2, tasks.size());
+    assertThat(tasks).hasSize(2);
   }
 
   @Test
@@ -305,7 +304,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertEquals(2, tasks.size());
+    assertThat(tasks).hasSize(2);
   }
 
   @Test
@@ -332,7 +331,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertEquals(3, tasks.size());
+    assertThat(tasks).hasSize(3);
   }
 
   @Test
@@ -359,7 +358,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertEquals(3, tasks.size());
+    assertThat(tasks).hasSize(3);
   }
 
   @Test
@@ -382,7 +381,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertEquals(2, tasks.size());
+    assertThat(tasks).hasSize(2);
   }
 
   @Test
@@ -419,7 +418,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertEquals(5, tasks.size());
+    assertThat(tasks).hasSize(5);
   }
 
   @Test
@@ -469,7 +468,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertEquals(3, tasks.size());
+    assertThat(tasks).hasSize(3);
   }
 
   @Test
@@ -537,7 +536,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertEquals(3, tasks.size());
+    assertThat(tasks).hasSize(3);
   }
 
   @Test
@@ -565,7 +564,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertEquals(1, tasks.size());
+    assertThat(tasks).hasSize(1);
   }
 
   @Test
@@ -587,7 +586,7 @@ public class TaskQueryOrTest {
       .endOr();
 
     // then
-    assertEquals(2, query.count());
+    assertThat(query.count()).isEqualTo(2);
   }
 
   @Test
@@ -616,7 +615,7 @@ public class TaskQueryOrTest {
       .endOr();
 
     // then
-    assertEquals(2, query.count());
+    assertThat(query.count()).isEqualTo(2);
   }
 
   @Test
@@ -664,9 +663,9 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertEquals(2, tasks.size());
-    assertEquals("aFormKey", tasks.get(0).getFormKey());
-    assertEquals("anotherFormKey", tasks.get(1).getFormKey());
+    assertThat(tasks).hasSize(2);
+    assertThat(tasks.get(0).getFormKey()).isEqualTo("aFormKey");
+    assertThat(tasks.get(1).getFormKey()).isEqualTo("anotherFormKey");
   }
 
   @Test
@@ -710,7 +709,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertEquals(2, tasks.size());
+    assertThat(tasks).hasSize(2);
   }
 
   @Test
@@ -755,7 +754,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertEquals(2, tasks.size());
+    assertThat(tasks).hasSize(2);
   }
 
   @Test
@@ -812,7 +811,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertEquals(2, tasks.size());
+    assertThat(tasks).hasSize(2);
   }
 
   @Test
@@ -863,7 +862,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertEquals(3, tasks.size());
+    assertThat(tasks).hasSize(3);
   }
 
   @Test
@@ -901,7 +900,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertEquals(2, tasks.size());
+    assertThat(tasks).hasSize(2);
   }
 
   @Test
@@ -941,7 +940,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertEquals(2, tasks.size());
+    assertThat(tasks).hasSize(2);
   }
 
   @Test
@@ -988,7 +987,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertEquals(3, tasks.size());
+    assertThat(tasks).hasSize(3);
   }
 
   @Test
@@ -1028,7 +1027,7 @@ public class TaskQueryOrTest {
         .processInstanceBusinessKey(businessKey)
       .endOr();
 
-    assertEquals(2, query.list().size());
+    assertThat(query.list()).hasSize(2);
   }
 
   @Test
@@ -1063,7 +1062,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertEquals(2, tasks.size());
+    assertThat(tasks).hasSize(2);
   }
 
   @Test
@@ -1084,9 +1083,9 @@ public class TaskQueryOrTest {
     TaskQueryImpl result =  (TaskQueryImpl)((TaskQueryImpl)extendedQuery).extend(extendingQuery);
 
     // then
-    assertEquals("sales", result.getCandidateGroup());
-    assertEquals("aTaskName", result.getQueries().get(1).getName());
-    assertEquals("anotherTaskName", result.getQueries().get(2).getNameLike());
+    assertThat(result.getCandidateGroup()).isEqualTo("sales");
+    assertThat(result.getQueries().get(1).getName()).isEqualTo("aTaskName");
+    assertThat(result.getQueries().get(2).getNameLike()).isEqualTo("anotherTaskName");
   }
 
   @Test
@@ -1107,9 +1106,9 @@ public class TaskQueryOrTest {
     TaskQueryImpl result =  (TaskQueryImpl)((TaskQueryImpl)extendedQuery).extend(extendingQuery);
 
     // then
-    assertEquals("aTaskName", result.getQueries().get(1).getName());
-    assertEquals("anotherTaskName", result.getQueries().get(2).getNameLike());
-    assertEquals("aCandidateGroup", result.getCandidateGroup());
+    assertThat(result.getQueries().get(1).getName()).isEqualTo("aTaskName");
+    assertThat(result.getQueries().get(2).getNameLike()).isEqualTo("anotherTaskName");
+    assertThat(result.getCandidateGroup()).isEqualTo("aCandidateGroup");
   }
 
   @Test
@@ -1135,10 +1134,10 @@ public class TaskQueryOrTest {
     TaskQueryImpl result =  (TaskQueryImpl)((TaskQueryImpl)extendedQuery).extend(extendingQuery);
 
     // then
-    assertEquals("aTaskName", result.getQueries().get(1).getName());
-    assertEquals("anotherTaskName", result.getQueries().get(2).getNameLike());
-    assertEquals("aCandidateGroup", result.getQueries().get(3).getCandidateGroup());
-    assertEquals("aCandidateUser", result.getQueries().get(4).getCandidateUser());
+    assertThat(result.getQueries().get(1).getName()).isEqualTo("aTaskName");
+    assertThat(result.getQueries().get(2).getNameLike()).isEqualTo("anotherTaskName");
+    assertThat(result.getQueries().get(3).getCandidateGroup()).isEqualTo("aCandidateGroup");
+    assertThat(result.getQueries().get(4).getCandidateUser()).isEqualTo("aCandidateUser");
   }
 
   @Test
@@ -1146,157 +1145,157 @@ public class TaskQueryOrTest {
     HashMap<String, Date> dates = createFollowUpAndDueDateTasks();
     taskService.saveTask(taskService.newTask());
 
-    assertEquals(2, taskService.createTaskQuery()
-      .or()
+    assertThat(taskService.createTaskQuery()
+        .or()
         .dueDate(dates.get("date"))
         .dueBefore(dates.get("oneHourAgo"))
-      .endOr()
-      .count());
+        .endOr()
+        .count()).isEqualTo(2);
 
-    assertEquals(3, taskService.createTaskQuery()
-      .or()
+    assertThat(taskService.createTaskQuery()
+        .or()
         .dueDate(dates.get("date"))
         .dueBefore(dates.get("oneHourAgo"))
         .withoutDueDate()
-      .endOr()
-      .count());
+        .endOr()
+        .count()).isEqualTo(3);
 
-    assertEquals(2, taskService.createTaskQuery()
-      .or()
+    assertThat(taskService.createTaskQuery()
+        .or()
         .dueDate(dates.get("date"))
         .dueAfter(dates.get("oneHourLater"))
-      .endOr()
-      .count());
+        .endOr()
+        .count()).isEqualTo(2);
 
-    assertEquals(3, taskService.createTaskQuery()
-      .or()
+    assertThat(taskService.createTaskQuery()
+        .or()
         .dueDate(dates.get("date"))
         .dueAfter(dates.get("oneHourLater"))
         .withoutDueDate()
-      .endOr()
-      .count());
+        .endOr()
+        .count()).isEqualTo(3);
 
-    assertEquals(2, taskService.createTaskQuery()
-      .or()
+    assertThat(taskService.createTaskQuery()
+        .or()
         .dueBefore(dates.get("oneHourAgo"))
         .dueAfter(dates.get("oneHourLater"))
-      .endOr()
-      .count());
+        .endOr()
+        .count()).isEqualTo(2);
 
-    assertEquals(3, taskService.createTaskQuery()
-      .or()
+    assertThat(taskService.createTaskQuery()
+        .or()
         .dueBefore(dates.get("oneHourAgo"))
         .dueAfter(dates.get("oneHourLater"))
         .withoutDueDate()
-      .endOr()
-      .count());
+        .endOr()
+        .count()).isEqualTo(3);
 
-    assertEquals(3, taskService.createTaskQuery()
-      .or()
+    assertThat(taskService.createTaskQuery()
+        .or()
         .dueBefore(dates.get("oneHourLater"))
         .dueAfter(dates.get("oneHourAgo"))
-      .endOr()
-      .count());
+        .endOr()
+        .count()).isEqualTo(3);
 
-    assertEquals(4, taskService.createTaskQuery()
-      .or()
+    assertThat(taskService.createTaskQuery()
+        .or()
         .dueBefore(dates.get("oneHourLater"))
         .dueAfter(dates.get("oneHourAgo"))
         .withoutDueDate()
-      .endOr()
-      .count());
+        .endOr()
+        .count()).isEqualTo(4);
 
-    assertEquals(3, taskService.createTaskQuery()
-      .or()
+    assertThat(taskService.createTaskQuery()
+        .or()
         .dueDate(dates.get("date"))
         .dueBefore(dates.get("oneHourAgo"))
         .dueAfter(dates.get("oneHourLater"))
-      .endOr()
-      .count());
+        .endOr()
+        .count()).isEqualTo(3);
 
-    assertEquals(4, taskService.createTaskQuery()
-      .or()
+    assertThat(taskService.createTaskQuery()
+        .or()
         .dueDate(dates.get("date"))
         .dueBefore(dates.get("oneHourAgo"))
         .dueAfter(dates.get("oneHourLater"))
         .withoutDueDate()
-      .endOr()
-      .count());
+        .endOr()
+        .count()).isEqualTo(4);
   }
 
   @Test
   public void shouldTestFollowUpDateCombinations() throws ParseException {
     HashMap<String, Date> dates = createFollowUpAndDueDateTasks();
 
-    assertEquals(2, taskService.createTaskQuery()
-      .or()
+    assertThat(taskService.createTaskQuery()
+        .or()
         .followUpDate(dates.get("date"))
         .followUpBefore(dates.get("oneHourAgo"))
-      .endOr()
-      .count());
+        .endOr()
+        .count()).isEqualTo(2);
 
-    assertEquals(2, taskService.createTaskQuery()
-      .or()
+    assertThat(taskService.createTaskQuery()
+        .or()
         .followUpDate(dates.get("date"))
         .followUpAfter(dates.get("oneHourLater"))
-      .endOr()
-      .count());
+        .endOr()
+        .count()).isEqualTo(2);
 
-    assertEquals(2, taskService.createTaskQuery()
-      .or()
+    assertThat(taskService.createTaskQuery()
+        .or()
         .followUpBefore(dates.get("oneHourAgo"))
         .followUpAfter(dates.get("oneHourLater"))
-      .endOr()
-      .count());
+        .endOr()
+        .count()).isEqualTo(2);
 
-    assertEquals(3, taskService.createTaskQuery()
-      .or()
+    assertThat(taskService.createTaskQuery()
+        .or()
         .followUpBefore(dates.get("oneHourLater"))
         .followUpAfter(dates.get("oneHourAgo"))
-      .endOr()
-      .count());
+        .endOr()
+        .count()).isEqualTo(3);
 
-    assertEquals(3, taskService.createTaskQuery()
-      .or()
+    assertThat(taskService.createTaskQuery()
+        .or()
         .followUpDate(dates.get("date"))
         .followUpBefore(dates.get("oneHourAgo"))
         .followUpAfter(dates.get("oneHourLater"))
-      .endOr()
-      .count());
+        .endOr()
+        .count()).isEqualTo(3);
 
     // followUp before or null
     taskService.saveTask(taskService.newTask());
 
-    assertEquals(4, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(4);
 
-    assertEquals(3, taskService.createTaskQuery()
-      .or()
+    assertThat(taskService.createTaskQuery()
+        .or()
         .followUpDate(dates.get("date"))
         .followUpBeforeOrNotExistent(dates.get("oneHourAgo"))
-      .endOr()
-      .count());
+        .endOr()
+        .count()).isEqualTo(3);
 
-    assertEquals(3, taskService.createTaskQuery()
-      .or()
+    assertThat(taskService.createTaskQuery()
+        .or()
         .followUpBeforeOrNotExistent(dates.get("oneHourAgo"))
         .followUpAfter(dates.get("oneHourLater"))
-      .endOr()
-      .count());
+        .endOr()
+        .count()).isEqualTo(3);
 
-    assertEquals(4, taskService.createTaskQuery()
-      .or()
+    assertThat(taskService.createTaskQuery()
+        .or()
         .followUpBeforeOrNotExistent(dates.get("oneHourLater"))
         .followUpAfter(dates.get("oneHourAgo"))
-      .endOr()
-      .count());
+        .endOr()
+        .count()).isEqualTo(4);
 
-    assertEquals(4, taskService.createTaskQuery()
-      .or()
+    assertThat(taskService.createTaskQuery()
+        .or()
         .followUpDate(dates.get("date"))
         .followUpBeforeOrNotExistent(dates.get("oneHourAgo"))
         .followUpAfter(dates.get("oneHourLater"))
-      .endOr()
-      .count());
+        .endOr()
+        .count()).isEqualTo(4);
   }
 
   @Test
@@ -1324,11 +1323,11 @@ public class TaskQueryOrTest {
     runtimeService.suspendProcessInstanceById(suspendedProcessInstance.getProcessInstanceId());
 
     // assume
-    assertEquals(2, taskService.createTaskQuery().taskDefinitionKey("testQuerySuspensionStateTask").active().count());
-    assertEquals(1, taskService.createTaskQuery().taskDefinitionKey("testQuerySuspensionStateTask").suspended().count());
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("testQuerySuspensionStateTask").active().count()).isEqualTo(2);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("testQuerySuspensionStateTask").suspended().count()).isEqualTo(1);
 
     // then
-    assertEquals(3, taskService.createTaskQuery().or().active().processVariableValueEquals("foo", 0).endOr().list().size());
+    assertThat(taskService.createTaskQuery().or().active().processVariableValueEquals("foo", 0).endOr().list()).hasSize(3);
   }
 
   @Test
@@ -1365,7 +1364,7 @@ public class TaskQueryOrTest {
       .list();
 
     // then
-    assertEquals(3, tasks.size());
+    assertThat(tasks).hasSize(3);
     for (Task task : tasks) {
       assertThat(task.getProcessInstanceId()).isIn(processInstanceId, processInstanceIds.get(0), processInstanceIds.get(1));
     }
@@ -1391,7 +1390,7 @@ public class TaskQueryOrTest {
     taskDueAfter.setDueDate(new Date(oneHourLater.getTime() + 1000));
     taskService.saveTask(taskDueAfter);
 
-    assertEquals(3, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(3);
 
     return new HashMap<>() {{
       put("date", date);

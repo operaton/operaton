@@ -19,9 +19,7 @@ package org.operaton.bpm.engine.test.api.mgmt;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.jobByPriority;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySortingAndCount;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -71,7 +69,7 @@ public class JobQueryByPriorityTest extends PluggableProcessEngineTest {
     // when making a job query and filtering by job priority
     // then the correct jobs are returned
     List<Job> jobs = managementService.createJobQuery().priorityLowerThanOrEquals(2).list();
-    assertEquals(3, jobs.size());
+    assertThat(jobs).hasSize(3);
 
     Set<String> processInstanceIds = new HashSet<>();
     processInstanceIds.add(instances.get(0).getId());
@@ -79,8 +77,8 @@ public class JobQueryByPriorityTest extends PluggableProcessEngineTest {
     processInstanceIds.add(instances.get(2).getId());
 
     for (Job job : jobs) {
-      assertTrue(job.getPriority() <= 2);
-      assertTrue(processInstanceIds.contains(job.getProcessInstanceId()));
+      assertThat(job.getPriority()).isLessThanOrEqualTo(2);
+      assertThat(processInstanceIds).contains(job.getProcessInstanceId());
     }
   }
 
@@ -97,7 +95,7 @@ public class JobQueryByPriorityTest extends PluggableProcessEngineTest {
 
     // when making a job query and filtering by disjunctive job priority
     // then the no jobs are returned
-    assertEquals(0, managementService.createJobQuery().priorityLowerThanOrEquals(2).priorityHigherThanOrEquals(3).count());
+    assertThat(managementService.createJobQuery().priorityLowerThanOrEquals(2).priorityHigherThanOrEquals(3).count()).isZero();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/jobPrioExpressionProcess.bpmn20.xml")
@@ -114,7 +112,7 @@ public class JobQueryByPriorityTest extends PluggableProcessEngineTest {
     // when making a job query and filtering by job priority
     // then the correct jobs are returned
     List<Job> jobs = managementService.createJobQuery().priorityHigherThanOrEquals(2L).list();
-    assertEquals(3, jobs.size());
+    assertThat(jobs).hasSize(3);
 
     Set<String> processInstanceIds = new HashSet<>();
     processInstanceIds.add(instances.get(2).getId());
@@ -122,8 +120,8 @@ public class JobQueryByPriorityTest extends PluggableProcessEngineTest {
     processInstanceIds.add(instances.get(4).getId());
 
     for (Job job : jobs) {
-      assertTrue(job.getPriority() >= 2);
-      assertTrue(processInstanceIds.contains(job.getProcessInstanceId()));
+      assertThat(job.getPriority()).isGreaterThanOrEqualTo(2);
+      assertThat(processInstanceIds).contains(job.getProcessInstanceId());
     }
   }
 
@@ -142,8 +140,8 @@ public class JobQueryByPriorityTest extends PluggableProcessEngineTest {
     // then the correct job is returned
     Job job = managementService.createJobQuery().priorityHigherThanOrEquals(2L)
         .priorityLowerThanOrEquals(2L).singleResult();
-    assertNotNull(job);
-    assertEquals(2, job.getPriority());
-    assertEquals(instances.get(2).getId(), job.getProcessInstanceId());
+    assertThat(job).isNotNull();
+    assertThat(job.getPriority()).isEqualTo(2);
+    assertThat(job.getProcessInstanceId()).isEqualTo(instances.get(2).getId());
   }
 }

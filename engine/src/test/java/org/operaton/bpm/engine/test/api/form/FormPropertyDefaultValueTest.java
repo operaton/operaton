@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.form;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,25 +36,26 @@ public class FormPropertyDefaultValueTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
+  @SuppressWarnings("deprecation")
   public void testDefaultValue() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("FormPropertyDefaultValueTest.testDefaultValue");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
 
     TaskFormData formData = formService.getTaskFormData(task.getId());
     List<FormProperty> formProperties = formData.getFormProperties();
-    assertEquals(4, formProperties.size());
+    assertThat(formProperties).hasSize(4);
 
     for (FormProperty prop : formProperties) {
       if ("booleanProperty".equals(prop.getId())) {
-        assertEquals("true", prop.getValue());
+        assertThat(prop.getValue()).isEqualTo("true");
       } else if ("stringProperty".equals(prop.getId())) {
-        assertEquals("someString", prop.getValue());
+        assertThat(prop.getValue()).isEqualTo("someString");
       } else if ("longProperty".equals(prop.getId())) {
-        assertEquals("42", prop.getValue());
+        assertThat(prop.getValue()).isEqualTo("42");
       } else if ("longExpressionProperty".equals(prop.getId())) {
-        assertEquals("23", prop.getValue());
+        assertThat(prop.getValue()).isEqualTo("23");
       } else {
-        assertTrue("Invalid form property: " + prop.getId(), false);
+        fail("Invalid form property: " + prop.getId());
       }
     }
 
@@ -63,14 +64,15 @@ public class FormPropertyDefaultValueTest extends PluggableProcessEngineTest {
     formDataUpdate.put("booleanProperty", "false");
     formService.submitTaskFormData(task.getId(), formDataUpdate);
 
-    assertEquals(false, runtimeService.getVariable(processInstance.getId(), "booleanProperty"));
-    assertEquals("someString", runtimeService.getVariable(processInstance.getId(), "stringProperty"));
-    assertEquals(42L, runtimeService.getVariable(processInstance.getId(), "longProperty"));
-    assertEquals(1L, runtimeService.getVariable(processInstance.getId(), "longExpressionProperty"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "booleanProperty")).isEqualTo(false);
+    assertThat(runtimeService.getVariable(processInstance.getId(), "stringProperty")).isEqualTo("someString");
+    assertThat(runtimeService.getVariable(processInstance.getId(), "longProperty")).isEqualTo(42L);
+    assertThat(runtimeService.getVariable(processInstance.getId(), "longExpressionProperty")).isEqualTo(1L);
   }
   
   @Deployment
   @Test
+  @SuppressWarnings("deprecation")
   public void testStartFormDefaultValue() {
     String processDefinitionId = repositoryService.createProcessDefinitionQuery()
       .processDefinitionKey("FormPropertyDefaultValueTest.testDefaultValue")
@@ -82,19 +84,19 @@ public class FormPropertyDefaultValueTest extends PluggableProcessEngineTest {
     
     
     List<FormProperty> formProperties = startForm.getFormProperties();
-    assertEquals(4, formProperties.size());
+    assertThat(formProperties).hasSize(4);
 
     for (FormProperty prop : formProperties) {
       if ("booleanProperty".equals(prop.getId())) {
-        assertEquals("true", prop.getValue());
+        assertThat(prop.getValue()).isEqualTo("true");
       } else if ("stringProperty".equals(prop.getId())) {
-        assertEquals("someString", prop.getValue());
+        assertThat(prop.getValue()).isEqualTo("someString");
       } else if ("longProperty".equals(prop.getId())) {
-        assertEquals("42", prop.getValue());
+        assertThat(prop.getValue()).isEqualTo("42");
       } else if ("longExpressionProperty".equals(prop.getId())) {
-        assertEquals("23", prop.getValue());
+        assertThat(prop.getValue()).isEqualTo("23");
       } else {
-        assertTrue("Invalid form property: " + prop.getId(), false);
+        fail("Invalid form property: " + prop.getId());
       }
     }
 
@@ -104,9 +106,9 @@ public class FormPropertyDefaultValueTest extends PluggableProcessEngineTest {
     formDataUpdate.put("booleanProperty", "false");
     ProcessInstance processInstance = formService.submitStartFormData(processDefinitionId, formDataUpdate);
 
-    assertEquals(false, runtimeService.getVariable(processInstance.getId(), "booleanProperty"));
-    assertEquals("someString", runtimeService.getVariable(processInstance.getId(), "stringProperty"));
-    assertEquals(42L, runtimeService.getVariable(processInstance.getId(), "longProperty"));
-    assertEquals(1L, runtimeService.getVariable(processInstance.getId(), "longExpressionProperty"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "booleanProperty")).isEqualTo(false);
+    assertThat(runtimeService.getVariable(processInstance.getId(), "stringProperty")).isEqualTo("someString");
+    assertThat(runtimeService.getVariable(processInstance.getId(), "longProperty")).isEqualTo(42L);
+    assertThat(runtimeService.getVariable(processInstance.getId(), "longExpressionProperty")).isEqualTo(1L);
   }
 }

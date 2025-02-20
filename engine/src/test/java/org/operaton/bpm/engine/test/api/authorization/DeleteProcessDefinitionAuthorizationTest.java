@@ -18,7 +18,7 @@ package org.operaton.bpm.engine.test.api.authorization;
 
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -119,7 +119,7 @@ public class DeleteProcessDefinitionAuthorizationTest {
 
     //then only one process definition should remain
     if (authRule.assertScenario(scenario)) {
-      assertEquals(1, repositoryService.createProcessDefinitionQuery().count());
+      assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
     }
   }
 
@@ -142,10 +142,10 @@ public class DeleteProcessDefinitionAuthorizationTest {
 
     //then exist no process instance and no definition
     if (authRule.assertScenario(scenario)) {
-      assertEquals(0, runtimeService.createProcessInstanceQuery().count());
-      assertEquals(0, repositoryService.createProcessDefinitionQuery().count());
+      assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
+      assertThat(repositoryService.createProcessDefinitionQuery().count()).isZero();
       if (processEngineConfiguration.getHistoryLevel().getId() >= HistoryLevel.HISTORY_LEVEL_ACTIVITY.getId()) {
-        assertEquals(0, engineRule.getHistoryService().createHistoricActivityInstanceQuery().count());
+        assertThat(engineRule.getHistoryService().createHistoricActivityInstanceQuery().count()).isZero();
       }
     }
   }
@@ -169,7 +169,7 @@ public class DeleteProcessDefinitionAuthorizationTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      assertEquals(0, repositoryService.createProcessDefinitionQuery().count());
+      assertThat(repositoryService.createProcessDefinitionQuery().count()).isZero();
     }
   }
 
@@ -195,11 +195,11 @@ public class DeleteProcessDefinitionAuthorizationTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      assertEquals(0, runtimeService.createProcessInstanceQuery().count());
-      assertEquals(0, repositoryService.createProcessDefinitionQuery().count());
+      assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
+      assertThat(repositoryService.createProcessDefinitionQuery().count()).isZero();
 
       if (processEngineConfiguration.getHistoryLevel().getId() >= HistoryLevel.HISTORY_LEVEL_ACTIVITY.getId()) {
-        assertEquals(0, historyService.createHistoricActivityInstanceQuery().count());
+        assertThat(historyService.createHistoricActivityInstanceQuery().count()).isZero();
       }
     }
   }
@@ -224,7 +224,7 @@ public class DeleteProcessDefinitionAuthorizationTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      assertEquals(0, repositoryService.createProcessDefinitionQuery().count());
+      assertThat(repositoryService.createProcessDefinitionQuery().count()).isZero();
     }
   }
 
@@ -251,11 +251,11 @@ public class DeleteProcessDefinitionAuthorizationTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      assertEquals(0, runtimeService.createProcessInstanceQuery().count());
-      assertEquals(0, repositoryService.createProcessDefinitionQuery().count());
+      assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
+      assertThat(repositoryService.createProcessDefinitionQuery().count()).isZero();
 
       if (processEngineConfiguration.getHistoryLevel().getId() >= HistoryLevel.HISTORY_LEVEL_ACTIVITY.getId()) {
-        assertEquals(0, historyService.createHistoricActivityInstanceQuery().count());
+        assertThat(historyService.createHistoricActivityInstanceQuery().count()).isZero();
       }
     }
   }

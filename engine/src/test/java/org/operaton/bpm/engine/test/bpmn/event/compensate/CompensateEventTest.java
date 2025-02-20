@@ -20,10 +20,7 @@ import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertTha
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -55,7 +52,6 @@ import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -74,13 +70,13 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
     org.operaton.bpm.engine.repository.Deployment deployment1 = repositoryService.createDeployment()
             .addClasspathResource(PROCESS_MODEL_WITH_REF_BEFORE)
             .deploy();
-    //then no problem will occure
+    //then no problem will occur
 
     //when model with ref after is deployed
     org.operaton.bpm.engine.repository.Deployment deployment2 = repositoryService.createDeployment()
             .addClasspathResource(PROCESS_MODEL_WITH_REF_AFTER)
             .deploy();
-    //then also no problem should occure
+    //then also no problem should occur
 
     //clean up
     repositoryService.deleteDeployment(deployment1.getId());
@@ -93,7 +89,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("compensateProcess");
 
-    assertEquals(5, runtimeService.getVariable(processInstance.getId(), "undoBookHotel"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "undoBookHotel")).isEqualTo(5);
 
     runtimeService.signal(processInstance.getId());
     testRule.assertProcessEnded(processInstance.getId());
@@ -124,7 +120,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("compensateProcess");
 
-    assertEquals(5, runtimeService.getVariable(processInstance.getId(), "undoBookHotel"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "undoBookHotel")).isEqualTo(5);
 
     Task singleResult = taskService.createTaskQuery().singleResult();
     taskService.complete(singleResult.getId());
@@ -141,11 +137,11 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("compensateProcess");
 
     List<Task> compensationHandlerTasks = taskService.createTaskQuery().taskDefinitionKey("undoBookHotel").list();
-    assertEquals(5, compensationHandlerTasks.size());
+    assertThat(compensationHandlerTasks).hasSize(5);
 
     ActivityInstance rootActivityInstance = runtimeService.getActivityInstance(processInstance.getId());
     List<ActivityInstance> compensationHandlerInstances = getInstancesForActivityId(rootActivityInstance, "undoBookHotel");
-    assertEquals(5, compensationHandlerInstances.size());
+    assertThat(compensationHandlerInstances).hasSize(5);
 
     for (Task task : compensationHandlerTasks) {
       taskService.complete(task.getId());
@@ -166,7 +162,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
 
     // five inner tasks
     List<Task> compensationHandlerTasks = taskService.createTaskQuery().taskDefinitionKey("undoBookHotel").list();
-    assertEquals(5, compensationHandlerTasks.size());
+    assertThat(compensationHandlerTasks).hasSize(5);
 
     // when
     runtimeService.deleteProcessInstance(processInstance.getId(), "");
@@ -181,7 +177,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("compensateProcess");
 
-    assertEquals(5, runtimeService.getVariable(processInstance.getId(), "undoBookHotel"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "undoBookHotel")).isEqualTo(5);
 
     runtimeService.signal(processInstance.getId());
     testRule.assertProcessEnded(processInstance.getId());
@@ -194,8 +190,8 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("compensateProcess");
 
-    assertEquals(5, runtimeService.getVariable(processInstance.getId(), "undoBookHotel"));
-    assertEquals(5, runtimeService.getVariable(processInstance.getId(), "undoBookFlight"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "undoBookHotel")).isEqualTo(5);
+    assertThat(runtimeService.getVariable(processInstance.getId(), "undoBookFlight")).isEqualTo(5);
 
     runtimeService.signal(processInstance.getId());
     testRule.assertProcessEnded(processInstance.getId());
@@ -209,8 +205,8 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("compensateProcess");
 
-    assertEquals(5, runtimeService.getVariable(processInstance.getId(), "undoBookHotel"));
-    assertNull(runtimeService.getVariable(processInstance.getId(), "undoBookFlight"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "undoBookHotel")).isEqualTo(5);
+    assertThat(runtimeService.getVariable(processInstance.getId(), "undoBookFlight")).isNull();
 
     runtimeService.signal(processInstance.getId());
     testRule.assertProcessEnded(processInstance.getId());
@@ -226,8 +222,8 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("compensateProcess");
 
     Task compensationTask = taskService.createTaskQuery().singleResult();
-    assertNotNull(compensationTask);
-    assertEquals("undoSubprocess", compensationTask.getTaskDefinitionKey());
+    assertThat(compensationTask).isNotNull();
+    assertThat(compensationTask.getTaskDefinitionKey()).isEqualTo("undoSubprocess");
 
     taskService.complete(compensationTask.getId());
     runtimeService.signal(instance.getId());
@@ -248,8 +244,8 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
     runtimeService.signal(instance.getId());
     // then
     Task compensationTask = taskService.createTaskQuery().singleResult();
-    assertNotNull(compensationTask);
-    assertEquals("undoScopeTask", compensationTask.getTaskDefinitionKey());
+    assertThat(compensationTask).isNotNull();
+    assertThat(compensationTask.getTaskDefinitionKey()).isEqualTo("undoScopeTask");
 
     taskService.complete(compensationTask.getId());
     runtimeService.signal(instance.getId());
@@ -274,8 +270,8 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
 
     // then
     Task compensationTask = taskService.createTaskQuery().singleResult();
-    assertNotNull(compensationTask);
-    assertEquals("undoScopeTask", compensationTask.getTaskDefinitionKey());
+    assertThat(compensationTask).isNotNull();
+    assertThat(compensationTask.getTaskDefinitionKey()).isEqualTo("undoScopeTask");
 
     taskService.complete(compensationTask.getId());
     runtimeService.signal(instance.getId());
@@ -294,7 +290,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
     completeTaskWithVariable("Request Vacation", "accept", false);
 
     // should not compensate activity before multi instance activity is completed
-    assertEquals(0, taskService.createTaskQuery().taskName("Cancel Hotel").count());
+    assertThat(taskService.createTaskQuery().taskName("Cancel Hotel").count()).isZero();
 
     // complete last open task and end process instance
     completeTask("Book Hotel");
@@ -313,7 +309,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
     completeTaskWithVariable("Request Vacation", "accept", false);
 
     // should not compensate activity before multi instance activity is completed
-    assertEquals(0, taskService.createTaskQuery().taskName("Cancel Hotel").count());
+    assertThat(taskService.createTaskQuery().taskName("Cancel Hotel").count()).isZero();
 
     // complete last open task and end process instance
     completeTask("Book Hotel");
@@ -333,7 +329,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
     completeTaskWithVariable("Request Vacation", "accept", false);
 
     // execute compensation handlers for each execution of the subprocess
-    assertEquals(5, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(5);
     completeTasks("Cancel Hotel", 5);
 
     testRule.assertProcessEnded(processInstanceId);
@@ -350,7 +346,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
     completeTaskWithVariable("Request Vacation", "accept", false);
 
     // execute compensation handlers for each execution of the subprocess
-    assertEquals(5, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(5);
     completeTasks("Cancel Hotel", 5);
 
     testRule.assertProcessEnded(processInstanceId);
@@ -364,16 +360,16 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("compensateProcess");
 
     if (!processEngineConfiguration.getHistory().equals(ProcessEngineConfiguration.HISTORY_NONE)) {
-      assertEquals(5, historyService.createHistoricActivityInstanceQuery().activityId("undoBookHotel").count());
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("undoBookHotel").count()).isEqualTo(5);
     }
 
     runtimeService.signal(processInstance.getId());
     testRule.assertProcessEnded(processInstance.getId());
 
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
     if (!processEngineConfiguration.getHistory().equals(ProcessEngineConfiguration.HISTORY_NONE)) {
-      assertEquals(6, historyService.createHistoricProcessInstanceQuery().count());
+      assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(6);
     }
 
   }
@@ -393,10 +389,10 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("compensateProcess");
 
     if (!processEngineConfiguration.getHistory().equals(ProcessEngineConfiguration.HISTORY_NONE)) {
-      assertEquals(5, historyService.createHistoricActivityInstanceQuery().activityId("undoBookHotel").count());
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("undoBookHotel").count()).isEqualTo(5);
     }
 
-    assertTrue(GetVariablesDelegate.values.containsAll(hotels));
+    assertThat(GetVariablesDelegate.values).containsAll(hotels);
   }
 
   @Deployment
@@ -414,10 +410,10 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("compensateProcess");
 
     if (!processEngineConfiguration.getHistory().equals(ProcessEngineConfiguration.HISTORY_NONE)) {
-      assertEquals(5, historyService.createHistoricActivityInstanceQuery().activityId("undoBookHotel").count());
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("undoBookHotel").count()).isEqualTo(5);
     }
 
-    assertTrue(GetVariablesDelegate.values.containsAll(hotels));
+    assertThat(GetVariablesDelegate.values).containsAll(hotels);
   }
 
   @Deployment
@@ -435,12 +431,12 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("compensateProcess", variables);
 
     if (!processEngineConfiguration.getHistory().equals(ProcessEngineConfiguration.HISTORY_NONE)) {
-      assertEquals(flights.size(), historyService.createHistoricActivityInstanceQuery().activityId("undoBookFlight").count());
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("undoBookFlight").count()).isEqualTo(flights.size());
     }
 
     // java delegates should be invoked for each element in collection
-    assertEquals(flights, BookFlightService.bookedFlights);
-    assertEquals(flights, CancelFlightService.canceledFlights);
+    assertThat(BookFlightService.bookedFlights).isEqualTo(flights);
+    assertThat(CancelFlightService.canceledFlights).isEqualTo(flights);
 
     testRule.assertProcessEnded(processInstance.getId());
   }
@@ -448,6 +444,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/bpmn/event/compensate/CompensateEventTest.testCompensationTriggeredByEventSubProcessActivityRef.bpmn20.xml" })
   @Test
+  @SuppressWarnings("deprecation")
   public void testCompensateActivityRefTriggeredByEventSubprocess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("compensateProcess");
     testRule.assertProcessEnded(processInstance.getId());
@@ -456,17 +453,18 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
         .processInstanceId(processInstance.getId()).variableName("undoBookHotel");
 
     if (processEngineConfiguration.getHistoryLevel().getId() >= ProcessEngineConfigurationImpl.HISTORYLEVEL_AUDIT) {
-      assertEquals(1, historicVariableInstanceQuery.count());
-      assertEquals("undoBookHotel", historicVariableInstanceQuery.list().get(0).getVariableName());
-      assertEquals(5, historicVariableInstanceQuery.list().get(0).getValue());
+      assertThat(historicVariableInstanceQuery.count()).isEqualTo(1);
+      assertThat(historicVariableInstanceQuery.list().get(0).getVariableName()).isEqualTo("undoBookHotel");
+      assertThat(historicVariableInstanceQuery.list().get(0).getValue()).isEqualTo(5);
 
-      assertEquals(0, historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstance.getId()).variableName("undoBookFlight").count());
+      assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstance.getId()).variableName("undoBookFlight").count()).isZero();
     }
   }
 
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/bpmn/event/compensate/CompensateEventTest.testCompensationTriggeredByEventSubProcessInSubProcessActivityRef.bpmn20.xml" })
   @Test
+  @SuppressWarnings("deprecation")
   public void testCompensateActivityRefTriggeredByEventSubprocessInSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("compensateProcess");
     testRule.assertProcessEnded(processInstance.getId());
@@ -475,16 +473,17 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
         .processInstanceId(processInstance.getId()).variableName("undoBookHotel");
 
     if (processEngineConfiguration.getHistoryLevel().getId() >= ProcessEngineConfigurationImpl.HISTORYLEVEL_AUDIT) {
-      assertEquals(1, historicVariableInstanceQuery.count());
-      assertEquals("undoBookHotel", historicVariableInstanceQuery.list().get(0).getVariableName());
-      assertEquals(5, historicVariableInstanceQuery.list().get(0).getValue());
+      assertThat(historicVariableInstanceQuery.count()).isEqualTo(1);
+      assertThat(historicVariableInstanceQuery.list().get(0).getVariableName()).isEqualTo("undoBookHotel");
+      assertThat(historicVariableInstanceQuery.list().get(0).getValue()).isEqualTo(5);
 
-      assertEquals(0, historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstance.getId()).variableName("undoBookFlight").count());
+      assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstance.getId()).variableName("undoBookFlight").count()).isZero();
     }
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/event/compensate/CompensateEventTest.testCompensationInEventSubProcessActivityRef.bpmn20.xml" })
   @Test
+  @SuppressWarnings("deprecation")
   public void testCompensateActivityRefInEventSubprocess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("compensateProcess");
     testRule.assertProcessEnded(processInstance.getId());
@@ -492,13 +491,13 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
     HistoricVariableInstanceQuery historicVariableInstanceQuery = historyService.createHistoricVariableInstanceQuery().variableName("undoBookSecondHotel");
 
     if (processEngineConfiguration.getHistoryLevel().getId() >= ProcessEngineConfigurationImpl.HISTORYLEVEL_AUDIT) {
-      assertEquals(1, historicVariableInstanceQuery.count());
-      assertEquals("undoBookSecondHotel", historicVariableInstanceQuery.list().get(0).getVariableName());
-      assertEquals(5, historicVariableInstanceQuery.list().get(0).getValue());
+      assertThat(historicVariableInstanceQuery.count()).isEqualTo(1);
+      assertThat(historicVariableInstanceQuery.list().get(0).getVariableName()).isEqualTo("undoBookSecondHotel");
+      assertThat(historicVariableInstanceQuery.list().get(0).getValue()).isEqualTo(5);
 
-      assertEquals(0, historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstance.getId()).variableName("undoBookFlight").count());
+      assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstance.getId()).variableName("undoBookFlight").count()).isZero();
 
-      assertEquals(0, historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstance.getId()).variableName("undoBookHotel").count());
+      assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstance.getId()).variableName("undoBookHotel").count()).isZero();
     }
   }
 
@@ -509,6 +508,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
    */
   @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/event/compensate/CompensateEventTest.testCompensationInEventSubProcess.bpmn20.xml" })
   @Test
+  @SuppressWarnings("deprecation")
   public void testCompensateInEventSubprocess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("compensateProcess");
     testRule.assertProcessEnded(processInstance.getId());
@@ -516,19 +516,19 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
     HistoricVariableInstanceQuery historicVariableInstanceQuery = historyService.createHistoricVariableInstanceQuery().variableName("undoBookSecondHotel");
 
     if (processEngineConfiguration.getHistoryLevel().getId() >= ProcessEngineConfigurationImpl.HISTORYLEVEL_AUDIT) {
-      assertEquals(1, historicVariableInstanceQuery.count());
-      assertEquals("undoBookSecondHotel", historicVariableInstanceQuery.list().get(0).getVariableName());
-      assertEquals(5, historicVariableInstanceQuery.list().get(0).getValue());
+      assertThat(historicVariableInstanceQuery.count()).isEqualTo(1);
+      assertThat(historicVariableInstanceQuery.list().get(0).getVariableName()).isEqualTo("undoBookSecondHotel");
+      assertThat(historicVariableInstanceQuery.list().get(0).getValue()).isEqualTo(5);
 
       historicVariableInstanceQuery = historyService.createHistoricVariableInstanceQuery().variableName("undoBookFlight");
 
-      assertEquals(1, historicVariableInstanceQuery.count());
-      assertEquals(5, historicVariableInstanceQuery.list().get(0).getValue());
+      assertThat(historicVariableInstanceQuery.count()).isEqualTo(1);
+      assertThat(historicVariableInstanceQuery.list().get(0).getValue()).isEqualTo(5);
 
       historicVariableInstanceQuery = historyService.createHistoricVariableInstanceQuery().variableName("undoBookHotel");
 
-      assertEquals(1, historicVariableInstanceQuery.count());
-      assertEquals(5, historicVariableInstanceQuery.list().get(0).getValue());
+      assertThat(historicVariableInstanceQuery.count()).isEqualTo(1);
+      assertThat(historicVariableInstanceQuery.list().get(0).getValue()).isEqualTo(5);
     }
   }
 
@@ -542,15 +542,15 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess", variables);
 
     int started = (Integer) runtimeService.getVariable(processInstance.getId(), "start");
-    assertEquals(5, started);
+    assertThat(started).isEqualTo(5);
 
     int ended = (Integer) runtimeService.getVariable(processInstance.getId(), "end");
-    assertEquals(5, ended);
+    assertThat(ended).isEqualTo(5);
 
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
     if (historyLevel > ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
       long finishedCount = historyService.createHistoricActivityInstanceQuery().activityId("undoBookHotel").finished().count();
-      assertEquals(5, finishedCount);
+      assertThat(finishedCount).isEqualTo(5);
     }
   }
 
@@ -633,8 +633,8 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("compensateProcess");
 
     if (!processEngineConfiguration.getHistory().equals(ProcessEngineConfiguration.HISTORY_NONE)) {
-      assertEquals(5, historyService.createHistoricActivityInstanceQuery().activityId("undoBookHotel").count());
-      assertEquals(5, historyService.createHistoricActivityInstanceQuery().activityId("undoBookFlight").count());
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("undoBookHotel").count()).isEqualTo(5);
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("undoBookFlight").count()).isEqualTo(5);
     }
 
     testRule.assertProcessEnded(processInstance.getId());
@@ -646,8 +646,8 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("compensateProcess");
 
     if (!processEngineConfiguration.getHistory().equals(ProcessEngineConfiguration.HISTORY_NONE)) {
-      assertEquals(5, historyService.createHistoricActivityInstanceQuery().activityId("undoBookHotel").count());
-      assertEquals(0, historyService.createHistoricActivityInstanceQuery().activityId("undoBookFlight").count());
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("undoBookHotel").count()).isEqualTo(5);
+      assertThat(historyService.createHistoricActivityInstanceQuery().activityId("undoBookFlight").count()).isZero();
     }
 
     testRule.assertProcessEnded(processInstance.getId());
@@ -783,10 +783,10 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
     completeTaskWithVariable("Validate Booking", "valid", false);
 
     // first - compensate book flight
-    assertEquals(1, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
     completeTask("Cancel Flight");
     // second - compensate book hotel
-    assertEquals(1, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
     completeTask("Cancel Hotel");
     // third - additional compensation handler
     completeTask("Update Customer Record");
@@ -806,7 +806,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
     completeTaskWithVariable("Validate Booking", "valid", false);
 
     // compensate the activity within this scope
-    assertEquals(1, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
     completeTask("Cancel Hotel");
 
     testRule.assertProcessEnded(processInstanceId);
@@ -951,15 +951,15 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
     // then the compensation handler has been activated
     // and the user task in the sub process can be successfully completed
     Task subProcessTask = taskService.createTaskQuery().singleResult();
-    assertNotNull(subProcessTask);
-    assertEquals("subProcessTask", subProcessTask.getTaskDefinitionKey());
+    assertThat(subProcessTask).isNotNull();
+    assertThat(subProcessTask.getTaskDefinitionKey()).isEqualTo("subProcessTask");
 
     taskService.complete(subProcessTask.getId());
 
     // and the task following compensation can be successfully completed
     Task afterCompensationTask = taskService.createTaskQuery().singleResult();
-    assertNotNull(afterCompensationTask);
-    assertEquals("beforeEnd", afterCompensationTask.getTaskDefinitionKey());
+    assertThat(afterCompensationTask).isNotNull();
+    assertThat(afterCompensationTask.getTaskDefinitionKey()).isEqualTo("beforeEnd");
 
     taskService.complete(afterCompensationTask.getId());
 
@@ -1019,8 +1019,8 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
 
     // then activity instance tree is correct
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
-    assertEquals("eventSubProcessTask", task.getTaskDefinitionKey());
+    assertThat(task).isNotNull();
+    assertThat(task.getTaskDefinitionKey()).isEqualTo("eventSubProcessTask");
   }
 
   /**
@@ -1062,15 +1062,15 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
 
     // then there is a message event subscription for the receive task compensation handler
     EventSubscription eventSubscription = runtimeService.createEventSubscriptionQuery().singleResult();
-    assertNotNull(eventSubscription);
-    assertEquals(EventType.MESSAGE.name(), eventSubscription.getEventType());
+    assertThat(eventSubscription).isNotNull();
+    assertThat(eventSubscription.getEventType()).isEqualTo(EventType.MESSAGE.name());
 
     // and triggering the message completes compensation
     runtimeService.correlateMessage("Message");
 
     Task afterCompensationTask = taskService.createTaskQuery().singleResult();
-    assertNotNull(afterCompensationTask);
-    assertEquals("beforeEnd", afterCompensationTask.getTaskDefinitionKey());
+    assertThat(afterCompensationTask).isNotNull();
+    assertThat(afterCompensationTask.getTaskDefinitionKey()).isEqualTo("beforeEnd");
 
     taskService.complete(afterCompensationTask.getId());
 
@@ -1095,14 +1095,14 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
       HistoricVariableInstanceQuery historicVariableInstanceQuery = historyService
           .createHistoricVariableInstanceQuery().variableName("compensateScope1Task");
 
-      assertEquals(1, historicVariableInstanceQuery.count());
-      assertEquals(1, historicVariableInstanceQuery.list().get(0).getValue());
+      assertThat(historicVariableInstanceQuery.count()).isEqualTo(1);
+      assertThat(historicVariableInstanceQuery.list().get(0).getValue()).isEqualTo(1);
 
       historicVariableInstanceQuery = historyService
           .createHistoricVariableInstanceQuery().variableName("compensateScope2Task");
 
-      assertEquals(1, historicVariableInstanceQuery.count());
-      assertEquals(1, historicVariableInstanceQuery.list().get(0).getValue());
+      assertThat(historicVariableInstanceQuery.count()).isEqualTo(1);
+      assertThat(historicVariableInstanceQuery.list().get(0).getValue()).isEqualTo(1);
     }
 
     // and after completing the concurrent task, the process instance ends successfully
@@ -1130,11 +1130,11 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
     // then the variable listener has been invoked and was able to read the variable on the end event
     readListener = (ReadLocalVariableListener) runtimeService.getVariable(processInstance.getId(), "readListener");
 
-    Assert.assertEquals(1, readListener.getVariableEvents().size());
+    assertThat(readListener.getVariableEvents()).hasSize(1);
 
     VariableEvent event = readListener.getVariableEvents().get(0);
-    Assert.assertEquals("foo", event.getVariableName());
-    Assert.assertEquals("bar", event.getVariableValue());
+    assertThat(event.getVariableName()).isEqualTo("foo");
+    assertThat(event.getVariableValue()).isEqualTo("bar");
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
@@ -1179,18 +1179,18 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
     // then
     List<HistoricActivityInstance> historicActivityInstance = historyService.createHistoricActivityInstanceQuery()
         .orderByActivityId().asc().list();
-    assertEquals(5, historicActivityInstance.size());
+    assertThat(historicActivityInstance).hasSize(5);
 
-    assertEquals("start", historicActivityInstance.get(0).getActivityId());
-    assertEquals(date1, historicActivityInstance.get(0).getEndTime());
-    assertEquals("subProcess", historicActivityInstance.get(1).getActivityId());
-    assertEquals(date1, historicActivityInstance.get(1).getEndTime());
-    assertEquals("subProcessEnd", historicActivityInstance.get(2).getActivityId());
-    assertEquals(date1, historicActivityInstance.get(2).getEndTime());
-    assertEquals("subProcessStart", historicActivityInstance.get(3).getActivityId());
-    assertEquals(date1, historicActivityInstance.get(3).getEndTime());
-    assertEquals("userTask", historicActivityInstance.get(4).getActivityId());
-    assertEquals(date2, historicActivityInstance.get(4).getEndTime());
+    assertThat(historicActivityInstance.get(0).getActivityId()).isEqualTo("start");
+    assertThat(historicActivityInstance.get(0).getEndTime()).isEqualTo(date1);
+    assertThat(historicActivityInstance.get(1).getActivityId()).isEqualTo("subProcess");
+    assertThat(historicActivityInstance.get(1).getEndTime()).isEqualTo(date1);
+    assertThat(historicActivityInstance.get(2).getActivityId()).isEqualTo("subProcessEnd");
+    assertThat(historicActivityInstance.get(2).getEndTime()).isEqualTo(date1);
+    assertThat(historicActivityInstance.get(3).getActivityId()).isEqualTo("subProcessStart");
+    assertThat(historicActivityInstance.get(3).getEndTime()).isEqualTo(date1);
+    assertThat(historicActivityInstance.get(4).getActivityId()).isEqualTo("userTask");
+    assertThat(historicActivityInstance.get(4).getEndTime()).isEqualTo(date2);
 
 
   }
@@ -1202,7 +1202,9 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
   private void completeTasks(String taskName, int times) {
     List<Task> tasks = taskService.createTaskQuery().taskName(taskName).list();
 
-    assertTrue("Actual there are " + tasks.size() + " open tasks with name '" + taskName + "'. Expected at least " + times, times <= tasks.size());
+    assertThat(times)
+      .as("Actual there are " + tasks.size() + " open tasks with name '" + taskName + "'. Expected at least " + times)
+      .isLessThanOrEqualTo(tasks.size());
 
     Iterator<Task> taskIterator = tasks.iterator();
     for (int i = 0; i < times; i++) {
@@ -1213,7 +1215,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
 
   private void completeTaskWithVariable(String taskName, String variable, Object value) {
     Task task = taskService.createTaskQuery().taskName(taskName).singleResult();
-    assertNotNull("No open task with name '" + taskName + "'", task);
+    assertThat(task).as("No open task with name '" + taskName + "'").isNotNull();
 
     Map<String, Object> variables = new HashMap<>();
     if (variable != null) {

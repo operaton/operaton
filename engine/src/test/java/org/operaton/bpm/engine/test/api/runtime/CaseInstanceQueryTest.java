@@ -16,12 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -90,22 +86,22 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   private void verifyQueryResults(CaseInstanceQuery query, int countExpected) {
-    assertEquals(countExpected, query.list().size());
-    assertEquals(countExpected, query.count());
+    assertThat(query.list()).hasSize(countExpected);
+    assertThat(query.count()).isEqualTo(countExpected);
 
     if (countExpected == 1) {
-      assertNotNull(query.singleResult());
+      assertThat(query.singleResult()).isNotNull();
     } else if (countExpected > 1){
       verifySingleResultFails(query);
     } else if (countExpected == 0) {
-      assertNull(query.singleResult());
+      assertThat(query.singleResult()).isNull();
     }
   }
 
   private void verifySingleResultFails(CaseInstanceQuery query) {
     try {
       query.singleResult();
-      fail();
+      fail("Exception expected");
     } catch (ProcessEngineException e) {}
   }
 
@@ -122,15 +118,15 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
       .caseDefinitionKey(CASE_DEFINITION_KEY_2)
       .singleResult();
 
-    assertNotNull(caseInstance.getId());
-    assertEquals(caseInstance.getId(), caseInstance.getCaseInstanceId());
-    assertEquals("1", caseInstance.getBusinessKey());
-    assertEquals(caseDefinitionId, caseInstance.getCaseDefinitionId());
-    assertEquals("CasePlanModel_1", caseInstance.getActivityId());
-    assertNull(caseInstance.getActivityName());
-    assertNull(caseInstance.getParentId());
-    assertTrue(caseInstance.isActive());
-    assertFalse(caseInstance.isEnabled());
+    assertThat(caseInstance.getId()).isNotNull();
+    assertThat(caseInstance.getCaseInstanceId()).isEqualTo(caseInstance.getId());
+    assertThat(caseInstance.getBusinessKey()).isEqualTo("1");
+    assertThat(caseInstance.getCaseDefinitionId()).isEqualTo(caseDefinitionId);
+    assertThat(caseInstance.getActivityId()).isEqualTo("CasePlanModel_1");
+    assertThat(caseInstance.getActivityName()).isNull();
+    assertThat(caseInstance.getParentId()).isNull();
+    assertThat(caseInstance.isActive()).isTrue();
+    assertThat(caseInstance.isEnabled()).isFalse();
 
   }
 
@@ -160,7 +156,7 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
     try {
       query.caseDefinitionKey(null);
-      fail();
+      fail("Exception expected");
     } catch (NotValidException e) {}
 
   }
@@ -190,7 +186,7 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
     try {
       query.caseDefinitionId(null);
-      fail();
+      fail("Exception expected");
     } catch (NotValidException e) {}
 
   }
@@ -288,7 +284,7 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
     try {
       query.caseInstanceBusinessKey(null);
-      fail();
+      fail("Exception expected");
     } catch (NotValidException e) {}
 
   }
@@ -351,7 +347,7 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
     try {
       query.caseInstanceId(null);
-      fail();
+      fail("Exception expected");
     } catch (NotValidException e) {}
 
   }
@@ -483,7 +479,7 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
     try {
       caseInstanceQuery.list();
-      fail();
+      fail("Exception expected");
     } catch (ProcessEngineException e) {}
   }
 
@@ -504,7 +500,7 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
     try {
       caseInstanceQuery.list();
-      fail();
+      fail("Exception expected");
     } catch (ProcessEngineException e) {}
   }
 
@@ -624,7 +620,7 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
     try {
       caseInstanceQuery.list();
-      fail();
+      fail("Exception expected");
     } catch (ProcessEngineException e) {}
   }
 
@@ -645,7 +641,7 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
     try {
       caseInstanceQuery.list();
-      fail();
+      fail("Exception expected");
     } catch (ProcessEngineException e) {}
   }
 
@@ -659,9 +655,9 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
     try {
       query.variableValueGreaterThan("aNullValue", null);
-      fail();
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
-      assertEquals("Booleans and null cannot be used in 'greater than' condition", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'greater than' condition");
     }
 
   }
@@ -691,9 +687,9 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
     try {
       query.variableValueGreaterThan("aBooleanValue", false);
-      fail();
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
-      assertEquals("Booleans and null cannot be used in 'greater than' condition", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'greater than' condition");
     }
 
   }
@@ -791,7 +787,7 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
     try {
       caseInstanceQuery.list();
-      fail();
+      fail("Exception expected");
     } catch (ProcessEngineException e) {}
   }
 
@@ -812,7 +808,7 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
     try {
       caseInstanceQuery.list();
-      fail();
+      fail("Exception expected");
     } catch (ProcessEngineException e) {}
   }
 
@@ -826,9 +822,9 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
     try {
       query.variableValueGreaterThanOrEqual("aNullValue", null);
-      fail();
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
-      assertEquals("Booleans and null cannot be used in 'greater than or equal' condition", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'greater than or equal' condition");
     }
 
   }
@@ -864,9 +860,9 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
     try {
       query.variableValueGreaterThanOrEqual("aBooleanValue", false);
-      fail();
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
-      assertEquals("Booleans and null cannot be used in 'greater than or equal' condition", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'greater than or equal' condition");
     }
 
   }
@@ -994,7 +990,7 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
     try {
       caseInstanceQuery.list();
-      fail();
+      fail("Exception expected");
     } catch (ProcessEngineException e) {}
   }
 
@@ -1015,7 +1011,7 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
     try {
       caseInstanceQuery.list();
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {}
   }
 
@@ -1029,9 +1025,9 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
     try {
       query.variableValueLessThan("aNullValue", null);
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
-      assertEquals("Booleans and null cannot be used in 'less than' condition", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'less than' condition");
     }
 
   }
@@ -1061,9 +1057,9 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
     try {
       query.variableValueLessThan("aBooleanValue", false);
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
-      assertEquals("Booleans and null cannot be used in 'less than' condition", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'less than' condition");
     }
 
   }
@@ -1161,7 +1157,7 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
     try {
       caseInstanceQuery.list();
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {}
   }
 
@@ -1182,7 +1178,7 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
     try {
       caseInstanceQuery.list();
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {}
   }
 
@@ -1196,9 +1192,9 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
     try {
       query.variableValueLessThanOrEqual("aNullValue", null);
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
-      assertEquals("Booleans and null cannot be used in 'less than or equal' condition", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'less than or equal' condition");
     }
 
   }
@@ -1234,9 +1230,9 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
     try {
       query.variableValueLessThanOrEqual("aBooleanValue", false);
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
-      assertEquals("Booleans and null cannot be used in 'less than or equal' condition", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'less than or equal' condition");
     }
 
   }
@@ -1364,7 +1360,7 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
     try {
       caseInstanceQuery.list();
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {}
   }
 
@@ -1385,7 +1381,7 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
     try {
       caseInstanceQuery.list();
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {}
   }
 
@@ -1399,9 +1395,9 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
     try {
       query.variableValueLike("aNullValue", null);
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
-      assertEquals("Booleans and null cannot be used in 'like' condition", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'like' condition");
     }
 
   }
@@ -1442,9 +1438,9 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
     try {
       query.variableValueNotLike("aNullValue", null);
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
-      assertEquals("Booleans and null cannot be used in 'not like' condition", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'not like' condition");
     }
 
   }
@@ -1577,19 +1573,19 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
       .setVariable("var", "123")
       .create();
 
-    assertEquals(4, caseService.createCaseInstanceQuery().variableValueEquals("var", Variables.numberValue(123)).count());
-    assertEquals(4, caseService.createCaseInstanceQuery().variableValueEquals("var", Variables.numberValue(123L)).count());
-    assertEquals(4, caseService.createCaseInstanceQuery().variableValueEquals("var", Variables.numberValue(123.0d)).count());
-    assertEquals(4, caseService.createCaseInstanceQuery().variableValueEquals("var", Variables.numberValue((short) 123)).count());
+    assertThat(caseService.createCaseInstanceQuery().variableValueEquals("var", Variables.numberValue(123)).count()).isEqualTo(4);
+    assertThat(caseService.createCaseInstanceQuery().variableValueEquals("var", Variables.numberValue(123L)).count()).isEqualTo(4);
+    assertThat(caseService.createCaseInstanceQuery().variableValueEquals("var", Variables.numberValue(123.0d)).count()).isEqualTo(4);
+    assertThat(caseService.createCaseInstanceQuery().variableValueEquals("var", Variables.numberValue((short) 123)).count()).isEqualTo(4);
 
-    assertEquals(1, caseService.createCaseInstanceQuery().variableValueEquals("var", Variables.numberValue(null)).count());
+    assertThat(caseService.createCaseInstanceQuery().variableValueEquals("var", Variables.numberValue(null)).count()).isEqualTo(1);
 
     // other operators
-    assertEquals(4, caseService.createCaseInstanceQuery().variableValueNotEquals("var", Variables.numberValue(123)).count());
-    assertEquals(1, caseService.createCaseInstanceQuery().variableValueGreaterThan("var", Variables.numberValue(123L)).count());
-    assertEquals(5, caseService.createCaseInstanceQuery().variableValueGreaterThanOrEqual("var", Variables.numberValue(123.0d)).count());
-    assertEquals(0, caseService.createCaseInstanceQuery().variableValueLessThan("var", Variables.numberValue((short) 123)).count());
-    assertEquals(4, caseService.createCaseInstanceQuery().variableValueLessThanOrEqual("var", Variables.numberValue((short) 123)).count());
+    assertThat(caseService.createCaseInstanceQuery().variableValueNotEquals("var", Variables.numberValue(123)).count()).isEqualTo(4);
+    assertThat(caseService.createCaseInstanceQuery().variableValueGreaterThan("var", Variables.numberValue(123L)).count()).isEqualTo(1);
+    assertThat(caseService.createCaseInstanceQuery().variableValueGreaterThanOrEqual("var", Variables.numberValue(123.0d)).count()).isEqualTo(5);
+    assertThat(caseService.createCaseInstanceQuery().variableValueLessThan("var", Variables.numberValue((short) 123)).count()).isZero();
+    assertThat(caseService.createCaseInstanceQuery().variableValueLessThanOrEqual("var", Variables.numberValue((short) 123)).count()).isEqualTo(4);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/superProcessWithCaseCallActivity.bpmn20.xml"})
@@ -1626,7 +1622,7 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
     try {
       query.superProcessInstanceId(null);
-      fail();
+      fail("");
     } catch (NotValidException e) {}
 
   }
@@ -1651,7 +1647,7 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
     verifyQueryResults(query, 1);
 
     CaseInstance caseInstance = query.singleResult();
-    assertEquals(superCaseInstanceId, caseInstance.getId());
+    assertThat(caseInstance.getId()).isEqualTo(superCaseInstanceId);
   }
 
   @Test
@@ -1664,7 +1660,7 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
     try {
       query.subProcessInstanceId(null);
-      fail();
+      fail("");
     } catch (NotValidException e) {
       // expected
     }
@@ -1692,7 +1688,7 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
     try {
       query.superCaseInstanceId(null);
-      fail();
+      fail("");
     } catch (NotValidException e) {
       // expected
     }
@@ -1716,7 +1712,7 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
     verifyQueryResults(query, 1);
 
     CaseInstance caseInstance = query.singleResult();
-    assertEquals(superCaseInstanceId, caseInstance.getId());
+    assertThat(caseInstance.getId()).isEqualTo(superCaseInstanceId);
   }
 
   @Test
@@ -1729,7 +1725,7 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
     try {
       query.subCaseInstanceId(null);
-      fail();
+      fail("");
     } catch (NotValidException e) {
       // expected
     }
@@ -1759,7 +1755,7 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
     try {
       query.deploymentId(null);
-      fail();
+      fail("");
     } catch (NotValidException e) {
       // expected
     }

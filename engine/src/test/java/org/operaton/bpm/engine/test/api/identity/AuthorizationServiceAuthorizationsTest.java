@@ -26,10 +26,8 @@ import static org.operaton.bpm.engine.authorization.Permissions.DELETE;
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
 import static org.operaton.bpm.engine.authorization.Resources.AUTHORIZATION;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestUtil.assertExceptionInfo;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.AuthorizationService;
@@ -86,9 +84,9 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
       fail("exception expected");
 
     } catch (AuthorizationException e) {
-      assertEquals(1, e.getMissingAuthorizations().size());
+      assertThat(e.getMissingAuthorizations()).hasSize(1);
       MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertEquals(JONNY_2, e.getUserId());
+      assertThat(e.getUserId()).isEqualTo(JONNY_2);
       assertExceptionInfo(CREATE.getName(), AUTHORIZATION.resourceName(), null, info);
     }
 
@@ -102,9 +100,9 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
       fail("exception expected");
 
     } catch (AuthorizationException e) {
-      assertEquals(1, e.getMissingAuthorizations().size());
+      assertThat(e.getMissingAuthorizations()).hasSize(1);
       MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertEquals(JONNY_2, e.getUserId());
+      assertThat(e.getUserId()).isEqualTo(JONNY_2);
       assertExceptionInfo(CREATE.getName(), AUTHORIZATION.resourceName(), null, info);
     }
   }
@@ -131,9 +129,9 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
       fail("exception expected");
 
     } catch (AuthorizationException e) {
-      assertEquals(1, e.getMissingAuthorizations().size());
+      assertThat(e.getMissingAuthorizations()).hasSize(1);
       MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertEquals(JONNY_2, e.getUserId());
+      assertThat(e.getUserId()).isEqualTo(JONNY_2);
       assertExceptionInfo(DELETE.getName(), AUTHORIZATION.resourceName(), basePerms.getId(), info);
     }
   }
@@ -163,9 +161,9 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
       fail("exception expected");
 
     } catch (AuthorizationException e) {
-      assertEquals(1, e.getMissingAuthorizations().size());
+      assertThat(e.getMissingAuthorizations()).hasSize(1);
       MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertEquals(JONNY_2, e.getUserId());
+      assertThat(e.getUserId()).isEqualTo(JONNY_2);
       assertExceptionInfo(UPDATE.getName(), AUTHORIZATION.resourceName(), basePerms.getId(), info);
     }
 
@@ -193,13 +191,13 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
     authorizationService.saveAuthorization(basePerms);
 
     // I can see it
-    assertEquals(1, authorizationService.createAuthorizationQuery().count());
+    assertThat(authorizationService.createAuthorizationQuery().count()).isEqualTo(1);
 
     // now enable checks
     processEngineConfiguration.setAuthorizationEnabled(true);
 
     // I can't see it
-    assertEquals(0, authorizationService.createAuthorizationQuery().count());
+    assertThat(authorizationService.createAuthorizationQuery().count()).isZero();
 
   }
 
@@ -220,7 +218,7 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
       fail("expected exception");
     } catch (BadUserRequestException e) {
       // then
-      assertTrue(e.getMessage().contains("The resource type with id:'0' is not valid for 'CREATE_BATCH_MIGRATE_PROCESS_INSTANCES' permission."));
+      assertThat(e.getMessage()).contains("The resource type with id:'0' is not valid for 'CREATE_BATCH_MIGRATE_PROCESS_INSTANCES' permission.");
     }
 
     // given
@@ -235,7 +233,7 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
       fail("expected exception");
     } catch (BadUserRequestException e) {
       // then
-      assertTrue(e.getMessage().contains("The resource type with id:'13' is not valid for 'ACCESS' permission."));
+      assertThat(e.getMessage()).contains("The resource type with id:'13' is not valid for 'ACCESS' permission.");
     }
   }
 
@@ -256,7 +254,7 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
       fail("expected exception");
     } catch (BadUserRequestException e) {
       // then
-      assertTrue(e.getMessage().contains("The resource type with id:'6' is not valid for 'CREATE_BATCH_MIGRATE_PROCESS_INSTANCES' permission."));
+      assertThat(e.getMessage()).contains("The resource type with id:'6' is not valid for 'CREATE_BATCH_MIGRATE_PROCESS_INSTANCES' permission.");
     }
   }
 
@@ -277,7 +275,7 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
       fail("expected exception");
     } catch (BadUserRequestException e) {
       // then
-      assertTrue(e.getMessage().contains("The resource type with id:'6' is not valid for 'CREATE_BATCH_MIGRATE_PROCESS_INSTANCES' permission."));
+      assertThat(e.getMessage()).contains("The resource type with id:'6' is not valid for 'CREATE_BATCH_MIGRATE_PROCESS_INSTANCES' permission.");
     }
 
     // given
@@ -292,7 +290,7 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
       fail("expected exception");
     } catch (BadUserRequestException e) {
       // then
-      assertTrue(e.getMessage().contains("The resource type with id:'6' is not valid for 'ACCESS' permission."));
+      assertThat(e.getMessage()).contains("The resource type with id:'6' is not valid for 'ACCESS' permission.");
     }
   }
 
@@ -313,7 +311,7 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
       fail("expected exception");
     } catch (BadUserRequestException e) {
       // then
-      assertTrue(e.getMessage().contains("The resource type with id:'8' is not valid for 'CREATE_BATCH_MIGRATE_PROCESS_INSTANCES' permission."));
+      assertThat(e.getMessage()).contains("The resource type with id:'8' is not valid for 'CREATE_BATCH_MIGRATE_PROCESS_INSTANCES' permission.");
     }
 
     // given
@@ -328,7 +326,7 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
       fail("expected exception");
     } catch (BadUserRequestException e) {
       // then
-      assertTrue(e.getMessage().contains("The resource type with id:'8' is not valid for 'ACCESS' permission."));
+      assertThat(e.getMessage()).contains("The resource type with id:'8' is not valid for 'ACCESS' permission.");
     }
   }
 
@@ -352,9 +350,9 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
 
     // then
     Authorization authorizationResult = authorizationService.createAuthorizationQuery().resourceType(Resources.BATCH).singleResult();
-    assertNotNull(authorizationResult);
-    assertTrue(authorizationResult.isPermissionGranted(BatchPermissions.CREATE_BATCH_MIGRATE_PROCESS_INSTANCES));
-    assertTrue(authorizationResult.isPermissionGranted(BatchPermissions.CREATE_BATCH_DELETE_DECISION_INSTANCES));
+    assertThat(authorizationResult).isNotNull();
+    assertThat(authorizationResult.isPermissionGranted(BatchPermissions.CREATE_BATCH_MIGRATE_PROCESS_INSTANCES)).isTrue();
+    assertThat(authorizationResult.isPermissionGranted(BatchPermissions.CREATE_BATCH_DELETE_DECISION_INSTANCES)).isTrue();
   }
 
   @Test
@@ -371,30 +369,30 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
     processEngineConfiguration.setAuthorizationEnabled(true);
 
     // then
-    assertEquals(true, authorizationService.isUserAuthorized(userId, null, Permissions.ACCESS, Resources.APPLICATION));
-    assertEquals(false, authorizationService.isUserAuthorized(userId, null, BatchPermissions.CREATE_BATCH_MIGRATE_PROCESS_INSTANCES, Resources.BATCH));
-    assertEquals(false, authorizationService.isUserAuthorized(userId, null, ProcessDefinitionPermissions.RETRY_JOB, Resources.PROCESS_DEFINITION));
-    assertEquals(false, authorizationService.isUserAuthorized(userId, null, ProcessInstancePermissions.RETRY_JOB, Resources.PROCESS_INSTANCE));
+    assertThat(authorizationService.isUserAuthorized(userId, null, Permissions.ACCESS, Resources.APPLICATION)).isTrue();
+    assertThat(authorizationService.isUserAuthorized(userId, null, BatchPermissions.CREATE_BATCH_MIGRATE_PROCESS_INSTANCES, Resources.BATCH)).isFalse();
+    assertThat(authorizationService.isUserAuthorized(userId, null, ProcessDefinitionPermissions.RETRY_JOB, Resources.PROCESS_DEFINITION)).isFalse();
+    assertThat(authorizationService.isUserAuthorized(userId, null, ProcessInstancePermissions.RETRY_JOB, Resources.PROCESS_INSTANCE)).isFalse();
     try {
       authorizationService.isUserAuthorized(userId, null, BatchPermissions.CREATE_BATCH_MIGRATE_PROCESS_INSTANCES, Resources.APPLICATION);
       fail("expected exception");
     } catch (BadUserRequestException e) {
-      assertTrue(e.getMessage().contains("The resource type 'Application' is not valid"));
-      assertTrue(e.getMessage().contains(BatchPermissions.CREATE_BATCH_MIGRATE_PROCESS_INSTANCES.getName()));
+      assertThat(e.getMessage()).contains("The resource type 'Application' is not valid");
+      assertThat(e.getMessage()).contains(BatchPermissions.CREATE_BATCH_MIGRATE_PROCESS_INSTANCES.getName());
     }
     try {
       authorizationService.isUserAuthorized(userId, null, ProcessDefinitionPermissions.RETRY_JOB, Resources.APPLICATION);
       fail("expected exception");
     } catch (BadUserRequestException e) {
-      assertTrue(e.getMessage().contains("The resource type 'Application' is not valid"));
-      assertTrue(e.getMessage().contains(ProcessDefinitionPermissions.RETRY_JOB.getName()));
+      assertThat(e.getMessage()).contains("The resource type 'Application' is not valid");
+      assertThat(e.getMessage()).contains(ProcessDefinitionPermissions.RETRY_JOB.getName());
     }
     try {
       authorizationService.isUserAuthorized(userId, null, ProcessInstancePermissions.RETRY_JOB, Resources.APPLICATION);
       fail("expected exception");
     } catch (BadUserRequestException e) {
-      assertTrue(e.getMessage().contains("The resource type 'Application' is not valid"));
-      assertTrue(e.getMessage().contains(ProcessInstancePermissions.RETRY_JOB.getName()));
+      assertThat(e.getMessage()).contains("The resource type 'Application' is not valid");
+      assertThat(e.getMessage()).contains(ProcessInstancePermissions.RETRY_JOB.getName());
     }
 
   }
@@ -414,17 +412,17 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
     processEngineConfiguration.setAuthorizationEnabled(true);
 
     // then
-    assertEquals(true, authorizationService.isUserAuthorized(userId, null, Permissions.READ, Resources.PROCESS_INSTANCE));
-    assertEquals(true, authorizationService.isUserAuthorized(userId, null, ProcessInstancePermissions.RETRY_JOB, Resources.PROCESS_INSTANCE));
-    assertEquals(false, authorizationService.isUserAuthorized(userId, null, BatchPermissions.CREATE_BATCH_MIGRATE_PROCESS_INSTANCES, Resources.BATCH));
-    assertEquals(false, authorizationService.isUserAuthorized(userId, null, ProcessDefinitionPermissions.RETRY_JOB, Resources.PROCESS_DEFINITION));
-    assertEquals(false, authorizationService.isUserAuthorized(userId, null, Permissions.ACCESS, Resources.APPLICATION));
+    assertThat(authorizationService.isUserAuthorized(userId, null, Permissions.READ, Resources.PROCESS_INSTANCE)).isTrue();
+    assertThat(authorizationService.isUserAuthorized(userId, null, ProcessInstancePermissions.RETRY_JOB, Resources.PROCESS_INSTANCE)).isTrue();
+    assertThat(authorizationService.isUserAuthorized(userId, null, BatchPermissions.CREATE_BATCH_MIGRATE_PROCESS_INSTANCES, Resources.BATCH)).isFalse();
+    assertThat(authorizationService.isUserAuthorized(userId, null, ProcessDefinitionPermissions.RETRY_JOB, Resources.PROCESS_DEFINITION)).isFalse();
+    assertThat(authorizationService.isUserAuthorized(userId, null, Permissions.ACCESS, Resources.APPLICATION)).isFalse();
     try {
       authorizationService.isUserAuthorized(userId, null, ProcessDefinitionPermissions.RETRY_JOB, Resources.PROCESS_INSTANCE);
       fail("expected exception");
     } catch (BadUserRequestException e) {
-      assertTrue(e.getMessage().contains("The resource type 'ProcessInstance' is not valid"));
-      assertTrue(e.getMessage().contains(ProcessDefinitionPermissions.RETRY_JOB.getName()));
+      assertThat(e.getMessage()).contains("The resource type 'ProcessInstance' is not valid");
+      assertThat(e.getMessage()).contains(ProcessDefinitionPermissions.RETRY_JOB.getName());
     }
   }
 
@@ -443,7 +441,7 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
     processEngineConfiguration.setAuthorizationEnabled(true);
 
     // then
-    assertEquals(true, authorizationService.isUserAuthorized(userId, null, Permissions.ACCESS, resource));
+    assertThat(authorizationService.isUserAuthorized(userId, null, Permissions.ACCESS, resource)).isTrue();
   }
 
   protected void cleanupAfterTest() {

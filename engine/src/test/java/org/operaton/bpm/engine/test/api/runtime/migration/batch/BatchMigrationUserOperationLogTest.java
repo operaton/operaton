@@ -16,9 +16,10 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration.batch;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +37,6 @@ import org.operaton.bpm.engine.test.api.runtime.migration.MigrationTestRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
@@ -80,51 +80,51 @@ public class BatchMigrationUserOperationLogTest {
     engineRule.getIdentityService().setAuthenticatedUserId(USER_ID);
     engineRule.getRuntimeService()
       .newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .executeAsync();
     engineRule.getIdentityService().clearAuthentication();
 
     // then
     List<UserOperationLogEntry> opLogEntries = engineRule.getHistoryService().createUserOperationLogQuery().list();
-    Assert.assertEquals(3, opLogEntries.size());
+    assertThat(opLogEntries).hasSize(3);
 
     Map<String, UserOperationLogEntry> entries = asMap(opLogEntries);
 
     UserOperationLogEntry procDefEntry = entries.get("processDefinitionId");
-    Assert.assertNotNull(procDefEntry);
-    Assert.assertEquals("ProcessInstance", procDefEntry.getEntityType());
-    Assert.assertEquals("Migrate", procDefEntry.getOperationType());
-    Assert.assertEquals(sourceProcessDefinition.getId(), procDefEntry.getProcessDefinitionId());
-    Assert.assertEquals(sourceProcessDefinition.getKey(), procDefEntry.getProcessDefinitionKey());
-    Assert.assertNull(procDefEntry.getProcessInstanceId());
-    Assert.assertEquals(sourceProcessDefinition.getId(), procDefEntry.getOrgValue());
-    Assert.assertEquals(targetProcessDefinition.getId(), procDefEntry.getNewValue());
-    Assert.assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, procDefEntry.getCategory());
+    assertThat(procDefEntry).isNotNull();
+    assertThat(procDefEntry.getEntityType()).isEqualTo("ProcessInstance");
+    assertThat(procDefEntry.getOperationType()).isEqualTo("Migrate");
+    assertThat(procDefEntry.getProcessDefinitionId()).isEqualTo(sourceProcessDefinition.getId());
+    assertThat(procDefEntry.getProcessDefinitionKey()).isEqualTo(sourceProcessDefinition.getKey());
+    assertThat(procDefEntry.getProcessInstanceId()).isNull();
+    assertThat(procDefEntry.getOrgValue()).isEqualTo(sourceProcessDefinition.getId());
+    assertThat(procDefEntry.getNewValue()).isEqualTo(targetProcessDefinition.getId());
+    assertThat(procDefEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
     UserOperationLogEntry asyncEntry = entries.get("async");
-    Assert.assertNotNull(asyncEntry);
-    Assert.assertEquals("ProcessInstance", asyncEntry.getEntityType());
-    Assert.assertEquals("Migrate", asyncEntry.getOperationType());
-    Assert.assertEquals(sourceProcessDefinition.getId(), asyncEntry.getProcessDefinitionId());
-    Assert.assertEquals(sourceProcessDefinition.getKey(), asyncEntry.getProcessDefinitionKey());
-    Assert.assertNull(asyncEntry.getProcessInstanceId());
-    Assert.assertNull(asyncEntry.getOrgValue());
-    Assert.assertEquals("true", asyncEntry.getNewValue());
-    Assert.assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, asyncEntry.getCategory());
+    assertThat(asyncEntry).isNotNull();
+    assertThat(asyncEntry.getEntityType()).isEqualTo("ProcessInstance");
+    assertThat(asyncEntry.getOperationType()).isEqualTo("Migrate");
+    assertThat(asyncEntry.getProcessDefinitionId()).isEqualTo(sourceProcessDefinition.getId());
+    assertThat(asyncEntry.getProcessDefinitionKey()).isEqualTo(sourceProcessDefinition.getKey());
+    assertThat(asyncEntry.getProcessInstanceId()).isNull();
+    assertThat(asyncEntry.getOrgValue()).isNull();
+    assertThat(asyncEntry.getNewValue()).isEqualTo("true");
+    assertThat(asyncEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
     UserOperationLogEntry numInstancesEntry = entries.get("nrOfInstances");
-    Assert.assertNotNull(numInstancesEntry);
-    Assert.assertEquals("ProcessInstance", numInstancesEntry.getEntityType());
-    Assert.assertEquals("Migrate", numInstancesEntry.getOperationType());
-    Assert.assertEquals(sourceProcessDefinition.getId(), numInstancesEntry.getProcessDefinitionId());
-    Assert.assertEquals(sourceProcessDefinition.getKey(), numInstancesEntry.getProcessDefinitionKey());
-    Assert.assertNull(numInstancesEntry.getProcessInstanceId());
-    Assert.assertNull(numInstancesEntry.getOrgValue());
-    Assert.assertEquals("1", numInstancesEntry.getNewValue());
-    Assert.assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, numInstancesEntry.getCategory());
+    assertThat(numInstancesEntry).isNotNull();
+    assertThat(numInstancesEntry.getEntityType()).isEqualTo("ProcessInstance");
+    assertThat(numInstancesEntry.getOperationType()).isEqualTo("Migrate");
+    assertThat(numInstancesEntry.getProcessDefinitionId()).isEqualTo(sourceProcessDefinition.getId());
+    assertThat(numInstancesEntry.getProcessDefinitionKey()).isEqualTo(sourceProcessDefinition.getKey());
+    assertThat(numInstancesEntry.getProcessInstanceId()).isNull();
+    assertThat(numInstancesEntry.getOrgValue()).isNull();
+    assertThat(numInstancesEntry.getNewValue()).isEqualTo("1");
+    assertThat(numInstancesEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
-    Assert.assertEquals(procDefEntry.getOperationId(), asyncEntry.getOperationId());
-    Assert.assertEquals(asyncEntry.getOperationId(), numInstancesEntry.getOperationId());
+    assertThat(asyncEntry.getOperationId()).isEqualTo(procDefEntry.getOperationId());
+    assertThat(numInstancesEntry.getOperationId()).isEqualTo(asyncEntry.getOperationId());
   }
 
   @Test
@@ -141,7 +141,7 @@ public class BatchMigrationUserOperationLogTest {
     ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceById(sourceProcessDefinition.getId());
     Batch batch = engineRule.getRuntimeService()
       .newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .executeAsync();
     batchHelper.completeSeedJobs(batch);
 
@@ -151,7 +151,7 @@ public class BatchMigrationUserOperationLogTest {
     engineRule.getIdentityService().clearAuthentication();
 
     // then
-    Assert.assertEquals(0, engineRule.getHistoryService().createUserOperationLogQuery().entityType(EntityTypes.PROCESS_INSTANCE).count());
+    assertThat(engineRule.getHistoryService().createUserOperationLogQuery().entityType(EntityTypes.PROCESS_INSTANCE).count()).isZero();
   }
 
   @Test
@@ -168,14 +168,14 @@ public class BatchMigrationUserOperationLogTest {
     ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceById(sourceProcessDefinition.getId());
     engineRule.getRuntimeService()
       .newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .executeAsync();
 
     // when
     migrationRule.waitForJobExecutorToProcessAllJobs(5000L);
 
     // then
-    Assert.assertEquals(0, engineRule.getHistoryService().createUserOperationLogQuery().count());
+    assertThat(engineRule.getHistoryService().createUserOperationLogQuery().count()).isZero();
   }
 
   protected Map<String, UserOperationLogEntry> asMap(List<UserOperationLogEntry> logEntries) {
@@ -185,7 +185,7 @@ public class BatchMigrationUserOperationLogTest {
 
       UserOperationLogEntry previousValue = map.put(entry.getProperty(), entry);
       if (previousValue != null) {
-        Assert.fail("expected only entry for every property");
+        fail("expected only entry for every property");
       }
     }
 

@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.common;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +29,6 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.Task;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -122,7 +119,7 @@ public abstract class AbstractProcessEngineServicesAccessTest extends PluggableP
 
     // then
     // starting the process fails and everything is rolled back:
-    assertEquals(0, runtimeService.createExecutionQuery().count());
+    assertThat(runtimeService.createExecutionQuery().count()).isZero();
   }
 
   protected abstract Class<?> getTestServiceAccessibleClass();
@@ -170,7 +167,7 @@ public abstract class AbstractProcessEngineServicesAccessTest extends PluggableP
 
     // then
     // the started process instance is still active and waiting at the user task
-    assertEquals(1, taskService.createTaskQuery().taskDefinitionKey(TASK_DEF_KEY).count());
+    assertThat(taskService.createTaskQuery().taskDefinitionKey(TASK_DEF_KEY).count()).isEqualTo(1);
   }
 
   @Test
@@ -183,14 +180,14 @@ public abstract class AbstractProcessEngineServicesAccessTest extends PluggableP
   }
 
   public static void assertCanAccessServices(ProcessEngineServices services) {
-    Assert.assertNotNull(services.getAuthorizationService());
-    Assert.assertNotNull(services.getFormService());
-    Assert.assertNotNull(services.getHistoryService());
-    Assert.assertNotNull(services.getIdentityService());
-    Assert.assertNotNull(services.getManagementService());
-    Assert.assertNotNull(services.getRepositoryService());
-    Assert.assertNotNull(services.getRuntimeService());
-    Assert.assertNotNull(services.getTaskService());
+    assertThat(services.getAuthorizationService()).isNotNull();
+    assertThat(services.getFormService()).isNotNull();
+    assertThat(services.getHistoryService()).isNotNull();
+    assertThat(services.getIdentityService()).isNotNull();
+    assertThat(services.getManagementService()).isNotNull();
+    assertThat(services.getRepositoryService()).isNotNull();
+    assertThat(services.getRuntimeService()).isNotNull();
+    assertThat(services.getTaskService()).isNotNull();
   }
 
   public static void assertCanPerformQuery(ProcessEngineServices services) {

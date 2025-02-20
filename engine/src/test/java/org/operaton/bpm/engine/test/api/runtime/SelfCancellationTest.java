@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.api.runtime;
 
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
@@ -38,7 +38,6 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.EndEvent;
 import org.operaton.bpm.model.bpmn.instance.TerminateEventDefinition;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -211,10 +210,10 @@ public class SelfCancellationTest {
 
   private void checkRecordedEvents(String ...activityIds) {
     List<RecorderExecutionListener.RecordedEvent> recordedEvents = RecorderExecutionListener.getRecordedEvents();
-    assertEquals(activityIds.length, recordedEvents.size());
+    assertThat(recordedEvents).hasSize(activityIds.length);
 
     for (int i = 0; i < activityIds.length; i++) {
-      assertEquals(activityIds[i], recordedEvents.get(i).getActivityId());
+      assertThat(recordedEvents.get(i).getActivityId()).isEqualTo(activityIds[i]);
     }
   }
 
@@ -229,7 +228,7 @@ public class SelfCancellationTest {
     taskService.complete(task.getId());
 
     // then
-    Assert.assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
     checkRecordedEvents("receiveTask", "sendTask", "terminateEnd");
   }
 
@@ -270,7 +269,7 @@ public class SelfCancellationTest {
     taskService.complete(task.getId());
 
     // then
-    Assert.assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
     checkRecordedEvents("sendTask", "startSubEvent", "endEventSubEvent");
   }
 
@@ -285,8 +284,9 @@ public class SelfCancellationTest {
 
     // then
     List<String> activities = runtimeService.getActiveActivityIds(procInst.getId());
-    Assert.assertNotNull(activities);
-    Assert.assertEquals(1, activities.size());
+    assertThat(activities)
+            .isNotNull()
+            .hasSize(1);
     checkRecordedEvents("sendTask", "boundary", "endEventBoundary");
   }
 

@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -108,13 +106,13 @@ public class FailedJobListenerWithRetriesTest {
 
     //then
     JobEntity jobFinalState = (JobEntity)engineRule.getManagementService().createJobQuery().jobId(job.getId()).list().get(0);
-    assertEquals(jobRetries, jobFinalState.getRetries());
+    assertThat(jobFinalState.getRetries()).isEqualTo(jobRetries);
     if (jobLocked) {
-      assertNotNull(jobFinalState.getLockOwner());
-      assertNotNull(jobFinalState.getLockExpirationTime());
+      assertThat(jobFinalState.getLockOwner()).isNotNull();
+      assertThat(jobFinalState.getLockExpirationTime()).isNotNull();
     } else {
-      assertNull(jobFinalState.getLockOwner());
-      assertNull(jobFinalState.getLockExpirationTime());
+      assertThat(jobFinalState.getLockOwner()).isNull();
+      assertThat(jobFinalState.getLockExpirationTime()).isNull();
     }
   }
 
@@ -129,7 +127,7 @@ public class FailedJobListenerWithRetriesTest {
 
   private Job getJob() {
     List<Job> jobs = engineRule.getManagementService().createJobQuery().list();
-    assertEquals(1, jobs.size());
+    assertThat(jobs).hasSize(1);
     return jobs.get(0);
   }
 

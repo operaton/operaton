@@ -17,8 +17,7 @@
 package org.operaton.bpm.engine.test.api.repository.diagram;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -62,7 +61,7 @@ public class ProcessDiagramParseTest {
     processEngineConfiguration.setEnableXxeProcessing(false);
     final InputStream bpmnXmlStream = getResourceInputStream(RESOURCE_PATH + ".bpmn20.xml");
     final InputStream imageStream = getResourceInputStream(RESOURCE_PATH + ".png");
-    assertNotNull(bpmnXmlStream);
+    assertThat(bpmnXmlStream).isNotNull();
     var processEngineConfigurationImpl = engineRule.getProcessEngineConfiguration()
         .getCommandExecutorTxRequired();
 
@@ -83,7 +82,7 @@ public class ProcessDiagramParseTest {
     processEngineConfiguration.setEnableXxeProcessing(true);
     final InputStream bpmnXmlStream = getResourceInputStream(RESOURCE_PATH + ".bpmn20.xml");
     final InputStream imageStream = getResourceInputStream(RESOURCE_PATH + ".png");
-    assertNotNull(bpmnXmlStream);
+    assertThat(bpmnXmlStream).isNotNull();
     var processEngineConfigurationImpl = engineRule.getProcessEngineConfiguration()
         .getCommandExecutorTxRequired();
 

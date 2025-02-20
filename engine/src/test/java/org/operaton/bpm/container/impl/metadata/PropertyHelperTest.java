@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.container.impl.metadata;
 
+import static org.assertj.core.api.Assertions.*;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -25,7 +27,6 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.StandaloneProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.jobexecutor.DefaultJobExecutor;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
-import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -76,11 +77,11 @@ public class PropertyHelperTest {
 
     PropertyHelper.applyProperties(engineConfiguration, propertiesToSet);
 
-    Assert.assertTrue(engineConfiguration.isJobExecutorDeploymentAware());
-    Assert.assertTrue(engineConfiguration.isJobExecutorPreferTimerJobs());
-    Assert.assertTrue(engineConfiguration.isJobExecutorAcquireByDueDate());
-    Assert.assertEquals(42, engineConfiguration.getMailServerPort());
-    Assert.assertEquals("someUrl", engineConfiguration.getJdbcUrl());
+    assertThat(engineConfiguration.isJobExecutorDeploymentAware()).isTrue();
+    assertThat(engineConfiguration.isJobExecutorPreferTimerJobs()).isTrue();
+    assertThat(engineConfiguration.isJobExecutorAcquireByDueDate()).isTrue();
+    assertThat(engineConfiguration.getMailServerPort()).isEqualTo(42);
+    assertThat(engineConfiguration.getJdbcUrl()).isEqualTo("someUrl");
   }
 
   @Test
@@ -98,10 +99,10 @@ public class PropertyHelperTest {
     PropertyHelper.applyProperties(jobExecutor, propertiesToSet);
 
     // then
-    Assert.assertEquals(Integer.MAX_VALUE, jobExecutor.getMaxJobsPerAcquisition());
-    Assert.assertEquals(Long.MAX_VALUE, jobExecutor.getMaxWait());
-    Assert.assertEquals(Float.MAX_VALUE, jobExecutor.getWaitIncreaseFactor(), 0.0001d);
-    Assert.assertEquals(Integer.MAX_VALUE, jobExecutor.getBackoffTimeInMillis());
+    assertThat(jobExecutor.getMaxJobsPerAcquisition()).isEqualTo(Integer.MAX_VALUE);
+    assertThat(jobExecutor.getMaxWait()).isEqualTo(Long.MAX_VALUE);
+    assertThat(jobExecutor.getWaitIncreaseFactor()).isCloseTo(Float.MAX_VALUE, within(0.0001f));
+    assertThat(jobExecutor.getBackoffTimeInMillis()).isEqualTo(Integer.MAX_VALUE);
   }
 
   /**
@@ -116,12 +117,12 @@ public class PropertyHelperTest {
     propertiesToSet.put(DB_IDENTITY_USED_PROP, "false");
     PropertyHelper.applyProperties(engineConfiguration, propertiesToSet);
 
-    Assert.assertFalse(engineConfiguration.isDbIdentityUsed());
+    assertThat(engineConfiguration.isDbIdentityUsed()).isFalse();
 
     propertiesToSet.put(DB_IDENTITY_USED_PROP, "true");
     PropertyHelper.applyProperties(engineConfiguration, propertiesToSet);
 
-    Assert.assertTrue(engineConfiguration.isDbIdentityUsed());
+    assertThat(engineConfiguration.isDbIdentityUsed()).isTrue();
   }
 
   @Test
@@ -132,7 +133,7 @@ public class PropertyHelperTest {
 
     try {
       PropertyHelper.applyProperties(engineConfiguration, propertiesToSet);
-      Assert.fail();
+      fail("Exception expected");
     } catch (Exception e) {
       // happy path
     }
@@ -143,7 +144,7 @@ public class PropertyHelperTest {
     Properties source = new Properties();
     source.put("operaton.test.someKey", "1234");
     String result = PropertyHelper.resolveProperty(source, "${operaton.test.someKey}");
-    Assert.assertEquals("1234", result);
+    assertThat(result).isEqualTo("1234");
   }
 
   @Test
@@ -151,23 +152,23 @@ public class PropertyHelperTest {
     Properties source = new Properties();
     source.put("operaton.test.someKey", "1234");
     String result = PropertyHelper.resolveProperty(source, " -${ operaton.test.someKey }- ");
-    Assert.assertEquals(" -1234- ", result);
+    assertThat(result).isEqualTo(" -1234- ");
   }
 
   @Test
-  public void testResolvePropertyForMultiplePropertes() {
+  public void testResolvePropertyForMultipleProperties() {
     Properties source = new Properties();
     source.put("operaton.test.oneKey", "1234");
     source.put("operaton.test.anotherKey", "5678");
     String result = PropertyHelper.resolveProperty(source, "-${ operaton.test.oneKey }-${ operaton.test.anotherKey}-");
-    Assert.assertEquals("-1234-5678-", result);
+    assertThat(result).isEqualTo("-1234-5678-");
   }
 
   @Test
   public void testResolvePropertyForMissingProperty() {
     Properties source = new Properties();
     String result = PropertyHelper.resolveProperty(source, "${operaton.test.someKey}");
-    Assert.assertEquals("", result);
+    assertThat(result).isEmpty();
   }
 
   @Test
@@ -175,7 +176,7 @@ public class PropertyHelperTest {
     Properties source = new Properties();
     source.put("operaton.test.someKey", "1234");
     String result = PropertyHelper.resolveProperty(source, "operaton.test.someKey");
-    Assert.assertEquals("operaton.test.someKey", result);
+    assertThat(result).isEqualTo("operaton.test.someKey");
   }
 
   @Test
@@ -197,10 +198,10 @@ public class PropertyHelperTest {
     PropertyHelper.applyProperties(jobExecutor, executorProperties, PropertyHelper.KEBAB_CASE);
 
     // then
-    Assert.assertEquals(Integer.MAX_VALUE, jobExecutor.getBackoffTimeInMillis());
-    Assert.assertEquals(Float.MAX_VALUE, jobExecutor.getWaitIncreaseFactor(), 0.0001d);
-    Assert.assertEquals(true, engineConfiguration.isDbIdentityUsed());
-    Assert.assertEquals("someUrl", engineConfiguration.getJdbcUrl());
+    assertThat(jobExecutor.getBackoffTimeInMillis()).isEqualTo(Integer.MAX_VALUE);
+    assertThat(jobExecutor.getWaitIncreaseFactor()).isCloseTo(Float.MAX_VALUE, within(0.0001f));
+    assertThat(engineConfiguration.isDbIdentityUsed()).isTrue();
+    assertThat(engineConfiguration.getJdbcUrl()).isEqualTo("someUrl");
   }
 
   @Test
@@ -222,9 +223,9 @@ public class PropertyHelperTest {
     PropertyHelper.applyProperties(jobExecutor, executorProperties, PropertyHelper.SNAKE_CASE);
 
     // then
-    Assert.assertEquals(Integer.MAX_VALUE, jobExecutor.getBackoffTimeInMillis());
-    Assert.assertEquals(Float.MAX_VALUE, jobExecutor.getWaitIncreaseFactor(), 0.0001d);
-    Assert.assertEquals(true, engineConfiguration.isDbIdentityUsed());
-    Assert.assertEquals("someUrl", engineConfiguration.getJdbcUrl());
+    assertThat(jobExecutor.getBackoffTimeInMillis()).isEqualTo(Integer.MAX_VALUE);
+    assertThat(jobExecutor.getWaitIncreaseFactor()).isCloseTo(Float.MAX_VALUE, within(0.0001f));
+    assertThat(engineConfiguration.isDbIdentityUsed()).isTrue();
+    assertThat(engineConfiguration.getJdbcUrl()).isEqualTo("someUrl");
   }
 }

@@ -17,8 +17,8 @@
 package org.operaton.bpm.engine.test.api.runtime;
 
 import static junit.framework.TestCase.assertFalse;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 
@@ -70,9 +70,9 @@ public class UpdateProcessInstancesSuspendStateTest {
 
     // Update the process instances and they are suspended
     ProcessInstance p1c = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance1.getId()).singleResult();
-    assertTrue(p1c.isSuspended());
+    assertThat(p1c.isSuspended()).isTrue();
     ProcessInstance p2c = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance2.getId()).singleResult();
-    assertTrue(p2c.isSuspended());
+    assertThat(p2c.isSuspended()).isTrue();
 
   }
 
@@ -115,9 +115,9 @@ public class UpdateProcessInstancesSuspendStateTest {
 
     // Update the process instances and they are suspended
     ProcessInstance p1c = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance1.getId()).singleResult();
-    assertTrue(p1c.isSuspended());
+    assertThat(p1c.isSuspended()).isTrue();
     ProcessInstance p2c = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance2.getId()).singleResult();
-    assertTrue(p2c.isSuspended());
+    assertThat(p2c.isSuspended()).isTrue();
 
   }
 
@@ -161,9 +161,9 @@ public class UpdateProcessInstancesSuspendStateTest {
 
     // Update the process instances and they are suspended
     ProcessInstance p1c = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance1.getId()).singleResult();
-    assertTrue(p1c.isSuspended());
+    assertThat(p1c.isSuspended()).isTrue();
     ProcessInstance p2c = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance2.getId()).singleResult();
-    assertTrue(p2c.isSuspended());
+    assertThat(p2c.isSuspended()).isTrue();
 
   }
 
@@ -210,9 +210,9 @@ public class UpdateProcessInstancesSuspendStateTest {
 
     // Update the process instances and they are suspended
     ProcessInstance p1c = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance1.getId()).singleResult();
-    assertTrue(p1c.isSuspended());
+    assertThat(p1c.isSuspended()).isTrue();
     ProcessInstance p2c = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance2.getId()).singleResult();
-    assertTrue(p2c.isSuspended());
+    assertThat(p2c.isSuspended()).isTrue();
 
   }
 

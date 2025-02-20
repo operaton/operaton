@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.standalone.scripting;
 
-import static org.junit.Assert.assertFalse;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
@@ -46,8 +46,8 @@ public class DisableScriptEngineCachingTest {
 
   @Test
   public void testScriptEnginesConfiguration() {
-    assertFalse(processEngineConfiguration.isEnableScriptEngineCaching());
-    assertFalse(processEngineConfiguration.getScriptingEngines().isEnableScriptEngineCaching());
+    assertThat(processEngineConfiguration.isEnableScriptEngineCaching()).isFalse();
+    assertThat(processEngineConfiguration.getScriptingEngines().isEnableScriptEngineCaching()).isFalse();
   }
 
 }

@@ -17,12 +17,6 @@
 package org.operaton.bpm.engine.test.history;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -49,7 +43,7 @@ import org.junit.Test;
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class HistoricIncidentTest extends PluggableProcessEngineTest {
 
-  private static String PROCESS_DEFINITION_KEY = "oneFailingServiceTaskProcess";
+  private static final String PROCESS_DEFINITION_KEY = "oneFailingServiceTaskProcess";
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
   @Test
@@ -57,35 +51,35 @@ public class HistoricIncidentTest extends PluggableProcessEngineTest {
     startProcessInstance(PROCESS_DEFINITION_KEY);
 
     Incident incident = runtimeService.createIncidentQuery().singleResult();
-    assertNotNull(incident);
+    assertThat(incident).isNotNull();
 
     HistoricIncident historicIncident = historyService.createHistoricIncidentQuery().singleResult();
-    assertNotNull(historicIncident);
+    assertThat(historicIncident).isNotNull();
 
     // the last failure log entry correlates to the historic incident
     HistoricJobLog jobLog = getHistoricJobLogOrdered(incident.getConfiguration()).get(0);
 
-    assertEquals(incident.getId(), historicIncident.getId());
-    assertEquals(incident.getIncidentTimestamp(), historicIncident.getCreateTime());
-    assertNull(historicIncident.getEndTime());
-    assertEquals(incident.getIncidentType(), historicIncident.getIncidentType());
-    assertEquals(incident.getIncidentMessage(), historicIncident.getIncidentMessage());
-    assertEquals(incident.getExecutionId(), historicIncident.getExecutionId());
-    assertEquals(incident.getActivityId(), historicIncident.getActivityId());
-    assertEquals(incident.getProcessInstanceId(), historicIncident.getProcessInstanceId());
-    assertEquals(incident.getProcessDefinitionId(), historicIncident.getProcessDefinitionId());
-    assertEquals(PROCESS_DEFINITION_KEY, historicIncident.getProcessDefinitionKey());
-    assertEquals(incident.getCauseIncidentId(), historicIncident.getCauseIncidentId());
-    assertEquals(incident.getRootCauseIncidentId(), historicIncident.getRootCauseIncidentId());
-    assertEquals(incident.getConfiguration(), historicIncident.getConfiguration());
-    assertEquals(incident.getJobDefinitionId(), historicIncident.getJobDefinitionId());
-    assertEquals(jobLog.getId(), historicIncident.getHistoryConfiguration());
-    assertNotNull(historicIncident.getFailedActivityId());
-    assertEquals(incident.getFailedActivityId(), historicIncident.getFailedActivityId());
+    assertThat(historicIncident.getId()).isEqualTo(incident.getId());
+    assertThat(historicIncident.getCreateTime()).isEqualTo(incident.getIncidentTimestamp());
+    assertThat(historicIncident.getEndTime()).isNull();
+    assertThat(historicIncident.getIncidentType()).isEqualTo(incident.getIncidentType());
+    assertThat(historicIncident.getIncidentMessage()).isEqualTo(incident.getIncidentMessage());
+    assertThat(historicIncident.getExecutionId()).isEqualTo(incident.getExecutionId());
+    assertThat(historicIncident.getActivityId()).isEqualTo(incident.getActivityId());
+    assertThat(historicIncident.getProcessInstanceId()).isEqualTo(incident.getProcessInstanceId());
+    assertThat(historicIncident.getProcessDefinitionId()).isEqualTo(incident.getProcessDefinitionId());
+    assertThat(historicIncident.getProcessDefinitionKey()).isEqualTo(PROCESS_DEFINITION_KEY);
+    assertThat(historicIncident.getCauseIncidentId()).isEqualTo(incident.getCauseIncidentId());
+    assertThat(historicIncident.getRootCauseIncidentId()).isEqualTo(incident.getRootCauseIncidentId());
+    assertThat(historicIncident.getConfiguration()).isEqualTo(incident.getConfiguration());
+    assertThat(historicIncident.getJobDefinitionId()).isEqualTo(incident.getJobDefinitionId());
+    assertThat(historicIncident.getHistoryConfiguration()).isEqualTo(jobLog.getId());
+    assertThat(historicIncident.getFailedActivityId()).isNotNull();
+    assertThat(historicIncident.getFailedActivityId()).isEqualTo(incident.getFailedActivityId());
 
-    assertTrue(historicIncident.isOpen());
-    assertFalse(historicIncident.isDeleted());
-    assertFalse(historicIncident.isResolved());
+    assertThat(historicIncident.isOpen()).isTrue();
+    assertThat(historicIncident.isDeleted()).isFalse();
+    assertThat(historicIncident.isResolved()).isFalse();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
@@ -99,14 +93,14 @@ public class HistoricIncidentTest extends PluggableProcessEngineTest {
     testRule.executeAvailableJobs();
 
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
-    assertEquals(2, query.count());
+    assertThat(query.count()).isEqualTo(2);
 
     // the first historic incident has been resolved
-    assertEquals(1, query.resolved().count());
+    assertThat(query.resolved().count()).isEqualTo(1);
 
     query = historyService.createHistoricIncidentQuery();
     // a new historic incident exists which is open
-    assertEquals(1, query.open().count());
+    assertThat(query.open().count()).isEqualTo(1);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
@@ -120,16 +114,16 @@ public class HistoricIncidentTest extends PluggableProcessEngineTest {
     testRule.executeAvailableJobs();
 
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
-    assertEquals(2, query.count());
+    assertThat(query.count()).isEqualTo(2);
 
     List<HistoricJobLog> logs = getHistoricJobLogOrdered(jobId);
 
     // the first historic incident references the previous-to-last job log
-    assertEquals(logs.get(1).getId(), query.resolved().singleResult().getHistoryConfiguration());
+    assertThat(query.resolved().singleResult().getHistoryConfiguration()).isEqualTo(logs.get(1).getId());
 
     query = historyService.createHistoricIncidentQuery();
     // the new historic incident references the latest job log
-    assertEquals(logs.get(0).getId(), query.open().singleResult().getHistoryConfiguration());
+    assertThat(query.open().singleResult().getHistoryConfiguration()).isEqualTo(logs.get(0).getId());
   }
 
 
@@ -142,13 +136,13 @@ public class HistoricIncidentTest extends PluggableProcessEngineTest {
     managementService.setJobRetries(jobId, 1);
 
     HistoricIncident historicIncident = historyService.createHistoricIncidentQuery().singleResult();
-    assertNotNull(historicIncident);
+    assertThat(historicIncident).isNotNull();
 
-    assertNotNull(historicIncident.getEndTime());
+    assertThat(historicIncident.getEndTime()).isNotNull();
 
-    assertFalse(historicIncident.isOpen());
-    assertFalse(historicIncident.isDeleted());
-    assertTrue(historicIncident.isResolved());
+    assertThat(historicIncident.isOpen()).isFalse();
+    assertThat(historicIncident.isDeleted()).isFalse();
+    assertThat(historicIncident.isResolved()).isTrue();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/history/HistoricIncidentQueryTest.testQueryByCauseIncidentId.bpmn20.xml",
@@ -163,11 +157,11 @@ public class HistoricIncidentTest extends PluggableProcessEngineTest {
     List<HistoricIncident> historicIncidents = historyService.createHistoricIncidentQuery().list();
 
     for (HistoricIncident historicIncident : historicIncidents) {
-      assertNotNull(historicIncident.getEndTime());
+      assertThat(historicIncident.getEndTime()).isNotNull();
 
-      assertFalse(historicIncident.isOpen());
-      assertFalse(historicIncident.isDeleted());
-      assertTrue(historicIncident.isResolved());
+      assertThat(historicIncident.isOpen()).isFalse();
+      assertThat(historicIncident.isDeleted()).isFalse();
+      assertThat(historicIncident.isResolved()).isTrue();
     }
   }
 
@@ -180,13 +174,13 @@ public class HistoricIncidentTest extends PluggableProcessEngineTest {
     runtimeService.deleteProcessInstance(processInstanceId, null);
 
     HistoricIncident historicIncident = historyService.createHistoricIncidentQuery().singleResult();
-    assertNotNull(historicIncident);
+    assertThat(historicIncident).isNotNull();
 
-    assertNotNull(historicIncident.getEndTime());
+    assertThat(historicIncident.getEndTime()).isNotNull();
 
-    assertFalse(historicIncident.isOpen());
-    assertTrue(historicIncident.isDeleted());
-    assertFalse(historicIncident.isResolved());
+    assertThat(historicIncident.isOpen()).isFalse();
+    assertThat(historicIncident.isDeleted()).isTrue();
+    assertThat(historicIncident.isResolved()).isFalse();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/history/HistoricIncidentQueryTest.testQueryByCauseIncidentId.bpmn20.xml",
@@ -204,11 +198,11 @@ public class HistoricIncidentTest extends PluggableProcessEngineTest {
     List<HistoricIncident> historicIncidents = historyService.createHistoricIncidentQuery().list();
 
     for (HistoricIncident historicIncident : historicIncidents) {
-      assertNotNull(historicIncident.getEndTime());
+      assertThat(historicIncident.getEndTime()).isNotNull();
 
-      assertFalse(historicIncident.isOpen());
-      assertTrue(historicIncident.isDeleted());
-      assertFalse(historicIncident.isResolved());
+      assertThat(historicIncident.isOpen()).isFalse();
+      assertThat(historicIncident.isDeleted()).isTrue();
+      assertThat(historicIncident.isResolved()).isFalse();
     }
   }
 
@@ -220,16 +214,16 @@ public class HistoricIncidentTest extends PluggableProcessEngineTest {
     Execution execution = runtimeService.createExecutionQuery()
         .activityId("serviceTask")
         .singleResult();
-    assertNotNull(execution);
+    assertThat(execution).isNotNull();
 
     HistoricIncident historicIncident = historyService.createHistoricIncidentQuery().singleResult();
-    assertNotNull(historicIncident);
+    assertThat(historicIncident).isNotNull();
 
     HistoricJobLog jobLog = getHistoricJobLogOrdered(historicIncident.getConfiguration()).get(0);
 
-    assertEquals(execution.getId(), historicIncident.getExecutionId());
-    assertEquals("serviceTask", historicIncident.getActivityId());
-    assertEquals(jobLog.getId(), historicIncident.getHistoryConfiguration());
+    assertThat(historicIncident.getExecutionId()).isEqualTo(execution.getId());
+    assertThat(historicIncident.getActivityId()).isEqualTo("serviceTask");
+    assertThat(historicIncident.getHistoryConfiguration()).isEqualTo(jobLog.getId());
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/history/HistoricIncidentQueryTest.testQueryByCauseIncidentId.bpmn20.xml",
@@ -241,28 +235,28 @@ public class HistoricIncidentTest extends PluggableProcessEngineTest {
     ProcessInstance pi1 = runtimeService.createProcessInstanceQuery()
         .processDefinitionKey("process")
         .singleResult();
-    assertNotNull(pi1);
+    assertThat(pi1).isNotNull();
 
     ProcessInstance pi2 = runtimeService.createProcessInstanceQuery()
         .processDefinitionKey(PROCESS_DEFINITION_KEY)
         .singleResult();
-    assertNotNull(pi2);
+    assertThat(pi2).isNotNull();
 
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
     HistoricIncident rootCauseHistoricIncident = query.processInstanceId(pi2.getId()).singleResult();
-    assertNotNull(rootCauseHistoricIncident);
+    assertThat(rootCauseHistoricIncident).isNotNull();
 
     // cause and root cause id is equal to the id of the root incident
-    assertEquals(rootCauseHistoricIncident.getId(), rootCauseHistoricIncident.getCauseIncidentId());
-    assertEquals(rootCauseHistoricIncident.getId(), rootCauseHistoricIncident.getRootCauseIncidentId());
+    assertThat(rootCauseHistoricIncident.getCauseIncidentId()).isEqualTo(rootCauseHistoricIncident.getId());
+    assertThat(rootCauseHistoricIncident.getRootCauseIncidentId()).isEqualTo(rootCauseHistoricIncident.getId());
 
     HistoricIncident historicIncident = query.processInstanceId(pi1.getId()).singleResult();
-    assertNotNull(historicIncident);
+    assertThat(historicIncident).isNotNull();
 
     // cause and root cause id is equal to the id of the root incident
-    assertEquals(rootCauseHistoricIncident.getId(), historicIncident.getCauseIncidentId());
-    assertEquals(rootCauseHistoricIncident.getId(), historicIncident.getRootCauseIncidentId());
+    assertThat(historicIncident.getCauseIncidentId()).isEqualTo(rootCauseHistoricIncident.getId());
+    assertThat(historicIncident.getRootCauseIncidentId()).isEqualTo(rootCauseHistoricIncident.getId());
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/history/HistoricIncidentQueryTest.testQueryByCauseIncidentId.bpmn20.xml",
@@ -288,10 +282,10 @@ public class HistoricIncidentTest extends PluggableProcessEngineTest {
     List<HistoricJobLog> logs = getHistoricJobLogOrdered(rootCauseHistoricIncident.getConfiguration());
 
     // the root incident is referencing the latest failure job log
-    assertEquals(logs.get(0).getId(), rootCauseHistoricIncident.getHistoryConfiguration());
+    assertThat(rootCauseHistoricIncident.getHistoryConfiguration()).isEqualTo(logs.get(0).getId());
 
     // the parent incident links to no job log
-    assertNull(historicIncident.getHistoryConfiguration());
+    assertThat(historicIncident.getHistoryConfiguration()).isNull();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/history/HistoricIncidentTest.testCreateRecursiveHistoricIncidentsForNestedCallActivities.bpmn20.xml",
@@ -304,40 +298,40 @@ public class HistoricIncidentTest extends PluggableProcessEngineTest {
     ProcessInstance pi1 = runtimeService.createProcessInstanceQuery()
         .processDefinitionKey("process1")
         .singleResult();
-    assertNotNull(pi1);
+    assertThat(pi1).isNotNull();
 
     ProcessInstance pi2 = runtimeService.createProcessInstanceQuery()
         .processDefinitionKey("process")
         .singleResult();
-    assertNotNull(pi2);
+    assertThat(pi2).isNotNull();
 
     ProcessInstance pi3 = runtimeService.createProcessInstanceQuery()
         .processDefinitionKey(PROCESS_DEFINITION_KEY)
         .singleResult();
-    assertNotNull(pi3);
+    assertThat(pi3).isNotNull();
 
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
     HistoricIncident rootCauseHistoricIncident = query.processInstanceId(pi3.getId()).singleResult();
-    assertNotNull(rootCauseHistoricIncident);
+    assertThat(rootCauseHistoricIncident).isNotNull();
 
     // cause and root cause id is equal to the id of the root incident
-    assertEquals(rootCauseHistoricIncident.getId(), rootCauseHistoricIncident.getCauseIncidentId());
-    assertEquals(rootCauseHistoricIncident.getId(), rootCauseHistoricIncident.getRootCauseIncidentId());
+    assertThat(rootCauseHistoricIncident.getCauseIncidentId()).isEqualTo(rootCauseHistoricIncident.getId());
+    assertThat(rootCauseHistoricIncident.getRootCauseIncidentId()).isEqualTo(rootCauseHistoricIncident.getId());
 
     HistoricIncident causeHistoricIncident = query.processInstanceId(pi2.getId()).singleResult();
-    assertNotNull(causeHistoricIncident);
+    assertThat(causeHistoricIncident).isNotNull();
 
     // cause and root cause id is equal to the id of the root incident
-    assertEquals(rootCauseHistoricIncident.getId(), causeHistoricIncident.getCauseIncidentId());
-    assertEquals(rootCauseHistoricIncident.getId(), causeHistoricIncident.getRootCauseIncidentId());
+    assertThat(causeHistoricIncident.getCauseIncidentId()).isEqualTo(rootCauseHistoricIncident.getId());
+    assertThat(causeHistoricIncident.getRootCauseIncidentId()).isEqualTo(rootCauseHistoricIncident.getId());
 
     HistoricIncident historicIncident = query.processInstanceId(pi1.getId()).singleResult();
-    assertNotNull(historicIncident);
+    assertThat(historicIncident).isNotNull();
 
     // cause and root cause id is equal to the id of the root incident
-    assertEquals(causeHistoricIncident.getId(), historicIncident.getCauseIncidentId());
-    assertEquals(rootCauseHistoricIncident.getId(), historicIncident.getRootCauseIncidentId());
+    assertThat(historicIncident.getCauseIncidentId()).isEqualTo(causeHistoricIncident.getId());
+    assertThat(historicIncident.getRootCauseIncidentId()).isEqualTo(rootCauseHistoricIncident.getId());
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
@@ -349,7 +343,7 @@ public class HistoricIncidentTest extends PluggableProcessEngineTest {
 
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery().processInstanceId(pi.getId());
     HistoricIncident incident = query.singleResult();
-    assertNotNull(incident);
+    assertThat(incident).isNotNull();
 
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().singleResult();
 
@@ -358,20 +352,20 @@ public class HistoricIncidentTest extends PluggableProcessEngineTest {
 
     // the incident still exists
     HistoricIncident tmp = query.singleResult();
-    assertEquals(incident.getId(), tmp.getId());
-    assertNull(tmp.getEndTime());
-    assertTrue(tmp.isOpen());
+    assertThat(tmp.getId()).isEqualTo(incident.getId());
+    assertThat(tmp.getEndTime()).isNull();
+    assertThat(tmp.isOpen()).isTrue();
 
     // execute the available job (should fail again)
     testRule.executeAvailableJobs();
 
     // the incident still exists and there
     // should be not a new incident
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
     tmp = query.singleResult();
-    assertEquals(incident.getId(), tmp.getId());
-    assertNull(tmp.getEndTime());
-    assertTrue(tmp.isOpen());
+    assertThat(tmp.getId()).isEqualTo(incident.getId());
+    assertThat(tmp.getEndTime()).isNull();
+    assertThat(tmp.isOpen()).isTrue();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
@@ -386,7 +380,7 @@ public class HistoricIncidentTest extends PluggableProcessEngineTest {
 
     String jobId = incident.getConfiguration();
     List<HistoricJobLog> logs = getHistoricJobLogOrdered(jobId);
-    assertEquals(logs.get(0).getId(), incident.getHistoryConfiguration());
+    assertThat(incident.getHistoryConfiguration()).isEqualTo(logs.get(0).getId());
 
     // set retries to 2 by job definition id
     managementService.setJobRetriesByJobDefinitionId(jobDefinition.getId(), 2);
@@ -395,24 +389,24 @@ public class HistoricIncidentTest extends PluggableProcessEngineTest {
     testRule.executeAvailableJobs(false);
 
     // the incident still exists, there is no new incident, the incident still references the old log entry
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
     HistoricIncident incidentNew = query.singleResult();
     List<HistoricJobLog> logsNew = getHistoricJobLogOrdered(jobId);
-    assertEquals(incident.getId(), incidentNew.getId());
-    assertEquals(incident.getHistoryConfiguration(), incidentNew.getHistoryConfiguration());
-    assertTrue(logsNew.size() > logs.size());
+    assertThat(incidentNew.getId()).isEqualTo(incident.getId());
+    assertThat(incidentNew.getHistoryConfiguration()).isEqualTo(incident.getHistoryConfiguration());
+    assertThat(logsNew).hasSizeGreaterThan(logs.size());
 
     // execute the available job (should fail again)
     testRule.executeAvailableJobs(false);
 
     // the incident still exists, there is no new incident, the incident references the new latest log entry
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
     incidentNew = query.singleResult();
     logsNew = getHistoricJobLogOrdered(jobId);
-    assertTrue(logsNew.size() > logs.size());
-    assertEquals(incident.getId(), incidentNew.getId());
-    assertNotEquals(incident.getHistoryConfiguration(), incidentNew.getHistoryConfiguration());
-    assertEquals(logsNew.get(0).getId(), incidentNew.getHistoryConfiguration());
+    assertThat(logsNew).hasSizeGreaterThan(logs.size());
+    assertThat(incidentNew.getId()).isEqualTo(incident.getId());
+    assertThat(incidentNew.getHistoryConfiguration()).isNotEqualTo(incident.getHistoryConfiguration());
+    assertThat(incidentNew.getHistoryConfiguration()).isEqualTo(logsNew.get(0).getId());
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
@@ -426,17 +420,17 @@ public class HistoricIncidentTest extends PluggableProcessEngineTest {
     testRule.executeAvailableJobs(false);
 
     List<HistoricJobLog> logs = getHistoricJobLogOrdered(job.getId());
-    assertEquals(2, logs.size());
+    assertThat(logs).hasSize(2);
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery().processInstanceId(pi.getId());
-    assertEquals(0, query.count());
+    assertThat(query.count()).isZero();
 
     // set retries to 0
     managementService.setJobRetries(job.getId(), 0);
 
     // an incident is created, it references the latest log entry
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
     HistoricIncident incident = query.singleResult();
-    assertEquals(logs.get(0).getId(), incident.getHistoryConfiguration());
+    assertThat(incident.getHistoryConfiguration()).isEqualTo(logs.get(0).getId());
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
@@ -448,7 +442,7 @@ public class HistoricIncidentTest extends PluggableProcessEngineTest {
 
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery().processInstanceId(pi.getId());
     HistoricIncident incident = query.singleResult();
-    assertNotNull(incident);
+    assertThat(incident).isNotNull();
 
     runtimeService.setVariable(pi.getId(), "fail", false);
 
@@ -459,19 +453,19 @@ public class HistoricIncidentTest extends PluggableProcessEngineTest {
 
     // the incident still exists
     HistoricIncident tmp = query.singleResult();
-    assertEquals(incident.getId(), tmp.getId());
-    assertNull(tmp.getEndTime());
-    assertTrue(tmp.isOpen());
+    assertThat(tmp.getId()).isEqualTo(incident.getId());
+    assertThat(tmp.getEndTime()).isNull();
+    assertThat(tmp.isOpen()).isTrue();
 
     // execute the available job (should succeed)
     testRule.executeAvailableJobs();
 
     // the incident still exists and is resolved
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
     tmp = query.singleResult();
-    assertEquals(incident.getId(), tmp.getId());
-    assertNotNull(tmp.getEndTime());
-    assertTrue(tmp.isResolved());
+    assertThat(tmp.getId()).isEqualTo(incident.getId());
+    assertThat(tmp.getEndTime()).isNotNull();
+    assertThat(tmp.isResolved()).isTrue();
 
     testRule.assertProcessEnded(pi.getId());
   }

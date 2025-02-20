@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Map;
 
@@ -37,15 +37,16 @@ public class ManagementServiceTableCountTest extends PluggableProcessEngineTest 
 
     String tablePrefix = processEngineConfiguration.getDatabaseTablePrefix();
 
-    assertEquals(Long.valueOf(0), tableCount.get(tablePrefix + "ACT_GE_BYTEARRAY"));
-    assertEquals(Long.valueOf(0), tableCount.get(tablePrefix + "ACT_RE_DEPLOYMENT"));
-    assertEquals(Long.valueOf(0), tableCount.get(tablePrefix + "ACT_RU_EXECUTION"));
-    assertEquals(Long.valueOf(0), tableCount.get(tablePrefix + "ACT_ID_GROUP"));
-    assertEquals(Long.valueOf(0), tableCount.get(tablePrefix + "ACT_ID_MEMBERSHIP"));
-    assertEquals(Long.valueOf(0), tableCount.get(tablePrefix + "ACT_ID_USER"));
-    assertEquals(Long.valueOf(0), tableCount.get(tablePrefix + "ACT_RE_PROCDEF"));
-    assertEquals(Long.valueOf(0), tableCount.get(tablePrefix + "ACT_RU_TASK"));
-    assertEquals(Long.valueOf(0), tableCount.get(tablePrefix + "ACT_RU_IDENTITYLINK"));
+    assertThat(tableCount)
+            .containsEntry(tablePrefix + "ACT_GE_BYTEARRAY", Long.valueOf(0))
+            .containsEntry(tablePrefix + "ACT_RE_DEPLOYMENT", Long.valueOf(0))
+            .containsEntry(tablePrefix + "ACT_RU_EXECUTION", Long.valueOf(0))
+            .containsEntry(tablePrefix + "ACT_ID_GROUP", Long.valueOf(0))
+            .containsEntry(tablePrefix + "ACT_ID_MEMBERSHIP", Long.valueOf(0))
+            .containsEntry(tablePrefix + "ACT_ID_USER", Long.valueOf(0))
+            .containsEntry(tablePrefix + "ACT_RE_PROCDEF", Long.valueOf(0))
+            .containsEntry(tablePrefix + "ACT_RU_TASK", Long.valueOf(0))
+            .containsEntry(tablePrefix + "ACT_RU_IDENTITYLINK", Long.valueOf(0));
   }
 
 }

@@ -18,7 +18,7 @@ package org.operaton.bpm.engine.test.api.runtime;
 
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
 
@@ -156,7 +156,7 @@ public class BatchUpdateSuspensionStateAuthorizationTest {
     }
     // then
     if (authRule.assertScenario(scenario)) {
-      assertEquals("userId", batch.getCreateUserId());
+      assertThat(batch.getCreateUserId()).isEqualTo("userId");
     }
   }
 

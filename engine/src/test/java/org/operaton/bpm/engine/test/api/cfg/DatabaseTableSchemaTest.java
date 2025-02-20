@@ -35,8 +35,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.Test.None;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertTrue;
 
 /**
  * @author Ronny Bräunlich
@@ -112,7 +112,7 @@ public class DatabaseTableSchemaTest {
 
     commandExecutor.execute(commandContext -> {
       DbSqlSession sqlSession = commandContext.getSession(DbSqlSession.class);
-      assertTrue(sqlSession.isTablePresent("SOME_TABLE"));
+      assertThat(sqlSession.isTablePresent("SOME_TABLE")).isTrue();
       return null;
     });
 

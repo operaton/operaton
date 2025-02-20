@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.async;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.List;
@@ -39,12 +39,12 @@ public class AsyncEmailTaskTest extends EmailTestCase {
     String procId = runtimeService.startProcessInstanceByKey("simpleTextOnly").getId();
 
     List<WiserMessage> messages = wiser.getMessages();
-    assertEquals(0, messages.size());
+    assertThat(messages).isEmpty();
 
     testRule.waitForJobExecutorToProcessAllJobs(5000L);
 
     messages = wiser.getMessages();
-    assertEquals(1, messages.size());
+    assertThat(messages).hasSize(1);
 
     WiserMessage message = messages.get(0);
     EmailServiceTaskTest.assertEmailSend(message, false, "Hello Kermit!", "This a text only e-mail.", "operaton@localhost",
@@ -58,12 +58,12 @@ public class AsyncEmailTaskTest extends EmailTestCase {
     runtimeService.startProcessInstanceByKey("simpleTextOnly");
 
     List<WiserMessage> messages = wiser.getMessages();
-    assertEquals(0, messages.size());
+    assertThat(messages).isEmpty();
 
     testRule.waitForJobExecutorToProcessAllJobs(5000L);
 
     messages = wiser.getMessages();
-    assertEquals(1, messages.size());
+    assertThat(messages).hasSize(1);
 
     WiserMessage message = messages.get(0);
     EmailServiceTaskTest.assertEmailSend(message, false, "Hello Kermit!", "This a text only e-mail.", "operaton@localhost",

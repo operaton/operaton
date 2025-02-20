@@ -16,10 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.identity;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.*;
 
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.IdentityService;
@@ -117,7 +114,7 @@ public class IdentityServiceTenantTest {
       if (!(ex instanceof BadUserRequestException)) {
         fail("BadUserRequestException is expected, but another exception was received:  " + ex);
       }
-      assertEquals("The tenant already exists", ex.getMessage());
+      assertThat(ex.getMessage()).isEqualTo("The tenant already exists");
     }
   }
 
@@ -136,7 +133,7 @@ public class IdentityServiceTenantTest {
     identityService.saveTenant(tenant);
 
     tenant = identityService.createTenantQuery().singleResult();
-    assertEquals("newName", tenant.getName());
+    assertThat(tenant.getName()).isEqualTo("newName");
   }
 
   @Test
@@ -147,7 +144,7 @@ public class IdentityServiceTenantTest {
       identityService.saveTenant(tenant);
       fail("Invalid tenant id exception expected!");
     } catch (ProcessEngineException ex) {
-      assertEquals(String.format(INVALID_ID_MESSAGE, "Tenant", invalidId), ex.getMessage());
+      assertThat(ex.getMessage()).isEqualTo(String.format(INVALID_ID_MESSAGE, "Tenant", invalidId));
     }
   }
 
@@ -161,7 +158,7 @@ public class IdentityServiceTenantTest {
 
       fail("Invalid tenant id exception expected!");
     } catch (ProcessEngineException ex) {
-      assertEquals(String.format(INVALID_ID_MESSAGE, "Tenant", invalidId), ex.getMessage());
+      assertThat(ex.getMessage()).isEqualTo(String.format(INVALID_ID_MESSAGE, "Tenant", invalidId));
     }
   }
 
@@ -179,7 +176,7 @@ public class IdentityServiceTenantTest {
       identityService.saveTenant(tenant);
       fail("Invalid tenant id exception expected!");
     } catch (ProcessEngineException ex) {
-      assertEquals(String.format(INVALID_ID_MESSAGE, "Tenant", invalidId), ex.getMessage());
+      assertThat(ex.getMessage()).isEqualTo(String.format(INVALID_ID_MESSAGE, "Tenant", invalidId));
     }
   }
 
@@ -200,7 +197,7 @@ public class IdentityServiceTenantTest {
 
       fail("Invalid tenant id exception expected!");
     } catch (ProcessEngineException ex) {
-      assertEquals(String.format(INVALID_ID_MESSAGE, "Tenant", invalidId), ex.getMessage());
+      assertThat(ex.getMessage()).isEqualTo(String.format(INVALID_ID_MESSAGE, "Tenant", invalidId));
     }
   }
 

@@ -18,10 +18,8 @@ package org.operaton.bpm.engine.test.api.authorization;
 
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
 import static org.operaton.bpm.engine.authorization.Resources.TASK;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Collections;
 import java.util.List;
@@ -70,7 +68,7 @@ public class TaskCommentAuthorizationTest extends AuthorizationTest {
 
     // then
     Comment shouldBeDeleletedComment = taskService.getTaskComment(TASK_ID, createdComment.getId());
-    assertNull(shouldBeDeleletedComment);
+    assertThat(shouldBeDeleletedComment).isNull();
 
     // triggers a db clean up
     deleteTask(TASK_ID, true);
@@ -111,7 +109,7 @@ public class TaskCommentAuthorizationTest extends AuthorizationTest {
 
     // then
     List<Comment> comments = taskService.getTaskComments(TASK_ID);
-    assertEquals("The comments list should be empty", Collections.emptyList(), comments);
+    assertThat(comments).as("The comments list should be empty").isEqualTo(Collections.emptyList());
 
     // triggers a db clean up
     deleteTask(TASK_ID, true);
@@ -153,8 +151,8 @@ public class TaskCommentAuthorizationTest extends AuthorizationTest {
 
     // then
     List<Comment> comments = taskService.getTaskComments(TASK_ID);
-    assertFalse("The comments list should not be empty", comments.isEmpty());
-    assertEquals(updatedMessage, comments.get(0).getFullMessage());
+    assertThat(comments).as("The comments list should not be empty").isNotEmpty();
+    assertThat(comments.get(0).getFullMessage()).isEqualTo(updatedMessage);
 
     // triggers a db clean up
     deleteTask(TASK_ID, true);
@@ -195,7 +193,7 @@ public class TaskCommentAuthorizationTest extends AuthorizationTest {
 
     // then
     Comment shouldBeDeleletedComment = taskService.getTaskComment(task.getId(), createdComment.getId());
-    assertNull(shouldBeDeleletedComment);
+    assertThat(shouldBeDeleletedComment).isNull();
   }
 
   @Test
@@ -235,7 +233,7 @@ public class TaskCommentAuthorizationTest extends AuthorizationTest {
 
     // then
     List<Comment> comments = taskService.getTaskComments(task.getId());
-    assertEquals("The comments list should be empty", Collections.emptyList(), comments);
+    assertThat(comments).as("The comments list should be empty").isEqualTo(Collections.emptyList());
   }
 
   @Test
@@ -276,8 +274,8 @@ public class TaskCommentAuthorizationTest extends AuthorizationTest {
 
     // then
     List<Comment> comments = taskService.getTaskComments(task.getId());
-    assertFalse("The comments list should not be empty", comments.isEmpty());
-    assertEquals(updatedMessage, comments.get(0).getFullMessage());
+    assertThat(comments).as("The comments list should not be empty").isNotEmpty();
+    assertThat(comments.get(0).getFullMessage()).isEqualTo(updatedMessage);
   }
 
 }

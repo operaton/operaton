@@ -18,8 +18,6 @@ package org.operaton.bpm.engine.test.bpmn.el;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -68,7 +66,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
     vars.put("aString", "abcdefgh");
     runtimeService.startProcessInstanceByKey("methodExpressionProcess", vars);
 
-    assertEquals(0, runtimeService.createProcessInstanceQuery().processDefinitionKey("methodExpressionProcess").count());
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("methodExpressionProcess").count()).isZero();
   }
 
   @Deployment
@@ -81,8 +79,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
 
     // Check of the testMethod has been called with the current execution
     String value = (String) runtimeService.getVariable(processInstance.getId(), "testVar");
-    assertNotNull(value);
-    assertEquals("myValue", value);
+    assertThat(value).isNotNull().isEqualTo("myValue");
   }
 
   @Deployment
@@ -95,8 +92,8 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
 
       // Check if the variable that has been set in service-task is the authenticated user
       String value = (String) runtimeService.getVariable(processInstance.getId(), "theUser");
-      assertNotNull(value);
-      assertEquals("frederik", value);
+      assertThat(value).isNotNull();
+      assertThat(value).isEqualTo("frederik");
     } finally {
       // Cleanup
       identityService.clearAuthentication();
@@ -111,12 +108,12 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
 
     runtimeService.startProcessInstanceByKey("oneTaskProcess", variables);
     Task task = taskService.createTaskQuery().singleResult();
-    assertEquals("michael", task.getAssignee());
+    assertThat(task.getAssignee()).isEqualTo("michael");
 
     variables.put("assignee", "johnny");
     ProcessInstance secondInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess", variables);
     task = taskService.createTaskQuery().processInstanceId(secondInstance.getId()).singleResult();
-    assertEquals("johnny", task.getAssignee());
+    assertThat(task.getAssignee()).isEqualTo("johnny");
   }
 
   @Deployment
@@ -128,7 +125,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
     // when
     taskService.complete(taskService.createTaskQuery().singleResult().getId());
     // then
-    assertEquals(1L, historyService.createHistoricVariableInstanceQuery().variableValueEquals("myCounter", 6).count());
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableValueEquals("myCounter", 6).count()).isEqualTo(1L);
   }
 
   @Test
@@ -204,7 +201,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
     boolean task1Var = (boolean) runtimeService.getVariable(processInstance.getId(), "task1Var");
     assertThat(task1Var).isTrue();
     String task2Var = (String) runtimeService.getVariable(processInstance.getId(), "task2Var");
-    assertEquals("lastParam", task2Var);
+    assertThat(task2Var).isEqualTo("lastParam");
   }
 
   @Test

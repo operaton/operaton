@@ -20,7 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.test.bpmn.executionlistener.ThrowingHistoryEventProducer.ERROR_CODE;
 import static org.operaton.bpm.engine.test.bpmn.executionlistener.ThrowingHistoryEventProducer.EXCEPTION_MESSAGE;
-import static org.junit.Assert.assertEquals;
 
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
@@ -375,8 +374,8 @@ public class ThrowingHistoryExecutionListenerTest {
   }
 
   protected void verifyHistoryListenerErrorGotCaught() {
-    assertEquals(1, taskService.createTaskQuery().list().size());
-    assertEquals("afterCatchHistory", taskService.createTaskQuery().singleResult().getName());
+    assertThat(taskService.createTaskQuery().list()).hasSize(1);
+    assertThat(taskService.createTaskQuery().singleResult().getName()).isEqualTo("afterCatchHistory");
   }
 
   protected void verifyActivityRunning(String activityName) {

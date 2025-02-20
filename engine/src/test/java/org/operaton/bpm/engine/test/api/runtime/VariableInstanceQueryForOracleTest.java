@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
@@ -48,7 +48,7 @@ public class VariableInstanceQueryForOracleTest {
 
     // then
     List<VariableInstance> variables = engineRule.getRuntimeService().createVariableInstanceQuery().list();
-    assertEquals(0, variables.size());
+    assertThat(variables).isEmpty();
   }
 
   @Test
@@ -66,7 +66,7 @@ public class VariableInstanceQueryForOracleTest {
     // then
     List<VariableInstance> variables = engineRule.getRuntimeService().createVariableInstanceQuery()
         .activityInstanceIdIn(activityInstanceId).list();
-    assertEquals(1, variables.size());
+    assertThat(variables).hasSize(1);
   }
 
   @Test
@@ -88,7 +88,7 @@ public class VariableInstanceQueryForOracleTest {
     // then
     List<VariableInstance> variables = engineRule.getRuntimeService().createVariableInstanceQuery()
         .activityInstanceIdIn(ids).list();
-    assertEquals(1000, variables.size());
+    assertThat(variables).hasSize(1000);
   }
 
   @Test
@@ -110,7 +110,7 @@ public class VariableInstanceQueryForOracleTest {
     // then
     List<VariableInstance> variables = engineRule.getRuntimeService().createVariableInstanceQuery()
         .activityInstanceIdIn(ids).list();
-    assertEquals(1001, variables.size());
+    assertThat(variables).hasSize(1001);
   }
 
   @Test
@@ -132,6 +132,6 @@ public class VariableInstanceQueryForOracleTest {
     // then
     List<VariableInstance> variables = engineRule.getRuntimeService().createVariableInstanceQuery()
         .activityInstanceIdIn(ids).list();
-    assertEquals(2001, variables.size());
+    assertThat(variables).hasSize(2001);
   }
 }

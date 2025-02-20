@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.application.impl.event;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -94,8 +93,8 @@ public class ProcessApplicationEventListenerTest {
     // I can start a process event though the process app does not provide an
     // event listener.
     ProcessInstance process = runtimeService.startProcessInstanceByKey("startToEnd");
-    
-    assertTrue(process.isEnded());
+
+    assertThat(process.isEnded()).isTrue();
 
   }
 
@@ -122,7 +121,7 @@ public class ProcessApplicationEventListenerTest {
     runtimeService.startProcessInstanceByKey("startToEnd");
 
     // Start and end of the process 
-    assertEquals(2, processDefinitionEventCount.get());
+    assertThat(processDefinitionEventCount.get()).isEqualTo(2);
   }
 
   @Test
@@ -147,7 +146,7 @@ public class ProcessApplicationEventListenerTest {
     // Start process instance.
     runtimeService.startProcessInstanceByKey("startToEnd");
 
-    assertEquals(5, eventCount.get());
+    assertThat(eventCount.get()).isEqualTo(5);
   }
 
   @Test
@@ -170,7 +169,7 @@ public class ProcessApplicationEventListenerTest {
     runtimeService.startProcessInstanceByKey("startToEnd");
 
     // 7 events received
-    assertEquals(7, eventCount.get());
+    assertThat(eventCount.get()).isEqualTo(7);
    }
 
   @Test
@@ -193,7 +192,7 @@ public class ProcessApplicationEventListenerTest {
     // start process instance
     runtimeService.startProcessInstanceByKey("executionListener");
 
-    assertEquals(10, eventCount.get());
+    assertThat(eventCount.get()).isEqualTo(10);
     
     // reset counter
     eventCount.set(0);
@@ -203,7 +202,7 @@ public class ProcessApplicationEventListenerTest {
     // start process instance
     runtimeService.startProcessInstanceByKey("executionListener", Collections.singletonMap("shouldThrowError", true));
 
-    assertEquals(12, eventCount.get());
+    assertThat(eventCount.get()).isEqualTo(12);
   }
 
   @Test
@@ -230,7 +229,7 @@ public class ProcessApplicationEventListenerTest {
     Task task = taskService.createTaskQuery().singleResult();
     taskService.complete(task.getId());
 
-    assertEquals(10, eventCount.get());
+    assertThat(eventCount.get()).isEqualTo(10);
     
     // reset counter
     eventCount.set(0);
@@ -244,7 +243,7 @@ public class ProcessApplicationEventListenerTest {
     Job job = managementService.createJobQuery().singleResult();
     managementService.executeJob(job.getId());
 
-    assertEquals(12, eventCount.get());
+    assertThat(eventCount.get()).isEqualTo(12);
   }
 
   @Test
@@ -271,7 +270,7 @@ public class ProcessApplicationEventListenerTest {
     Task task = taskService.createTaskQuery().singleResult();
     taskService.complete(task.getId());
 
-    assertEquals(10, eventCount.get());
+    assertThat(eventCount.get()).isEqualTo(10);
     
     // reset counter
     eventCount.set(0);
@@ -284,7 +283,7 @@ public class ProcessApplicationEventListenerTest {
     // signal event
     runtimeService.signalEventReceived("signal");
 
-    assertEquals(12, eventCount.get());
+    assertThat(eventCount.get()).isEqualTo(12);
   }
 
   @Test
@@ -319,7 +318,7 @@ public class ProcessApplicationEventListenerTest {
     }
 
     // 2 events are expected: one for mi body start; one for mi body end
-    assertEquals(2, eventCountForMultiInstanceBody.get());
+    assertThat(eventCountForMultiInstanceBody.get()).isEqualTo(2);
   }
 
   @Test
@@ -342,27 +341,27 @@ public class ProcessApplicationEventListenerTest {
     ProcessInstance taskListenerProcess = runtimeService.startProcessInstanceByKey("taskListenerProcess");
 
     // create event received
-    assertEquals(1, events.size());
-    assertEquals(TaskListener.EVENTNAME_CREATE, events.get(0));
+    assertThat(events).hasSize(1);
+    assertThat(events.get(0)).isEqualTo(TaskListener.EVENTNAME_CREATE);
 
     Task task = taskService.createTaskQuery().singleResult();
     //assign task:
     taskService.setAssignee(task.getId(), "jonny");
-    assertEquals(3, events.size());
-    assertEquals(TaskListener.EVENTNAME_UPDATE, events.get(1));
-    assertEquals(TaskListener.EVENTNAME_ASSIGNMENT, events.get(2));
+    assertThat(events).hasSize(3);
+    assertThat(events.get(1)).isEqualTo(TaskListener.EVENTNAME_UPDATE);
+    assertThat(events.get(2)).isEqualTo(TaskListener.EVENTNAME_ASSIGNMENT);
 
     // complete task
     taskService.complete(task.getId());
-    assertEquals(5, events.size());
-    assertEquals(TaskListener.EVENTNAME_COMPLETE, events.get(3));
+    assertThat(events).hasSize(5);
+    assertThat(events.get(3)).isEqualTo(TaskListener.EVENTNAME_COMPLETE);
     // next task was created
-    assertEquals(TaskListener.EVENTNAME_CREATE, events.get(4));
+    assertThat(events.get(4)).isEqualTo(TaskListener.EVENTNAME_CREATE);
 
     // delete process instance so last task will be deleted
     runtimeService.deleteProcessInstance(taskListenerProcess.getProcessInstanceId(), "test delete event");
-    assertEquals(6, events.size());
-    assertEquals(TaskListener.EVENTNAME_DELETE, events.get(5));
+    assertThat(events).hasSize(6);
+    assertThat(events.get(5)).isEqualTo(TaskListener.EVENTNAME_DELETE);
 
   }
 
@@ -396,13 +395,13 @@ public class ProcessApplicationEventListenerTest {
     managementService.executeJob(jobId);
 
     // then
-    assertEquals(2, timerEvents.size());
+    assertThat(timerEvents).hasSize(2);
 
     // "start" event listener
-    assertEquals(ExecutionListener.EVENTNAME_START, timerEvents.get(0));
+    assertThat(timerEvents.get(0)).isEqualTo(ExecutionListener.EVENTNAME_START);
 
     // "end" event listener
-    assertEquals(ExecutionListener.EVENTNAME_END, timerEvents.get(1));
+    assertThat(timerEvents.get(1)).isEqualTo(ExecutionListener.EVENTNAME_END);
   }
 
   @Test
@@ -434,13 +433,13 @@ public class ProcessApplicationEventListenerTest {
     runtimeService.signalEventReceived("abort");
 
     // then
-    assertEquals(2, timerEvents.size());
+    assertThat(timerEvents).hasSize(2);
 
     // "start" event listener
-    assertEquals(ExecutionListener.EVENTNAME_START, timerEvents.get(0));
+    assertThat(timerEvents.get(0)).isEqualTo(ExecutionListener.EVENTNAME_START);
 
     // "end" event listener
-    assertEquals(ExecutionListener.EVENTNAME_END, timerEvents.get(1));
+    assertThat(timerEvents.get(1)).isEqualTo(ExecutionListener.EVENTNAME_END);
   }
 
 }

@@ -35,8 +35,8 @@ import java.util.Set;
 import org.junit.After;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 
 /**
@@ -105,17 +105,17 @@ public class TimerRecalculationTest extends PluggableProcessEngineTest {
     variables1.put("dueDate", new Date());
 
     ProcessInstance pi1 = runtimeService.startProcessInstanceByKey("intermediateTimerEventExample", variables1);
-    assertEquals(1, managementService.createJobQuery().processInstanceId(pi1.getId()).count());
+    assertThat(managementService.createJobQuery().processInstanceId(pi1.getId()).count()).isEqualTo(1);
 
     JobQuery jobQuery = managementService.createJobQuery().executable();
-    assertEquals(1L, jobQuery.count());
+    assertThat(jobQuery.count()).isEqualTo(1L);
 
     // job duedate can be recalculated, job still exists in runtime
     String jobId = jobQuery.singleResult().getId();
     managementService.recalculateJobDuedate(jobId, false);
     // run the job, finish the process
     managementService.executeJob(jobId);
-    assertEquals(0L, managementService.createJobQuery().processInstanceId(pi1.getId()).count());
+    assertThat(managementService.createJobQuery().processInstanceId(pi1.getId()).count()).isZero();
     testRule.assertProcessEnded(pi1.getProcessInstanceId());
     
     try {

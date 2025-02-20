@@ -25,7 +25,6 @@ import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_TASK;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 import org.operaton.bpm.engine.AuthorizationException;
@@ -473,7 +472,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
 
     disableAuthorization();
     String variableInstanceId = historyService.createHistoricVariableInstanceQuery().singleResult().getId();
-    assertEquals(1L, historyService.createHistoricDetailQuery().count());
+    assertThat(historyService.createHistoricDetailQuery().count()).isEqualTo(1L);
     enableAuthorization();
 
     assertThatThrownBy(() -> historyService.deleteHistoricVariableInstance(variableInstanceId))
@@ -493,7 +492,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
 
     disableAuthorization();
     String variableInstanceId = historyService.createHistoricVariableInstanceQuery().singleResult().getId();
-    assertEquals(1L, historyService.createHistoricDetailQuery().count());
+    assertThat(historyService.createHistoricDetailQuery().count()).isEqualTo(1L);
     enableAuthorization();
 
     assertThatCode(() -> historyService.deleteHistoricVariableInstance(variableInstanceId))
@@ -518,7 +517,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
     disableAuthorization();
     repositoryService.deleteDeployment(deploymentId);
     String variableInstanceId = historyService.createHistoricVariableInstanceQuery().singleResult().getId();
-    assertEquals(1L, historyService.createHistoricDetailQuery().count());
+    assertThat(historyService.createHistoricDetailQuery().count()).isEqualTo(1L);
     enableAuthorization();
 
     // when
@@ -538,7 +537,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
 
     disableAuthorization();
     String variableInstanceId = historyService.createHistoricVariableInstanceQuery().singleResult().getId();
-    assertEquals(1L, historyService.createHistoricDetailQuery().count());
+    assertThat(historyService.createHistoricDetailQuery().count()).isEqualTo(1L);
     enableAuthorization();
 
     // when
@@ -558,7 +557,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
     disableAuthorization();
     taskService.setVariables(taskId, getVariables());
     String variableInstanceId = historyService.createHistoricVariableInstanceQuery().singleResult().getId();
-    assertEquals(1L, historyService.createHistoricDetailQuery().count());
+    assertThat(historyService.createHistoricDetailQuery().count()).isEqualTo(1L);
     enableAuthorization();
 
     // when
@@ -635,15 +634,15 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
 
   protected void verifyVariablesDeleted() {
     disableAuthorization();
-    assertEquals(0L, historyService.createHistoricVariableInstanceQuery().count());
-    assertEquals(0L, historyService.createHistoricDetailQuery().count());
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isZero();
+    assertThat(historyService.createHistoricDetailQuery().count()).isZero();
     enableAuthorization();
   }
 
   protected void verifyVariablesCreated() {
     disableAuthorization();
-    assertEquals(1L, historyService.createHistoricVariableInstanceQuery().count());
-    assertEquals(1L, historyService.createHistoricDetailQuery().count());
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(1L);
+    assertThat(historyService.createHistoricDetailQuery().count()).isEqualTo(1L);
     enableAuthorization();
   }
 
@@ -704,7 +703,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
         .list();
 
     // then
-    assertEquals(0, result.size());
+    assertThat(result).isEmpty();
   }
 
   @Test
@@ -725,7 +724,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
         .list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result).hasSize(1);
   }
 
   @Test
@@ -746,7 +745,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
         .list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result).hasSize(1);
 
     // clear
     deleteTask(taskId, true);
@@ -770,7 +769,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
         .list();
 
     // then
-    assertEquals(0, result.size());
+    assertThat(result).isEmpty();
 
     // clear
     deleteTask(taskId, true);
@@ -795,7 +794,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
         .list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result).hasSize(1);
   }
 
   @Test
@@ -818,7 +817,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
         .list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result).hasSize(1);
   }
 
   @Test
@@ -842,7 +841,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
         .list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result).hasSize(1);
   }
 
   @Test
@@ -861,7 +860,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
         .list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result).hasSize(1);
   }
 
   @Test
@@ -880,7 +879,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
         .list();
 
     // then
-    assertEquals(0, result.size());
+    assertThat(result).isEmpty();
   }
 
   @Test
@@ -899,7 +898,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
         .list();
 
     // then
-    assertEquals(0, result.size());
+    assertThat(result).isEmpty();
   }
 
   @Test
@@ -921,7 +920,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
         .list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result).hasSize(1);
 
     // clear
     deleteTask(taskId, true);
@@ -946,7 +945,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
         .list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result).hasSize(1);
   }
 
   @Test
@@ -970,7 +969,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
         .list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result).hasSize(1);
   }
 
   @Test
@@ -993,7 +992,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
         .list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result).hasSize(1);
   }
 
   @Test
@@ -1011,7 +1010,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
     List<HistoricVariableInstance> result = historyService.createHistoricVariableInstanceQuery().list();
 
     // then
-    assertEquals(1, result.size());
+    assertThat(result).hasSize(1);
   }
 
   @Test

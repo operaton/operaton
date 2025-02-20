@@ -16,11 +16,7 @@
  */
 package org.operaton.bpm.engine.test.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,6 +32,8 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.variable.impl.value.UntypedValueImpl;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
+import org.assertj.core.api.Assertions;
+
 public class MigrationPlanAssert {
 
   protected MigrationPlan actual;
@@ -45,7 +43,7 @@ public class MigrationPlanAssert {
   }
 
   public MigrationPlanAssert isNotNull() {
-    assertNotNull("The migration plan is null", actual);
+    Assertions.assertThat(actual).as("The migration plan is null").isNotNull();
 
     return this;
   }
@@ -56,7 +54,7 @@ public class MigrationPlanAssert {
 
   public MigrationPlanAssert hasSourceProcessDefinitionId(String sourceProcessDefinitionId) {
     isNotNull();
-    assertEquals("The source process definition id does not match", sourceProcessDefinitionId, actual.getSourceProcessDefinitionId());
+    Assertions.assertThat(actual.getSourceProcessDefinitionId()).as("The source process definition id does not match").isEqualTo(sourceProcessDefinitionId);
 
     return this;
   }
@@ -67,20 +65,20 @@ public class MigrationPlanAssert {
 
   public MigrationPlanAssert hasTargetProcessDefinitionId(String targetProcessDefinitionId) {
     isNotNull();
-    assertEquals("The target process definition id does not match", targetProcessDefinitionId, actual.getTargetProcessDefinitionId());
+    Assertions.assertThat(actual.getTargetProcessDefinitionId()).as("The target process definition id does not match").isEqualTo(targetProcessDefinitionId);
 
     return this;
   }
 
   public MigrationPlanAssert variablesNull() {
     isNotNull();
-    assertNull(actual.getVariables());
+    Assertions.assertThat(actual.getVariables()).isNull();
     return this;
   }
 
   public MigrationPlanAssert variablesEmpty() {
     isNotNull();
-    assertTrue(actual.getVariables() != null && actual.getVariables().isEmpty());
+    Assertions.assertThat(actual.getVariables() != null && actual.getVariables().isEmpty()).isTrue();
     return this;
   }
 
@@ -138,11 +136,9 @@ public class MigrationPlanAssert {
         if (instructionAssert.sourceActivityId.equals(instruction.getSourceActivityId())) {
           notFound.remove(instructionAssert);
           notExpected.remove(instruction);
-          assertEquals("Target activity ids do not match for instruction " + instruction,
-            instructionAssert.targetActivityId, instruction.getTargetActivityId());
+          Assertions.assertThat(instruction.getTargetActivityId()).as("Target activity ids do not match for instruction " + instruction).isEqualTo(instructionAssert.targetActivityId);
           if (instructionAssert.updateEventTrigger != null) {
-            assertEquals("Expected instruction to update event trigger: " + instructionAssert.updateEventTrigger + " but is: " + instruction.isUpdateEventTrigger(),
-              instructionAssert.updateEventTrigger, instruction.isUpdateEventTrigger());
+            Assertions.assertThat(instruction.isUpdateEventTrigger()).as("Expected instruction to update event trigger: " + instructionAssert.updateEventTrigger + " but is: " + instruction.isUpdateEventTrigger()).isEqualTo(instructionAssert.updateEventTrigger);
           }
         }
       }
@@ -167,7 +163,7 @@ public class MigrationPlanAssert {
     isNotNull();
 
     List<MigrationInstruction> instructions = actual.getInstructions();
-    assertTrue("Expected migration plan has no instructions but has: " + instructions, instructions.isEmpty());
+    Assertions.assertThat(instructions).as("Expected migration plan has no instructions but has: " + instructions).isEmpty();
 
     return this;
   }

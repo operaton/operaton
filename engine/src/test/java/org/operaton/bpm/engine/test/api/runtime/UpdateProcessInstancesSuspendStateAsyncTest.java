@@ -18,15 +18,12 @@ package org.operaton.bpm.engine.test.api.runtime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import org.assertj.core.api.Assertions;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -91,9 +88,9 @@ public class UpdateProcessInstancesSuspendStateAsyncTest {
 
     // then
     ProcessInstance p1c = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance1.getId()).singleResult();
-    assertTrue(p1c.isSuspended());
+    assertThat(p1c.isSuspended()).isTrue();
     ProcessInstance p2c = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance2.getId()).singleResult();
-    assertTrue(p2c.isSuspended());
+    assertThat(p2c.isSuspended()).isTrue();
 
   }
 
@@ -127,9 +124,9 @@ public class UpdateProcessInstancesSuspendStateAsyncTest {
 
     // then
     ProcessInstance p1c = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance1.getId()).singleResult();
-    assertTrue(p1c.isSuspended());
+    assertThat(p1c.isSuspended()).isTrue();
     ProcessInstance p2c = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance2.getId()).singleResult();
-    assertTrue(p2c.isSuspended());
+    assertThat(p2c.isSuspended()).isTrue();
 
   }
 
@@ -202,9 +199,9 @@ public class UpdateProcessInstancesSuspendStateAsyncTest {
 
     // then
     ProcessInstance p1c = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance1.getId()).singleResult();
-    assertFalse(p1c.isSuspended());
+    assertThat(p1c.isSuspended()).isFalse();
     ProcessInstance p2c = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance2.getId()).singleResult();
-    assertFalse(p2c.isSuspended());
+    assertThat(p2c.isSuspended()).isFalse();
   }
 
   @Test
@@ -223,9 +220,9 @@ public class UpdateProcessInstancesSuspendStateAsyncTest {
 
     // then
     ProcessInstance p1c = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance1.getId()).singleResult();
-    assertTrue(p1c.isSuspended());
+    assertThat(p1c.isSuspended()).isTrue();
     ProcessInstance p2c = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance2.getId()).singleResult();
-    assertTrue(p2c.isSuspended());
+    assertThat(p2c.isSuspended()).isTrue();
 
   }
 
@@ -248,9 +245,9 @@ public class UpdateProcessInstancesSuspendStateAsyncTest {
 
     // then
     ProcessInstance p1c = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance1.getId()).singleResult();
-    assertFalse(p1c.isSuspended());
+    assertThat(p1c.isSuspended()).isFalse();
     ProcessInstance p2c = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance2.getId()).singleResult();
-    assertFalse(p2c.isSuspended());
+    assertThat(p2c.isSuspended()).isFalse();
   }
 
   @Test
@@ -270,9 +267,9 @@ public class UpdateProcessInstancesSuspendStateAsyncTest {
 
     // then
     ProcessInstance p1c = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance1.getId()).singleResult();
-    assertTrue(p1c.isSuspended());
+    assertThat(p1c.isSuspended()).isTrue();
     ProcessInstance p2c = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance2.getId()).singleResult();
-    assertTrue(p2c.isSuspended());
+    assertThat(p2c.isSuspended()).isTrue();
 
   }
 
@@ -297,9 +294,9 @@ public class UpdateProcessInstancesSuspendStateAsyncTest {
 
     // then
     ProcessInstance p1c = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance1.getId()).singleResult();
-    assertFalse(p1c.isSuspended());
+    assertThat(p1c.isSuspended()).isFalse();
     ProcessInstance p2c = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance2.getId()).singleResult();
-    assertFalse(p2c.isSuspended());
+    assertThat(p2c.isSuspended()).isFalse();
   }
 
   @Test
@@ -381,8 +378,8 @@ public class UpdateProcessInstancesSuspendStateAsyncTest {
     HistoricBatch historicBatch = historyService.createHistoricBatchQuery().singleResult();
     batch = engineRule.getManagementService().createBatchQuery().singleResult();
 
-    Assertions.assertThat(batch.getExecutionStartTime()).isCloseTo(TEST_DATE, 1000);
-    Assertions.assertThat(historicBatch.getExecutionStartTime()).isCloseTo(TEST_DATE, 1000);
+    assertThat(batch.getExecutionStartTime()).isCloseTo(TEST_DATE, 1000);
+    assertThat(historicBatch.getExecutionStartTime()).isCloseTo(TEST_DATE, 1000);
   }
 
 }

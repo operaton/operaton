@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.test.standalone.initialization;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.sql.SQLException;
 
@@ -37,7 +37,7 @@ public class NoDbConnectionTest {
       processEngineConfiguration.buildProcessEngine();
       fail("expected exception");
     } catch (RuntimeException e) {
-      assertTrue(containsSqlException(e));
+      assertThat(containsSqlException(e)).isTrue();
     }
   }
 

@@ -39,25 +39,17 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * @author Frederik Heremans
  */
 public class IdentityServiceTest {
 
-  private final String INVALID_ID_MESSAGE = "%s has an invalid id: '%s' is not a valid resource identifier.";
+  private static final String INVALID_ID_MESSAGE = "%s has an invalid id: '%s' is not a valid resource identifier.";
 
   private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-  private static final String INDENTITY_LOGGER = "org.operaton.bpm.engine.identity";
+  private static final String IDENTITY_LOGGER = "org.operaton.bpm.engine.identity";
 
   @Rule
   public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
@@ -106,7 +98,7 @@ public class IdentityServiceTest {
 
   @Test
   public void testIsReadOnly() {
-    assertFalse(identityService.isReadOnly());
+    assertThat(identityService.isReadOnly()).isFalse();
   }
 
   @Test
@@ -115,33 +107,34 @@ public class IdentityServiceTest {
     identityService.saveUser(user);
 
     identityService.setUserInfo("testuser", "myinfo", "myvalue");
-    assertEquals("myvalue", identityService.getUserInfo("testuser", "myinfo"));
+    assertThat(identityService.getUserInfo("testuser", "myinfo")).isEqualTo("myvalue");
 
     identityService.setUserInfo("testuser", "myinfo", "myvalue2");
-    assertEquals("myvalue2", identityService.getUserInfo("testuser", "myinfo"));
+    assertThat(identityService.getUserInfo("testuser", "myinfo")).isEqualTo("myvalue2");
 
     identityService.deleteUserInfo("testuser", "myinfo");
-    assertNull(identityService.getUserInfo("testuser", "myinfo"));
+    assertThat(identityService.getUserInfo("testuser", "myinfo")).isNull();
 
     identityService.deleteUser(user.getId());
   }
 
   @Test
+  @SuppressWarnings("deprecation")
   public void testUserAccount() {
     User user = identityService.newUser("testuser");
     identityService.saveUser(user);
 
     identityService.setUserAccount("testuser", "123", "google", "mygoogleusername", "mygooglepwd", null);
     Account googleAccount = identityService.getUserAccount("testuser", "123", "google");
-    assertEquals("google", googleAccount.getName());
-    assertEquals("mygoogleusername", googleAccount.getUsername());
-    assertEquals("mygooglepwd", googleAccount.getPassword());
+    assertThat(googleAccount.getName()).isEqualTo("google");
+    assertThat(googleAccount.getUsername()).isEqualTo("mygoogleusername");
+    assertThat(googleAccount.getPassword()).isEqualTo("mygooglepwd");
 
     identityService.setUserAccount("testuser", "123", "google", "mygoogleusername2", "mygooglepwd2", null);
     googleAccount = identityService.getUserAccount("testuser", "123", "google");
-    assertEquals("google", googleAccount.getName());
-    assertEquals("mygoogleusername2", googleAccount.getUsername());
-    assertEquals("mygooglepwd2", googleAccount.getPassword());
+    assertThat(googleAccount.getName()).isEqualTo("google");
+    assertThat(googleAccount.getUsername()).isEqualTo("mygoogleusername2");
+    assertThat(googleAccount.getPassword()).isEqualTo("mygooglepwd2");
 
     identityService.setUserAccount("testuser", "123", "alfresco", "myalfrescousername", "myalfrescopwd", null);
     identityService.setUserInfo("testuser", "myinfo", "myvalue");
@@ -165,18 +158,20 @@ public class IdentityServiceTest {
 
   private void assertListElementsMatch(List<String> list1, List<String> list2) {
     if (list1 != null) {
-      assertNotNull(list2);
-      assertEquals(list1.size(), list2.size());
+      assertThat(list2)
+              .isNotNull()
+              .hasSize(list1.size());
       for (String value : list1) {
-        assertTrue(list2.contains(value));
+        assertThat(list2).contains(value);
       }
     } else {
-      assertNull(list2);
+      assertThat(list2).isNull();
     }
 
   }
 
   @Test
+  @SuppressWarnings("deprecation")
   public void testUserAccountDetails() {
     User user = identityService.newUser("testuser");
     identityService.saveUser(user);
@@ -186,7 +181,7 @@ public class IdentityServiceTest {
     accountDetails.put("port", "35");
     identityService.setUserAccount("testuser", "123", "google", "mygoogleusername", "mygooglepwd", accountDetails);
     Account googleAccount = identityService.getUserAccount("testuser", "123", "google");
-    assertEquals(accountDetails, googleAccount.getDetails());
+    assertThat(googleAccount.getDetails()).isEqualTo(accountDetails);
 
     identityService.deleteUser(user.getId());
   }
@@ -205,7 +200,7 @@ public class IdentityServiceTest {
       if (!(ex instanceof BadUserRequestException)) {
         fail("BadUserRequestException is expected, but another exception was received:  " + ex);
       }
-      assertEquals("The user already exists", ex.getMessage());
+      assertThat(ex.getMessage()).isEqualTo("The user already exists");
     }
   }
 
@@ -227,10 +222,10 @@ public class IdentityServiceTest {
     identityService.saveUser(user);
 
     user = identityService.createUserQuery().userId("johndoe").singleResult();
-    assertEquals("Jane", user.getFirstName());
-    assertEquals("Donnel", user.getLastName());
-    assertEquals("updated@alfresco.com", user.getEmail());
-    assertTrue(identityService.checkPassword("johndoe", "s3cret"));
+    assertThat(user.getFirstName()).isEqualTo("Jane");
+    assertThat(user.getLastName()).isEqualTo("Donnel");
+    assertThat(user.getEmail()).isEqualTo("updated@alfresco.com");
+    assertThat(identityService.checkPassword("johndoe", "s3cret")).isTrue();
 
     identityService.deleteUser(user.getId());
   }
@@ -249,8 +244,8 @@ public class IdentityServiceTest {
 
     // Fetch and update the user
     user = identityService.createUserQuery().userId("johndoe").singleResult();
-    assertTrue("byte arrays differ", Arrays.equals("niceface".getBytes(), picture.getBytes()));
-    assertEquals("image/string", picture.getMimeType());
+    assertThat(Arrays.equals("niceface".getBytes(), picture.getBytes())).as("byte arrays differ").isTrue();
+    assertThat(picture.getMimeType()).isEqualTo("image/string");
 
     identityService.deleteUserPicture("johndoe");
     // this is ignored
@@ -258,7 +253,7 @@ public class IdentityServiceTest {
 
     // picture does not exist
     picture = identityService.getUserPicture("johndoe");
-    assertNull(picture);
+    assertThat(picture).isNull();
 
     // add new picture
     picture = new Picture("niceface".getBytes(), "image/string");
@@ -282,7 +277,7 @@ public class IdentityServiceTest {
       if (!(ex instanceof BadUserRequestException)) {
         fail("BadUserRequestException is expected, but another exception was received:  " + ex);
       }
-      assertEquals("The group already exists", ex.getMessage());
+      assertThat(ex.getMessage()).isEqualTo("The group already exists");
     }
   }
 
@@ -297,7 +292,7 @@ public class IdentityServiceTest {
     identityService.saveGroup(group);
 
     group = identityService.createGroupQuery().groupId("sales").singleResult();
-    assertEquals("Updated", group.getName());
+    assertThat(group.getName()).isEqualTo("Updated");
 
     identityService.deleteGroup(group.getId());
   }
@@ -305,13 +300,13 @@ public class IdentityServiceTest {
   @Test
   public void findUserByUnexistingId() {
     User user = identityService.createUserQuery().userId("unexistinguser").singleResult();
-    assertNull(user);
+    assertThat(user).isNull();
   }
 
   @Test
   public void findGroupByUnexistingId() {
     Group group = identityService.createGroupQuery().groupId("unexistinggroup").singleResult();
-    assertNull(group);
+    assertThat(group).isNull();
   }
 
   @Test
@@ -408,8 +403,7 @@ public class IdentityServiceTest {
   @Test
   public void testFindUsersByGroupUnexistingGroup() {
     List<User> users = identityService.createUserQuery().memberOfGroup("unexistinggroup").list();
-    assertNotNull(users);
-    assertTrue(users.isEmpty());
+    assertThat(users).isNotNull().isEmpty();
   }
 
   @Test
@@ -431,13 +425,13 @@ public class IdentityServiceTest {
     identityService.createMembership(johndoe.getId(), sales.getId());
 
     List<Group> groups = identityService.createGroupQuery().groupMember(johndoe.getId()).list();
-    assertEquals(1, groups.size());
-    assertEquals("sales", groups.get(0).getId());
+    assertThat(groups).hasSize(1);
+    assertThat(groups.get(0).getId()).isEqualTo("sales");
 
     // Delete the membership and check members of sales group
     identityService.deleteMembership(johndoe.getId(), sales.getId());
     groups = identityService.createGroupQuery().groupMember(johndoe.getId()).list();
-    assertTrue(groups.isEmpty());
+    assertThat(groups).isEmpty();
 
     identityService.deleteGroup("sales");
     identityService.deleteUser("johndoe");
@@ -519,8 +513,8 @@ public class IdentityServiceTest {
     user.setPassword("s3cret");
     identityService.saveUser(user);
 
-    assertTrue(identityService.checkPassword(user.getId(), "s3cret"));
-    assertFalse(identityService.checkPassword(user.getId(), "wrong"));
+    assertThat(identityService.checkPassword(user.getId(), "s3cret")).isTrue();
+    assertThat(identityService.checkPassword(user.getId(), "wrong")).isFalse();
 
     identityService.deleteUser(user.getId());
 
@@ -534,12 +528,12 @@ public class IdentityServiceTest {
     user.setPassword("s3cret");
     identityService.saveUser(user);
 
-    assertTrue(identityService.checkPassword(user.getId(), "s3cret"));
+    assertThat(identityService.checkPassword(user.getId(), "s3cret")).isTrue();
 
     user.setPassword("new-password");
     identityService.saveUser(user);
 
-    assertTrue(identityService.checkPassword(user.getId(), "new-password"));
+    assertThat(identityService.checkPassword(user.getId(), "new-password")).isTrue();
 
     identityService.deleteUser(user.getId());
 
@@ -547,9 +541,9 @@ public class IdentityServiceTest {
 
   @Test
   public void testCheckPasswordNullSafe() {
-    assertFalse(identityService.checkPassword("userId", null));
-    assertFalse(identityService.checkPassword(null, "passwd"));
-    assertFalse(identityService.checkPassword(null, null));
+    assertThat(identityService.checkPassword("userId", null)).isFalse();
+    assertThat(identityService.checkPassword(null, "passwd")).isFalse();
+    assertThat(identityService.checkPassword(null, null)).isFalse();
   }
 
   @Test
@@ -651,10 +645,10 @@ public class IdentityServiceTest {
 
     Authentication currentAuthentication = identityService.getCurrentAuthentication();
 
-    assertNotNull(currentAuthentication);
-    assertEquals("john", currentAuthentication.getUserId());
-    assertNull(currentAuthentication.getGroupIds());
-    assertNull(currentAuthentication.getTenantIds());
+    assertThat(currentAuthentication).isNotNull();
+    assertThat(currentAuthentication.getUserId()).isEqualTo("john");
+    assertThat(currentAuthentication.getGroupIds()).isNull();
+    assertThat(currentAuthentication.getTenantIds()).isNull();
   }
 
   @Test
@@ -665,10 +659,10 @@ public class IdentityServiceTest {
 
     Authentication currentAuthentication = identityService.getCurrentAuthentication();
 
-    assertNotNull(currentAuthentication);
-    assertEquals("john", currentAuthentication.getUserId());
-    assertEquals(groups, currentAuthentication.getGroupIds());
-    assertNull(currentAuthentication.getTenantIds());
+    assertThat(currentAuthentication).isNotNull();
+    assertThat(currentAuthentication.getUserId()).isEqualTo("john");
+    assertThat(currentAuthentication.getGroupIds()).isEqualTo(groups);
+    assertThat(currentAuthentication.getTenantIds()).isNull();
   }
 
   @Test
@@ -680,10 +674,10 @@ public class IdentityServiceTest {
 
     Authentication currentAuthentication = identityService.getCurrentAuthentication();
 
-    assertNotNull(currentAuthentication);
-    assertEquals("john", currentAuthentication.getUserId());
-    assertEquals(groups, currentAuthentication.getGroupIds());
-    assertEquals(tenants, currentAuthentication.getTenantIds());
+    assertThat(currentAuthentication).isNotNull();
+    assertThat(currentAuthentication.getUserId()).isEqualTo("john");
+    assertThat(currentAuthentication.getGroupIds()).isEqualTo(groups);
+    assertThat(currentAuthentication.getTenantIds()).isEqualTo(tenants);
   }
 
   @Test
@@ -692,15 +686,15 @@ public class IdentityServiceTest {
     user.setPassword("xxx");
     identityService.saveUser(user);
 
-    assertTrue(identityService.checkPassword("johndoe", "xxx"));
-    assertFalse(identityService.checkPassword("johndoe", "invalid pwd"));
+    assertThat(identityService.checkPassword("johndoe", "xxx")).isTrue();
+    assertThat(identityService.checkPassword("johndoe", "invalid pwd")).isFalse();
 
     identityService.deleteUser("johndoe");
   }
 
   @Test
-  @WatchLogger(loggerNames = {INDENTITY_LOGGER}, level = "INFO")
-  public void testUsuccessfulAttemptsResultInBlockedUser() throws ParseException {
+  @WatchLogger(loggerNames = {IDENTITY_LOGGER}, level = "INFO")
+  public void testUnsuccessfulAttemptsResultInBlockedUser() throws ParseException {
     // given
     User user = identityService.newUser("johndoe");
     user.setPassword("xxx");
@@ -711,13 +705,13 @@ public class IdentityServiceTest {
 
     // when
     for (int i = 0; i < 11; i++) {
-      assertFalse(identityService.checkPassword("johndoe", "invalid pwd"));
+      assertThat(identityService.checkPassword("johndoe", "invalid pwd")).isFalse();
       now = DateUtils.addMinutes(now, 1);
       ClockUtil.setCurrentTime(now);
     }
 
     // then
-    assertThat(loggingRule.getFilteredLog(INDENTITY_LOGGER, "The user with id 'johndoe' is permanently locked.")).hasSize(1);
+    assertThat(loggingRule.getFilteredLog(IDENTITY_LOGGER, "The user with id 'johndoe' is permanently locked.")).hasSize(1);
   }
 
   @Test
@@ -728,15 +722,15 @@ public class IdentityServiceTest {
 
     Date now = ClockUtil.getCurrentTime();
     ClockUtil.setCurrentTime(now);
-    assertFalse(identityService.checkPassword("johndoe", "invalid pwd"));
+    assertThat(identityService.checkPassword("johndoe", "invalid pwd")).isFalse();
     ClockUtil.setCurrentTime(DateUtils.addSeconds(now, 30));
-    assertTrue(identityService.checkPassword("johndoe", "xxx"));
+    assertThat(identityService.checkPassword("johndoe", "xxx")).isTrue();
 
     identityService.deleteUser("johndoe");
   }
 
   @Test
-  @WatchLogger(loggerNames = {INDENTITY_LOGGER}, level = "INFO")
+  @WatchLogger(loggerNames = {IDENTITY_LOGGER}, level = "INFO")
   public void testSuccessfulLoginAfterFailureWithoutDelay() {
     // given
     User user = identityService.newUser("johndoe");
@@ -745,22 +739,22 @@ public class IdentityServiceTest {
 
     Date now = ClockUtil.getCurrentTime();
     ClockUtil.setCurrentTime(now);
-    assertFalse(identityService.checkPassword("johndoe", "invalid pwd"));
-    assertFalse(identityService.checkPassword("johndoe", "xxx"));
+    assertThat(identityService.checkPassword("johndoe", "invalid pwd")).isFalse();
+    assertThat(identityService.checkPassword("johndoe", "xxx")).isFalse();
 
     // assume
-    assertThat(loggingRule.getFilteredLog(INDENTITY_LOGGER, "The user with id 'johndoe' is locked.")).hasSize(1);
+    assertThat(loggingRule.getFilteredLog(IDENTITY_LOGGER, "The user with id 'johndoe' is locked.")).hasSize(1);
 
     // when
     ClockUtil.setCurrentTime(DateUtils.addSeconds(now, 30));
     boolean checkPassword = identityService.checkPassword("johndoe", "xxx");
 
     // then
-    assertTrue(checkPassword);
+    assertThat(checkPassword).isTrue();
   }
 
   @Test
-  @WatchLogger(loggerNames = {INDENTITY_LOGGER}, level = "INFO")
+  @WatchLogger(loggerNames = {IDENTITY_LOGGER}, level = "INFO")
   public void testUnsuccessfulLoginAfterFailureWithoutDelay() {
     // given
     User user = identityService.newUser("johndoe");
@@ -769,16 +763,16 @@ public class IdentityServiceTest {
 
     Date now = ClockUtil.getCurrentTime();
     ClockUtil.setCurrentTime(now);
-    assertFalse(identityService.checkPassword("johndoe", "invalid pwd"));
+    assertThat(identityService.checkPassword("johndoe", "invalid pwd")).isFalse();
 
     ClockUtil.setCurrentTime(DateUtils.addSeconds(now, 1));
     Date expectedLockExpitation = DateUtils.addSeconds(now, 3);
 
     // when try again before exprTime
-    assertFalse(identityService.checkPassword("johndoe", "invalid pwd"));
+    assertThat(identityService.checkPassword("johndoe", "invalid pwd")).isFalse();
 
     // then
-    assertThat(loggingRule.getFilteredLog(INDENTITY_LOGGER, "The lock will expire at " + expectedLockExpitation)).hasSize(1);
+    assertThat(loggingRule.getFilteredLog(IDENTITY_LOGGER, "The lock will expire at " + expectedLockExpitation)).hasSize(1);
   }
 
   @Test
@@ -819,16 +813,16 @@ public class IdentityServiceTest {
     Set<String> expectedGroupIds = new HashSet<>();
     expectedGroupIds.add("user");
     expectedGroupIds.add("admin");
-    assertEquals(expectedGroupIds, groupIds);
+    assertThat(groupIds).isEqualTo(expectedGroupIds);
 
     groups = identityService.createGroupQuery().groupMember("joesmoe").groupType("security-role").list();
     groupIds = getGroupIds(groups);
     expectedGroupIds = new HashSet<>();
     expectedGroupIds.add("user");
-    assertEquals(expectedGroupIds, groupIds);
+    assertThat(groupIds).isEqualTo(expectedGroupIds);
 
     groups = identityService.createGroupQuery().groupMember("jackblack").groupType("security-role").list();
-    assertTrue(groups.isEmpty());
+    assertThat(groups).isEmpty();
 
     identityService.deleteGroup("sales");
     identityService.deleteGroup("development");
@@ -848,10 +842,10 @@ public class IdentityServiceTest {
     identityService.saveUser(user);
 
     user = identityService.createUserQuery().userId("johndoe").singleResult();
-    assertEquals("johndoe", user.getId());
-    assertEquals("John", user.getFirstName());
-    assertEquals("Doe", user.getLastName());
-    assertEquals("johndoe@alfresco.com", user.getEmail());
+    assertThat(user.getId()).isEqualTo("johndoe");
+    assertThat(user.getFirstName()).isEqualTo("John");
+    assertThat(user.getLastName()).isEqualTo("Doe");
+    assertThat(user.getEmail()).isEqualTo("johndoe@alfresco.com");
 
     identityService.deleteUser("johndoe");
   }
@@ -863,8 +857,8 @@ public class IdentityServiceTest {
     identityService.saveGroup(group);
 
     group = identityService.createGroupQuery().groupId("sales").singleResult();
-    assertEquals("sales", group.getId());
-    assertEquals("Sales division", group.getName());
+    assertThat(group.getId()).isEqualTo("sales");
+    assertThat(group.getName()).isEqualTo("Sales division");
 
     identityService.deleteGroup("sales");
   }
@@ -893,19 +887,19 @@ public class IdentityServiceTest {
     identityService.createMembership("jackblack", "development");
 
     List<Group> groups = identityService.createGroupQuery().groupMember("johndoe").list();
-    assertEquals(createStringSet("sales"), getGroupIds(groups));
+    assertThat(getGroupIds(groups)).containsExactly("sales");
 
     groups = identityService.createGroupQuery().groupMember("joesmoe").list();
-    assertEquals(createStringSet("sales", "development"), getGroupIds(groups));
+    assertThat(getGroupIds(groups)).containsExactlyInAnyOrder("sales", "development");
 
     groups = identityService.createGroupQuery().groupMember("jackblack").list();
-    assertEquals(createStringSet("development"), getGroupIds(groups));
+    assertThat(getGroupIds(groups)).containsExactly("development");
 
     List<User> users = identityService.createUserQuery().memberOfGroup("sales").list();
-    assertEquals(createStringSet("johndoe", "joesmoe"), getUserIds(users));
+    assertThat(getUserIds(users)).containsExactlyInAnyOrder("johndoe", "joesmoe");
 
     users = identityService.createUserQuery().memberOfGroup("development").list();
-    assertEquals(createStringSet("joesmoe", "jackblack"), getUserIds(users));
+    assertThat(getUserIds(users)).containsExactly("joesmoe", "jackblack");
 
     identityService.deleteGroup("sales");
     identityService.deleteGroup("development");
@@ -924,7 +918,7 @@ public class IdentityServiceTest {
       identityService.saveUser(user);
       fail("Invalid user id exception expected!");
     } catch (ProcessEngineException ex) {
-      assertEquals(String.format(INVALID_ID_MESSAGE, "User", invalidId), ex.getMessage());
+      assertThat(ex.getMessage()).isEqualTo(String.format(INVALID_ID_MESSAGE, "User", invalidId));
     }
   }
 
@@ -938,7 +932,7 @@ public class IdentityServiceTest {
 
       fail("Invalid user id exception expected!");
     } catch (ProcessEngineException ex) {
-      assertEquals(String.format(INVALID_ID_MESSAGE, "User", invalidId), ex.getMessage());
+      assertThat(ex.getMessage()).isEqualTo(String.format(INVALID_ID_MESSAGE, "User", invalidId));
     }
   }
 
@@ -950,7 +944,7 @@ public class IdentityServiceTest {
       identityService.saveGroup(group);
       fail("Invalid group id exception expected!");
     } catch (ProcessEngineException ex) {
-      assertEquals(String.format(INVALID_ID_MESSAGE, "Group", invalidId), ex.getMessage());
+      assertThat(ex.getMessage()).isEqualTo(String.format(INVALID_ID_MESSAGE, "Group", invalidId));
     }
   }
 
@@ -964,7 +958,7 @@ public class IdentityServiceTest {
 
       fail("Invalid group id exception expected!");
     } catch (ProcessEngineException ex) {
-      assertEquals(String.format(INVALID_ID_MESSAGE, "Group", invalidId), ex.getMessage());
+      assertThat(ex.getMessage()).isEqualTo(String.format(INVALID_ID_MESSAGE, "Group", invalidId));
     }
   }
 
@@ -998,7 +992,7 @@ public class IdentityServiceTest {
       processEngineIdentityService.saveUser(user);
       fail("Invalid user id exception expected!");
     } catch (ProcessEngineException ex) {
-      assertEquals(String.format(INVALID_ID_MESSAGE, "User", invalidUserId), ex.getMessage());
+      assertThat(ex.getMessage()).isEqualTo(String.format(INVALID_ID_MESSAGE, "User", invalidUserId));
     }
 
     Group johnsGroup = processEngineIdentityService.newGroup("johnsGroup");
@@ -1007,7 +1001,7 @@ public class IdentityServiceTest {
       processEngineIdentityService.saveGroup(johnsGroup);
       fail("Invalid group id exception expected!");
     } catch (ProcessEngineException ex) {
-      assertEquals(String.format(INVALID_ID_MESSAGE, "Group", invalidGroupId), ex.getMessage());
+      assertThat(ex.getMessage()).isEqualTo(String.format(INVALID_ID_MESSAGE, "Group", invalidGroupId));
     }
 
     Tenant tenant = processEngineIdentityService.newTenant(invalidTenantId);
@@ -1015,7 +1009,7 @@ public class IdentityServiceTest {
       processEngineIdentityService.saveTenant(tenant);
       fail("Invalid tenant id exception expected!");
     } catch (ProcessEngineException ex) {
-      assertEquals(String.format(INVALID_ID_MESSAGE, "Tenant", invalidTenantId), ex.getMessage());
+      assertThat(ex.getMessage()).isEqualTo(String.format(INVALID_ID_MESSAGE, "Tenant", invalidTenantId));
     }
   }
 
@@ -1038,7 +1032,7 @@ public class IdentityServiceTest {
       processEngineIdentityService.saveUser(user);
       fail("Invalid user id exception expected!");
     } catch (ProcessEngineException ex) {
-      assertEquals(String.format(INVALID_ID_MESSAGE, "User", invalidUserId), ex.getMessage());
+      assertThat(ex.getMessage()).isEqualTo(String.format(INVALID_ID_MESSAGE, "User", invalidUserId));
     }
 
     Group group = processEngineIdentityService.newGroup(invalidGroupId);
@@ -1048,7 +1042,7 @@ public class IdentityServiceTest {
       processEngineIdentityService.saveGroup(group);
       fail("Invalid group id exception expected!");
     } catch (ProcessEngineException ex) {
-      assertEquals(String.format(INVALID_ID_MESSAGE, "Group", invalidGroupId), ex.getMessage());
+      assertThat(ex.getMessage()).isEqualTo(String.format(INVALID_ID_MESSAGE, "Group", invalidGroupId));
     }
 
     Tenant tenant = processEngineIdentityService.newTenant(invalidTenantId);
@@ -1057,7 +1051,7 @@ public class IdentityServiceTest {
       processEngineIdentityService.saveTenant(tenant);
       fail("Invalid tenant id exception expected!");
     } catch (ProcessEngineException ex) {
-      assertEquals(String.format(INVALID_ID_MESSAGE, "Tenant", invalidTenantId), ex.getMessage());
+      assertThat(ex.getMessage()).isEqualTo(String.format(INVALID_ID_MESSAGE, "Tenant", invalidTenantId));
     }
   }
 
@@ -1104,14 +1098,6 @@ public class IdentityServiceTest {
       .doesNotContain(salt)
       .doesNotContain(hashedPassword);
 
-  }
-
-  private Object createStringSet(String... strings) {
-    Set<String> stringSet = new HashSet<>();
-    for (String string : strings) {
-      stringSet.add(string);
-    }
-    return stringSet;
   }
 
   protected Set<String> getGroupIds(List<Group> groups) {

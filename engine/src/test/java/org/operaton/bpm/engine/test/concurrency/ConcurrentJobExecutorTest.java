@@ -17,10 +17,6 @@
 package org.operaton.bpm.engine.test.concurrency;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -132,7 +128,7 @@ public class ConcurrentJobExecutorTest {
     // then the job fails with a OLE and the failed job listener throws no NPE
     LOG.debug("test thread notifies thread 1");
     threadOne.proceedAndWaitTillDone();
-    assertTrue(threadOne.exception instanceof OptimisticLockingException);
+    assertThat(threadOne.exception).isInstanceOf(OptimisticLockingException.class);
   }
 
   @Test
@@ -187,7 +183,7 @@ public class ConcurrentJobExecutorTest {
     runtimeService.startProcessInstanceByKey("miParallelSubprocess");
 
     List<Job> currentJobs = managementService.createJobQuery().list();
-    assertEquals(2, currentJobs.size());
+    assertThat(currentJobs).hasSize(2);
 
     // when the jobs are executed in parallel
     JobExecutionThread threadOne = new JobExecutionThread(currentJobs.get(0).getId());
@@ -199,24 +195,24 @@ public class ConcurrentJobExecutorTest {
     // then the first committing thread succeeds
     LOG.debug("test thread notifies thread 1");
     threadOne.proceedAndWaitTillDone();
-    assertNull(threadOne.exception);
+    assertThat(threadOne.exception).isNull();
 
     // then the second committing thread fails with an OptimisticLockingException
     // and the job retries have not been decremented
     LOG.debug("test thread notifies thread 2");
     threadTwo.proceedAndWaitTillDone();
-    assertNotNull(threadTwo.exception);
+    assertThat(threadTwo.exception).isNotNull();
 
     Job remainingJob = managementService.createJobQuery().singleResult();
-    assertEquals(currentJobs.get(1).getRetries(), remainingJob.getRetries());
+    assertThat(remainingJob.getRetries()).isEqualTo(currentJobs.get(1).getRetries());
 
-    assertNotNull(remainingJob.getExceptionMessage());
+    assertThat(remainingJob.getExceptionMessage()).isNotNull();
 
     JobEntity jobEntity = (JobEntity) remainingJob;
-    assertNull(jobEntity.getLockOwner());
+    assertThat(jobEntity.getLockOwner()).isNull();
 
     // and there is no lock expiration time due to the default retry strategy
-    assertNull(jobEntity.getLockExpirationTime());
+    assertThat(jobEntity.getLockExpirationTime()).isNull();
   }
 
   @Test
@@ -226,7 +222,7 @@ public class ConcurrentJobExecutorTest {
     runtimeService.startProcessInstanceByKey("miParallelSubprocess");
 
     List<Job> currentJobs = managementService.createJobQuery().list();
-    assertEquals(2, currentJobs.size());
+    assertThat(currentJobs).hasSize(2);
 
     // when the jobs are executed in parallel
     JobExecutionThread threadOne = new JobExecutionThread(currentJobs.get(0).getId());
@@ -238,25 +234,25 @@ public class ConcurrentJobExecutorTest {
     // then the first committing thread succeeds
     LOG.debug("test thread notifies thread 1");
     threadOne.proceedAndWaitTillDone();
-    assertNull(threadOne.exception);
+    assertThat(threadOne.exception).isNull();
 
     // then the second committing thread fails with an OptimisticLockingException
     // and the job retries have not been decremented
     LOG.debug("test thread notifies thread 2");
     threadTwo.proceedAndWaitTillDone();
-    assertNotNull(threadTwo.exception);
+    assertThat(threadTwo.exception).isNotNull();
 
     Job remainingJob = managementService.createJobQuery().singleResult();
     // retries are configured as R5/PT5M, so no decrement means 5 retries left
-    assertEquals(5, remainingJob.getRetries());
+    assertThat(remainingJob.getRetries()).isEqualTo(5);
 
-    assertNotNull(remainingJob.getExceptionMessage());
+    assertThat(remainingJob.getExceptionMessage()).isNotNull();
 
     JobEntity jobEntity = (JobEntity) remainingJob;
-    assertNull(jobEntity.getLockOwner());
+    assertThat(jobEntity.getLockOwner()).isNull();
 
     // and there is a due date time set
-    assertNotNull(jobEntity.getDuedate());
+    assertThat(jobEntity.getDuedate()).isNotNull();
   }
 
   @Test
@@ -278,8 +274,8 @@ public class ConcurrentJobExecutorTest {
     executionthread.proceedAndWaitTillDone();
 
     // then the execution will fail with optimistic locking
-    assertNull(jobSuspensionThread.exception);
-    assertNotNull(executionthread.exception);
+    assertThat(jobSuspensionThread.exception).isNull();
+    assertThat(executionthread.exception).isNotNull();
 
     //--------------------------------------------
 
@@ -295,8 +291,8 @@ public class ConcurrentJobExecutorTest {
     jobSuspensionThread.proceedAndWaitTillDone();
 
     // then there are no optimistic locking exceptions
-    assertNull(jobSuspensionThread.exception);
-    assertNull(executionthread.exception);
+    assertThat(jobSuspensionThread.exception).isNull();
+    assertThat(executionthread.exception).isNull();
   }
 
   @Test
@@ -317,11 +313,11 @@ public class ConcurrentJobExecutorTest {
     acquisitionThread.proceedAndWaitTillDone();
 
     // then the acquisition will not fail with optimistic locking
-    assertNull(jobSuspensionThread.exception);
+    assertThat(jobSuspensionThread.exception).isNull();
 
-    assertNull(acquisitionThread.exception);
+    assertThat(acquisitionThread.exception).isNull();
     // but the job will also not be acquired
-    assertEquals(0, acquisitionThread.acquiredJobs.size());
+    assertThat(acquisitionThread.acquiredJobs.size()).isZero();
 
     //--------------------------------------------
 
@@ -337,8 +333,8 @@ public class ConcurrentJobExecutorTest {
     jobSuspensionThread.proceedAndWaitTillDone();
 
     // then there are no optimistic locking exceptions
-    assertNull(jobSuspensionThread.exception);
-    assertNull(acquisitionThread.exception);
+    assertThat(jobSuspensionThread.exception).isNull();
+    assertThat(acquisitionThread.exception).isNull();
   }
 
   @Test
@@ -362,17 +358,17 @@ public class ConcurrentJobExecutorTest {
     repositoryService.suspendProcessDefinitionById(processDefinition.getId());
 
     // assert that there still exists a running and active process instance
-    assertEquals(1, runtimeService.createProcessInstanceQuery().active().count());
+    assertThat(runtimeService.createProcessInstanceQuery().active().count()).isEqualTo(1);
 
     // when
     runtimeService.signal(processInstance.getId());
 
     // then
     // there should be one suspended job
-    assertEquals(1, managementService.createJobQuery().suspended().count());
-    assertEquals(0, managementService.createJobQuery().active().count());
+    assertThat(managementService.createJobQuery().suspended().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().active().count()).isZero();
 
-    assertEquals(1, runtimeService.createProcessInstanceQuery().active().count());
+    assertThat(runtimeService.createProcessInstanceQuery().active().count()).isEqualTo(1);
 
   }
 
@@ -405,17 +401,17 @@ public class ConcurrentJobExecutorTest {
     // then both jobs priority has changed
     List<Job> currentJobs = managementService.createJobQuery().list();
     for (Job job : currentJobs) {
-      assertEquals(42, job.getPriority());
+      assertThat(job.getPriority()).isEqualTo(42);
     }
 
     // and the execution thread can nevertheless successfully finish job execution
     executionThread.proceedAndWaitTillDone();
 
     long remainingJobCount = managementService.createJobQuery().count();
-    assertNull(executionThread.exception);
+    assertThat(executionThread.exception).isNull();
 
     // and ultimately only one job with an updated priority is left
-    assertEquals(1L, remainingJobCount);
+    assertThat(remainingJobCount).isEqualTo(1L);
   }
 
   @Test
@@ -444,10 +440,10 @@ public class ConcurrentJobExecutorTest {
 
     // then both updates have been performed
     List<Job> updatedJobs = managementService.createJobQuery().list();
-    assertEquals(2, updatedJobs.size());
+    assertThat(updatedJobs).hasSize(2);
     for (Job job : updatedJobs) {
-      assertEquals(42, job.getPriority());
-      assertTrue(job.isSuspended());
+      assertThat(job.getPriority()).isEqualTo(42);
+      assertThat(job.isSuspended()).isTrue();
     }
   }
 
@@ -478,7 +474,7 @@ public class ConcurrentJobExecutorTest {
       catch (OptimisticLockingException e) {
         this.exception = e;
       }
-      LOG.debug(getName() + " ends");
+      LOG.debug("{} ends", getName());
     }
   }
 
@@ -500,7 +496,7 @@ public class ConcurrentJobExecutorTest {
       } catch (OptimisticLockingException e) {
         this.exception = e;
       }
-      LOG.debug(getName()+" ends");
+      LOG.debug("{} ends", getName());
     }
   }
 
@@ -527,7 +523,7 @@ public class ConcurrentJobExecutorTest {
       } catch (OptimisticLockingException e) {
         this.exception = e;
       }
-      LOG.debug(getName()+" ends");
+      LOG.debug("{} ends", getName());
     }
 
     protected Command<Void> createSuspendJobCommand() {
@@ -562,7 +558,7 @@ public class ConcurrentJobExecutorTest {
       } catch (OptimisticLockingException e) {
         this.exception = e;
       }
-      LOG.debug(getName()+" ends");
+      LOG.debug("{} ends", getName());
     }
 
     protected SuspendJobCmd createSuspendJobCommand() {

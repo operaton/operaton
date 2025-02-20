@@ -19,7 +19,8 @@ package org.operaton.bpm.engine.test.api.authorization.externaltask;
 import org.operaton.bpm.engine.externaltask.ExternalTask;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.junit.Assert;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -52,7 +53,7 @@ public class SetExternalTaskPriorityAuthorizationTest extends HandleExternalTask
     // then
     if (authRule.assertScenario(scenario)) {
       task = engineRule.getExternalTaskService().createExternalTaskQuery().singleResult();
-      Assert.assertEquals(5, task.getPriority());
+      assertThat(task.getPriority()).isEqualTo(5);
     }
   }  
 }

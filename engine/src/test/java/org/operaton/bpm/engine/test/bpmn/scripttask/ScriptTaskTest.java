@@ -30,13 +30,7 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.model.bpmn.Bpmn;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  *
@@ -94,7 +88,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
     // the script task can be executed without exceptions
     // the execution variable is stored and has the correct value
     Object variableValue = runtimeService.getVariable(pi.getId(), "foo");
-    assertEquals("a", variableValue);
+    assertThat(variableValue).isEqualTo("a");
 
   }
 
@@ -135,7 +129,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
     // the script task can be executed without exceptions
     // the execution variable is stored and has the correct value
     Object variableValue = runtimeService.getVariable(pi.getId(), "foo");
-    assertEquals("a", variableValue);
+    assertThat(variableValue).isEqualTo("a");
 
   }
 
@@ -177,7 +171,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
     // the script task can be executed without exceptions
     // the execution variable is stored and has the correct value
     Object variableValue = runtimeService.getVariable(pi.getId(), "foo");
-    assertEquals("a", variableValue);
+    assertThat(variableValue).isEqualTo("a");
 
   }
 
@@ -222,7 +216,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
     // the script task can be executed without exceptions
     // the execution variable is stored and has the correct value
     Object variableValue = runtimeService.getVariable(pi.getId(), "foo");
-    assertEquals("a", variableValue);
+    assertThat(variableValue).isEqualTo("a");
 
   }
 
@@ -307,7 +301,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
     // THEN
     // the variable is defined
     Object variable = runtimeService.getVariable(pi.getId(), "foo");
-    assertEquals(3l, variable);
+    assertThat(variable).isEqualTo(3l);
 
   }
 
@@ -336,7 +330,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
     // THEN
     // the variable is defined
     Object variable = runtimeService.getVariable(pi.getId(), "foo");
-    assertEquals(3, variable);
+    assertThat(variable).isEqualTo(3);
 
   }
 
@@ -349,7 +343,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
     Object variableValue = runtimeService.getVariable(pi.getId(), "foo");
-    assertNull(variableValue);
+    assertThat(variableValue).isNull();
 
   }
 
@@ -362,7 +356,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
     Object variableValue = runtimeService.getVariable(pi.getId(), "foo");
-    assertNull(variableValue);
+    assertThat(variableValue).isNull();
 
   }
 
@@ -375,7 +369,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
     Object variableValue = runtimeService.getVariable(pi.getId(), "foo");
-    assertNull(variableValue);
+    assertThat(variableValue).isNull();
 
   }
 
@@ -388,7 +382,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
     Object variableValue = runtimeService.getVariable(pi.getId(), "foo");
-    assertNull(variableValue);
+    assertThat(variableValue).isNull();
 
   }
 
@@ -399,7 +393,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
 
     String variableValue = (String) runtimeService.getVariable(pi.getId(), "foo");
-    assertEquals("bar", variableValue);
+    assertThat(variableValue).isEqualTo("bar");
   }
 
   @Test
@@ -409,7 +403,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
 
     String variableValue = (String) runtimeService.getVariable(pi.getId(), "foo");
-    assertEquals("bar", variableValue);
+    assertThat(variableValue).isEqualTo("bar");
   }
 
   @Test
@@ -421,7 +415,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess", variables);
 
     String variableValue = (String) runtimeService.getVariable(pi.getId(), "foo");
-    assertEquals("bar", variableValue);
+    assertThat(variableValue).isEqualTo("bar");
   }
 
   @Test
@@ -446,7 +440,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess", variables);
 
     String variableValue = (String) runtimeService.getVariable(pi.getId(), "foo");
-    assertEquals("bar", variableValue);
+    assertThat(variableValue).isEqualTo("bar");
   }
 
   @Test
@@ -458,7 +452,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess", variables);
 
     String variableValue = (String) runtimeService.getVariable(pi.getId(), "foo");
-    assertEquals("bar", variableValue);
+    assertThat(variableValue).isEqualTo("bar");
   }
 
   @Test
@@ -468,14 +462,14 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
 
     Date date = (Date) runtimeService.getVariable(pi.getId(), "date");
-    assertEquals(0, date.getTime());
+    assertThat(date.getTime()).isZero();
 
     deployProcess(JAVASCRIPT, "execution.setVariable('myVar', new org.operaton.bpm.engine.test.bpmn.scripttask.MySerializable('test'));");
 
     pi = runtimeService.startProcessInstanceByKey("testProcess");
 
     MySerializable myVar = (MySerializable) runtimeService.getVariable(pi.getId(), "myVar");
-    assertEquals("test", myVar.getName());
+    assertThat(myVar.getName()).isEqualTo("test");
   }
 
   @Test
@@ -485,7 +479,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
 
     Date date = (Date) runtimeService.getVariable(pi.getId(), "date");
-    assertEquals(0, date.getTime());
+    assertThat(date.getTime()).isZero();
 
     deployProcess(PYTHON, "import org.operaton.bpm.engine.test.bpmn.scripttask.MySerializable\n" +
       "execution.setVariable('myVar', org.operaton.bpm.engine.test.bpmn.scripttask.MySerializable('test'));");
@@ -493,7 +487,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
     pi = runtimeService.startProcessInstanceByKey("testProcess");
 
     MySerializable myVar = (MySerializable) runtimeService.getVariable(pi.getId(), "myVar");
-    assertEquals("test", myVar.getName());
+    assertThat(myVar.getName()).isEqualTo("test");
   }
 
   @Test
@@ -503,14 +497,14 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
 
     Date date = (Date) runtimeService.getVariable(pi.getId(), "date");
-    assertEquals(0, date.getTime());
+    assertThat(date.getTime()).isZero();
 
     deployProcess(RUBY, "$execution.setVariable('myVar', org.operaton.bpm.engine.test.bpmn.scripttask.MySerializable.new('test'));");
 
     pi = runtimeService.startProcessInstanceByKey("testProcess");
 
     MySerializable myVar = (MySerializable) runtimeService.getVariable(pi.getId(), "myVar");
-    assertEquals("test", myVar.getName());
+    assertThat(myVar.getName()).isEqualTo("test");
   }
 
   @Test
@@ -520,14 +514,14 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
 
     Date date = (Date) runtimeService.getVariable(pi.getId(), "date");
-    assertEquals(0, date.getTime());
+    assertThat(date.getTime()).isZero();
 
     deployProcess(GROOVY, "execution.setVariable('myVar', new org.operaton.bpm.engine.test.bpmn.scripttask.MySerializable('test'));");
 
     pi = runtimeService.startProcessInstanceByKey("testProcess");
 
     MySerializable myVar = (MySerializable) runtimeService.getVariable(pi.getId(), "myVar");
-    assertEquals("test", myVar.getName());
+    assertThat(myVar.getName()).isEqualTo("test");
   }
 
   @Test
@@ -594,12 +588,12 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
     runtimeService.startProcessInstanceByKey("testProcess");
 
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
   }
 
   @Test
   public void testAutoStoreScriptVarsOff() {
-    assertFalse(processEngineConfiguration.isAutoStoreScriptVariables());
+    assertThat(processEngineConfiguration.isAutoStoreScriptVariables()).isFalse();
   }
 
   @org.operaton.bpm.engine.test.Deployment
@@ -607,7 +601,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
   public void testPreviousTaskShouldNotHandleException(){
     try {
       runtimeService.startProcessInstanceByKey("process");
-      fail();
+      fail("");
     }
     // since the NVE extends the ProcessEngineException we have to handle it
     // separately
@@ -627,8 +621,8 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("setScriptResultToProcessVariable", variables);
 
-    assertEquals("hello", runtimeService.getVariable(pi.getId(), "existingProcessVariableName"));
-    assertEquals(pi.getId(), runtimeService.getVariable(pi.getId(), "newProcessVariableName"));
+    assertThat(runtimeService.getVariable(pi.getId(), "existingProcessVariableName")).isEqualTo("hello");
+    assertThat(runtimeService.getVariable(pi.getId(), "newProcessVariableName")).isEqualTo(pi.getId());
   }
 
   @org.operaton.bpm.engine.test.Deployment
@@ -641,7 +635,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
       ProcessInstance pi = runtimeService.startProcessInstanceByKey("scriptExecution", CollectionUtil.singletonMap("inputArray", inputArray));
 
       Integer result = (Integer) runtimeService.getVariable(pi.getId(), "sum");
-      assertEquals(15, result.intValue());
+      assertThat(result.intValue()).isEqualTo(15);
 
     } finally {
       processEngineConfiguration.setAutoStoreScriptVariables(false);
@@ -655,8 +649,8 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
 
     // Since 'def' is used, the 'scriptVar' will be script local
     // and not automatically stored as a process variable.
-    assertNull(runtimeService.getVariable(pi.getId(), "scriptVar"));
-    assertEquals("test123", runtimeService.getVariable(pi.getId(), "myVar"));
+    assertThat(runtimeService.getVariable(pi.getId(), "scriptVar")).isNull();
+    assertThat(runtimeService.getVariable(pi.getId(), "myVar")).isEqualTo("test123");
   }
 
   @org.operaton.bpm.engine.test.Deployment
@@ -695,7 +689,7 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
       // the script task can be executed without exceptions
       // the execution variable is stored and has the correct value
       Object variableValue = runtimeService.getVariable(pi.getId(), "foo");
-      assertEquals(7, variableValue);
+      assertThat(variableValue).isEqualTo(7);
     } finally {
       processEngineConfiguration.setEnableScriptEngineLoadExternalResources(false);
     }

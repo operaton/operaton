@@ -17,9 +17,7 @@
 package org.operaton.bpm.engine.test.api.authorization;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -35,7 +33,7 @@ public class DefaultUserPermissionNameForTaskCfgTest {
 
   @Test
   public void updateIsDefaultTaskPermission() {
-    assertEquals("UPDATE", new StandaloneInMemProcessEngineConfiguration().getDefaultUserPermissionNameForTask());
+    assertThat(new StandaloneInMemProcessEngineConfiguration().getDefaultUserPermissionNameForTask()).isEqualTo("UPDATE");
   }
 
   @Test
@@ -49,7 +47,7 @@ public class DefaultUserPermissionNameForTaskCfgTest {
     testProcessEngineCfg.initDefaultUserPermissionForTask();
 
     // then
-    assertEquals(Permissions.UPDATE, testProcessEngineCfg.getDefaultUserPermissionForTask());
+    assertThat(testProcessEngineCfg.getDefaultUserPermissionForTask()).isEqualTo(Permissions.UPDATE);
   }
 
   @Test
@@ -63,7 +61,7 @@ public class DefaultUserPermissionNameForTaskCfgTest {
     testProcessEngineCfg.initDefaultUserPermissionForTask();
 
     // then
-    assertEquals(Permissions.TASK_WORK, testProcessEngineCfg.getDefaultUserPermissionForTask());
+    assertThat(testProcessEngineCfg.getDefaultUserPermissionForTask()).isEqualTo(Permissions.TASK_WORK);
   }
 
   @Test
@@ -113,7 +111,7 @@ public class DefaultUserPermissionNameForTaskCfgTest {
     testProcessEngineCfg.initDefaultUserPermissionForTask();
 
     // then
-    assertEquals(Permissions.ALL, testProcessEngineCfg.getDefaultUserPermissionForTask());
+    assertThat(testProcessEngineCfg.getDefaultUserPermissionForTask()).isEqualTo(Permissions.ALL);
   }
 
   @Test
@@ -130,7 +128,7 @@ public class DefaultUserPermissionNameForTaskCfgTest {
         .buildProcessEngine();
 
       // then
-      assertTrue(testProcessEngineCfg.initMethodCalled);
+      assertThat(testProcessEngineCfg.initMethodCalled).isTrue();
     } finally {
       if(engine != null) {
         engine.close();

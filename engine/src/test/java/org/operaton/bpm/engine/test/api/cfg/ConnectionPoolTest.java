@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.cfg;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import javax.sql.DataSource;
 
@@ -48,24 +47,24 @@ public class ConnectionPoolTest {
     int maxWaitTime = 25000;
     Integer jdbcStatementTimeout = 300;
 
-    assertEquals(maxActive, config.getJdbcMaxActiveConnections());
-    assertEquals(maxIdle, config.getJdbcMaxIdleConnections());
-    assertEquals(maxCheckoutTime, config.getJdbcMaxCheckoutTime());
-    assertEquals(maxWaitTime, config.getJdbcMaxWaitTime());
-    assertEquals(jdbcStatementTimeout, config.getJdbcStatementTimeout());
+    assertThat(config.getJdbcMaxActiveConnections()).isEqualTo(maxActive);
+    assertThat(config.getJdbcMaxIdleConnections()).isEqualTo(maxIdle);
+    assertThat(config.getJdbcMaxCheckoutTime()).isEqualTo(maxCheckoutTime);
+    assertThat(config.getJdbcMaxWaitTime()).isEqualTo(maxWaitTime);
+    assertThat(config.getJdbcStatementTimeout()).isEqualTo(jdbcStatementTimeout);
 
     // Verify that these properties are correctly set in the MyBatis datasource
     Configuration sessionFactoryConfiguration = config.getDbSqlSessionFactory().getSqlSessionFactory().getConfiguration();
     DataSource datasource = sessionFactoryConfiguration.getEnvironment().getDataSource();
-    assertTrue(datasource instanceof PooledDataSource);
+    assertThat(datasource).isInstanceOf(PooledDataSource.class);
 
     PooledDataSource pooledDataSource = (PooledDataSource) datasource;
-    assertEquals(maxActive, pooledDataSource.getPoolMaximumActiveConnections());
-    assertEquals(maxIdle, pooledDataSource.getPoolMaximumIdleConnections());
-    assertEquals(maxCheckoutTime, pooledDataSource.getPoolMaximumCheckoutTime());
-    assertEquals(maxWaitTime, pooledDataSource.getPoolTimeToWait());
+    assertThat(pooledDataSource.getPoolMaximumActiveConnections()).isEqualTo(maxActive);
+    assertThat(pooledDataSource.getPoolMaximumIdleConnections()).isEqualTo(maxIdle);
+    assertThat(pooledDataSource.getPoolMaximumCheckoutTime()).isEqualTo(maxCheckoutTime);
+    assertThat(pooledDataSource.getPoolTimeToWait()).isEqualTo(maxWaitTime);
 
-    assertEquals(jdbcStatementTimeout, sessionFactoryConfiguration.getDefaultStatementTimeout());
+    assertThat(sessionFactoryConfiguration.getDefaultStatementTimeout()).isEqualTo(jdbcStatementTimeout);
 
     engine.close();
   }

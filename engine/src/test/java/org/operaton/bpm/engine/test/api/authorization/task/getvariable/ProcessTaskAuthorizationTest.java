@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.task.getvariable;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -68,7 +66,7 @@ public abstract class ProcessTaskAuthorizationTest {
   protected RuntimeService runtimeService;
 
   protected boolean ensureSpecificVariablePermission;
-  protected String deploumentId;
+  protected String deploymentId;
 
 
   @Before
@@ -78,13 +76,13 @@ public abstract class ProcessTaskAuthorizationTest {
     runtimeService = engineRule.getRuntimeService();
 
     authRule.createUserAndGroup("userId", "groupId");
-    deploumentId = engineRule.getRepositoryService().createDeployment().addClasspathResource(ONE_TASK_PROCESS).deployWithResult().getId();
+    deploymentId = engineRule.getRepositoryService().createDeployment().addClasspathResource(ONE_TASK_PROCESS).deployWithResult().getId();
   }
 
   @After
   public void tearDown() {
     authRule.deleteUsersAndGroups();
-    engineRule.getRepositoryService().deleteDeployment(deploumentId, true);
+    engineRule.getRepositoryService().deleteDeployment(deploymentId, true);
   }
 
   @Test
@@ -104,7 +102,7 @@ public abstract class ProcessTaskAuthorizationTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      assertEquals(VARIABLE_VALUE, variable);
+      assertThat(variable).isEqualTo(VARIABLE_VALUE);
     }
   }
 
@@ -127,7 +125,7 @@ public abstract class ProcessTaskAuthorizationTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      assertEquals(VARIABLE_VALUE, variable);
+      assertThat(variable).isEqualTo(VARIABLE_VALUE);
     }
   }
 
@@ -148,8 +146,8 @@ public abstract class ProcessTaskAuthorizationTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      assertNotNull(typedValue);
-      assertEquals(VARIABLE_VALUE, typedValue.getValue());
+      assertThat(typedValue).isNotNull();
+      assertThat(typedValue.getValue()).isEqualTo(VARIABLE_VALUE);
     }
   }
 
@@ -172,8 +170,8 @@ public abstract class ProcessTaskAuthorizationTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      assertNotNull(typedValue);
-      assertEquals(VARIABLE_VALUE, typedValue.getValue());
+      assertThat(typedValue).isNotNull();
+      assertThat(typedValue.getValue()).isEqualTo(VARIABLE_VALUE);
     }
   }
 
@@ -363,11 +361,12 @@ public abstract class ProcessTaskAuthorizationTest {
   }
 
   protected void verifyGetVariables(Map<String, Object> variables) {
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
-    assertEquals(1, variables.size());
-
-    assertEquals(ProcessTaskAuthorizationTest.VARIABLE_VALUE, variables.get(ProcessTaskAuthorizationTest.VARIABLE_NAME));
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(ProcessTaskAuthorizationTest.VARIABLE_NAME, ProcessTaskAuthorizationTest.VARIABLE_VALUE);
   }
 
 }

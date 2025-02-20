@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy.tenantcheck;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Collections;
@@ -28,7 +29,6 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
@@ -179,10 +179,10 @@ public class MultiTenancyMigrationExecuteTenantCheckTest {
   }
 
   protected void assertMigratedTo(ProcessInstance processInstance, ProcessDefinition targetDefinition) {
-    Assert.assertEquals(1, engineRule.getRuntimeService()
-      .createProcessInstanceQuery()
-      .processInstanceId(processInstance.getId())
-      .processDefinitionId(targetDefinition.getId())
-      .count());
+    assertThat(engineRule.getRuntimeService()
+        .createProcessInstanceQuery()
+        .processInstanceId(processInstance.getId())
+        .processDefinitionId(targetDefinition.getId())
+        .count()).isEqualTo(1);
   }
 }

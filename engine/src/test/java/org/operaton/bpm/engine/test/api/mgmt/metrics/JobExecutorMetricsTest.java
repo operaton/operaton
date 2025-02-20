@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt.metrics;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -78,11 +77,11 @@ public class JobExecutorMetricsTest extends AbstractMetricsTest {
 
     // then
     long acquisitionAttempts = managementService.createMetricsQuery().name(Metrics.JOB_ACQUISITION_ATTEMPT).sum();
-    assertTrue(acquisitionAttempts >= 1);
+    assertThat(acquisitionAttempts).isPositive();
 
     long acquiredJobs = managementService.createMetricsQuery()
         .name(Metrics.JOB_ACQUIRED_SUCCESS).sum();
-    assertEquals(3, acquiredJobs);
+    assertThat(acquiredJobs).isEqualTo(3);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/metrics/asyncServiceTaskProcess.bpmn20.xml")
@@ -120,16 +119,16 @@ public class JobExecutorMetricsTest extends AbstractMetricsTest {
     // then
     long acquisitionAttempts = managementService.createMetricsQuery().name(Metrics.JOB_ACQUISITION_ATTEMPT).sum();
     // each job executor twice (since the controllable thread always waits when already acquiring jobs)
-    assertEquals(2 + 2, acquisitionAttempts);
+    assertThat(acquisitionAttempts).isEqualTo(2 + 2);
 
     long acquiredJobs = managementService.createMetricsQuery()
         .name(Metrics.JOB_ACQUIRED_SUCCESS).sum();
-    assertEquals(3, acquiredJobs);
+    assertThat(acquiredJobs).isEqualTo(3);
 
     long acquiredJobsFailure = managementService.createMetricsQuery()
         .name(Metrics.JOB_ACQUIRED_FAILURE).sum();
 
-    assertEquals(3, acquiredJobsFailure);
+    assertThat(acquiredJobsFailure).isEqualTo(3);
 
     // cleanup
     jobExecutor1.shutdown();
@@ -155,15 +154,15 @@ public class JobExecutorMetricsTest extends AbstractMetricsTest {
 
     // then
     long jobsSuccessful = managementService.createMetricsQuery().name(Metrics.JOB_SUCCESSFUL).sum();
-    assertEquals(3, jobsSuccessful);
+    assertThat(jobsSuccessful).isEqualTo(3);
 
     long jobsFailed = managementService.createMetricsQuery().name(Metrics.JOB_FAILED).sum();
     // 2 jobs * 3 tries
-    assertEquals(6, jobsFailed);
+    assertThat(jobsFailed).isEqualTo(6);
 
     long jobCandidatesForAcquisition = managementService.createMetricsQuery()
         .name(Metrics.JOB_ACQUIRED_SUCCESS).sum();
-    assertEquals(3 + 6, jobCandidatesForAcquisition);
+    assertThat(jobCandidatesForAcquisition).isEqualTo(3 + 6);
   }
 
   @Deployment
@@ -185,12 +184,12 @@ public class JobExecutorMetricsTest extends AbstractMetricsTest {
     long exclusiveFollowupJobs = managementService.createMetricsQuery()
       .name(Metrics.JOB_LOCKED_EXCLUSIVE).sum();
 
-    assertEquals(6, jobsSuccessful);
-    assertEquals(0, jobsFailed);
+    assertThat(jobsSuccessful).isEqualTo(6);
+    assertThat(jobsFailed).isZero();
     // the respective follow-up jobs are exclusive and have been executed right away without
     // acquisition
-    assertEquals(3, jobCandidatesForAcquisition);
-    assertEquals(3, exclusiveFollowupJobs);
+    assertThat(jobCandidatesForAcquisition).isEqualTo(3);
+    assertThat(exclusiveFollowupJobs).isEqualTo(3);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/metrics/asyncServiceTaskProcess.bpmn20.xml")
@@ -212,7 +211,7 @@ public class JobExecutorMetricsTest extends AbstractMetricsTest {
     // then all of them were rejected by the job executor which is reflected by the metric
     long numRejectedJobs = managementService.createMetricsQuery().name(Metrics.JOB_EXECUTION_REJECTED).sum();
 
-    assertEquals(3, numRejectedJobs);
+    assertThat(numRejectedJobs).isEqualTo(3);
   }
 
   public static class RejectingJobExecutor extends DefaultJobExecutor {

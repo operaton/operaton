@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.engine.test.util;
 
-import java.util.Date;
+import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Assert;
+import java.util.Date;
 
 /**
  * @author Thorben Lindhauer
@@ -33,7 +33,6 @@ public class AssertUtil {
    * Drop milliseconds since older MySQL versions cannot store them
    */
   public static void assertEqualsSecondPrecision(Date expected, Date actual) {
-    Assert.assertEquals("expected " + expected + " but got " + actual,
-        expected.getTime() / 1000L, actual.getTime() / 1000L);
+    assertThat(actual.getTime() / 1000L).as("expected " + expected + " but got " + actual).isEqualTo(expected.getTime() / 1000L);
   }
 }

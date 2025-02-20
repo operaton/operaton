@@ -18,7 +18,8 @@ package org.operaton.bpm.engine.test.standalone.beans;
 
 import org.operaton.bpm.engine.ArtifactFactory;
 import org.operaton.bpm.engine.impl.DefaultArtifactFactory;
-import org.junit.Assert;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Test;
 
 /**
@@ -31,7 +32,7 @@ public class DefaultArtifactFactoryTest {
     ArtifactFactory artifactFactory = new DefaultArtifactFactory();
 
     DummyArtifact artifact = artifactFactory.getArtifact(DummyArtifact.class);
-    Assert.assertNotNull(artifact);
+    assertThat(artifact).isNotNull();
   }
 
 

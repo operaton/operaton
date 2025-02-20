@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.usertask;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
@@ -59,26 +57,27 @@ public class UserTaskTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
+  @SuppressWarnings("deprecation")
   public void testTaskPropertiesNotNull() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     runtimeService.getActiveActivityIds(processInstance.getId());
 
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task.getId());
-    assertEquals("my task", task.getName());
-    assertEquals("Very important", task.getDescription());
-    assertTrue(task.getPriority() > 0);
-    assertEquals("kermit", task.getAssignee());
-    assertEquals(processInstance.getId(), task.getProcessInstanceId());
-    assertEquals(processInstance.getId(), task.getExecutionId());
-    assertNotNull(task.getProcessDefinitionId());
-    assertNotNull(task.getTaskDefinitionKey());
-    assertNotNull(task.getCreateTime());
+    assertThat(task.getId()).isNotNull();
+    assertThat(task.getName()).isEqualTo("my task");
+    assertThat(task.getDescription()).isEqualTo("Very important");
+    assertThat(task.getPriority()).isPositive();
+    assertThat(task.getAssignee()).isEqualTo("kermit");
+    assertThat(task.getProcessInstanceId()).isEqualTo(processInstance.getId());
+    assertThat(task.getExecutionId()).isEqualTo(processInstance.getId());
+    assertThat(task.getProcessDefinitionId()).isNotNull();
+    assertThat(task.getTaskDefinitionKey()).isNotNull();
+    assertThat(task.getCreateTime()).isNotNull();
 
     // the next test verifies that if an execution creates a task, that no events are created during creation of the task.
     if (processEngineConfiguration.getHistoryLevel().getId() >= ProcessEngineConfigurationImpl.HISTORYLEVEL_ACTIVITY) {
-      assertEquals(0, taskService.getTaskEvents(task.getId()).size());
+      assertThat(taskService.getTaskEvents(task.getId())).isEmpty();
     }
   }
 
@@ -86,7 +85,7 @@ public class UserTaskTest extends PluggableProcessEngineTest {
   @Test
   public void testQuerySortingWithParameter() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
-    assertEquals(1, taskService.createTaskQuery().processInstanceId(processInstance.getId()).list().size());
+    assertThat(taskService.createTaskQuery().processInstanceId(processInstance.getId()).list()).hasSize(1);
   }
 
   @Deployment
@@ -97,12 +96,13 @@ public class UserTaskTest extends PluggableProcessEngineTest {
 	  // start the process
     runtimeService.startProcessInstanceByKey("ForkProcess");
     List<Task> taskList = taskService.createTaskQuery().list();
-    assertNotNull(taskList);
-    assertEquals(2, taskList.size());
+    assertThat(taskList)
+            .isNotNull()
+            .hasSize(2);
 
     // make sure user task exists
     Task task = taskService.createTaskQuery().taskDefinitionKey("SimpleUser").singleResult();
-  	assertNotNull(task);
+    assertThat(task).isNotNull();
 
   	// attempt to complete the task and get PersistenceException pointing to "referential integrity constraint violation"
   	taskService.complete(task.getId());
@@ -114,8 +114,9 @@ public class UserTaskTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("processWithSubProcessesAndParallelGateways");
 
     List<Task> taskList = taskService.createTaskQuery().list();
-    assertNotNull(taskList);
-    assertEquals(13, taskList.size());
+    assertThat(taskList)
+            .isNotNull()
+            .hasSize(13);
 
   }
 
@@ -126,9 +127,9 @@ public class UserTaskTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("financialReport");
 
     List<Task> tasks = taskService.createTaskQuery().taskCandidateUser("fozzie").list();
-    assertEquals(1, tasks.size());
+    assertThat(tasks).hasSize(1);
     Task task = tasks.get(0);
-    assertEquals("Write monthly financial report", task.getName());
+    assertThat(task.getName()).isEqualTo("Write monthly financial report");
 
     taskService.claim(task.getId(), "fozzie");
     tasks = taskService
@@ -136,14 +137,14 @@ public class UserTaskTest extends PluggableProcessEngineTest {
       .taskAssignee("fozzie")
       .list();
 
-    assertEquals(1, tasks.size());
+    assertThat(tasks).hasSize(1);
     taskService.complete(task.getId());
 
     tasks = taskService.createTaskQuery().taskCandidateUser("fozzie").list();
-    assertEquals(0, tasks.size());
+    assertThat(tasks).isEmpty();
     tasks = taskService.createTaskQuery().taskCandidateUser("kermit").list();
-    assertEquals(1, tasks.size());
-    assertEquals("Verify monthly financial report", tasks.get(0).getName());
+    assertThat(tasks).hasSize(1);
+    assertThat(tasks.get(0).getName()).isEqualTo("Verify monthly financial report");
     taskService.complete(tasks.get(0).getId());
 
     testRule.assertProcessEnded(processInstance.getId());

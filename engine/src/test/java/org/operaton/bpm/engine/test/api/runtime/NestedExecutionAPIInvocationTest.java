@@ -28,8 +28,12 @@ import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
 import org.junit.After;
-import org.junit.Assert;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -116,26 +120,28 @@ public class NestedExecutionAPIInvocationTest {
   public void testWaitStateIsReachedOnNestedInstantiation() {
 
     engineRule1.getRuntimeService().startProcessInstanceByKey(PROCESS_KEY_1);
-    String taskId = engineRule1.getTaskService()
+    var taskService = engineRule1.getTaskService();
+    String taskId = taskService
       .createTaskQuery()
       .singleResult()
       .getId();
 
     // when
-    engineRule1.getTaskService().complete(taskId);
+    assertThatCode(() -> taskService.complete(taskId)).doesNotThrowAnyException();
   }
 
   @Test
   public void testWaitStateIsReachedOnMultiEngine() {
 
     engineRule1.getRuntimeService().startProcessInstanceByKey(PROCESS_KEY_2);
-    String taskId = engineRule1.getTaskService()
+    var taskService = engineRule1.getTaskService();
+    String taskId = taskService
       .createTaskQuery()
       .singleResult()
       .getId();
 
     // when
-    engineRule1.getTaskService().complete(taskId);
+    assertThatCode(() -> taskService.complete(taskId)).doesNotThrowAnyException();
   }
 
   public static class StartProcessOnAnotherEngineDelegate implements JavaDelegate {
@@ -152,8 +158,7 @@ public class NestedExecutionAPIInvocationTest {
       // then the wait state is reached immediately after instantiation
       ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
       ActivityInstance[] activityInstances = activityInstance.getActivityInstances("waitState");
-      Assert.assertEquals(1, activityInstances.length);
-
+      assertThat(activityInstances).hasSize(1);
     }
   }
 
@@ -170,8 +175,7 @@ public class NestedExecutionAPIInvocationTest {
       // then the wait state is reached immediately after instantiation
       ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
       ActivityInstance[] activityInstances = activityInstance.getActivityInstances("waitState");
-      Assert.assertEquals(1, activityInstances.length);
-
+      assertThat(activityInstances).hasSize(1);
     }
   }
 }

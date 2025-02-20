@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -38,7 +41,6 @@ import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -58,8 +60,8 @@ public class ExternalTaskUserOperationLogTest {
   @Rule
   public RuleChain ruleChain = RuleChain.outerRule(rule).around(testRule);
 
-  private static String PROCESS_DEFINITION_KEY = "oneExternalTaskProcess";
-  private static String PROCESS_DEFINITION_KEY_2 = "twoExternalTaskWithPriorityProcess";
+  private static final String PROCESS_DEFINITION_KEY = "oneExternalTaskProcess";
+  private static final String PROCESS_DEFINITION_KEY_2 = "twoExternalTaskWithPriorityProcess";
 
   protected RuntimeService runtimeService;
   protected ExternalTaskService externalTaskService;
@@ -96,21 +98,21 @@ public class ExternalTaskUserOperationLogTest {
     rule.getIdentityService().clearAuthentication();
     // then
     List<UserOperationLogEntry> opLogEntries = rule.getHistoryService().createUserOperationLogQuery().list();
-    Assert.assertEquals(1, opLogEntries.size());
+    assertThat(opLogEntries).hasSize(1);
 
     Map<String, UserOperationLogEntry> entries = asMap(opLogEntries);
 
     UserOperationLogEntry retriesEntry = entries.get("retries");
-    Assert.assertNotNull(retriesEntry);
-    Assert.assertEquals(EntityTypes.EXTERNAL_TASK, retriesEntry.getEntityType());
-    Assert.assertEquals("SetExternalTaskRetries", retriesEntry.getOperationType());
-    Assert.assertEquals(externalTask.getId(), retriesEntry.getExternalTaskId());
-    Assert.assertEquals(externalTask.getProcessInstanceId(), retriesEntry.getProcessInstanceId());
-    Assert.assertEquals(externalTask.getProcessDefinitionId(), retriesEntry.getProcessDefinitionId());
-    Assert.assertEquals(externalTask.getProcessDefinitionKey(), retriesEntry.getProcessDefinitionKey());
-    Assert.assertNull(retriesEntry.getOrgValue());
-    Assert.assertEquals("5", retriesEntry.getNewValue());
-    Assert.assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, retriesEntry.getCategory());
+    assertThat(retriesEntry).isNotNull();
+    assertThat(retriesEntry.getEntityType()).isEqualTo(EntityTypes.EXTERNAL_TASK);
+    assertThat(retriesEntry.getOperationType()).isEqualTo("SetExternalTaskRetries");
+    assertThat(retriesEntry.getExternalTaskId()).isEqualTo(externalTask.getId());
+    assertThat(retriesEntry.getProcessInstanceId()).isEqualTo(externalTask.getProcessInstanceId());
+    assertThat(retriesEntry.getProcessDefinitionId()).isEqualTo(externalTask.getProcessDefinitionId());
+    assertThat(retriesEntry.getProcessDefinitionKey()).isEqualTo(externalTask.getProcessDefinitionKey());
+    assertThat(retriesEntry.getOrgValue()).isNull();
+    assertThat(retriesEntry.getNewValue()).isEqualTo("5");
+    assertThat(retriesEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
   }
 
   @Test
@@ -133,46 +135,46 @@ public class ExternalTaskUserOperationLogTest {
     rule.getIdentityService().clearAuthentication();
     // then
     List<UserOperationLogEntry> opLogEntries = rule.getHistoryService().createUserOperationLogQuery().list();
-    Assert.assertEquals(3, opLogEntries.size());
+    assertThat(opLogEntries).hasSize(3);
 
     Map<String, UserOperationLogEntry> entries = asMap(opLogEntries);
 
     UserOperationLogEntry asyncEntry = entries.get("async");
-    Assert.assertNotNull(asyncEntry);
-    Assert.assertEquals(EntityTypes.EXTERNAL_TASK, asyncEntry.getEntityType());
-    Assert.assertEquals("SetExternalTaskRetries", asyncEntry.getOperationType());
-    Assert.assertNull(asyncEntry.getExternalTaskId());
-    Assert.assertNull(asyncEntry.getProcessDefinitionId());
-    Assert.assertNull(asyncEntry.getProcessDefinitionKey());
-    Assert.assertNull(asyncEntry.getProcessInstanceId());
-    Assert.assertNull(asyncEntry.getOrgValue());
-    Assert.assertEquals("false", asyncEntry.getNewValue());
-    Assert.assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, asyncEntry.getCategory());
+    assertThat(asyncEntry).isNotNull();
+    assertThat(asyncEntry.getEntityType()).isEqualTo(EntityTypes.EXTERNAL_TASK);
+    assertThat(asyncEntry.getOperationType()).isEqualTo("SetExternalTaskRetries");
+    assertThat(asyncEntry.getExternalTaskId()).isNull();
+    assertThat(asyncEntry.getProcessDefinitionId()).isNull();
+    assertThat(asyncEntry.getProcessDefinitionKey()).isNull();
+    assertThat(asyncEntry.getProcessInstanceId()).isNull();
+    assertThat(asyncEntry.getOrgValue()).isNull();
+    assertThat(asyncEntry.getNewValue()).isEqualTo("false");
+    assertThat(asyncEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
     UserOperationLogEntry numInstancesEntry = entries.get("nrOfInstances");
-    Assert.assertNotNull(numInstancesEntry);
-    Assert.assertEquals(EntityTypes.EXTERNAL_TASK, numInstancesEntry.getEntityType());
-    Assert.assertEquals("SetExternalTaskRetries", numInstancesEntry.getOperationType());
-    Assert.assertNull(numInstancesEntry.getExternalTaskId());
-    Assert.assertNull(numInstancesEntry.getProcessDefinitionId());
-    Assert.assertNull(numInstancesEntry.getProcessDefinitionKey());
-    Assert.assertNull(numInstancesEntry.getProcessInstanceId());
-    Assert.assertNull(numInstancesEntry.getOrgValue());
-    Assert.assertEquals("2", numInstancesEntry.getNewValue());
-    Assert.assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, numInstancesEntry.getCategory());
+    assertThat(numInstancesEntry).isNotNull();
+    assertThat(numInstancesEntry.getEntityType()).isEqualTo(EntityTypes.EXTERNAL_TASK);
+    assertThat(numInstancesEntry.getOperationType()).isEqualTo("SetExternalTaskRetries");
+    assertThat(numInstancesEntry.getExternalTaskId()).isNull();
+    assertThat(numInstancesEntry.getProcessDefinitionId()).isNull();
+    assertThat(numInstancesEntry.getProcessDefinitionKey()).isNull();
+    assertThat(numInstancesEntry.getProcessInstanceId()).isNull();
+    assertThat(numInstancesEntry.getOrgValue()).isNull();
+    assertThat(numInstancesEntry.getNewValue()).isEqualTo("2");
+    assertThat(numInstancesEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
     UserOperationLogEntry retriesEntry = entries.get("retries");
-    Assert.assertNotNull(retriesEntry);
-    Assert.assertEquals(EntityTypes.EXTERNAL_TASK, retriesEntry.getEntityType());
-    Assert.assertEquals("SetExternalTaskRetries", retriesEntry.getOperationType());
-    Assert.assertNull(retriesEntry.getExternalTaskId());
-    Assert.assertNull(retriesEntry.getProcessDefinitionId());
-    Assert.assertNull(retriesEntry.getProcessDefinitionKey());
-    Assert.assertNull(retriesEntry.getProcessInstanceId());
-    Assert.assertNull(retriesEntry.getOrgValue());
-    Assert.assertEquals("5", retriesEntry.getNewValue());
-    Assert.assertEquals(asyncEntry.getOperationId(), retriesEntry.getOperationId());
-    Assert.assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, retriesEntry.getCategory());
+    assertThat(retriesEntry).isNotNull();
+    assertThat(retriesEntry.getEntityType()).isEqualTo(EntityTypes.EXTERNAL_TASK);
+    assertThat(retriesEntry.getOperationType()).isEqualTo("SetExternalTaskRetries");
+    assertThat(retriesEntry.getExternalTaskId()).isNull();
+    assertThat(retriesEntry.getProcessDefinitionId()).isNull();
+    assertThat(retriesEntry.getProcessDefinitionKey()).isNull();
+    assertThat(retriesEntry.getProcessInstanceId()).isNull();
+    assertThat(retriesEntry.getOrgValue()).isNull();
+    assertThat(retriesEntry.getNewValue()).isEqualTo("5");
+    assertThat(retriesEntry.getOperationId()).isEqualTo(asyncEntry.getOperationId());
+    assertThat(retriesEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
   }
 
   @Test
@@ -188,53 +190,53 @@ public class ExternalTaskUserOperationLogTest {
     rule.getIdentityService().clearAuthentication();
     // then
     List<UserOperationLogEntry> opLogEntries = rule.getHistoryService().createUserOperationLogQuery().list();
-    Assert.assertEquals(3, opLogEntries.size());
+    assertThat(opLogEntries).hasSize(3);
 
     Map<String, UserOperationLogEntry> entries = asMap(opLogEntries);
 
     UserOperationLogEntry asyncEntry = entries.get("async");
-    Assert.assertNotNull(asyncEntry);
-    Assert.assertEquals(EntityTypes.EXTERNAL_TASK, asyncEntry.getEntityType());
-    Assert.assertEquals("SetExternalTaskRetries", asyncEntry.getOperationType());
-    Assert.assertNull(asyncEntry.getExternalTaskId());
-    Assert.assertNull(asyncEntry.getProcessDefinitionId());
-    Assert.assertNull(asyncEntry.getProcessDefinitionKey());
-    Assert.assertNull(asyncEntry.getProcessInstanceId());
-    Assert.assertNull(asyncEntry.getOrgValue());
-    Assert.assertEquals("true", asyncEntry.getNewValue());
-    Assert.assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, asyncEntry.getCategory());
+    assertThat(asyncEntry).isNotNull();
+    assertThat(asyncEntry.getEntityType()).isEqualTo(EntityTypes.EXTERNAL_TASK);
+    assertThat(asyncEntry.getOperationType()).isEqualTo("SetExternalTaskRetries");
+    assertThat(asyncEntry.getExternalTaskId()).isNull();
+    assertThat(asyncEntry.getProcessDefinitionId()).isNull();
+    assertThat(asyncEntry.getProcessDefinitionKey()).isNull();
+    assertThat(asyncEntry.getProcessInstanceId()).isNull();
+    assertThat(asyncEntry.getOrgValue()).isNull();
+    assertThat(asyncEntry.getNewValue()).isEqualTo("true");
+    assertThat(asyncEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
     UserOperationLogEntry numInstancesEntry = entries.get("nrOfInstances");
-    Assert.assertNotNull(numInstancesEntry);
-    Assert.assertEquals(EntityTypes.EXTERNAL_TASK, numInstancesEntry.getEntityType());
-    Assert.assertEquals("SetExternalTaskRetries", numInstancesEntry.getOperationType());
-    Assert.assertNull(numInstancesEntry.getExternalTaskId());
-    Assert.assertNull(numInstancesEntry.getProcessDefinitionId());
-    Assert.assertNull(numInstancesEntry.getProcessDefinitionKey());
-    Assert.assertNull(numInstancesEntry.getProcessInstanceId());
-    Assert.assertNull(numInstancesEntry.getOrgValue());
-    Assert.assertEquals("2", numInstancesEntry.getNewValue());
-    Assert.assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, numInstancesEntry.getCategory());
+    assertThat(numInstancesEntry).isNotNull();
+    assertThat(numInstancesEntry.getEntityType()).isEqualTo(EntityTypes.EXTERNAL_TASK);
+    assertThat(numInstancesEntry.getOperationType()).isEqualTo("SetExternalTaskRetries");
+    assertThat(numInstancesEntry.getExternalTaskId()).isNull();
+    assertThat(numInstancesEntry.getProcessDefinitionId()).isNull();
+    assertThat(numInstancesEntry.getProcessDefinitionKey()).isNull();
+    assertThat(numInstancesEntry.getProcessInstanceId()).isNull();
+    assertThat(numInstancesEntry.getOrgValue()).isNull();
+    assertThat(numInstancesEntry.getNewValue()).isEqualTo("2");
+    assertThat(numInstancesEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
 
     UserOperationLogEntry retriesEntry = entries.get("retries");
-    Assert.assertNotNull(retriesEntry);
-    Assert.assertEquals(EntityTypes.EXTERNAL_TASK, retriesEntry.getEntityType());
-    Assert.assertEquals("SetExternalTaskRetries", retriesEntry.getOperationType());
-    Assert.assertNull(retriesEntry.getExternalTaskId());
-    Assert.assertNull(retriesEntry.getProcessDefinitionId());
-    Assert.assertNull(retriesEntry.getProcessDefinitionKey());
-    Assert.assertNull(retriesEntry.getProcessInstanceId());
-    Assert.assertNull(retriesEntry.getOrgValue());
-    Assert.assertEquals("5", retriesEntry.getNewValue());
-    Assert.assertEquals(asyncEntry.getOperationId(), retriesEntry.getOperationId());
-    Assert.assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, retriesEntry.getCategory());
+    assertThat(retriesEntry).isNotNull();
+    assertThat(retriesEntry.getEntityType()).isEqualTo(EntityTypes.EXTERNAL_TASK);
+    assertThat(retriesEntry.getOperationType()).isEqualTo("SetExternalTaskRetries");
+    assertThat(retriesEntry.getExternalTaskId()).isNull();
+    assertThat(retriesEntry.getProcessDefinitionId()).isNull();
+    assertThat(retriesEntry.getProcessDefinitionKey()).isNull();
+    assertThat(retriesEntry.getProcessInstanceId()).isNull();
+    assertThat(retriesEntry.getOrgValue()).isNull();
+    assertThat(retriesEntry.getNewValue()).isEqualTo("5");
+    assertThat(retriesEntry.getOperationId()).isEqualTo(asyncEntry.getOperationId());
+    assertThat(retriesEntry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
   }
   
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/externalTaskPriorityExpression.bpmn20.xml")
   public void testSetPriorityLogCreation() {
     // given
-    runtimeService.startProcessInstanceByKey(PROCESS_DEFINITION_KEY_2, Collections.<String, Object>singletonMap("priority", 14));
+    runtimeService.startProcessInstanceByKey(PROCESS_DEFINITION_KEY_2, Collections.singletonMap("priority", 14));
     ExternalTask externalTask = externalTaskService.createExternalTaskQuery().priorityHigherThanOrEquals(1).singleResult();
     
     // when
@@ -244,20 +246,20 @@ public class ExternalTaskUserOperationLogTest {
     
     // then
     List<UserOperationLogEntry> opLogEntries = rule.getHistoryService().createUserOperationLogQuery().list();
-    Assert.assertEquals(1, opLogEntries.size());
+    assertThat(opLogEntries).hasSize(1);
 
     UserOperationLogEntry entry = opLogEntries.get(0);
-    Assert.assertNotNull(entry);
-    Assert.assertEquals(EntityTypes.EXTERNAL_TASK, entry.getEntityType());
-    Assert.assertEquals(UserOperationLogEntry.OPERATION_TYPE_SET_PRIORITY, entry.getOperationType());
-    Assert.assertEquals(externalTask.getId(), entry.getExternalTaskId());
-    Assert.assertEquals(externalTask.getProcessInstanceId(), entry.getProcessInstanceId());
-    Assert.assertEquals(externalTask.getProcessDefinitionId(), entry.getProcessDefinitionId());
-    Assert.assertEquals(externalTask.getProcessDefinitionKey(), entry.getProcessDefinitionKey());
-    Assert.assertEquals("priority", entry.getProperty());
-    Assert.assertEquals("14", entry.getOrgValue());
-    Assert.assertEquals("78", entry.getNewValue());
-    Assert.assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, entry.getCategory());
+    assertThat(entry).isNotNull();
+    assertThat(entry.getEntityType()).isEqualTo(EntityTypes.EXTERNAL_TASK);
+    assertThat(entry.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_SET_PRIORITY);
+    assertThat(entry.getExternalTaskId()).isEqualTo(externalTask.getId());
+    assertThat(entry.getProcessInstanceId()).isEqualTo(externalTask.getProcessInstanceId());
+    assertThat(entry.getProcessDefinitionId()).isEqualTo(externalTask.getProcessDefinitionId());
+    assertThat(entry.getProcessDefinitionKey()).isEqualTo(externalTask.getProcessDefinitionKey());
+    assertThat(entry.getProperty()).isEqualTo("priority");
+    assertThat(entry.getOrgValue()).isEqualTo("14");
+    assertThat(entry.getNewValue()).isEqualTo("78");
+    assertThat(entry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
   }
   
   @Test
@@ -275,20 +277,20 @@ public class ExternalTaskUserOperationLogTest {
     
     // then
     List<UserOperationLogEntry> opLogEntries = rule.getHistoryService().createUserOperationLogQuery().list();
-    Assert.assertEquals(1, opLogEntries.size());
+    assertThat(opLogEntries).hasSize(1);
 
     UserOperationLogEntry entry = opLogEntries.get(0);
-    Assert.assertNotNull(entry);
-    Assert.assertEquals(EntityTypes.EXTERNAL_TASK, entry.getEntityType());
-    Assert.assertEquals(UserOperationLogEntry.OPERATION_TYPE_UNLOCK, entry.getOperationType());
-    Assert.assertEquals(externalTask.getId(), entry.getExternalTaskId());
-    Assert.assertEquals(externalTask.getProcessInstanceId(), entry.getProcessInstanceId());
-    Assert.assertEquals(externalTask.getProcessDefinitionId(), entry.getProcessDefinitionId());
-    Assert.assertEquals(externalTask.getProcessDefinitionKey(), entry.getProcessDefinitionKey());
-    Assert.assertNull(entry.getProperty());
-    Assert.assertNull(entry.getOrgValue());
-    Assert.assertNull(entry.getNewValue());
-    Assert.assertEquals(UserOperationLogEntry.CATEGORY_OPERATOR, entry.getCategory());
+    assertThat(entry).isNotNull();
+    assertThat(entry.getEntityType()).isEqualTo(EntityTypes.EXTERNAL_TASK);
+    assertThat(entry.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_UNLOCK);
+    assertThat(entry.getExternalTaskId()).isEqualTo(externalTask.getId());
+    assertThat(entry.getProcessInstanceId()).isEqualTo(externalTask.getProcessInstanceId());
+    assertThat(entry.getProcessDefinitionId()).isEqualTo(externalTask.getProcessDefinitionId());
+    assertThat(entry.getProcessDefinitionKey()).isEqualTo(externalTask.getProcessDefinitionKey());
+    assertThat(entry.getProperty()).isNull();
+    assertThat(entry.getOrgValue()).isNull();
+    assertThat(entry.getNewValue()).isNull();
+    assertThat(entry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
   }
 
   protected Map<String, UserOperationLogEntry> asMap(List<UserOperationLogEntry> logEntries) {
@@ -298,7 +300,7 @@ public class ExternalTaskUserOperationLogTest {
 
       UserOperationLogEntry previousValue = map.put(entry.getProperty(), entry);
       if (previousValue != null) {
-        Assert.fail("expected only entry for every property");
+        fail("expected only entry for every property");
       }
     }
 

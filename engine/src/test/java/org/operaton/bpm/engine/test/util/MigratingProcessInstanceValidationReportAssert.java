@@ -26,9 +26,6 @@ import java.util.List;
 
 import org.assertj.core.api.Assertions;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 public class MigratingProcessInstanceValidationReportAssert {
 
   protected MigratingProcessInstanceValidationReport actual;
@@ -38,7 +35,7 @@ public class MigratingProcessInstanceValidationReportAssert {
   }
 
   public MigratingProcessInstanceValidationReportAssert isNotNull() {
-    assertNotNull("Expected report to be not null", actual);
+    Assertions.assertThat(actual).as("Expected report to be not null").isNotNull();
 
     return this;
   }
@@ -50,7 +47,9 @@ public class MigratingProcessInstanceValidationReportAssert {
   public MigratingProcessInstanceValidationReportAssert hasProcessInstanceId(String processInstanceId) {
     isNotNull();
 
-    assertEquals("Expected report to be for process instance", processInstanceId, actual.getProcessInstanceId());
+    Assertions.assertThat(actual.getProcessInstanceId())
+      .as("Expected report to be for process instance")
+      .isEqualTo(processInstanceId);
 
     return this;
   }
@@ -66,7 +65,7 @@ public class MigratingProcessInstanceValidationReportAssert {
       }
     }
 
-    assertNotNull("No validation report found for source scope: " + sourceScopeId, actualReport);
+    Assertions.assertThat(actualReport).as("No validation report found for source scope: " + sourceScopeId).isNotNull();
 
     assertFailures(sourceScopeId, Arrays.asList(expectedFailures), actualReport.getFailures());
 
@@ -84,7 +83,7 @@ public class MigratingProcessInstanceValidationReportAssert {
       }
     }
 
-    assertNotNull("No validation report found for source scope: " + sourceScopeId, actualReport);
+    Assertions.assertThat(actualReport).as("No validation report found for source scope: " + sourceScopeId).isNotNull();
 
     assertFailures(sourceScopeId, Arrays.asList(expectedFailures), actualReport.getFailures());
 

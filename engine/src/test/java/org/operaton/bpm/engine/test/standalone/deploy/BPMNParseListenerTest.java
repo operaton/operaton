@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.test.standalone.deploy;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -99,8 +97,8 @@ public class BPMNParseListenerTest {
 
     // then
     // Check if process-definition has different key
-    assertEquals(0, repositoryService.createProcessDefinitionQuery().processDefinitionKey("oneTaskProcess").count());
-    assertEquals(1, repositoryService.createProcessDefinitionQuery().processDefinitionKey("oneTaskProcess-modified").count());
+    assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionKey("oneTaskProcess").count()).isZero();
+    assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionKey("oneTaskProcess-modified").count()).isEqualTo(1);
   }
 
   @Test
@@ -118,13 +116,13 @@ public class BPMNParseListenerTest {
     ProcessDefinitionImpl processDefinition = ((ProcessInstanceWithVariablesImpl) processInstance).getExecutionEntity().getProcessDefinition();
 
     ActivityImpl cancelThrowEvent = processDefinition.findActivity("CancelthrowEvent");
-    assertTrue(cancelThrowEvent.getActivityBehavior() instanceof TestBPMNParseListener.TestCompensationEventActivityBehavior);
+    assertThat(cancelThrowEvent.getActivityBehavior()).isInstanceOf(TestBPMNParseListener.TestCompensationEventActivityBehavior.class);
 
     ActivityImpl startEvent = processDefinition.findActivity("theStart");
-    assertTrue(startEvent.getActivityBehavior() instanceof TestBPMNParseListener.TestNoneStartEventActivityBehavior);
+    assertThat(startEvent.getActivityBehavior()).isInstanceOf(TestBPMNParseListener.TestNoneStartEventActivityBehavior.class);
 
     ActivityImpl endEvent = processDefinition.findActivity("theEnd");
-    assertTrue(endEvent.getActivityBehavior() instanceof TestBPMNParseListener.TestNoneEndEventActivityBehavior);
+    assertThat(endEvent.getActivityBehavior()).isInstanceOf(TestBPMNParseListener.TestNoneEndEventActivityBehavior.class);
   }
 
   @Test
@@ -275,7 +273,7 @@ public class BPMNParseListenerTest {
         + "BPMNParseListenerTest.shouldInvokeParseIoMapping.bpmn20.xml");
 
     // then
-    assertEquals(1, invokeTimes.get());
+    assertThat(invokeTimes.get()).isEqualTo(1);
   }
 
   // helper ////////////////////////////////////////////////////////////////////////////////////////////////////////////

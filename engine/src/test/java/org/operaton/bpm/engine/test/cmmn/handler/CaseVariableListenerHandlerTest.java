@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.handler;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
@@ -35,7 +34,6 @@ import org.operaton.bpm.model.cmmn.instance.ExtensionElements;
 import org.operaton.bpm.model.cmmn.instance.PlanItem;
 import org.operaton.bpm.model.cmmn.instance.operaton.OperatonField;
 import org.operaton.bpm.model.cmmn.instance.operaton.OperatonVariableListener;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -71,19 +69,19 @@ public class CaseVariableListenerHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     List<VariableListener<?>> listeners = activity.getVariableListenersLocal(CaseVariableListener.CREATE);
-    Assert.assertEquals(1, listeners.size());
+    assertThat(listeners).hasSize(1);
 
     ClassDelegateCaseVariableListener listener = (ClassDelegateCaseVariableListener) listeners.get(0);
-    Assert.assertEquals("a.class.Name", listener.getClassName());
-    Assert.assertEquals(1, listener.getFieldDeclarations().size());
-    Assert.assertEquals("fieldName", listener.getFieldDeclarations().get(0).getName());
+    assertThat(listener.getClassName()).isEqualTo("a.class.Name");
+    assertThat(listener.getFieldDeclarations()).hasSize(1);
+    assertThat(listener.getFieldDeclarations().get(0).getName()).isEqualTo("fieldName");
     Object fieldValue = listener.getFieldDeclarations().get(0).getValue();
-    assertTrue(fieldValue instanceof Expression);
+    assertThat(fieldValue).isInstanceOf(Expression.class);
     Expression expressionValue = (Expression) fieldValue;
-    assertEquals("a string value", expressionValue.getExpressionText());
+    assertThat(expressionValue.getExpressionText()).isEqualTo("a string value");
 
-    Assert.assertEquals(listener, activity.getVariableListenersLocal(CaseVariableListener.UPDATE).get(0));
-    Assert.assertEquals(listener, activity.getVariableListenersLocal(CaseVariableListener.DELETE).get(0));
+    assertThat(activity.getVariableListenersLocal(CaseVariableListener.UPDATE).get(0)).isEqualTo(listener);
+    assertThat(activity.getVariableListenersLocal(CaseVariableListener.DELETE).get(0)).isEqualTo(listener);
   }
 
   @Test
@@ -97,13 +95,13 @@ public class CaseVariableListenerHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     List<VariableListener<?>> listeners = activity.getVariableListenersLocal(CaseVariableListener.CREATE);
-    Assert.assertEquals(1, listeners.size());
+    assertThat(listeners).hasSize(1);
 
     DelegateExpressionCaseVariableListener listener = (DelegateExpressionCaseVariableListener) listeners.get(0);
-    Assert.assertEquals("${expression}", listener.getExpressionText());
+    assertThat(listener.getExpressionText()).isEqualTo("${expression}");
 
-    Assert.assertEquals(0, activity.getVariableListenersLocal(CaseVariableListener.UPDATE).size());
-    Assert.assertEquals(0, activity.getVariableListenersLocal(CaseVariableListener.DELETE).size());
+    assertThat(activity.getVariableListenersLocal(CaseVariableListener.UPDATE)).isEmpty();
+    assertThat(activity.getVariableListenersLocal(CaseVariableListener.DELETE)).isEmpty();
   }
 
   @Test
@@ -117,13 +115,13 @@ public class CaseVariableListenerHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     List<VariableListener<?>> listeners = activity.getVariableListenersLocal(CaseVariableListener.CREATE);
-    Assert.assertEquals(1, listeners.size());
+    assertThat(listeners).hasSize(1);
 
     ExpressionCaseVariableListener listener = (ExpressionCaseVariableListener) listeners.get(0);
-    Assert.assertEquals("${expression}", listener.getExpressionText());
+    assertThat(listener.getExpressionText()).isEqualTo("${expression}");
 
-    Assert.assertEquals(0, activity.getVariableListenersLocal(CaseVariableListener.UPDATE).size());
-    Assert.assertEquals(0, activity.getVariableListenersLocal(CaseVariableListener.DELETE).size());
+    assertThat(activity.getVariableListenersLocal(CaseVariableListener.UPDATE)).isEmpty();
+    assertThat(activity.getVariableListenersLocal(CaseVariableListener.DELETE)).isEmpty();
   }
 
 }

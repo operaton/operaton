@@ -17,9 +17,6 @@
 package org.operaton.bpm.engine.test.api.task;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -55,7 +52,7 @@ public class DelegateTaskTest {
   private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
   private static final String FOLLOW_UP_DATE_STRING = "2019-01-01T01:00:00";
 
-  private static Date FOLLOW_UP_DATE;
+  private static final Date FOLLOW_UP_DATE;
 
   static {
     try {
@@ -86,19 +83,15 @@ public class DelegateTaskTest {
     runtimeService.startProcessInstanceByKey("DelegateTaskTest.testGetCandidates");
 
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     @SuppressWarnings("unchecked")
     Set<String> candidateUsers = (Set<String>) taskService.getVariable(task.getId(), DelegateTaskTestTaskListener.VARNAME_CANDIDATE_USERS);
-    assertEquals(2, candidateUsers.size());
-    assertTrue(candidateUsers.contains("kermit"));
-    assertTrue(candidateUsers.contains("gonzo"));
+    assertThat(candidateUsers).containsExactlyInAnyOrder("kermit", "gonzo");
 
     @SuppressWarnings("unchecked")
     Set<String> candidateGroups = (Set<String>) taskService.getVariable(task.getId(), DelegateTaskTestTaskListener.VARNAME_CANDIDATE_GROUPS);
-    assertEquals(2, candidateGroups.size());
-    assertTrue(candidateGroups.contains("management"));
-    assertTrue(candidateGroups.contains("accountancy"));
+    assertThat(candidateGroups).containsExactlyInAnyOrder("management", "accountancy");
   }
 
   @Test

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 
@@ -27,7 +28,6 @@ import org.operaton.bpm.engine.test.api.runtime.migration.models.EventSubProcess
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.TransactionModels;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
@@ -245,9 +245,7 @@ public class MigrationTransactionTest {
     ProcessInstance processInstance = testRule.createProcessInstanceAndMigrate(migrationPlan);
 
     // then
-    Assert.assertEquals(
-        testRule.getSingleActivityInstanceBeforeMigration("transaction").getId(),
-        testRule.getSingleActivityInstanceAfterMigration("subProcess").getId());
+    assertThat(testRule.getSingleActivityInstanceAfterMigration("subProcess").getId()).isEqualTo(testRule.getSingleActivityInstanceBeforeMigration("transaction").getId());
 
     testRule.completeTask("userTask");
     testRule.assertProcessEnded(processInstance.getId());
@@ -274,9 +272,7 @@ public class MigrationTransactionTest {
     testRule.migrateProcessInstance(migrationPlan, processInstance);
 
     // then
-    Assert.assertEquals(
-        testRule.getSingleActivityInstanceBeforeMigration("eventSubProcess").getId(),
-        testRule.getSingleActivityInstanceAfterMigration("transaction").getId());
+    assertThat(testRule.getSingleActivityInstanceAfterMigration("transaction").getId()).isEqualTo(testRule.getSingleActivityInstanceBeforeMigration("eventSubProcess").getId());
 
     testRule.completeTask("userTask");
     testRule.assertProcessEnded(processInstance.getId());

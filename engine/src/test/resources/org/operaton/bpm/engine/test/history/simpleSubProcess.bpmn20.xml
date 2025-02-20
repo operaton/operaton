@@ -13,7 +13,7 @@
     <scriptTask id="task" name="Execute script" scriptFormat="groovy">
       <script>
         // Using def in Groovy makes the variable script-local
-        // It will not be stored autmatically (which is the case when not using def)
+        // It will not be stored automatically (which is the case when not using def)
         def scriptVar = "test666"
         execution.setVariable("myVar", scriptVar)
         def scriptVar1 = "test666"

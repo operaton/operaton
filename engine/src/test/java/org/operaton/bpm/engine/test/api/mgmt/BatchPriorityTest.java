@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.IdentityService;
@@ -92,7 +92,7 @@ public class BatchPriorityTest {
 
     // then
     Job seedJob = helper.getSeedJob(batch);
-    assertEquals(DefaultJobPriorityProvider.DEFAULT_PRIORITY, seedJob.getPriority());
+    assertThat(seedJob.getPriority()).isEqualTo(DefaultJobPriorityProvider.DEFAULT_PRIORITY);
   }
 
   @Test
@@ -105,7 +105,7 @@ public class BatchPriorityTest {
 
     // then
     Job monitorJob = helper.getMonitorJob(batch);
-    assertEquals(DefaultJobPriorityProvider.DEFAULT_PRIORITY, monitorJob.getPriority());
+    assertThat(monitorJob.getPriority()).isEqualTo(DefaultJobPriorityProvider.DEFAULT_PRIORITY);
   }
 
   @Test
@@ -118,7 +118,7 @@ public class BatchPriorityTest {
 
     // then
     Job executionJob = helper.getExecutionJobs(batch).get(0);
-    assertEquals(DefaultJobPriorityProvider.DEFAULT_PRIORITY, executionJob.getPriority());
+    assertThat(executionJob.getPriority()).isEqualTo(DefaultJobPriorityProvider.DEFAULT_PRIORITY);
   }
 
   @Test
@@ -131,7 +131,7 @@ public class BatchPriorityTest {
 
     // then
     Job seedJob = helper.getSeedJob(batch);
-    assertEquals(CUSTOM_PRIORITY, seedJob.getPriority());
+    assertThat(seedJob.getPriority()).isEqualTo(CUSTOM_PRIORITY);
   }
 
   @Test
@@ -145,7 +145,7 @@ public class BatchPriorityTest {
 
     // then
     Job monitorJob = helper.getMonitorJob(batch);
-    assertEquals(CUSTOM_PRIORITY, monitorJob.getPriority());
+    assertThat(monitorJob.getPriority()).isEqualTo(CUSTOM_PRIORITY);
   }
 
   @Test
@@ -159,7 +159,7 @@ public class BatchPriorityTest {
 
     // then
     Job executionJob = helper.getExecutionJobs(batch).get(0);
-    assertEquals(CUSTOM_PRIORITY, executionJob.getPriority());
+    assertThat(executionJob.getPriority()).isEqualTo(CUSTOM_PRIORITY);
   }
 
   @Test
@@ -174,7 +174,7 @@ public class BatchPriorityTest {
 
     // then
     Job seedJob = helper.getSeedJob(batch);
-    assertEquals(CUSTOM_PRIORITY, seedJob.getPriority());
+    assertThat(seedJob.getPriority()).isEqualTo(CUSTOM_PRIORITY);
   }
 
   @Test
@@ -188,7 +188,7 @@ public class BatchPriorityTest {
 
     // then
     Job seedJob = helper.getSeedJob(batch);
-    assertEquals(CUSTOM_PRIORITY, seedJob.getPriority());
+    assertThat(seedJob.getPriority()).isEqualTo(CUSTOM_PRIORITY);
   }
 
   @Test
@@ -203,7 +203,7 @@ public class BatchPriorityTest {
 
     // then
     Job monitorJob = helper.getMonitorJob(batch);
-    assertEquals(CUSTOM_PRIORITY, monitorJob.getPriority());
+    assertThat(monitorJob.getPriority()).isEqualTo(CUSTOM_PRIORITY);
   }
 
   @Test
@@ -218,7 +218,7 @@ public class BatchPriorityTest {
 
     // then
     Job monitorJob = helper.getMonitorJob(batch);
-    assertEquals(CUSTOM_PRIORITY, monitorJob.getPriority());
+    assertThat(monitorJob.getPriority()).isEqualTo(CUSTOM_PRIORITY);
   }
 
   @Test
@@ -233,7 +233,7 @@ public class BatchPriorityTest {
 
     // then
     Job executionJob = helper.getExecutionJobs(batch).get(0);
-    assertEquals(CUSTOM_PRIORITY, executionJob.getPriority());
+    assertThat(executionJob.getPriority()).isEqualTo(CUSTOM_PRIORITY);
   }
 
   @Test
@@ -248,7 +248,7 @@ public class BatchPriorityTest {
 
     // then
     Job executionJob = helper.getExecutionJobs(batch).get(0);
-    assertEquals(CUSTOM_PRIORITY, executionJob.getPriority());
+    assertThat(executionJob.getPriority()).isEqualTo(CUSTOM_PRIORITY);
   }
 
   protected void setBatchJobPriority(long priority) {

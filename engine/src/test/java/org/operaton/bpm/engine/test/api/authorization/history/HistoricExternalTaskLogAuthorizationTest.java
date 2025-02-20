@@ -17,15 +17,13 @@
 package org.operaton.bpm.engine.test.api.authorization.history;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.READ_HISTORY;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.DEFAULT_PROCESS_KEY;
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.DEFAULT_TOPIC;
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.createDefaultExternalTaskModel;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
 
 import java.util.List;
 import org.operaton.bpm.engine.AuthorizationException;
@@ -220,8 +218,7 @@ public class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest 
     String stacktrace = historyService.getHistoricExternalTaskLogErrorDetails(failedHistoricExternalTaskLogId);
 
     // then
-    assertNotNull(stacktrace);
-    assertEquals(ERROR_DETAILS, stacktrace);
+    assertThat(stacktrace).isNotNull().isEqualTo(ERROR_DETAILS);
   }
 
   @Test
@@ -242,8 +239,7 @@ public class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest 
     String stacktrace = historyService.getHistoricExternalTaskLogErrorDetails(failedHistoricExternalTaskLogId);
 
     // then
-    assertNotNull(stacktrace);
-    assertEquals(ERROR_DETAILS, stacktrace);
+    assertThat(stacktrace).isNotNull().isEqualTo(ERROR_DETAILS);
   }
 
   @Test

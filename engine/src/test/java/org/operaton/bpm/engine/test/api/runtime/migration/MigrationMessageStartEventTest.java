@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.migration.MigrationPlan;
@@ -96,8 +95,8 @@ public class MigrationMessageStartEventTest {
     // then
     EventSubscription eventSubscriptionAfter = runtimeService.createEventSubscriptionQuery().singleResult();
 
-    assertNotNull(eventSubscriptionAfter);
-    assertEquals(EventSubProcessModels.MESSAGE_NAME, eventSubscriptionAfter.getEventName());
+    assertThat(eventSubscriptionAfter).isNotNull();
+    assertThat(eventSubscriptionAfter.getEventName()).isEqualTo(EventSubProcessModels.MESSAGE_NAME);
 
     runtimeService.correlateMessage(EventSubProcessModels.MESSAGE_NAME);
     testHelper.completeTask("eventSubProcessTask");
@@ -106,11 +105,11 @@ public class MigrationMessageStartEventTest {
 
   protected void assertEventSubscriptionMigrated(EventSubscription eventSubscriptionBefore, String activityIdAfter, String eventName) {
     EventSubscription eventSubscriptionAfter = runtimeService.createEventSubscriptionQuery().singleResult();
-    assertNotNull("Expected that an event subscription with id '" + eventSubscriptionBefore.getId() + "' "
-        + "exists after migration", eventSubscriptionAfter);
+    assertThat(eventSubscriptionAfter).as("Expected that an event subscription with id '" + eventSubscriptionBefore.getId() + "' "
+        + "exists after migration").isNotNull();
 
-    assertEquals(eventSubscriptionBefore.getEventType(), eventSubscriptionAfter.getEventType());
-    assertEquals(activityIdAfter, eventSubscriptionAfter.getActivityId());
-    assertEquals(eventName, eventSubscriptionAfter.getEventName());
+    assertThat(eventSubscriptionAfter.getEventType()).isEqualTo(eventSubscriptionBefore.getEventType());
+    assertThat(eventSubscriptionAfter.getActivityId()).isEqualTo(activityIdAfter);
+    assertThat(eventSubscriptionAfter.getEventName()).isEqualTo(eventName);
   }
 }

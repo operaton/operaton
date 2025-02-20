@@ -117,7 +117,7 @@ public interface ValueType extends Serializable {
 
   /**
    * Converts a typed value to a typed value of this type.
-   * This does not suceed if {@link #canConvertFromTypedValue(TypedValue)}
+   * This does not succeed if {@link #canConvertFromTypedValue(TypedValue)}
    * returns <code>false</code>.
    */
   TypedValue convertFromTypedValue(TypedValue typedValue);

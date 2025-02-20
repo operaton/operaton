@@ -17,10 +17,7 @@
 package org.operaton.bpm.engine.test.bpmn.usertask;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
@@ -96,8 +93,8 @@ public class UserTaskBpmnModelExecutionContextTest {
 
     runtimeService.startProcessInstanceByKey(PROCESS_ID);
 
-    assertNull(ModelExecutionContextTaskListener.modelInstance);
-    assertNull(ModelExecutionContextTaskListener.userTask);
+    assertThat(ModelExecutionContextTaskListener.modelInstance).isNull();
+    assertThat(ModelExecutionContextTaskListener.userTask).isNull();
 
     String taskId = taskService.createTaskQuery().singleResult().getId();
     taskService.setAssignee(taskId, "demo");
@@ -113,14 +110,14 @@ public class UserTaskBpmnModelExecutionContextTest {
 
     runtimeService.startProcessInstanceByKey(PROCESS_ID);
 
-    assertNull(ModelExecutionContextTaskListener.modelInstance);
-    assertNull(ModelExecutionContextTaskListener.userTask);
+    assertThat(ModelExecutionContextTaskListener.modelInstance).isNull();
+    assertThat(ModelExecutionContextTaskListener.userTask).isNull();
 
     String taskId = taskService.createTaskQuery().singleResult().getId();
     taskService.setAssignee(taskId, "demo");
 
-    assertNull(ModelExecutionContextTaskListener.modelInstance);
-    assertNull(ModelExecutionContextTaskListener.userTask);
+    assertThat(ModelExecutionContextTaskListener.modelInstance).isNull();
+    assertThat(ModelExecutionContextTaskListener.userTask).isNull();
 
     taskService.complete(taskId);
 
@@ -135,14 +132,14 @@ public class UserTaskBpmnModelExecutionContextTest {
 
     runtimeService.startProcessInstanceByKey(PROCESS_ID);
 
-    assertNull(ModelExecutionContextTaskListener.modelInstance);
-    assertNull(ModelExecutionContextTaskListener.userTask);
+    assertThat(ModelExecutionContextTaskListener.modelInstance).isNull();
+    assertThat(ModelExecutionContextTaskListener.userTask).isNull();
 
     String taskId = taskService.createTaskQuery().singleResult().getId();
     taskService.setAssignee(taskId, "demo");
 
-    assertNotNull(ModelExecutionContextTaskListener.modelInstance);
-    assertNotNull(ModelExecutionContextTaskListener.userTask);
+    assertThat(ModelExecutionContextTaskListener.modelInstance).isNotNull();
+    assertThat(ModelExecutionContextTaskListener.userTask).isNotNull();
 
     taskService.complete(taskId);
 
@@ -155,8 +152,8 @@ public class UserTaskBpmnModelExecutionContextTest {
   public void shouldGetBpmnModelElementInstanceOnTimeout() {
     runtimeService.startProcessInstanceByKey(PROCESS_ID);
 
-    assertNull(ModelExecutionContextTaskListener.modelInstance);
-    assertNull(ModelExecutionContextTaskListener.userTask);
+    assertThat(ModelExecutionContextTaskListener.modelInstance).isNull();
+    assertThat(ModelExecutionContextTaskListener.userTask).isNull();
 
     ClockUtil.offset(TimeUnit.MINUTES.toMillis(70L));
     testRule.waitForJobExecutorToProcessAllJobs(5000L);
@@ -167,30 +164,30 @@ public class UserTaskBpmnModelExecutionContextTest {
 
   private void assertModelInstance() {
     BpmnModelInstance modelInstance = ModelExecutionContextTaskListener.modelInstance;
-    assertNotNull(modelInstance);
+    assertThat(modelInstance).isNotNull();
 
     Collection<ModelElementInstance> events = modelInstance.getModelElementsByType(modelInstance.getModel().getType(Event.class));
-    assertEquals(2, events.size());
+    assertThat(events).hasSize(2);
 
     Collection<ModelElementInstance> tasks = modelInstance.getModelElementsByType(modelInstance.getModel().getType(Task.class));
-    assertEquals(1, tasks.size());
+    assertThat(tasks).hasSize(1);
 
     Process process = (Process) modelInstance.getDefinitions().getRootElements().iterator().next();
-    assertEquals(PROCESS_ID, process.getId());
-    assertTrue(process.isExecutable());
+    assertThat(process.getId()).isEqualTo(PROCESS_ID);
+    assertThat(process.isExecutable()).isTrue();
   }
 
   private void assertUserTask(String eventName) {
     UserTask userTask = ModelExecutionContextTaskListener.userTask;
-    assertNotNull(userTask);
+    assertThat(userTask).isNotNull();
 
     ModelElementInstance taskListener = userTask.getExtensionElements().getUniqueChildElementByNameNs(OPERATON_NS, "taskListener");
-    assertEquals(eventName, taskListener.getAttributeValueNs(OPERATON_NS, "event"));
-    assertEquals(ModelExecutionContextTaskListener.class.getName(), taskListener.getAttributeValueNs(OPERATON_NS, "class"));
+    assertThat(taskListener.getAttributeValueNs(OPERATON_NS, "event")).isEqualTo(eventName);
+    assertThat(taskListener.getAttributeValueNs(OPERATON_NS, "class")).isEqualTo(ModelExecutionContextTaskListener.class.getName());
 
     BpmnModelInstance modelInstance = ModelExecutionContextTaskListener.modelInstance;
     Collection<ModelElementInstance> tasks = modelInstance.getModelElementsByType(modelInstance.getModel().getType(Task.class));
-    assertTrue(tasks.contains(userTask));
+    assertThat(tasks).contains(userTask);
   }
 
   private void deployProcess(String eventName) {

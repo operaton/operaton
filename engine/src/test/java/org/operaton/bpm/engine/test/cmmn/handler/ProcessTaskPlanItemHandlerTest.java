@@ -22,12 +22,7 @@ import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_IS_
 import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_MANUAL_ACTIVATION_RULE;
 import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_REPETITION_RULE;
 import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_REQUIRED_RULE;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
@@ -99,7 +94,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertEquals(name, activity.getName());
+    assertThat(activity.getName()).isEqualTo(name);
   }
 
   @Test
@@ -117,8 +112,8 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertNotEquals(processTaskName, activity.getName());
-    assertEquals(planItemName, activity.getName());
+    assertThat(activity.getName()).isNotEqualTo(processTaskName);
+    assertThat(activity.getName()).isEqualTo(planItemName);
   }
 
   @Test
@@ -130,10 +125,11 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     String activityType = (String) activity.getProperty(PROPERTY_ACTIVITY_TYPE);
-    assertEquals("processTask", activityType);
+    assertThat(activityType).isEqualTo("processTask");
   }
 
   @Test
+  @SuppressWarnings("deprecation")
   public void testProcessTaskDescription() {
     // given
     String description = "This is a processTask";
@@ -143,10 +139,11 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertEquals(description, activity.getProperty(PROPERTY_ACTIVITY_DESCRIPTION));
+    assertThat(activity.getProperty(PROPERTY_ACTIVITY_DESCRIPTION)).isEqualTo(description);
   }
 
   @Test
+  @SuppressWarnings("deprecation")
   public void testPlanItemDescription() {
     // given
     String description = "This is a planItem";
@@ -156,7 +153,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertEquals(description, activity.getProperty(PROPERTY_ACTIVITY_DESCRIPTION));
+    assertThat(activity.getProperty(PROPERTY_ACTIVITY_DESCRIPTION)).isEqualTo(description);
   }
 
   @Test
@@ -168,7 +165,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     CmmnActivityBehavior behavior = activity.getActivityBehavior();
-    assertTrue(behavior instanceof ProcessTaskActivityBehavior);
+    assertThat(behavior).isInstanceOf(ProcessTaskActivityBehavior.class);
   }
 
   @Test
@@ -180,7 +177,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Boolean isBlocking = (Boolean) activity.getProperty(PROPERTY_IS_BLOCKING);
-    assertTrue(isBlocking);
+    assertThat(isBlocking).isTrue();
   }
 
   @Test
@@ -194,7 +191,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Boolean isBlocking = (Boolean) activity.getProperty(PROPERTY_IS_BLOCKING);
-    assertFalse(isBlocking);
+    assertThat(isBlocking).isFalse();
   }
 
   @Test
@@ -205,7 +202,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertNull(activity.getParent());
+    assertThat(activity.getParent()).isNull();
   }
 
   @Test
@@ -219,8 +216,8 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity activity = handler.handleElement(planItem, context);
 
     // then
-    assertEquals(parent, activity.getParent());
-    assertTrue(parent.getActivities().contains(activity));
+    assertThat(activity.getParent()).isEqualTo(parent);
+    assertThat(parent.getActivities()).contains(activity);
   }
 
   @Test
@@ -234,7 +231,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     // there exists a callableElement
     ProcessTaskActivityBehavior behavior = (ProcessTaskActivityBehavior) activity.getActivityBehavior();
 
-    assertNotNull(behavior.getCallableElement());
+    assertThat(behavior.getCallableElement()).isNotNull();
   }
 
   @Test
@@ -251,11 +248,9 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CallableElement callableElement = behavior.getCallableElement();
 
     ParameterValueProvider processRefValueProvider = callableElement.getDefinitionKeyValueProvider();
-    assertNotNull(processRefValueProvider);
-
-    assertTrue(processRefValueProvider instanceof ConstantValueProvider);
+    assertThat(processRefValueProvider).isInstanceOf(ConstantValueProvider.class);
     ConstantValueProvider valueProvider = (ConstantValueProvider) processRefValueProvider;
-    assertEquals(processRef, valueProvider.getValue(null));
+    assertThat(valueProvider.getValue(null)).isEqualTo(processRef);
   }
 
   @Test
@@ -272,11 +267,9 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CallableElement callableElement = behavior.getCallableElement();
 
     ParameterValueProvider processRefValueProvider = callableElement.getDefinitionKeyValueProvider();
-    assertNotNull(processRefValueProvider);
-
-    assertTrue(processRefValueProvider instanceof ElValueProvider);
+    assertThat(processRefValueProvider).isInstanceOf(ElValueProvider.class);
     ElValueProvider valueProvider = (ElValueProvider) processRefValueProvider;
-    assertEquals(processRef, valueProvider.getExpression().getExpressionText());
+    assertThat(valueProvider.getExpression().getExpressionText()).isEqualTo(processRef);
   }
 
   @Test
@@ -293,8 +286,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CallableElement callableElement = behavior.getCallableElement();
 
     CallableElementBinding binding = callableElement.getBinding();
-    assertNotNull(binding);
-    assertEquals(processBinding, binding);
+    assertThat(binding).isNotNull().isEqualTo(processBinding);
   }
 
   @Test
@@ -311,10 +303,8 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CallableElement callableElement = behavior.getCallableElement();
 
     ParameterValueProvider processVersionValueProvider = callableElement.getVersionValueProvider();
-    assertNotNull(processVersionValueProvider);
-
-    assertTrue(processVersionValueProvider instanceof ConstantValueProvider);
-    assertEquals(processVersion, processVersionValueProvider.getValue(null));
+    assertThat(processVersionValueProvider).isInstanceOf(ConstantValueProvider.class);
+    assertThat(processVersionValueProvider.getValue(null)).isEqualTo(processVersion);
   }
 
   @Test
@@ -331,11 +321,9 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CallableElement callableElement = behavior.getCallableElement();
 
     ParameterValueProvider processVersionValueProvider = callableElement.getVersionValueProvider();
-    assertNotNull(processVersionValueProvider);
-
-    assertTrue(processVersionValueProvider instanceof ElValueProvider);
+    assertThat(processVersionValueProvider).isInstanceOf(ElValueProvider.class);
     ElValueProvider valueProvider = (ElValueProvider) processVersionValueProvider;
-    assertEquals(processVersion, valueProvider.getExpression().getExpressionText());
+    assertThat(valueProvider.getExpression().getExpressionText()).isEqualTo(processVersion);
   }
 
   @Test
@@ -354,10 +342,8 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CallableElement callableElement = behavior.getCallableElement();
 
     ParameterValueProvider businessKeyValueProvider = callableElement.getBusinessKeyValueProvider();
-    assertNotNull(businessKeyValueProvider);
-
-    assertTrue(businessKeyValueProvider instanceof ConstantValueProvider);
-    assertEquals(businessKey, businessKeyValueProvider.getValue(null));
+    assertThat(businessKeyValueProvider).isInstanceOf(ConstantValueProvider.class);
+    assertThat(businessKeyValueProvider.getValue(null)).isEqualTo(businessKey);
   }
 
   @Test
@@ -376,11 +362,9 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CallableElement callableElement = behavior.getCallableElement();
 
     ParameterValueProvider businessKeyValueProvider = callableElement.getBusinessKeyValueProvider();
-    assertNotNull(businessKeyValueProvider);
-
-    assertTrue(businessKeyValueProvider instanceof ElValueProvider);
+    assertThat(businessKeyValueProvider).isInstanceOf(ElValueProvider.class);
     ElValueProvider valueProvider = (ElValueProvider) businessKeyValueProvider;
-    assertEquals(businessKey, valueProvider.getExpression().getExpressionText());
+    assertThat(valueProvider.getExpression().getExpressionText()).isEqualTo(businessKey);
   }
 
   @Test
@@ -403,9 +387,10 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CallableElement callableElement = behavior.getCallableElement();
 
     List<CallableElementParameter> inputs = callableElement.getInputs();
-    assertNotNull(inputs);
-    assertFalse(inputs.isEmpty());
-    assertEquals(3, inputs.size());
+    assertThat(inputs)
+            .isNotNull()
+            .isNotEmpty()
+            .hasSize(3);
   }
 
   @Test
@@ -424,8 +409,8 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CallableElement callableElement = behavior.getCallableElement();
     CallableElementParameter parameter = callableElement.getInputs().get(0);
 
-    assertNotNull(parameter);
-    assertTrue(parameter.isAllVariables());
+    assertThat(parameter).isNotNull();
+    assertThat(parameter.isAllVariables()).isTrue();
   }
 
   @Test
@@ -444,14 +429,12 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CallableElement callableElement = behavior.getCallableElement();
     CallableElementParameter parameter = callableElement.getInputs().get(0);
 
-    assertNotNull(parameter);
-    assertFalse(parameter.isAllVariables());
+    assertThat(parameter).isNotNull();
+    assertThat(parameter.isAllVariables()).isFalse();
 
     ParameterValueProvider sourceValueProvider = parameter.getSourceValueProvider();
-    assertNotNull(sourceValueProvider);
-
-    assertTrue(sourceValueProvider instanceof ConstantValueProvider);
-    assertEquals(source, sourceValueProvider.getValue(null));
+    assertThat(sourceValueProvider).isInstanceOf(ConstantValueProvider.class);
+    assertThat(sourceValueProvider.getValue(null)).isEqualTo(source);
   }
 
   @Test
@@ -470,15 +453,13 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CallableElement callableElement = behavior.getCallableElement();
     CallableElementParameter parameter = callableElement.getInputs().get(0);
 
-    assertNotNull(parameter);
-    assertFalse(parameter.isAllVariables());
+    assertThat(parameter).isNotNull();
+    assertThat(parameter.isAllVariables()).isFalse();
 
     ParameterValueProvider sourceExpressionValueProvider = parameter.getSourceValueProvider();
-    assertNotNull(sourceExpressionValueProvider);
-
-    assertTrue(sourceExpressionValueProvider instanceof ElValueProvider);
+    assertThat(sourceExpressionValueProvider).isInstanceOf(ElValueProvider.class);
     ElValueProvider valueProvider = (ElValueProvider) sourceExpressionValueProvider;
-    assertEquals(source, valueProvider.getExpression().getExpressionText());
+    assertThat(valueProvider.getExpression().getExpressionText()).isEqualTo(source);
   }
 
   @Test
@@ -497,10 +478,10 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CallableElement callableElement = behavior.getCallableElement();
     CallableElementParameter parameter = callableElement.getInputs().get(0);
 
-    assertNotNull(parameter);
-    assertFalse(parameter.isAllVariables());
+    assertThat(parameter).isNotNull();
+    assertThat(parameter.isAllVariables()).isFalse();
 
-    assertEquals(target, parameter.getTarget());
+    assertThat(parameter.getTarget()).isEqualTo(target);
   }
 
   @Test
@@ -523,9 +504,10 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CallableElement callableElement = behavior.getCallableElement();
 
     List<CallableElementParameter> outputs = callableElement.getOutputs();
-    assertNotNull(outputs);
-    assertFalse(outputs.isEmpty());
-    assertEquals(3, outputs.size());
+    assertThat(outputs)
+            .isNotNull()
+            .isNotEmpty()
+            .hasSize(3);
   }
 
   @Test
@@ -544,8 +526,8 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CallableElement callableElement = behavior.getCallableElement();
     CallableElementParameter parameter = callableElement.getOutputs().get(0);
 
-    assertNotNull(parameter);
-    assertTrue(parameter.isAllVariables());
+    assertThat(parameter).isNotNull();
+    assertThat(parameter.isAllVariables()).isTrue();
   }
 
   @Test
@@ -564,14 +546,12 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CallableElement callableElement = behavior.getCallableElement();
     CallableElementParameter parameter = callableElement.getOutputs().get(0);
 
-    assertNotNull(parameter);
-    assertFalse(parameter.isAllVariables());
+    assertThat(parameter).isNotNull();
+    assertThat(parameter.isAllVariables()).isFalse();
 
     ParameterValueProvider sourceValueProvider = parameter.getSourceValueProvider();
-    assertNotNull(sourceValueProvider);
-
-    assertTrue(sourceValueProvider instanceof ConstantValueProvider);
-    assertEquals(source, sourceValueProvider.getValue(null));
+    assertThat(sourceValueProvider).isInstanceOf(ConstantValueProvider.class);
+    assertThat(sourceValueProvider.getValue(null)).isEqualTo(source);
   }
 
   @Test
@@ -590,15 +570,13 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CallableElement callableElement = behavior.getCallableElement();
     CallableElementParameter parameter = callableElement.getOutputs().get(0);
 
-    assertNotNull(parameter);
-    assertFalse(parameter.isAllVariables());
+    assertThat(parameter).isNotNull();
+    assertThat(parameter.isAllVariables()).isFalse();
 
     ParameterValueProvider sourceExpressionValueProvider = parameter.getSourceValueProvider();
-    assertNotNull(sourceExpressionValueProvider);
-
-    assertTrue(sourceExpressionValueProvider instanceof ElValueProvider);
+    assertThat(sourceExpressionValueProvider).isInstanceOf(ElValueProvider.class);
     ElValueProvider valueProvider = (ElValueProvider) sourceExpressionValueProvider;
-    assertEquals(source, valueProvider.getExpression().getExpressionText());
+    assertThat(valueProvider.getExpression().getExpressionText()).isEqualTo(source);
   }
 
   @Test
@@ -617,10 +595,10 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CallableElement callableElement = behavior.getCallableElement();
     CallableElementParameter parameter = callableElement.getOutputs().get(0);
 
-    assertNotNull(parameter);
-    assertFalse(parameter.isAllVariables());
+    assertThat(parameter).isNotNull();
+    assertThat(parameter.isAllVariables()).isFalse();
 
-    assertEquals(target, parameter.getTarget());
+    assertThat(parameter.getTarget()).isEqualTo(target);
   }
 
   @Test
@@ -649,12 +627,12 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity newActivity = handler.handleElement(planItem, context);
 
     // then
-    assertTrue(newActivity.getEntryCriteria().isEmpty());
+    assertThat(newActivity.getEntryCriteria()).isEmpty();
 
-    assertFalse(newActivity.getExitCriteria().isEmpty());
-    assertEquals(1, newActivity.getExitCriteria().size());
+    assertThat(newActivity.getExitCriteria()).isNotEmpty();
+    assertThat(newActivity.getExitCriteria()).hasSize(1);
 
-    assertEquals(sentryDeclaration, newActivity.getExitCriteria().get(0));
+    assertThat(newActivity.getExitCriteria().get(0)).isEqualTo(sentryDeclaration);
 
   }
 
@@ -694,13 +672,13 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity newActivity = handler.handleElement(planItem, context);
 
     // then
-    assertTrue(newActivity.getEntryCriteria().isEmpty());
+    assertThat(newActivity.getEntryCriteria()).isEmpty();
 
-    assertFalse(newActivity.getExitCriteria().isEmpty());
-    assertEquals(2, newActivity.getExitCriteria().size());
+    assertThat(newActivity.getExitCriteria()).isNotEmpty();
+    assertThat(newActivity.getExitCriteria()).hasSize(2);
 
-    assertTrue(newActivity.getExitCriteria().contains(firstSentryDeclaration));
-    assertTrue(newActivity.getExitCriteria().contains(secondSentryDeclaration));
+    assertThat(newActivity.getExitCriteria()).contains(firstSentryDeclaration);
+    assertThat(newActivity.getExitCriteria()).contains(secondSentryDeclaration);
 
   }
 
@@ -729,12 +707,12 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity newActivity = handler.handleElement(planItem, context);
 
     // then
-    assertTrue(newActivity.getExitCriteria().isEmpty());
+    assertThat(newActivity.getExitCriteria()).isEmpty();
 
-    assertFalse(newActivity.getEntryCriteria().isEmpty());
-    assertEquals(1, newActivity.getEntryCriteria().size());
+    assertThat(newActivity.getEntryCriteria()).isNotEmpty();
+    assertThat(newActivity.getEntryCriteria()).hasSize(1);
 
-    assertEquals(sentryDeclaration, newActivity.getEntryCriteria().get(0));
+    assertThat(newActivity.getEntryCriteria().get(0)).isEqualTo(sentryDeclaration);
 
   }
 
@@ -774,13 +752,13 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity newActivity = handler.handleElement(planItem, context);
 
     // then
-    assertTrue(newActivity.getExitCriteria().isEmpty());
+    assertThat(newActivity.getExitCriteria()).isEmpty();
 
-    assertFalse(newActivity.getEntryCriteria().isEmpty());
-    assertEquals(2, newActivity.getEntryCriteria().size());
+    assertThat(newActivity.getEntryCriteria()).isNotEmpty();
+    assertThat(newActivity.getEntryCriteria()).hasSize(2);
 
-    assertTrue(newActivity.getEntryCriteria().contains(firstSentryDeclaration));
-    assertTrue(newActivity.getEntryCriteria().contains(secondSentryDeclaration));
+    assertThat(newActivity.getEntryCriteria()).contains(firstSentryDeclaration);
+    assertThat(newActivity.getEntryCriteria()).contains(secondSentryDeclaration);
 
   }
 
@@ -811,13 +789,13 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     CmmnActivity newActivity = handler.handleElement(planItem, context);
 
     // then
-    assertFalse(newActivity.getExitCriteria().isEmpty());
-    assertEquals(1, newActivity.getExitCriteria().size());
-    assertEquals(sentryDeclaration, newActivity.getExitCriteria().get(0));
+    assertThat(newActivity.getExitCriteria()).isNotEmpty();
+    assertThat(newActivity.getExitCriteria()).hasSize(1);
+    assertThat(newActivity.getExitCriteria().get(0)).isEqualTo(sentryDeclaration);
 
-    assertFalse(newActivity.getEntryCriteria().isEmpty());
-    assertEquals(1, newActivity.getEntryCriteria().size());
-    assertEquals(sentryDeclaration, newActivity.getEntryCriteria().get(0));
+    assertThat(newActivity.getEntryCriteria()).isNotEmpty();
+    assertThat(newActivity.getEntryCriteria()).hasSize(1);
+    assertThat(newActivity.getEntryCriteria().get(0)).isEqualTo(sentryDeclaration);
 
   }
 
@@ -836,8 +814,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_MANUAL_ACTIVATION_RULE);
-    assertNotNull(rule);
-    assertTrue(rule instanceof CaseControlRule);
+    assertThat(rule).isInstanceOf(CaseControlRule.class);
   }
 
   @Test
@@ -855,8 +832,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_MANUAL_ACTIVATION_RULE);
-    assertNotNull(rule);
-    assertTrue(rule instanceof CaseControlRule);
+    assertThat(rule).isInstanceOf(CaseControlRule.class);
   }
 
   @Test
@@ -874,8 +850,7 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_REQUIRED_RULE);
-    assertNotNull(rule);
-    assertTrue(rule instanceof CaseControlRule);
+    assertThat(rule).isInstanceOf(CaseControlRule.class);
   }
 
   @Test
@@ -893,15 +868,14 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_REQUIRED_RULE);
-    assertNotNull(rule);
-    assertTrue(rule instanceof CaseControlRule);
+    assertThat(rule).isInstanceOf(CaseControlRule.class);
   }
 
   @Test
   public void testRepetitionRule() {
     // given
     ItemControl itemControl = createElement(planItem, "ItemControl_1", ItemControl.class);
-    RepetitionRule repetitionRule = createElement(itemControl, "RepititionRule_1", RepetitionRule.class);
+    RepetitionRule repetitionRule = createElement(itemControl, "RepetitionRule_1", RepetitionRule.class);
     ConditionExpression expression = createElement(repetitionRule, "Expression_1", ConditionExpression.class);
     expression.setText("${true}");
 
@@ -912,15 +886,14 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_REPETITION_RULE);
-    assertNotNull(rule);
-    assertTrue(rule instanceof CaseControlRule);
+    assertThat(rule).isInstanceOf(CaseControlRule.class);
   }
 
   @Test
   public void testRepetitionRuleByDefaultPlanItemControl() {
     // given
     PlanItemControl defaultControl = createElement(processTask, "DefaultControl_1", DefaultControl.class);
-    RepetitionRule repetitionRule = createElement(defaultControl, "RepititionRule_1", RepetitionRule.class);
+    RepetitionRule repetitionRule = createElement(defaultControl, "RepetitionRule_1", RepetitionRule.class);
     ConditionExpression expression = createElement(repetitionRule, "Expression_1", ConditionExpression.class);
     expression.setText("${true}");
 
@@ -931,15 +904,14 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     Object rule = newActivity.getProperty(PROPERTY_REPETITION_RULE);
-    assertNotNull(rule);
-    assertTrue(rule instanceof CaseControlRule);
+    assertThat(rule).isInstanceOf(CaseControlRule.class);
   }
 
   @Test
   public void testRepetitionRuleStandardEvents() {
     // given
     ItemControl itemControl = createElement(planItem, "ItemControl_1", ItemControl.class);
-    RepetitionRule repetitionRule = createElement(itemControl, "RepititionRule_1", RepetitionRule.class);
+    RepetitionRule repetitionRule = createElement(itemControl, "RepetitionRule_1", RepetitionRule.class);
     ConditionExpression expression = createElement(repetitionRule, "Expression_1", ConditionExpression.class);
     expression.setText("${true}");
 
@@ -950,17 +922,18 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     List<String> events = newActivity.getProperties().get(CmmnProperties.REPEAT_ON_STANDARD_EVENTS);
-    assertNotNull(events);
-    assertEquals(2, events.size());
-    assertTrue(events.contains(CaseExecutionListener.COMPLETE));
-    assertTrue(events.contains(CaseExecutionListener.TERMINATE));
+    assertThat(events)
+            .isNotNull()
+            .hasSize(2)
+            .contains(CaseExecutionListener.COMPLETE)
+            .contains(CaseExecutionListener.TERMINATE);
   }
 
   @Test
   public void testRepetitionRuleStandardEventsByDefaultPlanItemControl() {
     // given
     PlanItemControl defaultControl = createElement(processTask, "DefaultControl_1", DefaultControl.class);
-    RepetitionRule repetitionRule = createElement(defaultControl, "RepititionRule_1", RepetitionRule.class);
+    RepetitionRule repetitionRule = createElement(defaultControl, "RepetitionRule_1", RepetitionRule.class);
     ConditionExpression expression = createElement(repetitionRule, "Expression_1", ConditionExpression.class);
     expression.setText("${true}");
 
@@ -971,17 +944,18 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     List<String> events = newActivity.getProperties().get(CmmnProperties.REPEAT_ON_STANDARD_EVENTS);
-    assertNotNull(events);
-    assertEquals(2, events.size());
-    assertTrue(events.contains(CaseExecutionListener.COMPLETE));
-    assertTrue(events.contains(CaseExecutionListener.TERMINATE));
+    assertThat(events)
+            .isNotNull()
+            .hasSize(2)
+            .contains(CaseExecutionListener.COMPLETE)
+            .contains(CaseExecutionListener.TERMINATE);
   }
 
   @Test
   public void testRepetitionRuleCustomStandardEvents() {
     // given
     ItemControl itemControl = createElement(planItem, "ItemControl_1", ItemControl.class);
-    RepetitionRule repetitionRule = createElement(itemControl, "RepititionRule_1", RepetitionRule.class);
+    RepetitionRule repetitionRule = createElement(itemControl, "RepetitionRule_1", RepetitionRule.class);
     ConditionExpression expression = createElement(repetitionRule, "Expression_1", ConditionExpression.class);
     expression.setText("${true}");
 
@@ -994,16 +968,17 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     List<String> events = newActivity.getProperties().get(CmmnProperties.REPEAT_ON_STANDARD_EVENTS);
-    assertNotNull(events);
-    assertEquals(1, events.size());
-    assertTrue(events.contains(CaseExecutionListener.DISABLE));
+    assertThat(events)
+            .isNotNull()
+            .hasSize(1)
+            .contains(CaseExecutionListener.DISABLE);
   }
 
   @Test
   public void testRepetitionRuleCustomStandardEventsByDefaultPlanItemControl() {
     // given
     PlanItemControl defaultControl = createElement(processTask, "DefaultControl_1", DefaultControl.class);
-    RepetitionRule repetitionRule = createElement(defaultControl, "RepititionRule_1", RepetitionRule.class);
+    RepetitionRule repetitionRule = createElement(defaultControl, "RepetitionRule_1", RepetitionRule.class);
     ConditionExpression expression = createElement(repetitionRule, "Expression_1", ConditionExpression.class);
     expression.setText("${true}");
 
@@ -1016,9 +991,10 @@ public class ProcessTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
 
     // then
     List<String> events = newActivity.getProperties().get(CmmnProperties.REPEAT_ON_STANDARD_EVENTS);
-    assertNotNull(events);
-    assertEquals(1, events.size());
-    assertTrue(events.contains(CaseExecutionListener.DISABLE));
+    assertThat(events)
+            .isNotNull()
+            .hasSize(1)
+            .contains(CaseExecutionListener.DISABLE);
   }
 
 }

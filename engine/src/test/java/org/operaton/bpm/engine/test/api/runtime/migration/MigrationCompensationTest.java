@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
@@ -39,7 +41,6 @@ import org.operaton.bpm.engine.test.api.runtime.migration.models.CompensationMod
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
@@ -75,7 +76,7 @@ public class MigrationCompensationTest {
     // when
     try {
       testHelper.migrateProcessInstance(migrationPlan, processInstance);
-      Assert.fail("should fail");
+      fail("should fail");
     }
     catch (MigratingProcessInstanceValidationException e) {
       // then
@@ -105,7 +106,7 @@ public class MigrationCompensationTest {
     // when
     try {
       testHelper.migrateProcessInstance(migrationPlan, processInstance);
-      Assert.fail("should fail");
+      fail("should fail");
     }
     catch (MigratingProcessInstanceValidationException e) {
       // then
@@ -135,7 +136,7 @@ public class MigrationCompensationTest {
     // when
     try {
       testHelper.migrateProcessInstance(migrationPlan, processInstance);
-      Assert.fail("should fail");
+      fail("should fail");
     }
     catch (MigratingProcessInstanceValidationException e) {
       // then
@@ -166,7 +167,7 @@ public class MigrationCompensationTest {
     // when
     try {
       testHelper.migrateProcessInstance(migrationPlan, processInstance);
-      Assert.fail("should fail");
+      fail("should fail");
     }
     catch (MigratingProcessInstanceValidationException e) {
       // then
@@ -196,7 +197,7 @@ public class MigrationCompensationTest {
     // when
     try {
       testHelper.migrateProcessInstance(migrationPlan, processInstance);
-      Assert.fail("should fail");
+      fail("should fail");
     }
     catch (MigratingProcessInstanceValidationException e) {
       // then
@@ -226,7 +227,7 @@ public class MigrationCompensationTest {
     // when
     try {
       testHelper.migrateProcessInstance(migrationPlan, processInstance);
-      Assert.fail("should fail");
+      fail("should fail");
     }
     catch (MigratingProcessInstanceValidationException e) {
       // then
@@ -257,7 +258,7 @@ public class MigrationCompensationTest {
     testHelper.completeTask("userTask1");
 
     // then
-    Assert.assertEquals(0, testHelper.snapshotAfterMigration.getEventSubscriptions().size());
+    assertThat(testHelper.snapshotAfterMigration.getEventSubscriptions()).isEmpty();
 
     testHelper.completeTask("userTask2");
     testHelper.assertProcessEnded(processInstance.getId());
@@ -282,7 +283,7 @@ public class MigrationCompensationTest {
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
     // then
-    Assert.assertEquals(0, testHelper.snapshotAfterMigration.getEventSubscriptions().size());
+    assertThat(testHelper.snapshotAfterMigration.getEventSubscriptions()).isEmpty();
 
     testHelper.completeTask("userTask2");
     testHelper.assertProcessEnded(processInstance.getId());
@@ -304,7 +305,7 @@ public class MigrationCompensationTest {
 
     // then
     testHelper.completeTask("userTask1");
-    Assert.assertEquals(1, rule.getRuntimeService().createEventSubscriptionQuery().count());
+    assertThat(rule.getRuntimeService().createEventSubscriptionQuery().count()).isEqualTo(1);
 
     testHelper.completeTask("userTask2");
     testHelper.completeTask("compensationHandler");
@@ -824,11 +825,11 @@ public class MigrationCompensationTest {
         .createTaskQuery()
         .taskDefinitionKey("compensationHandler")
         .list();
-    Assert.assertEquals(2, compensationTasks.size());
+    assertThat(compensationTasks).hasSize(2);
 
     Object value1 = rule.getTaskService().getVariable(compensationTasks.get(0).getId(), "var");
     Object value2 = rule.getTaskService().getVariable(compensationTasks.get(1).getId(), "var");
-    Assert.assertNotEquals(value1, value2);
+    assertThat(value2).isNotEqualTo(value1);
   }
 
   @Test
@@ -850,7 +851,7 @@ public class MigrationCompensationTest {
     // when
     try {
       testHelper.migrateProcessInstance(migrationPlan, processInstance);
-      Assert.fail("should fail");
+      fail("should fail");
     }
     catch (MigratingProcessInstanceValidationException e) {
       // then
@@ -883,7 +884,7 @@ public class MigrationCompensationTest {
     // when
     try {
       testHelper.migrateProcessInstance(migrationPlan, processInstance);
-      Assert.fail("should fail");
+      fail("should fail");
     }
     catch (MigratingProcessInstanceValidationException e) {
       // then
@@ -908,7 +909,7 @@ public class MigrationCompensationTest {
     try {
       // when
       runtimeService.build();
-      Assert.fail("exception expected");
+      fail("exception expected");
     } catch (MigrationPlanValidationException e) {
       // then
       assertThat(e.getValidationReport())
@@ -939,7 +940,7 @@ public class MigrationCompensationTest {
     try {
       // when
       runtimeService.build();
-      Assert.fail("exception expected");
+      fail("exception expected");
     } catch (MigrationPlanValidationException e) {
       // then
       assertThat(e.getValidationReport())
@@ -962,7 +963,7 @@ public class MigrationCompensationTest {
     try {
       // when
       runtimeService.build();
-      Assert.fail("exception expected");
+      fail("exception expected");
     } catch (MigrationPlanValidationException e) {
       // then
       assertThat(e.getValidationReport())
@@ -987,7 +988,7 @@ public class MigrationCompensationTest {
     try {
       // when
       runtimeService.build();
-      Assert.fail("exception expected");
+      fail("exception expected");
     } catch (MigrationPlanValidationException e) {
       // then
       assertThat(e.getValidationReport())

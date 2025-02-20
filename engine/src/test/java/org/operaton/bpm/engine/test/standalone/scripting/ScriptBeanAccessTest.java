@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.standalone.scripting;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -50,7 +50,7 @@ public class ScriptBeanAccessTest {
   @Test
   public void testConfigurationBeanAccess() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("ScriptBeanAccess");
-    assertEquals("myValue", runtimeService.getVariable(pi.getId(), "myVariable"));
+    assertThat(runtimeService.getVariable(pi.getId(), "myVariable")).isEqualTo("myValue");
   }
 
 }

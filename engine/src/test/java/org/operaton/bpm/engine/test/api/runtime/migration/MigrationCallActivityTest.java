@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
@@ -29,7 +30,6 @@ import org.operaton.bpm.engine.test.api.runtime.migration.models.CallActivityMod
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -546,7 +546,7 @@ public class MigrationCallActivityTest {
       .createProcessInstanceQuery()
       .processDefinitionKey("oneTaskProcess")
       .singleResult();
-    Assert.assertNotNull(calledInstance);
+    assertThat(calledInstance).isNotNull();
 
     // and it is possible to complete the called process instance
     testHelper.completeTask("userTask");

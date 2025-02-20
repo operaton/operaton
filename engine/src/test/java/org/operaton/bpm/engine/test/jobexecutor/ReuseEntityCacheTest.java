@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.ArrayList;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
@@ -32,7 +34,6 @@ import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -130,7 +131,7 @@ public class ReuseEntityCacheTest {
     acquisitionThreadControl.waitForSync();
 
     // then the job has been successfully executed
-    Assert.assertEquals(0, engineRule.getManagementService().createJobQuery().count());
+    assertThat(engineRule.getManagementService().createJobQuery().count()).isZero();
   }
 
   protected ProcessEngineConfigurationImpl getEngineConfig() {

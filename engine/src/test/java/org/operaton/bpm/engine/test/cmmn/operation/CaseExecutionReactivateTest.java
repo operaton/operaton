@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.operation;
 
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.impl.cmmn.behavior.StageActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
@@ -72,10 +72,10 @@ public class CaseExecutionReactivateTest {
     caseInstance.reactivate();
 
     // then
-    assertTrue(caseInstance.isActive());
-    assertTrue(stageX.isActive());
-    assertTrue(taskA.isEnabled());
-    assertTrue(taskB.isEnabled());
+    assertThat(caseInstance.isActive()).isTrue();
+    assertThat(stageX.isActive()).isTrue();
+    assertThat(taskA.isEnabled()).isTrue();
+    assertThat(taskB.isEnabled()).isTrue();
   }
 
 }

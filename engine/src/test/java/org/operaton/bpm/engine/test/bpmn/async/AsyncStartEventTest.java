@@ -20,10 +20,7 @@ import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertTha
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +33,6 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.ExecutionTree;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Assert;
 import org.junit.Test;
 
 public class AsyncStartEventTest extends PluggableProcessEngineTest {
@@ -47,16 +43,16 @@ public class AsyncStartEventTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("asyncStartEvent");
 
     Task task = taskService.createTaskQuery().singleResult();
-    Assert.assertNull("The user task should not have been reached yet", task);
+    assertThat(task).as("The user task should not have been reached yet").isNull();
 
-    Assert.assertEquals(1, runtimeService.createExecutionQuery().activityId("startEvent").count());
+    assertThat(runtimeService.createExecutionQuery().activityId("startEvent").count()).isEqualTo(1);
 
     testRule.executeAvailableJobs();
     task = taskService.createTaskQuery().singleResult();
 
-    Assert.assertEquals(0, runtimeService.createExecutionQuery().activityId("startEvent").count());
+    assertThat(runtimeService.createExecutionQuery().activityId("startEvent").count()).isZero();
 
-    Assert.assertNotNull("The user task should have been reached", task);
+    assertThat(task).as("The user task should have been reached").isNotNull();
   }
 
   @Deployment
@@ -64,11 +60,11 @@ public class AsyncStartEventTest extends PluggableProcessEngineTest {
   public void testAsyncStartEventListeners() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("asyncStartEvent");
 
-    Assert.assertNull(runtimeService.getVariable(instance.getId(), "listener"));
+    assertThat(runtimeService.getVariable(instance.getId(), "listener")).isNull();
 
     testRule.executeAvailableJobs();
 
-    Assert.assertNotNull(runtimeService.getVariable(instance.getId(), "listener"));
+    assertThat(runtimeService.getVariable(instance.getId(), "listener")).isNotNull();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/async/AsyncStartEventTest.testAsyncStartEvent.bpmn20.xml")
@@ -90,18 +86,18 @@ public class AsyncStartEventTest extends PluggableProcessEngineTest {
     variables.put("foo", "bar");
     runtimeService.correlateMessage("newInvoiceMessage", new HashMap<>(), variables);
 
-    assertEquals(1, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
 
     testRule.executeAvailableJobs();
 
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
-    assertEquals("taskAfterMessageStartEvent", task.getTaskDefinitionKey());
+    assertThat(task).isNotNull();
+    assertThat(task.getTaskDefinitionKey()).isEqualTo("taskAfterMessageStartEvent");
 
     taskService.complete(task.getId());
 
     // assert process instance is ended
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
   }
 
@@ -118,9 +114,9 @@ public class AsyncStartEventTest extends PluggableProcessEngineTest {
         .processDefinitionKey("sub")
         .singleResult();
 
-    assertTrue(pi instanceof ExecutionEntity);
+    assertThat(pi).isInstanceOf(ExecutionEntity.class);
 
-    assertEquals("theSubStart", ((ExecutionEntity)pi).getActivityId());
+    assertThat(((ExecutionEntity) pi).getActivityId()).isEqualTo("theSubStart");
 
   }
 
@@ -130,15 +126,15 @@ public class AsyncStartEventTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("process");
 
     Task task = taskService.createTaskQuery().singleResult();
-    assertNull("The subprocess user task should not have been reached yet", task);
+    assertThat(task).as("The subprocess user task should not have been reached yet").isNull();
 
-    assertEquals(1, runtimeService.createExecutionQuery().activityId("StartEvent_2").count());
+    assertThat(runtimeService.createExecutionQuery().activityId("StartEvent_2").count()).isEqualTo(1);
 
     testRule.executeAvailableJobs();
     task = taskService.createTaskQuery().singleResult();
 
-    assertEquals(0, runtimeService.createExecutionQuery().activityId("StartEvent_2").count());
-    assertNotNull("The subprocess user task should have been reached", task);
+    assertThat(runtimeService.createExecutionQuery().activityId("StartEvent_2").count()).isZero();
+    assertThat(task).as("The subprocess user task should have been reached").isNotNull();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/async/AsyncStartEventTest.testAsyncSubProcessStartEvent.bpmn")
@@ -174,8 +170,8 @@ public class AsyncStartEventTest extends PluggableProcessEngineTest {
     // the user task after the async continuation is reached successfully
     Task task = taskService.createTaskQuery().singleResult();
 
-    assertEquals(0, runtimeService.createExecutionQuery().activityId("StartEvent_1").count());
-    assertNotNull("The user task should have been reached", task);
+    assertThat(runtimeService.createExecutionQuery().activityId("StartEvent_1").count()).isZero();
+    assertThat(task).as("The user task should have been reached").isNotNull();
 
     // and the event sub process is still active
     String processDefinitionId = repositoryService.createProcessDefinitionQuery().singleResult().getId();

@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.identity;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.tuple;
+import static org.assertj.core.api.Assertions.*;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GLOBAL;
 import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
@@ -33,12 +32,6 @@ import static org.operaton.bpm.engine.authorization.Resources.TENANT;
 import static org.operaton.bpm.engine.authorization.Resources.TENANT_MEMBERSHIP;
 import static org.operaton.bpm.engine.authorization.Resources.USER;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestUtil.assertExceptionInfo;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -62,7 +55,6 @@ import org.operaton.bpm.engine.impl.persistence.entity.UserEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -123,9 +115,9 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
       fail("exception expected");
 
     } catch (AuthorizationException e) {
-      assertEquals(1, e.getMissingAuthorizations().size());
+      assertThat(e.getMissingAuthorizations()).hasSize(1);
       MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertEquals(USER_ID, e.getUserId());
+      assertThat(e.getUserId()).isEqualTo(USER_ID);
       assertExceptionInfo(CREATE.getName(), USER.resourceName(), null, info);
     }
   }
@@ -154,9 +146,9 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
       fail("exception expected");
 
     } catch (AuthorizationException e) {
-      assertEquals(1, e.getMissingAuthorizations().size());
+      assertThat(e.getMissingAuthorizations()).hasSize(1);
       MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertEquals(USER_ID, e.getUserId());
+      assertThat(e.getUserId()).isEqualTo(USER_ID);
       assertExceptionInfo(DELETE.getName(), USER.resourceName(), "jonny1", info);
     }
   }
@@ -225,9 +217,9 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
       identityService.saveUser(jonny1);
       fail("exception expected");
     } catch (AuthorizationException e) {
-      assertEquals(1, e.getMissingAuthorizations().size());
+      assertThat(e.getMissingAuthorizations()).hasSize(1);
       MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertEquals(USER_ID, e.getUserId());
+      assertThat(e.getUserId()).isEqualTo(USER_ID);
       assertExceptionInfo(UPDATE.getName(), USER.resourceName(), "jonny1", info);
     }
 
@@ -250,9 +242,9 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
     // assume
     int maxNumOfAttempts = 10;
     UserEntity lockedUser = (UserEntity) identityService.createUserQuery().userId(jonny.getId()).singleResult();
-    assertNotNull(lockedUser);
-    assertNotNull(lockedUser.getLockExpirationTime());
-    assertEquals(maxNumOfAttempts, lockedUser.getAttempts());
+    assertThat(lockedUser).isNotNull();
+    assertThat(lockedUser.getLockExpirationTime()).isNotNull();
+    assertThat(lockedUser.getAttempts()).isEqualTo(maxNumOfAttempts);
 
 
     // create global auth
@@ -271,9 +263,9 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
 
     // then
     lockedUser = (UserEntity) identityService.createUserQuery().userId(jonny.getId()).singleResult();
-    assertNotNull(lockedUser);
-    assertNull(lockedUser.getLockExpirationTime());
-    assertEquals(0, lockedUser.getAttempts());
+    assertThat(lockedUser).isNotNull();
+    assertThat(lockedUser.getLockExpirationTime()).isNull();
+    assertThat(lockedUser.getAttempts()).isZero();
   }
 
   @Test
@@ -289,9 +281,9 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
     // assume
     int maxNumOfAttempts = 10;
     UserEntity lockedUser = (UserEntity) identityService.createUserQuery().userId(jonny.getId()).singleResult();
-    assertNotNull(lockedUser);
-    assertNotNull(lockedUser.getLockExpirationTime());
-    assertEquals(maxNumOfAttempts, lockedUser.getAttempts());
+    assertThat(lockedUser).isNotNull();
+    assertThat(lockedUser.getLockExpirationTime()).isNotNull();
+    assertThat(lockedUser.getAttempts()).isEqualTo(maxNumOfAttempts);
 
     processEngineConfiguration.setAuthorizationEnabled(true);
     identityService.setAuthentication("admin", null, null);
@@ -302,7 +294,7 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
       identityService.unlockUser(lockedUserId);
       fail("expected exception");
     } catch (AuthorizationException e) {
-      assertTrue(e.getMessage().contains("ENGINE-03029 Required admin authenticated group or user."));
+      assertThat(e.getMessage()).contains("ENGINE-03029 Required admin authenticated group or user.");
     }
 
     // return to god-mode
@@ -311,9 +303,9 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
     // then
     int maxNumOfLoginAttempts = 10;
     lockedUser = (UserEntity) identityService.createUserQuery().userId(jonny.getId()).singleResult();
-    assertNotNull(lockedUser);
-    assertNotNull(lockedUser.getLockExpirationTime());
-    assertEquals(maxNumOfLoginAttempts, lockedUser.getAttempts());
+    assertThat(lockedUser).isNotNull();
+    assertThat(lockedUser.getLockExpirationTime()).isNotNull();
+    assertThat(lockedUser.getAttempts()).isEqualTo(maxNumOfLoginAttempts);
   }
 
   @Test
@@ -359,9 +351,9 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
       fail("exception expected");
 
     } catch (AuthorizationException e) {
-      assertEquals(1, e.getMissingAuthorizations().size());
+      assertThat(e.getMissingAuthorizations()).hasSize(1);
       MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertEquals(USER_ID, e.getUserId());
+      assertThat(e.getUserId()).isEqualTo(USER_ID);
       assertExceptionInfo(CREATE.getName(), GROUP.resourceName(), null, info);
     }
   }
@@ -390,9 +382,9 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
       fail("exception expected");
 
     } catch (AuthorizationException e) {
-      assertEquals(1, e.getMissingAuthorizations().size());
+      assertThat(e.getMissingAuthorizations()).hasSize(1);
       MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertEquals(USER_ID, e.getUserId());
+      assertThat(e.getUserId()).isEqualTo(USER_ID);
       assertExceptionInfo(DELETE.getName(), GROUP.resourceName(), "group1", info);
     }
 
@@ -464,9 +456,9 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
       fail("exception expected");
 
     } catch (AuthorizationException e) {
-      assertEquals(1, e.getMissingAuthorizations().size());
+      assertThat(e.getMissingAuthorizations()).hasSize(1);
       MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertEquals(USER_ID, e.getUserId());
+      assertThat(e.getUserId()).isEqualTo(USER_ID);
       assertExceptionInfo(UPDATE.getName(), GROUP.resourceName(), "group1", info);
     }
 
@@ -519,9 +511,9 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
       fail("exception expected");
 
     } catch (AuthorizationException e) {
-      assertEquals(1, e.getMissingAuthorizations().size());
+      assertThat(e.getMissingAuthorizations()).hasSize(1);
       MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertEquals(USER_ID, e.getUserId());
+      assertThat(e.getUserId()).isEqualTo(USER_ID);
       assertExceptionInfo(CREATE.getName(), TENANT.resourceName(), null, info);
     }
   }
@@ -550,9 +542,9 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
       fail("exception expected");
 
     } catch (AuthorizationException e) {
-      assertEquals(1, e.getMissingAuthorizations().size());
+      assertThat(e.getMissingAuthorizations()).hasSize(1);
       MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertEquals(USER_ID, e.getUserId());
+      assertThat(e.getUserId()).isEqualTo(USER_ID);
       assertExceptionInfo(DELETE.getName(), TENANT.resourceName(), "tenant", info);
     }
   }
@@ -585,9 +577,9 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
 
       fail("exception expected");
     } catch (AuthorizationException e) {
-      assertEquals(1, e.getMissingAuthorizations().size());
+      assertThat(e.getMissingAuthorizations()).hasSize(1);
       MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertEquals(USER_ID, e.getUserId());
+      assertThat(e.getUserId()).isEqualTo(USER_ID);
       assertExceptionInfo(UPDATE.getName(), TENANT.resourceName(), "tenant", info);
     }
 
@@ -621,9 +613,9 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
       fail("exception expected");
 
     } catch (AuthorizationException e) {
-      assertEquals(1, e.getMissingAuthorizations().size());
+      assertThat(e.getMissingAuthorizations()).hasSize(1);
       MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertEquals(USER_ID, e.getUserId());
+      assertThat(e.getUserId()).isEqualTo(USER_ID);
       assertExceptionInfo(CREATE.getName(), GROUP_MEMBERSHIP.resourceName(), "group1", info);
     }
   }
@@ -653,9 +645,9 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
       fail("exception expected");
 
     } catch (AuthorizationException e) {
-      assertEquals(1, e.getMissingAuthorizations().size());
+      assertThat(e.getMissingAuthorizations()).hasSize(1);
       MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertEquals(USER_ID, e.getUserId());
+      assertThat(e.getUserId()).isEqualTo(USER_ID);
       assertExceptionInfo(DELETE.getName(), GROUP_MEMBERSHIP.resourceName(), "group1", info);
     }
   }
@@ -748,9 +740,9 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
       fail("exception expected");
 
     } catch (AuthorizationException e) {
-      assertEquals(1, e.getMissingAuthorizations().size());
+      assertThat(e.getMissingAuthorizations()).hasSize(1);
       MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertEquals(USER_ID, e.getUserId());
+      assertThat(e.getUserId()).isEqualTo(USER_ID);
       assertExceptionInfo(CREATE.getName(), TENANT_MEMBERSHIP.resourceName(), "tenant1", info);
     }
   }
@@ -780,9 +772,9 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
       fail("exception expected");
 
     } catch (AuthorizationException e) {
-      assertEquals(1, e.getMissingAuthorizations().size());
+      assertThat(e.getMissingAuthorizations()).hasSize(1);
       MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertEquals(USER_ID, e.getUserId());
+      assertThat(e.getUserId()).isEqualTo(USER_ID);
       assertExceptionInfo(CREATE.getName(), TENANT_MEMBERSHIP.resourceName(), "tenant1", info);
     }
   }
@@ -812,15 +804,15 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
       fail("exception expected");
 
     } catch (AuthorizationException e) {
-      assertEquals(1, e.getMissingAuthorizations().size());
+      assertThat(e.getMissingAuthorizations()).hasSize(1);
       MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertEquals(USER_ID, e.getUserId());
+      assertThat(e.getUserId()).isEqualTo(USER_ID);
       assertExceptionInfo(DELETE.getName(), TENANT_MEMBERSHIP.resourceName(), "tenant1", info);
     }
   }
 
   @Test
-  public void testTenanGroupMembershipDeleteAuthorizations() {
+  public void testTenantGroupMembershipDeleteAuthorizations() {
 
     Group group1 = identityService.newGroup("group1");
     identityService.saveGroup(group1);
@@ -844,9 +836,9 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
       fail("exception expected");
 
     } catch (AuthorizationException e) {
-      assertEquals(1, e.getMissingAuthorizations().size());
+      assertThat(e.getMissingAuthorizations()).hasSize(1);
       MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertEquals(USER_ID, e.getUserId());
+      assertThat(e.getUserId()).isEqualTo(USER_ID);
       assertExceptionInfo(DELETE.getName(), TENANT_MEMBERSHIP.resourceName(), "tenant1", info);
     }
   }
@@ -872,8 +864,8 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
     processEngineConfiguration.setAuthorizationEnabled(true);
 
     // we cannot fetch the user
-    assertNull(identityService.createUserQuery().singleResult());
-    assertEquals(0, identityService.createUserQuery().count());
+    assertThat(identityService.createUserQuery().singleResult()).isNull();
+    assertThat(identityService.createUserQuery().count()).isZero();
 
     processEngineConfiguration.setAuthorizationEnabled(false);
 
@@ -888,8 +880,8 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
     processEngineConfiguration.setAuthorizationEnabled(true);
 
     // now we can fetch the user
-    assertNotNull(identityService.createUserQuery().singleResult());
-    assertEquals(1, identityService.createUserQuery().count());
+    assertThat(identityService.createUserQuery().singleResult()).isNotNull();
+    assertThat(identityService.createUserQuery().count()).isEqualTo(1);
 
     // change the base permission:
     processEngineConfiguration.setAuthorizationEnabled(false);
@@ -899,8 +891,8 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
     processEngineConfiguration.setAuthorizationEnabled(true);
 
     // we can still fetch the user
-    assertNotNull(identityService.createUserQuery().singleResult());
-    assertEquals(1, identityService.createUserQuery().count());
+    assertThat(identityService.createUserQuery().singleResult()).isNotNull();
+    assertThat(identityService.createUserQuery().count()).isEqualTo(1);
 
 
     // revoke permission for jonny2:
@@ -918,8 +910,8 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
     processEngineConfiguration.setAuthorizationEnabled(true);
 
     // now we cannot fetch the user
-    assertNull(identityService.createUserQuery().singleResult());
-    assertEquals(0, identityService.createUserQuery().count());
+    assertThat(identityService.createUserQuery().singleResult()).isNull();
+    assertThat(identityService.createUserQuery().count()).isZero();
 
 
     // delete our perms
@@ -929,8 +921,8 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
     processEngineConfiguration.setAuthorizationEnabled(true);
 
     // now the base permission applies and grants us read access
-    assertNotNull(identityService.createUserQuery().singleResult());
-    assertEquals(1, identityService.createUserQuery().count());
+    assertThat(identityService.createUserQuery().singleResult()).isNotNull();
+    assertThat(identityService.createUserQuery().count()).isEqualTo(1);
 
   }
 
@@ -1071,29 +1063,29 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
     processEngineConfiguration.setAuthorizationEnabled(true);
 
     List<User> salesUser = identityService.createUserQuery().memberOfGroup("sales").list();
-    assertEquals(2, salesUser.size());
+    assertThat(salesUser).hasSize(2);
 
     for (User user : salesUser) {
       if (!user.getId().equals("demo") && !user.getId().equals("john")) {
-        Assert.fail("Unexpected user for group sales: " + user.getId());
+        fail("Unexpected user for group sales: " + user.getId());
       }
     }
 
     List<User> accountingUser = identityService.createUserQuery().memberOfGroup("accounting").list();
-    assertEquals(2, accountingUser.size());
+    assertThat(accountingUser).hasSize(2);
 
     for (User user : accountingUser) {
       if (!user.getId().equals("demo") && !user.getId().equals("mary")) {
-        Assert.fail("Unexpected user for group accounting: " + user.getId());
+        fail("Unexpected user for group accounting: " + user.getId());
       }
     }
 
     List<User> managementUser = identityService.createUserQuery().memberOfGroup("management").list();
-    assertEquals(2, managementUser.size());
+    assertThat(managementUser).hasSize(2);
 
     for (User user : managementUser) {
       if (!user.getId().equals("demo") && !user.getId().equals("peter")) {
-        Assert.fail("Unexpected user for group managment: " + user.getId());
+        fail("Unexpected user for group management: " + user.getId());
       }
     }
   }
@@ -1122,8 +1114,8 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
     processEngineConfiguration.setAuthorizationEnabled(true);
 
     // we cannot fetch the group
-    assertNull(identityService.createGroupQuery().singleResult());
-    assertEquals(0, identityService.createGroupQuery().count());
+    assertThat(identityService.createGroupQuery().singleResult()).isNull();
+    assertThat(identityService.createGroupQuery().count()).isZero();
 
     // now we add permission for jonny2 to read the group:
     processEngineConfiguration.setAuthorizationEnabled(false);
@@ -1136,8 +1128,8 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
     processEngineConfiguration.setAuthorizationEnabled(true);
 
     // now we can fetch the group
-    assertNotNull(identityService.createGroupQuery().singleResult());
-    assertEquals(1, identityService.createGroupQuery().count());
+    assertThat(identityService.createGroupQuery().singleResult()).isNotNull();
+    assertThat(identityService.createGroupQuery().count()).isEqualTo(1);
 
     // change the base permission:
     processEngineConfiguration.setAuthorizationEnabled(false);
@@ -1147,8 +1139,8 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
     processEngineConfiguration.setAuthorizationEnabled(true);
 
     // we can still fetch the group
-    assertNotNull(identityService.createGroupQuery().singleResult());
-    assertEquals(1, identityService.createGroupQuery().count());
+    assertThat(identityService.createGroupQuery().singleResult()).isNotNull();
+    assertThat(identityService.createGroupQuery().count()).isEqualTo(1);
 
     // revoke permission for jonny2:
     processEngineConfiguration.setAuthorizationEnabled(false);
@@ -1165,8 +1157,8 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
     processEngineConfiguration.setAuthorizationEnabled(true);
 
     // now we cannot fetch the group
-    assertNull(identityService.createGroupQuery().singleResult());
-    assertEquals(0, identityService.createGroupQuery().count());
+    assertThat(identityService.createGroupQuery().singleResult()).isNull();
+    assertThat(identityService.createGroupQuery().count()).isZero();
 
     // delete our perms
     processEngineConfiguration.setAuthorizationEnabled(false);
@@ -1175,8 +1167,8 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
     processEngineConfiguration.setAuthorizationEnabled(true);
 
     // now the base permission applies and grants us read access
-    assertNotNull(identityService.createGroupQuery().singleResult());
-    assertEquals(1, identityService.createGroupQuery().count());
+    assertThat(identityService.createGroupQuery().singleResult()).isNotNull();
+    assertThat(identityService.createGroupQuery().count()).isEqualTo(1);
 
   }
 
@@ -1203,7 +1195,7 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
     processEngineConfiguration.setAuthorizationEnabled(true);
 
     // we cannot fetch the tenants
-    assertEquals(0, identityService.createTenantQuery().count());
+    assertThat(identityService.createTenantQuery().count()).isZero();
 
     // now we add permission for jonny2 to read the tenants:
     processEngineConfiguration.setAuthorizationEnabled(false);
@@ -1216,7 +1208,7 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
     processEngineConfiguration.setAuthorizationEnabled(true);
 
     // now we can fetch the tenants
-    assertEquals(1, identityService.createTenantQuery().count());
+    assertThat(identityService.createTenantQuery().count()).isEqualTo(1);
 
     // change the base permission:
     processEngineConfiguration.setAuthorizationEnabled(false);
@@ -1226,7 +1218,7 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
     processEngineConfiguration.setAuthorizationEnabled(true);
 
     // we can still fetch the tenants
-    assertEquals(1, identityService.createTenantQuery().count());
+    assertThat(identityService.createTenantQuery().count()).isEqualTo(1);
 
     // revoke permission for jonny2:
     processEngineConfiguration.setAuthorizationEnabled(false);
@@ -1243,7 +1235,7 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
     processEngineConfiguration.setAuthorizationEnabled(true);
 
     // now we cannot fetch the tenants
-    assertEquals(0, identityService.createTenantQuery().count());
+    assertThat(identityService.createTenantQuery().count()).isZero();
 
     // delete our permissions
     processEngineConfiguration.setAuthorizationEnabled(false);
@@ -1252,7 +1244,7 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
     processEngineConfiguration.setAuthorizationEnabled(true);
 
     // now the base permission applies and grants us read access
-    assertEquals(1, identityService.createTenantQuery().count());
+    assertThat(identityService.createTenantQuery().count()).isEqualTo(1);
   }
 
   @Test
@@ -1343,7 +1335,7 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
     Date now = ClockUtil.getCurrentTime();
     try {
       for (int i = 0; i <= 11; i++) {
-        assertFalse(identityService.checkPassword(userId, invalidPassword));
+        assertThat(identityService.checkPassword(userId, invalidPassword)).isFalse();
         now = DateUtils.addMinutes(ClockUtil.getCurrentTime(), 1);
         ClockUtil.setCurrentTime(now);
       }

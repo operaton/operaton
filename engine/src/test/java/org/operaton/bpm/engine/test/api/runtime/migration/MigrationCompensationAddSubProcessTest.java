@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
@@ -33,7 +35,6 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.CompensationModels;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
@@ -251,7 +252,7 @@ public class MigrationCompensationAddSubProcessTest {
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
     // then
-    Assert.assertEquals(0, testHelper.snapshotAfterMigration.getVariables().size());
+    assertThat(testHelper.snapshotAfterMigration.getVariables()).isEmpty();
   }
 
   @Ignore("CAM-6035")
@@ -276,7 +277,7 @@ public class MigrationCompensationAddSubProcessTest {
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
     // then
-    Assert.assertEquals(0, testHelper.snapshotAfterMigration.getVariables().size());
+    assertThat(testHelper.snapshotAfterMigration.getVariables()).isEmpty();
   }
 
   @Test
@@ -305,7 +306,7 @@ public class MigrationCompensationAddSubProcessTest {
 
     // then the variable snapshot is available
     Task compensationTask = rule.getTaskService().createTaskQuery().singleResult();
-    Assert.assertEquals("bar", rule.getTaskService().getVariable(compensationTask.getId(), "foo"));
+    assertThat(rule.getTaskService().getVariable(compensationTask.getId(), "foo")).isEqualTo("bar");
   }
 
   @Test
@@ -332,7 +333,7 @@ public class MigrationCompensationAddSubProcessTest {
     try {
       // when
       runtimeService.build();
-      Assert.fail("exception expected");
+      fail("exception expected");
     } catch (MigrationPlanValidationException e) {
       // then
       assertThat(e.getValidationReport())

@@ -17,11 +17,7 @@
 package org.operaton.bpm.engine.test.api.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assume.assumeNotNull;
 
 import java.util.Date;
@@ -141,8 +137,8 @@ public class ProcessApplicationDeploymentTest {
 
     // then
     Set<String> deploymentIds = registration.getDeploymentIds();
-    assertEquals(1, deploymentIds.size());
-    assertEquals(processEngine.getName(), registration.getProcessEngineName());
+    assertThat(deploymentIds).hasSize(1);
+    assertThat(registration.getProcessEngineName()).isEqualTo(processEngine.getName());
   }
 
   @Test
@@ -169,8 +165,8 @@ public class ProcessApplicationDeploymentTest {
 
     // then
     Set<String> deploymentIds = registration.getDeploymentIds();
-    assertEquals(1, deploymentIds.size());
-    assertEquals(processEngine.getName(), registration.getProcessEngineName());
+    assertThat(deploymentIds).hasSize(1);
+    assertThat(registration.getProcessEngineName()).isEqualTo(processEngine.getName());
   }
 
   @Test
@@ -201,7 +197,7 @@ public class ProcessApplicationDeploymentTest {
         .addModelInstance("process2.bpmn20.xml", changedModel2));
 
     // then
-    assertEquals(4, repositoryService.createProcessDefinitionQuery().count());
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(4);
 
     List<ProcessDefinition> processDefinitionsModel1 =
       repositoryService
@@ -210,9 +206,9 @@ public class ProcessApplicationDeploymentTest {
         .orderByProcessDefinitionVersion().asc().list();
 
     // now there are two versions of process1 deployed
-    assertEquals(2, processDefinitionsModel1.size());
-    assertEquals(1, processDefinitionsModel1.get(0).getVersion());
-    assertEquals(2, processDefinitionsModel1.get(1).getVersion());
+    assertThat(processDefinitionsModel1).hasSize(2);
+    assertThat(processDefinitionsModel1.get(0).getVersion()).isEqualTo(1);
+    assertThat(processDefinitionsModel1.get(1).getVersion()).isEqualTo(2);
 
     // now there are two versions of process2 deployed
     List<ProcessDefinition> processDefinitionsModel2 =
@@ -221,15 +217,15 @@ public class ProcessApplicationDeploymentTest {
           .processDefinitionKey("process1")
           .orderByProcessDefinitionVersion().asc().list();
 
-    assertEquals(2, processDefinitionsModel2.size());
-    assertEquals(1, processDefinitionsModel2.get(0).getVersion());
-    assertEquals(2, processDefinitionsModel2.get(1).getVersion());
+    assertThat(processDefinitionsModel2).hasSize(2);
+    assertThat(processDefinitionsModel2.get(0).getVersion()).isEqualTo(1);
+    assertThat(processDefinitionsModel2.get(1).getVersion()).isEqualTo(2);
 
     // old deployment was resumed
     ProcessApplicationRegistration registration = deployment2.getProcessApplicationRegistration();
     Set<String> deploymentIds = registration.getDeploymentIds();
-    assertEquals(2, deploymentIds.size());
-    assertEquals(processEngine.getName(), registration.getProcessEngineName());
+    assertThat(deploymentIds).hasSize(2);
+    assertThat(registration.getProcessEngineName()).isEqualTo(processEngine.getName());
   }
 
   /**
@@ -260,7 +256,7 @@ public class ProcessApplicationDeploymentTest {
         .addModelInstance("process1.bpmn20.xml", model1)
         .addModelInstance("process2.bpmn20.xml", changedModel2));
 
-    assertEquals(3, repositoryService.createProcessDefinitionQuery().count());
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(3);
 
     // there is one version of process1 deployed
     ProcessDefinition processDefinitionModel1 =
@@ -269,9 +265,9 @@ public class ProcessApplicationDeploymentTest {
           .processDefinitionKey("process1")
           .singleResult();
 
-    assertNotNull(processDefinitionModel1);
-    assertEquals(1, processDefinitionModel1.getVersion());
-    assertEquals(deployment1.getId(), processDefinitionModel1.getDeploymentId());
+    assertThat(processDefinitionModel1).isNotNull();
+    assertThat(processDefinitionModel1.getVersion()).isEqualTo(1);
+    assertThat(processDefinitionModel1.getDeploymentId()).isEqualTo(deployment1.getId());
 
     // there are two versions of process2 deployed
     List<ProcessDefinition> processDefinitionsModel2 =
@@ -280,14 +276,14 @@ public class ProcessApplicationDeploymentTest {
           .processDefinitionKey("process2")
           .orderByProcessDefinitionVersion().asc().list();
 
-    assertEquals(2, processDefinitionsModel2.size());
-    assertEquals(1, processDefinitionsModel2.get(0).getVersion());
-    assertEquals(2, processDefinitionsModel2.get(1).getVersion());
+    assertThat(processDefinitionsModel2).hasSize(2);
+    assertThat(processDefinitionsModel2.get(0).getVersion()).isEqualTo(1);
+    assertThat(processDefinitionsModel2.get(1).getVersion()).isEqualTo(2);
 
     // old deployment was resumed
     ProcessApplicationRegistration registration = deployment2.getProcessApplicationRegistration();
     Set<String> deploymentIds = registration.getDeploymentIds();
-    assertEquals(2, deploymentIds.size());
+    assertThat(deploymentIds).hasSize(2);
 
     BpmnModelInstance anotherChangedModel2 = Bpmn.createExecutableProcess("process2")
         .startEvent()
@@ -305,19 +301,19 @@ public class ProcessApplicationDeploymentTest {
         .name("deployment"));
 
     // there should still be one version of process 1
-    assertEquals(1, repositoryService.createProcessDefinitionQuery()
+    assertThat(repositoryService.createProcessDefinitionQuery()
         .processDefinitionKey("process1")
-        .count());
+        .count()).isEqualTo(1);
 
     // there should be three versions of process 2
-    assertEquals(3, repositoryService.createProcessDefinitionQuery()
+    assertThat(repositoryService.createProcessDefinitionQuery()
         .processDefinitionKey("process2")
-        .count());
+        .count()).isEqualTo(3);
 
     // old deployments are resumed
     registration = deployment3.getProcessApplicationRegistration();
     deploymentIds = registration.getDeploymentIds();
-    assertEquals(3, deploymentIds.size());
+    assertThat(deploymentIds).hasSize(3);
   }
 
   @Test
@@ -341,7 +337,7 @@ public class ProcessApplicationDeploymentTest {
 
     // then
     long deploymentCount = repositoryService.createDeploymentQuery().count();
-    assertEquals(2, deploymentCount);
+    assertThat(deploymentCount).isEqualTo(2);
   }
 
   @Test
@@ -375,8 +371,8 @@ public class ProcessApplicationDeploymentTest {
 
     // then
     long deploymentCount = repositoryService.createDeploymentQuery().count();
-    assertEquals(2, deploymentCount);
-    assertEquals(deployment1.getId(), deployment3.getId());
+    assertThat(deploymentCount).isEqualTo(2);
+    assertThat(deployment3.getId()).isEqualTo(deployment1.getId());
   }
 
   @Test
@@ -399,7 +395,7 @@ public class ProcessApplicationDeploymentTest {
         .addModelInstance("process2.bpmn20.xml", model2));
 
     ProcessApplicationRegistration registration = deployment2.getProcessApplicationRegistration();
-    assertEquals(2, registration.getDeploymentIds().size());
+    assertThat(registration.getDeploymentIds()).hasSize(2);
   }
 
   @Test
@@ -425,14 +421,14 @@ public class ProcessApplicationDeploymentTest {
         .asc()
         .list();
     // now there are 2 process definitions deployed
-    assertEquals(1, processDefinitions.get(0).getVersion());
-    assertEquals(2, processDefinitions.get(1).getVersion());
+    assertThat(processDefinitions.get(0).getVersion()).isEqualTo(1);
+    assertThat(processDefinitions.get(1).getVersion()).isEqualTo(2);
 
     // old deployment was resumed
     ProcessApplicationRegistration registration = deployment2.getProcessApplicationRegistration();
     Set<String> deploymentIds = registration.getDeploymentIds();
-    assertEquals(2, deploymentIds.size());
-    assertEquals(processEngine.getName(), registration.getProcessEngineName());
+    assertThat(deploymentIds).hasSize(2);
+    assertThat(registration.getProcessEngineName()).isEqualTo(processEngine.getName());
   }
 
   @Test
@@ -457,15 +453,15 @@ public class ProcessApplicationDeploymentTest {
         .asc()
         .list();
     // now there are 2 process definitions deployed
-    assertEquals(1, processDefinitions.get(0).getVersion());
-    assertEquals(1, processDefinitions.get(1).getVersion());
+    assertThat(processDefinitions.get(0).getVersion()).isEqualTo(1);
+    assertThat(processDefinitions.get(1).getVersion()).isEqualTo(1);
 
     // and the old deployment was not resumed
     ProcessApplicationRegistration registration = deployment2.getProcessApplicationRegistration();
     Set<String> deploymentIds = registration.getDeploymentIds();
-    assertEquals(1, deploymentIds.size());
-    assertEquals(deployment2.getId(), deploymentIds.iterator().next());
-    assertEquals(processEngine.getName(), registration.getProcessEngineName());
+    assertThat(deploymentIds).hasSize(1);
+    assertThat(deploymentIds.iterator().next()).isEqualTo(deployment2.getId());
+    assertThat(registration.getProcessEngineName()).isEqualTo(processEngine.getName());
   }
 
   @Test
@@ -490,7 +486,7 @@ public class ProcessApplicationDeploymentTest {
 
     // then
     ProcessApplicationRegistration registration = deployment2.getProcessApplicationRegistration();
-    assertEquals(2, registration.getDeploymentIds().size());
+    assertThat(registration.getDeploymentIds()).hasSize(2);
   }
 
   @Test
@@ -530,13 +526,13 @@ public class ProcessApplicationDeploymentTest {
     // then
     // PA2 registers only it's own (new) version of the model
     ProcessApplicationRegistration registration2 = deployment2.getProcessApplicationRegistration();
-    assertEquals(1, registration2.getDeploymentIds().size());
+    assertThat(registration2.getDeploymentIds()).hasSize(1);
 
     // PA3 deploys a duplicate version of the process. The duplicate deployment needs to be found
     // and registered (deployment1)
     ProcessApplicationRegistration registration3 = deployment3.getProcessApplicationRegistration();
-    assertEquals(1, registration3.getDeploymentIds().size());
-    assertEquals(deployment1.getId(), registration3.getDeploymentIds().iterator().next());
+    assertThat(registration3.getDeploymentIds()).hasSize(1);
+    assertThat(registration3.getDeploymentIds().iterator().next()).isEqualTo(deployment1.getId());
   }
 
   @Test
@@ -561,14 +557,14 @@ public class ProcessApplicationDeploymentTest {
         .asc()
         .list();
     // now there are 2 process definitions deployed
-    assertEquals(1, processDefinitions.get(0).getVersion());
-    assertEquals(2, processDefinitions.get(1).getVersion());
+    assertThat(processDefinitions.get(0).getVersion()).isEqualTo(1);
+    assertThat(processDefinitions.get(1).getVersion()).isEqualTo(2);
 
     // old deployment was NOT resumed
     ProcessApplicationRegistration registration = deployment2.getProcessApplicationRegistration();
     Set<String> deploymentIds = registration.getDeploymentIds();
-    assertEquals(1, deploymentIds.size());
-    assertEquals(processEngine.getName(), registration.getProcessEngineName());
+    assertThat(deploymentIds).hasSize(1);
+    assertThat(registration.getProcessEngineName()).isEqualTo(processEngine.getName());
   }
 
   @Test
@@ -595,14 +591,14 @@ public class ProcessApplicationDeploymentTest {
         .asc()
         .list();
     // now there are 2 process definitions deployed
-    assertEquals(1, processDefinitions.get(0).getVersion());
-    assertEquals(2, processDefinitions.get(1).getVersion());
+    assertThat(processDefinitions.get(0).getVersion()).isEqualTo(1);
+    assertThat(processDefinitions.get(1).getVersion()).isEqualTo(2);
 
     // old deployment was resumed
     ProcessApplicationRegistration registration = deployment2.getProcessApplicationRegistration();
     Set<String> deploymentIds = registration.getDeploymentIds();
-    assertEquals(2, deploymentIds.size());
-    assertEquals(processEngine.getName(), registration.getProcessEngineName());
+    assertThat(deploymentIds).hasSize(2);
+    assertThat(registration.getProcessEngineName()).isEqualTo(processEngine.getName());
   }
 
   @Test
@@ -639,15 +635,14 @@ public class ProcessApplicationDeploymentTest {
         .asc()
         .list();
     // now there are 2 process definitions deployed
-    assertEquals(1, processDefinitions.get(0).getVersion());
-    assertEquals(2, processDefinitions.get(1).getVersion());
+    assertThat(processDefinitions.get(0).getVersion()).isEqualTo(1);
+    assertThat(processDefinitions.get(1).getVersion()).isEqualTo(2);
 
     // old deployment was resumed
     ProcessApplicationRegistration registration = deployment2.getProcessApplicationRegistration();
     Set<String> paDeploymentIds = registration.getDeploymentIds();
-    assertEquals(1, paDeploymentIds.size());
-    assertTrue(paDeploymentIds.contains(deployment2.getId()));
-    assertEquals(processEngine.getName(), registration.getProcessEngineName());
+    assertThat(paDeploymentIds).containsExactly(deployment2.getId());
+    assertThat(registration.getProcessEngineName()).isEqualTo(processEngine.getName());
   }
 
   @Test
@@ -673,14 +668,14 @@ public class ProcessApplicationDeploymentTest {
         .asc()
         .list();
     // now there are 2 process definitions deployed but both with version 1
-    assertEquals(1, processDefinitions.get(0).getVersion());
-    assertEquals(1, processDefinitions.get(1).getVersion());
+    assertThat(processDefinitions.get(0).getVersion()).isEqualTo(1);
+    assertThat(processDefinitions.get(1).getVersion()).isEqualTo(1);
 
     // old deployment was resumed
     ProcessApplicationRegistration registration = deployment2.getProcessApplicationRegistration();
     Set<String> deploymentIds = registration.getDeploymentIds();
-    assertEquals(2, deploymentIds.size());
-    assertEquals(processEngine.getName(), registration.getProcessEngineName());
+    assertThat(deploymentIds).hasSize(2);
+    assertThat(registration.getProcessEngineName()).isEqualTo(processEngine.getName());
   }
 
   @Test
@@ -705,15 +700,15 @@ public class ProcessApplicationDeploymentTest {
         .asc()
         .list();
     // there is a new version of the process
-    assertEquals(1, processDefinitions.get(0).getVersion());
-    assertEquals(2, processDefinitions.get(1).getVersion());
+    assertThat(processDefinitions.get(0).getVersion()).isEqualTo(1);
+    assertThat(processDefinitions.get(1).getVersion()).isEqualTo(2);
 
     // but the old deployment was not resumed
     ProcessApplicationRegistration registration = deployment2.getProcessApplicationRegistration();
     Set<String> deploymentIds = registration.getDeploymentIds();
-    assertEquals(1, deploymentIds.size());
-    assertEquals(deployment2.getId(), deploymentIds.iterator().next());
-    assertEquals(processEngine.getName(), registration.getProcessEngineName());
+    assertThat(deploymentIds).hasSize(1);
+    assertThat(deploymentIds.iterator().next()).isEqualTo(deployment2.getId());
+    assertThat(registration.getProcessEngineName()).isEqualTo(processEngine.getName());
   }
 
   @Test
@@ -737,7 +732,7 @@ public class ProcessApplicationDeploymentTest {
         .addModelInstance("process2.bpmn20.xml", model2));
 
     ProcessApplicationRegistration registration = deployment2.getProcessApplicationRegistration();
-    assertEquals(2, registration.getDeploymentIds().size());
+    assertThat(registration.getDeploymentIds()).hasSize(2);
   }
 
   @Test
@@ -759,7 +754,7 @@ public class ProcessApplicationDeploymentTest {
         .addClasspathResource("org/operaton/bpm/engine/test/api/repository/version2.bpmn20.xml"));
 
     // then the cache is still empty
-    assertTrue(deploymentCache.getBpmnModelInstanceCache().isEmpty());
+    assertThat(deploymentCache.getBpmnModelInstanceCache().isEmpty()).isTrue();
   }
 
   @Test
@@ -773,9 +768,9 @@ public class ProcessApplicationDeploymentTest {
         .name("first-deployment-without-a-source")
         .addModelInstance("process.bpmn", model));
 
-    assertNull(deploymentQuery.deploymentName("first-deployment-without-a-source")
-                   .singleResult()
-                   .getSource());
+    assertThat(deploymentQuery.deploymentName("first-deployment-without-a-source")
+        .singleResult()
+        .getSource()).isNull();
 
     // when
     testRule.deploy(repositoryService
@@ -785,9 +780,9 @@ public class ProcessApplicationDeploymentTest {
         .addModelInstance("process.bpmn", model));
 
     // then
-    assertNull(deploymentQuery.deploymentName("second-deployment-with-a-source")
-                   .singleResult()
-                   .getSource());
+    assertThat(deploymentQuery.deploymentName("second-deployment-with-a-source")
+        .singleResult()
+        .getSource()).isNull();
   }
 
   @Test
@@ -802,10 +797,9 @@ public class ProcessApplicationDeploymentTest {
         .source("my-first-deployment-source")
         .addModelInstance("process.bpmn", model));
 
-    assertEquals("my-first-deployment-source",
-                 deploymentQuery.deploymentName("first-deployment-without-a-source")
-                     .singleResult()
-                     .getSource());
+    assertThat(deploymentQuery.deploymentName("first-deployment-without-a-source")
+        .singleResult()
+        .getSource()).isEqualTo("my-first-deployment-source");
 
     // when
     testRule.deploy(repositoryService
@@ -815,10 +809,9 @@ public class ProcessApplicationDeploymentTest {
         .addModelInstance("process.bpmn", model));
 
     // then
-    assertEquals("my-second-deployment-source",
-                 deploymentQuery.deploymentName("second-deployment-with-a-source")
-                     .singleResult()
-                     .getSource());
+    assertThat(deploymentQuery.deploymentName("second-deployment-with-a-source")
+        .singleResult()
+        .getSource()).isEqualTo("my-second-deployment-source");
   }
 
   @Test
@@ -835,10 +828,9 @@ public class ProcessApplicationDeploymentTest {
         .addModelInstance("process.bpmn", model));
 
     // then
-    assertEquals(ProcessApplicationDeployment.PROCESS_APPLICATION_DEPLOYMENT_SOURCE,
-                 deploymentQuery.deploymentName("first-deployment-with-a-source")
-                     .singleResult()
-                     .getSource());
+    assertThat(deploymentQuery.deploymentName("first-deployment-with-a-source")
+        .singleResult()
+        .getSource()).isEqualTo(ProcessApplicationDeployment.PROCESS_APPLICATION_DEPLOYMENT_SOURCE);
   }
 
   @Test
@@ -856,10 +848,9 @@ public class ProcessApplicationDeploymentTest {
         .addModelInstance("process.bpmn", model));
 
     // then
-    assertEquals("my-source",
-                 deploymentQuery.deploymentName("first-deployment-with-a-source")
-                     .singleResult()
-                     .getSource());
+    assertThat(deploymentQuery.deploymentName("first-deployment-with-a-source")
+        .singleResult()
+        .getSource()).isEqualTo("my-source");
   }
 
   @Test
@@ -887,8 +878,8 @@ public class ProcessApplicationDeploymentTest {
         .addModelInstance("process.bpmn", model)
         .enableDuplicateFiltering(true));
 
-    assertEquals(1, processDefinitionQuery.count());
-    assertEquals(1, deploymentQuery.count());
+    assertThat(processDefinitionQuery.count()).isEqualTo(1);
+    assertThat(deploymentQuery.count()).isEqualTo(1);
 
     testRule.deploy(repositoryService
         .createDeployment(processApplication.getReference())
@@ -899,8 +890,8 @@ public class ProcessApplicationDeploymentTest {
 
     // then
 
-    assertEquals(1, processDefinitionQuery.count());
-    assertEquals(1, deploymentQuery.count());
+    assertThat(processDefinitionQuery.count()).isEqualTo(1);
+    assertThat(deploymentQuery.count()).isEqualTo(1);
   }
 
   @Test
@@ -929,8 +920,8 @@ public class ProcessApplicationDeploymentTest {
         .addModelInstance("process.bpmn", model)
         .enableDuplicateFiltering(true));
 
-    assertEquals(1, processDefinitionQuery.count());
-    assertEquals(1, deploymentQuery.count());
+    assertThat(processDefinitionQuery.count()).isEqualTo(1);
+    assertThat(deploymentQuery.count()).isEqualTo(1);
 
     testRule.deploy(repositoryService
         .createDeployment(processApplication.getReference())
@@ -940,8 +931,8 @@ public class ProcessApplicationDeploymentTest {
 
     // then
 
-    assertEquals(1, processDefinitionQuery.count());
-    assertEquals(1, deploymentQuery.count());
+    assertThat(processDefinitionQuery.count()).isEqualTo(1);
+    assertThat(deploymentQuery.count()).isEqualTo(1);
   }
 
   @Test
@@ -969,8 +960,8 @@ public class ProcessApplicationDeploymentTest {
         .addModelInstance("process.bpmn", model)
         .enableDuplicateFiltering(true));
 
-    assertEquals(1, processDefinitionQuery.count());
-    assertEquals(1, deploymentQuery.count());
+    assertThat(processDefinitionQuery.count()).isEqualTo(1);
+    assertThat(deploymentQuery.count()).isEqualTo(1);
 
     testRule.deploy(repositoryService
         .createDeployment(processApplication.getReference())
@@ -981,8 +972,8 @@ public class ProcessApplicationDeploymentTest {
 
     // then
 
-    assertEquals(1, processDefinitionQuery.count());
-    assertEquals(1, deploymentQuery.count());
+    assertThat(processDefinitionQuery.count()).isEqualTo(1);
+    assertThat(deploymentQuery.count()).isEqualTo(1);
   }
 
   @Test
@@ -1010,8 +1001,8 @@ public class ProcessApplicationDeploymentTest {
         .addModelInstance("process.bpmn", model)
         .enableDuplicateFiltering(true));
 
-    assertEquals(1, processDefinitionQuery.count());
-    assertEquals(1, deploymentQuery.count());
+    assertThat(processDefinitionQuery.count()).isEqualTo(1);
+    assertThat(deploymentQuery.count()).isEqualTo(1);
 
     testRule.deploy(repositoryService
         .createDeployment(processApplication.getReference())
@@ -1021,8 +1012,8 @@ public class ProcessApplicationDeploymentTest {
 
     // then
 
-    assertEquals(1, processDefinitionQuery.count());
-    assertEquals(1, deploymentQuery.count());
+    assertThat(processDefinitionQuery.count()).isEqualTo(1);
+    assertThat(deploymentQuery.count()).isEqualTo(1);
   }
 
   @Test
@@ -1051,8 +1042,8 @@ public class ProcessApplicationDeploymentTest {
         .addModelInstance("process.bpmn", model)
         .enableDuplicateFiltering(true));
 
-    assertEquals(1, processDefinitionQuery.count());
-    assertEquals(1, deploymentQuery.count());
+    assertThat(processDefinitionQuery.count()).isEqualTo(1);
+    assertThat(deploymentQuery.count()).isEqualTo(1);
 
     testRule.deploy(repositoryService
         .createDeployment(processApplication.getReference())
@@ -1063,8 +1054,8 @@ public class ProcessApplicationDeploymentTest {
 
     // then
 
-    assertEquals(1, processDefinitionQuery.count());
-    assertEquals(1, deploymentQuery.count());
+    assertThat(processDefinitionQuery.count()).isEqualTo(1);
+    assertThat(deploymentQuery.count()).isEqualTo(1);
   }
 
   @Test
@@ -1093,8 +1084,8 @@ public class ProcessApplicationDeploymentTest {
         .addModelInstance("process.bpmn", model)
         .enableDuplicateFiltering(true));
 
-    assertEquals(1, processDefinitionQuery.count());
-    assertEquals(1, deploymentQuery.count());
+    assertThat(processDefinitionQuery.count()).isEqualTo(1);
+    assertThat(deploymentQuery.count()).isEqualTo(1);
 
     testRule.deploy(repositoryService
         .createDeployment(processApplication.getReference())
@@ -1105,8 +1096,8 @@ public class ProcessApplicationDeploymentTest {
 
     // then
 
-    assertEquals(2, processDefinitionQuery.count());
-    assertEquals(2, deploymentQuery.count());
+    assertThat(processDefinitionQuery.count()).isEqualTo(2);
+    assertThat(deploymentQuery.count()).isEqualTo(2);
   }
 
   @Test
@@ -1135,8 +1126,8 @@ public class ProcessApplicationDeploymentTest {
         .addModelInstance("process.bpmn", model)
         .enableDuplicateFiltering(true));
 
-    assertEquals(1, processDefinitionQuery.count());
-    assertEquals(1, deploymentQuery.count());
+    assertThat(processDefinitionQuery.count()).isEqualTo(1);
+    assertThat(deploymentQuery.count()).isEqualTo(1);
 
     testRule.deploy(repositoryService
         .createDeployment(processApplication.getReference())
@@ -1147,8 +1138,8 @@ public class ProcessApplicationDeploymentTest {
 
     // then
 
-    assertEquals(2, processDefinitionQuery.count());
-    assertEquals(2, deploymentQuery.count());
+    assertThat(processDefinitionQuery.count()).isEqualTo(2);
+    assertThat(deploymentQuery.count()).isEqualTo(2);
   }
 
   @Test
@@ -1177,8 +1168,8 @@ public class ProcessApplicationDeploymentTest {
         .addModelInstance("process.bpmn", model)
         .enableDuplicateFiltering(true));
 
-    assertEquals(1, processDefinitionQuery.count());
-    assertEquals(1, deploymentQuery.count());
+    assertThat(processDefinitionQuery.count()).isEqualTo(1);
+    assertThat(deploymentQuery.count()).isEqualTo(1);
 
     testRule.deploy(repositoryService
         .createDeployment(processApplication.getReference())
@@ -1189,8 +1180,8 @@ public class ProcessApplicationDeploymentTest {
 
     // then
 
-    assertEquals(2, processDefinitionQuery.count());
-    assertEquals(2, deploymentQuery.count());
+    assertThat(processDefinitionQuery.count()).isEqualTo(2);
+    assertThat(deploymentQuery.count()).isEqualTo(2);
   }
 
   @Test
@@ -1204,11 +1195,11 @@ public class ProcessApplicationDeploymentTest {
     managementService.registerProcessApplication(deployment.getId(),
                                                  processApplication.getReference());
 
-    // when deleting the deploymen
+    // when deleting the deployment
     repositoryService.deleteDeployment(deployment.getId(), true);
 
     // then the registration is removed
-    assertNull(managementService.getProcessApplicationForDeployment(deployment.getId()));
+    assertThat(managementService.getProcessApplicationForDeployment(deployment.getId())).isNull();
   }
 
   /*
@@ -1258,8 +1249,8 @@ public class ProcessApplicationDeploymentTest {
         .name("foo"));
 
     // then
-    assertNotNull(managementService.getProcessApplicationForDeployment(deployment1.getId()));
-    assertNotNull(managementService.getProcessApplicationForDeployment(deployment2.getId()));
+    assertThat(managementService.getProcessApplicationForDeployment(deployment1.getId())).isNotNull();
+    assertThat(managementService.getProcessApplicationForDeployment(deployment2.getId())).isNotNull();
   }
 
   /*
@@ -1278,7 +1269,7 @@ public class ProcessApplicationDeploymentTest {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
         .singleResult();
     assertThat(processDefinition).isNotNull();
-    assertEquals(1, processDefinition.getVersion());
+    assertThat(processDefinition.getVersion()).isEqualTo(1);
   }
 
   protected BpmnModelInstance createEmptyModel(String key) {

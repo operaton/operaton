@@ -23,7 +23,7 @@ import org.operaton.bpm.engine.query.QueryProperty;
 /**
  * Contains the possible properties which can be used in a {@link HistoricVariableInstanceQuery}.
  *
- * @author Christian Lipphardt (operaton)
+ * @author Christian Lipphardt (Camunda)
  */
 public interface HistoricVariableInstanceQueryProperty {
 

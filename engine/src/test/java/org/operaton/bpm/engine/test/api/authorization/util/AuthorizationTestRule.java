@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.util;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -25,7 +27,6 @@ import java.util.Map;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.junit.Assert;
 import org.junit.runner.Description;
 
 /**
@@ -49,7 +50,7 @@ public class AuthorizationTestRule extends AuthorizationTestBaseRule {
   }
 
   public void start(AuthorizationScenario scenario, String userId, Map<String, String> resourceBindings) {
-    Assert.assertNull(interceptor.getLastException());
+    assertThat(interceptor.getLastException()).isNull();
     scenarioInstance = new AuthorizationScenarioInstance(scenario, engineRule.getAuthorizationService(), resourceBindings);
     enableAuthorization(userId);
     interceptor.activate();
@@ -73,7 +74,7 @@ public class AuthorizationTestRule extends AuthorizationTestBaseRule {
   }
 
   /**
-   * No exception was expected and no was thrown
+   * No exception was expected and none was thrown
    */
   public boolean scenarioSucceeded() {
     return interceptor.getLastException() == null;

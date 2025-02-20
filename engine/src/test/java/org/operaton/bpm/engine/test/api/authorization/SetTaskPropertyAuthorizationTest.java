@@ -21,6 +21,7 @@ import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.util.*;
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.TASK_ASSIGN;
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
@@ -41,7 +42,6 @@ import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Fail.fail;
 
 @RunWith(Parameterized.class)
 @SuppressWarnings("java:S1117")

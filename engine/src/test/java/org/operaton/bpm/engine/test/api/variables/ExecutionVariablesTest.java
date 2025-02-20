@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.variables;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.runtime.Execution;
@@ -61,9 +60,9 @@ public class ExecutionVariablesTest extends PluggableProcessEngineTest {
 
     // then the variable still exists
     VariableInstance variable = runtimeService.createVariableInstanceQuery().singleResult();
-    assertNotNull(variable);
-    assertEquals("foo", variable.getName());
-    assertEquals(processInstance.getId(), variable.getExecutionId());
+    assertThat(variable).isNotNull();
+    assertThat(variable.getName()).isEqualTo("foo");
+    assertThat(variable.getExecutionId()).isEqualTo(processInstance.getId());
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/variables/ExecutionVariablesTest.testTreeCompactionWithLocalVariableOnConcurrentExecution.bpmn20.xml")
@@ -95,7 +94,7 @@ public class ExecutionVariablesTest extends PluggableProcessEngineTest {
 
     // then the variable still exists
     VariableInstance variableAfterCompaction = runtimeService.createVariableInstanceQuery().singleResult();
-    assertEquals(variableBeforeCompaction.getId(), variableAfterCompaction.getId());
+    assertThat(variableAfterCompaction.getId()).isEqualTo(variableBeforeCompaction.getId());
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/variables/ExecutionVariablesTest.testTreeCompactionForkParallelGateway.bpmn20.xml")
@@ -127,7 +126,7 @@ public class ExecutionVariablesTest extends PluggableProcessEngineTest {
 
     // then the variable still exists
     VariableInstance variableAfterCompaction = runtimeService.createVariableInstanceQuery().singleResult();
-    assertEquals(variableBeforeCompaction.getId(), variableAfterCompaction.getId());
+    assertThat(variableAfterCompaction.getId()).isEqualTo(variableBeforeCompaction.getId());
   }
 
   @Deployment
@@ -153,9 +152,9 @@ public class ExecutionVariablesTest extends PluggableProcessEngineTest {
 
     // then the variable still exists
     VariableInstance variable = runtimeService.createVariableInstanceQuery().singleResult();
-    assertNotNull(variable);
-    assertEquals("foo", variable.getName());
-    assertEquals(processInstance.getId(), variable.getExecutionId());
+    assertThat(variable).isNotNull();
+    assertThat(variable.getName()).isEqualTo("foo");
+    assertThat(variable.getExecutionId()).isEqualTo(processInstance.getId());
   }
 
   @Deployment
@@ -182,9 +181,9 @@ public class ExecutionVariablesTest extends PluggableProcessEngineTest {
 
     // then the variable still exists on the subprocess scope execution
     VariableInstance variable = runtimeService.createVariableInstanceQuery().singleResult();
-    assertNotNull(variable);
-    assertEquals("foo", variable.getName());
-    assertEquals(subProcessScopeExecutionId, variable.getExecutionId());
+    assertThat(variable).isNotNull();
+    assertThat(variable.getName()).isEqualTo("foo");
+    assertThat(variable.getExecutionId()).isEqualTo(subProcessScopeExecutionId);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/variables/ExecutionVariablesTest.testTreeCompactionForkParallelGateway.bpmn20.xml")
@@ -211,9 +210,9 @@ public class ExecutionVariablesTest extends PluggableProcessEngineTest {
 
     // then something happens
     VariableInstance variable = runtimeService.createVariableInstanceQuery().singleResult();
-    assertNotNull(variable);
-    assertEquals("foo", variable.getName());
-    assertEquals(processInstance.getId(), variable.getExecutionId());
+    assertThat(variable).isNotNull();
+    assertThat(variable.getName()).isEqualTo("foo");
+    assertThat(variable.getExecutionId()).isEqualTo(processInstance.getId());
   }
 
   @Deployment
@@ -233,7 +232,7 @@ public class ExecutionVariablesTest extends PluggableProcessEngineTest {
     taskService.complete(taskService.createTaskQuery().taskDefinitionKey("task2").singleResult().getId());
 
     // then
-    assertEquals(0, runtimeService.createVariableInstanceQuery().count());
+    assertThat(runtimeService.createVariableInstanceQuery().count()).isZero();
   }
 
   @Deployment
@@ -253,7 +252,7 @@ public class ExecutionVariablesTest extends PluggableProcessEngineTest {
     taskService.complete(taskService.createTaskQuery().taskDefinitionKey("task2").singleResult().getId());
 
     // then
-    assertEquals(0, runtimeService.createVariableInstanceQuery().count());
+    assertThat(runtimeService.createVariableInstanceQuery().count()).isZero();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/variables/ExecutionVariablesTest.testTreeCompactionForkParallelGateway.bpmn20.xml")
@@ -280,7 +279,7 @@ public class ExecutionVariablesTest extends PluggableProcessEngineTest {
     Task task1 = taskService.createTaskQuery().taskDefinitionKey("task1").singleResult();
     VariableInstance variable = runtimeService.createVariableInstanceQuery().singleResult();
 
-    assertEquals(task1.getExecutionId(), variable.getExecutionId());
+    assertThat(variable.getExecutionId()).isEqualTo(task1.getExecutionId());
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/variables/ExecutionVariablesTest.testTreeCompactionForkParallelGateway.bpmn20.xml")
@@ -305,7 +304,7 @@ public class ExecutionVariablesTest extends PluggableProcessEngineTest {
     // then the variable is still assigned to the scope execution execution
     VariableInstance variable = runtimeService.createVariableInstanceQuery().singleResult();
 
-    assertEquals(processInstance.getId(), variable.getExecutionId());
+    assertThat(variable.getExecutionId()).isEqualTo(processInstance.getId());
   }
 
 }

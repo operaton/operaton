@@ -1,4 +1,4 @@
-/*/*
+/*
  * Copyright and/or licensed under one or more contributor license agreements.
  * See the NOTICE file distributed with this work for additional information regarding
  * copyright ownership. This file is licensed to you under the Apache License,
@@ -15,7 +15,7 @@
  */
 package org.operaton.bpm.dmn.engine.test.junit5;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -47,21 +47,21 @@ public class ParameterizedTestExtensionTest {
 	}
 
 	@BeforeEach
-	public void setup() throws Exception {
+	void setUp() {
 		requestUrl = requestUrl + "processed/";
 	}
 
 	@AfterEach
-	public void teardown() {
+	void tearDown() {
 		requestUrl = null;
 	}
 
 	@TestTemplate
-	public void ensureBeforeEachCanProcessParamaters() throws Exception {
+	void ensureBeforeEachCanProcessParameters() {
 		if (alreadyAuthenticated) {
-			assertEquals("/app/cockpit/default/processed/", requestUrl);
+      assertThat(requestUrl).isEqualTo("/app/cockpit/default/processed/");
 		} else {
-			assertEquals("/app/cockpit/engine2/processed/", requestUrl);
+      assertThat(requestUrl).isEqualTo("/app/cockpit/engine2/processed/");
 		}
 	}
 

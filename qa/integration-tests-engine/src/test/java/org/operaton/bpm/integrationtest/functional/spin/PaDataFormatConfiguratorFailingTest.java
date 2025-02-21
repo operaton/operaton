@@ -29,12 +29,13 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.Set;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Thorben Lindhauer
@@ -86,6 +87,6 @@ public class PaDataFormatConfiguratorFailingTest {
   @OperateOnDeployment("checkDeployment")
   public void testNoProcessApplicationIsDeployed() {
     Set<String> registeredPAs = BpmPlatform.getProcessApplicationService().getProcessApplicationNames();
-    Assert.assertTrue(registeredPAs.isEmpty());
+    assertThat(registeredPAs).isEmpty();
   }
 }

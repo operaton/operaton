@@ -29,11 +29,12 @@ import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * <p>Ensures that process variables can be deserialized on a
@@ -70,7 +71,7 @@ public class DeserializableVariableTest extends AbstractFoxPlatformIntegrationTe
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testDeserializeVariable");
 
     // when
-    Assert.assertNull(runtimeService.createProcessInstanceQuery().processInstanceId(pi.getId()).singleResult());
+    assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(pi.getId()).singleResult()).isNull();
     runtimeService.restartProcessInstances(pi.getProcessDefinitionId())
       .startAfterActivity("servicetask1")
       .processInstanceIds(pi.getId())
@@ -83,7 +84,7 @@ public class DeserializableVariableTest extends AbstractFoxPlatformIntegrationTe
     List<HistoricVariableInstance> variableInstances = historyService.createHistoricVariableInstanceQuery().disableCustomObjectDeserialization().list();
     for (HistoricVariableInstance variable : variableInstances) {
       if (variable.getProcessInstanceId() != pi.getId() && variable instanceof HistoricVariableInstanceEntity variableEntity) {
-        Assert.assertNotNull(variableEntity.getByteArrayValue());
+        assertThat(variableEntity.getByteArrayValue()).isNotNull();
       }
     }
   }

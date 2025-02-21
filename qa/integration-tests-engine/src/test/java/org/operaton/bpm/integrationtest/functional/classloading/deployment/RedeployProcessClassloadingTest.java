@@ -19,12 +19,14 @@ package org.operaton.bpm.integrationtest.functional.classloading.deployment;
 import org.operaton.bpm.integrationtest.functional.classloading.deployment.beans.MyCustomDelegate;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.TestContainer;
+
 import org.jboss.arquillian.container.test.api.Deployment;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -69,7 +71,7 @@ public class RedeployProcessClassloadingTest extends AbstractFoxPlatformIntegrat
     String id = runtimeService.startProcessInstanceByKey("process").getId();
 
     // then
-    Assert.assertTrue((Boolean) runtimeService.getVariable(id, "executed"));
+    assertThat((Boolean) runtimeService.getVariable(id, "executed")).isTrue();
 
     repositoryService.deleteDeployment(deployment2.getId(), true);
   }

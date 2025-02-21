@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.integrationtest.service;
 
+import static org.assertj.core.api.Assertions.fail;
+
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
@@ -24,7 +26,6 @@ import org.operaton.bpm.integrationtest.util.TestConstants;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -43,7 +44,7 @@ public class PlatformServicesJndiBindingTest extends AbstractFoxPlatformIntegrat
     try {
       InitialContext.doLookup(testConstants.getProcessApplicationService());
     } catch (NamingException e) {
-      Assert.fail("Failed to lookup ProcessApplicationService '" + TestConstants.PROCESS_APPLICATION_SERVICE_JNDI_NAME + "'. Reason: " + e);
+      fail("Failed to lookup ProcessApplicationService '" + TestConstants.PROCESS_APPLICATION_SERVICE_JNDI_NAME + "'. Reason: " + e);
     }
   }
 
@@ -52,7 +53,7 @@ public class PlatformServicesJndiBindingTest extends AbstractFoxPlatformIntegrat
     try {
       InitialContext.doLookup(testConstants.getEngineService());
     } catch (NamingException e) {
-      Assert.fail("Failed to lookup ProcessEngineService '" + TestConstants.PROCESS_ENGINE_SERVICE_JNDI_NAME + "'. Reason: " + e);
+      fail("Failed to lookup ProcessEngineService '" + TestConstants.PROCESS_ENGINE_SERVICE_JNDI_NAME + "'. Reason: " + e);
     }
   }
 

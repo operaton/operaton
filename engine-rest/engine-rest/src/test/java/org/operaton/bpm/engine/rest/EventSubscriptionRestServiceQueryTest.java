@@ -100,7 +100,7 @@ public class EventSubscriptionRestServiceQueryTest extends AbstractRestServiceTe
     String content = response.asString();
     List<String> instances = from(content).getList("");
     Assert.assertEquals("There should be one event subscription returned.", 1, instances.size());
-    Assert.assertNotNull("There should be one event subscription returned", instances.get(0));
+    assertThat(instances.get(0)).as("There should be one event subscription returned").isNotNull();
 
     String returnedEventSubscriptionId = from(content).getString("[0].id");
     String returnedEventType = from(content).getString("[0].eventType");

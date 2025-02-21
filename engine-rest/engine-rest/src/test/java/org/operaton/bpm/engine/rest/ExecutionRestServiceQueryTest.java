@@ -161,7 +161,7 @@ public class ExecutionRestServiceQueryTest extends
     String content = response.asString();
     List<String> executions = from(content).getList("");
     Assert.assertEquals("There should be one execution returned.", 1, executions.size());
-    Assert.assertNotNull("There should be one execution returned", executions.get(0));
+    assertThat(executions.get(0)).as("There should be one execution returned").isNotNull();
 
     String returnedExecutionId = from(content).getString("[0].id");
     Boolean returnedIsEnded = from(content).getBoolean("[0].ended");
@@ -182,8 +182,7 @@ public class ExecutionRestServiceQueryTest extends
 
     String content = response.asString();
     String returnedProcessInstanceId = from(content).getString("[0].processInstanceId");
-    Assert.assertNull("Should be null, as it is also null in the original execution on the server.",
-        returnedProcessInstanceId);
+    assertThat(returnedProcessInstanceId).as("Should be null, as it is also null in the original execution on the server.").isNull();
   }
 
   private List<Execution> createIncompleteMockExecutions() {

@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.integrationtest.functional.cdi;
 
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.integrationtest.functional.cdi.beans.VersionTagBean;
@@ -61,7 +61,7 @@ public class CdiCallActivityVersionTagTest extends AbstractFoxPlatformIntegratio
 
     // then
     ProcessInstance subInstance = runtimeService.createProcessInstanceQuery().processDefinitionKey("subProcess").superProcessInstanceId(processInstance.getId()).singleResult();
-    assertNotNull(subInstance);
+    assertThat(subInstance).isNotNull();
 
   }
 }

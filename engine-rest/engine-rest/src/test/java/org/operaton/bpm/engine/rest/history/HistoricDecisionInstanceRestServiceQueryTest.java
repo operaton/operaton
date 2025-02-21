@@ -53,7 +53,6 @@ import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
 import org.operaton.bpm.engine.variable.value.BytesValue;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.engine.variable.value.StringValue;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -238,7 +237,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
     String content = response.asString();
     List<String> instances = from(content).getList("");
     assertEquals(1, instances.size());
-    Assert.assertNotNull(instances.get(0));
+    assertThat(instances.get(0)).isNotNull();
 
     String returnedHistoricDecisionInstanceId = from(content).getString("[0].id");
     String returnedDecisionDefinitionId = from(content).getString("[0].decisionDefinitionId");
@@ -324,7 +323,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
     String content = response.asString();
     List<String> instances = from(content).getList("");
     assertEquals(1, instances.size());
-    Assert.assertNotNull(instances.get(0));
+    assertThat(instances.get(0)).isNotNull();
 
     List<Map<String, Object>> returnedInputs = from(content).getList("[0].inputs");
     List<Map<String, Object>> returnedOutputs = from(content).getList("[0].outputs");
@@ -358,7 +357,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
     String content = response.asString();
     List<String> instances = from(content).getList("");
     assertEquals(1, instances.size());
-    Assert.assertNotNull(instances.get(0));
+    assertThat(instances.get(0)).isNotNull();
 
     List<Map<String, Object>> returnedInputs = from(content).getList("[0].inputs");
     List<Map<String, Object>> returnedOutputs = from(content).getList("[0].outputs");
@@ -393,7 +392,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
     String content = response.asString();
     List<String> instances = from(content).getList("");
     assertEquals(1, instances.size());
-    Assert.assertNotNull(instances.get(0));
+    assertThat(instances.get(0)).isNotNull();
 
     List<Map<String, Object>> returnedInputs = from(content).getList("[0].inputs");
     List<Map<String, Object>> returnedOutputs = from(content).getList("[0].outputs");

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.integrationtest.functional.classloading.war;
 
+import static org.assertj.core.api.Assertions.fail;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -67,7 +69,7 @@ public class JavaDelegateResolutionTest extends AbstractFoxPlatformIntegrationTe
     // assert that we cannot load the delegate here:
     try {
       Class.forName("org.operaton.bpm.integrationtest.functional.classloading.ExampleDelegate");
-      Assert.fail("CNFE expected");
+      fail("CNFE expected");
     }catch (ClassNotFoundException e) {
       // expected
     }

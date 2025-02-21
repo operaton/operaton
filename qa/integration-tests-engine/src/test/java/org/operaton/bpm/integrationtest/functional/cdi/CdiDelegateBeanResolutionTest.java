@@ -21,7 +21,10 @@ import org.operaton.bpm.integrationtest.functional.cdi.beans.ExampleDelegateBean
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
+
 import org.jboss.arquillian.container.test.api.Deployment;
+
+import static org.assertj.core.api.Assertions.fail;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -71,7 +74,7 @@ public class CdiDelegateBeanResolutionTest extends AbstractFoxPlatformIntegratio
     try {
       // assert that we cannot resolve the bean here:
       ProgrammaticBeanLookup.lookup("exampleDelegateBean");
-      Assert.fail("exception expected");
+      fail("exception expected");
     }catch (Throwable e) {
       // expected
     }

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.integrationtest.functional.jpa;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -23,7 +25,6 @@ import javax.persistence.PersistenceContext;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
-import org.junit.Assert;
 
 @Named
 @ApplicationScoped
@@ -41,7 +42,7 @@ public class PersistenceDelegateBean implements JavaDelegate {
     // this means that we obtain the same entity manager we used to
     // persist the entity before starting the process
 
-    Assert.assertTrue(em.contains(entity));
+    assertThat(em.contains(entity)).isTrue();
 
   }
 

@@ -20,12 +20,14 @@ import org.operaton.bpm.engine.runtime.ProcessInstanceModificationInstantiationB
 import org.operaton.bpm.integrationtest.functional.modification.beans.ExampleDelegate;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.TestContainer;
+
 import org.jboss.arquillian.container.test.api.Deployment;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -60,7 +62,7 @@ public class ModificationContextSwitchTest extends AbstractFoxPlatformIntegratio
     // given
     // process instance is in state "waitState"
     String pi = runtimeService.startProcessInstanceByKey("testProcess").getId();
-    Assert.assertNull(runtimeService.getVariable(pi, "executed"));
+    assertThat(runtimeService.getVariable(pi, "executed")).isNull();
 
     // if
     // we modify the process instance to start the next task:
@@ -70,7 +72,7 @@ public class ModificationContextSwitchTest extends AbstractFoxPlatformIntegratio
     // then
     // the modification does not fail
     modification.execute();
-    Assert.assertTrue((Boolean)runtimeService.getVariable(pi, "executed"));
+    assertThat((Boolean) runtimeService.getVariable(pi, "executed")).isTrue();
   }
 
 }

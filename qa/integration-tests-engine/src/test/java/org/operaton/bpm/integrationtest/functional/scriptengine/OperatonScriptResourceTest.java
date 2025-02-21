@@ -25,8 +25,8 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 /**
  * @author Daniel Meyer
@@ -53,7 +53,7 @@ public class OperatonScriptResourceTest extends AbstractFoxPlatformIntegrationTe
       .processInstanceId(pi.getId())
       .singleResult();
 
-    assertNotNull(variable);
+    assertThat(variable).isNotNull();
     assertEquals("executed", variable.getName());
     assertEquals(true, variable.getValue());
   }

@@ -26,10 +26,10 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
 
@@ -59,7 +59,7 @@ public class TestWarDeploymentWithProcessEnginePlugin extends AbstractFoxPlatfor
   @Test
   public void testPAGroovyProcessEnginePlugin() {
     ProcessEngine groovyEngine = processEngineService.getProcessEngine("groovy");
-    Assert.assertNotNull(groovyEngine);
+    assertThat(groovyEngine).isNotNull();
 
     ProcessInstance pi = groovyEngine.getRuntimeService().startProcessInstanceByKey("groovy");
     HistoricProcessInstance hpi = groovyEngine.getHistoryService()
@@ -70,7 +70,7 @@ public class TestWarDeploymentWithProcessEnginePlugin extends AbstractFoxPlatfor
   @Test
   public void testPAGroovyAsyncProcessEnginePlugin() {
     ProcessEngine groovyEngine = processEngineService.getProcessEngine("groovy");
-    Assert.assertNotNull(groovyEngine);
+    assertThat(groovyEngine).isNotNull();
 
     ProcessInstance pi = groovyEngine.getRuntimeService().startProcessInstanceByKey("groovyAsync");
 

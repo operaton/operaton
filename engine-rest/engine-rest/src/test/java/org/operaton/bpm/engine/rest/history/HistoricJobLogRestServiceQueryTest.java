@@ -435,7 +435,7 @@ public class HistoricJobLogRestServiceQueryTest extends AbstractRestServiceTest 
     String content = response.asString();
     List<String> logs = from(content).getList("");
     Assert.assertEquals("There should be one historic job log returned.", 1, logs.size());
-    Assert.assertNotNull("The returned historic job log should not be null.", logs.get(0));
+    assertThat(logs.get(0)).as("The returned historic job log should not be null.").isNotNull();
 
     verifyHistoricJobLogEntries(content);
   }
@@ -463,7 +463,7 @@ public class HistoricJobLogRestServiceQueryTest extends AbstractRestServiceTest 
     String content = response.asString();
     List<String> logs = from(content).getList("");
     Assert.assertEquals("There should be one historic job log returned.", 1, logs.size());
-    Assert.assertNotNull("The returned historic job log should not be null.", logs.get(0));
+    assertThat(logs.get(0)).as("The returned historic job log should not be null.").isNotNull();
 
     verifyHistoricJobLogEntries(content);
   }

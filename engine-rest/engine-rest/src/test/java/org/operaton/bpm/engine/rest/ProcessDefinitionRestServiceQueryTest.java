@@ -163,7 +163,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
     String content = response.asString();
     List<String> definitions = from(content).getList("");
     Assert.assertEquals("There should be one process definition returned.", 1, definitions.size());
-    Assert.assertNotNull("There should be one process definition returned", definitions.get(0));
+    assertThat(definitions.get(0)).as("There should be one process definition returned").isNotNull();
 
     String returnedDefinitionKey = from(content).getString("[0].key");
     String returnedDefinitionId = from(content).getString("[0].id");
@@ -252,8 +252,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
 
     String content = response.asString();
     String returnedResourceName = from(content).getString("[0].resource");
-    Assert.assertNull("Should be null, as it is also null in the original process definition on the server.",
-        returnedResourceName);
+    assertThat(returnedResourceName).as("Should be null, as it is also null in the original process definition on the server.").isNull();
   }
 
   private List<ProcessDefinition> createIncompleteMockDefinitions() {

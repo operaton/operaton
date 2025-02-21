@@ -37,8 +37,8 @@ import org.junit.Test;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -117,7 +117,7 @@ public class TaskReportRestServiceTest extends AbstractRestServiceTest {
     String content = response.asString();
     List<String> reports = from(content).getList("");
     Assert.assertEquals("There should be one report returned.", 1, reports.size());
-    Assert.assertNotNull("The returned report should not be null.", reports.get(0));
+    assertThat(reports.get(0)).as("The returned report should not be null.").isNotNull();
 
     String returnedGroup = from(content).getString("[0].groupName");
     int returnedCount = from(content).getInt("[0].taskCount");
@@ -157,9 +157,9 @@ public class TaskReportRestServiceTest extends AbstractRestServiceTest {
         .get(CANDIDATE_GROUP_REPORT_URL);
 
     String responseContent = response.asString();
-    assertTrue(responseContent.contains(TaskReportResultToCsvConverter.CANDIDATE_GROUP_HEADER));
-    assertTrue(responseContent.contains(EXAMPLE_GROUP_ID));
-    assertTrue(responseContent.contains(String.valueOf(EXAMPLE_TASK_COUNT_BY_CANDIDATE_GROUP)));
+    assertThat(responseContent).contains(TaskReportResultToCsvConverter.CANDIDATE_GROUP_HEADER)
+      .contains(EXAMPLE_GROUP_ID)
+      .contains(String.valueOf(EXAMPLE_TASK_COUNT_BY_CANDIDATE_GROUP));
   }
 
   @Test
@@ -177,8 +177,9 @@ public class TaskReportRestServiceTest extends AbstractRestServiceTest {
           .get(CANDIDATE_GROUP_REPORT_URL);
 
     String responseContent = response.asString();
-    assertTrue(responseContent.contains(TaskReportResultToCsvConverter.CANDIDATE_GROUP_HEADER));
-    assertTrue(responseContent.contains(EXAMPLE_GROUP_ID));
-    assertTrue(responseContent.contains(String.valueOf(EXAMPLE_TASK_COUNT_BY_CANDIDATE_GROUP)));
+    assertThat(responseContent)
+      .contains(TaskReportResultToCsvConverter.CANDIDATE_GROUP_HEADER)
+      .contains(EXAMPLE_GROUP_ID)
+      .contains(String.valueOf(EXAMPLE_TASK_COUNT_BY_CANDIDATE_GROUP));
   }
 }

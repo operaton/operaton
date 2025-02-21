@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.integrationtest.functional.message;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -44,7 +44,7 @@ public class IntermediateMessageCatchEventTest extends AbstractFoxPlatformIntegr
 
     Execution execution = runtimeService.createExecutionQuery().messageEventSubscriptionName("Test Message").singleResult();
 
-    assertNotNull(execution);
+    assertThat(execution).isNotNull();
 
     runtimeService.createMessageCorrelation("Test Message").correlate();
 

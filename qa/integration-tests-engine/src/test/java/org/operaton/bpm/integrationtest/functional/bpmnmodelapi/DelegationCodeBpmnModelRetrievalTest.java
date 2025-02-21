@@ -21,7 +21,10 @@ import org.operaton.bpm.integrationtest.functional.bpmnmodelapi.beans.BpmnElemen
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
 import org.jboss.arquillian.container.test.api.Deployment;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
@@ -59,8 +62,8 @@ public class DelegationCodeBpmnModelRetrievalTest extends AbstractFoxPlatformInt
 
     BpmnElementRetrievalDelegate delegate = ProgrammaticBeanLookup.lookup(BpmnElementRetrievalDelegate.class);
 
-    Assert.assertNotNull(delegate.getBpmnModelElementInstance());
-    Assert.assertNotNull(delegate.getBpmnModelInstance());
+    assertThat(delegate.getBpmnModelElementInstance()).isNotNull();
+    assertThat(delegate.getBpmnModelInstance()).isNotNull();
     Assert.assertEquals(TEST_PROCESS, delegate.getBpmnModelInstance().getDefinitions().getRootElements().iterator().next().getId());
   }
 }

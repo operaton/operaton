@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.rest;
 import static io.restassured.RestAssured.expect;
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -334,7 +335,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
     String content = response.asString();
     List<String> variables = from(content).getList("");
     Assert.assertEquals("There should be one variable instance returned.", 1, variables.size());
-    Assert.assertNotNull("There should be one variable instance returned", variables.get(0));
+    assertThat(variables.get(0)).as("There should be one variable instance returned").isNotNull();
 
     verify(mockedQuery).disableBinaryFetching();
     // requirement to not break existing API; should be:
@@ -377,7 +378,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
     String content = response.asString();
     List<String> variables = from(content).getList("");
     Assert.assertEquals("There should be one process definition returned.", 1, variables.size());
-    Assert.assertNotNull("There should be one process definition returned", variables.get(0));
+    assertThat(variables.get(0)).as("There should be one process definition returned").isNotNull();
 
     verify(mockedQuery).disableBinaryFetching();
 

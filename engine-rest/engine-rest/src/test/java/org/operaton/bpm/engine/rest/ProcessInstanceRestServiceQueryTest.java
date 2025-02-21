@@ -153,7 +153,7 @@ public class ProcessInstanceRestServiceQueryTest extends
     String content = response.asString();
     List<String> instances = from(content).getList("");
     Assert.assertEquals("There should be one process definition returned.", 1, instances.size());
-    Assert.assertNotNull("There should be one process definition returned", instances.get(0));
+    assertThat(instances.get(0)).as("There should be one process definition returned").isNotNull();
 
     String returnedInstanceId = from(content).getString("[0].id");
     Boolean returnedIsEnded = from(content).getBoolean("[0].ended");
@@ -180,8 +180,7 @@ public class ProcessInstanceRestServiceQueryTest extends
 
     String content = response.asString();
     String returnedBusinessKey = from(content).getString("[0].businessKey");
-    Assert.assertNull("Should be null, as it is also null in the original process instance on the server.",
-        returnedBusinessKey);
+    assertThat(returnedBusinessKey).as("Should be null, as it is also null in the original process instance on the server.").isNull();
   }
 
   private List<ProcessInstance> createIncompleteMockInstances() {

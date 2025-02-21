@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.model.xml.impl.parser;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.xml.ModelInstance;
@@ -26,6 +25,7 @@ import org.operaton.bpm.model.xml.testmodel.TestModelParser;
 import java.io.InputStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ParserTest {
 
@@ -46,7 +46,7 @@ class ParserTest {
 
   @Test
   void shouldProhibitExternalSchemaAccessViaSystemProperty() {
-    Assertions.assertThatThrownBy(() -> {
+    assertThatThrownBy(() -> {
       // given
       // the external schema access property is not supported on certain
       // IBM JDK versions, in which case schema access cannot be restricted

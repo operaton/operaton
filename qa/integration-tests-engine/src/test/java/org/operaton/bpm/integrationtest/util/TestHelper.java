@@ -23,7 +23,6 @@ import org.operaton.bpm.engine.impl.util.IoUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.jboss.shrinkwrap.api.asset.Asset;
 import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
-import org.junit.Assert;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,7 +30,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 public abstract class TestHelper {
@@ -63,12 +62,12 @@ public abstract class TestHelper {
 
   public static void assertDiagramIsDeployed(boolean deployed, Class<?> clazz, String expectedDiagramResource, String processDefinitionKey) throws IOException {
     ProcessEngine processEngine = ProgrammaticBeanLookup.lookup(ProcessEngine.class);
-    Assert.assertNotNull(processEngine);
+    assertThat(processEngine).isNotNull();
     RepositoryService repositoryService = processEngine.getRepositoryService();
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
       .processDefinitionKey(processDefinitionKey)
       .singleResult();
-    assertNotNull(processDefinition);
+    assertThat(processDefinition).isNotNull();
 
     InputStream actualStream = null;
     InputStream expectedStream = null;
@@ -77,16 +76,16 @@ public abstract class TestHelper {
 
       if (deployed) {
         byte[] actualDiagram = IoUtil.readInputStream(actualStream, "actualStream");
-        assertNotNull(actualDiagram);
-        assertTrue(actualDiagram.length > 0);
+        assertThat(actualDiagram).isNotNull();
+        assertThat(actualDiagram.length > 0).isTrue();
 
         expectedStream = clazz.getResourceAsStream(expectedDiagramResource);
         byte[] expectedDiagram = IoUtil.readInputStream(expectedStream, "expectedSteam");
-        assertNotNull(expectedDiagram);
+        assertThat(expectedDiagram).isNotNull();
 
-        assertTrue(isEqual(expectedStream, actualStream));
+        assertThat(isEqual(expectedStream, actualStream)).isTrue();
       } else {
-        assertNull(actualStream);
+        assertThat(actualStream).isNull();
       }
     } finally {
       IoUtil.closeSilently(actualStream);

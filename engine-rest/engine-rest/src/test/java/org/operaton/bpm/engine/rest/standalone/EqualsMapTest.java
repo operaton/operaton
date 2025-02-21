@@ -23,8 +23,7 @@ import org.operaton.bpm.engine.rest.helper.EqualsMap;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Thorben Lindhauer
@@ -43,7 +42,7 @@ public class EqualsMapTest {
 
   @Test
   public void testMapsSame() {
-    assertTrue(new EqualsMap(map1).matches(map1));
+    assertThat(new EqualsMap(map1).matches(map1)).isTrue();
   }
 
   @Test
@@ -51,23 +50,23 @@ public class EqualsMapTest {
     map1.put("aKey", "aValue");
     map2.put("aKey", "aValue");
 
-    assertTrue(new EqualsMap(map1).matches(map2));
-    assertTrue(new EqualsMap(map2).matches(map1));
+    assertThat(new EqualsMap(map1).matches(map2)).isTrue();
+    assertThat(new EqualsMap(map2).matches(map1)).isTrue();
   }
 
   @Test
   public void testMapsNotEqual() {
     map1.put("aKey", "aValue");
 
-    assertFalse(new EqualsMap(map1).matches(map2));
-    assertFalse(new EqualsMap(map2).matches(map1));
+    assertThat(new EqualsMap(map1).matches(map2)).isFalse();
+    assertThat(new EqualsMap(map2).matches(map1)).isFalse();
   }
 
   @Test
   public void testMapsNull() {
-    assertFalse(new EqualsMap(null).matches(map1));
-    assertFalse(new EqualsMap(map1).matches(null));
-    assertTrue(new EqualsMap(null).matches(null));
+    assertThat(new EqualsMap(null).matches(map1)).isFalse();
+    assertThat(new EqualsMap(map1).matches(null)).isFalse();
+    assertThat(new EqualsMap(null).matches(null)).isTrue();
   }
 
 }

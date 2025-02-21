@@ -17,11 +17,10 @@
 package org.operaton.bpm.engine.rest;
 
 import static io.restassured.RestAssured.given;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.rest.util.JsonPathUtil.from;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
@@ -269,7 +268,7 @@ public class BatchRestServiceQueryTest extends AbstractRestServiceTest {
     BatchDto batch = from(batchListJson).getObject("[0]", BatchDto.class);
     String returnedStartTime = from(batchListJson).getString("[0].startTime");
 
-    assertNotNull("The returned batch should not be null.", batch);
+    assertThat(batch).as("The returned batch should not be null.").isNotNull();
     assertEquals(MockProvider.EXAMPLE_BATCH_ID, batch.getId());
     assertEquals(MockProvider.EXAMPLE_BATCH_TYPE, batch.getType());
     assertEquals(MockProvider.EXAMPLE_BATCH_TOTAL_JOBS, batch.getTotalJobs());
@@ -282,7 +281,7 @@ public class BatchRestServiceQueryTest extends AbstractRestServiceTest {
     assertEquals(MockProvider.EXAMPLE_TENANT_ID, batch.getTenantId());
     assertEquals(MockProvider.EXAMPLE_USER_ID, batch.getCreateUserId());
     assertEquals(MockProvider.EXAMPLE_HISTORIC_BATCH_START_TIME, returnedStartTime);
-    assertTrue(batch.isSuspended());
+    assertThat(batch.isSuspended()).isTrue();
   }
 
 }

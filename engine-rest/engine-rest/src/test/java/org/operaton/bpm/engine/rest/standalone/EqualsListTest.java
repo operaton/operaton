@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.rest.standalone;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +42,7 @@ public class EqualsListTest {
 
   @Test
   public void testListsSame() {
-    assertTrue(new EqualsList(list1).matches(list1));
+    assertThat(new EqualsList(list1).matches(list1)).isTrue();
   }
 
   @Test
@@ -51,23 +50,23 @@ public class EqualsListTest {
     list1.add("aString");
     list2.add("aString");
 
-    assertTrue(new EqualsList(list1).matches(list2));
-    assertTrue(new EqualsList(list2).matches(list1));
+    assertThat(new EqualsList(list1).matches(list2)).isTrue();
+    assertThat(new EqualsList(list2).matches(list1)).isTrue();
   }
 
   @Test
   public void testListsNotEqual() {
     list1.add("aString");
 
-    assertFalse(new EqualsList(list1).matches(list2));
-    assertFalse(new EqualsList(list2).matches(list1));
+    assertThat(new EqualsList(list1).matches(list2)).isFalse();
+    assertThat(new EqualsList(list2).matches(list1)).isFalse();
   }
 
   @Test
   public void testListsNull() {
-    assertFalse(new EqualsList(null).matches(list1));
-    assertFalse(new EqualsList(list1).matches(null));
-    assertTrue(new EqualsList(null).matches(null));
+    assertThat(new EqualsList(null).matches(list1)).isFalse();
+    assertThat(new EqualsList(list1).matches(null)).isFalse();
+    assertThat(new EqualsList(null).matches(null)).isTrue();
   }
 
 }

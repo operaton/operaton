@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.test.junit5;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.ProcessEngine;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -27,7 +28,10 @@ class ProcessEngineExtensionParentClassDeploymentTest extends ProcessEngineExten
 
   @Test
   void testDeploymentOnParentClassLevel(ProcessEngine processEngine) {
-    assertThat(processEngine.getRepositoryService().createProcessDefinitionQuery().processDefinitionKey("testHelperDeploymentTest").singleResult()).as("process is not deployed").isNotNull();
+    var processDefinition = processEngine.getRepositoryService().createProcessDefinitionQuery().processDefinitionKey("testHelperDeploymentTest").singleResult();
+    assertThat(processDefinition)
+      .as("process is not deployed")
+      .isNotNull();
   }
 
 }

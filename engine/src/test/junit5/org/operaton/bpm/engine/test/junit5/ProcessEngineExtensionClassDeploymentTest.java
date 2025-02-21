@@ -29,12 +29,18 @@ class ProcessEngineExtensionClassDeploymentTest {
 
   @Test
   void testDeploymentOnClassLevel(ProcessEngine processEngine) {
-    assertThat(processEngine.getRepositoryService().createProcessDefinitionQuery().processDefinitionKey("testHelperDeploymentTest").singleResult()).as("No process deployed with class annotation").isNotNull();
+    var processDefinition = processEngine.getRepositoryService().createProcessDefinitionQuery().processDefinitionKey("testHelperDeploymentTest").singleResult();
+    assertThat(processDefinition)
+      .as("No process deployed with class annotation")
+      .isNotNull();
   }
 
   @Test
   @Deployment
   void testDeploymentOnMethodOverridesClass(ProcessEngine processEngine) {
-    assertThat(processEngine.getRepositoryService().createProcessDefinitionQuery().processDefinitionKey("testHelperDeploymentTestOverride").singleResult()).as("No process deployed for method").isNotNull();
+    var processDefinition = processEngine.getRepositoryService().createProcessDefinitionQuery().processDefinitionKey("testHelperDeploymentTestOverride").singleResult();
+    assertThat(processDefinition)
+      .as("No process deployed for method")
+      .isNotNull();
   }
 }

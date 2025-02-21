@@ -1,4 +1,4 @@
-/*/*
+/*
  * Copyright and/or licensed under one or more contributor license agreements.
  * See the NOTICE file distributed with this work for additional information regarding
  * copyright ownership. This file is licensed to you under the Apache License,
@@ -47,17 +47,17 @@ public class ParameterizedTestExtensionTest {
 	}
 
 	@BeforeEach
-	public void setup() throws Exception {
+	void setUp() {
 		requestUrl = requestUrl + "processed/";
 	}
 
 	@AfterEach
-	public void teardown() {
+	void tearDown() {
 		requestUrl = null;
 	}
 
 	@TestTemplate
-	public void ensureBeforeEachCanProcessParamaters() throws Exception {
+	void ensureBeforeEachCanProcessParameters() {
 		if (alreadyAuthenticated) {
       assertThat(requestUrl).isEqualTo("/app/cockpit/default/processed/");
 		} else {

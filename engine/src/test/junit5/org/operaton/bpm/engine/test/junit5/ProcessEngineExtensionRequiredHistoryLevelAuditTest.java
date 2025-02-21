@@ -27,7 +27,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 class ProcessEngineExtensionRequiredHistoryLevelAuditTest {
 
   @RegisterExtension
-  ProcessEngineExtension extension = ProcessEngineExtension.builder()
+  static ProcessEngineExtension extension = ProcessEngineExtension.builder()
       .configurationResource("audithistory.operaton.cfg.xml")
       .build();
 
@@ -40,6 +40,7 @@ class ProcessEngineExtensionRequiredHistoryLevelAuditTest {
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
   void testRequiredHistoryLevelMatch() {
-    assertThat(extension.getProcessEngineConfiguration().getHistoryLevel().getName()).isEqualTo(ProcessEngineConfiguration.HISTORY_AUDIT);
+    String historyLevel = extension.getProcessEngineConfiguration().getHistoryLevel().getName();
+    assertThat(historyLevel).isEqualTo(ProcessEngineConfiguration.HISTORY_AUDIT);
   }
 }

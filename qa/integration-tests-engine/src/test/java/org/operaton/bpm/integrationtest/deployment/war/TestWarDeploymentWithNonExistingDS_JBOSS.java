@@ -36,7 +36,7 @@ import org.junit.runner.RunWith;
 
 /**
  * <p>This test makes sure that if we deploy a process application which contains a persistence.xml 
- * file which references a non existing datasource, the MSC does not run into a deadlock.</p>
+ * file which references a non-existing datasource, the MSC does not run into a deadlock.</p>
  * 
  * @author Daniel Meyer
  *

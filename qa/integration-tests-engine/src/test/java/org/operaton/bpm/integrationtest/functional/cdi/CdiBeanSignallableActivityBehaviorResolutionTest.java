@@ -43,7 +43,7 @@ import org.junit.runner.RunWith;
 public class CdiBeanSignallableActivityBehaviorResolutionTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
-  public static WebArchive createProcessArchiveDeplyoment() {
+  public static WebArchive createProcessArchiveDeployment() {
     return initWebArchiveDeployment()
             .addClass(ExampleSignallableActivityBehaviorBean.class)
             .addAsResource("org/operaton/bpm/integrationtest/functional/cdi/CdiBeanSignallableActivityBehaviorResolutionTest.testResolveBean.bpmn20.xml");

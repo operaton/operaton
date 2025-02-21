@@ -29,7 +29,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * <p>Integration test making sure that we can lookup a managed process engine 
+ * <p>Integration test making sure that we can look up a managed process engine
  * and expose it as a Spring Bean inside a Spring Application</p>
  * 
  * @author Daniel Meyer

@@ -498,6 +498,7 @@ public class ProcessBuilderTest {
   }
 
   @Test
+  @SuppressWarnings("deprecation")
   void testProcessOperatonExtensions() {
     modelInstance = Bpmn.createProcess(PROCESS_ID)
       .operatonJobPriority("${somePriority}")
@@ -1011,17 +1012,8 @@ public class ProcessBuilderTest {
 
   @Test
   void testSubProcessBuilderWrongScope() {
-    try {
-      modelInstance = Bpmn.createProcess()
-        .startEvent()
-        .subProcessDone()
-        .endEvent()
-        .done();
-      fail("Exception expected");
-    }
-    catch (Exception e) {
-      assertThat(e).isInstanceOf(BpmnModelException.class);
-    }
+    var endEventBuilder = Bpmn.createProcess().startEvent();
+    assertThatThrownBy(endEventBuilder::subProcessDone).isInstanceOf(BpmnModelException.class);
   }
 
   @Test

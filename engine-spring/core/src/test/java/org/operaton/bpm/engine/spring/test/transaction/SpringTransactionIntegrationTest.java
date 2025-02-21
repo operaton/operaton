@@ -113,8 +113,7 @@ class SpringTransactionIntegrationTest extends SpringProcessEngineTestCase {
     assertThat(job.getExceptionMessage()).isEqualTo("Transaction rolled back because it has been marked as rollback-only");
 
     String stacktrace = managementService.getJobExceptionStacktrace(job.getId());
-    assertThat(stacktrace).isNotNull();
-    assertThat(stacktrace.contains("Transaction rolled back because it has been marked as rollback-only")).as("unexpected stacktrace, was <" + stacktrace + ">").isTrue();
+    assertThat(stacktrace).isNotNull().contains("Transaction rolled back because it has been marked as rollback-only");
   }
 
   @Deployment
@@ -131,8 +130,7 @@ class SpringTransactionIntegrationTest extends SpringProcessEngineTestCase {
     assertThat(job.getExceptionMessage()).isEqualTo("Transaction rolled back because it has been marked as rollback-only");
 
     String stacktrace = managementService.getJobExceptionStacktrace(job.getId());
-    assertThat(stacktrace).isNotNull();
-    assertThat(stacktrace.contains("Transaction rolled back because it has been marked as rollback-only")).as("unexpected stacktrace, was <" + stacktrace + ">").isTrue();
+    assertThat(stacktrace).isNotNull().contains("Transaction rolled back because it has been marked as rollback-only");
   }
 
   @Deployment
@@ -149,8 +147,7 @@ class SpringTransactionIntegrationTest extends SpringProcessEngineTestCase {
     assertThat(job.getExceptionMessage()).isEqualTo("exception in transaction listener");
 
     String stacktrace = managementService.getJobExceptionStacktrace(job.getId());
-    assertThat(stacktrace).isNotNull();
-    assertThat(stacktrace.contains("java.lang.RuntimeException: exception in transaction listener")).as("unexpected stacktrace, was <" + stacktrace + ">").isTrue();
+    assertThat(stacktrace).isNotNull().contains("java.lang.RuntimeException: exception in transaction listener");
   }
 
 }

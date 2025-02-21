@@ -48,7 +48,7 @@ public class TestFoxPlatformClientAsEjbModule_onePaAsLib extends AbstractFoxPlat
 
   /**
    * Deployment layout
-   *
+   * <pre>
    * test-application.ear
    *    |-- lib /
    *        |-- processes.jar
@@ -61,7 +61,7 @@ public class TestFoxPlatformClientAsEjbModule_onePaAsLib extends AbstractFoxPlat
    *        |-- META-INF/MANIFEST.MF =================================||
    *        |-- WEB-INF/beans.xml
    *        |-- + test classes
-   *
+   * </pre>
    */
   @Deployment
   public static EnterpriseArchive onePaAsLib() {

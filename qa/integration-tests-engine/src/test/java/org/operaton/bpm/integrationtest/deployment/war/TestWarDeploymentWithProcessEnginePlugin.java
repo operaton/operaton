@@ -36,8 +36,9 @@ import static org.junit.Assert.assertEquals;
 /**
  * Assert that we can deploy a WAR with a process engine plugin
  * which ships and requires groovy as a dependency for scripting purposes.
- *
- * Does not work on JBoss, see https://app.camunda.com/jira/browse/CAM-1778
+ * <p>
+ * Does not work on JBoss, see <a href="https://app.camunda.com/jira/browse/CAM-1778">CAM-1778</a>
+ * </p>
  */
 @RunWith(Arquillian.class)
 public class TestWarDeploymentWithProcessEnginePlugin extends AbstractFoxPlatformIntegrationTest {

@@ -93,13 +93,13 @@ public class IndependentJobExecutionTest extends AbstractFoxPlatformIntegrationT
     List<ProcessApplicationDeploymentInfo> pa1DeploymentInfo = pa1Info.getDeploymentInfo();
 
     Assert.assertEquals(1, pa1DeploymentInfo.size());
-    assertThat(registeredDeploymentsForEngine1).contains(pa1DeploymentInfo.get(0));
+    assertThat(registeredDeploymentsForEngine1).contains(pa1DeploymentInfo.get(0).getDeploymentId());
 
     ProcessApplicationInfo pa2Info = getProcessApplicationDeploymentInfo("pa2");
 
     List<ProcessApplicationDeploymentInfo> pa2DeploymentInfo = pa2Info.getDeploymentInfo();
     Assert.assertEquals(1, pa2DeploymentInfo.size());
-    assertThat(registeredDeploymentsForDefaultEngine).contains(pa2DeploymentInfo.get(0));
+    assertThat(registeredDeploymentsForDefaultEngine).contains(pa2DeploymentInfo.get(0).getDeploymentId());
   }
 
   private ProcessApplicationInfo getProcessApplicationDeploymentInfo(String applicationName) {

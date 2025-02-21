@@ -28,6 +28,7 @@ import org.junit.runner.RunWith;
 
 import jakarta.inject.Inject;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
 import jakarta.transaction.Status;

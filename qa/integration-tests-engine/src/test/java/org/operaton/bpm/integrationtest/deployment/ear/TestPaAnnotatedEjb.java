@@ -39,7 +39,7 @@ import org.junit.runner.RunWith;
 public class TestPaAnnotatedEjb extends AbstractFoxPlatformIntegrationTest {
 
   /**
-   *
+   * <pre>
    * test-application.ear
    *    |-- pa.jar
    *        |-- AbstractFoxPlatformIntegrationTest.class
@@ -52,7 +52,7 @@ public class TestPaAnnotatedEjb extends AbstractFoxPlatformIntegrationTest {
    *
    *    |-- operaton-engine-cdi.jar
    *        |-- META-INF/MANIFEST.MF
-   *
+   * </pre>
    */
   @Deployment
   public static EnterpriseArchive paAsEjbModule() {

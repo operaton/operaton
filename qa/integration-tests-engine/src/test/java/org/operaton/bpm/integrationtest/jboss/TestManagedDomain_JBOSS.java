@@ -17,11 +17,14 @@
 package org.operaton.bpm.integrationtest.jboss;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import org.assertj.core.api.Assertions;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.TargetsContainer;
 import org.jboss.arquillian.junit.Arquillian;
@@ -47,18 +50,14 @@ public class TestManagedDomain_JBOSS {
 
   @Test
   public void shouldBeAbleToLookupDefaultProcessEngine() {
-    try {
-      assertThat(InitialContext.doLookup("java:global/operaton-bpm-platform/process-engine/default")).isNotNull();
-    } catch (NamingException e) {
-      fail("Could not lookup default process engine");
-    }
 
-    try {
-      assertThat(InitialContext.doLookup("java:global/operaton-bpm-platform/process-engine/someNonExistingEngine")).isNotNull();
-      fail("Should not be able to lookup someNonExistingEngine process engine");
-    } catch (NamingException e) {
-      // expected
-    }
+    assertThatCode(() -> InitialContext.<Object>doLookup("java:global/operaton-bpm-platform/process-engine/default"))
+      .as("Expected to lookup default process engine")
+      .doesNotThrowAnyException();
+
+    assertThatThrownBy(() -> InitialContext.doLookup("java:global/operaton-bpm-platform/process-engine/someNonExistingEngine"))
+      .as("Expected exception when looking up someNonExistingEngine")
+      .isInstanceOf(NamingException.class);
   }
 
 }

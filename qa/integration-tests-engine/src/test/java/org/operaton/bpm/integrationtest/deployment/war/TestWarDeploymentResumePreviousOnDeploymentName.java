@@ -60,7 +60,7 @@ public class TestWarDeploymentResumePreviousOnDeploymentName extends AbstractFox
   public void testDeployProcessArchive() {
     assertThat(processEngine, is(notNullValue()));
     RepositoryService repositoryService = processEngine.getRepositoryService();
-    //since we have two processes deployed for PA2 we gotta check that both are present
+    //since we have two processes deployed for PA2 we got to check that both are present
     long count = repositoryService.createProcessDefinitionQuery().processDefinitionKey("testDeployProcessArchive").count();
 
     assertThat(count, is(1L));

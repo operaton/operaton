@@ -36,7 +36,6 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.quarkus.engine.test.helper.ProcessEngineAwareExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -54,6 +53,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
 class TransactionIntegrationTest {
@@ -134,8 +134,6 @@ class TransactionIntegrationTest {
           fail("");
         } catch (ProcessEngineException ignored) {
           // expected
-        } catch (RuntimeException e) {
-          fail(e.getMessage());
         }
 
         // then
@@ -279,7 +277,7 @@ class TransactionIntegrationTest {
 
     @Transactional
     @Override
-    public void execute(DelegateExecution execution) throws Exception {
+    public void execute(DelegateExecution execution) {
       beanWithException.doSomething();
     }
 
@@ -343,6 +341,7 @@ class TransactionIntegrationTest {
           }
         }
       } catch (SQLException ignored) {
+        // ignored
       }
 
       if (nrOfRows != 1) {

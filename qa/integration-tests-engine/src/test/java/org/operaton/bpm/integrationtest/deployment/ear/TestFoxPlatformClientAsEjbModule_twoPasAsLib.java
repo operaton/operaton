@@ -49,7 +49,7 @@ public class TestFoxPlatformClientAsEjbModule_twoPasAsLib extends AbstractFoxPla
 
   /**
    * Deployment layout
-   *
+   * <pre>
    * test-application.ear
    *    |-- lib /
    *        |-- processes1.jar
@@ -65,7 +65,7 @@ public class TestFoxPlatformClientAsEjbModule_twoPasAsLib extends AbstractFoxPla
    *        |-- META-INF/MANIFEST.MF =================================||
    *        |-- WEB-INF/beans.xml
    *        |-- + test classes
-   *
+   * </pre>
    */
   @Deployment
   public static EnterpriseArchive twoPasAsLib() {

@@ -43,7 +43,7 @@ import org.junit.runner.RunWith;
 public class TestPaAsEjbJar extends AbstractFoxPlatformIntegrationTest {
 
   /**
-   *
+   * <pre>
    * test-application.ear
    *    |-- pa.jar
    *        |-- DefaultEjbProcessApplication.class
@@ -56,10 +56,10 @@ public class TestPaAsEjbJar extends AbstractFoxPlatformIntegrationTest {
    *
    *    |-- operaton-engine-cdi.jar
    *        |-- META-INF/MANIFEST.MF
-   *
+   * </pre>
    */
   @Deployment
-  public static EnterpriseArchive paAsEjbModule() throws Exception {
+  public static EnterpriseArchive paAsEjbModule() {
 
     JavaArchive processArchive1Jar = ShrinkWrap.create(JavaArchive.class, "pa.jar")
       .addClass(DefaultEjbProcessApplication.class)

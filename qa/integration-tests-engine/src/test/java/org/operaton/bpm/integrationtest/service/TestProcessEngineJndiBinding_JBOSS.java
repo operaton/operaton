@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.integrationtest.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
 import javax.naming.InitialContext;

@@ -93,10 +93,11 @@ public class CdiBeanCallActivityResolutionTest extends AbstractFoxPlatformIntegr
 
     Task afterCallActivityTask = taskService.createTaskQuery().singleResult();
     assertThat(afterCallActivityTask).isNotNull();
+    assertThat(afterCallActivityTask.getTaskDefinitionKey()).isEqualTo("afterCallActivity");
     Assert.assertEquals("afterCallActivity", afterCallActivityTask.getTaskDefinitionKey());
 
     String variable = (String) runtimeService.getVariable(processInstance.getId(), "var");
-    Assert.assertEquals("valuevalue", variable);
+    assertThat(variable).isEqualTo("valuevalue");
   }
 
   @Test

@@ -22,6 +22,9 @@ import static org.junit.Assert.assertEquals;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.connect.Connectors;
+import org.operaton.connect.spi.Connector;
+import org.operaton.connect.spi.ConnectorRequest;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
@@ -48,12 +51,12 @@ public class PaConnectSupportTest extends AbstractFoxPlatformIntegrationTest {
 
   @Test
   public void httpConnectorShouldBeAvailable() {
-    assertThat(Connectors.http()).isNotNull();
+    assertThat(Connectors.<Connector<?>>http()).isNotNull();
   }
 
   @Test
   public void soapConnectorShouldBeAvailable() {
-    assertThat(Connectors.soap()).isNotNull();
+    assertThat(Connectors.<Connector<?>>soap()).isNotNull();
   }
 
   @Test

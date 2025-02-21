@@ -34,6 +34,7 @@ import jakarta.inject.Named;
 import jakarta.transaction.Status;
 import jakarta.transaction.UserTransaction;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
 class UserTransactionIntegrationTest {
@@ -111,7 +112,7 @@ class UserTransactionIntegrationTest {
       assertThat(userTransactionManager.getStatus()).isEqualTo(Status.STATUS_MARKED_ROLLBACK);
 
     } finally {
-      // make sure we always rollback
+      // make sure we always roll back
       userTransactionManager.rollback();
     }
   }

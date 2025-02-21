@@ -189,8 +189,9 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
         .get(XML_DEFINITION_BY_KEY_URL);
 
     String responseContent = response.asString();
-    assertThat(responseContent).contains(MockProvider.EXAMPLE_CASE_DEFINITION_ID);
-    assertThat(responseContent).contains("<?xml");
+    assertThat(responseContent)
+      .contains(MockProvider.EXAMPLE_CASE_DEFINITION_ID)
+      .contains("<?xml");
   }
 
   @Test

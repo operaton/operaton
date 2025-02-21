@@ -22,6 +22,7 @@ import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
 import org.jboss.arquillian.container.test.api.Deployer;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
 import org.jboss.arquillian.container.test.api.Deployment;

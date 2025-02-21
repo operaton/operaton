@@ -46,7 +46,7 @@ public class TestFoxPlatformClientAsLibInWebModule extends AbstractFoxPlatformIn
 
   /**
    * Deployment layout
-   *
+   * <pre>
    * test-application.ear
    *    |-- test.war
    *        |-- lib /
@@ -54,7 +54,7 @@ public class TestFoxPlatformClientAsLibInWebModule extends AbstractFoxPlatformIn
    *        |-- WEB-INF/classes
    *            |-- META-INF/processes.xml
    *        |-- org/operaton/bpm/integrationtest/testDeployProcessArchive.bpmn20.xml
-   *
+   * </pre>
    */
   @Deployment
   public static EnterpriseArchive deployment() {

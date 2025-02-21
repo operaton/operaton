@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.integrationtest.deployment.war;
 import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import java.util.Set;

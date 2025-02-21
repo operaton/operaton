@@ -32,11 +32,13 @@ public class CustomSpringServletProcessApplication extends SpringServletProcessA
   private boolean isPreUndeployInvoked = false;
 
   @PostDeploy
+  @SuppressWarnings("unused")
   public void postDeploy() {
     isPostDeployInvoked = true;
   }
 
   @PreUndeploy
+  @SuppressWarnings("unused")
   public void preUndeploy() {
     isPreUndeployInvoked = true;
   }

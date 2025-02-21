@@ -20,6 +20,7 @@ import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.variable.Variables;
+import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.integrationtest.jobexecutor.classes.MyPojo;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.TestContainer;
@@ -39,6 +40,8 @@ import java.io.ByteArrayOutputStream;
 import java.util.Collections;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
@@ -99,15 +102,11 @@ public class SetVariablesAsyncTest extends AbstractFoxPlatformIntegrationTest {
     // when: execute remaining batch jobs
     jobs = managementService.createJobQuery().list();
     for (Job job : jobs) {
-      try {
-        managementService.executeJob(job.getId());
-      } catch (ProcessEngineException ex) {
-        fail("No exception expected: " + ex.getMessage());
-      }
+      assertThatCode(() -> managementService.executeJob(job.getId())).doesNotThrowAnyException();
     }
 
     // then
-    assertThat(runtimeService.getVariableTyped(pi, "foo", false)).isNotNull();
+    assertThat(runtimeService.<ObjectValue>getVariableTyped(pi, "foo", false)).isNotNull();
   }
 
   protected static Asset modelAsAsset(BpmnModelInstance modelInstance) {

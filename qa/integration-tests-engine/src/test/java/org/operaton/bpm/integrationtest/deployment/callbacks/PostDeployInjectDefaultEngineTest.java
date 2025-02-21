@@ -54,7 +54,7 @@ public class PostDeployInjectDefaultEngineTest {
     List<ProcessEngine> processEngines = PostDeployInjectApp.processEngines;
     assertThat(processEngines).as("processEngines must be injected").isNotNull();
     
-    // the app did no do a deployment so no engines are in the list
+    // the app did not do a deployment so no engines are in the list
     Assert.assertEquals(0, processEngines.size());
     
   }

@@ -129,6 +129,17 @@
       <scope>test</scope>
     </dependency>
 
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter</artifactId>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-api</artifactId>
+        <scope>test</scope>
+      </dependency>
+
     <!-- only included to prevent java.lang.ClassNotFoundException: org.apache.jasper.servlet.JspServlet -->
     <!-- removing this dep. will not break the tests, but makes them "ugly"-->
     <dependency>

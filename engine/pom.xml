@@ -116,6 +116,34 @@
       <artifactId>gson</artifactId>
     </dependency>
 
+	<!-- Test libraries on compile time for junit extensions -->
+
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-params</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.vintage</groupId>
+      <artifactId>junit-vintage-engine</artifactId>
+      <scope>test</scope> 
+    </dependency>
+
     <!-- provided dependencies -->
 
     <dependency>
@@ -261,12 +289,6 @@
     </dependency>
 
     <dependency>
-      <groupId>org.assertj</groupId>
-      <artifactId>assertj-core</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
       <scope>test</scope>
@@ -328,9 +350,21 @@
     </dependency>
 
     <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-testkit</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-bpm-archunit</artifactId>
       <version>${project.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-bpm-junit5</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -415,6 +449,38 @@
 
     <plugins>
       <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>add-sources</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>add-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>src/main/junit4</source>
+                <source>src/main/junit5</source>
+              </sources>
+            </configuration>
+          </execution>
+          <execution>
+            <id>add-test-sources</id>
+            <phase>generate-test-sources</phase>
+            <goals>
+              <goal>add-test-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>src/test/junit5</source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      
+      <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <failIfNoTests>false</failIfNoTests>
@@ -459,9 +525,75 @@
         <artifactId>maven-jar-plugin</artifactId>
         <executions>
           <execution>
+            <id>default-jar</id>
             <goals>
-              <goal>test-jar</goal>
+              <goal>jar</goal>
             </goals>
+          </execution>
+          <execution>
+            <id>junit4-jar</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+            <configuration>
+              <classifier>junit4</classifier>
+              <classesDirectory>${project.build.directory}/classes-junit4</classesDirectory>
+            </configuration>
+          </execution>
+          <execution>
+            <id>junit5-jar</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+            <configuration>
+              <classifier>junit5</classifier>
+              <classesDirectory>${project.build.directory}/classes-junit5</classesDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>default-testCompile</id>
+            <phase>test-compile</phase>
+            <goals>
+              <goal>testCompile</goal>
+            </goals>
+          </execution>
+          <!-- Additional execution to compile code needed for JUnit4 test only -->
+          <execution>
+            <id>junit4-Compile</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+            <configuration>
+              <!-- Specify the extra test source folder -->
+              <compileSourceRoots>
+                <compileSourceRoot>${project.basedir}/src/main/junit4</compileSourceRoot>
+              </compileSourceRoots>
+              <!-- Set its own output directory -->
+              <outputDirectory>${project.build.directory}/classes-junit4</outputDirectory>
+            </configuration>
+          </execution>
+          <!-- Additional execution to compile code needed for JUnit5 test only -->
+          <execution>
+            <id>junit5-compile</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+            <configuration>
+              <!-- Specify the extra test source folder -->
+              <compileSourceRoots>
+                <compileSourceRoot>${project.basedir}/src/main/junit5</compileSourceRoot>
+              </compileSourceRoots>
+              <!-- Set its own output directory -->
+              <outputDirectory>${project.build.directory}/classes-junit5</outputDirectory>
+            </configuration>
           </execution>
         </executions>
       </plugin>

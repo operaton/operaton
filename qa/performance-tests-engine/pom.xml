@@ -39,8 +39,8 @@
     </dependency>
     <dependency>
       <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-bpm-junit5</artifactId>
-      <scope>compile</scope>
+      <artifactId>operaton-engine</artifactId>
+      <classifier>junit5</classifier>
     </dependency>
 
     <dependency>

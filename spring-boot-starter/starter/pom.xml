@@ -25,7 +25,17 @@
   <dependencies>
     <dependency>
       <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine-spring-6</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
+      <classifier>junit5</classifier>
+      <scope>test</scope>
     </dependency>
 
     <!-- Spring dependencies required by operaton-engine-spring -->

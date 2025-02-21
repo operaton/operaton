@@ -97,7 +97,7 @@
 
               <!-- incidents -->
               left outer join
-                  <!-- Sum all incidents grouped by process definition and incident type-->
+                  <!-- Sum all incidents grouped by process definition -->
                   (
                     select
                         I.PROC_DEF_ID_

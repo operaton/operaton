@@ -86,6 +86,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 /**
  * @author Frederik Heremans
@@ -270,11 +271,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("ioMappingProcess");
 
     // Try to delete the deployment
-    try {
-      repositoryService.deleteDeployment(deploymentId, true, false, true);
-    } catch (Exception e) {
-      throw new ProcessEngineException("Exception is not expected when deleting deployment with running process", e);
-    }
+    assertDoesNotThrow(() -> repositoryService.deleteDeployment(deploymentId, true, false, true));
   }
 
   @Test

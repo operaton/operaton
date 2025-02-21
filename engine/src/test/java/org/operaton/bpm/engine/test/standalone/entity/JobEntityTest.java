@@ -26,6 +26,7 @@ import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 /**
  *
@@ -48,7 +49,7 @@ public class JobEntityTest extends PluggableProcessEngineTest {
     threeByteJobEntity.setExceptionMessage(fittingThreeByteMessage);
 
     // should not fail
-    insertJob(threeByteJobEntity);
+    assertDoesNotThrow(() -> insertJob(threeByteJobEntity));
 
     deleteJob(threeByteJobEntity);
   }
@@ -86,7 +87,7 @@ public class JobEntityTest extends PluggableProcessEngineTest {
     return sb.toString();
   }
 
-  
+
    @Deployment
   @Test
   public void testLongProcessDefinitionKey() {

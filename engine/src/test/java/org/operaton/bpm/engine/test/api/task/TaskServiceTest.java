@@ -61,6 +61,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 /**
  * @author Frederik Heremans
@@ -1128,7 +1129,8 @@ public class TaskServiceTest {
     task = taskService.createTaskQuery().taskId(task.getId()).singleResult();
 
     // Claim the task again with the same user. No exception should be thrown
-    taskService.claim(task.getId(), user.getId());
+    Task finalTask = task;
+    assertDoesNotThrow(() -> taskService.claim(finalTask.getId(), user.getId()));
 
     taskService.deleteTask(task.getId(), true);
     identityService.deleteUser(user.getId());
@@ -1707,7 +1709,7 @@ public class TaskServiceTest {
     taskService.addCandidateUser(task.getId(), user.getId());
 
     // Add as candidate the second time
-    taskService.addCandidateUser(task.getId(), user.getId());
+    assertDoesNotThrow(() -> taskService.addCandidateUser(task.getId(), user.getId()));
 
     identityService.deleteUser(user.getId());
     taskService.deleteTask(task.getId(), true);

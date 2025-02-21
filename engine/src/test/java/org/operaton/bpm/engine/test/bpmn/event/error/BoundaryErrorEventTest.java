@@ -43,6 +43,7 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 
 /**
@@ -781,7 +782,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
     // if the test fails, it produces a constraint violation in db.
 
-    runtimeService.startProcessInstanceByKey("process");
+    assertDoesNotThrow(() -> runtimeService.startProcessInstanceByKey("process"));
   }
 
   @Deployment

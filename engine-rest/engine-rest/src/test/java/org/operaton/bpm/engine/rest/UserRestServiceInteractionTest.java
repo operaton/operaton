@@ -351,7 +351,7 @@ public class UserRestServiceInteractionTest extends AbstractRestServiceTest {
   public void testDeleteUser() {
     given()
         .pathParam("id", MockProvider.EXAMPLE_USER_ID)
-    .then()
+    .then().expect()
         .statusCode(Status.NO_CONTENT.getStatusCode())
     .when()
         .delete(USER_URL);
@@ -361,7 +361,7 @@ public class UserRestServiceInteractionTest extends AbstractRestServiceTest {
   public void testDeleteNonExistingUser() {
     given()
         .pathParam("id", "non-existing")
-    .then()
+    .then().expect()
         .statusCode(Status.NO_CONTENT.getStatusCode())
     .when()
         .delete(USER_URL);

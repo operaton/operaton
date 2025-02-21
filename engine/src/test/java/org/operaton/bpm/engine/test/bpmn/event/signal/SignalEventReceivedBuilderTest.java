@@ -30,6 +30,7 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class SignalEventReceivedBuilderTest extends PluggableProcessEngineTest {
 
@@ -152,7 +153,7 @@ public class SignalEventReceivedBuilderTest extends PluggableProcessEngineTest {
   @Test
   public void testNoSignalEventSubscription() {
     // assert that no exception is thrown
-    runtimeService.createSignalEvent("signal").send();
+    assertDoesNotThrow(() -> runtimeService.createSignalEvent("signal").send());
   }
 
   @Test

@@ -65,6 +65,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -474,8 +475,7 @@ public class RuntimeServiceTest {
 
   @Test
   public void testDeleteProcessInstanceIfExistsWithFake() {
-      runtimeService.deleteProcessInstanceIfExists("aFake", null, false, false, false, false);
-      //don't expect exception
+    assertDoesNotThrow(() -> runtimeService.deleteProcessInstanceIfExists("aFake", null, false, false, false, false));
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})

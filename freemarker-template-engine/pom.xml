@@ -11,7 +11,7 @@
   <groupId>org.operaton.template-engines</groupId>
   <artifactId>operaton-template-engines-freemarker</artifactId>
   <version>1.0.0-beta-4-SNAPSHOT</version>
-  
+
   <name>Operaton - Template Engine - JSR223 Freemarker</name>
 
   <properties>
@@ -50,6 +50,7 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 

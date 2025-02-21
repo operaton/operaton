@@ -25,6 +25,7 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class JobExecutorPriorityRangeConfigurationTest {
 
@@ -68,10 +69,7 @@ public class JobExecutorPriorityRangeConfigurationTest {
     config.setJobExecutorPriorityRangeMax(-5);
 
     // when
-    config.buildProcessEngine();
-
-    // then
-    // no exception
+    assertDoesNotThrow(() -> config.buildProcessEngine());
   }
 
   @Test

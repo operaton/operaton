@@ -638,15 +638,17 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @SuppressWarnings("unchecked")
   protected void assertSorting(Map<String, Object> sorting, String sortBy, String sortOrder, String parametersVariable, ValueType parametersType) {
-    assertThat(sorting).containsEntry("sortBy", sortBy);
-    assertThat(sorting).containsEntry("sortOrder", sortOrder);
+    assertThat(sorting)
+            .containsEntry("sortBy", sortBy)
+            .containsEntry("sortOrder", sortOrder);
     if (parametersVariable == null) {
       assertThat(sorting.containsKey("parameters")).isFalse();
     }
     else {
       Map<String, Object> parameters = (Map<String, Object>) sorting.get("parameters");
-      assertThat(parameters).containsEntry("variable", parametersVariable);
-      assertThat(parameters).containsEntry("type", VariableValueDto.toRestApiTypeName(parametersType.getName()));
+      assertThat(parameters)
+              .containsEntry("variable", parametersVariable)
+              .containsEntry("type", VariableValueDto.toRestApiTypeName(parametersType.getName()));
     }
   }
 
@@ -1894,10 +1896,11 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @SuppressWarnings("unchecked")
   protected void verifyVariableValue(Map<String, Object> variable, String name, String value, String scopeResourcePath, String scopeId, String variablesName) {
-    assertThat(variable).containsEntry("name", name);
-    assertThat(variable).containsEntry("value", value);
-    assertThat(variable).containsEntry("type", "String");
-    assertThat(variable).containsEntry("valueInfo", Collections.emptyMap());
+    assertThat(variable)
+            .containsEntry("name", name)
+            .containsEntry("value", value)
+            .containsEntry("type", "String")
+            .containsEntry("valueInfo", Collections.emptyMap());
     assertThat(variable.get("_embedded")).isNull();
     Map<String, Map<String, String>> links = (Map<String, Map<String, String>>) variable.get("_links");
     assertThat(links).hasSize(1);

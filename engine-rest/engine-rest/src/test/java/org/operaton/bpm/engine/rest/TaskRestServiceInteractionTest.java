@@ -48,9 +48,6 @@ import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -80,7 +77,6 @@ import jakarta.ws.rs.HttpMethod;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
 
-import org.assertj.core.api.Assertions;
 import org.operaton.bpm.ProcessApplicationService;
 import org.operaton.bpm.application.ProcessApplicationInfo;
 import org.operaton.bpm.container.RuntimeContainerDelegate;
@@ -438,23 +434,23 @@ public class TaskRestServiceInteractionTest extends
     Assert.assertEquals("There should be two users returned.", 2, embeddedUsers.size());
 
     Map<String, Object> embeddedUser = embeddedUsers.get(0);
-    assertNotNull("The returned user should not be null.", embeddedUser);
+    assertThat(embeddedUser).as("The returned user should not be null.").isNotNull();
     assertEquals(MockProvider.EXAMPLE_TASK_ASSIGNEE_NAME, embeddedUser.get("id"));
     assertEquals(MockProvider.EXAMPLE_USER_FIRST_NAME, embeddedUser.get("firstName"));
     assertEquals(MockProvider.EXAMPLE_USER_LAST_NAME, embeddedUser.get("lastName"));
     assertEquals(MockProvider.EXAMPLE_USER_EMAIL, embeddedUser.get("email"));
-    assertNull(embeddedUser.get("_embedded"));
+    assertThat(embeddedUser.get("_embedded")).isNull();
     Map<String, Object> links = (Map<String, Object>) embeddedUser.get("_links");
     assertEquals(1, links.size());
     assertHalLink(links, "self", UserRestService.PATH + "/" + MockProvider.EXAMPLE_TASK_ASSIGNEE_NAME);
 
     embeddedUser = embeddedUsers.get(1);
-    assertNotNull("The returned user should not be null.", embeddedUser);
+    assertThat(embeddedUser).as("The returned user should not be null.").isNotNull();
     assertEquals(MockProvider.EXAMPLE_TASK_OWNER, embeddedUser.get("id"));
     assertEquals(MockProvider.EXAMPLE_USER_FIRST_NAME, embeddedUser.get("firstName"));
     assertEquals(MockProvider.EXAMPLE_USER_LAST_NAME, embeddedUser.get("lastName"));
     assertEquals(MockProvider.EXAMPLE_USER_EMAIL, embeddedUser.get("email"));
-    assertNull(embeddedUser.get("_embedded"));
+    assertThat(embeddedUser.get("_embedded")).isNull();
     links = (Map<String, Object>) embeddedUser.get("_links");
     assertEquals(1, links.size());
     assertHalLink(links, "self", UserRestService.PATH + "/" + MockProvider.EXAMPLE_TASK_OWNER);
@@ -464,21 +460,21 @@ public class TaskRestServiceInteractionTest extends
     Assert.assertEquals("There should be two groups returned.", 2, embeddedGroups.size());
 
     Map<String, Object> embeddedGroup = embeddedGroups.get(0);
-    assertNotNull("The returned group should not be null.", embeddedGroup);
+    assertThat(embeddedGroup).as("The returned group should not be null.").isNotNull();
     assertEquals(MockProvider.EXAMPLE_GROUP_ID, embeddedGroup.get("id"));
     assertEquals(MockProvider.EXAMPLE_GROUP_NAME, embeddedGroup.get("name"));
     assertEquals(MockProvider.EXAMPLE_GROUP_TYPE, embeddedGroup.get("type"));
-    assertNull(embeddedGroup.get("_embedded"));
+    assertThat(embeddedGroup.get("_embedded")).isNull();
     links = (Map<String, Object>) embeddedGroup.get("_links");
     assertEquals(1, links.size());
     assertHalLink(links, "self", GroupRestService.PATH + "/" + MockProvider.EXAMPLE_GROUP_ID);
 
     embeddedGroup = embeddedGroups.get(1);
-    assertNotNull("The returned group should not be null.", embeddedGroup);
+    assertThat(embeddedGroup).as("The returned group should not be null.").isNotNull();
     assertEquals(MockProvider.EXAMPLE_GROUP_ID2, embeddedGroup.get("id"));
     assertEquals(MockProvider.EXAMPLE_GROUP_NAME, embeddedGroup.get("name"));
     assertEquals(MockProvider.EXAMPLE_GROUP_TYPE, embeddedGroup.get("type"));
-    assertNull(embeddedGroup.get("_embedded"));
+    assertThat(embeddedGroup.get("_embedded")).isNull();
     links = (Map<String, Object>) embeddedGroup.get("_links");
     assertEquals(1, links.size());
     assertHalLink(links, "self", GroupRestService.PATH + "/" + MockProvider.EXAMPLE_GROUP_ID2);
@@ -487,7 +483,7 @@ public class TaskRestServiceInteractionTest extends
     List<Map<String,Object>> embeddedDefinitions = from(content).getList("_embedded.processDefinition");
     Assert.assertEquals("There should be one processDefinition returned.", 1, embeddedDefinitions.size());
     Map<String, Object> embeddedProcessDefinition = embeddedDefinitions.get(0);
-    Assert.assertNotNull("The returned processDefinition should not be null.", embeddedProcessDefinition);
+    assertThat(embeddedProcessDefinition).as("The returned processDefinition should not be null.").isNotNull();
     Assert.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, embeddedProcessDefinition.get("id"));
     Assert.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY, embeddedProcessDefinition.get("key"));
     Assert.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_CATEGORY, embeddedProcessDefinition.get("category"));
@@ -513,7 +509,7 @@ public class TaskRestServiceInteractionTest extends
     List<Map<String,Object>> embeddedCaseDefinitions = from(content).getList("_embedded.caseDefinition");
     Assert.assertEquals("There should be one caseDefinition returned.", 1, embeddedCaseDefinitions.size());
     Map<String, Object> embeddedCaseDefinition = embeddedCaseDefinitions.get(0);
-    Assert.assertNotNull("The returned caseDefinition should not be null.", embeddedCaseDefinition);
+    assertThat(embeddedCaseDefinition).as("The returned caseDefinition should not be null.").isNotNull();
     Assert.assertEquals(MockProvider.EXAMPLE_CASE_DEFINITION_ID, embeddedCaseDefinition.get("id"));
     Assert.assertEquals(MockProvider.EXAMPLE_CASE_DEFINITION_KEY, embeddedCaseDefinition.get("key"));
     Assert.assertEquals(MockProvider.EXAMPLE_CASE_DEFINITION_CATEGORY, embeddedCaseDefinition.get("category"));
@@ -543,7 +539,7 @@ public class TaskRestServiceInteractionTest extends
   @SuppressWarnings("unchecked")
   protected void assertHalLink(Map<String, Object> links, String key, String expectedLink) {
     Map<String, Object> linkObject = (Map<String, Object>) links.get(key);
-    Assert.assertNotNull(linkObject);
+    assertThat(linkObject).isNotNull();
 
     String actualLink = (String) linkObject.get("href");
     Assert.assertEquals(expectedLink, actualLink);
@@ -551,12 +547,12 @@ public class TaskRestServiceInteractionTest extends
 
   @SuppressWarnings("unchecked")
   protected void assertEmbeddedIdentityLink(IdentityLink expected, Map<String, Object> actual) {
-    assertNotNull("Embedded indentity link should not be null", actual);
+    assertThat(actual).as("Embedded indentity link should not be null").isNotNull();
     assertEquals(expected.getType(), actual.get("type"));
     assertEquals(expected.getUserId(), actual.get("userId"));
     assertEquals(expected.getGroupId(), actual.get("groupId"));
     assertEquals(expected.getTaskId(), actual.get("taskId"));
-    assertNull(actual.get("_embedded"));
+    assertThat(actual.get("_embedded")).isNull();
 
     Map<String, Object> links = (Map<String, Object>) actual.get("_links");
     if (expected.getUserId() != null) {
@@ -700,7 +696,7 @@ public class TaskRestServiceInteractionTest extends
         .get(RENDERED_FORM_URL);
 
     String responseContent = response.asString();
-    Assertions.assertThat(responseContent).isEqualTo(expectedResult);
+    assertThat(responseContent).isEqualTo(expectedResult);
   }
 
   @Test
@@ -718,7 +714,7 @@ public class TaskRestServiceInteractionTest extends
           .get(RENDERED_FORM_URL);
 
     String responseContent = new String(response.asByteArray(), EncodingUtil.DEFAULT_ENCODING);
-    Assertions.assertThat(responseContent).isEqualTo(expectedResult);
+    assertThat(responseContent).isEqualTo(expectedResult);
   }
 
   @Test
@@ -4116,7 +4112,7 @@ public class TaskRestServiceInteractionTest extends
 
     Map<String, String> returnedLink = returnedLinks.get(0);
     assertEquals(HttpMethod.GET, returnedLink.get("method"));
-    assertTrue(returnedLink.get("href").endsWith(SINGLE_TASK_COMMENTS_URL.replace("{id}", mockTaskComment.getTaskId()) + "/" + mockTaskComment.getId()));
+    assertThat(returnedLink.get("href")).endsWith(SINGLE_TASK_COMMENTS_URL.replace("{id}", mockTaskComment.getTaskId()) + "/" + mockTaskComment.getId());
     assertEquals("self", returnedLink.get("rel"));
   }
 
@@ -4177,7 +4173,7 @@ public class TaskRestServiceInteractionTest extends
 
     Map<String, String> returnedLink = returnedLinks.get(0);
     assertEquals(HttpMethod.GET, returnedLink.get("method"));
-    assertTrue(returnedLink.get("href").endsWith(SINGLE_TASK_ATTACHMENTS_URL.replace("{id}", mockTaskAttachment.getTaskId()) + "/" + mockTaskAttachment.getId()));
+    assertThat(returnedLink.get("href")).endsWith(SINGLE_TASK_ATTACHMENTS_URL.replace("{id}", mockTaskAttachment.getTaskId()) + "/" + mockTaskAttachment.getId());
     assertEquals("self", returnedLink.get("rel"));
   }
 

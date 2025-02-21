@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.junit5;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;

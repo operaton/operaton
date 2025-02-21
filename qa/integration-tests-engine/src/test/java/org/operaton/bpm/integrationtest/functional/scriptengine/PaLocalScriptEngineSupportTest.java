@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.integrationtest.functional.scriptengine;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 import org.operaton.bpm.integrationtest.functional.scriptengine.engine.AbstractScriptEngineFactory;
 import org.operaton.bpm.integrationtest.functional.scriptengine.engine.DummyScriptEngineFactory;
@@ -47,7 +47,7 @@ public class PaLocalScriptEngineSupportTest extends AbstractPaLocalScriptEngineT
   public void shouldSetVariable() {
     String processInstanceId = runtimeService.startProcessInstanceByKey(PROCESS_ID).getId();
     Object scriptValue = runtimeService.getVariable(processInstanceId, "scriptValue");
-    assertNotNull(scriptValue);
+    assertThat(scriptValue).isNotNull();
     assertEquals(SCRIPT_TEXT, scriptValue);
   }
 

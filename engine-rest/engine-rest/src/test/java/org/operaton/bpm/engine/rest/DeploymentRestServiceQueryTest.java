@@ -136,7 +136,7 @@ public class DeploymentRestServiceQueryTest extends AbstractRestServiceTest {
     String content = response.asString();
     List<String> deployments = from(content).getList("");
     Assert.assertEquals("There should be one deployment returned.", 1, deployments.size());
-    Assert.assertNotNull("There should be one deployment returned", deployments.get(0));
+    assertThat(deployments.get(0)).as("There should be one deployment returned").isNotNull();
 
     String returnedId = from(content).getString("[0].id");
     String returnedName = from(content).getString("[0].name");

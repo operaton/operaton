@@ -22,7 +22,10 @@ import org.operaton.bpm.integrationtest.functional.cdi.beans.ExampleBean;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
+
 import org.jboss.arquillian.container.test.api.Deployment;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -69,7 +72,7 @@ public class CdiBeanResolutionTest extends AbstractFoxPlatformIntegrationTest {
   @OperateOnDeployment("clientDeployment")
   public void testResolveBean() {
     // assert that we cannot resolve the bean here:
-    Assert.assertNull(ProgrammaticBeanLookup.lookup("exampleBean"));
+    assertThat(ProgrammaticBeanLookup.lookup("exampleBean")).isNull();
 
     Assert.assertEquals(0, runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBean").count());
     // but the process engine can:
@@ -96,7 +99,7 @@ public class CdiBeanResolutionTest extends AbstractFoxPlatformIntegrationTest {
   @OperateOnDeployment("clientDeployment")
   public void testResolveCdiStandaloneProcessEngineConfigBean() {
 
-    Assert.assertNotNull(ProgrammaticBeanLookup.lookup(CdiStandaloneProcessEngineConfiguration.class));
+    assertThat(ProgrammaticBeanLookup.lookup(CdiStandaloneProcessEngineConfiguration.class)).isNotNull();
 
   }
 

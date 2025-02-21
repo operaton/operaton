@@ -44,9 +44,9 @@ import org.junit.Test;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.containsString;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.mock;
@@ -209,7 +209,7 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
     String content = response.asString();
     List<String> reports = from(content).getList("");
     Assert.assertEquals("There should be one report returned.", 1, reports.size());
-    Assert.assertNotNull("The returned report should not be null.", reports.get(0));
+    assertThat(reports.get(0)).as("The returned report should not be null.").isNotNull();
 
     long returnedAvg = from(content).getLong("[0].average");
     long returnedMax = from(content).getLong("[0].maximum");
@@ -239,7 +239,7 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
     String content = response.asString();
     List<String> reports = from(content).getList("");
     Assert.assertEquals("There should be one report returned.", 1, reports.size());
-    Assert.assertNotNull("The returned report should not be null.", reports.get(0));
+    assertThat(reports.get(0)).as("The returned report should not be null.").isNotNull();
 
     long returnedAvg = from(content).getLong("[0].average");
     long returnedMax = from(content).getLong("[0].maximum");
@@ -421,11 +421,11 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
         .when().get(HISTORIC_PROCESS_INSTANCE_REPORT_URL);
 
     String responseContent = response.asString();
-    assertTrue(responseContent.contains(ReportResultToCsvConverter.DURATION_HEADER));
-    assertTrue(responseContent.contains(MONTH.toString()));
-    assertTrue(responseContent.contains(String.valueOf(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_AVG)));
-    assertTrue(responseContent.contains(String.valueOf(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_MIN)));
-    assertTrue(responseContent.contains(String.valueOf(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_MAX)));
+    assertThat(responseContent).contains(ReportResultToCsvConverter.DURATION_HEADER);
+    assertThat(responseContent).contains(MONTH);
+    assertThat(responseContent).contains(String);
+    assertThat(responseContent).contains(String);
+    assertThat(responseContent).contains(String);
   }
 
   @Test
@@ -444,11 +444,11 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
       .when().get(HISTORIC_PROCESS_INSTANCE_REPORT_URL);
 
     String responseContent = response.asString();
-    assertTrue(responseContent.contains(ReportResultToCsvConverter.DURATION_HEADER));
-    assertTrue(responseContent.contains(QUARTER.toString()));
-    assertTrue(responseContent.contains(String.valueOf(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_AVG)));
-    assertTrue(responseContent.contains(String.valueOf(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_MIN)));
-    assertTrue(responseContent.contains(String.valueOf(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_MAX)));
+    assertThat(responseContent).contains(ReportResultToCsvConverter.DURATION_HEADER);
+    assertThat(responseContent).contains(QUARTER);
+    assertThat(responseContent).contains(String);
+    assertThat(responseContent).contains(String);
+    assertThat(responseContent).contains(String);
   }
 
   @Test
@@ -467,11 +467,11 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
         .when().get(HISTORIC_PROCESS_INSTANCE_REPORT_URL);
 
     String responseContent = response.asString();
-    assertTrue(responseContent.contains(ReportResultToCsvConverter.DURATION_HEADER));
-    assertTrue(responseContent.contains(MONTH.toString()));
-    assertTrue(responseContent.contains(String.valueOf(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_AVG)));
-    assertTrue(responseContent.contains(String.valueOf(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_MIN)));
-    assertTrue(responseContent.contains(String.valueOf(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_MAX)));
+    assertThat(responseContent).contains(ReportResultToCsvConverter.DURATION_HEADER);
+    assertThat(responseContent).contains(MONTH);
+    assertThat(responseContent).contains(String);
+    assertThat(responseContent).contains(String);
+    assertThat(responseContent).contains(String);
   }
 
   @Test
@@ -490,11 +490,11 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
       .when().get(HISTORIC_PROCESS_INSTANCE_REPORT_URL);
 
     String responseContent = response.asString();
-    assertTrue(responseContent.contains(ReportResultToCsvConverter.DURATION_HEADER));
-    assertTrue(responseContent.contains(QUARTER.toString()));
-    assertTrue(responseContent.contains(String.valueOf(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_AVG)));
-    assertTrue(responseContent.contains(String.valueOf(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_MIN)));
-    assertTrue(responseContent.contains(String.valueOf(EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_MAX)));
+    assertThat(responseContent).contains(ReportResultToCsvConverter.DURATION_HEADER);
+    assertThat(responseContent).contains(QUARTER);
+    assertThat(responseContent).contains(String);
+    assertThat(responseContent).contains(String);
+    assertThat(responseContent).contains(String);
   }
 
   @Test

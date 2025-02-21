@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.integrationtest.functional.connect;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
@@ -48,12 +48,12 @@ public class PaConnectSupportTest extends AbstractFoxPlatformIntegrationTest {
 
   @Test
   public void httpConnectorShouldBeAvailable() {
-    assertNotNull(Connectors.http());
+    assertThat(Connectors.http()).isNotNull();
   }
 
   @Test
   public void soapConnectorShouldBeAvailable() {
-    assertNotNull(Connectors.soap());
+    assertThat(Connectors.soap()).isNotNull();
   }
 
   @Test
@@ -63,7 +63,7 @@ public class PaConnectSupportTest extends AbstractFoxPlatformIntegrationTest {
 
     runtimeService.startProcessInstanceByKey("testProcess");
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     String payload = (String) taskService.getVariable(task.getId(), "payload");
     assertEquals("Hello world!", payload);
 

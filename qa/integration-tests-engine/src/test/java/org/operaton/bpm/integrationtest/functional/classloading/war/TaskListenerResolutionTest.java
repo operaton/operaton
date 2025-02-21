@@ -22,12 +22,16 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.integrationtest.functional.classloading.beans.ExampleTaskListener;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.TestContainer;
+
 import org.jboss.arquillian.container.test.api.Deployment;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -58,7 +62,7 @@ public class TaskListenerResolutionTest extends AbstractFoxPlatformIntegrationTe
     // assert that we cannot load the delegate here:
     try {
       Class.forName("org.operaton.bpm.integrationtest.functional.classloading.beans.ExampleTaskListener");
-      Assert.fail("CNFE expected");
+      fail("CNFE expected");
     }catch (ClassNotFoundException e) {
       // expected
     }
@@ -70,12 +74,12 @@ public class TaskListenerResolutionTest extends AbstractFoxPlatformIntegrationTe
     taskService.setAssignee(task.getId(), "john doe");
 
     Execution execution = runtimeService.createExecutionQuery().processInstanceId(pi.getId()).singleResult();
-    Assert.assertNotNull(runtimeService.getVariable(execution.getId(), "listener"));
+    assertThat(runtimeService.getVariable(execution.getId(), "listener")).isNotNull();
     runtimeService.removeVariable(execution.getId(), "listener");
 
     taskService.complete(task.getId());
 
-    Assert.assertNotNull(runtimeService.getVariable(execution.getId(), "listener"));
+    assertThat(runtimeService.getVariable(execution.getId(), "listener")).isNotNull();
 
     // the delegate expression listener should execute successfully
     runtimeService.removeVariable(execution.getId(), "listener");
@@ -83,12 +87,12 @@ public class TaskListenerResolutionTest extends AbstractFoxPlatformIntegrationTe
     task = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
 
     taskService.setAssignee(task.getId(), "john doe");
-    Assert.assertNotNull(runtimeService.getVariable(execution.getId(), "listener"));
+    assertThat(runtimeService.getVariable(execution.getId(), "listener")).isNotNull();
     runtimeService.removeVariable(execution.getId(), "listener");
 
     taskService.complete(task.getId());
 
-    Assert.assertNotNull(runtimeService.getVariable(execution.getId(), "listener"));
+    assertThat(runtimeService.getVariable(execution.getId(), "listener")).isNotNull();
 
   }
 

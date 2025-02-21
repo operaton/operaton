@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.rest;
 
 
 import static io.restassured.RestAssured.given;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -137,7 +138,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
   private InputStream createMockCaseDefinitionCmmnXml() {
     // do not close the input stream, will be done in implementation
     InputStream cmmnXmlInputStream = ReflectUtil.getResourceAsStream("cases/case-model.cmmn");
-    Assert.assertNotNull(cmmnXmlInputStream);
+    assertThat(cmmnXmlInputStream).isNotNull();
     return cmmnXmlInputStream;
   }
 
@@ -152,8 +153,8 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
         .get(XML_DEFINITION_URL);
 
     String responseContent = response.asString();
-    Assert.assertTrue(responseContent.contains(MockProvider.EXAMPLE_CASE_DEFINITION_ID));
-    Assert.assertTrue(responseContent.contains("<?xml"));
+    assertThat(responseContent).contains(MockProvider.EXAMPLE_CASE_DEFINITION_ID);
+    assertThat(responseContent).contains("<?xml");
   }
 
   @Test
@@ -188,8 +189,8 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
         .get(XML_DEFINITION_BY_KEY_URL);
 
     String responseContent = response.asString();
-    Assert.assertTrue(responseContent.contains(MockProvider.EXAMPLE_CASE_DEFINITION_ID));
-    Assert.assertTrue(responseContent.contains("<?xml"));
+    assertThat(responseContent).contains(MockProvider.EXAMPLE_CASE_DEFINITION_ID);
+    assertThat(responseContent).contains("<?xml");
   }
 
   @Test
@@ -573,7 +574,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
 
     // compare input stream with response body bytes
     byte[] expected = IoUtil.readInputStream(new FileInputStream(file), "case diagram");
-    Assert.assertArrayEquals(expected, actual);
+    assertThat(actual).containsExactly(expected);
   }
 
   @Test
@@ -600,7 +601,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
 
     // compare input stream with response body bytes
     byte[] expected = IoUtil.readInputStream(new FileInputStream(file), "case diagram");
-    Assert.assertArrayEquals(expected, actual);
+    assertThat(actual).containsExactly(expected);
   }
 
   @Test

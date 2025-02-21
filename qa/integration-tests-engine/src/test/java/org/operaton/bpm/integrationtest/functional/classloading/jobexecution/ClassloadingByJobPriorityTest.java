@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.integrationtest.functional.classloading.jobexecution;
 
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
@@ -79,7 +79,7 @@ public class ClassloadingByJobPriorityTest extends AbstractFoxPlatformIntegratio
 
     // then
     List<Job> availableJobs = configuration.getManagementService().createJobQuery().noRetriesLeft().list();
-    assertTrue(availableJobs.isEmpty());
+    assertThat(availableJobs).isEmpty();
   }
 
   protected static Asset modelAsAsset(BpmnModelInstance modelInstance) {

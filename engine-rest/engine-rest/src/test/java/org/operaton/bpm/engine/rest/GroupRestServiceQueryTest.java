@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.rest;
 import static io.restassured.RestAssured.expect;
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
@@ -126,7 +127,7 @@ public class GroupRestServiceQueryTest extends AbstractRestServiceTest {
     String content = response.asString();
     List<String> instances = from(content).getList("");
     Assert.assertEquals("There should be one group returned.", 1, instances.size());
-    Assert.assertNotNull("The returned group should not be null.", instances.get(0));
+    assertThat(instances.get(0)).as("The returned group should not be null.").isNotNull();
 
     String returendName = from(content).getString("[0].name");
     String returendType = from(content).getString("[0].type");

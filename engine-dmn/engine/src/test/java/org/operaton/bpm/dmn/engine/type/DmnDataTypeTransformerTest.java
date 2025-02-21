@@ -37,7 +37,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 /**
  * Tests the build-in {@link DmnDataTypeTransformer}s.
@@ -86,7 +86,7 @@ class DmnDataTypeTransformerTest extends DmnEngineTest {
   @Test
   void invalidStringValueForBooleanType() {
     DmnDataTypeTransformer typeTransformer = registry.getTransformer("boolean");
-    assertThrows(IllegalArgumentException.class, () -> typeTransformer.transform("NaB"));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> typeTransformer.transform("NaB"));
   }
 
   @Test
@@ -105,31 +105,31 @@ class DmnDataTypeTransformerTest extends DmnEngineTest {
   @Test
   void invalidStringValueForIntegerType() {
     DmnDataTypeTransformer typeTransformer = registry.getTransformer("integer");
-    assertThrows(IllegalArgumentException.class, () -> typeTransformer.transform("4.2"));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> typeTransformer.transform("4.2"));
   }
 
   @Test
   void invalidDoubleValueForIntegerType() {
     DmnDataTypeTransformer typeTransformer = registry.getTransformer("integer");
-    assertThrows(IllegalArgumentException.class, () -> typeTransformer.transform(4.2));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> typeTransformer.transform(4.2));
   }
 
   @Test
   void invalidLongValueForIntegerType() {
     DmnDataTypeTransformer typeTransformer = registry.getTransformer("integer");
-    assertThrows(IllegalArgumentException.class, () -> typeTransformer.transform(Long.MAX_VALUE));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> typeTransformer.transform(Long.MAX_VALUE));
   }
 
   @Test
   void invalidIntegerMinValueForIntegerType() {
     DmnDataTypeTransformer typeTransformer = registry.getTransformer("integer");
-    assertThrows(IllegalArgumentException.class, () -> typeTransformer.transform(Integer.MIN_VALUE - 1L));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> typeTransformer.transform(Integer.MIN_VALUE - 1L));
   }
 
   @Test
   void invalidIntegerMaxValueForIntegerType() {
     DmnDataTypeTransformer typeTransformer = registry.getTransformer("integer");
-    assertThrows(IllegalArgumentException.class, () -> typeTransformer.transform(Integer.MAX_VALUE + 1L));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> typeTransformer.transform(Integer.MAX_VALUE + 1L));
   }
 
   @Test
@@ -148,19 +148,19 @@ class DmnDataTypeTransformerTest extends DmnEngineTest {
   @Test
   void invalidStringValueForLongType() {
     DmnDataTypeTransformer typeTransformer = registry.getTransformer("long");
-    assertThrows(IllegalArgumentException.class, () -> typeTransformer.transform("4.2"));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> typeTransformer.transform("4.2"));
   }
 
   @Test
   void invalidDoubleValueForLongType() {
     DmnDataTypeTransformer typeTransformer = registry.getTransformer("long");
-    assertThrows(IllegalArgumentException.class, () -> typeTransformer.transform(4.2));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> typeTransformer.transform(4.2));
   }
 
   @Test
   void invalidDoubleMinValueForLongType() {
     DmnDataTypeTransformer typeTransformer = registry.getTransformer("long");
-    assertThrows(IllegalArgumentException.class, () -> typeTransformer.transform(Double.MIN_VALUE));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> typeTransformer.transform(Double.MIN_VALUE));
   }
 
   @Test
@@ -181,7 +181,7 @@ class DmnDataTypeTransformerTest extends DmnEngineTest {
   @Test
   void invalidStringValueForDoubleType() {
     DmnDataTypeTransformer typeTransformer = registry.getTransformer("double");
-    assertThrows(IllegalArgumentException.class, () -> typeTransformer.transform("NaD"));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> typeTransformer.transform("NaD"));
   }
 
   @Test
@@ -293,7 +293,7 @@ class DmnDataTypeTransformerTest extends DmnEngineTest {
   @Test
   void invalidStringForDateType() {
     DmnDataTypeTransformer typeTransformer = registry.getTransformer("date");
-    assertThrows(IllegalArgumentException.class, () -> typeTransformer.transform("18.09.2015 12:00:00"));
+    assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> typeTransformer.transform("18.09.2015 12:00:00"));
   }
 
   protected Date toDate(String date, String timeZone) {

@@ -57,7 +57,6 @@ import java.util.*;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.assertj.core.api.Assertions;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -67,6 +66,7 @@ import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
 
 import static io.restassured.RestAssured.given;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
@@ -184,7 +184,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
     // do not close the input stream, will be done in implementation
     InputStream bpmn20XmlIn = null;
     bpmn20XmlIn = ReflectUtil.getResourceAsStream("processes/fox-invoice_en_long_id.bpmn");
-    Assert.assertNotNull(bpmn20XmlIn);
+    assertThat(bpmn20XmlIn).isNotNull();
     return bpmn20XmlIn;
   }
 
@@ -239,8 +239,8 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
     .when().get(XML_DEFINITION_URL);
 
     String responseContent = response.asString();
-    Assert.assertTrue(responseContent.contains(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID));
-    Assert.assertTrue(responseContent.contains("<?xml"));
+    assertThat(responseContent).contains(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
+    assertThat(responseContent).contains("<?xml");
   }
 
   @Test
@@ -266,7 +266,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
 
     // compare input stream with response body bytes
     byte[] expected = IoUtil.readInputStream(new FileInputStream(file), "process diagram");
-    Assert.assertArrayEquals(expected, actual);
+    assertThat(actual).containsExactly(expected);
   }
 
   @Test
@@ -293,7 +293,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
 
     // compare input stream with response body bytes
     byte[] expected = IoUtil.readInputStream(new FileInputStream(file), "process diagram");
-    Assert.assertArrayEquals(expected, actual);
+    assertThat(actual).containsExactly(expected);
   }
 
   @Test
@@ -462,7 +462,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
         .get(RENDERED_FORM_URL);
 
     String responseContent = response.asString();
-    Assertions.assertThat(responseContent).isEqualTo(expectedResult);
+    assertThat(responseContent).isEqualTo(expectedResult);
   }
 
   @Test
@@ -480,7 +480,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
           .get(RENDERED_FORM_URL);
 
     String responseContent = new String(response.asByteArray(), EncodingUtil.DEFAULT_ENCODING);
-    Assertions.assertThat(responseContent).isEqualTo(expectedResult);
+    assertThat(responseContent).isEqualTo(expectedResult);
   }
 
   @Test
@@ -2760,8 +2760,8 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
     .when().get(XML_DEFINITION_BY_KEY_URL);
 
     String responseContent = response.asString();
-    Assert.assertTrue(responseContent.contains(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID));
-    Assert.assertTrue(responseContent.contains("<?xml"));
+    assertThat(responseContent).contains(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
+    assertThat(responseContent).contains("<?xml");
   }
 
   @Test
@@ -2832,7 +2832,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
         .get(RENDERED_FORM_BY_KEY_URL);
 
     String responseContent = response.asString();
-    Assertions.assertThat(responseContent).isEqualTo(expectedResult);
+    assertThat(responseContent).isEqualTo(expectedResult);
   }
 
   @Test

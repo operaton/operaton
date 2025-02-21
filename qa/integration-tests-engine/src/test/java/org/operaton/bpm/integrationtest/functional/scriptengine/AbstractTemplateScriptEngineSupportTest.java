@@ -26,8 +26,8 @@ import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 /**
  * @author Sebastian Menski
@@ -63,7 +63,7 @@ public abstract class AbstractTemplateScriptEngineSupportTest extends AbstractFo
     processInstanceId = runtimeService.startProcessInstanceByKey(PROCESS_ID, variables).getId();
 
     Object result = runtimeService.getVariable(processInstanceId, RESULT_VARIABLE);
-    assertNotNull(result);
+    assertThat(result).isNotNull();
     assertEquals(EXPECTED_RESULT, result);
   }
 

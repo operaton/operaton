@@ -18,7 +18,8 @@ package org.operaton.bpm.integrationtest.functional.classloading.variables.beans
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
-import org.junit.Assert;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Daniel Meyer
@@ -31,7 +32,7 @@ public class GetVariableDelegate implements JavaDelegate {
     
     SerializableVariable variable = (SerializableVariable) execution.getVariable("var1");
 
-    Assert.assertNotNull(variable);
+    assertThat(variable).isNotNull();
   }
 
 

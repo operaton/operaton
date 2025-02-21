@@ -19,7 +19,10 @@ package org.operaton.bpm.integrationtest.functional.el;
 import org.operaton.bpm.engine.form.StartFormData;
 import org.operaton.bpm.integrationtest.functional.el.beans.ResolveFormDataBean;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+
 import org.jboss.arquillian.container.test.api.Deployment;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Assert;
@@ -46,7 +49,7 @@ public class ElResolveStartFormDataTest extends AbstractFoxPlatformIntegrationTe
     StartFormData formData = formService.getStartFormData(processDefinitionId);
     Object defaultValue = formData.getFormFields().get(0).getValue().getValue();
 
-    Assert.assertNotNull(defaultValue);
+    assertThat(defaultValue).isNotNull();
     Assert.assertEquals("testString123", defaultValue);
   }
 
@@ -57,7 +60,7 @@ public class ElResolveStartFormDataTest extends AbstractFoxPlatformIntegrationTe
     StartFormData formData = formService.getStartFormData(processDefinitionId);
 
     String label = formData.getFormFields().get(0).getLabel();
-    Assert.assertNotNull(label);
+    assertThat(label).isNotNull();
     Assert.assertEquals("testString123", label);
   }
 

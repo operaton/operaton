@@ -15,7 +15,7 @@
  */
 package org.operaton.bpm.dmn.engine.test.junit5;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -59,9 +59,9 @@ public class ParameterizedTestExtensionTest {
 	@TestTemplate
 	public void ensureBeforeEachCanProcessParamaters() throws Exception {
 		if (alreadyAuthenticated) {
-			assertEquals("/app/cockpit/default/processed/", requestUrl);
+      assertThat(requestUrl).isEqualTo("/app/cockpit/default/processed/");
 		} else {
-			assertEquals("/app/cockpit/engine2/processed/", requestUrl);
+      assertThat(requestUrl).isEqualTo("/app/cockpit/engine2/processed/");
 		}
 	}
 

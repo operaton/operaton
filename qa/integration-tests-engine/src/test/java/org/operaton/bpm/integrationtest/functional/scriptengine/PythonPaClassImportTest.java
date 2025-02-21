@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.integrationtest.functional.scriptengine;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 import org.operaton.bpm.integrationtest.functional.scriptengine.classes.CustomClass;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
@@ -89,7 +89,7 @@ public class PythonPaClassImportTest extends AbstractFoxPlatformIntegrationTest 
     // then start process 2
     String processInstanceId = runtimeService.startProcessInstanceByKey("process2").getId();
     Object foo = runtimeService.getVariable(processInstanceId, "greeting");
-    assertNotNull(foo);
+    assertThat(foo).isNotNull();
     assertEquals("Hi Ho", foo);
   }
 

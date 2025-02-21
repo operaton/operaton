@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.integrationtest.functional.scriptengine;
 
-import static org.junit.Assert.assertNotEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.integrationtest.functional.scriptengine.engine.AbstractScriptEngineFactory;
@@ -45,7 +45,7 @@ public class PaLocalScriptEngineDisabledCacheTest extends AbstractPaLocalScriptE
   @Test
   public void shouldNotCacheScriptEngine() {
     AbstractProcessApplication processApplication = (AbstractProcessApplication) getProcessApplication();
-    assertNotEquals(processApplication.getScriptEngineForName(SCRIPT_FORMAT, false), processApplication.getScriptEngineForName(SCRIPT_FORMAT, false));
+    assertThat(processApplication.getScriptEngineForName(SCRIPT_FORMAT, false)).isNotEqualTo(processApplication.getScriptEngineForName(SCRIPT_FORMAT, false));
   }
 
 }

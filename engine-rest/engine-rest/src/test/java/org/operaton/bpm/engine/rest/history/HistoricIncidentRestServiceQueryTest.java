@@ -366,7 +366,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
     String content = response.asString();
     List<String> incidents = from(content).getList("");
     Assert.assertEquals("There should be one incident returned.", 1, incidents.size());
-    Assert.assertNotNull("The returned incident should not be null.", incidents.get(0));
+    assertThat(incidents.get(0)).as("The returned incident should not be null.").isNotNull();
 
     String returnedId = from(content).getString("[0].id");
     String returnedProcessDefinitionKey = from(content).getString("[0].processDefinitionKey");

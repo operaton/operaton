@@ -22,7 +22,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -578,7 +577,7 @@ public class HistoricProcessInstanceRestServiceInteractionTest extends AbstractR
 
   protected void verifyBatchJson(String batchJson) {
     BatchDto batch = JsonPathUtil.from(batchJson).getObject("", BatchDto.class);
-    assertNotNull("The returned batch should not be null.", batch);
+    assertThat(batch).as("The returned batch should not be null.").isNotNull();
     assertEquals(MockProvider.EXAMPLE_BATCH_ID, batch.getId());
     assertEquals(MockProvider.EXAMPLE_BATCH_TYPE, batch.getType());
     assertEquals(MockProvider.EXAMPLE_BATCH_TOTAL_JOBS, batch.getTotalJobs());

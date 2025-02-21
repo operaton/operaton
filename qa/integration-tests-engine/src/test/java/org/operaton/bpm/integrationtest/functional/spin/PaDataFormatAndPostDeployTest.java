@@ -23,11 +23,13 @@ import org.operaton.bpm.integrationtest.functional.spin.dataformat.FooDataFormat
 import org.operaton.bpm.integrationtest.functional.spin.dataformat.FooSpin;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.spin.spi.DataFormatProvider;
+
 import org.jboss.arquillian.container.test.api.Deployment;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -56,8 +58,8 @@ public class PaDataFormatAndPostDeployTest extends AbstractFoxPlatformIntegratio
 
   @Test
   public void shouldDeployApp() {
-    Assert.assertNotNull(BpmPlatform.getProcessApplicationService()
-        .getProcessApplicationInfo(PaDataformatAndPostDeployApp.PA_NAME));
+    assertThat(BpmPlatform.getProcessApplicationService()
+      .getProcessApplicationInfo(PaDataformatAndPostDeployApp.PA_NAME)).isNotNull();
   }
 
 }

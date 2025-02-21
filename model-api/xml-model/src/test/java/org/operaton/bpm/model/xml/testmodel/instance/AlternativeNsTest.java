@@ -35,8 +35,6 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * @author Ronny Bräunlich
@@ -239,7 +237,7 @@ class AlternativeNsTest extends TestModelTest {
     donald.setAttributeValueNs(YET_ANOTHER_NS, "canHazExtendedWings", "false");
     assertThatThereIsNoNewerNamespaceUrl(modelInstance);
 
-    assertTrue(plucky.canHazExtendedWings());
+    assertThat(plucky.canHazExtendedWings()).isTrue();
     assertThatThereIsNoNewerNamespaceUrl(modelInstance);
   }
 
@@ -249,7 +247,7 @@ class AlternativeNsTest extends TestModelTest {
     for (int i = 0; i < attributes.getLength(); i++) {
       Node item = attributes.item(i);
       String nodeValue = item.getNodeValue();
-      assertNotEquals(TestModelConstants.NEWER_NAMESPACE, nodeValue, "Found newer namespace url which shouldn't exist");
+      assertThat(nodeValue).as("Found newer namespace url which shouldn't exist").isNotEqualTo(TestModelConstants.NEWER_NAMESPACE);
     }
   }
 

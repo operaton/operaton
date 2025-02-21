@@ -278,7 +278,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
     String content = response.asString();
     List<Map<String,Object>> instances = from(content).getList("_embedded.task");
     Assert.assertEquals("There should be one task returned.", 1, instances.size());
-    Assert.assertNotNull("The returned task should not be null.", instances.get(0));
+    assertThat(instances.get(0)).as("The returned task should not be null.").isNotNull();
 
     Map<String, Object> taskObject = instances.get(0);
 
@@ -331,14 +331,14 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
 
     // validate links
     Map<String,Object> selfReference = from(content).getMap("_links.self");
-    Assert.assertNotNull(selfReference);
+    assertThat(selfReference).isNotNull();
     Assert.assertEquals("/task", selfReference.get("href"));
 
     // validate embedded assignees:
     List<Map<String,Object>> embeddedAssignees = from(content).getList("_embedded.assignee");
     Assert.assertEquals("There should be one assignee returned.", 1, embeddedAssignees.size());
     Map<String, Object> embeddedAssignee = embeddedAssignees.get(0);
-    Assert.assertNotNull("The returned assignee should not be null.", embeddedAssignee);
+    assertThat(embeddedAssignee).as("The returned assignee should not be null.").isNotNull();
     Assert.assertEquals(MockProvider.EXAMPLE_USER_ID, embeddedAssignee.get("id"));
     Assert.assertEquals(MockProvider.EXAMPLE_USER_FIRST_NAME, embeddedAssignee.get("firstName"));
     Assert.assertEquals(MockProvider.EXAMPLE_USER_LAST_NAME, embeddedAssignee.get("lastName"));
@@ -348,7 +348,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
     List<Map<String,Object>> embeddedOwners = from(content).getList("_embedded.owner");
     Assert.assertEquals("There should be one owner returned.", 1, embeddedOwners.size());
     Map<String, Object> embeddedOwner = embeddedOwners.get(0);
-    Assert.assertNotNull("The returned owner should not be null.", embeddedOwner);
+    assertThat(embeddedOwner).as("The returned owner should not be null.").isNotNull();
     Assert.assertEquals(MockProvider.EXAMPLE_USER_ID, embeddedOwner.get("id"));
     Assert.assertEquals(MockProvider.EXAMPLE_USER_FIRST_NAME, embeddedOwner.get("firstName"));
     Assert.assertEquals(MockProvider.EXAMPLE_USER_LAST_NAME, embeddedOwner.get("lastName"));
@@ -358,7 +358,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
     List<Map<String,Object>> embeddedDefinitions = from(content).getList("_embedded.processDefinition");
     Assert.assertEquals("There should be one processDefinition returned.", 1, embeddedDefinitions.size());
     Map<String, Object> embeddedProcessDefinition = embeddedDefinitions.get(0);
-    Assert.assertNotNull("The returned processDefinition should not be null.", embeddedProcessDefinition);
+    assertThat(embeddedProcessDefinition).as("The returned processDefinition should not be null.").isNotNull();
     Assert.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, embeddedProcessDefinition.get("id"));
     Assert.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY, embeddedProcessDefinition.get("key"));
     Assert.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_CATEGORY, embeddedProcessDefinition.get("category"));
@@ -376,7 +376,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
     List<Map<String,Object>> embeddedCaseDefinitions = from(content).getList("_embedded.caseDefinition");
     Assert.assertEquals("There should be one caseDefinition returned.", 1, embeddedCaseDefinitions.size());
     Map<String, Object> embeddedCaseDefinition = embeddedCaseDefinitions.get(0);
-    Assert.assertNotNull("The returned caseDefinition should not be null.", embeddedCaseDefinition);
+    assertThat(embeddedCaseDefinition).as("The returned caseDefinition should not be null.").isNotNull();
     Assert.assertEquals(MockProvider.EXAMPLE_CASE_DEFINITION_ID, embeddedCaseDefinition.get("id"));
     Assert.assertEquals(MockProvider.EXAMPLE_CASE_DEFINITION_KEY, embeddedCaseDefinition.get("key"));
     Assert.assertEquals(MockProvider.EXAMPLE_CASE_DEFINITION_CATEGORY, embeddedCaseDefinition.get("category"));

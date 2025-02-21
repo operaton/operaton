@@ -18,7 +18,10 @@ package org.operaton.bpm.integrationtest.deployment.war;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+
 import org.jboss.arquillian.container.test.api.Deployment;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Assert;
@@ -40,7 +43,7 @@ public class TestWarDeploymentWithoutProcessDefinitions extends AbstractFoxPlatf
 
   @Test
   public void testDeployProcessArchive() {
-    Assert.assertNotNull(ProgrammaticBeanLookup.lookup(ProcessEngine.class));
+    assertThat(ProgrammaticBeanLookup.lookup(ProcessEngine.class)).isNotNull();
 
     // no deployment has been constructed
     Assert.assertEquals(0, repositoryService.createDeploymentQuery().deploymentName("pa").count());

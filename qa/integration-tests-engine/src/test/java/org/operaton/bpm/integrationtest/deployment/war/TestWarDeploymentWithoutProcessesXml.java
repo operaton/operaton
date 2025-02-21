@@ -20,11 +20,13 @@ import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
+
 import org.jboss.arquillian.container.test.api.Deployment;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -52,7 +54,7 @@ public class TestWarDeploymentWithoutProcessesXml extends AbstractFoxPlatformInt
   
   @Test
   public void testDeployProcessArchive() {
-    Assert.assertNotNull(ProgrammaticBeanLookup.lookup(ProcessEngine.class));
+    assertThat(ProgrammaticBeanLookup.lookup(ProcessEngine.class)).isNotNull();
   }
 
 }

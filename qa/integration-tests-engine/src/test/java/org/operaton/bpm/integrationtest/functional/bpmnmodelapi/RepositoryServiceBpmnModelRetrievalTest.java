@@ -20,11 +20,13 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
 import org.jboss.arquillian.container.test.api.Deployment;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -51,7 +53,7 @@ public class RepositoryServiceBpmnModelRetrievalTest extends AbstractFoxPlatform
       .singleResult();
 
     BpmnModelInstance bpmnModelInstance = repositoryService.getBpmnModelInstance(processDefinition.getId());
-    Assert.assertNotNull(bpmnModelInstance);
+    assertThat(bpmnModelInstance).isNotNull();
 
   }
 }

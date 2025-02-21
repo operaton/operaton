@@ -20,13 +20,15 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.integrationtest.deployment.ear.beans.AnnotatedEjbPa;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
+
 import org.jboss.arquillian.container.test.api.Deployment;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -72,7 +74,7 @@ public class TestPaAnnotatedEjb extends AbstractFoxPlatformIntegrationTest {
   public void testPaAnnotatedEjb() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process1");
 
-    Assert.assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
   }
 
 }

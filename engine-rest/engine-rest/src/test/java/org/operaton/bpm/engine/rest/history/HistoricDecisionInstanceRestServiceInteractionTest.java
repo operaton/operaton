@@ -23,7 +23,6 @@ import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_DECISION_
 import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_DECISION_INSTANCE_ID;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyList;
 import static org.mockito.Mockito.anyString;
@@ -579,7 +578,7 @@ public class HistoricDecisionInstanceRestServiceInteractionTest extends Abstract
 
   protected void verifyBatchJson(String batchJson) {
     BatchDto batch = JsonPathUtil.from(batchJson).getObject("", BatchDto.class);
-    assertNotNull("The returned batch should not be null.", batch);
+    assertThat(batch).as("The returned batch should not be null.").isNotNull();
     assertEquals(MockProvider.EXAMPLE_BATCH_ID, batch.getId());
     assertEquals(MockProvider.EXAMPLE_BATCH_TYPE, batch.getType());
     assertEquals(MockProvider.EXAMPLE_BATCH_TOTAL_JOBS, batch.getTotalJobs());

@@ -562,8 +562,8 @@ public class HistoricDetailRestServiceQueryTest extends AbstractRestServiceTest 
     String content = response.asString();
     List<String> details = from(content).getList("");
     Assert.assertEquals("There should be two activity instance returned.", 2, details.size());
-    Assert.assertNotNull("The returned details should not be null.", details.get(0));
-    Assert.assertNotNull("The returned details should not be null.", details.get(1));
+    assertThat(details.get(0)).as("The returned details should not be null.").isNotNull();
+    assertThat(details.get(1)).as("The returned details should not be null.").isNotNull();
 
     // note: element [0] is asserted as part of the fluent rest-assured invocation
 

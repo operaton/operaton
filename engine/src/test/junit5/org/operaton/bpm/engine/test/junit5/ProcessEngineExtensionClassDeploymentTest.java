@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.junit5;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.test.Deployment;
@@ -29,14 +29,12 @@ class ProcessEngineExtensionClassDeploymentTest {
 
   @Test
   void testDeploymentOnClassLevel(ProcessEngine processEngine) {
-    assertNotNull(processEngine.getRepositoryService().createProcessDefinitionQuery().processDefinitionKey("testHelperDeploymentTest").singleResult(),
-        "No process deployed with class annotation");
+    assertThat(processEngine.getRepositoryService().createProcessDefinitionQuery().processDefinitionKey("testHelperDeploymentTest").singleResult()).as("No process deployed with class annotation").isNotNull();
   }
 
   @Test
   @Deployment
   void testDeploymentOnMethodOverridesClass(ProcessEngine processEngine) {
-    assertNotNull(processEngine.getRepositoryService().createProcessDefinitionQuery().processDefinitionKey("testHelperDeploymentTestOverride").singleResult(),
-        "No process deployed for method");
+    assertThat(processEngine.getRepositoryService().createProcessDefinitionQuery().processDefinitionKey("testHelperDeploymentTestOverride").singleResult()).as("No process deployed for method").isNotNull();
   }
 }

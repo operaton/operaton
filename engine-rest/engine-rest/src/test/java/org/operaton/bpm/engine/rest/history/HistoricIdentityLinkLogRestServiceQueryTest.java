@@ -257,7 +257,7 @@ public class HistoricIdentityLinkLogRestServiceQueryTest extends AbstractRestSer
     String content = response.asString();
     List<String> identityLinks = from(content).getList("");
     Assert.assertEquals("There should be one incident returned.", 1, identityLinks.size());
-    Assert.assertNotNull("The returned incident should not be null.", identityLinks.get(0));
+    assertThat(identityLinks.get(0)).as("The returned incident should not be null.").isNotNull();
 
     String returnedAssignerId = from(content).getString("[0].assignerId");
     String returnedTenantId = from(content).getString("[0].tenantId");

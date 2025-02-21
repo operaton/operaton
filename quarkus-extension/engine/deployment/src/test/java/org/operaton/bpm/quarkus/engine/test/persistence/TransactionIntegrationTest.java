@@ -54,7 +54,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
 class TransactionIntegrationTest {
@@ -132,7 +131,7 @@ class TransactionIntegrationTest {
         try {
           // when
           userBean.completeTask(taskId);
-          Assertions.fail();
+          fail("");
         } catch (ProcessEngineException ignored) {
           // expected
         } catch (RuntimeException e) {

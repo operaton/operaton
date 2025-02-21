@@ -29,6 +29,8 @@ import org.junit.runner.RunWith;
 
 import java.util.Set;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  * @author Thorben Lindhauer
  *
@@ -50,7 +52,7 @@ public class TestWarDeploymentCustomPAName extends AbstractFoxPlatformIntegratio
     Set<String> paNames = BpmPlatform.getProcessApplicationService().getProcessApplicationNames();
 
     Assert.assertEquals(1, paNames.size());
-    Assert.assertTrue(paNames.contains(CustomNameServletPA.NAME));
+    assertThat(paNames).contains(CustomNameServletPA.NAME);
 
   }
 }

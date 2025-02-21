@@ -35,6 +35,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.Arrays;
+
+import static org.assertj.core.api.Assertions.fail;
+
 import java.util.List;
 import java.util.Map;
 
@@ -57,7 +60,7 @@ public class PurgeDatabaseTest extends AbstractFoxPlatformIntegrationTest {
 
   @Test
   public void testPurgeDatabase() {
-    Assert.assertNotNull(processEngine);
+    assertThat(processEngine).isNotNull();
     VariableMap variableMap = Variables.putValue("var", "value");
     runtimeService.startProcessInstanceByKey("testDeployProcessArchive", variableMap);
     runtimeService.startProcessInstanceByKey("testDeployProcessArchive", variableMap);
@@ -112,7 +115,7 @@ public class PurgeDatabaseTest extends AbstractFoxPlatformIntegrationTest {
             }
           });
       }
-      Assert.fail(outputMessage.toString());
+      fail(outputMessage.toString());
     }
   }
 

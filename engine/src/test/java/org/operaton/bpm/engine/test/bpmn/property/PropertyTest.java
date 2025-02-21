@@ -32,8 +32,8 @@ public class PropertyTest extends PluggableProcessEngineTest {
 
     // DO NOT DELETE: WILL BE REACTIVATED SOON!
     // http://jira.codehaus.org/browse/ACT-88
-    
-    
+
+
 //    // Start the process -> waits in usertask
 //    Map<String, Object> vars = new HashMap<String, Object>();
 //    vars.put("inputVar", "test");
@@ -187,18 +187,18 @@ public class PropertyTest extends PluggableProcessEngineTest {
 
   // @Test public void testUserTaskLinkExprProperty() {
   // deployProcessForThisTestMethod();
-  //    
+  //
   // // Start the process -> waits in usertask
   // Map<String, Object> address = new HashMap<String, Object>();
   // address.put("Street", "Broadway");
   // address.put("City", "New York");
-  //    
+  //
   // Map<String, Object> variables = new HashMap<String, Object>();
   // variables.put("address", address);
   // ProcessInstance pi =
   // processService.startProcessInstanceByKey("testUserTaskLinkExprProperty",
   // variables);
-  //    
+  //
   // // Variable 'taskVar' should only be visible for the task scoped execution
   // Execution childExecution =
   // processService.findChildExecutions(pi.getId()).get(0);
@@ -206,7 +206,7 @@ public class PropertyTest extends PluggableProcessEngineTest {
   // "taskVar"));
   // assertEquals("test", processService.getVariable(childExecution.getId(),
   // "inputVar"));
-  //    
+  //
   // // Change the value of variable 'taskVar' on the task scope
   // String taskScopedExecutionId = childExecution.getId();
   // processService.setVariable(taskScopedExecutionId, "taskVar", "new_value");
@@ -215,7 +215,7 @@ public class PropertyTest extends PluggableProcessEngineTest {
   // assertEquals("test", processService.getVariable(taskScopedExecutionId,
   // "inputVar"));
   // assertNull(processService.getVariable(pi.getId(), "taskVar"));
-  //    
+  //
   // // Completing the task copies the value of 'taskVar' into 'inputVar'
   // taskService.complete(taskService.createTaskQuery().singleResult().getId());
   // assertTrue(processService.findChildExecutions(pi.getId()).isEmpty()); //

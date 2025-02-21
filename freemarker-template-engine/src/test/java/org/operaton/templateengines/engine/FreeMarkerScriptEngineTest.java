@@ -26,8 +26,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.operaton.templateengines.engine.util.Greeter;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * @author Sebastian Menski
@@ -51,13 +50,6 @@ class FreeMarkerScriptEngineTest {
     bindings = new SimpleBindings();
   }
 
-  @AfterEach
-  void checkResult() throws ScriptException {
-    if (template != null) {
-      assertThat(evaluate(template)).isEqualTo(expected);
-    }
-  }
-
   protected String evaluate(String template) throws ScriptException {
     return (String) scriptEngine.eval(template, bindings);
   }
@@ -68,60 +60,68 @@ class FreeMarkerScriptEngineTest {
   }
 
   @Test
-  void variableExpansion() {
+  void variableExpansion() throws ScriptException {
     bindings.put("name", "world");
     expected = "Hello world!";
     template = "Hello ${name}!";
+    assertThat(evaluate(template)).isEqualTo(expected);
   }
 
   @Test
-  void javaProperties() {
+  void javaProperties() throws ScriptException {
     bindings.put("greeter", new Greeter());
     expected = "!";
     template = "${greeter.suffix}";
+    assertThat(evaluate(template)).isEqualTo(expected);
   }
 
   @Test
-  void javaMethodCall() {
+  void javaMethodCall() throws ScriptException {
     bindings.put("greeter", new Greeter());
     expected = "Hello world!";
     template = "${greeter.hello('world')}";
+    assertThat(evaluate(template)).isEqualTo(expected);
   }
 
   @Test
-  void javaArrays() {
+  void javaArrays() throws ScriptException {
     bindings.put("myarray", new String[]{"hello", "foo", "world", "bar"});
     expected = "4 hello world!";
     template = "${myarray?size} ${myarray[0]} ${myarray[2]}!";
+    assertThat(evaluate(template)).isEqualTo(expected);
   }
 
   @Test
-  void javaBoolean() {
+  void javaBoolean() throws ScriptException {
     bindings.put("mybool", false);
     expected = "Hello world!";
     template = "<#if mybool>okey<#else>Hello world!</#if>";
+    assertThat(evaluate(template)).isEqualTo(expected);
   }
 
   @Test
-  void javaInteger() {
+  void javaInteger() throws ScriptException {
     bindings.put("myint", 6);
     expected = "42";
     template = "<#assign myint = myint + 36>${myint}";
+    assertThat(evaluate(template)).isEqualTo(expected);
   }
 
   @Test
-  void javaCollection() {
-    Collection names = Arrays.asList("tweety", "duffy", "tom");
+  void javaCollection() throws ScriptException {
+    Collection<String> names = Arrays.asList("tweety", "duffy", "tom");
     bindings.put("names", names);
     expected = "tweety, duffy, tom";
     template = "<#list names as name>${name}<#if name_has_next>, </#if></#list>";
+    assertThat(evaluate(template)).isEqualTo(expected);
   }
 
   @Test
-  void defineBlock() {
+  void defineBlock() throws ScriptException {
     bindings.put("who", "world");
     expected = "Hello world!";
     template = "<#macro block>Hello ${who}!</#macro><@block/>";
+    assertThat(evaluate(template)).isEqualTo(expected);
   }
 
   @Test

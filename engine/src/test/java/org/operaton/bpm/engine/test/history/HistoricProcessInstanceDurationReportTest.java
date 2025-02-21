@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.test.history;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.operaton.bpm.engine.query.PeriodUnit.MONTH;
 import static org.operaton.bpm.engine.query.PeriodUnit.QUARTER;
 
@@ -47,6 +48,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.data.Offset;
 import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 /**
  * @author Roman Smirnov
@@ -727,17 +729,8 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
   public void testReportByInvalidProcessDefinitionKey() {
     HistoricProcessInstanceReport report = historyService.createHistoricProcessInstanceReport();
 
-    try {
-      report.processDefinitionKeyIn((String) null);
-    } catch (NotValidException e) {
-      // expected
-    }
-
-    try {
-      report.processDefinitionKeyIn("abc", null, "def");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThrows(NotValidException.class, () -> report.processDefinitionIdIn((String) null));
+    assertThrows(NotValidException.class, () -> report.processDefinitionKeyIn("abc", null, "def"));
   }
 
   protected BpmnModelInstance createProcessWithUserTask(String key) {

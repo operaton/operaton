@@ -31,6 +31,7 @@ import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.*;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.util.Date;
 import java.util.List;
@@ -532,9 +533,7 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     // when
-    runtimeService.setAnnotationForIncidentById(incident.getId(), "my annotation");
-
-    // then no error is thrown
+    assertDoesNotThrow(() -> runtimeService.setAnnotationForIncidentById(incident.getId(), "my annotation"));
 
     // cleanup
     cleanupStandalonIncident(jobId);

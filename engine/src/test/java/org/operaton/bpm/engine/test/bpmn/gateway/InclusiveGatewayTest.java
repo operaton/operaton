@@ -39,6 +39,7 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 /**
  * @author Joram Barrez
@@ -190,7 +191,7 @@ public class InclusiveGatewayTest extends PluggableProcessEngineTest {
   public void testWhitespaceInExpression() {
     // Starting a process instance will lead to an exception if whitespace are
     // incorrectly handled
-    runtimeService.startProcessInstanceByKey("inclusiveWhiteSpaceInExpression", CollectionUtil.singletonMap("input", 1));
+    assertDoesNotThrow(() -> runtimeService.startProcessInstanceByKey("inclusiveWhiteSpaceInExpression", CollectionUtil.singletonMap("input", 1)));
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/gateway/InclusiveGatewayTest.testDivergingInclusiveGateway.bpmn20.xml" })
@@ -817,5 +818,5 @@ public class InclusiveGatewayTest extends PluggableProcessEngineTest {
     assertThat(historyService.createHistoricProcessInstanceQuery().singleResult().getState())
         .isEqualTo("COMPLETED");
   }
-  
+
 }

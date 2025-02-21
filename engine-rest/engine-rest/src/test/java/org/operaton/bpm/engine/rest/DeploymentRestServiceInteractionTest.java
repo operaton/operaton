@@ -38,7 +38,6 @@ import java.util.*;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -48,7 +47,6 @@ import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTest {
@@ -887,7 +885,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testGetDeploymentHtmlpResourceData() {
+  public void testGetDeploymentHtmlResourceData() {
     Resource resource = MockProvider.createMockDeploymentHtmlResource();
 
     List<Resource> resources = new ArrayList<>();
@@ -1427,19 +1425,19 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     List<HashMap<String, Object>> errors = problems.get("errors");
     HashMap<String, Object> error = errors.get(0);
-    assertEquals(EXAMPLE_PROBLEM_COLUMN, error.get("column"));
-    assertEquals(EXAMPLE_PROBLEM_LINE, error.get("line"));
-    assertEquals(message, error.get("message"));
-    assertEquals(EXAMPLE_PROBLEM_ELEMENT_ID, error.get("mainElementId"));
-    assertEquals(EXAMPLE_ELEMENT_IDS, error.get("еlementIds"));
+    assertThat(error).containsEntry("column", EXAMPLE_PROBLEM_COLUMN)
+                     .containsEntry("line", EXAMPLE_PROBLEM_LINE)
+                     .containsEntry("message", message)
+                     .containsEntry("mainElementId", EXAMPLE_PROBLEM_ELEMENT_ID)
+                     .containsEntry("еlementIds", EXAMPLE_ELEMENT_IDS);
 
     List<HashMap<String, Object>> warnings = problems.get("warnings");
     HashMap<String, Object> warning = warnings.get(0);
-    assertEquals(EXAMPLE_PROBLEM_COLUMN_2, warning.get("column"));
-    assertEquals(EXAMPLE_PROBLEM_LINE_2, warning.get("line"));
-    assertEquals(EXAMPLE_EXCEPTION_MESSAGE, warning.get("message"));
-    assertEquals(EXAMPLE_PROBLEM_ELEMENT_ID_2, warning.get("mainElementId"));
-    assertEquals(EXAMPLE_ELEMENT_IDS, warning.get("еlementIds"));
+    assertThat(warning).containsEntry("column", EXAMPLE_PROBLEM_COLUMN_2)
+                       .containsEntry("line", EXAMPLE_PROBLEM_LINE_2)
+                       .containsEntry("message", EXAMPLE_EXCEPTION_MESSAGE)
+                       .containsEntry("mainElementId", EXAMPLE_PROBLEM_ELEMENT_ID_2)
+                       .containsEntry("еlementIds", EXAMPLE_ELEMENT_IDS);
   }
 
   @Test
@@ -1951,13 +1949,13 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
     Map<String, HashMap<String, Object>>  deployedDecisionDefinitions = path.getMap(PROPERTY_DEPLOYED_DECISION_DEFINITIONS);
     Map<String, HashMap<String, Object>>  deployedDecisionRequirementsDefinitions = path.getMap(PROPERTY_DEPLOYED_DECISION_REQUIREMENTS_DEFINITIONS);
 
-    assertEquals(1, deployedProcessDefinitions.size());
+    assertThat(deployedProcessDefinitions).hasSize(1);
     assertThat(deployedProcessDefinitions.get(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)).isNotNull();
-    assertEquals(1, deployedCaseDefinitions.size());
+    assertThat(deployedCaseDefinitions).hasSize(1);
     assertThat(deployedCaseDefinitions.get(EXAMPLE_CASE_DEFINITION_ID)).isNotNull();
-    assertEquals(1, deployedDecisionDefinitions.size());
+    assertThat(deployedDecisionDefinitions).hasSize(1);
     assertThat(deployedDecisionDefinitions.get(EXAMPLE_DECISION_DEFINITION_ID)).isNotNull();
-    assertEquals(1, deployedDecisionRequirementsDefinitions.size());
+    assertThat(deployedDecisionRequirementsDefinitions).hasSize(1);
     assertThat(deployedDecisionRequirementsDefinitions.get(EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_ID)).isNotNull();
   }
 
@@ -1967,14 +1965,14 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     Map<String, HashMap<String, Object>> deployedProcessDefinitionDtos = path.getMap(PROPERTY_DEPLOYED_PROCESS_DEFINITIONS);
 
-    assertEquals(1, deployedProcessDefinitionDtos.size());
+    assertThat(deployedProcessDefinitionDtos).hasSize(1);
     HashMap processDefinitionDto = deployedProcessDefinitionDtos.get(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
     assertThat(processDefinitionDto).isNotNull();
     verifyBpmnDeployment(processDefinitionDto);
 
-    assertThat(path.get(PROPERTY_DEPLOYED_CASE_DEFINITIONS)).isNull();
-    assertThat(path.get(PROPERTY_DEPLOYED_DECISION_DEFINITIONS)).isNull();
-    assertThat(path.get(PROPERTY_DEPLOYED_DECISION_REQUIREMENTS_DEFINITIONS)).isNull();
+    assertThat(path.<String>get(PROPERTY_DEPLOYED_CASE_DEFINITIONS)).isNull();
+    assertThat(path.<String>get(PROPERTY_DEPLOYED_DECISION_DEFINITIONS)).isNull();
+    assertThat(path.<String>get(PROPERTY_DEPLOYED_DECISION_REQUIREMENTS_DEFINITIONS)).isNull();
   }
 
   private void verifyCmmnDeploymentValues(Deployment mockDeployment, String responseContent) {
@@ -1983,14 +1981,14 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     Map<String, HashMap<String, Object>> deployedCaseDefinitions = path.getMap(PROPERTY_DEPLOYED_CASE_DEFINITIONS);
 
-    assertEquals(1, deployedCaseDefinitions.size());
+    assertThat(deployedCaseDefinitions).hasSize(1);
     HashMap caseDefinitionDto = deployedCaseDefinitions.get(EXAMPLE_CASE_DEFINITION_ID);
     assertThat(caseDefinitionDto).isNotNull();
     verifyCmnDeployment(caseDefinitionDto);
 
-    assertThat(path.get(PROPERTY_DEPLOYED_PROCESS_DEFINITIONS)).isNull();
-    assertThat(path.get(PROPERTY_DEPLOYED_DECISION_DEFINITIONS)).isNull();
-    assertThat(path.get(PROPERTY_DEPLOYED_DECISION_REQUIREMENTS_DEFINITIONS)).isNull();
+    assertThat(path.<String>get(PROPERTY_DEPLOYED_PROCESS_DEFINITIONS)).isNull();
+    assertThat(path.<String>get(PROPERTY_DEPLOYED_DECISION_DEFINITIONS)).isNull();
+    assertThat(path.<String>get(PROPERTY_DEPLOYED_DECISION_REQUIREMENTS_DEFINITIONS)).isNull();
   }
 
   private void verifyDmnDeploymentValues(Deployment mockDeployment, String responseContent) {
@@ -1999,14 +1997,14 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     Map<String, HashMap<String, Object>> deployedDecisionDefinitions = path.getMap(PROPERTY_DEPLOYED_DECISION_DEFINITIONS);
 
-    assertEquals(1, deployedDecisionDefinitions.size());
+    assertThat(deployedDecisionDefinitions).hasSize(1);
     HashMap decisionDefinitionDto = deployedDecisionDefinitions.get(EXAMPLE_DECISION_DEFINITION_ID);
     assertThat(decisionDefinitionDto).isNotNull();
     verifyDmnDeployment(decisionDefinitionDto);
 
-    assertThat(path.get(PROPERTY_DEPLOYED_DECISION_REQUIREMENTS_DEFINITIONS)).isNull();
-    assertThat(path.get(PROPERTY_DEPLOYED_PROCESS_DEFINITIONS)).isNull();
-    assertThat(path.get(PROPERTY_DEPLOYED_CASE_DEFINITIONS)).isNull();
+    assertThat(path.<String>get(PROPERTY_DEPLOYED_DECISION_REQUIREMENTS_DEFINITIONS)).isNull();
+    assertThat(path.<String>get(PROPERTY_DEPLOYED_PROCESS_DEFINITIONS)).isNull();
+    assertThat(path.<String>get(PROPERTY_DEPLOYED_CASE_DEFINITIONS)).isNull();
   }
 
   private void verifyDrdDeploymentValues(Deployment mockDeployment, String responseContent) {
@@ -2018,72 +2016,73 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
     Map<String, HashMap<String, Object>> deployedDecisionRequirementsDefinitions =
       path.getMap(PROPERTY_DEPLOYED_DECISION_REQUIREMENTS_DEFINITIONS);
 
-    assertEquals(1, deployedDecisionDefinitions.size());
+    assertThat(deployedDecisionDefinitions).hasSize(1);
     HashMap decisionDefinitionDto = deployedDecisionDefinitions.get(EXAMPLE_DECISION_DEFINITION_ID);
     assertThat(decisionDefinitionDto).isNotNull();
     verifyDmnDeployment(decisionDefinitionDto);
 
-    assertEquals(1, deployedDecisionRequirementsDefinitions.size());
+    assertThat(deployedDecisionRequirementsDefinitions).hasSize(1);
     HashMap decisionRequirementsDefinitionDto = deployedDecisionRequirementsDefinitions.get(EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_ID);
     assertThat(decisionRequirementsDefinitionDto).isNotNull();
     verifyDrdDeployment(decisionRequirementsDefinitionDto);
 
-    assertThat(path.get(PROPERTY_DEPLOYED_PROCESS_DEFINITIONS)).isNull();
-    assertThat(path.get(PROPERTY_DEPLOYED_CASE_DEFINITIONS)).isNull();
+    assertThat(path.<String>get(PROPERTY_DEPLOYED_PROCESS_DEFINITIONS)).isNull();
+    assertThat(path.<String>get(PROPERTY_DEPLOYED_CASE_DEFINITIONS)).isNull();
   }
 
   private void verifyBpmnDeployment(HashMap<String, Object> dto) {
-    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, dto.get("id"));
-    assertEquals(EXAMPLE_PROCESS_DEFINITION_CATEGORY, dto.get("category"));
-    assertEquals(EXAMPLE_PROCESS_DEFINITION_NAME, dto.get("name"));
-    assertEquals(EXAMPLE_PROCESS_DEFINITION_KEY, dto.get("key"));
-    assertEquals(EXAMPLE_PROCESS_DEFINITION_DESCRIPTION, dto.get("description"));
-    assertEquals(EXAMPLE_PROCESS_DEFINITION_VERSION, dto.get("version"));
-    assertEquals(EXAMPLE_PROCESS_DEFINITION_RESOURCE_NAME, dto.get("resource"));
-    assertEquals(EXAMPLE_DEPLOYMENT_ID, dto.get("deploymentId"));
-    assertEquals(EXAMPLE_PROCESS_DEFINITION_DIAGRAM_RESOURCE_NAME, dto.get("diagram"));
-    assertEquals(EXAMPLE_PROCESS_DEFINITION_IS_SUSPENDED, dto.get("suspended"));
+    assertThat(dto).containsEntry("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
+                   .containsEntry("category", EXAMPLE_PROCESS_DEFINITION_CATEGORY)
+                   .containsEntry("name", EXAMPLE_PROCESS_DEFINITION_NAME)
+                   .containsEntry("key", EXAMPLE_PROCESS_DEFINITION_KEY)
+                   .containsEntry("description", EXAMPLE_PROCESS_DEFINITION_DESCRIPTION)
+                   .containsEntry("version", EXAMPLE_PROCESS_DEFINITION_VERSION)
+                   .containsEntry("resource", EXAMPLE_PROCESS_DEFINITION_RESOURCE_NAME)
+                   .containsEntry("deploymentId", EXAMPLE_DEPLOYMENT_ID)
+                   .containsEntry("diagram", EXAMPLE_PROCESS_DEFINITION_DIAGRAM_RESOURCE_NAME)
+                   .containsEntry("suspended", EXAMPLE_PROCESS_DEFINITION_IS_SUSPENDED);
   }
+
   private void verifyCmnDeployment(HashMap<String, Object> dto) {
-    assertEquals(EXAMPLE_CASE_DEFINITION_ID, dto.get("id"));
-    assertEquals(EXAMPLE_CASE_DEFINITION_CATEGORY, dto.get("category"));
-    assertEquals(EXAMPLE_CASE_DEFINITION_NAME, dto.get("name"));
-    assertEquals(EXAMPLE_CASE_DEFINITION_KEY, dto.get("key"));
-    assertEquals(EXAMPLE_CASE_DEFINITION_VERSION, dto.get("version"));
-    assertEquals(EXAMPLE_CASE_DEFINITION_RESOURCE_NAME, dto.get("resource"));
-    assertEquals(EXAMPLE_DEPLOYMENT_ID, dto.get("deploymentId"));
+    assertThat(dto).containsEntry("id", EXAMPLE_CASE_DEFINITION_ID)
+                   .containsEntry("category", EXAMPLE_CASE_DEFINITION_CATEGORY)
+                   .containsEntry("name", EXAMPLE_CASE_DEFINITION_NAME)
+                   .containsEntry("key", EXAMPLE_CASE_DEFINITION_KEY)
+                   .containsEntry("version", EXAMPLE_CASE_DEFINITION_VERSION)
+                   .containsEntry("resource", EXAMPLE_CASE_DEFINITION_RESOURCE_NAME)
+                   .containsEntry("deploymentId", EXAMPLE_DEPLOYMENT_ID);
   }
 
   private void verifyDmnDeployment(HashMap<String, Object> dto) {
-    assertEquals(EXAMPLE_DECISION_DEFINITION_ID, dto.get("id"));
-    assertEquals(EXAMPLE_DECISION_DEFINITION_CATEGORY, dto.get("category"));
-    assertEquals(EXAMPLE_DECISION_DEFINITION_NAME, dto.get("name"));
-    assertEquals(EXAMPLE_DECISION_DEFINITION_KEY, dto.get("key"));
-    assertEquals(EXAMPLE_DECISION_DEFINITION_VERSION, dto.get("version"));
-    assertEquals(EXAMPLE_DECISION_DEFINITION_RESOURCE_NAME, dto.get("resource"));
-    assertEquals(EXAMPLE_DEPLOYMENT_ID, dto.get("deploymentId"));
-    assertEquals(EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_ID, dto.get("decisionRequirementsDefinitionId"));
-    assertEquals(EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_KEY, dto.get("decisionRequirementsDefinitionKey"));
+    assertThat(dto).containsEntry("id", EXAMPLE_DECISION_DEFINITION_ID)
+                   .containsEntry("category", EXAMPLE_DECISION_DEFINITION_CATEGORY)
+                   .containsEntry("name", EXAMPLE_DECISION_DEFINITION_NAME)
+                   .containsEntry("key", EXAMPLE_DECISION_DEFINITION_KEY)
+                   .containsEntry("version", EXAMPLE_DECISION_DEFINITION_VERSION)
+                   .containsEntry("resource", EXAMPLE_DECISION_DEFINITION_RESOURCE_NAME)
+                   .containsEntry("deploymentId", EXAMPLE_DEPLOYMENT_ID)
+                   .containsEntry("decisionRequirementsDefinitionId", EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_ID)
+                   .containsEntry("decisionRequirementsDefinitionKey", EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_KEY);
   }
 
   private void verifyDrdDeployment(HashMap<String, Object> dto) {
-    assertEquals(EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_ID, dto.get("id"));
-    assertEquals(EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_CATEGORY, dto.get("category"));
-    assertEquals(EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_NAME, dto.get("name"));
-    assertEquals(EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_KEY, dto.get("key"));
-    assertEquals(EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_VERSION, dto.get("version"));
-    assertEquals(EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_RESOURCE_NAME, dto.get("resource"));
-    assertEquals(EXAMPLE_DEPLOYMENT_ID, dto.get("deploymentId"));
+    assertThat(dto).containsEntry("id", EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_ID)
+                   .containsEntry("category", EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_CATEGORY)
+                   .containsEntry("name", EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_NAME)
+                   .containsEntry("key", EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_KEY)
+                   .containsEntry("version", EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_VERSION)
+                   .containsEntry("resource", EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_RESOURCE_NAME)
+                   .containsEntry("deploymentId", EXAMPLE_DEPLOYMENT_ID);
   }
 
   private void verifyDeploymentValuesEmptyDefinitions(Deployment mockDeployment, String responseContent) {
     JsonPath path = from(responseContent);
     verifyStandardDeploymentValues(mockDeployment, path);
 
-    assertThat(path.get(PROPERTY_DEPLOYED_PROCESS_DEFINITIONS)).isNull();
-    assertThat(path.get(PROPERTY_DEPLOYED_CASE_DEFINITIONS)).isNull();
-    assertThat(path.get(PROPERTY_DEPLOYED_DECISION_DEFINITIONS)).isNull();
-    assertThat(path.get(PROPERTY_DEPLOYED_DECISION_REQUIREMENTS_DEFINITIONS)).isNull();
+    assertThat(path.<String>get(PROPERTY_DEPLOYED_PROCESS_DEFINITIONS)).isNull();
+    assertThat(path.<String>get(PROPERTY_DEPLOYED_CASE_DEFINITIONS)).isNull();
+    assertThat(path.<String>get(PROPERTY_DEPLOYED_DECISION_DEFINITIONS)).isNull();
+    assertThat(path.<String>get(PROPERTY_DEPLOYED_DECISION_REQUIREMENTS_DEFINITIONS)).isNull();
   }
 
   private void verifyStandardDeploymentValues(Deployment mockDeployment, JsonPath path) {
@@ -2091,19 +2090,21 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
     String returnedName = path.get("name");
     Date returnedDeploymentTime = DateTimeUtil.parseDate(path.<String>get("deploymentTime"));
 
-    assertEquals(mockDeployment.getId(), returnedId);
-    assertEquals(mockDeployment.getName(), returnedName);
-    assertEquals(mockDeployment.getDeploymentTime(), returnedDeploymentTime);
+    assertThat(returnedId).isEqualTo(mockDeployment.getId());
+    assertThat(returnedName).isEqualTo(mockDeployment.getName());
+    assertThat(returnedDeploymentTime).isEqualTo(mockDeployment.getDeploymentTime());
   }
 
   private void verifyDeploymentLink(Deployment mockDeployment, String responseContent) {
     List<Map<String, String>> returnedLinks = from(responseContent).getList("links");
-    assertEquals(1, returnedLinks.size());
+    assertThat(returnedLinks).hasSize(1);
 
     Map<String, String> returnedLink = returnedLinks.get(0);
-    assertEquals(HttpMethod.GET, returnedLink.get("method"));
+    assertThat(returnedLink)
+      .containsEntry("method", HttpMethod.GET)
+      .containsEntry("rel", "self");
+
     assertThat(returnedLink.get("href")).endsWith(RESOURCE_URL + "/" + mockDeployment.getId());
-    assertEquals("self", returnedLink.get("rel"));
   }
 
   private void verifyDeploymentResource(Resource mockDeploymentResource, Response response) {
@@ -2114,15 +2115,15 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
     String returnedName = path.get("name");
     String returnedDeploymentId = path.get("deploymentId");
 
-    assertEquals(mockDeploymentResource.getId(), returnedId);
-    assertEquals(mockDeploymentResource.getName(), returnedName);
-    assertEquals(mockDeploymentResource.getDeploymentId(), returnedDeploymentId);
+    assertThat(returnedId).isEqualTo(mockDeploymentResource.getId());
+    assertThat(returnedName).isEqualTo(mockDeploymentResource.getName());
+    assertThat(returnedDeploymentId).isEqualTo(mockDeploymentResource.getDeploymentId());
   }
 
   @SuppressWarnings("unchecked")
   private void verifyDeploymentResources(List<Resource> mockDeploymentResources, Response response) {
     List list = response.as(List.class);
-    assertEquals(1, list.size());
+    assertThat(list).hasSize(1);
 
     LinkedHashMap<String, String> resourceHashMap = (LinkedHashMap<String, String>) list.get(0);
 
@@ -2132,9 +2133,9 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     Resource deploymentResource = mockDeploymentResources.get(0);
 
-    assertEquals(deploymentResource.getId(), returnedId);
-    assertEquals(deploymentResource.getName(), returnedName);
-    assertEquals(deploymentResource.getDeploymentId(), returnedDeploymentId);
+    assertThat(returnedId).isEqualTo(deploymentResource.getId());
+    assertThat(returnedName).isEqualTo(deploymentResource.getName());
+    assertThat(returnedDeploymentId).isEqualTo(deploymentResource.getDeploymentId());
   }
 
   private List<Problem> mockProblems(int column, int line, String message, String elementId) {

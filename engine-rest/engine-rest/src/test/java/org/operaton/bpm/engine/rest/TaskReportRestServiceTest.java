@@ -157,9 +157,9 @@ public class TaskReportRestServiceTest extends AbstractRestServiceTest {
         .get(CANDIDATE_GROUP_REPORT_URL);
 
     String responseContent = response.asString();
-    assertThat(responseContent).contains(TaskReportResultToCsvConverter.CANDIDATE_GROUP_HEADER);
-    assertThat(responseContent).contains(EXAMPLE_GROUP_ID);
-    assertThat(responseContent).contains(String);
+    assertThat(responseContent).contains(TaskReportResultToCsvConverter.CANDIDATE_GROUP_HEADER)
+      .contains(EXAMPLE_GROUP_ID)
+      .contains(String.valueOf(EXAMPLE_TASK_COUNT_BY_CANDIDATE_GROUP));
   }
 
   @Test
@@ -177,8 +177,9 @@ public class TaskReportRestServiceTest extends AbstractRestServiceTest {
           .get(CANDIDATE_GROUP_REPORT_URL);
 
     String responseContent = response.asString();
-    assertThat(responseContent).contains(TaskReportResultToCsvConverter.CANDIDATE_GROUP_HEADER);
-    assertThat(responseContent).contains(EXAMPLE_GROUP_ID);
-    assertThat(responseContent).contains(String);
+    assertThat(responseContent)
+      .contains(TaskReportResultToCsvConverter.CANDIDATE_GROUP_HEADER)
+      .contains(EXAMPLE_GROUP_ID)
+      .contains(String.valueOf(EXAMPLE_TASK_COUNT_BY_CANDIDATE_GROUP));
   }
 }

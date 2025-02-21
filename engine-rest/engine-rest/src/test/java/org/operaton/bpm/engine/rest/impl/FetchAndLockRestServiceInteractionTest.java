@@ -39,8 +39,9 @@ import io.restassured.http.ContentType;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import javax.servlet.ServletContextEvent;
-import javax.ws.rs.core.Response.Status;
+
+import jakarta.servlet.ServletContextEvent;
+import jakarta.ws.rs.core.Response.Status;
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineException;

@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.MultivaluedMap;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.repository.DecisionDefinitionQuery;

@@ -29,8 +29,8 @@ import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import static org.operaton.bpm.engine.rest.helper.MockProvider.*;
 
-import javax.ws.rs.HttpMethod;
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.HttpMethod;
+import jakarta.ws.rs.core.Response.Status;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.*;

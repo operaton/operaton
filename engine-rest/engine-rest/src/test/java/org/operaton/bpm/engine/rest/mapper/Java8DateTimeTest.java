@@ -23,7 +23,7 @@ import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
 
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response.Status;
 
 import org.operaton.bpm.engine.impl.RuntimeServiceImpl;
 import org.operaton.bpm.engine.rest.AbstractRestServiceTest;

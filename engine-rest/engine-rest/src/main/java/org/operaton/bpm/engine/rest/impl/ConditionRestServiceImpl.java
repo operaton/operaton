@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.rest.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response.Status;
 
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.rest.ConditionRestService;

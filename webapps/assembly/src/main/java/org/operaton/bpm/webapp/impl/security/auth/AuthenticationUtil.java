@@ -28,8 +28,8 @@ import static org.operaton.bpm.engine.authorization.Permissions.ACCESS;
 import static org.operaton.bpm.engine.authorization.Resources.APPLICATION;
 import static org.operaton.bpm.webapp.impl.security.filter.util.HttpSessionMutexListener.AUTH_TIME_SESSION_MUTEX;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import java.util.*;
 
 public class AuthenticationUtil {

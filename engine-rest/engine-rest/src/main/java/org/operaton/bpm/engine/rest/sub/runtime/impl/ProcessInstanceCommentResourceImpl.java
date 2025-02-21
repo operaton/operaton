@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.rest.sub.runtime.impl;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response.Status;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngine;

@@ -25,7 +25,7 @@ import java.util.Iterator;
 import java.util.Properties;
 import java.util.ServiceLoader;
 
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.MediaType;
 
 import org.apache.http.entity.ContentType;
 import org.operaton.bpm.engine.ProcessEngine;

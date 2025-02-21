@@ -43,8 +43,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response.Status;
 
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.ProcessEngineException;

@@ -20,7 +20,7 @@ import static org.operaton.bpm.engine.impl.util.ExceptionUtil.PERSISTENCE_CONNEC
 import static org.operaton.bpm.engine.impl.util.ExceptionUtil.getExceptionStacktrace;
 
 import java.sql.SQLException;
-import javax.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response;
 import org.operaton.bpm.engine.ProcessEnginePersistenceException;
 import org.operaton.commons.logging.BaseLogger;
 

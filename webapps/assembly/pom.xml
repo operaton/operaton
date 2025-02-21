@@ -60,10 +60,13 @@
     </dependency>
 
     <dependency>
-      <groupId>org.jboss.spec.javax.ws.rs</groupId>
-      <artifactId>jboss-jaxrs-api_2.1_spec</artifactId>
-      <scope>provided</scope>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-core-internal-dependencies</artifactId>
+      <version>${project.version}</version>
+      <scope>import</scope>
+      <type>pom</type>
     </dependency>
+
 
     <!-- rest api -->
     <dependency>
@@ -74,8 +77,6 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
-      <version>${version.spring.framework}</version>
-      <scope>test</scope>
     </dependency>
 
     <dependency>
@@ -84,7 +85,10 @@
       <version>${version.spring.framework}</version>
       <scope>test</scope>
     </dependency>
-
+    <dependency>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+    </dependency>
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine-rest-core</artifactId>
@@ -215,8 +219,8 @@
           <scope>runtime</scope>
         </dependency>
         <dependency>
-          <groupId>org.jboss.spec.javax.ws.rs</groupId>
-          <artifactId>jboss-jaxrs-api_2.1_spec</artifactId>
+          <groupId>jakarta.servlet</groupId>
+          <artifactId>jakarta.servlet-api</artifactId>
         </dependency>
         <dependency>
           <groupId>org.operaton.bpm</groupId>

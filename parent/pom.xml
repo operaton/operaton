@@ -22,7 +22,7 @@
     <version.spring.framework6>6.1.15</version.spring.framework6>
     <version.spring-boot>3.4.1</version.spring-boot>
     <version.resteasy>3.15.6.Final</version.resteasy>
-    <version.jersey2>2.34</version.jersey2>
+    <version.jersey3>3.1.9</version.jersey3>
     <version.ejb>3.1</version.ejb>
     <!-- use minimum version of resteasy and jersey -->
     <version.jaxrs.api>2.0.1.Final</version.jaxrs.api>
@@ -42,6 +42,7 @@
     <version.xml.jaxb-impl>2.3.6</version.xml.jaxb-impl>
     <version.xml.jaxb-impl4>4.0.5</version.xml.jaxb-impl4>
     <version.jakarta.xml.bind-api>4.0.2</version.jakarta.xml.bind-api>
+    <version.jakarta.servlet-api>6.1.0</version.jakarta.servlet-api>
     <version.httpclient>4.5.14</version.httpclient>
     <version.httpclient5>5.4.1</version.httpclient5>
 

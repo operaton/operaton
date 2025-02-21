@@ -19,8 +19,8 @@ package org.operaton.bpm.webapp.impl.security.auth;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Date;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngine;

@@ -22,24 +22,24 @@ import org.operaton.bpm.engine.rest.dto.runtime.ExecutionTriggerDto;
 import org.operaton.bpm.engine.rest.dto.runtime.IncidentDto;
 import org.operaton.bpm.engine.rest.sub.VariableResource;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 
 public interface ExecutionResource {
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   ExecutionDto getExecution();
-  
+
   @POST
   @Path("/signal")
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
   void signalExecution(ExecutionTriggerDto triggerDto);
-  
+
   @Path("/localVariables")
   VariableResource getLocalVariables();
-  
+
   @Path("/messageSubscriptions/{messageName}")
   EventSubscriptionResource getMessageEventSubscription(@PathParam("messageName") String messageName);
 

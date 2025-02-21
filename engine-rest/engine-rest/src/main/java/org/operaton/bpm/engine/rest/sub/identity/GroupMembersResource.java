@@ -18,10 +18,10 @@ package org.operaton.bpm.engine.rest.sub.identity;
 
 import org.operaton.bpm.engine.rest.dto.ResourceOptionsDto;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.UriInfo;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.UriInfo;
 
 
 /**
@@ -29,19 +29,19 @@ import javax.ws.rs.core.UriInfo;
  *
  */
 public interface GroupMembersResource {
-  
+
   public static final String PATH = "/members";
 
   @PUT
   @Path("/{userId}")
   public void createGroupMember(@PathParam("userId") String userId);
-  
+
   @DELETE
   @Path("/{userId}")
   public void deleteGroupMember(@PathParam("userId") String userId);
-  
+
   @OPTIONS
   @Produces(MediaType.APPLICATION_JSON)
   ResourceOptionsDto availableOperations(@Context UriInfo context);
-  
+
 }

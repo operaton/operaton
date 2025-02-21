@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.webapp.plugin.resource;
 
-import javax.servlet.ServletContext;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.UriInfo;
+import jakarta.servlet.ServletContext;
+import jakarta.ws.rs.core.HttpHeaders;
+import jakarta.ws.rs.core.UriInfo;
 
 /**
  * @author Daniel Meyer

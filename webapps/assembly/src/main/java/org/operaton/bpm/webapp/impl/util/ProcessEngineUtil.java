@@ -19,7 +19,7 @@ package org.operaton.bpm.webapp.impl.util;
 import java.util.Iterator;
 import java.util.ServiceLoader;
 
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response.Status;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.rest.exception.RestException;

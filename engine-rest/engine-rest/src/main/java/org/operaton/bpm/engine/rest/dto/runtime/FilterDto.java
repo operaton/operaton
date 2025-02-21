@@ -18,7 +18,7 @@ package org.operaton.bpm.engine.rest.dto.runtime;
 
 import java.util.Map;
 
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response.Status;
 
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.ProcessEngine;

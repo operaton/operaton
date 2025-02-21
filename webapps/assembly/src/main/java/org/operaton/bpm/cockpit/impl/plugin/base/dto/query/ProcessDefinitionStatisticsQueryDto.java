@@ -20,7 +20,7 @@ import org.operaton.bpm.cockpit.impl.plugin.base.dto.ProcessDefinitionStatistics
 import org.operaton.bpm.cockpit.rest.dto.AbstractRestQueryParametersDto;
 import org.operaton.bpm.engine.rest.dto.OperatonQueryParam;
 
-import javax.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.MultivaluedMap;
 import java.util.HashMap;
 import java.util.Map;
 

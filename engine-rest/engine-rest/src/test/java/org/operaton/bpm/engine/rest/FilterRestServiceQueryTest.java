@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import static javax.ws.rs.core.Response.Status;
+import static jakarta.ws.rs.core.Response.Status;
 import static io.restassured.RestAssured.expect;
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
@@ -53,7 +53,7 @@ public class FilterRestServiceQueryTest extends AbstractRestServiceTest {
 
   @ClassRule
   public static TestContainerRule rule = new TestContainerRule();
-  
+
   protected static final String FILTER_QUERY_URL = TEST_RESOURCE_ROOT_PATH + FilterRestService.PATH;
   protected static final String SINGLE_FILTER_URL = FILTER_QUERY_URL + "/{id}";
   protected static final String FILTER_COUNT_QUERY_URL = FILTER_QUERY_URL + "/count";

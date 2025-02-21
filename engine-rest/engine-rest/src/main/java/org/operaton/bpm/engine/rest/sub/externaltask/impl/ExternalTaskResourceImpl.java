@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.rest.sub.externaltask.impl;
 
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response.Status;
 
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.ExternalTaskService;

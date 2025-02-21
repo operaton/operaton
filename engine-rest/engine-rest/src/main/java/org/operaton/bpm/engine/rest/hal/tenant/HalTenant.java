@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.rest.hal.tenant;
 
-import javax.ws.rs.core.UriBuilder;
+import jakarta.ws.rs.core.UriBuilder;
 
 import org.operaton.bpm.engine.identity.Tenant;
 import org.operaton.bpm.engine.rest.TenantRestService;

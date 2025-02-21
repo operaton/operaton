@@ -18,7 +18,7 @@ package org.operaton.bpm.webapp.impl.security.filter;
 
 import java.util.Arrays;
 
-import javax.servlet.FilterConfig;
+import jakarta.servlet.FilterConfig;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.webapp.impl.security.filter.util.CookieConstants;

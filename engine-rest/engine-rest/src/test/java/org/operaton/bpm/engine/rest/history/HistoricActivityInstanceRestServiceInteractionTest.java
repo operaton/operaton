@@ -23,7 +23,7 @@ import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response.Status;
 
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
@@ -44,7 +44,7 @@ public class HistoricActivityInstanceRestServiceInteractionTest extends Abstract
 
   @ClassRule
   public static TestContainerRule rule = new TestContainerRule();
-  
+
   protected static final String HISTORIC_ACTIVITY_INSTANCE_URL = TEST_RESOURCE_ROOT_PATH + "/history/activity-instance";
   protected static final String HISTORIC_SINGLE_ACTIVITY_INSTANCE_URL = HISTORIC_ACTIVITY_INSTANCE_URL + "/{id}";
 

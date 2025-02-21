@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.rest.standalone;
 
+import jakarta.servlet.Filter;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -29,10 +30,9 @@ import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.security.auth.ProcessEngineAuthenticationFilter;
 import org.operaton.bpm.engine.rest.security.auth.impl.HttpBasicAuthenticationProvider;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.ws.rs.core.Response.Status;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.ws.rs.core.Response.Status;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;

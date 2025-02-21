@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.engine.rest.exception;
 
-import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.ExceptionMapper;
-import javax.ws.rs.ext.Provider;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.ext.ExceptionMapper;
+import jakarta.ws.rs.ext.Provider;
 
 /**
  * Translates {@link RestException}s to error responses according to the status that is set in the exception.
  * Response content format: <code>{"type" : "ExceptionType", "message" : "some exception message"}</code>
- * 
+ *
  * @author Thorben Lindhauer
  */
 @Provider

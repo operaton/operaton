@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.rest.sub.management;
 
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response.Status;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngine;

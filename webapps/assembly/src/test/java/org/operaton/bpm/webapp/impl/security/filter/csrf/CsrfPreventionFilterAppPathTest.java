@@ -23,8 +23,8 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.mock.web.MockServletContext;
 
-import javax.servlet.ServletException;
-import javax.ws.rs.core.Response;
+import jakarta.servlet.ServletException;
+import jakarta.ws.rs.core.Response;
 import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;

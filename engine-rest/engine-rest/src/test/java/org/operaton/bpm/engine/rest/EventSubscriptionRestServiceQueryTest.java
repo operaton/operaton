@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response.Status;
 
 import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
@@ -176,7 +176,7 @@ public class EventSubscriptionRestServiceQueryTest extends AbstractRestServiceTe
   public void testTenantIdListParameter() {
     mockedEventSubscriptionQuery = setUpMockEventSubscriptionQuery(createMockEventSubscriptionTwoTenants());
 
-    Response response = 
+    Response response =
         given()
           .queryParam("tenantIdIn", MockProvider.EXAMPLE_TENANT_ID_LIST)
         .then().expect()
@@ -202,7 +202,7 @@ public class EventSubscriptionRestServiceQueryTest extends AbstractRestServiceTe
   public void testWithoutTenantIdParameter() {
     mockedEventSubscriptionQuery = setUpMockEventSubscriptionQuery(Arrays.asList(MockProvider.createMockEventSubscription(null)));
 
-    Response response = 
+    Response response =
         given()
           .queryParam("withoutTenantId", true)
         .then().expect()
@@ -308,7 +308,7 @@ public class EventSubscriptionRestServiceQueryTest extends AbstractRestServiceTe
       .statusCode(expectedStatus.getStatusCode())
     .when().get(EVENT_SUBSCRIPTION_URL);
   }
-  
+
   private Map<String, String> getCompleteQueryParameters() {
     Map<String, String> parameters = new HashMap<>();
 

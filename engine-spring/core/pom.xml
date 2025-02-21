@@ -63,17 +63,18 @@
       <!--  do not expose -->
       <scope>provided</scope>
     </dependency>
-    
+
     <!-- servlet API -->
     <dependency>
       <groupId>org.jboss.spec.javax.servlet</groupId>
       <artifactId>jboss-servlet-api_3.0_spec</artifactId>
       <scope>provided</scope>
     </dependency>
-    
+
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
+      <version>5.3.39</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -210,6 +211,6 @@
       </plugin>
     </plugins>
   </build>
-  
+
   <description>${project.name}</description>
 </project>

@@ -22,14 +22,14 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.MediaType;
 import java.util.Arrays;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
 import static org.junit.Assert.assertEquals;
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response.Status;
 import static org.mockito.Mockito.when;
 
 public class ExternalTaskTopicNamesRestServiceTest extends AbstractRestServiceTest {

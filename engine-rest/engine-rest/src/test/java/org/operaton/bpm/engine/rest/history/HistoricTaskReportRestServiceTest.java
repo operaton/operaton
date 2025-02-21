@@ -29,7 +29,7 @@ import static org.operaton.bpm.engine.query.PeriodUnit.MONTH;
 import static org.operaton.bpm.engine.query.PeriodUnit.QUARTER;
 import static org.operaton.bpm.engine.rest.helper.MockProvider.*;
 
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response.Status;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;

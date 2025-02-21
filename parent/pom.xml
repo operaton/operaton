@@ -18,11 +18,11 @@
 
   <properties>
     <version.operaton.dbscheme>7.23.0</version.operaton.dbscheme>
-    <version.spring.framework>5.3.39</version.spring.framework>
-    <version.spring.framework6>6.1.15</version.spring.framework6>
+    <version.spring.framework>6.1.15</version.spring.framework>
     <version.spring-boot>3.4.1</version.spring-boot>
     <version.resteasy>3.15.6.Final</version.resteasy>
     <version.jersey2>2.34</version.jersey2>
+    <version.jersey3>3.1.9</version.jersey3>
     <version.ejb>3.1</version.ejb>
     <!-- use minimum version of resteasy and jersey -->
     <version.jaxrs.api>2.0.1.Final</version.jaxrs.api>
@@ -65,7 +65,7 @@
     <version.tomcat9>9.0.90</version.tomcat9>
     <version.tomcat>10.1.30</version.tomcat>
 
-    <version.arquillian>1.1.10.Final</version.arquillian>
+    <version.arquillian>1.7.0.Final</version.arquillian>
     <version.shrinkwrap.resolvers>3.3.3</version.shrinkwrap.resolvers>
     <version.selenium>4.10.0</version.selenium>
     <version.freemarker>2.3.31</version.freemarker>

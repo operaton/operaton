@@ -23,7 +23,7 @@ import org.operaton.bpm.engine.rest.dto.history.HistoricCaseInstanceDto;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.sub.history.HistoricCaseInstanceResource;
 
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response.Status;
 
 public class HistoricCaseInstanceResourceImpl implements HistoricCaseInstanceResource {
 

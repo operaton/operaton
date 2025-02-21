@@ -25,7 +25,7 @@ import org.operaton.bpm.engine.rest.dto.history.HistoricExternalTaskLogDto;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.sub.history.HistoricExternalTaskLogResource;
 
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response.Status;
 
 public class HistoricExternalTaskLogResourceImpl implements HistoricExternalTaskLogResource {
 

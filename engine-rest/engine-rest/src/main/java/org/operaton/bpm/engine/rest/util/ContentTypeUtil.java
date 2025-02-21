@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.rest.util;
 
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.MediaType;
 
 import org.operaton.bpm.engine.form.OperatonFormRef;
 

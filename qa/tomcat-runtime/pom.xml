@@ -12,6 +12,11 @@
     <version>1.0.0-beta-4-SNAPSHOT</version>
   </parent>
 
+  <properties>
+    <version.asm>7.3.1</version.asm>
+  </properties>
+
+
   <dependencies>
     <dependency>
       <!--
@@ -127,6 +132,36 @@
                       <groupId>org.assertj</groupId>
                       <artifactId>assertj-core</artifactId>
                       <version>${version.assertj}</version>
+                      <outputDirectory>target/server/apache-tomcat-${version.tomcat}/lib</outputDirectory>
+                    </artifactItem>
+                    <artifactItem>
+                      <groupId>org.openjdk.nashorn</groupId>
+                      <artifactId>nashorn-core</artifactId>
+                      <version>${version.nashorn}</version>
+                      <outputDirectory>target/server/apache-tomcat-${version.tomcat}/lib</outputDirectory>
+                    </artifactItem>
+                    <artifactItem>
+                      <groupId>org.ow2.asm</groupId>
+                      <artifactId>asm</artifactId>
+                      <version>${version.asm}</version>
+                      <outputDirectory>target/server/apache-tomcat-${version.tomcat}/lib</outputDirectory>
+                    </artifactItem>
+                    <artifactItem>
+                      <groupId>org.ow2.asm</groupId>
+                      <artifactId>asm-commons</artifactId>
+                      <version>${version.asm}</version>
+                      <outputDirectory>target/server/apache-tomcat-${version.tomcat}/lib</outputDirectory>
+                    </artifactItem>
+                    <artifactItem>
+                      <groupId>org.ow2.asm</groupId>
+                      <artifactId>asm-tree</artifactId>
+                      <version>${version.asm}</version>
+                      <outputDirectory>target/server/apache-tomcat-${version.tomcat}/lib</outputDirectory>
+                    </artifactItem>
+                    <artifactItem>
+                      <groupId>org.ow2.asm</groupId>
+                      <artifactId>asm-util</artifactId>
+                      <version>${version.asm}</version>
                       <outputDirectory>target/server/apache-tomcat-${version.tomcat}/lib</outputDirectory>
                     </artifactItem>
                   </artifactItems>

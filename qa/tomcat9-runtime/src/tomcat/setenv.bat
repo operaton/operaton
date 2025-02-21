@@ -1,1 +1,0 @@
-set CATALINA_OPTS=-Xmx512m

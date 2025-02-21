@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.integrationtest.functional.el.beans;
 
-import javax.inject.Named;
+import jakarta.inject.Named;
 
 /**
  * @author Daniel Meyer

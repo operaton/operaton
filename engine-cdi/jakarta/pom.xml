@@ -13,9 +13,9 @@
   </parent>
 
   <properties>
-    <arquillian.container.version>3.0.2.Final</arquillian.container.version>
-    <arquillian.junit.version>1.7.0.Alpha14</arquillian.junit.version>
-    <weld.version>5.0.1.Final</weld.version>
+    <arquillian.container.version>4.0.0.Final</arquillian.container.version>
+    <arquillian.junit.version>1.9.3.Final</arquillian.junit.version>
+    <weld.version>6.0.1.Final</weld.version>
   </properties>
 
   <dependencyManagement>
@@ -40,6 +40,20 @@
         <version>${version.jakarta-ee-spec}</version>
         <type>pom</type>
         <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.jboss.arquillian.jakarta</groupId>
+        <artifactId>arquillian-jakarta-bom</artifactId>
+        <version>10.0.0.Final</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+      <dependency>
+        <groupId>org.jboss.arquillian</groupId>
+        <artifactId>arquillian-bom</artifactId>
+        <version>1.9.3.Final</version>
+        <scope>import</scope>
+        <type>pom</type>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -109,9 +123,12 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>org.jboss.arquillian.core</groupId>
+      <artifactId>arquillian-core-spi</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.jboss.arquillian.junit</groupId>
       <artifactId>arquillian-junit-container</artifactId>
-      <version>${arquillian.junit.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -142,6 +159,12 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>jul-to-slf4j</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-bpm-archunit</artifactId>
+      <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

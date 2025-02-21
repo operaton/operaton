@@ -21,7 +21,7 @@ import org.operaton.bpm.application.ProcessApplication;
 
 @ProcessApplication
 // Using fully-qualified class name instead of import statement to allow for automatic Jakarta transformation
-public class PostDeployFailureApp extends org.operaton.bpm.application.impl.ServletProcessApplication {
+public class PostDeployFailureApp extends org.operaton.bpm.application.impl.JakartaServletProcessApplication {
   
   @PostDeploy
   public void fail() {

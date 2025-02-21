@@ -20,7 +20,7 @@ import org.operaton.bpm.engine.impl.bpmn.behavior.AbstractBpmnActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.impl.pvm.delegate.SignallableActivityBehavior;
 
-import javax.inject.Named;
+import jakarta.inject.Named;
 
 /**
  * @author Daniel Meyer

@@ -42,6 +42,11 @@
       <artifactId>operaton-bpm-junit5</artifactId>
       <scope>compile</scope>
     </dependency>
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
+      <classifier>junit5</classifier>
+    </dependency>
 
     <dependency>
       <groupId>org.apache.tomcat</groupId>

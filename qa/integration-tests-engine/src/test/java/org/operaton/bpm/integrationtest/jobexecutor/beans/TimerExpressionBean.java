@@ -19,8 +19,8 @@ package org.operaton.bpm.integrationtest.jobexecutor.beans;
 import java.io.Serial;
 import java.io.Serializable;
 
-import javax.inject.Inject;
-import javax.inject.Named;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.cdi.annotation.ProcessVariableTyped;

@@ -28,6 +28,7 @@
     <version.jaxrs.api>2.0.1.Final</version.jaxrs.api>
     <version.groovy>4.0.22</version.groovy>
     <version.graal.js>21.3.12</version.graal.js>
+    <version.nashorn>15.4</version.nashorn>
     <version.icu.icu4j>71.1</version.icu.icu4j>
     <!-- json-smart and accessors-smart are runtime dependencies of json-path -->
     <version.json-path>2.9.0</version.json-path>
@@ -60,10 +61,6 @@
     <version.wildfly>33.0.1.Final</version.wildfly>
     <version.wildfly.core>25.0.1.Final</version.wildfly.core>
 
-    <version.wildfly26>26.0.1.Final</version.wildfly26>
-    <version.wildfly26.core>18.0.4.Final</version.wildfly26.core>
-
-    <version.tomcat9>9.0.90</version.tomcat9>
     <version.tomcat>10.1.30</version.tomcat>
 
     <version.arquillian>1.1.10.Final</version.arquillian>

@@ -23,7 +23,6 @@
 
     <!-- wildfly -->
     <wildfly.runtime.location>../wildfly-runtime/target/server/wildfly-${version.wildfly}</wildfly.runtime.location>
-    <wildfly26.runtime.location>../wildfly26-runtime/target/wildfly-${version.wildfly26}</wildfly26.runtime.location>
 
     <jboss.http.port>38080</jboss.http.port>
     <jboss.ajp.port>38009</jboss.ajp.port>
@@ -43,10 +42,7 @@
     <tomcat.connector.ajp.port>48009</tomcat.connector.ajp.port>
     <tomcat.connector.ajp.redirectPort>48443</tomcat.connector.ajp.redirectPort>
     <tomcat.server.port>48005</tomcat.server.port>
-
     <tomcat.runtime.location>../tomcat-runtime/target/server/apache-tomcat-${version.tomcat}</tomcat.runtime.location>
-    <tomcat9.runtime.location>../tomcat9-runtime/target/server/apache-tomcat-${version.tomcat9}</tomcat9.runtime.location>
-
   </properties>
 
   <dependencyManagement>
@@ -63,7 +59,6 @@
 
   <modules>
     <module>ensure-clean-db-plugin</module>
-    <module>integration-tests-engine-jakarta</module>
   </modules>
 
   <profiles>
@@ -74,12 +69,6 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <modules>
-        <module>wildfly-runtime</module>
-        <module>wildfly26-runtime</module>
-        <module>tomcat-runtime</module>
-        <module>tomcat9-runtime</module>
-        <module>integration-tests-webapps</module>
-        <module>integration-tests-engine</module>
         <!--module>test-db-util</module-->
         <!--module>test-db-instance-migration</module-->
         <!--module>test-db-rolling-update</module-->
@@ -103,26 +92,6 @@
         <module>wildfly-runtime</module>
       </modules>
     </profile>
-    
-    <profile>
-      <id>wildfly26</id>
-      <modules>
-        <module>wildfly26-runtime</module>
-      </modules>
-    </profile>
-    <profile>
-      <id>wildfly26-domain</id>
-      <modules>
-        <module>wildfly26-runtime</module>
-      </modules>
-    </profile>
-
-    <profile>
-      <id>tomcat9</id>
-      <modules>
-        <module>tomcat9-runtime</module>
-      </modules>
-    </profile>
 
     <profile>
       <id>tomcat</id>
@@ -144,13 +113,6 @@
       <id>engine-integration</id>
       <modules>
         <module>integration-tests-engine</module>
-      </modules>
-    </profile>
-
-    <profile>
-      <id>engine-integration-jakarta</id>
-      <modules>
-        <module>integration-tests-engine-jakarta</module>
       </modules>
     </profile>
 

@@ -13,7 +13,7 @@
   </parent>
 
   <properties>
-    <arquillian.container.version>2.1.0.Final</arquillian.container.version>
+    <arquillian.container.version>4.0.0.Final</arquillian.container.version>
     <arquillian.junit.version>1.6.0.Final</arquillian.junit.version>
     <weld.version>3.1.9.Final</weld.version>
     <javaee.spec>jboss-javaee-8.0</javaee.spec>

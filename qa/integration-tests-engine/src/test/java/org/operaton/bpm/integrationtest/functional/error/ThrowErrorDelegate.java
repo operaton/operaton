@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.integrationtest.functional.error;
 
-import javax.inject.Named;
+import jakarta.inject.Named;
 
 import org.operaton.bpm.engine.delegate.BpmnError;
 import org.operaton.bpm.engine.impl.bpmn.behavior.AbstractBpmnActivityBehavior;

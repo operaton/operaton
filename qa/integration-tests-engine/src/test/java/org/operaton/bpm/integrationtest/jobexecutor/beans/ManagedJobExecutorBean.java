@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.integrationtest.jobexecutor.beans;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-import javax.annotation.Resource;
-import javax.ejb.Singleton;
-import javax.ejb.Startup;
-import javax.enterprise.concurrent.ManagedExecutorService;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+import jakarta.annotation.Resource;
+import jakarta.ejb.Singleton;
+import jakarta.ejb.Startup;
+import jakarta.enterprise.concurrent.ManagedExecutorService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.cdi.impl.ManagedJobExecutor;
 
@@ -39,8 +39,8 @@ public class ManagedJobExecutorBean {
   @PostConstruct
   public void startEngine() {
     // Using fully-qualified class name instead of import statement to allow for automatic Jakarta transformation
-    org.operaton.bpm.engine.impl.cfg.JtaProcessEngineConfiguration processEngineConfiguration =
-        new org.operaton.bpm.engine.impl.cfg.JtaProcessEngineConfiguration();
+    org.operaton.bpm.engine.impl.cfg.JakartaTransactionProcessEngineConfiguration processEngineConfiguration =
+        new org.operaton.bpm.engine.impl.cfg.JakartaTransactionProcessEngineConfiguration();
     processEngineConfiguration.setDatabaseSchemaUpdate("true")
       .setHistory("auto")
       .setDbMetricsReporterActivate(false)

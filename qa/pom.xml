@@ -69,10 +69,6 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <modules>
-        <module>wildfly-runtime</module>
-        <module>tomcat-runtime</module>
-        <module>integration-tests-webapps</module>
-        <module>integration-tests-engine</module>
         <!--module>test-db-util</module-->
         <!--module>test-db-instance-migration</module-->
         <!--module>test-db-rolling-update</module-->

@@ -13,8 +13,8 @@
   </parent>
 
   <properties>
-    <arquillian.container.version>3.0.2.Final</arquillian.container.version>
-    <arquillian.junit.version>1.7.0.Alpha14</arquillian.junit.version>
+    <arquillian.container.version>4.0.0.Final</arquillian.container.version>
+    <arquillian.junit.version>1.9.3.Final</arquillian.junit.version>
     <weld.version>5.0.1.Final</weld.version>
   </properties>
 

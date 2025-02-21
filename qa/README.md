@@ -42,6 +42,12 @@ There is a special profile for Wildfly Application Server:
 mvn clean install -Pengine-integration,h2,wildfly-domain`
 ```
 
+If you want to run a single engine integration test, use `-Dsurefire.includes=**/*MyTest*`:
+```shell
+./mvnw -Pengine-integration,tomcat,h2 verify -Dsurefire.includes="**/*Nashorn*" -f qa
+```
+
+```shell
 ### Running tests with the Maven Wrapper
 
 With `mvnw`, from the root of the project,

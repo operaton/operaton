@@ -16,11 +16,11 @@
     <wildfly.container.adapter.version>5.0.1.Final</wildfly.container.adapter.version>
     <version.spring.framework>${version.spring.framework6}</version.spring.framework>
 
-    <version.arquillian>1.7.0.Final</version.arquillian>
+    <version.arquillian>1.9.3.Final</version.arquillian>
 
     <redirect.test.output>true</redirect.test.output>
 
-    <weld.version>5.1.0.Final</weld.version>
+    <weld.version>6.0.1.Final</weld.version>
     <install.skip>true</install.skip>
   </properties>
 
@@ -45,6 +45,27 @@
       </dependency>
 
       <dependency>
+        <groupId>org.jboss.arquillian.jakarta</groupId>
+        <artifactId>arquillian-jakarta-bom</artifactId>
+        <version>10.0.0.Final</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+
+      <dependency>
+        <groupId>org.jboss.weld</groupId>
+        <artifactId>weld-core-bom</artifactId>
+        <version>${weld.version}</version>
+      </dependency>
+
+      <!-- Deployed programmatically by DeploymentHelper -->
+      <dependency>
+        <groupId>org.jboss.weld.servlet</groupId>
+        <artifactId>weld-servlet-shaded</artifactId>
+        <version>${weld.version}</version>
+      </dependency>
+
+      <dependency>
         <groupId>jakarta.platform</groupId>
         <artifactId>jakarta.jakartaee-bom</artifactId>
         <version>${version.jakarta-ee-spec}</version>
@@ -66,13 +87,6 @@
         <version>${version.jackson}</version>
         <scope>import</scope>
         <type>pom</type>
-      </dependency>
-
-      <!-- Deployed programmatically by DeploymentHelper -->
-      <dependency>
-        <groupId>org.jboss.weld.servlet</groupId>
-        <artifactId>weld-servlet-shaded</artifactId>
-        <version>${weld.version}</version>
       </dependency>
 
     </dependencies>
@@ -142,7 +156,6 @@
     <dependency>
       <groupId>jakarta.persistence</groupId>
       <artifactId>jakarta.persistence-api</artifactId>
-      <version>3.1.0</version>
       <scope>test</scope>
     </dependency>
 
@@ -458,11 +471,10 @@
           <scope>test</scope>
         </dependency>
 
-        <!-- This dependency can be updated when arquillian releases the managed tomcat 10 artifact -->
         <dependency>
           <groupId>org.jboss.arquillian.container</groupId>
-          <artifactId>arquillian-tomcat-managed-8</artifactId>
-          <version>1.1.0.Final</version>
+          <artifactId>arquillian-tomcat-managed-10</artifactId>
+          <version>1.2.3.Final</version>
           <scope>test</scope>
         </dependency>
 
@@ -572,13 +584,13 @@
           <type>pom</type>
         </dependency>
         <dependency>
-          <groupId>${wildfly.container.adapter.groupId}</groupId>
+          <groupId>org.wildfly.arquillian</groupId>
           <artifactId>wildfly-arquillian-container-managed</artifactId>
           <version>${wildfly.container.adapter.version}</version>
           <scope>test</scope>
         </dependency>
         <dependency>
-          <groupId>${wildfly.container.adapter.groupId}</groupId>
+          <groupId>org.wildfly.arquillian</groupId>
           <artifactId>wildfly-arquillian-protocol-jmx</artifactId>
           <version>${wildfly.container.adapter.version}</version>
           <scope>test</scope>
@@ -656,13 +668,13 @@
           <type>pom</type>
         </dependency>
         <dependency>
-          <groupId>${wildfly.container.adapter.groupId}</groupId>
+          <groupId>org.wildfly.arquillian</groupId>
           <artifactId>wildfly-arquillian-container-domain-managed</artifactId>
           <version>${wildfly.container.adapter.version}</version>
           <scope>test</scope>
         </dependency>
         <dependency>
-          <groupId>${wildfly.container.adapter.groupId}</groupId>
+          <groupId>org.wildfly.arquillian</groupId>
           <artifactId>wildfly-arquillian-protocol-jmx</artifactId>
           <version>${wildfly.container.adapter.version}</version>
           <scope>test</scope>
@@ -771,14 +783,6 @@
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>
-      <dependencies>
-        <dependency>
-          <groupId>${wildfly.container.adapter.groupId}</groupId>
-          <artifactId>wildfly-arquillian-container-managed</artifactId>
-          <version>${wildfly.container.adapter.version}</version>
-          <scope>test</scope>
-        </dependency>
-      </dependencies>
       <build>
         <plugins>
           <plugin>

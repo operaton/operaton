@@ -460,9 +460,9 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
       .addClasspathResource("org/operaton/bpm/engine/test/bpmn/deployment/BpmnDeploymentTest.testInvalidExpression.bpmn20.xml");
     // when
     assertThatThrownBy(() -> testRule.deploy(deployment))
+      .withFailMessage("Expected exception when deploying process with invalid expression.")
       .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContaining("ENGINE-01009 Error while parsing process")
-      .withFailMessage("Expected exception when deploying process with invalid expression.");
+      .hasMessageContaining("ENGINE-01009 Error while parsing process");
     // then
     assertThat(repositoryService.createDeploymentQuery().count()).isZero();
   }

@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.compensate;
 
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Date;
 import java.util.List;
@@ -91,10 +90,12 @@ public class CompensateEventOrderTest {
     long indexA = searchForActivityIndex(list, "A");
     long indexB = searchForActivityIndex(list, "B");
 
-    assertNotEquals(-1, indexA);
-    assertNotEquals(-1, indexB);
+    assertThat(indexA).isNotEqualTo(-1);
+    assertThat(indexB).isNotEqualTo(-1);
 
-    assertTrue("Compensation activities were executed in wrong order.", indexA > indexB);
+    assertThat(indexA)
+      .as("Compensation activities were executed in wrong order.")
+      .isGreaterThan(indexB);
 
   }
 

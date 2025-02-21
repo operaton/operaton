@@ -137,8 +137,7 @@ public class StageTest extends ProcessAssertTestCase {
   }
 
   private CaseInstance givenCaseIsCreated() {
-    CaseInstance caseInstance = caseService().createCaseInstanceByKey("Case_StageTests");
-    return caseInstance;
+    return caseService().createCaseInstanceByKey("Case_StageTests");
   }
 
   private CaseInstance givenCaseIsCreatedAndStageSActive() {

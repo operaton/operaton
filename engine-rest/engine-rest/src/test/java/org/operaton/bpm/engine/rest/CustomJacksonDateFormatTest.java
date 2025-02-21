@@ -55,9 +55,9 @@ public class CustomJacksonDateFormatTest extends AbstractRestServiceTest {
   protected static final String PROCESS_INSTANCE_VARIABLES_URL = SINGLE_PROCESS_INSTANCE_URL + "/variables";
   protected static final String SINGLE_PROCESS_INSTANCE_VARIABLE_URL = PROCESS_INSTANCE_VARIABLES_URL + "/{varId}";
 
-  protected static final SimpleDateFormat testDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-  protected static final Date testDate = new Date(1450282812000L);
-  protected static final String testDateFormatted = testDateFormat.format(testDate);
+  protected static final SimpleDateFormat TEST_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+  protected static final Date TEST_DATE = new Date(1450282812000L);
+  protected static final String TEST_DATE_FORMATTED = TEST_DATE_FORMAT.format(TEST_DATE);
 
   protected RuntimeServiceImpl runtimeServiceMock;
 
@@ -66,7 +66,7 @@ public class CustomJacksonDateFormatTest extends AbstractRestServiceTest {
     runtimeServiceMock = mock(RuntimeServiceImpl.class);
 
     when(runtimeServiceMock.getVariableTyped(EXAMPLE_PROCESS_INSTANCE_ID, EXAMPLE_VARIABLE_KEY, true))
-      .thenReturn(Variables.dateValue(testDate));
+      .thenReturn(Variables.dateValue(TEST_DATE));
 
     when(processEngine.getRuntimeService()).thenReturn(runtimeServiceMock);
   }
@@ -83,7 +83,7 @@ public class CustomJacksonDateFormatTest extends AbstractRestServiceTest {
         .pathParam("varId", EXAMPLE_VARIABLE_KEY)
       .then().expect()
         .statusCode(Status.OK.getStatusCode())
-        .body("value", is(testDateFormatted))
+        .body("value", is(TEST_DATE_FORMATTED))
         .body("type", is("Date"))
       .when()
         .get(SINGLE_PROCESS_INSTANCE_VARIABLE_URL);
@@ -91,7 +91,7 @@ public class CustomJacksonDateFormatTest extends AbstractRestServiceTest {
 
   @Test
   public void testSetDateVariable() {
-    String variableValue = testDateFormat.format(testDate);
+    String variableValue = TEST_DATE_FORMAT.format(TEST_DATE);
 
     Map<String, Object> variableJson = VariablesBuilder.getVariableValueMap(variableValue, "Date");
 
@@ -106,7 +106,7 @@ public class CustomJacksonDateFormatTest extends AbstractRestServiceTest {
         .put(SINGLE_PROCESS_INSTANCE_VARIABLE_URL);
 
     verify(runtimeServiceMock).setVariable(eq(EXAMPLE_PROCESS_INSTANCE_ID), eq(EXAMPLE_VARIABLE_KEY),
-      argThat(EqualsPrimitiveValue.dateValue(testDate)));
+      argThat(EqualsPrimitiveValue.dateValue(TEST_DATE)));
   }
 
 }

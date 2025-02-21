@@ -17,10 +17,7 @@
 package org.operaton.bpm.engine.test.api.runtime;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,11 +113,11 @@ public class CreateAndResolveIncidentTest {
 
     // then
     Incident incident2 = runtimeService.createIncidentQuery().executionId(processInstance.getId()).singleResult();
-    assertEquals(incident2.getId(), incident.getId());
-    assertEquals("foo", incident2.getIncidentType());
-    assertEquals("aa", incident2.getConfiguration());
-    assertEquals("bar", incident2.getIncidentMessage());
-    assertEquals(processInstance.getId(), incident2.getExecutionId());
+    assertThat(incident.getId()).isEqualTo(incident2.getId());
+    assertThat(incident2.getIncidentType()).isEqualTo("foo");
+    assertThat(incident2.getConfiguration()).isEqualTo("aa");
+    assertThat(incident2.getIncidentMessage()).isEqualTo("bar");
+    assertThat(incident2.getExecutionId()).isEqualTo(processInstance.getId());
   }
 
   @Test
@@ -167,7 +164,7 @@ public class CreateAndResolveIncidentTest {
 
     // then
     Incident incident2 = runtimeService.createIncidentQuery().executionId(processInstance.getId()).singleResult();
-    assertNull(incident2);
+    assertThat(incident2).isNull();
   }
 
   @Test
@@ -208,8 +205,9 @@ public class CreateAndResolveIncidentTest {
 
     // then
     Incident incident = runtimeService.createIncidentQuery().processInstanceId(processInstance.getId()).singleResult();
+    var incidentId = incident.getId();
     try {
-      runtimeService.resolveIncident(incident.getId());
+      runtimeService.resolveIncident(incidentId);
       fail("Exception expected");
     } catch (BadUserRequestException e) {
       assertThat(e.getMessage()).contains("Cannot resolve an incident of type failedJob");
@@ -226,13 +224,14 @@ public class CreateAndResolveIncidentTest {
     Incident incident = runtimeService.createIncident("custom", processInstance.getId(), "configuration");
 
     // then
-    assertNotNull(incident);
+    assertThat(incident).isNotNull();
 
     Incident incident2 = runtimeService.createIncidentQuery().singleResult();
-    assertNotNull(incident2);
-    assertEquals(incident, incident2);
-    assertEquals("custom", incident.getIncidentType());
-    assertEquals("configuration", incident.getConfiguration());
+    assertThat(incident2)
+            .isNotNull()
+            .isEqualTo(incident);
+    assertThat(incident.getIncidentType()).isEqualTo("custom");
+    assertThat(incident.getConfiguration()).isEqualTo("configuration");
 
     assertThat(CUSTOM_HANDLER.getCreateEvents()).hasSize(1);
     assertThat(CUSTOM_HANDLER.getResolveEvents()).isEmpty();
@@ -252,7 +251,7 @@ public class CreateAndResolveIncidentTest {
 
     // then
     incident = runtimeService.createIncidentQuery().singleResult();
-    assertNull(incident);
+    assertThat(incident).isNull();
 
     assertThat(CUSTOM_HANDLER.getCreateEvents()).hasSize(1);
     assertThat(CUSTOM_HANDLER.getResolveEvents()).hasSize(1);

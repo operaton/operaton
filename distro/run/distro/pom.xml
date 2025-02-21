@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.operaton.bpm.run</groupId>
     <artifactId>operaton-bpm-run-root</artifactId>
-    <version>1.0.0-beta-3-SNAPSHOT</version>
+    <version>1.0.0-beta-4-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-bpm-run</artifactId>
@@ -24,7 +24,7 @@
     <dependency>
       <groupId>org.operaton.bpm.distro</groupId>
       <artifactId>operaton-sql-scripts</artifactId>
-      <version>${project.version}</version>
+      <version>${version.operaton.dbscheme}</version>
       <type>jar</type>
     </dependency>
 

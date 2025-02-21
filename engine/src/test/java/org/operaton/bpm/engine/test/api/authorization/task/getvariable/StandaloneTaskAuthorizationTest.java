@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.task.getvariable;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -60,7 +58,7 @@ public abstract class StandaloneTaskAuthorizationTest {
   protected TaskService taskService;
   protected RuntimeService runtimeService;
 
-  public static final String userId = "userId";
+  public static final String USER_ID = "userId";
   public String taskId = "myTask";
   public static final String VARIABLE_NAME = "aVariableName";
   public static final String VARIABLE_VALUE = "aVariableValue";
@@ -100,7 +98,7 @@ public abstract class StandaloneTaskAuthorizationTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      assertEquals(VARIABLE_VALUE, variable);
+      assertThat(variable).isEqualTo(VARIABLE_VALUE);
     }
   }
 
@@ -122,7 +120,7 @@ public abstract class StandaloneTaskAuthorizationTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      assertEquals(VARIABLE_VALUE, variable);
+      assertThat(variable).isEqualTo(VARIABLE_VALUE);
     }
   }
 
@@ -144,8 +142,8 @@ public abstract class StandaloneTaskAuthorizationTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      assertNotNull(typedValue);
-      assertEquals(VARIABLE_VALUE, typedValue.getValue());
+      assertThat(typedValue).isNotNull();
+      assertThat(typedValue.getValue()).isEqualTo(VARIABLE_VALUE);
     }
   }
 
@@ -167,8 +165,8 @@ public abstract class StandaloneTaskAuthorizationTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      assertNotNull(typedValue);
-      assertEquals(VARIABLE_VALUE, typedValue.getValue());
+      assertThat(typedValue).isNotNull();
+      assertThat(typedValue.getValue()).isEqualTo(VARIABLE_VALUE);
     }
   }
 
@@ -354,11 +352,12 @@ public abstract class StandaloneTaskAuthorizationTest {
   }
 
   protected void verifyGetVariables(Map<String, Object> variables) {
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
-    assertEquals(1, variables.size());
-
-    assertEquals(ProcessTaskAuthorizationTest.VARIABLE_VALUE, variables.get(ProcessTaskAuthorizationTest.VARIABLE_NAME));
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(ProcessTaskAuthorizationTest.VARIABLE_NAME, ProcessTaskAuthorizationTest.VARIABLE_VALUE);
   }
 
 }

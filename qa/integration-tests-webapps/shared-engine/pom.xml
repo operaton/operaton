@@ -7,7 +7,7 @@
   <parent>
     <groupId>org.operaton.bpm.qa</groupId>
     <artifactId>operaton-qa-integration-tests-webapps-root</artifactId>
-    <version>1.0.0-beta-3-SNAPSHOT</version>
+    <version>1.0.0-beta-4-SNAPSHOT</version>
   </parent>
 
   <properties>
@@ -83,6 +83,7 @@
               </execution>
             </executions>
             <configuration>
+              <skip>${skipTests}</skip>
               <!-- Container configuration -->
               <container>
                 <type>installed</type>
@@ -90,6 +91,7 @@
                 <append>false</append>
                 <home>${jboss.runtime}</home>
                 <timeout>${cargo.timeout}</timeout>
+                <output>${project.build.directory}/cargo.log</output>
               </container>
               <configuration>
                 <type>standalone</type>
@@ -192,6 +194,7 @@
               </execution>
             </executions>
             <configuration>
+              <skip>${skipTests}</skip>
               <!-- Container configuration -->
               <container>
                 <type>installed</type>
@@ -199,6 +202,7 @@
                 <append>false</append>
                 <home>${jboss.runtime}</home>
                 <timeout>${cargo.timeout}</timeout>
+                <output>${project.build.directory}/cargo.log</output>
               </container>
               <configuration>
                 <type>standalone</type>
@@ -302,6 +306,7 @@
               </execution>
             </executions>
             <configuration>
+              <skip>${skipTests}</skip>
               <!-- Container configuration -->
               <container>
                 <type>installed</type>
@@ -309,6 +314,7 @@
                 <append>false</append>
                 <home>${tomcat.runtime}</home>
                 <timeout>${cargo.timeout}</timeout>
+                <output>${project.build.directory}/cargo.log</output>
               </container>
               <configuration>
                 <type>standalone</type>
@@ -415,6 +421,7 @@
               </execution>
             </executions>
             <configuration>
+              <skip>${skipTests}</skip>
               <!-- Container configuration -->
               <container>
                 <type>installed</type>
@@ -422,6 +429,7 @@
                 <append>false</append>
                 <home>${tomcat.runtime}</home>
                 <timeout>${cargo.timeout}</timeout>
+                <output>${project.build.directory}/cargo.log</output>
               </container>
               <configuration>
                 <type>standalone</type>

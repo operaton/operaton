@@ -25,7 +25,6 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -69,12 +68,7 @@ public class ProcessEngineTestsExecuteTest extends ProcessAssertTestCase {
     final Job job = job();
     execute(job);
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        execute(job);
-      }
-    }, IllegalStateException.class);
+    expect(() -> execute(job), IllegalStateException.class);
   }
 
 }

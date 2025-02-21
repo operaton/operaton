@@ -22,7 +22,6 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtim
 
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -57,12 +56,7 @@ public class JobAssertHasRetriesTest extends ProcessAssertTestCase {
     // Then
     assertThat(jobQuery().singleResult()).isNotNull();
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(jobQuery().singleResult()).hasRetries(2);
-      }
-    });
+    expect(() -> assertThat(jobQuery().singleResult()).hasRetries(2));
   }
 
 }

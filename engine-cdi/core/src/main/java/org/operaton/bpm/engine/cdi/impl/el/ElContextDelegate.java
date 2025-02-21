@@ -55,7 +55,6 @@ public class ElContextDelegate extends ELContext {
   // delegate methods ////////////////////////////
 
   @Override
-  @SuppressWarnings("rawtypes")
   public Object getContext(Class key) {
     return delegateContext.getContext(key);
   }
@@ -63,6 +62,11 @@ public class ElContextDelegate extends ELContext {
   @Override
   public boolean equals(Object obj) {
     return delegateContext.equals(obj);
+  }
+
+  @Override
+  public int hashCode() {
+    return delegateContext.hashCode();
   }
 
   @Override
@@ -76,7 +80,6 @@ public class ElContextDelegate extends ELContext {
   }
 
   @Override
-  @SuppressWarnings("rawtypes")
   public void putContext(Class key, Object contextObject) {
     delegateContext.putContext(key, contextObject);
   }

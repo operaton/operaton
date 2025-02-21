@@ -28,16 +28,8 @@ public class ExecuteJobHelper {
 
   private static final JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 
-  public static ExceptionLoggingHandler LOGGING_HANDLER = new ExceptionLoggingHandler() {
-
-    @Override
-    public void exceptionWhileExecutingJob(String jobId, Throwable exception) {
-
-      // Default behavior, just log exception
-      LOG.exceptionWhileExecutingJob(jobId, exception);
-    }
-
-  };
+  // Default behavior, just log exception
+  public static ExceptionLoggingHandler LOGGING_HANDLER = LOG::exceptionWhileExecutingJob;
 
   private ExecuteJobHelper() {
   }

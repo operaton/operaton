@@ -14,20 +14,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.bpm.engine.rest.util;
+package org.operaton.bpm.engine.test.jobexecutor;
 
-/**
- * @author Daniel Meyer
- *
- */
-public class QueryParamUtils {
+import org.operaton.bpm.engine.delegate.DelegateExecution;
+import org.operaton.bpm.engine.delegate.JavaDelegate;
 
-  public static String arrayAsCommaSeperatedList(String... items) {
-    String result = items[0];
-    for (int i = 1; i < items.length; i++) {
-      result += ","+items[i];
-    }
-    return result;
+public class DelayDelegate implements JavaDelegate {
+
+  @Override
+  public void execute(DelegateExecution execution) throws Exception {
+    Thread.sleep(2000L);
   }
 
 }

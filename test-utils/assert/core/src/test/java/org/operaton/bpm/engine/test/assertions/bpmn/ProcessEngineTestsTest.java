@@ -165,7 +165,7 @@ public class ProcessEngineTestsTest {
     // When
     ProcessDefinitionAssert returnedAssert = assertThat(processDefinition);
     // Then
-    assertThat(returnedAssert).isNotNull().isInstanceOf(ProcessDefinitionAssert.class);
+    assertThat(returnedAssert).isInstanceOf(ProcessDefinitionAssert.class);
     ProcessDefinitionAssert processDefinitionAssert = assertThat(processDefinition);
     assertThat(processDefinitionAssert.getActual()).isSameAs(processDefinition);
   }
@@ -177,7 +177,7 @@ public class ProcessEngineTestsTest {
     // When
     ProcessInstanceAssert returnedAssert = assertThat(processInstance);
     // Then
-    assertThat(returnedAssert).isNotNull().isInstanceOf(ProcessInstanceAssert.class);
+    assertThat(returnedAssert).isInstanceOf(ProcessInstanceAssert.class);
     ProcessInstanceAssert processInstanceAssert = assertThat(processInstance);
     assertThat(processInstanceAssert.getActual()).isSameAs(processInstance);
   }
@@ -189,7 +189,7 @@ public class ProcessEngineTestsTest {
     // When
     TaskAssert returnedAssert = assertThat(task);
     // Then
-    assertThat(returnedAssert).isNotNull().isInstanceOf(TaskAssert.class);
+    assertThat(returnedAssert).isInstanceOf(TaskAssert.class);
     TaskAssert taskAssert = assertThat(task);
     assertThat(taskAssert.getActual()).isSameAs(task);
   }
@@ -201,7 +201,7 @@ public class ProcessEngineTestsTest {
     // When
     JobAssert returnedAssert = assertThat(job);
     // Then
-    assertThat(returnedAssert).isNotNull().isInstanceOf(JobAssert.class);
+    assertThat(returnedAssert).isInstanceOf(JobAssert.class);
     JobAssert jobAssert = assertThat(job);
     assertThat(jobAssert.getActual()).isSameAs(job);
   }

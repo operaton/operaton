@@ -57,9 +57,9 @@ public class GetHistoricIdentityLinkLogsForOptimizeTest {
 
   private OptimizeService optimizeService;
 
-  protected static final String userId = "testUser";
-  protected static final String assignerId = "testAssigner";
-  protected static final String groupId = "testGroup";
+  protected static final String USER_ID = "testUser";
+  protected static final String ASSIGNER_ID = "testAssigner";
+  protected static final String GROUP_ID = "testGroup";
 
   private IdentityService identityService;
   private RuntimeService runtimeService;
@@ -77,9 +77,9 @@ public class GetHistoricIdentityLinkLogsForOptimizeTest {
     authorizationService = engineRule.getAuthorizationService();
     taskService = engineRule.getTaskService();
 
-    createUser(userId);
+    createUser(USER_ID);
     createGroup();
-    identityService.setAuthenticatedUserId(userId);
+    identityService.setAuthenticatedUserId(USER_ID);
   }
 
   @After
@@ -109,8 +109,8 @@ public class GetHistoricIdentityLinkLogsForOptimizeTest {
     testHelper.deploy(simpleDefinition);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String taskId = taskService.createTaskQuery().singleResult().getId();
-    identityService.setAuthenticatedUserId(assignerId);
-    taskService.addCandidateUser(taskId, userId);
+    identityService.setAuthenticatedUserId(ASSIGNER_ID);
+    taskService.addCandidateUser(taskId, USER_ID);
 
     // when
     List<OptimizeHistoricIdentityLinkLogEntity> identityLinkLogs =
@@ -133,19 +133,19 @@ public class GetHistoricIdentityLinkLogsForOptimizeTest {
     testHelper.deploy(simpleDefinition);
     runtimeService.startProcessInstanceByKey("process");
     String taskId = taskService.createTaskQuery().singleResult().getId();
-    identityService.setAuthenticatedUserId(assignerId);
+    identityService.setAuthenticatedUserId(ASSIGNER_ID);
     Date now = new Date();
     ClockUtil.setCurrentTime(now);
-    taskService.addCandidateUser(taskId, userId);
+    taskService.addCandidateUser(taskId, USER_ID);
     Date nowPlus2Seconds = new Date(now.getTime() + 2000L);
     ClockUtil.setCurrentTime(nowPlus2Seconds);
-    taskService.deleteCandidateUser(taskId, userId);
+    taskService.deleteCandidateUser(taskId, USER_ID);
     Date nowPlus4Seconds = new Date(now.getTime() + 4000L);
     ClockUtil.setCurrentTime(nowPlus4Seconds);
-    taskService.addCandidateGroup(taskId, groupId);
+    taskService.addCandidateGroup(taskId, GROUP_ID);
     Date nowPlus6Seconds = new Date(now.getTime() + 6000L);
     ClockUtil.setCurrentTime(nowPlus6Seconds);
-    taskService.deleteCandidateGroup(taskId, groupId);
+    taskService.deleteCandidateGroup(taskId, GROUP_ID);
     Date nowPlus8Seconds = new Date(now.getTime() + 8000L);
     ClockUtil.setCurrentTime(nowPlus8Seconds);
 
@@ -155,16 +155,16 @@ public class GetHistoricIdentityLinkLogsForOptimizeTest {
 
     // then
     assertThat(identityLinkLogs).hasSize(4);
-    assertThat(identityLinkLogs.get(0).getUserId()).isEqualTo(userId);
+    assertThat(identityLinkLogs.get(0).getUserId()).isEqualTo(USER_ID);
     assertThat(identityLinkLogs.get(0).getOperationType()).isEqualTo(IDENTITY_LINK_ADD);
     assertThat(identityLinkLogs.get(0).getType()).isEqualTo(IdentityLinkType.CANDIDATE);
-    assertThat(identityLinkLogs.get(1).getUserId()).isEqualTo(userId);
+    assertThat(identityLinkLogs.get(1).getUserId()).isEqualTo(USER_ID);
     assertThat(identityLinkLogs.get(1).getOperationType()).isEqualTo(IDENTITY_LINK_DELETE);
     assertThat(identityLinkLogs.get(1).getType()).isEqualTo(IdentityLinkType.CANDIDATE);
-    assertThat(identityLinkLogs.get(2).getGroupId()).isEqualTo(groupId);
+    assertThat(identityLinkLogs.get(2).getGroupId()).isEqualTo(GROUP_ID);
     assertThat(identityLinkLogs.get(2).getOperationType()).isEqualTo(IDENTITY_LINK_ADD);
     assertThat(identityLinkLogs.get(2).getType()).isEqualTo(IdentityLinkType.CANDIDATE);
-    assertThat(identityLinkLogs.get(3).getGroupId()).isEqualTo(groupId);
+    assertThat(identityLinkLogs.get(3).getGroupId()).isEqualTo(GROUP_ID);
     assertThat(identityLinkLogs.get(3).getOperationType()).isEqualTo(IDENTITY_LINK_DELETE);
     assertThat(identityLinkLogs.get(3).getType()).isEqualTo(IdentityLinkType.CANDIDATE);
   }
@@ -180,7 +180,7 @@ public class GetHistoricIdentityLinkLogsForOptimizeTest {
       .done();
     testHelper.deploy(simpleDefinition);
     runtimeService.startProcessInstanceByKey("process");
-    identityService.setAuthenticatedUserId(assignerId);
+    identityService.setAuthenticatedUserId(ASSIGNER_ID);
     Date now = new Date();
     ClockUtil.setCurrentTime(now);
     claimAllUserTasks();
@@ -194,10 +194,10 @@ public class GetHistoricIdentityLinkLogsForOptimizeTest {
 
     // then
     assertThat(identityLinkLogs).hasSize(2);
-    assertThat(identityLinkLogs.get(0).getUserId()).isEqualTo(userId);
+    assertThat(identityLinkLogs.get(0).getUserId()).isEqualTo(USER_ID);
     assertThat(identityLinkLogs.get(0).getOperationType()).isEqualTo(IDENTITY_LINK_ADD);
     assertThat(identityLinkLogs.get(0).getType()).isEqualTo(IdentityLinkType.ASSIGNEE);
-    assertThat(identityLinkLogs.get(1).getUserId()).isEqualTo(userId);
+    assertThat(identityLinkLogs.get(1).getUserId()).isEqualTo(USER_ID);
     assertThat(identityLinkLogs.get(1).getOperationType()).isEqualTo(IDENTITY_LINK_DELETE);
     assertThat(identityLinkLogs.get(0).getType()).isEqualTo(IdentityLinkType.ASSIGNEE);
   }
@@ -208,7 +208,7 @@ public class GetHistoricIdentityLinkLogsForOptimizeTest {
     BpmnModelInstance simpleDefinition = Bpmn.createExecutableProcess("process")
       .startEvent()
       .userTask("userTask")
-        .operatonAssignee(userId)
+        .operatonAssignee(USER_ID)
       .endEvent()
       .done();
     testHelper.deploy(simpleDefinition);
@@ -216,15 +216,15 @@ public class GetHistoricIdentityLinkLogsForOptimizeTest {
     String taskId = taskService.createTaskQuery().singleResult().getId();
     Date now = new Date();
     ClockUtil.setCurrentTime(now);
-    taskService.addCandidateUser(taskId, userId);
+    taskService.addCandidateUser(taskId, USER_ID);
 
     Date nowPlus2Seconds = new Date(now.getTime() + 2000L);
     ClockUtil.setCurrentTime(nowPlus2Seconds);
-    taskService.deleteCandidateUser(taskId, userId);
+    taskService.deleteCandidateUser(taskId, USER_ID);
 
     Date nowPlus4Seconds = new Date(now.getTime() + 4000L);
     ClockUtil.setCurrentTime(nowPlus4Seconds);
-    taskService.addCandidateUser(taskId, userId);
+    taskService.addCandidateUser(taskId, USER_ID);
 
     // when
     List<OptimizeHistoricIdentityLinkLogEntity> identityLinkLogs =
@@ -247,15 +247,15 @@ public class GetHistoricIdentityLinkLogsForOptimizeTest {
     String taskId = taskService.createTaskQuery().singleResult().getId();
     Date now = new Date();
     ClockUtil.setCurrentTime(now);
-    taskService.addCandidateUser(taskId, userId);
+    taskService.addCandidateUser(taskId, USER_ID);
 
     Date nowPlus2Seconds = new Date(now.getTime() + 2000L);
     ClockUtil.setCurrentTime(nowPlus2Seconds);
-    taskService.deleteCandidateUser(taskId, userId);
+    taskService.deleteCandidateUser(taskId, USER_ID);
 
     Date nowPlus4Seconds = new Date(now.getTime() + 4000L);
     ClockUtil.setCurrentTime(nowPlus4Seconds);
-    taskService.addCandidateUser(taskId, userId);
+    taskService.addCandidateUser(taskId, USER_ID);
 
     // when
     List<OptimizeHistoricIdentityLinkLogEntity> identityLinkLogs =
@@ -278,15 +278,15 @@ public class GetHistoricIdentityLinkLogsForOptimizeTest {
     String taskId = taskService.createTaskQuery().singleResult().getId();
     Date now = new Date();
     ClockUtil.setCurrentTime(now);
-    taskService.addCandidateUser(taskId, userId);
+    taskService.addCandidateUser(taskId, USER_ID);
 
     Date nowPlus2Seconds = new Date(now.getTime() + 2000L);
     ClockUtil.setCurrentTime(nowPlus2Seconds);
-    taskService.deleteCandidateUser(taskId, userId);
+    taskService.deleteCandidateUser(taskId, USER_ID);
 
     Date nowPlus4Seconds = new Date(now.getTime() + 4000L);
     ClockUtil.setCurrentTime(nowPlus4Seconds);
-    taskService.addCandidateUser(taskId, userId);
+    taskService.addCandidateUser(taskId, USER_ID);
 
     // when
     List<OptimizeHistoricIdentityLinkLogEntity> identityLinkLogs =
@@ -307,11 +307,11 @@ public class GetHistoricIdentityLinkLogsForOptimizeTest {
     testHelper.deploy(simpleDefinition);
     runtimeService.startProcessInstanceByKey("process");
     String taskId = taskService.createTaskQuery().singleResult().getId();
-    taskService.addCandidateUser(taskId, userId);
-    taskService.deleteCandidateUser(taskId, userId);
-    taskService.addCandidateUser(taskId, userId);
-    taskService.deleteCandidateUser(taskId, userId);
-    taskService.addCandidateUser(taskId, userId);
+    taskService.addCandidateUser(taskId, USER_ID);
+    taskService.deleteCandidateUser(taskId, USER_ID);
+    taskService.addCandidateUser(taskId, USER_ID);
+    taskService.deleteCandidateUser(taskId, USER_ID);
+    taskService.addCandidateUser(taskId, USER_ID);
 
     // when
     List<OptimizeHistoricIdentityLinkLogEntity> identityLinkLogs =
@@ -334,15 +334,15 @@ public class GetHistoricIdentityLinkLogsForOptimizeTest {
     String taskId = taskService.createTaskQuery().singleResult().getId();
     Date now = new Date();
     ClockUtil.setCurrentTime(now);
-    taskService.addCandidateUser(taskId, userId);
+    taskService.addCandidateUser(taskId, USER_ID);
 
     Date nowPlus2Seconds = new Date(now.getTime() + 2000L);
     ClockUtil.setCurrentTime(nowPlus2Seconds);
-    taskService.deleteCandidateUser(taskId, userId);
+    taskService.deleteCandidateUser(taskId, USER_ID);
 
     Date nowPlus4Seconds = new Date(now.getTime() + 4000L);
     ClockUtil.setCurrentTime(nowPlus4Seconds);
-    taskService.addCandidateUser(taskId, userId);
+    taskService.addCandidateUser(taskId, USER_ID);
 
     // when
     List<OptimizeHistoricIdentityLinkLogEntity> identityLinkLogs =
@@ -362,7 +362,7 @@ public class GetHistoricIdentityLinkLogsForOptimizeTest {
   private void claimAllUserTasks() {
     List<Task> list = taskService.createTaskQuery().list();
     for (Task task : list) {
-      taskService.claim(task.getId(), userId);
+      taskService.claim(task.getId(), USER_ID);
     }
   }
 
@@ -379,17 +379,17 @@ public class GetHistoricIdentityLinkLogsForOptimizeTest {
   }
 
   protected void createGroup() {
-    Group group = identityService.newGroup(GetHistoricIdentityLinkLogsForOptimizeTest.groupId);
+    Group group = identityService.newGroup(GetHistoricIdentityLinkLogsForOptimizeTest.GROUP_ID);
     identityService.saveGroup(group);
   }
 
   private void assertThatIdentityLinksHaveAllImportantInformation(OptimizeHistoricIdentityLinkLogEntity identityLinkLog,
                                                                   ProcessInstance processInstance) {
     assertThat(identityLinkLog).isNotNull();
-    assertThat(identityLinkLog.getUserId()).isEqualTo(userId);
+    assertThat(identityLinkLog.getUserId()).isEqualTo(USER_ID);
     assertThat(identityLinkLog.getTaskId()).isEqualTo(taskService.createTaskQuery().singleResult().getId());
     assertThat(identityLinkLog.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
-    assertThat(identityLinkLog.getAssignerId()).isEqualTo(assignerId);
+    assertThat(identityLinkLog.getAssignerId()).isEqualTo(ASSIGNER_ID);
     assertThat(identityLinkLog.getGroupId()).isNull();
     assertThat(identityLinkLog.getOperationType()).isEqualTo(IDENTITY_LINK_ADD);
     assertThat(identityLinkLog.getProcessDefinitionId()).isEqualTo(processInstance.getProcessDefinitionId());

@@ -17,9 +17,8 @@
 package org.operaton.bpm.engine.test.api.resources;
 
 import static org.operaton.bpm.engine.repository.ResourceTypes.RUNTIME;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -169,13 +168,13 @@ public class RuntimeByteArrayTest {
     // when
     try {
       managementService.executeJob(jobId);
-      fail();
+      fail("");
     } catch (Exception e) {
       // expected
     }
 
     JobEntity job = (JobEntity) managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
 
     ByteArrayEntity byteArrayEntity = configuration.getCommandExecutorTxRequired().execute(new GetByteArrayCommand(job.getExceptionByteArrayId()));
 
@@ -205,7 +204,7 @@ public class RuntimeByteArrayTest {
       exceptionStackTrace = ExceptionUtils.getStackTrace(e);
       errorMessage = e.getMessage();
     }
-    assertNotNull(exceptionStackTrace);
+    assertThat(exceptionStackTrace).isNotNull();
 
     externalTaskService.handleFailure(task.getId(), WORKER_ID, errorMessage, exceptionStackTrace, 5, 3000L);
 
@@ -218,9 +217,9 @@ public class RuntimeByteArrayTest {
   }
 
   protected void checkBinary(ByteArrayEntity byteArrayEntity) {
-    assertNotNull(byteArrayEntity);
-    assertNotNull(byteArrayEntity.getCreateTime());
-    assertEquals(RUNTIME.getValue(), byteArrayEntity.getType());
+    assertThat(byteArrayEntity).isNotNull();
+    assertThat(byteArrayEntity.getCreateTime()).isNotNull();
+    assertThat(byteArrayEntity.getType()).isEqualTo(RUNTIME.getValue());
   }
 
   protected FileValue createFile() {
@@ -228,13 +227,12 @@ public class RuntimeByteArrayTest {
     String encoding = "crazy-encoding";
     String mimeType = "martini/dry";
 
-    FileValue fileValue = Variables
+    return Variables
         .fileValue(fileName)
         .file("ABC".getBytes())
         .encoding(encoding)
         .mimeType(mimeType)
         .create();
-    return fileValue;
   }
 
   protected BpmnModelInstance createProcess() {

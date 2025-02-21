@@ -51,8 +51,7 @@ public class TransitionInstantiationCmd extends AbstractInstantiationCmd {
 
   @Override
   protected CoreModelElement getTargetElement(ProcessDefinitionImpl processDefinition) {
-    TransitionImpl transition = processDefinition.findTransition(transitionId);
-    return transition;
+    return processDefinition.findTransition(transitionId);
   }
 
   @Override

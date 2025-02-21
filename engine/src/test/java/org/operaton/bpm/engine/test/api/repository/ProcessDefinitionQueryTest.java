@@ -104,7 +104,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
     assertThat(processDefinition.getKey()).isEqualTo("two");
     assertThat(processDefinition.getName()).isEqualTo("Two");
     assertThat(processDefinition.getDescription()).isNull();
-    assertThat(processDefinition.getId().startsWith("two:1"));
+    assertThat(processDefinition.getId()).startsWith("two:1");
     assertThat(processDefinition.getCategory()).isEqualTo("Examples2");
     assertThat(processDefinition.isStartableInTasklist()).isTrue();
 
@@ -112,7 +112,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
     assertThat(processDefinition.getKey()).isEqualTo("xyz_");
     assertThat(processDefinition.getName()).isEqualTo("Xyz_");
     assertThat(processDefinition.getDescription()).isNull();
-    assertThat(processDefinition.getId().startsWith("xyz_:1"));
+    assertThat(processDefinition.getId()).startsWith("xyz_:1");
     assertThat(processDefinition.getCategory()).isEqualTo("xyz_");
     assertThat(processDefinition.isStartableInTasklist()).isFalse();
   }
@@ -128,8 +128,9 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery().deploymentId("invalid");
     verifyQueryResults(query, 0);
 
+    var processDefinitionQuery = repositoryService.createProcessDefinitionQuery();
     // when/then
-    assertThatThrownBy(() -> repositoryService.createProcessDefinitionQuery().deploymentId(null))
+    assertThatThrownBy(() -> processDefinitionQuery.deploymentId(null))
       .isInstanceOf(ProcessEngineException.class);
   }
 
@@ -238,8 +239,9 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery().processDefinitionName("invalid");
     verifyQueryResults(query, 0);
 
+    var processDefinitionQuery = repositoryService.createProcessDefinitionQuery();
     // when/then
-    assertThatThrownBy(() -> repositoryService.createProcessDefinitionQuery().processDefinitionName(null))
+    assertThatThrownBy(() -> processDefinitionQuery.processDefinitionName(null))
       .isInstanceOf(ProcessEngineException.class);
   }
 
@@ -302,7 +304,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
           found = true; break;
         }
       }
-      assertThat(found).withFailMessage("Expected to find process definition " + processDefinition);
+      assertThat(found).withFailMessage("Expected to find process definition " + processDefinition).isTrue();
     }
 
     assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionKey("dummyKey").processDefinitionKeysIn(processDefinitionKeys).count()).isZero();
@@ -313,8 +315,9 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery().processDefinitionKey("invalid");
     verifyQueryResults(query, 0);
 
+    var processDefinitionQuery = repositoryService.createProcessDefinitionQuery();
     // when/then
-    assertThatThrownBy(() -> repositoryService.createProcessDefinitionQuery().processDefinitionKey(null))
+    assertThatThrownBy(() -> processDefinitionQuery.processDefinitionKey(null))
       .isInstanceOf(ProcessEngineException.class);
   }
 
@@ -331,8 +334,9 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery().processDefinitionKeyLike("%invalid%");
     verifyQueryResults(query, 0);
 
+    var processDefinitionQuery = repositoryService.createProcessDefinitionQuery();
     // when/then
-    assertThatThrownBy(() -> repositoryService.createProcessDefinitionQuery().processDefinitionKeyLike(null))
+    assertThatThrownBy(() -> processDefinitionQuery.processDefinitionKeyLike(null))
       .isInstanceOf(ProcessEngineException.class);
   }
 
@@ -347,8 +351,9 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery().processDefinitionResourceNameLike("%invalid%");
     verifyQueryResults(query, 0);
 
+    var processDefinitionQuery = repositoryService.createProcessDefinitionQuery();
     // when/then
-    assertThatThrownBy(() -> repositoryService.createProcessDefinitionQuery().processDefinitionResourceNameLike(null))
+    assertThatThrownBy(() -> processDefinitionQuery.processDefinitionResourceNameLike(null))
       .isInstanceOf(ProcessEngineException.class);
   }
 
@@ -385,11 +390,13 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
     verifyQueryResults(query, 0);
 
     // when/then
-    assertThatThrownBy(() -> repositoryService.createProcessDefinitionQuery().processDefinitionVersion(-1).list())
+    var query2 = repositoryService.createProcessDefinitionQuery();
+    assertThatThrownBy(() -> query2.processDefinitionVersion(-1))
       .isInstanceOf(ProcessEngineException.class);
 
     // and
-    assertThatThrownBy(() -> repositoryService.createProcessDefinitionQuery().processDefinitionVersion(null).list())
+    var query3 = repositoryService.createProcessDefinitionQuery();
+    assertThatThrownBy(() -> query3.processDefinitionVersion(null))
       .isInstanceOf(ProcessEngineException.class);
   }
 
@@ -421,15 +428,22 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   public void testInvalidUsageOfLatest() {
 
     // when/then
-    assertThatThrownBy(() -> repositoryService.createProcessDefinitionQuery().processDefinitionId("test").latestVersion().list())
+    var query1 = repositoryService.createProcessDefinitionQuery()
+      .processDefinitionId("test")
+      .latestVersion();
+    assertThatThrownBy(query1::list)
       .isInstanceOf(ProcessEngineException.class);
 
     // and
-    assertThatThrownBy(() -> repositoryService.createProcessDefinitionQuery().processDefinitionVersion(1).latestVersion().list())
+    var query2 = repositoryService.createProcessDefinitionQuery()
+      .processDefinitionVersion(1)
+      .latestVersion();
+    assertThatThrownBy(query2::list)
       .isInstanceOf(ProcessEngineException.class);
 
     // and
-    assertThatThrownBy(() -> repositoryService.createProcessDefinitionQuery().deploymentId("test").latestVersion().list())
+    var query3 = repositoryService.createProcessDefinitionQuery().deploymentId("test").latestVersion();
+    assertThatThrownBy(query3::list)
       .isInstanceOf(ProcessEngineException.class);
   }
 
@@ -661,7 +675,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
           found = true; break;
         }
       }
-      assertThat(found).withFailMessage("Expected to find process definition " + processDefinition);
+      assertThat(found).withFailMessage("Expected to find process definition " + processDefinition).isTrue();
     }
 
     assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionId("dummyId").processDefinitionIdIn(ids).count()).isZero();

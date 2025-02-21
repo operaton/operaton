@@ -25,7 +25,7 @@ import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -59,7 +59,7 @@ public class JobEntityTest extends PluggableProcessEngineTest {
 
     String message = repeatCharacter("a", StringUtil.DB_MAX_STRING_LENGTH * 2);
     threeByteJobEntity.setExceptionMessage(message);
-    assertEquals(StringUtil.DB_MAX_STRING_LENGTH, threeByteJobEntity.getExceptionMessage().length());
+    assertThat(threeByteJobEntity.getExceptionMessage()).hasSize(StringUtil.DB_MAX_STRING_LENGTH);
   }
 
   protected void insertJob(final JobEntity jobEntity) {
@@ -95,7 +95,7 @@ public class JobEntityTest extends PluggableProcessEngineTest {
 
     Job job = managementService.createJobQuery().processInstanceId(processInstanceId).singleResult();
 
-    assertEquals(key, job.getProcessDefinitionKey());
+     assertThat(job.getProcessDefinitionKey()).isEqualTo(key);
   }
 
 }

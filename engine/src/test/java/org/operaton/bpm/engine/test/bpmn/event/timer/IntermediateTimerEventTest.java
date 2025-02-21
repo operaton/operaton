@@ -17,9 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.event.timer;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -51,13 +48,13 @@ public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
     // After process start, there should be timer created
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("intermediateTimerEventExample");
     JobQuery jobQuery = managementService.createJobQuery().processInstanceId(pi.getId());
-    assertEquals(1, jobQuery.count());
+    assertThat(jobQuery.count()).isEqualTo(1);
 
     // After setting the clock to time '50minutes and 5 seconds', the second timer should fire
     ClockUtil.setCurrentTime(new Date(startTime.getTime() + ((50 * 60 * 1000) + 5000)));
     testRule.waitForJobExecutorToProcessAllJobs(5000L);
 
-    assertEquals(0, jobQuery.count());
+    assertThat(jobQuery.count()).isZero();
     testRule.assertProcessEnded(pi.getProcessInstanceId());
   }
 
@@ -75,18 +72,18 @@ public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
     ProcessInstance pi1 = runtimeService.startProcessInstanceByKey("intermediateTimerEventExample", variables1);
     ProcessInstance pi2 = runtimeService.startProcessInstanceByKey("intermediateTimerEventExample", variables2);
 
-    assertEquals(1, managementService.createJobQuery().processInstanceId(pi1.getId()).count());
-    assertEquals(1, managementService.createJobQuery().processInstanceId(pi2.getId()).count());
+    assertThat(managementService.createJobQuery().processInstanceId(pi1.getId()).count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().processInstanceId(pi2.getId()).count()).isEqualTo(1);
 
     // After setting the clock to one second in the future the timers should fire
     List<Job> jobs = managementService.createJobQuery().executable().list();
-    assertEquals(2, jobs.size());
+    assertThat(jobs).hasSize(2);
     for (Job job : jobs) {
       managementService.executeJob(job.getId());
     }
 
-    assertEquals(0, managementService.createJobQuery().processInstanceId(pi1.getId()).count());
-    assertEquals(0, managementService.createJobQuery().processInstanceId(pi2.getId()).count());
+    assertThat(managementService.createJobQuery().processInstanceId(pi1.getId()).count()).isZero();
+    assertThat(managementService.createJobQuery().processInstanceId(pi2.getId()).count()).isZero();
 
     testRule.assertProcessEnded(pi1.getProcessInstanceId());
     testRule.assertProcessEnded(pi2.getProcessInstanceId());
@@ -102,7 +99,7 @@ public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
     // After process start, there should be timer created
     ProcessInstanceWithVariables pi1 = (ProcessInstanceWithVariables) runtimeService.startProcessInstanceByKey("intermediateTimerEventExample", variables);
     JobQuery jobQuery = managementService.createJobQuery().processInstanceId(pi1.getId());
-    assertEquals(1, jobQuery.count());
+    assertThat(jobQuery.count()).isEqualTo(1);
     Job job = jobQuery.singleResult();
     Date firstDate = job.getDuedate();
 
@@ -111,11 +108,11 @@ public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
     Date currentTime = ClockUtil.getCurrentTime();
     runtimeService.setVariable(pi1.getProcessInstanceId(), "duration", "PT15M");
     processEngine.getManagementService().recalculateJobDuedate(job.getId(), false);
-    
-    assertEquals(1, jobQuery.count());
+
+    assertThat(jobQuery.count()).isEqualTo(1);
     job = jobQuery.singleResult();
-    assertNotEquals(firstDate, job.getDuedate());
-    assertTrue(firstDate.after(job.getDuedate()));
+    assertThat(job.getDuedate()).isNotEqualTo(firstDate);
+    assertThat(firstDate.after(job.getDuedate())).isTrue();
     Date expectedDate = LocalDateTime.fromDateFields(currentTime).plusMinutes(15).toDate();
     assertThat(job.getDuedate()).isCloseTo(expectedDate, 1000l);
     
@@ -123,7 +120,7 @@ public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
     ClockUtil.setCurrentTime(new Date(firstDate.getTime() + TimeUnit.MINUTES.toMillis(16L)));
     testRule.waitForJobExecutorToProcessAllJobs(5000L);
 
-    assertEquals(0, managementService.createJobQuery().processInstanceId(pi1.getId()).count());
+    assertThat(managementService.createJobQuery().processInstanceId(pi1.getId()).count()).isZero();
     testRule.assertProcessEnded(pi1.getProcessInstanceId());
   }
   
@@ -137,7 +134,7 @@ public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
     // After process start, there should be timer created
     ProcessInstanceWithVariables pi1 = (ProcessInstanceWithVariables) runtimeService.startProcessInstanceByKey("intermediateTimerEventExample", variables);
     JobQuery jobQuery = managementService.createJobQuery().processInstanceId(pi1.getId());
-    assertEquals(1, jobQuery.count());
+    assertThat(jobQuery.count()).isEqualTo(1);
     Job job = jobQuery.singleResult();
     Date firstDate = job.getDuedate();
 
@@ -145,19 +142,19 @@ public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
     moveByMinutes(65);// move past first due date
     runtimeService.setVariable(pi1.getProcessInstanceId(), "duration", "PT15M");
     processEngine.getManagementService().recalculateJobDuedate(job.getId(), true);
-    
-    assertEquals(1, jobQuery.count());
+
+    assertThat(jobQuery.count()).isEqualTo(1);
     job = jobQuery.singleResult();
-    assertNotEquals(firstDate, job.getDuedate());
-    assertTrue(firstDate.after(job.getDuedate()));
+    assertThat(job.getDuedate()).isNotEqualTo(firstDate);
+    assertThat(firstDate.after(job.getDuedate())).isTrue();
     Date expectedDate = LocalDateTime.fromDateFields(job.getCreateTime()).plusMinutes(15).toDate();
-    assertEquals(expectedDate, job.getDuedate());
+    assertThat(job.getDuedate()).isEqualTo(expectedDate);
     
     // After waiting for sixteen minutes the timer should fire
     ClockUtil.setCurrentTime(new Date(firstDate.getTime() + TimeUnit.MINUTES.toMillis(16L)));
     testRule.waitForJobExecutorToProcessAllJobs(5000L);
 
-    assertEquals(0, managementService.createJobQuery().processInstanceId(pi1.getId()).count());
+    assertThat(managementService.createJobQuery().processInstanceId(pi1.getId()).count()).isZero();
     testRule.assertProcessEnded(pi1.getProcessInstanceId());
   }
 
@@ -167,12 +164,12 @@ public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
     JobQuery query = managementService.createJobQuery();
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
 
     String jobId = query.singleResult().getId();
     managementService.executeJob(jobId);
 
-    assertEquals(0, query.count());
+    assertThat(query.count()).isZero();
 
     String taskId = taskService.createTaskQuery().singleResult().getId();
     taskService.complete(taskId);
@@ -189,7 +186,7 @@ public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
     String processInstanceId = runtimeService.startProcessInstanceByKey("process", variables).getId();
 
     JobQuery query = managementService.createJobQuery();
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
     Job job = query.singleResult();
     Date oldDuedate = job.getDuedate();
     String jobId = job.getId();
@@ -199,8 +196,8 @@ public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
     managementService.recalculateJobDuedate(jobId, false);
 
     // then
-    assertEquals(1, query.count());
-    assertTrue(oldDuedate.after(query.singleResult().getDuedate()));
+    assertThat(query.count()).isEqualTo(1);
+    assertThat(oldDuedate.after(query.singleResult().getDuedate())).isTrue();
 
     managementService.executeJob(jobId);
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -218,7 +215,7 @@ public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
     String processInstanceId = runtimeService.startProcessInstanceByKey("process", variables).getId();
 
     JobQuery query = managementService.createJobQuery();
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
     Job job = query.singleResult();
     Date oldDuedate = job.getDuedate();
     String jobId = job.getId();
@@ -228,11 +225,11 @@ public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
     managementService.recalculateJobDuedate(jobId, true);
 
     // then
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
     Date newDuedate = query.singleResult().getDuedate();
-    assertTrue(oldDuedate.after(newDuedate));
+    assertThat(oldDuedate.after(newDuedate)).isTrue();
     Date expectedDate = LocalDateTime.fromDateFields(job.getCreateTime()).plusMinutes(10).toDate();
-    assertEquals(expectedDate, newDuedate);
+    assertThat(newDuedate).isEqualTo(expectedDate);
 
     managementService.executeJob(jobId);
     String taskId = taskService.createTaskQuery().singleResult().getId();

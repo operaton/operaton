@@ -24,7 +24,6 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.unclai
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -58,12 +57,7 @@ public class ProcessEngineTestsUnclaimTest extends ProcessAssertTestCase {
       "ProcessEngineTests-unclaim"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        unclaim(task("UserTask_2", processInstance));
-      }
-    }, IllegalArgumentException.class);
+    expect(() -> unclaim(task("UserTask_2", processInstance)), IllegalArgumentException.class);
   }
 
   @Test

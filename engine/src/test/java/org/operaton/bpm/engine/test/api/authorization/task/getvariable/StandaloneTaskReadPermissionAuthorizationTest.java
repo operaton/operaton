@@ -42,13 +42,13 @@ public class StandaloneTaskReadPermissionAuthorizationTest extends StandaloneTas
       scenario()
         .withoutAuthorizations()
         .failsDueToRequired(
-          grant(TASK, "taskId", userId, READ)),
+          grant(TASK, "taskId", USER_ID, READ)),
       scenario()
         .withAuthorizations(
-          grant(TASK, "taskId", userId, READ)),
+          grant(TASK, "taskId", USER_ID, READ)),
       scenario()
         .withAuthorizations(
-          grant(TASK, "*", userId, READ))
+          grant(TASK, "*", USER_ID, READ))
         .succeeds()
       );
   }

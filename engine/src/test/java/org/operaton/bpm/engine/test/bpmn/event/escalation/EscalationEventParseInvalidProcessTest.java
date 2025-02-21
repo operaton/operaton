@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.bpmn.event.escalation;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -91,14 +91,11 @@ public class EscalationEventParseInvalidProcessTest {
 
   @Test
   public void testParseInvalidProcessDefinition() {
+    var deploymentBuilder = repositoryService.createDeployment()
+      .addClasspathResource(PROCESS_DEFINITION_DIRECTORY + processDefinitionResource);
+
     try {
-      String deploymentId = repositoryService.createDeployment()
-        .addClasspathResource(PROCESS_DEFINITION_DIRECTORY + processDefinitionResource)
-        .deploy().getId();
-
-      // in case that the deployment do not fail
-      repositoryService.deleteDeployment(deploymentId, true);
-
+      deploymentBuilder.deploy();
       fail("exception expected: " + expectedErrorMessage);
     } catch (ParseException e) {
       assertExceptionMessageContainsText(e, expectedErrorMessage);

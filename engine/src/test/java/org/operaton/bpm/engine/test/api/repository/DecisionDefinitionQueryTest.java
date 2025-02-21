@@ -132,12 +132,12 @@ public class DecisionDefinitionQueryTest {
     }
 
     decisionDefinitions = repositoryService.createDecisionDefinitionQuery()
-      .decisionDefinitionIdIn(ids.toArray(new String[ids.size()]))
+      .decisionDefinitionIdIn(ids.toArray(new String[0]))
       .list();
 
     assertThat(decisionDefinitions).hasSize(ids.size());
     for (DecisionDefinition decisionDefinition : decisionDefinitions) {
-      assertThat(ids).contains(decisionDefinition.getId()).withFailMessage("Expected to find decision definition " + decisionDefinition);
+      assertThat(ids).withFailMessage("Expected to find decision definition " + decisionDefinition).contains(decisionDefinition.getId());
     }
   }
 
@@ -495,34 +495,24 @@ public class DecisionDefinitionQueryTest {
     DecisionDefinitionQuery query = repositoryService.createDecisionDefinitionQuery();
 
     // when/then
-    assertThatThrownBy(() -> query
-        .decisionDefinitionId("test")
-        .latestVersion()
-        .list())
+    var decisionDefinitionQuery1 = query.decisionDefinitionId("test").latestVersion();
+    assertThatThrownBy(decisionDefinitionQuery1::list)
       .isInstanceOf(NotValidException.class);
 
-    assertThatThrownBy(() -> query
-        .decisionDefinitionName("test")
-        .latestVersion()
-        .list())
+    var decisionDefinitionQuery2 = query.decisionDefinitionName("test").latestVersion();
+    assertThatThrownBy(decisionDefinitionQuery2::list)
       .isInstanceOf(NotValidException.class);
 
-    assertThatThrownBy(() -> query
-        .decisionDefinitionNameLike("test")
-        .latestVersion()
-        .list())
+    var decisionDefinitionQuery3 = query.decisionDefinitionNameLike("test").latestVersion();
+    assertThatThrownBy(decisionDefinitionQuery3::list)
       .isInstanceOf(NotValidException.class);
 
-    assertThatThrownBy(() -> query
-        .decisionDefinitionVersion(1)
-        .latestVersion()
-        .list())
+    var decisionDefinitionQuery4 = query.decisionDefinitionVersion(1).latestVersion();
+    assertThatThrownBy(decisionDefinitionQuery4::list)
       .isInstanceOf(NotValidException.class);
 
-    assertThatThrownBy(() -> query
-        .deploymentId("test")
-        .latestVersion()
-        .list())
+    var decisionDefinitionQuery5 = query.deploymentId("test").latestVersion();
+    assertThatThrownBy(decisionDefinitionQuery5::list)
       .isInstanceOf(NotValidException.class);
   }
 

@@ -16,10 +16,8 @@
  */
 package org.operaton.bpm.engine.test.standalone.el;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
@@ -57,16 +55,16 @@ public class ExpressionBeanAccessTest {
   public void testConfigurationBeanAccess() {
     // Exposed bean returns 'I'm exposed' when to-string is called in first service-task
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("expressionBeanAccess");
-    assertEquals("I'm exposed", runtimeService.getVariable(pi.getId(), "exposedBeanResult"));
+    assertThat(runtimeService.getVariable(pi.getId(), "exposedBeanResult")).isEqualTo("I'm exposed");
+    var processInstanceId = pi.getId();
 
     // After signaling, an expression tries to use a bean that is present in the configuration but
     // is not added to the beans-list
     try {
-      runtimeService.signal(pi.getId());
+      runtimeService.signal(processInstanceId);
       fail("Exception expected");
     } catch(ProcessEngineException ae) {
-      assertNotNull(ae.getCause());
-      assertTrue(ae.getCause() instanceof PropertyNotFoundException);
+      assertThat(ae.getCause()).isInstanceOf(PropertyNotFoundException.class);
     }
   }
 }

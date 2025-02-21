@@ -17,9 +17,8 @@
 package org.operaton.bpm.engine.test.api.resources;
 
 import static org.operaton.bpm.engine.repository.ResourceTypes.HISTORY;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.io.ByteArrayInputStream;
 import java.util.Date;
@@ -200,7 +199,7 @@ public class HistoryByteArrayTest {
 
     HistoricDecisionInstance historicDecisionInstance = engineRule.getHistoryService().createHistoricDecisionInstanceQuery().includeInputs().singleResult();
     List<HistoricDecisionInputInstance> inputInstances = historicDecisionInstance.getInputs();
-    assertEquals(1, inputInstances.size());
+    assertThat(inputInstances).hasSize(1);
 
     String byteArrayValueId = ((HistoricDecisionInputInstanceEntity) inputInstances.get(0)).getByteArrayValueId();
 
@@ -218,7 +217,7 @@ public class HistoryByteArrayTest {
 
     HistoricDecisionInstance historicDecisionInstance = engineRule.getHistoryService().createHistoricDecisionInstanceQuery().includeOutputs().singleResult();
     List<HistoricDecisionOutputInstance> outputInstances = historicDecisionInstance.getOutputs();
-    assertEquals(1, outputInstances.size());
+    assertThat(outputInstances).hasSize(1);
 
 
     String byteArrayValueId = ((HistoricDecisionOutputInstanceEntity) outputInstances.get(0)).getByteArrayValueId();
@@ -255,7 +254,7 @@ public class HistoryByteArrayTest {
     // when
     try {
       managementService.executeJob(jobId);
-      fail();
+      fail("");
     } catch (Exception e) {
       // expected
     }
@@ -264,7 +263,7 @@ public class HistoryByteArrayTest {
         .createHistoricJobLogQuery()
         .failureLog()
         .singleResult();
-    assertNotNull(entity);
+    assertThat(entity).isNotNull();
 
     ByteArrayEntity byteArrayEntity = configuration.getCommandExecutorTxRequired().execute(new GetByteArrayCommand(entity.getExceptionByteArrayId()));
 
@@ -294,12 +293,12 @@ public class HistoryByteArrayTest {
       exceptionStackTrace = ExceptionUtils.getStackTrace(e);
       errorMessage = e.getMessage();
     }
-    assertNotNull(exceptionStackTrace);
+    assertThat(exceptionStackTrace).isNotNull();
 
     externalTaskService.handleFailure(task.getId(), WORKER_ID, errorMessage, exceptionStackTrace, 5, 3000L);
 
     HistoricExternalTaskLogEntity entity = (HistoricExternalTaskLogEntity) historyService.createHistoricExternalTaskLogQuery().errorMessage(errorMessage).singleResult();
-    assertNotNull(entity);
+    assertThat(entity).isNotNull();
 
     ByteArrayEntity byteArrayEntity = configuration.getCommandExecutorTxRequired().execute(new GetByteArrayCommand(entity.getErrorDetailsByteArrayId()));
 
@@ -308,9 +307,9 @@ public class HistoryByteArrayTest {
   }
 
   protected void checkBinary(ByteArrayEntity byteArrayEntity) {
-    assertNotNull(byteArrayEntity);
-    assertNotNull(byteArrayEntity.getCreateTime());
-    assertEquals(HISTORY.getValue(), byteArrayEntity.getType());
+    assertThat(byteArrayEntity).isNotNull();
+    assertThat(byteArrayEntity.getCreateTime()).isNotNull();
+    assertThat(byteArrayEntity.getType()).isEqualTo(HISTORY.getValue());
   }
 
   protected FileValue createFile() {
@@ -318,13 +317,12 @@ public class HistoryByteArrayTest {
     String encoding = "crazy-encoding";
     String mimeType = "martini/dry";
 
-    FileValue fileValue = Variables
+    return Variables
         .fileValue(fileName)
         .file("ABC".getBytes())
         .encoding(encoding)
         .mimeType(mimeType)
         .create();
-    return fileValue;
   }
 
   protected BpmnModelInstance createProcess() {

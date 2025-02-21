@@ -103,8 +103,8 @@ public class CleanableHistoricCaseInstanceReportServiceTest extends AbstractRest
     when(anotherReportResult.getCaseDefinitionName()).thenReturn("cdName");
     when(anotherReportResult.getCaseDefinitionVersion()).thenReturn(33);
     when(anotherReportResult.getHistoryTimeToLive()).thenReturn(null);
-    when(anotherReportResult.getFinishedCaseInstanceCount()).thenReturn(13l);
-    when(anotherReportResult.getCleanableCaseInstanceCount()).thenReturn(0l);
+    when(anotherReportResult.getFinishedCaseInstanceCount()).thenReturn(13L);
+    when(anotherReportResult.getCleanableCaseInstanceCount()).thenReturn(0L);
     when(anotherReportResult.getTenantId()).thenReturn(ANOTHER_EXAMPLE_TENANT_ID);
 
 

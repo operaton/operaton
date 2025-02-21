@@ -65,10 +65,8 @@ public class SaveUserCmd extends AbstractWritableIdentityServiceCmd<Void> implem
   }
 
   private void validateUserEntity(CommandContext commandContext) {
-    if(shouldCheckPasswordPolicy(commandContext)) {
-      if(!((UserEntity) user).checkPasswordAgainstPolicy()) {
-        throw new ProcessEngineException("Password does not match policy");
-      }
+    if(shouldCheckPasswordPolicy(commandContext) && !((UserEntity) user).checkPasswordAgainstPolicy()) {
+      throw new ProcessEngineException("Password does not match policy");
     }
   }
 

@@ -292,7 +292,7 @@ public class BackoffJobAcquisitionStrategy implements JobAcquisitionStrategy {
     if (applyJitter) {
       // add a bounded random jitter to avoid multiple job acquisitions getting exactly the same
       // polling interval
-      backoffTime += Math.random() * (backoffTime / 2);
+      backoffTime += Double.valueOf(Math.random() * ((double) backoffTime / 2)).longValue();
     }
 
     return backoffTime;

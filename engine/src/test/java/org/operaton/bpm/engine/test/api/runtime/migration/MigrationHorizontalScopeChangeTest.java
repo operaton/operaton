@@ -22,8 +22,10 @@ import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.MigrationPlanValidationReportAssert;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Assert;
+
 import org.junit.Rule;
+
+import static org.assertj.core.api.Assertions.fail;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
 
@@ -45,18 +47,18 @@ public class MigrationHorizontalScopeChangeTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_SUBPROCESS_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_SUBPROCESS_PROCESS);
-
-    // when
-    try {
-      rule.getRuntimeService()
+    var runtimeService = rule.getRuntimeService()
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("subProcess1", "subProcess1")
         .mapActivities("subProcess2", "subProcess2")
         .mapActivities("userTask1", "userTask2")
-        .mapActivities("userTask2", "userTask1")
-        .build();
+        .mapActivities("userTask2", "userTask1");
 
-      Assert.fail("should fail");
+    // when
+    try {
+      runtimeService.build();
+
+      fail("should fail");
     }
     catch (MigrationPlanValidationException e) {
       MigrationPlanValidationReportAssert.assertThat(e.getValidationReport())

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -48,7 +47,6 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.*;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 
 
@@ -153,7 +151,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
     List<Exception> exceptions = executeBatchJobs(batch);
 
     // then
-    assertEquals(0, exceptions.size());
+    assertThat(exceptions).isEmpty();
 
     assertThat(managementService.createJobQuery().withException().list()).isEmpty();
 
@@ -179,9 +177,11 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
   public void testDeleteProcessInstancesAsyncWithEmptyList() {
+    // given
+    List<String> emptyProcessInstanceIds = new ArrayList<>();
 
     // when/then
-    assertThatThrownBy(() -> runtimeService.deleteProcessInstancesAsync(new ArrayList<String>(), null, TESTING_INSTANCE_DELETE))
+    assertThatThrownBy(() -> runtimeService.deleteProcessInstancesAsync(emptyProcessInstanceIds, null, TESTING_INSTANCE_DELETE))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("processInstanceIds is empty");
 
@@ -384,10 +384,10 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
 
     // then
     ProcessInstance superInstance = runtimeService.createProcessInstanceQuery().processInstanceId(processIds.get(0)).singleResult();
-    assertNull(superInstance);
+    assertThat(superInstance).isNull();
 
     ProcessInstance subInstance = runtimeService.createProcessInstanceQuery().processDefinitionKey("called").singleResult();
-    assertNotNull(subInstance);
+    assertThat(subInstance).isNotNull();
   }
 
   @Deployment(resources="org/operaton/bpm/engine/test/api/oneTaskProcessWithIoMappings.bpmn20.xml")
@@ -465,10 +465,10 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
 
     // then
     ProcessInstance superInstance = runtimeService.createProcessInstanceQuery().processInstanceId(processIds.get(0)).singleResult();
-    assertNull(superInstance);
+    assertThat(superInstance).isNull();
 
     ProcessInstance subInstance = runtimeService.createProcessInstanceQuery().processDefinitionKey("called").singleResult();
-    assertNull(subInstance);
+    assertThat(subInstance).isNull();
   }
 
 
@@ -526,27 +526,27 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
 
     // execute jobs related to the first deployment
     List<String> jobIdsForFirstDeployment = getJobIdsByDeployment(jobs, firstDeploymentId);
-    assertNotNull(jobIdsForFirstDeployment);
+    assertThat(jobIdsForFirstDeployment).isNotNull();
     for (String jobId : jobIdsForFirstDeployment) {
       managementService.executeJob(jobId);
     }
 
     // the process instances related to the first deployment should be deleted
-    assertEquals(0, runtimeService.createProcessInstanceQuery().deploymentId(firstDeploymentId).count());
+    assertThat(runtimeService.createProcessInstanceQuery().deploymentId(firstDeploymentId).count()).isZero();
     assertHistoricTaskDeletionPresent(processInstanceIdsFromFirstDeployment, "test_reason", testRule);
     // and process instances related to the second deployment should not be deleted
-    assertEquals(processInstanceIdsFromSecondDeployment.size(), runtimeService.createProcessInstanceQuery().deploymentId(secondDeploymentId).count());
+    assertThat(runtimeService.createProcessInstanceQuery().deploymentId(secondDeploymentId).count()).isEqualTo(processInstanceIdsFromSecondDeployment.size());
     assertHistoricTaskDeletionPresent(processInstanceIdsFromSecondDeployment, null, testRule);
 
     // execute jobs related to the second deployment
     List<String> jobIdsForSecondDeployment = getJobIdsByDeployment(jobs, secondDeploymentId);
-    assertNotNull(jobIdsForSecondDeployment);
+    assertThat(jobIdsForSecondDeployment).isNotNull();
     for (String jobId : jobIdsForSecondDeployment) {
       managementService.executeJob(jobId);
     }
 
     // all of the process instances should be deleted
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
   @Deployment(resources = {
@@ -564,7 +564,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
     Batch batch = runtimeService.deleteProcessInstancesAsync(processIds, null, TESTING_INSTANCE_DELETE);
 
     // then
-    Assertions.assertThat(batch.getInvocationsPerBatchJob()).isEqualTo(42);
+    assertThat(batch.getInvocationsPerBatchJob()).isEqualTo(42);
 
     // clear
     engineRule.getProcessEngineConfiguration()

@@ -5,11 +5,12 @@
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-database-settings</artifactId>
     <relativePath>../../database</relativePath>
-    <version>1.0.0-beta-3-SNAPSHOT</version>
+    <version>1.0.0-beta-4-SNAPSHOT</version>
   </parent>
 
   <groupId>org.operaton.bpm.distro</groupId>
   <artifactId>operaton-sql-scripts</artifactId>
+  <version>${version.operaton.dbscheme}</version>
   <packaging>jar</packaging>
 
   <name>Operaton - SQL scripts</name>
@@ -24,7 +25,7 @@
       <dependency>
         <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-core-internal-dependencies</artifactId>
-        <version>${project.version}</version>
+        <version>${project.parent.version}</version>
         <scope>import</scope>
         <type>pom</type>
       </dependency>
@@ -144,10 +145,10 @@
                 <artifactItem>
                   <groupId>org.operaton.bpm</groupId>
                   <artifactId>operaton-engine</artifactId>
-                  <version>${project.version}</version>
+                  <version>${project.parent.version}</version>
                   <type>jar</type>
                   <overWrite>true</overWrite>
-                  <outputDirectory>target/operaton-engine-${project.version}</outputDirectory>
+                  <outputDirectory>target/operaton-engine-${project.parent.version}</outputDirectory>
                 </artifactItem>
               </artifactItems>
               <includes>**/create/*.sql, **/drop/*.sql, **/upgrade/*.sql, **/liquibase/**/*</includes>
@@ -174,36 +175,36 @@
                 <mkdir dir="target/sql/create" />
 
                 <concat destfile="target/sql/create/db2_engine_${project.version}.sql" fixlastline="yes">
-                  <filelist dir="target/operaton-engine-${project.version}/org/operaton/bpm/engine/db/create" files="activiti.db2.create.engine.sql activiti.db2.create.case.engine.sql activiti.db2.create.decision.engine.sql activiti.db2.create.history.sql activiti.db2.create.case.history.sql activiti.db2.create.decision.history.sql" />
+                  <filelist dir="target/operaton-engine-${project.parent.version}/org/operaton/bpm/engine/db/create" files="activiti.db2.create.engine.sql activiti.db2.create.case.engine.sql activiti.db2.create.decision.engine.sql activiti.db2.create.history.sql activiti.db2.create.case.history.sql activiti.db2.create.decision.history.sql" />
                 </concat>
 
                 <concat destfile="target/sql/create/h2_engine_${project.version}.sql" fixlastline="yes">
-                  <filelist dir="target/operaton-engine-${project.version}/org/operaton/bpm/engine/db/create" files="activiti.h2.create.engine.sql activiti.h2.create.case.engine.sql activiti.h2.create.decision.engine.sql activiti.h2.create.history.sql activiti.h2.create.case.history.sql activiti.h2.create.decision.history.sql" />
+                  <filelist dir="target/operaton-engine-${project.parent.version}/org/operaton/bpm/engine/db/create" files="activiti.h2.create.engine.sql activiti.h2.create.case.engine.sql activiti.h2.create.decision.engine.sql activiti.h2.create.history.sql activiti.h2.create.case.history.sql activiti.h2.create.decision.history.sql" />
                 </concat>
 
                 <concat destfile="target/sql/create/mssql_engine_${project.version}.sql" fixlastline="yes">
-                  <filelist dir="target/operaton-engine-${project.version}/org/operaton/bpm/engine/db/create" files="activiti.mssql.create.engine.sql activiti.mssql.create.case.engine.sql activiti.mssql.create.decision.engine.sql activiti.mssql.create.history.sql activiti.mssql.create.case.history.sql activiti.mssql.create.decision.history.sql" />
+                  <filelist dir="target/operaton-engine-${project.parent.version}/org/operaton/bpm/engine/db/create" files="activiti.mssql.create.engine.sql activiti.mssql.create.case.engine.sql activiti.mssql.create.decision.engine.sql activiti.mssql.create.history.sql activiti.mssql.create.case.history.sql activiti.mssql.create.decision.history.sql" />
                 </concat>
 
                 <concat destfile="target/sql/create/mysql_engine_${project.version}.sql" fixlastline="yes">
-                  <filelist dir="target/operaton-engine-${project.version}/org/operaton/bpm/engine/db/create" files="activiti.mysql.create.engine.sql activiti.mysql.create.case.engine.sql activiti.mysql.create.decision.engine.sql activiti.mysql.create.history.sql activiti.mysql.create.case.history.sql activiti.mysql.create.decision.history.sql" />
+                  <filelist dir="target/operaton-engine-${project.parent.version}/org/operaton/bpm/engine/db/create" files="activiti.mysql.create.engine.sql activiti.mysql.create.case.engine.sql activiti.mysql.create.decision.engine.sql activiti.mysql.create.history.sql activiti.mysql.create.case.history.sql activiti.mysql.create.decision.history.sql" />
                 </concat>
 
                 <concat destfile="target/sql/create/mariadb_engine_${project.version}.sql" fixlastline="yes">
-                  <filelist dir="target/operaton-engine-${project.version}/org/operaton/bpm/engine/db/create" files="activiti.mariadb.create.engine.sql activiti.mariadb.create.case.engine.sql activiti.mariadb.create.decision.engine.sql activiti.mariadb.create.history.sql activiti.mariadb.create.case.history.sql activiti.mariadb.create.decision.history.sql" />
+                  <filelist dir="target/operaton-engine-${project.parent.version}/org/operaton/bpm/engine/db/create" files="activiti.mariadb.create.engine.sql activiti.mariadb.create.case.engine.sql activiti.mariadb.create.decision.engine.sql activiti.mariadb.create.history.sql activiti.mariadb.create.case.history.sql activiti.mariadb.create.decision.history.sql" />
                 </concat>
 
                 <concat destfile="target/sql/create/oracle_engine_${project.version}.sql" fixlastline="yes">
-                  <filelist dir="target/operaton-engine-${project.version}/org/operaton/bpm/engine/db/create" files="activiti.oracle.create.engine.sql activiti.oracle.create.case.engine.sql activiti.oracle.create.decision.engine.sql activiti.oracle.create.history.sql activiti.oracle.create.case.history.sql activiti.oracle.create.decision.history.sql" />
+                  <filelist dir="target/operaton-engine-${project.parent.version}/org/operaton/bpm/engine/db/create" files="activiti.oracle.create.engine.sql activiti.oracle.create.case.engine.sql activiti.oracle.create.decision.engine.sql activiti.oracle.create.history.sql activiti.oracle.create.case.history.sql activiti.oracle.create.decision.history.sql" />
                 </concat>
 
                 <concat destfile="target/sql/create/postgres_engine_${project.version}.sql" fixlastline="yes">
-                  <filelist dir="target/operaton-engine-${project.version}/org/operaton/bpm/engine/db/create" files="activiti.postgres.create.engine.sql activiti.postgres.create.case.engine.sql activiti.postgres.create.decision.engine.sql activiti.postgres.create.history.sql activiti.postgres.create.case.history.sql activiti.postgres.create.decision.history.sql" />
+                  <filelist dir="target/operaton-engine-${project.parent.version}/org/operaton/bpm/engine/db/create" files="activiti.postgres.create.engine.sql activiti.postgres.create.case.engine.sql activiti.postgres.create.decision.engine.sql activiti.postgres.create.history.sql activiti.postgres.create.case.history.sql activiti.postgres.create.decision.history.sql" />
                 </concat>
 
                 <!-- add identity create files -->
                 <copy todir="target/sql/create" flatten="false">
-                  <fileset dir="target/operaton-engine-${project.version}/org/operaton/bpm/engine/db/create" />
+                  <fileset dir="target/operaton-engine-${project.parent.version}/org/operaton/bpm/engine/db/create" />
                   <mapper>
                     <chainedmapper>
                       <regexpmapper from="^(activiti.)([A-Za-z0-9]*)(.create.identity.sql)" to="\2_identity_${project.version}.sql" handledirsep="yes" />
@@ -216,36 +217,36 @@
                 <mkdir dir="target/sql/drop" />
 
                 <concat destfile="target/sql/drop/db2_engine_${project.version}.sql" fixlastline="yes">
-                  <filelist dir="target/operaton-engine-${project.version}/org/operaton/bpm/engine/db/drop" files="activiti.db2.drop.decision.engine.sql activiti.db2.drop.case.engine.sql activiti.db2.drop.engine.sql activiti.db2.drop.decision.history.sql activiti.db2.drop.case.history.sql activiti.db2.drop.history.sql" />
+                  <filelist dir="target/operaton-engine-${project.parent.version}/org/operaton/bpm/engine/db/drop" files="activiti.db2.drop.decision.engine.sql activiti.db2.drop.case.engine.sql activiti.db2.drop.engine.sql activiti.db2.drop.decision.history.sql activiti.db2.drop.case.history.sql activiti.db2.drop.history.sql" />
                 </concat>
 
                 <concat destfile="target/sql/drop/h2_engine_${project.version}.sql" fixlastline="yes">
-                  <filelist dir="target/operaton-engine-${project.version}/org/operaton/bpm/engine/db/drop" files="activiti.h2.drop.decision.engine.sql activiti.h2.drop.case.engine.sql activiti.h2.drop.engine.sql activiti.h2.drop.decision.history.sql activiti.h2.drop.case.history.sql activiti.h2.drop.history.sql" />
+                  <filelist dir="target/operaton-engine-${project.parent.version}/org/operaton/bpm/engine/db/drop" files="activiti.h2.drop.decision.engine.sql activiti.h2.drop.case.engine.sql activiti.h2.drop.engine.sql activiti.h2.drop.decision.history.sql activiti.h2.drop.case.history.sql activiti.h2.drop.history.sql" />
                 </concat>
 
                 <concat destfile="target/sql/drop/mssql_engine_${project.version}.sql" fixlastline="yes">
-                  <filelist dir="target/operaton-engine-${project.version}/org/operaton/bpm/engine/db/drop" files="activiti.mssql.drop.decision.engine.sql activiti.mssql.drop.case.engine.sql activiti.mssql.drop.engine.sql activiti.mssql.drop.decision.history.sql activiti.mssql.drop.case.history.sql activiti.mssql.drop.history.sql" />
+                  <filelist dir="target/operaton-engine-${project.parent.version}/org/operaton/bpm/engine/db/drop" files="activiti.mssql.drop.decision.engine.sql activiti.mssql.drop.case.engine.sql activiti.mssql.drop.engine.sql activiti.mssql.drop.decision.history.sql activiti.mssql.drop.case.history.sql activiti.mssql.drop.history.sql" />
                 </concat>
 
                 <concat destfile="target/sql/drop/mysql_engine_${project.version}.sql" fixlastline="yes">
-                  <filelist dir="target/operaton-engine-${project.version}/org/operaton/bpm/engine/db/drop" files="activiti.mysql.drop.decision.engine.sql activiti.mysql.drop.case.engine.sql activiti.mysql.drop.engine.sql activiti.mysql.drop.decision.history.sql activiti.mysql.drop.case.history.sql activiti.mysql.drop.history.sql" />
+                  <filelist dir="target/operaton-engine-${project.parent.version}/org/operaton/bpm/engine/db/drop" files="activiti.mysql.drop.decision.engine.sql activiti.mysql.drop.case.engine.sql activiti.mysql.drop.engine.sql activiti.mysql.drop.decision.history.sql activiti.mysql.drop.case.history.sql activiti.mysql.drop.history.sql" />
                 </concat>
 
                 <concat destfile="target/sql/drop/mariadb_engine_${project.version}.sql" fixlastline="yes">
-                  <filelist dir="target/operaton-engine-${project.version}/org/operaton/bpm/engine/db/drop" files="activiti.mariadb.drop.decision.engine.sql activiti.mariadb.drop.case.engine.sql activiti.mariadb.drop.engine.sql activiti.mariadb.drop.decision.history.sql activiti.mariadb.drop.case.history.sql activiti.mariadb.drop.history.sql" />
+                  <filelist dir="target/operaton-engine-${project.parent.version}/org/operaton/bpm/engine/db/drop" files="activiti.mariadb.drop.decision.engine.sql activiti.mariadb.drop.case.engine.sql activiti.mariadb.drop.engine.sql activiti.mariadb.drop.decision.history.sql activiti.mariadb.drop.case.history.sql activiti.mariadb.drop.history.sql" />
                 </concat>
 
                 <concat destfile="target/sql/drop/oracle_engine_${project.version}.sql" fixlastline="yes">
-                  <filelist dir="target/operaton-engine-${project.version}/org/operaton/bpm/engine/db/drop" files="activiti.oracle.drop.decision.engine.sql activiti.oracle.drop.case.engine.sql activiti.oracle.drop.engine.sql activiti.oracle.drop.decision.history.sql activiti.oracle.drop.case.history.sql activiti.oracle.drop.history.sql" />
+                  <filelist dir="target/operaton-engine-${project.parent.version}/org/operaton/bpm/engine/db/drop" files="activiti.oracle.drop.decision.engine.sql activiti.oracle.drop.case.engine.sql activiti.oracle.drop.engine.sql activiti.oracle.drop.decision.history.sql activiti.oracle.drop.case.history.sql activiti.oracle.drop.history.sql" />
                 </concat>
 
                 <concat destfile="target/sql/drop/postgres_engine_${project.version}.sql" fixlastline="yes">
-                  <filelist dir="target/operaton-engine-${project.version}/org/operaton/bpm/engine/db/drop" files="activiti.postgres.drop.decision.engine.sql activiti.postgres.drop.case.engine.sql activiti.postgres.drop.engine.sql activiti.postgres.drop.decision.history.sql activiti.postgres.drop.case.history.sql activiti.postgres.drop.history.sql" />
+                  <filelist dir="target/operaton-engine-${project.parent.version}/org/operaton/bpm/engine/db/drop" files="activiti.postgres.drop.decision.engine.sql activiti.postgres.drop.case.engine.sql activiti.postgres.drop.engine.sql activiti.postgres.drop.decision.history.sql activiti.postgres.drop.case.history.sql activiti.postgres.drop.history.sql" />
                 </concat>
 
                 <!-- add identity drop files -->
                 <copy todir="target/sql/drop" flatten="false">
-                  <fileset dir="target/operaton-engine-${project.version}/org/operaton/bpm/engine/db/drop" />
+                  <fileset dir="target/operaton-engine-${project.parent.version}/org/operaton/bpm/engine/db/drop" />
                   <mapper>
                     <chainedmapper>
                       <regexpmapper from="^(activiti.)([A-Za-z0-9]*)(.drop.identity.sql)" to="\2_identity_${project.version}.sql" handledirsep="yes" />
@@ -257,7 +258,7 @@
                 <mkdir dir="target/sql/upgrade" />
 
                 <copy todir="target/sql/upgrade">
-                  <fileset dir="target/operaton-engine-${project.version}/org/operaton/bpm/engine/db/upgrade">
+                  <fileset dir="target/operaton-engine-${project.parent.version}/org/operaton/bpm/engine/db/upgrade">
                     <include name="*.sql" />
                   </fileset>
                 </copy>
@@ -265,7 +266,7 @@
                 <!-- liquibase -->
 
                 <copy todir="target/sql/liquibase">
-                  <fileset dir="target/operaton-engine-${project.version}/org/operaton/bpm/engine/db/liquibase" includes="**/*" />
+                  <fileset dir="target/operaton-engine-${project.parent.version}/org/operaton/bpm/engine/db/liquibase" includes="**/*" />
                 </copy>
 
               </target>
@@ -283,69 +284,69 @@
                 <!-- create concatenated patch scripts for easier testing -->
                 <!-- db2 patches -->
                 <concat destfile="target/upgrade-test/sql/upgrade/db2_engine_${operaton.current.majorVersion}.${operaton.current.minorVersion}_patch.sql" fixlastline="yes">
-                  <fileset dir="target/operaton-engine-${project.version}/org/operaton/bpm/engine/db/upgrade" includes="db2_engine_${operaton.current.majorVersion}.${operaton.current.minorVersion}_patch*.sql" />
+                  <fileset dir="target/operaton-engine-${project.parent.version}/org/operaton/bpm/engine/db/upgrade" includes="db2_engine_${operaton.current.majorVersion}.${operaton.current.minorVersion}_patch*.sql" />
                 </concat>
 
                 <concat destfile="target/upgrade-test/sql/upgrade/db2_engine_${operaton.old.majorVersion}.${operaton.old.minorVersion}_patch.sql" fixlastline="yes">
-                  <fileset dir="target/operaton-engine-${project.version}/org/operaton/bpm/engine/db/upgrade" includes="db2_engine_${operaton.old.majorVersion}.${operaton.old.minorVersion}_patch*.sql" />
+                  <fileset dir="target/operaton-engine-${project.parent.version}/org/operaton/bpm/engine/db/upgrade" includes="db2_engine_${operaton.old.majorVersion}.${operaton.old.minorVersion}_patch*.sql" />
                 </concat>
 
                 <!-- h2 patches -->
                 <concat destfile="target/upgrade-test/sql/upgrade/h2_engine_${operaton.current.majorVersion}.${operaton.current.minorVersion}_patch.sql" fixlastline="yes">
-                  <fileset dir="target/operaton-engine-${project.version}/org/operaton/bpm/engine/db/upgrade" includes="h2_engine_${operaton.current.majorVersion}.${operaton.current.minorVersion}_patch*.sql" />
+                  <fileset dir="target/operaton-engine-${project.parent.version}/org/operaton/bpm/engine/db/upgrade" includes="h2_engine_${operaton.current.majorVersion}.${operaton.current.minorVersion}_patch*.sql" />
                 </concat>
 
                 <concat destfile="target/upgrade-test/sql/upgrade/h2_engine_${operaton.old.majorVersion}.${operaton.old.minorVersion}_patch.sql" fixlastline="yes">
-                  <fileset dir="target/operaton-engine-${project.version}/org/operaton/bpm/engine/db/upgrade" includes="h2_engine_${operaton.old.majorVersion}.${operaton.old.minorVersion}_patch*.sql" />
+                  <fileset dir="target/operaton-engine-${project.parent.version}/org/operaton/bpm/engine/db/upgrade" includes="h2_engine_${operaton.old.majorVersion}.${operaton.old.minorVersion}_patch*.sql" />
                 </concat>
 
                 <!-- mssql patches -->
                 <concat destfile="target/upgrade-test/sql/upgrade/mssql_engine_${operaton.current.majorVersion}.${operaton.current.minorVersion}_patch.sql" fixlastline="yes">
-                  <fileset dir="target/operaton-engine-${project.version}/org/operaton/bpm/engine/db/upgrade" includes="mssql_engine_${operaton.current.majorVersion}.${operaton.current.minorVersion}_patch*.sql" />
+                  <fileset dir="target/operaton-engine-${project.parent.version}/org/operaton/bpm/engine/db/upgrade" includes="mssql_engine_${operaton.current.majorVersion}.${operaton.current.minorVersion}_patch*.sql" />
                 </concat>
 
                 <concat destfile="target/upgrade-test/sql/upgrade/mssql_engine_${operaton.old.majorVersion}.${operaton.old.minorVersion}_patch.sql" fixlastline="yes">
-                  <fileset dir="target/operaton-engine-${project.version}/org/operaton/bpm/engine/db/upgrade" includes="mssql_engine_${operaton.old.majorVersion}.${operaton.old.minorVersion}_patch*.sql" />
+                  <fileset dir="target/operaton-engine-${project.parent.version}/org/operaton/bpm/engine/db/upgrade" includes="mssql_engine_${operaton.old.majorVersion}.${operaton.old.minorVersion}_patch*.sql" />
                 </concat>
 
                 <!-- mysql patches -->
                 <concat destfile="target/upgrade-test/sql/upgrade/mysql_engine_${operaton.current.majorVersion}.${operaton.current.minorVersion}_patch.sql" fixlastline="yes">
-                  <fileset dir="target/operaton-engine-${project.version}/org/operaton/bpm/engine/db/upgrade" includes="mysql_engine_${operaton.current.majorVersion}.${operaton.current.minorVersion}_patch*.sql" />
+                  <fileset dir="target/operaton-engine-${project.parent.version}/org/operaton/bpm/engine/db/upgrade" includes="mysql_engine_${operaton.current.majorVersion}.${operaton.current.minorVersion}_patch*.sql" />
                 </concat>
 
                 <concat destfile="target/upgrade-test/sql/upgrade/mysql_engine_${operaton.old.majorVersion}.${operaton.old.minorVersion}_patch.sql" fixlastline="yes">
-                  <fileset dir="target/operaton-engine-${project.version}/org/operaton/bpm/engine/db/upgrade" includes="mysql_engine_${operaton.old.majorVersion}.${operaton.old.minorVersion}_patch*.sql" />
+                  <fileset dir="target/operaton-engine-${project.parent.version}/org/operaton/bpm/engine/db/upgrade" includes="mysql_engine_${operaton.old.majorVersion}.${operaton.old.minorVersion}_patch*.sql" />
                 </concat>
 
                 <!-- mariadb patches -->
                 <concat destfile="target/upgrade-test/sql/upgrade/mariadb_engine_${operaton.current.majorVersion}.${operaton.current.minorVersion}_patch.sql" fixlastline="yes">
-                  <fileset dir="target/operaton-engine-${project.version}/org/operaton/bpm/engine/db/upgrade" includes="mariadb_engine_${operaton.current.majorVersion}.${operaton.current.minorVersion}_patch*.sql" />
+                  <fileset dir="target/operaton-engine-${project.parent.version}/org/operaton/bpm/engine/db/upgrade" includes="mariadb_engine_${operaton.current.majorVersion}.${operaton.current.minorVersion}_patch*.sql" />
                 </concat>
 
                 <concat destfile="target/upgrade-test/sql/upgrade/mariadb_engine_${operaton.old.majorVersion}.${operaton.old.minorVersion}_patch.sql" fixlastline="yes">
-                  <fileset dir="target/operaton-engine-${project.version}/org/operaton/bpm/engine/db/upgrade" includes="mariadb_engine_${operaton.old.majorVersion}.${operaton.old.minorVersion}_patch*.sql" />
+                  <fileset dir="target/operaton-engine-${project.parent.version}/org/operaton/bpm/engine/db/upgrade" includes="mariadb_engine_${operaton.old.majorVersion}.${operaton.old.minorVersion}_patch*.sql" />
                 </concat>
 
                 <!-- oracle patches -->
                 <concat destfile="target/upgrade-test/sql/upgrade/oracle_engine_${operaton.current.majorVersion}.${operaton.current.minorVersion}_patch.sql" fixlastline="yes">
-                  <fileset dir="target/operaton-engine-${project.version}/org/operaton/bpm/engine/db/upgrade" includes="oracle_engine_${operaton.current.majorVersion}.${operaton.current.minorVersion}_patch*.sql" />
+                  <fileset dir="target/operaton-engine-${project.parent.version}/org/operaton/bpm/engine/db/upgrade" includes="oracle_engine_${operaton.current.majorVersion}.${operaton.current.minorVersion}_patch*.sql" />
                 </concat>
 
                 <concat destfile="target/upgrade-test/sql/upgrade/oracle_engine_${operaton.old.majorVersion}.${operaton.old.minorVersion}_patch.sql" fixlastline="yes">
-                  <fileset dir="target/operaton-engine-${project.version}/org/operaton/bpm/engine/db/upgrade" includes="oracle_engine_${operaton.old.majorVersion}.${operaton.old.minorVersion}_patch*.sql" />
+                  <fileset dir="target/operaton-engine-${project.parent.version}/org/operaton/bpm/engine/db/upgrade" includes="oracle_engine_${operaton.old.majorVersion}.${operaton.old.minorVersion}_patch*.sql" />
                 </concat>
 
                 <!-- postgres patches -->
                 <concat destfile="target/upgrade-test/sql/upgrade/postgres_engine_${operaton.current.majorVersion}.${operaton.current.minorVersion}_patch.sql" fixlastline="yes">
-                  <fileset dir="target/operaton-engine-${project.version}/org/operaton/bpm/engine/db/upgrade" includes="postgres_engine_${operaton.current.majorVersion}.${operaton.current.minorVersion}_patch*.sql" />
+                  <fileset dir="target/operaton-engine-${project.parent.version}/org/operaton/bpm/engine/db/upgrade" includes="postgres_engine_${operaton.current.majorVersion}.${operaton.current.minorVersion}_patch*.sql" />
                 </concat>
 
                 <concat destfile="target/upgrade-test/sql/upgrade/postgres_engine_${operaton.old.majorVersion}.${operaton.old.minorVersion}_patch.sql" fixlastline="yes">
-                  <fileset dir="target/operaton-engine-${project.version}/org/operaton/bpm/engine/db/upgrade" includes="postgres_engine_${operaton.old.majorVersion}.${operaton.old.minorVersion}_patch*.sql" />
+                  <fileset dir="target/operaton-engine-${project.parent.version}/org/operaton/bpm/engine/db/upgrade" includes="postgres_engine_${operaton.old.majorVersion}.${operaton.old.minorVersion}_patch*.sql" />
                 </concat>
 
                 <copy todir="target/upgrade-test/sql/upgrade">
-                  <fileset dir="target/operaton-engine-${project.version}/org/operaton/bpm/engine/db/upgrade">
+                  <fileset dir="target/operaton-engine-${project.parent.version}/org/operaton/bpm/engine/db/upgrade">
                     <include name="*.sql" />
                   </fileset>
                 </copy>
@@ -450,6 +451,9 @@
               <execution>
                 <id>create-sql-script-stubs</id>
                 <phase>generate-test-resources</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
                 <configuration>
                   <target>
                     <copy todir="${project.build.directory}/test-classes/local-upgrade-test/">
@@ -461,12 +465,8 @@
 
                     <touch file="${project.build.directory}/test-classes/local-upgrade-test/sql/upgrade/${database.type}_engine_${operaton.old.majorVersion}.${operaton.old.minorVersion}_patch.sql" />
                     <touch file="${project.build.directory}/test-classes/local-upgrade-test/sql/upgrade/${database.type}_engine_${operaton.current.majorVersion}.${operaton.current.minorVersion}_patch.sql" />
-
                   </target>
                 </configuration>
-                <goals>
-                  <goal>run</goal>
-                </goals>
               </execution>
             </executions>
           </plugin>

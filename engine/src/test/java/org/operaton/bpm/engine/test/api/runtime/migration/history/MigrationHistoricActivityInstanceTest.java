@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.api.runtime.migration.history;
 
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.List;
@@ -36,7 +36,6 @@ import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.runtime.migration.MigrationTestRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -89,8 +88,8 @@ public class MigrationHistoricActivityInstanceTest {
           .processDefinitionId(targetProcessDefinition.getId());
 
     //when
-    assertEquals(2, sourceHistoryActivityInstanceQuery.count());
-    assertEquals(0, targetHistoryActivityInstanceQuery.count());
+    assertThat(sourceHistoryActivityInstanceQuery.count()).isEqualTo(2);
+    assertThat(targetHistoryActivityInstanceQuery.count()).isZero();
     ProcessInstanceQuery sourceProcessInstanceQuery = runtimeService.createProcessInstanceQuery().processDefinitionId(sourceProcessDefinition.getId());
     runtimeService.newMigration(migrationPlan)
       .processInstanceQuery(sourceProcessInstanceQuery)
@@ -98,14 +97,14 @@ public class MigrationHistoricActivityInstanceTest {
 
     // then one instance of the start event still belongs to the source process
     // and one active user task instances is now migrated to the target process
-    assertEquals(1, sourceHistoryActivityInstanceQuery.count());
-    assertEquals(1, targetHistoryActivityInstanceQuery.count());
+    assertThat(sourceHistoryActivityInstanceQuery.count()).isEqualTo(1);
+    assertThat(targetHistoryActivityInstanceQuery.count()).isEqualTo(1);
 
     HistoricActivityInstance instance = targetHistoryActivityInstanceQuery.singleResult();
     assertMigratedTo(instance, targetProcessDefinition, "userTask2");
-    assertEquals("new activity name", instance.getActivityName());
-    assertEquals(processInstance.getId(), instance.getParentActivityInstanceId());
-    assertEquals("userTask", instance.getActivityType());
+    assertThat(instance.getActivityName()).isEqualTo("new activity name");
+    assertThat(instance.getParentActivityInstanceId()).isEqualTo(processInstance.getId());
+    assertThat(instance.getActivityType()).isEqualTo("userTask");
   }
 
   @Test
@@ -135,12 +134,12 @@ public class MigrationHistoricActivityInstanceTest {
         .asc()
         .list();
 
-    Assert.assertEquals(2, historicInstances.size());
+    assertThat(historicInstances).hasSize(2);
 
     assertMigratedTo(historicInstances.get(0), processDefinition, "subProcess");
     assertMigratedTo(historicInstances.get(1), processDefinition, "userTask");
-    assertEquals(processInstance.getId(), historicInstances.get(0).getParentActivityInstanceId());
-    assertEquals(historicInstances.get(0).getId(), historicInstances.get(1).getParentActivityInstanceId());
+    assertThat(historicInstances.get(0).getParentActivityInstanceId()).isEqualTo(processInstance.getId());
+    assertThat(historicInstances.get(1).getParentActivityInstanceId()).isEqualTo(historicInstances.get(0).getId());
   }
 
   @Test
@@ -173,12 +172,12 @@ public class MigrationHistoricActivityInstanceTest {
         .asc()
         .list();
 
-    Assert.assertEquals(2, historicInstances.size());
+    assertThat(historicInstances).hasSize(2);
 
     assertMigratedTo(historicInstances.get(0), targetDefinition, "newSubProcess");
     assertMigratedTo(historicInstances.get(1), targetDefinition, "userTask");
-    assertEquals(processInstance.getId(), historicInstances.get(0).getParentActivityInstanceId());
-    assertEquals(historicInstances.get(0).getId(), historicInstances.get(1).getParentActivityInstanceId());
+    assertThat(historicInstances.get(0).getParentActivityInstanceId()).isEqualTo(processInstance.getId());
+    assertThat(historicInstances.get(1).getParentActivityInstanceId()).isEqualTo(historicInstances.get(0).getId());
   }
 
   @Test
@@ -209,10 +208,10 @@ public class MigrationHistoricActivityInstanceTest {
         .asc()
         .list();
 
-    Assert.assertEquals(1, historicInstances.size());
+    assertThat(historicInstances).hasSize(1);
 
     assertMigratedTo(historicInstances.get(0), targetDefinition, "userTask");
-    assertEquals(processInstance.getId(), historicInstances.get(0).getParentActivityInstanceId());
+    assertThat(historicInstances.get(0).getParentActivityInstanceId()).isEqualTo(processInstance.getId());
   }
 
   @Test
@@ -243,18 +242,18 @@ public class MigrationHistoricActivityInstanceTest {
         .asc()
         .list();
 
-    Assert.assertEquals(2, historicInstances.size());
+    assertThat(historicInstances).hasSize(2);
 
     assertMigratedTo(historicInstances.get(0), targetDefinition, "subProcess");
     assertMigratedTo(historicInstances.get(1), targetDefinition, "userTask");
-    assertEquals(processInstance.getId(), historicInstances.get(0).getParentActivityInstanceId());
-    assertEquals(historicInstances.get(0).getId(), historicInstances.get(1).getParentActivityInstanceId());
+    assertThat(historicInstances.get(0).getParentActivityInstanceId()).isEqualTo(processInstance.getId());
+    assertThat(historicInstances.get(1).getParentActivityInstanceId()).isEqualTo(historicInstances.get(0).getId());
   }
 
   protected void assertMigratedTo(HistoricActivityInstance activityInstance, ProcessDefinition processDefinition, String activityId) {
-    Assert.assertEquals(processDefinition.getId(), activityInstance.getProcessDefinitionId());
-    Assert.assertEquals(processDefinition.getKey(), activityInstance.getProcessDefinitionKey());
-    Assert.assertEquals(activityId, activityInstance.getActivityId());
+    assertThat(activityInstance.getProcessDefinitionId()).isEqualTo(processDefinition.getId());
+    assertThat(activityInstance.getProcessDefinitionKey()).isEqualTo(processDefinition.getKey());
+    assertThat(activityInstance.getActivityId()).isEqualTo(activityId);
   }
 
 }

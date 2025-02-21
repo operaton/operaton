@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -85,10 +84,10 @@ public class JobDefinitionCreationAndDeletionWithParseListenerTest {
     //then there exists one job definition
     JobDefinitionQuery query = engineRule.getManagementService().createJobDefinitionQuery();
     JobDefinition jobDef = query.singleResult();
-    assertNotNull(jobDef);
-    assertEquals(jobDef.getProcessDefinitionKey(), "oneTaskProcess");
-    assertEquals(jobDef.getActivityId(), "servicetask1");
-    assertEquals(jobDef.getJobConfiguration(), MessageJobDeclaration.ASYNC_AFTER);
+    assertThat(jobDef).isNotNull();
+    assertThat(jobDef.getProcessDefinitionKey()).isEqualTo("oneTaskProcess");
+    assertThat(jobDef.getActivityId()).isEqualTo("servicetask1");
+    assertThat(jobDef.getJobConfiguration()).isEqualTo(MessageJobDeclaration.ASYNC_AFTER);
   }
 
   @Test
@@ -105,10 +104,10 @@ public class JobDefinitionCreationAndDeletionWithParseListenerTest {
     //then there exists one job definition
     JobDefinitionQuery query = engineRule.getManagementService().createJobDefinitionQuery();
     JobDefinition jobDef = query.singleResult();
-    assertNotNull(jobDef);
-    assertEquals(jobDef.getProcessDefinitionKey(), "oneTaskProcess");
-    assertEquals(jobDef.getActivityId(), "servicetask1");
-    assertEquals(jobDef.getJobConfiguration(), MessageJobDeclaration.ASYNC_AFTER);
+    assertThat(jobDef).isNotNull();
+    assertThat(jobDef.getProcessDefinitionKey()).isEqualTo("oneTaskProcess");
+    assertThat(jobDef.getActivityId()).isEqualTo("servicetask1");
+    assertThat(jobDef.getJobConfiguration()).isEqualTo(MessageJobDeclaration.ASYNC_AFTER);
   }
 
   @Test
@@ -125,9 +124,9 @@ public class JobDefinitionCreationAndDeletionWithParseListenerTest {
     //then there exists one job definition
     JobDefinitionQuery query = engineRule.getManagementService().createJobDefinitionQuery();
     JobDefinition jobDef = query.singleResult();
-    assertNotNull(jobDef);
-    assertEquals(jobDef.getProcessDefinitionKey(), "oneTaskProcess");
-    assertEquals(jobDef.getActivityId(), "servicetask1");
-    assertEquals(jobDef.getJobConfiguration(), MessageJobDeclaration.ASYNC_AFTER);
+    assertThat(jobDef).isNotNull();
+    assertThat(jobDef.getProcessDefinitionKey()).isEqualTo("oneTaskProcess");
+    assertThat(jobDef.getActivityId()).isEqualTo("servicetask1");
+    assertThat(jobDef.getJobConfiguration()).isEqualTo(MessageJobDeclaration.ASYNC_AFTER);
   }
 }

@@ -189,11 +189,12 @@ public class BatchSetVariablesMigrationTest {
         .mapEqualActivities()
         .setVariables(Variables.putValue("foo", Variables.stringValue("bar", true))).build();
 
+    var migrationPlanExecutionBuilder = engineRule.getRuntimeService()
+      .newMigration(migrationPlan)
+      .processInstanceIds(processInstanceId);
+
     // when/then
-    assertThatThrownBy(() -> engineRule.getRuntimeService()
-          .newMigration(migrationPlan)
-          .processInstanceIds(processInstanceId)
-          .executeAsync())
+    assertThatThrownBy(migrationPlanExecutionBuilder::executeAsync)
         .isInstanceOf(BadUserRequestException.class)
         .hasMessageContaining("ENGINE-13044 Setting transient variable 'foo' " +
             "asynchronously is currently not supported.");

@@ -123,7 +123,6 @@ public enum BatchPermissions implements Permission {
   }
 
   public static Permission forName(String name) {
-    Permission permission = valueOf(name);
-    return permission;
+    return valueOf(name);
   }
 }

@@ -29,15 +29,11 @@ import javax.inject.Inject;
 
 public class ScopedAssociation {
 
-  private final RuntimeService runtimeService;
-
-  private final TaskService taskService;
+  @Inject
+  private RuntimeService runtimeService;
 
   @Inject
-  public ScopedAssociation(RuntimeService runtimeService, TaskService taskService) {
-    this.runtimeService = runtimeService;
-    this.taskService = taskService;
-  }
+  private TaskService taskService;
 
   protected VariableMap cachedVariables = new VariableMapImpl();
   protected VariableMap cachedVariablesLocal = new VariableMapImpl();
@@ -63,11 +59,9 @@ public class ScopedAssociation {
   @SuppressWarnings("unchecked")
   public <T extends TypedValue> T getVariable(String variableName) {
     TypedValue value = cachedVariables.getValueTyped(variableName);
-    if(value == null) {
-      if(execution != null) {
-        value = runtimeService.getVariableTyped(execution.getId(), variableName);
-        cachedVariables.put(variableName, value);
-      }
+    if(value == null && execution != null) {
+      value = runtimeService.getVariableTyped(execution.getId(), variableName);
+      cachedVariables.put(variableName, value);
     }
     return (T) value;
   }

@@ -16,20 +16,18 @@
  */
 package org.operaton.bpm.engine.test.cmmn.required;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.Collections;
-
 import org.operaton.bpm.engine.exception.NotAllowedException;
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+
+import java.util.Collections;
+
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Roman Smirnov
@@ -42,16 +40,17 @@ public class RequiredRuleTest extends PluggableProcessEngineTest {
   public void testRequiredRuleEvaluatesToTrue() {
     CaseInstance caseInstance =
         caseService.createCaseInstanceByKey("case", Collections.<String, Object>singletonMap("required", true));
+    var caseInstanceId = caseInstance.getId();
 
     CaseExecution taskExecution = caseService
         .createCaseExecutionQuery()
         .activityId("PI_HumanTask_1")
         .singleResult();
-    assertNotNull(taskExecution);
-    assertTrue(taskExecution.isRequired());
+    assertThat(taskExecution).isNotNull();
+    assertThat(taskExecution.isRequired()).isTrue();
 
     try {
-      caseService.completeCaseExecution(caseInstance.getId());
+      caseService.completeCaseExecution(caseInstanceId);
       fail("completing the containing stage should not be allowed");
     } catch (NotAllowedException e) {
       // happy path
@@ -69,8 +68,8 @@ public class RequiredRuleTest extends PluggableProcessEngineTest {
         .activityId("PI_HumanTask_1")
         .singleResult();
 
-    assertNotNull(taskExecution);
-    assertFalse(taskExecution.isRequired());
+    assertThat(taskExecution).isNotNull();
+    assertThat(taskExecution.isRequired()).isFalse();
 
     // completing manually should be allowed
     caseService.completeCaseExecution(caseInstance.getId());
@@ -81,17 +80,18 @@ public class RequiredRuleTest extends PluggableProcessEngineTest {
   public void testDefaultRequiredRuleEvaluatesToTrue() {
     CaseInstance caseInstance =
         caseService.createCaseInstanceByKey("case", Collections.<String, Object>singletonMap("required", true));
+    var caseInstanceId = caseInstance.getId();
 
     CaseExecution taskExecution = caseService
         .createCaseExecutionQuery()
         .activityId("PI_HumanTask_1")
         .singleResult();
 
-    assertNotNull(taskExecution);
-    assertTrue(taskExecution.isRequired());
+    assertThat(taskExecution).isNotNull();
+    assertThat(taskExecution.isRequired()).isTrue();
 
     try {
-      caseService.completeCaseExecution(caseInstance.getId());
+      caseService.completeCaseExecution(caseInstanceId);
       fail("completing the containing stage should not be allowed");
     } catch (NotAllowedException e) {
       // happy path
@@ -109,8 +109,8 @@ public class RequiredRuleTest extends PluggableProcessEngineTest {
         .activityId("PI_HumanTask_1")
         .singleResult();
 
-    assertNotNull(taskExecution);
-    assertFalse(taskExecution.isRequired());
+    assertThat(taskExecution).isNotNull();
+    assertThat(taskExecution.isRequired()).isFalse();
 
     // completing manually should be allowed
     caseService.completeCaseExecution(caseInstance.getId());

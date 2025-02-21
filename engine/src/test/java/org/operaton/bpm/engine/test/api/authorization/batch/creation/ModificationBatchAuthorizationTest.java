@@ -18,7 +18,7 @@ package org.operaton.bpm.engine.test.api.authorization.batch.creation;
 
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -83,7 +83,7 @@ public class ModificationBatchAuthorizationTest extends BatchCreationAuthorizati
     // then
     if (authRule.assertScenario(scenario)) {
       Batch batch = engineRule.getManagementService().createBatchQuery().singleResult();
-      assertEquals("userId", batch.getCreateUserId());
+      assertThat(batch.getCreateUserId()).isEqualTo("userId");
     }
   }
 

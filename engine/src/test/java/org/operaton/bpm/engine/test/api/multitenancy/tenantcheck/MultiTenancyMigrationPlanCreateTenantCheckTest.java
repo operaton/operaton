@@ -16,9 +16,10 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy.tenantcheck;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.Arrays;
+import java.util.List;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.migration.MigrationPlan;
@@ -26,7 +27,6 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
@@ -54,13 +54,13 @@ public class MultiTenancyMigrationPlanCreateTenantCheckTest {
 
 
     // when
-    engineRule.getIdentityService().setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    engineRule.getIdentityService().setAuthentication("user", null, List.of(TENANT_ONE));
     MigrationPlan migrationPlan = engineRule.getRuntimeService().createMigrationPlan(tenant1Definition.getId(), tenant2Definition.getId())
       .mapEqualActivities()
       .build();
 
     // then
-    Assert.assertNotNull(migrationPlan);
+    assertThat(migrationPlan).isNotNull();
   }
 
   @Test
@@ -68,12 +68,13 @@ public class MultiTenancyMigrationPlanCreateTenantCheckTest {
     // given
     ProcessDefinition tenant1Definition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition tenant2Definition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
-    engineRule.getIdentityService().setAuthentication("user", null, Arrays.asList(TENANT_TWO));
+    engineRule.getIdentityService().setAuthentication("user", null, List.of(TENANT_TWO));
+    var migrationPlanBuilder = engineRule.getRuntimeService()
+      .createMigrationPlan(tenant1Definition.getId(), tenant2Definition.getId())
+      .mapEqualActivities();
 
     // when/then
-    assertThatThrownBy(() -> engineRule.getRuntimeService().createMigrationPlan(tenant1Definition.getId(), tenant2Definition.getId())
-        .mapEqualActivities()
-        .build())
+    assertThatThrownBy(migrationPlanBuilder::build)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot get process definition '" + tenant1Definition.getId()
       + "' because it belongs to no authenticated tenant");
@@ -84,12 +85,13 @@ public class MultiTenancyMigrationPlanCreateTenantCheckTest {
     // given
     ProcessDefinition tenant1Definition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition tenant2Definition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
-    engineRule.getIdentityService().setAuthentication("user", null, Arrays.asList(TENANT_TWO));
+    engineRule.getIdentityService().setAuthentication("user", null, List.of(TENANT_TWO));
+    var migrationInstructionsBuilder = engineRule.getRuntimeService()
+      .createMigrationPlan(tenant1Definition.getId(), tenant2Definition.getId())
+      .mapEqualActivities();
 
     // when/then
-    assertThatThrownBy(() -> engineRule.getRuntimeService().createMigrationPlan(tenant1Definition.getId(), tenant2Definition.getId())
-        .mapEqualActivities()
-        .build())
+    assertThatThrownBy(migrationInstructionsBuilder::build)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot get process definition '" + tenant2Definition.getId()
       + "' because it belongs to no authenticated tenant");
@@ -101,11 +103,12 @@ public class MultiTenancyMigrationPlanCreateTenantCheckTest {
     ProcessDefinition sourceDefinition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
     engineRule.getIdentityService().setAuthentication("user", null, null);
+    var migrationInstructionsBuilder = engineRule.getRuntimeService()
+      .createMigrationPlan(sourceDefinition.getId(), targetDefinition.getId())
+      .mapEqualActivities();
 
     // when/then
-    assertThatThrownBy(() -> engineRule.getRuntimeService().createMigrationPlan(sourceDefinition.getId(), targetDefinition.getId())
-        .mapEqualActivities()
-        .build())
+    assertThatThrownBy(migrationInstructionsBuilder::build)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot get process definition '" + sourceDefinition.getId()
       + "' because it belongs to no authenticated tenant");
@@ -125,7 +128,7 @@ public class MultiTenancyMigrationPlanCreateTenantCheckTest {
       .build();
 
     // then
-    Assert.assertNotNull(migrationPlan);
+    assertThat(migrationPlan).isNotNull();
   }
 
 
@@ -144,7 +147,7 @@ public class MultiTenancyMigrationPlanCreateTenantCheckTest {
       .build();
 
     // then
-    Assert.assertNotNull(migrationPlan);
+    assertThat(migrationPlan).isNotNull();
 
   }
 }

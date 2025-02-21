@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.identity;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
@@ -116,9 +117,7 @@ public class AdminUsersTest {
     authorizationService.saveAuthorization(userAuth);
     processEngineConfiguration.setAuthorizationEnabled(true);
 
-    // when
-    managementService.getProperties();
-
-    // then no exception
+    // when/then no exception
+    assertThat(managementService.getProperties()).isNotNull();
   }
 }

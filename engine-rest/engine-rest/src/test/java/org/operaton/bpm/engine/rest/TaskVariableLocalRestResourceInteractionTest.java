@@ -20,7 +20,6 @@ import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.TaskServiceImpl;
-import org.operaton.bpm.engine.impl.digest._apacheCommonsCodec.Base64;
 import org.operaton.bpm.engine.impl.util.IoUtil;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.exception.RestException;
@@ -271,7 +270,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
     messageBodyJson.put("modifications", modifications);
 
     TaskServiceImpl taskService = mockTaskServiceImpl();
-    String message = "excpected exception";
+    String message = "expected exception";
     doThrow(new AuthorizationException(message)).when(taskService).updateVariablesLocal(any(), any(), any());
 
     given()
@@ -341,7 +340,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   }
 
   @Test
-  public void testGetSingleLocalVariabledataNotBinary() {
+  public void testGetSingleLocalVariableDataNotBinary() {
 
     when(taskServiceMock.getVariableLocalTyped(anyString(), eq(EXAMPLE_VARIABLE_KEY), eq(false))).thenReturn(EXAMPLE_VARIABLE_VALUE);
 
@@ -450,7 +449,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   public void testGetSingleLocalVariableThrowsAuthorizationException() {
     String variableKey = "aVariableKey";
 
-    String message = "excpected exception";
+    String message = "expected exception";
     when(taskServiceMock.getVariableLocalTyped(anyString(), anyString(), anyBoolean())).thenThrow(new AuthorizationException(message));
 
     given()
@@ -1040,7 +1039,6 @@ public class TaskVariableLocalRestResourceInteractionTest extends
   public void testPostSingleLocalFileVariableWithMimeType() {
 
     byte[] value = "some text".getBytes();
-    String base64 = Base64.encodeBase64String(value);
     String variableKey = "aVariableKey";
     String filename = "test.txt";
     String mimetype = MediaType.TEXT_PLAIN;

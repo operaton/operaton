@@ -17,8 +17,7 @@
 package org.operaton.bpm.engine.test.standalone.history;
 
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.DB_SCHEMA_UPDATE_CREATE_DROP;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -107,7 +106,7 @@ public class CustomHistoryLevelIdentityLinkTest {
   public void testDeletingIdentityLinkByProcDefId() {
     // Pre test
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertEquals(historicIdentityLinks.size(), 0);
+    assertThat(historicIdentityLinks).isEmpty();
 
     // given
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
@@ -119,7 +118,7 @@ public class CustomHistoryLevelIdentityLinkTest {
 
     // assume
     historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertTrue(!historicIdentityLinks.isEmpty());
+    assertThat(historicIdentityLinks).isNotEmpty();
 
     // when
     repositoryService.deleteProcessDefinitions()
@@ -129,14 +128,14 @@ public class CustomHistoryLevelIdentityLinkTest {
 
     // then
     historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertEquals(0, historicIdentityLinks.size());
+    assertThat(historicIdentityLinks).isEmpty();
   }
 
   @Test
   public void testDeletingIdentityLinkByTaskId() {
     // Pre test
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertEquals(historicIdentityLinks.size(), 0);
+    assertThat(historicIdentityLinks).isEmpty();
 
     // given
     Task task = taskService.newTask();
@@ -149,14 +148,14 @@ public class CustomHistoryLevelIdentityLinkTest {
 
     // assume
     historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertTrue(!historicIdentityLinks.isEmpty());
+    assertThat(historicIdentityLinks).isNotEmpty();
 
     // when
     taskService.deleteTask(taskId, true);
 
     // then
     historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertEquals(0, historicIdentityLinks.size());
+    assertThat(historicIdentityLinks).isEmpty();
   }
 
 }

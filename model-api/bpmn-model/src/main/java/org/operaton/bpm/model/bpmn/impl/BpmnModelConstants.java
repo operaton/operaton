@@ -46,6 +46,7 @@ public final class BpmnModelConstants {
   /** Xml Schema is the default type language */
   public static final String XML_SCHEMA_NS = "http://www.w3.org/2001/XMLSchema";
 
+  /** The XPath namespace */
   public static final String XPATH_NS = "http://www.w3.org/1999/XPath";
 
   /**

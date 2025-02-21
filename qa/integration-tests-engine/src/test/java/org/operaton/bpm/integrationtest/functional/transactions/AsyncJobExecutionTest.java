@@ -86,7 +86,7 @@ public class AsyncJobExecutionTest extends AbstractFoxPlatformIntegrationTest {
 
     // then
     // the job exists with no retries, and an incident is raised
-    Job job = managementService.createJobQuery().singleResult();
+    Job job = managementService.createJobQuery().processDefinitionKey("failingTransactionListener").singleResult();
 
     assertNotNull(job);
     assertEquals(0, job.getRetries());

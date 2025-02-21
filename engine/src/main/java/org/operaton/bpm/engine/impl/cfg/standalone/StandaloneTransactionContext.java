@@ -16,10 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cfg.standalone;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.TransactionContext;
@@ -47,15 +44,12 @@ public class StandaloneTransactionContext implements TransactionContext {
 
   @Override
   public void addTransactionListener(TransactionState transactionState, TransactionListener transactionListener) {
-    if (stateTransactionListeners==null) {
-      stateTransactionListeners = new HashMap<>();
+    if (stateTransactionListeners == null) {
+      stateTransactionListeners = new EnumMap<>(TransactionState.class);
     }
-    List<TransactionListener> transactionListeners = stateTransactionListeners.get(transactionState);
-    if (transactionListeners==null) {
-      transactionListeners = new ArrayList<>();
-      stateTransactionListeners.put(transactionState, transactionListeners);
-    }
-    transactionListeners.add(transactionListener);
+    stateTransactionListeners
+      .computeIfAbsent(transactionState, k -> new ArrayList<>())
+      .add(transactionListener);
   }
 
   @Override

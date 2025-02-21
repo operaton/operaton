@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.test.api.authorization.batch;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
-import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -126,10 +125,8 @@ public class DeleteProcessInstancesBatchAuthorizationTest extends AbstractBatchA
     executeSeedAndBatchJobs();
 
     // then
-    if (authRule.assertScenario(scenario)) {
-      if (testHelper.isHistoryLevelFull()) {
-        assertThat(engineRule.getHistoryService().createUserOperationLogQuery().entityType(EntityTypes.PROCESS_INSTANCE).count()).isEqualTo(BATCH_OPERATIONS);
-      }
+    if (authRule.assertScenario(scenario) && testHelper.isHistoryLevelFull()) {
+      assertThat(engineRule.getHistoryService().createUserOperationLogQuery().entityType(EntityTypes.PROCESS_INSTANCE).count()).isEqualTo(BATCH_OPERATIONS);
     }
   }
 
@@ -155,12 +152,12 @@ public class DeleteProcessInstancesBatchAuthorizationTest extends AbstractBatchA
   protected void assertScenario() {
     if (authRule.assertScenario(getScenario())) {
       Batch batch = engineRule.getManagementService().createBatchQuery().singleResult();
-      assertEquals("userId", batch.getCreateUserId());
+      assertThat(batch.getCreateUserId()).isEqualTo("userId");
 
       if (testHelper.isHistoryLevelFull()) {
         assertThat(engineRule.getHistoryService().createUserOperationLogQuery().entityType(EntityTypes.PROCESS_INSTANCE).count()).isEqualTo(BATCH_OPERATIONS);
         HistoricBatch historicBatch = engineRule.getHistoryService().createHistoricBatchQuery().list().get(0);
-        assertEquals("userId", historicBatch.getCreateUserId());
+        assertThat(historicBatch.getCreateUserId()).isEqualTo("userId");
       }
 
       if (authRule.scenarioSucceeded()) {

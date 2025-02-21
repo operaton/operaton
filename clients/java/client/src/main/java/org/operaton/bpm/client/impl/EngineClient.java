@@ -40,13 +40,13 @@ import org.operaton.bpm.client.variable.impl.TypedValues;
 public class EngineClient {
 
   protected static final String EXTERNAL_TASK_RESOURCE_PATH = "/external-task";
-  protected static final String EXTERNAL_TASK__PROCESS_RESOURCE_PATH = "/process-instance";
+  protected static final String EXTERNAL_TASK_PROCESS_RESOURCE_PATH = "/process-instance";
   protected static final String FETCH_AND_LOCK_RESOURCE_PATH = EXTERNAL_TASK_RESOURCE_PATH + "/fetchAndLock";
   public static final String ID_PATH_PARAM = "{id}";
   protected static final String ID_RESOURCE_PATH = EXTERNAL_TASK_RESOURCE_PATH + "/" + ID_PATH_PARAM;
   public static final String LOCK_RESOURCE_PATH = ID_RESOURCE_PATH + "/lock";
   public static final String EXTEND_LOCK_RESOURCE_PATH = ID_RESOURCE_PATH + "/extendLock";
-  public static final String SET_VARIABLES_RESOURCE_PATH = EXTERNAL_TASK__PROCESS_RESOURCE_PATH + "/" + ID_PATH_PARAM + "/variables";
+  public static final String SET_VARIABLES_RESOURCE_PATH = EXTERNAL_TASK_PROCESS_RESOURCE_PATH + "/" + ID_PATH_PARAM + "/variables";
   public static final String UNLOCK_RESOURCE_PATH = ID_RESOURCE_PATH + "/unlock";
   public static final String COMPLETE_RESOURCE_PATH = ID_RESOURCE_PATH + "/complete";
   public static final String FAILURE_RESOURCE_PATH = ID_RESOURCE_PATH + "/failure";

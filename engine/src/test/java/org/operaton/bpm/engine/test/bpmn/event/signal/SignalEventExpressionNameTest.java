@@ -16,9 +16,8 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.signal;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.HashMap;
 
@@ -49,7 +48,7 @@ public class SignalEventExpressionNameTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("catchSignal", variables);
 
     // then
-    assertEquals(1, runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert-TestVar").count());
+    assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert-TestVar").count()).isEqualTo(1);
   }
 
   @Deployment(resources = {
@@ -66,7 +65,7 @@ public class SignalEventExpressionNameTest extends PluggableProcessEngineTest {
     runtimeService.signalEventReceived("alert-TestVar");
 
     // then
-    assertEquals(0, runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert-TestVar").count());
+    assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert-TestVar").count()).isZero();
   }
 
   @Deployment(resources = {
@@ -81,13 +80,13 @@ public class SignalEventExpressionNameTest extends PluggableProcessEngineTest {
 
     // when
     runtimeService.startProcessInstanceByKey("catchSignal", variables);
-    assertEquals(1, runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert-TestVar").count());
+    assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert-TestVar").count()).isEqualTo(1);
     runtimeService.startProcessInstanceByKey("throwSignal", variables);
 
     // then
-    assertEquals(0, runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert-${var}").count());
-    assertEquals(0, runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert-TestVar").count());
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert-${var}").count()).isZero();
+    assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert-TestVar").count()).isZero();
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
   }
 
@@ -103,13 +102,13 @@ public class SignalEventExpressionNameTest extends PluggableProcessEngineTest {
 
     // when
     runtimeService.startProcessInstanceByKey("catchSignal", variables);
-    assertEquals(1, runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert-TestVar").count());
+    assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert-TestVar").count()).isEqualTo(1);
     runtimeService.startProcessInstanceByKey("throwEndSignal", variables);
 
     // then
-    assertEquals(0, runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert-${var}").count());
-    assertEquals(0, runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert-TestVar").count());
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert-${var}").count()).isZero();
+    assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert-TestVar").count()).isZero();
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
 
@@ -123,15 +122,15 @@ public class SignalEventExpressionNameTest extends PluggableProcessEngineTest {
     HashMap<String, Object> variables = new HashMap<>();
     variables.put("var", "TestVar");
     runtimeService.startProcessInstanceByKey("catchSignal", variables);
-    assertEquals(1, runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert-TestVar").count());
-    assertEquals(1, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert-TestVar").count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
 
     // when
     runtimeService.startProcessInstanceByKey("throwSignal", variables);
 
     // then
-    assertEquals(0, runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert-TestVar").count());
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert-TestVar").count()).isZero();
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
   @Deployment(resources = {
@@ -140,15 +139,15 @@ public class SignalEventExpressionNameTest extends PluggableProcessEngineTest {
   public void testSignalStartEvent() {
 
     // given
-    assertEquals(1, runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert-foo").count());
-    assertEquals(0, taskService.createTaskQuery().count());
+    assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert-foo").count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isZero();
 
     // when
     runtimeService.signalEventReceived("alert-foo");
 
     // then
     // the signal should start a new process instance
-    assertEquals(1, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
   }
 
   @Deployment
@@ -159,22 +158,22 @@ public class SignalEventExpressionNameTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("signalStartEventInEventSubProcess");
     // check if execution exists
     ExecutionQuery executionQuery = runtimeService.createExecutionQuery().processInstanceId(processInstance.getId());
-    assertEquals(1, executionQuery.count());
+    assertThat(executionQuery.count()).isEqualTo(1);
     // check if user task exists
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(processInstance.getId());
-    assertEquals(1, taskQuery.count());
+    assertThat(taskQuery.count()).isEqualTo(1);
 
     // when
     runtimeService.signalEventReceived("alert-foo");
 
     // then
-    assertEquals(true, DummyServiceTask.wasExecuted);
+    assertThat(DummyServiceTask.wasExecuted).isTrue();
     // check if user task doesn't exist because signal start event is interrupting
     taskQuery = taskService.createTaskQuery().processInstanceId(processInstance.getId());
-    assertEquals(0, taskQuery.count());
+    assertThat(taskQuery.count()).isZero();
     // check if execution doesn't exist because signal start event is interrupting
     executionQuery = runtimeService.createExecutionQuery().processInstanceId(processInstance.getId());
-    assertEquals(0, executionQuery.count());
+    assertThat(executionQuery.count()).isZero();
   }
 
   @Deployment(resources = {
@@ -191,18 +190,18 @@ public class SignalEventExpressionNameTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("throwSignalAsync");
     // with an async job to trigger the signal event
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
 
     // when the job is executed
     managementService.executeJob(job.getId());
 
     // then there is a process instance
     ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-    assertNotNull(processInstance);
-    assertEquals(catchingProcessDefinition.getId(), processInstance.getProcessDefinitionId());
+    assertThat(processInstance).isNotNull();
+    assertThat(processInstance.getProcessDefinitionId()).isEqualTo(catchingProcessDefinition.getId());
 
     // and a task
-    assertEquals(1, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
   }
 
   @Deployment(resources = {
@@ -222,7 +221,7 @@ public class SignalEventExpressionNameTest extends PluggableProcessEngineTest {
       fail("exception expected: " + expectedErrorMessage);
     } catch (ProcessEngineException e) {
       // then the expression cannot be resolved and no signal should be available
-      assertEquals(0, runtimeService.createEventSubscriptionQuery().eventType("signal").count());
+      assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").count()).isZero();
     }
   }
 

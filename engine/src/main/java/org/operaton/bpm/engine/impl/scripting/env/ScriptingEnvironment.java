@@ -104,10 +104,8 @@ public class ScriptingEnvironment {
     ProcessApplicationReference processApplication = Context.getCurrentProcessApplication();
 
     Map<String, List<ExecutableScript>> result = null;
-    if (config.isEnableFetchScriptEngineFromProcessApplication()) {
-      if(processApplication != null) {
-        result = getPaEnvScripts(processApplication);
-      }
+    if (config.isEnableFetchScriptEngineFromProcessApplication() && processApplication != null) {
+      result = getPaEnvScripts(processApplication);
     }
 
     return result != null ? result : env;
@@ -147,11 +145,7 @@ public class ScriptingEnvironment {
     List<ExecutableScript> envScripts = environment.get(scriptLanguage);
     if(envScripts == null) {
       synchronized (this) {
-        envScripts = environment.get(scriptLanguage);
-        if(envScripts == null) {
-          envScripts = initEnvForLanguage(scriptLanguage);
-          environment.put(scriptLanguage, envScripts);
-        }
+        envScripts = environment.computeIfAbsent(scriptLanguage, this::initEnvForLanguage);
       }
     }
     return envScripts;

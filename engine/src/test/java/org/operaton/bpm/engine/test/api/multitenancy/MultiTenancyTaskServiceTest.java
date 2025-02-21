@@ -17,8 +17,7 @@
 package org.operaton.bpm.engine.test.api.multitenancy;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.List;
 
@@ -38,15 +37,15 @@ import org.junit.Test;
  */
 public class MultiTenancyTaskServiceTest extends PluggableProcessEngineTest {
 
-  private static final String tenant1 = "the-tenant-1";
-  private static final String tenant2 = "the-tenant-2";
+  private static final String TENANT_1 = "the-tenant-1";
+  private static final String TENANT_2 = "the-tenant-2";
 
   @Test
   public void testStandaloneTaskCreateWithTenantId() {
 
     // given a transient task with tenant id
     Task task = taskService.newTask();
-    task.setTenantId(tenant1);
+    task.setTenantId(TENANT_1);
 
     // if
     // it is saved
@@ -55,7 +54,7 @@ public class MultiTenancyTaskServiceTest extends PluggableProcessEngineTest {
     // then
     // when I load it, the tenant id is preserved
     task = taskService.createTaskQuery().taskId(task.getId()).singleResult();
-    assertEquals(tenant1, task.getTenantId());
+    assertThat(task.getTenantId()).isEqualTo(TENANT_1);
 
     // Finally, delete task
     deleteTasks(task);
@@ -71,7 +70,7 @@ public class MultiTenancyTaskServiceTest extends PluggableProcessEngineTest {
 
     // if
     // change the tenant id
-    task.setTenantId(tenant1);
+    task.setTenantId(TENANT_1);
 
     // then
     // an exception is thrown on 'save'
@@ -92,13 +91,13 @@ public class MultiTenancyTaskServiceTest extends PluggableProcessEngineTest {
 
     // given a persistent task with tenant id
     Task task = taskService.newTask();
-    task.setTenantId(tenant1);
+    task.setTenantId(TENANT_1);
     taskService.saveTask(task);
     task = taskService.createTaskQuery().singleResult();
 
     // if
     // change the tenant id
-    task.setTenantId(tenant2);
+    task.setTenantId(TENANT_2);
 
     // then
     // an exception is thrown on 'save'
@@ -119,14 +118,14 @@ public class MultiTenancyTaskServiceTest extends PluggableProcessEngineTest {
 
     // given a persistent task with a tenant id
     Task task = taskService.newTask();
-    task.setTenantId(tenant1);
+    task.setTenantId(TENANT_1);
     taskService.saveTask(task);
 
     // if
     // I create a subtask with a different tenant id
     Task subTask = taskService.newTask();
     subTask.setParentTaskId(task.getId());
-    subTask.setTenantId(tenant2);
+    subTask.setTenantId(TENANT_2);
 
     // then an exception is thrown on save
     try {
@@ -151,7 +150,7 @@ public class MultiTenancyTaskServiceTest extends PluggableProcessEngineTest {
     // I create a subtask with a different tenant id
     Task subTask = taskService.newTask();
     subTask.setParentTaskId(task.getId());
-    subTask.setTenantId(tenant1);
+    subTask.setTenantId(TENANT_1);
 
     // then an exception is thrown on save
     try {
@@ -170,7 +169,7 @@ public class MultiTenancyTaskServiceTest extends PluggableProcessEngineTest {
 
     // given a persistent task with a tenant id
     Task task = taskService.newTask();
-    task.setTenantId(tenant1);
+    task.setTenantId(TENANT_1);
     taskService.saveTask(task);
 
     // if
@@ -182,7 +181,7 @@ public class MultiTenancyTaskServiceTest extends PluggableProcessEngineTest {
     // then
     // the parent task's tenant id is propagated to the sub task
     subTask = taskService.createTaskQuery().taskId(subTask.getId()).singleResult();
-    assertEquals(tenant1, subTask.getTenantId());
+    assertThat(subTask.getTenantId()).isEqualTo(TENANT_1);
 
     // Finally, delete task
     deleteTasks(subTask, task);
@@ -192,7 +191,7 @@ public class MultiTenancyTaskServiceTest extends PluggableProcessEngineTest {
   public void testStandaloneTaskPropagatesTenantIdToVariableInstance() {
     // given a task with tenant id
     Task task = taskService.newTask();
-    task.setTenantId(tenant1);
+    task.setTenantId(TENANT_1);
     taskService.saveTask(task);
 
     // if we set a variable for the task
@@ -201,7 +200,7 @@ public class MultiTenancyTaskServiceTest extends PluggableProcessEngineTest {
     // then a variable instance with the same tenant id is created
     VariableInstance variableInstance = runtimeService.createVariableInstanceQuery().singleResult();
     assertThat(variableInstance).isNotNull();
-    assertThat(variableInstance.getTenantId()).isEqualTo(tenant1);
+    assertThat(variableInstance.getTenantId()).isEqualTo(TENANT_1);
 
     deleteTasks(task);
   }
@@ -228,8 +227,8 @@ public class MultiTenancyTaskServiceTest extends PluggableProcessEngineTest {
         .singleResult();
 
     List<IdentityLink> identityLinks = taskService.getIdentityLinksForTask(tenantTask.getId());
-    assertEquals(identityLinks.size(),1);
-    assertEquals(identityLinks.get(0).getTenantId(), "tenant");
+    assertThat(identityLinks).hasSize(1);
+    assertThat(identityLinks.get(0).getTenantId()).isEqualTo("tenant");
   }
 
   @Test
@@ -254,8 +253,8 @@ public class MultiTenancyTaskServiceTest extends PluggableProcessEngineTest {
         .singleResult();
 
     List<IdentityLink> identityLinks = taskService.getIdentityLinksForTask(tenantTask.getId());
-    assertEquals(identityLinks.size(),1);
-    assertEquals(identityLinks.get(0).getTenantId(), "tenant");
+    assertThat(identityLinks).hasSize(1);
+    assertThat(identityLinks.get(0).getTenantId()).isEqualTo("tenant");
   }
 
   protected void deleteTasks(Task... tasks) {

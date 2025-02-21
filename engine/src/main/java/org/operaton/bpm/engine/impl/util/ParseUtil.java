@@ -153,8 +153,7 @@ public class ParseUtil {
       jdkVendor = "OpenJDK";
     }
     String jdkVersion = System.getProperty("java.version");
-    JdkImpl jdk = new JdkImpl(jdkVersion, jdkVendor);
-    return jdk;
+    return new JdkImpl(jdkVersion, jdkVendor);
   }
 
 }

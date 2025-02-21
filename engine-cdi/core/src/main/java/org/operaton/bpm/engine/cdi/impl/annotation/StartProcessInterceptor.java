@@ -34,8 +34,6 @@ import org.operaton.bpm.engine.cdi.annotation.StartProcess;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 
-import static org.springframework.util.ObjectUtils.isEmpty;
-
 /**
  * implementation of the {@link StartProcess} annotation
  *
@@ -47,12 +45,7 @@ public class StartProcessInterceptor implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  BusinessProcess businessProcess;
-
-  @Inject
-  public StartProcessInterceptor(BusinessProcess businessProcess) {
-    this.businessProcess = businessProcess;
-  }
+  @Inject BusinessProcess businessProcess;
 
   @AroundInvoke
   public Object invoke(InvocationContext ctx) throws Exception {
@@ -99,7 +92,7 @@ public class StartProcessInterceptor implements Serializable {
         fieldName = processStartVariableTyped.value();
       }
 
-      if (isEmpty(fieldName)) {
+      if (fieldName == null || fieldName.length() == 0) {
         fieldName = field.getName();
       }
       Object value = field.get(ctx.getTarget());

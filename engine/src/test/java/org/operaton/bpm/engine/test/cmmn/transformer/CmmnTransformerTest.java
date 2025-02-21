@@ -40,9 +40,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Roman Smirnov
@@ -133,17 +131,17 @@ public class CmmnTransformerTest {
     List<CaseDefinitionEntity> caseDefinitions = transform();
 
     // then
-    assertEquals(1, caseDefinitions.size());
+    assertThat(caseDefinitions).hasSize(1);
 
     CmmnCaseDefinition caseModel = caseDefinitions.get(0);
 
     List<CmmnActivity> activities = caseModel.getActivities();
 
-    assertEquals(1, activities.size());
+    assertThat(activities).hasSize(1);
 
     CmmnActivity casePlanModelActivity = activities.get(0);
-    assertEquals(casePlanModel.getId(), casePlanModelActivity.getId());
-    assertTrue(casePlanModelActivity.getActivities().isEmpty());
+    assertThat(casePlanModelActivity.getId()).isEqualTo(casePlanModel.getId());
+    assertThat(casePlanModelActivity.getActivities()).isEmpty();
   }
 
   /**
@@ -173,7 +171,7 @@ public class CmmnTransformerTest {
     List<CaseDefinitionEntity> caseDefinitions = transform();
 
     // then
-    assertEquals(1, caseDefinitions.size());
+    assertThat(caseDefinitions).hasSize(1);
 
     CaseDefinitionEntity caseDef = caseDefinitions.get(0);
     List<CmmnActivity> activities = caseDef.getActivities();
@@ -181,11 +179,11 @@ public class CmmnTransformerTest {
     CmmnActivity casePlanModelActivity = activities.get(0);
 
     List<CmmnActivity> planItemActivities = casePlanModelActivity.getActivities();
-    assertEquals(1, planItemActivities.size());
+    assertThat(planItemActivities).hasSize(1);
 
     CmmnActivity child = planItemActivities.get(0);
-    assertEquals(planItem.getId(), child.getId());
-    assertTrue(child.getActivities().isEmpty());
+    assertThat(child.getId()).isEqualTo(planItem.getId());
+    assertThat(child.getActivities()).isEmpty();
   }
 
   /**
@@ -226,7 +224,7 @@ public class CmmnTransformerTest {
     List<CaseDefinitionEntity> caseDefinitions = transform();
 
     // then
-    assertEquals(1, caseDefinitions.size());
+    assertThat(caseDefinitions).hasSize(1);
 
     CaseDefinitionEntity caseDef = caseDefinitions.get(0);
     List<CmmnActivity> activities = caseDef.getActivities();
@@ -234,21 +232,21 @@ public class CmmnTransformerTest {
     CmmnActivity casePlanModelActivity = activities.get(0);
 
     List<CmmnActivity> children = casePlanModelActivity.getActivities();
-    assertEquals(1, children.size());
+    assertThat(children).hasSize(1);
 
     CmmnActivity planItemStage = children.get(0);
-    assertEquals(planItemX.getId(), planItemStage.getId());
+    assertThat(planItemStage.getId()).isEqualTo(planItemX.getId());
 
     children = planItemStage.getActivities();
-    assertEquals(2, children.size());
+    assertThat(children).hasSize(2);
 
     CmmnActivity childPlanItem = children.get(0);
-    assertEquals(planItemA.getId(), childPlanItem.getId());
-    assertTrue(childPlanItem.getActivities().isEmpty());
+    assertThat(childPlanItem.getId()).isEqualTo(planItemA.getId());
+    assertThat(childPlanItem.getActivities()).isEmpty();
 
     childPlanItem = children.get(1);
-    assertEquals(planItemB.getId(), childPlanItem.getId());
-    assertTrue(childPlanItem.getActivities().isEmpty());
+    assertThat(childPlanItem.getId()).isEqualTo(planItemB.getId());
+    assertThat(childPlanItem.getActivities()).isEmpty();
   }
 
   /**
@@ -318,7 +316,7 @@ public class CmmnTransformerTest {
     List<CaseDefinitionEntity> caseDefinitions = transform();
 
     // then
-    assertEquals(1, caseDefinitions.size());
+    assertThat(caseDefinitions).hasSize(1);
 
     CaseDefinitionEntity caseDef = caseDefinitions.get(0);
     List<CmmnActivity> activities = caseDef.getActivities();
@@ -326,52 +324,55 @@ public class CmmnTransformerTest {
     CmmnActivity casePlanModelActivity = activities.get(0);
 
     List<CmmnActivity> children = casePlanModelActivity.getActivities();
-    assertEquals(3, children.size());
+    assertThat(children).hasSize(3);
 
     CmmnActivity childPlanItem = children.get(0);
-    assertEquals(planItemA1.getId(), childPlanItem.getId());
-    assertTrue(childPlanItem.getActivities().isEmpty());
+    assertThat(childPlanItem.getId()).isEqualTo(planItemA1.getId());
+    assertThat(childPlanItem.getActivities()).isEmpty();
 
     childPlanItem = children.get(1);
-    assertEquals(planItemX1.getId(), childPlanItem.getId());
+    assertThat(childPlanItem.getId()).isEqualTo(planItemX1.getId());
 
     List<CmmnActivity> childrenOfX1 = childPlanItem.getActivities();
-    assertFalse(childrenOfX1.isEmpty());
-    assertEquals(2, childrenOfX1.size());
+    assertThat(childrenOfX1)
+            .isNotEmpty()
+            .hasSize(2);
 
     childPlanItem = childrenOfX1.get(0);
-    assertEquals(planItemA2.getId(), childPlanItem.getId());
-    assertTrue(childPlanItem.getActivities().isEmpty());
+    assertThat(childPlanItem.getId()).isEqualTo(planItemA2.getId());
+    assertThat(childPlanItem.getActivities()).isEmpty();
 
     childPlanItem = childrenOfX1.get(1);
-    assertEquals(planItemB.getId(), childPlanItem.getId());
-    assertTrue(childPlanItem.getActivities().isEmpty());
+    assertThat(childPlanItem.getId()).isEqualTo(planItemB.getId());
+    assertThat(childPlanItem.getActivities()).isEmpty();
 
     childPlanItem = children.get(2);
-    assertEquals(planItemY.getId(), childPlanItem.getId());
+    assertThat(childPlanItem.getId()).isEqualTo(planItemY.getId());
 
     List<CmmnActivity> childrenOfY = childPlanItem.getActivities();
-    assertFalse(childrenOfY.isEmpty());
-    assertEquals(2, childrenOfY.size());
+    assertThat(childrenOfY)
+            .isNotEmpty()
+            .hasSize(2);
 
     childPlanItem = childrenOfY.get(0);
-    assertEquals(planItemC.getId(), childPlanItem.getId());
-    assertTrue(childPlanItem.getActivities().isEmpty());
+    assertThat(childPlanItem.getId()).isEqualTo(planItemC.getId());
+    assertThat(childPlanItem.getActivities()).isEmpty();
 
     childPlanItem = childrenOfY.get(1);
-    assertEquals(planItemX2.getId(), childPlanItem.getId());
+    assertThat(childPlanItem.getId()).isEqualTo(planItemX2.getId());
 
     List<CmmnActivity> childrenOfX2 = childPlanItem.getActivities();
-    assertFalse(childrenOfX2.isEmpty());
-    assertEquals(2, childrenOfX2.size());
+    assertThat(childrenOfX2)
+            .isNotEmpty()
+            .hasSize(2);
 
     childPlanItem = childrenOfX2.get(0);
-    assertEquals(planItemA2.getId(), childPlanItem.getId());
-    assertTrue(childPlanItem.getActivities().isEmpty());
+    assertThat(childPlanItem.getId()).isEqualTo(planItemA2.getId());
+    assertThat(childPlanItem.getActivities()).isEmpty();
 
     childPlanItem = childrenOfX2.get(1);
-    assertEquals(planItemB.getId(), childPlanItem.getId());
-    assertTrue(childPlanItem.getActivities().isEmpty());
+    assertThat(childPlanItem.getId()).isEqualTo(planItemB.getId());
+    assertThat(childPlanItem.getActivities()).isEmpty();
 
   }
 

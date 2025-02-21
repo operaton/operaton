@@ -110,7 +110,7 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
 
   @Override
   public void registerDestructionCallback(String name, Runnable callback) {
-        logger.fine("no support for registering descruction callbacks implemented currently. registerDestructionCallback('" + name + "',callback) will do nothing.");
+        logger.fine(() -> "no support for registering descruction callbacks implemented currently. registerDestructionCallback('" + name + "',callback) will do nothing.");
     }
 
     private String getExecutionId() {
@@ -120,7 +120,7 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
   @Override
   public Object remove(String name) {
 
-        logger.fine("remove '" + name + "'");
+        logger.fine(() -> "remove '" + name + "'");
         return runtimeService.getVariable(getExecutionId(), name);
     }
 
@@ -150,7 +150,7 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
           public Object invoke(MethodInvocation methodInvocation) throws Throwable {
                 String methodName = methodInvocation.getMethod().getName();
 
-                logger.info("method invocation for " + methodName + ".");
+                logger.info(() -> "method invocation for " + methodName + ".");
                 if (methodName.equals("toString"))
                     return "SharedProcessInstance";
 
@@ -158,8 +158,7 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
                 ProcessInstance processInstance = Context.getBpmnExecutionContext().getProcessInstance();
                 Method method = methodInvocation.getMethod();
                 Object[] args = methodInvocation.getArguments();
-                Object result = method.invoke(processInstance, args);
-                return result;
+                return method.invoke(processInstance, args);
             }
         });
         return proxyFactoryBean.getProxy(this.classLoader);

@@ -168,22 +168,23 @@ public class TaskListenerDelegateCompletionTest {
 
     runtimeService.startProcessInstanceByKey(TASK_LISTENER_PROCESS);
     Task task = taskService.createTaskQuery().singleResult();
+    String taskId = task.getId();
 
     // when/then
-    assertThatThrownBy(() -> taskService.complete(task.getId()))
+    assertThatThrownBy(() -> taskService.complete(taskId))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("invalid task state");
   }
 
   @Test
   public void testCompletionIsNotPossibleOnDelete () {
-
     //given
     createProcessWithListener(TaskListener.EVENTNAME_DELETE);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(TASK_LISTENER_PROCESS);
+    String processInstanceId = processInstance.getId();
 
     // when/then
-    assertThatThrownBy(() -> runtimeService.deleteProcessInstance(processInstance.getId(),"test reason"))
+    assertThatThrownBy(() -> runtimeService.deleteProcessInstance(processInstanceId,"test reason"))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("invalid task state");
   }

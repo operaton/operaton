@@ -16,22 +16,6 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.message;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.HashMap;
-import java.util.List;
-
 import org.operaton.bpm.engine.ParseException;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -50,11 +34,19 @@ import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.Variables.SerializationDataFormats;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
+
+import java.io.*;
+import java.util.HashMap;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Daniel Meyer
@@ -89,22 +81,23 @@ public class MessageIntermediateEventTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
     List<String> activeActivityIds = runtimeService.getActiveActivityIds(pi.getId());
-    assertNotNull(activeActivityIds);
-    assertEquals(1, activeActivityIds.size());
-    assertTrue(activeActivityIds.contains("messageCatch"));
+    assertThat(activeActivityIds)
+            .isNotNull()
+            .hasSize(1)
+            .contains("messageCatch");
 
     String messageName = "newInvoiceMessage";
     Execution execution = runtimeService.createExecutionQuery()
         .messageEventSubscriptionName(messageName)
         .singleResult();
 
-    assertNotNull(execution);
+    assertThat(execution).isNotNull();
 
     runtimeService.messageEventReceived(messageName, execution.getId());
 
     Task task = taskService.createTaskQuery()
         .singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     taskService.complete(task.getId());
 
   }
@@ -116,30 +109,32 @@ public class MessageIntermediateEventTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
     List<String> activeActivityIds = runtimeService.getActiveActivityIds(pi.getId());
-    assertNotNull(activeActivityIds);
-    assertEquals(2, activeActivityIds.size());
-    assertTrue(activeActivityIds.contains("messageCatch1"));
-    assertTrue(activeActivityIds.contains("messageCatch2"));
+    assertThat(activeActivityIds)
+            .isNotNull()
+            .hasSize(2)
+            .contains("messageCatch1")
+            .contains("messageCatch2");
 
     String messageName = "newInvoiceMessage";
     List<Execution> executions = runtimeService.createExecutionQuery()
         .messageEventSubscriptionName(messageName)
         .list();
 
-    assertNotNull(executions);
-    assertEquals(2, executions.size());
+    assertThat(executions)
+            .isNotNull()
+            .hasSize(2);
 
     runtimeService.messageEventReceived(messageName, executions.get(0).getId());
 
     Task task = taskService.createTaskQuery()
         .singleResult();
-    assertNull(task);
+    assertThat(task).isNull();
 
     runtimeService.messageEventReceived(messageName, executions.get(1).getId());
 
     task = taskService.createTaskQuery()
         .singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     taskService.complete(task.getId());
   }
@@ -152,14 +147,15 @@ public class MessageIntermediateEventTest {
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/message/MessageIntermediateEventTest.testSingleIntermediateMessageEvent.bpmn20.xml")
         .deploy();
     // now there is one process deployed
-    assertEquals(1, repositoryService.createProcessDefinitionQuery().count());
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process");
 
     List<String> activeActivityIds = runtimeService.getActiveActivityIds(pi.getId());
-    assertNotNull(activeActivityIds);
-    assertEquals(1, activeActivityIds.size());
-    assertTrue(activeActivityIds.contains("messageCatch"));
+    assertThat(activeActivityIds)
+            .isNotNull()
+            .hasSize(1)
+            .contains("messageCatch");
 
     // deploy version 2
     repositoryService.createDeployment()
@@ -167,13 +163,14 @@ public class MessageIntermediateEventTest {
         .deploy();
 
     // now there are two versions deployed:
-    assertEquals(2, repositoryService.createProcessDefinitionQuery().count());
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(2);
 
     // assert process is still waiting in message event:
     activeActivityIds = runtimeService.getActiveActivityIds(pi.getId());
-    assertNotNull(activeActivityIds);
-    assertEquals(1, activeActivityIds.size());
-    assertTrue(activeActivityIds.contains("messageCatch"));
+    assertThat(activeActivityIds)
+            .isNotNull()
+            .hasSize(1)
+            .contains("messageCatch");
 
     // delete both versions:
     for (org.operaton.bpm.engine.repository.Deployment deployment : repositoryService.createDeploymentQuery().list()) {
@@ -184,14 +181,14 @@ public class MessageIntermediateEventTest {
 
   @Test
   public void testEmptyMessageNameFails() {
-    try {
-      repositoryService
+    var deploymentBuilder = repositoryService
           .createDeployment()
-          .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/message/MessageIntermediateEventTest.testEmptyMessageNameFails.bpmn20.xml")
-          .deploy();
+          .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/message/MessageIntermediateEventTest.testEmptyMessageNameFails.bpmn20.xml");
+    try {
+      deploymentBuilder.deploy();
       fail("exception expected");
     } catch (ParseException e) {
-      assertTrue(e.getMessage().contains("Cannot have a message event subscription with an empty or missing name"));
+      assertThat(e.getMessage()).contains("Cannot have a message event subscription with an empty or missing name");
       assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("messageCatch");
     }
   }
@@ -233,11 +230,11 @@ public class MessageIntermediateEventTest {
 
     // then
     ObjectValue variableTyped = runtimeService.getVariableTyped(processInstance.getId(), "var", false);
-    assertNotNull(variableTyped);
-    assertFalse(variableTyped.isDeserialized());
-    assertEquals(serializedObject, variableTyped.getValueSerialized());
-    assertEquals(FailingJavaSerializable.class.getName(), variableTyped.getObjectTypeName());
-    assertEquals(SerializationDataFormats.JAVA.getName(), variableTyped.getSerializationDataFormat());
+    assertThat(variableTyped).isNotNull();
+    assertThat(variableTyped.isDeserialized()).isFalse();
+    assertThat(variableTyped.getValueSerialized()).isEqualTo(serializedObject);
+    assertThat(variableTyped.getObjectTypeName()).isEqualTo(FailingJavaSerializable.class.getName());
+    assertThat(variableTyped.getSerializationDataFormat()).isEqualTo(SerializationDataFormats.JAVA.getName());
   }
 
   @Deployment
@@ -251,21 +248,22 @@ public class MessageIntermediateEventTest {
     // when
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process", variables);
     List<String> activeActivityIds = runtimeService.getActiveActivityIds(pi.getId());
-    assertNotNull(activeActivityIds);
-    assertEquals(1, activeActivityIds.size());
-    assertTrue(activeActivityIds.contains("messageCatch"));
+    assertThat(activeActivityIds)
+            .isNotNull()
+            .hasSize(1)
+            .contains("messageCatch");
 
     // then
     String messageName = "newInvoiceMessage-bar";
     Execution execution = runtimeService.createExecutionQuery()
         .messageEventSubscriptionName(messageName)
         .singleResult();
-    assertNotNull(execution);
+    assertThat(execution).isNotNull();
 
     runtimeService.messageEventReceived(messageName, execution.getId());
     Task task = taskService.createTaskQuery()
         .singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     taskService.complete(task.getId());
   }
 

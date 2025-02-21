@@ -24,9 +24,7 @@ import static org.operaton.bpm.engine.authorization.Resources.TASK;
 import static org.operaton.bpm.engine.authorization.TaskPermissions.UPDATE_VARIABLE;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -45,7 +43,6 @@ import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -63,7 +60,7 @@ import org.junit.runners.Parameterized.Parameters;
 public class ProcessTaskAuthorizationTest {
 
   private static final String ONE_TASK_PROCESS = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml";
-  protected static final String userId = "userId";
+  protected static final String USER_ID = "userId";
   protected static final String VARIABLE_NAME = "aVariableName";
   protected static final String VARIABLE_VALUE = "aVariableValue";
   protected static final String PROCESS_KEY = "oneTaskProcess";
@@ -82,7 +79,7 @@ public class ProcessTaskAuthorizationTest {
   protected RuntimeService runtimeService;
 
   protected boolean ensureSpecificVariablePermission;
-  protected String deploumentId;
+  protected String deploymentId;
 
   @Parameters(name = "Scenario {index}")
   public static Collection<AuthorizationScenario[]> scenarios() {
@@ -90,34 +87,34 @@ public class ProcessTaskAuthorizationTest {
       scenario()
         .withoutAuthorizations()
         .failsDueToRequired(
-          grant(TASK, "taskId", userId, UPDATE),
-          grant(PROCESS_DEFINITION, PROCESS_KEY, userId, UPDATE_TASK),
-          grant(TASK, "taskId", userId, UPDATE_VARIABLE),
-          grant(PROCESS_DEFINITION, PROCESS_KEY, userId, UPDATE_TASK_VARIABLE)),
+          grant(TASK, "taskId", USER_ID, UPDATE),
+          grant(PROCESS_DEFINITION, PROCESS_KEY, USER_ID, UPDATE_TASK),
+          grant(TASK, "taskId", USER_ID, UPDATE_VARIABLE),
+          grant(PROCESS_DEFINITION, PROCESS_KEY, USER_ID, UPDATE_TASK_VARIABLE)),
       scenario()
         .withAuthorizations(
-          grant(TASK, "taskId", userId, UPDATE)),
+          grant(TASK, "taskId", USER_ID, UPDATE)),
       scenario()
         .withAuthorizations(
-          grant(TASK, "*", userId, UPDATE)),
+          grant(TASK, "*", USER_ID, UPDATE)),
       scenario()
         .withAuthorizations(
-          grant(PROCESS_DEFINITION, PROCESS_KEY, userId, UPDATE_TASK)),
+          grant(PROCESS_DEFINITION, PROCESS_KEY, USER_ID, UPDATE_TASK)),
       scenario()
         .withAuthorizations(
-          grant(PROCESS_DEFINITION, "*", userId, UPDATE_TASK)),
+          grant(PROCESS_DEFINITION, "*", USER_ID, UPDATE_TASK)),
       scenario()
         .withAuthorizations(
-          grant(TASK, "taskId", userId, UPDATE_VARIABLE)),
+          grant(TASK, "taskId", USER_ID, UPDATE_VARIABLE)),
       scenario()
         .withAuthorizations(
-          grant(TASK, "*", userId, UPDATE_VARIABLE)),
+          grant(TASK, "*", USER_ID, UPDATE_VARIABLE)),
       scenario()
         .withAuthorizations(
-          grant(PROCESS_DEFINITION, PROCESS_KEY, userId, UPDATE_TASK_VARIABLE)),
+          grant(PROCESS_DEFINITION, PROCESS_KEY, USER_ID, UPDATE_TASK_VARIABLE)),
       scenario()
         .withAuthorizations(
-          grant(PROCESS_DEFINITION, "*", userId, UPDATE_TASK_VARIABLE))
+          grant(PROCESS_DEFINITION, "*", USER_ID, UPDATE_TASK_VARIABLE))
         .succeeds()
       );
   }
@@ -129,7 +126,7 @@ public class ProcessTaskAuthorizationTest {
     runtimeService = engineRule.getRuntimeService();
 
     authRule.createUserAndGroup("userId", "groupId");
-    deploumentId = engineRule.getRepositoryService().createDeployment().addClasspathResource(ONE_TASK_PROCESS).deployWithResult().getId();
+    deploymentId = engineRule.getRepositoryService().createDeployment().addClasspathResource(ONE_TASK_PROCESS).deployWithResult().getId();
     ensureSpecificVariablePermission = processEngineConfiguration.isEnforceSpecificVariablePermission();
 
     // prerequisite of the whole test suite
@@ -140,7 +137,7 @@ public class ProcessTaskAuthorizationTest {
   public void tearDown() {
     authRule.deleteUsersAndGroups();
     processEngineConfiguration.setEnforceSpecificVariablePermission(ensureSpecificVariablePermission);
-    engineRule.getRepositoryService().deleteDeployment(deploumentId, true);
+    engineRule.getRepositoryService().deleteDeployment(deploymentId, true);
   }
 
   @Test
@@ -455,19 +452,19 @@ public class ProcessTaskAuthorizationTest {
 
   protected void verifySetVariables() {
     verifyVariableInstanceCount(1);
-    assertNotNull(runtimeService.createVariableInstanceQuery().singleResult());
+    assertThat(runtimeService.createVariableInstanceQuery().singleResult()).isNotNull();
   }
 
   protected void verifyRemoveVariables() {
     verifyVariableInstanceCount(0);
-    assertNull(runtimeService.createVariableInstanceQuery().singleResult());
+    assertThat(runtimeService.createVariableInstanceQuery().singleResult()).isNull();
     HistoricVariableInstance deletedVariable = engineRule.getHistoryService().createHistoricVariableInstanceQuery().includeDeleted().singleResult();
-    Assert.assertEquals("DELETED", deletedVariable.getState());
+    assertThat(deletedVariable.getState()).isEqualTo("DELETED");
   }
 
   protected void verifyVariableInstanceCount(int count) {
-    assertEquals(count, runtimeService.createVariableInstanceQuery().list().size());
-    assertEquals(count, runtimeService.createVariableInstanceQuery().count());
+    assertThat(runtimeService.createVariableInstanceQuery().list()).hasSize(count);
+    assertThat(runtimeService.createVariableInstanceQuery().count()).isEqualTo(count);
   }
 
   protected VariableMap getVariables() {

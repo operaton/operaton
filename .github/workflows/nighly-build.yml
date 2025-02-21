@@ -18,12 +18,12 @@ on:
         description: 'Dry-Run: Skips remote operations when true'
         type: boolean
         required: true
-        default: true
+        default: false
       skip_tests:
         description: 'Skip test execution for faster build'
         type: boolean
         required: true
-        default: false
+        default: true
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -40,6 +40,7 @@ jobs:
     outputs:
       version: ${{steps.maven-build.outputs.version}}
       project_version: ${{steps.maven-build.outputs.project_version}}
+      database_version: ${{steps.maven-build.outputs.database_version}}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -51,6 +52,11 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: ${{ matrix.java }}
       - name: Maven Build
         id: maven-build
         shell: bash
@@ -58,9 +64,14 @@ jobs:
           .github/scripts/jacoco-create-flag-files.sh
           PROJECT_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout | tail -n 1)
           RELEASE_VERSION=$(echo $PROJECT_VERSION | sed 's/-SNAPSHOT//')
-          SKIP_TESTS=${{ github.event.inputs.skip_tests || (github.event_name == 'schedule' && false) }}
           echo "project_version=$PROJECT_VERSION" >> $GITHUB_OUTPUT
+          echo "project_version=$PROJECT_VERSION"
           echo "version=$RELEASE_VERSION" >> $GITHUB_OUTPUT
+          echo "version=$RELEASE_VERSION"
+          DATABASE_VERSION=$(grep '<version.operaton.dbscheme>' parent/pom.xml | sed -e 's/.*<version.operaton.dbscheme>\(.*\)<\/version.operaton.dbscheme>.*/\1/')
+          echo "database_version=$DATABASE_VERSION" >> $GITHUB_OUTPUT
+          echo "database_version=$DATABASE_VERSION"
+          SKIP_TESTS=${{ github.event.inputs.skip_tests || (github.event_name == 'schedule' && false) }}
           echo "skip_tests=$SKIP_TESTS"
           ./mvnw \
             -Pdistro,distro-run,distro-tomcat,distro-wildfly,distro-webjar,distro-starter,distro-serverless,h2-in-memory \
@@ -125,6 +136,8 @@ jobs:
           JRELEASER_MAVENCENTRAL_PASSWORD: ${{secrets.OSSRH_PASSWORD}}
           JRELEASER_DRY_RUN: ${{ github.event_name == 'schedule' && false || github.event.inputs.dry_run }}
           JRELEASER_PRERELEASE_ENABLED: true
+        with:
+          arguments: full-release -POPERATON_DATABASE_VERSION=${{needs.build.outputs.database_version}}
 
       - name: Publish Test Report
         if: ${{ github.event_name == 'schedule' || github.event.inputs.skip_tests == 'false'}}

@@ -19,8 +19,7 @@ package org.operaton.bpm.engine.test.api.authorization;
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
 import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_TASK;
 import static org.operaton.bpm.engine.authorization.Resources.TASK;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -142,8 +141,8 @@ public class TaskReadVariablePermissionAuthorizationTest {
 
     // then
     task = selectSingleTask();
-    assertNotNull(task);
-    assertEquals(DEMO, task.getAssignee());
+    assertThat(task).isNotNull();
+    assertThat(task.getAssignee()).isEqualTo(DEMO);
     verifyUserAuthorization(DEMO);
     taskService.deleteTask(taskId, true);
   }
@@ -163,8 +162,8 @@ public class TaskReadVariablePermissionAuthorizationTest {
 
     // then
     task = selectSingleTask();
-    assertNotNull(task);
-    assertEquals(DEMO, task.getAssignee());
+    assertThat(task).isNotNull();
+    assertThat(task.getAssignee()).isEqualTo(DEMO);
     verifyUserAuthorization(DEMO);
   }
 
@@ -183,8 +182,8 @@ public class TaskReadVariablePermissionAuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
-    assertEquals(DEMO, task.getOwner());
+    assertThat(task).isNotNull();
+    assertThat(task.getOwner()).isEqualTo(DEMO);
     verifyUserAuthorization(DEMO);
 
     taskService.deleteTask(taskId, true);
@@ -204,8 +203,8 @@ public class TaskReadVariablePermissionAuthorizationTest {
 
     // then
     Task task = selectSingleTask();
-    assertNotNull(task);
-    assertEquals(DEMO, task.getOwner());
+    assertThat(task).isNotNull();
+    assertThat(task.getOwner()).isEqualTo(DEMO);
     verifyUserAuthorization(DEMO);
   }
 
@@ -227,14 +226,15 @@ public class TaskReadVariablePermissionAuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     authRule.disableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertEquals(1, linksForTask.size());
+    assertThat(linksForTask)
+            .isNotNull()
+            .hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
-    assertEquals(DEMO, identityLink.getUserId());
-    assertEquals(IdentityLinkType.CANDIDATE, identityLink.getType());
+    assertThat(identityLink.getUserId()).isEqualTo(DEMO);
+    assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
     verifyUserAuthorization(DEMO);
 
     taskService.deleteTask(taskId, true);
@@ -242,7 +242,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testProcessTaskAddUserIdentityLinkWithUpdatePersmissionOnTask() {
+  public void testProcessTaskAddUserIdentityLinkWithUpdatePermissionOnTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -257,14 +257,15 @@ public class TaskReadVariablePermissionAuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     authRule.disableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertEquals(1, linksForTask.size());
+    assertThat(linksForTask)
+            .isNotNull()
+            .hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
-    assertEquals(DEMO, identityLink.getUserId());
-    assertEquals(IdentityLinkType.CANDIDATE, identityLink.getType());
+    assertThat(identityLink.getUserId()).isEqualTo(DEMO);
+    assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
     verifyUserAuthorization(DEMO);
   }
 
@@ -286,14 +287,15 @@ public class TaskReadVariablePermissionAuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     authRule.disableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertEquals(1, linksForTask.size());
+    assertThat(linksForTask)
+            .isNotNull()
+            .hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
-    assertEquals(ACCOUNTING_GROUP, identityLink.getGroupId());
-    assertEquals(IdentityLinkType.CANDIDATE, identityLink.getType());
+    assertThat(identityLink.getGroupId()).isEqualTo(ACCOUNTING_GROUP);
+    assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
 
     verifyGroupAuthorization(ACCOUNTING_GROUP);
 
@@ -302,7 +304,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testProcessTaskAddGroupIdentityLinkWithUpdatePersmissionOnTask() {
+  public void testProcessTaskAddGroupIdentityLinkWithUpdatePermissionOnTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
     String taskId = selectSingleTask().getId();
@@ -317,14 +319,15 @@ public class TaskReadVariablePermissionAuthorizationTest {
     List<IdentityLink> linksForTask = taskService.getIdentityLinksForTask(taskId);
     authRule.disableAuthorization();
 
-    assertNotNull(linksForTask);
-    assertEquals(1, linksForTask.size());
+    assertThat(linksForTask)
+            .isNotNull()
+            .hasSize(1);
 
     IdentityLink identityLink = linksForTask.get(0);
-    assertNotNull(identityLink);
+    assertThat(identityLink).isNotNull();
 
-    assertEquals(ACCOUNTING_GROUP, identityLink.getGroupId());
-    assertEquals(IdentityLinkType.CANDIDATE, identityLink.getType());
+    assertThat(identityLink.getGroupId()).isEqualTo(ACCOUNTING_GROUP);
+    assertThat(identityLink.getType()).isEqualTo(IdentityLinkType.CANDIDATE);
     verifyGroupAuthorization(ACCOUNTING_GROUP);
   }
 
@@ -357,7 +360,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
           .userIdIn(userId)
           .singleResult();
 
-      assertNotNull(runtimeUserAuthorization);
+      assertThat(runtimeUserAuthorization).isNotNull();
       verifyReadVariablePermission(runtimeUserAuthorization, TaskPermissions.READ_VARIABLE);
 
     } else if (AUTHORIZATION_TYP_HISTORIC.equals(authorizationType)) {
@@ -367,7 +370,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
           .userIdIn(userId)
           .singleResult();
 
-      assertNotNull(historyUserAuthorization);
+      assertThat(historyUserAuthorization).isNotNull();
       verifyReadVariablePermission(historyUserAuthorization, HistoricTaskPermissions.READ_VARIABLE);
 
     } else {
@@ -384,7 +387,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
       Authorization runtimeGroupAuthorization = authorizationService.createAuthorizationQuery()
           .resourceType(TASK)
           .groupIdIn(groupId).singleResult();
-      assertNotNull(runtimeGroupAuthorization);
+      assertThat(runtimeGroupAuthorization).isNotNull();
       verifyReadVariablePermission(runtimeGroupAuthorization, TaskPermissions.READ_VARIABLE);
 
     } else if (AUTHORIZATION_TYP_HISTORIC.equals(authorizationType)) {
@@ -392,7 +395,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
       Authorization historyGroupAuthorization = authorizationService.createAuthorizationQuery()
           .resourceType(HISTORIC_TASK)
           .groupIdIn(groupId).singleResult();
-      assertNotNull(historyGroupAuthorization);
+      assertThat(historyGroupAuthorization).isNotNull();
       verifyReadVariablePermission(historyGroupAuthorization, HistoricTaskPermissions.READ_VARIABLE);
 
     } else {
@@ -404,8 +407,8 @@ public class TaskReadVariablePermissionAuthorizationTest {
   protected void verifyReadVariablePermission(Authorization groupAuthorization,
                                               Permission expectedPermission) {
     Permission[] permissions = groupAuthorization.getPermissions(new Permission[] { expectedPermission });
-    assertNotNull(permissions);
-    assertEquals(expectedPermission, permissions[0]);
+    assertThat(permissions).isNotNull();
+    assertThat(permissions[0]).isEqualTo(expectedPermission);
   }
 
 }

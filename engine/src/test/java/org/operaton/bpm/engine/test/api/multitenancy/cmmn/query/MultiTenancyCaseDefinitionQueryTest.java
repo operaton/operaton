@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.api.multitenancy.cmmn.query;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -251,9 +251,9 @@ public class MultiTenancyCaseDefinitionQueryTest extends PluggableProcessEngineT
 
   @Test
   public void testFailQueryByTenantIdNull() {
+    var caseDefinitionQuery = repositoryService.createCaseDefinitionQuery();
     try {
-      repositoryService.createCaseDefinitionQuery()
-        .tenantIdIn((String) null);
+      caseDefinitionQuery.tenantIdIn((String) null);
 
       fail("expected exception");
     } catch (NullValueException e) {

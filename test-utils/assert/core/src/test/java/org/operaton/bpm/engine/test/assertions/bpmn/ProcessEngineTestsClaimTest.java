@@ -24,7 +24,6 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.task;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -57,12 +56,7 @@ public class ProcessEngineTestsClaimTest extends ProcessAssertTestCase {
       "ProcessEngineTests-claim"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        claim(task("UserTask_2", processInstance), "fozzie");
-      }
-    }, IllegalArgumentException.class);
+    expect(() -> claim(task("UserTask_2", processInstance), "fozzie"), IllegalArgumentException.class);
   }
 
   @Test
@@ -74,12 +68,7 @@ public class ProcessEngineTestsClaimTest extends ProcessAssertTestCase {
       "ProcessEngineTests-claim"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        claim(task("UserTask_1", processInstance), null);
-      }
-    }, IllegalArgumentException.class);
+    expect(() -> claim(task("UserTask_1", processInstance), null), IllegalArgumentException.class);
   }
 
 }

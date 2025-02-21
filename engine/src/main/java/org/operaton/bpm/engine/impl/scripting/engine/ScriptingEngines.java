@@ -108,10 +108,8 @@ public class ScriptingEngines implements DmnScriptEngineResolver {
     ProcessEngineConfigurationImpl config = Context.getProcessEngineConfiguration();
 
     ScriptEngine engine = null;
-    if (config.isEnableFetchScriptEngineFromProcessApplication()) {
-      if(pa != null) {
-        engine = getPaScriptEngine(language, pa);
-      }
+    if (config.isEnableFetchScriptEngineFromProcessApplication() && pa != null) {
+      engine = getPaScriptEngine(language, pa);
     }
 
     if(engine == null) {

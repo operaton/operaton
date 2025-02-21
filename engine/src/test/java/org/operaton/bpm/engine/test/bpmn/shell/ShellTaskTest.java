@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.test.bpmn.shell;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNotSame;
 
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
@@ -28,23 +28,23 @@ import org.junit.Test;
 public class ShellTaskTest extends PluggableProcessEngineTest {
 
   enum OsType {
-    LINUX, WINDOWS, MAC, SOLARIS, UNKOWN
+    LINUX, WINDOWS, MAC, SOLARIS, UNKNOWN
   }
 
   OsType osType;
 
   OsType getSystemOsType() {
     String osName = System.getProperty("os.name").toLowerCase();
-    if (osName.indexOf("win") >= 0)
+    if (osName.contains("win"))
       return OsType.WINDOWS;
-    else if (osName.indexOf("mac") >= 0)
+    else if (osName.contains("mac"))
       return OsType.MAC;
-    else if ((osName.indexOf("nix") >= 0) || (osName.indexOf("nux") >= 0))
+    else if ((osName.contains("nix")) || (osName.contains("nux")))
       return OsType.LINUX;
-    else if (osName.indexOf("sunos") >= 0)
+    else if (osName.contains("sunos"))
       return OsType.SOLARIS;
     else
-      return OsType.UNKOWN;
+      return OsType.UNKNOWN;
   }
 
   @Before
@@ -54,7 +54,7 @@ public class ShellTaskTest extends PluggableProcessEngineTest {
 
   @Test
   public void testOsDetection() {
-    assertTrue(osType != OsType.UNKOWN);
+    assertNotSame(OsType.UNKNOWN, osType);
   }
 
   @Deployment
@@ -65,8 +65,8 @@ public class ShellTaskTest extends PluggableProcessEngineTest {
       ProcessInstance pi = runtimeService.startProcessInstanceByKey("echoShellWindows");
   
       String st = (String) runtimeService.getVariable(pi.getId(), "resultVar");
-      assertNotNull(st);
-      assertTrue(st.startsWith("EchoTest"));
+      assertThat(st).isNotNull();
+      assertThat(st).startsWith("EchoTest");
     }
   }
 
@@ -78,8 +78,8 @@ public class ShellTaskTest extends PluggableProcessEngineTest {
       ProcessInstance pi = runtimeService.startProcessInstanceByKey("echoShellLinux");
   
       String st = (String) runtimeService.getVariable(pi.getId(), "resultVar");
-      assertNotNull(st);
-      assertTrue(st.startsWith("EchoTest"));
+      assertThat(st).isNotNull();
+      assertThat(st).startsWith("EchoTest");
     }
   }
   
@@ -91,8 +91,8 @@ public class ShellTaskTest extends PluggableProcessEngineTest {
       ProcessInstance pi = runtimeService.startProcessInstanceByKey("echoShellMac");
   
       String st = (String) runtimeService.getVariable(pi.getId(), "resultVar");
-      assertNotNull(st);
-      assertTrue(st.startsWith("EchoTest"));
+      assertThat(st).isNotNull();
+      assertThat(st).startsWith("EchoTest");
     }
   }
 }

@@ -51,9 +51,8 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.junit.*;
 import org.junit.rules.RuleChain;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class HistoryCleanupHistoricBatchTest {
@@ -127,13 +126,13 @@ public class HistoryCleanupHistoricBatchTest {
     // given
     prepareHistoricBatches(3, daysInThePast);
     List<HistoricBatch> historicList = historyService.createHistoricBatchQuery().list();
-    assertEquals(3, historicList.size());
+    assertThat(historicList).hasSize(3);
 
     // when
     runHistoryCleanup();
 
     // then
-    assertEquals(0, historyService.createHistoricBatchQuery().count());
+    assertThat(historyService.createHistoricBatchQuery().count()).isZero();
   }
 
   @Test
@@ -150,8 +149,8 @@ public class HistoryCleanupHistoricBatchTest {
     runHistoryCleanup();
 
     // then
-    assertEquals(0, historyService.createHistoricBatchQuery().count());
-    assertEquals(0, historyService.createHistoricJobLogQuery().jobDefinitionConfiguration(batchId).count());
+    assertThat(historyService.createHistoricBatchQuery().count()).isZero();
+    assertThat(historyService.createHistoricJobLogQuery().jobDefinitionConfiguration(batchId).count()).isZero();
   }
 
   @Test
@@ -184,9 +183,9 @@ public class HistoryCleanupHistoricBatchTest {
     // when
     runHistoryCleanup();
 
-    assertEquals(0, historyService.createHistoricBatchQuery().count());
-    assertEquals(0, historyService.createHistoricJobLogQuery().jobDefinitionConfiguration(batchId).count());
-    assertEquals(0, historyService.createHistoricIncidentQuery().count());
+    assertThat(historyService.createHistoricBatchQuery().count()).isZero();
+    assertThat(historyService.createHistoricJobLogQuery().jobDefinitionConfiguration(batchId).count()).isZero();
+    assertThat(historyService.createHistoricIncidentQuery().count()).isZero();
     verifyByteArraysWereRemoved(byteArrayIds.toArray(new String[] {}));
   }
 
@@ -204,7 +203,7 @@ public class HistoryCleanupHistoricBatchTest {
     // then
     final long removedBatches = managementService.createMetricsQuery().name(Metrics.HISTORY_CLEANUP_REMOVED_BATCH_OPERATIONS).sum();
 
-    assertEquals(batchesCount, removedBatches);
+    assertThat(removedBatches).isEqualTo(batchesCount);
   }
 
   @Test
@@ -216,7 +215,7 @@ public class HistoryCleanupHistoricBatchTest {
     processEngineConfiguration.setBatchOperationsForHistoryCleanup(map);
     processEngineConfiguration.initHistoryCleanup();
 
-    assertNull(processEngineConfiguration.getBatchOperationHistoryTimeToLive());
+    assertThat(processEngineConfiguration.getBatchOperationHistoryTimeToLive()).isNull();
 
     Date startDate = ClockUtil.getCurrentTime();
     int daysInThePast = -11;
@@ -240,13 +239,13 @@ public class HistoryCleanupHistoricBatchTest {
 
     // when
     List<HistoricBatch> historicList = historyService.createHistoricBatchQuery().list();
-    assertEquals(30, historicList.size());
+    assertThat(historicList).hasSize(30);
     runHistoryCleanup();
 
     // then
-    assertEquals(0,  historyService.createHistoricBatchQuery().count());
+    assertThat(historyService.createHistoricBatchQuery().count()).isZero();
     for (String batchId : batchIds) {
-      assertEquals(0, historyService.createHistoricJobLogQuery().jobDefinitionConfiguration(batchId).count());
+      assertThat(historyService.createHistoricJobLogQuery().jobDefinitionConfiguration(batchId).count()).isZero();
     }
   }
 
@@ -290,16 +289,16 @@ public class HistoryCleanupHistoricBatchTest {
 
     // when
     List<HistoricBatch> historicList = historyService.createHistoricBatchQuery().list();
-    assertEquals(31, historicList.size());
+    assertThat(historicList).hasSize(31);
     runHistoryCleanup();
 
     // then
     HistoricBatch modificationHistoricBatch = historyService.createHistoricBatchQuery().singleResult(); // the other batches should be cleaned
-    assertEquals(modificationBatch.getId(), modificationHistoricBatch.getId());
-    assertEquals(2, historyService.createHistoricJobLogQuery().jobDefinitionConfiguration(modificationBatch.getId()).count());
+    assertThat(modificationHistoricBatch.getId()).isEqualTo(modificationBatch.getId());
+    assertThat(historyService.createHistoricJobLogQuery().jobDefinitionConfiguration(modificationBatch.getId()).count()).isEqualTo(2);
     batchIds.remove(modificationBatch.getId());
     for (String batchId : batchIds) {
-      assertEquals(0, historyService.createHistoricJobLogQuery().jobDefinitionConfiguration(batchId).count());
+      assertThat(historyService.createHistoricJobLogQuery().jobDefinitionConfiguration(batchId).count()).isZero();
     }
   }
 
@@ -360,7 +359,7 @@ public class HistoryCleanupHistoricBatchTest {
   }
 
   private BpmnModelInstance createModelInstance() {
-    BpmnModelInstance instance = Bpmn.createExecutableProcess("process")
+    return Bpmn.createExecutableProcess("process")
         .operatonHistoryTimeToLive(180)
         .startEvent("start")
         .userTask("userTask1")
@@ -368,7 +367,6 @@ public class HistoryCleanupHistoricBatchTest {
         .userTask("userTask2")
         .endEvent("end")
         .done();
-    return instance;
   }
 
   private void prepareHistoricBatches(int batchesCount, int daysInThePast) {
@@ -404,8 +402,7 @@ public class HistoryCleanupHistoricBatchTest {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(sourceProcessDefinition.getId());
 
-    Batch batch = runtimeService.newMigration(migrationPlan).processInstanceIds(Arrays.asList(processInstance.getId(), "unknownId")).executeAsync();
-    return batch;
+    return runtimeService.newMigration(migrationPlan).processInstanceIds(Arrays.asList(processInstance.getId(), "unknownId")).executeAsync();
   }
 
   private List<String> createMigrationBatchList(int migrationCountBatch) {
@@ -419,8 +416,7 @@ public class HistoryCleanupHistoricBatchTest {
   private Batch createModificationBatch() {
     BpmnModelInstance instance = createModelInstance();
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
-    Batch modificationBatch = modificationHelper.startAfterAsync("process", 1, "userTask1", processDefinition.getId());
-    return modificationBatch;
+    return modificationHelper.startAfterAsync("process", 1, "userTask1", processDefinition.getId());
   }
 
   private List<String> createCancelationBatchList(int cancelationCountBatch) {
@@ -437,7 +433,7 @@ public class HistoryCleanupHistoricBatchTest {
   private void verifyByteArraysWereRemoved(final String... errorDetailsByteArrayIds) {
     engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(commandContext -> {
       for (String errorDetailsByteArrayId : errorDetailsByteArrayIds) {
-        assertNull(commandContext.getDbEntityManager().selectOne("selectByteArray", errorDetailsByteArrayId));
+        assertThat(commandContext.getDbEntityManager().selectOne("selectByteArray", errorDetailsByteArrayId)).isNull();
       }
       return null;
     });

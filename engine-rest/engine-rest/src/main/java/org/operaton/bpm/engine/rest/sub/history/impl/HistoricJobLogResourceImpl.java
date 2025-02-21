@@ -60,8 +60,7 @@ public class HistoricJobLogResourceImpl implements HistoricJobLogResource {
   public String getStacktrace() {
     try {
       HistoryService historyService = engine.getHistoryService();
-      String stacktrace = historyService.getHistoricJobLogExceptionStacktrace(id);
-      return stacktrace;
+      return historyService.getHistoricJobLogExceptionStacktrace(id);
     } catch (AuthorizationException e) {
       throw e;
     } catch (ProcessEngineException e) {

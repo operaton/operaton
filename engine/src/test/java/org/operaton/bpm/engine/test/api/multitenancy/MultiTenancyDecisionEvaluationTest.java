@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.api.multitenancy;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Arrays;
 
@@ -48,12 +48,12 @@ public class MultiTenancyDecisionEvaluationTest extends PluggableProcessEngineTe
    testRule.deploy(DMN_FILE);
 
     DecisionDefinition decisionDefinition = repositoryService.createDecisionDefinitionQuery().singleResult();
+    var decisionsEvaluationBuilder = decisionService.evaluateDecisionById(decisionDefinition.getId())
+          .variables(createVariables())
+          .decisionDefinitionWithoutTenantId();
 
     try {
-      decisionService.evaluateDecisionById(decisionDefinition.getId())
-          .variables(createVariables())
-          .decisionDefinitionWithoutTenantId()
-          .evaluate();
+      decisionsEvaluationBuilder.evaluate();
       fail("BadUserRequestException exception");
     } catch(BadUserRequestException e) {
       assertThat(e.getMessage()).contains("Cannot specify a tenant-id");
@@ -65,12 +65,12 @@ public class MultiTenancyDecisionEvaluationTest extends PluggableProcessEngineTe
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
 
     DecisionDefinition decisionDefinition = repositoryService.createDecisionDefinitionQuery().singleResult();
+    var decisionsEvaluationBuilder = decisionService.evaluateDecisionById(decisionDefinition.getId())
+          .variables(createVariables())
+          .decisionDefinitionTenantId(TENANT_ONE);
 
     try {
-      decisionService.evaluateDecisionById(decisionDefinition.getId())
-          .variables(createVariables())
-          .decisionDefinitionTenantId(TENANT_ONE)
-          .evaluate();
+      decisionsEvaluationBuilder.evaluate();
       fail("BadUserRequestException exception");
     } catch(BadUserRequestException e) {
       assertThat(e.getMessage()).contains("Cannot specify a tenant-id");
@@ -81,12 +81,12 @@ public class MultiTenancyDecisionEvaluationTest extends PluggableProcessEngineTe
   public void testFailToEvaluateDecisionByKeyForNonExistingTenantID() {
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
     testRule.deployForTenant(TENANT_TWO, DMN_FILE);
+    var decisionsEvaluationBuilder = decisionService.evaluateDecisionByKey(DECISION_DEFINITION_KEY)
+          .variables(createVariables())
+          .decisionDefinitionTenantId("nonExistingTenantId");
 
     try {
-      decisionService.evaluateDecisionByKey(DECISION_DEFINITION_KEY)
-          .variables(createVariables())
-          .decisionDefinitionTenantId("nonExistingTenantId")
-          .evaluate();
+      decisionsEvaluationBuilder.evaluate();
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).contains("no decision definition deployed with key 'decision' and tenant-id 'nonExistingTenantId'");
@@ -97,11 +97,11 @@ public class MultiTenancyDecisionEvaluationTest extends PluggableProcessEngineTe
   public void testFailToEvaluateDecisionByKeyForMultipleTenants() {
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
     testRule.deployForTenant(TENANT_TWO, DMN_FILE);
+    var decisionsEvaluationBuilder = decisionService.evaluateDecisionByKey(DECISION_DEFINITION_KEY)
+          .variables(createVariables());
 
     try {
-      decisionService.evaluateDecisionByKey(DECISION_DEFINITION_KEY)
-          .variables(createVariables())
-          .evaluate();
+      decisionsEvaluationBuilder.evaluate();
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).contains("multiple tenants.");
@@ -193,11 +193,11 @@ public class MultiTenancyDecisionEvaluationTest extends PluggableProcessEngineTe
     identityService.setAuthentication("user", null, null);
 
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
+    var decisionsEvaluationBuilder = decisionService.evaluateDecisionByKey(DECISION_DEFINITION_KEY)
+        .variables(createVariables());
 
     try {
-      decisionService.evaluateDecisionByKey(DECISION_DEFINITION_KEY)
-        .variables(createVariables())
-        .evaluate();
+      decisionsEvaluationBuilder.evaluate();
 
       fail("expected exception");
     } catch (ProcessEngineException e) {
@@ -210,12 +210,12 @@ public class MultiTenancyDecisionEvaluationTest extends PluggableProcessEngineTe
     identityService.setAuthentication("user", null, null);
 
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
+    var decisionsEvaluationBuilder = decisionService.evaluateDecisionByKey(DECISION_DEFINITION_KEY)
+        .decisionDefinitionTenantId(TENANT_ONE)
+        .variables(createVariables());
 
     try {
-      decisionService.evaluateDecisionByKey(DECISION_DEFINITION_KEY)
-        .decisionDefinitionTenantId(TENANT_ONE)
-        .variables(createVariables())
-        .evaluate();
+      decisionsEvaluationBuilder.evaluate();
 
       fail("expected exception");
     } catch (ProcessEngineException e) {
@@ -232,11 +232,11 @@ public class MultiTenancyDecisionEvaluationTest extends PluggableProcessEngineTe
       .singleResult();
 
     identityService.setAuthentication("user", null, null);
+    var decisionsEvaluationBuilder = decisionService.evaluateDecisionById(decisionDefinition.getId())
+        .variables(createVariables());
 
     try {
-      decisionService.evaluateDecisionById(decisionDefinition.getId())
-        .variables(createVariables())
-        .evaluate();
+      decisionsEvaluationBuilder.evaluate();
 
       fail("expected exception");
     } catch (ProcessEngineException e) {
@@ -310,8 +310,9 @@ public class MultiTenancyDecisionEvaluationTest extends PluggableProcessEngineTe
   }
 
   protected void assertThatDecisionHasResult(DmnDecisionResult decisionResult, Object expectedValue) {
-    assertThat(decisionResult).isNotNull();
-    assertThat(decisionResult).hasSize(1);
+    assertThat(decisionResult)
+            .isNotNull()
+            .hasSize(1);
     String value = decisionResult.getSingleResult().getFirstEntry();
     assertThat(value).isEqualTo(expectedValue);
   }

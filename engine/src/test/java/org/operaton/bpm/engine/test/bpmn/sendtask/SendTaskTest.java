@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.sendtask;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
@@ -38,7 +36,7 @@ public class SendTaskTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("sendTaskJavaDelegate");
 
     testRule.assertProcessEnded(processInstance.getId());
-    assertTrue(DummySendTask.wasExecuted);
+    assertThat(DummySendTask.wasExecuted).isTrue();
   }
 
   @Deployment
@@ -52,13 +50,11 @@ public class SendTaskTest extends PluggableProcessEngineTest {
 
     testRule.assertProcessEnded(processInstance.getId());
 
-    assertTrue(DummyActivityBehavior.wasExecuted);
+    assertThat(DummyActivityBehavior.wasExecuted).isTrue();
 
-    assertNotNull(DummyActivityBehavior.currentActivityName);
-    assertEquals("Task", DummyActivityBehavior.currentActivityName);
+    assertThat(DummyActivityBehavior.currentActivityName).isNotNull().isEqualTo("Task");
 
-    assertNotNull(DummyActivityBehavior.currentActivityId);
-    assertEquals("task", DummyActivityBehavior.currentActivityId);
+    assertThat(DummyActivityBehavior.currentActivityId).isNotNull().isEqualTo("task");
   }
 
 }

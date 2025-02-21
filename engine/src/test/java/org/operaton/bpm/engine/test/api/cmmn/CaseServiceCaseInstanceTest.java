@@ -16,13 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.cmmn;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -58,14 +52,14 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
         .create();
 
     // then
-    assertNotNull(caseInstance);
+    assertThat(caseInstance).isNotNull();
 
     // check properties
-    assertNull(caseInstance.getBusinessKey());
-    assertEquals(caseDefinitionId, caseInstance.getCaseDefinitionId());
-    assertEquals(caseInstance.getId(), caseInstance.getCaseInstanceId());
-    assertTrue(caseInstance.isActive());
-    assertFalse(caseInstance.isEnabled());
+    assertThat(caseInstance.getBusinessKey()).isNull();
+    assertThat(caseInstance.getCaseDefinitionId()).isEqualTo(caseDefinitionId);
+    assertThat(caseInstance.getCaseInstanceId()).isEqualTo(caseInstance.getId());
+    assertThat(caseInstance.isActive()).isTrue();
+    assertThat(caseInstance.isEnabled()).isFalse();
 
     // get persisted case instance
     CaseInstance instance = caseService
@@ -73,12 +67,12 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
       .singleResult();
 
     // should have the same properties
-    assertEquals(caseInstance.getId(), instance.getId());
-    assertEquals(caseInstance.getBusinessKey(), instance.getBusinessKey());
-    assertEquals(caseInstance.getCaseDefinitionId(), instance.getCaseDefinitionId());
-    assertEquals(caseInstance.getCaseInstanceId(), instance.getCaseInstanceId());
-    assertEquals(caseInstance.isActive(), instance.isActive());
-    assertEquals(caseInstance.isEnabled(), instance.isEnabled());
+    assertThat(instance.getId()).isEqualTo(caseInstance.getId());
+    assertThat(instance.getBusinessKey()).isEqualTo(caseInstance.getBusinessKey());
+    assertThat(instance.getCaseDefinitionId()).isEqualTo(caseInstance.getCaseDefinitionId());
+    assertThat(instance.getCaseInstanceId()).isEqualTo(caseInstance.getCaseInstanceId());
+    assertThat(instance.isActive()).isEqualTo(caseInstance.isActive());
+    assertThat(instance.isEnabled()).isEqualTo(caseInstance.isEnabled());
   }
 
   @Test
@@ -108,14 +102,14 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
         .create();
 
     // then
-    assertNotNull(caseInstance);
+    assertThat(caseInstance).isNotNull();
 
     // check properties
-    assertNull(caseInstance.getBusinessKey());
-    assertEquals(caseDefinitionId, caseInstance.getCaseDefinitionId());
-    assertEquals(caseInstance.getId(), caseInstance.getCaseInstanceId());
-    assertTrue(caseInstance.isActive());
-    assertFalse(caseInstance.isEnabled());
+    assertThat(caseInstance.getBusinessKey()).isNull();
+    assertThat(caseInstance.getCaseDefinitionId()).isEqualTo(caseDefinitionId);
+    assertThat(caseInstance.getCaseInstanceId()).isEqualTo(caseInstance.getId());
+    assertThat(caseInstance.isActive()).isTrue();
+    assertThat(caseInstance.isEnabled()).isFalse();
 
     // get persistent case instance
     CaseInstance instance = caseService
@@ -123,12 +117,12 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
       .singleResult();
 
     // should have the same properties
-    assertEquals(caseInstance.getId(), instance.getId());
-    assertEquals(caseInstance.getBusinessKey(), instance.getBusinessKey());
-    assertEquals(caseInstance.getCaseDefinitionId(), instance.getCaseDefinitionId());
-    assertEquals(caseInstance.getCaseInstanceId(), instance.getCaseInstanceId());
-    assertEquals(caseInstance.isActive(), instance.isActive());
-    assertEquals(caseInstance.isEnabled(), instance.isEnabled());
+    assertThat(instance.getId()).isEqualTo(caseInstance.getId());
+    assertThat(instance.getBusinessKey()).isEqualTo(caseInstance.getBusinessKey());
+    assertThat(instance.getCaseDefinitionId()).isEqualTo(caseInstance.getCaseDefinitionId());
+    assertThat(instance.getCaseInstanceId()).isEqualTo(caseInstance.getCaseInstanceId());
+    assertThat(instance.isActive()).isEqualTo(caseInstance.isActive());
+    assertThat(instance.isEnabled()).isEqualTo(caseInstance.isEnabled());
 
   }
 
@@ -159,27 +153,27 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
         .create();
 
     // then
-    assertNotNull(caseInstance);
+    assertThat(caseInstance).isNotNull();
 
     // check properties
-    assertEquals("aBusinessKey", caseInstance.getBusinessKey());
-    assertEquals(caseDefinitionId, caseInstance.getCaseDefinitionId());
-    assertEquals(caseInstance.getId(), caseInstance.getCaseInstanceId());
-    assertTrue(caseInstance.isActive());
-    assertFalse(caseInstance.isEnabled());
+    assertThat(caseInstance.getBusinessKey()).isEqualTo("aBusinessKey");
+    assertThat(caseInstance.getCaseDefinitionId()).isEqualTo(caseDefinitionId);
+    assertThat(caseInstance.getCaseInstanceId()).isEqualTo(caseInstance.getId());
+    assertThat(caseInstance.isActive()).isTrue();
+    assertThat(caseInstance.isEnabled()).isFalse();
 
-    // get persistend case instance
+    // get persistent case instance
     CaseInstance instance = caseService
       .createCaseInstanceQuery()
       .singleResult();
 
     // should have the same properties
-    assertEquals(caseInstance.getId(), instance.getId());
-    assertEquals(caseInstance.getBusinessKey(), instance.getBusinessKey());
-    assertEquals(caseInstance.getCaseDefinitionId(), instance.getCaseDefinitionId());
-    assertEquals(caseInstance.getCaseInstanceId(), instance.getCaseInstanceId());
-    assertEquals(caseInstance.isActive(), instance.isActive());
-    assertEquals(caseInstance.isEnabled(), instance.isEnabled());
+    assertThat(instance.getId()).isEqualTo(caseInstance.getId());
+    assertThat(instance.getBusinessKey()).isEqualTo(caseInstance.getBusinessKey());
+    assertThat(instance.getCaseDefinitionId()).isEqualTo(caseInstance.getCaseDefinitionId());
+    assertThat(instance.getCaseInstanceId()).isEqualTo(caseInstance.getCaseInstanceId());
+    assertThat(instance.isActive()).isEqualTo(caseInstance.isActive());
+    assertThat(instance.isEnabled()).isEqualTo(caseInstance.isEnabled());
 
   }
 
@@ -199,27 +193,27 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
         .create();
 
     // then
-    assertNotNull(caseInstance);
+    assertThat(caseInstance).isNotNull();
 
     // check properties
-    assertEquals("aBusinessKey", caseInstance.getBusinessKey());
-    assertEquals(caseDefinitionId, caseInstance.getCaseDefinitionId());
-    assertEquals(caseInstance.getId(), caseInstance.getCaseInstanceId());
-    assertTrue(caseInstance.isActive());
-    assertFalse(caseInstance.isEnabled());
+    assertThat(caseInstance.getBusinessKey()).isEqualTo("aBusinessKey");
+    assertThat(caseInstance.getCaseDefinitionId()).isEqualTo(caseDefinitionId);
+    assertThat(caseInstance.getCaseInstanceId()).isEqualTo(caseInstance.getId());
+    assertThat(caseInstance.isActive()).isTrue();
+    assertThat(caseInstance.isEnabled()).isFalse();
 
-    // get persistend case instance
+    // get persistent case instance
     CaseInstance instance = caseService
       .createCaseInstanceQuery()
       .singleResult();
 
     // should have the same properties
-    assertEquals(caseInstance.getId(), instance.getId());
-    assertEquals(caseInstance.getBusinessKey(), instance.getBusinessKey());
-    assertEquals(caseInstance.getCaseDefinitionId(), instance.getCaseDefinitionId());
-    assertEquals(caseInstance.getCaseInstanceId(), instance.getCaseInstanceId());
-    assertEquals(caseInstance.isActive(), instance.isActive());
-    assertEquals(caseInstance.isEnabled(), instance.isEnabled());
+    assertThat(instance.getId()).isEqualTo(caseInstance.getId());
+    assertThat(instance.getBusinessKey()).isEqualTo(caseInstance.getBusinessKey());
+    assertThat(instance.getCaseDefinitionId()).isEqualTo(caseInstance.getCaseDefinitionId());
+    assertThat(instance.getCaseInstanceId()).isEqualTo(caseInstance.getCaseInstanceId());
+    assertThat(instance.isActive()).isEqualTo(caseInstance.isActive());
+    assertThat(instance.isEnabled()).isEqualTo(caseInstance.isEnabled());
 
   }
 
@@ -236,7 +230,7 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
         .create();
 
     // then
-    assertNotNull(caseInstance);
+    assertThat(caseInstance).isNotNull();
 
     // there should exist two variables
     VariableInstanceQuery query = runtimeService.createVariableInstanceQuery();
@@ -247,16 +241,17 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
       .asc()
       .list();
 
-    assertFalse(result.isEmpty());
-    assertEquals(2, result.size());
+    assertThat(result)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variableInstance : result) {
       if (variableInstance.getName().equals("aVariableName")) {
-        assertEquals("aVariableName", variableInstance.getName());
-        assertEquals("aVariableValue", variableInstance.getValue());
+        assertThat(variableInstance.getName()).isEqualTo("aVariableName");
+        assertThat(variableInstance.getValue()).isEqualTo("aVariableValue");
       } else if (variableInstance.getName().equals("anotherVariableName")) {
-        assertEquals("anotherVariableName", variableInstance.getName());
-        assertEquals(999, variableInstance.getValue());
+        assertThat(variableInstance.getName()).isEqualTo("anotherVariableName");
+        assertThat(variableInstance.getValue()).isEqualTo(999);
       } else {
         fail("Unexpected variable: " + variableInstance.getName());
       }
@@ -281,7 +276,7 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
         .create();
 
     // then
-    assertNotNull(caseInstance);
+    assertThat(caseInstance).isNotNull();
 
     // there should exist two variables
     VariableInstanceQuery query = runtimeService.createVariableInstanceQuery();
@@ -292,16 +287,17 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
       .asc()
       .list();
 
-    assertFalse(result.isEmpty());
-    assertEquals(2, result.size());
+    assertThat(result)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variableInstance : result) {
       if (variableInstance.getName().equals("aVariableName")) {
-        assertEquals("aVariableName", variableInstance.getName());
-        assertEquals("aVariableValue", variableInstance.getValue());
+        assertThat(variableInstance.getName()).isEqualTo("aVariableName");
+        assertThat(variableInstance.getValue()).isEqualTo("aVariableValue");
       } else if (variableInstance.getName().equals("anotherVariableName")) {
-        assertEquals("anotherVariableName", variableInstance.getName());
-        assertEquals(999, variableInstance.getValue());
+        assertThat(variableInstance.getName()).isEqualTo("anotherVariableName");
+        assertThat(variableInstance.getValue()).isEqualTo(999);
       } else {
         fail("Unexpected variable: " + variableInstance.getName());
       }
@@ -327,7 +323,7 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
         .create();
 
     // then
-    assertNotNull(caseInstance);
+    assertThat(caseInstance).isNotNull();
 
     // there should exist two variables
     VariableInstanceQuery query = runtimeService.createVariableInstanceQuery();
@@ -338,16 +334,17 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
       .asc()
       .list();
 
-    assertFalse(result.isEmpty());
-    assertEquals(2, result.size());
+    assertThat(result)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variableInstance : result) {
       if (variableInstance.getName().equals("aVariableName")) {
-        assertEquals("aVariableName", variableInstance.getName());
-        assertEquals("aVariableValue", variableInstance.getValue());
+        assertThat(variableInstance.getName()).isEqualTo("aVariableName");
+        assertThat(variableInstance.getValue()).isEqualTo("aVariableValue");
       } else if (variableInstance.getName().equals("anotherVariableName")) {
-        assertEquals("anotherVariableName", variableInstance.getName());
-        assertEquals(999, variableInstance.getValue());
+        assertThat(variableInstance.getName()).isEqualTo("anotherVariableName");
+        assertThat(variableInstance.getValue()).isEqualTo(999);
       } else {
         fail("Unexpected variable: " + variableInstance.getName());
       }
@@ -377,7 +374,7 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
         .create();
 
     // then
-    assertNotNull(caseInstance);
+    assertThat(caseInstance).isNotNull();
 
     // there should exist two variables
     VariableInstanceQuery query = runtimeService.createVariableInstanceQuery();
@@ -388,16 +385,17 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
       .asc()
       .list();
 
-    assertFalse(result.isEmpty());
-    assertEquals(2, result.size());
+    assertThat(result)
+            .isNotEmpty()
+            .hasSize(2);
 
     for (VariableInstance variableInstance : result) {
       if (variableInstance.getName().equals("aVariableName")) {
-        assertEquals("aVariableName", variableInstance.getName());
-        assertEquals("aVariableValue", variableInstance.getValue());
+        assertThat(variableInstance.getName()).isEqualTo("aVariableName");
+        assertThat(variableInstance.getValue()).isEqualTo("aVariableValue");
       } else if (variableInstance.getName().equals("anotherVariableName")) {
-        assertEquals("anotherVariableName", variableInstance.getName());
-        assertEquals(999, variableInstance.getValue());
+        assertThat(variableInstance.getName()).isEqualTo("anotherVariableName");
+        assertThat(variableInstance.getValue()).isEqualTo(999);
       } else {
         fail("Unexpected variable: " + variableInstance.getName());
       }
@@ -508,14 +506,14 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
         .activityId("PI_HumanTask_1")
         .singleResult();
 
-    assertNull(caseExecution);
+    assertThat(caseExecution).isNull();
 
     CaseInstance caseInstance = caseService
         .createCaseInstanceQuery()
         .singleResult();
 
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isCompleted());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isCompleted()).isTrue();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneStageCase.cmmn"})
@@ -563,14 +561,14 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
         .activityId("PI_Stage_1")
         .singleResult();
 
-    assertNull(caseExecution3);
+    assertThat(caseExecution3).isNull();
 
     CaseInstance caseInstance = caseService
         .createCaseInstanceQuery()
         .singleResult();
 
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isCompleted());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isCompleted()).isTrue();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -603,16 +601,16 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
         .activityId("PI_HumanTask_1")
         .singleResult();
 
-    assertNotNull(caseExecution);
-    assertTrue(caseExecution.isActive());
+    assertThat(caseExecution).isNotNull();
+    assertThat(caseExecution.isActive()).isTrue();
 
     // the case instance is still active
     CaseInstance caseInstance = caseService
         .createCaseInstanceQuery()
         .singleResult();
 
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isActive());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isActive()).isTrue();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneStageCase.cmmn"})
@@ -631,12 +629,6 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
        .create()
        .getId();
 
-    String caseExecutionId = caseService
-        .createCaseExecutionQuery()
-        .activityId("PI_Stage_1")
-        .singleResult()
-        .getId();
-
     CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution(caseInstanceId);
 
     // when
@@ -651,16 +643,16 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
         .activityId("PI_Stage_1")
         .singleResult();
 
-    assertNotNull(caseExecution);
-    assertTrue(caseExecution.isActive());
+    assertThat(caseExecution).isNotNull();
+    assertThat(caseExecution.isActive()).isTrue();
 
     // the case instance is still active
     CaseInstance caseInstance = caseService
         .createCaseInstanceQuery()
         .singleResult();
 
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isActive());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isActive()).isTrue();
   }
 
 
@@ -685,8 +677,8 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
       .completed()
       .singleResult();
 
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isCompleted());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isCompleted()).isTrue();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -715,8 +707,8 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
       .createCaseInstanceQuery()
       .singleResult();
 
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isActive());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isActive()).isTrue();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn"})
@@ -755,7 +747,7 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
       .createCaseInstanceQuery()
       .singleResult();
 
-    assertNull(caseInstance);
+    assertThat(caseInstance).isNull();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -771,19 +763,19 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
        .withCaseDefinition(caseDefinitionId)
        .create()
        .getId();
- 
-    assertNotNull(queryCaseExecutionByActivityId("CasePlanModel_1"));
+
+    assertThat(queryCaseExecutionByActivityId("CasePlanModel_1")).isNotNull();
     
     CaseExecution taskExecution = queryCaseExecutionByActivityId("PI_HumanTask_1");
-    assertTrue(taskExecution.isActive());
+    assertThat(taskExecution.isActive()).isTrue();
 
     caseService.withCaseExecution(caseInstanceId)
       .terminate();
 
     CaseExecution caseInstance = queryCaseExecutionByActivityId("CasePlanModel_1");
-    assertTrue(caseInstance.isTerminated());
-    
-    assertNull(queryCaseExecutionByActivityId("PI_HumanTask_1"));
+    assertThat(caseInstance.isTerminated()).isTrue();
+
+    assertThat(queryCaseExecutionByActivityId("PI_HumanTask_1")).isNull();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn"})
@@ -799,11 +791,11 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
        .withCaseDefinition(caseDefinitionId)
        .create()
        .getId();
- 
-    assertNotNull(queryCaseExecutionByActivityId("CasePlanModel_1"));
+
+    assertThat(queryCaseExecutionByActivityId("CasePlanModel_1")).isNotNull();
     
     CaseExecution taskExecution = queryCaseExecutionByActivityId("PI_HumanTask_1");
-    assertTrue(taskExecution.isEnabled());
+    assertThat(taskExecution.isEnabled()).isTrue();
 
     caseService.completeCaseExecution(caseInstanceId);
 
@@ -813,7 +805,7 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
       fail("It should not be possible to terminate a task.");
     } catch (NotAllowedException e) {
       boolean result = e.getMessage().contains("The case execution must be in state 'active' to terminate");
-      assertTrue(result);
+      assertThat(result).isTrue();
     }
   }
 
@@ -830,18 +822,18 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
        .withCaseDefinition(caseDefinitionId)
        .create()
        .getId();
- 
-    assertNotNull(queryCaseExecutionByActivityId("CasePlanModel_1"));
+
+    assertThat(queryCaseExecutionByActivityId("CasePlanModel_1")).isNotNull();
     
     CaseExecution taskExecution = queryCaseExecutionByActivityId("PI_HumanTask_1");
-    assertTrue(taskExecution.isActive());
+    assertThat(taskExecution.isActive()).isTrue();
 
     caseService.terminateCaseExecution(caseInstanceId);
 
     CaseExecution caseInstance = queryCaseExecutionByActivityId("CasePlanModel_1");
-    assertTrue(caseInstance.isTerminated());
-    
-    assertNull(queryCaseExecutionByActivityId("PI_HumanTask_1"));
+    assertThat(caseInstance.isTerminated()).isTrue();
+
+    assertThat(queryCaseExecutionByActivityId("PI_HumanTask_1")).isNull();
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -857,14 +849,14 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
     CaseInstance caseInstance = caseService.createCaseInstanceByKey("oneTaskCase");
 
     // then
-    assertNotNull(caseInstance);
+    assertThat(caseInstance).isNotNull();
 
     // check properties
-    assertNull(caseInstance.getBusinessKey());
-    assertEquals(caseDefinitionId, caseInstance.getCaseDefinitionId());
-    assertEquals(caseInstance.getId(), caseInstance.getCaseInstanceId());
-    assertTrue(caseInstance.isActive());
-    assertFalse(caseInstance.isEnabled());
+    assertThat(caseInstance.getBusinessKey()).isNull();
+    assertThat(caseInstance.getCaseDefinitionId()).isEqualTo(caseDefinitionId);
+    assertThat(caseInstance.getCaseInstanceId()).isEqualTo(caseInstance.getId());
+    assertThat(caseInstance.isActive()).isTrue();
+    assertThat(caseInstance.isEnabled()).isFalse();
 
     // get persisted case instance
     CaseInstance instance = caseService
@@ -872,12 +864,12 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
       .singleResult();
 
     // should have the same properties
-    assertEquals(caseInstance.getId(), instance.getId());
-    assertEquals(caseInstance.getBusinessKey(), instance.getBusinessKey());
-    assertEquals(caseInstance.getCaseDefinitionId(), instance.getCaseDefinitionId());
-    assertEquals(caseInstance.getCaseInstanceId(), instance.getCaseInstanceId());
-    assertEquals(caseInstance.isActive(), instance.isActive());
-    assertEquals(caseInstance.isEnabled(), instance.isEnabled());
+    assertThat(instance.getId()).isEqualTo(caseInstance.getId());
+    assertThat(instance.getBusinessKey()).isEqualTo(caseInstance.getBusinessKey());
+    assertThat(instance.getCaseDefinitionId()).isEqualTo(caseInstance.getCaseDefinitionId());
+    assertThat(instance.getCaseInstanceId()).isEqualTo(caseInstance.getCaseInstanceId());
+    assertThat(instance.isActive()).isEqualTo(caseInstance.isActive());
+    assertThat(instance.isEnabled()).isEqualTo(caseInstance.isEnabled());
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -893,14 +885,14 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
     CaseInstance caseInstance = caseService.createCaseInstanceById(caseDefinitionId);
 
     // then
-    assertNotNull(caseInstance);
+    assertThat(caseInstance).isNotNull();
 
     // check properties
-    assertNull(caseInstance.getBusinessKey());
-    assertEquals(caseDefinitionId, caseInstance.getCaseDefinitionId());
-    assertEquals(caseInstance.getId(), caseInstance.getCaseInstanceId());
-    assertTrue(caseInstance.isActive());
-    assertFalse(caseInstance.isEnabled());
+    assertThat(caseInstance.getBusinessKey()).isNull();
+    assertThat(caseInstance.getCaseDefinitionId()).isEqualTo(caseDefinitionId);
+    assertThat(caseInstance.getCaseInstanceId()).isEqualTo(caseInstance.getId());
+    assertThat(caseInstance.isActive()).isTrue();
+    assertThat(caseInstance.isEnabled()).isFalse();
 
     // get persisted case instance
     CaseInstance instance = caseService
@@ -908,12 +900,12 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
       .singleResult();
 
     // should have the same properties
-    assertEquals(caseInstance.getId(), instance.getId());
-    assertEquals(caseInstance.getBusinessKey(), instance.getBusinessKey());
-    assertEquals(caseInstance.getCaseDefinitionId(), instance.getCaseDefinitionId());
-    assertEquals(caseInstance.getCaseInstanceId(), instance.getCaseInstanceId());
-    assertEquals(caseInstance.isActive(), instance.isActive());
-    assertEquals(caseInstance.isEnabled(), instance.isEnabled());
+    assertThat(instance.getId()).isEqualTo(caseInstance.getId());
+    assertThat(instance.getBusinessKey()).isEqualTo(caseInstance.getBusinessKey());
+    assertThat(instance.getCaseDefinitionId()).isEqualTo(caseInstance.getCaseDefinitionId());
+    assertThat(instance.getCaseInstanceId()).isEqualTo(caseInstance.getCaseInstanceId());
+    assertThat(instance.isActive()).isEqualTo(caseInstance.isActive());
+    assertThat(instance.isEnabled()).isEqualTo(caseInstance.isEnabled());
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -929,14 +921,14 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
     CaseInstance caseInstance = caseService.createCaseInstanceByKey("oneTaskCase", "aBusinessKey");
 
     // then
-    assertNotNull(caseInstance);
+    assertThat(caseInstance).isNotNull();
 
     // check properties
-    assertEquals("aBusinessKey", caseInstance.getBusinessKey());
-    assertEquals(caseDefinitionId, caseInstance.getCaseDefinitionId());
-    assertEquals(caseInstance.getId(), caseInstance.getCaseInstanceId());
-    assertTrue(caseInstance.isActive());
-    assertFalse(caseInstance.isEnabled());
+    assertThat(caseInstance.getBusinessKey()).isEqualTo("aBusinessKey");
+    assertThat(caseInstance.getCaseDefinitionId()).isEqualTo(caseDefinitionId);
+    assertThat(caseInstance.getCaseInstanceId()).isEqualTo(caseInstance.getId());
+    assertThat(caseInstance.isActive()).isTrue();
+    assertThat(caseInstance.isEnabled()).isFalse();
 
     // get persisted case instance
     CaseInstance instance = caseService
@@ -944,12 +936,12 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
       .singleResult();
 
     // should have the same properties
-    assertEquals(caseInstance.getId(), instance.getId());
-    assertEquals(caseInstance.getBusinessKey(), instance.getBusinessKey());
-    assertEquals(caseInstance.getCaseDefinitionId(), instance.getCaseDefinitionId());
-    assertEquals(caseInstance.getCaseInstanceId(), instance.getCaseInstanceId());
-    assertEquals(caseInstance.isActive(), instance.isActive());
-    assertEquals(caseInstance.isEnabled(), instance.isEnabled());
+    assertThat(instance.getId()).isEqualTo(caseInstance.getId());
+    assertThat(instance.getBusinessKey()).isEqualTo(caseInstance.getBusinessKey());
+    assertThat(instance.getCaseDefinitionId()).isEqualTo(caseInstance.getCaseDefinitionId());
+    assertThat(instance.getCaseInstanceId()).isEqualTo(caseInstance.getCaseInstanceId());
+    assertThat(instance.isActive()).isEqualTo(caseInstance.isActive());
+    assertThat(instance.isEnabled()).isEqualTo(caseInstance.isEnabled());
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -965,14 +957,14 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
     CaseInstance caseInstance = caseService.createCaseInstanceById(caseDefinitionId, "aBusinessKey");
 
     // then
-    assertNotNull(caseInstance);
+    assertThat(caseInstance).isNotNull();
 
     // check properties
-    assertEquals("aBusinessKey", caseInstance.getBusinessKey());
-    assertEquals(caseDefinitionId, caseInstance.getCaseDefinitionId());
-    assertEquals(caseInstance.getId(), caseInstance.getCaseInstanceId());
-    assertTrue(caseInstance.isActive());
-    assertFalse(caseInstance.isEnabled());
+    assertThat(caseInstance.getBusinessKey()).isEqualTo("aBusinessKey");
+    assertThat(caseInstance.getCaseDefinitionId()).isEqualTo(caseDefinitionId);
+    assertThat(caseInstance.getCaseInstanceId()).isEqualTo(caseInstance.getId());
+    assertThat(caseInstance.isActive()).isTrue();
+    assertThat(caseInstance.isEnabled()).isFalse();
 
     // get persisted case instance
     CaseInstance instance = caseService
@@ -980,12 +972,12 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
       .singleResult();
 
     // should have the same properties
-    assertEquals(caseInstance.getId(), instance.getId());
-    assertEquals(caseInstance.getBusinessKey(), instance.getBusinessKey());
-    assertEquals(caseInstance.getCaseDefinitionId(), instance.getCaseDefinitionId());
-    assertEquals(caseInstance.getCaseInstanceId(), instance.getCaseInstanceId());
-    assertEquals(caseInstance.isActive(), instance.isActive());
-    assertEquals(caseInstance.isEnabled(), instance.isEnabled());
+    assertThat(instance.getId()).isEqualTo(caseInstance.getId());
+    assertThat(instance.getBusinessKey()).isEqualTo(caseInstance.getBusinessKey());
+    assertThat(instance.getCaseDefinitionId()).isEqualTo(caseInstance.getCaseDefinitionId());
+    assertThat(instance.getCaseInstanceId()).isEqualTo(caseInstance.getCaseInstanceId());
+    assertThat(instance.isActive()).isEqualTo(caseInstance.isActive());
+    assertThat(instance.isEnabled()).isEqualTo(caseInstance.isEnabled());
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -999,16 +991,16 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
     CaseInstance caseInstance = caseService.createCaseInstanceByKey("oneTaskCase", variables);
 
     // then
-    assertNotNull(caseInstance);
+    assertThat(caseInstance).isNotNull();
 
     VariableInstance variable = runtimeService.createVariableInstanceQuery()
       .caseInstanceIdIn(caseInstance.getId())
       .singleResult();
 
-    assertNotNull(variable);
-    assertEquals("aVariable", variable.getName());
-    assertEquals("aValue", variable.getValue());
-    assertEquals(caseInstance.getId(), variable.getCaseInstanceId());
+    assertThat(variable).isNotNull();
+    assertThat(variable.getName()).isEqualTo("aVariable");
+    assertThat(variable.getValue()).isEqualTo("aValue");
+    assertThat(variable.getCaseInstanceId()).isEqualTo(caseInstance.getId());
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -1026,15 +1018,15 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
     CaseInstance caseInstance = caseService.createCaseInstanceById(caseDefinitionId, variables);
 
     // then
-    assertNotNull(caseInstance);
+    assertThat(caseInstance).isNotNull();
 
     VariableInstance variable = runtimeService.createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstance.getId())
         .singleResult();
 
-    assertNotNull(variable);
-    assertEquals("aVariable", variable.getName());
-    assertEquals("aValue", variable.getValue());
+    assertThat(variable).isNotNull();
+    assertThat(variable.getName()).isEqualTo("aVariable");
+    assertThat(variable.getValue()).isEqualTo("aValue");
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -1048,13 +1040,13 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
     CaseInstance caseInstance = caseService.createCaseInstanceByKey("oneTaskCase", "aBusinessKey", variables);
 
     // then
-    assertNotNull(caseInstance);
+    assertThat(caseInstance).isNotNull();
 
-    assertEquals("aBusinessKey", caseInstance.getBusinessKey());
-    assertEquals(1, runtimeService.createVariableInstanceQuery()
+    assertThat(caseInstance.getBusinessKey()).isEqualTo("aBusinessKey");
+    assertThat(runtimeService.createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstance.getId())
         .variableValueEquals("aVariable", "aValue")
-        .count());
+        .count()).isEqualTo(1);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -1072,13 +1064,13 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
     CaseInstance caseInstance = caseService.createCaseInstanceById(caseDefinitionId, "aBusinessKey", variables);
 
     // then
-    assertNotNull(caseInstance);
+    assertThat(caseInstance).isNotNull();
 
-    assertEquals("aBusinessKey", caseInstance.getBusinessKey());
-    assertEquals(1, runtimeService.createVariableInstanceQuery()
+    assertThat(caseInstance.getBusinessKey()).isEqualTo("aBusinessKey");
+    assertThat(runtimeService.createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstance.getId())
         .variableValueEquals("aVariable", "aValue")
-        .count());
+        .count()).isEqualTo(1);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn"})
@@ -1115,7 +1107,7 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
       .createCaseInstanceQuery()
       .singleResult();
 
-    assertNull(caseInstance);
+    assertThat(caseInstance).isNull();
   }
 
   protected CaseExecution queryCaseExecutionByActivityId(String activityId) {

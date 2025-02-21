@@ -20,9 +20,7 @@ import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnM
 import static org.operaton.bpm.engine.test.bpmn.event.conditional.AbstractConditionalEventTestCase.CONDITIONAL_EVENT_PROCESS_KEY;
 import static org.operaton.bpm.engine.test.bpmn.event.conditional.AbstractConditionalEventTestCase.CONDITIONAL_MODEL;
 import static org.operaton.bpm.engine.test.bpmn.event.conditional.AbstractConditionalEventTestCase.TASK_WITH_CONDITION_ID;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
@@ -54,8 +52,8 @@ public class OnlyDispatchVariableEventOnExistingConditionsTest {
 
       //then variable events should be delayed
       List<DelayedVariableEvent> delayedEvents = ((ExecutionEntity) execution).getDelayedEvents();
-      assertEquals(1, delayedEvents.size());
-      assertEquals("v", delayedEvents.get(0).getEvent().getVariableInstance().getName());
+      assertThat(delayedEvents).hasSize(1);
+      assertThat(delayedEvents.get(0).getEvent().getVariableInstance().getName()).isEqualTo("v");
     }
   }
 
@@ -69,7 +67,7 @@ public class OnlyDispatchVariableEventOnExistingConditionsTest {
 
       //then no variable events should be delayed
       List<DelayedVariableEvent> delayedEvents = ((ExecutionEntity) execution).getDelayedEvents();
-      assertEquals(0, delayedEvents.size());
+      assertThat(delayedEvents).isEmpty();
     }
   }
 
@@ -96,8 +94,9 @@ public class OnlyDispatchVariableEventOnExistingConditionsTest {
 
     //then process definition contains property which indicates that conditional events exists
     Object property = processInstance.getExecutionEntity().getProcessDefinition().getProperty(BpmnParse.PROPERTYNAME_HAS_CONDITIONAL_EVENTS);
-    assertNotNull(property);
-    assertEquals(Boolean.TRUE, property);
+    assertThat(property)
+            .isNotNull()
+            .isEqualTo(Boolean.TRUE);
   }
 
   @Test
@@ -125,8 +124,9 @@ public class OnlyDispatchVariableEventOnExistingConditionsTest {
 
     //then process definition contains property which indicates that conditional events exists
     Object property = processInstance.getExecutionEntity().getProcessDefinition().getProperty(BpmnParse.PROPERTYNAME_HAS_CONDITIONAL_EVENTS);
-    assertNotNull(property);
-    assertEquals(Boolean.TRUE, property);
+    assertThat(property)
+            .isNotNull()
+            .isEqualTo(Boolean.TRUE);
   }
 
   @Test
@@ -156,8 +156,9 @@ public class OnlyDispatchVariableEventOnExistingConditionsTest {
 
     //then process definition contains property which indicates that conditional events exists
     Object property = processInstance.getExecutionEntity().getProcessDefinition().getProperty(BpmnParse.PROPERTYNAME_HAS_CONDITIONAL_EVENTS);
-    assertNotNull(property);
-    assertEquals(Boolean.TRUE, property);
+    assertThat(property)
+            .isNotNull()
+            .isEqualTo(Boolean.TRUE);
   }
 
   @Test
@@ -177,6 +178,6 @@ public class OnlyDispatchVariableEventOnExistingConditionsTest {
 
     //then process definition contains no property which indicates that conditional events exists
     Object property = processInstance.getExecutionEntity().getProcessDefinition().getProperty(BpmnParse.PROPERTYNAME_HAS_CONDITIONAL_EVENTS);
-    assertNull(property);
+    assertThat(property).isNull();
   }
 }

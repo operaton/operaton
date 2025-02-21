@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.test.standalone.pvm;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 
@@ -64,12 +62,12 @@ public class PvmScopeWaitStateTest {
     processInstance.start();
 
     PvmExecution execution = processInstance.findExecution("scopedWait");
-    assertNotNull(execution);
+    assertThat(execution).isNotNull();
 
     execution.signal(null, null);
 
-    assertEquals(new ArrayList<String>(), processInstance.findActiveActivityIds());
-    assertTrue(processInstance.isEnded());
+    assertThat(processInstance.findActiveActivityIds()).isEqualTo(new ArrayList<String>());
+    assertThat(processInstance.isEnded()).isTrue();
   }
 
 }

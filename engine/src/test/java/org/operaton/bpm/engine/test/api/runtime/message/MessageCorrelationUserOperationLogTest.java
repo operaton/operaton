@@ -175,7 +175,7 @@ public class MessageCorrelationUserOperationLogTest {
     identityService.setAuthenticatedUserId(USER_ID);
 
     // when
-    List<MessageCorrelationResult> correlationResult = runtimeService.createMessageCorrelation(INTERMEDIATE_MESSAGE_NAME).correlateAllWithResult();
+    runtimeService.createMessageCorrelation(INTERMEDIATE_MESSAGE_NAME).correlateAllWithResult();
 
     // then
     String processInstanceId = processInstance.getId();
@@ -246,8 +246,10 @@ public class MessageCorrelationUserOperationLogTest {
     runtimeService.startProcessInstanceByKey(SINGLE_INTERMEDIATE_MESSAGE_PROCESS).getId();
     identityService.setAuthenticatedUserId(USER_ID);
 
+    var messageCorrelationBuilder = runtimeService.createMessageCorrelation(INTERMEDIATE_MESSAGE_NAME);
+
     // when
-    assertThatThrownBy(() -> runtimeService.createMessageCorrelation(INTERMEDIATE_MESSAGE_NAME).correlateAll())
+    assertThatThrownBy(messageCorrelationBuilder::correlateAll)
 
     // then
     .isInstanceOf(ProcessEngineException.class)

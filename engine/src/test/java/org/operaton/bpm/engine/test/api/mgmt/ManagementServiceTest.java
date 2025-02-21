@@ -16,14 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -58,7 +51,6 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Test;
 
 
@@ -84,7 +76,7 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
   @Test
   public void testGetMetaDataForUnexistingTable() {
     TableMetaData metaData = managementService.getTableMetaData("unexistingtable");
-    assertNull(metaData);
+    assertThat(metaData).isNull();
   }
 
   @Test
@@ -129,10 +121,11 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
         .processInstanceId(processInstance.getId())
         .singleResult();
 
-    assertNotNull("No job found for process instance", timerJob);
+    assertThat(timerJob).as("No job found for process instance").isNotNull();
+    var timerJobId = timerJob.getId();
 
     try {
-      managementService.executeJob(timerJob.getId());
+      managementService.executeJob(timerJobId);
       fail("RuntimeException from within the script task expected");
     } catch (RuntimeException re) {
       testRule.assertTextPresent("This is an exception thrown from scriptTask", re.getMessage());
@@ -143,13 +136,13 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
         .processInstanceId(processInstance.getId())
         .singleResult();
 
-    Assert.assertNotNull(timerJob);
-    Assert.assertNotNull(timerJob.getExceptionMessage());
+    assertThat(timerJob).isNotNull();
+    assertThat(timerJob.getExceptionMessage()).isNotNull();
     testRule.assertTextPresent("This is an exception thrown from scriptTask", timerJob.getExceptionMessage());
 
     // Get the full stacktrace using the managementService
     String exceptionStack = managementService.getJobExceptionStacktrace(timerJob.getId());
-    Assert.assertNotNull(exceptionStack);
+    assertThat(exceptionStack).isNotNull();
     testRule.assertTextPresent("This is an exception thrown from scriptTask", exceptionStack);
   }
 
@@ -184,15 +177,15 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
         .processInstanceId(processInstance.getId())
         .singleResult();
 
-    assertNotNull("No job found for process instance", timerJob);
-    assertEquals(JobEntity.DEFAULT_RETRIES, timerJob.getRetries());
+    assertThat(timerJob).as("No job found for process instance").isNotNull();
+    assertThat(timerJob.getRetries()).isEqualTo(JobEntity.DEFAULT_RETRIES);
 
     managementService.setJobRetries(timerJob.getId(), 5);
 
     timerJob = managementService.createJobQuery()
         .processInstanceId(processInstance.getId())
         .singleResult();
-    assertEquals(5, timerJob.getRetries());
+    assertThat(timerJob.getRetries()).isEqualTo(5);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/ManagementServiceTest.testGetJobExceptionStacktrace.bpmn20.xml"})
@@ -220,9 +213,10 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
   @Test
   public void shouldThrowExceptionOnSetJobRetriesWithNoJobReference() {
     // given
+    var setJobRetriesBuilder = managementService.setJobRetries(5);
 
     // when/then
-    assertThatThrownBy(() -> managementService.setJobRetries(5).execute())
+    assertThatThrownBy(setJobRetriesBuilder::execute)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("052")
       .hasMessageContaining("You must specify exactly one of jobId, jobIds or jobDefinitionId as parameter.");
@@ -409,7 +403,7 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
   public void testSetJobRetriesNullCreatesIncident() {
 
     // initially there is no incident
-    assertEquals(0, runtimeService.createIncidentQuery().count());
+    assertThat(runtimeService.createIncidentQuery().count()).isZero();
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exceptionInJobExecution");
 
@@ -419,17 +413,17 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
         .processInstanceId(processInstance.getId())
         .singleResult();
 
-    assertNotNull("No job found for process instance", timerJob);
-    assertEquals(JobEntity.DEFAULT_RETRIES, timerJob.getRetries());
+    assertThat(timerJob).as("No job found for process instance").isNotNull();
+    assertThat(timerJob.getRetries()).isEqualTo(JobEntity.DEFAULT_RETRIES);
 
     managementService.setJobRetries(timerJob.getId(), 0);
 
     timerJob = managementService.createJobQuery()
         .processInstanceId(processInstance.getId())
         .singleResult();
-    assertEquals(0, timerJob.getRetries());
+    assertThat(timerJob.getRetries()).isZero();
 
-    assertEquals(1, runtimeService.createIncidentQuery().count());
+    assertThat(runtimeService.createIncidentQuery().count()).isEqualTo(1);
 
   }
 
@@ -472,13 +466,13 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
 
     Job timerJob = query.singleResult();
 
-    assertNotNull("No job found for process instance", timerJob);
-    assertEquals(0, timerJob.getRetries());
+    assertThat(timerJob).as("No job found for process instance").isNotNull();
+    assertThat(timerJob.getRetries()).isZero();
 
     managementService.setJobRetriesByJobDefinitionId(jobDefinition.getId(), 5);
 
     timerJob = query.singleResult();
-    assertEquals(5, timerJob.getRetries());
+    assertThat(timerJob.getRetries()).isEqualTo(5);
   }
 
   @Test
@@ -509,10 +503,10 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
 
     // then the job can be picked up again
     job = (JobEntity) managementService.createJobQuery().singleResult();
-    assertNotNull(job);
-    assertNull(job.getLockOwner());
-    assertNull(job.getLockExpirationTime());
-    assertEquals(3, job.getRetries());
+    assertThat(job).isNotNull();
+    assertThat(job.getLockOwner()).isNull();
+    assertThat(job.getLockExpirationTime()).isNull();
+    assertThat(job.getRetries()).isEqualTo(3);
 
     deleteJobAndIncidents(job);
 
@@ -526,10 +520,10 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
 
     // then the job can be picked up again
     job = (JobEntity) managementService.createJobQuery().singleResult();
-    assertNotNull(job);
-    assertNull(job.getLockOwner());
-    assertNull(job.getLockExpirationTime());
-    assertEquals(3, job.getRetries());
+    assertThat(job).isNotNull();
+    assertThat(job.getLockOwner()).isNull();
+    assertThat(job.getLockExpirationTime()).isNull();
+    assertThat(job.getRetries()).isEqualTo(3);
 
     deleteJobAndIncidents(job);
 
@@ -543,10 +537,10 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
 
     // then the lock owner and expiration should not change
     job = (JobEntity) managementService.createJobQuery().singleResult();
-    assertNotNull(job);
-    assertNotNull(job.getLockOwner());
-    assertNotNull(job.getLockExpirationTime());
-    assertEquals(3, job.getRetries());
+    assertThat(job).isNotNull();
+    assertThat(job.getLockOwner()).isNotNull();
+    assertThat(job.getLockExpirationTime()).isNotNull();
+    assertThat(job.getRetries()).isEqualTo(3);
 
     deleteJobAndIncidents(job);
   }
@@ -595,10 +589,10 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
 
     // then the job can be picked up again
     JobEntity job = (JobEntity) managementService.createJobQuery().singleResult();
-    assertNotNull(job);
-    assertNull(job.getLockOwner());
-    assertNull(job.getLockExpirationTime());
-    assertEquals(3, job.getRetries());
+    assertThat(job).isNotNull();
+    assertThat(job.getLockOwner()).isNull();
+    assertThat(job.getLockExpirationTime()).isNull();
+    assertThat(job.getRetries()).isEqualTo(3);
 
     deleteJobAndIncidents(job);
   }
@@ -649,11 +643,11 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("timerOnTask");
     Job timerJob = managementService.createJobQuery().processInstanceId(processInstance.getId()).singleResult();
 
-    assertNotNull("Task timer should be there", timerJob);
+    assertThat(timerJob).as("Task timer should be there").isNotNull();
     managementService.deleteJob(timerJob.getId());
 
     timerJob = managementService.createJobQuery().processInstanceId(processInstance.getId()).singleResult();
-    assertNull("There should be no job now. It was deleted", timerJob);
+    assertThat(timerJob).as("There should be no job now. It was deleted").isNull();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/timerOnTask.bpmn20.xml"})
@@ -663,6 +657,7 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("timerOnTask");
     Job timerJob = managementService.createJobQuery().processInstanceId(processInstance.getId()).singleResult();
+    var timerJobId = timerJob.getId();
 
     // We need to move time at least one hour to make the timer executable
     ClockUtil.setCurrentTime(new Date(ClockUtil.getCurrentTime().getTime() + 7200000L));
@@ -676,8 +671,8 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
 
     // Try to delete the job. This should fail.
     try {
-      managementService.deleteJob(timerJob.getId());
-      fail();
+      managementService.deleteJob(timerJobId);
+      fail("Exception expected");
     } catch (ProcessEngineException e) {
       // Exception is expected
     }
@@ -697,8 +692,8 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
         .processInstanceId(processInstance.getId())
         .singleResult();
 
-    assertNotNull("No job found for process instance", timerJob);
-    assertNotNull(timerJob.getDuedate());
+    assertThat(timerJob).as("No job found for process instance").isNotNull();
+    assertThat(timerJob.getDuedate()).isNotNull();
 
     Calendar cal = Calendar.getInstance();
     cal.setTime(new Date());
@@ -711,8 +706,7 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
 
     // normalize date for mysql dropping fractional seconds in time values
     int SECOND = 1000;
-    assertEquals((cal.getTime().getTime() / SECOND) * SECOND,
-        (newTimerJob.getDuedate().getTime() / SECOND) * SECOND);
+    assertThat((newTimerJob.getDuedate().getTime() / SECOND) * SECOND).isEqualTo((cal.getTime().getTime() / SECOND) * SECOND);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/ManagementServiceTest.testGetJobExceptionStacktrace.bpmn20.xml"})
@@ -726,8 +720,8 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
         .processInstanceId(processInstance.getId())
         .singleResult();
 
-    assertNotNull("No job found for process instance", timerJob);
-    assertNotNull(timerJob.getDuedate());
+    assertThat(timerJob).as("No job found for process instance").isNotNull();
+    assertThat(timerJob.getDuedate()).isNotNull();
 
     managementService.setJobDuedate(timerJob.getId(), null);
 
@@ -735,14 +729,15 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
         .processInstanceId(processInstance.getId())
         .singleResult();
 
-    assertNull(timerJob.getDuedate());
+    assertThat(timerJob.getDuedate()).isNull();
   }
 
 
   @Test
   public void testSetJobDuedateJobIdNull() {
+    Date duedate = new Date();
     try {
-      managementService.setJobDuedate(null, new Date());
+      managementService.setJobDuedate(null, duedate);
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException re) {
       testRule.assertTextPresent("The job id is mandatory, but 'null' has been provided.", re.getMessage());
@@ -751,8 +746,9 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
 
   @Test
   public void testSetJobDuedateEmptyJobId() {
+    Date duedate = new Date();
     try {
-      managementService.setJobDuedate("", new Date());
+      managementService.setJobDuedate("", duedate);
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException re) {
       testRule.assertTextPresent("The job id is mandatory, but '' has been provided.", re.getMessage());
@@ -761,8 +757,9 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
 
   @Test
   public void testSetJobDuedateUnexistingJobId() {
+    Date duedate = new Date();
     try {
-      managementService.setJobDuedate("unexistingjob", new Date());
+      managementService.setJobDuedate("unexistingjob", duedate);
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException re) {
       testRule.assertTextPresent("No job found with id 'unexistingjob'.", re.getMessage());
@@ -774,17 +771,18 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
   public void testSetJobDuedateNonTimerJob(){
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Job job = managementService.createJobQuery().processDefinitionKey("oneTaskProcess").singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     managementService.setJobDuedate(job.getId(), new Date());
     job = managementService.createJobQuery().processDefinitionKey("oneTaskProcess").singleResult();
-    assertNotNull(job.getDuedate());
+    assertThat(job.getDuedate()).isNotNull();
   }
 
   @Test
   public void testGetProperties() {
     Map<String, String> properties = managementService.getProperties();
-    assertNotNull(properties);
-    assertFalse(properties.isEmpty());
+    assertThat(properties)
+            .isNotNull()
+            .isNotEmpty();
   }
 
   @Test
@@ -794,9 +792,9 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
     managementService.setProperty(name, value);
 
     Map<String, String> properties = managementService.getProperties();
-    assertTrue(properties.containsKey(name));
+    assertThat(properties).containsKey(name);
     String storedValue = properties.get(name);
-    assertEquals(value, storedValue);
+    assertThat(storedValue).isEqualTo(value);
 
     managementService.deleteProperty(name);
   }
@@ -808,27 +806,26 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
     managementService.setProperty(name, value);
 
     Map<String, String> properties = managementService.getProperties();
-    assertTrue(properties.containsKey(name));
+    assertThat(properties).containsKey(name);
     String storedValue = properties.get(name);
-    assertEquals(value, storedValue);
+    assertThat(storedValue).isEqualTo(value);
 
     managementService.deleteProperty(name);
     properties = managementService.getProperties();
-    assertFalse(properties.containsKey(name));
+    assertThat(properties.containsKey(name)).isFalse();
 
   }
 
   @Test
   public void testDeleteNonexistingProperty() {
-
-    managementService.deleteProperty("non existing");
-
+    assertThatCode(() -> managementService.deleteProperty("non existing"))
+      .doesNotThrowAnyException();
   }
 
   @Test
   public void testGetHistoryLevel() {
     int historyLevel = managementService.getHistoryLevel();
-    assertEquals(processEngineConfiguration.getHistoryLevel().getId(), historyLevel);
+    assertThat(historyLevel).isEqualTo(processEngineConfiguration.getHistoryLevel().getId());
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/asyncTaskProcess.bpmn20.xml")
@@ -848,7 +845,7 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
     // then
     job = managementService.createJobQuery().singleResult();
 
-    assertEquals(42, job.getPriority());
+    assertThat(job.getPriority()).isEqualTo(42);
   }
 
   @Test
@@ -884,12 +881,12 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
     // it is possible to set the max integer value
     managementService.setJobPriority(job.getId(), Long.MAX_VALUE);
     job = managementService.createJobQuery().singleResult();
-    assertEquals(Long.MAX_VALUE, job.getPriority());
+    assertThat(job.getPriority()).isEqualTo(Long.MAX_VALUE);
 
     // it is possible to set the min integer value
     managementService.setJobPriority(job.getId(), Long.MIN_VALUE + 1); // +1 for informix
     job = managementService.createJobQuery().singleResult();
-    assertEquals(Long.MIN_VALUE + 1, job.getPriority());
+    assertThat(job.getPriority()).isEqualTo(Long.MIN_VALUE + 1);
   }
 
   @Test
@@ -921,19 +918,19 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
         .tableName(tablePrefix + "ACT_RU_TASK")
         .listPage(0, 5);
 
-    assertEquals(0, tablePage.getFirstResult());
-    assertEquals(5, tablePage.getSize());
-    assertEquals(5, tablePage.getRows().size());
-    assertEquals(20, tablePage.getTotal());
+    assertThat(tablePage.getFirstResult()).isZero();
+    assertThat(tablePage.getSize()).isEqualTo(5);
+    assertThat(tablePage.getRows()).hasSize(5);
+    assertThat(tablePage.getTotal()).isEqualTo(20);
 
     tablePage = managementService.createTablePageQuery()
         .tableName(tablePrefix + "ACT_RU_TASK")
         .listPage(14, 10);
 
-    assertEquals(14, tablePage.getFirstResult());
-    assertEquals(6, tablePage.getSize());
-    assertEquals(6, tablePage.getRows().size());
-    assertEquals(20, tablePage.getTotal());
+    assertThat(tablePage.getFirstResult()).isEqualTo(14);
+    assertThat(tablePage.getSize()).isEqualTo(6);
+    assertThat(tablePage.getRows()).hasSize(6);
+    assertThat(tablePage.getTotal()).isEqualTo(20);
 
     taskService.deleteTasks(taskIds, true);
   }
@@ -982,7 +979,7 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
   }
 
   private void verifyTaskNames(String[] expectedTaskNames, List<Map<String, Object>> rowData) {
-    assertEquals(expectedTaskNames.length, rowData.size());
+    assertThat(rowData).hasSize(expectedTaskNames.length);
     String columnKey = "NAME_";
 
     for (int i = 0; i < expectedTaskNames.length; i++) {
@@ -990,7 +987,7 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
       if (o == null) {
         o = rowData.get(i).get(columnKey.toLowerCase());
       }
-      assertEquals(expectedTaskNames[i], o);
+      assertThat(o).isEqualTo(expectedTaskNames[i]);
     }
   }
 

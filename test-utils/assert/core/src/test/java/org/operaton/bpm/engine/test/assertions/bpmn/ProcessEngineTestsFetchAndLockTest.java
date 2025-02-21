@@ -27,7 +27,6 @@ import org.operaton.bpm.engine.externaltask.LockedExternalTask;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -58,12 +57,7 @@ public class ProcessEngineTestsFetchAndLockTest extends ProcessAssertTestCase {
     // When
     fetchAndLock("External_1", DEFAULT_WORKER_EXTERNAL_TASK, 1);
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(fetchAndLock("External_1", DEFAULT_WORKER_EXTERNAL_TASK, 1)).isNotEmpty();
-      }
-    });
+    expect(() -> assertThat(fetchAndLock("External_1", DEFAULT_WORKER_EXTERNAL_TASK, 1)).isNotEmpty());
   }
 
   @Test
@@ -72,12 +66,7 @@ public class ProcessEngineTestsFetchAndLockTest extends ProcessAssertTestCase {
     // Given
     getProcessInstanceStarted();
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        fetchAndLock(null, DEFAULT_WORKER_EXTERNAL_TASK, 1);
-      }
-    }, IllegalArgumentException.class);
+    expect(() -> fetchAndLock(null, DEFAULT_WORKER_EXTERNAL_TASK, 1), IllegalArgumentException.class);
   }
 
   @Test
@@ -86,12 +75,7 @@ public class ProcessEngineTestsFetchAndLockTest extends ProcessAssertTestCase {
     // Given
     getProcessInstanceStarted();
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        fetchAndLock("External_1", null, 1);
-      }
-    }, IllegalArgumentException.class);
+    expect(() -> fetchAndLock("External_1", null, 1), IllegalArgumentException.class);
   }
 
   private ProcessInstance getProcessInstanceStarted() {

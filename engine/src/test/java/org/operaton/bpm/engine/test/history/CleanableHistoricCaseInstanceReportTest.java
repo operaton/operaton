@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.history;
 
 import static junit.framework.TestCase.fail;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Date;
 import java.util.List;
@@ -95,7 +95,7 @@ public class CleanableHistoricCaseInstanceReportTest {
   private void prepareCaseInstances(String key, int daysInThePast, Integer historyTimeToLive, int instanceCount) {
     // update time to live
     List<CaseDefinition> caseDefinitions = repositoryService.createCaseDefinitionQuery().caseDefinitionKey(key).list();
-    assertEquals(1, caseDefinitions.size());
+    assertThat(caseDefinitions).hasSize(1);
     repositoryService.updateCaseDefinitionHistoryTimeToLive(caseDefinitions.get(0).getId(), historyTimeToLive);
 
     Date oldCurrentTime = ClockUtil.getCurrentTime();
@@ -111,8 +111,8 @@ public class CleanableHistoricCaseInstanceReportTest {
   }
 
   private void checkResultNumbers(CleanableHistoricCaseInstanceReportResult result, int expectedCleanable, int expectedFinished) {
-    assertEquals(expectedCleanable, result.getCleanableCaseInstanceCount());
-    assertEquals(expectedFinished, result.getFinishedCaseInstanceCount());
+    assertThat(result.getCleanableCaseInstanceCount()).isEqualTo(expectedCleanable);
+    assertThat(result.getFinishedCaseInstanceCount()).isEqualTo(expectedFinished);
   }
 
   @Test
@@ -125,8 +125,8 @@ public class CleanableHistoricCaseInstanceReportTest {
     long count = historyService.createCleanableHistoricCaseInstanceReport().count();
 
     // then
-    assertEquals(1, reportResults.size());
-    assertEquals(1, count);
+    assertThat(reportResults).hasSize(1);
+    assertThat(count).isEqualTo(1);
     checkResultNumbers(reportResults.get(0), 10, 10);
   }
 
@@ -140,7 +140,7 @@ public class CleanableHistoricCaseInstanceReportTest {
     List<CleanableHistoricCaseInstanceReportResult> reportResults = historyService.createCleanableHistoricCaseInstanceReport().list();
 
     // then
-    assertEquals(1, reportResults.size());
+    assertThat(reportResults).hasSize(1);
     checkResultNumbers(reportResults.get(0), 5, 10);
   }
 
@@ -154,7 +154,7 @@ public class CleanableHistoricCaseInstanceReportTest {
     List<CleanableHistoricCaseInstanceReportResult> reportResults = historyService.createCleanableHistoricCaseInstanceReport().list();
 
     // then
-    assertEquals(1, reportResults.size());
+    assertThat(reportResults).hasSize(1);
     checkResultNumbers(reportResults.get(0), 10, 10);
   }
 
@@ -168,7 +168,7 @@ public class CleanableHistoricCaseInstanceReportTest {
     List<CleanableHistoricCaseInstanceReportResult> reportResults = historyService.createCleanableHistoricCaseInstanceReport().list();
 
     // then
-    assertEquals(1, reportResults.size());
+    assertThat(reportResults).hasSize(1);
     checkResultNumbers(reportResults.get(0), 0, 10);
   }
 
@@ -195,7 +195,7 @@ public class CleanableHistoricCaseInstanceReportTest {
         .singleResult();
 
     // then
-    assertEquals(4, reportResults.size());
+    assertThat(reportResults).hasSize(4);
     for (CleanableHistoricCaseInstanceReportResult result : reportResults) {
       if (result.getCaseDefinitionKey().equals(CASE_DEFINITION_KEY)) {
         checkResultNumbers(result, 10, 20);
@@ -253,17 +253,17 @@ public class CleanableHistoricCaseInstanceReportTest {
   public void testReportCompact() {
     // given
     List<CaseDefinition> caseDefinitions = repositoryService.createCaseDefinitionQuery().caseDefinitionKey(CASE_DEFINITION_KEY).list();
-    assertEquals(1, caseDefinitions.size());
+    assertThat(caseDefinitions).hasSize(1);
 
     List<CleanableHistoricCaseInstanceReportResult> resultWithZeros = historyService.createCleanableHistoricCaseInstanceReport().list();
-    assertEquals(1, resultWithZeros.size());
-    assertEquals(0, resultWithZeros.get(0).getFinishedCaseInstanceCount());
+    assertThat(resultWithZeros).hasSize(1);
+    assertThat(resultWithZeros.get(0).getFinishedCaseInstanceCount()).isZero();
 
     // when
     long resultCountWithoutZeros = historyService.createCleanableHistoricCaseInstanceReport().compact().count();
 
     // then
-    assertEquals(0, resultCountWithoutZeros);
+    assertThat(resultCountWithoutZeros).isZero();
   }
 
   @Test
@@ -282,10 +282,10 @@ public class CleanableHistoricCaseInstanceReportTest {
         .list();
 
     // then
-    assertEquals(3, reportResult.size());
-    assertEquals(CASE_DEFINITION_KEY, reportResult.get(0).getCaseDefinitionKey());
-    assertEquals(SECOND_CASE_DEFINITION_KEY, reportResult.get(1).getCaseDefinitionKey());
-    assertEquals(THIRD_CASE_DEFINITION_KEY, reportResult.get(2).getCaseDefinitionKey());
+    assertThat(reportResult).hasSize(3);
+    assertThat(reportResult.get(0).getCaseDefinitionKey()).isEqualTo(CASE_DEFINITION_KEY);
+    assertThat(reportResult.get(1).getCaseDefinitionKey()).isEqualTo(SECOND_CASE_DEFINITION_KEY);
+    assertThat(reportResult.get(2).getCaseDefinitionKey()).isEqualTo(THIRD_CASE_DEFINITION_KEY);
   }
 
   @Test
@@ -304,10 +304,10 @@ public class CleanableHistoricCaseInstanceReportTest {
         .list();
 
     // then
-    assertEquals(3, reportResult.size());
-    assertEquals(THIRD_CASE_DEFINITION_KEY, reportResult.get(0).getCaseDefinitionKey());
-    assertEquals(SECOND_CASE_DEFINITION_KEY, reportResult.get(1).getCaseDefinitionKey());
-    assertEquals(CASE_DEFINITION_KEY, reportResult.get(2).getCaseDefinitionKey());
+    assertThat(reportResult).hasSize(3);
+    assertThat(reportResult.get(0).getCaseDefinitionKey()).isEqualTo(THIRD_CASE_DEFINITION_KEY);
+    assertThat(reportResult.get(1).getCaseDefinitionKey()).isEqualTo(SECOND_CASE_DEFINITION_KEY);
+    assertThat(reportResult.get(2).getCaseDefinitionKey()).isEqualTo(CASE_DEFINITION_KEY);
   }
 
 }

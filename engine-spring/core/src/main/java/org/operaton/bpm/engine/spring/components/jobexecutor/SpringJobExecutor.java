@@ -22,6 +22,7 @@ import java.util.concurrent.RejectedExecutionException;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 import org.springframework.core.task.TaskExecutor;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 /**
  *
@@ -59,10 +60,19 @@ public class SpringJobExecutor extends JobExecutor {
 	  try {
       taskExecutor.execute(getExecuteJobsRunnable(jobIds, processEngine));
     } catch (RejectedExecutionException e) {
-
       logRejectedExecution(processEngine, jobIds.size());
       rejectedJobsHandler.jobsRejected(jobIds, processEngine, this);
-    }
+		} finally {
+			if (taskExecutor instanceof ThreadPoolTaskExecutor threadPoolTaskExecutor) {
+				logJobExecutionInfo(
+						processEngine,
+						threadPoolTaskExecutor.getQueueSize(),
+						threadPoolTaskExecutor.getQueueCapacity(),
+						threadPoolTaskExecutor.getMaxPoolSize(),
+						threadPoolTaskExecutor.getActiveCount()
+				);
+			}
+		}
 	}
 
 	@Override

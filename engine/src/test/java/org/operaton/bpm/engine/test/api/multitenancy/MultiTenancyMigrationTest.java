@@ -17,8 +17,9 @@
 package org.operaton.bpm.engine.test.api.multitenancy;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
-import java.util.Arrays;
+import java.util.List;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.migration.MigrationPlan;
@@ -27,7 +28,7 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Assert;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
@@ -52,13 +53,13 @@ public class MultiTenancyMigrationTest {
     // given
     ProcessDefinition tenant1Definition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition tenant2Definition = testHelper.deployForTenantAndGetDefinition(TENANT_TWO, ProcessModels.ONE_TASK_PROCESS);
+    var runtimeService = engineRule.getRuntimeService().createMigrationPlan(tenant1Definition.getId(), tenant2Definition.getId())
+      .mapEqualActivities();
 
     // when
     try {
-      engineRule.getRuntimeService().createMigrationPlan(tenant1Definition.getId(), tenant2Definition.getId())
-      .mapEqualActivities()
-      .build();
-      Assert.fail("exception expected");
+      runtimeService.build();
+      fail("exception expected");
     } catch (ProcessEngineException e) {
       // then
       assertThat(e.getMessage()).contains(
@@ -79,7 +80,7 @@ public class MultiTenancyMigrationTest {
       .build();
 
     // then
-    Assert.assertNotNull(migrationPlan);
+    assertThat(migrationPlan).isNotNull();
   }
 
   @Test
@@ -95,7 +96,7 @@ public class MultiTenancyMigrationTest {
       .build();
 
     // then
-    Assert.assertNotNull(migrationPlan);
+    assertThat(migrationPlan).isNotNull();
   }
 
   @Test
@@ -110,7 +111,7 @@ public class MultiTenancyMigrationTest {
       .build();
 
     // then
-    Assert.assertNotNull(migrationPlan);
+    assertThat(migrationPlan).isNotNull();
   }
 
   @Test
@@ -127,7 +128,7 @@ public class MultiTenancyMigrationTest {
     // when
     engineRule.getRuntimeService()
       .newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .execute();
 
     // then
@@ -144,14 +145,14 @@ public class MultiTenancyMigrationTest {
     MigrationPlan migrationPlan = engineRule.getRuntimeService().createMigrationPlan(sourceDefinition.getId(), targetDefinition.getId())
         .mapEqualActivities()
         .build();
+    var runtimeService = engineRule.getRuntimeService()
+        .newMigration(migrationPlan)
+        .processInstanceIds(List.of(processInstance.getId()));
 
     // when
     try {
-      engineRule.getRuntimeService()
-        .newMigration(migrationPlan)
-        .processInstanceIds(Arrays.asList(processInstance.getId()))
-        .execute();
-      Assert.fail("exception expected");
+      runtimeService.execute();
+      fail("exception expected");
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).contains(
           "Cannot migrate process instance '" + processInstance.getId()
@@ -173,7 +174,7 @@ public class MultiTenancyMigrationTest {
     // when
     engineRule.getRuntimeService()
       .newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .execute();
 
     // then
@@ -181,10 +182,10 @@ public class MultiTenancyMigrationTest {
   }
 
   protected void assertMigratedTo(ProcessInstance processInstance, ProcessDefinition targetDefinition) {
-    Assert.assertEquals(1, engineRule.getRuntimeService()
-      .createProcessInstanceQuery()
-      .processInstanceId(processInstance.getId())
-      .processDefinitionId(targetDefinition.getId())
-      .count());
+    assertThat(engineRule.getRuntimeService()
+        .createProcessInstanceQuery()
+        .processInstanceId(processInstance.getId())
+        .processDefinitionId(targetDefinition.getId())
+        .count()).isEqualTo(1);
   }
 }

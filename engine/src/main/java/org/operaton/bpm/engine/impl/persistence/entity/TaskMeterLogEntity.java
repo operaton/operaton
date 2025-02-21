@@ -95,13 +95,11 @@ public class TaskMeterLogEntity implements DbEntity, HasDbReferences, Serializab
 
   @Override
   public Set<String> getReferencedEntityIds() {
-    Set<String> referencedEntityIds = new HashSet<>();
-    return referencedEntityIds;
+    return new HashSet<>();
   }
 
   @Override
   public Map<String, Class> getReferencedEntitiesIdAndClass() {
-    Map<String, Class> referenceIdAndClass = new HashMap<>();
-    return referenceIdAndClass;
+    return new HashMap<>();
   }
 }

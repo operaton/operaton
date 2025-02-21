@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-root</artifactId>
-    <version>1.0.0-beta-3-SNAPSHOT</version>
+    <version>1.0.0-beta-4-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-parent</artifactId>
@@ -17,6 +17,7 @@
   </description>
 
   <properties>
+    <version.operaton.dbscheme>7.23.0</version.operaton.dbscheme>
     <version.spring.framework>5.3.39</version.spring.framework>
     <version.spring.framework6>6.1.15</version.spring.framework6>
     <version.spring-boot>3.4.1</version.spring-boot>
@@ -45,8 +46,6 @@
     <version.httpclient>4.5.14</version.httpclient>
     <version.httpclient5>5.4.1</version.httpclient5>
 
-    <version.slf4j>1.7.26</version.slf4j>
-    <version.logback>1.2.11</version.logback>
     <version.junit>5.11.3</version.junit>
     <version.junit>4.13.1</version.junit>
     <version.assertj>3.26.3</version.assertj>
@@ -68,7 +67,7 @@
     <version.tomcat>10.1.30</version.tomcat>
 
     <version.arquillian>1.1.10.Final</version.arquillian>
-    <version.shrinkwrap.resolvers>2.2.2</version.shrinkwrap.resolvers>
+    <version.shrinkwrap.resolvers>3.3.3</version.shrinkwrap.resolvers>
     <version.selenium>4.10.0</version.selenium>
     <version.freemarker>2.3.31</version.freemarker>
 
@@ -128,15 +127,13 @@
 
   <dependencyManagement>
     <dependencies>
-
       <dependency>
         <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-bom</artifactId>
-        <version>${project.version}</version>
+        <version>${project.parent.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-
     </dependencies>
   </dependencyManagement>
 

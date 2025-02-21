@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.humantask;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -48,8 +47,8 @@ public class HumanTaskFollowUpDateTest extends PluggableProcessEngineTest {
 
     Task task = taskService.createTaskQuery().caseInstanceId(caseInstanceId).singleResult();
 
-    assertNotNull(task.getFollowUpDate());
-    assertEquals(date, task.getFollowUpDate());
+    assertThat(task.getFollowUpDate()).isNotNull();
+    assertThat(task.getFollowUpDate()).isEqualTo(date);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/humantask/HumanTaskFollowUpDateTest.testHumanTaskFollowUpDate.cmmn"})
@@ -63,9 +62,9 @@ public class HumanTaskFollowUpDateTest extends PluggableProcessEngineTest {
 
     Task task = taskService.createTaskQuery().caseInstanceId(caseInstanceId).singleResult();
 
-    assertNotNull(task.getFollowUpDate());
+    assertThat(task.getFollowUpDate()).isNotNull();
     Date date = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse("01-01-2015 12:10:00");
-    assertEquals(date, task.getFollowUpDate());
+    assertThat(task.getFollowUpDate()).isEqualTo(date);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/humantask/HumanTaskFollowUpDateTest.testHumanTaskFollowUpDate.cmmn"})
@@ -79,12 +78,12 @@ public class HumanTaskFollowUpDateTest extends PluggableProcessEngineTest {
     Task task = taskService.createTaskQuery().caseInstanceId(caseInstanceId).singleResult();
 
     Date followUpDate = task.getFollowUpDate();
-    assertNotNull(followUpDate);
+    assertThat(followUpDate).isNotNull();
 
     Period period = new Period(task.getCreateTime().getTime(), followUpDate.getTime());
-    assertEquals(period.getDays(), 2);
-    assertEquals(period.getHours(), 2);
-    assertEquals(period.getMinutes(), 30);
+    assertThat(period.getDays()).isEqualTo(2);
+    assertThat(period.getHours()).isEqualTo(2);
+    assertThat(period.getMinutes()).isEqualTo(30);
   }
 
 }

@@ -33,24 +33,25 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(Arquillian.class)
 public class GroovyAsyncScriptExecutionTest extends AbstractFoxPlatformIntegrationTest {
 
-  protected static String process = """
-    <?xml version="1.0" encoding="UTF-8"?>
-    <definitions id="definitions" 
-      xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
-      xmlns:operaton="http://operaton.org/schema/1.0/bpmn"
-      targetNamespace="Examples">
-      <process id="process" isExecutable="true" operaton:historyTimeToLive="P180D">
-        <startEvent id="theStart" />
-        <sequenceFlow id="flow1" sourceRef="theStart" targetRef="theScriptTask" />
-        <scriptTask id="theScriptTask" name="Execute script" scriptFormat="groovy" operaton:asyncBefore="true">
-          <script>execution.setVariable("foo", S("&lt;bar /&gt;").name())</script>
-        </scriptTask>
-        <sequenceFlow id="flow2" sourceRef="theScriptTask" targetRef="theTask" />
-        <userTask id="theTask" name="my task" />
-        <sequenceFlow id="flow3" sourceRef="theTask" targetRef="theEnd" />
-        <endEvent id="theEnd" />
-      </process>
-    </definitions>
+  protected static String process =
+  """
+  <?xml version="1.0" encoding="UTF-8"?>
+  <definitions id="definitions"
+    xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+    xmlns:operaton="http://operaton.org/schema/1.0/bpmn"
+    targetNamespace="Examples">
+    <process id="process" isExecutable="true" operaton:historyTimeToLive="P180D">
+      <startEvent id="theStart" />
+      <sequenceFlow id="flow1" sourceRef="theStart" targetRef="theScriptTask" />
+      <scriptTask id="theScriptTask" name="Execute script" scriptFormat="groovy" operaton:asyncBefore="true">
+        <script>execution.setVariable("foo", S("&lt;bar /&gt;").name())</script>
+      </scriptTask>
+      <sequenceFlow id="flow2" sourceRef="theScriptTask" targetRef="theTask" />
+      <userTask id="theTask" name="my task" />
+      <sequenceFlow id="flow3" sourceRef="theTask" targetRef="theEnd" />
+      <endEvent id="theEnd" />
+    </process>
+  </definitions>
   """;
 
   @Deployment(name="clientDeployment")

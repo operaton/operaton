@@ -26,14 +26,7 @@ import static org.operaton.bpm.engine.authorization.Permissions.UPDATE_INSTANCE;
 import static org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions.SUSPEND_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
-
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.*;
 
 import java.io.InputStream;
 import java.util.Collection;
@@ -124,8 +117,8 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     ProcessDefinition definition = query.singleResult();
-    assertNotNull(definition);
-    assertEquals(ONE_TASK_PROCESS_KEY, definition.getKey());
+    assertThat(definition).isNotNull();
+    assertThat(definition.getKey()).isEqualTo(ONE_TASK_PROCESS_KEY);
   }
 
   @Test
@@ -146,8 +139,8 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     ProcessDefinition definition = query.singleResult();
-    assertNotNull(definition);
-    assertEquals(TWO_TASKS_PROCESS_KEY, definition.getKey());
+    assertThat(definition).isNotNull();
+    assertThat(definition.getKey()).isEqualTo(TWO_TASKS_PROCESS_KEY);
   }
 
   @Test
@@ -171,8 +164,8 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     ProcessDefinition definition = query.singleResult();
-    assertNotNull(definition);
-    assertEquals(TWO_TASKS_PROCESS_KEY, definition.getKey());
+    assertThat(definition).isNotNull();
+    assertThat(definition.getKey()).isEqualTo(TWO_TASKS_PROCESS_KEY);
   }
 
   // get process definition /////////////////////////////////////////////////////
@@ -203,7 +196,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     ProcessDefinition definition = repositoryService.getProcessDefinition(processDefinitionId);
 
     // then
-    assertNotNull(definition);
+    assertThat(definition).isNotNull();
   }
 
   // get deployed process definition /////////////////////////////////////////////////////
@@ -237,7 +230,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     ReadOnlyProcessDefinition definition = ((RepositoryServiceImpl)repositoryService).getDeployedProcessDefinition(processDefinitionId);
 
     // then
-    assertNotNull(definition);
+    assertThat(definition).isNotNull();
   }
 
   // get process diagram /////////////////////////////////////////////////////
@@ -272,7 +265,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     // no process diagram deployed
-    assertNull(stream);
+    assertThat(stream).isNull();
   }
 
   // get process model /////////////////////////////////////////////////////
@@ -306,7 +299,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     InputStream stream = repositoryService.getProcessModel(processDefinitionId);
 
     // then
-    assertNotNull(stream);
+    assertThat(stream).isNotNull();
   }
 
   // get bpmn model instance /////////////////////////////////////////////////////
@@ -340,7 +333,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     BpmnModelInstance modelInstance = repositoryService.getBpmnModelInstance(processDefinitionId);
 
     // then
-    assertNotNull(modelInstance);
+    assertThat(modelInstance).isNotNull();
   }
 
   // get process diagram layout /////////////////////////////////////////////////
@@ -375,7 +368,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     // no process diagram deployed
-    assertNull(diagramLayout);
+    assertThat(diagramLayout).isNull();
   }
 
   // suspend process definition by id ///////////////////////////////////////////
@@ -411,7 +404,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     ProcessDefinition definition = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY);
-    assertTrue(definition.isSuspended());
+    assertThat(definition.isSuspended()).isTrue();
   }
 
   @Test
@@ -425,7 +418,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     ProcessDefinition definition = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY);
-    assertTrue(definition.isSuspended());
+    assertThat(definition.isSuspended()).isTrue();
   }
 
   // activate process definition by id ///////////////////////////////////////////
@@ -463,7 +456,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     ProcessDefinition definition = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY);
-    assertFalse(definition.isSuspended());
+    assertThat(definition.isSuspended()).isFalse();
   }
 
 
@@ -479,7 +472,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     ProcessDefinition definition = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY);
-    assertFalse(definition.isSuspended());
+    assertThat(definition.isSuspended()).isFalse();
   }
 
   // suspend process definition by id including instances ///////////////////////////////////////////
@@ -549,10 +542,10 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     ProcessDefinition definition = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY);
-    assertTrue(definition.isSuspended());
+    assertThat(definition.isSuspended()).isTrue();
 
     ProcessInstance instance = selectSingleProcessInstance();
-    assertTrue(instance.isSuspended());
+    assertThat(instance.isSuspended()).isTrue();
   }
 
   @Test
@@ -584,10 +577,10 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     ProcessDefinition definition = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY);
-    assertTrue(definition.isSuspended());
+    assertThat(definition.isSuspended()).isTrue();
 
     ProcessInstance instance = selectSingleProcessInstance();
-    assertTrue(instance.isSuspended());
+    assertThat(instance.isSuspended()).isTrue();
   }
 
   @Test
@@ -707,10 +700,10 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     ProcessDefinition definition = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY);
-    assertFalse(definition.isSuspended());
+    assertThat(definition.isSuspended()).isFalse();
 
     ProcessInstance instance = selectSingleProcessInstance();
-    assertFalse(instance.isSuspended());
+    assertThat(instance.isSuspended()).isFalse();
   }
 
   @Test
@@ -744,10 +737,10 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     ProcessDefinition definition = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY);
-    assertFalse(definition.isSuspended());
+    assertThat(definition.isSuspended()).isFalse();
 
     ProcessInstance instance = selectSingleProcessInstance();
-    assertFalse(instance.isSuspended());
+    assertThat(instance.isSuspended()).isFalse();
   }
 
   @Test
@@ -829,7 +822,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     ProcessDefinition definition = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY);
-    assertTrue(definition.isSuspended());
+    assertThat(definition.isSuspended()).isTrue();
   }
 
   @Test
@@ -842,7 +835,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     ProcessDefinition definition = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY);
-    assertTrue(definition.isSuspended());
+    assertThat(definition.isSuspended()).isTrue();
   }
 
   // activate process definition by id ///////////////////////////////////////////
@@ -878,7 +871,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     ProcessDefinition definition = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY);
-    assertFalse(definition.isSuspended());
+    assertThat(definition.isSuspended()).isFalse();
   }
 
   @Test
@@ -892,7 +885,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     ProcessDefinition definition = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY);
-    assertFalse(definition.isSuspended());
+    assertThat(definition.isSuspended()).isFalse();
   }
 
   // suspend process definition by key including instances ///////////////////////////////////////////
@@ -959,10 +952,10 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     ProcessDefinition definition = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY);
-    assertTrue(definition.isSuspended());
+    assertThat(definition.isSuspended()).isTrue();
 
     ProcessInstance instance = selectSingleProcessInstance();
-    assertTrue(instance.isSuspended());
+    assertThat(instance.isSuspended()).isTrue();
   }
 
   @Test
@@ -992,10 +985,10 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     ProcessDefinition definition = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY);
-    assertTrue(definition.isSuspended());
+    assertThat(definition.isSuspended()).isTrue();
 
     ProcessInstance instance = selectSingleProcessInstance();
-    assertTrue(instance.isSuspended());
+    assertThat(instance.isSuspended()).isTrue();
   }
 
   @Test
@@ -1111,10 +1104,10 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     ProcessDefinition definition = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY);
-    assertFalse(definition.isSuspended());
+    assertThat(definition.isSuspended()).isFalse();
 
     ProcessInstance instance = selectSingleProcessInstance();
-    assertFalse(instance.isSuspended());
+    assertThat(instance.isSuspended()).isFalse();
   }
 
   @Test
@@ -1146,10 +1139,10 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     ProcessDefinition definition = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY);
-    assertFalse(definition.isSuspended());
+    assertThat(definition.isSuspended()).isFalse();
 
     ProcessInstance instance = selectSingleProcessInstance();
-    assertFalse(instance.isSuspended());
+    assertThat(instance.isSuspended()).isFalse();
   }
 
   @Test
@@ -1214,7 +1207,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     definition = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY);
-    assertEquals(6, definition.getHistoryTimeToLive().intValue());
+    assertThat(definition.getHistoryTimeToLive().intValue()).isEqualTo(6);
 
   }
 
@@ -1246,10 +1239,10 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     // when
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().startablePermissionCheck().startableInTasklist().list();
     // then
-    assertNotNull(processDefinitions);
-    assertEquals(1, repositoryService.createProcessDefinitionQuery().startablePermissionCheck().startableInTasklist().count());
-    assertEquals(definition.getId(), processDefinitions.get(0).getId());
-    assertTrue(processDefinitions.get(0).isStartableInTasklist());
+    assertThat(processDefinitions).isNotNull();
+    assertThat(repositoryService.createProcessDefinitionQuery().startablePermissionCheck().startableInTasklist().count()).isEqualTo(1);
+    assertThat(processDefinitions.get(0).getId()).isEqualTo(definition.getId());
+    assertThat(processDefinitions.get(0).isStartableInTasklist()).isTrue();
   }
 
   @Test
@@ -1263,10 +1256,10 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     // when
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().startablePermissionCheck().startableInTasklist().list();
     // then
-    assertNotNull(processDefinitions);
-    assertEquals(1, repositoryService.createProcessDefinitionQuery().startablePermissionCheck().startableInTasklist().count());
-    assertEquals(definition.getId(), processDefinitions.get(0).getId());
-    assertTrue(processDefinitions.get(0).isStartableInTasklist());
+    assertThat(processDefinitions).isNotNull();
+    assertThat(repositoryService.createProcessDefinitionQuery().startablePermissionCheck().startableInTasklist().count()).isEqualTo(1);
+    assertThat(processDefinitions.get(0).getId()).isEqualTo(definition.getId());
+    assertThat(processDefinitions.get(0).isStartableInTasklist()).isTrue();
   }
 
   @Test
@@ -1279,8 +1272,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     // when
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().startablePermissionCheck().startableInTasklist().list();
     // then
-    assertNotNull(processDefinitions);
-    assertEquals(0, processDefinitions.size());
+    assertThat(processDefinitions).isNotNull().isEmpty();
   }
 
   @Test
@@ -1293,8 +1285,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     // when
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().startablePermissionCheck().startableInTasklist().list();
     // then
-    assertNotNull(processDefinitions);
-    assertEquals(0, processDefinitions.size());
+    assertThat(processDefinitions).isNotNull().isEmpty();
   }
 
   @Test
@@ -1305,8 +1296,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     // when
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().startablePermissionCheck().startableInTasklist().list();
     // then
-    assertNotNull(processDefinitions);
-    assertEquals(0, processDefinitions.size());
+    assertThat(processDefinitions).isNotNull().isEmpty();
   }
 
   @Test
@@ -1326,7 +1316,7 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
         .getStaticCalledProcessDefinitions(parentDefinition.getId());
 
       //then
-      assertTrue(mappings.isEmpty());
+      assertThat(mappings).isEmpty();
     } finally {
       deleteDeployment(deployment.getId());
     }
@@ -1337,18 +1327,18 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
 
   protected void verifyProcessDefinitionSuspendedByKeyIncludingInstances() {
     ProcessDefinition definition = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY);
-    assertTrue(definition.isSuspended());
+    assertThat(definition.isSuspended()).isTrue();
 
     ProcessInstance instance = selectSingleProcessInstance();
-    assertTrue(instance.isSuspended());
+    assertThat(instance.isSuspended()).isTrue();
   }
 
   protected void verifyProcessDefinitionActivatedByKeyIncludingInstances() {
     ProcessDefinition definition = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY);
-    assertFalse(definition.isSuspended());
+    assertThat(definition.isSuspended()).isFalse();
 
     ProcessInstance instance = selectSingleProcessInstance();
-    assertFalse(instance.isSuspended());
+    assertThat(instance.isSuspended()).isFalse();
   }
 
 }

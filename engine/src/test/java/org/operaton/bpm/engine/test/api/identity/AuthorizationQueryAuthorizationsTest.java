@@ -19,9 +19,7 @@ package org.operaton.bpm.engine.test.api.identity;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
 import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_REVOKE;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import org.operaton.bpm.engine.AuthorizationService;
@@ -74,10 +72,10 @@ public class AuthorizationQueryAuthorizationsTest {
 
     // assume
     Authorization authResult = authorizationService.createAuthorizationQuery().userIdIn("userId").resourceType(Resources.PROCESS_DEFINITION).singleResult();
-    assertNotNull(authResult);
+    assertThat(authResult).isNotNull();
 
     // then
-    assertEquals(1, authorizationService.createAuthorizationQuery().hasPermission(Permissions.READ).count());
+    assertThat(authorizationService.createAuthorizationQuery().hasPermission(Permissions.READ).count()).isEqualTo(1);
   }
 
   @Test
@@ -94,10 +92,10 @@ public class AuthorizationQueryAuthorizationsTest {
 
     // assume
     Authorization authResult = authorizationService.createAuthorizationQuery().userIdIn("userId").resourceType(Resources.BATCH).singleResult();
-    assertNotNull(authResult);
+    assertThat(authResult).isNotNull();
 
     // then
-    assertEquals(0, authorizationService.createAuthorizationQuery().hasPermission(Permissions.CREATE_INSTANCE).count());
+    assertThat(authorizationService.createAuthorizationQuery().hasPermission(Permissions.CREATE_INSTANCE).count()).isZero();
   }
 
   @Test
@@ -114,7 +112,7 @@ public class AuthorizationQueryAuthorizationsTest {
 
     // assume
     Authorization authResult = authorizationService.createAuthorizationQuery().userIdIn("userId").resourceType(Resources.APPLICATION).singleResult();
-    assertNotNull(authResult);
+    assertThat(authResult).isNotNull();
 
     // when
     Authorization accessResult = authorizationService.createAuthorizationQuery()
@@ -128,12 +126,12 @@ public class AuthorizationQueryAuthorizationsTest {
         .list();
 
     // then
-    assertNotNull(accessResult);
-    assertEquals(1, authorizationService.createAuthorizationQuery().hasPermission(Permissions.ACCESS).count());
-    assertTrue(retryJobPDResult.isEmpty());
-    assertEquals(0, authorizationService.createAuthorizationQuery().hasPermission(ProcessDefinitionPermissions.RETRY_JOB).count());
-    assertTrue(retryJobPIResult.isEmpty());
-    assertEquals(0, authorizationService.createAuthorizationQuery().hasPermission(ProcessInstancePermissions.RETRY_JOB).count());
+    assertThat(accessResult).isNotNull();
+    assertThat(authorizationService.createAuthorizationQuery().hasPermission(Permissions.ACCESS).count()).isEqualTo(1);
+    assertThat(retryJobPDResult).isEmpty();
+    assertThat(authorizationService.createAuthorizationQuery().hasPermission(ProcessDefinitionPermissions.RETRY_JOB).count()).isZero();
+    assertThat(retryJobPIResult).isEmpty();
+    assertThat(authorizationService.createAuthorizationQuery().hasPermission(ProcessInstancePermissions.RETRY_JOB).count()).isZero();
   }
 
   @Test
@@ -150,13 +148,13 @@ public class AuthorizationQueryAuthorizationsTest {
 
     // assume
     Authorization authResult = authorizationService.createAuthorizationQuery().userIdIn("userId").resourceType(Resources.APPLICATION).singleResult();
-    assertNotNull(authResult);
+    assertThat(authResult).isNotNull();
 
     // then
-    assertEquals(0, authorizationService.createAuthorizationQuery()
+    assertThat(authorizationService.createAuthorizationQuery()
         .resourceType(Resources.BATCH)
         .hasPermission(Permissions.ACCESS)
-        .count());
+        .count()).isZero();
   }
 
   @Test
@@ -174,27 +172,27 @@ public class AuthorizationQueryAuthorizationsTest {
 
     // assume
     Authorization authResult = authorizationService.createAuthorizationQuery().userIdIn("userId").resourceType(Resources.PROCESS_DEFINITION).singleResult();
-    assertNotNull(authResult);
-    assertEquals(1, authorizationService.createAuthorizationQuery()
+    assertThat(authResult).isNotNull();
+    assertThat(authorizationService.createAuthorizationQuery()
         .resourceType(Resources.PROCESS_DEFINITION)
         .hasPermission(ProcessDefinitionPermissions.READ)
         .hasPermission(ProcessDefinitionPermissions.RETRY_JOB)
-        .count());
-    assertEquals(1, authorizationService.createAuthorizationQuery()
+        .count()).isEqualTo(1);
+    assertThat(authorizationService.createAuthorizationQuery()
         .resourceType(Resources.PROCESS_DEFINITION)
         .hasPermission(ProcessDefinitionPermissions.READ)
-        .count());
+        .count()).isEqualTo(1);
 
     // then
-    assertEquals(0, authorizationService.createAuthorizationQuery()
+    assertThat(authorizationService.createAuthorizationQuery()
         .resourceType(Resources.PROCESS_DEFINITION)
         .hasPermission(Permissions.READ)
         .hasPermission(Permissions.ACCESS)
-        .count());
+        .count()).isZero();
   }
 
   @Test
-  public void testQueryCorrectAndIncorrectPersmission() {
+  public void testQueryCorrectAndIncorrectPermission() {
     // given
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     authorization.setUserId("userId");
@@ -208,13 +206,13 @@ public class AuthorizationQueryAuthorizationsTest {
 
     // assume
     Authorization authResult = authorizationService.createAuthorizationQuery().userIdIn("userId").resourceType(Resources.PROCESS_DEFINITION).singleResult();
-    assertNotNull(authResult);
+    assertThat(authResult).isNotNull();
 
     // then
-    assertEquals(0, authorizationService.createAuthorizationQuery()
+    assertThat(authorizationService.createAuthorizationQuery()
         .hasPermission(Permissions.READ)
         .hasPermission(Permissions.ACCESS)
-        .count());
+        .count()).isZero();
   }
 
   @Test
@@ -252,8 +250,8 @@ public class AuthorizationQueryAuthorizationsTest {
     List<Authorization> authorizations = authQuery.list();
 
     // then
-    assertEquals(0, authorizationsCount);
-    assertEquals(0, authorizations.size());
+    assertThat(authorizationsCount).isZero();
+    assertThat(authorizations).isEmpty();
   }
 
   protected void cleanupAfterTest() {

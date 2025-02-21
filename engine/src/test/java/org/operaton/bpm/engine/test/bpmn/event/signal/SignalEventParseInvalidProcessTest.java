@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.bpmn.event.signal;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -78,10 +78,10 @@ public class SignalEventParseInvalidProcessTest {
 
   @Test
   public void testParseInvalidProcessDefinition() {
+    var deploymentBuilder = repositoryService.createDeployment()
+        .addClasspathResource(PROCESS_DEFINITION_DIRECTORY + processDefinitionResource);
     try {
-      repositoryService.createDeployment()
-        .addClasspathResource(PROCESS_DEFINITION_DIRECTORY + processDefinitionResource)
-        .deploy();
+      deploymentBuilder.deploy();
 
       fail("exception expected: " + expectedErrorMessage);
     } catch (ParseException e) {

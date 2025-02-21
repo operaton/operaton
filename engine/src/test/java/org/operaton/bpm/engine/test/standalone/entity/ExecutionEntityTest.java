@@ -16,10 +16,7 @@
  */
 package org.operaton.bpm.engine.test.standalone.entity;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +59,7 @@ public class ExecutionEntityTest {
     entities.add(parent);
     //when restore process instance is called
     parent.restoreProcessInstance(entities, null, null, null, null, null, null);
-    //then no problem should occure
+    //then no problem should occur
 
     //when child is added and restore is called again
     ExecutionEntity entity = new ExecutionEntity();
@@ -71,14 +68,14 @@ public class ExecutionEntityTest {
     entities.add(entity);
 
     parent.restoreProcessInstance(entities, null, null, null, null, null, null);
-    //then again no problem should occure
+    //then again no problem should occur
 
     //when parent is deleted from the list
     entities.remove(parent);
 
-    // when/then
-    // then exception is thrown because child reference to parent which does not exist anymore
+    // when
     assertThatThrownBy(() -> parent.restoreProcessInstance(entities, null, null, null, null, null, null))
+      // then exception is thrown because child reference to parent which does not exist anymore
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot resolve parent with id 'parent' of execution 'child', perhaps it was deleted in the meantime");
   }
@@ -107,8 +104,8 @@ public class ExecutionEntityTest {
       .singleResult();
 
     // when
-    assertNotNull(execution);
-    assertEquals(pi.getId(), execution.getProcessInstanceId());
+    assertThat(execution).isNotNull();
+    assertThat(execution.getProcessInstanceId()).isEqualTo(pi.getId());
     processEngineRule.getRuntimeService().signal(execution.getId());
 
     // then (see #TestLocalVariableTaskListener::notify)
@@ -129,8 +126,8 @@ public class ExecutionEntityTest {
     public void notify(DelegateTask delegateTask) {
       try {
         // then (see #testRemoveExecutionSequence)
-        StringValue var = delegateTask.getExecution().getVariableLocalTyped("localVar");
-        assertEquals("localVarVal", var.getValue());
+        StringValue variable = delegateTask.getExecution().getVariableLocalTyped("localVar");
+        assertThat(variable.getValue()).isEqualTo("localVarVal");
       } catch (NullPointerException e) {
         fail("Local variable shouldn't be null.");
       }

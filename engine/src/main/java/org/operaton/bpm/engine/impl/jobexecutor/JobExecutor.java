@@ -59,7 +59,7 @@ public abstract class JobExecutor {
   // waiting when job acquisition is idle
   protected int waitTimeInMillis = 5 * 1000;
   protected float waitIncreaseFactor = 2;
-  protected long maxWait = 60 * 1000;
+  protected long maxWait = 60 * 1000L;
 
   // backoff when job acquisition fails to lock all jobs
   protected int backoffTimeInMillis = 0;
@@ -171,11 +171,43 @@ public abstract class JobExecutor {
   }
 
   public void logRejectedExecution(ProcessEngineImpl engine, int numJobs) {
-    if (engine != null && engine.getProcessEngineConfiguration().isMetricsEnabled()) {
-      engine.getProcessEngineConfiguration()
-        .getMetricsRegistry()
-        .markOccurrence(Metrics.JOB_EXECUTION_REJECTED, numJobs);
+    if (engine != null) {
+      LOG.rejectedJobExecutions(engine.getName(), numJobs);
+      if (engine.getProcessEngineConfiguration().isMetricsEnabled()) {
+        engine.getProcessEngineConfiguration()
+                .getMetricsRegistry()
+                .markOccurrence(Metrics.JOB_EXECUTION_REJECTED, numJobs);
+      }
     }
+  }
+
+  public void logJobExecutionInfo(ProcessEngineImpl engine,
+                                  int executionQueueSize,
+                                  int executionQueueCapacity,
+                                  int maxExecutionThreads,
+                                  int activeExecutionThreads) {
+    if (engine != null) {
+      LOG.currentJobExecutions(engine.getName(), activeExecutionThreads);
+      LOG.numJobsInQueue(engine.getName(), executionQueueSize, executionQueueCapacity);
+      try {
+        LOG.availableJobExecutionThreads(engine.getName(),
+            Math.subtractExact(maxExecutionThreads, activeExecutionThreads));
+      } catch (ArithmeticException arithmeticException) {
+        //arithmetic exception occurred while computing remaining available thread count for logging.
+        LOG.availableThreadsCalculationError();
+      }
+    }
+  }
+
+  public int calculateTotalQueueCapacity(int availableItems, int remainingCapacity) {
+    int totalQueueCapacity = 0;
+    try {
+      totalQueueCapacity = Math.addExact(availableItems, remainingCapacity);
+    } catch (ArithmeticException arithmeticException) {
+      //arithmetic exception occurred while computing Total Queue Capacity for logging.
+      LOG.totalQueueCapacityCalculationError();
+    }
+    return totalQueueCapacity;
   }
 
   // getters and setters //////////////////////////////////////////////////////

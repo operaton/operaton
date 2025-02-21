@@ -60,8 +60,7 @@ public class JobResourceImpl implements JobResource {
   public String getStacktrace() {
     try {
       ManagementService managementService = engine.getManagementService();
-      String stacktrace = managementService.getJobExceptionStacktrace(jobId);
-      return stacktrace;
+      return managementService.getJobExceptionStacktrace(jobId);
     } catch (AuthorizationException e) {
       throw e;
     } catch (ProcessEngineException e) {

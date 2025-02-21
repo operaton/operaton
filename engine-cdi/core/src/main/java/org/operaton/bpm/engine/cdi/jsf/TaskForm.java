@@ -45,21 +45,14 @@ public class TaskForm implements Serializable {
   protected String processDefinitionId;
   protected String processDefinitionKey;
 
+  @Inject
   protected BusinessProcess businessProcess;
 
+  @Inject
   protected RepositoryService repositoryService;
 
-  protected Instance<Conversation> conversationInstance;
-
   @Inject
-  public TaskForm(
-    BusinessProcess businessProcess,
-    RepositoryService repositoryService,
-    Instance<Conversation> conversationInstance) {
-    this.businessProcess = businessProcess;
-    this.repositoryService = repositoryService;
-    this.conversationInstance = conversationInstance;
-  }
+  protected Instance<Conversation> conversationInstance;
 
   /**
    * @deprecated use {@link startTaskForm()} instead
@@ -77,7 +70,7 @@ public class TaskForm implements Serializable {
         return;
       }
       // return it anyway but log an info message
-      log.log(Level.INFO, "Called startTask method without proper parameter (taskId='"+taskId+"'; callbackUrl='"+callbackUrl+"') even if it seems we are not called by an AJAX Postback. Are you using the operatonTaskForm bean correctly?");
+      log.log(Level.INFO, () -> "Called startTask method without proper parameter (taskId='"+taskId+"'; callbackUrl='"+callbackUrl+"') even if it seems we are not called by an AJAX Postback. Are you using the operatonTaskForm bean correctly?");
       return;
     }
     // Note that we always run in a conversation
@@ -103,7 +96,7 @@ public class TaskForm implements Serializable {
         return;
       }
       // return it anyway but log an info message
-      log.log(Level.INFO, "Called startTask method without proper parameter (taskId='"+taskId+"'; callbackUrl='"+callbackUrl+"') even if it seems we are not called by an AJAX Postback. Are you using the operatonTaskForm bean correctly?");
+      log.log(Level.INFO, () -> "Called startTask method without proper parameter (taskId='"+taskId+"'; callbackUrl='"+callbackUrl+"') even if it seems we are not called by an AJAX Postback. Are you using the operatonTaskForm bean correctly?");
       return;
     }
     // Note that we always run in a conversation
@@ -125,7 +118,7 @@ public class TaskForm implements Serializable {
   }
 
   /**
-   * @deprecated use {@link startProcessInstanceByIdForm()} instead
+   * @deprecated use {@link #startProcessInstanceByIdForm()} instead
    *
    * @param processDefinitionId
    * @param callbackUrl

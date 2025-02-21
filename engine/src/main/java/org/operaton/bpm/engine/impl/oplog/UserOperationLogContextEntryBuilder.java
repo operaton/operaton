@@ -30,7 +30,6 @@ import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.impl.repository.ResourceDefinitionEntity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_CREATE;
@@ -102,10 +101,8 @@ public class UserOperationLogContextEntryBuilder {
 
   public UserOperationLogContextEntryBuilder inContextOf(TaskEntity task, List<PropertyChange> propertyChanges) {
 
-    if (propertyChanges == null || propertyChanges.isEmpty()) {
-      if (OPERATION_TYPE_CREATE.equals(entry.getOperationType())) {
-        propertyChanges = Arrays.asList(PropertyChange.EMPTY_CHANGE);
-      }
+    if ((propertyChanges == null || propertyChanges.isEmpty()) && OPERATION_TYPE_CREATE.equals(entry.getOperationType())) {
+      propertyChanges = List.of(PropertyChange.EMPTY_CHANGE);
     }
     entry.setPropertyChanges(propertyChanges);
 
@@ -140,10 +137,8 @@ public class UserOperationLogContextEntryBuilder {
 
   public UserOperationLogContextEntryBuilder inContextOf(HistoricTaskInstance task, List<PropertyChange> propertyChanges) {
 
-    if (propertyChanges == null || propertyChanges.isEmpty()) {
-      if (OPERATION_TYPE_CREATE.equals(entry.getOperationType())) {
-        propertyChanges = Arrays.asList(PropertyChange.EMPTY_CHANGE);
-      }
+    if ((propertyChanges == null || propertyChanges.isEmpty()) && OPERATION_TYPE_CREATE.equals(entry.getOperationType())) {
+      propertyChanges = List.of(PropertyChange.EMPTY_CHANGE);
     }
     entry.setPropertyChanges(propertyChanges);
 
@@ -163,10 +158,8 @@ public class UserOperationLogContextEntryBuilder {
 
   public UserOperationLogContextEntryBuilder inContextOf(ExecutionEntity processInstance, List<PropertyChange> propertyChanges) {
 
-    if (propertyChanges == null || propertyChanges.isEmpty()) {
-      if (OPERATION_TYPE_CREATE.equals(entry.getOperationType())) {
-        propertyChanges = Arrays.asList(PropertyChange.EMPTY_CHANGE);
-      }
+    if ((propertyChanges == null || propertyChanges.isEmpty()) && OPERATION_TYPE_CREATE.equals(entry.getOperationType())) {
+      propertyChanges = List.of(PropertyChange.EMPTY_CHANGE);
     }
     entry.setPropertyChanges(propertyChanges);
     entry.setRootProcessInstanceId(processInstance.getRootProcessInstanceId());
@@ -187,10 +180,8 @@ public class UserOperationLogContextEntryBuilder {
 
   public UserOperationLogContextEntryBuilder inContextOf(HistoryEvent historyEvent, ResourceDefinitionEntity<?> definition, List<PropertyChange> propertyChanges) {
 
-    if (propertyChanges == null || propertyChanges.isEmpty()) {
-      if (OPERATION_TYPE_CREATE.equals(entry.getOperationType())) {
-        propertyChanges = Arrays.asList(PropertyChange.EMPTY_CHANGE);
-      }
+    if ((propertyChanges == null || propertyChanges.isEmpty()) && OPERATION_TYPE_CREATE.equals(entry.getOperationType())) {
+      propertyChanges = List.of(PropertyChange.EMPTY_CHANGE);
     }
     entry.setPropertyChanges(propertyChanges);
     entry.setRootProcessInstanceId(historyEvent.getRootProcessInstanceId());
@@ -214,10 +205,8 @@ public class UserOperationLogContextEntryBuilder {
 
   public UserOperationLogContextEntryBuilder inContextOf(HistoricVariableInstanceEntity variable, ResourceDefinitionEntity<?> definition, List<PropertyChange> propertyChanges) {
 
-    if (propertyChanges == null || propertyChanges.isEmpty()) {
-      if (OPERATION_TYPE_CREATE.equals(entry.getOperationType())) {
-        propertyChanges = Arrays.asList(PropertyChange.EMPTY_CHANGE);
-      }
+    if ((propertyChanges == null || propertyChanges.isEmpty()) && OPERATION_TYPE_CREATE.equals(entry.getOperationType())) {
+      propertyChanges = List.of(PropertyChange.EMPTY_CHANGE);
     }
     entry.setPropertyChanges(propertyChanges);
     entry.setRootProcessInstanceId(variable.getRootProcessInstanceId());

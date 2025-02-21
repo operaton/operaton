@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.junit.After;
 import org.junit.Test;
 
-public class SkipOutputMappingOnCanceledActitivitesTest extends PluggableProcessEngineTest {
+public class SkipOutputMappingOnCanceledActivitiesTest extends PluggableProcessEngineTest {
 
   protected static final String WORKER_ID = "aWorkerId";
   protected static final long LOCK_TIME = 10000L;
@@ -41,7 +41,7 @@ public class SkipOutputMappingOnCanceledActitivitesTest extends PluggableProcess
   }
 
   @Test
-  @Deployment(resources = "org/operaton/bpm/engine/test/io/SkipOutputMappingOnCanceledActitivitesTest.oneExternalTaskWithOutputMappingAndCatchingErrorBoundaryEvent.bpmn")
+  @Deployment(resources = "org/operaton/bpm/engine/test/io/SkipOutputMappingOnCanceledActivitiesTest.oneExternalTaskWithOutputMappingAndCatchingErrorBoundaryEvent.bpmn")
   public void shouldSkipOutputMappingOnBpmnErrorAtExternalTask() {
     // given a process with one external task which has output mapping configured
     processEngineConfiguration.setSkipOutputMappingOnCanceledActivities(true);
@@ -63,7 +63,7 @@ public class SkipOutputMappingOnCanceledActitivitesTest extends PluggableProcess
   }
 
   @Test
-  @Deployment(resources = "org/operaton/bpm/engine/test/io/SkipOutputMappingOnCanceledActitivitesTest.oneExternalTaskWithOutputMappingAndCatchingErrorBoundaryEvent.bpmn")
+  @Deployment(resources = "org/operaton/bpm/engine/test/io/SkipOutputMappingOnCanceledActivitiesTest.oneExternalTaskWithOutputMappingAndCatchingErrorBoundaryEvent.bpmn")
   public void shouldNotSkipOutputMappingOnBpmnErrorAtExternalTask() {
     // given a process with one external task which has output mapping configured
     processEngineConfiguration.setSkipOutputMappingOnCanceledActivities(false);
@@ -74,13 +74,14 @@ public class SkipOutputMappingOnCanceledActitivitesTest extends PluggableProcess
       .topic(TOPIC_NAME, LOCK_TIME)
       .execute();
     assertThat(externalTasks).hasSize(1);
-    assertThatThrownBy(() -> externalTaskService.handleBpmnError(externalTasks.get(0).getId(), WORKER_ID, "errorCode", null))
+    String externalTaskId = externalTasks.get(0).getId();
+    assertThatThrownBy(() -> externalTaskService.handleBpmnError(externalTaskId, WORKER_ID, "errorCode", null))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Propagation of bpmn error errorCode failed.");
   }
 
   @Test
-  @Deployment(resources = "org/operaton/bpm/engine/test/io/SkipOutputMappingOnCanceledActitivitesTest.oneSubprocessWithOutputMappingAndCatchingErrorBoundaryEvent.bpmn")
+  @Deployment(resources = "org/operaton/bpm/engine/test/io/SkipOutputMappingOnCanceledActivitiesTest.oneSubprocessWithOutputMappingAndCatchingErrorBoundaryEvent.bpmn")
   public void shouldSkipOutputMappingOnBpmnErrorInSubprocess() {
     // given a process with one external task which has output mapping configured
     processEngineConfiguration.setSkipOutputMappingOnCanceledActivities(true);
@@ -102,7 +103,7 @@ public class SkipOutputMappingOnCanceledActitivitesTest extends PluggableProcess
   }
 
   @Test
-  @Deployment(resources = "org/operaton/bpm/engine/test/io/SkipOutputMappingOnCanceledActitivitesTest.oneSubprocessWithOutputMappingAndCatchingErrorBoundaryEvent.bpmn")
+  @Deployment(resources = "org/operaton/bpm/engine/test/io/SkipOutputMappingOnCanceledActivitiesTest.oneSubprocessWithOutputMappingAndCatchingErrorBoundaryEvent.bpmn")
   public void shouldNotSkipOutputMappingOnBpmnErrorInSubprocess() {
     // given a process with one external task which has output mapping configured
     processEngineConfiguration.setSkipOutputMappingOnCanceledActivities(false);
@@ -112,8 +113,9 @@ public class SkipOutputMappingOnCanceledActitivitesTest extends PluggableProcess
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task).isNotNull();
     assertThat(task.getName()).isEqualTo("userTask in Subprocess");
+    String taskId = task.getId();
 
-    assertThatThrownBy(() -> taskService.handleBpmnError(task.getId(), "errorCode"))
+    assertThatThrownBy(() -> taskService.handleBpmnError(taskId, "errorCode"))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Propagation of bpmn error errorCode failed.");
   }

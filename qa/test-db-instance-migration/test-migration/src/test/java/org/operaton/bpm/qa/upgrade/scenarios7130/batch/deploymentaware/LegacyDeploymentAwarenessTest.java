@@ -149,8 +149,7 @@ public class LegacyDeploymentAwarenessTest {
 
   protected Job getSeedJob(Batch batch) {
     String seedJobDefinitionId = batch.getSeedJobDefinitionId();
-    Job seedJob = managementService.createJobQuery().jobDefinitionId(seedJobDefinitionId).singleResult();
-    return seedJob;
+    return managementService.createJobQuery().jobDefinitionId(seedJobDefinitionId).singleResult();
   }
 
   protected void executeSeedJob(Batch batch) {

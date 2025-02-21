@@ -40,8 +40,7 @@ public class CdiResolver extends ELResolver {
 
   protected javax.el.ELResolver getWrappedResolver() {
     BeanManager beanManager = getBeanManager();
-    javax.el.ELResolver resolver = beanManager.getELResolver();
-    return resolver;
+    return beanManager.getELResolver();
   }
 
   @Override

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.history;
 
-import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -40,9 +39,9 @@ import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
 
 /**
  * @author Askar Akhmerov
@@ -113,12 +112,12 @@ public class HistoryServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
     Batch batch = historyService.deleteHistoricProcessInstancesAsync(historicProcessInstances, TEST_REASON);
     // then a seed job with the lowest deployment id exist
     Job seedJob = getSeedJob(batch);
-    assertEquals(firstDeploymentId, seedJob.getDeploymentId());
+    assertThat(seedJob.getDeploymentId()).isEqualTo(firstDeploymentId);
     // when
     executeSeedJob(batch);
     // then
     seedJob = getSeedJob(batch);
-    assertEquals(firstDeploymentId, seedJob.getDeploymentId());
+    assertThat(seedJob.getDeploymentId()).isEqualTo(firstDeploymentId);
     // when
     executeSeedJob(batch);
     // then batch jobs with different deployment ids exist
@@ -189,8 +188,10 @@ public class HistoryServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
 
   @Test
   public void testDeleteHistoryProcessInstancesAsyncWithEmptyList() {
+    // given
+    List<String> processInstanceIds = emptyList();
     // when/then
-    assertThatThrownBy(() -> historyService.deleteHistoricProcessInstancesAsync(new ArrayList<String>(), TEST_REASON))
+    assertThatThrownBy(() -> historyService.deleteHistoricProcessInstancesAsync(processInstanceIds, TEST_REASON))
       .isInstanceOf(ProcessEngineException.class);
   }
 
@@ -315,7 +316,7 @@ public class HistoryServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
     Batch batch = historyService.deleteHistoricProcessInstancesAsync(historicProcessInstances, TEST_REASON);
 
     // then
-    Assertions.assertThat(batch.getInvocationsPerBatchJob()).isEqualTo(42);
+    assertThat(batch.getInvocationsPerBatchJob()).isEqualTo(42);
 
     // clear
     engineRule.getProcessEngineConfiguration()

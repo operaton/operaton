@@ -22,6 +22,7 @@ import org.operaton.spin.impl.json.jackson.format.MapJacksonJsonTypeDetector;
 import org.operaton.spin.impl.json.jackson.format.SetJacksonJsonTypeDetector;
 import org.operaton.spin.json.mapping.Customer;
 import org.operaton.spin.json.mapping.RegularCustomer;
+import org.operaton.spin.spi.DataFormatMapper;
 import static org.operaton.spin.DataFormats.json;
 
 import java.util.*;
@@ -135,9 +136,11 @@ class JsonJacksonTreeTypeDetectionTest {
 
   @Test
   void shouldHandleNullParameter() {
-    // given, when, then
+    // given
+    DataFormatMapper mapper = json().getMapper();
+    // when, then
     try {
-      json().getMapper().getCanonicalTypeName(null);
+      mapper.getCanonicalTypeName(null);
       fail("Expected IllegalArgumentException");
     } catch (IllegalArgumentException e) {
       // happy path

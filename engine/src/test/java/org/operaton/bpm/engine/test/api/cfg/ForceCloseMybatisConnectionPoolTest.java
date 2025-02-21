@@ -16,13 +16,15 @@
  */
 package org.operaton.bpm.engine.test.api.cfg;
 
-import org.apache.ibatis.datasource.pooled.PoolState;
-import org.apache.ibatis.datasource.pooled.PooledDataSource;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
-import org.junit.Assert;
+
+import org.apache.ibatis.datasource.pooled.PoolState;
+import org.apache.ibatis.datasource.pooled.PooledDataSource;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Daniel Meyer
@@ -53,7 +55,7 @@ public class ForceCloseMybatisConnectionPoolTest {
     processEngine.close();
 
     // the idle connections are closed
-    Assert.assertTrue(state.getIdleConnectionCount() == 0);
+    assertThat(state.getIdleConnectionCount()).isZero();
 
   }
 
@@ -80,11 +82,11 @@ public class ForceCloseMybatisConnectionPoolTest {
     processEngine.close();
 
     // the idle connections are not closed
-    Assert.assertEquals(state.getIdleConnectionCount(), idleConnections);
+    assertThat(idleConnections).isEqualTo(state.getIdleConnectionCount());
 
     pooledDataSource.forceCloseAll();
 
-    Assert.assertTrue(state.getIdleConnectionCount() == 0);
+    assertThat(state.getIdleConnectionCount()).isZero();
   }
 
 }

@@ -53,11 +53,11 @@ public class SuspendProcessDefinitionDeleteScenario {
         identityService.setAuthentication("jane01", null);
 
         engine.getProcessEngineConfiguration().setAuthorizationEnabled(false);
-        ClockUtil.setCurrentTime(new Date(1549000000000l));
+        ClockUtil.setCurrentTime(new Date(1549000000000L));
         engine.getRuntimeService().suspendProcessInstanceById(processInstance1.getId());
-        ClockUtil.setCurrentTime(new Date(1549100000000l));
+        ClockUtil.setCurrentTime(new Date(1549100000000L));
         engine.getRuntimeService().suspendProcessInstanceById(processInstance2.getId());
-        ClockUtil.setCurrentTime(new Date(1549200000000l));
+        ClockUtil.setCurrentTime(new Date(1549200000000L));
         engine.getRuntimeService().suspendProcessInstanceById(processInstance3.getId());
 
         ClockUtil.reset();

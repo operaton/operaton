@@ -81,7 +81,7 @@ public class SuspendProcessDefinitionDeleteAuthorizationTest {
     // given
     UserOperationLogQuery query = historyService.createUserOperationLogQuery()
         .processDefinitionKey("timerBoundaryProcess")
-        .afterTimestamp(new Date(1549110000000l));
+        .afterTimestamp(new Date(1549110000000L));
 
     // assume
     assertEquals(1L, query.count());
@@ -108,7 +108,7 @@ public class SuspendProcessDefinitionDeleteAuthorizationTest {
     // given
     UserOperationLogQuery query = historyService.createUserOperationLogQuery()
         .processDefinitionKey("timerBoundaryProcess")
-        .beforeTimestamp(new Date(1549110000000l));
+        .beforeTimestamp(new Date(1549110000000L));
 
     // assume
     assertTrue(query.count() == 1 || query.count() == 2);
@@ -136,7 +136,7 @@ public class SuspendProcessDefinitionDeleteAuthorizationTest {
     // given
     UserOperationLogQuery query = historyService.createUserOperationLogQuery()
         .processDefinitionKey("timerBoundaryProcess")
-        .beforeTimestamp(new Date(1549110000000l));
+        .beforeTimestamp(new Date(1549110000000L));
 
     // assume
     assertTrue(query.count() == 1 || query.count() == 2);

@@ -17,12 +17,12 @@
 package org.operaton.bpm.engine.test.api.history;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicBatchByEndTime;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicBatchById;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicBatchByStartTime;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
-import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,7 +44,6 @@ import org.operaton.bpm.engine.test.api.runtime.migration.batch.BatchMigrationHe
 import org.operaton.bpm.engine.test.util.ClockTestUtil;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -91,15 +90,16 @@ public class HistoricBatchQueryTest {
     List<HistoricBatch> list = historyService.createHistoricBatchQuery().list();
 
     // then
-    assertEquals(2, list.size());
+    assertThat(list).hasSize(2);
 
     List<String> batchIds = new ArrayList<>();
     for (HistoricBatch resultBatch : list) {
       batchIds.add(resultBatch.getId());
     }
 
-    Assert.assertTrue(batchIds.contains(batch1.getId()));
-    Assert.assertTrue(batchIds.contains(batch2.getId()));
+    assertThat(batchIds)
+            .contains(batch1.getId())
+            .contains(batch2.getId());
   }
 
   @Test
@@ -120,19 +120,19 @@ public class HistoricBatchQueryTest {
     HistoricBatch resultBatch = historyService.createHistoricBatchQuery().singleResult();
 
     // then
-    Assert.assertNotNull(resultBatch);
+    assertThat(resultBatch).isNotNull();
 
-    assertEquals(batch.getId(), resultBatch.getId());
-    assertEquals(batch.getBatchJobDefinitionId(), resultBatch.getBatchJobDefinitionId());
-    assertEquals(batch.getMonitorJobDefinitionId(), resultBatch.getMonitorJobDefinitionId());
-    assertEquals(batch.getSeedJobDefinitionId(), resultBatch.getSeedJobDefinitionId());
-    assertEquals(batch.getTenantId(), resultBatch.getTenantId());
-    assertEquals(batch.getType(), resultBatch.getType());
-    assertEquals(batch.getBatchJobsPerSeed(), resultBatch.getBatchJobsPerSeed());
-    assertEquals(batch.getInvocationsPerBatchJob(), resultBatch.getInvocationsPerBatchJob());
-    assertEquals(batch.getTotalJobs(), resultBatch.getTotalJobs());
-    assertEquals(startDate, resultBatch.getStartTime());
-    assertEquals(endDate, resultBatch.getEndTime());
+    assertThat(resultBatch.getId()).isEqualTo(batch.getId());
+    assertThat(resultBatch.getBatchJobDefinitionId()).isEqualTo(batch.getBatchJobDefinitionId());
+    assertThat(resultBatch.getMonitorJobDefinitionId()).isEqualTo(batch.getMonitorJobDefinitionId());
+    assertThat(resultBatch.getSeedJobDefinitionId()).isEqualTo(batch.getSeedJobDefinitionId());
+    assertThat(resultBatch.getTenantId()).isEqualTo(batch.getTenantId());
+    assertThat(resultBatch.getType()).isEqualTo(batch.getType());
+    assertThat(resultBatch.getBatchJobsPerSeed()).isEqualTo(batch.getBatchJobsPerSeed());
+    assertThat(resultBatch.getInvocationsPerBatchJob()).isEqualTo(batch.getInvocationsPerBatchJob());
+    assertThat(resultBatch.getTotalJobs()).isEqualTo(batch.getTotalJobs());
+    assertThat(resultBatch.getStartTime()).isEqualTo(startDate);
+    assertThat(resultBatch.getEndTime()).isEqualTo(endDate);
   }
 
   @Test
@@ -145,15 +145,16 @@ public class HistoricBatchQueryTest {
     HistoricBatch resultBatch = historyService.createHistoricBatchQuery().batchId(batch1.getId()).singleResult();
 
     // then
-    Assert.assertNotNull(resultBatch);
-    assertEquals(batch1.getId(), resultBatch.getId());
+    assertThat(resultBatch).isNotNull();
+    assertThat(resultBatch.getId()).isEqualTo(batch1.getId());
   }
 
   @Test
   public void testBatchQueryByIdNull() {
+    var historicBatchQuery = historyService.createHistoricBatchQuery();
     try {
-      historyService.createHistoricBatchQuery().batchId(null).singleResult();
-      Assert.fail("exception expected");
+      historicBatchQuery.batchId(null);
+      fail("exception expected");
     }
     catch (NullValueException e) {
       assertThat(e.getMessage()).contains("Batch id is null");
@@ -170,7 +171,7 @@ public class HistoricBatchQueryTest {
     long count = historyService.createHistoricBatchQuery().type(batch1.getType()).count();
 
     // then
-    assertEquals(2, count);
+    assertThat(count).isEqualTo(2);
   }
 
   @Test
@@ -182,7 +183,7 @@ public class HistoricBatchQueryTest {
     long count = historyService.createHistoricBatchQuery().type("foo").count();
 
     // then
-    assertEquals(0, count);
+    assertThat(count).isZero();
   }
 
   @Test
@@ -199,7 +200,7 @@ public class HistoricBatchQueryTest {
       .singleResult();
 
     // then
-    assertEquals(batch1.getId(), historicBatch.getId());
+    assertThat(historicBatch.getId()).isEqualTo(batch1.getId());
 
     // when
     historicBatch = historyService.createHistoricBatchQuery()
@@ -207,14 +208,15 @@ public class HistoricBatchQueryTest {
       .singleResult();
 
     // then
-    assertEquals(batch2.getId(), historicBatch.getId());
+    assertThat(historicBatch.getId()).isEqualTo(batch2.getId());
   }
 
   @Test
   public void testBatchQueryByTypeNull() {
+    var historicBatchQuery = historyService.createHistoricBatchQuery();
     try {
-      historyService.createHistoricBatchQuery().type(null).singleResult();
-      Assert.fail("exception expected");
+      historicBatchQuery.type(null);
+      fail("exception expected");
     }
     catch (NullValueException e) {
       assertThat(e.getMessage()).contains("Type is null");
@@ -231,7 +233,7 @@ public class HistoricBatchQueryTest {
     long count = historyService.createHistoricBatchQuery().count();
 
     // then
-    assertEquals(2, count);
+    assertThat(count).isEqualTo(2);
   }
 
   @Test
@@ -328,25 +330,25 @@ public class HistoricBatchQueryTest {
 
   @Test
   public void testBatchQueryOrderingPropertyWithoutOrder() {
+    var historicBatchQuery = historyService.createHistoricBatchQuery().orderById();
     try {
-      historyService.createHistoricBatchQuery().orderById().singleResult();
-      Assert.fail("exception expected");
+      historicBatchQuery.singleResult();
+      fail("exception expected");
     }
     catch (NotValidException e) {
-      assertThat(e.getMessage()).contains("Invalid query: "
-          + "call asc() or desc() after using orderByXX()");
+      assertThat(e.getMessage()).contains("Invalid query: call asc() or desc() after using orderByXX()");
     }
   }
 
   @Test
   public void testBatchQueryOrderWithoutOrderingProperty() {
+    var historicBatchQuery = historyService.createHistoricBatchQuery();
     try {
-      historyService.createHistoricBatchQuery().asc().singleResult();
-      Assert.fail("exception expected");
+      historicBatchQuery.asc();
+      fail("exception expected");
     }
     catch (NotValidException e) {
-      assertThat(e.getMessage()).contains("You should call any of the orderBy methods "
-          + "first before specifying a direction");
+      assertThat(e.getMessage()).contains("You should call any of the orderBy methods first before specifying a direction");
     }
   }
 }

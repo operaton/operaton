@@ -140,8 +140,7 @@ public abstract class AuthorizationTest extends AbstractCockpitPluginTest {
   }
 
   protected Authorization createGrantAuthorization(Resource resource, String resourceId) {
-    Authorization authorization = createAuthorization(AUTH_TYPE_GRANT, resource, resourceId);
-    return authorization;
+    return createAuthorization(AUTH_TYPE_GRANT, resource, resourceId);
   }
 
   protected Authorization createAuthorization(int type, Resource resource, String resourceId) {

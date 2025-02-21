@@ -1,0 +1,180 @@
+/*
+ * Copyright and/or licensed under one or more contributor license agreements.
+ * See the NOTICE file distributed with this work for additional information regarding
+ * copyright ownership. This file is licensed to you under the Apache License,
+ * Version 2.0; you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.operaton.bpm.engine.test.junit5;
+
+import static java.util.Arrays.asList;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Stream;
+
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.Extension;
+import org.junit.jupiter.api.extension.ExtensionConfigurationException;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.ParameterContext;
+import org.junit.jupiter.api.extension.ParameterResolutionException;
+import org.junit.jupiter.api.extension.ParameterResolver;
+import org.junit.jupiter.api.extension.TestInstanceFactory;
+import org.junit.jupiter.api.extension.TestInstanceFactoryContext;
+import org.junit.jupiter.api.extension.TestInstantiationException;
+import org.junit.jupiter.api.extension.TestTemplateInvocationContext;
+import org.junit.jupiter.api.extension.TestTemplateInvocationContextProvider;
+
+/**
+ * This JUnit 5 extension is intended to make the conversion from JUnit 4 Tests like ContainerAuthenticationFilterTest
+ * as easy as possible. The issue is, that these tests are run with @RunWith(org.junit.runners.Parameterized.class)
+ * and use a static method annotated with @org.junit.runners.Parameterized.Parameters to inject parameters into
+ * the constructor of the test class. This extension implements the same mechanism for JUnit 5.
+ * 
+ * To migrate the tests you can follow the following recipe:
+ * 
+ * 1. Remove the junit 4 imports
+ * 
+ *    import org.junit.After;
+ *    import org.junit.Assert;
+ *    import org.junit.Before;
+ *    import org.junit.Test;
+ *    import org.junit.runner.RunWith;
+ *    import org.junit.runners.Parameterized;
+ *    import org.junit.runners.Parameterized.Parameters;
+ *    
+ * 2. Add the imports for junit 5 and this class
+ * 
+ *    import org.junit.jupiter.api.*;
+ *    import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+ *    import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+ *    
+ * 3. Replace the class @RunWith(Parameterized.class) annotation with @Parameterized
+ * 
+ * 4. Replace @Before with @BeforeEach and @After with @AfterEach
+ * 
+ * 5. Replace each @Test with @TestTemplate
+ * 
+ * 6. Use assertion methods from Assertions instead from Assert
+ * 
+ */
+public class ParameterizedTestExtension implements TestTemplateInvocationContextProvider {
+
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target(ElementType.METHOD)
+	public @interface Parameters {
+	}
+
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target(ElementType.TYPE)
+	@ExtendWith(ParameterizedTestExtension.class)
+	public @interface Parameterized {
+	}
+
+	@Override
+	public boolean supportsTestTemplate(ExtensionContext context) {
+		// This extension “activates” if the test class is annotated with our marker
+		return context.getTestClass().map(cls -> cls.isAnnotationPresent(Parameterized.class)).orElse(false);
+	}
+
+	@Override
+	public Stream<TestTemplateInvocationContext> provideTestTemplateInvocationContexts(ExtensionContext context) {
+		Class<?> testClass = context.getRequiredTestClass();
+		// Look for a static method annotated with
+		// @org.junit.runners.Parameterized.Parameters
+		Method parametersMethod = Arrays.stream(testClass.getDeclaredMethods())
+				.filter(m -> m.isAnnotationPresent(Parameters.class) && Modifier.isStatic(m.getModifiers())).findFirst()
+				.orElseThrow(() -> new ExtensionConfigurationException(
+						"No static @Parameters method found in " + testClass.getName()));
+
+		Object parametersResult;
+		try {
+			parametersMethod.setAccessible(true);
+			parametersResult = parametersMethod.invoke(null);
+		} catch (Exception e) {
+			throw new ExtensionConfigurationException("Failed to invoke @Parameters method", e);
+		}
+
+		if (!(parametersResult instanceof Collection)) {
+			throw new ExtensionConfigurationException("@Parameters method must return a Collection<Object[]>");
+		}
+
+		@SuppressWarnings("unchecked")
+		Collection<Object[]> parameterSets = (Collection<Object[]>) parametersResult;
+		return parameterSets.stream().map(params -> new ParameterizedTestInvocationContext(params));
+	}
+
+	private static class ParameterizedTestInvocationContext implements TestTemplateInvocationContext {
+
+		private final Object[] parameters;
+
+		ParameterizedTestInvocationContext(Object[] parameters) {
+			this.parameters = parameters;
+		}
+
+		@Override
+		public String getDisplayName(int invocationIndex) {
+			return "Parameters: " + Arrays.toString(parameters);
+		}
+
+		@Override
+		public List<Extension> getAdditionalExtensions() {
+			return asList(
+					// A ParameterResolver that will resolve constructor (or method) parameters.
+					new ParameterResolver() {
+						@Override
+						public boolean supportsParameter(ParameterContext parameterContext,
+								ExtensionContext extensionContext) throws ParameterResolutionException {
+							// we assume the number of parameters from the static method exactly match the
+							// number needed.
+							return true;
+						}
+
+						@Override
+						public Object resolveParameter(ParameterContext parameterContext,
+								ExtensionContext extensionContext) throws ParameterResolutionException {
+							int index = parameterContext.getIndex();
+							if (index >= parameters.length) {
+								throw new ParameterResolutionException("Not enough parameters provided; index " + index
+										+ " out of " + parameters.length);
+							}
+							return parameters[index];
+						}
+					},
+					// A TestInstanceFactory that uses our parameters to create a new instance.
+					new TestInstanceFactory() {
+						@Override
+						public Object createTestInstance(TestInstanceFactoryContext factoryContext,
+								ExtensionContext extensionContext) throws TestInstantiationException {
+							try {
+								Class<?> testClass = extensionContext.getRequiredTestClass();
+								// we assume the test class has a single constructor.
+								Constructor<?> constructor = testClass.getDeclaredConstructors()[0];
+								constructor.setAccessible(true);
+								// Use the parameters provided by our invocation context.
+								return constructor.newInstance(parameters);
+							} catch (Exception e) {
+								throw new TestInstantiationException("Could not create test instance", e);
+							}
+						}
+					});
+		}
+	}
+}

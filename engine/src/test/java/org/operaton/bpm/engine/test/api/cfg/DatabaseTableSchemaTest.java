@@ -33,9 +33,10 @@ import org.apache.ibatis.datasource.pooled.PooledDataSource;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.Test.None;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertTrue;
 
 /**
  * @author Ronny Bräunlich
@@ -61,7 +62,7 @@ public class DatabaseTableSchemaTest {
     connection.close();
   }
 
-  @Test
+  @Test(expected=None.class)
   public void testPerformDatabaseSchemaOperationCreateTwice() throws Exception {
 
     Connection connection = pooledDataSource.getConnection();
@@ -111,7 +112,7 @@ public class DatabaseTableSchemaTest {
 
     commandExecutor.execute(commandContext -> {
       DbSqlSession sqlSession = commandContext.getSession(DbSqlSession.class);
-      assertTrue(sqlSession.isTablePresent("SOME_TABLE"));
+      assertThat(sqlSession.isTablePresent("SOME_TABLE")).isTrue();
       return null;
     });
 

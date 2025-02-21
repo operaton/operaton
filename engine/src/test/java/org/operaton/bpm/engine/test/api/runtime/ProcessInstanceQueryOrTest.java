@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.runtime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -68,91 +67,83 @@ public class ProcessInstanceQueryOrTest {
 
   @Test
   public void shouldThrowExceptionByMissingStartOr() {
+    // given
+    var processInstanceQuery = runtimeService.createProcessInstanceQuery().or().endOr();
 
     // when/then
-    assertThatThrownBy(() -> runtimeService.createProcessInstanceQuery()
-        .or()
-        .endOr()
-        .endOr())
+    assertThatThrownBy(processInstanceQuery::endOr)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Invalid query usage: cannot set endOr() before or()");
   }
 
   @Test
   public void shouldThrowExceptionByNesting() {
+    // given
+    var processInstanceQuery = runtimeService.createProcessInstanceQuery().or();
 
     // when/then
-    assertThatThrownBy(() -> runtimeService.createProcessInstanceQuery()
-        .or()
-        .or()
-        .endOr()
-        .endOr()
-        .or()
-        .endOr())
+    assertThatThrownBy(processInstanceQuery::or)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Invalid query usage: cannot set or() within 'or' query");
   }
 
   @Test
   public void shouldThrowExceptionOnOrderByProcessInstanceId() {
+    // given
+    var processInstanceQuery = runtimeService.createProcessInstanceQuery()
+      .or();
 
     // when/then
-    assertThatThrownBy(() -> runtimeService.createProcessInstanceQuery()
-        .or()
-        .orderByProcessInstanceId()
-        .endOr())
+    assertThatThrownBy(processInstanceQuery::orderByProcessInstanceId)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Invalid query usage: cannot set orderByProcessInstanceId() within 'or' query");
   }
 
   @Test
   public void shouldThrowExceptionOnOrderByProcessDefinitionId() {
+    // given
+    var processInstanceQuery = runtimeService.createProcessInstanceQuery()
+      .or();
 
     // when/then
-    assertThatThrownBy(() -> runtimeService.createProcessInstanceQuery()
-        .or()
-        .orderByProcessDefinitionId()
-      .endOr())
+    assertThatThrownBy(processInstanceQuery::orderByProcessDefinitionId)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Invalid query usage: cannot set orderByProcessDefinitionId() within 'or' query");
   }
 
   @Test
   public void shouldThrowExceptionOnOrderByProcessDefinitionKey() {
+    // given
+    var processInstanceQuery = runtimeService.createProcessInstanceQuery()
+      .or();
 
     // when/then
-    assertThatThrownBy(() -> runtimeService.createProcessInstanceQuery()
-        .or()
-          .orderByProcessDefinitionKey()
-        .endOr())
+    assertThatThrownBy(processInstanceQuery::orderByProcessDefinitionKey)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Invalid query usage: cannot set orderByProcessDefinitionKey() within 'or' query");
 
   }
 
   @Test
-  public void shouldThrowExceptionOnOorderByTenantIdd() {
+  public void shouldThrowExceptionOnOrderByTenantId() {
+    // given
+    var processInstanceQuery = runtimeService.createProcessInstanceQuery().or();
 
     // when/then
-    assertThatThrownBy(() -> runtimeService.createProcessInstanceQuery()
-        .or()
-          .orderByTenantId()
-        .endOr())
+    assertThatThrownBy(processInstanceQuery::orderByTenantId)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Invalid query usage: cannot set orderByTenantId() within 'or' query");
   }
 
   @Test
   public void shouldThrowExceptionOnOrderByBusinessKey() {
+    // given
+    var processInstanceQuery = runtimeService.createProcessInstanceQuery().or();
 
     // when/then
-    assertThatThrownBy(() -> runtimeService.createProcessInstanceQuery()
-        .or()
-          .orderByBusinessKey()
-        .endOr())
+    assertThatThrownBy(processInstanceQuery::orderByBusinessKey)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Invalid query usage: cannot set orderByBusinessKey() within 'or' query");
-
   }
 
   @Test
@@ -169,7 +160,7 @@ public class ProcessInstanceQueryOrTest {
         .list();
 
     // then
-    assertEquals(2, processInstances.size());
+    assertThat(processInstances).hasSize(2);
   }
 
   @Test
@@ -193,7 +184,7 @@ public class ProcessInstanceQueryOrTest {
         .list();
 
     // then
-    assertEquals(2, processInstances.size());
+    assertThat(processInstances).hasSize(2);
   }
 
   @Test
@@ -227,7 +218,7 @@ public class ProcessInstanceQueryOrTest {
         .list();
 
     // then
-    assertEquals(4, processInstances.size());
+    assertThat(processInstances).hasSize(4);
   }
 
   @Test
@@ -264,7 +255,7 @@ public class ProcessInstanceQueryOrTest {
         .list();
 
     // then
-    assertEquals(2, processInstances.size());
+    assertThat(processInstances).hasSize(2);
   }
 
   @Test
@@ -329,7 +320,7 @@ public class ProcessInstanceQueryOrTest {
         .list();
 
     // then
-    assertEquals(2, processInstances.size());
+    assertThat(processInstances).hasSize(2);
   }
 
   @Test
@@ -350,7 +341,7 @@ public class ProcessInstanceQueryOrTest {
         .list();
 
     // then
-    assertEquals(1, processInstances.size());
+    assertThat(processInstances).hasSize(1);
   }
 
   @Test
@@ -377,7 +368,7 @@ public class ProcessInstanceQueryOrTest {
         .endOr();
 
     // then
-    assertEquals(3, query.count());
+    assertThat(query.count()).isEqualTo(3);
   }
 
   @Test
@@ -425,7 +416,7 @@ public class ProcessInstanceQueryOrTest {
         .list();
 
     // then
-    assertEquals(2, processInstances.size());
+    assertThat(processInstances).hasSize(2);
   }
 
   @Test
@@ -472,7 +463,7 @@ public class ProcessInstanceQueryOrTest {
         .list();
 
     // then
-    assertEquals(2, processInstances.size());
+    assertThat(processInstances).hasSize(2);
   }
 
   @Test
@@ -513,8 +504,8 @@ public class ProcessInstanceQueryOrTest {
         .list();
 
     // assume
-    assertEquals(2, activeProcessInstances.size());
-    assertEquals(1, suspendedProcessInstances.size());
+    assertThat(activeProcessInstances).hasSize(2);
+    assertThat(suspendedProcessInstances).hasSize(1);
 
     List<ProcessInstance> processInstances = runtimeService.createProcessInstanceQuery()
         .or()
@@ -524,7 +515,7 @@ public class ProcessInstanceQueryOrTest {
         .list();
 
     // then
-    assertEquals(3, processInstances.size());
+    assertThat(processInstances).hasSize(3);
   }
 
   @Test

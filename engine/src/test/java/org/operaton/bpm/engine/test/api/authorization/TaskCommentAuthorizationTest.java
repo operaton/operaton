@@ -18,10 +18,8 @@ package org.operaton.bpm.engine.test.api.authorization;
 
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
 import static org.operaton.bpm.engine.authorization.Resources.TASK;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Collections;
 import java.util.List;
@@ -41,10 +39,11 @@ public class TaskCommentAuthorizationTest extends AuthorizationTest {
     // given
     createTask(TASK_ID);
     Comment createdComment = createComment(TASK_ID, null, "aComment");
+    var createdCommentId = createdComment.getId();
 
     try {
       // when
-      taskService.deleteTaskComment(TASK_ID, createdComment.getId());
+      taskService.deleteTaskComment(TASK_ID, createdCommentId);
       fail("Exception expected: It should not be possible to delete a comment.");
     } catch (AuthorizationException e) {
       // then
@@ -69,7 +68,7 @@ public class TaskCommentAuthorizationTest extends AuthorizationTest {
 
     // then
     Comment shouldBeDeleletedComment = taskService.getTaskComment(TASK_ID, createdComment.getId());
-    assertNull(shouldBeDeleletedComment);
+    assertThat(shouldBeDeleletedComment).isNull();
 
     // triggers a db clean up
     deleteTask(TASK_ID, true);
@@ -110,7 +109,7 @@ public class TaskCommentAuthorizationTest extends AuthorizationTest {
 
     // then
     List<Comment> comments = taskService.getTaskComments(TASK_ID);
-    assertEquals("The comments list should be empty", Collections.emptyList(), comments);
+    assertThat(comments).as("The comments list should be empty").isEqualTo(Collections.emptyList());
 
     // triggers a db clean up
     deleteTask(TASK_ID, true);
@@ -121,10 +120,11 @@ public class TaskCommentAuthorizationTest extends AuthorizationTest {
     // given
     createTask(TASK_ID);
     Comment createdComment = createComment(TASK_ID, null, "originalComment");
+    var createdCommentId = createdComment.getId();
 
     try {
       // when
-      taskService.updateTaskComment(TASK_ID, createdComment.getId(), "updateMessage");
+      taskService.updateTaskComment(TASK_ID, createdCommentId, "updateMessage");
       fail("Exception expected: It should not be possible to delete a comment.");
     } catch (AuthorizationException e) {
       // then
@@ -151,8 +151,8 @@ public class TaskCommentAuthorizationTest extends AuthorizationTest {
 
     // then
     List<Comment> comments = taskService.getTaskComments(TASK_ID);
-    assertFalse("The comments list should not be empty", comments.isEmpty());
-    assertEquals(updatedMessage, comments.get(0).getFullMessage());
+    assertThat(comments).as("The comments list should not be empty").isNotEmpty();
+    assertThat(comments.get(0).getFullMessage()).isEqualTo(updatedMessage);
 
     // triggers a db clean up
     deleteTask(TASK_ID, true);
@@ -163,12 +163,12 @@ public class TaskCommentAuthorizationTest extends AuthorizationTest {
   public void testDeleteProcessTaskCommentWithoutAuthorization() {
     // given
     ProcessInstance processInstance = startProcessInstanceByKey(PROCESS_KEY);
-    Task task = selectSingleTask();
-    Comment createdComment = createComment(task.getId(), processInstance.getId(), "aComment");
+    var taskId = selectSingleTask().getId();
+    var createdCommentId = createComment(taskId, processInstance.getId(), "aComment").getId();
 
     try {
       // when
-      taskService.deleteTaskComment(task.getId(), createdComment.getId());
+      taskService.deleteTaskComment(taskId, createdCommentId);
       fail("Exception expected: It should not be possible to delete a comment.");
     } catch (AuthorizationException e) {
       // then
@@ -193,7 +193,7 @@ public class TaskCommentAuthorizationTest extends AuthorizationTest {
 
     // then
     Comment shouldBeDeleletedComment = taskService.getTaskComment(task.getId(), createdComment.getId());
-    assertNull(shouldBeDeleletedComment);
+    assertThat(shouldBeDeleletedComment).isNull();
   }
 
   @Test
@@ -202,11 +202,12 @@ public class TaskCommentAuthorizationTest extends AuthorizationTest {
     // given
     ProcessInstance processInstance = startProcessInstanceByKey(PROCESS_KEY);
     Task task = selectSingleTask();
-    createComment(task.getId(), processInstance.getId(), "aComment");
+    var taskId = task.getId();
+    createComment(taskId, processInstance.getId(), "aComment");
 
     try {
       // when
-      taskService.deleteTaskComments(task.getId());
+      taskService.deleteTaskComments(taskId);
       fail("Exception expected: It should not be possible to delete a comment.");
     } catch (AuthorizationException e) {
       // then
@@ -232,7 +233,7 @@ public class TaskCommentAuthorizationTest extends AuthorizationTest {
 
     // then
     List<Comment> comments = taskService.getTaskComments(task.getId());
-    assertEquals("The comments list should be empty", Collections.emptyList(), comments);
+    assertThat(comments).as("The comments list should be empty").isEqualTo(Collections.emptyList());
   }
 
   @Test
@@ -240,13 +241,12 @@ public class TaskCommentAuthorizationTest extends AuthorizationTest {
   public void testUpdateProcessTaskCommentWithoutAuthorization() {
     // given
     ProcessInstance processInstance = startProcessInstanceByKey(PROCESS_KEY);
-    Task task = selectSingleTask();
-
-    Comment createdComment = createComment(task.getId(), processInstance.getId(), "originalComment");
+    var taskId = selectSingleTask().getId();
+    var createdCommentId = createComment(taskId, processInstance.getId(), "originalComment").getId();
 
     try {
       // when
-      taskService.updateTaskComment(task.getId(), createdComment.getId(), "updateMessage");
+      taskService.updateTaskComment(taskId, createdCommentId, "updateMessage");
       fail("Exception expected: It should not be possible to delete a comment.");
     } catch (AuthorizationException e) {
       // then
@@ -274,8 +274,8 @@ public class TaskCommentAuthorizationTest extends AuthorizationTest {
 
     // then
     List<Comment> comments = taskService.getTaskComments(task.getId());
-    assertFalse("The comments list should not be empty", comments.isEmpty());
-    assertEquals(updatedMessage, comments.get(0).getFullMessage());
+    assertThat(comments).as("The comments list should not be empty").isNotEmpty();
+    assertThat(comments.get(0).getFullMessage()).isEqualTo(updatedMessage);
   }
 
 }

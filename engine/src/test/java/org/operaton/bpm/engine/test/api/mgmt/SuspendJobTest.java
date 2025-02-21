@@ -16,10 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,7 +42,7 @@ public class SuspendJobTest extends PluggableProcessEngineTest {
   public void testSuspensionById_shouldThrowProcessEngineException() {
     try {
       managementService.suspendJobById(null);
-      fail("A ProcessEngineExcpetion was expected.");
+      fail("A ProcessEngineException was expected.");
     } catch (ProcessEngineException e) {
     }
   }
@@ -62,7 +60,7 @@ public class SuspendJobTest extends PluggableProcessEngineTest {
     // the failed job
     JobQuery jobQuery = managementService.createJobQuery();
     Job job = jobQuery.singleResult();
-    assertFalse(job.isSuspended());
+    assertThat(job.isSuspended()).isFalse();
 
     // when
     // the job will be suspended
@@ -70,13 +68,13 @@ public class SuspendJobTest extends PluggableProcessEngineTest {
 
     // then
     // the job should be suspended
-    assertEquals(0, jobQuery.active().count());
-    assertEquals(1, jobQuery.suspended().count());
+    assertThat(jobQuery.active().count()).isZero();
+    assertThat(jobQuery.suspended().count()).isEqualTo(1);
 
     Job suspendedJob = jobQuery.suspended().singleResult();
 
-    assertEquals(job.getId(), suspendedJob.getId());
-    assertTrue(suspendedJob.isSuspended());
+    assertThat(suspendedJob.getId()).isEqualTo(job.getId());
+    assertThat(suspendedJob.isSuspended()).isTrue();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
@@ -95,7 +93,7 @@ public class SuspendJobTest extends PluggableProcessEngineTest {
     // the failed job
     JobQuery jobQuery = managementService.createJobQuery();
     Job job = jobQuery.singleResult();
-    assertFalse(job.isSuspended());
+    assertThat(job.isSuspended()).isFalse();
 
     // when
     // the job will be suspended
@@ -103,14 +101,14 @@ public class SuspendJobTest extends PluggableProcessEngineTest {
 
     // then
     // the job should be suspended
-    assertEquals(0, jobQuery.active().count());
-    assertEquals(1, jobQuery.suspended().count());
+    assertThat(jobQuery.active().count()).isZero();
+    assertThat(jobQuery.suspended().count()).isEqualTo(1);
 
     Job suspendedJob = jobQuery.suspended().singleResult();
 
-    assertEquals(job.getId(), suspendedJob.getId());
-    assertEquals(jobDefinition.getId(), suspendedJob.getJobDefinitionId());
-    assertTrue(suspendedJob.isSuspended());
+    assertThat(suspendedJob.getId()).isEqualTo(job.getId());
+    assertThat(suspendedJob.getJobDefinitionId()).isEqualTo(jobDefinition.getId());
+    assertThat(suspendedJob.isSuspended()).isTrue();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
@@ -129,7 +127,7 @@ public class SuspendJobTest extends PluggableProcessEngineTest {
     // the failed job
     JobQuery jobQuery = managementService.createJobQuery();
     Job job = jobQuery.singleResult();
-    assertFalse(job.isSuspended());
+    assertThat(job.isSuspended()).isFalse();
 
     // when
     // the job will be suspended
@@ -137,14 +135,14 @@ public class SuspendJobTest extends PluggableProcessEngineTest {
 
     // then
     // the job should be suspended
-    assertEquals(0, jobQuery.active().count());
-    assertEquals(1, jobQuery.suspended().count());
+    assertThat(jobQuery.active().count()).isZero();
+    assertThat(jobQuery.suspended().count()).isEqualTo(1);
 
     Job suspendedJob = jobQuery.suspended().singleResult();
 
-    assertEquals(job.getId(), suspendedJob.getId());
-    assertEquals(jobDefinition.getId(), suspendedJob.getJobDefinitionId());
-    assertTrue(suspendedJob.isSuspended());
+    assertThat(suspendedJob.getId()).isEqualTo(job.getId());
+    assertThat(suspendedJob.getJobDefinitionId()).isEqualTo(jobDefinition.getId());
+    assertThat(suspendedJob.isSuspended()).isTrue();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
@@ -162,7 +160,7 @@ public class SuspendJobTest extends PluggableProcessEngineTest {
     // the failed job
     JobQuery jobQuery = managementService.createJobQuery();
     Job job = jobQuery.singleResult();
-    assertFalse(job.isSuspended());
+    assertThat(job.isSuspended()).isFalse();
 
     // when
     // the job will be suspended
@@ -170,13 +168,13 @@ public class SuspendJobTest extends PluggableProcessEngineTest {
 
     // then
     // the job should be suspended
-    assertEquals(0, jobQuery.active().count());
-    assertEquals(1, jobQuery.suspended().count());
+    assertThat(jobQuery.active().count()).isZero();
+    assertThat(jobQuery.suspended().count()).isEqualTo(1);
 
     Job suspendedJob = jobQuery.suspended().singleResult();
 
-    assertEquals(job.getId(), suspendedJob.getId());
-    assertTrue(suspendedJob.isSuspended());
+    assertThat(suspendedJob.getId()).isEqualTo(job.getId());
+    assertThat(suspendedJob.isSuspended()).isTrue();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
@@ -194,7 +192,7 @@ public class SuspendJobTest extends PluggableProcessEngineTest {
     // the failed job
     JobQuery jobQuery = managementService.createJobQuery();
     Job job = jobQuery.singleResult();
-    assertFalse(job.isSuspended());
+    assertThat(job.isSuspended()).isFalse();
 
     // when
     // the job will be suspended
@@ -202,13 +200,13 @@ public class SuspendJobTest extends PluggableProcessEngineTest {
 
     // then
     // the job should be suspended
-    assertEquals(0, jobQuery.active().count());
-    assertEquals(1, jobQuery.suspended().count());
+    assertThat(jobQuery.active().count()).isZero();
+    assertThat(jobQuery.suspended().count()).isEqualTo(1);
 
     Job suspendedJob = jobQuery.suspended().singleResult();
 
-    assertEquals(job.getId(), suspendedJob.getId());
-    assertTrue(suspendedJob.isSuspended());
+    assertThat(suspendedJob.getId()).isEqualTo(job.getId());
+    assertThat(suspendedJob.isSuspended()).isTrue();
   }
 
   @Test
@@ -235,8 +233,8 @@ public class SuspendJobTest extends PluggableProcessEngineTest {
     // the job should be suspended
     JobQuery jobQuery = managementService.createJobQuery();
 
-    assertEquals(0, jobQuery.active().count());
-    assertEquals(3, jobQuery.suspended().count());
+    assertThat(jobQuery.active().count()).isZero();
+    assertThat(jobQuery.suspended().count()).isEqualTo(3);
 
     // Clean DB
     for (org.operaton.bpm.engine.repository.Deployment deployment : repositoryService.createDeploymentQuery().list()) {
@@ -256,7 +254,7 @@ public class SuspendJobTest extends PluggableProcessEngineTest {
     // the failed job
     JobQuery jobQuery = managementService.createJobQuery();
     Job job = jobQuery.singleResult();
-    assertFalse(job.isSuspended());
+    assertThat(job.isSuspended()).isFalse();
 
     // when
     // the job will be suspended
@@ -267,8 +265,8 @@ public class SuspendJobTest extends PluggableProcessEngineTest {
 
     // then
     // the job should be suspended
-    assertEquals(0, jobQuery.active().count());
-    assertEquals(1, jobQuery.suspended().count());
+    assertThat(jobQuery.active().count()).isZero();
+    assertThat(jobQuery.suspended().count()).isEqualTo(1);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
@@ -282,7 +280,7 @@ public class SuspendJobTest extends PluggableProcessEngineTest {
 
     // the failed job
     JobQuery jobQuery = managementService.createJobQuery();
-    assertEquals(1, jobQuery.active().count());
+    assertThat(jobQuery.active().count()).isEqualTo(1);
 
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().singleResult();
 
@@ -295,8 +293,8 @@ public class SuspendJobTest extends PluggableProcessEngineTest {
 
     // then
     // the job should be suspended
-    assertEquals(0, jobQuery.active().count());
-    assertEquals(1, jobQuery.suspended().count());
+    assertThat(jobQuery.active().count()).isZero();
+    assertThat(jobQuery.suspended().count()).isEqualTo(1);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
@@ -310,7 +308,7 @@ public class SuspendJobTest extends PluggableProcessEngineTest {
 
     // the failed job
     JobQuery jobQuery = managementService.createJobQuery();
-    assertEquals(1, jobQuery.active().count());
+    assertThat(jobQuery.active().count()).isEqualTo(1);
 
     // when
     // the job will be suspended
@@ -321,8 +319,8 @@ public class SuspendJobTest extends PluggableProcessEngineTest {
 
     // then
     // the job should be suspended
-    assertEquals(0, jobQuery.active().count());
-    assertEquals(1, jobQuery.suspended().count());
+    assertThat(jobQuery.active().count()).isZero();
+    assertThat(jobQuery.suspended().count()).isEqualTo(1);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
@@ -336,7 +334,7 @@ public class SuspendJobTest extends PluggableProcessEngineTest {
 
     // the failed job
     JobQuery jobQuery = managementService.createJobQuery();
-    assertEquals(1, jobQuery.active().count());
+    assertThat(jobQuery.active().count()).isEqualTo(1);
 
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
 
@@ -349,8 +347,8 @@ public class SuspendJobTest extends PluggableProcessEngineTest {
 
     // then
     // the job should be suspended
-    assertEquals(0, jobQuery.active().count());
-    assertEquals(1, jobQuery.suspended().count());
+    assertThat(jobQuery.active().count()).isZero();
+    assertThat(jobQuery.suspended().count()).isEqualTo(1);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
@@ -364,7 +362,7 @@ public class SuspendJobTest extends PluggableProcessEngineTest {
 
     // the failed job
     JobQuery jobQuery = managementService.createJobQuery();
-    assertEquals(1, jobQuery.active().count());
+    assertThat(jobQuery.active().count()).isEqualTo(1);
 
     // when
     // the job will be suspended
@@ -375,8 +373,8 @@ public class SuspendJobTest extends PluggableProcessEngineTest {
 
     // then
     // the job should be suspended
-    assertEquals(0, jobQuery.active().count());
-    assertEquals(1, jobQuery.suspended().count());
+    assertThat(jobQuery.active().count()).isZero();
+    assertThat(jobQuery.suspended().count()).isEqualTo(1);
   }
 
 }

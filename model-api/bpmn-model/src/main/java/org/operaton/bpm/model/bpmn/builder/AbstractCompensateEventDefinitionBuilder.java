@@ -28,11 +28,6 @@ public abstract class AbstractCompensateEventDefinitionBuilder<B extends Abstrac
     super(modelInstance, element, selfType);
   }
 
-  @Override
-  public B id(String identifier) {
-    return super.id(identifier);
-  }
-
   public B activityRef(String activityId) {
     Activity activity = modelInstance.getModelElementById(activityId);
 

@@ -31,11 +31,6 @@ public abstract class AbstractMessageEventDefinitionBuilder<B extends AbstractMe
     super(modelInstance, element, selfType);
   }
 
-  @Override
-  public B id(String identifier) {
-    return super.id(identifier);
-  }
-
   /**
    * Sets the message attribute.
    *

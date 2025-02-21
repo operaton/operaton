@@ -19,8 +19,8 @@ package org.operaton.bpm.engine.test.standalone.history;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -31,6 +31,7 @@ import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguratio
 import org.operaton.bpm.engine.impl.cmd.DetermineHistoryLevelCmd;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.history.event.HistoryEventType;
+
 import org.junit.After;
 import org.junit.Test;
 
@@ -51,7 +52,7 @@ public class DetermineHistoryLevelCmdTest {
 
 
   @Test
-  public void readLevelFullfromDB() {
+  public void readLevelFullFromDB() {
     final ProcessEngineConfigurationImpl config = config("true", ProcessEngineConfiguration.HISTORY_FULL);
 
     // init the db with level=full
@@ -98,12 +99,13 @@ public class DetermineHistoryLevelCmdTest {
       }
     };
     ProcessEngineConfigurationImpl config = config("true", "custom");
-    config.setCustomHistoryLevels(Arrays.asList(customLevel));
+    config.setCustomHistoryLevels(List.of(customLevel));
     processEngineImpl = (ProcessEngineImpl) config.buildProcessEngine();
+    var determineHistoryLevelCmd = new DetermineHistoryLevelCmd(Collections.emptyList());
+    var commandExecutor = config.getCommandExecutorSchemaOperations();
 
     // when/then
-    assertThatThrownBy(() -> config.getCommandExecutorSchemaOperations().execute(
-        new DetermineHistoryLevelCmd(Collections.<HistoryLevel>emptyList())))
+    assertThatThrownBy(() -> commandExecutor.execute(determineHistoryLevelCmd))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("The configured history level with id='99' is not registered in this config.");
   }

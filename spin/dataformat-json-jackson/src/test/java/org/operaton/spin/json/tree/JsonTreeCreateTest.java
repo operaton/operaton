@@ -88,6 +88,7 @@ class JsonTreeCreateTest {
   @Test
   void shouldFailForNull() {
     SpinJsonNode jsonNode = null;
+    var json = json();
 
     try {
       JSON(jsonNode);
@@ -97,7 +98,7 @@ class JsonTreeCreateTest {
     }
 
     try {
-      S(jsonNode, json());
+      S(jsonNode, json);
       fail("Expected IllegalArgumentException");
     } catch(IllegalArgumentException e) {
       // expected
@@ -120,7 +121,7 @@ class JsonTreeCreateTest {
     }
 
     try {
-      S(reader, json());
+      S(reader, json);
       fail("Expected IllegalArgumentException");
     } catch(IllegalArgumentException e) {
       // expected
@@ -143,7 +144,7 @@ class JsonTreeCreateTest {
     }
 
     try {
-      S(inputString, json());
+      S(inputString, json);
       fail("Expected IllegalArgumentException");
     } catch(IllegalArgumentException e) {
       // expected
@@ -166,6 +167,7 @@ class JsonTreeCreateTest {
 
   @Test
   void shouldFailForInvalidJson() {
+    var json = json();
     try {
       JSON(EXAMPLE_INVALID_JSON);
       fail("Expected IllegalArgumentException");
@@ -174,7 +176,7 @@ class JsonTreeCreateTest {
     }
 
     try {
-      S(EXAMPLE_INVALID_JSON, json());
+      S(EXAMPLE_INVALID_JSON, json);
       fail("Expected IllegalArgumentException");
     } catch(SpinDataFormatException e) {
       // expected
@@ -197,6 +199,7 @@ class JsonTreeCreateTest {
 
   @Test
   void shouldFailForEmptyString() {
+    var json = json();
     try {
       JSON(EXAMPLE_EMPTY_STRING);
       fail("Expected IllegalArgumentException");
@@ -205,7 +208,7 @@ class JsonTreeCreateTest {
     }
 
     try {
-      S(EXAMPLE_EMPTY_STRING, json());
+      S(EXAMPLE_EMPTY_STRING, json);
       fail("Expected IllegalArgumentException");
     } catch(SpinDataFormatException e) {
       // expected
@@ -228,22 +231,26 @@ class JsonTreeCreateTest {
 
   @Test
   void shouldFailForEmptyReader() {
+    Reader input1 = stringAsReader(EXAMPLE_EMPTY_STRING);
+    var json = json();
     try {
-      JSON(stringAsReader(EXAMPLE_EMPTY_STRING));
+      JSON(input1);
       fail("Expected IllegalArgumentException");
     } catch(SpinDataFormatException e) {
       // expected
     }
 
+    Reader input2 = stringAsReader(EXAMPLE_EMPTY_STRING);
     try {
-      S(stringAsReader(EXAMPLE_EMPTY_STRING), json());
+      S(input2, json);
       fail("Expected IllegalArgumentException");
     } catch(SpinDataFormatException e) {
       // expected
     }
 
+    Reader input3 = stringAsReader(EXAMPLE_EMPTY_STRING);
     try {
-      S(stringAsReader(EXAMPLE_EMPTY_STRING));
+      S(input3);
       fail("Expected IllegalArgumentException");
     } catch(SpinDataFormatException e) {
       // expected

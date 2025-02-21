@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.cfg;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.sql.Connection;
 
@@ -97,8 +97,8 @@ public class DatabaseTablePrefixTest {
         .addClasspathResource("org/operaton/bpm/engine/test/api/cfg/oneJobProcess.bpmn20.xml")
         .deploy();
 
-      assertEquals(1, engine1.getRepositoryService().createDeploymentQuery().count());
-      assertEquals(0, engine2.getRepositoryService().createDeploymentQuery().count());
+      assertThat(engine1.getRepositoryService().createDeploymentQuery().count()).isEqualTo(1);
+      assertThat(engine2.getRepositoryService().createDeploymentQuery().count()).isZero();
 
     } finally {
       engine1.close();

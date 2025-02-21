@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.util.MigratingProcessInstanceValidationReportAssert.assertThat;
 
 import org.operaton.bpm.engine.impl.pvm.PvmTransition;
@@ -28,7 +29,6 @@ import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
@@ -66,7 +66,7 @@ public class MigrationSignallableServiceTaskTest {
     // when
     try {
       testHelper.createProcessInstanceAndMigrate(migrationPlan);
-      Assert.fail("should fail");
+      fail("should fail");
     }
     catch (MigratingProcessInstanceValidationException e) {
       // then
@@ -98,14 +98,14 @@ public class MigrationSignallableServiceTaskTest {
 
     String processInstanceId = rule.getRuntimeService().startProcessInstanceById(sourceProcessDefinition.getId()).getId();
     testHelper.executeAvailableJobs();
+    var runtimeService = rule.getRuntimeService().newMigration(migrationPlan)
+        .processInstanceIds(processInstanceId);
 
     // when
     try {
-      rule.getRuntimeService().newMigration(migrationPlan)
-        .processInstanceIds(processInstanceId)
-        .execute();
+      runtimeService.execute();
 
-      Assert.fail("should fail");
+      fail("should fail");
     }
     catch (MigratingProcessInstanceValidationException e) {
       // then

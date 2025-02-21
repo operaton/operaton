@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.test.standalone.scripting;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import javax.script.ScriptEngine;
 
@@ -45,8 +43,8 @@ public class ScriptEngineCachingTest extends PluggableProcessEngineTest {
     ScriptEngine engine = getScriptEngine(SCRIPT_LANGUAGE);
 
     // then
-    assertNotNull(engine);
-    assertEquals(engine, getScriptEngine(SCRIPT_LANGUAGE));
+    assertThat(engine).isNotNull();
+    assertThat(getScriptEngine(SCRIPT_LANGUAGE)).isEqualTo(engine);
   }
 
   @Test
@@ -59,8 +57,8 @@ public class ScriptEngineCachingTest extends PluggableProcessEngineTest {
     ScriptEngine engine = getScriptEngine(SCRIPT_LANGUAGE);
 
     // then
-    assertNotNull(engine);
-    assertFalse(engine.equals(getScriptEngine(SCRIPT_LANGUAGE)));
+    assertThat(engine).isNotNull();
+    assertThat(getScriptEngine(SCRIPT_LANGUAGE)).isNotEqualTo(engine);
 
     processEngineConfiguration.setEnableScriptEngineCaching(true);
     getScriptingEngines().setEnableScriptEngineCaching(true);
@@ -75,8 +73,8 @@ public class ScriptEngineCachingTest extends PluggableProcessEngineTest {
     ScriptEngine engine = processApplication.getScriptEngineForName(SCRIPT_LANGUAGE, true);
 
     // then
-    assertNotNull(engine);
-    assertEquals(engine, processApplication.getScriptEngineForName(SCRIPT_LANGUAGE, true));
+    assertThat(engine).isNotNull();
+    assertThat(processApplication.getScriptEngineForName(SCRIPT_LANGUAGE, true)).isEqualTo(engine);
   }
 
   @Test
@@ -88,8 +86,8 @@ public class ScriptEngineCachingTest extends PluggableProcessEngineTest {
     ScriptEngine engine = processApplication.getScriptEngineForName(SCRIPT_LANGUAGE, false);
 
     // then
-    assertNotNull(engine);
-    assertFalse(engine.equals(processApplication.getScriptEngineForName(SCRIPT_LANGUAGE, false)));
+    assertThat(engine).isNotNull();
+    assertThat(processApplication.getScriptEngineForName(SCRIPT_LANGUAGE, false)).isNotEqualTo(engine);
   }
 
   @Test
@@ -105,11 +103,11 @@ public class ScriptEngineCachingTest extends PluggableProcessEngineTest {
     ScriptEngine engine = getScriptEngineFromPa(SCRIPT_LANGUAGE, processApplication);
 
     // then
-    assertNotNull(engine);
-    assertEquals(engine, getScriptEngineFromPa(SCRIPT_LANGUAGE, processApplication));
+    assertThat(engine).isNotNull();
+    assertThat(getScriptEngineFromPa(SCRIPT_LANGUAGE, processApplication)).isEqualTo(engine);
 
     // cached in pa
-    assertEquals(engine, processApplication.getScriptEngineForName(SCRIPT_LANGUAGE, true));
+    assertThat(processApplication.getScriptEngineForName(SCRIPT_LANGUAGE, true)).isEqualTo(engine);
 
     repositoryService.deleteDeployment(deployment.getId(), true);
   }
@@ -130,11 +128,11 @@ public class ScriptEngineCachingTest extends PluggableProcessEngineTest {
     ScriptEngine engine = getScriptEngineFromPa(SCRIPT_LANGUAGE, processApplication);
 
     // then
-    assertNotNull(engine);
-    assertFalse(engine.equals(getScriptEngineFromPa(SCRIPT_LANGUAGE, processApplication)));
+    assertThat(engine).isNotNull();
+    assertThat(getScriptEngineFromPa(SCRIPT_LANGUAGE, processApplication)).isNotEqualTo(engine);
 
     // not cached in pa
-    assertFalse(engine.equals(processApplication.getScriptEngineForName(SCRIPT_LANGUAGE, false)));
+    assertThat(processApplication.getScriptEngineForName(SCRIPT_LANGUAGE, false)).isNotEqualTo(engine);
 
     repositoryService.deleteDeployment(deployment.getId(), true);
 
@@ -157,11 +155,11 @@ public class ScriptEngineCachingTest extends PluggableProcessEngineTest {
     ScriptEngine engine = getScriptEngineFromPa(SCRIPT_LANGUAGE, processApplication);
 
     // then
-    assertNotNull(engine);
-    assertEquals(engine, getScriptEngineFromPa(SCRIPT_LANGUAGE, processApplication));
+    assertThat(engine).isNotNull();
+    assertThat(getScriptEngineFromPa(SCRIPT_LANGUAGE, processApplication)).isEqualTo(engine);
 
     // not cached in pa
-    assertFalse(engine.equals(processApplication.getScriptEngineForName(SCRIPT_LANGUAGE, true)));
+    assertThat(processApplication.getScriptEngineForName(SCRIPT_LANGUAGE, true)).isNotEqualTo(engine);
 
     repositoryService.deleteDeployment(deployment.getId(), true);
 

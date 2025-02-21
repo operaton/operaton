@@ -28,7 +28,6 @@ import org.operaton.bpm.engine.externaltask.ExternalTaskQuery;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -149,12 +148,7 @@ public class ProcessInstanceAssertExternalTaskTest extends ProcessAssertTestCase
     final ProcessInstance processInstance = startProcess();
     assertThat(processInstance).externalTask().isNotNull();
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).externalTask(externalTaskQuery().activityId(TASK2)).isNotNull();
-      }
-    });
+    expect(() -> assertThat(processInstance).externalTask(externalTaskQuery().activityId(TASK2)).isNotNull());
   }
 
   @Test
@@ -165,12 +159,7 @@ public class ProcessInstanceAssertExternalTaskTest extends ProcessAssertTestCase
     assertThat(processInstance).externalTask(externalTaskQuery().activityId(TASK1)).isNotNull();
     complete(externalTask());
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).externalTask(externalTaskQuery().activityId(TASK1)).isNotNull();
-      }
-    });
+    expect(() -> assertThat(processInstance).externalTask(externalTaskQuery().activityId(TASK1)).isNotNull());
   }
 
   @Test
@@ -235,12 +224,7 @@ public class ProcessInstanceAssertExternalTaskTest extends ProcessAssertTestCase
     assertThat(processInstance).externalTask().isNotNull();
     complete(externalTask());
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).externalTask(TASK4).isNotNull();
-      }
-    });
+    expect(() -> assertThat(processInstance).externalTask(TASK4).isNotNull());
   }
 
   @Test
@@ -250,12 +234,7 @@ public class ProcessInstanceAssertExternalTaskTest extends ProcessAssertTestCase
     final ProcessInstance processInstance = startProcess();
     assertThat(processInstance).externalTask().isNotNull();
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).externalTask(TASK2).isNotNull();
-      }
-    });
+    expect(() -> assertThat(processInstance).externalTask(TASK2).isNotNull());
   }
 
   @Test
@@ -266,12 +245,7 @@ public class ProcessInstanceAssertExternalTaskTest extends ProcessAssertTestCase
     assertThat(processInstance).externalTask(externalTaskQuery().activityId(TASK1)).isNotNull();
     complete(externalTask());
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).externalTask(TASK1).isNotNull();
-      }
-    });
+    expect(() -> assertThat(processInstance).externalTask(TASK1).isNotNull());
   }
 
   private ProcessInstance startProcess() {

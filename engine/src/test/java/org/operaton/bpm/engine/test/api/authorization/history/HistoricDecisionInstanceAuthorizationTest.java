@@ -21,7 +21,6 @@ import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.DELETE_HISTORY;
 import static org.operaton.bpm.engine.authorization.Permissions.READ_HISTORY;
 import static org.operaton.bpm.engine.authorization.Resources.DECISION_DEFINITION;
-import static org.junit.Assert.assertEquals;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -236,7 +235,7 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
     List<CleanableHistoricDecisionInstanceReportResult> reportResults = historyService.createCleanableHistoricDecisionInstanceReport().list();
 
     // then
-    assertEquals(0, reportResults.size());
+    assertThat(reportResults).isEmpty();
   }
 
   @Test
@@ -251,9 +250,9 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
     List<CleanableHistoricDecisionInstanceReportResult> reportResults = historyService.createCleanableHistoricDecisionInstanceReport().list();
 
     // then
-    assertEquals(1, reportResults.size());
-    assertEquals(10, reportResults.get(0).getCleanableDecisionInstanceCount());
-    assertEquals(10, reportResults.get(0).getFinishedDecisionInstanceCount());
+    assertThat(reportResults).hasSize(1);
+    assertThat(reportResults.get(0).getCleanableDecisionInstanceCount()).isEqualTo(10);
+    assertThat(reportResults.get(0).getFinishedDecisionInstanceCount()).isEqualTo(10);
   }
 
   @Test
@@ -267,7 +266,7 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
     List<CleanableHistoricDecisionInstanceReportResult> reportResults = historyService.createCleanableHistoricDecisionInstanceReport().list();
 
     // then
-    assertEquals(0, reportResults.size());
+    assertThat(reportResults).isEmpty();
   }
 
   @Test
@@ -281,7 +280,7 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
     List<CleanableHistoricDecisionInstanceReportResult> reportResults = historyService.createCleanableHistoricDecisionInstanceReport().list();
 
     // then
-    assertEquals(0, reportResults.size());
+    assertThat(reportResults).isEmpty();
   }
 
   @Test
@@ -296,7 +295,7 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
     List<CleanableHistoricDecisionInstanceReportResult> reportResults = historyService.createCleanableHistoricDecisionInstanceReport().list();
 
     // then
-    assertEquals(0, reportResults.size());
+    assertThat(reportResults).isEmpty();
   }
 
   protected void startProcessInstanceAndEvaluateDecision() {

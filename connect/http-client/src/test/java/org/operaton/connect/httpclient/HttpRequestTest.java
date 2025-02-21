@@ -165,7 +165,7 @@ public class HttpRequestTest {
 
     assertThat(request.getConfigOption("object-field")).isEqualTo(value);
     assertThat(request.getConfigOption("int-field")).isEqualTo(15);
-    assertThat(request.getConfigOption("long-field")).isEqualTo(15l);
+    assertThat(request.getConfigOption("long-field")).isEqualTo(15L);
     assertThat(request.getConfigOption("boolean-field")).isEqualTo(true);
     assertThat(request.getConfigOption("string-field")).isEqualTo("string-value");
   }

@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.test.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -297,14 +295,14 @@ public class ProcessEngineTestRule extends TestWatcher {
   public void completeTask(String taskKey) {
     TaskService taskService = processEngine.getTaskService();
     Task task = taskService.createTaskQuery().taskDefinitionKey(taskKey).singleResult();
-    assertNotNull("Expected a task with key '" + taskKey + "' to exist", task);
+    assertThat(task).as("Expected a task with key '" + taskKey + "' to exist").isNotNull();
     taskService.complete(task.getId());
   }
 
   public void completeAnyTask(String taskKey) {
     TaskService taskService = processEngine.getTaskService();
     List<Task> tasks = taskService.createTaskQuery().taskDefinitionKey(taskKey).list();
-    assertTrue(!tasks.isEmpty());
+    assertThat(!tasks.isEmpty()).isTrue();
     taskService.complete(tasks.get(0).getId());
   }
 
@@ -364,8 +362,7 @@ public class ProcessEngineTestRule extends TestWatcher {
 
   public Object defaultManualActivation() {
     Expression expression = new FixedValue(true);
-    CaseControlRuleImpl caseControlRule = new CaseControlRuleImpl(expression);
-    return caseControlRule;
+    return new CaseControlRuleImpl(expression);
   }
 
 

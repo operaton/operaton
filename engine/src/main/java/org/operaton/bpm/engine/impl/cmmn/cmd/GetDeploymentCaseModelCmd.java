@@ -57,10 +57,8 @@ public class GetDeploymentCaseModelCmd implements Command<InputStream>, Serializ
     final String deploymentId = caseDefinition.getDeploymentId();
     final String resourceName = caseDefinition.getResourceName();
 
-    InputStream inputStream = commandContext.runWithoutAuthorization(
+    return commandContext.runWithoutAuthorization(
         new GetDeploymentResourceCmd(deploymentId, resourceName));
-
-    return inputStream;
   }
 
 }

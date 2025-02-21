@@ -29,7 +29,6 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.withVa
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.exception.NotFoundException;
@@ -39,7 +38,6 @@ import org.operaton.bpm.engine.history.HistoricExternalTaskLog;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -74,12 +72,7 @@ public class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTes
     // When
     complete(task);
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        complete(task);
-      }
-    }, NotFoundException.class);
+    expect(() -> complete(task), NotFoundException.class);
   }
 
   @Test
@@ -88,12 +81,7 @@ public class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTes
     // Given
     getProcessInstanceStarted();
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        complete((ExternalTask) null);
-      }
-    }, IllegalArgumentException.class);
+    expect(() -> complete((ExternalTask) null), IllegalArgumentException.class);
   }
 
   @Test
@@ -105,13 +93,10 @@ public class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTes
     // And
     final ExternalTask task = externalTask(processInstance);
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        // one of the two complete-calls will hit the external task of the other process instance
-        complete(task);
-        complete(task);
-      }
+    expect(() -> {
+      // one of the two complete-calls will hit the external task of the other process instance
+      complete(task);
+      complete(task);
     }, IllegalStateException.class);
   }
 
@@ -138,12 +123,7 @@ public class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTes
     // When
     complete(task, withVariables("a", "b"));
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        complete(task, withVariables("a", "b"));
-      }
-    }, NotFoundException.class);
+    expect(() -> complete(task, withVariables("a", "b")), NotFoundException.class);
   }
 
   @Test
@@ -152,12 +132,7 @@ public class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTes
     // Given
     getProcessInstanceStarted();
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        complete((ExternalTask) null, withVariables("a", "b"));
-      }
-    }, IllegalArgumentException.class);
+    expect(() -> complete((ExternalTask) null, withVariables("a", "b")), IllegalArgumentException.class);
   }
 
   @Test
@@ -168,12 +143,7 @@ public class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTes
     // And
     final ExternalTask task = externalTask(processInstance);
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        complete(task, (Map<String, Object>) null);
-      }
-    }, IllegalArgumentException.class);
+    expect(() -> complete(task, null), IllegalArgumentException.class);
   }
 
   @Test
@@ -206,12 +176,7 @@ public class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTes
     assertThat(lockedTasks).hasSize(1);
     complete(lockedTasks.get(0));
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        complete(lockedTasks.get(0));
-      }
-    }, NotFoundException.class);
+    expect(() -> complete(lockedTasks.get(0)), NotFoundException.class);
   }
 
   @Test
@@ -220,12 +185,7 @@ public class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTes
     // Given
     getProcessInstanceStarted();
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        complete((LockedExternalTask) null);
-      }
-    }, IllegalArgumentException.class);
+    expect(() -> complete((LockedExternalTask) null), IllegalArgumentException.class);
   }
 
   @Test
@@ -258,12 +218,7 @@ public class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTes
     assertThat(lockedTasks).hasSize(1);
     complete(lockedTasks.get(0), withVariables("a", "b"));
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        complete(lockedTasks.get(0), withVariables("a", "b"));
-      }
-    }, NotFoundException.class);
+    expect(() -> complete(lockedTasks.get(0), withVariables("a", "b")), NotFoundException.class);
   }
 
   @Test
@@ -272,12 +227,7 @@ public class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTes
     // Given
     getProcessInstanceStarted();
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        complete((LockedExternalTask) null, withVariables("a", "b"));
-      }
-    }, IllegalArgumentException.class);
+    expect(() -> complete((LockedExternalTask) null, withVariables("a", "b")), IllegalArgumentException.class);
   }
 
   @Test
@@ -291,12 +241,7 @@ public class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTes
     final List<LockedExternalTask> lockedTasks = fetchAndLock(task.getTopicName(), DEFAULT_WORKER_EXTERNAL_TASK, 1);
     assertThat(lockedTasks).hasSize(1);
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        complete(lockedTasks.get(0), null);
-      }
-    }, IllegalArgumentException.class);
+    expect(() -> complete(lockedTasks.get(0), null), IllegalArgumentException.class);
   }
 
   @Test
@@ -315,7 +260,7 @@ public class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTes
     // When
     complete(
       task,
-      Collections.EMPTY_MAP,
+      Collections.emptyMap(),
       withVariables(
         "local_variable_1", "value_1"));
 
@@ -355,7 +300,7 @@ public class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTes
     // When
     complete(
       externalTaskQuery().singleResult(),
-        Collections.EMPTY_MAP,
+        Collections.emptyMap(),
         withVariables(
           "local_variable_1", "value_1"));
 
@@ -371,7 +316,7 @@ public class ProcessEngineTestsCompleteExternalTaskTest extends ProcessAssertTes
     // Given
     runtimeService().startProcessInstanceByKey("ExternalTaskAssert-localVariables");
 
-    // Assumen
+    // Assume
     assertThat(externalTaskQuery().singleResult()).isNotNull();
 
     // When & Then

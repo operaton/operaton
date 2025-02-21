@@ -25,7 +25,6 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.withVa
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -46,12 +45,7 @@ public class ProcessInstanceAssertHasNotPassedTest extends ProcessAssertTestCase
     // When
     complete(taskQuery().singleResult(), withVariables("doUserTask5", false));
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).hasNotPassed("UserTask_1");
-      }
-    });
+    expect(() -> assertThat(processInstance).hasNotPassed("UserTask_1"));
   }
 
   @Test
@@ -99,12 +93,7 @@ public class ProcessInstanceAssertHasNotPassedTest extends ProcessAssertTestCase
     // And
     complete(taskQuery().taskDefinitionKey("UserTask_2").singleResult());
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).hasNotPassed("UserTask_2", "UserTask_3", "UserTask_4");
-      }
-    });
+    expect(() -> assertThat(processInstance).hasNotPassed("UserTask_2", "UserTask_3", "UserTask_4"));
   }
 
   @Test
@@ -160,12 +149,7 @@ public class ProcessInstanceAssertHasNotPassedTest extends ProcessAssertTestCase
     // And
     complete(taskQuery().taskDefinitionKey("UserTask_4").singleResult());
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).hasNotPassed("UserTask_5");
-      }
-    });
+    expect(() -> assertThat(processInstance).hasNotPassed("UserTask_5"));
   }
 
 }

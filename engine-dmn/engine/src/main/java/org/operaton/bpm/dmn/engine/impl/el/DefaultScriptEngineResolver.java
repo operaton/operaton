@@ -48,11 +48,7 @@ public class DefaultScriptEngineResolver implements DmnScriptEngineResolver {
 
     if (scriptEngine == null) {
       synchronized (this) {
-        scriptEngine = scriptEngineCache.get(language);
-        if (scriptEngine == null) {
-          scriptEngine = scriptEngineManager.getEngineByName(language);
-          scriptEngineCache.put(language, scriptEngine);
-        }
+        scriptEngine = scriptEngineCache.computeIfAbsent(language, scriptEngineManager::getEngineByName);
       }
     }
 

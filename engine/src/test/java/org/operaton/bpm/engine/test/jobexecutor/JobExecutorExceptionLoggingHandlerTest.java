@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.jobexecutor;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -81,7 +80,7 @@ public class JobExecutorExceptionLoggingHandlerTest {
     Throwable collectedException = collectingHandler.collectedExceptions.get(jobId);
 
     // then
-    assertTrue(collectedException instanceof RuntimeException);
+    assertThat(collectedException).isInstanceOf(RuntimeException.class);
     assertThat(collectedException.getMessage()).isEqualTo("Expected Exception");
   }
 

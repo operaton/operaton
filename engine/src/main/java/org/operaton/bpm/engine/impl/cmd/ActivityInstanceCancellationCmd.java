@@ -59,9 +59,7 @@ public class ActivityInstanceCancellationCmd extends AbstractInstanceCancellatio
         describeFailure("Activity instance '" + activityInstanceId + "' does not exist"),
         "activityInstance",
         instanceToCancel);
-    ExecutionEntity scopeExecution = getScopeExecutionForActivityInstance(processInstance, mapping, instanceToCancel);
-
-    return scopeExecution;
+    return getScopeExecutionForActivityInstance(processInstance, mapping, instanceToCancel);
   }
 
   @Override

@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.api.mgmt;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.batchById;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
@@ -25,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.assertj.core.api.Assertions;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -39,7 +39,6 @@ import org.operaton.bpm.engine.test.api.runtime.migration.MigrationTestRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.batch.BatchMigrationHelper;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -85,15 +84,14 @@ public class BatchQueryTest {
     List<Batch> list = managementService.createBatchQuery().list();
 
     // then
-    Assert.assertEquals(2, list.size());
+    assertThat(list).hasSize(2);
 
     List<String> batchIds = new ArrayList<>();
     for (Batch resultBatch : list) {
       batchIds.add(resultBatch.getId());
     }
 
-    Assert.assertTrue(batchIds.contains(batch1.getId()));
-    Assert.assertTrue(batchIds.contains(batch2.getId()));
+    assertThat(batchIds).containsExactly(batch1.getId(), batch2.getId());
   }
 
   @Test
@@ -106,21 +104,21 @@ public class BatchQueryTest {
     Batch resultBatch = managementService.createBatchQuery().singleResult();
 
     // then
-    Assert.assertNotNull(batch);
+    assertThat(batch).isNotNull();
 
-    Assert.assertEquals(batch.getId(), resultBatch.getId());
-    Assert.assertEquals(batch.getBatchJobDefinitionId(), resultBatch.getBatchJobDefinitionId());
-    Assert.assertEquals(batch.getMonitorJobDefinitionId(), resultBatch.getMonitorJobDefinitionId());
-    Assert.assertEquals(batch.getSeedJobDefinitionId(), resultBatch.getSeedJobDefinitionId());
-    Assert.assertEquals(batch.getTenantId(), resultBatch.getTenantId());
-    Assert.assertEquals(batch.getType(), resultBatch.getType());
-    Assert.assertEquals(batch.getBatchJobsPerSeed(), resultBatch.getBatchJobsPerSeed());
-    Assert.assertEquals(batch.getInvocationsPerBatchJob(), resultBatch.getInvocationsPerBatchJob());
-    Assert.assertEquals(batch.getTotalJobs(), resultBatch.getTotalJobs());
-    Assert.assertEquals(batch.getJobsCreated(), resultBatch.getJobsCreated());
-    Assert.assertEquals(batch.isSuspended(), resultBatch.isSuspended());
-    Assertions.assertThat(batch.getStartTime()).isCloseTo(resultBatch.getStartTime(), 1000);
-    Assertions.assertThat(batch.getStartTime()).isCloseTo(ClockUtil.getCurrentTime(), 1000);
+    assertThat(resultBatch.getId()).isEqualTo(batch.getId());
+    assertThat(resultBatch.getBatchJobDefinitionId()).isEqualTo(batch.getBatchJobDefinitionId());
+    assertThat(resultBatch.getMonitorJobDefinitionId()).isEqualTo(batch.getMonitorJobDefinitionId());
+    assertThat(resultBatch.getSeedJobDefinitionId()).isEqualTo(batch.getSeedJobDefinitionId());
+    assertThat(resultBatch.getTenantId()).isEqualTo(batch.getTenantId());
+    assertThat(resultBatch.getType()).isEqualTo(batch.getType());
+    assertThat(resultBatch.getBatchJobsPerSeed()).isEqualTo(batch.getBatchJobsPerSeed());
+    assertThat(resultBatch.getInvocationsPerBatchJob()).isEqualTo(batch.getInvocationsPerBatchJob());
+    assertThat(resultBatch.getTotalJobs()).isEqualTo(batch.getTotalJobs());
+    assertThat(resultBatch.getJobsCreated()).isEqualTo(batch.getJobsCreated());
+    assertThat(resultBatch.isSuspended()).isEqualTo(batch.isSuspended());
+    assertThat(batch.getStartTime()).isCloseTo(resultBatch.getStartTime(), 1000);
+    assertThat(batch.getStartTime()).isCloseTo(ClockUtil.getCurrentTime(), 1000);
   }
 
   @Test
@@ -133,15 +131,16 @@ public class BatchQueryTest {
     Batch resultBatch = managementService.createBatchQuery().batchId(batch1.getId()).singleResult();
 
     // then
-    Assert.assertNotNull(resultBatch);
-    Assert.assertEquals(batch1.getId(), resultBatch.getId());
+    assertThat(resultBatch).isNotNull();
+    assertThat(resultBatch.getId()).isEqualTo(batch1.getId());
   }
 
   @Test
   public void testBatchQueryByIdNull() {
+    var batchQuery = managementService.createBatchQuery();
     try {
-      managementService.createBatchQuery().batchId(null).singleResult();
-      Assert.fail("exception expected");
+      batchQuery.batchId(null);
+      fail("exception expected");
     }
     catch (NullValueException e) {
       assertThat(e.getMessage()).contains("Batch id is null");
@@ -158,7 +157,7 @@ public class BatchQueryTest {
     long count = managementService.createBatchQuery().type(batch1.getType()).count();
 
     // then
-    Assert.assertEquals(2, count);
+    assertThat(count).isEqualTo(2);
   }
 
   @Test
@@ -170,14 +169,15 @@ public class BatchQueryTest {
     long count = managementService.createBatchQuery().type("foo").count();
 
     // then
-    Assert.assertEquals(0, count);
+    assertThat(count).isZero();
   }
 
   @Test
   public void testBatchQueryByTypeNull() {
+    var batchQuery = managementService.createBatchQuery();
     try {
-      managementService.createBatchQuery().type(null).singleResult();
-      Assert.fail("exception expected");
+      batchQuery.type(null);
+      fail("exception expected");
     }
     catch (NullValueException e) {
       assertThat(e.getMessage()).contains("Type is null");
@@ -194,7 +194,7 @@ public class BatchQueryTest {
     long count = managementService.createBatchQuery().count();
 
     // then
-    Assert.assertEquals(2, count);
+    assertThat(count).isEqualTo(2);
   }
 
   @Test
@@ -225,9 +225,10 @@ public class BatchQueryTest {
 
   @Test
   public void testBatchQueryOrderingPropertyWithoutOrder() {
+    var batchQuery = managementService.createBatchQuery().orderById();
     try {
-      managementService.createBatchQuery().orderById().singleResult();
-      Assert.fail("exception expected");
+      batchQuery.singleResult();
+      fail("exception expected");
     }
     catch (NotValidException e) {
       assertThat(e.getMessage()).contains("Invalid query: "
@@ -237,9 +238,10 @@ public class BatchQueryTest {
 
   @Test
   public void testBatchQueryOrderWithoutOrderingProperty() {
+    var batchQuery = managementService.createBatchQuery();
     try {
-      managementService.createBatchQuery().asc().singleResult();
-      Assert.fail("exception expected");
+      batchQuery.asc();
+      fail("exception expected");
     }
     catch (NotValidException e) {
       assertThat(e.getMessage()).contains("You should call any of the orderBy methods "
@@ -261,9 +263,9 @@ public class BatchQueryTest {
 
     // then
     BatchQuery query = managementService.createBatchQuery().suspended();
-    Assert.assertEquals(1, query.count());
-    Assert.assertEquals(1, query.list().size());
-    Assert.assertEquals(batch2.getId(), query.singleResult().getId());
+    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
+    assertThat(query.singleResult().getId()).isEqualTo(batch2.getId());
   }
 
   @Test
@@ -280,8 +282,8 @@ public class BatchQueryTest {
 
     // then
     BatchQuery query = managementService.createBatchQuery().active();
-    Assert.assertEquals(2, query.count());
-    Assert.assertEquals(2, query.list().size());
+    assertThat(query.count()).isEqualTo(2);
+    assertThat(query.list()).hasSize(2);
 
     List<String> foundIds = new ArrayList<>();
     for (Batch batch : query.list()) {

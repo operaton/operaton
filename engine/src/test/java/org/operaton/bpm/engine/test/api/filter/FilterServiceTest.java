@@ -30,10 +30,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 /**
  * @author Sebastian Menski
@@ -49,9 +47,9 @@ public class FilterServiceTest extends PluggableProcessEngineTest {
       .setOwner("owner")
       .setQuery(taskService.createTaskQuery())
       .setProperties(new HashMap<>());
-    assertNull(filter.getId());
+    assertThat(filter.getId()).isNull();
     filterService.saveFilter(filter);
-    assertNotNull(filter.getId());
+    assertThat(filter.getId()).isNotNull();
   }
 
   @After
@@ -62,10 +60,10 @@ public class FilterServiceTest extends PluggableProcessEngineTest {
 
   @Test
   public void testCreateFilter() {
-    assertNotNull(filter);
+    assertThat(filter).isNotNull();
 
     Filter filter2 = filterService.getFilter(filter.getId());
-    assertNotNull(filter2);
+    assertThat(filter2).isNotNull();
 
     compareFilter(filter, filter2);
   }
@@ -102,11 +100,11 @@ public class FilterServiceTest extends PluggableProcessEngineTest {
       .taskName("newName")
       .taskOwner("newOwner");
     Filter newFilter = filter.extend(extendingQuery);
-    assertNull(newFilter.getId());
+    assertThat(newFilter.getId()).isNull();
 
     TaskQueryImpl filterQuery = newFilter.getQuery();
-    assertEquals("newName", filterQuery.getName());
-    assertEquals("newOwner", filterQuery.getOwner());
+    assertThat(filterQuery.getName()).isEqualTo("newName");
+    assertThat(filterQuery.getOwner()).isEqualTo("newOwner");
   }
 
   @Test
@@ -133,14 +131,14 @@ public class FilterServiceTest extends PluggableProcessEngineTest {
       .filterId("unknown")
       .singleResult();
 
-    assertNull(unknownFilter);
+    assertThat(unknownFilter).isNull();
 
     unknownFilter = filterService.createTaskFilterQuery()
       .filterId(filter.getId())
       .filterName("invalid")
       .singleResult();
 
-    assertNull(unknownFilter);
+    assertThat(unknownFilter).isNull();
   }
 
   @Test
@@ -148,14 +146,14 @@ public class FilterServiceTest extends PluggableProcessEngineTest {
     filterService.deleteFilter(filter.getId());
 
     filter = filterService.getFilter(filter.getId());
-    assertNull(filter);
+    assertThat(filter).isNull();
   }
 
   @Test
   public void testDeleteUnknownFilter() {
     filterService.deleteFilter(filter.getId());
     long count = filterService.createFilterQuery().count();
-    assertEquals(0, count);
+    assertThat(count).isZero();
 
     String filterId = filter.getId();
     assertThatThrownBy(() -> filterService.deleteFilter(filterId))
@@ -163,14 +161,14 @@ public class FilterServiceTest extends PluggableProcessEngineTest {
   }
 
   public static void compareFilter(Filter filter1, Filter filter2) {
-    assertNotNull(filter1);
-    assertNotNull(filter2);
-    assertEquals(filter1.getId(), filter2.getId());
-    assertEquals(filter1.getResourceType(), filter2.getResourceType());
-    assertEquals(filter1.getName(), filter2.getName());
-    assertEquals(filter1.getOwner(), filter2.getOwner());
-    assertEquals(((FilterEntity) filter1).getQueryInternal(), ((FilterEntity) filter2).getQueryInternal());
-    assertEquals(filter1.getProperties(), filter2.getProperties());
+    assertThat(filter1).isNotNull();
+    assertThat(filter2).isNotNull();
+    assertThat(filter2.getId()).isEqualTo(filter1.getId());
+    assertThat(filter2.getResourceType()).isEqualTo(filter1.getResourceType());
+    assertThat(filter2.getName()).isEqualTo(filter1.getName());
+    assertThat(filter2.getOwner()).isEqualTo(filter1.getOwner());
+    assertThat(((FilterEntity) filter2).getQueryInternal()).isEqualTo(((FilterEntity) filter1).getQueryInternal());
+    assertThat(filter2.getProperties()).isEqualTo(filter1.getProperties());
   }
 
 }

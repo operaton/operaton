@@ -22,7 +22,6 @@ import static org.operaton.bpm.engine.authorization.Permissions.CREATE_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
-import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
@@ -33,6 +32,7 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class ConditionStartEventAuthorizationTest extends AuthorizationTest {
@@ -58,7 +58,7 @@ public class ConditionStartEventAuthorizationTest extends AuthorizationTest {
         .evaluateStartConditions();
 
     // then
-    assertEquals(1, instances.size());
+    assertThat(instances).hasSize(1);
   }
 
   @Deployment(resources = { SINGLE_CONDITIONAL_XML })
@@ -96,6 +96,7 @@ public class ConditionStartEventAuthorizationTest extends AuthorizationTest {
         .hasMessageContaining("The user with id 'test' does not have 'CREATE_INSTANCE' permission on resource 'conditionalEventProcess' of type 'ProcessDefinition'.");
   }
 
+  @SuppressWarnings("GrazieInspection")
   @Deployment(resources = { SINGLE_CONDITIONAL_XML })
   @Test
   public void testWithoutProcessInstancePermission() {

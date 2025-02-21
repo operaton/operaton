@@ -16,11 +16,8 @@
  */
 package org.operaton.bpm.container.impl.jmx.kernel;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
@@ -91,25 +88,25 @@ public class MBeanServiceContainerTest {
   public void testStartService() {
 
     // initially the service is not present:
-    assertNull(serviceContainer.getService(service1ObjectName));
+    assertThat(serviceContainer.<TestService>getService(service1ObjectName)).isNull();
 
     // we can start a service
     serviceContainer.startService(service1Name, service1);
     // and get it after that
-    assertNotNull(serviceContainer.getService(service1ObjectName));
-    assertEquals(service1, serviceContainer.getService(service1ObjectName));
+    assertThat(serviceContainer.<TestService>getService(service1ObjectName)).isNotNull();
+    assertThat(serviceContainer.<TestService>getService(service1ObjectName)).isEqualTo(service1);
     // as long it is started, I cannot start a second service with the same name:
     try {
       serviceContainer.startService(service1Name, service1);
       fail("exception expected");
     } catch(Exception e) {
-      assertTrue(e.getMessage().contains("service with same name already registered"));
+      assertThat(e.getMessage()).contains("service with same name already registered");
     }
 
     // but, I can start a service with a different name:
     serviceContainer.startService(service2Name, service2);
     // and get it after that
-    assertNotNull(serviceContainer.getService(service2ObjectName));
+    assertThat(serviceContainer.<TestService>getService(service2ObjectName)).isNotNull();
 
   }
 
@@ -119,18 +116,18 @@ public class MBeanServiceContainerTest {
     // start some service
     serviceContainer.startService(service1Name, service1);
     // it's there
-    assertNotNull(serviceContainer.getService(service1ObjectName));
+    assertThat(serviceContainer.<TestService>getService(service1ObjectName)).isNotNull();
 
     // stop it:
     serviceContainer.stopService(service1Name);
     // now it's gone
-    assertNull(serviceContainer.getService(service1ObjectName));
+    assertThat(serviceContainer.<TestService>getService(service1ObjectName)).isNull();
 
     try {
       serviceContainer.stopService(service1Name);
       fail("exception expected");
     }catch(Exception e) {
-      assertTrue(e.getMessage().contains("no such service registered"));
+      assertThat(e.getMessage()).contains("no such service registered");
     }
 
   }
@@ -142,19 +139,19 @@ public class MBeanServiceContainerTest {
     serviceContainer.startService(service2Name, service2);
 
     List<PlatformService<TestService>> servicesByType1 = serviceContainer.getServicesByType(TestServiceType.TYPE1);
-    assertEquals(2, servicesByType1.size());
+    assertThat(servicesByType1).hasSize(2);
 
     List<PlatformService<TestService>> servicesByType2 = serviceContainer.getServicesByType(TestServiceType.TYPE2);
-    assertEquals(0, servicesByType2.size());
+    assertThat(servicesByType2).isEmpty();
 
     serviceContainer.startService(service3Name, service3);
     serviceContainer.startService(service4Name, service4);
 
     servicesByType1 = serviceContainer.getServicesByType(TestServiceType.TYPE1);
-    assertEquals(2, servicesByType1.size());
+    assertThat(servicesByType1).hasSize(2);
 
     servicesByType2 = serviceContainer.getServicesByType(TestServiceType.TYPE2);
-    assertEquals(2, servicesByType2.size());
+    assertThat(servicesByType2).hasSize(2);
 
   }
 
@@ -166,24 +163,20 @@ public class MBeanServiceContainerTest {
     serviceContainer.startService(service2Name, service2);
 
     List<PlatformService<TestService>> servicesByType1 = serviceContainer.getServiceValuesByType(TestServiceType.TYPE1);
-    assertEquals(2, servicesByType1.size());
-    assertTrue(servicesByType1.contains(service1));
-    assertTrue(servicesByType1.contains(service2));
+    assertThat(servicesByType1).containsExactlyInAnyOrder(service1, service2);
 
     List<PlatformService<TestService>> servicesByType2 = serviceContainer.getServicesByType(TestServiceType.TYPE2);
-    assertEquals(0, servicesByType2.size());
+    assertThat(servicesByType2).isEmpty();
 
     // start more services
     serviceContainer.startService(service3Name, service3);
     serviceContainer.startService(service4Name, service4);
 
     servicesByType1 = serviceContainer.getServicesByType(TestServiceType.TYPE1);
-    assertEquals(2, servicesByType1.size());
+    assertThat(servicesByType1).hasSize(2);
 
     servicesByType2 = serviceContainer.getServicesByType(TestServiceType.TYPE2);
-    assertEquals(2, servicesByType2.size());
-    assertTrue(servicesByType2.contains(service3));
-    assertTrue(servicesByType2.contains(service4));
+    assertThat(servicesByType2).containsExactlyInAnyOrder(service3, service4);
 
   }
 
@@ -195,26 +188,20 @@ public class MBeanServiceContainerTest {
     serviceContainer.startService(service2Name, service2);
 
     Set<String> serviceNames = serviceContainer.getServiceNames(TestServiceType.TYPE1);
-    assertEquals(2, serviceNames.size());
-    assertTrue(serviceNames.contains(service1Name));
-    assertTrue(serviceNames.contains(service2Name));
+    assertThat(serviceNames).containsExactlyInAnyOrder(service1Name, service2Name);
 
     serviceNames = serviceContainer.getServiceNames(TestServiceType.TYPE2);
-    assertEquals(0, serviceNames.size());
+    assertThat(serviceNames).isEmpty();
 
     // start more services
     serviceContainer.startService(service3Name, service3);
     serviceContainer.startService(service4Name, service4);
 
     serviceNames = serviceContainer.getServiceNames(TestServiceType.TYPE1);
-    assertEquals(2, serviceNames.size());
-    assertTrue(serviceNames.contains(service1Name));
-    assertTrue(serviceNames.contains(service2Name));
+    assertThat(serviceNames).containsExactlyInAnyOrder(service1Name, service2Name);
 
-    serviceNames = serviceContainer.getServiceNames(TestServiceType.TYPE2);
-    assertEquals(2, serviceNames.size());
-    assertTrue(serviceNames.contains(service3Name));
-    assertTrue(serviceNames.contains(service4Name));
+    serviceNames = serviceContainer.<TestService>getServiceNames(TestServiceType.TYPE2);
+    assertThat(serviceNames).containsExactlyInAnyOrder(service3Name, service4Name);
 
   }
 
@@ -227,58 +214,58 @@ public class MBeanServiceContainerTest {
       .execute();
 
     // both services were registered.
-    assertEquals(service1, serviceContainer.getService(service1ObjectName));
-    assertEquals(service2, serviceContainer.getService(service2ObjectName));
+    assertThat(serviceContainer.<TestService>getService(service1ObjectName)).isEqualTo(service1);
+    assertThat(serviceContainer.<TestService>getService(service2ObjectName)).isEqualTo(service2);
 
   }
 
   @Test
   public void testFailingDeploymentOperation() {
+    var deploymentOperationBuilder = serviceContainer.createDeploymentOperation("test failing op")
+        .addStep(new StartServiceDeploymentOperationStep(service1Name, service1))
+        .addStep(new StartServiceDeploymentOperationStep(service2Name, service2))
+        .addStep(new FailingDeploymentOperationStep());
 
     try {
-      serviceContainer.createDeploymentOperation("test failing op")
-        .addStep(new StartServiceDeploymentOperationStep(service1Name, service1))
-        .addStep(new FailingDeploymentOperationStep())                               // <- this step fails
-        .addStep(new StartServiceDeploymentOperationStep(service2Name, service2))
-        .execute();
+      deploymentOperationBuilder.execute();
 
       fail("Exception expected");
 
     } catch(Exception e) {
-      assertTrue(e.getMessage().contains("Exception while performing 'test failing op' => 'failing step'"));
+      assertThat(e.getMessage()).contains("Exception while performing 'test failing op' => 'failing step'");
 
     }
 
     // none of the services were registered
-    assertNull(serviceContainer.getService(service1ObjectName));
-    assertNull(serviceContainer.getService(service2ObjectName));
+    assertThat(serviceContainer.<TestService>getService(service1ObjectName)).isNull();
+    assertThat(serviceContainer.<TestService>getService(service2ObjectName)).isNull();
 
     // different step ordering //////////////////////////////////
 
+    var deploymentOperationBuilder1 = serviceContainer.createDeploymentOperation("test failing op")
+      .addStep(new StartServiceDeploymentOperationStep(service1Name, service1))
+      .addStep(new StartServiceDeploymentOperationStep(service2Name, service2))
+      .addStep(new FailingDeploymentOperationStep());
     try {
-      serviceContainer.createDeploymentOperation("test failing op")
-        .addStep(new StartServiceDeploymentOperationStep(service1Name, service1))
-        .addStep(new StartServiceDeploymentOperationStep(service2Name, service2))
-        .addStep(new FailingDeploymentOperationStep())                               // <- this step fails
-        .execute();
+      deploymentOperationBuilder1.execute();
 
       fail("Exception expected");
 
     } catch(Exception e) {
-      assertTrue(e.getMessage().contains("Exception while performing 'test failing op' => 'failing step'"));
+      assertThat(e.getMessage()).contains("Exception while performing 'test failing op' => 'failing step'");
 
     }
 
     // none of the services were registered
-    assertNull(serviceContainer.getService(service1ObjectName));
-    assertNull(serviceContainer.getService(service2ObjectName));
+    assertThat(serviceContainer.<TestService>getService(service1ObjectName)).isNull();
+    assertThat(serviceContainer.<TestService>getService(service2ObjectName)).isNull();
 
   }
 
   @Test
   public void testUndeploymentOperation() {
 
-    // lets first start some services:
+    // let's first start some services:
     serviceContainer.startService(service1Name, service1);
     serviceContainer.startService(service2Name, service2);
 
@@ -289,15 +276,15 @@ public class MBeanServiceContainerTest {
       .execute();
 
     // both services were stopped.
-    assertNull(serviceContainer.getService(service1ObjectName));
-    assertNull(serviceContainer.getService(service2ObjectName));
+    assertThat(serviceContainer.<TestService>getService(service1ObjectName)).isNull();
+    assertThat(serviceContainer.<TestService>getService(service2ObjectName)).isNull();
 
   }
 
   @Test
   public void testFailingUndeploymentOperation() {
 
-    // lets first start some services:
+    // let's first start some services:
     serviceContainer.startService(service1Name, service1);
     serviceContainer.startService(service2Name, service2);
 
@@ -310,8 +297,8 @@ public class MBeanServiceContainerTest {
 
 
     // both services were stopped.
-    assertNull(serviceContainer.getService(service1ObjectName));
-    assertNull(serviceContainer.getService(service2ObjectName));
+    assertThat(serviceContainer.<TestService>getService(service1ObjectName)).isNull();
+    assertThat(serviceContainer.<TestService>getService(service2ObjectName)).isNull();
 
     // different step ordering //////////////////////////////////
 
@@ -326,8 +313,8 @@ public class MBeanServiceContainerTest {
       .execute();
 
     // both services were stopped.
-    assertNull(serviceContainer.getService(service1ObjectName));
-    assertNull(serviceContainer.getService(service2ObjectName));
+    assertThat(serviceContainer.<TestService>getService(service1ObjectName)).isNull();
+    assertThat(serviceContainer.<TestService>getService(service2ObjectName)).isNull();
 
   }
 

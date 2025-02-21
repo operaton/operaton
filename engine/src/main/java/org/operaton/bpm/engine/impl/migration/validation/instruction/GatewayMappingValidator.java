@@ -73,10 +73,8 @@ public class GatewayMappingValidator implements MigrationInstructionValidator {
     ActivityImpl sourceActivity = instruction.getSourceActivity();
     ScopeImpl flowScope = sourceActivity.getFlowScope();
 
-    if (flowScope != flowScope.getProcessDefinition()) {
-      if (instructions.getInstructionsBySourceScope(flowScope).isEmpty()) {
-        report.addFailure("The gateway's flow scope '" + flowScope.getId() + "' must be mapped");
-      }
+    if (flowScope != flowScope.getProcessDefinition() && instructions.getInstructionsBySourceScope(flowScope).isEmpty()) {
+      report.addFailure("The gateway's flow scope '" + flowScope.getId() + "' must be mapped");
     }
   }
 

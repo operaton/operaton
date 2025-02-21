@@ -45,11 +45,9 @@ public class TimerRecalculationTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
   public static WebArchive processArchive() {
-    WebArchive archive = initWebArchiveDeployment()
+    return initWebArchiveDeployment()
             .addAsResource("org/operaton/bpm/integrationtest/jobexecutor/TimerRecalculation.bpmn20.xml")
             .addClass(TimerExpressionBean.class);
-
-    return archive;
   }
 
   @Test
@@ -58,9 +56,10 @@ public class TimerRecalculationTest extends AbstractFoxPlatformIntegrationTest {
     Map<String, Object> variables = new HashMap<>();
     variables.put("timerExpression", "PT10S");
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("TimerRecalculationProcess", variables);
+    String processInstanceId = instance.getId();
 
-    ProcessInstanceQuery instancesQuery = runtimeService.createProcessInstanceQuery().processInstanceId(instance.getId());
-    JobQuery jobQuery = managementService.createJobQuery();
+    ProcessInstanceQuery instancesQuery = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId);
+    JobQuery jobQuery = managementService.createJobQuery().processInstanceId(processInstanceId);
     assertEquals(1, instancesQuery.count());
     assertEquals(1, jobQuery.count());
     
@@ -68,7 +67,7 @@ public class TimerRecalculationTest extends AbstractFoxPlatformIntegrationTest {
     Date oldDueDate = job.getDuedate();
     
     // when
-    runtimeService.setVariable(instance.getId(),  "timerExpression", "PT1S");
+    runtimeService.setVariable(processInstanceId,  "timerExpression", "PT1S");
     managementService.recalculateJobDuedate(job.getId(), true);
 
     // then

@@ -38,7 +38,7 @@ public abstract class AbstractNativeQuery<T extends NativeQuery< ? , ? >, U> imp
 
   private static final long serialVersionUID = 1L;
 
-  private static enum ResultType {
+  private enum ResultType {
     LIST, LIST_PAGE, SINGLE_RESULT, COUNT
   }
 

@@ -40,7 +40,7 @@ import org.junit.Test;
 import org.junit.rules.RuleChain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Tassilo Weidner
@@ -173,10 +173,11 @@ public class JobEntityTest {
 
     runtimeService.startProcessInstanceByKey("process", Variables.createVariables().putValue("fail", true));
     JobEntity job = (JobEntity) managementService.createJobQuery().singleResult();
+    var jobId = job.getId();
 
     // when
     try {
-      managementService.executeJob(job.getId());
+      managementService.executeJob(jobId);
       fail("Exception expected");
     } catch (Exception e) {
       // exception expected
@@ -203,10 +204,11 @@ public class JobEntityTest {
 
     runtimeService.startProcessInstanceByKey("process", Variables.createVariables().putValue("fail", true));
     JobEntity job = (JobEntity) managementService.createJobQuery().singleResult();
+    var jobId = job.getId();
 
     // when
     try {
-      managementService.executeJob(job.getId());
+      managementService.executeJob(jobId);
       fail("Exception expected");
     } catch (Exception e) {
       // exception expected
@@ -235,10 +237,11 @@ public class JobEntityTest {
 
     runtimeService.startProcessInstanceByKey("process", Variables.createVariables().putValue("fail", true));
     JobEntity job = (JobEntity) managementService.createJobQuery().singleResult();
+    var jobId = job.getId();
 
     // when
     try {
-      managementService.executeJob(job.getId());
+      managementService.executeJob(jobId);
       fail("Exception expected");
     } catch (Exception e) {
       // exception expected

@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.operaton.bpm.webapp</groupId>
     <artifactId>operaton-webapp-root</artifactId>
-    <version>1.0.0-beta-3-SNAPSHOT</version>
+    <version>1.0.0-beta-4-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-webapp</artifactId>
@@ -77,8 +77,6 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
-      <version>6.2.1</version>
-      <scope>test</scope>
     </dependency>
 
     <dependency>
@@ -426,7 +424,6 @@
               <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-jdk14</artifactId>
-                <version>${version.slf4j}</version>
               </dependency>
               <dependency>
                 <groupId>com.h2database</groupId>

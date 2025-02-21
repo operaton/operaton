@@ -147,10 +147,10 @@ public class MultiTenancyHistoricJobLogQueryTest {
 
   @Test
   public void shouldFailQueryByTenantIdNull() {
+    var historicJobLogQuery = historyService.createHistoricJobLogQuery();
     try {
       // when
-      historyService.createHistoricJobLogQuery()
-        .tenantIdIn((String) null);
+      historicJobLogQuery.tenantIdIn((String) null);
 
       fail("expected exception");
 

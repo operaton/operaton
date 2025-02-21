@@ -131,6 +131,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Operaton SQL Scripts
-          path: distro/sql-script/target/operaton-sql-scripts-${{ env.PROJECT_VERSION }}.tar.gz
+          path: distro/sql-script/target/operaton-sql-scripts-*.tar.gz
           if-no-files-found: error
           retention-days: 10

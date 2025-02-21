@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Date;
@@ -29,13 +30,13 @@ import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.impl.persistence.entity.TimerEntity;
 
-import static org.springframework.util.ObjectUtils.isEmpty;
 
 /**
  * @author Kristin Polenz
  */
 public class SetJobDuedateCmd implements Command<Void>, Serializable {
 
+  @Serial
   private static final long serialVersionUID = 1L;
 
   private final String jobId;
@@ -43,7 +44,7 @@ public class SetJobDuedateCmd implements Command<Void>, Serializable {
   private final boolean cascade;
 
   public SetJobDuedateCmd(String jobId, Date newDuedate, boolean cascade) {
-    if (isEmpty(jobId)) {
+    if (jobId == null || jobId.isEmpty()) {
       throw new ProcessEngineException("The job id is mandatory, but '" + jobId + "' has been provided.");
     }
     this.jobId = jobId;

@@ -15,14 +15,12 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.authorization;
-
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.ALL;
 import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import org.operaton.bpm.engine.management.IncidentStatistics;
@@ -74,10 +72,10 @@ public class ProcessDefinitionStatisticsAuthorizationTest extends AuthorizationT
     verifyQueryResults(query, 1);
 
     ProcessDefinitionStatistics statistics = query.singleResult();
-    assertEquals(ONE_TASK_PROCESS_KEY, statistics.getKey());
-    assertEquals(0, statistics.getInstances());
-    assertEquals(0, statistics.getFailedJobs());
-    assertTrue(statistics.getIncidentStatistics().isEmpty());
+    assertThat(statistics.getKey()).isEqualTo(ONE_TASK_PROCESS_KEY);
+    assertThat(statistics.getInstances()).isZero();
+    assertThat(statistics.getFailedJobs()).isZero();
+    assertThat(statistics.getIncidentStatistics()).isEmpty();
   }
 
   @Test
@@ -141,7 +139,7 @@ public class ProcessDefinitionStatisticsAuthorizationTest extends AuthorizationT
     List<ProcessDefinitionStatistics> statistics = managementService.createProcessDefinitionStatisticsQuery().list();
 
     // then
-    assertEquals(2, statistics.size());
+    assertThat(statistics).hasSize(2);
 
     ProcessDefinitionStatistics oneTaskProcessStatistics = getStatisticsByKey(statistics, ONE_TASK_PROCESS_KEY);
     verifyStatisticsResult(oneTaskProcessStatistics, 2, 0, 0);
@@ -171,7 +169,7 @@ public class ProcessDefinitionStatisticsAuthorizationTest extends AuthorizationT
         .list();
 
     // then
-    assertEquals(2, statistics.size());
+    assertThat(statistics).hasSize(2);
 
     ProcessDefinitionStatistics oneTaskProcessStatistics = getStatisticsByKey(statistics, ONE_TASK_PROCESS_KEY);
     verifyStatisticsResult(oneTaskProcessStatistics, 2, 0, 0);
@@ -201,7 +199,7 @@ public class ProcessDefinitionStatisticsAuthorizationTest extends AuthorizationT
         .list();
 
     // then
-    assertEquals(2, statistics.size());
+    assertThat(statistics).hasSize(2);
 
     ProcessDefinitionStatistics oneTaskProcessStatistics = getStatisticsByKey(statistics, ONE_TASK_PROCESS_KEY);
     verifyStatisticsResult(oneTaskProcessStatistics, 2, 0, 0);
@@ -232,7 +230,7 @@ public class ProcessDefinitionStatisticsAuthorizationTest extends AuthorizationT
         .list();
 
     // then
-    assertEquals(2, statistics.size());
+    assertThat(statistics).hasSize(2);
 
     ProcessDefinitionStatistics oneTaskProcessStatistics = getStatisticsByKey(statistics, ONE_TASK_PROCESS_KEY);
     verifyStatisticsResult(oneTaskProcessStatistics, 2, 0, 0);
@@ -244,16 +242,16 @@ public class ProcessDefinitionStatisticsAuthorizationTest extends AuthorizationT
   // helper ///////////////////////////////////////////////////////////////////////////
 
   protected void verifyStatisticsResult(ProcessDefinitionStatistics statistics, int instances, int failedJobs, int incidents) {
-    assertEquals("Instances", instances, statistics.getInstances());
-    assertEquals("Failed Jobs", failedJobs, statistics.getFailedJobs());
+    assertThat(statistics.getInstances()).as("Instances").isEqualTo(instances);
+    assertThat(statistics.getFailedJobs()).as("Failed Jobs").isEqualTo(failedJobs);
 
     List<IncidentStatistics> incidentStatistics = statistics.getIncidentStatistics();
     if (incidents == 0) {
-      assertTrue("Incidents supposed to be empty", incidentStatistics.isEmpty());
+      assertThat(incidentStatistics).as("Incidents supposed to be empty").isEmpty();
     }
     else {
       // the test does have only one type of incidents
-      assertEquals("Incidents", incidents, incidentStatistics.get(0).getIncidentCount());
+      assertThat(incidentStatistics.get(0).getIncidentCount()).as("Incidents").isEqualTo(incidents);
     }
   }
 

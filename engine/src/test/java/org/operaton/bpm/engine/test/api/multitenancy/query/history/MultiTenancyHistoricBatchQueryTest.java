@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.test.api.multitenancy.query.history;
 
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicBatchByTenantId;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
@@ -41,7 +42,6 @@ import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -103,10 +103,10 @@ public class MultiTenancyHistoricBatchQueryTest {
     List<HistoricBatch> batches = historyService.createHistoricBatchQuery().list();
 
     // then
-    Assert.assertEquals(1, batches.size());
-    Assert.assertEquals(sharedBatch.getId(), batches.get(0).getId());
+    assertThat(batches).hasSize(1);
+    assertThat(batches.get(0).getId()).isEqualTo(sharedBatch.getId());
 
-    Assert.assertEquals(1, historyService.createHistoricBatchQuery().count());
+    assertThat(historyService.createHistoricBatchQuery().count()).isEqualTo(1);
 
     identityService.clearAuthentication();
   }
@@ -120,10 +120,10 @@ public class MultiTenancyHistoricBatchQueryTest {
     List<HistoricBatch> batches = historyService.createHistoricBatchQuery().list();
 
     // then
-    Assert.assertEquals(2, batches.size());
+    assertThat(batches).hasSize(2);
     assertBatches(batches, tenant1Batch.getId(), sharedBatch.getId());
 
-    Assert.assertEquals(2, historyService.createHistoricBatchQuery().count());
+    assertThat(historyService.createHistoricBatchQuery().count()).isEqualTo(2);
 
     identityService.clearAuthentication();
   }
@@ -137,9 +137,9 @@ public class MultiTenancyHistoricBatchQueryTest {
     List<HistoricBatch> batches = historyService.createHistoricBatchQuery().list();
 
     // then
-    Assert.assertEquals(3, batches.size());
+    assertThat(batches).hasSize(3);
 
-    Assert.assertEquals(3, historyService.createHistoricBatchQuery().count());
+    assertThat(historyService.createHistoricBatchQuery().count()).isEqualTo(3);
 
     identityService.clearAuthentication();
   }
@@ -154,18 +154,19 @@ public class MultiTenancyHistoricBatchQueryTest {
 
     // then
     identityService.clearAuthentication();
-    Assert.assertEquals(2, historyService.createHistoricBatchQuery().count());
+    assertThat(historyService.createHistoricBatchQuery().count()).isEqualTo(2);
   }
 
   @Test
   public void testDeleteHistoricBatchFailsWithWrongTenant() {
     // given
     identityService.setAuthentication("user", null, singletonList(TENANT_ONE));
+    var tenant2BatchId = tenant2Batch.getId();
 
     // when
     try {
-      historyService.deleteHistoricBatch(tenant2Batch.getId());
-      Assert.fail("exception expected");
+      historyService.deleteHistoricBatch(tenant2BatchId);
+      fail("exception expected");
     }
     catch (ProcessEngineException e) {
       // then
@@ -183,8 +184,8 @@ public class MultiTenancyHistoricBatchQueryTest {
     HistoricBatch returnedBatch = historyService.createHistoricBatchQuery().tenantIdIn(TENANT_ONE).singleResult();
 
     // then
-    Assert.assertNotNull(returnedBatch);
-    Assert.assertEquals(tenant1Batch.getId(), returnedBatch.getId());
+    assertThat(returnedBatch).isNotNull();
+    assertThat(returnedBatch.getId()).isEqualTo(tenant1Batch.getId());
   }
 
   @Test
@@ -197,9 +198,9 @@ public class MultiTenancyHistoricBatchQueryTest {
       .list();
 
     // then
-    Assert.assertEquals(2, returnedBatches.size());
-    Assert.assertEquals(tenant1Batch.getId(), returnedBatches.get(0).getId());
-    Assert.assertEquals(tenant2Batch.getId(), returnedBatches.get(1).getId());
+    assertThat(returnedBatches).hasSize(2);
+    assertThat(returnedBatches.get(0).getId()).isEqualTo(tenant1Batch.getId());
+    assertThat(returnedBatches.get(1).getId()).isEqualTo(tenant2Batch.getId());
   }
 
   @Test
@@ -208,17 +209,18 @@ public class MultiTenancyHistoricBatchQueryTest {
     HistoricBatch returnedBatch = historyService.createHistoricBatchQuery().withoutTenantId().singleResult();
 
     // then
-    Assert.assertNotNull(returnedBatch);
-    Assert.assertEquals(sharedBatch.getId(), returnedBatch.getId());
+    assertThat(returnedBatch).isNotNull();
+    assertThat(returnedBatch.getId()).isEqualTo(sharedBatch.getId());
   }
 
   @Test
   public void testBatchQueryFailOnNullTenantIdCase1() {
 
     String[] tenantIds = null;
+    var historicBatchQuery = historyService.createHistoricBatchQuery();
     try {
-      historyService.createHistoricBatchQuery().tenantIdIn(tenantIds);
-      Assert.fail("exception expected");
+      historicBatchQuery.tenantIdIn(tenantIds);
+      fail("exception expected");
     }
     catch (NullValueException e) {
       // happy path
@@ -229,9 +231,10 @@ public class MultiTenancyHistoricBatchQueryTest {
   public void testBatchQueryFailOnNullTenantIdCase2() {
 
     String[] tenantIds = new String[]{ null };
+    var historicBatchQuery = historyService.createHistoricBatchQuery();
     try {
-      historyService.createHistoricBatchQuery().tenantIdIn(tenantIds);
-      Assert.fail("exception expected");
+      historicBatchQuery.tenantIdIn(tenantIds);
+      fail("exception expected");
     }
     catch (NullValueException e) {
       // happy path
@@ -259,7 +262,7 @@ public class MultiTenancyHistoricBatchQueryTest {
   }
 
   protected void assertBatches(List<HistoricBatch> actualBatches, String... expectedIds) {
-    Assert.assertEquals(expectedIds.length, actualBatches.size());
+    assertThat(actualBatches).hasSize(expectedIds.length);
 
     Set<String> actualIds = new HashSet<>();
     for (HistoricBatch batch : actualBatches) {
@@ -267,7 +270,7 @@ public class MultiTenancyHistoricBatchQueryTest {
     }
 
     for (String expectedId : expectedIds) {
-      Assert.assertTrue(actualIds.contains(expectedId));
+      assertThat(actualIds).contains(expectedId);
     }
   }
 }

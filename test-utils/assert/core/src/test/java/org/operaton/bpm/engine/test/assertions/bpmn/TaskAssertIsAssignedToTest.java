@@ -26,7 +26,6 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -59,12 +58,7 @@ public class TaskAssertIsAssignedToTest extends ProcessAssertTestCase {
       "TaskAssert-isAssignedTo"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).task().isAssignedTo("fozzie");
-      }
-    });
+    expect(() -> assertThat(processInstance).task().isAssignedTo("fozzie"));
   }
 
   @Test
@@ -78,12 +72,7 @@ public class TaskAssertIsAssignedToTest extends ProcessAssertTestCase {
     // When
     claim(taskQuery().singleResult(), "fozzie");
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).task().isAssignedTo("gonzo");
-      }
-    });
+    expect(() -> assertThat(processInstance).task().isAssignedTo("gonzo"));
   }
 
   @Test
@@ -97,12 +86,7 @@ public class TaskAssertIsAssignedToTest extends ProcessAssertTestCase {
     // When
     claim(taskQuery().singleResult(), "fozzie");
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).task().isAssignedTo(null);
-      }
-    });
+    expect(() -> assertThat(processInstance).task().isAssignedTo(null));
   }
 
   @Test
@@ -117,12 +101,7 @@ public class TaskAssertIsAssignedToTest extends ProcessAssertTestCase {
     final Task task = taskQuery().singleResult();
     complete(task);
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(task).isAssignedTo("fozzie");
-      }
-    });
+    expect(() -> assertThat(task).isAssignedTo("fozzie"));
   }
 
 }

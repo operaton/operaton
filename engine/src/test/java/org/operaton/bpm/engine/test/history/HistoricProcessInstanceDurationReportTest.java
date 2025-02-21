@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.history;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
 
 import static org.operaton.bpm.engine.query.PeriodUnit.MONTH;
 import static org.operaton.bpm.engine.query.PeriodUnit.QUARTER;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -44,6 +43,9 @@ import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import org.assertj.core.api.Assertions;
+import org.assertj.core.data.Offset;
 import org.junit.Test;
 
 /**
@@ -53,7 +55,7 @@ import org.junit.Test;
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
 public class HistoricProcessInstanceDurationReportTest extends PluggableProcessEngineTest {
 
-  private Random random = new Random();
+  private final Random random = new Random();
 
   @Test
   public void testDurationReportByMonth() {
@@ -260,8 +262,10 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
 
     try {
       report.duration(null);
-      fail();
-    } catch (NotValidException e) {}
+      fail("Exception expected");
+    } catch (NotValidException e) {
+      // expected
+    }
   }
 
   @Test
@@ -330,8 +334,10 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
 
     try {
       report.startedBefore(null);
-      fail();
-    } catch (NotValidException e) {}
+      fail("Exception expected");
+    } catch (NotValidException e) {
+      // expected
+    }
   }
 
   @Test
@@ -394,8 +400,10 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
 
     try {
       report.startedAfter(null);
-      fail();
-    } catch (NotValidException e) {}
+      fail("Exception expected");
+    } catch (NotValidException e) {
+      // expected
+    }
   }
 
   @Test
@@ -485,7 +493,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
         .duration(MONTH);
 
     // then
-    assertEquals(0, result.size());
+    Assertions.assertThat(result).isEmpty();
   }
 
   @Test
@@ -618,13 +626,11 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
   public void testReportByInvalidProcessDefinitionId() {
     HistoricProcessInstanceReport report = historyService.createHistoricProcessInstanceReport();
 
-    try {
-      report.processDefinitionIdIn((String) null);
-    } catch (NotValidException e) {}
+    assertThatThrownBy(() -> report.processDefinitionIdIn((String) null))
+      .isInstanceOf(NotValidException.class);
 
-    try {
-      report.processDefinitionIdIn("abc", (String) null, "def");
-    } catch (NotValidException e) {}
+    assertThatThrownBy(() -> report.processDefinitionIdIn("abc", null, "def"))
+      .isInstanceOf(NotValidException.class);
   }
 
   @Test
@@ -723,11 +729,15 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
 
     try {
       report.processDefinitionKeyIn((String) null);
-    } catch (NotValidException e) {}
+    } catch (NotValidException e) {
+      // expected
+    }
 
     try {
-      report.processDefinitionKeyIn("abc", (String) null, "def");
-    } catch (NotValidException e) {}
+      report.processDefinitionKeyIn("abc", null, "def");
+    } catch (NotValidException e) {
+      // expected
+    }
   }
 
   protected BpmnModelInstance createProcessWithUserTask(String key) {
@@ -796,11 +806,7 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
     protected Map<Integer, Set<String>> periodToProcessInstancesMap = new HashMap<>();
 
     public DurationReportResultAssertion addDurationReportResult(int period, String processInstanceId) {
-      Set<String> processInstances = periodToProcessInstancesMap.get(period);
-      if (processInstances == null) {
-        processInstances = new HashSet<>();
-        periodToProcessInstancesMap.put(period, processInstances);
-      }
+      Set<String> processInstances = periodToProcessInstancesMap.computeIfAbsent(period, k -> new HashSet<>());
       processInstances.add(processInstanceId);
       return this;
     }
@@ -811,14 +817,14 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
     }
 
     public void assertReportResults(List<DurationReportResult> actual) {
-      assertEquals("Report size", periodToProcessInstancesMap.size(), actual.size());
+      Assertions.assertThat(actual).as("Report size").hasSize(periodToProcessInstancesMap.size());
 
       for (DurationReportResult reportResult : actual) {
-        assertEquals("Period unit", periodUnit, reportResult.getPeriodUnit());
+        Assertions.assertThat(reportResult.getPeriodUnit()).as("Period unit").isEqualTo(periodUnit);
 
         int period = reportResult.getPeriod();
         Set<String> processInstancesInPeriod = periodToProcessInstancesMap.get(period);
-        assertNotNull("Unexpected report for period " + period, processInstancesInPeriod);
+        Assertions.assertThat(processInstancesInPeriod).as("Unexpected report for period " + period).isNotNull();
 
         List<HistoricProcessInstance> historicProcessInstances = historyService
             .createHistoricProcessInstanceQuery()
@@ -840,9 +846,9 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
 
         long avg = sum / historicProcessInstances.size();
 
-        assertEquals("maximum", max, reportResult.getMaximum());
-        assertEquals("minimum", min, reportResult.getMinimum());
-        assertEquals("average", avg, reportResult.getAverage(), 1);
+        Assertions.assertThat(reportResult.getMaximum()).as("maximum").isEqualTo(max);
+        Assertions.assertThat(reportResult.getMinimum()).as("minimum").isEqualTo(min);
+        Assertions.assertThat(reportResult.getAverage()).as("average").isCloseTo(avg, Offset.offset(1L));
       }
     }
 

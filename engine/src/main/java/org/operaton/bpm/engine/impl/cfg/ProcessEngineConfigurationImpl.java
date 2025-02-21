@@ -357,7 +357,6 @@ import org.operaton.bpm.engine.impl.telemetry.dto.JdkImpl;
 import org.operaton.bpm.engine.impl.telemetry.dto.ProductImpl;
 import org.operaton.bpm.engine.impl.telemetry.dto.TelemetryDataImpl;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.operaton.bpm.engine.impl.util.IoUtil;
 import org.operaton.bpm.engine.impl.util.ParseUtil;
 import org.operaton.bpm.engine.impl.util.ProcessEngineDetails;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
@@ -1226,7 +1225,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     if (!HISTORY_REMOVAL_TIME_STRATEGY_START.equals(historyRemovalTimeStrategy) &&
       !HISTORY_REMOVAL_TIME_STRATEGY_END.equals(historyRemovalTimeStrategy) &&
       !HISTORY_REMOVAL_TIME_STRATEGY_NONE.equals(historyRemovalTimeStrategy)) {
-      throw LOG.invalidPropertyValue("historyRemovalTimeStrategy", String.valueOf(historyRemovalTimeStrategy),
+      throw LOG.invalidPropertyValue("historyRemovalTimeStrategy", historyRemovalTimeStrategy,
         String.format("history removal time strategy must be set to '%s', '%s' or '%s'", HISTORY_REMOVAL_TIME_STRATEGY_START, HISTORY_REMOVAL_TIME_STRATEGY_END, HISTORY_REMOVAL_TIME_STRATEGY_NONE));
     }
   }
@@ -1282,13 +1281,13 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
     if (!HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED.equals(historyCleanupStrategy) &&
       !HISTORY_CLEANUP_STRATEGY_END_TIME_BASED.equals(historyCleanupStrategy)) {
-      throw LOG.invalidPropertyValue("historyCleanupStrategy", String.valueOf(historyCleanupStrategy),
+      throw LOG.invalidPropertyValue("historyCleanupStrategy", historyCleanupStrategy,
         String.format("history cleanup strategy must be either set to '%s' or '%s'", HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED, HISTORY_CLEANUP_STRATEGY_END_TIME_BASED));
     }
 
     if (HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED.equals(historyCleanupStrategy) &&
       HISTORY_REMOVAL_TIME_STRATEGY_NONE.equals(historyRemovalTimeStrategy)) {
-      throw LOG.invalidPropertyValue("historyRemovalTimeStrategy", String.valueOf(historyRemovalTimeStrategy),
+      throw LOG.invalidPropertyValue("historyRemovalTimeStrategy", historyRemovalTimeStrategy,
         String.format("history removal time strategy cannot be set to '%s' in conjunction with '%s' history cleanup strategy", HISTORY_REMOVAL_TIME_STRATEGY_NONE, HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED));
     }
   }
@@ -1354,9 +1353,10 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     if (batchOperationsForHistoryCleanup == null) {
       batchOperationsForHistoryCleanup = new HashMap<>();
     } else {
-      for (String batchOperation : batchOperationsForHistoryCleanup.keySet()) {
-        String timeToLive = batchOperationsForHistoryCleanup.get(batchOperation);
-        if (!batchHandlers.keySet().contains(batchOperation)) {
+      for (var batchOperationEntry: batchOperationsForHistoryCleanup.entrySet()) {
+        String batchOperation = batchOperationEntry.getKey();
+        String timeToLive = batchOperationEntry.getValue();
+        if (!batchHandlers.containsKey(batchOperation)) {
           LOG.invalidBatchOperation(batchOperation, timeToLive);
         }
 
@@ -1369,18 +1369,16 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     }
 
     if (batchHandlers != null && batchOperationHistoryTimeToLive != null) {
-
-      for (String batchOperation : batchHandlers.keySet()) {
-        if (!batchOperationsForHistoryCleanup.containsKey(batchOperation)) {
-          batchOperationsForHistoryCleanup.put(batchOperation, batchOperationHistoryTimeToLive);
-        }
-      }
+      batchHandlers.keySet().forEach(batchOperation ->
+        batchOperationsForHistoryCleanup.computeIfAbsent(batchOperation, k -> batchOperationHistoryTimeToLive)
+      );
     }
 
     parsedBatchOperationsForHistoryCleanup = new HashMap<>();
     if (batchOperationsForHistoryCleanup != null) {
-      for (String operation : batchOperationsForHistoryCleanup.keySet()) {
-        Integer historyTTL = ParseUtil.parseHistoryTimeToLive(batchOperationsForHistoryCleanup.get(operation));
+      for (var batchOperationEntry: batchOperationsForHistoryCleanup.entrySet()) {
+        String operation = batchOperationEntry.getKey();
+        Integer historyTTL = ParseUtil.parseHistoryTimeToLive(batchOperationEntry.getValue());
         parsedBatchOperationsForHistoryCleanup.put(operation, historyTTL);
       }
     }
@@ -1844,9 +1842,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
       }
 
       if (sqlSessionFactory == null) {
-        InputStream inputStream = null;
-        try {
-          inputStream = getMyBatisXmlConfigurationSteam();
+        try (InputStream inputStream = getMyBatisXmlConfigurationSteam()) {
 
           // update the jdbc parameters to the configured ones...
           Environment environment = new Environment("default", transactionFactory, dataSource);
@@ -1882,8 +1878,6 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
         } catch (Exception e) {
           throw new ProcessEngineException("Error while building ibatis SqlSessionFactory: " + e.getMessage(), e);
-        } finally {
-          IoUtil.closeSilently(inputStream);
         }
       }
     }
@@ -2147,7 +2141,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   protected void ensurePrefixAndSchemaFitToegether(String prefix, String schema) {
     if (schema == null) {
       return;
-    } else if (prefix == null || (prefix != null && !prefix.startsWith(schema + "."))) {
+    }
+    if (prefix == null || !prefix.startsWith(schema + ".")) {
       throw new ProcessEngineException("When setting a schema the prefix has to be schema + '.'. Received schema: " + schema + " prefix: " + prefix);
     }
   }

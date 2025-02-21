@@ -22,7 +22,8 @@ import org.operaton.bpm.engine.impl.cmmn.execution.CmmnCaseInstance;
 import org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler;
 import org.operaton.bpm.engine.impl.cmmn.model.CaseDefinitionBuilder;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnCaseDefinition;
-import static org.junit.Assert.assertTrue;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.impl.test.TestHelper;
 import org.junit.Test;
@@ -69,10 +70,10 @@ public class CaseExecutionSuspensionTest {
     caseInstance.suspend();
 
     // then
-    assertTrue(caseInstance.isSuspended());
-    assertTrue(stageX.isSuspended());
-    assertTrue(taskA.isSuspended());
-    assertTrue(taskB.isSuspended());
+    assertThat(caseInstance.isSuspended()).isTrue();
+    assertThat(stageX.isSuspended()).isTrue();
+    assertThat(taskA.isSuspended()).isTrue();
+    assertThat(taskB.isSuspended()).isTrue();
   }
 
   @Test
@@ -111,10 +112,10 @@ public class CaseExecutionSuspensionTest {
     stageX.suspend();
 
     // then
-    assertTrue(caseInstance.isActive());
-    assertTrue(stageX.isSuspended());
-    assertTrue(taskA.isSuspended());
-    assertTrue(taskB.isSuspended());
+    assertThat(caseInstance.isActive()).isTrue();
+    assertThat(stageX.isSuspended()).isTrue();
+    assertThat(taskA.isSuspended()).isTrue();
+    assertThat(taskB.isSuspended()).isTrue();
   }
 
   @Test
@@ -154,10 +155,10 @@ public class CaseExecutionSuspensionTest {
     taskA.suspend();
 
     // then
-    assertTrue(caseInstance.isActive());
-    assertTrue(stageX.isActive());
-    assertTrue(taskA.isSuspended());
-    assertTrue(taskB.isEnabled());
+    assertThat(caseInstance.isActive()).isTrue();
+    assertThat(stageX.isActive()).isTrue();
+    assertThat(taskA.isSuspended()).isTrue();
+    assertThat(taskB.isEnabled()).isTrue();
   }
 
 }

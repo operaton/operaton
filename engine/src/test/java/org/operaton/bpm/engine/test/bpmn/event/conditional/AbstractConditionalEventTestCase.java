@@ -17,10 +17,7 @@
 package org.operaton.bpm.engine.test.bpmn.event.conditional;
 
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -112,7 +109,7 @@ public abstract class AbstractConditionalEventTestCase {
   @After
   public void checkIfProcessCanBeFinished() {
     //given tasks after variable was set
-    assertNotNull(tasksAfterVariableIsSet);
+    assertThat(tasksAfterVariableIsSet).isNotNull();
 
     //when tasks are completed
     for (Task task : tasksAfterVariableIsSet) {
@@ -120,9 +117,9 @@ public abstract class AbstractConditionalEventTestCase {
     }
 
     //then
-    assertEquals(0, conditionEventSubscriptionQuery.list().size());
-    assertNull(taskService.createTaskQuery().singleResult());
-    assertNull(runtimeService.createProcessInstanceQuery().singleResult());
+    assertThat(conditionEventSubscriptionQuery.list()).isEmpty();
+    assertThat(taskService.createTaskQuery().singleResult()).isNull();
+    assertThat(runtimeService.createProcessInstanceQuery().singleResult()).isNull();
     tasksAfterVariableIsSet = null;
   }
 
@@ -136,7 +133,7 @@ public abstract class AbstractConditionalEventTestCase {
         expectedNames.remove(actualTaskName);
       }
     }
-    assertTrue(expectedNames.isEmpty());
+    assertThat(expectedNames).isEmpty();
   }
 
   // conditional event sub process //////////////////////////////////////////////////////////////////////////////////////////

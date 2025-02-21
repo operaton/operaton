@@ -200,10 +200,9 @@ public class DefaultFormHandler implements FormHandler {
 
 
   protected FormTypes getFormTypes() {
-    FormTypes formTypes = Context
+    return Context
         .getProcessEngineConfiguration()
         .getFormTypes();
-    return formTypes;
   }
 
   protected void parseFormProperties(BpmnParse bpmnParse, ExpressionManager expressionManager, Element extensionElement) {

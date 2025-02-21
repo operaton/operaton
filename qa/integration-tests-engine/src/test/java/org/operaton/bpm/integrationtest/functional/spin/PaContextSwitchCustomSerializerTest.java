@@ -61,14 +61,12 @@ public class PaContextSwitchCustomSerializerTest extends AbstractFoxPlatformInte
 
   @Deployment(name = "pa4")
   public static WebArchive createDeployment2() {
-    WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "pa4.war")
+    return ShrinkWrap.create(WebArchive.class, "pa4.war")
         .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
         .addAsLibraries(DeploymentHelper.getEngineCdi())
         .addAsResource("META-INF/processes.xml")
         .addClass(AbstractFoxPlatformIntegrationTest.class)
         .addClass(ProcessApplication4.class);
-
-    return webArchive;
   }
 
   /**
@@ -80,27 +78,17 @@ public class PaContextSwitchCustomSerializerTest extends AbstractFoxPlatformInte
   @OperateOnDeployment("pa3")
   public void test() throws Exception {
 
-    final ProcessInstance processInstance = withProcessApplicationContext(new Callable<ProcessInstance>() {
-
-      @Override
-      public ProcessInstance call() throws Exception {
-        final XmlSerializable var = new XmlSerializable();
-        var.setProperty("jonny");
-        return runtimeService.startProcessInstanceByKey("processWithTimer", Variables.createVariables()
-          .putValueTyped("testObject", Variables.objectValue(var).serializationDataFormat(DataFormats.JSON_DATAFORMAT_NAME).create()));
-      }
-
+    final ProcessInstance processInstance = withProcessApplicationContext(() -> {
+      final XmlSerializable variable = new XmlSerializable();
+      variable.setProperty("jonny");
+      return runtimeService.startProcessInstanceByKey("processWithTimer", Variables.createVariables()
+        .putValueTyped("testObject", Variables.objectValue(variable).serializationDataFormat(DataFormats.JSON_DATAFORMAT_NAME).create()));
     }, "pa3");
 
-    withProcessApplicationContext(new Callable<Void>() {
-
-      @Override
-      public Void call() throws Exception {
-        runtimeService.createProcessInstanceModification(processInstance.getProcessInstanceId()).startTransition("flow2")
-          .execute();
-        return null;
-      }
-
+    withProcessApplicationContext((Callable<Void>) () -> {
+      runtimeService.createProcessInstanceModification(processInstance.getProcessInstanceId()).startTransition("flow2")
+        .execute();
+      return null;
     }, "pa4");
 
     assertEquals(1, historyService.createHistoricActivityInstanceQuery().activityId("exclusiveGateway").finished().count());

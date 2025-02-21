@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.test.api.multitenancy;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
@@ -61,9 +59,9 @@ public class MultiTenancyExecutionPropagationTest extends PluggableProcessEngine
         .createProcessDefinitionQuery()
         .singleResult();
 
-    assertNotNull(processDefinition);
+    assertThat(processDefinition).isNotNull();
     // inherit the tenant id from deployment
-    assertEquals(TENANT_ID, processDefinition.getTenantId());
+    assertThat(processDefinition.getTenantId()).isEqualTo(TENANT_ID);
   }
 
   @Test

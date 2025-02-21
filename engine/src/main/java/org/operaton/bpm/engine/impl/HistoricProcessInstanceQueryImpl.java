@@ -482,8 +482,8 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
       String dbType = processEngineConfiguration.getDatabaseType();
 
       for (HistoricProcessInstanceQueryImpl orQuery: queries) {
-        for (QueryVariableValue var : orQuery.getQueryVariableValues()) {
-          var.initialize(variableSerializers, dbType);
+        for (var variableValue : orQuery.getQueryVariableValues()) {
+          variableValue.initialize(variableSerializers, dbType);
         }
       }
     }

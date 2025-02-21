@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.handler.specification;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
 import org.operaton.bpm.engine.delegate.DelegateListener;
@@ -47,12 +45,12 @@ public class ScriptExecutionListenerSpec extends AbstractExecutionListenerSpec {
 
   @Override
   public void verifyListener(DelegateListener<? extends BaseDelegateExecution> listener) {
-    assertTrue(listener instanceof ScriptCaseExecutionListener);
+    assertThat(listener).isInstanceOf(ScriptCaseExecutionListener.class);
 
     ScriptCaseExecutionListener scriptListener = (ScriptCaseExecutionListener) listener;
     ExecutableScript executableScript = scriptListener.getScript();
-    assertNotNull(executableScript);
-    assertEquals(SCRIPT_FORMAT, executableScript.getLanguage());
+    assertThat(executableScript).isNotNull();
+    assertThat(executableScript.getLanguage()).isEqualTo(SCRIPT_FORMAT);
   }
 
 }

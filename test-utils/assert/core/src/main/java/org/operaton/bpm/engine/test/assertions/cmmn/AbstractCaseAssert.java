@@ -666,8 +666,7 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
     } else {
       assertion.isEmpty();
     }
-    S self = (S) this;
-    return self;
+    return (S) this;
   }
 
 }

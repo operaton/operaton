@@ -28,8 +28,8 @@ public class PathUtil {
   public static String decodePathParam(String param) {
 
     return param
-      .replaceAll("%2F", "/")
-      .replaceAll("%5C", "\\\\");
+      .replace("%2F", "/")
+      .replace("%5C", "\\");
   }
 
 }

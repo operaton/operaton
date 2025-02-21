@@ -16,10 +16,9 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -28,10 +27,7 @@ import java.util.Map;
 
 import org.operaton.bpm.engine.MismatchingMessageCorrelationException;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
-import org.operaton.bpm.engine.runtime.Execution;
-import org.operaton.bpm.engine.runtime.MessageCorrelationResult;
-import org.operaton.bpm.engine.runtime.MessageCorrelationResultType;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.runtime.*;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
@@ -87,7 +83,7 @@ public class MessageCorrelationByLocalVariablesTest {
 
     //uncorrelated executions
     List<Execution> uncorrelatedExecutions = engineRule.getRuntimeService().createExecutionQuery().activityId("MessageReceiver_1").list();
-    assertEquals(2, uncorrelatedExecutions.size());
+    assertThat(uncorrelatedExecutions).hasSize(2);
 
   }
 
@@ -124,7 +120,7 @@ public class MessageCorrelationByLocalVariablesTest {
 
     //uncorrelated executions
     List<Execution> uncorrelatedExecutions = engineRule.getRuntimeService().createExecutionQuery().activityId("MessageReceiver_1").list();
-    assertEquals(2, uncorrelatedExecutions.size());
+    assertThat(uncorrelatedExecutions).hasSize(2);
 
   }
 
@@ -168,7 +164,7 @@ public class MessageCorrelationByLocalVariablesTest {
 
     //uncorrelated executions
     List<Execution> uncorrelatedExecutions = engineRule.getRuntimeService().createExecutionQuery().activityId("UserTask_1").list();
-    assertEquals(2, uncorrelatedExecutions.size());
+    assertThat(uncorrelatedExecutions).hasSize(2);
 
   }
 
@@ -224,7 +220,7 @@ public class MessageCorrelationByLocalVariablesTest {
 
     //uncorrelated executions
     List<Execution> uncorrelatedExecutions = engineRule.getRuntimeService().createExecutionQuery().activityId("MessageReceiver_1").list();
-    assertEquals(5, uncorrelatedExecutions.size());
+    assertThat(uncorrelatedExecutions).hasSize(5);
 
   }
 
@@ -257,9 +253,13 @@ public class MessageCorrelationByLocalVariablesTest {
     correlationKeys.put("localVar", correlationKey);
     correlationKeys.put("constVar", "someValue");
 
+    var messageCorrelationBuilder = engineRule.getRuntimeService()
+      .createMessageCorrelation(messageName)
+      .localVariablesEqual(correlationKeys)
+      .setVariables(Variables.createVariables().putValue("newVar", "newValue"));
+
     // when/then
-    assertThatThrownBy(() -> engineRule.getRuntimeService().createMessageCorrelation(messageName)
-        .localVariablesEqual(correlationKeys).setVariables(Variables.createVariables().putValue("newVar", "newValue")).correlateWithResult())
+    assertThatThrownBy(messageCorrelationBuilder::correlateWithResult)
       .isInstanceOf(MismatchingMessageCorrelationException.class)
       .hasMessageContaining(String.format("Cannot correlate a message with name '%s' to a single execution", TEST_MESSAGE_NAME));
 
@@ -304,16 +304,16 @@ public class MessageCorrelationByLocalVariablesTest {
 
     //uncorrelated executions
     List<Execution> uncorrelatedExecutions = engineRule.getRuntimeService().createExecutionQuery().activityId("MessageReceiver_1").list();
-    assertEquals(1, uncorrelatedExecutions.size());
+    assertThat(uncorrelatedExecutions).hasSize(1);
 
   }
 
   protected void checkExecutionMessageCorrelationResult(MessageCorrelationResult result, ProcessInstance processInstance, String activityId) {
-    assertNotNull(result);
-    assertEquals(MessageCorrelationResultType.Execution, result.getResultType());
-    assertEquals(processInstance.getId(), result.getExecution().getProcessInstanceId());
+    assertThat(result).isNotNull();
+    assertThat(result.getResultType()).isEqualTo(MessageCorrelationResultType.Execution);
+    assertThat(result.getExecution().getProcessInstanceId()).isEqualTo(processInstance.getId());
     ExecutionEntity entity = (ExecutionEntity) result.getExecution();
-    assertEquals(activityId, entity.getActivityId());
+    assertThat(entity.getActivityId()).isEqualTo(activityId);
   }
 
 }

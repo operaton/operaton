@@ -84,8 +84,7 @@ public class HistoryCleanupJobHandlerConfiguration implements JobHandlerConfigur
    * @return date with delay
    */
   public Date getNextRunWithDelay(Date date) {
-    Date result = addSeconds(date, Math.min((int)(Math.pow(2., countEmptyRuns) * START_DELAY), MAX_DELAY));
-    return result;
+    return addSeconds(date, Math.min((int)(Math.pow(2., countEmptyRuns) * START_DELAY), MAX_DELAY));
   }
 
   private Date addSeconds(Date date, int amount) {

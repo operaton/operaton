@@ -26,7 +26,6 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -62,12 +61,7 @@ public class TaskAssertHasCandidateUserTest extends ProcessAssertTestCase {
     // When
     complete(taskQuery().singleResult());
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).task().hasCandidateUser(CANDIDATE_USER);
-      }
-    });
+    expect(() -> assertThat(processInstance).task().hasCandidateUser(CANDIDATE_USER));
   }
 
   @Test
@@ -81,12 +75,7 @@ public class TaskAssertHasCandidateUserTest extends ProcessAssertTestCase {
     // When
     taskService().deleteCandidateUser(taskQuery().singleResult().getId(), CANDIDATE_USER);
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).task().hasCandidateUser(CANDIDATE_USER);
-      }
-    });
+    expect(() -> assertThat(processInstance).task().hasCandidateUser(CANDIDATE_USER));
   }
 
   @Test
@@ -100,18 +89,13 @@ public class TaskAssertHasCandidateUserTest extends ProcessAssertTestCase {
     // When
     taskService().deleteCandidateUser(taskQuery().singleResult().getId(), CANDIDATE_USER);
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).task().hasCandidateUser("otherCandidateUser");
-      }
-    });
+    expect(() -> assertThat(processInstance).task().hasCandidateUser("otherCandidateUser"));
   }
 
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasCandidateUser.bpmn"
   })
-  public void testHasCandidateUser_ExplicitelySet_Success() {
+  public void testHasCandidateUser_ExplicitlySet_Success() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasCandidateUser"
@@ -127,7 +111,7 @@ public class TaskAssertHasCandidateUserTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasCandidateUser.bpmn"
   })
-  public void testHasCandidateUser_ExplicitelySet_Failure() {
+  public void testHasCandidateUser_ExplicitlySet_Failure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasCandidateUser"
@@ -135,18 +119,13 @@ public class TaskAssertHasCandidateUserTest extends ProcessAssertTestCase {
     // When
     complete(taskQuery().singleResult());
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).task().hasCandidateUser(CANDIDATE_USER);
-      }
-    });
+    expect(() -> assertThat(processInstance).task().hasCandidateUser(CANDIDATE_USER));
   }
 
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasCandidateUser.bpmn"
   })
-  public void testHasCandidateUser_ExplicitelySet_Removed_Failure() {
+  public void testHasCandidateUser_ExplicitlySet_Removed_Failure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasCandidateUser"
@@ -158,18 +137,13 @@ public class TaskAssertHasCandidateUserTest extends ProcessAssertTestCase {
     // When
     taskService().deleteCandidateUser(taskQuery().singleResult().getId(), "explicitCandidateUserId");
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).task().hasCandidateUser("explicitCandidateUserId");
-      }
-    });
+    expect(() -> assertThat(processInstance).task().hasCandidateUser("explicitCandidateUserId"));
   }
 
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasCandidateUser.bpmn"
   })
-  public void testHasCandidateUser_ExplicitelySet_Other_Failure() {
+  public void testHasCandidateUser_ExplicitlySet_Other_Failure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "TaskAssert-hasCandidateUser"
@@ -180,12 +154,7 @@ public class TaskAssertHasCandidateUserTest extends ProcessAssertTestCase {
     taskService().addCandidateUser(taskQuery().singleResult().getId(), "explicitCandidateUserId");
     // When
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).task().hasCandidateUser("otherCandidateUser");
-      }
-    });
+    expect(() -> assertThat(processInstance).task().hasCandidateUser("otherCandidateUser"));
   }
 
   @Test
@@ -215,12 +184,7 @@ public class TaskAssertHasCandidateUserTest extends ProcessAssertTestCase {
     // When
     taskService().addCandidateUser(taskQuery().singleResult().getId(), "explicitCandidateUserId");
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).task().hasCandidateUser("otherCandidateUser");
-      }
-    });
+    expect(() -> assertThat(processInstance).task().hasCandidateUser("otherCandidateUser"));
   }
 
   @Test
@@ -232,12 +196,7 @@ public class TaskAssertHasCandidateUserTest extends ProcessAssertTestCase {
       "TaskAssert-hasCandidateUser"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).task().hasCandidateUser(null);
-      }
-    });
+    expect(() -> assertThat(processInstance).task().hasCandidateUser(null));
   }
 
   @Test
@@ -252,12 +211,7 @@ public class TaskAssertHasCandidateUserTest extends ProcessAssertTestCase {
     final Task task = taskQuery().singleResult();
     complete(task);
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(task).hasCandidateUser(CANDIDATE_USER);
-      }
-    });
+    expect(() -> assertThat(task).hasCandidateUser(CANDIDATE_USER));
   }
 
   @Test
@@ -272,12 +226,7 @@ public class TaskAssertHasCandidateUserTest extends ProcessAssertTestCase {
     final Task task = taskQuery().singleResult();
     taskService().setAssignee(task.getId(), ASSIGNEE);
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(task).hasCandidateUser(CANDIDATE_USER);
-      }
-    });
+    expect(() -> assertThat(task).hasCandidateUser(CANDIDATE_USER));
   }
 
 }

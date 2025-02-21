@@ -24,7 +24,6 @@ import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION
 import static org.operaton.bpm.engine.authorization.Resources.TASK;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
-import static org.junit.Assert.assertNull;
 
 import java.util.Collection;
 import java.util.List;
@@ -75,7 +74,7 @@ public class HandleTaskAuthorizationTest {
   protected RuntimeService runtimeService;
   protected RepositoryService repositoryService;
 
-  protected static final String userId = "userId";
+  protected static final String USER_ID = "userId";
   protected String deploymentId;
 
   protected static final String BPMN_BEHAVIOR_LOGGER = "org.operaton.bpm.engine.bpmn.behavior";
@@ -88,22 +87,22 @@ public class HandleTaskAuthorizationTest {
       scenario()
         .withoutAuthorizations()
         .failsDueToRequired(
-          grant(TASK, "taskId", userId, TASK_WORK),
-          grant(PROCESS_DEFINITION, PROCESS_KEY, userId, TASK_WORK),
-          grant(TASK, "taskId", userId, UPDATE),
-          grant(PROCESS_DEFINITION, PROCESS_KEY, userId, UPDATE_TASK)),
+          grant(TASK, "taskId", USER_ID, TASK_WORK),
+          grant(PROCESS_DEFINITION, PROCESS_KEY, USER_ID, TASK_WORK),
+          grant(TASK, "taskId", USER_ID, UPDATE),
+          grant(PROCESS_DEFINITION, PROCESS_KEY, USER_ID, UPDATE_TASK)),
       scenario()
         .withAuthorizations(
-          grant(TASK, "taskId", userId, TASK_WORK)),
+          grant(TASK, "taskId", USER_ID, TASK_WORK)),
       scenario()
         .withAuthorizations(
-          grant(PROCESS_DEFINITION, PROCESS_KEY, userId, TASK_WORK)),
+          grant(PROCESS_DEFINITION, PROCESS_KEY, USER_ID, TASK_WORK)),
       scenario()
         .withAuthorizations(
-          grant(TASK, "taskId", userId, UPDATE)),
+          grant(TASK, "taskId", USER_ID, UPDATE)),
       scenario()
         .withAuthorizations(
-          grant(PROCESS_DEFINITION, PROCESS_KEY, userId, UPDATE_TASK))
+          grant(PROCESS_DEFINITION, PROCESS_KEY, USER_ID, UPDATE_TASK))
         .succeeds()
       );
   }
@@ -142,7 +141,7 @@ public class HandleTaskAuthorizationTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      assertNull(runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).singleResult());
+      assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).singleResult()).isNull();
       assertThat(loggingRule.getFilteredLog(BPMN_BEHAVIOR_LOGGER, "Execution is ended (none end event semantics)")).hasSize(1);
       assertThat(loggingRule.getFilteredLog(BPMN_BEHAVIOR_LOGGER, "no catching boundary event was defined")).hasSize(1);
     }

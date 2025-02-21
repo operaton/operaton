@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn;
 
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
@@ -33,7 +33,7 @@ public class StartToEndTest extends PluggableProcessEngineTest {
   public void testStartToEnd() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("startToEnd");
     testRule.assertProcessEnded(processInstance.getId());
-    assertTrue(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isTrue();
   }
   
 }

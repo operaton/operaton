@@ -16,7 +16,8 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.io.FileNotFoundException;
 import java.util.Date;
@@ -43,7 +44,6 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -77,8 +77,7 @@ public class DeploymentAwareJobExecutorTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("simpleAsyncProcess");
 
     Set<String> registeredDeployments = managementService.getRegisteredDeployments();
-    Assert.assertEquals(1, registeredDeployments.size());
-    Assert.assertTrue(registeredDeployments.contains(deploymentId));
+    assertThat(registeredDeployments).containsExactly(deploymentId);
 
     Job executableJob = managementService.createJobQuery().singleResult();
 
@@ -88,18 +87,17 @@ public class DeploymentAwareJobExecutorTest extends PluggableProcessEngineTest {
 
     // assert that two jobs have been created, one for each deployment
     List<Job> jobs = managementService.createJobQuery().list();
-    Assert.assertEquals(2, jobs.size());
+    assertThat(jobs).hasSize(2);
     Set<String> jobDeploymentIds = new HashSet<>();
     jobDeploymentIds.add(jobs.get(0).getDeploymentId());
     jobDeploymentIds.add(jobs.get(1).getDeploymentId());
 
-    Assert.assertTrue(jobDeploymentIds.contains(deploymentId));
-    Assert.assertTrue(jobDeploymentIds.contains(otherDeploymentId));
+    assertThat(jobDeploymentIds).containsExactlyInAnyOrder(deploymentId, otherDeploymentId);
 
     // select executable jobs for executor of first engine
     AcquiredJobs acquiredJobs = getExecutableJobs(processEngineConfiguration.getJobExecutor());
-    Assert.assertEquals(1, acquiredJobs.size());
-    Assert.assertTrue(acquiredJobs.contains(executableJob.getId()));
+    assertThat(acquiredJobs.size()).isEqualTo(1);
+    assertThat(acquiredJobs.contains(executableJob.getId())).isTrue();
 
     repositoryService.deleteDeployment(otherDeploymentId, true);
   }
@@ -118,9 +116,9 @@ public class DeploymentAwareJobExecutorTest extends PluggableProcessEngineTest {
     List<Job> jobs = managementService.createJobQuery().list();
 
     AcquiredJobs acquiredJobs = getExecutableJobs(processEngineConfiguration.getJobExecutor());
-    Assert.assertEquals(2, acquiredJobs.size());
+    assertThat(acquiredJobs.size()).isEqualTo(2);
     for (Job job : jobs) {
-      Assert.assertTrue(acquiredJobs.contains(job.getId()));
+      assertThat(acquiredJobs.contains(job.getId())).isTrue();
     }
 
     repositoryService.deleteDeployment(otherDeploymentId, true);
@@ -129,10 +127,11 @@ public class DeploymentAwareJobExecutorTest extends PluggableProcessEngineTest {
   @Test
   public void testRegistrationOfNonExistingDeployment() {
     String nonExistingDeploymentId = "some non-existing id";
+    var managementService = processEngine.getManagementService();
 
     try {
-      processEngine.getManagementService().registerDeploymentForJobExecutor(nonExistingDeploymentId);
-      Assert.fail("Registering a non-existing deployment should not succeed");
+      managementService.registerDeploymentForJobExecutor(nonExistingDeploymentId);
+      fail("Registering a non-existing deployment should not succeed");
     } catch (ProcessEngineException e) {
       testRule.assertTextPresent("Deployment " + nonExistingDeploymentId + " does not exist", e.getMessage());
       // happy path
@@ -143,11 +142,11 @@ public class DeploymentAwareJobExecutorTest extends PluggableProcessEngineTest {
   @Test
   public void testDeploymentUnregistrationOnUndeployment() {
     String deploymentId = repositoryService.createDeploymentQuery().singleResult().getId();
-    Assert.assertEquals(1, managementService.getRegisteredDeployments().size());
+    assertThat(managementService.getRegisteredDeployments()).hasSize(1);
 
     repositoryService.deleteDeployment(deploymentId, true);
 
-    Assert.assertEquals(0, managementService.getRegisteredDeployments().size());
+    assertThat(managementService.getRegisteredDeployments()).isEmpty();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/jobexecutor/simpleAsyncProcess.bpmn20.xml")
@@ -158,10 +157,10 @@ public class DeploymentAwareJobExecutorTest extends PluggableProcessEngineTest {
 
     try {
       repositoryService.deleteDeployment(deploymentId, false);
-      Assert.fail();
+      fail("");
     } catch (Exception e) {
       // should still be registered, if not successfully undeployed
-      Assert.assertEquals(1, managementService.getRegisteredDeployments().size());
+      assertThat(managementService.getRegisteredDeployments()).hasSize(1);
     }
   }
 
@@ -174,7 +173,7 @@ public class DeploymentAwareJobExecutorTest extends PluggableProcessEngineTest {
     processEngine.getManagementService().unregisterDeploymentForJobExecutor(deploymentId);
 
     AcquiredJobs acquiredJobs = getExecutableJobs(processEngineConfiguration.getJobExecutor());
-    Assert.assertEquals(0, acquiredJobs.size());
+    assertThat(acquiredJobs.size()).isZero();
   }
 
   @Test
@@ -188,8 +187,8 @@ public class DeploymentAwareJobExecutorTest extends PluggableProcessEngineTest {
     });
 
     AcquiredJobs acquiredJobs = getExecutableJobs(processEngineConfiguration.getJobExecutor());
-    Assert.assertEquals(1, acquiredJobs.size());
-    Assert.assertTrue(acquiredJobs.contains(messageId));
+    assertThat(acquiredJobs.size()).isEqualTo(1);
+    assertThat(acquiredJobs.contains(messageId)).isTrue();
 
     commandExecutor.execute(new DeleteJobsCmd(messageId, true));
   }
@@ -244,14 +243,14 @@ public class DeploymentAwareJobExecutorTest extends PluggableProcessEngineTest {
 
     List<AcquirableJobEntity> acquirableJobs = findAcquirableJobs();
 
-    assertEquals(1, acquirableJobs.size());
-    assertEquals(existingJob.getId(), acquirableJobs.get(0).getId());
+    assertThat(acquirableJobs).hasSize(1);
+    assertThat(acquirableJobs.get(0).getId()).isEqualTo(existingJob.getId());
 
     registeredDeployments.clear();
 
     acquirableJobs = findAcquirableJobs();
 
-    assertEquals(0, acquirableJobs.size());
+    assertThat(acquirableJobs).isEmpty();
   }
 
   @Deployment(resources="org/operaton/bpm/engine/test/jobexecutor/processWithTimerStart.bpmn20.xml")
@@ -266,14 +265,14 @@ public class DeploymentAwareJobExecutorTest extends PluggableProcessEngineTest {
 
     List<AcquirableJobEntity> acquirableJobs = findAcquirableJobs();
 
-    assertEquals(1, acquirableJobs.size());
-    assertEquals(existingJob.getId(), acquirableJobs.get(0).getId());
+    assertThat(acquirableJobs).hasSize(1);
+    assertThat(acquirableJobs.get(0).getId()).isEqualTo(existingJob.getId());
 
     registeredDeployments.clear();
 
     acquirableJobs = findAcquirableJobs();
 
-    assertEquals(0, acquirableJobs.size());
+    assertThat(acquirableJobs).isEmpty();
   }
 
   protected List<AcquirableJobEntity> findAcquirableJobs() {

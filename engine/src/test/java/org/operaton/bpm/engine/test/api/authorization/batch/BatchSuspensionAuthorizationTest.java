@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.api.authorization.batch;
 
 import static java.util.Collections.singletonList;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
 
@@ -35,7 +36,6 @@ import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -133,7 +133,7 @@ public class BatchSuspensionAuthorizationTest {
         .batchId(batch.getId())
         .singleResult();
 
-      Assert.assertTrue(batch.isSuspended());
+      assertThat(batch.isSuspended()).isTrue();
     }
   }
 
@@ -165,7 +165,7 @@ public class BatchSuspensionAuthorizationTest {
         .batchId(batch.getId())
         .singleResult();
 
-      Assert.assertFalse(batch.isSuspended());
+      assertThat(batch.isSuspended()).isFalse();
     }
   }
 }

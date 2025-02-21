@@ -16,11 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.identity;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.List;
 
@@ -102,17 +99,20 @@ public class GroupQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidId() {
     GroupQuery query = identityService.createGroupQuery().groupId("invalid");
     verifyQueryResults(query, 0);
+    var groupQuery = identityService.createGroupQuery();
 
     try {
-      identityService.createGroupQuery().groupId(null).list();
-      fail();
-    } catch (ProcessEngineException e) {}
+      groupQuery.groupId(null);
+      fail("");
+    } catch (ProcessEngineException e) {
+      assertThat(e.getMessage()).isEqualTo("Provided id is null");
+    }
   }
 
   @Test
   public void testQueryByIdIn() {
     // empty list
-    assertTrue(identityService.createGroupQuery().groupIdIn("a", "b").list().isEmpty());
+    assertThat(identityService.createGroupQuery().groupIdIn("a", "b").list()).isEmpty();
 
     // collect all ids
     List<Group> list = identityService.createGroupQuery().list();
@@ -122,7 +122,7 @@ public class GroupQueryTest extends PluggableProcessEngineTest {
     }
 
     List<Group> idInList = identityService.createGroupQuery().groupIdIn(ids).list();
-    assertEquals(list.size(), idInList.size());
+    assertThat(idInList).hasSize(list.size());
     for (Group group : idInList) {
       boolean found = false;
       for (Group otherGroup : list) {
@@ -149,11 +149,14 @@ public class GroupQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidName() {
     GroupQuery query = identityService.createGroupQuery().groupName("invalid");
     verifyQueryResults(query, 0);
+    var groupQuery = identityService.createGroupQuery();
 
     try {
-      identityService.createGroupQuery().groupName(null).list();
-      fail();
-    } catch (ProcessEngineException e) {}
+      groupQuery.groupName(null);
+      fail("");
+    } catch (ProcessEngineException e) {
+      assertThat(e.getMessage()).isEqualTo("Provided name is null");
+    }
   }
 
   @Test
@@ -175,11 +178,14 @@ public class GroupQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidNameLike() {
     GroupQuery query = identityService.createGroupQuery().groupNameLike("%invalid%");
     verifyQueryResults(query, 0);
+    var groupQuery = identityService.createGroupQuery();
 
     try {
-      identityService.createGroupQuery().groupNameLike(null).list();
-      fail();
-    } catch (ProcessEngineException e) {}
+      groupQuery.groupNameLike(null);
+      fail("");
+    } catch (ProcessEngineException e) {
+      assertThat(e.getMessage()).isEqualTo("Provided nameLike is null");
+    }
   }
 
   @Test
@@ -195,11 +201,14 @@ public class GroupQueryTest extends PluggableProcessEngineTest {
   public void testQueryByInvalidType() {
     GroupQuery query = identityService.createGroupQuery().groupType("invalid");
     verifyQueryResults(query, 0);
+    var groupQuery = identityService.createGroupQuery();
 
     try {
-      identityService.createGroupQuery().groupType(null).list();
-      fail();
-    } catch (ProcessEngineException e) {}
+      groupQuery.groupType(null);
+      fail("");
+    } catch (ProcessEngineException e) {
+      assertThat(e.getMessage()).isEqualTo("Provided type is null");
+    }
   }
 
   @Test
@@ -212,27 +221,30 @@ public class GroupQueryTest extends PluggableProcessEngineTest {
 
     query = query.orderByGroupId().asc();
     List<Group> groups = query.list();
-    assertEquals(3, groups.size());
-    assertEquals("admin", groups.get(0).getId());
-    assertEquals("frogs", groups.get(1).getId());
-    assertEquals("muppets", groups.get(2).getId());
+    assertThat(groups).hasSize(3);
+    assertThat(groups.get(0).getId()).isEqualTo("admin");
+    assertThat(groups.get(1).getId()).isEqualTo("frogs");
+    assertThat(groups.get(2).getId()).isEqualTo("muppets");
 
     query = query.groupType("user");
     groups = query.list();
-    assertEquals(2, groups.size());
-    assertEquals("frogs", groups.get(0).getId());
-    assertEquals("muppets", groups.get(1).getId());
+    assertThat(groups).hasSize(2);
+    assertThat(groups.get(0).getId()).isEqualTo("frogs");
+    assertThat(groups.get(1).getId()).isEqualTo("muppets");
   }
 
   @Test
   public void testQueryByInvalidMember() {
     GroupQuery query = identityService.createGroupQuery().groupMember("invalid");
     verifyQueryResults(query, 0);
+    var groupQuery = identityService.createGroupQuery();
 
     try {
-      identityService.createGroupQuery().groupMember(null).list();
-      fail();
-    } catch (ProcessEngineException e) {}
+      groupQuery.groupMember(null);
+      fail("");
+    } catch (ProcessEngineException e) {
+      assertThat(e.getMessage()).isEqualTo("Provided userId is null");
+    }
   }
 
   @Test
@@ -244,67 +256,68 @@ public class GroupQueryTest extends PluggableProcessEngineTest {
     verifyQueryResults(query, 1);
 
     Group group = query.singleResult();
-    assertEquals("frogs", group.getId());
+    assertThat(group.getId()).isEqualTo("frogs");
   }
 
   @Test
   public void testQuerySorting() {
     // asc
-    assertEquals(4, identityService.createGroupQuery().orderByGroupId().asc().count());
-    assertEquals(4, identityService.createGroupQuery().orderByGroupName().asc().count());
-    assertEquals(4, identityService.createGroupQuery().orderByGroupType().asc().count());
+    assertThat(identityService.createGroupQuery().orderByGroupId().asc().count()).isEqualTo(4);
+    assertThat(identityService.createGroupQuery().orderByGroupName().asc().count()).isEqualTo(4);
+    assertThat(identityService.createGroupQuery().orderByGroupType().asc().count()).isEqualTo(4);
 
     // desc
-    assertEquals(4, identityService.createGroupQuery().orderByGroupId().desc().count());
-    assertEquals(4, identityService.createGroupQuery().orderByGroupName().desc().count());
-    assertEquals(4, identityService.createGroupQuery().orderByGroupType().desc().count());
+    assertThat(identityService.createGroupQuery().orderByGroupId().desc().count()).isEqualTo(4);
+    assertThat(identityService.createGroupQuery().orderByGroupName().desc().count()).isEqualTo(4);
+    assertThat(identityService.createGroupQuery().orderByGroupType().desc().count()).isEqualTo(4);
 
     // Multiple sortings
     GroupQuery query = identityService.createGroupQuery().orderByGroupType().asc().orderByGroupName().desc();
     List<Group> groups = query.list();
-    assertEquals(4, query.count());
+    assertThat(query.count()).isEqualTo(4);
 
-    assertEquals("security", groups.get(0).getType());
-    assertEquals("user", groups.get(1).getType());
-    assertEquals("user", groups.get(2).getType());
-    assertEquals("user", groups.get(3).getType());
+    assertThat(groups.get(0).getType()).isEqualTo("security");
+    assertThat(groups.get(1).getType()).isEqualTo("user");
+    assertThat(groups.get(2).getType()).isEqualTo("user");
+    assertThat(groups.get(3).getType()).isEqualTo("user");
 
-    assertEquals("admin", groups.get(0).getId());
-    assertEquals("muppets", groups.get(1).getId());
-    assertEquals("mammals", groups.get(2).getId());
-    assertEquals("frogs", groups.get(3).getId());
+    assertThat(groups.get(0).getId()).isEqualTo("admin");
+    assertThat(groups.get(1).getId()).isEqualTo("muppets");
+    assertThat(groups.get(2).getId()).isEqualTo("mammals");
+    assertThat(groups.get(3).getId()).isEqualTo("frogs");
   }
 
   @Test
   public void testQueryInvalidSortingUsage() {
+    var groupQuery = identityService.createGroupQuery().orderByGroupId().orderByGroupName();
     try {
-      identityService.createGroupQuery().orderByGroupId().list();
-      fail();
+      groupQuery.list();
+      fail("");
     } catch (ProcessEngineException e) {}
 
     try {
-      identityService.createGroupQuery().orderByGroupId().orderByGroupName().list();
-      fail();
+      groupQuery.list();
+      fail("");
     } catch (ProcessEngineException e) {}
   }
 
   private void verifyQueryResults(GroupQuery query, int countExpected) {
-    assertEquals(countExpected, query.list().size());
-    assertEquals(countExpected, query.count());
+    assertThat(query.list()).hasSize(countExpected);
+    assertThat(query.count()).isEqualTo(countExpected);
 
     if (countExpected == 1) {
-      assertNotNull(query.singleResult());
+      assertThat(query.singleResult()).isNotNull();
     } else if (countExpected > 1){
       verifySingleResultFails(query);
     } else if (countExpected == 0) {
-      assertNull(query.singleResult());
+      assertThat(query.singleResult()).isNull();
     }
   }
 
   private void verifySingleResultFails(GroupQuery query) {
     try {
       query.singleResult();
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {}
   }
 

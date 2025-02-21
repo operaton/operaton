@@ -25,6 +25,8 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.GroupQuery;
@@ -34,8 +36,6 @@ import org.operaton.bpm.engine.impl.identity.WritableIdentityProvider;
 import org.operaton.bpm.engine.impl.identity.db.DbGroupQueryImpl;
 import org.operaton.bpm.engine.impl.identity.db.DbUserQueryImpl;
 import org.operaton.bpm.spring.boot.starter.security.oauth2.AbstractSpringSecurityIT;
-import org.junit.Before;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -48,6 +48,7 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
@@ -70,7 +71,7 @@ public class OperatonIdentityProviderIT extends AbstractSpringSecurityIT {
   @Autowired
   private ClientRegistrationRepository registrations;
 
-  @MockBean
+  @MockitoBean
   private OAuth2AuthorizedClientService authorizedClientService;
 
   public static OAuth2IdentityProvider spiedIdentityProvider = spy(new OAuth2IdentityProvider());
@@ -79,13 +80,14 @@ public class OperatonIdentityProviderIT extends AbstractSpringSecurityIT {
     mockIdentityProviderFactory();
   }
 
-  @Before
+  @Override
+  @BeforeEach
   public void setup() throws Exception {
     super.setup();
   }
 
   @Test
-  public void testIdentityProviderForUsersWithoutSpringSecurity() {
+  void testIdentityProviderForUsersWithoutSpringSecurity() {
     // given no spring security authentication
     User newUser = identityService.newUser("newUser");
     identityService.saveUser(newUser);
@@ -99,13 +101,13 @@ public class OperatonIdentityProviderIT extends AbstractSpringSecurityIT {
     assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
     verify(spiedIdentityProvider, atLeastOnce()).createUserQuery();
     UserQuery userQueryResult = resultCaptor.result;
-    assertThat(userQueryResult).isInstanceOf(DbUserQueryImpl.class);
-    assertThat(userQueryResult).isNotNull();
+    assertThat(userQueryResult)
+      .isInstanceOf(DbUserQueryImpl.class);
     assertThat(entity.getBody()).contains(newUser.getId());
   }
 
   @Test
-  public void testIdentityProviderForGroupsWithoutSpringSecurity() {
+  void testIdentityProviderForGroupsWithoutSpringSecurity() {
     // given no spring security authentication
     Group newGroup = identityService.newGroup("newGroup");
     identityService.saveGroup(newGroup);
@@ -120,12 +122,11 @@ public class OperatonIdentityProviderIT extends AbstractSpringSecurityIT {
     verify(spiedIdentityProvider, atLeastOnce()).createGroupQuery();
     GroupQuery groupQueryResult = resultCaptor.result;
     assertThat(groupQueryResult).isInstanceOf(DbGroupQueryImpl.class);
-    assertThat(groupQueryResult).isNotNull();
     assertThat(entity.getBody()).contains(newGroup.getId());
   }
 
   @Test
-  public void testIdentityProviderForUsersWithSpringSecurity() throws Exception {
+  void testIdentityProviderForUsersWithSpringSecurity() throws Exception {
     // given spring security context
     ResultCaptor<UserQuery> resultCaptor = new ResultCaptor<>();
     doAnswer(resultCaptor).when(spiedIdentityProvider).createUserQuery();
@@ -143,12 +144,11 @@ public class OperatonIdentityProviderIT extends AbstractSpringSecurityIT {
     verify(spiedIdentityProvider, atLeastOnce()).createUserQuery();
     UserQuery userQueryResult = resultCaptor.result;
     assertThat(userQueryResult).isInstanceOf(OAuth2IdentityProvider.OAuth2UserQuery.class);
-    assertThat(userQueryResult).isNotNull();
     assertThat(((OAuth2IdentityProvider.OAuth2UserQuery) userQueryResult).getId()).isEqualTo(AUTHORIZED_USER);
   }
 
   @Test
-  public void testIdentityProviderForGroupsWithSpringSecurity() throws Exception {
+  void testIdentityProviderForGroupsWithSpringSecurity() throws Exception {
     // given spring security context
     ResultCaptor<GroupQuery> resultCaptor = new ResultCaptor<>();
     doAnswer(resultCaptor).when(spiedIdentityProvider).createGroupQuery();
@@ -166,7 +166,6 @@ public class OperatonIdentityProviderIT extends AbstractSpringSecurityIT {
     verify(spiedIdentityProvider, atLeastOnce()).createGroupQuery();
     GroupQuery groupQueryResult = resultCaptor.result;
     assertThat(groupQueryResult).isInstanceOf(OAuth2IdentityProvider.OAuth2GroupQuery.class);
-    assertThat(groupQueryResult).isNotNull();
     assertThat(((OAuth2IdentityProvider.OAuth2GroupQuery) groupQueryResult).getUserId()).isEqualTo(AUTHORIZED_USER);
   }
 

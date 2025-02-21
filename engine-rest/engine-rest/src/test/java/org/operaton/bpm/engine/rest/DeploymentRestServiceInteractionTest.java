@@ -122,8 +122,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   private InputStream createMockDeploymentResourceBpmnDataNonExecutableProcess() {
     // do not close the input stream, will be done in implementation
     String model = Bpmn.convertToString(Bpmn.createProcess().startEvent().endEvent().done());
-    InputStream inputStream = new ByteArrayInputStream(model.getBytes());
-    return inputStream;
+    return new ByteArrayInputStream(model.getBytes());
   }
 
   private InputStream createMockDeploymentResourceSvgData() {

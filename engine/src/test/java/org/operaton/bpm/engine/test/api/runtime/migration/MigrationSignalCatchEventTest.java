@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
@@ -30,7 +31,6 @@ import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.SignalCatchModels;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
@@ -237,7 +237,7 @@ public class MigrationSignalCatchEventTest {
 
     // then there should be a variable
     VariableInstance beforeMigration = testHelper.snapshotBeforeMigration.getSingleVariable("var");
-    Assert.assertEquals(1, testHelper.snapshotAfterMigration.getVariables().size());
+    assertThat(testHelper.snapshotAfterMigration.getVariables()).hasSize(1);
     testHelper.assertVariableMigratedToExecution(beforeMigration, beforeMigration.getExecutionId());
 
     // and the signal event subscription's event name has changed

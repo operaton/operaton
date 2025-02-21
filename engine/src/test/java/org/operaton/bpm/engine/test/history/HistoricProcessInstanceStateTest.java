@@ -38,7 +38,6 @@ import java.util.List;
 
 import static junit.framework.TestCase.fail;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 
 /**
  * @author Askar Akhmerov
@@ -151,7 +150,7 @@ public class HistoricProcessInstanceStateTest {
 
     assertThat(hpi1.getState()).isEqualTo(HistoricProcessInstance.STATE_SUSPENDED);
     assertThat(hpi2.getState()).isEqualTo(HistoricProcessInstance.STATE_SUSPENDED);
-    assertEquals(2, processEngineRule.getHistoryService().createHistoricProcessInstanceQuery().suspended().count());
+    assertThat(processEngineRule.getHistoryService().createHistoricProcessInstanceQuery().suspended().count()).isEqualTo(2);
 
     //activate all
     processEngineRule.getRuntimeService().updateProcessInstanceSuspensionState()
@@ -165,7 +164,7 @@ public class HistoricProcessInstanceStateTest {
 
     assertThat(hpi1.getState()).isEqualTo(HistoricProcessInstance.STATE_ACTIVE);
     assertThat(hpi2.getState()).isEqualTo(HistoricProcessInstance.STATE_ACTIVE);
-    assertEquals(2, processEngineRule.getHistoryService().createHistoricProcessInstanceQuery().active().count());
+    assertThat(processEngineRule.getHistoryService().createHistoricProcessInstanceQuery().active().count()).isEqualTo(2);
   }
 
 
@@ -186,7 +185,7 @@ public class HistoricProcessInstanceStateTest {
     processEngineRule.getRuntimeService().deleteProcessInstance(processInstance.getId(), REASON, false, true);
     entity = getHistoricProcessInstanceWithAssertion(processDefinition);
     assertThat(entity.getState()).isEqualTo(HistoricProcessInstance.STATE_EXTERNALLY_TERMINATED);
-    assertEquals(1, processEngineRule.getHistoryService().createHistoricProcessInstanceQuery().externallyTerminated().count());
+    assertThat(processEngineRule.getHistoryService().createHistoricProcessInstanceQuery().externallyTerminated().count()).isEqualTo(1);
   }
 
   @Test
@@ -201,22 +200,22 @@ public class HistoricProcessInstanceStateTest {
         .endEvent()
         .done();
     ProcessDefinition processDefinition = processEngineTestRule.deployAndGetDefinition(instance);
+    processEngineRule.getRuntimeService().startProcessInstanceById(processDefinition.getId());
 
+    var jobId = processEngineRule.getManagementService().createJobQuery().executable().singleResult().getId();
+    var managementService = processEngineRule.getManagementService();
 
     try {
-      ProcessInstance pi = processEngineRule.getRuntimeService()
-          .startProcessInstanceById(processDefinition.getId());
-      processEngineRule.getManagementService().executeJob(
-          processEngineRule.getManagementService().createJobQuery().executable().singleResult().getId());
+      managementService.executeJob(jobId);
       fail("exception expected");
     } catch (Exception e) {
-      //expected
+      assertThat(e.getMessage()).contains("Unable to evaluate script while executing activity");
     }
 
     assertThat(processEngineRule.getRuntimeService().createProcessInstanceQuery().active().list()).hasSize(1);
     HistoricProcessInstance entity = getHistoricProcessInstanceWithAssertion(processDefinition);
     assertThat(entity.getState()).isEqualTo(HistoricProcessInstance.STATE_ACTIVE);
-    assertEquals(1, processEngineRule.getHistoryService().createHistoricProcessInstanceQuery().active().count());
+    assertThat(processEngineRule.getHistoryService().createHistoricProcessInstanceQuery().active().count()).isEqualTo(1);
   }
 
   @Test
@@ -231,7 +230,7 @@ public class HistoricProcessInstanceStateTest {
     processEngineRule.getRuntimeService().startProcessInstanceById(processDefinition.getId());
     HistoricProcessInstance entity = getHistoricProcessInstanceWithAssertion(processDefinition);
     assertThat(entity.getState()).isEqualTo(HistoricProcessInstance.STATE_COMPLETED);
-    assertEquals(1, processEngineRule.getHistoryService().createHistoricProcessInstanceQuery().completed().count());
+    assertThat(processEngineRule.getHistoryService().createHistoricProcessInstanceQuery().completed().count()).isEqualTo(1);
   }
 
   @Test
@@ -249,9 +248,9 @@ public class HistoricProcessInstanceStateTest {
     assertThat(entity1).isNotNull();
     assertThat(entity2).isNotNull();
     assertThat(entity1.getState()).isEqualTo(HistoricProcessInstance.STATE_COMPLETED);
-    assertEquals(1, processEngineRule.getHistoryService().createHistoricProcessInstanceQuery().completed().count());
+    assertThat(processEngineRule.getHistoryService().createHistoricProcessInstanceQuery().completed().count()).isEqualTo(1);
     assertThat(entity2.getState()).isEqualTo(HistoricProcessInstance.STATE_INTERNALLY_TERMINATED);
-    assertEquals(1, processEngineRule.getHistoryService().createHistoricProcessInstanceQuery().internallyTerminated().count());
+    assertThat(processEngineRule.getHistoryService().createHistoricProcessInstanceQuery().internallyTerminated().count()).isEqualTo(1);
   }
 
   @Test
@@ -302,8 +301,9 @@ public class HistoricProcessInstanceStateTest {
   private HistoricProcessInstance getHistoricProcessInstanceWithAssertion(ProcessDefinition processDefinition) {
     List<HistoricProcessInstance> entities = processEngineRule.getHistoryService().createHistoricProcessInstanceQuery()
         .processDefinitionId(processDefinition.getId()).list();
-    assertThat(entities).isNotNull();
-    assertThat(entities).hasSize(1);
+    assertThat(entities)
+            .isNotNull()
+            .hasSize(1);
     return entities.get(0);
   }
 

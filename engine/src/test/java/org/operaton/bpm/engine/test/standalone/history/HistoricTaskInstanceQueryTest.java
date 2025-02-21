@@ -16,10 +16,7 @@
  */
 package org.operaton.bpm.engine.test.standalone.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.Calendar;
 import java.util.Collections;
@@ -54,7 +51,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
   protected static final String VARIABLE_VALUE_LC = VARIABLE_VALUE.toLowerCase();
   protected static final String VARIABLE_VALUE_LC_LIKE = "%" + VARIABLE_VALUE_LC.substring(2, 10) + "%";
   protected static final String VARIABLE_VALUE_NE = "nonExistent";
-  protected static Map<String, Object> VARIABLES = new HashMap<>();
+  protected static final Map<String, Object> VARIABLES = new HashMap<>();
   static {
     VARIABLES.put(VARIABLE_NAME, VARIABLE_VALUE);
   }
@@ -93,18 +90,18 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Collections.<String, Object>singletonMap("var", "123"));
 
-    assertEquals(4, historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("var", Variables.numberValue(123)).count());
-    assertEquals(4, historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("var", Variables.numberValue(123L)).count());
-    assertEquals(4, historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("var", Variables.numberValue(123.0d)).count());
-    assertEquals(4, historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("var", Variables.numberValue((short) 123)).count());
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("var", Variables.numberValue(123)).count()).isEqualTo(4);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("var", Variables.numberValue(123L)).count()).isEqualTo(4);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("var", Variables.numberValue(123.0d)).count()).isEqualTo(4);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("var", Variables.numberValue((short) 123)).count()).isEqualTo(4);
 
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("var", Variables.numberValue(null)).count());
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("var", Variables.numberValue(null)).count()).isEqualTo(1);
 
-    assertEquals(8, historyService.createHistoricTaskInstanceQuery().processVariableValueNotEquals("var", 999L).count());
-    assertEquals(8, historyService.createHistoricTaskInstanceQuery().processVariableValueNotEquals("var",  (short) 999).count());
-    assertEquals(8, historyService.createHistoricTaskInstanceQuery().processVariableValueNotEquals("var", 999).count());
-    assertEquals(8, historyService.createHistoricTaskInstanceQuery().processVariableValueNotEquals("var", "999").count());
-    assertEquals(8, historyService.createHistoricTaskInstanceQuery().processVariableValueNotEquals("var", false).count());
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueNotEquals("var", 999L).count()).isEqualTo(8);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueNotEquals("var", (short) 999).count()).isEqualTo(8);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueNotEquals("var", 999).count()).isEqualTo(8);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueNotEquals("var", "999").count()).isEqualTo(8);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueNotEquals("var", false).count()).isEqualTo(8);
 
   }
 
@@ -114,21 +111,24 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
             Collections.<String, Object>singletonMap("requester", "vahid alizadeh"));
 
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().processVariableValueLike("requester", "vahid%").count());
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().processVariableValueLike("requester", "%alizadeh").count());
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().processVariableValueLike("requester", "%ali%").count());
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueLike("requester", "vahid%").count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueLike("requester", "%alizadeh").count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueLike("requester", "%ali%").count()).isEqualTo(1);
 
-    assertEquals(0, historyService.createHistoricTaskInstanceQuery().processVariableValueLike("requester", "requester%").count());
-    assertEquals(0, historyService.createHistoricTaskInstanceQuery().processVariableValueLike("requester", "%ali").count());
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueLike("requester", "requester%").count()).isZero();
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueLike("requester", "%ali").count()).isZero();
 
-    assertEquals(0, historyService.createHistoricTaskInstanceQuery().processVariableValueLike("requester", "vahid").count());
-    assertEquals(0, historyService.createHistoricTaskInstanceQuery().processVariableValueLike("nonExistingVar", "string%").count());
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueLike("requester", "vahid").count()).isZero();
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueLike("nonExistingVar", "string%").count()).isZero();
+    var historicTaskInstanceQuery = historyService.createHistoricTaskInstanceQuery();
 
     // test with null value
     try {
-      historyService.createHistoricTaskInstanceQuery().processVariableValueLike("requester", null).count();
+      historicTaskInstanceQuery.processVariableValueLike("requester", null);
       fail("expected exception");
-    } catch (final ProcessEngineException e) {/*OK*/}
+    } catch (final ProcessEngineException e) {
+      assertThat(e.getMessage()).contains("Booleans and null cannot be used in 'like' condition");
+    }
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
@@ -137,18 +137,19 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
             Collections.<String, Object>singletonMap("requester", "vahid alizadeh"));
 
-    assertEquals(0, historyService.createHistoricTaskInstanceQuery().processVariableValueNotLike("requester", "vahid%").count());
-    assertEquals(0, historyService.createHistoricTaskInstanceQuery().processVariableValueNotLike("requester", "%alizadeh").count());
-    assertEquals(0, historyService.createHistoricTaskInstanceQuery().processVariableValueNotLike("requester", "%ali%").count());
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueNotLike("requester", "vahid%").count()).isZero();
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueNotLike("requester", "%alizadeh").count()).isZero();
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueNotLike("requester", "%ali%").count()).isZero();
 
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().processVariableValueNotLike("requester", "requester%").count());
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().processVariableValueNotLike("requester", "%ali").count());
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueNotLike("requester", "requester%").count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueNotLike("requester", "%ali").count()).isEqualTo(1);
 
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().processVariableValueNotLike("requester", "vahid").count());
-    assertEquals(0, historyService.createHistoricTaskInstanceQuery().processVariableValueNotLike("nonExistingVar", "string%").count());
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueNotLike("requester", "vahid").count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueNotLike("nonExistingVar", "string%").count()).isZero();
 
     // test with null value
-    assertThatThrownBy(() -> historyService.createHistoricTaskInstanceQuery().processVariableValueNotLike("requester", null).count())
+    var historicTaskInstanceQuery = historyService.createHistoricTaskInstanceQuery();
+    assertThatThrownBy(() -> historicTaskInstanceQuery.processVariableValueNotLike("requester", null))
       .isInstanceOf(ProcessEngineException.class);
   }
 
@@ -158,7 +159,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
             Collections.<String, Object>singletonMap("requestNumber", 123));
 
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().processVariableValueGreaterThan("requestNumber", 122).count());
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueGreaterThan("requestNumber", 122).count()).isEqualTo(1);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
@@ -167,8 +168,8 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
             Collections.<String, Object>singletonMap("requestNumber", 123));
 
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().processVariableValueGreaterThanOrEquals("requestNumber", 122).count());
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().processVariableValueGreaterThanOrEquals("requestNumber", 123).count());
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueGreaterThanOrEquals("requestNumber", 122).count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueGreaterThanOrEquals("requestNumber", 123).count()).isEqualTo(1);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
@@ -177,7 +178,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
             Collections.<String, Object>singletonMap("requestNumber", 123));
 
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().processVariableValueLessThan("requestNumber", 124).count());
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueLessThan("requestNumber", 124).count()).isEqualTo(1);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
@@ -186,8 +187,8 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
             Collections.<String, Object>singletonMap("requestNumber", 123));
 
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().processVariableValueLessThanOrEquals("requestNumber", 123).count());
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().processVariableValueLessThanOrEquals("requestNumber", 124).count());
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueLessThanOrEquals("requestNumber", 123).count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueLessThanOrEquals("requestNumber", 124).count()).isEqualTo(1);
   }
 
   @Test
@@ -352,7 +353,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     List<Task> tasks = taskService.createTaskQuery().processDefinitionKey("oneTaskProcess").list();
-    assertEquals(8, tasks.size());
+    assertThat(tasks).hasSize(8);
     taskService.setVariableLocal(tasks.get(0).getId(), "var", 123L);
     taskService.setVariableLocal(tasks.get(1).getId(), "var", 12345L);
     taskService.setVariableLocal(tasks.get(2).getId(), "var", (short) 123);
@@ -362,12 +363,12 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
     taskService.setVariableLocal(tasks.get(6).getId(), "var", Variables.longValue(null));
     taskService.setVariableLocal(tasks.get(7).getId(), "var", "123");
 
-    assertEquals(4, historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("var", Variables.numberValue(123)).count());
-    assertEquals(4, historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("var", Variables.numberValue(123L)).count());
-    assertEquals(4, historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("var", Variables.numberValue(123.0d)).count());
-    assertEquals(4, historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("var", Variables.numberValue((short) 123)).count());
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("var", Variables.numberValue(123)).count()).isEqualTo(4);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("var", Variables.numberValue(123L)).count()).isEqualTo(4);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("var", Variables.numberValue(123.0d)).count()).isEqualTo(4);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("var", Variables.numberValue((short) 123)).count()).isEqualTo(4);
 
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("var", Variables.numberValue(null)).count());
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("var", Variables.numberValue(null)).count()).isEqualTo(1);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
@@ -454,9 +455,9 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
     taskAssignee.setAssignee("aUserId");
     taskService.saveTask(taskAssignee);
     // query test
-    assertEquals(2, historyService.createHistoricTaskInstanceQuery().taskInvolvedUser("aUserId").count());
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().taskInvolvedUser("bUserId").count());
-    assertEquals(0, historyService.createHistoricTaskInstanceQuery().taskInvolvedUser("invalidUserId").count());
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskInvolvedUser("aUserId").count()).isEqualTo(2);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskInvolvedUser("bUserId").count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskInvolvedUser("invalidUserId").count()).isZero();
     taskService.deleteTask("newTask",true);
   }
 
@@ -493,9 +494,9 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
     taskService.deleteCandidateGroup(taskId, "aGroupId");
     taskService.deleteCandidateGroup(taskId, "bGroupId");
     // query test
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().taskInvolvedGroup("aGroupId").count());
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().taskInvolvedGroup("bGroupId").count());
-    assertEquals(0, historyService.createHistoricTaskInstanceQuery().taskInvolvedGroup("invalidGroupId").count());
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskInvolvedGroup("aGroupId").count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskInvolvedGroup("bGroupId").count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskInvolvedGroup("invalidGroupId").count()).isZero();
 
     taskService.deleteTask("newTask",true);
   }
@@ -516,9 +517,9 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
     taskAssignee.setAssignee("aUserId");
     taskService.saveTask(taskAssignee);
     // query test
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().taskHadCandidateUser("aUserId").count());
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().taskHadCandidateUser("bUserId").count());
-    assertEquals(0, historyService.createHistoricTaskInstanceQuery().taskHadCandidateUser("invalidUserId").count());
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskHadCandidateUser("aUserId").count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskHadCandidateUser("bUserId").count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskHadCandidateUser("invalidUserId").count()).isZero();
     // delete test
     taskService.deleteTask("newTask",true);
   }
@@ -535,8 +536,8 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
     taskService.addCandidateGroup(taskId, "bGroupId");
     taskService.deleteCandidateGroup(taskId, "bGroupId");
     // query test
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().taskHadCandidateGroup("bGroupId").count());
-    assertEquals(0, historyService.createHistoricTaskInstanceQuery().taskHadCandidateGroup("invalidGroupId").count());
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskHadCandidateGroup("bGroupId").count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskHadCandidateGroup("invalidGroupId").count()).isZero();
     // delete test
     taskService.deleteTask("newTask",true);
   }
@@ -554,7 +555,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
     taskService.addCandidateGroup(taskId, "aGroupId");
 
     // then
-    assertEquals(historyService.createHistoricTaskInstanceQuery().withCandidateGroups().count(), 1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().withCandidateGroups().count()).isEqualTo(1);
 
     // cleanup
     taskService.deleteTask("newTask", true);
@@ -574,8 +575,8 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     // then
-    assertEquals(historyService.createHistoricTaskInstanceQuery().count(), 2);
-    assertEquals(historyService.createHistoricTaskInstanceQuery().withoutCandidateGroups().count(), 1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().count()).isEqualTo(2);
+    assertThat(historyService.createHistoricTaskInstanceQuery().withoutCandidateGroups().count()).isEqualTo(1);
 
     // cleanup
     taskService.deleteTask("newTask", true);
@@ -608,17 +609,17 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
     // Query test
     HistoricTaskInstanceQuery query = historyService.createHistoricTaskInstanceQuery();
-    assertEquals(4, query.taskInvolvedUser("aUserId").count());
+    assertThat(query.taskInvolvedUser("aUserId").count()).isEqualTo(4);
     query = historyService.createHistoricTaskInstanceQuery();
-    assertEquals(1, query.taskHadCandidateUser("aUserId").count());
+    assertThat(query.taskHadCandidateUser("aUserId").count()).isEqualTo(1);
     query = historyService.createHistoricTaskInstanceQuery();
-    assertEquals(1, query.taskHadCandidateGroup("aGroupId").count());
-    assertEquals(1, query.taskHadCandidateGroup("bGroupId").count());
-    assertEquals(0, query.taskInvolvedUser("aUserId").count());
+    assertThat(query.taskHadCandidateGroup("aGroupId").count()).isEqualTo(1);
+    assertThat(query.taskHadCandidateGroup("bGroupId").count()).isEqualTo(1);
+    assertThat(query.taskInvolvedUser("aUserId").count()).isZero();
     query = historyService.createHistoricTaskInstanceQuery();
-    assertEquals(4, query.taskInvolvedUser("aUserId").count());
-    assertEquals(1, query.taskHadCandidateUser("aUserId").count());
-    assertEquals(1, query.taskInvolvedUser("aUserId").count());
+    assertThat(query.taskInvolvedUser("aUserId").count()).isEqualTo(4);
+    assertThat(query.taskHadCandidateUser("aUserId").count()).isEqualTo(1);
+    assertThat(query.taskInvolvedUser("aUserId").count()).isEqualTo(1);
     // delete task
     taskService.deleteTask("taskOne",true);
     taskService.deleteTask("taskTwo",true);
@@ -646,7 +647,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
     List<HistoricTaskInstance> list = historyService.createHistoricTaskInstanceQuery().taskAssigned().list();
 
     // then
-    assertEquals(list.size(), 2);
+    assertThat(list).hasSize(2);
 
     // cleanup
     taskService.deleteTask("taskOne",true);
@@ -675,7 +676,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
     List<HistoricTaskInstance> list = historyService.createHistoricTaskInstanceQuery().taskUnassigned().list();
 
     // then
-    assertEquals(list.size(), 1);
+    assertThat(list).hasSize(1);
 
     // cleanup
     taskService.deleteTask("taskOne",true);
@@ -704,7 +705,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
             .finishedBefore(hourAgo.getTime()).list();
 
     // then
-    assertEquals(1, list.size());
+    assertThat(list).hasSize(1);
 
     // cleanup
     taskService.deleteTask("taskOne",true);
@@ -732,7 +733,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
             .finishedAfter(Calendar.getInstance().getTime()).list();
 
     // then
-    assertEquals(0, list.size());
+    assertThat(list).isEmpty();
 
     // cleanup
     taskService.deleteTask("taskOne",true);

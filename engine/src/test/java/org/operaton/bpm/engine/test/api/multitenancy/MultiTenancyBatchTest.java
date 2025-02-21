@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.test.api.multitenancy;
 
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.List;
 
@@ -37,7 +38,6 @@ import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -97,7 +97,7 @@ public class MultiTenancyBatchTest {
     Batch batch = batchHelper.migrateProcessInstanceAsync(sharedDefinition, sharedDefinition);
 
     // then
-    Assert.assertNull(batch.getTenantId());
+    assertThat(batch.getTenantId()).isNull();
   }
 
   /**
@@ -110,7 +110,7 @@ public class MultiTenancyBatchTest {
     Batch batch = batchHelper.migrateProcessInstanceAsync(tenant1Definition, sharedDefinition);
 
     // then
-    Assert.assertEquals(TENANT_ONE, batch.getTenantId());
+    assertThat(batch.getTenantId()).isEqualTo(TENANT_ONE);
   }
 
   /**
@@ -123,7 +123,7 @@ public class MultiTenancyBatchTest {
     Batch batch = batchHelper.migrateProcessInstanceAsync(sharedDefinition, tenant1Definition);
 
     // then
-    Assert.assertNull(batch.getTenantId());
+    assertThat(batch.getTenantId()).isNull();
   }
 
   @Test
@@ -134,7 +134,7 @@ public class MultiTenancyBatchTest {
 
     // then
     HistoricBatch historicBatch = historyService.createHistoricBatchQuery().singleResult();
-    Assert.assertEquals(TENANT_ONE, historicBatch.getTenantId());
+    assertThat(historicBatch.getTenantId()).isEqualTo(TENANT_ONE);
   }
 
   @Test
@@ -144,13 +144,13 @@ public class MultiTenancyBatchTest {
 
     // then
     JobDefinition migrationJobDefinition = batchHelper.getExecutionJobDefinition(batch);
-    Assert.assertEquals(TENANT_ONE, migrationJobDefinition.getTenantId());
+    assertThat(migrationJobDefinition.getTenantId()).isEqualTo(TENANT_ONE);
 
     JobDefinition monitorJobDefinition = batchHelper.getMonitorJobDefinition(batch);
-    Assert.assertEquals(TENANT_ONE, monitorJobDefinition.getTenantId());
+    assertThat(monitorJobDefinition.getTenantId()).isEqualTo(TENANT_ONE);
 
     JobDefinition seedJobDefinition = batchHelper.getSeedJobDefinition(batch);
-    Assert.assertEquals(TENANT_ONE, seedJobDefinition.getTenantId());
+    assertThat(seedJobDefinition.getTenantId()).isEqualTo(TENANT_ONE);
   }
 
   @Test
@@ -160,15 +160,15 @@ public class MultiTenancyBatchTest {
 
     // then
     Job seedJob = batchHelper.getSeedJob(batch);
-    Assert.assertEquals(TENANT_ONE, seedJob.getTenantId());
+    assertThat(seedJob.getTenantId()).isEqualTo(TENANT_ONE);
 
     batchHelper.completeSeedJobs(batch);
 
     List<Job> migrationJob = batchHelper.getExecutionJobs(batch);
-    Assert.assertEquals(TENANT_ONE, migrationJob.get(0).getTenantId());
+    assertThat(migrationJob.get(0).getTenantId()).isEqualTo(TENANT_ONE);
 
     Job monitorJob = batchHelper.getMonitorJob(batch);
-    Assert.assertEquals(TENANT_ONE, monitorJob.getTenantId());
+    assertThat(monitorJob.getTenantId()).isEqualTo(TENANT_ONE);
   }
 
   @Test
@@ -182,19 +182,20 @@ public class MultiTenancyBatchTest {
     identityService.clearAuthentication();
 
     // then
-    Assert.assertEquals(0, managementService.createBatchQuery().count());
+    assertThat(managementService.createBatchQuery().count()).isZero();
   }
 
   @Test
   public void testDeleteBatchFailsWithWrongTenant() {
     // given
     Batch batch = batchHelper.migrateProcessInstanceAsync(tenant2Definition, tenant2Definition);
+    var batchId = batch.getId();
 
     // when
     identityService.setAuthentication("user", null, singletonList(TENANT_ONE));
     try {
-      managementService.deleteBatch(batch.getId(), true);
-      Assert.fail("exception expected");
+      managementService.deleteBatch(batchId, true);
+      fail("exception expected");
     }
     catch (ProcessEngineException e) {
       // then
@@ -218,19 +219,20 @@ public class MultiTenancyBatchTest {
 
     // then
     batch = managementService.createBatchQuery().batchId(batch.getId()).singleResult();
-    Assert.assertTrue(batch.isSuspended());
+    assertThat(batch.isSuspended()).isTrue();
   }
 
   @Test
   public void testSuspendBatchFailsWithWrongTenant() {
     // given
     Batch batch = batchHelper.migrateProcessInstanceAsync(tenant2Definition, tenant2Definition);
+    var batchId = batch.getId();
 
     // when
     identityService.setAuthentication("user", null, singletonList(TENANT_ONE));
     try {
-      managementService.suspendBatchById(batch.getId());
-      Assert.fail("exception expected");
+      managementService.suspendBatchById(batchId);
+      fail("exception expected");
     }
     catch (ProcessEngineException e) {
       // then
@@ -255,7 +257,7 @@ public class MultiTenancyBatchTest {
 
     // then
     batch = managementService.createBatchQuery().batchId(batch.getId()).singleResult();
-    Assert.assertFalse(batch.isSuspended());
+    assertThat(batch.isSuspended()).isFalse();
   }
 
   @Test
@@ -263,12 +265,13 @@ public class MultiTenancyBatchTest {
     // given
     Batch batch = batchHelper.migrateProcessInstanceAsync(tenant2Definition, tenant2Definition);
     managementService.suspendBatchById(batch.getId());
+    var batchId = batch.getId();
 
     // when
     identityService.setAuthentication("user", null, singletonList(TENANT_ONE));
     try {
-      managementService.activateBatchById(batch.getId());
-      Assert.fail("exception expected");
+      managementService.activateBatchById(batchId);
+      fail("exception expected");
     }
     catch (ProcessEngineException e) {
       // then

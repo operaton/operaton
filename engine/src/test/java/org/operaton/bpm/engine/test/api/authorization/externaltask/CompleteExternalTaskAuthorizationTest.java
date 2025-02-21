@@ -17,7 +17,8 @@
 package org.operaton.bpm.engine.test.api.authorization.externaltask;
 
 import org.operaton.bpm.engine.externaltask.LockedExternalTask;
-import org.junit.Assert;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
@@ -35,6 +36,6 @@ public class CompleteExternalTaskAuthorizationTest extends HandleLockedExternalT
 
   @Override
   public void assertExternalTaskResults() {
-    Assert.assertEquals(0, engineRule.getExternalTaskService().createExternalTaskQuery().count());
+    assertThat(engineRule.getExternalTaskService().createExternalTaskQuery().count()).isZero();
   }
 }

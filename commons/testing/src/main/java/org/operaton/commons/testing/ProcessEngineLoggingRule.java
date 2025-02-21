@@ -32,6 +32,7 @@ import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.read.ListAppender;
 
+// XXX For JUnit5 there is already a replacement for this rule. Have a look at ProcessEngineLoggingExtensions .
 public class ProcessEngineLoggingRule extends TestWatcher {
 
   public static final String LOGGER_NOT_FOUND_ERROR = "no logger found with name ";

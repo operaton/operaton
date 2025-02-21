@@ -66,7 +66,6 @@ public class DefaultHistoryEventHandlerTest {
         .getHistoryEventHandler();
 
     // then
-    assertThat(useDefaultDbHandler).isNotNull();
     if (useDefaultDbHandler) {
       assertThat(defaultHandler).isInstanceOf(CompositeDbHistoryEventHandler.class);
     } else {

@@ -842,13 +842,12 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
    */
   protected void setDelayedPayloadToNewScope(PvmActivity activity) {
     String activityType = (String) activity.getProperty(BpmnProperties.TYPE.getName());
-    if (ActivityTypes.START_EVENT_MESSAGE.equals(activityType) // Event subprocess message start event
-        || ActivityTypes.BOUNDARY_MESSAGE.equals(activityType)) {
-      if (getProcessInstance().getPayloadForTriggeredScope() != null) {
-        this.setVariablesLocal(getProcessInstance().getPayloadForTriggeredScope());
-        // clear the process instance
-        getProcessInstance().setPayloadForTriggeredScope(null);
-      }
+    if ((ActivityTypes.START_EVENT_MESSAGE.equals(activityType) // Event subprocess message start event
+        || ActivityTypes.BOUNDARY_MESSAGE.equals(activityType))
+            && getProcessInstance().getPayloadForTriggeredScope() != null) {
+      this.setVariablesLocal(getProcessInstance().getPayloadForTriggeredScope());
+      // clear the process instance
+      getProcessInstance().setPayloadForTriggeredScope(null);
     }
   }
 
@@ -1666,9 +1665,6 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
     return getParent();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setVariable(String variableName, Object value, String targetActivityId) {
     String activityId = getActivityId();
@@ -2025,18 +2021,12 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
       return;
     }
 
-    continueIfExecutionDoesNotAffectNextOperation(new Callback<>() {
-      @Override
-      public Void callback(PvmExecutionImpl execution) {
-        dispatchScopeEvents(execution);
-        return null;
-      }
-    }, new Callback<>(){
-      @Override
-      public Void callback(PvmExecutionImpl execution) {
-        continueExecutionIfNotCanceled(continuation, execution);
-        return null;
-      }
+    continueIfExecutionDoesNotAffectNextOperation(execution1 -> {
+      dispatchScopeEvents(execution1);
+      return null;
+    }, execution2 -> {
+      continueExecutionIfNotCanceled(continuation, execution2);
+      return null;
     }, execution);
   }
 
@@ -2199,7 +2189,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
                                    String currentActivityInstanceId, String currentActivityId) {
     return
       //activityInstanceId's can be null on transitions, so the activityId must be equal
-      ((lastActivityInstanceId == null && lastActivityInstanceId == currentActivityInstanceId && lastActivityId.equals(currentActivityId))
+      ((lastActivityInstanceId == null && Objects.equals(lastActivityInstanceId, currentActivityInstanceId) && lastActivityId.equals(currentActivityId))
         //if activityInstanceId's are not null they must be equal -> otherwise execution changed
         || (lastActivityInstanceId != null && lastActivityInstanceId.equals(currentActivityInstanceId)
         && (lastActivityId == null || lastActivityId.equals(currentActivityId))));

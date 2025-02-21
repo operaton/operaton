@@ -44,7 +44,7 @@ import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -139,7 +139,7 @@ public class HistoryCleanupBatchWindowForWeekDaysTest {
 
       List<Job> jobs = managementService.createJobQuery().list();
       if (!jobs.isEmpty()) {
-        assertEquals(1, jobs.size());
+        assertThat(jobs).hasSize(1);
         String jobId = jobs.get(0).getId();
         commandContext.getJobManager().deleteJob((JobEntity) jobs.get(0));
         commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(jobId);
@@ -156,21 +156,21 @@ public class HistoryCleanupBatchWindowForWeekDaysTest {
     processEngineConfiguration.initHistoryCleanup();
     Job job = historyService.cleanUpHistoryAsync();
 
-    assertFalse(startDateForCheck.after(job.getDuedate())); // job due date is not before start date
-    assertTrue(endDateForCheck.after(job.getDuedate()));
+    assertThat(startDateForCheck.after(job.getDuedate())).isFalse(); // job due date is not before start date
+    assertThat(endDateForCheck.after(job.getDuedate())).isTrue();
 
     ClockUtil.setCurrentTime(DateUtils.addMinutes(endDateForCheck, -1));
 
     job = historyService.cleanUpHistoryAsync();
 
-    assertFalse(startDateForCheck.after(job.getDuedate()));
-    assertTrue(endDateForCheck.after(job.getDuedate()));
+    assertThat(startDateForCheck.after(job.getDuedate())).isFalse();
+    assertThat(endDateForCheck.after(job.getDuedate())).isTrue();
 
     ClockUtil.setCurrentTime(DateUtils.addMinutes(endDateForCheck, 1));
 
     job = historyService.cleanUpHistoryAsync();
 
-    assertTrue(endDateForCheck.before(job.getDuedate()));
+    assertThat(endDateForCheck.before(job.getDuedate())).isTrue();
   }
 
   @Test
@@ -190,21 +190,21 @@ public class HistoryCleanupBatchWindowForWeekDaysTest {
       endDateForCheckWithDefaultValues = endDateForCheck;
     }
 
-    assertFalse(startDateForCheckWithDefaultValues.after(job.getDuedate())); // job due date is not before start date
-    assertTrue(endDateForCheckWithDefaultValues.after(job.getDuedate()));
+    assertThat(startDateForCheckWithDefaultValues.after(job.getDuedate())).isFalse(); // job due date is not before start date
+    assertThat(endDateForCheckWithDefaultValues.after(job.getDuedate())).isTrue();
 
     ClockUtil.setCurrentTime(DateUtils.addMinutes(endDateForCheckWithDefaultValues, -1));
 
     job = historyService.cleanUpHistoryAsync();
 
-    assertFalse(startDateForCheckWithDefaultValues.after(job.getDuedate()));
-    assertTrue(endDateForCheckWithDefaultValues.after(job.getDuedate()));
+    assertThat(startDateForCheckWithDefaultValues.after(job.getDuedate())).isFalse();
+    assertThat(endDateForCheckWithDefaultValues.after(job.getDuedate())).isTrue();
 
     ClockUtil.setCurrentTime(DateUtils.addMinutes(endDateForCheckWithDefaultValues, 1));
 
     job = historyService.cleanUpHistoryAsync();
 
-    assertTrue(endDateForCheckWithDefaultValues.before(job.getDuedate()));
+    assertThat(endDateForCheckWithDefaultValues.before(job.getDuedate())).isTrue();
   }
 
   @Test
@@ -226,21 +226,21 @@ public class HistoryCleanupBatchWindowForWeekDaysTest {
       endDateForCheckWithDefaultValues = endDateForCheck;
     }
 
-    assertFalse(startDateForCheckWithDefaultValues.after(job.getDuedate())); // job due date is not before start date
-    assertTrue(endDateForCheckWithDefaultValues.after(job.getDuedate()));
+    assertThat(startDateForCheckWithDefaultValues.after(job.getDuedate())).isFalse(); // job due date is not before start date
+    assertThat(endDateForCheckWithDefaultValues.after(job.getDuedate())).isTrue();
 
     ClockUtil.setCurrentTime(DateUtils.addMinutes(endDateForCheckWithDefaultValues, -1));
 
     job = historyService.cleanUpHistoryAsync();
 
-    assertFalse(startDateForCheckWithDefaultValues.after(job.getDuedate()));
-    assertTrue(endDateForCheckWithDefaultValues.after(job.getDuedate()));
+    assertThat(startDateForCheckWithDefaultValues.after(job.getDuedate())).isFalse();
+    assertThat(endDateForCheckWithDefaultValues.after(job.getDuedate())).isTrue();
 
     ClockUtil.setCurrentTime(DateUtils.addMinutes(endDateForCheckWithDefaultValues, 1));
 
     job = historyService.cleanUpHistoryAsync();
 
-    assertTrue(endDateForCheckWithDefaultValues.before(job.getDuedate()));
+    assertThat(endDateForCheckWithDefaultValues.before(job.getDuedate())).isTrue();
   }
 
 }

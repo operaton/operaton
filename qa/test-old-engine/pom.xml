@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm.qa</groupId>
     <artifactId>operaton-qa</artifactId>
-    <version>1.0.0-beta-3-SNAPSHOT</version>
+    <version>1.0.0-beta-4-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-qa-old-engine</artifactId>
@@ -196,7 +196,7 @@
         <dependency>
           <groupId>org.operaton.bpm.distro</groupId>
           <artifactId>operaton-sql-scripts</artifactId>
-          <version>${project.version}</version>
+          <version>${version.operaton.dbscheme}</version>
           <type>test-jar</type>
         </dependency>
 
@@ -310,7 +310,7 @@
                     <artifactItem>
                       <groupId>org.operaton.bpm.distro</groupId>
                       <artifactId>operaton-sql-scripts</artifactId>
-                      <version>${project.version}</version>
+                      <version>${version.operaton.dbscheme}</version>
                       <type>test-jar</type>
                       <outputDirectory>${project.build.directory}/scripts-current</outputDirectory>
                       <overWrite>true</overWrite>

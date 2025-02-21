@@ -17,11 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.gateway;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
 import java.util.List;
@@ -54,35 +49,35 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
   @Test
   public void testSplitMergeNoWaitstates() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("forkJoinNoWaitStates");
-    assertTrue(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isTrue();
   }
 
   @Deployment
   @Test
   public void testUnstructuredConcurrencyTwoForks() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("unstructuredConcurrencyTwoForks");
-    assertTrue(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isTrue();
   }
 
   @Deployment
   @Test
   public void testUnstructuredConcurrencyTwoJoins() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("unstructuredConcurrencyTwoJoins");
-    assertTrue(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isTrue();
   }
 
   @Deployment
   @Test
   public void testForkFollowedByOnlyEndEvents() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("forkFollowedByEndEvents");
-    assertTrue(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isTrue();
   }
 
   @Deployment
   @Test
   public void testNestedForksFollowedByEndEvents() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("nestedForksFollowedByEndEvents");
-    assertTrue(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isTrue();
   }
 
   // ACT-482
@@ -91,47 +86,47 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
   public void testNestedForkJoin() {
     String pid = runtimeService.startProcessInstanceByKey("nestedForkJoin").getId();
 
-    // After process startm, only task 0 should be active
+    // After process start, only task 0 should be active
     TaskQuery query = taskService.createTaskQuery().orderByTaskName().asc();
     List<Task> tasks = query.list();
-    assertEquals(1, tasks.size());
-    assertEquals("Task 0", tasks.get(0).getName());
-    assertEquals(1, runtimeService.getActivityInstance(pid).getChildActivityInstances().length);
+    assertThat(tasks).hasSize(1);
+    assertThat(tasks.get(0).getName()).isEqualTo("Task 0");
+    assertThat(runtimeService.getActivityInstance(pid).getChildActivityInstances()).hasSize(1);
 
     // Completing task 0 will create Task A and B
     taskService.complete(tasks.get(0).getId());
     tasks = query.list();
-    assertEquals(2, tasks.size());
-    assertEquals("Task A", tasks.get(0).getName());
-    assertEquals("Task B", tasks.get(1).getName());
-    assertEquals(2, runtimeService.getActivityInstance(pid).getChildActivityInstances().length);
+    assertThat(tasks).hasSize(2);
+    assertThat(tasks.get(0).getName()).isEqualTo("Task A");
+    assertThat(tasks.get(1).getName()).isEqualTo("Task B");
+    assertThat(runtimeService.getActivityInstance(pid).getChildActivityInstances()).hasSize(2);
 
     // Completing task A should not trigger any new tasks
     taskService.complete(tasks.get(0).getId());
     tasks = query.list();
-    assertEquals(1, tasks.size());
-    assertEquals("Task B", tasks.get(0).getName());
-    assertEquals(2, runtimeService.getActivityInstance(pid).getChildActivityInstances().length);
+    assertThat(tasks).hasSize(1);
+    assertThat(tasks.get(0).getName()).isEqualTo("Task B");
+    assertThat(runtimeService.getActivityInstance(pid).getChildActivityInstances()).hasSize(2);
 
     // Completing task B creates tasks B1 and B2
     taskService.complete(tasks.get(0).getId());
     tasks = query.list();
-    assertEquals(2, tasks.size());
-    assertEquals("Task B1", tasks.get(0).getName());
-    assertEquals("Task B2", tasks.get(1).getName());
-    assertEquals(3, runtimeService.getActivityInstance(pid).getChildActivityInstances().length);
+    assertThat(tasks).hasSize(2);
+    assertThat(tasks.get(0).getName()).isEqualTo("Task B1");
+    assertThat(tasks.get(1).getName()).isEqualTo("Task B2");
+    assertThat(runtimeService.getActivityInstance(pid).getChildActivityInstances()).hasSize(3);
 
     // Completing B1 and B2 will activate both joins, and process reaches task C
     taskService.complete(tasks.get(0).getId());
     taskService.complete(tasks.get(1).getId());
     tasks = query.list();
-    assertEquals(1, tasks.size());
-    assertEquals("Task C", tasks.get(0).getName());
-    assertEquals(1, runtimeService.getActivityInstance(pid).getChildActivityInstances().length);
+    assertThat(tasks).hasSize(1);
+    assertThat(tasks.get(0).getName()).isEqualTo("Task C");
+    assertThat(runtimeService.getActivityInstance(pid).getChildActivityInstances()).hasSize(1);
   }
 
   /**
-   * http://jira.codehaus.org/browse/ACT-1222
+   * <a href="http://jira.codehaus.org/browse/ACT-1222">ACT-1222</a>
    */
   @Deployment
   @Test
@@ -142,21 +137,21 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
     // the sub process
     TaskQuery query = taskService.createTaskQuery().orderByTaskName().asc();
     List<Task> tasks = query.list();
-    assertEquals(2, tasks.size());
-    assertEquals("Another task", tasks.get(0).getName());
-    assertEquals("Some Task", tasks.get(1).getName());
+    assertThat(tasks).hasSize(2);
+    assertThat(tasks.get(0).getName()).isEqualTo("Another task");
+    assertThat(tasks.get(1).getName()).isEqualTo("Some Task");
 
     // we complete the task from the parent process, the root execution is
-    // receycled, the task in the sub process is still there
+    // recycled, the task in the sub process is still there
     taskService.complete(tasks.get(1).getId());
     tasks = query.list();
-    assertEquals(1, tasks.size());
-    assertEquals("Another task", tasks.get(0).getName());
+    assertThat(tasks).hasSize(1);
+    assertThat(tasks.get(0).getName()).isEqualTo("Another task");
 
     // we end the task in the sub process and the sub process instance end is
     // propagated to the parent process
     taskService.complete(tasks.get(0).getId());
-    assertEquals(0, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).isZero();
 
     // There is a QA config without history, so we cannot work with this:
     // assertEquals(1,
@@ -168,7 +163,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
   public void testCompletingJoin() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
-    assertTrue(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isTrue();
   }
 
   @Deployment
@@ -176,20 +171,20 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
   public void testAsyncParallelGateway() {
 
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().singleResult();
-    assertNotNull(jobDefinition);
-    assertEquals("parallelJoinEnd", jobDefinition.getActivityId());
+    assertThat(jobDefinition).isNotNull();
+    assertThat(jobDefinition.getActivityId()).isEqualTo("parallelJoinEnd");
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
-    assertFalse(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isFalse();
 
     // there are two jobs to continue the gateway:
     List<Job> list = managementService.createJobQuery().list();
-    assertEquals(2, list.size());
+    assertThat(list).hasSize(2);
 
     managementService.executeJob(list.get(0).getId());
     managementService.executeJob(list.get(1).getId());
 
-    assertNull(runtimeService.createProcessInstanceQuery().singleResult());
+    assertThat(runtimeService.createProcessInstanceQuery().singleResult()).isNull();
   }
 
   @Deployment
@@ -197,19 +192,19 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
   public void testAsyncParallelGatewayAfterScopeTask() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
-    assertFalse(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isFalse();
 
     Task task = taskService.createTaskQuery().singleResult();
     taskService.complete(task.getId());
 
     // there are two jobs to continue the gateway:
     List<Job> list = managementService.createJobQuery().list();
-    assertEquals(2, list.size());
+    assertThat(list).hasSize(2);
 
     managementService.executeJob(list.get(0).getId());
     managementService.executeJob(list.get(1).getId());
 
-    assertNull(runtimeService.createProcessInstanceQuery().singleResult());
+    assertThat(runtimeService.createProcessInstanceQuery().singleResult()).isNull();
   }
 
   @Deployment
@@ -217,7 +212,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
   public void testCompletingJoinInSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
-    assertTrue(processInstance.isEnded());
+    assertThat(processInstance.isEnded()).isTrue();
   }
 
   @Deployment
@@ -254,20 +249,20 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
                         .asc();
 
     List<Task> tasks = query.list();
-    assertEquals(2, tasks.size());
+    assertThat(tasks).hasSize(2);
     // the tasks are ordered by name (see above)
     Task task1 = tasks.get(0);
-    assertEquals("Receive Payment", task1.getName());
+    assertThat(task1.getName()).isEqualTo("Receive Payment");
     Task task2 = tasks.get(1);
-    assertEquals("Ship Order", task2.getName());
+    assertThat(task2.getName()).isEqualTo("Ship Order");
 
     // Completing both tasks will join the concurrent executions
     taskService.complete(tasks.get(0).getId());
     taskService.complete(tasks.get(1).getId());
 
     tasks = query.list();
-    assertEquals(1, tasks.size());
-    assertEquals("Archive Order", tasks.get(0).getName());
+    assertThat(tasks).hasSize(1);
+    assertThat(tasks.get(0).getName()).isEqualTo("Archive Order");
   }
 
   @Deployment
@@ -281,12 +276,12 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
                                  .asc();
 
     List<Task> tasks = query.list();
-    assertEquals(3, tasks.size());
+    assertThat(tasks).hasSize(3);
     // the tasks are ordered by name (see above)
     Task task1 = tasks.get(0);
-    assertEquals("Task 1", task1.getName());
+    assertThat(task1.getName()).isEqualTo("Task 1");
     Task task2 = tasks.get(1);
-    assertEquals("Task 2", task2.getName());
+    assertThat(task2.getName()).isEqualTo("Task 2");
 
     // Completing the first task should *not* trigger the join
     taskService.complete(task1.getId());
@@ -296,12 +291,12 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
 
     tasks = query.list();
     Task task3 = tasks.get(0);
-    assertEquals(2, tasks.size());
-    assertEquals("Task 3", task3.getName());
+    assertThat(tasks).hasSize(2);
+    assertThat(task3.getName()).isEqualTo("Task 3");
     Task task4 = tasks.get(1);
-    assertEquals("Task 4", task4.getName());
+    assertThat(task4.getName()).isEqualTo("Task 4");
 
-    // Completing the remaing tasks should trigger the second join and end the process
+    // Completing the remaining tasks should trigger the second join and end the process
     taskService.complete(task3.getId());
     taskService.complete(task4.getId());
 
@@ -335,7 +330,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
     taskService.complete(tasks.get(1).getId());
 
     // then
-    assertEquals(0, runtimeService.createVariableInstanceQuery().count());
+    assertThat(runtimeService.createVariableInstanceQuery().count()).isZero();
   }
 
   @Deployment
@@ -356,8 +351,8 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
     }
 
     // then
-    assertNull(exceptionOccurred);
-    assertEquals(3, taskService.createTaskQuery().count());
+    assertThat(exceptionOccurred).isNull();
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(3);
   }
 
   @Deployment
@@ -373,7 +368,7 @@ public class ParallelGatewayTest extends PluggableProcessEngineTest {
     runtimeService.signal(execution.getId());
 
     // then
-    assertEquals(3, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(3);
   }
 
   @Test

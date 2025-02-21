@@ -54,7 +54,7 @@ import org.operaton.bpm.engine.impl.util.ReflectUtil;
  * on this class.<br>
  * <br>
  * The {@link #init()} method will try to build one {@link ProcessEngine} for
- * each operaton.cfg.xml file found on the classpath.  If you have more then one,
+ * each operaton.cfg.xml file found on the classpath.  If you have more than one,
  * make sure you specify different process.engine.name values.
  *
  * @author Tom Baeyens
@@ -221,9 +221,9 @@ public abstract class ProcessEngines {
     return processEngineInfos;
   }
 
-  /** Get initialization results. Only info will we available for process engines
+  /** Get initialization results. Only info will be available for process engines
    * which were added in the {@link ProcessEngines#init()}. No {@link ProcessEngineInfo}
-   * is available for engines which were registered programatically.
+   * is available for engines which were registered programmatically.
   */
   public static ProcessEngineInfo getProcessEngineInfo(String processEngineName) {
     return processEngineInfosByName.get(processEngineName);
@@ -273,8 +273,9 @@ public abstract class ProcessEngines {
       Map<String, ProcessEngine> engines = new HashMap<>(processEngines);
       processEngines = new HashMap<>();
 
-      for (String processEngineName: engines.keySet()) {
-        ProcessEngine processEngine = engines.get(processEngineName);
+      for (var engineEntry : engines.entrySet()) {
+        String processEngineName = engineEntry.getKey();
+        ProcessEngine processEngine = engineEntry.getValue();
         try {
           processEngine.close();
         }

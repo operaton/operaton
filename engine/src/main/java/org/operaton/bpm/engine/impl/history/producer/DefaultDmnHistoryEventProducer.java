@@ -68,35 +68,19 @@ public class DefaultDmnHistoryEventProducer implements DmnHistoryEventProducer {
 
   @Override
   public HistoryEvent createDecisionEvaluatedEvt(final DelegateExecution execution, final DmnDecisionEvaluationEvent evaluationEvent) {
-    return createHistoryEvent(evaluationEvent, new HistoricDecisionInstanceSupplier() {
-
-      @Override
-      public HistoricDecisionInstanceEntity createHistoricDecisionInstance(DmnDecisionLogicEvaluationEvent evaluationEvent, HistoricDecisionInstanceEntity rootDecisionInstance) {
-        return createDecisionEvaluatedEvt(evaluationEvent, (ExecutionEntity) execution);
-      }
-    });
+    return createHistoryEvent(evaluationEvent,
+      (evaluationEvent1, rootDecisionInstance) -> createDecisionEvaluatedEvt(evaluationEvent1, (ExecutionEntity) execution));
   }
 
   @Override
   public HistoryEvent createDecisionEvaluatedEvt(final DelegateCaseExecution execution, final DmnDecisionEvaluationEvent evaluationEvent) {
-    return createHistoryEvent(evaluationEvent, new HistoricDecisionInstanceSupplier() {
-
-      @Override
-      public HistoricDecisionInstanceEntity createHistoricDecisionInstance(DmnDecisionLogicEvaluationEvent evaluationEvent, HistoricDecisionInstanceEntity rootDecisionInstance) {
-        return createDecisionEvaluatedEvt(evaluationEvent, (CaseExecutionEntity) execution);
-      }
-    });
+    return createHistoryEvent(evaluationEvent,
+      (evaluationEvent1, rootDecisionInstance) -> createDecisionEvaluatedEvt(evaluationEvent1, (CaseExecutionEntity) execution));
   }
 
   @Override
   public HistoryEvent createDecisionEvaluatedEvt(final DmnDecisionEvaluationEvent evaluationEvent) {
-    return createHistoryEvent(evaluationEvent, new HistoricDecisionInstanceSupplier() {
-
-      @Override
-      public HistoricDecisionInstanceEntity createHistoricDecisionInstance(DmnDecisionLogicEvaluationEvent evaluationEvent, HistoricDecisionInstanceEntity rootDecisionInstance) {
-        return createDecisionEvaluatedEvt(evaluationEvent, rootDecisionInstance);
-      }
-    });
+    return createHistoryEvent(evaluationEvent, this::createDecisionEvaluatedEvt);
   }
 
   protected interface HistoricDecisionInstanceSupplier {
@@ -227,8 +211,8 @@ public class DefaultDmnHistoryEventProducer implements DmnHistoryEventProducer {
       initDecisionInstanceEventForDecisionLiteralExpression(event, expressionEvaluationEvent);
 
     } else {
-      event.setInputs(Collections.<HistoricDecisionInputInstance> emptyList());
-      event.setOutputs(Collections.<HistoricDecisionOutputInstance> emptyList());
+      event.setInputs(Collections.emptyList());
+      event.setOutputs(Collections.emptyList());
     }
   }
 
@@ -312,13 +296,13 @@ public class DefaultDmnHistoryEventProducer implements DmnHistoryEventProducer {
 
   protected void initDecisionInstanceEventForDecisionLiteralExpression(HistoricDecisionInstanceEntity event, DmnDecisionLiteralExpressionEvaluationEvent evaluationEvent) {
     // no inputs for expression
-    event.setInputs(Collections.<HistoricDecisionInputInstance> emptyList());
+    event.setInputs(Collections.emptyList());
 
     HistoricDecisionOutputInstanceEntity outputInstance = new HistoricDecisionOutputInstanceEntity(event.getRootProcessInstanceId(), event.getRemovalTime());
     outputInstance.setVariableName(evaluationEvent.getOutputName());
     outputInstance.setValue(evaluationEvent.getOutputValue());
 
-    event.setOutputs(Collections.<HistoricDecisionOutputInstance> singletonList(outputInstance));
+    event.setOutputs(Collections.singletonList(outputInstance));
   }
 
   protected void setReferenceToProcessInstance(HistoricDecisionInstanceEntity event, ExecutionEntity execution) {

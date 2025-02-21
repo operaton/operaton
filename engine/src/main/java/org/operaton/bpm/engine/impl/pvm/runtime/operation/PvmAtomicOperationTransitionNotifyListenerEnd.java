@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
-import org.operaton.bpm.engine.impl.pvm.runtime.Callback;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 
 
@@ -46,14 +45,10 @@ public class PvmAtomicOperationTransitionNotifyListenerEnd extends PvmAtomicOper
       execution.setProcessInstanceStarting(false);
     }
 
-    execution.dispatchDelayedEventsAndPerformOperation(new Callback<>() {
-
-      @Override
-      public Void callback(PvmExecutionImpl execution) {
-        execution.leaveActivityInstance();
-        execution.performOperation(TRANSITION_DESTROY_SCOPE);
-        return null;
-      }
+    execution.dispatchDelayedEventsAndPerformOperation(execution1 -> {
+      execution1.leaveActivityInstance();
+      execution1.performOperation(TRANSITION_DESTROY_SCOPE);
+      return null;
     });
   }
 

@@ -88,7 +88,7 @@ public class TopicSubscriptionManager implements Runnable {
       try {
         acquire();
       }
-      catch (Throwable e) {
+      catch (Exception e) {
         LOG.exceptionWhileAcquiringTasks(e);
       }
     }
@@ -156,7 +156,7 @@ public class TopicSubscriptionManager implements Runnable {
       taskHandler.execute(task, externalTaskService);
     } catch (ExternalTaskClientException e) {
       LOG.exceptionOnExternalTaskServiceMethodInvocation(task.getTopicName(), e);
-    } catch (Throwable e) {
+    } catch (Exception e) {
       LOG.exceptionWhileExecutingExternalTaskHandler(task.getTopicName(), e);
     }
   }
@@ -222,7 +222,7 @@ public class TopicSubscriptionManager implements Runnable {
 
       long waitTime = backoffStrategy.calculateBackoffTime();
       suspend(waitTime);
-    } catch (Throwable e) {
+    } catch (Exception e) {
       LOG.exceptionWhileExecutingBackoffStrategyMethod(e);
     }
   }

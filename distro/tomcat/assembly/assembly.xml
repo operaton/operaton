@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <assembly
   xmlns="urn:maven:assembly:1.1.0-SNAPSHOT">
-    
+
   <id>assemble</id>
-    
+
   <formats>
     <format>tar.gz</format>
     <format>zip</format>
@@ -142,23 +142,23 @@
       <outputDirectory></outputDirectory>
     </file>
     <file>
-      <source>src/start-operaton.bat</source>
+      <source>src/start.bat</source>
       <filtered>true</filtered>
       <outputDirectory></outputDirectory>
     </file>
     <file>
-      <source>src/start-operaton.sh</source>
+      <source>src/start.sh</source>
       <filtered>true</filtered>
       <outputDirectory></outputDirectory>
       <fileMode>0755</fileMode>
     </file>
     <file>
-      <source>src/shutdown-operaton.bat</source>
+      <source>src/shutdown.bat</source>
       <filtered>true</filtered>
       <outputDirectory></outputDirectory>
     </file>
     <file>
-      <source>src/shutdown-operaton.sh</source>
+      <source>src/shutdown.sh</source>
       <filtered>true</filtered>
       <outputDirectory></outputDirectory>
       <fileMode>0755</fileMode>
@@ -168,12 +168,12 @@
       <source>src/conf/server.xml</source>
       <outputDirectory>server/apache-tomcat-${version.tomcat}/conf/</outputDirectory>
     </file>
-    
+
     <file>
       <source>src/conf/bpm-platform.xml</source>
       <outputDirectory>server/apache-tomcat-${version.tomcat}/conf/</outputDirectory>
     </file>
-      
+
     <file>
       <source>src/tomcat/setenv.bat</source>
       <outputDirectory>server/apache-tomcat-${version.tomcat}/bin/</outputDirectory>

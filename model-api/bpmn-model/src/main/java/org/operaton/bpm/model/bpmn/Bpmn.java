@@ -21,12 +21,8 @@ import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 import static org.operaton.bpm.model.bpmn.impl.instance.ProcessImpl.DEFAULT_HISTORY_TIME_TO_LIVE;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
+
 import org.operaton.bpm.model.bpmn.builder.ProcessBuilder;
 import org.operaton.bpm.model.bpmn.impl.BpmnParser;
 import org.operaton.bpm.model.bpmn.impl.instance.ActivationConditionImpl;
@@ -400,18 +396,15 @@ public class Bpmn {
   }
 
   protected BpmnModelInstance doReadModelFromFile(File file) {
-    InputStream is = null;
-    try {
-      is = new FileInputStream(file);
-      return doReadModelFromInputStream(is);
-
+    BpmnModelInstance result = null;
+    try (InputStream is = new FileInputStream(file)) {
+      result =  doReadModelFromInputStream(is);
     } catch (FileNotFoundException e) {
-      throw new BpmnModelException("Cannot read model from file "+file+": file does not exist.");
-
-    } finally {
-      IoUtil.closeSilently(is);
-
+      throw new BpmnModelException("Cannot read model from file " + file + ": file does not exist.");
+    } catch(IOException e) {
+      throw new BpmnModelException("Cannot read model from file " + file, e);
     }
+    return result;
   }
 
   protected BpmnModelInstance doReadModelFromInputStream(InputStream is) {
@@ -419,15 +412,12 @@ public class Bpmn {
   }
 
   protected void doWriteModelToFile(File file, BpmnModelInstance modelInstance) {
-    OutputStream os = null;
-    try {
-      os = new FileOutputStream(file);
+    try (OutputStream os = new FileOutputStream(file)) {
       doWriteModelToOutputStream(os, modelInstance);
-    }
-    catch (FileNotFoundException e) {
-      throw new BpmnModelException("Cannot write model to file "+file+": file does not exist.");
-    } finally {
-      IoUtil.closeSilently(os);
+    } catch (FileNotFoundException e) {
+      throw new BpmnModelException("Cannot write model to file " + file + ": file does not exist.");
+    } catch (IOException e) {
+      throw new BpmnModelException("Cannot write model to file " + file, e);
     }
   }
 

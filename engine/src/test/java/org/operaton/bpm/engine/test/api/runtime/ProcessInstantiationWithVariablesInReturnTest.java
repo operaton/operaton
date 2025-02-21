@@ -31,6 +31,7 @@ import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.util.TypedValueAssert.assertObjectValueSerializedJava;
 import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
 
@@ -39,7 +40,6 @@ import java.io.ObjectOutputStream;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -122,9 +122,9 @@ public class ProcessInstantiationWithVariablesInReturnTest {
     //access on value should fail because variable is not deserialized
     try {
       serializedVar.getValue();
-      Assert.fail("Deserialization should fail!");
+      fail("Deserialization should fail!");
     } catch (IllegalStateException ise) {
-      assertTrue(ise.getMessage().equals("Object is not deserialized."));
+      assertEquals("Object is not deserialized.", ise.getMessage());
     }
   }
 

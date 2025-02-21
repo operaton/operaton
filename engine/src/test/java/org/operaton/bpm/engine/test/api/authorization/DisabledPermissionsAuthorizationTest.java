@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.CREATE;
@@ -25,13 +26,8 @@ import static org.operaton.bpm.engine.authorization.Permissions.READ_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.operaton.bpm.engine.AuthorizationService;
@@ -111,7 +107,7 @@ public class DisabledPermissionsAuthorizationTest {
   @Test
   public void testIsUserAuthorizedForIgnoredPermission() {
     // given
-    processEngineConfiguration.setDisabledPermissions(Arrays.asList(READ.name()));
+    processEngineConfiguration.setDisabledPermissions(List.of(READ.name()));
 
     authRule.createGrantAuthorization(PROCESS_INSTANCE, ANY, USER_ID, ProcessInstancePermissions.RETRY_JOB);
 
@@ -126,12 +122,12 @@ public class DisabledPermissionsAuthorizationTest {
   @Test
   public void testCustomPermissionDuplicateValue() {
     // given
-    processEngineConfiguration.setDisabledPermissions(Arrays.asList(ProcessInstancePermissions.SUSPEND.name()));
+    processEngineConfiguration.setDisabledPermissions(List.of(ProcessInstancePermissions.SUSPEND.name()));
     Resource resource1 = TestResource.RESOURCE1;
     Resource resource2 = TestResource.RESOURCE2;
 
     // assume
-    assertEquals(ProcessInstancePermissions.SUSPEND.getValue(), TestPermissions.RANDOM.getValue());
+    assertThat(TestPermissions.RANDOM.getValue()).isEqualTo(ProcessInstancePermissions.SUSPEND.getValue());
 
     // when
     authRule.createGrantAuthorization(resource1, ANY, USER_ID, TestPermissions.RANDOM);
@@ -140,8 +136,8 @@ public class DisabledPermissionsAuthorizationTest {
 
     // then
     // verify that the custom permission with the same value is not affected by disabling the build-in permission
-    assertEquals(true, authorizationService.isUserAuthorized(USER_ID, null, TestPermissions.RANDOM, resource1));
-    assertEquals(true, authorizationService.isUserAuthorized(USER_ID, null, TestPermissions.RANDOM, resource2, "resource2-1"));
+    assertThat(authorizationService.isUserAuthorized(USER_ID, null, TestPermissions.RANDOM, resource1)).isTrue();
+    assertThat(authorizationService.isUserAuthorized(USER_ID, null, TestPermissions.RANDOM, resource2, "resource2-1")).isTrue();
   }
 
   // specific scenarios //////////////////////////////////////
@@ -151,7 +147,7 @@ public class DisabledPermissionsAuthorizationTest {
   @Test
   public void testGetVariableIgnoreTaskRead() {
     // given
-    processEngineConfiguration.setDisabledPermissions(Arrays.asList(TaskPermissions.READ.name()));
+    processEngineConfiguration.setDisabledPermissions(List.of(TaskPermissions.READ.name()));
     String taskId = "taskId";
     Task task = taskService.newTask(taskId);
     taskService.saveTask(task);
@@ -163,7 +159,7 @@ public class DisabledPermissionsAuthorizationTest {
     Object variable = taskService.getVariable(taskId, "foo");
 
     // then
-    assertEquals("bar", variable);
+    assertThat(variable).isEqualTo("bar");
     authRule.disableAuthorization();
     taskService.deleteTask(taskId, true);
   }
@@ -185,7 +181,7 @@ public class DisabledPermissionsAuthorizationTest {
     Task returnedTask = taskService.createTaskQuery().singleResult();
 
     // then
-    assertNotNull(returnedTask);
+    assertThat(returnedTask).isNotNull();
     authRule.disableAuthorization();
     taskService.deleteTask(taskId, true);
   }
@@ -195,7 +191,7 @@ public class DisabledPermissionsAuthorizationTest {
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   public void testDeleteHistoricProcessInstanceIgnoreDeleteHistory() {
     // given
-    processEngineConfiguration.setDisabledPermissions(Arrays.asList(Permissions.DELETE_HISTORY.name()));
+    processEngineConfiguration.setDisabledPermissions(List.of(Permissions.DELETE_HISTORY.name()));
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     runtimeService.deleteProcessInstance(processInstance.getId(), "any");
@@ -203,28 +199,28 @@ public class DisabledPermissionsAuthorizationTest {
 
     engineRule.getHistoryService().deleteHistoricProcessInstance(processInstance.getId());
     authRule.disableAuthorization();
-    assertNull(engineRule.getHistoryService().createHistoricProcessInstanceQuery().singleResult());
+    assertThat(engineRule.getHistoryService().createHistoricProcessInstanceQuery().singleResult()).isNull();
   }
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   public void testQueryDeploymentIgnoreRead() {
     // given
-    engineRule.getProcessEngineConfiguration().setDisabledPermissions(Arrays.asList(READ.name()));
+    engineRule.getProcessEngineConfiguration().setDisabledPermissions(List.of(READ.name()));
 
     // when
     authRule.enableAuthorization(USER_ID);
     List<org.operaton.bpm.engine.repository.Deployment> deployments = engineRule.getRepositoryService().createDeploymentQuery().list();
 
     // then
-    assertEquals(1, deployments.size());
+    assertThat(deployments).hasSize(1);
   }
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   public void testStartableInTasklistIgnoreRead() {
     // given
-    processEngineConfiguration.setDisabledPermissions(Arrays.asList(READ.name()));
+    processEngineConfiguration.setDisabledPermissions(List.of(READ.name()));
     authRule.createGrantAuthorization(PROCESS_DEFINITION, "oneTaskProcess", USER_ID, CREATE_INSTANCE);
     authRule.createGrantAuthorization(PROCESS_INSTANCE, "*", USER_ID, CREATE);
 
@@ -235,17 +231,17 @@ public class DisabledPermissionsAuthorizationTest {
     // when
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().startablePermissionCheck().startableInTasklist().list();
     // then
-    assertNotNull(processDefinitions);
-    assertEquals(1, repositoryService.createProcessDefinitionQuery().startablePermissionCheck().startableInTasklist().count());
-    assertEquals(definition.getId(), processDefinitions.get(0).getId());
-    assertTrue(processDefinitions.get(0).isStartableInTasklist());
+    assertThat(processDefinitions).isNotNull();
+    assertThat(repositoryService.createProcessDefinitionQuery().startablePermissionCheck().startableInTasklist().count()).isEqualTo(1);
+    assertThat(processDefinitions.get(0).getId()).isEqualTo(definition.getId());
+    assertThat(processDefinitions.get(0).isStartableInTasklist()).isTrue();
   }
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/authorization/timerBoundaryEventProcess.bpmn20.xml")
   public void testDeploymentStatisticsIgnoreReadInstance() {
     // given
-    processEngineConfiguration.setDisabledPermissions(Arrays.asList(READ_INSTANCE.name()));
+    processEngineConfiguration.setDisabledPermissions(List.of(READ_INSTANCE.name()));
 
     runtimeService.startProcessInstanceByKey("timerBoundaryProcess");
 
@@ -258,11 +254,11 @@ public class DisabledPermissionsAuthorizationTest {
     List<DeploymentStatistics> statistics = query.list();
 
     for (DeploymentStatistics deploymentStatistics : statistics) {
-      assertEquals("Instances", 1, deploymentStatistics.getInstances());
-      assertEquals("Failed Jobs", 0, deploymentStatistics.getFailedJobs());
+      assertThat(deploymentStatistics.getInstances()).as("Instances").isEqualTo(1);
+      assertThat(deploymentStatistics.getFailedJobs()).as("Failed Jobs").isZero();
 
       List<IncidentStatistics> incidentStatistics = deploymentStatistics.getIncidentStatistics();
-      assertTrue("Incidents supposed to be empty", incidentStatistics.isEmpty());
+      assertThat(incidentStatistics).as("Incidents supposed to be empty").isEmpty();
     }
 
   }
@@ -283,11 +279,11 @@ public class DisabledPermissionsAuthorizationTest {
     ActivityStatistics statistics = managementService.createActivityStatisticsQuery(processDefinitionId).singleResult();
 
     // then
-    assertNotNull(statistics);
-    assertEquals("task", statistics.getId());
-    assertEquals(1, statistics.getInstances());
-    assertEquals(0, statistics.getFailedJobs());
-    assertTrue(statistics.getIncidentStatistics().isEmpty());
+    assertThat(statistics).isNotNull();
+    assertThat(statistics.getId()).isEqualTo("task");
+    assertThat(statistics.getInstances()).isEqualTo(1);
+    assertThat(statistics.getFailedJobs()).isZero();
+    assertThat(statistics.getIncidentStatistics()).isEmpty();
   }
 
   @Test
@@ -311,19 +307,14 @@ public class DisabledPermissionsAuthorizationTest {
         .execute();
 
     // then
-    assertEquals(1, externalTasks.size());
+    assertThat(externalTasks).hasSize(1);
 
     LockedExternalTask task = externalTasks.get(0);
-    assertNotNull(task.getId());
-    assertEquals(processInstance.getId(), task.getProcessInstanceId());
-    assertEquals(processInstance.getProcessDefinitionId(), task.getProcessDefinitionId());
-    assertEquals("externalTask", task.getActivityId());
-    assertEquals("oneExternalTaskProcess", task.getProcessDefinitionKey());
-  }
-
-  protected void startProcessAndExecuteJob(String processDefinitionKey) {
-    runtimeService.startProcessInstanceByKey(processDefinitionKey);
-    executeAvailableJobs(processDefinitionKey);
+    assertThat(task.getId()).isNotNull();
+    assertThat(task.getProcessInstanceId()).isEqualTo(processInstance.getId());
+    assertThat(task.getProcessDefinitionId()).isEqualTo(processInstance.getProcessDefinitionId());
+    assertThat(task.getActivityId()).isEqualTo("externalTask");
+    assertThat(task.getProcessDefinitionKey()).isEqualTo("oneExternalTaskProcess");
   }
 
   protected void executeAvailableJobs(final String key) {
@@ -334,14 +325,10 @@ public class DisabledPermissionsAuthorizationTest {
     }
 
     for (Job job : jobs) {
-      try {
         managementService.executeJob(job.getId());
-      } catch (Exception e) {
-      }
     }
 
     executeAvailableJobs(key);
-    return;
   }
 
 }

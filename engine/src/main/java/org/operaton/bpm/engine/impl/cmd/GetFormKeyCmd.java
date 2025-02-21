@@ -28,7 +28,6 @@ import org.operaton.bpm.engine.impl.persistence.deploy.cache.DeploymentCache;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.task.TaskDefinition;
 
-import static org.springframework.util.ObjectUtils.isEmpty;
 
 /**
  * Command for retrieving start or task form keys.
@@ -52,14 +51,14 @@ public class GetFormKeyCmd implements Command<String> {
    */
   public GetFormKeyCmd(String processDefinitionId, String taskDefinitionKey) {
     setProcessDefinitionId(processDefinitionId);
-    if (isEmpty(taskDefinitionKey)) {
+    if (taskDefinitionKey == null || taskDefinitionKey.isEmpty()) {
       throw new ProcessEngineException("The task definition key is mandatory, but '" + taskDefinitionKey + "' has been provided.");
     }
     this.taskDefinitionKey = taskDefinitionKey;
   }
 
   protected void setProcessDefinitionId(String processDefinitionId) {
-    if (isEmpty(processDefinitionId)) {
+    if (processDefinitionId == null || processDefinitionId.isEmpty()) {
       throw new ProcessEngineException("The process definition id is mandatory, but '" + processDefinitionId + "' has been provided.");
     }
     this.processDefinitionId = processDefinitionId;

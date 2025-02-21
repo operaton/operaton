@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -30,21 +31,21 @@ import org.operaton.bpm.engine.impl.persistence.deploy.cache.DeploymentCache;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-import static org.springframework.util.ObjectUtils.isEmpty;
 
 /**
- * Gives access to a deploy BPMN model instance which can be accessed by
+ * Gives access to a deployed BPMN model instance which can be accessed by
  * the BPMN model API.
  *
  * @author Sebastian Menski
  */
 public class GetDeploymentBpmnModelInstanceCmd implements Command<BpmnModelInstance>, Serializable {
 
+  @Serial
   private static final long serialVersionUID = 1L;
   protected String processDefinitionId;
 
   public GetDeploymentBpmnModelInstanceCmd(String processDefinitionId) {
-    if (isEmpty(processDefinitionId)) {
+    if (processDefinitionId == null || processDefinitionId.isEmpty()) {
       throw new ProcessEngineException("The process definition id is mandatory, but '" + processDefinitionId + "' has been provided.");
     }
     this.processDefinitionId = processDefinitionId;

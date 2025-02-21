@@ -264,7 +264,6 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
       if (DatabaseUtil.checkDatabaseRollsBackTransactionOnError()) {
         return Context.getCommandContext().getProcessEngineConfiguration().isEnableOptimisticLockingOnForeignKeyViolation();
       }
-      DbEntity entity = dbEntityOperation.getEntity();
       for (Map.Entry<String, Class> reference : hasDbReferences.getReferencedEntitiesIdAndClass().entrySet()) {
         DbEntity referencedEntity = selectById(reference.getValue(), reference.getKey());
         if (referencedEntity == null) {
@@ -654,35 +653,21 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
 
   protected List<String> getTablesPresentInOracleDatabase() throws SQLException {
     List<String> tableNames = new ArrayList<>();
-    Connection connection = null;
-    PreparedStatement prepStat = null;
-    ResultSet tablesRs = null;
     String selectTableNamesFromOracle = "SELECT table_name FROM all_tables WHERE table_name LIKE ? ESCAPE '-'";
     String databaseTablePrefix = getDbSqlSessionFactory().getDatabaseTablePrefix();
 
-    try {
-      connection = Context.getProcessEngineConfiguration().getDataSource().getConnection();
-      prepStat = connection.prepareStatement(selectTableNamesFromOracle);
+    try(Connection connection = Context.getProcessEngineConfiguration().getDataSource().getConnection();
+        PreparedStatement prepStat = connection.prepareStatement(selectTableNamesFromOracle);
+        ResultSet tablesRs = prepStat.executeQuery()) {
+
       prepStat.setString(1, databaseTablePrefix + "ACT-_%");
 
-      tablesRs = prepStat.executeQuery();
       while (tablesRs.next()) {
         String tableName = tablesRs.getString("TABLE_NAME");
         tableName = tableName.toUpperCase();
         tableNames.add(tableName);
       }
       LOG.fetchDatabaseTables("oracle all_tables", tableNames);
-
-    } finally {
-      if (tablesRs != null) {
-        tablesRs.close();
-      }
-      if (prepStat != null) {
-        prepStat.close();
-      }
-      if (connection != null) {
-        connection.close();
-      }
     }
 
     return tableNames;
@@ -712,9 +697,7 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
   }
 
   public void executeSchemaResource(String operation, String component, String resourceName, boolean isOptional) {
-    InputStream inputStream = null;
-    try {
-      inputStream = ReflectUtil.getResourceAsStream(resourceName);
+    try (InputStream inputStream = ReflectUtil.getResourceAsStream(resourceName)) {
       if (inputStream == null) {
         if (isOptional) {
           LOG.missingSchemaResource(resourceName, operation);
@@ -724,21 +707,18 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
       } else {
         executeSchemaResource(operation, component, resourceName, inputStream);
       }
-
-    } finally {
-      IoUtil.closeSilently(inputStream);
+    } catch (IOException e) {
+      //ignore
     }
   }
 
   public void executeSchemaResource(String schemaFileResourceName) {
-    FileInputStream inputStream = null;
-    try {
-      inputStream = new FileInputStream(new File(schemaFileResourceName));
+    try (FileInputStream inputStream = new FileInputStream(schemaFileResourceName)) {
       executeSchemaResource("schema operation", "process engine", schemaFileResourceName, inputStream);
     } catch (FileNotFoundException e) {
       throw LOG.missingSchemaResourceFileException(schemaFileResourceName, e);
-    } finally {
-      IoUtil.closeSilently(inputStream);
+    } catch (IOException e) {
+      //ignore
     }
   }
 

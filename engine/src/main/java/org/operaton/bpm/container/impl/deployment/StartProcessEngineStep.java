@@ -156,8 +156,7 @@ public class StartProcessEngineStep extends DeploymentOperationStep {
   protected JobExecutor getJobExecutorService(final PlatformServiceContainer serviceContainer) {
     // lookup container managed job executor
     String jobAcquisitionName = processEngineXml.getJobAcquisitionName();
-    JobExecutor jobExecutor = serviceContainer.getServiceValue(ServiceTypes.JOB_EXECUTOR, jobAcquisitionName);
-    return jobExecutor;
+    return serviceContainer.getServiceValue(ServiceTypes.JOB_EXECUTOR, jobAcquisitionName);
   }
 
   @SuppressWarnings("unchecked")

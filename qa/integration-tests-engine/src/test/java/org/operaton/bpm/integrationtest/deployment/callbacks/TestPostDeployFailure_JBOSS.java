@@ -43,12 +43,10 @@ public class TestPostDeployFailure_JBOSS {
   @Deployment(managed=false, name=DEPLOYMENT)
   public static WebArchive createDeployment1() {
     
-    WebArchive archive = ShrinkWrap.create(WebArchive.class, "failingDeployment.war")
+    return ShrinkWrap.create(WebArchive.class, "failingDeployment.war")
         .addAsResource("META-INF/processes.xml", "META-INF/processes.xml")
         .addAsResource("org/operaton/bpm/integrationtest/invoice-it.bpmn20.xml")
         .addClass(PostDeployFailureApp.class);
-
-    return archive;
     
   }
   

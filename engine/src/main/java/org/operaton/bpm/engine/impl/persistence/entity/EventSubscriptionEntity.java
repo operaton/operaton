@@ -363,8 +363,7 @@ public class EventSubscriptionEntity implements EventSubscription, DbEntity, Has
 
   @Override
   public Set<String> getReferencedEntityIds() {
-    Set<String> referencedEntityIds = new HashSet<>();
-    return referencedEntityIds;
+    return new HashSet<>();
   }
 
   @Override

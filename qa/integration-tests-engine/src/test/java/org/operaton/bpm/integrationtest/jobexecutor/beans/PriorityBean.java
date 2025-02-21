@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.integrationtest.jobexecutor.beans;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import javax.ejb.Stateless;
@@ -27,8 +28,10 @@ import javax.inject.Named;
  */
 @Named
 @Stateless
+@SuppressWarnings("unused")
 public class PriorityBean implements Serializable {
 
+  @Serial
   private static final long serialVersionUID = 1L;
 
   public static final int PRIORITY = 52;

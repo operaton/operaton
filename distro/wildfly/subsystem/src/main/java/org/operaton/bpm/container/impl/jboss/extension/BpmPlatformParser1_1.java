@@ -378,9 +378,6 @@ public class BpmPlatformParser1_1 extends AbstractParser {
 
     static final BpmPlatformSubsystemParser INSTANCE = new BpmPlatformSubsystemParser();
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void readElement(XMLExtendedStreamReader reader, List<ModelNode> operations) throws XMLStreamException {
       // Require no attributes

@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm.engine.test.util;
 
+import static org.assertj.core.api.Assertions.fail;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.runtime.Execution;
-import org.junit.Assert;
 
 /**
  * @author Thorben Lindhauer
@@ -47,7 +48,7 @@ public class ExecutionTreeProcessDefinitionIdAssertion implements ExecutionTreeA
         sb.append("\n");
       }
       sb.append("]\n");
-      Assert.fail(sb.toString());
+      fail(sb.toString());
     }
   }
 

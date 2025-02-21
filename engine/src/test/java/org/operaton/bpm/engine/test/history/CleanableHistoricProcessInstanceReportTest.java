@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.history;
 
 import static junit.framework.TestCase.fail;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -106,7 +106,7 @@ public class CleanableHistoricProcessInstanceReportTest {
 
   protected void prepareProcessInstances(String key, int daysInThePast, Integer historyTimeToLive, int instanceCount) {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().processDefinitionKey(key).list();
-    assertEquals(1, processDefinitions.size());
+    assertThat(processDefinitions).hasSize(1);
     repositoryService.updateProcessDefinitionHistoryTimeToLive(processDefinitions.get(0).getId(), historyTimeToLive);
 
     Date oldCurrentTime = ClockUtil.getCurrentTime();
@@ -143,7 +143,7 @@ public class CleanableHistoricProcessInstanceReportTest {
     CleanableHistoricProcessInstanceReportResult thirdReportResult = historyService.createCleanableHistoricProcessInstanceReport().processDefinitionKeyIn(FOURTH_PROCESS_DEFINITION_KEY).singleResult();
 
     // then
-    assertEquals(3, reportResults.size());
+    assertThat(reportResults).hasSize(3);
     for (CleanableHistoricProcessInstanceReportResult result : reportResults) {
       if (result.getProcessDefinitionKey().equals(PROCESS_DEFINITION_KEY)) {
         checkResultNumbers(result, 10, 20);
@@ -158,8 +158,8 @@ public class CleanableHistoricProcessInstanceReportTest {
   }
 
   private void checkResultNumbers(CleanableHistoricProcessInstanceReportResult result, int expectedCleanable, int expectedFinished) {
-    assertEquals(expectedCleanable, result.getCleanableProcessInstanceCount());
-    assertEquals(expectedFinished, result.getFinishedProcessInstanceCount());
+    assertThat(result.getCleanableProcessInstanceCount()).isEqualTo(expectedCleanable);
+    assertThat(result.getFinishedProcessInstanceCount()).isEqualTo(expectedFinished);
   }
 
   @Test
@@ -172,8 +172,8 @@ public class CleanableHistoricProcessInstanceReportTest {
     long count = historyService.createCleanableHistoricProcessInstanceReport().count();
 
     // then
-    assertEquals(1, reportResults.size());
-    assertEquals(1, count);
+    assertThat(reportResults).hasSize(1);
+    assertThat(count).isEqualTo(1);
 
     checkResultNumbers(reportResults.get(0), 10, 10);
   }
@@ -188,7 +188,7 @@ public class CleanableHistoricProcessInstanceReportTest {
     List<CleanableHistoricProcessInstanceReportResult> reportResults = historyService.createCleanableHistoricProcessInstanceReport().list();
 
     // then
-    assertEquals(1, reportResults.size());
+    assertThat(reportResults).hasSize(1);
 
     checkResultNumbers(reportResults.get(0), 5, 10);
   }
@@ -216,7 +216,7 @@ public class CleanableHistoricProcessInstanceReportTest {
     List<CleanableHistoricProcessInstanceReportResult> reportResults = historyService.createCleanableHistoricProcessInstanceReport().list();
 
     // then
-    assertEquals(1, reportResults.size());
+    assertThat(reportResults).hasSize(1);
 
     checkResultNumbers(reportResults.get(0), 0, 10);
   }
@@ -263,18 +263,18 @@ public class CleanableHistoricProcessInstanceReportTest {
   public void testReportCompact() {
     // given
     List<ProcessDefinition> pdList = repositoryService.createProcessDefinitionQuery().processDefinitionKey(PROCESS_DEFINITION_KEY).list();
-    assertEquals(1, pdList.size());
+    assertThat(pdList).hasSize(1);
     runtimeService.startProcessInstanceById(pdList.get(0).getId());
 
     List<CleanableHistoricProcessInstanceReportResult> resultWithZeros = historyService.createCleanableHistoricProcessInstanceReport().list();
-    assertEquals(1, resultWithZeros.size());
-    assertEquals(0, resultWithZeros.get(0).getFinishedProcessInstanceCount());
+    assertThat(resultWithZeros).hasSize(1);
+    assertThat(resultWithZeros.get(0).getFinishedProcessInstanceCount()).isZero();
 
     // when
     long resultCountWithoutZeros = historyService.createCleanableHistoricProcessInstanceReport().compact().count();
 
     // then
-    assertEquals(0, resultCountWithoutZeros);
+    assertThat(resultCountWithoutZeros).isZero();
   }
 
   @Test
@@ -294,10 +294,10 @@ public class CleanableHistoricProcessInstanceReportTest {
       .list();
 
     // then
-    assertEquals(3, reportResult.size());
-    assertEquals(PROCESS_DEFINITION_KEY, reportResult.get(0).getProcessDefinitionKey());
-    assertEquals(SECOND_PROCESS_DEFINITION_KEY, reportResult.get(1).getProcessDefinitionKey());
-    assertEquals(THIRD_PROCESS_DEFINITION_KEY, reportResult.get(2).getProcessDefinitionKey());
+    assertThat(reportResult).hasSize(3);
+    assertThat(reportResult.get(0).getProcessDefinitionKey()).isEqualTo(PROCESS_DEFINITION_KEY);
+    assertThat(reportResult.get(1).getProcessDefinitionKey()).isEqualTo(SECOND_PROCESS_DEFINITION_KEY);
+    assertThat(reportResult.get(2).getProcessDefinitionKey()).isEqualTo(THIRD_PROCESS_DEFINITION_KEY);
   }
 
   @Test
@@ -317,9 +317,9 @@ public class CleanableHistoricProcessInstanceReportTest {
       .list();
 
     // then
-    assertEquals(3, reportResult.size());
-    assertEquals(THIRD_PROCESS_DEFINITION_KEY, reportResult.get(0).getProcessDefinitionKey());
-    assertEquals(SECOND_PROCESS_DEFINITION_KEY, reportResult.get(1).getProcessDefinitionKey());
-    assertEquals(PROCESS_DEFINITION_KEY, reportResult.get(2).getProcessDefinitionKey());
+    assertThat(reportResult).hasSize(3);
+    assertThat(reportResult.get(0).getProcessDefinitionKey()).isEqualTo(THIRD_PROCESS_DEFINITION_KEY);
+    assertThat(reportResult.get(1).getProcessDefinitionKey()).isEqualTo(SECOND_PROCESS_DEFINITION_KEY);
+    assertThat(reportResult.get(2).getProcessDefinitionKey()).isEqualTo(PROCESS_DEFINITION_KEY);
   }
 }

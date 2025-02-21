@@ -42,7 +42,7 @@ import org.junit.Test;
 import org.junit.rules.RuleChain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 public class AcquirableJobCacheTest {
 
@@ -95,10 +95,11 @@ public class AcquirableJobCacheTest {
     testRule.deploy(process);
     runtimeService.startProcessInstanceByKey("startTimer");
     Execution execution = runtimeService.createExecutionQuery().activityId("userTask").singleResult();
+    var executionId = execution.getId();
 
     try {
       // when
-      fetchTimerJobAfterCachedAcquirableJob(execution.getId());
+      fetchTimerJobAfterCachedAcquirableJob(executionId);
       fail("expected exception");
     } catch (Exception e) {
       // then
@@ -149,8 +150,7 @@ public class AcquirableJobCacheTest {
     return processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(commandContext -> {
       JobManager jobManager = commandContext.getJobManager();
       List<AcquirableJobEntity> acquirableJobs = jobManager.findNextJobsToExecute(new Page(0, 100));
-      JobEntity job = jobManager.findJobById(acquirableJobs.get(0).getId());
-      return job;
+      return jobManager.findJobById(acquirableJobs.get(0).getId());
     });
   }
 

@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.container.impl.jmx.deployment.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -43,10 +41,10 @@ public class VfsProcessApplicationScannerTest {
     Map<String, byte[]> scanResult = ProcessApplicationScanningUtil.findResources(classLoader, processRootPath, null);
 
     // expect: finds only the BPMN process file and not treats the 'bpmn' folder
-    assertEquals(1, scanResult.size());
+    assertThat(scanResult).hasSize(1);
     String processFileName = "VfsProcessScannerTest.bpmn20.xml";
-    assertTrue("'" + processFileName + "'not found", contains(scanResult, processFileName));
-    assertFalse("'bpmn' folder in resource path found", contains(scanResult, "processResource.txt"));
+    assertThat(contains(scanResult, processFileName)).as("'" + processFileName + "'not found").isTrue();
+    assertThat(contains(scanResult, "processResource.txt")).as("'bpmn' folder in resource path found").isFalse();
   }
 
   @Test
@@ -58,10 +56,10 @@ public class VfsProcessApplicationScannerTest {
     Map<String, byte[]> scanResult = ProcessApplicationScanningUtil.findResources(classLoader, processRootPath, null);
 
     // expect: finds only the CMMN process file and not treats the 'cmmn' folder
-    assertEquals(1, scanResult.size());
+    assertThat(scanResult).hasSize(1);
     String processFileName = "VfsProcessScannerTest.cmmn";
-    assertTrue("'" + processFileName + "' not found", contains(scanResult, processFileName));
-    assertFalse("'cmmn' in resource path found", contains(scanResult, "caseResource.txt"));
+    assertThat(contains(scanResult, processFileName)).as("'" + processFileName + "' not found").isTrue();
+    assertThat(contains(scanResult, "caseResource.txt")).as("'cmmn' in resource path found").isFalse();
   }
 
   @Test
@@ -71,12 +69,12 @@ public class VfsProcessApplicationScannerTest {
     String[] additionalResourceSuffixes = new String[] { "py", "groovy", "rb" };
     Map<String, byte[]> scanResult = ProcessApplicationScanningUtil.findResources(classLoader, processRootPath, null, additionalResourceSuffixes);
 
-    assertEquals(4, scanResult.size());
+    assertThat(scanResult).hasSize(4);
     String processFileName = "VfsProcessScannerTest.bpmn20.xml";
-    assertTrue("'" + processFileName + "' not found", contains(scanResult, processFileName));
-    assertTrue("'hello.py' in resource path found", contains(scanResult, "hello.py"));
-    assertTrue("'hello.rb' in resource path found", contains(scanResult, "hello.rb"));
-    assertTrue("'hello.groovy' in resource path found", contains(scanResult, "hello.groovy"));
+    assertThat(contains(scanResult, processFileName)).as("'" + processFileName + "' not found").isTrue();
+    assertThat(contains(scanResult, "hello.py")).as("'hello.py' in resource path found").isTrue();
+    assertThat(contains(scanResult, "hello.rb")).as("'hello.rb' in resource path found").isTrue();
+    assertThat(contains(scanResult, "hello.groovy")).as("'hello.groovy' in resource path found").isTrue();
   }
 
   private boolean contains(Map<String, byte[]> scanResult, String suffix) {

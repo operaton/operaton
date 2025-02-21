@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.calendar;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.Calendar;
@@ -143,7 +144,7 @@ import java.util.TreeSet;
  * the month&quot;. So if the 15th is a Saturday, the trigger will fire on
  * Friday the 14th. If the 15th is a Sunday, the trigger will fire on Monday the
  * 16th. If the 15th is a Tuesday, then it will fire on Tuesday the 15th.
- * However if you specify &quot;1W&quot; as the value for day-of-month, and the
+ * However, if you specify &quot;1W&quot; as the value for day-of-month, and the
  * 1st is a Saturday, the trigger will fire on Monday the 3rd, as it will not
  * 'jump' over the boundary of a month's days.  The 'W' character can only be
  * specified when the day-of-month is a single day, not a range or list of days.
@@ -197,6 +198,7 @@ import java.util.TreeSet;
  */
 public class CronExpression implements Serializable, Cloneable {
 
+    @Serial
     private static final long serialVersionUID = 12423409423L;
 
     protected static final int SECOND = 0;
@@ -389,7 +391,7 @@ public class CronExpression implements Serializable, Cloneable {
             throw pe;
         } catch (Exception e) {
             throw new ParseException("Illegal cron expression format ("
-                    + e.toString() + ")", 0);
+                    + e + ")", 0);
         }
     }
 
@@ -734,35 +736,37 @@ public class CronExpression implements Serializable, Cloneable {
         throws ParseException {
 
         TreeSet<Integer> set = getSet(type);
-
-        if (type == SECOND || type == MINUTE) {
-            if ((val < 0 || val > 59 || end > 59) && (val != ALL_SPEC_INT)) {
-                throw new ParseException(
-                        "Minute and Second values must be between 0 and 59",
-                        -1);
-            }
-        } else if (type == HOUR) {
-            if ((val < 0 || val > 23 || end > 23) && (val != ALL_SPEC_INT)) {
-                throw new ParseException(
-                        "Hour values must be between 0 and 23", -1);
-            }
-        } else if (type == DAY_OF_MONTH) {
-            if ((val < 1 || val > 31 || end > 31) && (val != ALL_SPEC_INT)
-                    && (val != NO_SPEC_INT)) {
-                throw new ParseException(
-                        "Day of month values must be between 1 and 31", -1);
-            }
-        } else if (type == MONTH) {
-            if ((val < 1 || val > 12 || end > 12) && (val != ALL_SPEC_INT)) {
-                throw new ParseException(
-                        "Month values must be between 1 and 12", -1);
-            }
-        } else if (type == DAY_OF_WEEK) {
-            if ((val == 0 || val > 7 || end > 7) && (val != ALL_SPEC_INT)
-                    && (val != NO_SPEC_INT)) {
-                throw new ParseException(
-                        "Day-of-Week values must be between 1 and 7", -1);
-            }
+        switch(type) {
+            case SECOND,MINUTE:
+                if ((val < 0 || val > 59 || end > 59) && (val != ALL_SPEC_INT)) {
+                    throw new ParseException("Minute and Second values must be between 0 and 59", -1);
+                }
+                break;
+            case HOUR:
+                if ((val < 0 || val > 23 || end > 23) && (val != ALL_SPEC_INT)) {
+                    throw new ParseException("Hour values must be between 0 and 23", -1);
+                }
+                break;
+            case DAY_OF_MONTH:
+                if ((val < 1 || val > 31 || end > 31) && (val != ALL_SPEC_INT)
+                        && (val != NO_SPEC_INT)) {
+                    throw new ParseException(
+                            "Day of month values must be between 1 and 31", -1);
+                }
+                break;
+            case MONTH:
+                if ((val < 1 || val > 12 || end > 12) && (val != ALL_SPEC_INT)) {
+                    throw new ParseException(
+                            "Month values must be between 1 and 12", -1);
+                }
+                break;
+            case DAY_OF_WEEK:
+                if ((val == 0 || val > 7 || end > 7) && (val != ALL_SPEC_INT)
+                        && (val != NO_SPEC_INT)) {
+                    throw new ParseException(
+                            "Day-of-Week values must be between 1 and 7", -1);
+                }
+                break;
         }
 
         if ((incr == 0 || incr == -1) && val != ALL_SPEC_INT) {
@@ -1177,12 +1181,9 @@ public class CronExpression implements Serializable, Cloneable {
                         daysToAdd = dow + (7 - cDow);
                     }
 
-                    boolean dayShifted = false;
-                    if (daysToAdd > 0) {
-                        dayShifted = true;
-                    }
+                    boolean dayShifted = daysToAdd > 0;
 
-                    day += daysToAdd;
+                  day += daysToAdd;
                     int weekOfMonth = day / 7;
                     if (day % 7 > 0) {
                         weekOfMonth++;

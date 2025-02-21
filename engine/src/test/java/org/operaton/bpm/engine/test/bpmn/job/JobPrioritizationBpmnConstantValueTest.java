@@ -16,19 +16,18 @@
  */
 package org.operaton.bpm.engine.test.bpmn.job;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
-
-import java.util.List;
-
 import org.operaton.bpm.engine.ParseException;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+
+import java.util.List;
+
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Thorben Lindhauer
@@ -49,8 +48,8 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
 
     // then
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
-    assertEquals(EXPECTED_DEFAULT_PRIORITY, job.getPriority());
+    assertThat(job).isNotNull();
+    assertThat(job.getPriority()).isEqualTo(EXPECTED_DEFAULT_PRIORITY);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/oneTaskProcess.bpmn20.xml")
@@ -67,8 +66,8 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
 
     // then
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
-    assertEquals(EXPECTED_DEFAULT_PRIORITY, job.getPriority());
+    assertThat(job).isNotNull();
+    assertThat(job.getPriority()).isEqualTo(EXPECTED_DEFAULT_PRIORITY);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/oneTimerProcess.bpmn20.xml")
@@ -82,8 +81,8 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
 
     // then
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
-    assertEquals(EXPECTED_DEFAULT_PRIORITY, job.getPriority());
+    assertThat(job).isNotNull();
+    assertThat(job.getPriority()).isEqualTo(EXPECTED_DEFAULT_PRIORITY);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/jobPrioProcess.bpmn20.xml")
@@ -97,8 +96,8 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
 
     // then
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
-    assertEquals(10, job.getPriority());
+    assertThat(job).isNotNull();
+    assertThat(job.getPriority()).isEqualTo(10);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/jobPrioProcess.bpmn20.xml")
@@ -115,8 +114,8 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
 
     // then
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
-    assertEquals(10, job.getPriority());
+    assertThat(job).isNotNull();
+    assertThat(job.getPriority()).isEqualTo(10);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/intermediateTimerJobPrioProcess.bpmn20.xml")
@@ -130,8 +129,8 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
 
     // then
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
-    assertEquals(8, job.getPriority());
+    assertThat(job).isNotNull();
+    assertThat(job.getPriority()).isEqualTo(8);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/jobPrioProcess.bpmn20.xml")
@@ -145,8 +144,8 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
 
     // then
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
-    assertEquals(5, job.getPriority());
+    assertThat(job).isNotNull();
+    assertThat(job.getPriority()).isEqualTo(5);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/jobPrioProcess.bpmn20.xml")
@@ -163,8 +162,8 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
 
     // then
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
-    assertEquals(5, job.getPriority());
+    assertThat(job).isNotNull();
+    assertThat(job.getPriority()).isEqualTo(5);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/intermediateTimerJobPrioProcess.bpmn20.xml")
@@ -178,8 +177,8 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
 
     // then
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
-    assertEquals(4, job.getPriority());
+    assertThat(job).isNotNull();
+    assertThat(job.getPriority()).isEqualTo(4);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/subProcessJobPrioProcess.bpmn20.xml")
@@ -195,16 +194,16 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
     // then the job for that activity has priority 10 which is the process definition's
     // priority; the sub process priority is not inherited
     Job job = managementService.createJobQuery().singleResult();
-    assertEquals(10, job.getPriority());
+    assertThat(job.getPriority()).isEqualTo(10);
   }
 
   @Test
   public void testFailOnMalformedInput() {
-    try {
-      repositoryService
+    var deploymentBuilder = repositoryService
         .createDeployment()
-        .addClasspathResource("org/operaton/bpm/engine/test/bpmn/job/invalidPrioProcess.bpmn20.xml")
-        .deploy();
+        .addClasspathResource("org/operaton/bpm/engine/test/bpmn/job/invalidPrioProcess.bpmn20.xml");
+    try {
+      deploymentBuilder.deploy();
       fail("deploying a process with malformed priority should not succeed");
     } catch (ParseException e) {
       testRule.assertTextPresentIgnoreCase("value 'thisIsNotANumber' for attribute 'jobPriority' "
@@ -238,7 +237,7 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
     Job job = managementService.createJobQuery().singleResult();
 
     // then the timer start job has the priority defined in the process definition
-    assertEquals(8, job.getPriority());
+    assertThat(job.getPriority()).isEqualTo(8);
 
     // cleanup
     repositoryService.deleteDeployment(deployment.getId(), true);
@@ -255,7 +254,7 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
     Job job = managementService.createJobQuery().singleResult();
 
     // then the timer start job has the priority defined in the process definition
-    assertEquals(1515, job.getPriority());
+    assertThat(job.getPriority()).isEqualTo(1515);
 
     // cleanup
     repositoryService.deleteDeployment(deployment.getId(), true);
@@ -270,7 +269,7 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
     Job job = managementService.createJobQuery().singleResult();
 
     // then the job has the priority specified in the BPMN XML
-    assertEquals(20, job.getPriority());
+    assertThat(job.getPriority()).isEqualTo(20);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/eventSubprocessTimerJobPrioProcess.bpmn20.xml")
@@ -282,7 +281,7 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
     Job job = managementService.createJobQuery().singleResult();
 
     // then the job has the priority specified in the BPMN XML
-    assertEquals(25, job.getPriority());
+    assertThat(job.getPriority()).isEqualTo(25);
   }
 
   @Deployment(resources = {
@@ -303,8 +302,8 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
     Job signal2Job = managementService.createJobQuery().executionId(signal2Execution.getId()).singleResult();
 
     // then the jobs have the priority as specified for the receiving events, not the throwing
-    assertEquals(8, signal1Job.getPriority());
-    assertEquals(4, signal2Job.getPriority());
+    assertThat(signal1Job.getPriority()).isEqualTo(8);
+    assertThat(signal2Job.getPriority()).isEqualTo(4);
 
   }
 
@@ -317,10 +316,10 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
     runtimeService.startProcessInstanceByKey("intermediateSignalJobPrioProcess");
 
     // then there is an async job for the signal start event with the priority defined in the BPMN XML
-    assertEquals(1, managementService.createJobQuery().count());
+    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
     Job signalStartJob = managementService.createJobQuery().singleResult();
-    assertNotNull(signalStartJob);
-    assertEquals(4, signalStartJob.getPriority());
+    assertThat(signalStartJob).isNotNull();
+    assertThat(signalStartJob.getPriority()).isEqualTo(4);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/miBodyAsyncProcess.bpmn20.xml")
@@ -329,10 +328,10 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
     runtimeService.startProcessInstanceByKey("miBodyAsyncPriorityProcess");
 
     // then there is a job that has the priority as defined on the activity
-    assertEquals(1, managementService.createJobQuery().count());
+    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
     Job miBodyJob = managementService.createJobQuery().singleResult();
-    assertNotNull(miBodyJob);
-    assertEquals(5, miBodyJob.getPriority());
+    assertThat(miBodyJob).isNotNull();
+    assertThat(miBodyJob.getPriority()).isEqualTo(5);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/miInnerAsyncProcess.bpmn20.xml")
@@ -344,10 +343,10 @@ public class JobPrioritizationBpmnConstantValueTest extends PluggableProcessEngi
     // then there are three jobs that have the priority as defined on the activity (TODO: or should it be MI characteristics?)
     List<Job> jobs = managementService.createJobQuery().list();
 
-    assertEquals(3, jobs.size());
+    assertThat(jobs).hasSize(3);
     for (Job job : jobs) {
-      assertNotNull(job);
-      assertEquals(5, job.getPriority());
+      assertThat(job).isNotNull();
+      assertThat(job.getPriority()).isEqualTo(5);
     }
   }
 }

@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.api.multitenancy;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.repository.CaseDefinition;
@@ -169,11 +169,11 @@ public class MultiTenancyCallActivityTest extends PluggableProcessEngineTest {
 
     testRule.deployForTenant(TENANT_ONE, callingProcess);
     testRule.deployForTenant(TENANT_TWO, SUB_PROCESS);
+    var processInstantiationBuilder = runtimeService.createProcessInstanceByKey("callingProcess")
+        .processDefinitionTenantId(TENANT_ONE);
 
     try {
-      runtimeService.createProcessInstanceByKey("callingProcess")
-        .processDefinitionTenantId(TENANT_ONE)
-        .execute();
+      processInstantiationBuilder.execute();
 
       fail("expected exception");
     } catch (ProcessEngineException e) {
@@ -194,11 +194,11 @@ public class MultiTenancyCallActivityTest extends PluggableProcessEngineTest {
 
     testRule.deployForTenant(TENANT_ONE, callingProcess);
     testRule.deployForTenant(TENANT_TWO, SUB_PROCESS);
+    var processInstantiationBuilder = runtimeService.createProcessInstanceByKey("callingProcess")
+        .processDefinitionTenantId(TENANT_ONE);
 
     try {
-      runtimeService.createProcessInstanceByKey("callingProcess")
-        .processDefinitionTenantId(TENANT_ONE)
-        .execute();
+      processInstantiationBuilder.execute();
 
       fail("expected exception");
     } catch (ProcessEngineException e) {
@@ -222,11 +222,11 @@ public class MultiTenancyCallActivityTest extends PluggableProcessEngineTest {
 
     testRule.deployForTenant(TENANT_TWO, SUB_PROCESS);
     testRule.deployForTenant(TENANT_TWO, SUB_PROCESS);
+    var processInstantiationBuilder = runtimeService.createProcessInstanceByKey("callingProcess")
+        .processDefinitionTenantId(TENANT_ONE);
 
     try {
-      runtimeService.createProcessInstanceByKey("callingProcess")
-        .processDefinitionTenantId(TENANT_ONE)
-        .execute();
+      processInstantiationBuilder.execute();
 
       fail("expected exception");
     } catch (ProcessEngineException e) {
@@ -240,12 +240,12 @@ public class MultiTenancyCallActivityTest extends PluggableProcessEngineTest {
     BpmnModelInstance callingProcess = createCallingProcess("callingProcess", "ver_tag_2");
     testRule.deployForTenant(TENANT_ONE, callingProcess);
     testRule.deployForTenant(TENANT_TWO, "org/operaton/bpm/engine/test/bpmn/callactivity/subProcessWithVersionTag2.bpmn20.xml");
+    var processInstantiationBuilder = runtimeService.createProcessInstanceByKey("callingProcess")
+        .processDefinitionTenantId(TENANT_ONE);
 
     try {
       // when
-      runtimeService.createProcessInstanceByKey("callingProcess")
-        .processDefinitionTenantId(TENANT_ONE)
-        .execute();
+      processInstantiationBuilder.execute();
       fail("expected exception");
     } catch (ProcessEngineException e) {
       // then
@@ -360,11 +360,11 @@ public class MultiTenancyCallActivityTest extends PluggableProcessEngineTest {
 
     testRule.deployForTenant(TENANT_ONE, callingProcess);
     testRule.deployForTenant(TENANT_TWO, CMMN);
+    var processInstantiationBuilder = runtimeService.createProcessInstanceByKey("callingProcess")
+        .processDefinitionTenantId(TENANT_ONE);
 
     try {
-      runtimeService.createProcessInstanceByKey("callingProcess")
-        .processDefinitionTenantId(TENANT_ONE)
-        .execute();
+      processInstantiationBuilder.execute();
 
       fail("expected exception");
     } catch (ProcessEngineException e) {
@@ -385,11 +385,11 @@ public class MultiTenancyCallActivityTest extends PluggableProcessEngineTest {
 
     testRule.deployForTenant(TENANT_ONE, callingProcess);
     testRule.deployForTenant(TENANT_TWO, CMMN);
+    var processInstantiationBuilder = runtimeService.createProcessInstanceByKey("callingProcess")
+        .processDefinitionTenantId(TENANT_ONE);
 
     try {
-      runtimeService.createProcessInstanceByKey("callingProcess")
-        .processDefinitionTenantId(TENANT_ONE)
-        .execute();
+      processInstantiationBuilder.execute();
 
       fail("expected exception");
     } catch (ProcessEngineException e) {
@@ -413,11 +413,11 @@ public class MultiTenancyCallActivityTest extends PluggableProcessEngineTest {
 
     testRule.deployForTenant(TENANT_TWO, CMMN);
     testRule.deployForTenant(TENANT_TWO, CMMN);
+    var processInstantiationBuilder = runtimeService.createProcessInstanceByKey("callingProcess")
+        .processDefinitionTenantId(TENANT_ONE);
 
     try {
-      runtimeService.createProcessInstanceByKey("callingProcess")
-        .processDefinitionTenantId(TENANT_ONE)
-        .execute();
+      processInstantiationBuilder.execute();
 
       fail("expected exception");
     } catch (ProcessEngineException e) {

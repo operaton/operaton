@@ -129,11 +129,11 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
   public static final String EXECUTE_LIST_FILTER_URL = SINGLE_FILTER_URL + "/list";
   public static final String EXECUTE_COUNT_FILTER_URL = SINGLE_FILTER_URL + "/count";
 
-  public static final TaskQuery extendingQuery = new TaskQueryImpl().taskName(MockProvider.EXAMPLE_TASK_NAME);
-  public static final TaskQueryDto extendingQueryDto = TaskQueryDto.fromQuery(extendingQuery);
-  public static final TaskQuery extendingOrQuery = new TaskQueryImpl().or().taskDescription(MockProvider.EXAMPLE_TASK_DESCRIPTION).endOr().or().taskName(MockProvider.EXAMPLE_TASK_NAME).endOr();
-  public static final TaskQueryDto extendingOrQueryDto = TaskQueryDto.fromQuery(extendingOrQuery);
-  public static final String invalidExtendingQuery = "abc";
+  public static final TaskQuery EXTENDING_QUERY = new TaskQueryImpl().taskName(MockProvider.EXAMPLE_TASK_NAME);
+  public static final TaskQueryDto EXTENDING_QUERY_DTO = TaskQueryDto.fromQuery(EXTENDING_QUERY);
+  public static final TaskQuery EXTENDING_OR_QUERY = new TaskQueryImpl().or().taskDescription(MockProvider.EXAMPLE_TASK_DESCRIPTION).endOr().or().taskName(MockProvider.EXAMPLE_TASK_NAME).endOr();
+  public static final TaskQueryDto EXTENDING_OR_QUERY_DTO = TaskQueryDto.fromQuery(EXTENDING_OR_QUERY);
+  public static final String INVALID_EXTENDING_QUERY = "abc";
 
   public static final String PROCESS_INSTANCE_A_ID = "processInstanceA";
   public static final String CASE_INSTANCE_A_ID = "caseInstanceA";
@@ -926,7 +926,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
       .header(ACCEPT_JSON_HEADER)
       .pathParam("id", EXAMPLE_FILTER_ID)
       .contentType(POST_JSON_CONTENT_TYPE)
-      .body(invalidExtendingQuery)
+      .body(INVALID_EXTENDING_QUERY)
     .then().expect()
       .statusCode(Status.BAD_REQUEST.getStatusCode())
     .when()
@@ -939,7 +939,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
       .header(ACCEPT_JSON_HEADER)
       .pathParam("id", EXAMPLE_FILTER_ID)
       .contentType(POST_JSON_CONTENT_TYPE)
-      .body(extendingQueryDto)
+      .body(EXTENDING_QUERY_DTO)
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
     .when()
@@ -955,7 +955,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
       .header(ACCEPT_JSON_HEADER)
       .pathParam("id", EXAMPLE_FILTER_ID)
       .contentType(POST_JSON_CONTENT_TYPE)
-      .body(extendingOrQueryDto)
+      .body(EXTENDING_OR_QUERY_DTO)
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
     .when()
@@ -1014,7 +1014,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
   @Test
   public void testEmptyHalList() {
     when(filterServiceMock.list(any(), any())).thenReturn(Collections.emptyList());
-    when(filterServiceMock.count(any(), any())).thenReturn(0l);
+    when(filterServiceMock.count(any(), any())).thenReturn(0L);
 
     given()
       .header(ACCEPT_HAL_HEADER)
@@ -1115,7 +1115,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
       .header(ACCEPT_JSON_HEADER)
       .pathParam("id", EXAMPLE_FILTER_ID)
       .contentType(POST_JSON_CONTENT_TYPE)
-      .body(extendingQueryDto)
+      .body(EXTENDING_QUERY_DTO)
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
       .body("$.size()", equalTo(1))
@@ -1133,7 +1133,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
       .queryParams("firstResult", 1)
       .queryParams("maxResults", 2)
       .contentType(POST_JSON_CONTENT_TYPE)
-      .body(extendingQueryDto)
+      .body(EXTENDING_QUERY_DTO)
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
       .body("$.size()", equalTo(1))
@@ -1149,7 +1149,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
       .header(ACCEPT_JSON_HEADER)
       .pathParam("id", EXAMPLE_FILTER_ID)
       .contentType(POST_JSON_CONTENT_TYPE)
-      .body(invalidExtendingQuery)
+      .body(INVALID_EXTENDING_QUERY)
     .then().expect()
       .statusCode(Status.BAD_REQUEST.getStatusCode())
     .when()
@@ -1205,7 +1205,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
       .header(ACCEPT_JSON_HEADER)
       .pathParam("id", EXAMPLE_FILTER_ID)
       .contentType(POST_JSON_CONTENT_TYPE)
-      .body(extendingQueryDto)
+      .body(EXTENDING_QUERY_DTO)
     .then().expect()
       .statusCode(Status.OK.getStatusCode())
       .body("count", equalTo(1))
@@ -1221,7 +1221,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
       .header(ACCEPT_JSON_HEADER)
       .pathParam("id", EXAMPLE_FILTER_ID)
       .contentType(POST_JSON_CONTENT_TYPE)
-      .body(invalidExtendingQuery)
+      .body(INVALID_EXTENDING_QUERY)
     .then().expect()
       .statusCode(Status.BAD_REQUEST.getStatusCode())
     .when()

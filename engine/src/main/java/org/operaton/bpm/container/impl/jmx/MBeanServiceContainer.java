@@ -100,10 +100,12 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
   public synchronized void stopService(ServiceType serviceType, String localName) {
     String globalName = composeLocalName(serviceType, localName);
     stopService(globalName);
+
   }
 
   @Override
   public synchronized void stopService(String name) {
+
     final MBeanServer beanServer = getmBeanServer();
 
     ObjectName serviceName = getObjectName(name);
@@ -111,6 +113,7 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
     final PlatformService<Object> service = getService(serviceName);
 
     ensureNotNull("Cannot stop service " + serviceName + ": no such service registered", "service", service);
+    ProcessEngineException unregisteringServiceException = null;
 
     try {
       // call the service-provided stop behavior
@@ -121,9 +124,13 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
         beanServer.unregisterMBean(serviceName);
         servicesByName.remove(serviceName);
       }
-      catch (Throwable t) {
-        throw LOG.exceptionWhileUnregisteringService(serviceName.getCanonicalName(), t);
+      catch (Exception e) {
+        unregisteringServiceException = LOG.exceptionWhileUnregisteringService(serviceName.getCanonicalName(), e);
       }
+    }
+
+    if (null != unregisteringServiceException) {
+      throw unregisteringServiceException;
     }
   }
 
@@ -141,6 +148,7 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
 
   @Override
   public void executeDeploymentOperation(DeploymentOperation operation) {
+
     Stack<DeploymentOperation> currentOperationContext = activeDeploymentOperations.get();
     if(currentOperationContext == null) {
       currentOperationContext = new Stack<>();
@@ -252,9 +260,9 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
 
     List<S> res = new ArrayList<>();
     for (String serviceName : serviceNames) {
-      PlatformService<S> BpmPlatformService = (PlatformService<S>) servicesByName.get(getObjectName(serviceName));
-      if (BpmPlatformService != null) {
-        res.add(BpmPlatformService.getValue());
+      PlatformService<S> bpmPlatformService = (PlatformService<S>) servicesByName.get(getObjectName(serviceName));
+      if (bpmPlatformService != null) {
+        res.add(bpmPlatformService.getValue());
       }
     }
 
@@ -268,7 +276,7 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
     return mBeanServer;
   }
 
-  public void setmBeanServer(MBeanServer mBeanServer) {
+  public synchronized void setmBeanServer(MBeanServer mBeanServer) {
     this.mBeanServer = mBeanServer;
   }
 

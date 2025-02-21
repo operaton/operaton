@@ -74,8 +74,8 @@ public class SpinScriptTaskSupportTest {
     deployProcess(language, setVariableScript("name", "S('<test />').name()"));
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
 
-    String var = (String) runtimeService.getVariable(pi.getId(), "name");
-    assertThat(var).isEqualTo("test");
+    String variable = (String) runtimeService.getVariable(pi.getId(), "name");
+    assertThat(variable).isEqualTo("test");
   }
 
   @Test

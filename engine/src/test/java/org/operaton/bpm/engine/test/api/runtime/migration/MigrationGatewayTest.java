@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
@@ -28,7 +30,6 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.GatewayModels;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
@@ -67,8 +68,8 @@ public class MigrationGatewayTest {
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
     // then
-    Assert.assertEquals(1, rule.getTaskService().createTaskQuery().count());
-    Assert.assertEquals(0, rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count());
+    assertThat(rule.getTaskService().createTaskQuery().count()).isEqualTo(1);
+    assertThat(rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count()).isZero();
 
     testHelper.completeTask("parallel1");
     testHelper.completeTask("afterJoin");
@@ -134,8 +135,8 @@ public class MigrationGatewayTest {
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
     // then
-    Assert.assertEquals(1, rule.getTaskService().createTaskQuery().count());
-    Assert.assertEquals(0, rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count());
+    assertThat(rule.getTaskService().createTaskQuery().count()).isEqualTo(1);
+    assertThat(rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count()).isZero();
 
     testHelper.completeTask("parallel1");
     testHelper.completeTask("afterJoin");
@@ -164,8 +165,8 @@ public class MigrationGatewayTest {
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
     // then
-    Assert.assertEquals(1, rule.getTaskService().createTaskQuery().count());
-    Assert.assertEquals(0, rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count());
+    assertThat(rule.getTaskService().createTaskQuery().count()).isEqualTo(1);
+    assertThat(rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count()).isZero();
 
     testHelper.completeTask("parallel1");
     testHelper.completeTask("afterJoin");
@@ -231,8 +232,8 @@ public class MigrationGatewayTest {
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
     // then
-    Assert.assertEquals(1, rule.getTaskService().createTaskQuery().count());
-    Assert.assertEquals(0, rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count());
+    assertThat(rule.getTaskService().createTaskQuery().count()).isEqualTo(1);
+    assertThat(rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count()).isZero();
 
     testHelper.completeTask("parallel1");
     testHelper.completeTask("afterJoin");
@@ -244,13 +245,13 @@ public class MigrationGatewayTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.INCLUSIVE_GW);
+    var runtimeService = rule.getRuntimeService()
+        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
+        .mapActivities("join", "join");
 
     try {
-      rule.getRuntimeService()
-        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
-        .mapActivities("join", "join")
-        .build();
-      Assert.fail("exception expected");
+      runtimeService.build();
+      fail("exception expected");
     } catch (MigrationPlanValidationException e) {
       // then
       assertThat(e.getValidationReport())
@@ -266,13 +267,13 @@ public class MigrationGatewayTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.INCLUSIVE_GW);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);
+    var runtimeService = rule.getRuntimeService()
+        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
+        .mapActivities("join", "join");
 
     try {
-      rule.getRuntimeService()
-        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
-        .mapActivities("join", "join")
-        .build();
-      Assert.fail("exception expected");
+      runtimeService.build();
+      fail("exception expected");
     } catch (MigrationPlanValidationException e) {
       // then
       assertThat(e.getValidationReport())
@@ -293,13 +294,13 @@ public class MigrationGatewayTest {
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(GatewayModels.PARALLEL_GW)
         .removeFlowNode("parallel2"));
+    var runtimeService = rule.getRuntimeService()
+        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
+        .mapActivities("join", "join");
 
     try {
-      rule.getRuntimeService()
-        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
-        .mapActivities("join", "join")
-        .build();
-      Assert.fail("exception expected");
+      runtimeService.build();
+      fail("exception expected");
     } catch (MigrationPlanValidationException e) {
       // then
       assertThat(e.getValidationReport())
@@ -339,13 +340,13 @@ public class MigrationGatewayTest {
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
     // then
-    Assert.assertEquals(1, rule.getTaskService().createTaskQuery().count());
-    Assert.assertEquals(0, rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count());
+    assertThat(rule.getTaskService().createTaskQuery().count()).isEqualTo(1);
+    assertThat(rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count()).isZero();
 
     rule.getRuntimeService().createProcessInstanceModification(processInstance.getId())
       .startBeforeActivity("join")
       .execute();
-    Assert.assertEquals(0, rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count());
+    assertThat(rule.getTaskService().createTaskQuery().taskDefinitionKey("afterJoin").count()).isZero();
 
     testHelper.completeTask("parallel1");
     testHelper.completeTask("afterJoin");
@@ -361,13 +362,13 @@ public class MigrationGatewayTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW_IN_SUBPROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);
+    var runtimeService = rule.getRuntimeService()
+        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
+        .mapActivities("join", "join");
 
     try {
-      rule.getRuntimeService()
-        .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
-        .mapActivities("join", "join")
-        .build();
-      Assert.fail("exception expected");
+      runtimeService.build();
+      fail("exception expected");
     } catch (MigrationPlanValidationException e) {
       // then
       assertThat(e.getValidationReport())
@@ -386,14 +387,14 @@ public class MigrationGatewayTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);
-
-    try {
-      rule.getRuntimeService()
+    var runtimeService = rule.getRuntimeService()
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("join", "join")
-        .mapActivities("fork", "join")
-        .build();
-      Assert.fail("exception expected");
+        .mapActivities("fork", "join");
+
+    try {
+      runtimeService.build();
+      fail("exception expected");
     } catch (MigrationPlanValidationException e) {
       // then
       assertThat(e.getValidationReport())

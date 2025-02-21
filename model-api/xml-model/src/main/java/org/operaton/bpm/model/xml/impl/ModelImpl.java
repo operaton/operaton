@@ -61,15 +61,9 @@ public class ModelImpl implements Model {
    * @throws IllegalArgumentException if the alternative is already used or if the actual namespace has an alternative
    */
   public void declareAlternativeNamespace(String alternativeNs, String actualNs) {
-    Set<String> alternativeNamespaces = actualNsToAlternative.get(actualNs);
-    if (alternativeNamespaces == null)
-    {
-      // linked hash set for consistent iteration order
-      alternativeNamespaces = new LinkedHashSet<>();
-      actualNsToAlternative.put(actualNs, alternativeNamespaces);
-    }
+    actualNsToAlternative.computeIfAbsent(actualNs, k -> new LinkedHashSet<>())
+      .add(alternativeNs);
 
-    alternativeNamespaces.add(alternativeNs);
     alternativeNsToActual.put(alternativeNs, actualNs);
   }
 

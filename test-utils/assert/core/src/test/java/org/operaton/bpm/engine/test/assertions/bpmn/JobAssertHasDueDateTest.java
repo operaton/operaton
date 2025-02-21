@@ -23,7 +23,6 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtim
 import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -58,12 +57,7 @@ public class JobAssertHasDueDateTest extends ProcessAssertTestCase {
     // Then
     assertThat(jobQuery().singleResult()).isNotNull();
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(jobQuery().singleResult()).hasDueDate(DateTimeUtil.now().minusDays(1).toDate());
-      }
-    });
+    expect(() -> assertThat(jobQuery().singleResult()).hasDueDate(DateTimeUtil.now().minusDays(1).toDate()));
   }
 
   @Test
@@ -77,12 +71,7 @@ public class JobAssertHasDueDateTest extends ProcessAssertTestCase {
     // Then
     assertThat(jobQuery().singleResult()).isNotNull();
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        BpmnAwareTests.assertThat(jobQuery().singleResult()).hasDueDate(null);
-      }
-    });
+    expect(() -> BpmnAwareTests.assertThat(jobQuery().singleResult()).hasDueDate(null));
   }
 
 }

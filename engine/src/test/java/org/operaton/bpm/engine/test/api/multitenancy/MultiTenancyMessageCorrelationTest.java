@@ -16,10 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
 
@@ -323,8 +320,10 @@ public class MultiTenancyMessageCorrelationTest {
     engineRule.getRuntimeService().createProcessInstanceByKey("messageCatch").processDefinitionTenantId(TENANT_ONE).execute();
     engineRule.getRuntimeService().createProcessInstanceByKey("messageCatch").processDefinitionTenantId(TENANT_TWO).execute();
 
+    var messageCorrelationBuilder = engineRule.getRuntimeService().createMessageCorrelation("message");
+
     // when/then
-    assertThatThrownBy(() -> engineRule.getRuntimeService().createMessageCorrelation("message").correlate())
+    assertThatThrownBy(messageCorrelationBuilder::correlate)
       .isInstanceOf(MismatchingMessageCorrelationException.class)
       .hasMessageContaining("Cannot correlate a message with name 'message' to a single execution");
   }
@@ -353,7 +352,7 @@ public class MultiTenancyMessageCorrelationTest {
     String processDefId9 = testRule.deployForTenantAndGetDefinition(TENANT_ONE, processAnotherKey).getId();
 
     // assume
-    assertEquals(3, engineRule.getRuntimeService().createEventSubscriptionQuery().count());
+    assertThat(engineRule.getRuntimeService().createEventSubscriptionQuery().count()).isEqualTo(3);
 
     // when
     engineRule.getRepositoryService()
@@ -363,15 +362,15 @@ public class MultiTenancyMessageCorrelationTest {
 
     // then
     List<EventSubscription> list = engineRule.getRuntimeService().createEventSubscriptionQuery().list();
-    assertEquals(3, list.size());
+    assertThat(list).hasSize(3);
     for (EventSubscription eventSubscription : list) {
       EventSubscriptionEntity eventSubscriptionEntity = (EventSubscriptionEntity) eventSubscription;
       if (eventSubscriptionEntity.getConfiguration().equals(processDefId2)) {
-        assertEquals(TENANT_ONE, eventSubscription.getTenantId());
+        assertThat(eventSubscription.getTenantId()).isEqualTo(TENANT_ONE);
       } else if (eventSubscriptionEntity.getConfiguration().equals(processDefId6)) {
-        assertEquals(null, eventSubscription.getTenantId());
+        assertThat(eventSubscription.getTenantId()).isNull();
       } else if (eventSubscriptionEntity.getConfiguration().equals(processDefId7)) {
-        assertEquals(TENANT_ONE, eventSubscription.getTenantId());
+        assertThat(eventSubscription.getTenantId()).isEqualTo(TENANT_ONE);
       } else {
         fail("This process definition '" + eventSubscriptionEntity.getConfiguration() + "' and the respective event subscription should not exist.");
       }
@@ -383,8 +382,10 @@ public class MultiTenancyMessageCorrelationTest {
     testRule.deployForTenant(TENANT_ONE, MESSAGE_START_PROCESS);
     testRule.deployForTenant(TENANT_TWO, MESSAGE_START_PROCESS);
 
+    var messageCorrelationBuilder = engineRule.getRuntimeService().createMessageCorrelation("message");
+
     // when/then
-    assertThatThrownBy(() -> engineRule.getRuntimeService().createMessageCorrelation("message").correlate())
+    assertThatThrownBy(messageCorrelationBuilder::correlate)
       .isInstanceOf(MismatchingMessageCorrelationException.class)
       .hasMessageContaining("Cannot correlate a message with name 'message' to a single process definition");
   }
@@ -394,8 +395,10 @@ public class MultiTenancyMessageCorrelationTest {
     testRule.deployForTenant(TENANT_ONE, MESSAGE_START_PROCESS);
     testRule.deployForTenant(TENANT_TWO, MESSAGE_START_PROCESS);
 
+    var messageCorrelationBuilder = engineRule.getRuntimeService().createMessageCorrelation("message");
+
     // when/then
-    assertThatThrownBy(() -> engineRule.getRuntimeService().createMessageCorrelation("message").correlateStartMessage())
+    assertThatThrownBy(messageCorrelationBuilder::correlateStartMessage)
       .isInstanceOf(MismatchingMessageCorrelationException.class)
       .hasMessageContaining("Cannot correlate a message with name 'message' to a single process definition");
 
@@ -403,48 +406,52 @@ public class MultiTenancyMessageCorrelationTest {
 
   @Test
   public void failToCorrelateMessageByProcessInstanceIdWithoutTenantId() {
+    // given
+    var messageCorrelationBuilder = engineRule.getRuntimeService().createMessageCorrelation("message")
+      .processInstanceId("id")
+      .withoutTenantId();
 
     // when/then
-    assertThatThrownBy(() -> engineRule.getRuntimeService().createMessageCorrelation("message")
-        .processInstanceId("id")
-        .withoutTenantId()
-        .correlate())
+    assertThatThrownBy(messageCorrelationBuilder::correlate)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("Cannot specify a tenant-id");
   }
 
   @Test
   public void failToCorrelateMessageByProcessInstanceIdAndTenantId() {
+    // given
+    var messageCorrelationBuilder = engineRule.getRuntimeService().createMessageCorrelation("message")
+      .processInstanceId("id")
+      .tenantId(TENANT_ONE);
 
     // when/then
-    assertThatThrownBy(() -> engineRule.getRuntimeService().createMessageCorrelation("message")
-        .processInstanceId("id")
-        .tenantId(TENANT_ONE)
-        .correlate())
+    assertThatThrownBy(messageCorrelationBuilder::correlate)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("Cannot specify a tenant-id");
   }
 
   @Test
   public void failToCorrelateMessageByProcessDefinitionIdWithoutTenantId() {
+    // given
+    var messageCorrelationBuilder = engineRule.getRuntimeService().createMessageCorrelation("message")
+      .processDefinitionId("id")
+      .withoutTenantId();
 
     // when/then
-    assertThatThrownBy(() -> engineRule.getRuntimeService().createMessageCorrelation("message")
-        .processDefinitionId("id")
-        .withoutTenantId()
-        .correlateStartMessage())
+    assertThatThrownBy(messageCorrelationBuilder::correlateStartMessage)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("Cannot specify a tenant-id");
   }
 
   @Test
   public void failToCorrelateMessageByProcessDefinitionIdAndTenantId() {
+    // given
+    var messageCorrelationBuilder = engineRule.getRuntimeService().createMessageCorrelation("message")
+      .processDefinitionId("id")
+      .tenantId(TENANT_ONE);
 
     // when/then
-    assertThatThrownBy(() -> engineRule.getRuntimeService().createMessageCorrelation("message")
-        .processDefinitionId("id")
-        .tenantId(TENANT_ONE)
-        .correlateStartMessage())
+    assertThatThrownBy(messageCorrelationBuilder::correlateStartMessage)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("Cannot specify a tenant-id");
   }

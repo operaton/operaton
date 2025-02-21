@@ -50,7 +50,7 @@ public class JodaTimeClassloadingTest extends AbstractFoxPlatformIntegrationTest
     ProcessInstance pi1 = runtimeService.startProcessInstanceByKey("intermediateTimerEventExample", variables1);
     Assert.assertEquals(1, managementService.createJobQuery().processInstanceId(pi1.getId()).count());
 
-    List<Job> jobs = managementService.createJobQuery().executable().list();
+    List<Job> jobs = managementService.createJobQuery().processDefinitionKey("intermediateTimerEventExample").executable().list();
     Assert.assertEquals(1, jobs.size());
     runtimeService.deleteProcessInstance(pi1.getId(), "test");
     

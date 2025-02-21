@@ -46,20 +46,20 @@ public class ProcessTaskReadVariablePermissionAuthorizationTest extends ProcessT
       scenario()
         .withoutAuthorizations()
         .failsDueToRequired(
-          grant(TASK, "taskId", userId, READ_VARIABLE),
-          grant(PROCESS_DEFINITION, PROCESS_KEY, userId, READ_TASK_VARIABLE)),
+          grant(TASK, "taskId", USER_ID, READ_VARIABLE),
+          grant(PROCESS_DEFINITION, PROCESS_KEY, USER_ID, READ_TASK_VARIABLE)),
       scenario()
         .withAuthorizations(
-          grant(TASK, "taskId", userId, READ_VARIABLE)),
+          grant(TASK, "taskId", USER_ID, READ_VARIABLE)),
       scenario()
         .withAuthorizations(
-          grant(TASK, "*", userId, READ_VARIABLE)),
+          grant(TASK, "*", USER_ID, READ_VARIABLE)),
       scenario()
         .withAuthorizations(
-          grant(PROCESS_DEFINITION, PROCESS_KEY, userId, READ_TASK_VARIABLE)),
+          grant(PROCESS_DEFINITION, PROCESS_KEY, USER_ID, READ_TASK_VARIABLE)),
       scenario()
         .withAuthorizations(
-          grant(PROCESS_DEFINITION, "*", userId, READ_TASK_VARIABLE))
+          grant(PROCESS_DEFINITION, "*", USER_ID, READ_TASK_VARIABLE))
         .succeeds()
       );
   }

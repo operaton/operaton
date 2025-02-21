@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.parse;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -37,7 +36,6 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -80,25 +78,25 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
     String processInstanceId = pi.getProcessInstanceId();
 
     int jobRetries = executeJob(processInstanceId);
-    assertEquals(3, jobRetries);
+    assertThat(jobRetries).isEqualTo(3);
     currentTime = DateUtils.addMinutes(currentTime, 5);
     assertDueDateTime(currentTime);
     ClockUtil.setCurrentTime(currentTime);
 
     jobRetries = executeJob(processInstanceId);
-    assertEquals(2, jobRetries);
+    assertThat(jobRetries).isEqualTo(2);
     currentTime = DateUtils.addMinutes(currentTime, 20);
     assertDueDateTime(currentTime);
     ClockUtil.setCurrentTime(currentTime);
 
     jobRetries = executeJob(processInstanceId);
-    assertEquals(1, jobRetries);
+    assertThat(jobRetries).isEqualTo(1);
     currentTime = DateUtils.addMinutes(currentTime, 3);
     assertDueDateTime(currentTime);
     ClockUtil.setCurrentTime(currentTime);
 
     jobRetries = executeJob(processInstanceId);
-    assertEquals(0, jobRetries);
+    assertThat(jobRetries).isZero();
   }
 
   @Test
@@ -126,13 +124,13 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
     String processInstanceId = pi.getProcessInstanceId();
 
     int jobRetries = executeJob(processInstanceId);
-    assertEquals(1, jobRetries);
+    assertThat(jobRetries).isEqualTo(1);
     currentTime = DateUtils.addMinutes(currentTime, 5);
     assertDueDateTime(currentTime);
     ClockUtil.setCurrentTime(currentTime);
 
     jobRetries = executeJob(processInstanceId);
-    assertEquals(0, jobRetries);
+    assertThat(jobRetries).isZero();
   }
 
   @Test
@@ -145,7 +143,7 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
     ClockUtil.setCurrentTime(SIMPLE_DATE_FORMAT.parse("2017-01-01T09:55:00"));
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey(PROCESS_ID);
-    assertNotNull(pi);
+    assertThat(pi).isNotNull();
 
     Date currentTime = SIMPLE_DATE_FORMAT.parse("2017-01-01T10:00:00");
     ClockUtil.setCurrentTime(currentTime);
@@ -156,7 +154,7 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
 
     for (int i = 0; i < 3; i++) {
       jobRetries = executeJob(processInstanceId);
-      assertEquals(2 - i, jobRetries);
+      assertThat(jobRetries).isEqualTo(2 - i);
       currentTime = DateUtils.addMinutes(currentTime, 1);
       assertDueDateTime(currentTime);
       ClockUtil.setCurrentTime(currentTime);
@@ -172,7 +170,7 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
     ClockUtil.setCurrentTime(SIMPLE_DATE_FORMAT.parse("2017-01-01T09:55:00"));
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey(PROCESS_ID);
-    assertNotNull(pi);
+    assertThat(pi).isNotNull();
 
     Date currentTime = SIMPLE_DATE_FORMAT.parse("2017-01-01T10:00:00");
     ClockUtil.setCurrentTime(currentTime);
@@ -180,25 +178,25 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
     String processInstanceId = pi.getProcessInstanceId();
 
     int jobRetries = executeJob(processInstanceId);
-    assertEquals(3, jobRetries);
+    assertThat(jobRetries).isEqualTo(3);
     currentTime = DateUtils.addMinutes(currentTime, 3);
     assertDueDateTime(currentTime);
     ClockUtil.setCurrentTime(currentTime);
 
     jobRetries = executeJob(processInstanceId);
-    assertEquals(2, jobRetries);
+    assertThat(jobRetries).isEqualTo(2);
     currentTime = DateUtils.addMinutes(currentTime, 10);
     assertDueDateTime(currentTime);
     ClockUtil.setCurrentTime(currentTime);
 
     jobRetries = executeJob(processInstanceId);
-    assertEquals(1, jobRetries);
+    assertThat(jobRetries).isEqualTo(1);
     currentTime = DateUtils.addMinutes(currentTime, 8);
     assertDueDateTime(currentTime);
     ClockUtil.setCurrentTime(currentTime);
 
     jobRetries = executeJob(processInstanceId);
-    assertEquals(0, jobRetries);
+    assertThat(jobRetries).isZero();
   }
 
   @Test
@@ -210,7 +208,7 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
     ClockUtil.setCurrentTime(SIMPLE_DATE_FORMAT.parse("2017-01-01T09:55:00"));
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey(PROCESS_ID);
-    assertNotNull(pi);
+    assertThat(pi).isNotNull();
 
     Date currentTime = SIMPLE_DATE_FORMAT.parse("2017-01-01T10:00:00");
     ClockUtil.setCurrentTime(currentTime);
@@ -218,13 +216,13 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
     String processInstanceId = pi.getProcessInstanceId();
 
     int jobRetries = executeJob(processInstanceId);
-    assertEquals(1, jobRetries);
+    assertThat(jobRetries).isEqualTo(1);
     currentTime = DateUtils.addMinutes(currentTime, 8);
     assertDueDateTime(currentTime);
     ClockUtil.setCurrentTime(currentTime);
 
     jobRetries = executeJob(processInstanceId);
-    assertEquals(0, jobRetries);
+    assertThat(jobRetries).isZero();
   }
 
   @Test
@@ -246,7 +244,7 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
 
     // then
     job = managementService.createJobQuery().singleResult();
-    Assert.assertEquals(8, job.getRetries());
+    assertThat(job.getRetries()).isEqualTo(8);
   }
 
   @Test
@@ -258,7 +256,7 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
     ClockUtil.setCurrentTime(SIMPLE_DATE_FORMAT.parse("2017-01-01T09:55:00"));
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey(PROCESS_ID);
-    assertNotNull(pi);
+    assertThat(pi).isNotNull();
 
     Date currentTime = SIMPLE_DATE_FORMAT.parse("2017-01-01T10:00:00");
     ClockUtil.setCurrentTime(currentTime);
@@ -266,7 +264,7 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
     String processInstanceId = pi.getProcessInstanceId();
 
     int jobRetries = executeJob(processInstanceId);
-    assertEquals(3, jobRetries);
+    assertThat(jobRetries).isEqualTo(3);
     currentTime = DateUtils.addMinutes(currentTime, 3);
     assertDueDateTime(currentTime);
     ClockUtil.setCurrentTime(currentTime);
@@ -275,31 +273,31 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
     managementService.setJobRetries(Arrays.asList(job.getId()), 5);
 
     jobRetries = executeJob(processInstanceId);
-    assertEquals(4, jobRetries);
+    assertThat(jobRetries).isEqualTo(4);
     currentTime = DateUtils.addMinutes(currentTime, 3);
     assertDueDateTime(currentTime);
     ClockUtil.setCurrentTime(currentTime);
 
     jobRetries = executeJob(processInstanceId);
-    assertEquals(3, jobRetries);
+    assertThat(jobRetries).isEqualTo(3);
     currentTime = DateUtils.addMinutes(currentTime, 3);
     assertDueDateTime(currentTime);
     ClockUtil.setCurrentTime(currentTime);
 
     jobRetries = executeJob(processInstanceId);
-    assertEquals(2, jobRetries);
+    assertThat(jobRetries).isEqualTo(2);
     currentTime = DateUtils.addMinutes(currentTime, 10);
     assertDueDateTime(currentTime);
     ClockUtil.setCurrentTime(currentTime);
 
     jobRetries = executeJob(processInstanceId);
-    assertEquals(1, jobRetries);
+    assertThat(jobRetries).isEqualTo(1);
     currentTime = DateUtils.addMinutes(currentTime, 8);
     assertDueDateTime(currentTime);
     ClockUtil.setCurrentTime(currentTime);
 
     jobRetries = executeJob(processInstanceId);
-    assertEquals(0, jobRetries);
+    assertThat(jobRetries).isZero();
   }
 
   @Test
@@ -321,7 +319,7 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
     ClockUtil.setCurrentTime(SIMPLE_DATE_FORMAT.parse("2017-01-01T09:55:00"));
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey(PROCESS_ID);
-    assertNotNull(pi);
+    assertThat(pi).isNotNull();
 
     Date currentTime = SIMPLE_DATE_FORMAT.parse("2017-01-01T10:00:00");
     ClockUtil.setCurrentTime(currentTime);
@@ -330,7 +328,7 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
 
     // try to execute the first service task without success
     int jobRetries = executeJob(processInstanceId);
-    assertEquals(3, jobRetries);
+    assertThat(jobRetries).isEqualTo(3);
     currentTime = DateUtils.addMinutes(currentTime, 5);
     assertDueDateTime(currentTime);
     ClockUtil.setCurrentTime(currentTime);
@@ -339,11 +337,11 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
 
     // finish the first service task
     jobRetries = executeJob(processInstanceId);
-    assertEquals(3, jobRetries);
+    assertThat(jobRetries).isEqualTo(3);
 
     // try to execute the second service task without success
     jobRetries = executeJob(processInstanceId);
-    assertEquals(3, jobRetries);
+    assertThat(jobRetries).isEqualTo(3);
     currentTime = DateUtils.addMinutes(currentTime, 3);
     assertDueDateTime(currentTime);
     ClockUtil.setCurrentTime(currentTime);
@@ -376,7 +374,7 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
 
     ClockUtil.setCurrentTime(SIMPLE_DATE_FORMAT.parse("2017-01-01T09:55:00"));
 
-    assertNotNull(pi);
+    assertThat(pi).isNotNull();
 
     Date currentTime = SIMPLE_DATE_FORMAT.parse("2017-01-01T10:00:00");
     ClockUtil.setCurrentTime(currentTime);
@@ -384,13 +382,13 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
     String processInstanceId = pi.getProcessInstanceId();
 
     int jobRetries = executeJob(processInstanceId);
-    assertEquals(3, jobRetries);
+    assertThat(jobRetries).isEqualTo(3);
     currentTime = DateUtils.addMinutes(currentTime, 5);
     assertDueDateTime(currentTime);
     ClockUtil.setCurrentTime(currentTime);
 
     jobRetries = executeJob(processInstanceId);
-    assertEquals(2, jobRetries);
+    assertThat(jobRetries).isEqualTo(2);
     currentTime = DateUtils.addMinutes(currentTime, 15);
     assertDueDateTime(currentTime);
     ClockUtil.setCurrentTime(currentTime);
@@ -398,13 +396,13 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
     runtimeService.setVariable(pi.getProcessInstanceId(), "var", "${nestedVar}");
 
     jobRetries = executeJob(processInstanceId);
-    assertEquals(1, jobRetries);
+    assertThat(jobRetries).isEqualTo(1);
     currentTime = DateUtils.addMinutes(currentTime, 13);
     assertDueDateTime(currentTime);
     ClockUtil.setCurrentTime(currentTime);
 
     jobRetries = executeJob(processInstanceId);
-    assertEquals(0, jobRetries);
+    assertThat(jobRetries).isZero();
   }
 
   private int executeJob(String processInstanceId) {
@@ -423,7 +421,7 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
 
   private void assertDueDateTime(Date expectedDate) {
     Date dueDateTime = managementService.createJobQuery().singleResult().getDuedate();
-    assertEquals(expectedDate, dueDateTime);
+    assertThat(dueDateTime).isEqualTo(expectedDate);
   }
 
   private Job fetchJob(String processInstanceId) {
@@ -431,18 +429,17 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
   }
 
   private BpmnModelInstance prepareProcessFailingServiceTask() {
-    BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(PROCESS_ID)
+    return Bpmn.createExecutableProcess(PROCESS_ID)
         .startEvent()
         .serviceTask()
           .operatonClass(FAILING_CLASS)
           .operatonAsyncBefore()
         .endEvent()
         .done();
-    return modelInstance;
   }
 
   private BpmnModelInstance prepareProcessFailingServiceTaskWithRetryCycle(String retryTimeCycle) {
-    BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(PROCESS_ID)
+    return Bpmn.createExecutableProcess(PROCESS_ID)
         .startEvent()
         .serviceTask()
           .operatonClass(FAILING_CLASS)
@@ -450,7 +447,6 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
           .operatonFailedJobRetryTimeCycle(retryTimeCycle)
         .endEvent()
         .done();
-    return modelInstance;
   }
 
 }

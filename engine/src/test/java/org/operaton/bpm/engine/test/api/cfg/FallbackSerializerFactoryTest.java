@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.cfg;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.Arrays;
 
 import org.operaton.bpm.engine.ProcessEngine;
@@ -29,7 +31,6 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -74,10 +75,10 @@ public class FallbackSerializerFactoryTest {
 
      ObjectValue fetchedValue = processEngine.getRuntimeService().getVariableTyped(pi.getId(), "var", true);
 
-     // then the fallback serializer is used
-     Assert.assertNotNull(fetchedValue);
-     Assert.assertEquals(ExampleSerializer.FORMAT, fetchedValue.getSerializationDataFormat());
-     Assert.assertEquals("foo", fetchedValue.getValue());
+    // then the fallback serializer is used
+    assertThat(fetchedValue).isNotNull();
+    assertThat(fetchedValue.getSerializationDataFormat()).isEqualTo(ExampleSerializer.FORMAT);
+    assertThat(fetchedValue.getValue()).isEqualTo("foo");
   }
 
   @Test
@@ -103,10 +104,10 @@ public class FallbackSerializerFactoryTest {
 
      ObjectValue fetchedValue = processEngine.getRuntimeService().getVariableTyped(pi.getId(), "var", true);
 
-     // then the fallback serializer is used
-     Assert.assertNotNull(fetchedValue);
-     Assert.assertEquals(ExampleSerializer.FORMAT, fetchedValue.getSerializationDataFormat());
-     Assert.assertEquals(ExampleConstantSerializer.DESERIALIZED_VALUE, fetchedValue.getValue());
+    // then the fallback serializer is used
+    assertThat(fetchedValue).isNotNull();
+    assertThat(fetchedValue.getSerializationDataFormat()).isEqualTo(ExampleSerializer.FORMAT);
+    assertThat(fetchedValue.getValue()).isEqualTo(ExampleConstantSerializer.DESERIALIZED_VALUE);
   }
 
   public static class ExampleSerializerFactory implements VariableSerializerFactory {

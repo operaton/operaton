@@ -24,7 +24,6 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.taskQu
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -57,12 +56,7 @@ public class TaskAssertIsNotAssignedTest extends ProcessAssertTestCase {
     // When
     claim(taskQuery().singleResult(), "fozzie");
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).task().isNotAssigned();
-      }
-    });
+    expect(() -> assertThat(processInstance).task().isNotAssigned());
   }
 
 }

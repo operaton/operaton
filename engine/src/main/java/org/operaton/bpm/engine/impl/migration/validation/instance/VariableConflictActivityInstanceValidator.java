@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.util.CollectionUtil;
 
 /**
- * Validates that when an activity instance has a variable with the same name twice (as a scope execution variable and a
+ * Validates that when an activity instance has a variable with the same name twice (as a scope execution variable and
  * a concurrent variable parent execution variable), no situation occurs in which either one is overwritten.
  *
  * @author Thorben Lindhauer
@@ -46,8 +46,9 @@ public class VariableConflictActivityInstanceValidator implements MigratingActiv
       boolean becomesNonScope = sourceScope.isScope() && !targetScope.isScope();
       if (becomesNonScope) {
         Map<String, List<MigratingVariableInstance>> dependentVariablesByName = getMigratingVariableInstancesByName(migratingInstance);
-        for (String variableName : dependentVariablesByName.keySet()) {
-          if (dependentVariablesByName.get(variableName).size() > 1) {
+        for (var entry : dependentVariablesByName.entrySet()) {
+          String variableName = entry.getKey();
+          if (entry.getValue().size() > 1) {
             instanceReport.addFailure("The variable '" + variableName + "' exists in both, this scope and "
                 + "concurrent local in the parent scope. "
                 + "Migrating to a non-scope activity would overwrite one of them.");

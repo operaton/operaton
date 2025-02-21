@@ -7,7 +7,7 @@
   <parent>
     <groupId>org.operaton.bpm.tomcat</groupId>
     <artifactId>operaton-tomcat</artifactId>
-    <version>1.0.0-beta-3-SNAPSHOT</version>
+    <version>1.0.0-beta-4-SNAPSHOT</version>
   </parent>
 
   <name>Operaton - Tomcat - Distro</name>
@@ -17,7 +17,7 @@
     <dependency>
       <groupId>org.operaton.bpm.distro</groupId>
       <artifactId>operaton-sql-scripts</artifactId>
-      <version>${project.version}</version>
+      <version>${version.operaton.dbscheme}</version>
       <type>jar</type>
     </dependency>
 

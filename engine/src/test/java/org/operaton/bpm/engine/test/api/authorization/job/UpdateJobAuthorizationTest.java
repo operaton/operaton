@@ -456,19 +456,17 @@ public class UpdateJobAuthorizationTest {
   // helper /////////////////////////////////////////////////////
 
   protected Job selectJobByProcessInstanceId(String processInstanceId) {
-    Job job = managementService
+    return managementService
         .createJobQuery()
         .processInstanceId(processInstanceId)
         .singleResult();
-    return job;
   }
 
   protected Job selectJobById(String jobId) {
-    Job job = managementService
+    return managementService
         .createJobQuery()
         .jobId(jobId)
         .singleResult();
-    return job;
   }
 
   protected String selectJobDefinitionIdByProcessDefinitionKey(String processDefinitionKey) {

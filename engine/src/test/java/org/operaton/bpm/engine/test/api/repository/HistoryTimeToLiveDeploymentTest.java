@@ -37,6 +37,7 @@ import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.commons.testing.ProcessEngineLoggingRule;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -92,11 +93,11 @@ public class HistoryTimeToLiveDeploymentTest {
 
   @Test
   public void processWithoutHTTLShouldFail() {
-    assertThatThrownBy(() -> {
-      // when
-      testRule.deploy(repositoryService.createDeployment()
-          .addClasspathResource("org/operaton/bpm/engine/test/api/repository/version1.bpmn20.xml"));})
-
+    // given
+    var deploymentBuilder = repositoryService.createDeployment()
+      .addClasspathResource("org/operaton/bpm/engine/test/api/repository/version1.bpmn20.xml");
+    // when
+    assertThatThrownBy(() -> testRule.deploy(deploymentBuilder))
         // then
         .isInstanceOf(ParseException.class)
         .hasMessageContaining(EXPECTED_DEFAULT_CONFIG_MSG)
@@ -134,11 +135,11 @@ public class HistoryTimeToLiveDeploymentTest {
 
   @Test
   public void caseWithoutHTTLShouldFail() {
-    assertThatThrownBy(() -> {
-      // when
-      testRule.deploy(repositoryService.createDeployment()
-          .addClasspathResource("org/operaton/bpm/engine/test/api/cmmn/oneTaskCase2.cmmn"));})
-
+    // given
+    var deploymentBuilder = repositoryService.createDeployment()
+      .addClasspathResource("org/operaton/bpm/engine/test/api/cmmn/oneTaskCase2.cmmn");
+    // when
+    assertThatThrownBy(() -> testRule.deploy(deploymentBuilder))
         // then
         .isInstanceOf(ProcessEngineException.class)
         .hasCauseInstanceOf(NotValidException.class)
@@ -160,12 +161,10 @@ public class HistoryTimeToLiveDeploymentTest {
 
   @Test
   public void decisionWithoutHTTLShouldFail() {
-    assertThatThrownBy(() -> {
-      // when
-      testRule.deploy(repositoryService
-          .createDeployment()
-          .addClasspathResource("org/operaton/bpm/engine/test/api/dmn/Another_Example.dmn"));})
-
+    var deploymentBuilder = repositoryService.createDeployment()
+      .addClasspathResource("org/operaton/bpm/engine/test/api/dmn/Another_Example.dmn");
+    // when
+    assertThatThrownBy(() -> testRule.deploy(deploymentBuilder))
         // then
         .isInstanceOf(ProcessEngineException.class)
         .hasCauseInstanceOf(DmnTransformException.class)
@@ -212,7 +211,7 @@ public class HistoryTimeToLiveDeploymentTest {
     // then
     processEngineConfiguration.setEnforceHistoryTimeToLive(true);
     processEngineConfiguration.getDeploymentCache().purgeCache();
-    repositoryService.getProcessDefinition(definitions.getDeployedProcessDefinitions().get(0).getId());
+    assertThat(repositoryService.getProcessDefinition(definitions.getDeployedProcessDefinitions().get(0).getId())).isNotNull();
   }
 
   @Test
@@ -227,7 +226,7 @@ public class HistoryTimeToLiveDeploymentTest {
     // then
     processEngineConfiguration.setEnforceHistoryTimeToLive(true);
     processEngineConfiguration.getDeploymentCache().purgeCache();
-    repositoryService.getDecisionDefinition(definitions.getDeployedDecisionDefinitions().get(0).getId());
+    assertThat(repositoryService.getDecisionDefinition(definitions.getDeployedDecisionDefinitions().get(0).getId())).isNotNull();
   }
 
   @Test
@@ -242,7 +241,7 @@ public class HistoryTimeToLiveDeploymentTest {
     // then
     processEngineConfiguration.setEnforceHistoryTimeToLive(true);
     processEngineConfiguration.getDeploymentCache().purgeCache();
-    repositoryService.getCaseDefinition(definitions.getDeployedCaseDefinitions().get(0).getId());
+    assertThat(repositoryService.getCaseDefinition(definitions.getDeployedCaseDefinitions().get(0).getId())).isNotNull();
   }
 
   @Test

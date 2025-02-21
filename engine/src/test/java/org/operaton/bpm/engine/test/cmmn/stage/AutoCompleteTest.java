@@ -17,9 +17,6 @@
 package org.operaton.bpm.engine.test.cmmn.stage;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -57,13 +54,13 @@ public class AutoCompleteTest extends CmmnTest {
         .caseInstanceId(caseInstanceId)
         .singleResult();
 
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isCompleted());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isCompleted()).isTrue();
 
     // humanTask1 and humanTask2 are not available
     CaseExecutionQuery query = caseService.createCaseExecutionQuery();
-    assertNull(query.activityId("PI_HumanTask_1").singleResult());
-    assertNull(query.activityId("PI_HumanTask_2").singleResult());
+    assertThat(query.activityId("PI_HumanTask_1").singleResult()).isNull();
+    assertThat(query.activityId("PI_HumanTask_2").singleResult()).isNull();
   }
 
   @Deployment
@@ -89,16 +86,16 @@ public class AutoCompleteTest extends CmmnTest {
         .createCaseInstanceQuery()
         .caseInstanceId(caseInstanceId)
         .singleResult();
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isActive());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isActive()).isTrue();
 
     // humanTask1 is still available
-    assertNotNull(query.activityId("PI_HumanTask_1").singleResult());
+    assertThat(query.activityId("PI_HumanTask_1").singleResult()).isNotNull();
 
     // stage, humanTask2, humanTask3 are not available
-    assertNull(query.activityId("PI_Stage_1").singleResult());
-    assertNull(query.activityId("PI_HumanTask_2").singleResult());
-    assertNull(query.activityId("PI_HumanTask_3").singleResult());
+    assertThat(query.activityId("PI_Stage_1").singleResult()).isNull();
+    assertThat(query.activityId("PI_HumanTask_2").singleResult()).isNull();
+    assertThat(query.activityId("PI_HumanTask_3").singleResult()).isNull();
   }
 
   @Deployment
@@ -116,8 +113,8 @@ public class AutoCompleteTest extends CmmnTest {
       .caseInstanceId(caseInstanceId);
 
     CaseInstance caseInstance = instanceQuery.singleResult();
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isActive());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isActive()).isTrue();
 
     CaseExecutionQuery executionQuery = caseService.createCaseExecutionQuery();
 
@@ -131,12 +128,12 @@ public class AutoCompleteTest extends CmmnTest {
 
     // then (2)
     caseInstance = instanceQuery.singleResult();
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isCompleted());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isCompleted()).isTrue();
 
     // humanTask1 and humanTask2 are not available
-    assertNull(executionQuery.activityId("PI_HumanTask_1").singleResult());
-    assertNull(executionQuery.activityId("PI_HumanTask_2").singleResult());
+    assertThat(executionQuery.activityId("PI_HumanTask_1").singleResult()).isNull();
+    assertThat(executionQuery.activityId("PI_HumanTask_2").singleResult()).isNull();
   }
 
   @Deployment
@@ -147,17 +144,14 @@ public class AutoCompleteTest extends CmmnTest {
 
     CaseExecutionQuery executionQuery = caseService.createCaseExecutionQuery();
 
-    String stageId = executionQuery
-        .activityId("PI_Stage_1")
-        .singleResult()
-        .getId();
+    assertThat(executionQuery.activityId("PI_Stage_1").singleResult()).isNotNull();
 
     // then (1)
     CaseExecution stage = executionQuery
         .activityId("PI_Stage_1")
         .singleResult();
-    assertNotNull(stage);
-    assertTrue(stage.isActive());
+    assertThat(stage).isNotNull();
+    assertThat(stage.isActive()).isTrue();
 
     String humanTask2Id = executionQuery
         .activityId("PI_HumanTask_2")
@@ -174,16 +168,16 @@ public class AutoCompleteTest extends CmmnTest {
         .createCaseInstanceQuery()
         .caseInstanceId(caseInstanceId)
         .singleResult();
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isActive());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isActive()).isTrue();
 
     // humanTask1 is still available
-    assertNotNull(executionQuery.activityId("PI_HumanTask_1").singleResult());
+    assertThat(executionQuery.activityId("PI_HumanTask_1").singleResult()).isNotNull();
 
     // stage, humanTask2, humanTask3 are not available
-    assertNull(executionQuery.activityId("PI_Stage_1").singleResult());
-    assertNull(executionQuery.activityId("PI_HumanTask_2").singleResult());
-    assertNull(executionQuery.activityId("PI_HumanTask_3").singleResult());
+    assertThat(executionQuery.activityId("PI_Stage_1").singleResult()).isNull();
+    assertThat(executionQuery.activityId("PI_HumanTask_2").singleResult()).isNull();
+    assertThat(executionQuery.activityId("PI_HumanTask_3").singleResult()).isNull();
   }
 
   @Deployment
@@ -202,14 +196,14 @@ public class AutoCompleteTest extends CmmnTest {
         .createCaseInstanceQuery()
         .caseInstanceId(caseInstanceId)
         .singleResult();
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isCompleted());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isCompleted()).isTrue();
 
     // stage, humanTask1, humanTask2, humanTask3 are not available
-    assertNull(executionQuery.activityId("PI_Stage_1").singleResult());
-    assertNull(executionQuery.activityId("PI_HumanTask_1").singleResult());
-    assertNull(executionQuery.activityId("PI_HumanTask_2").singleResult());
-    assertNull(executionQuery.activityId("PI_HumanTask_3").singleResult());
+    assertThat(executionQuery.activityId("PI_Stage_1").singleResult()).isNull();
+    assertThat(executionQuery.activityId("PI_HumanTask_1").singleResult()).isNull();
+    assertThat(executionQuery.activityId("PI_HumanTask_2").singleResult()).isNull();
+    assertThat(executionQuery.activityId("PI_HumanTask_3").singleResult()).isNull();
   }
 
   @Deployment
@@ -228,8 +222,8 @@ public class AutoCompleteTest extends CmmnTest {
     CaseInstance caseInstance = instanceQuery
         .caseInstanceId(caseInstanceId)
         .singleResult();
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isActive());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isActive()).isTrue();
 
     String humanTask1Id = executionQuery
         .activityId("PI_HumanTask_1")
@@ -242,8 +236,8 @@ public class AutoCompleteTest extends CmmnTest {
 
     // then (2)
     caseInstance = instanceQuery.singleResult();
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isActive());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isActive()).isTrue();
 
     String humanTask2Id = executionQuery
         .activityId("PI_HumanTask_2")
@@ -256,8 +250,8 @@ public class AutoCompleteTest extends CmmnTest {
 
     // then (3)
     caseInstance = instanceQuery.singleResult();
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isCompleted());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isCompleted()).isTrue();
   }
 
   @Deployment
@@ -280,8 +274,8 @@ public class AutoCompleteTest extends CmmnTest {
     CaseExecution stage = executionQuery
         .activityId("PI_Stage_1")
         .singleResult();
-    assertNotNull(stage);
-    assertTrue(stage.isActive());
+    assertThat(stage).isNotNull();
+    assertThat(stage.isActive()).isTrue();
 
     String humanTask2Id = executionQuery
         .activityId("PI_HumanTask_2")
@@ -292,14 +286,14 @@ public class AutoCompleteTest extends CmmnTest {
     complete(humanTask2Id);
 
     // then (2)
-    assertNull(executionQuery.activityId("PI_Stage_1").singleResult());
+    assertThat(executionQuery.activityId("PI_Stage_1").singleResult()).isNull();
 
     CaseInstance caseInstance = caseService
       .createCaseInstanceQuery()
       .caseInstanceId(caseInstanceId)
       .singleResult();
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isActive());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isActive()).isTrue();
   }
 
   @Deployment
@@ -324,8 +318,8 @@ public class AutoCompleteTest extends CmmnTest {
         .caseInstanceId(caseInstanceId);
 
     CaseInstance caseInstance = instanceQuery.singleResult();
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isActive());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isActive()).isTrue();
 
     String humanTask2Id = executionQuery
         .activityId("PI_HumanTask_2")
@@ -337,8 +331,8 @@ public class AutoCompleteTest extends CmmnTest {
 
     // then (2)
     caseInstance = instanceQuery.singleResult();
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isCompleted());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isCompleted()).isTrue();
   }
 
   @Deployment
@@ -368,8 +362,8 @@ public class AutoCompleteTest extends CmmnTest {
         .createCaseInstanceQuery()
         .caseInstanceId(caseInstanceId)
         .singleResult();
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isCompleted());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isCompleted()).isTrue();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/stage/AutoCompleteTest.testRequiredEnabled.cmmn"})
@@ -394,8 +388,8 @@ public class AutoCompleteTest extends CmmnTest {
 
     // then
     CaseInstance caseInstance = instanceQuery.singleResult();
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isCompleted());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isCompleted()).isTrue();
   }
 
   @Deployment(resources = {

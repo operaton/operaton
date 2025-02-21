@@ -22,9 +22,7 @@ import static org.operaton.bpm.engine.authorization.TaskPermissions.UPDATE_VARIA
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.revoke;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -44,7 +42,6 @@ import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -76,7 +73,7 @@ public class StandaloneTaskAuthorizationTest {
   protected RuntimeService runtimeService;
   protected HistoryService historyService;
 
-  protected static final String userId = "userId";
+  protected static final String USER_ID = "userId";
   protected String taskId = "myTask";
   protected static final String VARIABLE_NAME = "aVariableName";
   protected static final String VARIABLE_VALUE = "aVariableValue";
@@ -88,28 +85,28 @@ public class StandaloneTaskAuthorizationTest {
       scenario()
         .withoutAuthorizations()
         .failsDueToRequired(
-          grant(TASK, "taskId", userId, UPDATE),
-          grant(TASK, "taskId", userId, UPDATE_VARIABLE)),
+          grant(TASK, "taskId", USER_ID, UPDATE),
+          grant(TASK, "taskId", USER_ID, UPDATE_VARIABLE)),
       scenario()
         .withAuthorizations(
-          grant(TASK, "taskId", userId, UPDATE)),
+          grant(TASK, "taskId", USER_ID, UPDATE)),
       scenario()
         .withAuthorizations(
-          grant(TASK, "*", userId, UPDATE)),
+          grant(TASK, "*", USER_ID, UPDATE)),
       scenario()
         .withAuthorizations(
-          grant(TASK, "taskId", userId, UPDATE_VARIABLE)),
+          grant(TASK, "taskId", USER_ID, UPDATE_VARIABLE)),
       scenario()
         .withAuthorizations(
-          grant(TASK, "*", userId, UPDATE_VARIABLE))
+          grant(TASK, "*", USER_ID, UPDATE_VARIABLE))
         .succeeds(),
       scenario()
         .withAuthorizations(
           grant(TASK, "*", "*", UPDATE),
-          revoke(TASK, "taskId", userId, UPDATE))
+          revoke(TASK, "taskId", USER_ID, UPDATE))
         .failsDueToRequired(
-          grant(TASK, "taskId", userId, UPDATE),
-          grant(TASK, "taskId", userId, UPDATE_VARIABLE))
+          grant(TASK, "taskId", USER_ID, UPDATE),
+          grant(TASK, "taskId", USER_ID, UPDATE_VARIABLE))
       );
   }
 
@@ -127,8 +124,8 @@ public class StandaloneTaskAuthorizationTest {
   public void tearDown() {
     authRule.deleteUsersAndGroups();
     taskService.deleteTask(taskId, true);
-    for (HistoricVariableInstance var : historyService.createHistoricVariableInstanceQuery().includeDeleted().list()) {
-      historyService.deleteHistoricVariableInstance(var.getId());
+    for (HistoricVariableInstance historicVariableInstance : historyService.createHistoricVariableInstanceQuery().includeDeleted().list()) {
+      historyService.deleteHistoricVariableInstance(historicVariableInstance.getId());
     }
   }
 
@@ -434,19 +431,19 @@ public class StandaloneTaskAuthorizationTest {
 
   protected void verifySetVariables() {
     verifyVariableInstanceCount(1);
-    assertNotNull(runtimeService.createVariableInstanceQuery().singleResult());
+    assertThat(runtimeService.createVariableInstanceQuery().singleResult()).isNotNull();
   }
 
   protected void verifyRemoveVariable() {
     verifyVariableInstanceCount(0);
-    assertNull(runtimeService.createVariableInstanceQuery().singleResult());
+    assertThat(runtimeService.createVariableInstanceQuery().singleResult()).isNull();
     HistoricVariableInstance deletedVariable = historyService.createHistoricVariableInstanceQuery().includeDeleted().singleResult();
-    Assert.assertEquals("DELETED", deletedVariable.getState());
+    assertThat(deletedVariable.getState()).isEqualTo("DELETED");
   }
 
   protected void verifyVariableInstanceCount(int count) {
-    assertEquals(count, runtimeService.createVariableInstanceQuery().list().size());
-    assertEquals(count, runtimeService.createVariableInstanceQuery().count());
+    assertThat(runtimeService.createVariableInstanceQuery().list()).hasSize(count);
+    assertThat(runtimeService.createVariableInstanceQuery().count()).isEqualTo(count);
   }
 
   protected void createTask(final String taskId) {

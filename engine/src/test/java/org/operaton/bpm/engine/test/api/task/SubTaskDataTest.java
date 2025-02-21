@@ -24,7 +24,8 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Assert;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -60,7 +61,7 @@ public class SubTaskDataTest {
     taskService.setVariable(task.getId(), "testVariable", "testValue");
 
     // then variable is set in the scope of execution
-    Assert.assertEquals("testValue", runtimeService.getVariable(task.getExecutionId(), "testVariable"));
+    assertThat(runtimeService.getVariable(task.getExecutionId(), "testVariable")).isEqualTo("testValue");
 
     // when sub task is created create subtask for user task
     Task subTask = taskService.newTask("123456789");
@@ -72,6 +73,6 @@ public class SubTaskDataTest {
     taskService.setVariable(subTask.getId(), "testVariable", "newTestValue");
 
     //then variable is also updated in the scope execution
-    Assert.assertEquals("newTestValue", runtimeService.getVariable(task.getExecutionId(), "testVariable"));
+    assertThat(runtimeService.getVariable(task.getExecutionId(), "testVariable")).isEqualTo("newTestValue");
   }
 }

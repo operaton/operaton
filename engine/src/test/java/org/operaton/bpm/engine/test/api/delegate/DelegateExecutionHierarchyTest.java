@@ -22,7 +22,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.junit.After;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Tests for the execution hierarchy methods exposed in delegate execution
@@ -50,8 +50,8 @@ public class DelegateExecutionHierarchyTest extends PluggableProcessEngineTest {
 
     AssertingJavaDelegate.addAsserts(
         execution -> {
-          assertEquals(execution, execution.getProcessInstance());
-          assertNull(execution.getSuperExecution());
+          assertThat(execution.getProcessInstance()).isEqualTo(execution);
+          assertThat(execution.getSuperExecution()).isNull();
         }
     );
 
@@ -77,8 +77,8 @@ public class DelegateExecutionHierarchyTest extends PluggableProcessEngineTest {
 
     AssertingJavaDelegate.addAsserts(
         execution -> {
-          assertFalse(execution.equals(execution.getProcessInstance()));
-          assertNull(execution.getSuperExecution());
+          assertThat(execution.getProcessInstance()).isNotEqualTo(execution);
+          assertThat(execution.getSuperExecution()).isNull();
         }
     );
 
@@ -102,8 +102,8 @@ public class DelegateExecutionHierarchyTest extends PluggableProcessEngineTest {
 
     AssertingJavaDelegate.addAsserts(
         execution -> {
-          assertFalse(execution.equals(execution.getProcessInstance()));
-          assertNull(execution.getSuperExecution());
+          assertThat(execution.getProcessInstance()).isNotEqualTo(execution);
+          assertThat(execution.getSuperExecution()).isNull();
         }
     );
 
@@ -129,8 +129,8 @@ public class DelegateExecutionHierarchyTest extends PluggableProcessEngineTest {
 
     AssertingJavaDelegate.addAsserts(
         execution -> {
-          assertTrue(execution.equals(execution.getProcessInstance()));
-          assertNotNull(execution.getSuperExecution());
+          assertThat(execution.getProcessInstance()).isEqualTo(execution);
+          assertThat(execution.getSuperExecution()).isNotNull();
         }
     );
 

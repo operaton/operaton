@@ -16,28 +16,24 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import java.util.HashMap;
 import java.util.Map.Entry;
 
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 public class ImmutablePairTest {
 
   @Test
   public void shouldReturnBasicValues() {
     final ImmutablePair<Integer, String> pair = new ImmutablePair<>(0, "foo");
-    assertEquals(0, pair.getLeft().intValue());
-    assertEquals("foo", pair.getRight());
+    assertThat(pair.getLeft().intValue()).isZero();
+    assertThat(pair.getRight()).isEqualTo("foo");
     final ImmutablePair<Object, String> pair2 = new ImmutablePair<>(null, "bar");
-    assertNull(pair2.getLeft());
-    assertEquals("bar", pair2.getRight());
+    assertThat(pair2.getLeft()).isNull();
+    assertThat(pair2.getRight()).isEqualTo("bar");
   }
 
   @Test
@@ -46,28 +42,31 @@ public class ImmutablePairTest {
     final HashMap<Integer, String> map = new HashMap<>();
     map.put(0, "foo");
     final Entry<Integer, String> entry = map.entrySet().iterator().next();
-    assertEquals(pair, entry);
-    assertEquals(pair.hashCode(), entry.hashCode());
+    assertThat(entry).isEqualTo(pair).hasSameHashCodeAs(pair);
   }
 
   @Test
   public void shouldCompareWithLeftFirst() {
     final ImmutablePair<String, String> pair1 = new ImmutablePair<>("A", "D");
     final ImmutablePair<String, String> pair2 = new ImmutablePair<>("B", "C");
-    assertTrue(pair1.compareTo(pair1) == 0);
-    assertTrue(pair1.compareTo(pair2) < 0);
-    assertTrue(pair2.compareTo(pair2) == 0);
-    assertTrue(pair2.compareTo(pair1) > 0);
+    assertThat(pair1)
+      .isEqualByComparingTo(pair1)
+      .isLessThan(pair2);
+    assertThat(pair2)
+      .isEqualByComparingTo(pair2)
+      .isGreaterThan(pair1);
   }
 
   @Test
   public void shouldCompareWithRightSecond() {
     final ImmutablePair<String, String> pair1 = new ImmutablePair<>("A", "C");
     final ImmutablePair<String, String> pair2 = new ImmutablePair<>("A", "D");
-    assertTrue(pair1.compareTo(pair1) == 0);
-    assertTrue(pair1.compareTo(pair2) < 0);
-    assertTrue(pair2.compareTo(pair2) == 0);
-    assertTrue(pair2.compareTo(pair1) > 0);
+    assertThat(pair1)
+      .isEqualByComparingTo(pair1)
+      .isLessThan(pair2);
+    assertThat(pair2)
+      .isEqualByComparingTo(pair2)
+      .isGreaterThan(pair1);
   }
 
   @Test
@@ -84,17 +83,17 @@ public class ImmutablePairTest {
 
   @Test
   public void shouldFulfillEqualityRules() {
-    assertEquals(new ImmutablePair<>(null, "foo"), new ImmutablePair<>(null, "foo"));
-    assertFalse(new ImmutablePair<>("foo", 0).equals(new ImmutablePair<>("foo", null)));
-    assertFalse(new ImmutablePair<>("foo", "bar").equals(new ImmutablePair<>("xyz", "bar")));
+    assertThat(new ImmutablePair<>(null, "foo")).isEqualTo(new ImmutablePair<>(null, "foo"));
+    assertThat(new ImmutablePair<>("foo", null)).isNotEqualTo(new ImmutablePair<>("foo", 0));
+    assertThat(new ImmutablePair<>("xyz", "bar")).isNotEqualTo(new ImmutablePair<>("foo", "bar"));
 
     final ImmutablePair<String, String> p = new ImmutablePair<>("foo", "bar");
-    assertTrue(p.equals(p));
-    assertFalse(p.equals(new Object()));
+    assertThat(p).isEqualTo(p);
+    assertThat(new Object()).isNotEqualTo(p);
   }
 
   @Test
   public void shouldHaveSameHashCodeAsEqualObject() {
-    assertEquals(new ImmutablePair<>(null, "foo").hashCode(), new ImmutablePair<>(null, "foo").hashCode());
+    assertThat(new ImmutablePair<>(null, "foo")).hasSameHashCodeAs(new ImmutablePair<>(null, "foo"));
   }
 }

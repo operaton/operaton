@@ -66,10 +66,8 @@ public class SetJobRetriesBatchConfigurationJsonConverter
       dueDate = new Date(JsonUtil.getLong(json, DUE_DATE));
     }
 
-    SetJobRetriesBatchConfiguration configuration = new SetJobRetriesBatchConfiguration(
+    return new SetJobRetriesBatchConfiguration(
         readJobIds(json), readIdMappings(json), JsonUtil.getInt(json, RETRIES), dueDate, isDueDateSet);
-
-    return configuration;
   }
 
   protected List<String> readJobIds(JsonObject jsonObject) {

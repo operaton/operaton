@@ -63,15 +63,13 @@ public class TestWarDeploymentWithNonExistingDS_JBOSS {
   
   @Deployment(managed=false, name=DEPLOYMENT_WITH_SERVLET_PA)
   public static WebArchive createDeployment2() {
-    WebArchive archive = ShrinkWrap.create(WebArchive.class, "test2.war")
+    return ShrinkWrap.create(WebArchive.class, "test2.war")
         .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
         .addAsLibraries(DeploymentHelper.getEngineCdi())
         .addAsResource("META-INF/processes.xml", "META-INF/processes.xml")
         .addAsResource("persistence-nonexisting-ds.xml", "META-INF/persistence.xml")
         
         .addClass(CustomServletPA.class);
-    
-    return archive;
   }
   
   @Test

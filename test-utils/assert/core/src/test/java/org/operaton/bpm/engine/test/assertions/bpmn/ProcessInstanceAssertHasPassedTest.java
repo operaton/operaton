@@ -24,7 +24,6 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.taskQu
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -57,12 +56,7 @@ public class ProcessInstanceAssertHasPassedTest extends ProcessAssertTestCase {
       "ProcessInstanceAssert-hasPassed"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).hasPassed("UserTask_1");
-      }
-    });
+    expect(() -> assertThat(processInstance).hasPassed("UserTask_1"));
   }
 
   @Test
@@ -98,18 +92,8 @@ public class ProcessInstanceAssertHasPassedTest extends ProcessAssertTestCase {
     // And
     complete(taskQuery().taskDefinitionKey("UserTask_2").singleResult());
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).hasPassed("UserTask_3");
-      }
-    });
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).hasPassed("UserTask_4");
-      }
-    });
+    expect(() -> assertThat(processInstance).hasPassed("UserTask_3"));
+    expect(() -> assertThat(processInstance).hasPassed("UserTask_4"));
   }
 
   @Test
@@ -151,12 +135,7 @@ public class ProcessInstanceAssertHasPassedTest extends ProcessAssertTestCase {
     // And
     complete(taskQuery().taskDefinitionKey("UserTask_3").singleResult());
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).hasPassed("UserTask_4");
-      }
-    });
+    expect(() -> assertThat(processInstance).hasPassed("UserTask_4"));
   }
 
   @Test
@@ -204,12 +183,7 @@ public class ProcessInstanceAssertHasPassedTest extends ProcessAssertTestCase {
     // And
     complete(taskQuery().taskDefinitionKey("UserTask_4").singleResult());
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).hasPassed("UserTask_5");
-      }
-    });
+    expect(() -> assertThat(processInstance).hasPassed("UserTask_5"));
   }
 
   @Test
@@ -221,31 +195,15 @@ public class ProcessInstanceAssertHasPassedTest extends ProcessAssertTestCase {
       "ProcessInstanceAssert-isWaitingAt"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        String[] passed = null;
-        assertThat(processInstance).hasPassed(passed);
-      }
+    expect(() -> {
+      String[] passed = null;
+      assertThat(processInstance).hasPassed(passed);
     });
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).hasPassed("ok", null);
-      }
-    });
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).hasPassed(null, "ok");
-      }
-    });
-    expect(new Failure() {
-      @Override
-      public void when() {
-        String[] args = new String[]{};
-        assertThat(processInstance).hasPassed(args);
-      }
+    expect(() -> assertThat(processInstance).hasPassed("ok", null));
+    expect(() -> assertThat(processInstance).hasPassed(null, "ok"));
+    expect(() -> {
+      String[] args = new String[]{};
+      assertThat(processInstance).hasPassed(args);
     });
   }
 

@@ -15,15 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.runtime.message;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -50,14 +43,7 @@ import org.operaton.bpm.engine.impl.digest._apacheCommonsCodec.Base64;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.util.StringUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
-import org.operaton.bpm.engine.runtime.Execution;
-import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.runtime.MessageCorrelationResult;
-import org.operaton.bpm.engine.runtime.MessageCorrelationResultType;
-import org.operaton.bpm.engine.runtime.MessageCorrelationResultWithVariables;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
-import org.operaton.bpm.engine.runtime.VariableInstance;
+import org.operaton.bpm.engine.runtime.*;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
@@ -72,7 +58,6 @@ import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.engine.variable.value.StringValue;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -126,13 +111,13 @@ public class MessageCorrelationTest {
     long uncorrelatedExecutions = runtimeService.createExecutionQuery()
         .processVariableValueEquals("aKey", "anotherValue").messageEventSubscriptionName("newInvoiceMessage")
         .count();
-    assertEquals(1, uncorrelatedExecutions);
+    assertThat(uncorrelatedExecutions).isEqualTo(1);
 
     // the execution that has been correlated should have advanced
     long correlatedExecutions = runtimeService.createExecutionQuery()
         .activityId("task").processVariableValueEquals("aKey", "aValue").processVariableValueEquals("aNewKey", "aNewVariable")
         .count();
-    assertEquals(1, correlatedExecutions);
+    assertThat(correlatedExecutions).isEqualTo(1);
 
     runtimeService.deleteProcessInstance(processInstance.getId(), null);
 
@@ -151,13 +136,13 @@ public class MessageCorrelationTest {
     uncorrelatedExecutions = runtimeService.createExecutionQuery()
         .processVariableValueEquals("aKey", "anotherValue").messageEventSubscriptionName("newInvoiceMessage")
         .count();
-    assertEquals(1, uncorrelatedExecutions);
+    assertThat(uncorrelatedExecutions).isEqualTo(1);
 
     // the execution that has been correlated should have advanced
     correlatedExecutions = runtimeService.createExecutionQuery()
         .activityId("task").processVariableValueEquals("aKey", "aValue").processVariableValueEquals("aNewKey", "aNewVariable")
         .count();
-    assertEquals(1, correlatedExecutions);
+    assertThat(correlatedExecutions).isEqualTo(1);
 
     runtimeService.deleteProcessInstance(processInstance.getId(), null);
 
@@ -165,7 +150,7 @@ public class MessageCorrelationTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
   @Test
-  public void testOneMatchinProcessInstanceUsingFluentCorrelateAll() {
+  public void testOneMatchingProcessInstanceUsingFluentCorrelateAll() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("aKey", "aValue");
     runtimeService.startProcessInstanceByKey("process", variables);
@@ -188,7 +173,7 @@ public class MessageCorrelationTest {
         .processVariableValueEquals("aKey", "anotherValue")
         .messageEventSubscriptionName("newInvoiceMessage")
         .count();
-    assertEquals(1, uncorrelatedExecutions);
+    assertThat(uncorrelatedExecutions).isEqualTo(1);
 
     // the execution that has been correlated should have advanced
     long correlatedExecutions = runtimeService.createExecutionQuery()
@@ -196,7 +181,7 @@ public class MessageCorrelationTest {
         .processVariableValueEquals("aKey", "aValue")
         .processVariableValueEquals("aNewKey", "aNewVariable")
         .count();
-    assertEquals(1, correlatedExecutions);
+    assertThat(correlatedExecutions).isEqualTo(1);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
@@ -213,6 +198,8 @@ public class MessageCorrelationTest {
     String messageName = "newInvoiceMessage";
     Map<String, Object> correlationKeys = new HashMap<>();
     correlationKeys.put("aKey", "aValue");
+    var messageCorrelationBuilder = runtimeService.createMessageCorrelation(messageName)
+        .processInstanceVariableEquals("aKey", "aValue");
 
     try {
       runtimeService.correlateMessage(messageName, correlationKeys);
@@ -223,9 +210,7 @@ public class MessageCorrelationTest {
 
     // fluent builder fails as well
     try {
-      runtimeService.createMessageCorrelation(messageName)
-        .processInstanceVariableEquals("aKey", "aValue")
-        .correlate();
+      messageCorrelationBuilder.correlate();
       fail("Expected an Exception");
     } catch (MismatchingMessageCorrelationException e) {
       testRule.assertTextPresent("2 executions match the correlation keys", e.getMessage());
@@ -257,7 +242,7 @@ public class MessageCorrelationTest {
         .createExecutionQuery()
         .messageEventSubscriptionName("newInvoiceMessage")
         .count();
-    assertEquals(0, uncorrelatedExecutions);
+    assertThat(uncorrelatedExecutions).isZero();
 
     // the executions that has been correlated should have advanced
     long correlatedExecutions = runtimeService.createExecutionQuery()
@@ -265,7 +250,7 @@ public class MessageCorrelationTest {
         .processVariableValueEquals("aKey", "aValue")
         .processVariableValueEquals("aNewKey", "aNewVariable")
         .count();
-    assertEquals(2, correlatedExecutions);
+    assertThat(correlatedExecutions).isEqualTo(2);
 
   }
 
@@ -278,7 +263,7 @@ public class MessageCorrelationTest {
 
     // the execution that has been correlated should have advanced
     long correlatedExecutions = runtimeService.createExecutionQuery().activityId("task").count();
-    assertEquals(1, correlatedExecutions);
+    assertThat(correlatedExecutions).isEqualTo(1);
 
     runtimeService.deleteProcessInstance(processInstance.getId(), null);
 
@@ -291,7 +276,7 @@ public class MessageCorrelationTest {
 
     // the execution that has been correlated should have advanced
     correlatedExecutions = runtimeService.createExecutionQuery().activityId("task").count();
-    assertEquals(1, correlatedExecutions);
+    assertThat(correlatedExecutions).isEqualTo(1);
 
     runtimeService.deleteProcessInstance(processInstance.getId(), null);
   }
@@ -310,7 +295,7 @@ public class MessageCorrelationTest {
 
     // the executions that has been correlated should be in the task
     long correlatedExecutions = runtimeService.createExecutionQuery().activityId("task").count();
-    assertEquals(2, correlatedExecutions);
+    assertThat(correlatedExecutions).isEqualTo(2);
 
   }
 
@@ -325,16 +310,15 @@ public class MessageCorrelationTest {
     List<MessageCorrelationResult> resultList = runtimeService.createMessageCorrelation("newInvoiceMessage")
                                                               .correlateAllWithResult();
 
-    assertEquals(2, resultList.size());
-    //then result should contains executions on which messages was correlated
+    assertThat(resultList).hasSize(2);
+    //then result should contain executions on which messages was correlated
     for (MessageCorrelationResult result : resultList) {
-      assertNotNull(result);
-      assertEquals(MessageCorrelationResultType.Execution, result.getResultType());
-      assertTrue(procInstance1.getId().equalsIgnoreCase(result.getExecution().getProcessInstanceId())
-                || procInstance2.getId().equalsIgnoreCase(result.getExecution().getProcessInstanceId())
-      );
+      assertThat(result).isNotNull();
+      assertThat(result.getResultType()).isEqualTo(MessageCorrelationResultType.Execution);
+      assertThat(procInstance1.getId().equalsIgnoreCase(result.getExecution().getProcessInstanceId())
+          || procInstance2.getId().equalsIgnoreCase(result.getExecution().getProcessInstanceId())).isTrue();
       ExecutionEntity entity = (ExecutionEntity) result.getExecution();
-      assertEquals("messageCatch", entity.getActivityId());
+      assertThat(entity.getActivityId()).isEqualTo("messageCatch");
     }
   }
 
@@ -346,8 +330,8 @@ public class MessageCorrelationTest {
     List<MessageCorrelationResult> resultList = runtimeService.createMessageCorrelation("newInvoiceMessage")
                                                               .correlateAllWithResult();
 
-    assertEquals(1, resultList.size());
-    //then result should contains process definitions and start event activity ids on which messages was correlated
+    assertThat(resultList).hasSize(1);
+    //then result should contain process definitions and start event activity ids on which messages was correlated
     for (MessageCorrelationResult result : resultList) {
       checkProcessDefinitionMessageCorrelationResult(result, "theStart", "messageStartEvent");
     }
@@ -367,7 +351,7 @@ public class MessageCorrelationTest {
     // the execution that has been correlated should have advanced
     long correlatedExecutions = runtimeService.createExecutionQuery()
         .processVariableValueEquals("aKey", "aValue").count();
-    assertEquals(1, correlatedExecutions);
+    assertThat(correlatedExecutions).isEqualTo(1);
 
     runtimeService.deleteProcessInstance(processInstance.getId(), null);
 
@@ -383,7 +367,7 @@ public class MessageCorrelationTest {
     // the execution that has been correlated should have advanced
     correlatedExecutions = runtimeService.createExecutionQuery()
         .processVariableValueEquals("aKey", "aValue").count();
-    assertEquals(1, correlatedExecutions);
+    assertThat(correlatedExecutions).isEqualTo(1);
 
     runtimeService.deleteProcessInstance(processInstance.getId(), null);
   }
@@ -406,7 +390,7 @@ public class MessageCorrelationTest {
         .createExecutionQuery()
         .processVariableValueEquals("aKey", "aValue")
         .count();
-    assertEquals(2, correlatedExecutions);
+    assertThat(correlatedExecutions).isEqualTo(2);
 
   }
 
@@ -444,11 +428,11 @@ public class MessageCorrelationTest {
 
     // then
     ObjectValue variableTyped = runtimeService.getVariableTyped(processInstance.getId(), "var", false);
-    assertNotNull(variableTyped);
-    assertFalse(variableTyped.isDeserialized());
-    assertEquals(serializedObject, variableTyped.getValueSerialized());
-    assertEquals(FailingJavaSerializable.class.getName(), variableTyped.getObjectTypeName());
-    assertEquals(SerializationDataFormats.JAVA.getName(), variableTyped.getSerializationDataFormat());
+    assertThat(variableTyped).isNotNull();
+    assertThat(variableTyped.isDeserialized()).isFalse();
+    assertThat(variableTyped.getValueSerialized()).isEqualTo(serializedObject);
+    assertThat(variableTyped.getObjectTypeName()).isEqualTo(FailingJavaSerializable.class.getName());
+    assertThat(variableTyped.getSerializationDataFormat()).isEqualTo(SerializationDataFormats.JAVA.getName());
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
@@ -486,11 +470,11 @@ public class MessageCorrelationTest {
 
     // then
     ObjectValue variableTyped = runtimeService.getVariableTyped(processInstance.getId(), "var", false);
-    assertNotNull(variableTyped);
-    assertFalse(variableTyped.isDeserialized());
-    assertEquals(serializedObject, variableTyped.getValueSerialized());
-    assertEquals(FailingJavaSerializable.class.getName(), variableTyped.getObjectTypeName());
-    assertEquals(SerializationDataFormats.JAVA.getName(), variableTyped.getSerializationDataFormat());
+    assertThat(variableTyped).isNotNull();
+    assertThat(variableTyped.isDeserialized()).isFalse();
+    assertThat(variableTyped.getValueSerialized()).isEqualTo(serializedObject);
+    assertThat(variableTyped.getObjectTypeName()).isEqualTo(FailingJavaSerializable.class.getName());
+    assertThat(variableTyped.getSerializationDataFormat()).isEqualTo(SerializationDataFormats.JAVA.getName());
   }
 
   @Deployment
@@ -503,7 +487,7 @@ public class MessageCorrelationTest {
 
     long instances = runtimeService.createProcessInstanceQuery().processDefinitionKey("messageStartEvent")
         .variableValueEquals("aKey", "aValue").count();
-    assertEquals(1, instances);
+    assertThat(instances).isEqualTo(1);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml")
@@ -516,7 +500,7 @@ public class MessageCorrelationTest {
 
     long instances = runtimeService.createProcessInstanceQuery().processDefinitionKey("messageStartEvent")
         .variableValueEquals("aKey", "aValue").count();
-    assertEquals(1, instances);
+    assertThat(instances).isEqualTo(1);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml")
@@ -529,7 +513,7 @@ public class MessageCorrelationTest {
 
     long instances = runtimeService.createProcessInstanceQuery().processDefinitionKey("messageStartEvent")
         .variableValueEquals("aKey", "aValue").count();
-    assertEquals(1, instances);
+    assertThat(instances).isEqualTo(1);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml")
@@ -545,7 +529,7 @@ public class MessageCorrelationTest {
         .processDefinitionKey("messageStartEvent")
         .variableValueEquals("aKey", "aValue")
         .count();
-    assertEquals(1, instances);
+    assertThat(instances).isEqualTo(1);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml"})
@@ -556,8 +540,8 @@ public class MessageCorrelationTest {
     runtimeService.correlateMessage("newInvoiceMessage", businessKey);
 
     ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-    assertNotNull(processInstance);
-    assertEquals(businessKey, processInstance.getBusinessKey());
+    assertThat(processInstance).isNotNull();
+    assertThat(processInstance.getBusinessKey()).isEqualTo(businessKey);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml"})
@@ -570,8 +554,8 @@ public class MessageCorrelationTest {
       .correlateStartMessage();
 
     ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-    assertNotNull(processInstance);
-    assertEquals(businessKey, processInstance.getBusinessKey());
+    assertThat(processInstance).isNotNull();
+    assertThat(processInstance.getBusinessKey()).isEqualTo(businessKey);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml"})
@@ -584,8 +568,8 @@ public class MessageCorrelationTest {
       .correlate();
 
     ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-    assertNotNull(processInstance);
-    assertEquals(businessKey, processInstance.getBusinessKey());
+    assertThat(processInstance).isNotNull();
+    assertThat(processInstance.getBusinessKey()).isEqualTo(businessKey);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml"})
@@ -598,8 +582,8 @@ public class MessageCorrelationTest {
       .correlateAll();
 
     ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-    assertNotNull(processInstance);
-    assertEquals(businessKey, processInstance.getBusinessKey());
+    assertThat(processInstance).isNotNull();
+    assertThat(processInstance.getBusinessKey()).isEqualTo(businessKey);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml")
@@ -633,14 +617,14 @@ public class MessageCorrelationTest {
 
     // then
     ProcessInstance startedInstance = runtimeService.createProcessInstanceQuery().singleResult();
-    assertNotNull(startedInstance);
+    assertThat(startedInstance).isNotNull();
 
     ObjectValue variableTyped = runtimeService.getVariableTyped(startedInstance.getId(), "var", false);
-    assertNotNull(variableTyped);
-    assertFalse(variableTyped.isDeserialized());
-    assertEquals(serializedObject, variableTyped.getValueSerialized());
-    assertEquals(FailingJavaSerializable.class.getName(), variableTyped.getObjectTypeName());
-    assertEquals(SerializationDataFormats.JAVA.getName(), variableTyped.getSerializationDataFormat());
+    assertThat(variableTyped).isNotNull();
+    assertThat(variableTyped.isDeserialized()).isFalse();
+    assertThat(variableTyped.getValueSerialized()).isEqualTo(serializedObject);
+    assertThat(variableTyped.getObjectTypeName()).isEqualTo(FailingJavaSerializable.class.getName());
+    assertThat(variableTyped.getSerializationDataFormat()).isEqualTo(SerializationDataFormats.JAVA.getName());
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml")
@@ -675,14 +659,14 @@ public class MessageCorrelationTest {
 
     // then
     ProcessInstance startedInstance = runtimeService.createProcessInstanceQuery().singleResult();
-    assertNotNull(startedInstance);
+    assertThat(startedInstance).isNotNull();
 
     ObjectValue variableTyped = runtimeService.getVariableTyped(startedInstance.getId(), "var", false);
-    assertNotNull(variableTyped);
-    assertFalse(variableTyped.isDeserialized());
-    assertEquals(serializedObject, variableTyped.getValueSerialized());
-    assertEquals(FailingJavaSerializable.class.getName(), variableTyped.getObjectTypeName());
-    assertEquals(SerializationDataFormats.JAVA.getName(), variableTyped.getSerializationDataFormat());
+    assertThat(variableTyped).isNotNull();
+    assertThat(variableTyped.isDeserialized()).isFalse();
+    assertThat(variableTyped.getValueSerialized()).isEqualTo(serializedObject);
+    assertThat(variableTyped.getObjectTypeName()).isEqualTo(FailingJavaSerializable.class.getName());
+    assertThat(variableTyped.getSerializationDataFormat()).isEqualTo(SerializationDataFormats.JAVA.getName());
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml")
@@ -698,7 +682,7 @@ public class MessageCorrelationTest {
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery().processDefinitionKey("messageStartEvent")
         .variableValueEquals("var1", "a")
         .variableValueEquals("var2", "b");
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml")
@@ -714,7 +698,7 @@ public class MessageCorrelationTest {
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery().processDefinitionKey("messageStartEvent")
         .variableValueEquals("var1", "a")
         .variableValueEquals("var2", "b");
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml")
@@ -730,7 +714,7 @@ public class MessageCorrelationTest {
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery().processDefinitionKey("messageStartEvent")
         .variableValueEquals("var1", "a")
         .variableValueEquals("var2", "b");
-    assertEquals(1, query.count());
+    assertThat(query.count()).isEqualTo(1);
   }
 
   /**
@@ -743,15 +727,15 @@ public class MessageCorrelationTest {
     runtimeService.correlateMessage("someMessage");
     // verify the right start event was selected:
     Task task = taskService.createTaskQuery().taskDefinitionKey("task1").singleResult();
-    assertNotNull(task);
-    assertNull(taskService.createTaskQuery().taskDefinitionKey("task2").singleResult());
+    assertThat(task).isNotNull();
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("task2").singleResult()).isNull();
     taskService.complete(task.getId());
 
     runtimeService.correlateMessage("someOtherMessage");
     // verify the right start event was selected:
     task = taskService.createTaskQuery().taskDefinitionKey("task2").singleResult();
-    assertNotNull(task);
-    assertNull(taskService.createTaskQuery().taskDefinitionKey("task1").singleResult());
+    assertThat(task).isNotNull();
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("task1").singleResult()).isNull();
     taskService.complete(task.getId());
   }
 
@@ -762,15 +746,15 @@ public class MessageCorrelationTest {
     runtimeService.createMessageCorrelation("someMessage").correlateStartMessage();
     // verify the right start event was selected:
     Task task = taskService.createTaskQuery().taskDefinitionKey("task1").singleResult();
-    assertNotNull(task);
-    assertNull(taskService.createTaskQuery().taskDefinitionKey("task2").singleResult());
+    assertThat(task).isNotNull();
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("task2").singleResult()).isNull();
     taskService.complete(task.getId());
 
     runtimeService.createMessageCorrelation("someOtherMessage").correlateStartMessage();
     // verify the right start event was selected:
     task = taskService.createTaskQuery().taskDefinitionKey("task2").singleResult();
-    assertNotNull(task);
-    assertNull(taskService.createTaskQuery().taskDefinitionKey("task1").singleResult());
+    assertThat(task).isNotNull();
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("task1").singleResult()).isNull();
     taskService.complete(task.getId());
   }
 
@@ -781,15 +765,15 @@ public class MessageCorrelationTest {
     runtimeService.createMessageCorrelation("someMessage").correlate();
     // verify the right start event was selected:
     Task task = taskService.createTaskQuery().taskDefinitionKey("task1").singleResult();
-    assertNotNull(task);
-    assertNull(taskService.createTaskQuery().taskDefinitionKey("task2").singleResult());
+    assertThat(task).isNotNull();
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("task2").singleResult()).isNull();
     taskService.complete(task.getId());
 
     runtimeService.createMessageCorrelation("someOtherMessage").correlate();
     // verify the right start event was selected:
     task = taskService.createTaskQuery().taskDefinitionKey("task2").singleResult();
-    assertNotNull(task);
-    assertNull(taskService.createTaskQuery().taskDefinitionKey("task1").singleResult());
+    assertThat(task).isNotNull();
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("task1").singleResult()).isNull();
     taskService.complete(task.getId());
   }
 
@@ -803,15 +787,15 @@ public class MessageCorrelationTest {
     runtimeService.createMessageCorrelation("someMessage").correlateAll();
     // verify the right start event was selected:
     Task task = taskService.createTaskQuery().taskDefinitionKey("task1").singleResult();
-    assertNotNull(task);
-    assertNull(taskService.createTaskQuery().taskDefinitionKey("task2").singleResult());
+    assertThat(task).isNotNull();
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("task2").singleResult()).isNull();
     taskService.complete(task.getId());
 
     runtimeService.createMessageCorrelation("someOtherMessage").correlateAll();
     // verify the right start event was selected:
     task = taskService.createTaskQuery().taskDefinitionKey("task2").singleResult();
-    assertNotNull(task);
-    assertNull(taskService.createTaskQuery().taskDefinitionKey("task1").singleResult());
+    assertThat(task).isNotNull();
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("task1").singleResult()).isNull();
     taskService.complete(task.getId());
   }
 
@@ -820,10 +804,10 @@ public class MessageCorrelationTest {
   public void testMatchingStartEventAndExecution() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
-    assertNotNull(runtimeService.createExecutionQuery().messageEventSubscriptionName("newInvoiceMessage").singleResult());
+    assertThat(runtimeService.createExecutionQuery().messageEventSubscriptionName("newInvoiceMessage").singleResult()).isNotNull();
     // correlate message -> this will trigger the execution
     runtimeService.correlateMessage("newInvoiceMessage");
-    assertNull(runtimeService.createExecutionQuery().messageEventSubscriptionName("newInvoiceMessage").singleResult());
+    assertThat(runtimeService.createExecutionQuery().messageEventSubscriptionName("newInvoiceMessage").singleResult()).isNull();
 
     runtimeService.deleteProcessInstance(processInstance.getId(), null);
 
@@ -831,10 +815,10 @@ public class MessageCorrelationTest {
 
     processInstance = runtimeService.startProcessInstanceByKey("process");
 
-    assertNotNull(runtimeService.createExecutionQuery().messageEventSubscriptionName("newInvoiceMessage").singleResult());
+    assertThat(runtimeService.createExecutionQuery().messageEventSubscriptionName("newInvoiceMessage").singleResult()).isNotNull();
     // correlate message -> this will trigger the execution
     runtimeService.createMessageCorrelation("newInvoiceMessage").correlate();
-    assertNull(runtimeService.createExecutionQuery().messageEventSubscriptionName("newInvoiceMessage").singleResult());
+    assertThat(runtimeService.createExecutionQuery().messageEventSubscriptionName("newInvoiceMessage").singleResult()).isNull();
 
     runtimeService.deleteProcessInstance(processInstance.getId(), null);
 
@@ -857,10 +841,10 @@ public class MessageCorrelationTest {
   }
 
   protected void checkProcessDefinitionMessageCorrelationResult(MessageCorrelationResult result, String startActivityId, String processDefinitionId) {
-    assertNotNull(result);
-    assertNotNull(result.getProcessInstance().getId());
-    assertEquals(MessageCorrelationResultType.ProcessDefinition, result.getResultType());
-    assertTrue(result.getProcessInstance().getProcessDefinitionId().contains(processDefinitionId));
+    assertThat(result).isNotNull();
+    assertThat(result.getProcessInstance().getId()).isNotNull();
+    assertThat(result.getResultType()).isEqualTo(MessageCorrelationResultType.ProcessDefinition);
+    assertThat(result.getProcessInstance().getProcessDefinitionId()).contains(processDefinitionId);
   }
 
 
@@ -870,7 +854,7 @@ public class MessageCorrelationTest {
     //given
     String msgName = "newInvoiceMessage";
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
-    assertNotNull(runtimeService.createExecutionQuery().messageEventSubscriptionName(msgName).singleResult());
+    assertThat(runtimeService.createExecutionQuery().messageEventSubscriptionName(msgName).singleResult()).isNotNull();
 
     //when
     //correlate message with result
@@ -882,11 +866,11 @@ public class MessageCorrelationTest {
   }
 
   protected void checkExecutionMessageCorrelationResult(MessageCorrelationResult result, ProcessInstance processInstance, String activityId) {
-    assertNotNull(result);
-    assertEquals(MessageCorrelationResultType.Execution, result.getResultType());
-    assertEquals(processInstance.getId(), result.getExecution().getProcessInstanceId());
+    assertThat(result).isNotNull();
+    assertThat(result.getResultType()).isEqualTo(MessageCorrelationResultType.Execution);
+    assertThat(result.getExecution().getProcessInstanceId()).isEqualTo(processInstance.getId());
     ExecutionEntity entity = (ExecutionEntity) result.getExecution();
-    assertEquals(activityId, entity.getActivityId());
+    assertThat(entity.getActivityId()).isEqualTo(activityId);
   }
 
 
@@ -896,12 +880,12 @@ public class MessageCorrelationTest {
     runtimeService.startProcessInstanceByKey("process");
     runtimeService.startProcessInstanceByKey("process");
 
-    assertEquals(2, runtimeService.createExecutionQuery().messageEventSubscriptionName("newInvoiceMessage").count());
+    assertThat(runtimeService.createExecutionQuery().messageEventSubscriptionName("newInvoiceMessage").count()).isEqualTo(2);
     // correlate message -> this will trigger the executions AND start a new process instance
     runtimeService.createMessageCorrelation("newInvoiceMessage").correlateAll();
-    assertNotNull(runtimeService.createExecutionQuery().messageEventSubscriptionName("newInvoiceMessage").singleResult());
+    assertThat(runtimeService.createExecutionQuery().messageEventSubscriptionName("newInvoiceMessage").singleResult()).isNotNull();
 
-    assertEquals(3, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(3);
   }
 
 
@@ -916,32 +900,32 @@ public class MessageCorrelationTest {
     List<MessageCorrelationResult> resultList = runtimeService.createMessageCorrelation("newInvoiceMessage")
             .correlateAllWithResult();
 
-    //then result should contains three entries
+    //then result should contain three entries
     //two of type execution und one of type process definition
-    assertEquals(3, resultList.size());
+    assertThat(resultList).hasSize(3);
     int executionResultCount = 0;
     int procDefResultCount = 0;
     for (MessageCorrelationResult result : resultList) {
       if (result.getResultType().equals(MessageCorrelationResultType.Execution)) {
-        assertNotNull(result);
-        assertEquals(MessageCorrelationResultType.Execution, result.getResultType());
-        assertTrue(procInstance1.getId().equalsIgnoreCase(result.getExecution().getProcessInstanceId())
-                || procInstance2.getId().equalsIgnoreCase(result.getExecution().getProcessInstanceId())
-        );
+        assertThat(result).isNotNull();
+        assertThat(result.getResultType()).isEqualTo(MessageCorrelationResultType.Execution);
+        assertThat(procInstance1.getId().equalsIgnoreCase(result.getExecution().getProcessInstanceId())
+            || procInstance2.getId().equalsIgnoreCase(result.getExecution().getProcessInstanceId())).isTrue();
         ExecutionEntity entity = (ExecutionEntity) result.getExecution();
-        assertEquals("messageCatch", entity.getActivityId());
+        assertThat(entity.getActivityId()).isEqualTo("messageCatch");
         executionResultCount++;
       } else {
         checkProcessDefinitionMessageCorrelationResult(result, "theStart", "process");
         procDefResultCount++;
       }
     }
-    assertEquals(2, executionResultCount);
-    assertEquals(1, procDefResultCount);
+    assertThat(executionResultCount).isEqualTo(2);
+    assertThat(procDefResultCount).isEqualTo(1);
   }
 
   @Test
   public void testMessageStartEventCorrelationWithNonMatchingDefinition() {
+    var messageCorrelationBuilder = runtimeService.createMessageCorrelation("aMessageName");
     try {
       runtimeService.correlateMessage("aMessageName");
       fail("Expect an Exception");
@@ -952,7 +936,7 @@ public class MessageCorrelationTest {
     // fluent builder //////////////////
 
     try {
-      runtimeService.createMessageCorrelation("aMessageName").correlate();
+      messageCorrelationBuilder.correlate();
       fail("Expect an Exception");
     } catch (MismatchingMessageCorrelationException e) {
       testRule.assertTextPresent("Cannot correlate message", e.getMessage());
@@ -986,12 +970,12 @@ public class MessageCorrelationTest {
         .activityId("task").processVariableValueEquals("aProcessVariable", "aVariableValue")
         .singleResult();
 
-    assertNotNull(correlatedExecution);
+    assertThat(correlatedExecution).isNotNull();
 
     ProcessInstance correlatedProcessInstance = runtimeService.createProcessInstanceQuery()
         .processInstanceId(correlatedExecution.getProcessInstanceId()).singleResult();
 
-    assertEquals("aBusinessKey", correlatedProcessInstance.getBusinessKey());
+    assertThat(correlatedProcessInstance.getBusinessKey()).isEqualTo("aBusinessKey");
 
     runtimeService.deleteProcessInstance(processInstance.getId(), null);
 
@@ -1011,12 +995,12 @@ public class MessageCorrelationTest {
         .activityId("task").processVariableValueEquals("aProcessVariable", "aVariableValue")
         .singleResult();
 
-    assertNotNull(correlatedExecution);
+    assertThat(correlatedExecution).isNotNull();
 
     correlatedProcessInstance = runtimeService.createProcessInstanceQuery()
         .processInstanceId(correlatedExecution.getProcessInstanceId()).singleResult();
 
-    assertEquals("aBusinessKey", correlatedProcessInstance.getBusinessKey());
+    assertThat(correlatedProcessInstance.getBusinessKey()).isEqualTo("aBusinessKey");
 
     runtimeService.deleteProcessInstance(processInstance.getId(), null);
 
@@ -1043,7 +1027,7 @@ public class MessageCorrelationTest {
         .processVariableValueEquals("aProcessVariable", "aVariableValue")
         .list();
 
-    assertEquals(2, correlatedExecutions.size());
+    assertThat(correlatedExecutions).hasSize(2);
 
     // Instance 1
     Execution correlatedExecution = correlatedExecutions.get(0);
@@ -1052,7 +1036,7 @@ public class MessageCorrelationTest {
         .processInstanceId(correlatedExecution.getProcessInstanceId())
         .singleResult();
 
-    assertEquals("aBusinessKey", correlatedProcessInstance.getBusinessKey());
+    assertThat(correlatedProcessInstance.getBusinessKey()).isEqualTo("aBusinessKey");
 
     // Instance 2
     correlatedExecution = correlatedExecutions.get(1);
@@ -1061,7 +1045,7 @@ public class MessageCorrelationTest {
         .processInstanceId(correlatedExecution.getProcessInstanceId())
         .singleResult();
 
-    assertEquals("aBusinessKey", correlatedProcessInstance.getBusinessKey());
+    assertThat(correlatedProcessInstance.getBusinessKey()).isEqualTo("aBusinessKey");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
@@ -1071,10 +1055,11 @@ public class MessageCorrelationTest {
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("process");
 
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("process");
+    var messageCorrelationBuilder = runtimeService.createMessageCorrelation("aMessageName");
 
     // correlation with only the name is ambiguous:
     try {
-      runtimeService.createMessageCorrelation("aMessageName").correlate();
+      messageCorrelationBuilder.correlate();
       fail("Expect an Exception");
     } catch (MismatchingMessageCorrelationException e) {
       testRule.assertTextPresent("Cannot correlate message", e.getMessage());
@@ -1089,13 +1074,13 @@ public class MessageCorrelationTest {
         .activityId("task")
         .processInstanceId(processInstance1.getId())
         .singleResult();
-    assertNotNull(correlatedExecution);
+    assertThat(correlatedExecution).isNotNull();
 
     Execution uncorrelatedExecution = runtimeService.createExecutionQuery()
         .activityId("task")
         .processInstanceId(processInstance2.getId())
         .singleResult();
-    assertNull(uncorrelatedExecution);
+    assertThat(uncorrelatedExecution).isNull();
 
     runtimeService.deleteProcessInstance(processInstance1.getId(), null);
   }
@@ -1113,7 +1098,7 @@ public class MessageCorrelationTest {
       .createMessageCorrelation("aMessageName")
       .correlateAll();
 
-    assertEquals(0, runtimeService.createExecutionQuery().activityId("task").count());
+    assertThat(runtimeService.createExecutionQuery().activityId("task").count()).isZero();
 
     // correlate process instance id
     processInstance1 = runtimeService.startProcessInstanceByKey("process");
@@ -1131,14 +1116,14 @@ public class MessageCorrelationTest {
         .activityId("task")
         .processInstanceId(processInstance1.getId())
         .singleResult();
-    assertNotNull(correlatedExecution);
+    assertThat(correlatedExecution).isNotNull();
 
     Execution uncorrelatedExecution = runtimeService
         .createExecutionQuery()
         .activityId("task")
         .processInstanceId(processInstance2.getId())
         .singleResult();
-    assertNull(uncorrelatedExecution);
+    assertThat(uncorrelatedExecution).isNull();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
@@ -1147,16 +1132,14 @@ public class MessageCorrelationTest {
     runtimeService.startProcessInstanceByKey("process", "aBusinessKey");
 
     String messageName = "newInvoiceMessage";
+    var messageCorrelationBuilder = runtimeService.createMessageCorrelation(messageName)
+        .processInstanceBusinessKey("aBusinessKey");
 
     try {
-      runtimeService.createMessageCorrelation(messageName)
-        .processInstanceBusinessKey("aBusinessKey")
-        .setVariable(null, "aVariableValue")
-        .correlateAll();
+      messageCorrelationBuilder.setVariable(null, "aVariableValue");
       fail("Variable name is null");
     }
-    catch (Exception e) {
-      assertTrue(e instanceof ProcessEngineException);
+    catch (NullValueException e) {
       testRule.assertTextPresent("null", e.getMessage());
     }
 
@@ -1170,16 +1153,14 @@ public class MessageCorrelationTest {
     runtimeService.startProcessInstanceByKey("process", "aBusinessKey", variables);
 
     String messageName = "newInvoiceMessage";
+    var messageCorrelationBuilder = runtimeService.createMessageCorrelation(messageName)
+        .processInstanceBusinessKey("aBusinessKey");
 
     try {
-      runtimeService.createMessageCorrelation(messageName)
-        .processInstanceBusinessKey("aBusinessKey")
-        .processInstanceVariableEquals(null, "bar")
-        .correlateAll();
+      messageCorrelationBuilder.processInstanceVariableEquals(null, "bar");
       fail("Variable name is null");
     }
-    catch (Exception e) {
-      assertTrue(e instanceof ProcessEngineException);
+    catch (NullValueException e) {
       testRule.assertTextPresent("null", e.getMessage());
     }
 
@@ -1204,7 +1185,7 @@ public class MessageCorrelationTest {
       .processVariableValueEquals("foo", "bar")
       .list();
 
-    assertFalse(correlatedExecutions.isEmpty());
+    assertThat(correlatedExecutions).isNotEmpty();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
@@ -1224,8 +1205,8 @@ public class MessageCorrelationTest {
       .activityId("task")
       .list();
 
-    assertEquals(1, correlatedExecutions.size());
-    assertEquals(instance.getId(), correlatedExecutions.get(0).getId());
+    assertThat(correlatedExecutions).hasSize(1);
+    assertThat(correlatedExecutions.get(0).getId()).isEqualTo(instance.getId());
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
@@ -1241,8 +1222,8 @@ public class MessageCorrelationTest {
       .activityId("task")
       .list();
 
-    assertEquals(1, correlatedExecutions.size());
-    assertEquals(instance.getId(), correlatedExecutions.get(0).getId());
+    assertThat(correlatedExecutions).hasSize(1);
+    assertThat(correlatedExecutions.get(0).getId()).isEqualTo(instance.getId());
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
@@ -1261,8 +1242,8 @@ public class MessageCorrelationTest {
       .activityId("task")
       .list();
 
-    assertEquals(1, correlatedExecutions.size());
-    assertEquals(instance.getId(), correlatedExecutions.get(0).getId());
+    assertThat(correlatedExecutions).hasSize(1);
+    assertThat(correlatedExecutions.get(0).getId()).isEqualTo(instance.getId());
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
@@ -1284,8 +1265,8 @@ public class MessageCorrelationTest {
       .activityId("task")
       .list();
 
-    assertEquals(1, correlatedExecutions.size());
-    assertEquals(instance.getId(), correlatedExecutions.get(0).getId());
+    assertThat(correlatedExecutions).hasSize(1);
+    assertThat(correlatedExecutions.get(0).getId()).isEqualTo(instance.getId());
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml",
@@ -1312,18 +1293,18 @@ public class MessageCorrelationTest {
       .asc()
       .list();
 
-    assertEquals(2, correlatedExecutions.size());
-    assertEquals(instance1.getId(), correlatedExecutions.get(0).getId());
-    assertEquals(instance2.getId(), correlatedExecutions.get(1).getId());
+    assertThat(correlatedExecutions).hasSize(2);
+    assertThat(correlatedExecutions.get(0).getId()).isEqualTo(instance1.getId());
+    assertThat(correlatedExecutions.get(1).getId()).isEqualTo(instance2.getId());
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml")
   @Test
   public void testCorrelationWithoutMessageDoesNotMatchStartEvent() {
+    var messageCorrelationBuilder = runtimeService.createMessageCorrelation(null)
+        .processInstanceVariableEquals("variable", "value2");
     try {
-      runtimeService.createMessageCorrelation(null)
-        .processInstanceVariableEquals("variable", "value2")
-        .correlate();
+      messageCorrelationBuilder.correlate();
       fail("exception expected");
     } catch (MismatchingMessageCorrelationException e) {
       // expected
@@ -1334,7 +1315,7 @@ public class MessageCorrelationTest {
       .activityId("task")
       .list();
 
-    assertTrue(correlatedExecutions.isEmpty());
+    assertThat(correlatedExecutions).isEmpty();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
@@ -1342,20 +1323,20 @@ public class MessageCorrelationTest {
   public void testCorrelationWithoutCorrelationPropertiesFails() {
 
     runtimeService.startProcessInstanceByKey("process");
+    var messageCorrelationBuilder = runtimeService.createMessageCorrelation(null);
 
     try {
-      runtimeService.createMessageCorrelation(null)
-        .correlate();
+      messageCorrelationBuilder.correlate();
       fail("expected exception");
     } catch (NullValueException e) {
-      // expected
+      assertThat(e.getMessage()).isEqualTo("At least one of the following correlation criteria has to be present: messageName, businessKey, correlationKeys, processInstanceId");
     }
 
     try {
       runtimeService.correlateMessage(null);
       fail("expected exception");
     } catch (NullValueException e) {
-      // expected
+      assertThat(e.getMessage()).isEqualTo("At least one of the following correlation criteria has to be present: messageName, businessKey, correlationKeys, processInstanceId");
     }
   }
 
@@ -1364,11 +1345,11 @@ public class MessageCorrelationTest {
   public void testCorrelationToExecutionWithMultipleSubscriptionsFails() {
 
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("process");
+    var messageCorrelationBuilder = runtimeService.createMessageCorrelation(null)
+        .processInstanceId(instance.getId());
 
     try {
-      runtimeService.createMessageCorrelation(null)
-        .processInstanceId(instance.getId())
-        .correlate();
+      messageCorrelationBuilder.correlate();
       fail("expected exception");
     } catch (ProcessEngineException e) {
       // note: this does not expect a MismatchingCorrelationException since the exception
@@ -1377,6 +1358,7 @@ public class MessageCorrelationTest {
       // at least one message)
 
       // expected
+      assertThat(e.getMessage()).contains("More than one matching message subscription found for execution");
     }
   }
 
@@ -1432,7 +1414,7 @@ public class MessageCorrelationTest {
         .processVariableValueEquals("aKey", "aValue")
         .messageEventSubscriptionName("newInvoiceMessage")
         .count();
-    assertEquals(1, uncorrelatedExecutions);
+    assertThat(uncorrelatedExecutions).isEqualTo(1);
 
     // the execution that has been correlated should have advanced
     long correlatedExecutions = runtimeService
@@ -1442,7 +1424,7 @@ public class MessageCorrelationTest {
         .processVariableValueEquals("aKey", "aValue")
         .processVariableValueEquals("aNewKey", "aNewVariable")
         .count();
-    assertEquals(1, correlatedExecutions);
+    assertThat(correlatedExecutions).isEqualTo(1);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml")
@@ -1454,9 +1436,10 @@ public class MessageCorrelationTest {
 
     Map<String, Object> variables = new HashMap<>();
     variables.put("aKey", "aValue");
+    var processVariables = new HashMap<String, Object>();
 
     try {
-      runtimeService.correlateMessage("newInvoiceMessage", new HashMap<>(), variables);
+      runtimeService.correlateMessage("newInvoiceMessage", processVariables, variables);
       fail("It should not be possible to correlate a message to a suspended process definition.");
     } catch (MismatchingMessageCorrelationException e) {
       // expected
@@ -1492,10 +1475,10 @@ public class MessageCorrelationTest {
       .processInstanceBusinessKey("second")
       .correlateStartMessage();
 
-    assertEquals(1, runtimeService.createProcessInstanceQuery()
-        .processInstanceBusinessKey("first").processDefinitionId(firstProcessDefinition.getId()).count());
-    assertEquals(1, runtimeService.createProcessInstanceQuery()
-        .processInstanceBusinessKey("second").processDefinitionId(secondProcessDefinition.getId()).count());
+    assertThat(runtimeService.createProcessInstanceQuery()
+        .processInstanceBusinessKey("first").processDefinitionId(firstProcessDefinition.getId()).count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery()
+        .processInstanceBusinessKey("second").processDefinitionId(secondProcessDefinition.getId()).count()).isEqualTo(1);
   }
 
   @Test
@@ -1515,11 +1498,11 @@ public class MessageCorrelationTest {
         .done());
 
     ProcessDefinition latestProcessDefinition = repositoryService.createProcessDefinitionQuery().latestVersion().singleResult();
+    var messageCorrelationBuilder = runtimeService.createMessageCorrelation("a")
+        .processDefinitionId(latestProcessDefinition.getId());
 
     try {
-      runtimeService.createMessageCorrelation("a")
-        .processDefinitionId(latestProcessDefinition.getId())
-        .correlateStartMessage();
+      messageCorrelationBuilder.correlateStartMessage();
 
       fail("expected exception");
     } catch (MismatchingMessageCorrelationException e){
@@ -1529,10 +1512,10 @@ public class MessageCorrelationTest {
 
   @Test
   public void testFailCorrelateMessageStartEventWithNonExistingProcessDefinitionId() {
+    var messageCorrelationBuilder = runtimeService.createMessageCorrelation("a")
+        .processDefinitionId("not existing");
     try {
-      runtimeService.createMessageCorrelation("a")
-        .processDefinitionId("not existing")
-        .correlateStartMessage();
+      messageCorrelationBuilder.correlateStartMessage();
 
       fail("expected exception");
     } catch (ProcessEngineException e){
@@ -1542,10 +1525,10 @@ public class MessageCorrelationTest {
 
   @Test
   public void testFailCorrelateMessageWithProcessDefinitionId() {
+    var messageCorrelationBuilder = runtimeService.createMessageCorrelation("a")
+        .processDefinitionId("id");
     try {
-      runtimeService.createMessageCorrelation("a")
-        .processDefinitionId("id")
-        .correlate();
+      messageCorrelationBuilder.correlate();
 
       fail("expected exception");
     } catch (BadUserRequestException e){
@@ -1555,10 +1538,10 @@ public class MessageCorrelationTest {
 
   @Test
   public void testFailCorrelateMessagesWithProcessDefinitionId() {
+    var messageCorrelationBuilder = runtimeService.createMessageCorrelation("a")
+        .processDefinitionId("id");
     try {
-      runtimeService.createMessageCorrelation("a")
-        .processDefinitionId("id")
-        .correlateAll();
+      messageCorrelationBuilder.correlateAll();
 
       fail("expected exception");
     } catch (BadUserRequestException e){
@@ -1568,10 +1551,10 @@ public class MessageCorrelationTest {
 
   @Test
   public void testFailCorrelateMessageStartEventWithCorrelationVariable() {
+    var messageCorrelationBuilder = runtimeService.createMessageCorrelation("a")
+        .processInstanceVariableEquals("var", "value");
     try {
-      runtimeService.createMessageCorrelation("a")
-        .processInstanceVariableEquals("var", "value")
-        .correlateStartMessage();
+      messageCorrelationBuilder.correlateStartMessage();
 
       fail("expected exception");
     } catch (BadUserRequestException e){
@@ -1581,13 +1564,13 @@ public class MessageCorrelationTest {
 
   @Test
   public void testFailCorrelateMessageStartEventWithCorrelationVariables() {
-    try {
-      runtimeService.createMessageCorrelation("a")
+    var messageCorrelationBuilder = runtimeService.createMessageCorrelation("a")
         .processInstanceVariablesEqual(Variables
               .createVariables()
               .putValue("var1", "b")
-              .putValue("var2", "c"))
-        .correlateStartMessage();
+              .putValue("var2", "c"));
+    try {
+      messageCorrelationBuilder.correlateStartMessage();
 
       fail("expected exception");
     } catch (BadUserRequestException e){
@@ -1615,9 +1598,9 @@ public class MessageCorrelationTest {
     ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceByKey("Process_1", variables);
 
     Map<String, Object> messageLocalPayload = new HashMap<>();
-    String outpuValue = "outputValue";
+    String outputValue = "outputValue";
     String localVarName = "testLocalVar";
-    messageLocalPayload.put(localVarName, outpuValue);
+    messageLocalPayload.put(localVarName, outputValue);
 
     // when
     MessageCorrelationResultWithVariables messageCorrelationResult = runtimeService
@@ -1633,20 +1616,20 @@ public class MessageCorrelationTest {
         .processInstanceIdIn(processInstance.getId())
         .variableName(outputVarName)
         .singleResult();
-    assertNotNull(variable);
-    assertEquals(outpuValue, variable.getValue());
-    assertEquals(processInstance.getId(), variable.getExecutionId());
+    assertThat(variable).isNotNull();
+    assertThat(variable.getValue()).isEqualTo(outputValue);
+    assertThat(variable.getExecutionId()).isEqualTo(processInstance.getId());
 
     VariableInstance variableNonExisting = runtimeService
         .createVariableInstanceQuery()
         .processInstanceIdIn(processInstance.getId())
         .variableName(localVarName)
         .singleResult();
-    assertNull(variableNonExisting);
+    assertThat(variableNonExisting).isNull();
 
     VariableMap variablesInReturn = messageCorrelationResult.getVariables();
-    assertEquals(variable.getTypedValue(), variablesInReturn.getValueTyped(outputVarName));
-    assertEquals("processInstanceVarValue", variablesInReturn.getValue("processInstanceVar", String.class));
+    assertThat(variablesInReturn.<StringValue>getValueTyped(outputVarName)).isEqualTo(variable.getTypedValue());
+    assertThat(variablesInReturn.getValue("processInstanceVar", String.class)).isEqualTo("processInstanceVarValue");
   }
 
   @Test
@@ -1669,9 +1652,9 @@ public class MessageCorrelationTest {
     ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceByKey("Process_1", variables);
 
     Map<String, Object> messageLocalPayload = new HashMap<>();
-    String outpuValue = "outputValue";
+    String outputValue = "outputValue";
     String localVarName = "testLocalVar";
-    messageLocalPayload.put(localVarName, outpuValue);
+    messageLocalPayload.put(localVarName, outputValue);
 
     // when
     runtimeService
@@ -1685,16 +1668,16 @@ public class MessageCorrelationTest {
         .processInstanceIdIn(processInstance.getId())
         .variableName(outputVarName)
         .singleResult();
-    assertNotNull(variable);
-    assertEquals(outpuValue, variable.getValue());
-    assertEquals(processInstance.getId(), variable.getExecutionId());
+    assertThat(variable).isNotNull();
+    assertThat(variable.getValue()).isEqualTo(outputValue);
+    assertThat(variable.getExecutionId()).isEqualTo(processInstance.getId());
 
     VariableInstance variableNonExisting = runtimeService
         .createVariableInstanceQuery()
         .processInstanceIdIn(processInstance.getId())
         .variableName(localVarName)
         .singleResult();
-    assertNull(variableNonExisting);
+    assertThat(variableNonExisting).isNull();
   }
 
 
@@ -1744,7 +1727,7 @@ public class MessageCorrelationTest {
     ProcessInstance messageWaitProcess = runtimeService.startProcessInstanceByKey("waitForMessageProcess", variables);
 
     Execution waitingProcess = runtimeService.createExecutionQuery().executionId(messageWaitProcess.getProcessInstanceId()).singleResult();
-    Assert.assertNotNull(waitingProcess);
+    assertThat(waitingProcess).isNotNull();
 
     VariableMap switchScenarioFlag = Variables.createVariables().putValue("allFlag", false);
 
@@ -1755,7 +1738,7 @@ public class MessageCorrelationTest {
 
     // waiting process has not finished
     waitingProcess = runtimeService.createExecutionQuery().executionId(messageWaitProcess.getProcessInstanceId()).singleResult();
-    Assert.assertNotNull(waitingProcess);
+    assertThat(waitingProcess).isNotNull();
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.waitForMessageProcess.bpmn20.xml",
@@ -1768,7 +1751,7 @@ public class MessageCorrelationTest {
     ProcessInstance messageWaitProcess = runtimeService.startProcessInstanceByKey("waitForMessageProcess", variables);
 
     Execution waitingProcess = runtimeService.createExecutionQuery().executionId(messageWaitProcess.getProcessInstanceId()).singleResult();
-    Assert.assertNotNull(waitingProcess);
+    assertThat(waitingProcess).isNotNull();
 
     // start process that sends two messages with the same correlationKey
     VariableMap switchScenarioFlag = Variables.createVariables().putValue("allFlag", true);
@@ -1776,7 +1759,7 @@ public class MessageCorrelationTest {
 
     // waiting process must be finished
     waitingProcess = runtimeService.createExecutionQuery().executionId(messageWaitProcess.getProcessInstanceId()).singleResult();
-    Assert.assertNull(waitingProcess);
+    assertThat(waitingProcess).isNull();
   }
 
   @Test
@@ -1792,9 +1775,9 @@ public class MessageCorrelationTest {
     testRule.deploy(model);
 
     Map<String, Object> messagePayload = new HashMap<>();
-    String outpuValue = "outputValue";
+    String outputValue = "outputValue";
     String localVarName = "testLocalVar";
-    messagePayload.put(localVarName, outpuValue);
+    messagePayload.put(localVarName, outputValue);
 
     // when
     MessageCorrelationResult result = runtimeService
@@ -1803,8 +1786,8 @@ public class MessageCorrelationTest {
         .correlateWithResult();
 
     // then
-    assertNotNull(result);
-    assertEquals(MessageCorrelationResultType.ProcessDefinition, result.getResultType());
+    assertThat(result).isNotNull();
+    assertThat(result.getResultType()).isEqualTo(MessageCorrelationResultType.ProcessDefinition);
   }
 
   @Test
@@ -1826,9 +1809,9 @@ public class MessageCorrelationTest {
         .correlateWithResultAndVariables(true);
 
     // then
-    assertNotNull(result);
-    assertEquals(MessageCorrelationResultType.ProcessDefinition, result.getResultType());
-    assertEquals("bar", result.getVariables().getValue("foo", String.class));
+    assertThat(result).isNotNull();
+    assertThat(result.getResultType()).isEqualTo(MessageCorrelationResultType.ProcessDefinition);
+    assertThat(result.getVariables().getValue("foo", String.class)).isEqualTo("bar");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
@@ -1843,18 +1826,18 @@ public class MessageCorrelationTest {
         .createMessageCorrelation("newInvoiceMessage")
         .correlateAllWithResultAndVariables(true);
 
-    assertEquals(2, resultList.size());
-    //then result should contains executions on which messages was correlated
+    assertThat(resultList).hasSize(2);
+    //then result should contain executions on which messages was correlated
     for (MessageCorrelationResultWithVariables result : resultList) {
-      assertNotNull(result);
-      assertEquals(MessageCorrelationResultType.Execution, result.getResultType());
+      assertThat(result).isNotNull();
+      assertThat(result.getResultType()).isEqualTo(MessageCorrelationResultType.Execution);
       ExecutionEntity execution = (ExecutionEntity) result.getExecution();
       VariableMap variables = result.getVariables();
-      assertEquals(1, variables.size());
+      assertThat(variables).hasSize(1);
       if (procInstance1.getId().equalsIgnoreCase(execution.getProcessInstanceId())) {
-        assertEquals("foo", variables.getValue("var1", String.class));
+        assertThat(variables.getValue("var1", String.class)).isEqualTo("foo");
       } else if (procInstance2.getId().equalsIgnoreCase(execution.getProcessInstanceId())) {
-        assertEquals("bar", variables.getValue("var2", String.class));
+        assertThat(variables.getValue("var2", String.class)).isEqualTo("bar");
       } else {
         fail("Only those process instances should exist");
       }
@@ -1887,12 +1870,12 @@ public class MessageCorrelationTest {
         .correlateWithResultAndVariables(true);
 
     // then
-    assertNotNull(result);
-    assertEquals(MessageCorrelationResultType.Execution, result.getResultType());
-    assertEquals(3, result.getVariables().size());
-    assertEquals("foo", result.getVariables().get("a"));
-    assertEquals(2, result.getVariables().get("b"));
-    assertEquals(42, result.getVariables().get("sum"));
+    assertThat(result).isNotNull();
+    assertThat(result.getResultType()).isEqualTo(MessageCorrelationResultType.Execution);
+    assertThat(result.getVariables()).hasSize(3);
+    assertThat(result.getVariables()).containsEntry("a", "foo");
+    assertThat(result.getVariables()).containsEntry("b", 2);
+    assertThat(result.getVariables()).containsEntry("sum", 42);
   }
 
   @Test
@@ -2132,11 +2115,11 @@ public class MessageCorrelationTest {
 
   @Test
   public void testFailStartMessageOnlyFlagWithCorrelationVariable() {
-    try {
-      runtimeService.createMessageCorrelation("a")
+    var messageCorrelationBuilder = runtimeService.createMessageCorrelation("a")
         .startMessageOnly()
-        .processInstanceVariableEquals("var", "value")
-        .correlate();
+        .processInstanceVariableEquals("var", "value");
+    try {
+      messageCorrelationBuilder.correlate();
 
       fail("expected exception");
     } catch (BadUserRequestException e){
@@ -2146,14 +2129,14 @@ public class MessageCorrelationTest {
 
   @Test
   public void testFailStartMessageOnlyFlagWithCorrelationVariables() {
-    try {
-      runtimeService.createMessageCorrelation("a")
+    var messageCorrelationBuilder = runtimeService.createMessageCorrelation("a")
         .startMessageOnly()
         .processInstanceVariablesEqual(Variables
               .createVariables()
               .putValue("var1", "b")
-              .putValue("var2", "c"))
-        .correlateAll();
+              .putValue("var2", "c"));
+    try {
+      messageCorrelationBuilder.correlateAll();
 
       fail("expected exception");
     } catch (BadUserRequestException e){
@@ -2173,9 +2156,9 @@ public class MessageCorrelationTest {
     engineRule.getRuntimeService().startProcessInstanceByKey("Process_1", variables);
 
     Map<String, Object> messagePayload = new HashMap<>();
-    String outpuValue = "outputValue";
+    String outputValue = "outputValue";
     String variableName = "testVar";
-    messagePayload.put(variableName, outpuValue);
+    messagePayload.put(variableName, outputValue);
 
     // when
     runtimeService
@@ -2192,7 +2175,7 @@ public class MessageCorrelationTest {
         .variableScopeIdIn(activityInstance.getId())
         .singleResult();
     assertThat(variable).isNotNull();
-    assertThat(variable.getValue()).isEqualTo(outpuValue);
+    assertThat(variable.getValue()).isEqualTo(outputValue);
   }
 
   @Test
@@ -2207,9 +2190,9 @@ public class MessageCorrelationTest {
     ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceByKey("Process_1", variables);
 
     Map<String, Object> messagePayload = new HashMap<>();
-    String outpuValue = "outputValue";
+    String outputValue = "outputValue";
     String variableName = "testVar";
-    messagePayload.put(variableName, outpuValue);
+    messagePayload.put(variableName, outputValue);
 
     // when
     runtimeService
@@ -2224,7 +2207,7 @@ public class MessageCorrelationTest {
         .variableScopeIdIn(processInstance.getId())
         .singleResult();
     assertThat(variable).isNotNull();
-    assertThat(variable.getValue()).isEqualTo(outpuValue);
+    assertThat(variable.getValue()).isEqualTo(outputValue);
   }
 
   @Test
@@ -2236,13 +2219,13 @@ public class MessageCorrelationTest {
     variables.put("processInstanceVar", "processInstanceVarValue");
     engineRule.getRuntimeService().startProcessInstanceByKey("Process_1", variables);
 
-    String outpuValue = "outputValue";
+    String outputValue = "outputValue";
     String variableName = "testVar";
 
     // when
     runtimeService
         .createMessageCorrelation("1")
-        .setVariableToTriggeredScope(variableName, outpuValue)
+        .setVariableToTriggeredScope(variableName, outputValue)
         .correlate();
 
     // then the scope is "afterMessage" activity
@@ -2254,7 +2237,7 @@ public class MessageCorrelationTest {
         .variableScopeIdIn(activityInstance.getId())
         .singleResult();
     assertThat(variable).isNotNull();
-    assertThat(variable.getValue()).isEqualTo(outpuValue);
+    assertThat(variable.getValue()).isEqualTo(outputValue);
   }
 
   @Test
@@ -2266,13 +2249,13 @@ public class MessageCorrelationTest {
     variables.put("processInstanceVar", "processInstanceVarValue");
     engineRule.getRuntimeService().startProcessInstanceByKey("Process_1", variables);
 
-    String outpuValue = "outputValue";
+    String outputValue = "outputValue";
     String variableName = "testVar";
 
     // when
     runtimeService
         .createMessageCorrelation("1")
-        .setVariableToTriggeredScope(variableName, outpuValue)
+        .setVariableToTriggeredScope(variableName, outputValue)
         .correlate();
 
     // then the scope is "afterMessage" activity
@@ -2284,7 +2267,7 @@ public class MessageCorrelationTest {
         .variableScopeIdIn(activityInstance.getId())
         .singleResult();
     assertThat(variable).isNotNull();
-    assertThat(variable.getValue()).isEqualTo(outpuValue);
+    assertThat(variable.getValue()).isEqualTo(outputValue);
   }
 
   @Test
@@ -2303,9 +2286,9 @@ public class MessageCorrelationTest {
     variables.put("processInstanceVar", "processInstanceVarValue");
 
     Map<String, Object> messagePayload = new HashMap<>();
-    String outpuValue = "outputValue";
+    String outputValue = "outputValue";
     String variableName = "testVar";
-    messagePayload.put(variableName, outpuValue);
+    messagePayload.put(variableName, outputValue);
 
     // when
     MessageCorrelationResult result = runtimeService
@@ -2320,7 +2303,7 @@ public class MessageCorrelationTest {
         .variableName(variableName)
         .singleResult();
     assertThat(variable).isNotNull();
-    assertThat(variable.getValue()).isEqualTo(outpuValue);
+    assertThat(variable.getValue()).isEqualTo(outputValue);
   }
 
   @Test
@@ -2342,9 +2325,9 @@ public class MessageCorrelationTest {
     engineRule.getRuntimeService().startProcessInstanceByKey("Process_1", variables);
 
     Map<String, Object> messagePayload = new HashMap<>();
-    String outpuValue = "outputValue";
+    String outputValue = "outputValue";
     String variableName = "testVar";
-    messagePayload.put(variableName, outpuValue);
+    messagePayload.put(variableName, outputValue);
 
     // when
     runtimeService
@@ -2374,13 +2357,10 @@ public class MessageCorrelationTest {
     variables.put("processInstanceVar", "processInstanceVarValue");
     engineRule.getRuntimeService().startProcessInstanceByKey("Process_1", variables);
 
-    String outpuValue = "outputValue";
+    var messageCorrelationBuilder = runtimeService.createMessageCorrelation("1");
 
     // when/then
-    assertThatThrownBy(() ->  runtimeService
-        .createMessageCorrelation("1")
-        .setVariableToTriggeredScope(null, outpuValue)
-        .correlate())
+    assertThatThrownBy(() -> messageCorrelationBuilder.setVariableToTriggeredScope(null, "outputValue"))
     .isInstanceOf(NullValueException.class)
     .hasMessageContaining("variableName");
   }
@@ -2397,9 +2377,9 @@ public class MessageCorrelationTest {
     engineRule.getRuntimeService().startProcessInstanceByKey("Process_1", variables);
 
     Map<String, Object> messagePayload = new HashMap<>();
-    String outpuValue = "outputValue";
+    String outputValue = "outputValue";
     String variableName = "testVar";
-    messagePayload.put(variableName, outpuValue);
+    messagePayload.put(variableName, outputValue);
 
 
     // when
@@ -2408,7 +2388,7 @@ public class MessageCorrelationTest {
         .setVariablesToTriggeredScope(messagePayload)
         .correlate();
     Job asyncJob = engineRule.getManagementService().createJobQuery().list().get(0);
-    assertNotNull(asyncJob);
+    assertThat(asyncJob).isNotNull();
     engineRule.getManagementService().executeJob(asyncJob.getId());
 
     // then the scope is "afterMessage" activity
@@ -2420,7 +2400,7 @@ public class MessageCorrelationTest {
         .variableScopeIdIn(activityInstance.getId())
         .singleResult();
     assertThat(variable).isNotNull();
-    assertThat(variable.getValue()).isEqualTo(outpuValue);
+    assertThat(variable.getValue()).isEqualTo(outputValue);
   }
 
   @Test
@@ -2435,9 +2415,9 @@ public class MessageCorrelationTest {
     ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceByKey("Process_1", variables);
 
     Map<String, Object> messagePayload = new HashMap<>();
-    String outpuValue = "outputValue";
+    String outputValue = "outputValue";
     String variableName = "testVar";
-    messagePayload.put(variableName, outpuValue);
+    messagePayload.put(variableName, outputValue);
 
     // when
     runtimeService
@@ -2445,7 +2425,7 @@ public class MessageCorrelationTest {
         .setVariablesToTriggeredScope(messagePayload)
         .correlate();
     Job asyncJob = engineRule.getManagementService().createJobQuery().singleResult();
-    assertNotNull(asyncJob);
+    assertThat(asyncJob).isNotNull();
     engineRule.getManagementService().executeJob(asyncJob.getId());
 
     // then the scope is the PI
@@ -2455,7 +2435,7 @@ public class MessageCorrelationTest {
         .variableScopeIdIn(processInstance.getId())
         .singleResult();
     assertThat(variable).isNotNull();
-    assertThat(variable.getValue()).isEqualTo(outpuValue);
+    assertThat(variable.getValue()).isEqualTo(outputValue);
   }
 
   @Test
@@ -2467,16 +2447,16 @@ public class MessageCorrelationTest {
     variables.put("processInstanceVar", "processInstanceVarValue");
     engineRule.getRuntimeService().startProcessInstanceByKey("Process_1", variables);
 
-    String outpuValue = "outputValue";
+    String outputValue = "outputValue";
     String variableName = "testVar";
 
     // when
     runtimeService
         .createMessageCorrelation("1")
-        .setVariableToTriggeredScope(variableName, outpuValue)
+        .setVariableToTriggeredScope(variableName, outputValue)
         .correlate();
     Job asyncJob = engineRule.getManagementService().createJobQuery().singleResult();
-    assertNotNull(asyncJob);
+    assertThat(asyncJob).isNotNull();
     engineRule.getManagementService().executeJob(asyncJob.getId());
 
     // then the scope is "afterMessage" activity
@@ -2488,7 +2468,7 @@ public class MessageCorrelationTest {
         .variableScopeIdIn(activityInstance.getId())
         .singleResult();
     assertThat(variable).isNotNull();
-    assertThat(variable.getValue()).isEqualTo(outpuValue);
+    assertThat(variable.getValue()).isEqualTo(outputValue);
   }
 
   @Test
@@ -2500,16 +2480,16 @@ public class MessageCorrelationTest {
     variables.put("processInstanceVar", "processInstanceVarValue");
     engineRule.getRuntimeService().startProcessInstanceByKey("Process_1", variables);
 
-    String outpuValue = "outputValue";
+    String outputValue = "outputValue";
     String variableName = "testVar";
 
     // when
     runtimeService
         .createMessageCorrelation("1")
-        .setVariableToTriggeredScope(variableName, outpuValue)
+        .setVariableToTriggeredScope(variableName, outputValue)
         .correlate();
     Job asyncJob = engineRule.getManagementService().createJobQuery().singleResult();
-    assertNotNull(asyncJob);
+    assertThat(asyncJob).isNotNull();
     engineRule.getManagementService().executeJob(asyncJob.getId());
 
     // then the scope is "afterMessage" activity
@@ -2521,7 +2501,7 @@ public class MessageCorrelationTest {
         .variableScopeIdIn(activityInstance.getId())
         .singleResult();
     assertThat(variable).isNotNull();
-    assertThat(variable.getValue()).isEqualTo(outpuValue);
+    assertThat(variable.getValue()).isEqualTo(outputValue);
   }
 
   @Test
@@ -2544,12 +2524,12 @@ public class MessageCorrelationTest {
     engineRule.getRuntimeService().startProcessInstanceByKey("Process_1", variables);
 
     Map<String, Object> messagePayload = new HashMap<>();
-    String outpuValue = "outputValue";
+    String outputValue = "outputValue";
     String variableName = "testVar";
-    messagePayload.put(variableName, outpuValue);
+    messagePayload.put(variableName, outputValue);
 
     Job asyncJob = engineRule.getManagementService().createJobQuery().singleResult();
-    assertNotNull(asyncJob);
+    assertThat(asyncJob).isNotNull();
     engineRule.getManagementService().executeJob(asyncJob.getId());
 
     // when
@@ -2603,7 +2583,7 @@ public class MessageCorrelationTest {
   }
 
   protected BpmnModelInstance createModelWithEventSubprocess(boolean isInterrupting, boolean isAsync) {
-    BpmnModelInstance targetModel = modify(Bpmn.createExecutableProcess("Process_1")
+    return modify(Bpmn.createExecutableProcess("Process_1")
         .startEvent()
         .subProcess("Subprocess_1")
           .embeddedSubProcess()
@@ -2629,7 +2609,6 @@ public class MessageCorrelationTest {
             .userTask("wrongOutcome")
             .endEvent("unhappyEnd")
             .done();
-    return targetModel;
   }
 
   protected BpmnModelInstance createModelWithBoundaryEvent(boolean isInterrupting, boolean isAsync) {

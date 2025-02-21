@@ -33,6 +33,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureValidIndividual
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.authorization.HistoricTaskPermissions;
@@ -528,7 +529,7 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
 
   protected boolean areIdsEqual(String firstId, String secondId) {
     if (firstId == null || secondId == null) {
-      return firstId == secondId;
+      return Objects.equals(firstId, secondId);
     }else {
       return firstId.equals(secondId);
     }

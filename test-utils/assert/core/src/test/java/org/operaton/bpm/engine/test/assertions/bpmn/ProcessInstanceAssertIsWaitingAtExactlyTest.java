@@ -24,7 +24,6 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.taskQu
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -55,12 +54,7 @@ public class ProcessInstanceAssertIsWaitingAtExactlyTest extends ProcessAssertTe
       "ProcessInstanceAssert-isWaitingAt"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).isWaitingAtExactly("UserTask_2");
-      }
-    });
+    expect(() -> assertThat(processInstance).isWaitingAtExactly("UserTask_2"));
   }
 
   @Test
@@ -72,12 +66,7 @@ public class ProcessInstanceAssertIsWaitingAtExactlyTest extends ProcessAssertTe
       "ProcessInstanceAssert-isWaitingAt"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).isWaitingAtExactly("NonExistingUserTask");
-      }
-    });
+    expect(() -> assertThat(processInstance).isWaitingAtExactly("NonExistingUserTask"));
   }
 
   @Test
@@ -107,19 +96,9 @@ public class ProcessInstanceAssertIsWaitingAtExactlyTest extends ProcessAssertTe
     // When
     complete(taskQuery().singleResult());
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).isWaitingAtExactly("UserTask_1", "UserTask_2");
-      }
-    });
+    expect(() -> assertThat(processInstance).isWaitingAtExactly("UserTask_1", "UserTask_2"));
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).isWaitingAtExactly("UserTask_2");
-      }
-    });
+    expect(() -> assertThat(processInstance).isWaitingAtExactly("UserTask_2"));
   }
 
   @Test
@@ -131,34 +110,18 @@ public class ProcessInstanceAssertIsWaitingAtExactlyTest extends ProcessAssertTe
       "ProcessInstanceAssert-isWaitingAt"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        String[] waitingAt = null;
-        assertThat(processInstance).isWaitingAtExactly(waitingAt);
-      }
+    expect(() -> {
+      String[] waitingAt = null;
+      assertThat(processInstance).isWaitingAtExactly(waitingAt);
     });
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).isWaitingAtExactly("ok", null);
-      }
-    });
+    expect(() -> assertThat(processInstance).isWaitingAtExactly("ok", null));
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).isWaitingAtExactly(null, "ok");
-      }
-    });
+    expect(() -> assertThat(processInstance).isWaitingAtExactly(null, "ok"));
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        String[] args = new String[]{};
-        assertThat(processInstance).isWaitingAtExactly(args);
-      }
+    expect(() -> {
+      String[] args = new String[]{};
+      assertThat(processInstance).isWaitingAtExactly(args);
     });
   }
 

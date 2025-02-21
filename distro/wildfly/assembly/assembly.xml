@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <assembly
   xmlns="urn:maven:assembly:1.1.0-SNAPSHOT">
-  
+
   <id>assemble</id>
-  
+
   <formats>
     <format>tar.gz</format>
     <format>zip</format>
@@ -24,17 +24,17 @@
       <includes>
         <include>org.wildfly:wildfly-dist:tar.gz:${version.wildfly}</include>
       </includes>
-      <unpack>true</unpack>      
+      <unpack>true</unpack>
       <unpackOptions>
         <excludes>
-          <exclude>**/standalone/configuration/standalone.xml</exclude>        
-          <exclude>**/standalone/configuration/standalone-full.xml</exclude> 
+          <exclude>**/standalone/configuration/standalone.xml</exclude>
+          <exclude>**/standalone/configuration/standalone-full.xml</exclude>
           <exclude>**/bin/standalone.conf</exclude>
           <exclude>**/bin/standalone.conf.bat</exclude>
           <!-- exclude wildfly's shipped version of h2database -->
           <exclude>**/h2database/**</exclude>
-        </excludes>        
-      </unpackOptions>      
+        </excludes>
+      </unpackOptions>
     </dependencySet>
     <dependencySet>
       <outputDirectory>lib</outputDirectory>
@@ -80,12 +80,12 @@
       <outputDirectory></outputDirectory>
     </file>
     <file>
-      <source>src/start-operaton.bat</source>
+      <source>src/start.bat</source>
       <filtered>true</filtered>
       <outputDirectory></outputDirectory>
     </file>
     <file>
-      <source>src/start-operaton.sh</source>
+      <source>src/start.sh</source>
       <filtered>true</filtered>
       <outputDirectory></outputDirectory>
       <fileMode>0755</fileMode>

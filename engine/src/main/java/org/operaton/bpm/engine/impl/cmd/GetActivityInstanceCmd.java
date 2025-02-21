@@ -168,10 +168,7 @@ public class GetActivityInstanceCmd implements Command<ActivityInstance> {
             .get(scope.getFlowScope())
             .getParentActivityInstanceId();
 
-        if (activityInstances.containsKey(activityInstanceId)) {
-          continue;
-        }
-        else {
+        if (!activityInstances.containsKey(activityInstanceId)) {
           // regardless of the tree structure (compacted or not), the scope's activity instance id
           // is the activity instance id of the parent execution and the parent activity instance id
           // of that is the actual parent activity instance id
@@ -337,12 +334,9 @@ public class GetActivityInstanceCmd implements Command<ActivityInstance> {
   }
 
   protected <S, T> void putListElement(Map<S, List<T>> mapOfLists, S key, T listElement) {
-    List<T> list = mapOfLists.get(key);
-    if (list == null) {
-      list = new ArrayList<>();
-      mapOfLists.put(key, list);
-    }
-    list.add(listElement);
+    mapOfLists
+      .computeIfAbsent(key, k -> new ArrayList<>())
+      .add(listElement);
   }
 
   protected ExecutionEntity filterProcessInstance(List<ExecutionEntity> executionList) {

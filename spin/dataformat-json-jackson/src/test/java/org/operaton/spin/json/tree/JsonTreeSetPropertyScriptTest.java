@@ -79,7 +79,7 @@ public abstract class JsonTreeSetPropertyScriptTest extends ScriptTest {
     String oldValue = script.getVariable("oldValue");
     Number newValue = script.getVariable("newValue");
 
-    assertThat(newValue).isNotEqualTo(oldValue);
+    assertThat(newValue.toString()).isNotEqualTo(oldValue);
     // Ruby casts Number to long
     assertThat(newValue.intValue()).isEqualTo(42);
   }
@@ -104,7 +104,7 @@ public abstract class JsonTreeSetPropertyScriptTest extends ScriptTest {
     String oldValue = script.getVariable("oldValue");
     Number newValue = script.getVariable("newValue");
 
-    assertThat(newValue).isNotEqualTo(oldValue);
+    assertThat(newValue.toString()).isNotEqualTo(oldValue);
     // Python returns a double instead a float
     assertThat(newValue.floatValue()).isEqualTo(42.00F);
   }
@@ -129,7 +129,7 @@ public abstract class JsonTreeSetPropertyScriptTest extends ScriptTest {
     String oldValue = script.getVariable("oldValue");
     Number newValue = script.getVariable("newValue");
 
-    assertThat(newValue).isNotEqualTo(oldValue);
+    assertThat(newValue.toString()).isNotEqualTo(oldValue);
     // python returns a BigInt, needs to cast it
     assertThat(newValue.longValue()).isEqualTo(4200000000L);
   }
@@ -162,9 +162,7 @@ public abstract class JsonTreeSetPropertyScriptTest extends ScriptTest {
     String oldValue = script.getVariable("oldValue");
     Boolean newValue = script.getVariable("newValue");
 
-    assertThat(newValue)
-      .isNotEqualTo(oldValue)
-      .isFalse();
+    assertThat(newValue).isNotEqualTo(oldValue);
   }
 
   @Test

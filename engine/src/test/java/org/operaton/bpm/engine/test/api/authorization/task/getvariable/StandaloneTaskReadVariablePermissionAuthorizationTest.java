@@ -44,13 +44,13 @@ public class StandaloneTaskReadVariablePermissionAuthorizationTest extends Stand
       scenario()
         .withoutAuthorizations()
         .failsDueToRequired(
-          grant(TASK, "taskId", userId, READ_VARIABLE)),
+          grant(TASK, "taskId", USER_ID, READ_VARIABLE)),
       scenario()
         .withAuthorizations(
-          grant(TASK, "taskId", userId, READ_VARIABLE)),
+          grant(TASK, "taskId", USER_ID, READ_VARIABLE)),
       scenario()
         .withAuthorizations(
-          grant(TASK, "*", userId, READ_VARIABLE))
+          grant(TASK, "*", USER_ID, READ_VARIABLE))
         .succeeds()
       );
   }

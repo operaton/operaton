@@ -16,31 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.security.oauth2;
 
-import jakarta.servlet.Filter;
-import java.lang.reflect.Field;
-import org.operaton.bpm.engine.rest.security.auth.AuthenticationResult;
-import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.AuthorizeTokenFilter;
-import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.OAuth2AuthenticationProvider;
-import org.operaton.bpm.webapp.impl.security.auth.ContainerBasedAuthenticationFilter;
-import org.operaton.commons.testing.ProcessEngineLoggingRule;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.http.MediaType;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
@@ -49,10 +24,37 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 
+import java.lang.reflect.Field;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.rest.security.auth.AuthenticationResult;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
+import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.AuthorizeTokenFilter;
+import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.OAuth2AuthenticationProvider;
+import org.operaton.bpm.webapp.impl.security.auth.ContainerBasedAuthenticationFilter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.http.MediaType;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import jakarta.servlet.Filter;
+
 @AutoConfigureMockMvc
 @TestPropertySource("/oauth2-mock.properties")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class OperatonBpmSecurityAutoConfigOauth2ApplicationIT extends AbstractSpringSecurityIT {
+class OperatonBpmSecurityAutoConfigOauth2ApplicationIT extends AbstractSpringSecurityIT {
 
   protected static final String UNAUTHORIZED_USER = "mary";
 
@@ -65,22 +67,24 @@ public class OperatonBpmSecurityAutoConfigOauth2ApplicationIT extends AbstractSp
   @Autowired
   private ClientRegistrationRepository registrations;
 
-  @MockBean
+  @MockitoBean
   private OAuth2AuthorizedClientService authorizedClientService;
 
-  @Rule
-  public ProcessEngineLoggingRule loggingRule = new ProcessEngineLoggingRule().watch(AuthorizeTokenFilter.class.getCanonicalName());
+  @RegisterExtension
+  ProcessEngineLoggingExtension logger = new ProcessEngineLoggingExtension()
+      .watch(AuthorizeTokenFilter.class.getCanonicalName());
 
   private OAuth2AuthenticationProvider spiedAuthenticationProvider;
 
-  @Before
+  @Override
+  @BeforeEach
   public void setup() throws Exception {
     super.setup();
     spyAuthenticationProvider();
   }
 
   @Test
-  public void testSpringSecurityAutoConfigurationCorrectlySet() {
+  void testSpringSecurityAutoConfigurationCorrectlySet() {
     // given oauth2 client configured
     // when retrieving config beans then only OAuth2AutoConfiguration is present
     assertThat(getBeanForClass(OperatonSpringSecurityOAuth2AutoConfiguration.class, mockMvc.getDispatcherServlet().getWebApplicationContext())).isNotNull();
@@ -88,7 +92,7 @@ public class OperatonBpmSecurityAutoConfigOauth2ApplicationIT extends AbstractSp
   }
 
   @Test
-  public void testWebappWithoutAuthentication() throws Exception {
+  void testWebappWithoutAuthentication() throws Exception {
     // given no authentication
 
     // when
@@ -102,7 +106,7 @@ public class OperatonBpmSecurityAutoConfigOauth2ApplicationIT extends AbstractSp
   }
 
   @Test
-  public void testWebappApiWithAuthorizedUser() throws Exception {
+  void testWebappApiWithAuthorizedUser() throws Exception {
     // given authorized oauth2 authentication token
     OAuth2AuthenticationToken authenticationToken = createToken(AUTHORIZED_USER);
     createAuthorizedClient(authenticationToken, registrations, authorizedClientService);
@@ -118,7 +122,7 @@ public class OperatonBpmSecurityAutoConfigOauth2ApplicationIT extends AbstractSp
   }
 
   @Test
-  public void testWebappWithUnauthorizedUser() throws Exception {
+  void testWebappWithUnauthorizedUser() throws Exception {
     // given unauthorized oauth2 authentication token
     OAuth2AuthenticationToken authenticationToken = createToken(UNAUTHORIZED_USER);
     createAuthorizedClient(authenticationToken, registrations, authorizedClientService);
@@ -133,13 +137,13 @@ public class OperatonBpmSecurityAutoConfigOauth2ApplicationIT extends AbstractSp
         .andExpect(MockMvcResultMatchers.header().string("Location", baseUrl + "/oauth2/authorization/" + PROVIDER));
 
     String expectedWarn = "Authorize failed for '" + UNAUTHORIZED_USER + "'";
-    assertThat(loggingRule.getFilteredLog(expectedWarn)).hasSize(1);
+    assertThat(logger.getFilteredLog(expectedWarn)).hasSize(1);
     verifyNoInteractions(spiedAuthenticationProvider);
   }
 
 
   @Test
-  public void testOauth2AuthenticationProvider() throws Exception {
+  void testOauth2AuthenticationProvider() throws Exception {
     // given authorized oauth2 authentication token
     ResultCaptor<AuthenticationResult> resultCaptor = new ResultCaptor<>();
     doAnswer(resultCaptor).when(spiedAuthenticationProvider).extractAuthenticatedUser(any(), any());

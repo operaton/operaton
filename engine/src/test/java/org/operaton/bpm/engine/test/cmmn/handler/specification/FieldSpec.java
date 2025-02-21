@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.handler.specification;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.impl.bpmn.parser.FieldDeclaration;
@@ -46,14 +44,14 @@ public class FieldSpec {
   }
 
   public void verify(FieldDeclaration field) {
-    assertEquals(fieldName, field.getName());
+    assertThat(field.getName()).isEqualTo(fieldName);
 
     Object fieldValue = field.getValue();
-    assertNotNull(fieldValue);
+    assertThat(fieldValue).isNotNull();
 
-    assertTrue(fieldValue instanceof Expression);
+    assertThat(fieldValue).isInstanceOf(Expression.class);
     Expression expressionValue = (Expression) fieldValue;
-    assertEquals(getExpectedExpression(), expressionValue.getExpressionText());
+    assertThat(expressionValue.getExpressionText()).isEqualTo(getExpectedExpression());
   }
 
   public void addFieldToListenerElement(CmmnModelInstance modelInstance, OperatonCaseExecutionListener listenerElement) {

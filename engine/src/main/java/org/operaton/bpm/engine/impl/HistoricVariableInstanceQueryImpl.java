@@ -33,7 +33,7 @@ import org.operaton.bpm.engine.impl.variable.serializer.AbstractTypedValueSerial
 import org.operaton.bpm.engine.impl.variable.serializer.VariableSerializers;
 
 /**
- * @author Christian Lipphardt (operaton)
+ * @author Christian Lipphardt (Camunda)
  */
 public class HistoricVariableInstanceQueryImpl extends AbstractQuery<HistoricVariableInstanceQuery, HistoricVariableInstance> implements
         HistoricVariableInstanceQuery {

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.externaltask;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
 
@@ -40,7 +41,6 @@ import org.operaton.bpm.engine.test.api.runtime.migration.models.ExternalTaskMod
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -156,7 +156,7 @@ public class SetExternalTasksRetriesBatchAuthorizationTest {
     if (authRule.assertScenario(scenario)) {
       externalTasks = engineRule.getExternalTaskService().createExternalTaskQuery().list();
       for ( ExternalTask task : externalTasks) {
-      Assert.assertEquals(5, (int) task.getRetries());
+        assertThat((int) task.getRetries()).isEqualTo(5);
       }
     }
   }
@@ -187,11 +187,11 @@ public class SetExternalTasksRetriesBatchAuthorizationTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      Assert.assertEquals("userId", batch.getCreateUserId());
+      assertThat(batch.getCreateUserId()).isEqualTo("userId");
 
       externalTasks = engineRule.getExternalTaskService().createExternalTaskQuery().list();
       for ( ExternalTask task : externalTasks) {
-        Assert.assertEquals(5, (int) task.getRetries());
+        assertThat((int) task.getRetries()).isEqualTo(5);
       }
     }
   }

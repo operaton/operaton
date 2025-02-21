@@ -29,7 +29,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.assertj.core.api.Assertions;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.AuthorizationQuery;
 import org.operaton.bpm.engine.authorization.Resources;
@@ -94,9 +93,9 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
     clearAuthorization();
   }
 
-  protected final String CALLED_PROCESS_KEY = "calledProcess";
+  protected static final String CALLED_PROCESS_KEY = "calledProcess";
 
-  protected final BpmnModelInstance CALLED_PROCESS = Bpmn.createExecutableProcess(CALLED_PROCESS_KEY)
+  protected static final BpmnModelInstance CALLED_PROCESS = Bpmn.createExecutableProcess(CALLED_PROCESS_KEY)
       .operatonHistoryTimeToLive(180)
       .startEvent()
       .userTask("userTask")
@@ -108,15 +107,15 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
       .endEvent()
       .done();
 
-  protected final String CALLING_PROCESS_KEY = "callingProcess";
-  protected final BpmnModelInstance CALLING_PROCESS = Bpmn.createExecutableProcess(CALLING_PROCESS_KEY)
+  protected static final String CALLING_PROCESS_KEY = "callingProcess";
+  protected static final BpmnModelInstance CALLING_PROCESS = Bpmn.createExecutableProcess(CALLING_PROCESS_KEY)
     .operatonHistoryTimeToLive(5)
     .startEvent()
       .callActivity()
         .calledElement(CALLED_PROCESS_KEY)
     .endEvent().done();
 
-  protected final Date START_DATE = new GregorianCalendar(2013, Calendar.MARCH, 18, 13, 0, 0).getTime();
+  protected static final Date START_DATE = new GregorianCalendar(2013, Calendar.MARCH, 18, 13, 0, 0).getTime();
 
   @Test
   @Deployment(resources = {
@@ -391,7 +390,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
     testRule.deploy(CALLED_PROCESS);
 
     // when
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(CALLING_PROCESS_KEY);
+    runtimeService.startProcessInstanceByKey(CALLING_PROCESS_KEY);
 
     HistoricProcessInstance historicProcessInstance = historyService.createHistoricProcessInstanceQuery()
       .activeActivityIdIn("userTask")
@@ -416,7 +415,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
     testRule.deploy(CALLED_PROCESS);
 
     // when
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(CALLING_PROCESS_KEY);
+    runtimeService.startProcessInstanceByKey(CALLING_PROCESS_KEY);
 
     HistoricActivityInstance historicActivityInstance = historyService.createHistoricActivityInstanceQuery()
       .activityId("userTask")
@@ -441,7 +440,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
     testRule.deploy(CALLED_PROCESS);
 
     // when
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(CALLING_PROCESS_KEY);
+    runtimeService.startProcessInstanceByKey(CALLING_PROCESS_KEY);
 
     HistoricTaskInstance historicTaskInstance = historyService.createHistoricTaskInstanceQuery()
       .taskName("userTask")
@@ -614,7 +613,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
 
     String rootProcessInstanceId = rootProcessInstance.getRootProcessInstanceId();
     Date removalTime = addDays(START_DATE, 5);
-    Assertions.assertThat(authQuery.list())
+    assertThat(authQuery.list())
         .extracting("removalTime", "resourceId", "rootProcessInstanceId")
         .containsExactly(tuple(removalTime, processInstanceId, rootProcessInstanceId));
   }
@@ -655,7 +654,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
 
     String rootProcessInstanceId = rootProcessInstance.getRootProcessInstanceId();
     Date removalTime = addDays(START_DATE, 5);
-    Assertions.assertThat(authQuery.list())
+    assertThat(authQuery.list())
         .extracting("removalTime", "resourceId", "rootProcessInstanceId")
         .containsExactly(tuple(removalTime, processInstanceId, rootProcessInstanceId));
 
@@ -667,7 +666,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
     authQuery = authorizationService.createAuthorizationQuery()
         .resourceType(Resources.HISTORIC_PROCESS_INSTANCE);
 
-    Assertions.assertThat(authQuery.list())
+    assertThat(authQuery.list())
         .extracting("removalTime", "resourceId", "rootProcessInstanceId")
         .containsExactly(tuple(null, "*", null));
   }
@@ -697,7 +696,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
     AuthorizationQuery authQuery = authorizationService.createAuthorizationQuery()
         .resourceType(Resources.HISTORIC_PROCESS_INSTANCE);
 
-    Assertions.assertThat(authQuery.list())
+    assertThat(authQuery.list())
         .extracting("removalTime", "resourceId", "rootProcessInstanceId")
         .containsExactly(tuple(null, "*", null));
 
@@ -717,7 +716,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
 
     Date removalTime = addDays(START_DATE, 5);
     String rootProcessInstanceId = rootProcessInstance.getRootProcessInstanceId();
-    Assertions.assertThat(authQuery.list())
+    assertThat(authQuery.list())
         .extracting("removalTime", "resourceId", "rootProcessInstanceId")
         .containsExactly(tuple(removalTime, processInstanceId, rootProcessInstanceId));
   }
@@ -900,7 +899,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
 
     testRule.deploy(CALLED_PROCESS);
 
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(CALLING_PROCESS_KEY);
+    runtimeService.startProcessInstanceByKey(CALLING_PROCESS_KEY);
     taskService.complete(taskService.createTaskQuery().singleResult().getId());
 
     String jobId = managementService.createJobQuery()
@@ -912,7 +911,9 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
     try {
       // when
       managementService.executeJob(jobId);
-    } catch (Exception ignored) { }
+    } catch (Exception ignored) {
+      // expected
+    }
 
     List<HistoricIncident> historicIncidents = historyService.createHistoricIncidentQuery().list();
 
@@ -944,14 +945,14 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
     try {
       // when
       managementService.executeJob(jobId);
-    } catch (Exception ignored) { }
+    } catch (Exception ignored) {
+      // expected
+    }
 
     HistoricIncident historicIncident = historyService.createHistoricIncidentQuery().singleResult();
 
     // assume
     assertThat(historicIncident).isNotNull();
-
-    Date removalTime = addDays(START_DATE, 5);
 
     // then
     assertThat(historicIncident.getRemovalTime()).isNull();
@@ -1001,7 +1002,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
 
     testRule.deploy(CALLED_PROCESS);
 
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(CALLING_PROCESS_KEY);
+    runtimeService.startProcessInstanceByKey(CALLING_PROCESS_KEY);
     taskService.complete(taskService.createTaskQuery().singleResult().getId());
 
     String jobId = managementService.createJobQuery()
@@ -1011,7 +1012,9 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
     try {
       // when
       managementService.executeJob(jobId);
-    } catch (Exception ignored) { }
+    } catch (Exception ignored) {
+      // expected
+    }
 
     List<HistoricJobLog> jobLog = historyService.createHistoricJobLogQuery().list();
 
@@ -1124,7 +1127,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
 
     testRule.deploy(CALLED_PROCESS);
 
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(CALLING_PROCESS_KEY);
+    runtimeService.startProcessInstanceByKey(CALLING_PROCESS_KEY);
 
     // when
     identityService.setAuthenticatedUserId("aUserId");
@@ -1151,7 +1154,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
 
     testRule.deploy(CALLED_PROCESS);
 
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(CALLING_PROCESS_KEY);
+    runtimeService.startProcessInstanceByKey(CALLING_PROCESS_KEY);
 
     // when
     identityService.setAuthenticatedUserId("aUserId");
@@ -1231,7 +1234,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
 
     testRule.deploy(CALLED_PROCESS);
 
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(CALLING_PROCESS_KEY);
+    runtimeService.startProcessInstanceByKey(CALLING_PROCESS_KEY);
 
     String processInstanceId = runtimeService.createProcessInstanceQuery()
       .activityIdIn("userTask")
@@ -1261,7 +1264,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
 
     testRule.deploy(CALLED_PROCESS);
 
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(CALLING_PROCESS_KEY);
+    runtimeService.startProcessInstanceByKey(CALLING_PROCESS_KEY);
 
     String taskId = taskService.createTaskQuery().singleResult().getId();
 
@@ -1288,7 +1291,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
 
     testRule.deploy(CALLED_PROCESS);
 
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(CALLING_PROCESS_KEY);
+    runtimeService.startProcessInstanceByKey(CALLING_PROCESS_KEY);
 
     String processInstanceId = runtimeService.createProcessInstanceQuery()
       .activityIdIn("userTask")
@@ -1512,7 +1515,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
 
     testRule.deploy(CALLED_PROCESS);
 
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(CALLING_PROCESS_KEY);
+    runtimeService.startProcessInstanceByKey(CALLING_PROCESS_KEY);
 
     String taskId = taskService.createTaskQuery().singleResult().getId();
 
@@ -1539,7 +1542,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
 
     testRule.deploy(CALLED_PROCESS);
 
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(CALLING_PROCESS_KEY);
+    runtimeService.startProcessInstanceByKey(CALLING_PROCESS_KEY);
 
     String calledProcessInstanceId = runtimeService.createProcessInstanceQuery()
       .activityIdIn("userTask")
@@ -1626,7 +1629,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
 
     testRule.deploy(CALLED_PROCESS);
 
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(CALLING_PROCESS_KEY);
+    runtimeService.startProcessInstanceByKey(CALLING_PROCESS_KEY);
 
     taskService.complete(taskService.createTaskQuery().singleResult().getId());
 
@@ -1637,7 +1640,9 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
     try {
       // when
       managementService.executeJob(jobId);
-    } catch (Exception ignored) { }
+    } catch (Exception ignored) {
+      // expected
+    }
 
     HistoricJobLogEventEntity jobLog = (HistoricJobLogEventEntity) historyService.createHistoricJobLogQuery()
       .jobExceptionMessage("I'm supposed to fail!")
@@ -1671,7 +1676,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
           .calledElement("calledProcess")
       .endEvent().done());
 
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("callingProcess");
+    runtimeService.startProcessInstanceByKey("callingProcess");
 
     List<LockedExternalTask> tasks = externalTaskService.fetchAndLock(5, "aWorkerId")
       .topic("aTopicName", Integer.MAX_VALUE)
@@ -1710,7 +1715,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
       .endEvent().done());
 
     // when
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(CALLING_PROCESS_KEY,
+    runtimeService.startProcessInstanceByKey(CALLING_PROCESS_KEY,
       Variables.createVariables()
         .putValue("pojo", new TestPojo("okay", 13.37)));
 
@@ -1781,7 +1786,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
       .endEvent().done());
 
     // when
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(CALLING_PROCESS_KEY,
+    runtimeService.startProcessInstanceByKey(CALLING_PROCESS_KEY,
       Variables.createVariables()
         .putValue("pojo", new TestPojo("okay", 13.37)));
 
@@ -1851,7 +1856,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
       .endEvent().done());
 
     // when
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(CALLING_PROCESS_KEY,
+    runtimeService.startProcessInstanceByKey(CALLING_PROCESS_KEY,
       Variables.createVariables()
         .putValue("pojo", new TestPojo("okay", 13.37)));
 
@@ -2013,7 +2018,9 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
     for (Job job : jobs) {
       try {
         managementService.executeJob(job.getId());
-      } catch (RuntimeException ignored) { }
+      } catch (RuntimeException ignored) {
+        // expected
+      }
     }
 
     HistoricJobLogEventEntity jobLog = (HistoricJobLogEventEntity)historyService.createHistoricJobLogQuery()

@@ -75,7 +75,7 @@ public class ExpressionFactoryImpl extends jakarta.el.ExpressionFactory {
 	 *
 	 * @since 2.2
 	 */
-	public static enum Profile {
+	public enum Profile {
 		/**
 		 * JEE5: none
 		 */
@@ -244,17 +244,10 @@ public class ExpressionFactoryImpl extends jakarta.el.ExpressionFactory {
 		File file = new File(path);
 		if (file.exists()) {
 			Properties properties = new Properties();
-			InputStream input = null;
-			try {
-				properties.load(input = new FileInputStream(file));
+			try (InputStream input = new FileInputStream(file)) {
+				properties.load(input);
 			} catch (IOException e) {
 				throw new ELException("Cannot read default EL properties", e);
-			} finally {
-				try {
-					input.close();
-				} catch (IOException e) {
-					// ignore...
-				}
 			}
 			if (getClass().getName().equals(properties.getProperty("jakarta.el.ExpressionFactory"))) {
 				return properties;

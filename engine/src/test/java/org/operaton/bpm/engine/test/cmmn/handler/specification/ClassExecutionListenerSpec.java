@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.handler.specification;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
@@ -44,12 +43,12 @@ public class ClassExecutionListenerSpec extends AbstractExecutionListenerSpec {
 
   @Override
   public void verifyListener(DelegateListener<? extends BaseDelegateExecution> listener) {
-    assertTrue(listener instanceof ClassDelegateCaseExecutionListener);
+    assertThat(listener).isInstanceOf(ClassDelegateCaseExecutionListener.class);
     ClassDelegateCaseExecutionListener classDelegateListener = (ClassDelegateCaseExecutionListener) listener;
-    assertEquals(CLASS_NAME, classDelegateListener.getClassName());
+    assertThat(classDelegateListener.getClassName()).isEqualTo(CLASS_NAME);
 
     List<FieldDeclaration> fieldDeclarations = classDelegateListener.getFieldDeclarations();
-    assertEquals(fieldSpecs.size(), fieldDeclarations.size());
+    assertThat(fieldDeclarations).hasSize(fieldSpecs.size());
 
     for (int i = 0; i < fieldDeclarations.size(); i++) {
       FieldDeclaration declaration = fieldDeclarations.get(i);

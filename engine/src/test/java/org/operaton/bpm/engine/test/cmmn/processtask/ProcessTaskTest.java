@@ -16,31 +16,23 @@
  */
 package org.operaton.bpm.engine.test.cmmn.processtask;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.List;
-
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.exception.NotAllowedException;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
-import org.operaton.bpm.engine.runtime.CaseExecution;
-import org.operaton.bpm.engine.runtime.CaseInstance;
-import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.runtime.VariableInstance;
+import org.operaton.bpm.engine.runtime.*;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.cmmn.CmmnTest;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.TypedValue;
+
+import java.util.List;
+
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Roman Smirnov
@@ -48,8 +40,8 @@ import org.junit.Test;
  */
 public class ProcessTaskTest extends CmmnTest {
 
-  protected final String PROCESS_TASK = "PI_ProcessTask_1";
-  protected final String ONE_PROCESS_TASK_CASE = "oneProcessTaskCase";
+  protected static final String PROCESS_TASK = "PI_ProcessTask_1";
+  protected static final String ONE_PROCESS_TASK_CASE = "oneProcessTaskCase";
 
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCase.cmmn",
@@ -65,19 +57,19 @@ public class ProcessTaskTest extends CmmnTest {
 
     // there exists a process instance
     ExecutionEntity processInstance = (ExecutionEntity) queryProcessInstance();
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
 
     // the case instance id is set on called process instance
-    assertEquals(caseInstanceId, processInstance.getCaseInstanceId());
+    assertThat(processInstance.getCaseInstanceId()).isEqualTo(caseInstanceId);
     // the super case execution id is equals the processTaskId
-    assertEquals(processTaskId, processInstance.getSuperCaseExecutionId());
+    assertThat(processInstance.getSuperCaseExecutionId()).isEqualTo(processTaskId);
 
     TaskEntity task = (TaskEntity) queryTask();
 
     // the case instance id has been also set on the task
-    assertEquals(caseInstanceId, task.getCaseInstanceId());
+    assertThat(task.getCaseInstanceId()).isEqualTo(caseInstanceId);
     // the case execution id should be null
-    assertNull(task.getCaseExecutionId());
+    assertThat(task.getCaseExecutionId()).isNull();
 
     // complete ////////////////////////////////////////////////////////
 
@@ -104,19 +96,19 @@ public class ProcessTaskTest extends CmmnTest {
 
     // there exists a process instance
     ExecutionEntity processInstance = (ExecutionEntity) queryProcessInstance();
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
 
     // the case instance id is set on called process instance
-    assertEquals(caseInstanceId, processInstance.getCaseInstanceId());
+    assertThat(processInstance.getCaseInstanceId()).isEqualTo(caseInstanceId);
     // the super case execution id is equals the processTaskId
-    assertEquals(processTaskId, processInstance.getSuperCaseExecutionId());
+    assertThat(processInstance.getSuperCaseExecutionId()).isEqualTo(processTaskId);
 
     TaskEntity task = (TaskEntity) queryTask();
 
     // the case instance id has been also set on the task
-    assertEquals(caseInstanceId, task.getCaseInstanceId());
+    assertThat(task.getCaseInstanceId()).isEqualTo(caseInstanceId);
     // the case execution id should be null
-    assertNull(task.getCaseExecutionId());
+    assertThat(task.getCaseExecutionId()).isNull();
 
     // complete ////////////////////////////////////////////////////////
 
@@ -142,19 +134,19 @@ public class ProcessTaskTest extends CmmnTest {
 
     // there exists a process instance
     ExecutionEntity processInstance = (ExecutionEntity) queryProcessInstance();
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
 
     // the case instance id is set on called process instance
-    assertEquals(caseInstanceId, processInstance.getCaseInstanceId());
+    assertThat(processInstance.getCaseInstanceId()).isEqualTo(caseInstanceId);
     // the super case execution id is equals the processTaskId
-    assertEquals(processTaskId, processInstance.getSuperCaseExecutionId());
+    assertThat(processInstance.getSuperCaseExecutionId()).isEqualTo(processTaskId);
 
     TaskEntity task = (TaskEntity) queryTask();
 
     // the case instance id has been also set on the task
-    assertEquals(caseInstanceId, task.getCaseInstanceId());
+    assertThat(task.getCaseInstanceId()).isEqualTo(caseInstanceId);
     // the case execution id should be null
-    assertNull(task.getCaseExecutionId());
+    assertThat(task.getCaseExecutionId()).isNull();
 
     // complete ////////////////////////////////////////////////////////
 
@@ -179,7 +171,7 @@ public class ProcessTaskTest extends CmmnTest {
         .deploy()
         .getId();
 
-    assertEquals(2, repositoryService.createProcessDefinitionQuery().count());
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(2);
 
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
@@ -197,18 +189,18 @@ public class ProcessTaskTest extends CmmnTest {
     ExecutionEntity processInstance = (ExecutionEntity) queryProcessInstance();
 
     // the case instance id is set on called process instance
-    assertEquals(caseInstanceId, processInstance.getCaseInstanceId());
+    assertThat(processInstance.getCaseInstanceId()).isEqualTo(caseInstanceId);
     // the super case execution id is equals the processTaskId
-    assertEquals(processTaskId, processInstance.getSuperCaseExecutionId());
+    assertThat(processInstance.getSuperCaseExecutionId()).isEqualTo(processTaskId);
     // it is associated with the latest process definition
-    assertEquals(latestProcessDefinitionId, processInstance.getProcessDefinitionId());
+    assertThat(processInstance.getProcessDefinitionId()).isEqualTo(latestProcessDefinitionId);
 
     TaskEntity task = (TaskEntity) queryTask();
 
     // the case instance id has been also set on the task
-    assertEquals(caseInstanceId, task.getCaseInstanceId());
+    assertThat(task.getCaseInstanceId()).isEqualTo(caseInstanceId);
     // the case execution id should be null
-    assertNull(task.getCaseExecutionId());
+    assertThat(task.getCaseExecutionId()).isNull();
 
     // complete ////////////////////////////////////////////////////////
 
@@ -240,7 +232,7 @@ public class ProcessTaskTest extends CmmnTest {
             .deploy()
             .getId();
 
-    assertEquals(2, repositoryService.createProcessDefinitionQuery().count());
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(2);
 
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
@@ -256,21 +248,21 @@ public class ProcessTaskTest extends CmmnTest {
 
     // there exists a process instance
     ExecutionEntity processInstance = (ExecutionEntity) queryProcessInstance();
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
 
     // the case instance id is set on called process instance
-    assertEquals(caseInstanceId, processInstance.getCaseInstanceId());
+    assertThat(processInstance.getCaseInstanceId()).isEqualTo(caseInstanceId);
     // the super case execution id is equals the processTaskId
-    assertEquals(processTaskId, processInstance.getSuperCaseExecutionId());
+    assertThat(processInstance.getSuperCaseExecutionId()).isEqualTo(processTaskId);
     // it is associated with the correct process definition
-    assertEquals(processDefinitionIdInSameDeployment, processInstance.getProcessDefinitionId());
+    assertThat(processInstance.getProcessDefinitionId()).isEqualTo(processDefinitionIdInSameDeployment);
 
     TaskEntity task = (TaskEntity) queryTask();
 
     // the case instance id has been also set on the task
-    assertEquals(caseInstanceId, task.getCaseInstanceId());
+    assertThat(task.getCaseInstanceId()).isEqualTo(caseInstanceId);
     // the case execution id should be null
-    assertNull(task.getCaseExecutionId());
+    assertThat(task.getCaseExecutionId()).isNull();
 
     // complete ////////////////////////////////////////////////////////
 
@@ -302,7 +294,7 @@ public class ProcessTaskTest extends CmmnTest {
           .deploy()
           .getId();
 
-    assertEquals(3, repositoryService.createProcessDefinitionQuery().count());
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(3);
 
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
@@ -318,21 +310,21 @@ public class ProcessTaskTest extends CmmnTest {
 
     // there exists a process instance
     ExecutionEntity processInstance = (ExecutionEntity) queryProcessInstance();
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
 
     // the case instance id is set on called process instance
-    assertEquals(caseInstanceId, processInstance.getCaseInstanceId());
+    assertThat(processInstance.getCaseInstanceId()).isEqualTo(caseInstanceId);
     // the super case execution id is equals the processTaskId
-    assertEquals(processTaskId, processInstance.getSuperCaseExecutionId());
+    assertThat(processInstance.getSuperCaseExecutionId()).isEqualTo(processTaskId);
     // it is associated with the correct process definition
-    assertEquals(processDefinitionIdInSecondDeployment, processInstance.getProcessDefinitionId());
+    assertThat(processInstance.getProcessDefinitionId()).isEqualTo(processDefinitionIdInSecondDeployment);
 
     TaskEntity task = (TaskEntity) queryTask();
 
     // the case instance id has been also set on the task
-    assertEquals(caseInstanceId, task.getCaseInstanceId());
+    assertThat(task.getCaseInstanceId()).isEqualTo(caseInstanceId);
     // the case execution id should be null
-    assertNull(task.getCaseExecutionId());
+    assertThat(task.getCaseExecutionId()).isNull();
 
     // complete ////////////////////////////////////////////////////////
 
@@ -366,7 +358,7 @@ public class ProcessTaskTest extends CmmnTest {
           .deploy()
           .getId();
 
-    assertEquals(3, repositoryService.createProcessDefinitionQuery().count());
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(3);
 
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE,
         Variables.createVariables().putValue("myVersion", 2)).getId();
@@ -383,21 +375,21 @@ public class ProcessTaskTest extends CmmnTest {
 
     // there exists a process instance
     ExecutionEntity processInstance = (ExecutionEntity) queryProcessInstance();
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
 
     // the case instance id is set on called process instance
-    assertEquals(caseInstanceId, processInstance.getCaseInstanceId());
+    assertThat(processInstance.getCaseInstanceId()).isEqualTo(caseInstanceId);
     // the super case execution id is equals the processTaskId
-    assertEquals(processTaskId, processInstance.getSuperCaseExecutionId());
+    assertThat(processInstance.getSuperCaseExecutionId()).isEqualTo(processTaskId);
     // it is associated with the correct process definition
-    assertEquals(processDefinitionIdInSecondDeployment, processInstance.getProcessDefinitionId());
+    assertThat(processInstance.getProcessDefinitionId()).isEqualTo(processDefinitionIdInSecondDeployment);
 
     TaskEntity task = (TaskEntity) queryTask();
 
     // the case instance id has been also set on the task
-    assertEquals(caseInstanceId, task.getCaseInstanceId());
+    assertThat(task.getCaseInstanceId()).isEqualTo(caseInstanceId);
     // the case execution id should be null
-    assertNull(task.getCaseExecutionId());
+    assertThat(task.getCaseExecutionId()).isNull();
 
     // complete ////////////////////////////////////////////////////////
 
@@ -431,7 +423,7 @@ public class ProcessTaskTest extends CmmnTest {
           .deploy()
           .getId();
 
-    assertEquals(3, repositoryService.createProcessDefinitionQuery().count());
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(3);
 
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE,
         Variables.createVariables().putValue("myVersion", 2)).getId();
@@ -448,21 +440,21 @@ public class ProcessTaskTest extends CmmnTest {
 
     // there exists a process instance
     ExecutionEntity processInstance = (ExecutionEntity) queryProcessInstance();
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
 
     // the case instance id is set on called process instance
-    assertEquals(caseInstanceId, processInstance.getCaseInstanceId());
+    assertThat(processInstance.getCaseInstanceId()).isEqualTo(caseInstanceId);
     // the super case execution id is equals the processTaskId
-    assertEquals(processTaskId, processInstance.getSuperCaseExecutionId());
+    assertThat(processInstance.getSuperCaseExecutionId()).isEqualTo(processTaskId);
     // it is associated with the correct process definition
-    assertEquals(processDefinitionIdInSecondDeployment, processInstance.getProcessDefinitionId());
+    assertThat(processInstance.getProcessDefinitionId()).isEqualTo(processDefinitionIdInSecondDeployment);
 
     TaskEntity task = (TaskEntity) queryTask();
 
     // the case instance id has been also set on the task
-    assertEquals(caseInstanceId, task.getCaseInstanceId());
+    assertThat(task.getCaseInstanceId()).isEqualTo(caseInstanceId);
     // the case execution id should be null
-    assertNull(task.getCaseExecutionId());
+    assertThat(task.getCaseExecutionId()).isNull();
 
     // complete ////////////////////////////////////////////////////////
 
@@ -491,21 +483,21 @@ public class ProcessTaskTest extends CmmnTest {
 
     // there exists a process instance
     ExecutionEntity processInstance = (ExecutionEntity) queryProcessInstance();
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
 
     // the case instance id is set on called process instance
-    assertEquals(caseInstanceId, processInstance.getCaseInstanceId());
+    assertThat(processInstance.getCaseInstanceId()).isEqualTo(caseInstanceId);
     // the super case execution id is equals the processTaskId
-    assertEquals(processTaskId, processInstance.getSuperCaseExecutionId());
+    assertThat(processInstance.getSuperCaseExecutionId()).isEqualTo(processTaskId);
     // the business key has been set
-    assertEquals(businessKey, processInstance.getBusinessKey());
+    assertThat(processInstance.getBusinessKey()).isEqualTo(businessKey);
 
     TaskEntity task = (TaskEntity) queryTask();
 
     // the case instance id has been also set on the task
-    assertEquals(caseInstanceId, task.getCaseInstanceId());
+    assertThat(task.getCaseInstanceId()).isEqualTo(caseInstanceId);
     // the case execution id should be null
-    assertNull(task.getCaseExecutionId());
+    assertThat(task.getCaseExecutionId()).isNull();
 
     // complete ////////////////////////////////////////////////////////
 
@@ -538,22 +530,22 @@ public class ProcessTaskTest extends CmmnTest {
 
     // there exists a process instance
     ExecutionEntity processInstance = (ExecutionEntity) queryProcessInstance();
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
 
     // the case instance id is set on called process instance
-    assertEquals(caseInstanceId, processInstance.getCaseInstanceId());
+    assertThat(processInstance.getCaseInstanceId()).isEqualTo(caseInstanceId);
     // the super case execution id is equals the processTaskId
-    assertEquals(processTaskId, processInstance.getSuperCaseExecutionId());
+    assertThat(processInstance.getSuperCaseExecutionId()).isEqualTo(processTaskId);
     // the business key has been set
-    assertEquals("myOwnBusinessKey", processInstance.getBusinessKey());
-    assertFalse(businessKey.equals(processInstance.getBusinessKey()));
+    assertThat(processInstance.getBusinessKey()).isEqualTo("myOwnBusinessKey");
+    assertThat(processInstance.getBusinessKey()).isNotEqualTo(businessKey);
 
     TaskEntity task = (TaskEntity) queryTask();
 
     // the case instance id has been also set on the task
-    assertEquals(caseInstanceId, task.getCaseInstanceId());
+    assertThat(task.getCaseInstanceId()).isEqualTo(caseInstanceId);
     // the case execution id should be null
-    assertNull(task.getCaseExecutionId());
+    assertThat(task.getCaseExecutionId()).isNull();
 
     // complete ////////////////////////////////////////////////////////
 
@@ -578,32 +570,33 @@ public class ProcessTaskTest extends CmmnTest {
             .putValue("anotherVariable", 999)
             .putValue("aThirdVariable", "def"))
         .getId();
-    String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
+    var processTask = queryCaseExecutionByActivityId(PROCESS_TASK);
+    assertThat(processTask).isNotNull();
 
     // then
 
     // there exists a process instance
     ProcessInstance processInstance = queryProcessInstance();
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
 
     List<VariableInstance> variables = runtimeService
         .createVariableInstanceQuery()
         .processInstanceIdIn(processInstance.getId())
         .list();
 
-    assertEquals(2, variables.size());
-    assertFalse(variables.get(0).getName().equals(variables.get(1).getName()));
+    assertThat(variables).hasSize(2);
+    assertThat(variables.get(1).getName()).isNotEqualTo(variables.get(0).getName());
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
       if ("aVariable".equals(name)) {
-        assertEquals("aVariable", name);
-        assertEquals("abc", variable.getValue());
+        assertThat(name).isEqualTo("aVariable");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if ("anotherVariable".equals(name)) {
-        assertEquals("anotherVariable", name);
-        assertEquals(999, variable.getValue());
+        assertThat(name).isEqualTo("anotherVariable");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else {
-        fail("Found an unexpected variable: '"+name+"'");
+        fail("Found an unexpected variable: '" + name + "'");
       }
     }
 
@@ -639,26 +632,26 @@ public class ProcessTaskTest extends CmmnTest {
 
     // there exists a process instance
     ProcessInstance processInstance = queryProcessInstance();
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
 
     List<VariableInstance> variables = runtimeService
         .createVariableInstanceQuery()
         .processInstanceIdIn(processInstance.getId())
         .list();
 
-    assertEquals(2, variables.size());
-    assertFalse(variables.get(0).getName().equals(variables.get(1).getName()));
+    assertThat(variables).hasSize(2);
+    assertThat(variables.get(1).getName()).isNotEqualTo(variables.get(0).getName());
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
       if ("myVariable".equals(name)) {
-        assertEquals("myVariable", name);
-        assertEquals("abc", variable.getValue());
+        assertThat(name).isEqualTo("myVariable");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if ("myAnotherVariable".equals(name)) {
-        assertEquals("myAnotherVariable", name);
-        assertEquals(999, variable.getValue());
+        assertThat(name).isEqualTo("myAnotherVariable");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else {
-        fail("Found an unexpected variable: '"+name+"'");
+        fail("Found an unexpected variable: '" + name + "'");
       }
     }
 
@@ -680,30 +673,31 @@ public class ProcessTaskTest extends CmmnTest {
   public void testInputSourceNullValue() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
-    String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
+    var processTask = queryCaseExecutionByActivityId(PROCESS_TASK);
+    assertThat(processTask).isNotNull();
 
     // then
 
     // there exists a process instance
     ProcessInstance processInstance = queryProcessInstance();
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
 
     List<VariableInstance> variables = runtimeService
         .createVariableInstanceQuery()
         .processInstanceIdIn(processInstance.getId())
         .list();
 
-    assertEquals(2, variables.size());
-    assertFalse(variables.get(0).getName().equals(variables.get(1).getName()));
+    assertThat(variables).hasSize(2);
+    assertThat(variables.get(1).getName()).isNotEqualTo(variables.get(0).getName());
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
 
       if (!"aVariable".equals(name) && !"anotherVariable".equals(name)) {
-        fail("Found an unexpected variable: '"+name+"'");
+        fail("Found an unexpected variable: '" + name + "'");
       }
 
-      assertNull(variable.getValue());
+      assertThat(variable.getValue()).isNull();
     }
 
     // complete ////////////////////////////////////////////////////////
@@ -726,32 +720,33 @@ public class ProcessTaskTest extends CmmnTest {
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE,
         Variables.createVariables().putValue("aVariable", "abc")
     .putValue("anotherVariable", 999)).getId();
-    String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
+    var processTask = queryCaseExecutionByActivityId(PROCESS_TASK);
+    assertThat(processTask).isNotNull();
 
     // then
 
     // there exists a process instance
     ProcessInstance processInstance = queryProcessInstance();
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
 
     List<VariableInstance> variables = runtimeService
         .createVariableInstanceQuery()
         .processInstanceIdIn(processInstance.getId())
         .list();
 
-    assertEquals(2, variables.size());
-    assertFalse(variables.get(0).getName().equals(variables.get(1).getName()));
+    assertThat(variables).hasSize(2);
+    assertThat(variables.get(1).getName()).isNotEqualTo(variables.get(0).getName());
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
       if ("aVariable".equals(name)) {
-        assertEquals("aVariable", name);
-        assertEquals("abc", variable.getValue());
+        assertThat(name).isEqualTo("aVariable");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if ("anotherVariable".equals(name)) {
-        assertEquals("anotherVariable", name);
-        assertEquals((long) 1000, variable.getValue());
+        assertThat(name).isEqualTo("anotherVariable");
+        assertThat(variable.getValue()).isEqualTo((long) 1000);
       } else {
-        fail("Found an unexpected variable: '"+name+"'");
+        fail("Found an unexpected variable: '" + name + "'");
       }
     }
 
@@ -774,32 +769,33 @@ public class ProcessTaskTest extends CmmnTest {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE,
         Variables.createVariables().putValue("aVariable", "abc").putValue("anotherVariable", 999)).getId();
-    String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
+    var processTask = queryCaseExecutionByActivityId(PROCESS_TASK);
+    assertThat(processTask).isNotNull();
 
     // then
 
     // there exists a process instance
     ProcessInstance processInstance = queryProcessInstance();
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
 
     List<VariableInstance> variables = runtimeService
         .createVariableInstanceQuery()
         .processInstanceIdIn(processInstance.getId())
         .list();
 
-    assertEquals(2, variables.size());
-    assertFalse(variables.get(0).getName().equals(variables.get(1).getName()));
+    assertThat(variables).hasSize(2);
+    assertThat(variables.get(1).getName()).isNotEqualTo(variables.get(0).getName());
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
       if ("aVariable".equals(name)) {
-        assertEquals("aVariable", name);
-        assertEquals("abc", variable.getValue());
+        assertThat(name).isEqualTo("aVariable");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if ("anotherVariable".equals(name)) {
-        assertEquals("anotherVariable", name);
-        assertEquals(999, variable.getValue());
+        assertThat(name).isEqualTo("anotherVariable");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else {
-        fail("Found an unexpected variable: '"+name+"'");
+        fail("Found an unexpected variable: '" + name + "'");
       }
     }
 
@@ -838,8 +834,8 @@ public class ProcessTaskTest extends CmmnTest {
         .processInstanceIdIn(subProcessInstance.getId())
         .list();
 
-    assertEquals(1, variables.size());
-    assertEquals("aLocalVariable", variables.get(0).getName());
+    assertThat(variables).hasSize(1);
+    assertThat(variables.get(0).getName()).isEqualTo("aLocalVariable");
   }
 
 
@@ -865,26 +861,26 @@ public class ProcessTaskTest extends CmmnTest {
 
     // there exists a process instance
     ProcessInstance processInstance = queryProcessInstance();
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
 
     List<VariableInstance> variables = runtimeService
         .createVariableInstanceQuery()
         .processInstanceIdIn(processInstance.getId())
         .list();
 
-    assertEquals(2, variables.size());
-    assertFalse(variables.get(0).getName().equals(variables.get(1).getName()));
+    assertThat(variables).hasSize(2);
+    assertThat(variables.get(1).getName()).isNotEqualTo(variables.get(0).getName());
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
       if ("aVariable".equals(name)) {
-        assertEquals("aVariable", name);
-        assertEquals("abc", variable.getValue());
+        assertThat(name).isEqualTo("aVariable");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if ("anotherVariable".equals(name)) {
-        assertEquals("anotherVariable", name);
-        assertEquals((long) 1000, variable.getValue());
+        assertThat(name).isEqualTo("anotherVariable");
+        assertThat(variable.getValue()).isEqualTo((long) 1000);
       } else {
-        fail("Found an unexpected variable: '"+name+"'");
+        fail("Found an unexpected variable: '" + name + "'");
       }
     }
 
@@ -906,14 +902,16 @@ public class ProcessTaskTest extends CmmnTest {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
+    var caseExecutionCommandBuilder = caseService
+        .withCaseExecution(processTaskId);
 
     try {
       // when
-      caseService
-        .withCaseExecution(processTaskId)
-        .manualStart();
+      caseExecutionCommandBuilder.manualStart();
       fail("It should not be possible to start a process instance.");
-    } catch (ProcessEngineException e) {}
+    } catch (ProcessEngineException e) {
+      // expected
+    }
 
     // complete //////////////////////////////////////////////////////////
 
@@ -940,12 +938,12 @@ public class ProcessTaskTest extends CmmnTest {
 
     // the process instance has been completed
     ProcessInstance processInstance = queryProcessInstance();
-    assertNull(processInstance);
+    assertThat(processInstance).isNull();
 
     // the case execution associated with the
     // process task has been completed
     CaseExecution processTask = queryCaseExecutionByActivityId(PROCESS_TASK);
-    assertNull(processTask);
+    assertThat(processTask).isNull();
 
     // complete ////////////////////////////////////////////////////////
 
@@ -981,19 +979,19 @@ public class ProcessTaskTest extends CmmnTest {
         .caseInstanceIdIn(caseInstanceId)
         .list();
 
-    assertEquals(2, variables.size());
-    assertFalse(variables.get(0).getName().equals(variables.get(1).getName()));
+    assertThat(variables).hasSize(2);
+    assertThat(variables.get(1).getName()).isNotEqualTo(variables.get(0).getName());
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
       if ("aVariable".equals(name)) {
-        assertEquals("aVariable", name);
-        assertEquals("abc", variable.getValue());
+        assertThat(name).isEqualTo("aVariable");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if ("anotherVariable".equals(name)) {
-        assertEquals("anotherVariable", name);
-        assertEquals(999, variable.getValue());
+        assertThat(name).isEqualTo("anotherVariable");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else {
-        fail("Found an unexpected variable: '"+name+"'");
+        fail("Found an unexpected variable: '" + name + "'");
       }
     }
 
@@ -1032,19 +1030,19 @@ public class ProcessTaskTest extends CmmnTest {
         .caseInstanceIdIn(caseInstanceId)
         .list();
 
-    assertEquals(2, variables.size());
-    assertFalse(variables.get(0).getName().equals(variables.get(1).getName()));
+    assertThat(variables).hasSize(2);
+    assertThat(variables.get(1).getName()).isNotEqualTo(variables.get(0).getName());
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
       if ("myVariable".equals(name)) {
-        assertEquals("myVariable", name);
-        assertEquals("abc", variable.getValue());
+        assertThat(name).isEqualTo("myVariable");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if ("myAnotherVariable".equals(name)) {
-        assertEquals("myAnotherVariable", name);
-        assertEquals(999, variable.getValue());
+        assertThat(name).isEqualTo("myAnotherVariable");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else {
-        fail("Found an unexpected variable: '"+name+"'");
+        fail("Found an unexpected variable: '" + name + "'");
       }
     }
 
@@ -1080,8 +1078,8 @@ public class ProcessTaskTest extends CmmnTest {
         .caseInstanceIdIn(caseInstanceId)
         .list();
 
-    assertEquals(2, variables.size());
-    assertFalse(variables.get(0).getName().equals(variables.get(1).getName()));
+    assertThat(variables).hasSize(2);
+    assertThat(variables.get(1).getName()).isNotEqualTo(variables.get(0).getName());
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
@@ -1089,7 +1087,7 @@ public class ProcessTaskTest extends CmmnTest {
         fail("Found an unexpected variable: '" + name + "'");
       }
 
-      assertNull(variable.getValue());
+      assertThat(variable.getValue()).isNull();
     }
 
     // complete ////////////////////////////////////////////////////////
@@ -1127,19 +1125,19 @@ public class ProcessTaskTest extends CmmnTest {
         .caseInstanceIdIn(caseInstanceId)
         .list();
 
-    assertEquals(2, variables.size());
-    assertFalse(variables.get(0).getName().equals(variables.get(1).getName()));
+    assertThat(variables).hasSize(2);
+    assertThat(variables.get(1).getName()).isNotEqualTo(variables.get(0).getName());
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
       if ("aVariable".equals(name)) {
-        assertEquals("aVariable", name);
-        assertEquals("abc", variable.getValue());
+        assertThat(name).isEqualTo("aVariable");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if ("anotherVariable".equals(name)) {
-        assertEquals("anotherVariable", name);
-        assertEquals((long) 1000, variable.getValue());
+        assertThat(name).isEqualTo("anotherVariable");
+        assertThat(variable.getValue()).isEqualTo((long) 1000);
       } else {
-        fail("Found an unexpected variable: '"+name+"'");
+        fail("Found an unexpected variable: '" + name + "'");
       }
     }
 
@@ -1160,7 +1158,8 @@ public class ProcessTaskTest extends CmmnTest {
   public void testOutputAll() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
-    String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
+    var processTask = queryCaseExecutionByActivityId(PROCESS_TASK);
+    assertThat(processTask).isNotNull();
 
     String processInstanceId = queryProcessInstance().getId();
 
@@ -1179,19 +1178,19 @@ public class ProcessTaskTest extends CmmnTest {
         .caseInstanceIdIn(caseInstanceId)
         .list();
 
-    assertEquals(2, variables.size());
-    assertFalse(variables.get(0).getName().equals(variables.get(1).getName()));
+    assertThat(variables).hasSize(2);
+    assertThat(variables.get(1).getName()).isNotEqualTo(variables.get(0).getName());
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
       if ("aVariable".equals(name)) {
-        assertEquals("aVariable", name);
-        assertEquals("abc", variable.getValue());
+        assertThat(name).isEqualTo("aVariable");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if ("anotherVariable".equals(name)) {
-        assertEquals("anotherVariable", name);
-        assertEquals(999, variable.getValue());
+        assertThat(name).isEqualTo("anotherVariable");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else {
-        fail("Found an unexpected variable: '"+name+"'");
+        fail("Found an unexpected variable: '" + name + "'");
       }
     }
 
@@ -1212,7 +1211,8 @@ public class ProcessTaskTest extends CmmnTest {
   public void testOutputOverlapping() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
-    String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
+    var processTask = queryCaseExecutionByActivityId(PROCESS_TASK);
+    assertThat(processTask).isNotNull();
 
     String processInstanceId = queryProcessInstance().getId();
 
@@ -1231,19 +1231,19 @@ public class ProcessTaskTest extends CmmnTest {
         .caseInstanceIdIn(caseInstanceId)
         .list();
 
-    assertEquals(2, variables.size());
-    assertFalse(variables.get(0).getName().equals(variables.get(1).getName()));
+    assertThat(variables).hasSize(2);
+    assertThat(variables.get(1).getName()).isNotEqualTo(variables.get(0).getName());
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
       if ("aVariable".equals(name)) {
-        assertEquals("aVariable", name);
-        assertEquals("abc", variable.getValue());
+        assertThat(name).isEqualTo("aVariable");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if ("anotherVariable".equals(name)) {
-        assertEquals("anotherVariable", name);
-        assertEquals((long) 1000, variable.getValue());
+        assertThat(name).isEqualTo("anotherVariable");
+        assertThat(variable.getValue()).isEqualTo((long) 1000);
       } else {
-        fail("Found an unexpected variable: '"+name+"'");
+        fail("Found an unexpected variable: '" + name + "'");
       }
     }
 
@@ -1286,13 +1286,13 @@ public class ProcessTaskTest extends CmmnTest {
 
     // then
 
-    // the variables has been deleted
+    // the variables have been deleted
     List<VariableInstance> variables = runtimeService
         .createVariableInstanceQuery()
         .caseInstanceIdIn(caseInstanceId)
         .list();
 
-    assertTrue(variables.isEmpty());
+    assertThat(variables).isEmpty();
 
     // complete ////////////////////////////////////////////////////////
 
@@ -1336,19 +1336,19 @@ public class ProcessTaskTest extends CmmnTest {
         .caseInstanceIdIn(caseInstanceId)
         .list();
 
-    assertEquals(2, variables.size());
-    assertFalse(variables.get(0).getName().equals(variables.get(1).getName()));
+    assertThat(variables).hasSize(2);
+    assertThat(variables.get(1).getName()).isNotEqualTo(variables.get(0).getName());
 
     for (VariableInstance variable : variables) {
       String name = variable.getName();
       if ("aVariable".equals(name)) {
-        assertEquals("aVariable", name);
-        assertEquals("abc", variable.getValue());
+        assertThat(name).isEqualTo("aVariable");
+        assertThat(variable.getValue()).isEqualTo("abc");
       } else if ("anotherVariable".equals(name)) {
-        assertEquals("anotherVariable", name);
-        assertEquals(999, variable.getValue());
+        assertThat(name).isEqualTo("anotherVariable");
+        assertThat(variable.getValue()).isEqualTo(999);
       } else {
-        fail("Found an unexpected variable: '"+name+"'");
+        fail("Found an unexpected variable: '" + name + "'");
       }
     }
 
@@ -1378,7 +1378,8 @@ public class ProcessTaskTest extends CmmnTest {
         .putValue(variableName, variableValue)
         .putValue(variableName2, variableValue2))
         .getId();
-    String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
+    var processTask = queryCaseExecutionByActivityId(PROCESS_TASK);
+    assertThat(processTask).isNotNull();
 
     String processInstanceId = queryProcessInstance().getId();
 
@@ -1459,14 +1460,16 @@ public class ProcessTaskTest extends CmmnTest {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
+    var caseExecutionCommandBuilder = caseService
+        .withCaseExecution(processTaskId);
 
     try {
       // when
-      caseService
-        .withCaseExecution(processTaskId)
-        .complete();
+      caseExecutionCommandBuilder.complete();
       fail("It should not be possible to complete a process task, while the process instance is running.");
-    } catch (NotAllowedException e) {}
+    } catch (NotAllowedException e) {
+      // expected
+    }
 
     // complete ////////////////////////////////////////////////////////
 
@@ -1497,15 +1500,17 @@ public class ProcessTaskTest extends CmmnTest {
     runtimeService.deleteProcessInstance(processInstanceId, null);
 
     ProcessInstance processInstance = queryProcessInstance();
-    assertNull(processInstance);
+    assertThat(processInstance).isNull();
+    var caseExecutionCommandBuilder = caseService
+        .withCaseExecution(processTaskId);
 
     try {
       // when
-      caseService
-        .withCaseExecution(processTaskId)
-        .complete();
+      caseExecutionCommandBuilder.complete();
       fail("It should not be possible to complete a process task");
-    } catch (Exception e) {}
+    } catch (Exception e) {
+      // expected
+    }
 
     // complete ////////////////////////////////////////////////////////
 
@@ -1533,7 +1538,7 @@ public class ProcessTaskTest extends CmmnTest {
 
     // the process instance is still running
     ProcessInstance processInstance = queryProcessInstance();
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
 
     // complete ////////////////////////////////////////////////////////
 
@@ -1563,15 +1568,15 @@ public class ProcessTaskTest extends CmmnTest {
 
     // then
     ProcessInstance processInstance = queryProcessInstance();
-    assertNull(processInstance);
+    assertThat(processInstance).isNull();
 
     // the case execution associated with the process task
     // does still exist and is active.
     CaseExecution processTask = queryCaseExecutionByActivityId(PROCESS_TASK);
 
-    assertNotNull(processTask);
+    assertThat(processTask).isNotNull();
 
-    assertTrue(processTask.isActive());
+    assertThat(processTask.isActive()).isTrue();
 
     // complete ////////////////////////////////////////////////////////
 
@@ -1597,12 +1602,12 @@ public class ProcessTaskTest extends CmmnTest {
 
     // then
     ProcessInstance processInstance = queryProcessInstance();
-    assertNotNull(processInstance);
-    assertFalse(processInstance.isSuspended());
+    assertThat(processInstance).isNotNull();
+    assertThat(processInstance.isSuspended()).isFalse();
 
     Task task = queryTask();
-    assertNotNull(task);
-    assertFalse(task.isSuspended());
+    assertThat(task).isNotNull();
+    assertThat(task.isSuspended()).isFalse();
 
     // complete ////////////////////////////////////////////////////////
 
@@ -1623,7 +1628,8 @@ public class ProcessTaskTest extends CmmnTest {
   public void testSuspendSubProcessInstance() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
-    String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
+    var processTask = queryCaseExecutionByActivityId(PROCESS_TASK);
+    assertThat(processTask).isNotNull();
 
     String processInstanceId = queryProcessInstance().getId();
 
@@ -1633,12 +1639,12 @@ public class ProcessTaskTest extends CmmnTest {
 
     // then
     ProcessInstance processInstance = queryProcessInstance();
-    assertTrue(processInstance.isSuspended());
+    assertThat(processInstance.isSuspended()).isTrue();
 
     // the case execution associated with the process task
     // is still active
-    CaseExecution processTask = queryCaseExecutionByActivityId(PROCESS_TASK);
-    assertTrue(processTask.isActive());
+    processTask = queryCaseExecutionByActivityId(PROCESS_TASK);
+    assertThat(processTask.isActive()).isTrue();
 
     // complete ////////////////////////////////////////////////////////
 
@@ -1666,20 +1672,20 @@ public class ProcessTaskTest extends CmmnTest {
     suspend(processTaskId);
 
     CaseExecution processTask = queryCaseExecutionByActivityId(PROCESS_TASK);
-    assertFalse(processTask.isActive());
+    assertThat(processTask.isActive()).isFalse();
 
     ProcessInstance processInstance = queryProcessInstance();
-    assertFalse(processInstance.isSuspended());
+    assertThat(processInstance.isSuspended()).isFalse();
 
     // when
     resume(processTaskId);
 
     // then
     processInstance = queryProcessInstance();
-    assertFalse(processInstance.isSuspended());
+    assertThat(processInstance.isSuspended()).isFalse();
 
     processTask = queryCaseExecutionByActivityId(PROCESS_TASK);
-    assertTrue(processTask.isActive());
+    assertThat(processTask.isActive()).isTrue();
 
     // complete ////////////////////////////////////////////////////////
 
@@ -1703,19 +1709,19 @@ public class ProcessTaskTest extends CmmnTest {
 
     // then
     ProcessInstance processInstance = queryProcessInstance();
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
 
     Task task = queryTask();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     CaseExecution processTask = queryCaseExecutionByActivityId(PROCESS_TASK);
-    assertNull(processTask);
+    assertThat(processTask).isNull();
 
     CaseInstance caseInstance = caseService
         .createCaseInstanceQuery()
         .singleResult();
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isCompleted());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isCompleted()).isTrue();
 
     // complete ////////////////////////////////////////////////////////
 
@@ -1739,16 +1745,16 @@ public class ProcessTaskTest extends CmmnTest {
 
     // then
     ProcessInstance processInstance = queryProcessInstance();
-    assertNull(processInstance);
+    assertThat(processInstance).isNull();
 
     CaseExecution processTask = queryCaseExecutionByActivityId(PROCESS_TASK);
-    assertNull(processTask);
+    assertThat(processTask).isNull();
 
     CaseInstance caseInstance = caseService
         .createCaseInstanceQuery()
         .singleResult();
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isCompleted());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isCompleted()).isTrue();
 
     // complete ////////////////////////////////////////////////////////
 
@@ -1767,16 +1773,16 @@ public class ProcessTaskTest extends CmmnTest {
 
     // then
     ProcessInstance processInstance = queryProcessInstance();
-    assertNull(processInstance);
+    assertThat(processInstance).isNull();
 
     CaseExecution processTask = queryCaseExecutionByActivityId(PROCESS_TASK);
-    assertNull(processTask);
+    assertThat(processTask).isNull();
 
     CaseInstance caseInstance = caseService
         .createCaseInstanceQuery()
         .singleResult();
-    assertNotNull(caseInstance);
-    assertTrue(caseInstance.isCompleted());
+    assertThat(caseInstance).isNotNull();
+    assertThat(caseInstance.isCompleted()).isTrue();
 
     // complete ////////////////////////////////////////////////////////
 
@@ -1792,14 +1798,15 @@ public class ProcessTaskTest extends CmmnTest {
   public void testStartProcessInstanceAsync() {
     // given
     String caseInstanceId = createCaseInstanceByKey(ONE_PROCESS_TASK_CASE).getId();
-    String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK).getId();
+    var processTask = queryCaseExecutionByActivityId(PROCESS_TASK);
+    assertThat(processTask).isNotNull();
 
     // then
     Job job = managementService.createJobQuery().singleResult();
-    assertNotNull(job);
+    assertThat(job).isNotNull();
 
     ProcessInstance processInstance = queryProcessInstance();
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
 
     // complete ////////////////////////////////////////////////////////
 
@@ -1818,7 +1825,7 @@ public class ProcessTaskTest extends CmmnTest {
     CaseExecution processTask = queryCaseExecutionByActivityId(PROCESS_TASK);
 
     // then
-    assertEquals("processTask", processTask.getActivityType());
+    assertThat(processTask.getActivityType()).isEqualTo("processTask");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/processtask/ProcessTaskTest.testOutputAll.cmmn",

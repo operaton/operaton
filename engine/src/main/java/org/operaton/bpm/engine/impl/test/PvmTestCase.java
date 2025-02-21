@@ -58,8 +58,7 @@ public class PvmTestCase extends TestCase {
 
   public Object defaultManualActivation() {
     Expression expression = new FixedValue(true);
-    CaseControlRuleImpl caseControlRule = new CaseControlRuleImpl(expression);
-    return caseControlRule;
+    return new CaseControlRuleImpl(expression);
   }
 
 }

@@ -44,20 +44,20 @@ public class ProcessTaskReadPermissionAuthorizationTest extends ProcessTaskAutho
       scenario()
         .withoutAuthorizations()
         .failsDueToRequired(
-          grant(TASK, "taskId", userId, READ),
-          grant(PROCESS_DEFINITION, PROCESS_KEY, userId, READ_TASK)),
+          grant(TASK, "taskId", USER_ID, READ),
+          grant(PROCESS_DEFINITION, PROCESS_KEY, USER_ID, READ_TASK)),
       scenario()
         .withAuthorizations(
-          grant(TASK, "taskId", userId, READ)),
+          grant(TASK, "taskId", USER_ID, READ)),
       scenario()
         .withAuthorizations(
-          grant(TASK, "*", userId, READ)),
+          grant(TASK, "*", USER_ID, READ)),
       scenario()
         .withAuthorizations(
-          grant(PROCESS_DEFINITION, PROCESS_KEY, userId, READ_TASK)),
+          grant(PROCESS_DEFINITION, PROCESS_KEY, USER_ID, READ_TASK)),
       scenario()
         .withAuthorizations(
-          grant(PROCESS_DEFINITION, "*", userId, READ_TASK))
+          grant(PROCESS_DEFINITION, "*", USER_ID, READ_TASK))
         .succeeds()
       );
   }

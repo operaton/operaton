@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.api.runtime;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Map;
 
@@ -108,8 +108,9 @@ public class ProcessInstantiationAtStartEventTest extends PluggableProcessEngine
 
   @Test
   public void testFailToStartProcessInstanceSkipListeners() {
+    var processInstantiationBuilder = runtimeService.createProcessInstanceByKey(PROCESS_DEFINITION_KEY);
     try {
-      runtimeService.createProcessInstanceByKey(PROCESS_DEFINITION_KEY).execute(true, false);
+      processInstantiationBuilder.execute(true, false);
 
       fail("expected exception");
     } catch (BadUserRequestException e) {
@@ -119,8 +120,9 @@ public class ProcessInstantiationAtStartEventTest extends PluggableProcessEngine
 
   @Test
   public void testFailToStartProcessInstanceSkipInputOutputMapping() {
+    var processInstantiationBuilder = runtimeService.createProcessInstanceByKey(PROCESS_DEFINITION_KEY);
     try {
-      runtimeService.createProcessInstanceByKey(PROCESS_DEFINITION_KEY).execute(false, true);
+      processInstantiationBuilder.execute(false, true);
 
       fail("expected exception");
     } catch (BadUserRequestException e) {

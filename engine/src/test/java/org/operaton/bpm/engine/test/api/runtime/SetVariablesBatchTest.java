@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -436,10 +435,11 @@ public class SetVariablesBatchTest {
   public void shouldThrowException_TransientVariable() {
     // given
     String processInstanceId = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
+    List<String> processInstanceIds = Collections.singletonList(processInstanceId);
+    var variables = Variables.putValue("foo", Variables.stringValue("bar", true));
 
     // when/then
-    assertThatThrownBy(() -> runtimeService.setVariablesAsync(Collections.singletonList(processInstanceId),
-        Variables.putValue("foo", Variables.stringValue("bar", true))))
+    assertThatThrownBy(() -> runtimeService.setVariablesAsync(processInstanceIds, variables))
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("ENGINE-13044 Setting transient variable 'foo' " +
           "asynchronously is currently not supported.");
@@ -450,14 +450,13 @@ public class SetVariablesBatchTest {
     // given
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     ProcessInstanceQuery runtimeQuery = runtimeService.createProcessInstanceQuery();
+    var variables = Variables.putValue("foo", Variables.serializedObjectValue()
+      .serializedValue("foo")
+      .serializationDataFormat(Variables.SerializationDataFormats.JAVA)
+      .create());
 
     // when/then
-    assertThatThrownBy(() -> runtimeService.setVariablesAsync(runtimeQuery,
-        Variables.putValue("foo",
-            Variables.serializedObjectValue()
-                .serializedValue("foo")
-                .serializationDataFormat(Variables.SerializationDataFormats.JAVA)
-                .create())))
+    assertThatThrownBy(() -> runtimeService.setVariablesAsync(runtimeQuery, variables))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("ENGINE-17007 Cannot set variable with name foo. " +
           "Java serialization format is prohibited");
@@ -502,9 +501,10 @@ public class SetVariablesBatchTest {
   public void shouldThrowException_VariablesEmpty() {
     // given
     ProcessInstanceQuery runtimeQuery = runtimeService.createProcessInstanceQuery();
+    Map<String, Object> variables = Collections.emptyMap();
 
     // when/then
-    assertThatThrownBy(() -> runtimeService.setVariablesAsync(runtimeQuery, Collections.emptyMap()))
+    assertThatThrownBy(() -> runtimeService.setVariablesAsync(runtimeQuery, variables))
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("variables is empty");
   }
@@ -725,8 +725,8 @@ public class SetVariablesBatchTest {
     HistoricBatch historicBatch = historyService.createHistoricBatchQuery().singleResult();
     batch = managementService.createBatchQuery().singleResult();
 
-    Assertions.assertThat(batch.getExecutionStartTime()).isCloseTo(TEST_DATE, 1000);
-    Assertions.assertThat(historicBatch.getExecutionStartTime()).isCloseTo(TEST_DATE, 1000);
+    assertThat(batch.getExecutionStartTime()).isCloseTo(TEST_DATE, 1000);
+    assertThat(historicBatch.getExecutionStartTime()).isCloseTo(TEST_DATE, 1000);
 
     // clear
     managementService.deleteBatch(batch.getId(), true);
@@ -742,7 +742,7 @@ public class SetVariablesBatchTest {
         engineRule.getTaskService().complete(task.getId());
 
         // when executing batch then no exception is thrown
-        batchRule.syncExec(batch);
+        assertThatCode(() -> batchRule.syncExec(batch)).doesNotThrowAnyException();
     }
 
     @Test
@@ -755,7 +755,7 @@ public class SetVariablesBatchTest {
         engineRule.getTaskService().complete(task.getId());
 
         // when executing batch then no exception is thrown
-        batchRule.syncExec(batch);
+        assertThatCode(() -> batchRule.syncExec(batch)).doesNotThrowAnyException();
     }
 
     @Test
@@ -768,7 +768,7 @@ public class SetVariablesBatchTest {
         engineRule.getTaskService().complete(task.getId());
 
         // when executing batch then no exception is thrown
-        batchRule.syncExec(batch);
+        assertThatCode(() -> batchRule.syncExec(batch)).doesNotThrowAnyException();
     }
 
     @Test
@@ -799,6 +799,6 @@ public class SetVariablesBatchTest {
         batchRule.syncExec(batch);
 
         // then no exception is thrown and the variables are set for the existing process
-        assertThat(runtimeService.getVariables(id2).equals(SINGLE_VARIABLE));
+        assertThat(runtimeService.getVariables(id2)).isEqualTo(SINGLE_VARIABLE);
     }
 }

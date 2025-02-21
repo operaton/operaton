@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.container.impl.jmx.deployment.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -82,12 +80,12 @@ public class ClassPathScannerTest {
     
     scanner.scanPaResourceRootPath(classLoader, new URL(url+"/META-INF/processes.xml"), null, scanResult);
 
-    assertTrue("'testDeployProcessArchive.bpmn20.xml' not found", contains(scanResult, "testDeployProcessArchive.bpmn20.xml"));
-    assertTrue("'testDeployProcessArchive.png' not found", contains(scanResult, "testDeployProcessArchive.png"));
+    assertThat(contains(scanResult, "testDeployProcessArchive.bpmn20.xml")).as("'testDeployProcessArchive.bpmn20.xml' not found").isTrue();
+    assertThat(contains(scanResult, "testDeployProcessArchive.png")).as("'testDeployProcessArchive.png' not found").isTrue();
     if(url.contains("TwoDirectories")) {
-      assertEquals(4, scanResult.size());
+      assertThat(scanResult).hasSize(4);
     } else {
-      assertEquals(2, scanResult.size());
+      assertThat(scanResult).hasSize(2);
     }
   }
   
@@ -99,9 +97,9 @@ public class ClassPathScannerTest {
     Map<String, byte[]> scanResult = new HashMap<>();
     scanner.scanPaResourceRootPath(classLoader, new URL(url+"/META-INF/processes.xml"), "pa:nonexisting", scanResult);
 
-    assertFalse("'testDeployProcessArchive.bpmn20.xml' found", contains(scanResult, "testDeployProcessArchive.bpmn20.xml"));
-    assertFalse("'testDeployProcessArchive.png' found", contains(scanResult, "testDeployProcessArchive.png"));
-    assertEquals(0, scanResult.size());
+    assertThat(contains(scanResult, "testDeployProcessArchive.bpmn20.xml")).as("'testDeployProcessArchive.bpmn20.xml' found").isFalse();
+    assertThat(contains(scanResult, "testDeployProcessArchive.png")).as("'testDeployProcessArchive.png' found").isFalse();
+    assertThat(scanResult).isEmpty();
   }
   
   @Test
@@ -111,10 +109,10 @@ public class ClassPathScannerTest {
     
     Map<String, byte[]> scanResult = new HashMap<>();
     scanner.scanPaResourceRootPath(classLoader, null, "nonexisting", scanResult);
-    
-    assertFalse("'testDeployProcessArchive.bpmn20.xml' found", contains(scanResult, "testDeployProcessArchive.bpmn20.xml"));
-    assertFalse("'testDeployProcessArchive.png' found", contains(scanResult, "testDeployProcessArchive.png"));
-    assertEquals(0, scanResult.size());
+
+    assertThat(contains(scanResult, "testDeployProcessArchive.bpmn20.xml")).as("'testDeployProcessArchive.bpmn20.xml' found").isFalse();
+    assertThat(contains(scanResult, "testDeployProcessArchive.png")).as("'testDeployProcessArchive.png' found").isFalse();
+    assertThat(scanResult).isEmpty();
   }
 
   @Test
@@ -126,13 +124,13 @@ public class ClassPathScannerTest {
     scanner.scanPaResourceRootPath(classLoader, new URL(url+"/META-INF/processes.xml"), "pa:directory/", scanResult);
 
     if(url.contains("Recursive")) {
-      assertTrue("'testDeployProcessArchive.bpmn20.xml' not found", contains(scanResult, "testDeployProcessArchive.bpmn20.xml"));
-      assertTrue("'testDeployProcessArchive.png' not found", contains(scanResult, "testDeployProcessArchive.png"));
-      assertEquals(2, scanResult.size());      
+      assertThat(contains(scanResult, "testDeployProcessArchive.bpmn20.xml")).as("'testDeployProcessArchive.bpmn20.xml' not found").isTrue();
+      assertThat(contains(scanResult, "testDeployProcessArchive.png")).as("'testDeployProcessArchive.png' not found").isTrue();
+      assertThat(scanResult).hasSize(2);      
     } else {
-      assertFalse("'testDeployProcessArchive.bpmn20.xml' found", contains(scanResult, "testDeployProcessArchive.bpmn20.xml"));
-      assertFalse("'testDeployProcessArchive.png' found", contains(scanResult, "testDeployProcessArchive.png"));
-      assertEquals(0, scanResult.size());
+      assertThat(contains(scanResult, "testDeployProcessArchive.bpmn20.xml")).as("'testDeployProcessArchive.bpmn20.xml' found").isFalse();
+      assertThat(contains(scanResult, "testDeployProcessArchive.png")).as("'testDeployProcessArchive.png' found").isFalse();
+      assertThat(scanResult).isEmpty();
     }
   }
   
@@ -145,13 +143,13 @@ public class ClassPathScannerTest {
     scanner.scanPaResourceRootPath(classLoader, null, "directory/", scanResult);
         
     if(url.contains("Recursive")) {
-      assertTrue("'testDeployProcessArchive.bpmn20.xml' not found", contains(scanResult, "testDeployProcessArchive.bpmn20.xml"));
-      assertTrue("'testDeployProcessArchive.png' not found", contains(scanResult, "testDeployProcessArchive.png"));
-      assertEquals(2, scanResult.size());      
+      assertThat(contains(scanResult, "testDeployProcessArchive.bpmn20.xml")).as("'testDeployProcessArchive.bpmn20.xml' not found").isTrue();
+      assertThat(contains(scanResult, "testDeployProcessArchive.png")).as("'testDeployProcessArchive.png' not found").isTrue();
+      assertThat(scanResult).hasSize(2);      
     } else {
-      assertFalse("'testDeployProcessArchive.bpmn20.xml' found", contains(scanResult, "testDeployProcessArchive.bpmn20.xml"));
-      assertFalse("'testDeployProcessArchive.png' found", contains(scanResult, "testDeployProcessArchive.png"));
-      assertEquals(0, scanResult.size());
+      assertThat(contains(scanResult, "testDeployProcessArchive.bpmn20.xml")).as("'testDeployProcessArchive.bpmn20.xml' found").isFalse();
+      assertThat(contains(scanResult, "testDeployProcessArchive.png")).as("'testDeployProcessArchive.png' found").isFalse();
+      assertThat(scanResult).isEmpty();
     }
   }
 
@@ -164,7 +162,7 @@ public class ClassPathScannerTest {
     Map<String, byte[]> scanResult = scanner.findResources(classLoader, null, new URL(url + "/META-INF/processes.xml"), additionalResourceSuffixes);
 
     if (url.contains("AdditionalResourceSuffixes")) {
-      assertEquals(5, scanResult.size());
+      assertThat(scanResult).hasSize(5);
     }
   }
   

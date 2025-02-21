@@ -20,10 +20,8 @@ import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
 import static org.operaton.bpm.engine.authorization.Resources.DECISION_DEFINITION;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.io.InputStream;
 import org.operaton.bpm.engine.AuthorizationException;
@@ -86,8 +84,8 @@ public class DecisionDefinitionAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 1);
 
     DecisionDefinition definition = query.singleResult();
-    assertNotNull(definition);
-    assertEquals(DECISION_DEFINITION_KEY, definition.getKey());
+    assertThat(definition).isNotNull();
+    assertThat(definition.getKey()).isEqualTo(DECISION_DEFINITION_KEY);
   }
 
   @Test
@@ -144,7 +142,7 @@ public class DecisionDefinitionAuthorizationTest extends AuthorizationTest {
     DecisionDefinition decisionDefinition = repositoryService.getDecisionDefinition(decisionDefinitionId);
 
     // then
-    assertNotNull(decisionDefinition);
+    assertThat(decisionDefinition).isNotNull();
   }
 
   @Test
@@ -178,7 +176,7 @@ public class DecisionDefinitionAuthorizationTest extends AuthorizationTest {
 
     // then
     // no decision diagram deployed
-    assertNull(stream);
+    assertThat(stream).isNull();
   }
 
   @Test
@@ -211,7 +209,7 @@ public class DecisionDefinitionAuthorizationTest extends AuthorizationTest {
     InputStream stream = repositoryService.getDecisionModel(decisionDefinitionId);
 
     // then
-    assertNotNull(stream);
+    assertThat(stream).isNotNull();
   }
 
   @Test
@@ -244,7 +242,7 @@ public class DecisionDefinitionAuthorizationTest extends AuthorizationTest {
     DmnModelInstance modelInstance = repositoryService.getDmnModelInstance(decisionDefinitionId);
 
     // then
-    assertNotNull(modelInstance);
+    assertThat(modelInstance).isNotNull();
   }
 
   @Test
@@ -257,7 +255,7 @@ public class DecisionDefinitionAuthorizationTest extends AuthorizationTest {
     repositoryService.updateDecisionDefinitionHistoryTimeToLive(decisionDefinitionId, 6);
 
     //then
-    assertEquals(6, selectDecisionDefinitionByKey(DECISION_DEFINITION_KEY).getHistoryTimeToLive().intValue());
+    assertThat(selectDecisionDefinitionByKey(DECISION_DEFINITION_KEY).getHistoryTimeToLive().intValue()).isEqualTo(6);
 
   }
 

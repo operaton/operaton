@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
-import org.operaton.bpm.engine.impl.pvm.runtime.Callback;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 
 /**
@@ -39,15 +38,11 @@ public class PvmAtomicOperationActivityNotifyListenerEnd extends PvmAtomicOperat
   protected void eventNotificationsCompleted(PvmExecutionImpl execution) {
 
     // perform activity end behavior
-    execution.dispatchDelayedEventsAndPerformOperation(new Callback<>() {
-
-      @Override
-      public Void callback(PvmExecutionImpl execution) {
-        execution.leaveActivityInstance();
-        execution.setActivityInstanceId(null);
-        execution.performOperation(ACTIVITY_END);
-        return null;
-      }
+    execution.dispatchDelayedEventsAndPerformOperation(execution1 -> {
+      execution1.leaveActivityInstance();
+      execution1.setActivityInstanceId(null);
+      execution1.performOperation(ACTIVITY_END);
+      return null;
     });
   }
 

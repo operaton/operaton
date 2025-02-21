@@ -16,18 +16,6 @@
  */
 package org.operaton.bpm.engine.test.bpmn.callactivity;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.operaton.bpm.engine.ParseException;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
@@ -35,11 +23,7 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.util.CollectionUtil;
-import org.operaton.bpm.engine.runtime.EventSubscription;
-import org.operaton.bpm.engine.runtime.EventSubscriptionQuery;
-import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.runtime.VariableInstance;
+import org.operaton.bpm.engine.runtime.*;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.test.Deployment;
@@ -54,7 +38,15 @@ import org.operaton.bpm.model.bpmn.builder.CallActivityBuilder;
 import org.operaton.bpm.model.bpmn.instance.CallActivity;
 import org.operaton.bpm.model.bpmn.instance.operaton.OperatonIn;
 import org.operaton.bpm.model.bpmn.instance.operaton.OperatonOut;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Joram Barrez
@@ -75,17 +67,17 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // one task in the subprocess should be active after starting the process instance
     TaskQuery taskQuery = taskService.createTaskQuery();
     Task taskBeforeSubProcess = taskQuery.singleResult();
-    assertEquals("Task before subprocess", taskBeforeSubProcess.getName());
+    assertThat(taskBeforeSubProcess.getName()).isEqualTo("Task before subprocess");
 
     // Completing the task continues the process which leads to calling the subprocess
     taskService.complete(taskBeforeSubProcess.getId());
     Task taskInSubProcess = taskQuery.singleResult();
-    assertEquals("Task in subprocess", taskInSubProcess.getName());
+    assertThat(taskInSubProcess.getName()).isEqualTo("Task in subprocess");
 
     // Completing the task in the subprocess, finishes the subprocess
     taskService.complete(taskInSubProcess.getId());
     Task taskAfterSubProcess = taskQuery.singleResult();
-    assertEquals("Task after subprocess", taskAfterSubProcess.getName());
+    assertThat(taskAfterSubProcess.getName()).isEqualTo("Task after subprocess");
 
     // Completing this task end the process instance
     taskService.complete(taskAfterSubProcess.getId());
@@ -103,16 +95,16 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // one task in the subprocess should be active after starting the process instance
     TaskQuery taskQuery = taskService.createTaskQuery();
     Task taskBeforeSubProcess = taskQuery.singleResult();
-    assertEquals("Task before subprocess", taskBeforeSubProcess.getName());
+    assertThat(taskBeforeSubProcess.getName()).isEqualTo("Task before subprocess");
 
     // the variable does not yet exist
-    assertNull(runtimeService.getVariable(processInstance.getId(), "greeting"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "greeting")).isNull();
 
     // completing the task executed the sub process
     taskService.complete(taskBeforeSubProcess.getId());
 
     // now the variable exists
-    assertEquals("hello", runtimeService.getVariable(processInstance.getId(), "greeting"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "greeting")).isEqualTo("hello");
 
   }
 
@@ -127,16 +119,16 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // one task in the subprocess should be active after starting the process instance
     TaskQuery taskQuery = taskService.createTaskQuery();
     Task taskBeforeSubProcess = taskQuery.singleResult();
-    assertEquals("Task before subprocess", taskBeforeSubProcess.getName());
+    assertThat(taskBeforeSubProcess.getName()).isEqualTo("Task before subprocess");
 
     // the variable does not yet exist
-    assertNull(runtimeService.getVariable(processInstance.getId(), "greeting"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "greeting")).isNull();
 
     // completing the task executed the sub process
     taskService.complete(taskBeforeSubProcess.getId());
 
     // now the variable exists
-    assertEquals("hello", runtimeService.getVariable(processInstance.getId(), "greeting"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "greeting")).isEqualTo("hello");
 
   }
 
@@ -151,7 +143,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // instance
     TaskQuery taskQuery = taskService.createTaskQuery();
     Task taskBeforeSubProcess = taskQuery.singleResult();
-    assertEquals("Task before subprocess", taskBeforeSubProcess.getName());
+    assertThat(taskBeforeSubProcess.getName()).isEqualTo("Task before subprocess");
 
     // Completing the task continues the process which leads to calling the
     // subprocess. The sub process we want to call is passed in as a variable
@@ -159,12 +151,12 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     taskService.setVariable(taskBeforeSubProcess.getId(), "simpleSubProcessExpression", "simpleSubProcess");
     taskService.complete(taskBeforeSubProcess.getId());
     Task taskInSubProcess = taskQuery.singleResult();
-    assertEquals("Task in subprocess", taskInSubProcess.getName());
+    assertThat(taskInSubProcess.getName()).isEqualTo("Task in subprocess");
 
     // Completing the task in the subprocess, finishes the subprocess
     taskService.complete(taskInSubProcess.getId());
     Task taskAfterSubProcess = taskQuery.singleResult();
-    assertEquals("Task after subprocess", taskAfterSubProcess.getName());
+    assertThat(taskAfterSubProcess.getName()).isEqualTo("Task after subprocess");
 
     // Completing this task end the process instance
     taskService.complete(taskAfterSubProcess.getId());
@@ -185,12 +177,12 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // one task in the subprocess should be active after starting the process instance
     TaskQuery taskQuery = taskService.createTaskQuery();
     Task taskBeforeSubProcess = taskQuery.singleResult();
-    assertEquals("Task in subprocess", taskBeforeSubProcess.getName());
+    assertThat(taskBeforeSubProcess.getName()).isEqualTo("Task in subprocess");
 
     // Completing this task ends the subprocess which leads to the end of the whole process instance
     taskService.complete(taskBeforeSubProcess.getId());
     testRule.assertProcessEnded(processInstance.getId());
-    assertEquals(0, runtimeService.createExecutionQuery().list().size());
+    assertThat(runtimeService.createExecutionQuery().list()).isEmpty();
   }
 
   @Deployment(resources = {
@@ -206,20 +198,20 @@ public class CallActivityTest extends PluggableProcessEngineTest {
             .orderByTaskName()
             .asc();
     List<Task> tasks = taskQuery.list();
-    assertEquals(2, tasks.size());
+    assertThat(tasks).hasSize(2);
 
     Task taskA = tasks.get(0);
     Task taskB = tasks.get(1);
-    assertEquals("Task A", taskA.getName());
-    assertEquals("Task B", taskB.getName());
+    assertThat(taskA.getName()).isEqualTo("Task A");
+    assertThat(taskB.getName()).isEqualTo("Task B");
 
     // Completing the first task should not end the subprocess
     taskService.complete(taskA.getId());
-    assertEquals(1, taskQuery.list().size());
+    assertThat(taskQuery.list()).hasSize(1);
 
     // Completing the second task should end the subprocess and end the whole process instance
     taskService.complete(taskB.getId());
-    assertEquals(0, runtimeService.createExecutionQuery().count());
+    assertThat(runtimeService.createExecutionQuery().count()).isZero();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSequentialSubProcess.bpmn20.xml",
@@ -236,7 +228,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // instance
     TaskQuery taskQuery = taskService.createTaskQuery();
     Task taskBeforeSubProcess = taskQuery.singleResult();
-    assertEquals("Task before subprocess", taskBeforeSubProcess.getName());
+    assertThat(taskBeforeSubProcess.getName()).isEqualTo("Task before subprocess");
 
     // Completing the task continues the process which leads to calling the
     // subprocess. The sub process we want to call is passed in as a variable
@@ -244,12 +236,12 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     taskService.setVariable(taskBeforeSubProcess.getId(), "simpleSubProcessExpression", "simpleSubProcess");
     taskService.complete(taskBeforeSubProcess.getId());
     Task taskInSubProcess = taskQuery.singleResult();
-    assertEquals("Task in subprocess", taskInSubProcess.getName());
+    assertThat(taskInSubProcess.getName()).isEqualTo("Task in subprocess");
 
     // Completing the task in the subprocess, finishes the subprocess
     taskService.complete(taskInSubProcess.getId());
     Task taskAfterSubProcess = taskQuery.singleResult();
-    assertEquals("Task after subprocess", taskAfterSubProcess.getName());
+    assertThat(taskAfterSubProcess.getName()).isEqualTo("Task after subprocess");
 
     // Completing this task end the process instance
     taskService.complete(taskAfterSubProcess.getId());
@@ -259,7 +251,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // instance
     taskQuery = taskService.createTaskQuery();
     taskBeforeSubProcess = taskQuery.singleResult();
-    assertEquals("Task before subprocess", taskBeforeSubProcess.getName());
+    assertThat(taskBeforeSubProcess.getName()).isEqualTo("Task before subprocess");
 
     // Completing the task continues the process which leads to calling the
     // subprocess. The sub process we want to call is passed in as a variable
@@ -267,12 +259,12 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     taskService.setVariable(taskBeforeSubProcess.getId(), "simpleSubProcessExpression", "simpleSubProcess2");
     taskService.complete(taskBeforeSubProcess.getId());
     taskInSubProcess = taskQuery.singleResult();
-    assertEquals("Task in subprocess 2", taskInSubProcess.getName());
+    assertThat(taskInSubProcess.getName()).isEqualTo("Task in subprocess 2");
 
     // Completing the task in the subprocess, finishes the subprocess
     taskService.complete(taskInSubProcess.getId());
     taskAfterSubProcess = taskQuery.singleResult();
-    assertEquals("Task after subprocess", taskAfterSubProcess.getName());
+    assertThat(taskAfterSubProcess.getName()).isEqualTo("Task after subprocess");
 
     // Completing this task end the process instance
     taskService.complete(taskAfterSubProcess.getId());
@@ -288,19 +280,19 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("timerOnCallActivity");
     TaskQuery taskQuery = taskService.createTaskQuery();
     Task taskInSubProcess = taskQuery.singleResult();
-    assertEquals("Task in subprocess", taskInSubProcess.getName());
+    assertThat(taskInSubProcess.getName()).isEqualTo("Task in subprocess");
 
     Job timer = managementService.createJobQuery().singleResult();
-    assertNotNull(timer);
+    assertThat(timer).isNotNull();
 
     managementService.executeJob(timer.getId());
 
     Task escalatedTask = taskQuery.singleResult();
-    assertEquals("Escalated Task", escalatedTask.getName());
+    assertThat(escalatedTask.getName()).isEqualTo("Escalated Task");
 
     // Completing the task ends the complete process
     taskService.complete(escalatedTask.getId());
-    assertEquals(0, runtimeService.createExecutionQuery().list().size());
+    assertThat(runtimeService.createExecutionQuery().list()).isEmpty();
   }
 
   /**
@@ -319,23 +311,23 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // one task in the subprocess should be active after starting the process instance
     TaskQuery taskQuery = taskService.createTaskQuery();
     Task taskBeforeSubProcess = taskQuery.singleResult();
-    assertEquals("Task in subprocess", taskBeforeSubProcess.getName());
-    assertEquals("Hello from the super process.", runtimeService.getVariable(taskBeforeSubProcess.getProcessInstanceId(), "subVariable"));
-    assertEquals("Hello from the super process.", taskService.getVariable(taskBeforeSubProcess.getId(), "subVariable"));
+    assertThat(taskBeforeSubProcess.getName()).isEqualTo("Task in subprocess");
+    assertThat(runtimeService.getVariable(taskBeforeSubProcess.getProcessInstanceId(), "subVariable")).isEqualTo("Hello from the super process.");
+    assertThat(taskService.getVariable(taskBeforeSubProcess.getId(), "subVariable")).isEqualTo("Hello from the super process.");
 
     runtimeService.setVariable(taskBeforeSubProcess.getProcessInstanceId(), "subVariable", "Hello from sub process.");
 
     // super variable is unchanged
-    assertEquals("Hello from the super process.", runtimeService.getVariable(processInstance.getId(), "superVariable"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "superVariable")).isEqualTo("Hello from the super process.");
 
     // Completing this task ends the subprocess which leads to a task in the super process
     taskService.complete(taskBeforeSubProcess.getId());
 
     // one task in the subprocess should be active after starting the process instance
     Task taskAfterSubProcess = taskQuery.singleResult();
-    assertEquals("Task in super process", taskAfterSubProcess.getName());
-    assertEquals("Hello from sub process.", runtimeService.getVariable(processInstance.getId(), "superVariable"));
-    assertEquals("Hello from sub process.", taskService.getVariable(taskAfterSubProcess.getId(), "superVariable"));
+    assertThat(taskAfterSubProcess.getName()).isEqualTo("Task in super process");
+    assertThat(runtimeService.getVariable(processInstance.getId(), "superVariable")).isEqualTo("Hello from sub process.");
+    assertThat(taskService.getVariable(taskAfterSubProcess.getId(), "superVariable")).isEqualTo("Hello from sub process.");
 
     vars.clear();
     vars.put("x", 5L);
@@ -345,24 +337,24 @@ public class CallActivityTest extends PluggableProcessEngineTest {
 
     // now we are the second time in the sub process but passed variables via expressions
     Task taskInSecondSubProcess = taskQuery.singleResult();
-    assertEquals("Task in subprocess", taskInSecondSubProcess.getName());
-    assertEquals(10l, runtimeService.getVariable(taskInSecondSubProcess.getProcessInstanceId(), "y"));
-    assertEquals(10l, taskService.getVariable(taskInSecondSubProcess.getId(), "y"));
+    assertThat(taskInSecondSubProcess.getName()).isEqualTo("Task in subprocess");
+    assertThat(runtimeService.getVariable(taskInSecondSubProcess.getProcessInstanceId(), "y")).isEqualTo(10L);
+    assertThat(taskService.getVariable(taskInSecondSubProcess.getId(), "y")).isEqualTo(10L);
 
     // Completing this task ends the subprocess which leads to a task in the super process
     taskService.complete(taskInSecondSubProcess.getId());
 
     // one task in the subprocess should be active after starting the process instance
     Task taskAfterSecondSubProcess = taskQuery.singleResult();
-    assertEquals("Task in super process", taskAfterSecondSubProcess.getName());
-    assertEquals(15l, runtimeService.getVariable(taskAfterSecondSubProcess.getProcessInstanceId(), "z"));
-    assertEquals(15l, taskService.getVariable(taskAfterSecondSubProcess.getId(), "z"));
+    assertThat(taskAfterSecondSubProcess.getName()).isEqualTo("Task in super process");
+    assertThat(runtimeService.getVariable(taskAfterSecondSubProcess.getProcessInstanceId(), "z")).isEqualTo(15L);
+    assertThat(taskService.getVariable(taskAfterSecondSubProcess.getId(), "z")).isEqualTo(15L);
 
     // and end last task in Super process
     taskService.complete(taskAfterSecondSubProcess.getId());
 
     testRule.assertProcessEnded(processInstance.getId());
-    assertEquals(0, runtimeService.createExecutionQuery().list().size());
+    assertThat(runtimeService.createExecutionQuery().list()).isEmpty();
   }
 
   /**
@@ -406,7 +398,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     taskService.complete(taskAfterSubProcess.getId());
 
     testRule.assertProcessEnded(processInstance.getId());
-    assertEquals(0, runtimeService.createExecutionQuery().list().size());
+    assertThat(runtimeService.createExecutionQuery().list()).isEmpty();
   }
 
   /**
@@ -447,7 +439,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     taskService.complete(taskAfterSubProcess.getId());
 
     testRule.assertProcessEnded(processInstance.getId());
-    assertEquals(0, runtimeService.createExecutionQuery().list().size());
+    assertThat(runtimeService.createExecutionQuery().list()).isEmpty();
   }
 
   /**
@@ -527,25 +519,25 @@ public class CallActivityTest extends PluggableProcessEngineTest {
             .processInstanceIdIn(processInstanceId)
             .variableName("subVariable")
             .singleResult();
-    assertNull(variable);
+    assertThat(variable).isNull();
 
     variable = runtimeService
             .createVariableInstanceQuery()
             .processInstanceIdIn(processInstanceId)
             .variableName("superVariable")
             .singleResult();
-    assertNull(variable);
+    assertThat(variable).isNull();
 
     // the sub process instance is in the task
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
-    assertEquals("Task in subprocess", task.getName());
+    assertThat(task).isNotNull();
+    assertThat(task.getName()).isEqualTo("Task in subprocess");
 
     // the value of "subVariable" is null
-    assertNull(taskService.getVariable(task.getId(), "subVariable"));
+    assertThat(taskService.getVariable(task.getId(), "subVariable")).isNull();
 
     String subProcessInstanceId = task.getProcessInstanceId();
-    assertFalse(processInstanceId.equals(subProcessInstanceId));
+    assertThat(subProcessInstanceId).isNotEqualTo(processInstanceId);
 
     // the variable "subVariable" is set on the sub process instance
     variable = runtimeService
@@ -554,9 +546,9 @@ public class CallActivityTest extends PluggableProcessEngineTest {
             .variableName("subVariable")
             .singleResult();
 
-    assertNotNull(variable);
-    assertNull(variable.getValue());
-    assertEquals("subVariable", variable.getName());
+    assertThat(variable).isNotNull();
+    assertThat(variable.getValue()).isNull();
+    assertThat(variable.getName()).isEqualTo("subVariable");
   }
 
   /**
@@ -577,26 +569,26 @@ public class CallActivityTest extends PluggableProcessEngineTest {
             .processInstanceIdIn(processInstanceId)
             .variableName("subVariable")
             .singleResult();
-    assertNull(variable);
+    assertThat(variable).isNull();
 
     variable = runtimeService
             .createVariableInstanceQuery()
             .processInstanceIdIn(processInstanceId)
             .variableName("superVariable")
             .singleResult();
-    assertNotNull(variable);
-    assertNull(variable.getValue());
+    assertThat(variable).isNotNull();
+    assertThat(variable.getValue()).isNull();
 
     // the sub process instance is in the task
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
-    assertEquals("Task in subprocess", task.getName());
+    assertThat(task).isNotNull();
+    assertThat(task.getName()).isEqualTo("Task in subprocess");
 
     // the value of "subVariable" is null
-    assertNull(taskService.getVariable(task.getId(), "subVariable"));
+    assertThat(taskService.getVariable(task.getId(), "subVariable")).isNull();
 
     String subProcessInstanceId = task.getProcessInstanceId();
-    assertFalse(processInstanceId.equals(subProcessInstanceId));
+    assertThat(subProcessInstanceId).isNotEqualTo(processInstanceId);
 
     // the variable "subVariable" is set on the sub process instance
     variable = runtimeService
@@ -605,9 +597,9 @@ public class CallActivityTest extends PluggableProcessEngineTest {
             .variableName("subVariable")
             .singleResult();
 
-    assertNotNull(variable);
-    assertNull(variable.getValue());
-    assertEquals("subVariable", variable.getName());
+    assertThat(variable).isNotNull();
+    assertThat(variable.getValue()).isNull();
+    assertThat(variable.getName()).isEqualTo("subVariable");
   }
 
   @Deployment(resources = {
@@ -623,19 +615,19 @@ public class CallActivityTest extends PluggableProcessEngineTest {
             .processInstanceIdIn(processInstanceId)
             .variableName("subVariable")
             .singleResult();
-    assertNull(variable);
+    assertThat(variable).isNull();
 
     variable = runtimeService
             .createVariableInstanceQuery()
             .processInstanceIdIn(processInstanceId)
             .variableName("superVariable")
             .singleResult();
-    assertNull(variable);
+    assertThat(variable).isNull();
 
     // the sub process instance is in the task
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
-    assertEquals("Task in subprocess", task.getName());
+    assertThat(task).isNotNull();
+    assertThat(task.getName()).isEqualTo("Task in subprocess");
 
     taskService.complete(task.getId());
 
@@ -644,23 +636,23 @@ public class CallActivityTest extends PluggableProcessEngineTest {
             .processInstanceIdIn(processInstanceId)
             .variableName("subVariable")
             .singleResult();
-    assertNull(variable);
+    assertThat(variable).isNull();
 
     variable = runtimeService
             .createVariableInstanceQuery()
             .processInstanceIdIn(processInstanceId)
             .variableName("superVariable")
             .singleResult();
-    assertNotNull(variable);
-    assertNull(variable.getValue());
+    assertThat(variable).isNotNull();
+    assertThat(variable.getValue()).isNull();
 
     variable = runtimeService
             .createVariableInstanceQuery()
             .processInstanceIdIn(processInstanceId)
             .variableName("hisLocalVariable")
             .singleResult();
-    assertNotNull(variable);
-    assertNull(variable.getValue());
+    assertThat(variable).isNotNull();
+    assertThat(variable.getValue()).isNull();
 
   }
 
@@ -679,20 +671,20 @@ public class CallActivityTest extends PluggableProcessEngineTest {
             .processInstanceIdIn(processInstanceId)
             .variableName("subVariable")
             .singleResult();
-    assertNull(variable);
+    assertThat(variable).isNull();
 
     variable = runtimeService
             .createVariableInstanceQuery()
             .processInstanceIdIn(processInstanceId)
             .variableName("superVariable")
             .singleResult();
-    assertNotNull(variable);
-    assertNull(variable.getValue());
+    assertThat(variable).isNotNull();
+    assertThat(variable.getValue()).isNull();
 
     // the sub process instance is in the task
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
-    assertEquals("Task in subprocess", task.getName());
+    assertThat(task).isNotNull();
+    assertThat(task.getName()).isEqualTo("Task in subprocess");
 
     VariableMap variables = Variables.createVariables().putValue("myLocalVariable", null);
     taskService.complete(task.getId(), variables);
@@ -702,38 +694,34 @@ public class CallActivityTest extends PluggableProcessEngineTest {
             .processInstanceIdIn(processInstanceId)
             .variableName("subVariable")
             .singleResult();
-    assertNull(variable);
+    assertThat(variable).isNull();
 
     variable = runtimeService
             .createVariableInstanceQuery()
             .processInstanceIdIn(processInstanceId)
             .variableName("superVariable")
             .singleResult();
-    assertNotNull(variable);
-    assertNull(variable.getValue());
+    assertThat(variable).isNotNull();
+    assertThat(variable.getValue()).isNull();
 
     variable = runtimeService
             .createVariableInstanceQuery()
             .processInstanceIdIn(processInstanceId)
             .variableName("hisLocalVariable")
             .singleResult();
-    assertNotNull(variable);
-    assertNull(variable.getValue());
+    assertThat(variable).isNotNull();
+    assertThat(variable.getValue()).isNull();
 
   }
 
   private void deployAndExpectException(BpmnModelInstance modelInstance) {
-    String deploymentId = null;
+    var deploymentBuilder = repositoryService.createDeployment().addModelInstance("process.bpmn", modelInstance);
     try {
-      deploymentId = repositoryService.createDeployment().addModelInstance("process.bpmn", modelInstance).deploy().getId();
+      testRule.deploy(deploymentBuilder);
       fail("Exception expected");
     } catch (ParseException e) {
        testRule.assertTextPresent("Missing attribute 'target'", e.getMessage());
       assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("callActivity");
-    } finally {
-      if (deploymentId != null) {
-        repositoryService.deleteDeployment(deploymentId, true);
-      }
     }
   }
 
@@ -748,22 +736,22 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("callTwoSubProcesses");
 
     List<ProcessInstance> instanceList = runtimeService.createProcessInstanceQuery().list();
-    assertNotNull(instanceList);
-    assertEquals(3, instanceList.size());
+    assertThat(instanceList)
+            .isNotNull()
+            .hasSize(3);
 
     List<Task> taskList = taskService.createTaskQuery().list();
-    assertNotNull(taskList);
-    assertEquals(2, taskList.size());
+    assertThat(taskList)
+            .isNotNull()
+            .hasSize(2);
 
     runtimeService.deleteProcessInstance(processInstance.getId(), "Test cascading");
 
     instanceList = runtimeService.createProcessInstanceQuery().list();
-    assertNotNull(instanceList);
-    assertEquals(0, instanceList.size());
+    assertThat(instanceList).isEmpty();
 
     taskList = taskService.createTaskQuery().list();
-    assertNotNull(taskList);
-    assertEquals(0, taskList.size());
+    assertThat(taskList).isEmpty();
   }
 
   /**
@@ -783,22 +771,22 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // one task in the super process should be active after starting the process instance
     TaskQuery taskQuery = taskService.createTaskQuery();
     Task taskBeforeSubProcess = taskQuery.singleResult();
-    assertEquals("Task before subprocess", taskBeforeSubProcess.getName());
-    assertEquals("Hello from the super process.", runtimeService.getVariable(taskBeforeSubProcess.getProcessInstanceId(), "superVariable"));
-    assertEquals("Hello from the super process.", taskService.getVariable(taskBeforeSubProcess.getId(), "superVariable"));
-    assertEquals("Only a test.", runtimeService.getVariable(taskBeforeSubProcess.getProcessInstanceId(), "testVariable"));
-    assertEquals("Only a test.", taskService.getVariable(taskBeforeSubProcess.getId(), "testVariable"));
+    assertThat(taskBeforeSubProcess.getName()).isEqualTo("Task before subprocess");
+    assertThat(runtimeService.getVariable(taskBeforeSubProcess.getProcessInstanceId(), "superVariable")).isEqualTo("Hello from the super process.");
+    assertThat(taskService.getVariable(taskBeforeSubProcess.getId(), "superVariable")).isEqualTo("Hello from the super process.");
+    assertThat(runtimeService.getVariable(taskBeforeSubProcess.getProcessInstanceId(), "testVariable")).isEqualTo("Only a test.");
+    assertThat(taskService.getVariable(taskBeforeSubProcess.getId(), "testVariable")).isEqualTo("Only a test.");
 
     taskService.complete(taskBeforeSubProcess.getId());
 
     // one task in sub process should be active after starting sub process instance
     taskQuery = taskService.createTaskQuery();
     Task taskInSubProcess = taskQuery.singleResult();
-    assertEquals("Task in subprocess", taskInSubProcess.getName());
-    assertEquals("Hello from the super process.", runtimeService.getVariable(taskInSubProcess.getProcessInstanceId(), "superVariable"));
-    assertEquals("Hello from the super process.", taskService.getVariable(taskInSubProcess.getId(), "superVariable"));
-    assertEquals("Only a test.", runtimeService.getVariable(taskInSubProcess.getProcessInstanceId(), "testVariable"));
-    assertEquals("Only a test.", taskService.getVariable(taskInSubProcess.getId(), "testVariable"));
+    assertThat(taskInSubProcess.getName()).isEqualTo("Task in subprocess");
+    assertThat(runtimeService.getVariable(taskInSubProcess.getProcessInstanceId(), "superVariable")).isEqualTo("Hello from the super process.");
+    assertThat(taskService.getVariable(taskInSubProcess.getId(), "superVariable")).isEqualTo("Hello from the super process.");
+    assertThat(runtimeService.getVariable(taskInSubProcess.getProcessInstanceId(), "testVariable")).isEqualTo("Only a test.");
+    assertThat(taskService.getVariable(taskInSubProcess.getId(), "testVariable")).isEqualTo("Only a test.");
 
     // changed variables in sub process
     runtimeService.setVariable(taskInSubProcess.getProcessInstanceId(), "superVariable", "Hello from sub process.");
@@ -809,16 +797,16 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // task after sub process in super process
     taskQuery = taskService.createTaskQuery();
     Task taskAfterSubProcess = taskQuery.singleResult();
-    assertEquals("Task after subprocess", taskAfterSubProcess.getName());
+    assertThat(taskAfterSubProcess.getName()).isEqualTo("Task after subprocess");
 
     // variables are changed after finished sub process
-    assertEquals("Hello from sub process.", runtimeService.getVariable(processInstance.getId(), "superVariable"));
-    assertEquals("Variable changed in sub process.", runtimeService.getVariable(processInstance.getId(), "testVariable"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "superVariable")).isEqualTo("Hello from sub process.");
+    assertThat(runtimeService.getVariable(processInstance.getId(), "testVariable")).isEqualTo("Variable changed in sub process.");
 
     taskService.complete(taskAfterSubProcess.getId());
 
     testRule.assertProcessEnded(processInstance.getId());
-    assertEquals(0, runtimeService.createExecutionQuery().list().size());
+    assertThat(runtimeService.createExecutionQuery().list()).isEmpty();
   }
 
   /**
@@ -838,23 +826,23 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // one task in the super process should be active after starting the process instance
     TaskQuery taskQuery = taskService.createTaskQuery();
     Task taskBeforeSubProcess = taskQuery.singleResult();
-    assertEquals("Task before subprocess", taskBeforeSubProcess.getName());
-    assertEquals("Hello from the super process.", runtimeService.getVariable(taskBeforeSubProcess.getProcessInstanceId(), "superVariable"));
-    assertEquals("Hello from the super process.", taskService.getVariable(taskBeforeSubProcess.getId(), "superVariable"));
-    assertEquals("Only a test.", runtimeService.getVariable(taskBeforeSubProcess.getProcessInstanceId(), "testVariable"));
-    assertEquals("Only a test.", taskService.getVariable(taskBeforeSubProcess.getId(), "testVariable"));
+    assertThat(taskBeforeSubProcess.getName()).isEqualTo("Task before subprocess");
+    assertThat(runtimeService.getVariable(taskBeforeSubProcess.getProcessInstanceId(), "superVariable")).isEqualTo("Hello from the super process.");
+    assertThat(taskService.getVariable(taskBeforeSubProcess.getId(), "superVariable")).isEqualTo("Hello from the super process.");
+    assertThat(runtimeService.getVariable(taskBeforeSubProcess.getProcessInstanceId(), "testVariable")).isEqualTo("Only a test.");
+    assertThat(taskService.getVariable(taskBeforeSubProcess.getId(), "testVariable")).isEqualTo("Only a test.");
 
     taskService.complete(taskBeforeSubProcess.getId());
 
     // one task in sub process should be active after starting sub process instance
     taskQuery = taskService.createTaskQuery();
     Task taskInSubProcess = taskQuery.singleResult();
-    assertEquals("Task in subprocess", taskInSubProcess.getName());
-    assertEquals("Hello from the super process.", runtimeService.getVariable(taskInSubProcess.getProcessInstanceId(), "superVariable"));
-    assertEquals("Hello from the super process.", runtimeService.getVariable(taskInSubProcess.getProcessInstanceId(), "subVariable"));
-    assertEquals("Hello from the super process.", taskService.getVariable(taskInSubProcess.getId(), "superVariable"));
-    assertEquals("Only a test.", runtimeService.getVariable(taskInSubProcess.getProcessInstanceId(), "testVariable"));
-    assertEquals("Only a test.", taskService.getVariable(taskInSubProcess.getId(), "testVariable"));
+    assertThat(taskInSubProcess.getName()).isEqualTo("Task in subprocess");
+    assertThat(runtimeService.getVariable(taskInSubProcess.getProcessInstanceId(), "superVariable")).isEqualTo("Hello from the super process.");
+    assertThat(runtimeService.getVariable(taskInSubProcess.getProcessInstanceId(), "subVariable")).isEqualTo("Hello from the super process.");
+    assertThat(taskService.getVariable(taskInSubProcess.getId(), "superVariable")).isEqualTo("Hello from the super process.");
+    assertThat(runtimeService.getVariable(taskInSubProcess.getProcessInstanceId(), "testVariable")).isEqualTo("Only a test.");
+    assertThat(taskService.getVariable(taskInSubProcess.getId(), "testVariable")).isEqualTo("Only a test.");
 
     // changed variables in sub process
     runtimeService.setVariable(taskInSubProcess.getProcessInstanceId(), "superVariable", "Hello from sub process.");
@@ -865,23 +853,23 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // task after sub process in super process
     taskQuery = taskService.createTaskQuery();
     Task taskAfterSubProcess = taskQuery.singleResult();
-    assertEquals("Task after subprocess", taskAfterSubProcess.getName());
+    assertThat(taskAfterSubProcess.getName()).isEqualTo("Task after subprocess");
 
     // variables are changed after finished sub process
-    assertEquals("Hello from sub process.", runtimeService.getVariable(processInstance.getId(), "superVariable"));
-    assertEquals("Variable changed in sub process.", runtimeService.getVariable(processInstance.getId(), "testVariable"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "superVariable")).isEqualTo("Hello from sub process.");
+    assertThat(runtimeService.getVariable(processInstance.getId(), "testVariable")).isEqualTo("Variable changed in sub process.");
 
     taskService.complete(taskAfterSubProcess.getId());
 
     testRule.assertProcessEnded(processInstance.getId());
-    assertEquals(0, runtimeService.createExecutionQuery().list().size());
+    assertThat(runtimeService.createExecutionQuery().list()).isEmpty();
   }
 
   /**
    * This testcase verifies that <operaton:out variables="all" /> works also in
    * case super process has no variables
    *
-   * https://app.camunda.com/jira/browse/CAM-1617
+   * @see <a href="https://app.camunda.com/jira/browse/CAM-1617">CAM-1617</a>
    *
    */
   @Deployment(resources = {
@@ -895,14 +883,14 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // one task in the super process should be active after starting the process instance
     TaskQuery taskQuery = taskService.createTaskQuery();
     Task taskBeforeSubProcess = taskQuery.singleResult();
-    assertEquals("Task before subprocess", taskBeforeSubProcess.getName());
+    assertThat(taskBeforeSubProcess.getName()).isEqualTo("Task before subprocess");
 
     taskService.complete(taskBeforeSubProcess.getId());
 
     // one task in sub process should be active after starting sub process instance
     taskQuery = taskService.createTaskQuery();
     Task taskInSubProcess = taskQuery.singleResult();
-    assertEquals("Task in subprocess", taskInSubProcess.getName());
+    assertThat(taskInSubProcess.getName()).isEqualTo("Task in subprocess");
 
     // add variables to sub process
     runtimeService.setVariable(taskInSubProcess.getProcessInstanceId(), "superVariable", "Hello from sub process.");
@@ -913,16 +901,16 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // task after sub process in super process
     taskQuery = taskService.createTaskQuery();
     Task taskAfterSubProcess = taskQuery.singleResult();
-    assertEquals("Task after subprocess", taskAfterSubProcess.getName());
+    assertThat(taskAfterSubProcess.getName()).isEqualTo("Task after subprocess");
 
     // variables are copied to super process instance after sub process instance finishes
-    assertEquals("Hello from sub process.", runtimeService.getVariable(processInstance.getId(), "superVariable"));
-    assertEquals("Variable changed in sub process.", runtimeService.getVariable(processInstance.getId(), "testVariable"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "superVariable")).isEqualTo("Hello from sub process.");
+    assertThat(runtimeService.getVariable(processInstance.getId(), "testVariable")).isEqualTo("Variable changed in sub process.");
 
     taskService.complete(taskAfterSubProcess.getId());
 
     testRule.assertProcessEnded(processInstance.getId());
-    assertEquals(0, runtimeService.createExecutionQuery().list().size());
+    assertThat(runtimeService.createExecutionQuery().list()).isEmpty();
   }
 
   @Deployment(resources = {
@@ -945,8 +933,9 @@ public class CallActivityTest extends PluggableProcessEngineTest {
             .singleResult();
 
     Map<String, Object> calledInstanceVariables = runtimeService.getVariables(calledInstance.getId());
-    assertEquals(1, calledInstanceVariables.size());
-    assertEquals("val2", calledInstanceVariables.get("inputParameter"));
+    assertThat(calledInstanceVariables)
+            .hasSize(1)
+            .containsEntry("inputParameter", "val2");
 
     // when setting a variable in the called process instance
     runtimeService.setVariable(calledInstance.getId(), "calledProcessVar1", 42L);
@@ -958,10 +947,11 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // then the call activity output variable has been mapped to the process instance execution
     // and the output mapping variable as well
     Map<String, Object> callingInstanceVariables = runtimeService.getVariables(processInstance.getId());
-    assertEquals(3, callingInstanceVariables.size());
-    assertEquals("val1", callingInstanceVariables.get("callingProcessVar1"));
-    assertEquals(42L, callingInstanceVariables.get("calledProcessVar1"));
-    assertEquals(43L, callingInstanceVariables.get("outputParameter"));
+    assertThat(callingInstanceVariables)
+            .hasSize(3)
+            .containsEntry("callingProcessVar1", "val1")
+            .containsEntry("calledProcessVar1", 42L)
+            .containsEntry("outputParameter", 43L);
   }
 
   @Deployment(resources = {
@@ -984,8 +974,9 @@ public class CallActivityTest extends PluggableProcessEngineTest {
             .singleResult();
 
     Map<String, Object> calledInstanceVariables = runtimeService.getVariables(calledInstance.getId());
-    assertEquals(1, calledInstanceVariables.size());
-    assertEquals("val2", calledInstanceVariables.get("mappedInputParameter"));
+    assertThat(calledInstanceVariables)
+            .hasSize(1)
+            .containsEntry("mappedInputParameter", "val2");
 
     // when setting a variable in the called process instance
     runtimeService.setVariable(calledInstance.getId(), "calledProcessVar1", 42L);
@@ -997,11 +988,12 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // then the call activity output variable has been mapped to the process instance execution
     // and the output mapping variable as well
     Map<String, Object> callingInstanceVariables = runtimeService.getVariables(processInstance.getId());
-    assertEquals(4, callingInstanceVariables.size());
-    assertEquals("val1", callingInstanceVariables.get("callingProcessVar1"));
-    assertEquals("val2", callingInstanceVariables.get("mappedInputParameter"));
-    assertEquals(42L, callingInstanceVariables.get("calledProcessVar1"));
-    assertEquals(43L, callingInstanceVariables.get("outputParameter"));
+    assertThat(callingInstanceVariables)
+            .hasSize(4)
+            .containsEntry("callingProcessVar1", "val1")
+            .containsEntry("mappedInputParameter", "val2")
+            .containsEntry("calledProcessVar1", 42L)
+            .containsEntry("outputParameter", 43L);
   }
 
   @Deployment(resources = {
@@ -1022,8 +1014,9 @@ public class CallActivityTest extends PluggableProcessEngineTest {
             .singleResult();
 
     Map<String, Object> calledInstanceVariables = runtimeService.getVariables(calledInstance.getId());
-    assertEquals(1, calledInstanceVariables.size());
-    assertEquals(43L, calledInstanceVariables.get("mappedInputParameter"));
+    assertThat(calledInstanceVariables)
+            .hasSize(1)
+            .containsEntry("mappedInputParameter", 43L);
 
     // and completing it
     Task callActivityTask = taskService.createTaskQuery().singleResult();
@@ -1031,11 +1024,11 @@ public class CallActivityTest extends PluggableProcessEngineTest {
 
     // and executing a call activity in parameter where the source variable is not mapped by an activity
     // input parameter fails
-    Task beforeSecondCallActivityTask = taskService.createTaskQuery().singleResult();
     runtimeService.setVariable(processInstance.getId(), "globalVariable", "42");
+    var beforeSecondCallActivityTaskId = taskService.createTaskQuery().singleResult().getId();
 
     try {
-      taskService.complete(beforeSecondCallActivityTask.getId());
+      taskService.complete(beforeSecondCallActivityTaskId);
       fail("expected exception");
     } catch (ProcessEngineException e) {
        testRule.assertTextPresent("Cannot resolve identifier 'globalVariable'", e.getMessage());
@@ -1062,9 +1055,10 @@ public class CallActivityTest extends PluggableProcessEngineTest {
             .singleResult();
 
     Map<String, Object> calledInstanceVariables = runtimeService.getVariables(calledInstance.getId());
-    assertEquals(2, calledInstanceVariables.size());
-    assertEquals("val1", calledInstanceVariables.get("callingProcessVar1"));
-    assertEquals("val2", calledInstanceVariables.get("inputParameter"));
+    assertThat(calledInstanceVariables)
+            .hasSize(2)
+            .containsEntry("callingProcessVar1", "val1")
+            .containsEntry("inputParameter", "val2");
 
     // when setting a variable in the called process instance
     runtimeService.setVariable(calledInstance.getId(), "calledProcessVar1", 42L);
@@ -1075,9 +1069,10 @@ public class CallActivityTest extends PluggableProcessEngineTest {
 
     // then only the output mapping variable has been mapped into the calling process instance
     Map<String, Object> callingInstanceVariables = runtimeService.getVariables(processInstance.getId());
-    assertEquals(2, callingInstanceVariables.size());
-    assertEquals("val1", callingInstanceVariables.get("callingProcessVar1"));
-    assertEquals(43L, callingInstanceVariables.get("outputParameter"));
+    assertThat(callingInstanceVariables)
+            .hasSize(2)
+            .containsEntry("callingProcessVar1", "val1")
+            .containsEntry("outputParameter", 43L);
   }
 
   @Deployment(resources = {
@@ -1100,9 +1095,10 @@ public class CallActivityTest extends PluggableProcessEngineTest {
             .singleResult();
 
     Map<String, Object> calledInstanceVariables = runtimeService.getVariables(calledInstance.getId());
-    assertEquals(2, calledInstanceVariables.size());
-    assertEquals("val1", calledInstanceVariables.get("callingProcessVar1"));
-    assertEquals("val2", calledInstanceVariables.get("inputParameter"));
+    assertThat(calledInstanceVariables)
+            .hasSize(2)
+            .containsEntry("callingProcessVar1", "val1")
+            .containsEntry("inputParameter", "val2");
 
     // when setting a variable in the called process instance
     runtimeService.setVariable(calledInstance.getId(), "calledProcessVar1", 42L);
@@ -1113,9 +1109,10 @@ public class CallActivityTest extends PluggableProcessEngineTest {
 
     // then only the output mapping variable has been mapped into the calling process instance
     Map<String, Object> callingInstanceVariables = runtimeService.getVariables(processInstance.getId());
-    assertEquals(2, callingInstanceVariables.size());
-    assertEquals("val1", callingInstanceVariables.get("callingProcessVar1"));
-    assertEquals(43L, callingInstanceVariables.get("outputParameter"));
+    assertThat(callingInstanceVariables)
+            .hasSize(2)
+            .containsEntry("callingProcessVar1", "val1")
+            .containsEntry("outputParameter", 43L);
   }
 
   /**
@@ -1132,43 +1129,43 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // one task in the super process should be active after starting the process instance
     TaskQuery taskQuery = taskService.createTaskQuery();
     Task taskBeforeSubProcess = taskQuery.singleResult();
-    assertEquals("Task before subprocess", taskBeforeSubProcess.getName());
-    assertEquals("myBusinessKey", processInstance.getBusinessKey());
+    assertThat(taskBeforeSubProcess.getName()).isEqualTo("Task before subprocess");
+    assertThat(processInstance.getBusinessKey()).isEqualTo("myBusinessKey");
 
     taskService.complete(taskBeforeSubProcess.getId());
 
     if (processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
       // called process started so businesskey should be written in history
       HistoricProcessInstance hpi = historyService.createHistoricProcessInstanceQuery().superProcessInstanceId(processInstance.getId()).singleResult();
-      assertEquals(businessKey, hpi.getBusinessKey());
+      assertThat(hpi.getBusinessKey()).isEqualTo(businessKey);
 
-      assertEquals(2, historyService.createHistoricProcessInstanceQuery().processInstanceBusinessKey(businessKey).list().size());
+      assertThat(historyService.createHistoricProcessInstanceQuery().processInstanceBusinessKey(businessKey).list()).hasSize(2);
     }
 
     // one task in sub process should be active after starting sub process instance
     taskQuery = taskService.createTaskQuery();
     Task taskInSubProcess = taskQuery.singleResult();
-    assertEquals("Task in subprocess", taskInSubProcess.getName());
+    assertThat(taskInSubProcess.getName()).isEqualTo("Task in subprocess");
     ProcessInstance subProcessInstance = runtimeService.createProcessInstanceQuery().processInstanceId(taskInSubProcess.getProcessInstanceId()).singleResult();
-    assertEquals("myBusinessKey", subProcessInstance.getBusinessKey());
+    assertThat(subProcessInstance.getBusinessKey()).isEqualTo("myBusinessKey");
 
     taskService.complete(taskInSubProcess.getId());
 
     // task after sub process in super process
     taskQuery = taskService.createTaskQuery();
     Task taskAfterSubProcess = taskQuery.singleResult();
-    assertEquals("Task after subprocess", taskAfterSubProcess.getName());
+    assertThat(taskAfterSubProcess.getName()).isEqualTo("Task after subprocess");
 
     taskService.complete(taskAfterSubProcess.getId());
 
     testRule.assertProcessEnded(processInstance.getId());
-    assertEquals(0, runtimeService.createExecutionQuery().list().size());
+    assertThat(runtimeService.createExecutionQuery().list()).isEmpty();
 
     if (processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
       HistoricProcessInstance hpi = historyService.createHistoricProcessInstanceQuery().superProcessInstanceId(processInstance.getId()).finished().singleResult();
-      assertEquals(businessKey, hpi.getBusinessKey());
+      assertThat(hpi.getBusinessKey()).isEqualTo(businessKey);
 
-      assertEquals(2, historyService.createHistoricProcessInstanceQuery().processInstanceBusinessKey(businessKey).finished().list().size());
+      assertThat(historyService.createHistoricProcessInstanceQuery().processInstanceBusinessKey(businessKey).finished().list()).hasSize(2);
     }
   }
 
@@ -1183,7 +1180,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // instance
     TaskQuery taskQuery = taskService.createTaskQuery();
     Task taskBeforeSubProcess = taskQuery.singleResult();
-    assertEquals("Task before subprocess", taskBeforeSubProcess.getName());
+    assertThat(taskBeforeSubProcess.getName()).isEqualTo("Task before subprocess");
 
     // Completing the task continues the process which leads to calling the
     // subprocess. The sub process we want to call is passed in as a variable
@@ -1191,12 +1188,12 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     taskService.setVariable(taskBeforeSubProcess.getId(), "simpleSubProcessExpression", "simpleSubProcess");
     taskService.complete(taskBeforeSubProcess.getId());
     Task taskInSubProcess = taskQuery.singleResult();
-    assertEquals("Task in subprocess", taskInSubProcess.getName());
+    assertThat(taskInSubProcess.getName()).isEqualTo("Task in subprocess");
 
     // Completing the task in the subprocess, finishes the subprocess
     taskService.complete(taskInSubProcess.getId());
     Task taskAfterSubProcess = taskQuery.singleResult();
-    assertEquals("Task after subprocess", taskAfterSubProcess.getName());
+    assertThat(taskAfterSubProcess.getName()).isEqualTo("Task after subprocess");
 
     // Completing this task end the process instance
     taskService.complete(taskAfterSubProcess.getId());
@@ -1212,23 +1209,23 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // one task in the call activity subprocess should be active after starting the process instance
     TaskQuery taskQuery = taskService.createTaskQuery();
     Task taskInsideCallActivity = taskQuery.singleResult();
-    assertEquals("taskBeforeInterruptingEventSubprocess", taskInsideCallActivity.getTaskDefinitionKey());
+    assertThat(taskInsideCallActivity.getTaskDefinitionKey()).isEqualTo("taskBeforeInterruptingEventSubprocess");
 
     // we should have no event subscriptions for the parent process
-    assertEquals(0, runtimeService.createEventSubscriptionQuery().processInstanceId(processInstance.getId()).count());
+    assertThat(runtimeService.createEventSubscriptionQuery().processInstanceId(processInstance.getId()).count()).isZero();
     // we should have two event subscriptions for the called process instance, one for message and one for signal
     String calledProcessInstanceId = taskInsideCallActivity.getProcessInstanceId();
     EventSubscriptionQuery eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery().processInstanceId(calledProcessInstanceId);
     List<EventSubscription> subscriptions = eventSubscriptionQuery.list();
-    assertEquals(2, subscriptions.size());
+    assertThat(subscriptions).hasSize(2);
 
     // start the message interrupting event sub process
     runtimeService.correlateMessage("newMessage");
     Task taskAfterMessageStartEvent = taskQuery.processInstanceId(calledProcessInstanceId).singleResult();
-    assertEquals("taskAfterMessageStartEvent", taskAfterMessageStartEvent.getTaskDefinitionKey());
+    assertThat(taskAfterMessageStartEvent.getTaskDefinitionKey()).isEqualTo("taskAfterMessageStartEvent");
 
     // no subscriptions left
-    assertEquals(0, eventSubscriptionQuery.count());
+    assertThat(eventSubscriptionQuery.count()).isZero();
 
     // Complete the task inside the called process instance
     taskService.complete(taskAfterMessageStartEvent.getId());
@@ -1246,23 +1243,23 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // one task in the call activity subprocess should be active after starting the process instance
     TaskQuery taskQuery = taskService.createTaskQuery();
     Task taskInsideCallActivity = taskQuery.singleResult();
-    assertEquals("taskBeforeInterruptingEventSubprocess", taskInsideCallActivity.getTaskDefinitionKey());
+    assertThat(taskInsideCallActivity.getTaskDefinitionKey()).isEqualTo("taskBeforeInterruptingEventSubprocess");
 
     // we should have no event subscriptions for the parent process
-    assertEquals(0, runtimeService.createEventSubscriptionQuery().processInstanceId(processInstance.getId()).count());
+    assertThat(runtimeService.createEventSubscriptionQuery().processInstanceId(processInstance.getId()).count()).isZero();
     // we should have two event subscriptions for the called process instance, one for message and one for signal
     String calledProcessInstanceId = taskInsideCallActivity.getProcessInstanceId();
     EventSubscriptionQuery eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery().processInstanceId(calledProcessInstanceId);
     List<EventSubscription> subscriptions = eventSubscriptionQuery.list();
-    assertEquals(2, subscriptions.size());
+    assertThat(subscriptions).hasSize(2);
 
     // start the signal interrupting event sub process
     runtimeService.signalEventReceived("newSignal");
     Task taskAfterSignalStartEvent = taskQuery.processInstanceId(calledProcessInstanceId).singleResult();
-    assertEquals("taskAfterSignalStartEvent", taskAfterSignalStartEvent.getTaskDefinitionKey());
+    assertThat(taskAfterSignalStartEvent.getTaskDefinitionKey()).isEqualTo("taskAfterSignalStartEvent");
 
     // no subscriptions left
-    assertEquals(0, eventSubscriptionQuery.count());
+    assertThat(eventSubscriptionQuery.count()).isZero();
 
     // Complete the task inside the called process instance
     taskService.complete(taskAfterSignalStartEvent.getId());
@@ -1286,7 +1283,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
             .getId();
 
     Object variable = runtimeService.getVariable(subInstanceId, "inLiteralVariable");
-    assertEquals("inLiteralValue", variable);
+    assertThat(variable).isEqualTo("inLiteralValue");
   }
 
   @Deployment(resources = {
@@ -1304,7 +1301,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     taskService.complete(taskId);
 
     Object variable = runtimeService.getVariable(processInstanceId, "outLiteralVariable");
-    assertEquals("outLiteralValue", variable);
+    assertThat(variable).isEqualTo("outLiteralValue");
   }
 
   @Deployment(resources = {
@@ -1454,9 +1451,9 @@ public class CallActivityTest extends PluggableProcessEngineTest {
 
     // then
     ProcessInstance subInstance = runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").singleResult();
-    assertNotNull(subInstance);
+    assertThat(subInstance).isNotNull();
 
-    assertEquals(processDefinitionIdInSecondDeployment, subInstance.getProcessDefinitionId());
+    assertThat(subInstance.getProcessDefinitionId()).isEqualTo(processDefinitionIdInSecondDeployment);
 
     repositoryService.deleteDeployment(secondDeploymentId, true);
     repositoryService.deleteDeployment(thirdDeploymentId, true);
@@ -1497,9 +1494,9 @@ public class CallActivityTest extends PluggableProcessEngineTest {
 
     // then
     ProcessInstance subInstance = runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").singleResult();
-    assertNotNull(subInstance);
+    assertThat(subInstance).isNotNull();
 
-    assertEquals(processDefinitionIdInSecondDeployment, subInstance.getProcessDefinitionId());
+    assertThat(subInstance.getProcessDefinitionId()).isEqualTo(processDefinitionIdInSecondDeployment);
 
     repositoryService.deleteDeployment(secondDeploymentId, true);
     repositoryService.deleteDeployment(thirdDeploymentId, true);
@@ -1518,7 +1515,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
 
     // then
     ProcessInstance subInstance = runtimeService.createProcessInstanceQuery().processDefinitionKey("subProcess").superProcessInstanceId(processInstance.getId()).singleResult();
-    assertNotNull(subInstance);
+    assertThat(subInstance).isNotNull();
 
     // clean up
     cleanupDeployments();
@@ -1538,7 +1535,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
 
     // then
     ProcessInstance subInstance = runtimeService.createProcessInstanceQuery().processDefinitionKey("subProcess").superProcessInstanceId(processInstance.getId()).singleResult();
-    assertNotNull(subInstance);
+    assertThat(subInstance).isNotNull();
 
     // clean up
     cleanupDeployments();
@@ -1558,7 +1555,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
 
     // then
     ProcessInstance subInstance = runtimeService.createProcessInstanceQuery().processDefinitionKey("subProcess").superProcessInstanceId(processInstance.getId()).singleResult();
-    assertNotNull(subInstance);
+    assertThat(subInstance).isNotNull();
 
     // clean up
     cleanupDeployments();
@@ -1581,8 +1578,8 @@ public class CallActivityTest extends PluggableProcessEngineTest {
       fail("expected exception");
     } catch (ProcessEngineException e) {
       // then
-      assertTrue(e.getMessage().contains("Could not parse BPMN process."));
-      assertTrue(e.getMessage().contains("Missing attribute 'calledElementVersionTag' when 'calledElementBinding' has value 'versionTag'"));
+      assertThat(e.getMessage()).contains("Could not parse BPMN process.");
+      assertThat(e.getMessage()).contains("Missing attribute 'calledElementVersionTag' when 'calledElementBinding' has value 'versionTag'");
     }
   }
 
@@ -1599,7 +1596,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
       fail("expected exception");
     } catch (ProcessEngineException e) {
       // then
-      assertTrue(e.getMessage().contains("no processes deployed with key = 'subProcess', versionTag = 'ver_tag_1' and tenant-id = 'null': processDefinition is null"));
+      assertThat(e.getMessage()).contains("no processes deployed with key = 'subProcess', versionTag = 'ver_tag_1' and tenant-id = 'null': processDefinition is null");
     }
   }
 
@@ -1618,7 +1615,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
       fail("expected exception");
     } catch (ProcessEngineException e) {
       // then
-      assertTrue(e.getMessage().contains("There are '2' results for a process definition with key 'subProcess', versionTag 'ver_tag_1' and tenant-id '{}'."));
+      assertThat(e.getMessage()).contains("There are '2' results for a process definition with key 'subProcess', versionTag 'ver_tag_1' and tenant-id '{}'.");
     }
 
     // clean up
@@ -1635,21 +1632,21 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("orderProcess");
     TaskQuery taskQuery = taskService.createTaskQuery();
     Task verifyCreditTask = taskQuery.singleResult();
-    assertEquals("Verify credit history", verifyCreditTask.getName());
+    assertThat(verifyCreditTask.getName()).isEqualTo("Verify credit history");
 
     // Verify with Query API
     ProcessInstance subProcessInstance = runtimeService.createProcessInstanceQuery().superProcessInstanceId(pi.getId()).singleResult();
-    assertNotNull(subProcessInstance);
-    assertEquals(pi.getId(), runtimeService.createProcessInstanceQuery().subProcessInstanceId(subProcessInstance.getId()).singleResult().getId());
+    assertThat(subProcessInstance).isNotNull();
+    assertThat(runtimeService.createProcessInstanceQuery().subProcessInstanceId(subProcessInstance.getId()).singleResult().getId()).isEqualTo(pi.getId());
 
     // Completing the task with approval, will end the subprocess and continue the original process
     taskService.complete(verifyCreditTask.getId(), CollectionUtil.singletonMap("creditApproved", true));
     Task prepareAndShipTask = taskQuery.singleResult();
-    assertEquals("Prepare and Ship", prepareAndShipTask.getName());
+    assertThat(prepareAndShipTask.getName()).isEqualTo("Prepare and Ship");
   }
 
   /**
-   * Test case for checking deletion of process instancess in call activity subprocesses
+   * Test case for checking deletion of process instances in call activity subprocesses
    */
   @Deployment(resources = {
     "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcess.bpmn20.xml",
@@ -1671,8 +1668,9 @@ public class CallActivityTest extends PluggableProcessEngineTest {
 
 
     List<ProcessInstance> instanceList = runtimeService.createProcessInstanceQuery().list();
-    assertNotNull(instanceList);
-    assertEquals(2, instanceList.size());
+    assertThat(instanceList)
+            .isNotNull()
+            .hasSize(2);
 
 
     // when
@@ -1683,16 +1681,15 @@ public class CallActivityTest extends PluggableProcessEngineTest {
 
     // How many process Instances
     instanceList = runtimeService.createProcessInstanceQuery().list();
-    assertNotNull(instanceList);
-    assertEquals(0, instanceList.size());
+    assertThat(instanceList).isEmpty();
   }
 
   /**
    * Test case for checking deletion of process instances in call activity subprocesses
-   *
-   * Checks that deletion of process Instance will resepct other process instances in the scope
+   * <p>
+   * Checks that deletion of process Instance will respect other process instances in the scope
    * and stop its upward deletion propagation will stop at this point
-   *
+   * </p>
    */
   @Deployment(resources = {
     "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testTwoSubProcesses.bpmn20.xml",
@@ -1703,16 +1700,19 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("callTwoSubProcesses");
 
     List<ProcessInstance> instanceList = runtimeService.createProcessInstanceQuery().list();
-    assertNotNull(instanceList);
-    assertEquals(3, instanceList.size());
+    assertThat(instanceList)
+            .isNotNull()
+            .hasSize(3);
 
     List<Task> taskList = taskService.createTaskQuery().list();
-    assertNotNull(taskList);
-    assertEquals(2, taskList.size());
+    assertThat(taskList)
+            .isNotNull()
+            .hasSize(2);
 
     List<String> activeActivityIds = runtimeService.getActiveActivityIds(processInstance.getProcessInstanceId());
-    assertNotNull(activeActivityIds);
-    assertEquals(2, activeActivityIds.size());
+    assertThat(activeActivityIds)
+            .isNotNull()
+            .hasSize(2);
 
     // when
     runtimeService.deleteProcessInstance(taskList.get(0).getProcessInstanceId(), "Test upstream deletion");
@@ -1720,20 +1720,22 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // then
     // How many process Instances
     instanceList = runtimeService.createProcessInstanceQuery().list();
-    assertNotNull(instanceList);
-    assertEquals(2, instanceList.size());
+    assertThat(instanceList)
+            .isNotNull()
+            .hasSize(2);
 
     // How man call activities
     activeActivityIds = runtimeService.getActiveActivityIds(processInstance.getProcessInstanceId());
-    assertNotNull(activeActivityIds);
-    assertEquals(1, activeActivityIds.size());
+    assertThat(activeActivityIds)
+            .isNotNull()
+            .hasSize(1);
   }
 
   /**
    * Test case for checking deletion of process instances in nested call activity subprocesses
-   *
+   * <p>
    * Checking that nested call activities will propagate upward over multiple nested levels
-   *
+   * </p>
    */
   @Deployment(resources = {
     "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcess.bpmn20.xml",
@@ -1758,8 +1760,9 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     Task taskInNestedSubProcess = taskQuery.singleResult();
 
     List<ProcessInstance> instanceList = runtimeService.createProcessInstanceQuery().list();
-    assertNotNull(instanceList);
-    assertEquals(3, instanceList.size());
+    assertThat(instanceList)
+            .isNotNull()
+            .hasSize(3);
 
     // when
     // Delete the ProcessInstance in the sub process
@@ -1769,21 +1772,21 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // then
     // How many process Instances
     instanceList = runtimeService.createProcessInstanceQuery().list();
-    assertNotNull(instanceList);
-    assertEquals(0, instanceList.size());
-
+    assertThat(instanceList).isEmpty();
   }
 
   /**
    * Test case for checking deletion of process instances in nested call activity subprocesses
-   *
+   * <p>
    * The test defines a process waiting on three nested call activities to complete
-   *
+   * </p>
+   * <p>
    * At each nested level there is only one process instance, which is waiting on the next level to complete
-   *
+   * </p>
+   * <p>
    * When we delete the process instance of the most inner call activity sub process the expected behaviour is that
    * the delete will propagate upward and delete all process instances.
-   *
+   * </p>
    */
   @Deployment(resources = {
     "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcess.bpmn20.xml",
@@ -1815,8 +1818,9 @@ public class CallActivityTest extends PluggableProcessEngineTest {
 
 
     List<ProcessInstance> instanceList = runtimeService.createProcessInstanceQuery().list();
-    assertNotNull(instanceList);
-    assertEquals(4, instanceList.size());
+    assertThat(instanceList)
+            .isNotNull()
+            .hasSize(4);
 
     // when
     // Delete the ProcessInstance in the sub process
@@ -1826,8 +1830,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // then
     // How many process Instances
     instanceList = runtimeService.createProcessInstanceQuery().list();
-    assertNotNull(instanceList);
-    assertEquals(0, instanceList.size());
+    assertThat(instanceList).isEmpty();
 
   }
 

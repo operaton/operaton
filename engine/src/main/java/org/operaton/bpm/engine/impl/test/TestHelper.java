@@ -189,9 +189,7 @@ public abstract class TestHelper {
     for (String suffix : RESOURCE_SUFFIXES) {
       String resource = createResourceName(type, name, suffix);
       InputStream inputStream = ReflectUtil.getResourceAsStream(resource);
-      if (inputStream == null) {
-        continue;
-      } else {
+      if (inputStream != null) {
         return resource;
       }
     }
@@ -517,16 +515,14 @@ public abstract class TestHelper {
   }
 
   public static ProcessEngine getProcessEngine(String configurationResource) {
-    ProcessEngine processEngine = processEngines.get(configurationResource);
-    if (processEngine==null) {
+    return processEngines.computeIfAbsent(configurationResource, resource -> {
       LOG.debug("==== BUILDING PROCESS ENGINE ========================================================================");
-      processEngine = ProcessEngineConfiguration
-        .createProcessEngineConfigurationFromResource(configurationResource)
+      ProcessEngine newProcessEngine = ProcessEngineConfiguration
+        .createProcessEngineConfigurationFromResource(resource)
         .buildProcessEngine();
       LOG.debug("==== PROCESS ENGINE CREATED =========================================================================");
-      processEngines.put(configurationResource, processEngine);
-    }
-    return processEngine;
+      return newProcessEngine;
+    });
   }
 
   public static void closeProcessEngines() {
@@ -606,7 +602,6 @@ public abstract class TestHelper {
 
   public static Object defaultManualActivation() {
     Expression expression = new FixedValue(true);
-    CaseControlRuleImpl caseControlRule = new CaseControlRuleImpl(expression);
-    return caseControlRule;
+    return new CaseControlRuleImpl(expression);
   }
 }

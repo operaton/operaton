@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.standalone.testing;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.RuntimeService;
@@ -32,10 +31,11 @@ import org.junit.Test;
 
 
 /**
- * Test runners follow the this rule:
- *   - if the class extends Testcase, run as Junit 3
- *   - otherwise use Junit 4
- *
+ * Test runners follow this rule:
+ * <ul>
+ *   <li>if the class extends Testcase, run as Junit 3</li>
+ *   <li>otherwise use Junit 4</li>
+ * </ul>
  * So this test can be included in the regular test suite without problems.
  *
  * @author Joram Barrez
@@ -53,10 +53,10 @@ public class ProcessEngineRuleJunit4Test {
 
     TaskService taskService = engineRule.getTaskService();
     Task task = taskService.createTaskQuery().singleResult();
-    assertEquals("My Task", task.getName());
+    assertThat(task.getName()).isEqualTo("My Task");
 
     taskService.complete(task.getId());
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
   /**
@@ -64,7 +64,7 @@ public class ProcessEngineRuleJunit4Test {
    */
   @Test
   public void testWithoutDeploymentAnnotation() {
-    assertEquals("aString", "aString");
+    assertThat("aString").isEqualTo("aString");
   }
 
   @Test

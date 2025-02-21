@@ -61,8 +61,7 @@ public class ProcessInstanceResourceImpl implements ProcessInstanceResource {
       throw new InvalidRequestException(Status.NOT_FOUND, "Process instance with id " + processInstanceId + " does not exist");
     }
 
-    ProcessInstanceDto result = ProcessInstanceDto.fromProcessInstance(instance);
-    return result;
+    return ProcessInstanceDto.fromProcessInstance(instance);
   }
 
   @Override
@@ -103,8 +102,7 @@ public class ProcessInstanceResourceImpl implements ProcessInstanceResource {
       throw new InvalidRequestException(Status.NOT_FOUND, "Process instance with id " + processInstanceId + " does not exist");
     }
 
-    ActivityInstanceDto result = ActivityInstanceDto.fromActivityInstance(activityInstance);
-    return result;
+    return ActivityInstanceDto.fromActivityInstance(activityInstance);
   }
 
   @Override

@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.api.multitenancy.query;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Arrays;
 import java.util.List;
@@ -105,9 +105,9 @@ public class MultiTenancyExecutionQueryTest extends PluggableProcessEngineTest {
 
   @Test
   public void testFailQueryByTenantIdNull() {
+    var executionQuery = runtimeService.createExecutionQuery();
     try {
-      runtimeService.createExecutionQuery()
-        .tenantIdIn((String) null);
+      executionQuery.tenantIdIn((String) null);
 
       fail("expected exception");
     } catch (NullValueException e) {

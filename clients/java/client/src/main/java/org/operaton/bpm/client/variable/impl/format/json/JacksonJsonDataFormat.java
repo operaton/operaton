@@ -27,9 +27,7 @@ import org.operaton.bpm.client.impl.ExternalTaskClientLogger;
 import org.operaton.bpm.client.spi.DataFormat;
 import org.operaton.bpm.client.variable.impl.format.TypeDetector;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
@@ -101,12 +99,6 @@ public class JacksonJsonDataFormat implements DataFormat {
     try {
       return objectMapper.readValue(value, cls);
     }
-    catch (JsonParseException e) {
-      throw LOG.unableToReadValue(value, e);
-    }
-    catch (JsonMappingException e) {
-      throw LOG.unableToReadValue(value, e);
-    }
     catch (IOException e) {
       throw LOG.unableToReadValue(value, e);
     }
@@ -115,12 +107,6 @@ public class JacksonJsonDataFormat implements DataFormat {
   protected <C> C readValue(String value, JavaType type) {
     try {
       return objectMapper.readValue(value, type);
-    }
-    catch (JsonParseException e) {
-      throw LOG.unableToReadValue(value, e);
-    }
-    catch (JsonMappingException e) {
-      throw LOG.unableToReadValue(value, e);
     }
     catch (IOException e) {
       throw LOG.unableToReadValue(value, e);

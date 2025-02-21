@@ -18,10 +18,11 @@ project:
     - url: https://avatars.githubusercontent.com/u/185116948?s=200&v=4
       width: 200
       height: 200
-  java:
-    groupId: org.operaton
-    version: '17'
-    multiProject: false
+  languages:
+    java:
+      groupId: org.operaton
+      version: '17'
+      multiProject: false
   tags:
     - 'operaton'
     - 'bpmn'
@@ -39,7 +40,7 @@ release: # https://jreleaser.org/guide/latest/reference/release/github.html
     owner: operaton
     draft: false
     skipTag: false
-    previousTagName: 1.0.0-beta-2
+    previousTagName: 1.0.0-beta-3
     releaseName: Release {{tagName}}
     prerelease: # TODO Evaluate JRELEASER_PRERELEASE_ENABLED
       enabled: true
@@ -174,6 +175,8 @@ deploy:
         url: https://central.sonatype.com/api/v1/publisher
         stagingRepositories:
           - target/staging-deploy
+        retryDelay: 20
+        maxRetries: 80
     pomchecker:
       # Could be enabled when all POMs have <description> tag, see https://github.com/operaton/operaton/issues/293
       strict: false
@@ -198,7 +201,7 @@ files:
     - path: 'distro/tomcat/distro/target/operaton-bpm-tomcat-{{projectVersion}}.zip'
     - path: 'distro/wildfly/distro/target/operaton-bpm-wildfly-{{projectVersion}}.tar.gz'
     - path: 'distro/wildfly/distro/target/operaton-bpm-wildfly-{{projectVersion}}.zip'
-    - path: 'distro/sql-script/target/operaton-sql-scripts-{{projectVersion}}.tar.gz'
+    - path: 'distro/sql-script/target/operaton-sql-scripts-{{OPERATON_DATABASE_VERSION}}.tar.gz'
     - path: 'distro/webjar/target/operaton-webapp-webjar-{{projectVersion}}.jar'
     - path: 'target/project-reports.zip'
 

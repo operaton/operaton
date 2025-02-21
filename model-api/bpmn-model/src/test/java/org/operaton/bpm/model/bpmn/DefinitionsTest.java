@@ -194,8 +194,8 @@ class DefinitionsTest extends BpmnModelTest {
     MessageEventDefinition anotherMessageEventDefinition = bpmnModelInstance.newInstance(MessageEventDefinition.class);
     final MessageEventDefinition finalMessageEventDefinition = anotherMessageEventDefinition;
     assertThatThrownBy(() -> finalMessageEventDefinition.setMessage(anotherMessage))
-            .isInstanceOf(ModelReferenceException.class)
-            .withFailMessage("Message should not be added to message event definition, cause it is not part of the model");
+      .withFailMessage("Message should not be added to message event definition, cause it is not part of the model")
+      .isInstanceOf(ModelReferenceException.class);
 
     // first add message to model than to event definition
     definitions.getRootElements().add(anotherMessage);

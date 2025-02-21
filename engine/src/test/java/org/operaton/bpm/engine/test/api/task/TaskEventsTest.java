@@ -23,9 +23,8 @@ import static org.operaton.bpm.engine.task.Event.ACTION_DELETE_ATTACHMENT;
 import static org.operaton.bpm.engine.task.Event.ACTION_DELETE_GROUP_LINK;
 import static org.operaton.bpm.engine.task.Event.ACTION_DELETE_USER_LINK;
 import static org.operaton.bpm.engine.task.IdentityLinkType.CANDIDATE;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Date;
 import java.util.List;
@@ -71,21 +70,21 @@ public class TaskEventsTest extends AbstractUserOperationLogTest {
   public void testAddUserLinkEvents() {
 
     // initially there are no task events
-    assertTrue(taskService.getTaskEvents(task.getId()).isEmpty());
+    assertThat(taskService.getTaskEvents(task.getId())).isEmpty();
 
     taskService.addCandidateUser(task.getId(), JONNY);
 
     // now there is a task event created
     List<Event> events = taskService.getTaskEvents(task.getId());
-    assertEquals(1, events.size());
+    assertThat(events).hasSize(1);
     Event event = events.get(0);
-    assertEquals(JONNY, event.getMessageParts().get(0));
-    assertEquals(CANDIDATE, event.getMessageParts().get(1));
-    assertEquals(task.getId(), event.getTaskId());
-    assertEquals(ACTION_ADD_USER_LINK, event.getAction());
-    assertEquals(JONNY + CommentEntity.MESSAGE_PARTS_MARKER + CANDIDATE, event.getMessage());
-    assertEquals(null, event.getProcessInstanceId());
-    assertNotNull(event.getTime().getTime() <= ClockUtil.getCurrentTime().getTime());
+    assertThat(event.getMessageParts().get(0)).isEqualTo(JONNY);
+    assertThat(event.getMessageParts().get(1)).isEqualTo(CANDIDATE);
+    assertThat(event.getTaskId()).isEqualTo(task.getId());
+    assertThat(event.getAction()).isEqualTo(ACTION_ADD_USER_LINK);
+    assertThat(event.getMessage()).isEqualTo(JONNY + CommentEntity.MESSAGE_PARTS_MARKER + CANDIDATE);
+    assertThat(event.getProcessInstanceId()).isNull();
+    assertThat(event.getTime().getTime()).isLessThanOrEqualTo(ClockUtil.getCurrentTime().getTime());
 
     assertNoCommentsForTask();
   }
@@ -94,7 +93,7 @@ public class TaskEventsTest extends AbstractUserOperationLogTest {
   public void testDeleteUserLinkEvents() {
 
     // initially there are no task events
-    assertTrue(taskService.getTaskEvents(task.getId()).isEmpty());
+    assertThat(taskService.getTaskEvents(task.getId())).isEmpty();
 
     taskService.addCandidateUser(task.getId(), JONNY);
 
@@ -104,15 +103,15 @@ public class TaskEventsTest extends AbstractUserOperationLogTest {
 
     // now there is a task event created
     List<Event> events = taskService.getTaskEvents(task.getId());
-    assertEquals(2, events.size());
+    assertThat(events).hasSize(2);
     Event event = events.get(0);
-    assertEquals(JONNY, event.getMessageParts().get(0));
-    assertEquals(CANDIDATE, event.getMessageParts().get(1));
-    assertEquals(task.getId(), event.getTaskId());
-    assertEquals(ACTION_DELETE_USER_LINK, event.getAction());
-    assertEquals(JONNY + CommentEntity.MESSAGE_PARTS_MARKER + CANDIDATE, event.getMessage());
-    assertEquals(null, event.getProcessInstanceId());
-    assertNotNull(event.getTime().getTime() <= ClockUtil.getCurrentTime().getTime());
+    assertThat(event.getMessageParts().get(0)).isEqualTo(JONNY);
+    assertThat(event.getMessageParts().get(1)).isEqualTo(CANDIDATE);
+    assertThat(event.getTaskId()).isEqualTo(task.getId());
+    assertThat(event.getAction()).isEqualTo(ACTION_DELETE_USER_LINK);
+    assertThat(event.getMessage()).isEqualTo(JONNY + CommentEntity.MESSAGE_PARTS_MARKER + CANDIDATE);
+    assertThat(event.getProcessInstanceId()).isNull();
+    assertThat(event.getTime().getTime()).isLessThanOrEqualTo(ClockUtil.getCurrentTime().getTime());
 
     assertNoCommentsForTask();
   }
@@ -121,21 +120,21 @@ public class TaskEventsTest extends AbstractUserOperationLogTest {
   public void testAddGroupLinkEvents() {
 
     // initially there are no task events
-    assertTrue(taskService.getTaskEvents(task.getId()).isEmpty());
+    assertThat(taskService.getTaskEvents(task.getId())).isEmpty();
 
     taskService.addCandidateGroup(task.getId(), ACCOUNTING);
 
     // now there is a task event created
     List<Event> events = taskService.getTaskEvents(task.getId());
-    assertEquals(1, events.size());
+    assertThat(events).hasSize(1);
     Event event = events.get(0);
-    assertEquals(ACCOUNTING, event.getMessageParts().get(0));
-    assertEquals(CANDIDATE, event.getMessageParts().get(1));
-    assertEquals(task.getId(), event.getTaskId());
-    assertEquals(ACTION_ADD_GROUP_LINK, event.getAction());
-    assertEquals(ACCOUNTING + CommentEntity.MESSAGE_PARTS_MARKER + CANDIDATE, event.getMessage());
-    assertEquals(null, event.getProcessInstanceId());
-    assertNotNull(event.getTime().getTime() <= ClockUtil.getCurrentTime().getTime());
+    assertThat(event.getMessageParts().get(0)).isEqualTo(ACCOUNTING);
+    assertThat(event.getMessageParts().get(1)).isEqualTo(CANDIDATE);
+    assertThat(event.getTaskId()).isEqualTo(task.getId());
+    assertThat(event.getAction()).isEqualTo(ACTION_ADD_GROUP_LINK);
+    assertThat(event.getMessage()).isEqualTo(ACCOUNTING + CommentEntity.MESSAGE_PARTS_MARKER + CANDIDATE);
+    assertThat(event.getProcessInstanceId()).isNull();
+    assertThat(event.getTime().getTime()).isLessThanOrEqualTo(ClockUtil.getCurrentTime().getTime());
 
     assertNoCommentsForTask();
   }
@@ -144,7 +143,7 @@ public class TaskEventsTest extends AbstractUserOperationLogTest {
   public void testDeleteGroupLinkEvents() {
 
     // initially there are no task events
-    assertTrue(taskService.getTaskEvents(task.getId()).isEmpty());
+    assertThat(taskService.getTaskEvents(task.getId())).isEmpty();
 
     taskService.addCandidateGroup(task.getId(), ACCOUNTING);
 
@@ -154,15 +153,15 @@ public class TaskEventsTest extends AbstractUserOperationLogTest {
 
     // now there is a task event created
     List<Event> events = taskService.getTaskEvents(task.getId());
-    assertEquals(2, events.size());
+    assertThat(events).hasSize(2);
     Event event = events.get(0);
-    assertEquals(ACCOUNTING, event.getMessageParts().get(0));
-    assertEquals(CANDIDATE, event.getMessageParts().get(1));
-    assertEquals(task.getId(), event.getTaskId());
-    assertEquals(ACTION_DELETE_GROUP_LINK, event.getAction());
-    assertEquals(ACCOUNTING + CommentEntity.MESSAGE_PARTS_MARKER + CANDIDATE, event.getMessage());
-    assertEquals(null, event.getProcessInstanceId());
-    assertNotNull(event.getTime().getTime() <= ClockUtil.getCurrentTime().getTime());
+    assertThat(event.getMessageParts().get(0)).isEqualTo(ACCOUNTING);
+    assertThat(event.getMessageParts().get(1)).isEqualTo(CANDIDATE);
+    assertThat(event.getTaskId()).isEqualTo(task.getId());
+    assertThat(event.getAction()).isEqualTo(ACTION_DELETE_GROUP_LINK);
+    assertThat(event.getMessage()).isEqualTo(ACCOUNTING + CommentEntity.MESSAGE_PARTS_MARKER + CANDIDATE);
+    assertThat(event.getProcessInstanceId()).isNull();
+    assertThat(event.getTime().getTime()).isLessThanOrEqualTo(ClockUtil.getCurrentTime().getTime());
 
     assertNoCommentsForTask();
   }
@@ -170,22 +169,22 @@ public class TaskEventsTest extends AbstractUserOperationLogTest {
   @Test
   public void testAddAttachmentEvents() {
     // initially there are no task events
-    assertTrue(taskService.getTaskEvents(task.getId()).isEmpty());
+    assertThat(taskService.getTaskEvents(task.getId())).isEmpty();
 
     identityService.setAuthenticatedUserId(JONNY);
     taskService.createAttachment(IMAGE_PNG, task.getId(), null, IMAGE_NAME, IMAGE_DESC, IMAGE_URL);
 
     // now there is a task event created
     List<Event> events = taskService.getTaskEvents(task.getId());
-    assertEquals(1, events.size());
+    assertThat(events).hasSize(1);
     Event event = events.get(0);
-    assertEquals(1, event.getMessageParts().size());
-    assertEquals(IMAGE_NAME, event.getMessageParts().get(0));
-    assertEquals(task.getId(), event.getTaskId());
-    assertEquals(ACTION_ADD_ATTACHMENT, event.getAction());
-    assertEquals(IMAGE_NAME, event.getMessage());
-    assertEquals(null, event.getProcessInstanceId());
-    assertNotNull(event.getTime().getTime() <= ClockUtil.getCurrentTime().getTime());
+    assertThat(event.getMessageParts()).hasSize(1);
+    assertThat(event.getMessageParts().get(0)).isEqualTo(IMAGE_NAME);
+    assertThat(event.getTaskId()).isEqualTo(task.getId());
+    assertThat(event.getAction()).isEqualTo(ACTION_ADD_ATTACHMENT);
+    assertThat(event.getMessage()).isEqualTo(IMAGE_NAME);
+    assertThat(event.getProcessInstanceId()).isNull();
+    assertThat(event.getTime().getTime()).isLessThanOrEqualTo(ClockUtil.getCurrentTime().getTime());
 
     assertNoCommentsForTask();
   }
@@ -193,7 +192,7 @@ public class TaskEventsTest extends AbstractUserOperationLogTest {
   @Test
   public void testDeleteAttachmentEvents() {
     // initially there are no task events
-    assertTrue(taskService.getTaskEvents(task.getId()).isEmpty());
+    assertThat(taskService.getTaskEvents(task.getId())).isEmpty();
 
     identityService.setAuthenticatedUserId(JONNY);
     Attachment attachment = taskService.createAttachment(IMAGE_PNG, task.getId(), null, IMAGE_NAME, IMAGE_DESC, IMAGE_URL);
@@ -204,15 +203,15 @@ public class TaskEventsTest extends AbstractUserOperationLogTest {
 
     // now there is a task event created
     List<Event> events = taskService.getTaskEvents(task.getId());
-    assertEquals(2, events.size());
+    assertThat(events).hasSize(2);
     Event event = events.get(0);
-    assertEquals(1, event.getMessageParts().size());
-    assertEquals(IMAGE_NAME, event.getMessageParts().get(0));
-    assertEquals(task.getId(), event.getTaskId());
-    assertEquals(ACTION_DELETE_ATTACHMENT, event.getAction());
-    assertEquals(IMAGE_NAME, event.getMessage());
-    assertEquals(null, event.getProcessInstanceId());
-    assertNotNull(event.getTime().getTime() <= ClockUtil.getCurrentTime().getTime());
+    assertThat(event.getMessageParts()).hasSize(1);
+    assertThat(event.getMessageParts().get(0)).isEqualTo(IMAGE_NAME);
+    assertThat(event.getTaskId()).isEqualTo(task.getId());
+    assertThat(event.getAction()).isEqualTo(ACTION_DELETE_ATTACHMENT);
+    assertThat(event.getMessage()).isEqualTo(IMAGE_NAME);
+    assertThat(event.getProcessInstanceId()).isNull();
+    assertThat(event.getTime().getTime()).isLessThanOrEqualTo(ClockUtil.getCurrentTime().getTime());
 
     assertNoCommentsForTask();
   }
@@ -220,7 +219,7 @@ public class TaskEventsTest extends AbstractUserOperationLogTest {
 
   private void assertNoCommentsForTask() {
     processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
-      assertTrue(commandContext.getCommentManager().findCommentsByTaskId(task.getId()).isEmpty());
+      assertThat(commandContext.getCommentManager().findCommentsByTaskId(task.getId())).isEmpty();
       return null;
     });
   }

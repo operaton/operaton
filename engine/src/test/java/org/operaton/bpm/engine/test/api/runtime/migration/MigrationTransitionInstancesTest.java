@@ -17,12 +17,12 @@
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 import static org.operaton.bpm.engine.test.util.MigratingProcessInstanceValidationReportAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 import java.util.Date;
 import java.util.List;
@@ -48,7 +48,6 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.joda.time.DateTime;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
@@ -173,7 +172,7 @@ public class MigrationTransitionInstancesTest {
         .transition("userTask")
       .done());
 
-    Assert.assertEquals(2, testHelper.snapshotAfterMigration.getJobs().size());
+    assertThat(testHelper.snapshotAfterMigration.getJobs()).hasSize(2);
 
     // and it is possible to successfully execute the migrated job
     for (Job job : testHelper.snapshotAfterMigration.getJobs()) {
@@ -460,7 +459,7 @@ public class MigrationTransitionInstancesTest {
     // when
     try {
       testHelper.migrateProcessInstance(migrationPlan, processInstance);
-      Assert.fail("should fail");
+      fail("should fail");
     }
     catch (MigratingProcessInstanceValidationException e) {
       assertThat(e.getValidationReport())
@@ -553,8 +552,7 @@ public class MigrationTransitionInstancesTest {
 
     // and it is possible to successfully execute the migrated job
     Job job = testHelper.snapshotAfterMigration.getJobs().get(0);
-    Assert.assertEquals("Replace this non-API assert with a proper test case that fails when the wrong atomic operation is used",
-        "process-start", ((JobEntity) job).getJobHandlerConfigurationRaw());
+    assertThat(((JobEntity) job).getJobHandlerConfigurationRaw()).as("Replace this non-API assert with a proper test case that fails when the wrong atomic operation is used").isEqualTo("process-start");
     rule.getManagementService().executeJob(job.getId());
 
     // and complete the task and process instance
@@ -576,7 +574,7 @@ public class MigrationTransitionInstancesTest {
     // when
     try {
       testHelper.createProcessInstanceAndMigrate(migrationPlan);
-      Assert.fail("should fail");
+      fail("should fail");
     }
     catch (MigratingProcessInstanceValidationException e) {
       assertThat(e.getValidationReport())
@@ -714,7 +712,7 @@ public class MigrationTransitionInstancesTest {
           .transition("userTask")
       .done());
 
-    Assert.assertEquals(2, testHelper.snapshotAfterMigration.getJobs().size());
+    assertThat(testHelper.snapshotAfterMigration.getJobs()).hasSize(2);
 
     // and it is possible to successfully execute the migrated job
     for (Job job : testHelper.snapshotAfterMigration.getJobs()) {
@@ -751,14 +749,14 @@ public class MigrationTransitionInstancesTest {
     // then
     Incident incidentAfterMigration = rule.getRuntimeService().createIncidentQuery().singleResult();
 
-    assertNotNull(incidentAfterMigration);
+    assertThat(incidentAfterMigration).isNotNull();
     // and it is still the same incident
-    assertEquals(incidentBeforeMigration.getId(), incidentAfterMigration.getId());
-    assertEquals(job.getId(), incidentAfterMigration.getConfiguration());
+    assertThat(incidentAfterMigration.getId()).isEqualTo(incidentBeforeMigration.getId());
+    assertThat(incidentAfterMigration.getConfiguration()).isEqualTo(job.getId());
 
     // and the activity and process definition references were updated
-    assertEquals("newUserTask", incidentAfterMigration.getActivityId());
-    assertEquals(targetProcessDefinition.getId(), incidentAfterMigration.getProcessDefinitionId());
+    assertThat(incidentAfterMigration.getActivityId()).isEqualTo("newUserTask");
+    assertThat(incidentAfterMigration.getProcessDefinitionId()).isEqualTo(targetProcessDefinition.getId());
 
     // and it is possible to successfully execute the migrated job
     rule.getManagementService().executeJob(job.getId());
@@ -790,7 +788,7 @@ public class MigrationTransitionInstancesTest {
 
     // then
     List<Job> jobs = testHelper.snapshotAfterMigration.getJobs();
-    Assert.assertEquals(3, jobs.size());
+    assertThat(jobs).hasSize(3);
 
     testHelper.assertJobMigrated(jobs.get(0), "userTask");
     testHelper.assertJobMigrated(jobs.get(1), "userTask");
@@ -834,7 +832,7 @@ public class MigrationTransitionInstancesTest {
 
     // then
     List<Job> jobs = testHelper.snapshotAfterMigration.getJobs();
-    Assert.assertEquals(3, jobs.size());
+    assertThat(jobs).hasSize(3);
 
     testHelper.assertJobMigrated(jobs.get(0), "userTask");
     testHelper.assertJobMigrated(jobs.get(1), "userTask");
@@ -863,7 +861,7 @@ public class MigrationTransitionInstancesTest {
     // when
     try {
       testHelper.createProcessInstanceAndMigrate(migrationPlan);
-      Assert.fail("should fail");
+      fail("should fail");
     }
     catch (MigratingProcessInstanceValidationException e) {
       // then
@@ -893,7 +891,7 @@ public class MigrationTransitionInstancesTest {
     // when
     try {
       testHelper.migrateProcessInstance(migrationPlan, processInstance);
-      Assert.fail("should fail");
+      fail("should fail");
     }
     catch (MigratingProcessInstanceValidationException e) {
       // then
@@ -917,7 +915,7 @@ public class MigrationTransitionInstancesTest {
     // when
     try {
       testHelper.createProcessInstanceAndMigrate(migrationPlan);
-      Assert.fail("should fail");
+      fail("should fail");
     }
     catch (MigratingProcessInstanceValidationException e) {
       // then
@@ -946,7 +944,7 @@ public class MigrationTransitionInstancesTest {
     // when
     try {
       testHelper.createProcessInstanceAndMigrate(migrationPlan);
-      Assert.fail("should fail");
+      fail("should fail");
     }
     catch (MigratingProcessInstanceValidationException e) {
       // then
@@ -977,7 +975,7 @@ public class MigrationTransitionInstancesTest {
     // when
     try {
       testHelper.migrateProcessInstance(migrationPlan, processInstance);
-      Assert.fail("should fail");
+      fail("should fail");
     }
     catch (MigratingProcessInstanceValidationException e) {
       // then
@@ -1091,19 +1089,14 @@ public class MigrationTransitionInstancesTest {
 
     String processInstanceId = rule.getRuntimeService().startProcessInstanceById(sourceProcessDefinition.getId()).getId();
     testHelper.executeAvailableJobs();
+    var runtimeService = rule.getRuntimeService().newMigration(migrationPlan)
+        .processInstanceIds(processInstanceId);
 
     // when
-    try {
-      rule.getRuntimeService().newMigration(migrationPlan)
-        .processInstanceIds(processInstanceId)
-        .execute();
-
-      Assert.fail("should fail");
-    }
-    catch (MigratingProcessInstanceValidationException e) {
-      // then
-      Assert.assertTrue(e instanceof MigratingProcessInstanceValidationException);
-    }
+    assertThatThrownBy(runtimeService::execute)
+      .isInstanceOf(MigratingProcessInstanceValidationException.class)
+      .hasMessageContaining("ENGINE-23004 Cannot migrate process instance")
+      .hasMessageContaining("Process instance contains not migrated incidents");
   }
 
 }

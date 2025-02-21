@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.engine.test.bpmn.async;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
-
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.Job;
@@ -27,10 +23,14 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Stefan Hentschel.
@@ -59,33 +59,34 @@ public class JobRetryCmdWithDefaultPropertyTest {
   @Test
   public void testDefaultNumberOfRetryProperty() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("failedTask");
-    assertNotNull(pi);
+    assertThat(pi).isNotNull();
 
     Job job = managementService.createJobQuery().processInstanceId(pi.getProcessInstanceId()).singleResult();
-    assertNotNull(job);
-    assertEquals(pi.getProcessInstanceId(), job.getProcessInstanceId());
-    assertEquals(2, job.getRetries());
+    assertThat(job).isNotNull();
+    assertThat(job.getProcessInstanceId()).isEqualTo(pi.getProcessInstanceId());
+    assertThat(job.getRetries()).isEqualTo(2);
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedServiceTask.bpmn20.xml" })
   @Test
   public void testOverwritingPropertyWithBpmnExtension() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("failedServiceTask");
-    assertNotNull(pi);
+    assertThat(pi).isNotNull();
 
     Job job = managementService.createJobQuery().processInstanceId(pi.getProcessInstanceId()).singleResult();
-    assertNotNull(job);
-    assertEquals(pi.getProcessInstanceId(), job.getProcessInstanceId());
+    assertThat(job).isNotNull();
+    var jobId = job.getId();
+    assertThat(job.getProcessInstanceId()).isEqualTo(pi.getProcessInstanceId());
 
     try {
-      managementService.executeJob(job.getId());
+      managementService.executeJob(jobId);
       fail("Exception expected!");
     } catch(Exception e) {
       // expected
     }
 
     job = managementService.createJobQuery().jobId(job.getId()).singleResult();
-    assertEquals(4, job.getRetries());
+    assertThat(job.getRetries()).isEqualTo(4);
 
   }
 }

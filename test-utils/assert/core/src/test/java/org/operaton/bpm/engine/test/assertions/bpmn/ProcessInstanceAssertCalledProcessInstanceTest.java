@@ -28,7 +28,6 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -101,14 +100,9 @@ public class ProcessInstanceAssertCalledProcessInstanceTest extends ProcessAsser
       "ProcessInstanceAssert-calledProcessInstance-superProcess1"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance)
-          .calledProcessInstance("ProcessInstanceAssert-calledProcessInstance-subProcess2")
-          .isNotNull();
-      }
-    });
+    expect(() -> assertThat(processInstance)
+      .calledProcessInstance("ProcessInstanceAssert-calledProcessInstance-subProcess2")
+      .isNotNull());
     // And
     assertThat(processInstance)
       .calledProcessInstance()
@@ -116,13 +110,8 @@ public class ProcessInstanceAssertCalledProcessInstanceTest extends ProcessAsser
     // When
     complete(task("UserTask_1", calledProcessInstance()));
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).calledProcessInstance("ProcessInstanceAssert-calledProcessInstance-subProcess1")
-          .isNotNull();
-      }
-    });
+    expect(() -> assertThat(processInstance).calledProcessInstance("ProcessInstanceAssert-calledProcessInstance-subProcess1")
+      .isNotNull());
   }
 
   @Test
@@ -160,14 +149,9 @@ public class ProcessInstanceAssertCalledProcessInstanceTest extends ProcessAsser
       "ProcessInstanceAssert-calledProcessInstance-superProcess2"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance)
-          .calledProcessInstance("ProcessInstanceAssert-calledProcessInstance-subProcess3")
-          .isNotNull();
-      }
-    });
+    expect(() -> assertThat(processInstance)
+      .calledProcessInstance("ProcessInstanceAssert-calledProcessInstance-subProcess3")
+      .isNotNull());
   }
 
   @Test

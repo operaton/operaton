@@ -17,10 +17,7 @@
 package org.operaton.bpm.application.impl.deployment;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -148,13 +145,13 @@ public class RedeploymentProcessApplicationTest {
         .addDeploymentResources(deployment1.getId())
         .deploy();
 
-    assertEquals(2, testProvider.countDefinitionsByKey(definitionKey1));
+    assertThat(testProvider.countDefinitionsByKey(definitionKey1)).isEqualTo(2);
 
     // when
     testProvider.createInstanceByDefinitionKey(definitionKey1);
 
     // then
-    assertTrue(application.isCalled());
+    assertThat(application.isCalled()).isTrue();
 
     deploymentsToCleanup.addAll(Arrays.asList(deployment1, deployment2));
   }
@@ -162,21 +159,21 @@ public class RedeploymentProcessApplicationTest {
   @Test
   public void redeploymentShouldFailOnNullHTTLAndEnforceHistoryTimeToLiveTrue() {
     // given
-    Deployment deployment1 = null;
+    Deployment deployment1;
     Deployment deployment2 = null;
-    try {
-      MyEmbeddedProcessApplication application = new MyEmbeddedProcessApplication();
-      engineRule.getProcessEngineConfiguration().setEnforceHistoryTimeToLive(false);
-
-      // first deployment allows null HTTL
-      deployment1 = repositoryService
+    // given
+    MyEmbeddedProcessApplication application = new MyEmbeddedProcessApplication();
+    // given
+    engineRule.getProcessEngineConfiguration().setEnforceHistoryTimeToLive(false);
+    // given
+    deployment1 = repositoryService
           .createDeployment(application.getReference())
           .name(DEPLOYMENT_NAME)
           .addClasspathResource(resource1)
           .deploy();
-
-      // enforceHistoryTimeToLive=true should prevent deployment2 from getting deployed
-      engineRule.getProcessEngineConfiguration().setEnforceHistoryTimeToLive(true);
+    // given
+    engineRule.getProcessEngineConfiguration().setEnforceHistoryTimeToLive(true);
+    try {
 
       // when - second deployment
       deployment2 = repositoryService
@@ -231,14 +228,14 @@ public class RedeploymentProcessApplicationTest {
         .addDeploymentResources(deployment1.getId())
         .deploy();
 
-    assertEquals(3, testProvider.countDefinitionsByKey(definitionKey1));
+    assertThat(testProvider.countDefinitionsByKey(definitionKey1)).isEqualTo(3);
 
     // when
     testProvider.createInstanceByDefinitionKey(definitionKey1);
 
     // then
-    assertFalse(application1.isCalled());
-    assertTrue(application2.isCalled());
+    assertThat(application1.isCalled()).isFalse();
+    assertThat(application2.isCalled()).isTrue();
 
     deploymentsToCleanup.addAll(Arrays.asList(deployment1, deployment2, deployment3));
   }
@@ -269,13 +266,13 @@ public class RedeploymentProcessApplicationTest {
         .addDeploymentResources(deployment1.getId())
         .deploy();
 
-    assertEquals(3, testProvider.countDefinitionsByKey(definitionKey1));
+    assertThat(testProvider.countDefinitionsByKey(definitionKey1)).isEqualTo(3);
 
     // when
     testProvider.createInstanceByDefinitionKey(definitionKey1);
 
     // then
-    assertTrue(application1.isCalled());
+    assertThat(application1.isCalled()).isTrue();
 
     deploymentsToCleanup.addAll(Arrays.asList(deployment1, deployment2, deployment3));
   }
@@ -307,15 +304,15 @@ public class RedeploymentProcessApplicationTest {
         .addDeploymentResources(deployment1.getId())
         .deploy();
 
-    assertEquals(3, testProvider.countDefinitionsByKey(definitionKey1));
+    assertThat(testProvider.countDefinitionsByKey(definitionKey1)).isEqualTo(3);
 
     // when
     deleteDeployments(deployment2);
     testProvider.createInstanceByDefinitionKey(definitionKey1);
 
     // then
-    assertTrue(application1.isCalled());
-    assertFalse(application2.isCalled());
+    assertThat(application1.isCalled()).isTrue();
+    assertThat(application2.isCalled()).isFalse();
 
     deploymentsToCleanup.addAll(Arrays.asList(deployment1, deployment3));
   }
@@ -347,15 +344,15 @@ public class RedeploymentProcessApplicationTest {
         .addDeploymentResources(deployment1.getId())
         .deploy();
 
-    assertEquals(3, testProvider.countDefinitionsByKey(definitionKey1));
+    assertThat(testProvider.countDefinitionsByKey(definitionKey1)).isEqualTo(3);
 
     // when
     managementService.unregisterProcessApplication(deployment2.getId(), true);
     testProvider.createInstanceByDefinitionKey(definitionKey1);
 
     // then
-    assertTrue(application1.isCalled());
-    assertFalse(application2.isCalled());
+    assertThat(application1.isCalled()).isTrue();
+    assertThat(application2.isCalled()).isFalse();
 
     deploymentsToCleanup.addAll(Arrays.asList(deployment1, deployment2, deployment3));
   }
@@ -388,15 +385,15 @@ public class RedeploymentProcessApplicationTest {
         .addDeploymentResources(deployment2.getId())
         .deploy();
 
-    assertEquals(2, testProvider.countDefinitionsByKey(definitionKey1));
-    assertEquals(2, testProvider.countDefinitionsByKey(definitionKey2));
+    assertThat(testProvider.countDefinitionsByKey(definitionKey1)).isEqualTo(2);
+    assertThat(testProvider.countDefinitionsByKey(definitionKey2)).isEqualTo(2);
 
     // when (1)
     testProvider.createInstanceByDefinitionKey(definitionKey1);
 
     // then (1)
-    assertTrue(application1.isCalled());
-    assertFalse(application2.isCalled());
+    assertThat(application1.isCalled()).isTrue();
+    assertThat(application2.isCalled()).isFalse();
 
     // reset flag
     application1.setCalled(false);
@@ -405,8 +402,8 @@ public class RedeploymentProcessApplicationTest {
     testProvider.createInstanceByDefinitionKey(definitionKey2);
 
     // then (2)
-    assertFalse(application1.isCalled());
-    assertTrue(application2.isCalled());
+    assertThat(application1.isCalled()).isFalse();
+    assertThat(application2.isCalled()).isTrue();
 
     deploymentsToCleanup.addAll(Arrays.asList(deployment1, deployment2, deployment3));
   }
@@ -439,15 +436,15 @@ public class RedeploymentProcessApplicationTest {
         .addDeploymentResources(deployment1.getId())
         .deploy();
 
-    assertEquals(3, testProvider.countDefinitionsByKey(definitionKey1));
-    assertEquals(2, testProvider.countDefinitionsByKey(definitionKey2));
+    assertThat(testProvider.countDefinitionsByKey(definitionKey1)).isEqualTo(3);
+    assertThat(testProvider.countDefinitionsByKey(definitionKey2)).isEqualTo(2);
 
     // when (1)
     testProvider.createInstanceByDefinitionKey(definitionKey1);
 
     // then (1)
-    assertFalse(application1.isCalled());
-    assertTrue(application2.isCalled());
+    assertThat(application1.isCalled()).isFalse();
+    assertThat(application2.isCalled()).isTrue();
 
     // reset flag
     application2.setCalled(false);
@@ -456,8 +453,8 @@ public class RedeploymentProcessApplicationTest {
     testProvider.createInstanceByDefinitionKey(definitionKey2);
 
     // then (2)
-    assertTrue(application1.isCalled());
-    assertFalse(application2.isCalled());
+    assertThat(application1.isCalled()).isTrue();
+    assertThat(application2.isCalled()).isFalse();
 
     deploymentsToCleanup.addAll(Arrays.asList(deployment1, deployment2, deployment3));
   }

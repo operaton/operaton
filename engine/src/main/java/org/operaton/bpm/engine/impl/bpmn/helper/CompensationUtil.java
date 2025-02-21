@@ -71,12 +71,7 @@ public class CompensationUtil {
     }
 
     // signal compensation events in REVERSE order of their 'created' timestamp
-    Collections.sort(eventSubscriptions, new Comparator<EventSubscriptionEntity>() {
-      @Override
-      public int compare(EventSubscriptionEntity o1, EventSubscriptionEntity o2) {
-        return o2.getCreated().compareTo(o1.getCreated());
-      }
-    });
+    eventSubscriptions.sort((o1, o2) -> o2.getCreated().compareTo(o1.getCreated()));
 
     for (EventSubscriptionEntity compensateEventSubscriptionEntity : eventSubscriptions) {
       compensateEventSubscriptionEntity.eventReceived(null, async);
@@ -85,12 +80,14 @@ public class CompensationUtil {
 
   /**
    * creates an event scope for the given execution:
-   *
+   * <p>
    * create a new event scope execution under the parent of the given execution
    * and move all event subscriptions to that execution.
-   *
+   * </p>
+   * <p>
    * this allows us to "remember" the event subscriptions after finishing a
    * scope
+   * </p>
    */
   public static void createEventScopeExecution(ExecutionEntity execution) {
 
@@ -156,8 +153,9 @@ public class CompensationUtil {
   /**
    * In the context when an event scope execution is created (i.e. a scope such as a subprocess has completed),
    * this method returns the compensation handler activity that is going to be executed when by the event scope execution.
-   *
+   * <p>
    * This method is not relevant when the scope has a boundary compensation handler.
+   * </p>
    */
   protected static ActivityImpl getEventScopeCompensationHandler(ExecutionEntity execution) {
     ActivityImpl activity = execution.getActivity();
@@ -184,12 +182,9 @@ public class CompensationUtil {
     // <LEGACY>: different flow scopes may have the same scope execution =>
     // collect subscriptions in a set
     final Set<EventSubscriptionEntity> subscriptions = new HashSet<>();
-    TreeVisitor<ScopeImpl> eventSubscriptionCollector = new TreeVisitor<>() {
-      @Override
-      public void visit(ScopeImpl obj) {
-        PvmExecutionImpl execution = scopeExecutionMapping.get(obj);
-        subscriptions.addAll(((ExecutionEntity) execution).getCompensateEventSubscriptions());
-      }
+    TreeVisitor<ScopeImpl> eventSubscriptionCollector = obj -> {
+      PvmExecutionImpl execution1 = scopeExecutionMapping.get(obj);
+      subscriptions.addAll(((ExecutionEntity) execution1).getCompensateEventSubscriptions());
     };
 
     new FlowScopeWalker(activity).addPostVisitor(eventSubscriptionCollector).walkUntil(element -> {

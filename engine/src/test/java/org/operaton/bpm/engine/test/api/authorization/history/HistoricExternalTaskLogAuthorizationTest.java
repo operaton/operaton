@@ -17,15 +17,13 @@
 package org.operaton.bpm.engine.test.api.authorization.history;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.READ_HISTORY;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.DEFAULT_PROCESS_KEY;
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.DEFAULT_TOPIC;
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.createDefaultExternalTaskModel;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
 
 import java.util.List;
 import org.operaton.bpm.engine.AuthorizationException;
@@ -47,10 +45,10 @@ import org.junit.Test;
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest {
 
-  protected final String WORKER_ID = "aWorkerId";
-  protected final long LOCK_DURATION = 5 * 60L * 1000L;
-  protected final String ERROR_DETAILS = "These are the error details!";
-  protected final String ANOTHER_PROCESS_KEY = "AnotherProcess";
+  protected static final String WORKER_ID = "aWorkerId";
+  protected static final long LOCK_DURATION = 5 * 60L * 1000L;
+  protected static final String ERROR_DETAILS = "These are the error details!";
+  protected static final String ANOTHER_PROCESS_KEY = "AnotherProcess";
 
   @Override
   @Before
@@ -190,7 +188,7 @@ public class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest 
 
     try {
       // when
-      String stacktrace = historyService.getHistoricExternalTaskLogErrorDetails(failedHistoricExternalTaskLogId);
+      historyService.getHistoricExternalTaskLogErrorDetails(failedHistoricExternalTaskLogId);
       fail("Exception expected: It should not be possible to retrieve the error details");
     } catch (AuthorizationException e) {
       // then
@@ -220,8 +218,7 @@ public class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest 
     String stacktrace = historyService.getHistoricExternalTaskLogErrorDetails(failedHistoricExternalTaskLogId);
 
     // then
-    assertNotNull(stacktrace);
-    assertEquals(ERROR_DETAILS, stacktrace);
+    assertThat(stacktrace).isNotNull().isEqualTo(ERROR_DETAILS);
   }
 
   @Test
@@ -242,8 +239,7 @@ public class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest 
     String stacktrace = historyService.getHistoricExternalTaskLogErrorDetails(failedHistoricExternalTaskLogId);
 
     // then
-    assertNotNull(stacktrace);
-    assertEquals(ERROR_DETAILS, stacktrace);
+    assertThat(stacktrace).isNotNull().isEqualTo(ERROR_DETAILS);
   }
 
   @Test

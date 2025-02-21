@@ -22,7 +22,6 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtim
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -64,12 +63,7 @@ public class ProcessInstanceAssertHasBusinessKeyTest extends ProcessAssertTestCa
       "anotherBusinessKey"
     );
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).hasProcessDefinitionKey("aBusinessKey");
-      }
-    });
+    expect(() -> assertThat(processInstance).hasProcessDefinitionKey("aBusinessKey"));
   }
 
 }

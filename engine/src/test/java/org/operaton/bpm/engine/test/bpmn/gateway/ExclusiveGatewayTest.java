@@ -16,12 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.gateway;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,7 +45,7 @@ public class ExclusiveGatewayTest extends PluggableProcessEngineTest {
   public void testDivergingExclusiveGateway() {
     for (int i = 1; i <= 3; i++) {
       ProcessInstance pi = runtimeService.startProcessInstanceByKey("exclusiveGwDiverging", CollectionUtil.singletonMap("input", i));
-      assertEquals("Task " + i, taskService.createTaskQuery().singleResult().getName());
+      assertThat(taskService.createTaskQuery().singleResult().getName()).isEqualTo("Task " + i);
       runtimeService.deleteProcessInstance(pi.getId(), "testing deletion");
     }
   }
@@ -59,7 +54,7 @@ public class ExclusiveGatewayTest extends PluggableProcessEngineTest {
   @Test
   public void testMergingExclusiveGateway() {
     runtimeService.startProcessInstanceByKey("exclusiveGwMerging");
-    assertEquals(3, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).isEqualTo(3);
   }
 
   // If there are multiple outgoing seqFlow with valid conditions, the first
@@ -68,15 +63,16 @@ public class ExclusiveGatewayTest extends PluggableProcessEngineTest {
   @Test
   public void testMultipleValidConditions() {
     runtimeService.startProcessInstanceByKey("exclusiveGwMultipleValidConditions", CollectionUtil.singletonMap("input", 5));
-    assertEquals("Task 2", taskService.createTaskQuery().singleResult().getName());
+    assertThat(taskService.createTaskQuery().singleResult().getName()).isEqualTo("Task 2");
   }
 
   @Deployment
   @Test
   public void testNoSequenceFlowSelected() {
+    var variables = CollectionUtil.singletonMap("input", 4);
     try {
-      runtimeService.startProcessInstanceByKey("exclusiveGwNoSeqFlowSelected", CollectionUtil.singletonMap("input", 4));
-      fail();
+      runtimeService.startProcessInstanceByKey("exclusiveGwNoSeqFlowSelected", variables);
+      fail("");
     } catch (ProcessEngineException e) {
       testRule.assertTextPresent("ENGINE-02004 No outgoing sequence flow for the element with id 'exclusiveGw' could be selected for continuing the process.", e.getMessage());
     }
@@ -97,11 +93,11 @@ public class ExclusiveGatewayTest extends PluggableProcessEngineTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/gateway/ExclusiveGatewayTest.testDivergingExclusiveGateway.bpmn20.xml"})
   @Test
   public void testUnknownVariableInExpression() {
+    var variables = CollectionUtil.singletonMap("iinput", 1);
     // Instead of 'input' we're starting a process instance with the name 'iinput' (ie. a typo)
     try {
-      runtimeService.startProcessInstanceByKey(
-            "exclusiveGwDiverging", CollectionUtil.singletonMap("iinput", 1));
-      fail();
+      runtimeService.startProcessInstanceByKey("exclusiveGwDiverging", variables);
+      fail("");
     } catch (ProcessEngineException e) {
       testRule.assertTextPresent("Unknown property used in expression", e.getMessage());
     }
@@ -114,8 +110,8 @@ public class ExclusiveGatewayTest extends PluggableProcessEngineTest {
             CollectionUtil.singletonMap("order", new ExclusiveGatewayTestOrder(150)));
 
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
-    assertEquals("Standard service", task.getName());
+    assertThat(task).isNotNull();
+    assertThat(task.getName()).isEqualTo("Standard service");
   }
 
   @Deployment
@@ -130,8 +126,8 @@ public class ExclusiveGatewayTest extends PluggableProcessEngineTest {
             "decisionBasedOnListOrArrayOfBeans", CollectionUtil.singletonMap("orders", orders));
 
     Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
-    assertNotNull(task);
-    assertEquals("Gold Member service", task.getName());
+    assertThat(task).isNotNull();
+    assertThat(task.getName()).isEqualTo("Gold Member service");
 
 
     // Arrays are usable in exactly the same way
@@ -141,8 +137,8 @@ public class ExclusiveGatewayTest extends PluggableProcessEngineTest {
             "decisionBasedOnListOrArrayOfBeans", CollectionUtil.singletonMap("orders", orderArray));
 
     task = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
-    assertNotNull(task);
-    assertEquals("Basic service", task.getName());
+    assertThat(task).isNotNull();
+    assertThat(task.getName()).isEqualTo("Basic service");
   }
 
   @Deployment
@@ -152,17 +148,17 @@ public class ExclusiveGatewayTest extends PluggableProcessEngineTest {
             CollectionUtil.singletonMap("order", new ExclusiveGatewayTestOrder(300)));
 
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
-    assertEquals("Gold Member service", task.getName());
+    assertThat(task).isNotNull();
+    assertThat(task.getName()).isEqualTo("Gold Member service");
   }
 
   @Deployment
   @Test
   public void testInvalidMethodExpression() {
+    var variables = CollectionUtil.singletonMap("order", new ExclusiveGatewayTestOrder(50));
     try {
-      runtimeService.startProcessInstanceByKey("invalidMethodExpression",
-            CollectionUtil.singletonMap("order", new ExclusiveGatewayTestOrder(50)));
-      fail();
+      runtimeService.startProcessInstanceByKey("invalidMethodExpression", variables);
+      fail("");
     } catch (ProcessEngineException e) {
       testRule.assertTextPresent("Unknown method used in expression", e.getMessage());
     }
@@ -176,13 +172,13 @@ public class ExclusiveGatewayTest extends PluggableProcessEngineTest {
     String procId = runtimeService.startProcessInstanceByKey("exclusiveGwDefaultSequenceFlow",
             CollectionUtil.singletonMap("input", 1)).getId();
     Task task = taskService.createTaskQuery().singleResult();
-    assertEquals("Input is one", task.getName());
+    assertThat(task.getName()).isEqualTo("Input is one");
     runtimeService.deleteProcessInstance(procId, null);
 
     procId = runtimeService.startProcessInstanceByKey("exclusiveGwDefaultSequenceFlow",
             CollectionUtil.singletonMap("input", 5)).getId();
     task = taskService.createTaskQuery().singleResult();
-    assertEquals("Default input", task.getName());
+    assertThat(task.getName()).isEqualTo("Default input");
   }
 
   @Deployment
@@ -190,7 +186,7 @@ public class ExclusiveGatewayTest extends PluggableProcessEngineTest {
   public void testNoIdOnSequenceFlow() {
     runtimeService.startProcessInstanceByKey("noIdOnSequenceFlow", CollectionUtil.singletonMap("input", 3));
     Task task = taskService.createTaskQuery().singleResult();
-    assertEquals("Input is more than one", task.getName());
+    assertThat(task.getName()).isEqualTo("Input is more than one");
   }
 
   @Test
@@ -212,12 +208,13 @@ public class ExclusiveGatewayTest extends PluggableProcessEngineTest {
             "    <userTask id='theTask2' name='Default input' /> " +
             "  </process>" +
             "</definitions>";
+    var deploymentBuilder = repositoryService.createDeployment().addString("myprocess.bpmn20.xml", flowWithoutConditionNoDefaultFlow);
     try {
-      repositoryService.createDeployment().addString("myprocess.bpmn20.xml", flowWithoutConditionNoDefaultFlow).deploy();
+      deploymentBuilder.deploy();
       fail("Could deploy a process definition with a sequence flow out of a XOR Gateway without condition with is not the default flow.");
     }
     catch (ParseException e) {
-      assertTrue(e.getMessage().contains("Exclusive Gateway 'exclusiveGw' has outgoing sequence flow 'flow3' without condition which is not the default flow."));
+      assertThat(e.getMessage()).contains("Exclusive Gateway 'exclusiveGw' has outgoing sequence flow 'flow3' without condition which is not the default flow.");
       Problem error = e.getResourceReports().get(0).getErrors().get(0);
       assertThat(error.getMainElementId()).isEqualTo("exclusiveGw");
       assertThat(error.getElementIds()).containsExactlyInAnyOrder("exclusiveGw", "flow3");
@@ -244,12 +241,13 @@ public class ExclusiveGatewayTest extends PluggableProcessEngineTest {
             "    <userTask id='theTask2' name='Default input' /> " +
             "  </process>" +
             "</definitions>";
+    var deploymentBuilder = repositoryService.createDeployment().addString("myprocess.bpmn20.xml", defaultFlowWithCondition);
     try {
-      repositoryService.createDeployment().addString("myprocess.bpmn20.xml", defaultFlowWithCondition).deploy();
+      deploymentBuilder.deploy();
       fail("Could deploy a process definition with a sequence flow out of a XOR Gateway without condition with is not the default flow.");
     }
     catch (ParseException e) {
-      assertTrue(e.getMessage().contains("Exclusive Gateway 'exclusiveGw' has outgoing sequence flow 'flow3' which is the default flow but has a condition too."));
+      assertThat(e.getMessage()).contains("Exclusive Gateway 'exclusiveGw' has outgoing sequence flow 'flow3' which is the default flow but has a condition too.");
       Problem error = e.getResourceReports().get(0).getErrors().get(0);
       assertThat(error.getMainElementId()).isEqualTo("exclusiveGw");
       assertThat(error.getElementIds()).containsExactlyInAnyOrder("exclusiveGw", "flow3");
@@ -266,12 +264,13 @@ public class ExclusiveGatewayTest extends PluggableProcessEngineTest {
             "    <exclusiveGateway id='exclusiveGw' name='Exclusive Gateway' /> " +
             "  </process>" +
             "</definitions>";
+    var deploymentBuilder = repositoryService.createDeployment().addString("myprocess.bpmn20.xml", noOutgoingFlow);
     try {
-      repositoryService.createDeployment().addString("myprocess.bpmn20.xml", noOutgoingFlow).deploy();
+      deploymentBuilder.deploy();
       fail("Could deploy a process definition with a sequence flow out of a XOR Gateway without condition with is not the default flow.");
     }
     catch (ParseException e) {
-      assertTrue(e.getMessage().contains("Exclusive Gateway 'exclusiveGw' has no outgoing sequence flows."));
+      assertThat(e.getMessage()).contains("Exclusive Gateway 'exclusiveGw' has no outgoing sequence flows.");
       assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("exclusiveGw");
     }
 
@@ -304,25 +303,25 @@ public class ExclusiveGatewayTest extends PluggableProcessEngineTest {
     variables.put("input", 1);
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("exclusiveGateway", variables);
     Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
-    assertEquals("Send e-mail for more information", task.getName());
+    assertThat(task.getName()).isEqualTo("Send e-mail for more information");
 
     // Test with input == 2
     variables.put("input", 2);
     pi = runtimeService.startProcessInstanceByKey("exclusiveGateway", variables);
     task = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
-    assertEquals("Check account balance", task.getName());
+    assertThat(task.getName()).isEqualTo("Check account balance");
 
     // Test with input == 3
     variables.put("input", 3);
     pi = runtimeService.startProcessInstanceByKey("exclusiveGateway", variables);
     task = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
-    assertEquals("Call customer", task.getName());
+    assertThat(task.getName()).isEqualTo("Call customer");
 
     // Test with input == 4
     variables.put("input", 4);
     try {
       runtimeService.startProcessInstanceByKey("exclusiveGateway", variables);
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
       // Exception is expected since no outgoing sequence flow matches
     }

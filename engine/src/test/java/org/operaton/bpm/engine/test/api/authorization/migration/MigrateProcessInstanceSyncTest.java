@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.migration;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resources;
@@ -37,7 +38,6 @@ import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -137,14 +137,14 @@ public class MigrateProcessInstanceSyncTest {
       .start();
 
     engineRule.getRuntimeService().newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(Collections.singletonList(processInstance.getId()))
       .execute();
 
     // then
     if (authRule.assertScenario(scenario)) {
       ProcessInstance processInstanceAfterMigration = engineRule.getRuntimeService().createProcessInstanceQuery().singleResult();
 
-      Assert.assertEquals(targetDefinition.getId(), processInstanceAfterMigration.getProcessDefinitionId());
+      assertThat(processInstanceAfterMigration.getProcessDefinitionId()).isEqualTo(targetDefinition.getId());
     }
   }
 
@@ -181,7 +181,7 @@ public class MigrateProcessInstanceSyncTest {
     if (authRule.assertScenario(scenario)) {
       ProcessInstance processInstanceAfterMigration = engineRule.getRuntimeService().createProcessInstanceQuery().singleResult();
 
-      Assert.assertEquals(targetDefinition.getId(), processInstanceAfterMigration.getProcessDefinitionId());
+      assertThat(processInstanceAfterMigration.getProcessDefinitionId()).isEqualTo(targetDefinition.getId());
     }
   }
 }

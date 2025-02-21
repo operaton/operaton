@@ -35,7 +35,7 @@ import org.operaton.bpm.engine.impl.util.EngineUtilLogger;
  */
 public class DurationHelper {
 
-  public static final String PnW_PATTERN = "P\\d+W";
+  public static final String PNW_PATTERN = "P\\d+W";
   private static final int MS_PER_WEEK = 7 * 24 * 60 * 60 * 1000;
   private static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 
@@ -146,7 +146,7 @@ public class DurationHelper {
   }
 
   private Duration parsePeriod(String period) {
-    if (period.matches(PnW_PATTERN)) {
+    if (period.matches(PNW_PATTERN)) {
       return parsePnWDuration(period);
     }
     return datatypeFactory.newDuration(period);

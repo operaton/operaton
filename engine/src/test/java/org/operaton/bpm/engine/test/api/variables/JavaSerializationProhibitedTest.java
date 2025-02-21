@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.test.api.variables;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.test.util.TypedValueAssert.assertObjectValueDeserialized;
 import static org.operaton.bpm.engine.test.util.TypedValueAssert.assertObjectValueSerializedJava;
 import static org.operaton.bpm.engine.variable.Variables.objectValue;
 import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
-import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutputStream;
@@ -90,7 +90,7 @@ public class JavaSerializationProhibitedTest {
     // validate untyped value
     JavaSerializable value = (JavaSerializable) runtimeService.getVariable(instance.getId(), "simpleBean");
 
-    assertEquals(javaSerializable, value);
+    assertThat(value).isEqualTo(javaSerializable);
 
     // validate typed value
     ObjectValue typedValue = runtimeService.getVariableTyped(instance.getId(), "simpleBean");
@@ -101,20 +101,23 @@ public class JavaSerializationProhibitedTest {
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
   public void testSetJavaObjectSerialized() throws Exception {
-    ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
+    // given
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
+    String processInstanceId = processInstance.getId();
 
     JavaSerializable javaSerializable = new JavaSerializable("foo");
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     new ObjectOutputStream(baos).writeObject(javaSerializable);
     String serializedObject = StringUtil.fromBytes(Base64.encodeBase64(baos.toByteArray()), engineRule.getProcessEngine());
+    ObjectValue serializedJavaObject = serializedObjectValue(serializedObject)
+      .serializationDataFormat(JAVA_DATA_FORMAT)
+      .objectTypeName(JavaSerializable.class.getName())
+      .create();
 
     // when/then
-    assertThatThrownBy(() -> runtimeService.setVariable(instance.getId(), "simpleBean",
-        serializedObjectValue(serializedObject)
-        .serializationDataFormat(JAVA_DATA_FORMAT)
-        .objectTypeName(JavaSerializable.class.getName())
-        .create()))
+    assertThatThrownBy(() -> runtimeService.setVariable(processInstanceId, "simpleBean",
+      serializedJavaObject))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot set variable with name simpleBean. Java serialization format is prohibited");
 
@@ -123,19 +126,22 @@ public class JavaSerializationProhibitedTest {
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
   public void testSetJavaObjectSerializedEmptySerializationDataFormat() throws Exception {
-    ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
+    // given
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
+    String processInstanceId = processInstance.getId();
 
     JavaSerializable javaSerializable = new JavaSerializable("foo");
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     new ObjectOutputStream(baos).writeObject(javaSerializable);
     String serializedObject = StringUtil.fromBytes(Base64.encodeBase64(baos.toByteArray()), engineRule.getProcessEngine());
+    ObjectValue serializedObjectValue = serializedObjectValue(serializedObject)
+      .objectTypeName(JavaSerializable.class.getName())
+      .create();
 
     // when/then
-    assertThatThrownBy(() -> runtimeService.setVariable(instance.getId(), "simpleBean",
-      serializedObjectValue(serializedObject)
-        .objectTypeName(JavaSerializable.class.getName())
-        .create()))
+    assertThatThrownBy(() -> runtimeService.setVariable(processInstanceId, "simpleBean",
+      serializedObjectValue))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot set variable with name simpleBean. Java serialization format is prohibited");
 
@@ -143,18 +149,20 @@ public class JavaSerializationProhibitedTest {
 
   @Test
   public void testStandaloneTaskTransientVariableSerializedObject() {
+    // given
     Task task = taskService.newTask();
     task.setName("gonzoTask");
     taskService.saveTask(task);
     String taskId = task.getId();
+    ObjectValue serializedObjectValue = serializedObjectValue("any value")
+      .serializationDataFormat(Variables.SerializationDataFormats.JAVA)
+      .setTransient(true)
+      .create();
 
     try {
       // when/then
       assertThatThrownBy(() -> taskService.setVariable(taskId, "instrument",
-        Variables.serializedObjectValue("any value")
-          .serializationDataFormat(Variables.SerializationDataFormats.JAVA)
-          .setTransient(true)
-          .create()))
+        serializedObjectValue))
         .isInstanceOf(ProcessEngineException.class)
         .hasMessageContaining("Cannot set variable with name instrument. Java serialization format is prohibited");
     } finally {
@@ -163,7 +171,7 @@ public class JavaSerializationProhibitedTest {
 
   }
 
-  private class JavaCustomSerializer extends JavaObjectSerializer {
+  private static class JavaCustomSerializer extends JavaObjectSerializer {
 
     @Override
     protected boolean canWriteValue(TypedValue typedValue) {

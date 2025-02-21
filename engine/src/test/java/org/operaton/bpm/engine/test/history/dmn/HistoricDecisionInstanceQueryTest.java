@@ -42,7 +42,7 @@ import java.util.Date;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Philipp Ossler
@@ -106,9 +106,10 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     startProcessInstanceAndEvaluateDecision();
 
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
+    var historicDecisionInstance = query.singleResult();
 
     try {
-      query.singleResult().getOutputs();
+      historicDecisionInstance.getOutputs();
       fail("expected exception: output not fetched");
     } catch (ProcessEngineException e) {
       // should throw exception if output is not fetched
@@ -250,10 +251,10 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
   public void testQueryByInvalidDecisionDefinitionIdIn() {
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
     try {
-      query.decisionDefinitionIdIn("aFake", null).count();
+      query.decisionDefinitionIdIn("aFake", null);
       fail("exception expected");
     } catch (ProcessEngineException e) {
-      //expected
+      assertThat(e.getMessage()).isEqualTo("decisionDefinitionIdIn contains null value");
     }
   }
 
@@ -279,10 +280,10 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
   public void testQueryByInvalidDecisionDefinitionKeyIn() {
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
     try {
-      query.decisionDefinitionKeyIn("aFake", null).count();
+      query.decisionDefinitionKeyIn("aFake", null);
       fail("exception expected");
     } catch (ProcessEngineException e) {
-      //expected
+      assertThat(e.getMessage()).isEqualTo("decisionDefinitionKeyIn contains null value");
     }
   }
 
@@ -336,7 +337,7 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
 
     try {
       query.decisionDefinitionNameLike(null);
-      fail();
+      fail("");
     } catch (NotValidException e) {
       // Expected exception
     }

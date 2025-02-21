@@ -42,8 +42,7 @@ public class DeleteHistoricDecisionInstanceBatchConfigurationJsonConverter exten
 
   @Override
   public BatchConfiguration readConfiguration(JsonObject json) {
-    BatchConfiguration configuration = new BatchConfiguration(readDecisionInstanceIds(json), readMappings(json));
-    return configuration;
+    return new BatchConfiguration(readDecisionInstanceIds(json), readMappings(json));
   }
 
   protected List<String> readDecisionInstanceIds(JsonObject jsonNode) {

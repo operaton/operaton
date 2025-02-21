@@ -136,8 +136,7 @@ public abstract class AbstractCorrelateMessageCmd {
   }
 
   protected ExecutionEntity findProcessInstanceExecution(final CommandContext commandContext, final CorrelationHandlerResult handlerResult) {
-    ExecutionEntity execution = commandContext.getExecutionManager().findExecutionById(handlerResult.getExecution().getProcessInstanceId());
-    return execution;
+    return commandContext.getExecutionManager().findExecutionById(handlerResult.getExecution().getProcessInstanceId());
   }
 
   protected VariableMap resolveVariables() {

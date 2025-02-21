@@ -167,7 +167,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   protected Map<String, List<String>> cachedUserGroups;
 
   // or query /////////////////////////////
-  protected List<TaskQueryImpl> queries = new ArrayList<>(Arrays.asList(this));
+  protected List<TaskQueryImpl> queries = new ArrayList<>(List.of(this));
   protected boolean isOrQueryActive = false;
   protected boolean withCommentAttachmentInfo;
 
@@ -419,10 +419,8 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   public TaskQueryImpl taskCandidateGroup(String candidateGroup) {
     ensureNotNull("Candidate group", candidateGroup);
 
-    if (!isOrQueryActive) {
-      if (candidateUser != null || expressions.containsKey("taskCandidateUser")) {
-        throw new ProcessEngineException("Invalid query usage: cannot set both candidateGroup and candidateUser");
-      }
+    if (!isOrQueryActive && (candidateUser != null || expressions.containsKey("taskCandidateUser"))) {
+      throw new ProcessEngineException("Invalid query usage: cannot set both candidateGroup and candidateUser");
     }
 
     this.candidateGroup = candidateGroup;
@@ -434,10 +432,8 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   public TaskQuery taskCandidateGroupExpression(String candidateGroupExpression) {
     ensureNotNull("Candidate group expression", candidateGroupExpression);
 
-    if (!isOrQueryActive) {
-      if (candidateUser != null || expressions.containsKey("taskCandidateUser")) {
-        throw new ProcessEngineException("Invalid query usage: cannot set both candidateGroup and candidateUser");
-      }
+    if (!isOrQueryActive && (candidateUser != null || expressions.containsKey("taskCandidateUser"))) {
+      throw new ProcessEngineException("Invalid query usage: cannot set both candidateGroup and candidateUser");
     }
 
     expressions.put("taskCandidateGroup", candidateGroupExpression);
@@ -460,10 +456,8 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   public TaskQuery taskCandidateGroupIn(List<String> candidateGroups) {
     ensureNotEmpty("Candidate group list", candidateGroups);
 
-    if (!isOrQueryActive) {
-      if (candidateUser != null || expressions.containsKey("taskCandidateUser")) {
-        throw new ProcessEngineException("Invalid query usage: cannot set both candidateGroupIn and candidateUser");
-      }
+    if (!isOrQueryActive && (candidateUser != null || expressions.containsKey("taskCandidateUser"))) {
+      throw new ProcessEngineException("Invalid query usage: cannot set both candidateGroupIn and candidateUser");
     }
 
     this.candidateGroups = candidateGroups;
@@ -475,10 +469,8 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   public TaskQuery taskCandidateGroupInExpression(String candidateGroupsExpression) {
     ensureNotEmpty("Candidate group list expression", candidateGroupsExpression);
 
-    if (!isOrQueryActive) {
-      if (candidateUser != null || expressions.containsKey("taskCandidateUser")) {
-        throw new ProcessEngineException("Invalid query usage: cannot set both candidateGroupIn and candidateUser");
-      }
+    if (!isOrQueryActive && (candidateUser != null || expressions.containsKey("taskCandidateUser"))) {
+      throw new ProcessEngineException("Invalid query usage: cannot set both candidateGroupIn and candidateUser");
     }
 
     expressions.put("taskCandidateGroupIn", candidateGroupsExpression);
@@ -567,10 +559,8 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
 
     // The tenantIdIn filter can't be used in an AND query with
     // the withoutTenantId filter. They can be combined in an OR query
-    if (!isOrQueryActive) {
-      if (TRUE.equals(isWithoutTenantId)) {
-        throw new ProcessEngineException("Invalid query usage: cannot set both tenantIdIn and withoutTenantId filters.");
-      }
+    if (!isOrQueryActive && TRUE.equals(isWithoutTenantId)) {
+      throw new ProcessEngineException("Invalid query usage: cannot set both tenantIdIn and withoutTenantId filters.");
     }
 
     this.tenantIds = tenantIds;
@@ -582,10 +572,8 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
 
     // The tenantIdIn filter can't be used in an AND query with
     // the withoutTenantId filter. They can be combined in an OR query
-    if (!isOrQueryActive) {
-      if (tenantIds != null && tenantIds.length > 0) {
-        throw new ProcessEngineException("Invalid query usage: cannot set both tenantIdIn and withoutTenantId filters.");
-      }
+    if (!isOrQueryActive && (tenantIds != null && tenantIds.length > 0)) {
+      throw new ProcessEngineException("Invalid query usage: cannot set both tenantIdIn and withoutTenantId filters.");
     }
 
     this.isWithoutTenantId = true;
@@ -896,10 +884,8 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   public TaskQuery dueDate(Date dueDate) {
     // The dueDate filter can't be used in an AND query with
     // the withoutDueDate filter. They can be combined in an OR query
-    if (!isOrQueryActive) {
-      if (TRUE.equals(isWithoutDueDate)) {
-        throw new ProcessEngineException("Invalid query usage: cannot set both dueDate and withoutDueDate filters.");
-      }
+    if (!isOrQueryActive && TRUE.equals(isWithoutDueDate)) {
+      throw new ProcessEngineException("Invalid query usage: cannot set both dueDate and withoutDueDate filters.");
     }
 
     this.dueDate = dueDate;
@@ -911,10 +897,8 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   public TaskQuery dueDateExpression(String dueDateExpression) {
     // The dueDateExpression filter can't be used in an AND query with
     // the withoutDueDate filter. They can be combined in an OR query
-    if (!isOrQueryActive) {
-      if (TRUE.equals(isWithoutDueDate)) {
+    if (!isOrQueryActive && TRUE.equals(isWithoutDueDate)) {
         throw new ProcessEngineException("Invalid query usage: cannot set both dueDateExpression and withoutDueDate filters.");
-      }
     }
 
     expressions.put("dueDate", dueDateExpression);
@@ -925,10 +909,8 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   public TaskQuery dueBefore(Date dueBefore) {
     // The dueBefore filter can't be used in an AND query with
     // the withoutDueDate filter. They can be combined in an OR query
-    if (!isOrQueryActive) {
-      if (TRUE.equals(isWithoutDueDate)) {
-        throw new ProcessEngineException("Invalid query usage: cannot set both dueBefore and withoutDueDate filters.");
-      }
+    if (!isOrQueryActive && TRUE.equals(isWithoutDueDate)) {
+      throw new ProcessEngineException("Invalid query usage: cannot set both dueBefore and withoutDueDate filters.");
     }
 
     this.dueBefore = dueBefore;
@@ -940,10 +922,8 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   public TaskQuery dueBeforeExpression(String dueDate) {
     // The dueBeforeExpression filter can't be used in an AND query with
     // the withoutDueDate filter. They can be combined in an OR query
-    if (!isOrQueryActive) {
-      if (TRUE.equals(isWithoutDueDate)) {
-        throw new ProcessEngineException("Invalid query usage: cannot set both dueBeforeExpression and withoutDueDate filters.");
-      }
+    if (!isOrQueryActive && TRUE.equals(isWithoutDueDate)) {
+      throw new ProcessEngineException("Invalid query usage: cannot set both dueBeforeExpression and withoutDueDate filters.");
     }
 
     expressions.put("dueBefore", dueDate);
@@ -954,10 +934,8 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   public TaskQuery dueAfter(Date dueAfter) {
     // The dueAfter filter can't be used in an AND query with
     // the withoutDueDate filter. They can be combined in an OR query
-    if (!isOrQueryActive) {
-      if (TRUE.equals(isWithoutDueDate)) {
-        throw new ProcessEngineException("Invalid query usage: cannot set both dueAfter and withoutDueDate filters.");
-      }
+    if (!isOrQueryActive && TRUE.equals(isWithoutDueDate)) {
+      throw new ProcessEngineException("Invalid query usage: cannot set both dueAfter and withoutDueDate filters.");
     }
 
     this.dueAfter = dueAfter;
@@ -969,10 +947,8 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   public TaskQuery dueAfterExpression(String dueDateExpression) {
     // The dueAfterExpression filter can't be used in an AND query with
     // the withoutDueDate filter. They can be combined in an OR query
-    if (!isOrQueryActive) {
-      if (TRUE.equals(isWithoutDueDate)) {
-        throw new ProcessEngineException("Invalid query usage: cannot set both dueAfterExpression and withoutDueDate filters.");
-      }
+    if (!isOrQueryActive && TRUE.equals(isWithoutDueDate)) {
+      throw new ProcessEngineException("Invalid query usage: cannot set both dueAfterExpression and withoutDueDate filters.");
     }
 
     expressions.put("dueAfter", dueDateExpression);
@@ -983,11 +959,10 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   public TaskQuery withoutDueDate() {
     // The due date filters can't be used in an AND query with
     // the withoutDueDate filter. They can be combined in an OR query
-    if (!isOrQueryActive) {
-      if (dueAfter != null || dueBefore != null || dueDate != null || expressions.containsKey("dueDate")
-          || expressions.containsKey("dueBefore") || expressions.containsKey("dueAfter")) {
-        throw new ProcessEngineException("Invalid query usage: cannot set both due date (equal to, before, or after) and withoutDueDate filters.");
-      }
+    if (!isOrQueryActive &&
+            (dueAfter != null || dueBefore != null || dueDate != null || expressions.containsKey("dueDate")
+            || expressions.containsKey("dueBefore") || expressions.containsKey("dueAfter"))) {
+      throw new ProcessEngineException("Invalid query usage: cannot set both due date (equal to, before, or after) and withoutDueDate filters.");
     }
 
     this.isWithoutDueDate = true;
@@ -1227,14 +1202,14 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
     ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
     VariableSerializers variableSerializers = processEngineConfiguration.getVariableSerializers();
     String dbType = processEngineConfiguration.getDatabaseType();
-    for(QueryVariableValue var : variables) {
-      var.initialize(variableSerializers, dbType);
+    for(var queryVariableValue : variables) {
+      queryVariableValue.initialize(variableSerializers, dbType);
     }
 
     if (!queries.isEmpty()) {
       for (TaskQueryImpl orQuery: queries) {
-        for (QueryVariableValue var : orQuery.variables) {
-          var.initialize(variableSerializers, dbType);
+        for (var queryVariableValue : orQuery.variables) {
+          queryVariableValue.initialize(variableSerializers, dbType);
         }
       }
     }
@@ -2308,7 +2283,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
 
     mergeOrdering(extendedQuery, extendingQuery);
 
-    extendedQuery.queries = new ArrayList<>(Arrays.asList(extendedQuery));
+    extendedQuery.queries = new ArrayList<>(List.of(extendedQuery));
 
     if (queries.size() > 1) {
       queries.remove(0);

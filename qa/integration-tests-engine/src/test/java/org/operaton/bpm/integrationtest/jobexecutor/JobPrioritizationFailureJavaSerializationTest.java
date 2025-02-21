@@ -88,9 +88,8 @@ public class JobPrioritizationFailureJavaSerializationTest extends AbstractFoxPl
 
   @Deployment(name = "dummy-client", order = 2)
   public static WebArchive createDummyClientDeployment() {
-    final WebArchive webArchive = initWebArchiveDeployment("paJavaSerialization2.war", "org/operaton/bpm/integrationtest/processes-javaSerializationEnabled-pa2.xml")
+    return initWebArchiveDeployment("paJavaSerialization2.war", "org/operaton/bpm/integrationtest/processes-javaSerializationEnabled-pa2.xml")
       .addAsResource(new ByteArrayAsset(serializeJavaObjectValue(new PriorityBean())), PRIORITY_BEAN_INSTANCE_FILE);
-    return webArchive;
   }
 
   @After

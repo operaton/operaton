@@ -17,16 +17,9 @@
 package org.operaton.bpm.engine.test.standalone.history;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -70,6 +63,7 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -81,7 +75,7 @@ import org.junit.rules.RuleChain;
  * @author Tom Baeyens
  * @author Frederik Heremans
  * @author Joram Barrez
- * @author Christian Lipphardt (operaton)
+ * @author Christian Lipphardt (Camunda)
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class FullHistoryTest {
@@ -111,6 +105,7 @@ public class FullHistoryTest {
 
   @Test
   @Deployment
+  @SuppressWarnings("deprecation")
   public void testVariableUpdates() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("number", "one");
@@ -125,19 +120,19 @@ public class FullHistoryTest {
       .processInstanceId(processInstance.getId())
       .activityId("theStart")
       .singleResult();
-    assertNotNull(historicStartEvent);
+    assertThat(historicStartEvent).isNotNull();
 
     HistoricActivityInstance waitStateActivity = historyService.createHistoricActivityInstanceQuery()
       .processInstanceId(processInstance.getId())
       .activityId("waitState")
       .singleResult();
-    assertNotNull(waitStateActivity);
+    assertThat(waitStateActivity).isNotNull();
 
     HistoricActivityInstance serviceTaskActivity = historyService.createHistoricActivityInstanceQuery()
       .processInstanceId(processInstance.getId())
       .activityId("serviceTask")
       .singleResult();
-    assertNotNull(serviceTaskActivity);
+    assertThat(serviceTaskActivity).isNotNull();
 
     List<HistoricDetail> historicDetails = historyService
       .createHistoricDetailQuery()
@@ -145,74 +140,74 @@ public class FullHistoryTest {
       .orderByVariableRevision().asc()
       .list();
 
-    assertEquals(10, historicDetails.size());
+    assertThat(historicDetails).hasSize(10);
 
     HistoricVariableUpdate historicVariableUpdate = (HistoricVariableUpdate) historicDetails.get(0);
-    assertEquals("bytes", historicVariableUpdate.getVariableName());
-    assertEquals(":-(", new String((byte[])historicVariableUpdate.getValue()));
-    assertEquals(0, historicVariableUpdate.getRevision());
-    assertEquals(processInstance.getProcessInstanceId(), historicVariableUpdate.getActivityInstanceId());
+    assertThat(historicVariableUpdate.getVariableName()).isEqualTo("bytes");
+    assertThat(new String((byte[]) historicVariableUpdate.getValue())).isEqualTo(":-(");
+    assertThat(historicVariableUpdate.getRevision()).isZero();
+    assertThat(historicVariableUpdate.getActivityInstanceId()).isEqualTo(processInstance.getProcessInstanceId());
 
     // Variable is updated when process was in waitstate
     historicVariableUpdate = (HistoricVariableUpdate) historicDetails.get(1);
-    assertEquals("bytes", historicVariableUpdate.getVariableName());
-    assertEquals(":-)", new String((byte[])historicVariableUpdate.getValue()));
-    assertEquals(1, historicVariableUpdate.getRevision());
-    assertEquals(waitStateActivity.getId(), historicVariableUpdate.getActivityInstanceId());
+    assertThat(historicVariableUpdate.getVariableName()).isEqualTo("bytes");
+    assertThat(new String((byte[]) historicVariableUpdate.getValue())).isEqualTo(":-)");
+    assertThat(historicVariableUpdate.getRevision()).isEqualTo(1);
+    assertThat(historicVariableUpdate.getActivityInstanceId()).isEqualTo(waitStateActivity.getId());
 
     historicVariableUpdate = (HistoricVariableUpdate) historicDetails.get(2);
-    assertEquals("character", historicVariableUpdate.getVariableName());
-    assertEquals("a", historicVariableUpdate.getValue());
-    assertEquals(0, historicVariableUpdate.getRevision());
-    assertEquals(processInstance.getProcessInstanceId(), historicVariableUpdate.getActivityInstanceId());
+    assertThat(historicVariableUpdate.getVariableName()).isEqualTo("character");
+    assertThat(historicVariableUpdate.getValue()).isEqualTo("a");
+    assertThat(historicVariableUpdate.getRevision()).isZero();
+    assertThat(historicVariableUpdate.getActivityInstanceId()).isEqualTo(processInstance.getProcessInstanceId());
 
     historicVariableUpdate = (HistoricVariableUpdate) historicDetails.get(3);
-    assertEquals("number", historicVariableUpdate.getVariableName());
-    assertEquals("one", historicVariableUpdate.getValue());
-    assertEquals(0, historicVariableUpdate.getRevision());
-    assertEquals(processInstance.getProcessInstanceId(), historicVariableUpdate.getActivityInstanceId());
+    assertThat(historicVariableUpdate.getVariableName()).isEqualTo("number");
+    assertThat(historicVariableUpdate.getValue()).isEqualTo("one");
+    assertThat(historicVariableUpdate.getRevision()).isZero();
+    assertThat(historicVariableUpdate.getActivityInstanceId()).isEqualTo(processInstance.getProcessInstanceId());
 
     // Variable is updated when process was in waitstate
     historicVariableUpdate = (HistoricVariableUpdate) historicDetails.get(4);
-    assertEquals("number", historicVariableUpdate.getVariableName());
-    assertEquals("two", historicVariableUpdate.getValue());
-    assertEquals(1, historicVariableUpdate.getRevision());
-    assertEquals(waitStateActivity.getId(), historicVariableUpdate.getActivityInstanceId());
+    assertThat(historicVariableUpdate.getVariableName()).isEqualTo("number");
+    assertThat(historicVariableUpdate.getValue()).isEqualTo("two");
+    assertThat(historicVariableUpdate.getRevision()).isEqualTo(1);
+    assertThat(historicVariableUpdate.getActivityInstanceId()).isEqualTo(waitStateActivity.getId());
 
     // Variable set from process-start execution listener
     historicVariableUpdate = (HistoricVariableUpdate) historicDetails.get(5);
-    assertEquals("zVar1", historicVariableUpdate.getVariableName());
-    assertEquals("Event: start", historicVariableUpdate.getValue());
-    assertEquals(0, historicVariableUpdate.getRevision());
-    assertEquals(processInstance.getProcessInstanceId(), historicVariableUpdate.getActivityInstanceId());
+    assertThat(historicVariableUpdate.getVariableName()).isEqualTo("zVar1");
+    assertThat(historicVariableUpdate.getValue()).isEqualTo("Event: start");
+    assertThat(historicVariableUpdate.getRevision()).isZero();
+    assertThat(historicVariableUpdate.getActivityInstanceId()).isEqualTo(processInstance.getProcessInstanceId());
 
     // Variable set from transition take execution listener
     historicVariableUpdate = (HistoricVariableUpdate) historicDetails.get(6);
-    assertEquals("zVar2", historicVariableUpdate.getVariableName());
-    assertEquals("Event: take", historicVariableUpdate.getValue());
-    assertEquals(0, historicVariableUpdate.getRevision());
-    assertNull(historicVariableUpdate.getActivityInstanceId());
+    assertThat(historicVariableUpdate.getVariableName()).isEqualTo("zVar2");
+    assertThat(historicVariableUpdate.getValue()).isEqualTo("Event: take");
+    assertThat(historicVariableUpdate.getRevision()).isZero();
+    assertThat(historicVariableUpdate.getActivityInstanceId()).isNull();
 
     // Variable set from activity start execution listener on the servicetask
     historicVariableUpdate = (HistoricVariableUpdate) historicDetails.get(7);
-    assertEquals("zVar3", historicVariableUpdate.getVariableName());
-    assertEquals("Event: start", historicVariableUpdate.getValue());
-    assertEquals(0, historicVariableUpdate.getRevision());
-    assertEquals(serviceTaskActivity.getId(), historicVariableUpdate.getActivityInstanceId());
+    assertThat(historicVariableUpdate.getVariableName()).isEqualTo("zVar3");
+    assertThat(historicVariableUpdate.getValue()).isEqualTo("Event: start");
+    assertThat(historicVariableUpdate.getRevision()).isZero();
+    assertThat(historicVariableUpdate.getActivityInstanceId()).isEqualTo(serviceTaskActivity.getId());
 
     // Variable set from activity end execution listener on the servicetask
     historicVariableUpdate = (HistoricVariableUpdate) historicDetails.get(8);
-    assertEquals("zVar4", historicVariableUpdate.getVariableName());
-    assertEquals("Event: end", historicVariableUpdate.getValue());
-    assertEquals(0, historicVariableUpdate.getRevision());
-    assertEquals(serviceTaskActivity.getId(), historicVariableUpdate.getActivityInstanceId());
+    assertThat(historicVariableUpdate.getVariableName()).isEqualTo("zVar4");
+    assertThat(historicVariableUpdate.getValue()).isEqualTo("Event: end");
+    assertThat(historicVariableUpdate.getRevision()).isZero();
+    assertThat(historicVariableUpdate.getActivityInstanceId()).isEqualTo(serviceTaskActivity.getId());
 
     // Variable set from service-task
     historicVariableUpdate = (HistoricVariableUpdate) historicDetails.get(9);
-    assertEquals("zzz", historicVariableUpdate.getVariableName());
-    assertEquals(123456789L, historicVariableUpdate.getValue());
-    assertEquals(0, historicVariableUpdate.getRevision());
-    assertEquals(serviceTaskActivity.getId(), historicVariableUpdate.getActivityInstanceId());
+    assertThat(historicVariableUpdate.getVariableName()).isEqualTo("zzz");
+    assertThat(historicVariableUpdate.getValue()).isEqualTo(123456789L);
+    assertThat(historicVariableUpdate.getRevision()).isZero();
+    assertThat(historicVariableUpdate.getActivityInstanceId()).isEqualTo(serviceTaskActivity.getId());
 
     // trigger receive task
     runtimeService.signal(processInstance.getId());
@@ -223,87 +218,89 @@ public class FullHistoryTest {
             .createHistoricVariableInstanceQuery()
             .orderByVariableName().asc();
 
-    assertEquals(8, historicProcessVariableQuery.count());
+    assertThat(historicProcessVariableQuery.count()).isEqualTo(8);
 
     List<HistoricVariableInstance> historicVariables = historicProcessVariableQuery.list();
 
     // Variable status when process is finished
     HistoricVariableInstance historicVariable = historicVariables.get(0);
-    assertEquals("bytes", historicVariable.getVariableName());
-    assertEquals(":-)", new String((byte[])historicVariable.getValue()));
+    assertThat(historicVariable.getVariableName()).isEqualTo("bytes");
+    assertThat(new String((byte[]) historicVariable.getValue())).isEqualTo(":-)");
 
     historicVariable = historicVariables.get(1);
-    assertEquals("character", historicVariable.getVariableName());
-    assertEquals("a", historicVariable.getValue());
+    assertThat(historicVariable.getVariableName()).isEqualTo("character");
+    assertThat(historicVariable.getValue()).isEqualTo("a");
 
     historicVariable = historicVariables.get(2);
-    assertEquals("number", historicVariable.getVariableName());
-    assertEquals("two", historicVariable.getValue());
+    assertThat(historicVariable.getVariableName()).isEqualTo("number");
+    assertThat(historicVariable.getValue()).isEqualTo("two");
 
     historicVariable = historicVariables.get(3);
-    assertEquals("zVar1", historicVariable.getVariableName());
-    assertEquals("Event: start", historicVariable.getValue());
+    assertThat(historicVariable.getVariableName()).isEqualTo("zVar1");
+    assertThat(historicVariable.getValue()).isEqualTo("Event: start");
 
     historicVariable = historicVariables.get(4);
-    assertEquals("zVar2", historicVariable.getVariableName());
-    assertEquals("Event: take", historicVariable.getValue());
+    assertThat(historicVariable.getVariableName()).isEqualTo("zVar2");
+    assertThat(historicVariable.getValue()).isEqualTo("Event: take");
 
     historicVariable = historicVariables.get(5);
-    assertEquals("zVar3", historicVariable.getVariableName());
-    assertEquals("Event: start", historicVariable.getValue());
+    assertThat(historicVariable.getVariableName()).isEqualTo("zVar3");
+    assertThat(historicVariable.getValue()).isEqualTo("Event: start");
 
     historicVariable = historicVariables.get(6);
-    assertEquals("zVar4", historicVariable.getVariableName());
-    assertEquals("Event: end", historicVariable.getValue());
+    assertThat(historicVariable.getVariableName()).isEqualTo("zVar4");
+    assertThat(historicVariable.getValue()).isEqualTo("Event: end");
 
     historicVariable = historicVariables.get(7);
-    assertEquals("zzz", historicVariable.getVariableName());
-    assertEquals(123456789L, historicVariable.getValue());
+    assertThat(historicVariable.getVariableName()).isEqualTo("zzz");
+    assertThat(historicVariable.getValue()).isEqualTo(123456789L);
   }
 
   @Test
   @Deployment(resources="org/operaton/bpm/engine/test/standalone/history/FullHistoryTest.testVariableUpdates.bpmn20.xml")
+  @SuppressWarnings("deprecation")
   public void testHistoricVariableInstanceQuery() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("process", "one");
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("receiveTask", variables);
     runtimeService.signal(processInstance.getProcessInstanceId());
 
-    assertEquals(1, historyService.createHistoricVariableInstanceQuery().variableName("process").count());
-    assertEquals(1, historyService.createHistoricVariableInstanceQuery().variableValueEquals("process", "one").count());
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableName("process").count()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableValueEquals("process", "one").count()).isEqualTo(1);
 
     Map<String, Object> variables2 = new HashMap<>();
     variables2.put("process", "two");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("receiveTask", variables2);
     runtimeService.signal(processInstance2.getProcessInstanceId());
 
-    assertEquals(2, historyService.createHistoricVariableInstanceQuery().variableName("process").count());
-    assertEquals(1, historyService.createHistoricVariableInstanceQuery().variableValueEquals("process", "one").count());
-    assertEquals(1, historyService.createHistoricVariableInstanceQuery().variableValueEquals("process", "two").count());
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableName("process").count()).isEqualTo(2);
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableValueEquals("process", "one").count()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableValueEquals("process", "two").count()).isEqualTo(1);
 
     HistoricVariableInstance historicProcessVariable = historyService.createHistoricVariableInstanceQuery().variableValueEquals("process", "one").singleResult();
-    assertEquals("process", historicProcessVariable.getVariableName());
-    assertEquals("one", historicProcessVariable.getValue());
-    assertEquals(ValueType.STRING.getName(), historicProcessVariable.getVariableTypeName());
-    assertEquals(ValueType.STRING.getName(), historicProcessVariable.getTypeName());
-    assertEquals(historicProcessVariable.getValue(), historicProcessVariable.getTypedValue().getValue());
-    assertEquals(historicProcessVariable.getTypeName(), historicProcessVariable.getTypedValue().getType().getName());
+    assertThat(historicProcessVariable.getVariableName()).isEqualTo("process");
+    assertThat(historicProcessVariable.getValue()).isEqualTo("one");
+    assertThat(historicProcessVariable.getVariableTypeName()).isEqualTo(ValueType.STRING.getName());
+    assertThat(historicProcessVariable.getTypeName()).isEqualTo(ValueType.STRING.getName());
+    assertThat(historicProcessVariable.getTypedValue().getValue()).isEqualTo(historicProcessVariable.getValue());
+    assertThat(historicProcessVariable.getTypedValue().getType().getName()).isEqualTo(historicProcessVariable.getTypeName());
 
     Map<String, Object> variables3 = new HashMap<>();
-    variables3.put("long", 1000l);
+    variables3.put("long", 1000L);
     variables3.put("double", 25.43d);
     ProcessInstance processInstance3 = runtimeService.startProcessInstanceByKey("receiveTask", variables3);
     runtimeService.signal(processInstance3.getProcessInstanceId());
 
-    assertEquals(1, historyService.createHistoricVariableInstanceQuery().variableName("long").count());
-    assertEquals(1, historyService.createHistoricVariableInstanceQuery().variableValueEquals("long", 1000l).count());
-    assertEquals(1, historyService.createHistoricVariableInstanceQuery().variableName("double").count());
-    assertEquals(1, historyService.createHistoricVariableInstanceQuery().variableValueEquals("double",  25.43d).count());
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableName("long").count()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableValueEquals("long", 1000L).count()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableName("double").count()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableValueEquals("double", 25.43d).count()).isEqualTo(1);
 
   }
 
   @Test
   @Deployment
+  @SuppressWarnings("deprecation")
   public void testHistoricVariableUpdatesAllTypes() throws Exception {
 
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss SSS");
@@ -328,69 +325,69 @@ public class FullHistoryTest {
 
     // 8 variable updates should be present, one performed when starting process
     // the other 7 are set in VariableSetter serviceTask
-    assertEquals(9, details.size());
+    assertThat(details).hasSize(9);
 
     // Since we order by varName, first entry should be aVariable update from startTask
     HistoricVariableUpdate startVarUpdate = (HistoricVariableUpdate) details.get(0);
-    assertEquals("aVariable", startVarUpdate.getVariableName());
-    assertEquals("initial value", startVarUpdate.getValue());
-    assertEquals(0, startVarUpdate.getRevision());
-    assertEquals(processInstance.getId(), startVarUpdate.getProcessInstanceId());
-    // Date should the the one set when starting
-    assertEquals(startedDate, startVarUpdate.getTime());
+    assertThat(startVarUpdate.getVariableName()).isEqualTo("aVariable");
+    assertThat(startVarUpdate.getValue()).isEqualTo("initial value");
+    assertThat(startVarUpdate.getRevision()).isZero();
+    assertThat(startVarUpdate.getProcessInstanceId()).isEqualTo(processInstance.getId());
+    // Date should the one set when starting
+    assertThat(startVarUpdate.getTime()).isEqualTo(startedDate);
 
     HistoricVariableUpdate updatedStringVariable = (HistoricVariableUpdate) details.get(1);
-    assertEquals("aVariable", updatedStringVariable.getVariableName());
-    assertEquals("updated value", updatedStringVariable.getValue());
-    assertEquals(processInstance.getId(), updatedStringVariable.getProcessInstanceId());
+    assertThat(updatedStringVariable.getVariableName()).isEqualTo("aVariable");
+    assertThat(updatedStringVariable.getValue()).isEqualTo("updated value");
+    assertThat(updatedStringVariable.getProcessInstanceId()).isEqualTo(processInstance.getId());
     // Date should be the updated date
-    assertEquals(updatedDate, updatedStringVariable.getTime());
+    assertThat(updatedStringVariable.getTime()).isEqualTo(updatedDate);
 
     HistoricVariableUpdate intVariable = (HistoricVariableUpdate) details.get(2);
-    assertEquals("bVariable", intVariable.getVariableName());
-    assertEquals(123, intVariable.getValue());
-    assertEquals(processInstance.getId(), intVariable.getProcessInstanceId());
-    assertEquals(updatedDate, intVariable.getTime());
+    assertThat(intVariable.getVariableName()).isEqualTo("bVariable");
+    assertThat(intVariable.getValue()).isEqualTo(123);
+    assertThat(intVariable.getProcessInstanceId()).isEqualTo(processInstance.getId());
+    assertThat(intVariable.getTime()).isEqualTo(updatedDate);
 
     HistoricVariableUpdate longVariable = (HistoricVariableUpdate) details.get(3);
-    assertEquals("cVariable", longVariable.getVariableName());
-    assertEquals(12345L, longVariable.getValue());
-    assertEquals(processInstance.getId(), longVariable.getProcessInstanceId());
-    assertEquals(updatedDate, longVariable.getTime());
+    assertThat(longVariable.getVariableName()).isEqualTo("cVariable");
+    assertThat(longVariable.getValue()).isEqualTo(12345L);
+    assertThat(longVariable.getProcessInstanceId()).isEqualTo(processInstance.getId());
+    assertThat(longVariable.getTime()).isEqualTo(updatedDate);
 
     HistoricVariableUpdate doubleVariable = (HistoricVariableUpdate) details.get(4);
-    assertEquals("dVariable", doubleVariable.getVariableName());
-    assertEquals(1234.567, doubleVariable.getValue());
-    assertEquals(processInstance.getId(), doubleVariable.getProcessInstanceId());
-    assertEquals(updatedDate, doubleVariable.getTime());
+    assertThat(doubleVariable.getVariableName()).isEqualTo("dVariable");
+    assertThat(doubleVariable.getValue()).isEqualTo(1234.567);
+    assertThat(doubleVariable.getProcessInstanceId()).isEqualTo(processInstance.getId());
+    assertThat(doubleVariable.getTime()).isEqualTo(updatedDate);
 
     HistoricVariableUpdate shortVariable = (HistoricVariableUpdate) details.get(5);
-    assertEquals("eVariable", shortVariable.getVariableName());
-    assertEquals((short)12, shortVariable.getValue());
-    assertEquals(processInstance.getId(), shortVariable.getProcessInstanceId());
-    assertEquals(updatedDate, shortVariable.getTime());
+    assertThat(shortVariable.getVariableName()).isEqualTo("eVariable");
+    assertThat(shortVariable.getValue()).isEqualTo((short) 12);
+    assertThat(shortVariable.getProcessInstanceId()).isEqualTo(processInstance.getId());
+    assertThat(shortVariable.getTime()).isEqualTo(updatedDate);
 
     HistoricVariableUpdate dateVariable = (HistoricVariableUpdate) details.get(6);
-    assertEquals("fVariable", dateVariable.getVariableName());
-    assertEquals(sdf.parse("01/01/2001 01:23:45 678"), dateVariable.getValue());
-    assertEquals(processInstance.getId(), dateVariable.getProcessInstanceId());
-    assertEquals(updatedDate, dateVariable.getTime());
+    assertThat(dateVariable.getVariableName()).isEqualTo("fVariable");
+    assertThat(dateVariable.getValue()).isEqualTo(sdf.parse("01/01/2001 01:23:45 678"));
+    assertThat(dateVariable.getProcessInstanceId()).isEqualTo(processInstance.getId());
+    assertThat(dateVariable.getTime()).isEqualTo(updatedDate);
 
     HistoricVariableUpdate serializableVariable = (HistoricVariableUpdate) details.get(7);
-    assertEquals("gVariable", serializableVariable.getVariableName());
-    assertEquals(new SerializableVariable("hello hello"), serializableVariable.getValue());
-    assertEquals(processInstance.getId(), serializableVariable.getProcessInstanceId());
-    assertEquals(updatedDate, serializableVariable.getTime());
+    assertThat(serializableVariable.getVariableName()).isEqualTo("gVariable");
+    assertThat(serializableVariable.getValue()).isEqualTo(new SerializableVariable("hello hello"));
+    assertThat(serializableVariable.getProcessInstanceId()).isEqualTo(processInstance.getId());
+    assertThat(serializableVariable.getTime()).isEqualTo(updatedDate);
 
     HistoricVariableUpdate byteArrayVariable = (HistoricVariableUpdate) details.get(8);
-    assertEquals("hVariable", byteArrayVariable.getVariableName());
-    assertEquals(";-)", new String((byte[])byteArrayVariable.getValue()));
-    assertEquals(processInstance.getId(), byteArrayVariable.getProcessInstanceId());
-    assertEquals(updatedDate, byteArrayVariable.getTime());
+    assertThat(byteArrayVariable.getVariableName()).isEqualTo("hVariable");
+    assertThat(new String((byte[]) byteArrayVariable.getValue())).isEqualTo(";-)");
+    assertThat(byteArrayVariable.getProcessInstanceId()).isEqualTo(processInstance.getId());
+    assertThat(byteArrayVariable.getTime()).isEqualTo(updatedDate);
 
     // end process instance
     List<Task> tasks = taskService.createTaskQuery().list();
-    assertEquals(1, tasks.size());
+    assertThat(tasks).hasSize(1);
     taskService.complete(tasks.get(0).getId());
     testHelper.assertProcessEnded(processInstance.getId());
 
@@ -399,54 +396,55 @@ public class FullHistoryTest {
             .createHistoricVariableInstanceQuery()
             .orderByVariableName().asc();
 
-    assertEquals(8, historicProcessVariableQuery.count());
+    assertThat(historicProcessVariableQuery.count()).isEqualTo(8);
 
     List<HistoricVariableInstance> historicVariables = historicProcessVariableQuery.list();
 
  // Variable status when process is finished
     HistoricVariableInstance historicVariable = historicVariables.get(0);
-    assertEquals("aVariable", historicVariable.getVariableName());
-    assertEquals("updated value", historicVariable.getValue());
-    assertEquals(processInstance.getId(), historicVariable.getProcessInstanceId());
+    assertThat(historicVariable.getVariableName()).isEqualTo("aVariable");
+    assertThat(historicVariable.getValue()).isEqualTo("updated value");
+    assertThat(historicVariable.getProcessInstanceId()).isEqualTo(processInstance.getId());
 
     historicVariable = historicVariables.get(1);
-    assertEquals("bVariable", historicVariable.getVariableName());
-    assertEquals(123, historicVariable.getValue());
-    assertEquals(processInstance.getId(), historicVariable.getProcessInstanceId());
+    assertThat(historicVariable.getVariableName()).isEqualTo("bVariable");
+    assertThat(historicVariable.getValue()).isEqualTo(123);
+    assertThat(historicVariable.getProcessInstanceId()).isEqualTo(processInstance.getId());
 
     historicVariable = historicVariables.get(2);
-    assertEquals("cVariable", historicVariable.getVariableName());
-    assertEquals(12345L, historicVariable.getValue());
-    assertEquals(processInstance.getId(), historicVariable.getProcessInstanceId());
+    assertThat(historicVariable.getVariableName()).isEqualTo("cVariable");
+    assertThat(historicVariable.getValue()).isEqualTo(12345L);
+    assertThat(historicVariable.getProcessInstanceId()).isEqualTo(processInstance.getId());
 
     historicVariable = historicVariables.get(3);
-    assertEquals("dVariable", historicVariable.getVariableName());
-    assertEquals(1234.567, historicVariable.getValue());
-    assertEquals(processInstance.getId(), historicVariable.getProcessInstanceId());
+    assertThat(historicVariable.getVariableName()).isEqualTo("dVariable");
+    assertThat(historicVariable.getValue()).isEqualTo(1234.567);
+    assertThat(historicVariable.getProcessInstanceId()).isEqualTo(processInstance.getId());
 
     historicVariable = historicVariables.get(4);
-    assertEquals("eVariable", historicVariable.getVariableName());
-    assertEquals((short) 12, historicVariable.getValue());
-    assertEquals(processInstance.getId(), historicVariable.getProcessInstanceId());
+    assertThat(historicVariable.getVariableName()).isEqualTo("eVariable");
+    assertThat(historicVariable.getValue()).isEqualTo((short) 12);
+    assertThat(historicVariable.getProcessInstanceId()).isEqualTo(processInstance.getId());
 
     historicVariable = historicVariables.get(5);
-    assertEquals("fVariable", historicVariable.getVariableName());
-    assertEquals(sdf.parse("01/01/2001 01:23:45 678"), historicVariable.getValue());
-    assertEquals(processInstance.getId(), historicVariable.getProcessInstanceId());
+    assertThat(historicVariable.getVariableName()).isEqualTo("fVariable");
+    assertThat(historicVariable.getValue()).isEqualTo(sdf.parse("01/01/2001 01:23:45 678"));
+    assertThat(historicVariable.getProcessInstanceId()).isEqualTo(processInstance.getId());
 
     historicVariable = historicVariables.get(6);
-    assertEquals("gVariable", historicVariable.getVariableName());
-    assertEquals(new SerializableVariable("hello hello"), historicVariable.getValue());
-    assertEquals(processInstance.getId(), historicVariable.getProcessInstanceId());
+    assertThat(historicVariable.getVariableName()).isEqualTo("gVariable");
+    assertThat(historicVariable.getValue()).isEqualTo(new SerializableVariable("hello hello"));
+    assertThat(historicVariable.getProcessInstanceId()).isEqualTo(processInstance.getId());
 
     historicVariable = historicVariables.get(7);
-    assertEquals("hVariable", historicVariable.getVariableName());
-    assertEquals(";-)", ";-)", new String((byte[])historicVariable.getValue()));
-    assertEquals(processInstance.getId(), historicVariable.getProcessInstanceId());
+    assertThat(historicVariable.getVariableName()).isEqualTo("hVariable");
+    assertThat(new String((byte[]) historicVariable.getValue())).as(";-)").isEqualTo(";-)");
+    assertThat(historicVariable.getProcessInstanceId()).isEqualTo(processInstance.getId());
   }
 
   @Test
   @Deployment
+  @SuppressWarnings("deprecation")
   public void testHistoricFormProperties() throws Exception {
     Date startedDate = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss SSS").parse("01/01/2001 01:23:46 000");
 
@@ -462,12 +460,13 @@ public class FullHistoryTest {
 
     // Submit form-properties on the created task
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     // Out execution only has a single activity waiting, the task
     List<String> activityIds = runtimeService.getActiveActivityIds(task.getExecutionId());
-    assertNotNull(activityIds);
-    assertEquals(1, activityIds.size());
+    assertThat(activityIds)
+            .isNotNull()
+            .hasSize(1);
 
     String taskActivityId = activityIds.get(0);
 
@@ -485,46 +484,46 @@ public class FullHistoryTest {
       .list();
 
     HistoricFormProperty historicProperty1 = (HistoricFormProperty) props.get(0);
-    assertEquals("formProp1", historicProperty1.getPropertyId());
-    assertEquals("Activiti rocks", historicProperty1.getPropertyValue());
-    assertEquals(startedDate, historicProperty1.getTime());
-    assertEquals(processInstance.getId(), historicProperty1.getProcessInstanceId());
-    assertNull(historicProperty1.getTaskId());
+    assertThat(historicProperty1.getPropertyId()).isEqualTo("formProp1");
+    assertThat(historicProperty1.getPropertyValue()).isEqualTo("Activiti rocks");
+    assertThat(historicProperty1.getTime()).isEqualTo(startedDate);
+    assertThat(historicProperty1.getProcessInstanceId()).isEqualTo(processInstance.getId());
+    assertThat(historicProperty1.getTaskId()).isNull();
 
-    assertEquals(processInstance.getId(), historicProperty1.getActivityInstanceId());
+    assertThat(historicProperty1.getActivityInstanceId()).isEqualTo(processInstance.getId());
 
     HistoricFormProperty historicProperty2 = (HistoricFormProperty) props.get(1);
-    assertEquals("formProp2", historicProperty2.getPropertyId());
-    assertEquals("12345", historicProperty2.getPropertyValue());
-    assertEquals(startedDate, historicProperty2.getTime());
-    assertEquals(processInstance.getId(), historicProperty2.getProcessInstanceId());
-    assertNull(historicProperty2.getTaskId());
+    assertThat(historicProperty2.getPropertyId()).isEqualTo("formProp2");
+    assertThat(historicProperty2.getPropertyValue()).isEqualTo("12345");
+    assertThat(historicProperty2.getTime()).isEqualTo(startedDate);
+    assertThat(historicProperty2.getProcessInstanceId()).isEqualTo(processInstance.getId());
+    assertThat(historicProperty2.getTaskId()).isNull();
 
-    assertEquals(processInstance.getId(), historicProperty2.getActivityInstanceId());
+    assertThat(historicProperty2.getActivityInstanceId()).isEqualTo(processInstance.getId());
 
     HistoricFormProperty historicProperty3 = (HistoricFormProperty) props.get(2);
-    assertEquals("formProp3", historicProperty3.getPropertyId());
-    assertEquals("Activiti still rocks!!!", historicProperty3.getPropertyValue());
-    assertEquals(startedDate, historicProperty3.getTime());
-    assertEquals(processInstance.getId(), historicProperty3.getProcessInstanceId());
+    assertThat(historicProperty3.getPropertyId()).isEqualTo("formProp3");
+    assertThat(historicProperty3.getPropertyValue()).isEqualTo("Activiti still rocks!!!");
+    assertThat(historicProperty3.getTime()).isEqualTo(startedDate);
+    assertThat(historicProperty3.getProcessInstanceId()).isEqualTo(processInstance.getId());
     String activityInstanceId = historicProperty3.getActivityInstanceId();
     HistoricActivityInstance historicActivityInstance = historyService.createHistoricActivityInstanceQuery().activityInstanceId(activityInstanceId).singleResult();
-    assertNotNull(historicActivityInstance);
-    assertEquals(taskActivityId, historicActivityInstance.getActivityId());
-    assertNotNull(historicProperty3.getTaskId());
+    assertThat(historicActivityInstance).isNotNull();
+    assertThat(historicActivityInstance.getActivityId()).isEqualTo(taskActivityId);
+    assertThat(historicProperty3.getTaskId()).isNotNull();
 
     HistoricFormProperty historicProperty4 = (HistoricFormProperty) props.get(3);
-    assertEquals("formProp4", historicProperty4.getPropertyId());
-    assertEquals("54321", historicProperty4.getPropertyValue());
-    assertEquals(startedDate, historicProperty4.getTime());
-    assertEquals(processInstance.getId(), historicProperty4.getProcessInstanceId());
+    assertThat(historicProperty4.getPropertyId()).isEqualTo("formProp4");
+    assertThat(historicProperty4.getPropertyValue()).isEqualTo("54321");
+    assertThat(historicProperty4.getTime()).isEqualTo(startedDate);
+    assertThat(historicProperty4.getProcessInstanceId()).isEqualTo(processInstance.getId());
     activityInstanceId = historicProperty4.getActivityInstanceId();
     historicActivityInstance = historyService.createHistoricActivityInstanceQuery().activityInstanceId(activityInstanceId).singleResult();
-    assertNotNull(historicActivityInstance);
-    assertEquals(taskActivityId, historicActivityInstance.getActivityId());
-    assertNotNull(historicProperty4.getTaskId());
+    assertThat(historicActivityInstance).isNotNull();
+    assertThat(historicActivityInstance.getActivityId()).isEqualTo(taskActivityId);
+    assertThat(historicProperty4.getTaskId()).isNotNull();
 
-    assertEquals(4, props.size());
+    assertThat(props).hasSize(4);
   }
 
   @Test
@@ -538,29 +537,29 @@ public class FullHistoryTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess", variables);
 
     // Query on activity-instance, activity instance null will return all vars set when starting process
-    assertEquals(2, historyService.createHistoricDetailQuery().variableUpdates().activityInstanceId(null).count());
-    assertEquals(0, historyService.createHistoricDetailQuery().variableUpdates().activityInstanceId("unexisting").count());
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().activityInstanceId(null).count()).isEqualTo(2);
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().activityInstanceId("unexisting").count()).isZero();
 
     // Query on process-instance
-    assertEquals(2, historyService.createHistoricDetailQuery().variableUpdates().processInstanceId(processInstance.getId()).count());
-    assertEquals(0, historyService.createHistoricDetailQuery().variableUpdates().processInstanceId("unexisting").count());
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().processInstanceId(processInstance.getId()).count()).isEqualTo(2);
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().processInstanceId("unexisting").count()).isZero();
 
     // Query both process-instance and activity-instance
-    assertEquals(2, historyService.createHistoricDetailQuery().variableUpdates()
-            .activityInstanceId(null)
-            .processInstanceId(processInstance.getId()).count());
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates()
+        .activityInstanceId(null)
+        .processInstanceId(processInstance.getId()).count()).isEqualTo(2);
 
     // end process instance
     List<Task> tasks = taskService.createTaskQuery().list();
-    assertEquals(1, tasks.size());
+    assertThat(tasks).hasSize(1);
     taskService.complete(tasks.get(0).getId());
     testHelper.assertProcessEnded(processInstance.getId());
 
-    assertEquals(2, historyService.createHistoricVariableInstanceQuery().count());
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(2);
 
     // Query on process-instance
-    assertEquals(2, historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstance.getId()).count());
-    assertEquals(0, historyService.createHistoricVariableInstanceQuery().processInstanceId("unexisting").count());
+    assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstance.getId()).count()).isEqualTo(2);
+    assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId("unexisting").count()).isZero();
   }
 
   @Test
@@ -575,24 +574,25 @@ public class FullHistoryTest {
 
     // Set a local task-variable
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     taskService.setVariableLocal(task.getId(), "taskVar", "It is I, le Variable");
 
     // Query on process-instance
-    assertEquals(3, historyService.createHistoricDetailQuery().variableUpdates().processInstanceId(processInstance.getId()).count());
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().processInstanceId(processInstance.getId()).count()).isEqualTo(3);
 
     // Query on process-instance, excluding task-details
-    assertEquals(2, historyService.createHistoricDetailQuery().variableUpdates().processInstanceId(processInstance.getId())
-      .excludeTaskDetails().count());
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().processInstanceId(processInstance.getId())
+        .excludeTaskDetails().count()).isEqualTo(2);
 
     // Check task-id precedence on excluding task-details
-    assertEquals(1, historyService.createHistoricDetailQuery().variableUpdates().processInstanceId(processInstance.getId())
-            .excludeTaskDetails().taskId(task.getId()).count());
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().processInstanceId(processInstance.getId())
+        .excludeTaskDetails().taskId(task.getId()).count()).isEqualTo(1);
   }
 
   @Test
   @Deployment(
     resources={"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
+  @SuppressWarnings("deprecation")
   public void testHistoricFormPropertiesQuery() {
     Map<String, String> formProperties = new HashMap<>();
     formProperties.put("stringVar", "activiti rocks!");
@@ -602,12 +602,12 @@ public class FullHistoryTest {
     ProcessInstance processInstance = formService.submitStartFormData(procDef.getId() , formProperties);
 
     // Query on activity-instance, activity instance null will return all vars set when starting process
-    assertEquals(2, historyService.createHistoricDetailQuery().formProperties().activityInstanceId(null).count());
-    assertEquals(0, historyService.createHistoricDetailQuery().formProperties().activityInstanceId("unexisting").count());
+    assertThat(historyService.createHistoricDetailQuery().formProperties().activityInstanceId(null).count()).isEqualTo(2);
+    assertThat(historyService.createHistoricDetailQuery().formProperties().activityInstanceId("unexisting").count()).isZero();
 
     // Query on process-instance
-    assertEquals(2, historyService.createHistoricDetailQuery().formProperties().processInstanceId(processInstance.getId()).count());
-    assertEquals(0, historyService.createHistoricDetailQuery().formProperties().processInstanceId("unexisting").count());
+    assertThat(historyService.createHistoricDetailQuery().formProperties().processInstanceId(processInstance.getId()).count()).isEqualTo(2);
+    assertThat(historyService.createHistoricDetailQuery().formProperties().processInstanceId("unexisting").count()).isZero();
 
     // Complete the task by submitting the task properties
     Task task = taskService.createTaskQuery().singleResult();
@@ -615,8 +615,8 @@ public class FullHistoryTest {
     formProperties.put("taskVar", "task form property");
     formService.submitTaskFormData(task.getId(), formProperties);
 
-    assertEquals(3, historyService.createHistoricDetailQuery().formProperties().processInstanceId(processInstance.getId()).count());
-    assertEquals(0, historyService.createHistoricDetailQuery().formProperties().processInstanceId("unexisting").count());
+    assertThat(historyService.createHistoricDetailQuery().formProperties().processInstanceId(processInstance.getId()).count()).isEqualTo(3);
+    assertThat(historyService.createHistoricDetailQuery().formProperties().processInstanceId("unexisting").count()).isZero();
   }
 
   @Test
@@ -629,34 +629,35 @@ public class FullHistoryTest {
 
     runtimeService.startProcessInstanceByKey("oneTaskProcess", variables);
 
-    assertEquals(2, historyService.createHistoricDetailQuery().variableUpdates().orderByProcessInstanceId().asc().count());
-    assertEquals(2, historyService.createHistoricDetailQuery().variableUpdates().orderByTime().asc().count());
-    assertEquals(2, historyService.createHistoricDetailQuery().variableUpdates().orderByVariableName().asc().count());
-    assertEquals(2, historyService.createHistoricDetailQuery().variableUpdates().orderByVariableRevision().asc().count());
-    assertEquals(2, historyService.createHistoricDetailQuery().variableUpdates().orderByVariableType().asc().count());
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().orderByProcessInstanceId().asc().count()).isEqualTo(2);
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().orderByTime().asc().count()).isEqualTo(2);
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().orderByVariableName().asc().count()).isEqualTo(2);
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().orderByVariableRevision().asc().count()).isEqualTo(2);
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().orderByVariableType().asc().count()).isEqualTo(2);
 
-    assertEquals(2, historyService.createHistoricDetailQuery().variableUpdates().orderByProcessInstanceId().desc().count());
-    assertEquals(2, historyService.createHistoricDetailQuery().variableUpdates().orderByTime().desc().count());
-    assertEquals(2, historyService.createHistoricDetailQuery().variableUpdates().orderByVariableName().desc().count());
-    assertEquals(2, historyService.createHistoricDetailQuery().variableUpdates().orderByVariableRevision().desc().count());
-    assertEquals(2, historyService.createHistoricDetailQuery().variableUpdates().orderByVariableType().desc().count());
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().orderByProcessInstanceId().desc().count()).isEqualTo(2);
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().orderByTime().desc().count()).isEqualTo(2);
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().orderByVariableName().desc().count()).isEqualTo(2);
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().orderByVariableRevision().desc().count()).isEqualTo(2);
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().orderByVariableType().desc().count()).isEqualTo(2);
 
-    assertEquals(2, historyService.createHistoricDetailQuery().variableUpdates().orderByProcessInstanceId().asc().list().size());
-    assertEquals(2, historyService.createHistoricDetailQuery().variableUpdates().orderByTime().asc().list().size());
-    assertEquals(2, historyService.createHistoricDetailQuery().variableUpdates().orderByVariableName().asc().list().size());
-    assertEquals(2, historyService.createHistoricDetailQuery().variableUpdates().orderByVariableRevision().asc().list().size());
-    assertEquals(2, historyService.createHistoricDetailQuery().variableUpdates().orderByVariableType().asc().list().size());
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().orderByProcessInstanceId().asc().list()).hasSize(2);
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().orderByTime().asc().list()).hasSize(2);
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().orderByVariableName().asc().list()).hasSize(2);
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().orderByVariableRevision().asc().list()).hasSize(2);
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().orderByVariableType().asc().list()).hasSize(2);
 
-    assertEquals(2, historyService.createHistoricDetailQuery().variableUpdates().orderByProcessInstanceId().desc().list().size());
-    assertEquals(2, historyService.createHistoricDetailQuery().variableUpdates().orderByTime().desc().list().size());
-    assertEquals(2, historyService.createHistoricDetailQuery().variableUpdates().orderByVariableName().desc().list().size());
-    assertEquals(2, historyService.createHistoricDetailQuery().variableUpdates().orderByVariableRevision().desc().list().size());
-    assertEquals(2, historyService.createHistoricDetailQuery().variableUpdates().orderByVariableType().desc().list().size());
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().orderByProcessInstanceId().desc().list()).hasSize(2);
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().orderByTime().desc().list()).hasSize(2);
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().orderByVariableName().desc().list()).hasSize(2);
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().orderByVariableRevision().desc().list()).hasSize(2);
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().orderByVariableType().desc().list()).hasSize(2);
   }
 
   @Test
   @Deployment(
     resources={"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
+  @SuppressWarnings("deprecation")
   public void testHistoricFormPropertySorting() {
 
     Map<String, String> formProperties = new HashMap<>();
@@ -666,25 +667,26 @@ public class FullHistoryTest {
     ProcessDefinition procDef = repositoryService.createProcessDefinitionQuery().processDefinitionKey("oneTaskProcess").singleResult();
     formService.submitStartFormData(procDef.getId() , formProperties);
 
-    assertEquals(2, historyService.createHistoricDetailQuery().formProperties().orderByProcessInstanceId().asc().count());
-    assertEquals(2, historyService.createHistoricDetailQuery().formProperties().orderByTime().asc().count());
-    assertEquals(2, historyService.createHistoricDetailQuery().formProperties().orderByFormPropertyId().asc().count());
+    assertThat(historyService.createHistoricDetailQuery().formProperties().orderByProcessInstanceId().asc().count()).isEqualTo(2);
+    assertThat(historyService.createHistoricDetailQuery().formProperties().orderByTime().asc().count()).isEqualTo(2);
+    assertThat(historyService.createHistoricDetailQuery().formProperties().orderByFormPropertyId().asc().count()).isEqualTo(2);
 
-    assertEquals(2, historyService.createHistoricDetailQuery().formProperties().orderByProcessInstanceId().desc().count());
-    assertEquals(2, historyService.createHistoricDetailQuery().formProperties().orderByTime().desc().count());
-    assertEquals(2, historyService.createHistoricDetailQuery().formProperties().orderByFormPropertyId().desc().count());
+    assertThat(historyService.createHistoricDetailQuery().formProperties().orderByProcessInstanceId().desc().count()).isEqualTo(2);
+    assertThat(historyService.createHistoricDetailQuery().formProperties().orderByTime().desc().count()).isEqualTo(2);
+    assertThat(historyService.createHistoricDetailQuery().formProperties().orderByFormPropertyId().desc().count()).isEqualTo(2);
 
-    assertEquals(2, historyService.createHistoricDetailQuery().formProperties().orderByProcessInstanceId().asc().list().size());
-    assertEquals(2, historyService.createHistoricDetailQuery().formProperties().orderByTime().asc().list().size());
-    assertEquals(2, historyService.createHistoricDetailQuery().formProperties().orderByFormPropertyId().asc().list().size());
+    assertThat(historyService.createHistoricDetailQuery().formProperties().orderByProcessInstanceId().asc().list()).hasSize(2);
+    assertThat(historyService.createHistoricDetailQuery().formProperties().orderByTime().asc().list()).hasSize(2);
+    assertThat(historyService.createHistoricDetailQuery().formProperties().orderByFormPropertyId().asc().list()).hasSize(2);
 
-    assertEquals(2, historyService.createHistoricDetailQuery().formProperties().orderByProcessInstanceId().desc().list().size());
-    assertEquals(2, historyService.createHistoricDetailQuery().formProperties().orderByTime().desc().list().size());
-    assertEquals(2, historyService.createHistoricDetailQuery().formProperties().orderByFormPropertyId().desc().list().size());
+    assertThat(historyService.createHistoricDetailQuery().formProperties().orderByProcessInstanceId().desc().list()).hasSize(2);
+    assertThat(historyService.createHistoricDetailQuery().formProperties().orderByTime().desc().list()).hasSize(2);
+    assertThat(historyService.createHistoricDetailQuery().formProperties().orderByFormPropertyId().desc().list()).hasSize(2);
   }
 
   @Test
   @Deployment
+  @SuppressWarnings("deprecation")
   public void testHistoricDetailQueryMixed() {
 
     Map<String, String> formProperties = new HashMap<>();
@@ -700,81 +702,87 @@ public class FullHistoryTest {
       .orderByVariableName().asc()
       .list();
 
-    assertEquals(4, details.size());
+    assertThat(details).hasSize(4);
 
-    assertTrue(details.get(0) instanceof HistoricFormProperty);
+    assertThat(details.get(0)).isInstanceOf(HistoricFormProperty.class);
     HistoricFormProperty formProp1 = (HistoricFormProperty) details.get(0);
-    assertEquals("formProp1", formProp1.getPropertyId());
-    assertEquals("activiti rocks!", formProp1.getPropertyValue());
+    assertThat(formProp1.getPropertyId()).isEqualTo("formProp1");
+    assertThat(formProp1.getPropertyValue()).isEqualTo("activiti rocks!");
 
-    assertTrue(details.get(1) instanceof HistoricFormProperty);
+    assertThat(details.get(1)).isInstanceOf(HistoricFormProperty.class);
     HistoricFormProperty formProp2 = (HistoricFormProperty) details.get(1);
-    assertEquals("formProp2", formProp2.getPropertyId());
-    assertEquals("12345", formProp2.getPropertyValue());
+    assertThat(formProp2.getPropertyId()).isEqualTo("formProp2");
+    assertThat(formProp2.getPropertyValue()).isEqualTo("12345");
 
 
-    assertTrue(details.get(2) instanceof HistoricVariableUpdate);
+    assertThat(details.get(2)).isInstanceOf(HistoricVariableUpdate.class);
     HistoricVariableUpdate varUpdate1 = (HistoricVariableUpdate) details.get(2);
-    assertEquals("variable1", varUpdate1.getVariableName());
-    assertEquals("activiti rocks!", varUpdate1.getValue());
+    assertThat(varUpdate1.getVariableName()).isEqualTo("variable1");
+    assertThat(varUpdate1.getValue()).isEqualTo("activiti rocks!");
 
 
     // This variable should be of type LONG since this is defined in the process-definition
-    assertTrue(details.get(3) instanceof HistoricVariableUpdate);
+    assertThat(details.get(3)).isInstanceOf(HistoricVariableUpdate.class);
     HistoricVariableUpdate varUpdate2 = (HistoricVariableUpdate) details.get(3);
-    assertEquals("variable2", varUpdate2.getVariableName());
-    assertEquals(12345L, varUpdate2.getValue());
+    assertThat(varUpdate2.getVariableName()).isEqualTo("variable2");
+    assertThat(varUpdate2.getValue()).isEqualTo(12345L);
   }
 
   @Test
   public void testHistoricDetailQueryInvalidSorting() {
+    var historicDetailQuery = historyService.createHistoricDetailQuery();
     try {
-      historyService.createHistoricDetailQuery().asc().list();
-      fail();
+      historicDetailQuery.asc();
+      fail("");
     } catch (ProcessEngineException e) {
-
+      // expected
     }
 
     try {
-      historyService.createHistoricDetailQuery().desc().list();
-      fail();
+      historicDetailQuery.desc();
+      fail("");
     } catch (ProcessEngineException e) {
-
+      // expected
     }
 
+    HistoricDetailQuery queryOrderByProcessInstanceId = historicDetailQuery.orderByProcessInstanceId();
     try {
-      historyService.createHistoricDetailQuery().orderByProcessInstanceId().list();
-      fail();
+      queryOrderByProcessInstanceId.list();
+      fail("");
     } catch (ProcessEngineException e) {
-
+      // expected
     }
 
+    HistoricDetailQuery queryOrderByTime = historicDetailQuery.orderByTime();
     try {
-      historyService.createHistoricDetailQuery().orderByTime().list();
-      fail();
+      queryOrderByTime.list();
+      fail("");
     } catch (ProcessEngineException e) {
-
+      // expected
     }
 
+    HistoricDetailQuery queryOrderByVariableName = historicDetailQuery.orderByVariableName();
     try {
-      historyService.createHistoricDetailQuery().orderByVariableName().list();
-      fail();
+      queryOrderByVariableName.list();
+      fail("");
     } catch (ProcessEngineException e) {
-
+      // expected
     }
 
+    HistoricDetailQuery queryOrderByVariableRevision = historicDetailQuery.orderByVariableRevision();
     try {
-      historyService.createHistoricDetailQuery().orderByVariableRevision().list();
-      fail();
+      queryOrderByVariableRevision.list();
+      fail("");
     } catch (ProcessEngineException e) {
-
+      // expected
     }
 
+    HistoricDetailQuery queryByVariableType = historicDetailQuery.orderByVariableType();
     try {
-      historyService.createHistoricDetailQuery().orderByVariableType().list();
-      fail();
+      queryByVariableType.list();
+      fail("");
     } catch (ProcessEngineException e) {
-
+      // expected
     }
   }
 
@@ -792,7 +800,7 @@ public class FullHistoryTest {
 
     taskService.complete(taskId);
 
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().count());
+    assertThat(historyService.createHistoricTaskInstanceQuery().count()).isEqualTo(1);
 
     List<HistoricDetail> historicTaskVariableUpdates = historyService.createHistoricDetailQuery()
       .taskId(taskId)
@@ -800,7 +808,7 @@ public class FullHistoryTest {
       .orderByVariableName().asc()
       .list();
 
-    assertEquals(2, historicTaskVariableUpdates.size());
+    assertThat(historicTaskVariableUpdates).hasSize(2);
 
     historyService.deleteHistoricTaskInstance(taskId);
 
@@ -811,7 +819,7 @@ public class FullHistoryTest {
       .orderByVariableName().asc()
       .list();
 
-     assertEquals(0, historicTaskVariableUpdates.size());
+    assertThat(historicTaskVariableUpdates).isEmpty();
   }
 
   // ACT-592
@@ -820,7 +828,7 @@ public class FullHistoryTest {
   public void testSetVariableOnProcessInstanceWithTimer() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("timerVariablesProcess");
     runtimeService.setVariable(processInstance.getId(), "myVar", 123456L);
-    assertEquals(123456L, runtimeService.getVariable(processInstance.getId(), "myVar"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "myVar")).isEqualTo(123456L);
   }
 
   @Test
@@ -832,7 +840,7 @@ public class FullHistoryTest {
     vars.put("anotherProcessVar", new DummySerializable());
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("HistoricTaskInstanceTest", vars);
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
 
     // Set 2 task properties
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -842,21 +850,21 @@ public class FullHistoryTest {
     // Finish the task, this end the process-instance
     taskService.complete(task.getId());
 
-    assertEquals(1, historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstance.getId()).count());
-    assertEquals(3, historyService.createHistoricActivityInstanceQuery().processInstanceId(processInstance.getId()).count());
-    assertEquals(4, historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstance.getId()).count());
-    assertEquals(4, historyService.createHistoricDetailQuery().processInstanceId(processInstance.getId()).count());
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().processInstanceId(processInstance.getId()).count());
+    assertThat(historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstance.getId()).count()).isEqualTo(1);
+    assertThat(historyService.createHistoricActivityInstanceQuery().processInstanceId(processInstance.getId()).count()).isEqualTo(3);
+    assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstance.getId()).count()).isEqualTo(4);
+    assertThat(historyService.createHistoricDetailQuery().processInstanceId(processInstance.getId()).count()).isEqualTo(4);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processInstanceId(processInstance.getId()).count()).isEqualTo(1);
 
     // Delete the historic process-instance
     historyService.deleteHistoricProcessInstance(processInstance.getId());
 
     // Verify no traces are left in the history tables
-    assertEquals(0, historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstance.getId()).count());
-    assertEquals(0, historyService.createHistoricActivityInstanceQuery().processInstanceId(processInstance.getId()).count());
-    assertEquals(0, historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstance.getId()).count());
-    assertEquals(0, historyService.createHistoricDetailQuery().processInstanceId(processInstance.getId()).count());
-    assertEquals(0, historyService.createHistoricTaskInstanceQuery().processInstanceId(processInstance.getId()).count());
+    assertThat(historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstance.getId()).count()).isZero();
+    assertThat(historyService.createHistoricActivityInstanceQuery().processInstanceId(processInstance.getId()).count()).isZero();
+    assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(processInstance.getId()).count()).isZero();
+    assertThat(historyService.createHistoricDetailQuery().processInstanceId(processInstance.getId()).count()).isZero();
+    assertThat(historyService.createHistoricTaskInstanceQuery().processInstanceId(processInstance.getId()).count()).isZero();
 
     try {
       // Delete the historic process-instance, which is still running
@@ -872,11 +880,12 @@ public class FullHistoryTest {
   @Deployment
   public void testDeleteRunningHistoricProcessInstance() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("HistoricTaskInstanceTest");
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
+    var processInstanceId = processInstance.getId();
 
     try {
       // Delete the historic process-instance, which is still running
-      historyService.deleteHistoricProcessInstance(processInstance.getId());
+      historyService.deleteHistoricProcessInstance(processInstanceId);
       fail("Exception expected when deleting process-instance that is still running");
     } catch(ProcessEngineException ae) {
       // Expected exception
@@ -891,21 +900,21 @@ public class FullHistoryTest {
 
 
     engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(commandContext -> {
-      Map<String, Object> formProperties = new HashMap<String, Object>();
+      Map<String, Object> formProperties = new HashMap<>();
       formProperties.put("formProp1", "value1");
 
       ProcessInstance processInstance = new SubmitStartFormCmd(processDefinitionId, null, formProperties).execute(commandContext);
 
       // two historic details should be in cache: one form property and one variable update
-      commandContext.getHistoricDetailManager().deleteHistoricDetailsByProcessInstanceIds(Arrays.asList(processInstance.getId()));
+      commandContext.getHistoricDetailManager().deleteHistoricDetailsByProcessInstanceIds(List.of(processInstance.getId()));
       return null;
     });
 
     // the historic process instance should still be there
-    assertEquals(1, historyService.createHistoricProcessInstanceQuery().count());
+    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(1);
 
     // the historic details should be deleted
-    assertEquals(0, historyService.createHistoricDetailQuery().count());
+    assertThat(historyService.createHistoricDetailQuery().count()).isZero();
   }
 
   /**
@@ -913,12 +922,13 @@ public class FullHistoryTest {
    */
   @Test
   @Deployment
+  @SuppressWarnings("deprecation")
   public void testHistoricFormPropertiesOnReEnteringActivity() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("comeBack", Boolean.TRUE);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("HistoricFormPropertiesProcess", variables);
-    assertNotNull(processInstance);
+    assertThat(processInstance).isNotNull();
 
     // Submit form on task
     Map<String, String> data = new HashMap<>();
@@ -932,8 +942,9 @@ public class FullHistoryTest {
       .formProperties()
       .processInstanceId(processInstance.getId())
       .list();
-    assertNotNull(details);
-    assertEquals(1, details.size());
+    assertThat(details)
+            .isNotNull()
+            .hasSize(1);
 
     // Task should be active in the same activity as the previous one
     task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -943,8 +954,9 @@ public class FullHistoryTest {
       .formProperties()
       .processInstanceId(processInstance.getId())
       .list();
-    assertNotNull(details);
-    assertEquals(2, details.size());
+    assertThat(details)
+            .isNotNull()
+            .hasSize(2);
 
     // Should have 2 different historic activity instance ID's, with the same activityId
     Assert.assertNotSame(details.get(0).getActivityInstanceId(), details.get(1).getActivityInstanceId());
@@ -957,7 +969,7 @@ public class FullHistoryTest {
       .activityInstanceId(details.get(1).getActivityInstanceId())
       .singleResult();
 
-    assertEquals(historicActInst1.getActivityId(), historicActInst2.getActivityId());
+    assertThat(historicActInst2.getActivityId()).isEqualTo(historicActInst1.getActivityId());
   }
 
   @Test
@@ -980,16 +992,16 @@ public class FullHistoryTest {
     taskService.setVariablesLocal(task.getId(), variables);
 
     // Validate all variable-updates are present in DB
-    assertEquals(7, historyService.createHistoricDetailQuery().variableUpdates().taskId(task.getId()).count());
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().taskId(task.getId()).count()).isEqualTo(7);
 
     // Query Historic task instances based on variable
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("longVar", 12345L).count());
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("shortVar", (short) 123).count());
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("integerVar",1234).count());
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("stringVar","stringValue").count());
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("booleanVar", true).count());
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("dateVar", date).count());
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("nullVar", null).count());
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("longVar", 12345L).count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("shortVar", (short) 123).count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("integerVar", 1234).count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("stringVar", "stringValue").count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("booleanVar", true).count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("dateVar", date).count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("nullVar", null).count()).isEqualTo(1);
 
     // Update the variables
     variables.put("longVar", 67890L);
@@ -1006,24 +1018,24 @@ public class FullHistoryTest {
     taskService.setVariablesLocal(task.getId(), variables);
 
     // Validate all variable-updates are present in DB
-    assertEquals(14, historyService.createHistoricDetailQuery().variableUpdates().taskId(task.getId()).count());
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().taskId(task.getId()).count()).isEqualTo(14);
 
     // Previous values should NOT match
-    assertEquals(0, historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("longVar", 12345L).count());
-    assertEquals(0, historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("shortVar", (short) 123).count());
-    assertEquals(0, historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("integerVar",1234).count());
-    assertEquals(0, historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("stringVar","stringValue").count());
-    assertEquals(0, historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("booleanVar", true).count());
-    assertEquals(0, historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("dateVar", date).count());
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("longVar", 12345L).count()).isZero();
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("shortVar", (short) 123).count()).isZero();
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("integerVar", 1234).count()).isZero();
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("stringVar", "stringValue").count()).isZero();
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("booleanVar", true).count()).isZero();
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("dateVar", date).count()).isZero();
 
     // New values should match
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("longVar", 67890L).count());
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("shortVar", (short) 456).count());
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("integerVar",5678).count());
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("stringVar","updatedStringValue").count());
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("booleanVar", false).count());
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("dateVar", otherDate).count());
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("nullVar", null).count());
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("longVar", 67890L).count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("shortVar", (short) 456).count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("integerVar", 5678).count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("stringVar", "updatedStringValue").count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("booleanVar", false).count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("dateVar", otherDate).count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("nullVar", null).count()).isEqualTo(1);
   }
 
   @Test
@@ -1036,22 +1048,22 @@ public class FullHistoryTest {
     taskService.setVariableLocal(task.getId(), "var", 12345L);
 
     // Validate all variable-updates are present in DB
-    assertEquals(1, historyService.createHistoricDetailQuery().variableUpdates().taskId(task.getId()).count());
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().taskId(task.getId()).count()).isEqualTo(1);
 
     // Query Historic task instances based on variable
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("var", 12345L).count());
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("var", 12345L).count()).isEqualTo(1);
 
     // Update the variables to an int variable
     taskService.setVariableLocal(task.getId(), "var", 12345);
 
     // Validate all variable-updates are present in DB
-    assertEquals(2, historyService.createHistoricDetailQuery().variableUpdates().taskId(task.getId()).count());
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().taskId(task.getId()).count()).isEqualTo(2);
 
     // The previous long value should not match
-    assertEquals(0, historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("var", 12345L).count());
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("var", 12345L).count()).isZero();
 
     // The previous int value should not match
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("var", 12345).count());
+    assertThat(historyService.createHistoricTaskInstanceQuery().taskVariableValueEquals("var", 12345).count()).isEqualTo(1);
   }
 
   @Test
@@ -1066,8 +1078,8 @@ public class FullHistoryTest {
     runtimeService.setVariableLocal(task2Execution.getId(), "var", 12345);
 
     // then the task query should be able to filter by both variables and return both tasks
-    assertEquals(2, historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("var", 12345).count());
-    assertEquals(2, historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("var", 12345L).count());
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("var", 12345).count()).isEqualTo(2);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("var", 12345L).count()).isEqualTo(2);
   }
 
   @Test
@@ -1082,8 +1094,8 @@ public class FullHistoryTest {
     runtimeService.setVariableLocal(task2Execution.getId(), "var", 45678L);
 
     // then the task query should be able to filter by both variables and return both tasks
-    assertEquals(2, historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("var", 12345L).count());
-    assertEquals(2, historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("var", 45678L).count());
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("var", 12345L).count()).isEqualTo(2);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("var", 45678L).count()).isEqualTo(2);
   }
 
   @Test
@@ -1104,16 +1116,16 @@ public class FullHistoryTest {
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
 
     // Validate all variable-updates are present in DB
-    assertEquals(7, historyService.createHistoricDetailQuery().variableUpdates().processInstanceId(processInstance.getId()).count());
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().processInstanceId(processInstance.getId()).count()).isEqualTo(7);
 
     // Query Historic task instances based on process variable
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("longVar", 12345L).count());
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("shortVar", (short) 123).count());
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("integerVar",1234).count());
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("stringVar","stringValue").count());
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("booleanVar", true).count());
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("dateVar", date).count());
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("nullVar", null).count());
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("longVar", 12345L).count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("shortVar", (short) 123).count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("integerVar", 1234).count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("stringVar", "stringValue").count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("booleanVar", true).count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("dateVar", date).count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("nullVar", null).count()).isEqualTo(1);
 
     // Update the variables
     variables.put("longVar", 67890L);
@@ -1130,29 +1142,29 @@ public class FullHistoryTest {
     runtimeService.setVariables(processInstance.getId(), variables);
 
     // Validate all variable-updates are present in DB
-    assertEquals(14, historyService.createHistoricDetailQuery().variableUpdates().processInstanceId(processInstance.getId()).count());
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().processInstanceId(processInstance.getId()).count()).isEqualTo(14);
 
     // Previous values should NOT match
-    assertEquals(0, historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("longVar", 12345L).count());
-    assertEquals(0, historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("shortVar", (short) 123).count());
-    assertEquals(0, historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("integerVar",1234).count());
-    assertEquals(0, historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("stringVar","stringValue").count());
-    assertEquals(0, historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("booleanVar", true).count());
-    assertEquals(0, historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("dateVar", date).count());
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("longVar", 12345L).count()).isZero();
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("shortVar", (short) 123).count()).isZero();
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("integerVar", 1234).count()).isZero();
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("stringVar", "stringValue").count()).isZero();
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("booleanVar", true).count()).isZero();
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("dateVar", date).count()).isZero();
 
     // New values should match
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("longVar", 67890L).count());
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("shortVar", (short) 456).count());
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("integerVar",5678).count());
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("stringVar","updatedStringValue").count());
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("booleanVar", false).count());
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("dateVar", otherDate).count());
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("nullVar", null).count());
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("longVar", 67890L).count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("shortVar", (short) 456).count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("integerVar", 5678).count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("stringVar", "updatedStringValue").count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("booleanVar", false).count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("dateVar", otherDate).count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("nullVar", null).count()).isEqualTo(1);
 
     // Set a task-variables, shouldn't affect the process-variable matches
     taskService.setVariableLocal(task.getId(), "longVar", 9999L);
-    assertEquals(0, historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("longVar", 9999L).count());
-    assertEquals(1, historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("longVar", 67890L).count());
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("longVar", 9999L).count()).isZero();
+    assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueEquals("longVar", 67890L).count()).isEqualTo(1);
   }
 
   @Test
@@ -1172,7 +1184,7 @@ public class FullHistoryTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("HistoricProcessInstanceTest", variables);
 
     // Validate all variable-updates are present in DB
-    assertEquals(7, historyService.createHistoricDetailQuery().variableUpdates().processInstanceId(processInstance.getId()).count());
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().processInstanceId(processInstance.getId()).count()).isEqualTo(7);
 
   }
 
@@ -1196,16 +1208,16 @@ public class FullHistoryTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("HistoricProcessInstanceTest", variables);
 
     // Validate all variable-updates are present in DB
-    assertEquals(7, historyService.createHistoricDetailQuery().variableUpdates().processInstanceId(processInstance.getId()).count());
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().processInstanceId(processInstance.getId()).count()).isEqualTo(7);
 
     // Query Historic process instances based on process variable, shouldn't match
-    assertEquals(0, historyService.createHistoricProcessInstanceQuery().variableValueNotEquals("longVar", 12345L).count());
-    assertEquals(0, historyService.createHistoricProcessInstanceQuery().variableValueNotEquals("shortVar", (short) 123).count());
-    assertEquals(0, historyService.createHistoricProcessInstanceQuery().variableValueNotEquals("integerVar",1234).count());
-    assertEquals(0, historyService.createHistoricProcessInstanceQuery().variableValueNotEquals("stringVar","stringValue").count());
-    assertEquals(0, historyService.createHistoricProcessInstanceQuery().variableValueNotEquals("booleanVar", true).count());
-    assertEquals(0, historyService.createHistoricProcessInstanceQuery().variableValueNotEquals("dateVar", date).count());
-    assertEquals(0, historyService.createHistoricProcessInstanceQuery().variableValueNotEquals("nullVar", null).count());
+    assertThat(historyService.createHistoricProcessInstanceQuery().variableValueNotEquals("longVar", 12345L).count()).isZero();
+    assertThat(historyService.createHistoricProcessInstanceQuery().variableValueNotEquals("shortVar", (short) 123).count()).isZero();
+    assertThat(historyService.createHistoricProcessInstanceQuery().variableValueNotEquals("integerVar", 1234).count()).isZero();
+    assertThat(historyService.createHistoricProcessInstanceQuery().variableValueNotEquals("stringVar", "stringValue").count()).isZero();
+    assertThat(historyService.createHistoricProcessInstanceQuery().variableValueNotEquals("booleanVar", true).count()).isZero();
+    assertThat(historyService.createHistoricProcessInstanceQuery().variableValueNotEquals("dateVar", date).count()).isZero();
+    assertThat(historyService.createHistoricProcessInstanceQuery().variableValueNotEquals("nullVar", null).count()).isZero();
 
   }
 
@@ -1219,9 +1231,9 @@ public class FullHistoryTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("HistoricProcessInstanceTest", variables);
 
     // Validate all variable-updates are present in DB
-    assertEquals(1, historyService.createHistoricDetailQuery().variableUpdates().processInstanceId(processInstance.getId()).count());
+    assertThat(historyService.createHistoricDetailQuery().variableUpdates().processInstanceId(processInstance.getId()).count()).isEqualTo(1);
 
-    assertEquals(0, historyService.createHistoricProcessInstanceQuery().variableValueGreaterThan("longVar", 12345L).count());
+    assertThat(historyService.createHistoricProcessInstanceQuery().variableValueGreaterThan("longVar", 12345L).count()).isZero();
   }
 
   @Test
@@ -1245,7 +1257,7 @@ public class FullHistoryTest {
 
     // check history
     List<HistoricDetail> updates = historyService.createHistoricDetailQuery().variableUpdates().list();
-    assertEquals(2, updates.size());
+    assertThat(updates).hasSize(2);
 
     Map<String, HistoricVariableUpdate> updatesMap = new HashMap<>();
     HistoricVariableUpdate update = (HistoricVariableUpdate) updates.get(0);
@@ -1256,24 +1268,24 @@ public class FullHistoryTest {
     HistoricVariableUpdate update1 = updatesMap.get("1");
     HistoricVariableUpdate update2 = updatesMap.get("2");
 
-    assertNotNull(update1.getActivityInstanceId());
-    assertNotNull(update1.getExecutionId());
+    assertThat(update1.getActivityInstanceId()).isNotNull();
+    assertThat(update1.getExecutionId()).isNotNull();
     HistoricActivityInstance historicActivityInstance1 = historyService.createHistoricActivityInstanceQuery().activityInstanceId(update1.getActivityInstanceId()).singleResult();
-    assertEquals(historicActivityInstance1.getExecutionId(), update1.getExecutionId());
-    assertEquals("usertask1", historicActivityInstance1.getActivityId());
+    assertThat(update1.getExecutionId()).isEqualTo(historicActivityInstance1.getExecutionId());
+    assertThat(historicActivityInstance1.getActivityId()).isEqualTo("usertask1");
 
-    assertNotNull(update2.getActivityInstanceId());
+    assertThat(update2.getActivityInstanceId()).isNotNull();
     HistoricActivityInstance historicActivityInstance2 = historyService.createHistoricActivityInstanceQuery().activityInstanceId(update2.getActivityInstanceId()).singleResult();
-    assertEquals("usertask2", historicActivityInstance2.getActivityId());
+    assertThat(historicActivityInstance2.getActivityId()).isEqualTo("usertask2");
 
     /*
-     * This is OK! The variable is set on the root execution, on a execution never run through the activity, where the process instances
+     * This is OK! The variable is set on the root execution, on an execution never run through the activity, where the process instances
      * stands when calling the set Variable. But the ActivityId of this flow node is used. So the execution id's doesn't have to be equal.
      *
      * execution id: On which execution it was set
      * activity id: in which activity was the process instance when setting the variable
      */
-    assertFalse(historicActivityInstance2.getExecutionId().equals(update2.getExecutionId()));
+    assertThat(update2.getExecutionId()).isNotEqualTo(historicActivityInstance2.getExecutionId());
   }
 
   @Test
@@ -1291,8 +1303,8 @@ public class FullHistoryTest {
 
     query.variableInstanceId(testVariable.getId());
 
-    assertEquals(1, query.count());
-    assertEquals(1, query.list().size());
+    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
   }
 
   @Test
@@ -1300,17 +1312,21 @@ public class FullHistoryTest {
     HistoricDetailQuery query = historyService.createHistoricDetailQuery();
 
     query.variableInstanceId("invalid");
-    assertEquals(0, query.count());
+    assertThat(query.count()).isZero();
 
     try {
       query.variableInstanceId(null);
-      fail("A ProcessEngineExcpetion was expected.");
-    } catch (ProcessEngineException e) {}
+      fail("A ProcessEngineException was expected.");
+    } catch (ProcessEngineException e) {
+      // expected
+    }
 
     try {
       query.variableInstanceId((String)null);
-      fail("A ProcessEngineExcpetion was expected.");
-    } catch (ProcessEngineException e) {}
+      fail("A ProcessEngineException was expected.");
+    } catch (ProcessEngineException e) {
+      // expected
+    }
   }
 
   @Test
@@ -1322,8 +1338,8 @@ public class FullHistoryTest {
     runtimeService.setVariable(pi.getId(), "foo", "bar");
 
     HistoricDetail historicDetail = historyService.createHistoricDetailQuery().singleResult();
-    assertNotNull(historicDetail.getActivityInstanceId());
-    assertNotEquals(pi.getId(), historicDetail.getActivityInstanceId());
+    assertThat(historicDetail.getActivityInstanceId()).isNotNull();
+    assertThat(historicDetail.getActivityInstanceId()).isNotEqualTo(pi.getId());
   }
 
   @Test
@@ -1335,11 +1351,12 @@ public class FullHistoryTest {
     runtimeService.setVariable(pi.getId(), "foo", "bar");
 
     HistoricDetail historicDetail = historyService.createHistoricDetailQuery().singleResult();
-    assertNotNull(historicDetail.getActivityInstanceId());
-    assertNotEquals(pi.getId(), historicDetail.getActivityInstanceId());
+    assertThat(historicDetail.getActivityInstanceId()).isNotNull();
+    assertThat(historicDetail.getActivityInstanceId()).isNotEqualTo(pi.getId());
   }
 
   @Test
+  @SuppressWarnings("deprecation")
   public void testHistoricDetailQueryById() {
 
     Task newTask = taskService.newTask();
@@ -1353,12 +1370,12 @@ public class FullHistoryTest {
       .singleResult();
 
     HistoricDetail resultById = historyService.createHistoricDetailQuery().detailId(result.getId()).singleResult();
-    assertNotNull(resultById);
-    assertEquals(result.getId(), resultById.getId());
-    assertEquals(variableName, ((HistoricVariableUpdate)resultById).getVariableName());
-    assertEquals(variableValue, ((HistoricVariableUpdate)resultById).getValue());
-    assertEquals(ValueType.STRING.getName(), ((HistoricVariableUpdate)resultById).getVariableTypeName());
-    assertEquals(ValueType.STRING.getName(), ((HistoricVariableUpdate)resultById).getTypeName());
+    assertThat(resultById).isNotNull();
+    assertThat(resultById.getId()).isEqualTo(result.getId());
+    assertThat(((HistoricVariableUpdate) resultById).getVariableName()).isEqualTo(variableName);
+    assertThat(((HistoricVariableUpdate) resultById).getValue()).isEqualTo(variableValue);
+    assertThat(((HistoricVariableUpdate) resultById).getVariableTypeName()).isEqualTo(ValueType.STRING.getName());
+    assertThat(((HistoricVariableUpdate) resultById).getTypeName()).isEqualTo(ValueType.STRING.getName());
 
     taskService.deleteTask(newTask.getId(), true);
   }
@@ -1374,7 +1391,7 @@ public class FullHistoryTest {
     taskService.setVariable(newTask.getId(), variableName, variableValue);
 
     HistoricDetail result = historyService.createHistoricDetailQuery().detailId("non-existing").singleResult();
-    assertNull(result);
+    assertThat(result).isNull();
 
     taskService.deleteTask(newTask.getId(), true);
   }
@@ -1394,7 +1411,7 @@ public class FullHistoryTest {
       .variableUpdates()
       .singleResult();
 
-    assertNotNull(((HistoricVariableUpdate)result).getValue());
+    assertThat(((HistoricVariableUpdate) result).getValue()).isNotNull();
 
     taskService.deleteTask(newTask.getId(), true);
   }
@@ -1413,7 +1430,7 @@ public class FullHistoryTest {
       .variableUpdates()
       .singleResult();
 
-    assertNull(((HistoricVariableUpdate)result).getValue());
+    assertThat(((HistoricVariableUpdate) result).getValue()).isNull();
 
     taskService.deleteTask(newTask.getId(), true);
   }
@@ -1441,26 +1458,26 @@ public class FullHistoryTest {
         (HistoricVariableUpdate) historyService.createHistoricDetailQuery().singleResult();
 
     // then the binary value is accessible
-    assertNotNull(fileVariableInstance.getValue());
+    assertThat(fileVariableInstance.getValue()).isNotNull();
 
     // when disabling binary fetching
     fileVariableInstance =
         (HistoricVariableUpdate) historyService.createHistoricDetailQuery().disableBinaryFetching().singleResult();
 
     // then the byte value is not fetched
-    assertNotNull(fileVariableInstance);
-    assertEquals("fileVar", fileVariableInstance.getVariableName());
+    assertThat(fileVariableInstance).isNotNull();
+    assertThat(fileVariableInstance.getVariableName()).isEqualTo("fileVar");
 
-    assertNull(fileVariableInstance.getValue());
+    assertThat(fileVariableInstance.getValue()).isNull();
 
     FileValue typedValue = (FileValue) fileVariableInstance.getTypedValue();
-    assertNull(typedValue.getValue());
+    assertThat(typedValue.getValue()).isNull();
 
     // but typed value metadata is accessible
-    assertEquals(ValueType.FILE, typedValue.getType());
-    assertEquals(fileName, typedValue.getFilename());
-    assertEquals(encoding, typedValue.getEncoding());
-    assertEquals(mimeType, typedValue.getMimeType());
+    assertThat(typedValue.getType()).isEqualTo(ValueType.FILE);
+    assertThat(typedValue.getFilename()).isEqualTo(fileName);
+    assertThat(typedValue.getEncoding()).isEqualTo(encoding);
+    assertThat(typedValue.getMimeType()).isEqualTo(mimeType);
 
   }
 
@@ -1482,15 +1499,15 @@ public class FullHistoryTest {
         .list();
 
     // both variables are not deserialized, but their serialized values are available
-    assertEquals(2, results.size());
+    assertThat(results).hasSize(2);
 
     for (HistoricDetail update : results) {
       HistoricVariableUpdate variableUpdate = (HistoricVariableUpdate) update;
-      assertNull(variableUpdate.getErrorMessage());
+      assertThat(variableUpdate.getErrorMessage()).isNull();
 
       ObjectValue typedValue = (ObjectValue) variableUpdate.getTypedValue();
-      assertNotNull(typedValue);
-      assertFalse(typedValue.isDeserialized());
+      assertThat(typedValue).isNotNull();
+      assertThat(typedValue.isDeserialized()).isFalse();
       // cannot access the deserialized value
       try {
         typedValue.getValue();
@@ -1498,7 +1515,7 @@ public class FullHistoryTest {
       catch(IllegalStateException e) {
         assertThat(e.getMessage()).contains("Object is not deserialized");
       }
-      assertNotNull(typedValue.getValueSerialized());
+      assertThat(typedValue.getValueSerialized()).isNotNull();
     }
 
     taskService.deleteTask(newTask.getId(), true);
@@ -1518,8 +1535,8 @@ public class FullHistoryTest {
         .variableUpdates()
         .singleResult();
 
-    assertNull(((HistoricVariableUpdate)result).getValue());
-    assertNotNull(((HistoricVariableUpdate)result).getErrorMessage());
+    assertThat(((HistoricVariableUpdate) result).getValue()).isNull();
+    assertThat(((HistoricVariableUpdate) result).getErrorMessage()).isNotNull();
 
     taskService.deleteTask(newTask.getId(), true);
 
@@ -1538,15 +1555,15 @@ public class FullHistoryTest {
     VariableInstance variable = runtimeService
         .createVariableInstanceQuery()
         .singleResult();
-    assertNotNull(variable);
+    assertThat(variable).isNotNull();
 
     HistoricVariableUpdate result = (HistoricVariableUpdate) historyService
         .createHistoricDetailQuery()
         .variableUpdates()
         .singleResult();
-    assertNotNull(result);
+    assertThat(result).isNotNull();
 
-    assertEquals(variable.getId(), result.getVariableInstanceId());
+    assertThat(result.getVariableInstanceId()).isEqualTo(variable.getId());
 
     taskService.deleteTask(newTask.getId(), true);
   }
@@ -1584,14 +1601,14 @@ public class FullHistoryTest {
         .singleResult();
 
     // then (1)
-    assertNotNull(instance.getProcessDefinitionKey());
-    assertEquals(key, instance.getProcessDefinitionKey());
+    assertThat(instance.getProcessDefinitionKey()).isNotNull();
+    assertThat(instance.getProcessDefinitionKey()).isEqualTo(key);
 
-    assertNotNull(instance.getProcessDefinitionId());
-    assertEquals(processInstance.getProcessDefinitionId(), instance.getProcessDefinitionId());
+    assertThat(instance.getProcessDefinitionId()).isNotNull();
+    assertThat(instance.getProcessDefinitionId()).isEqualTo(processInstance.getProcessDefinitionId());
 
-    assertNull(instance.getCaseDefinitionKey());
-    assertNull(instance.getCaseDefinitionId());
+    assertThat(instance.getCaseDefinitionKey()).isNull();
+    assertThat(instance.getCaseDefinitionId()).isNull();
 
     // when (2)
     instance = (HistoricVariableUpdate) historyService
@@ -1601,14 +1618,14 @@ public class FullHistoryTest {
         .singleResult();
 
     // then (2)
-    assertNotNull(instance.getProcessDefinitionKey());
-    assertEquals(key, instance.getProcessDefinitionKey());
+    assertThat(instance.getProcessDefinitionKey()).isNotNull();
+    assertThat(instance.getProcessDefinitionKey()).isEqualTo(key);
 
-    assertNotNull(instance.getProcessDefinitionId());
-    assertEquals(processInstance.getProcessDefinitionId(), instance.getProcessDefinitionId());
+    assertThat(instance.getProcessDefinitionId()).isNotNull();
+    assertThat(instance.getProcessDefinitionId()).isEqualTo(processInstance.getProcessDefinitionId());
 
-    assertNull(instance.getCaseDefinitionKey());
-    assertNull(instance.getCaseDefinitionId());
+    assertThat(instance.getCaseDefinitionKey()).isNull();
+    assertThat(instance.getCaseDefinitionId()).isNull();
   }
 
   @Test
@@ -1651,14 +1668,14 @@ public class FullHistoryTest {
         .singleResult();
 
     // then (1)
-    assertNotNull(instance.getCaseDefinitionKey());
-    assertEquals(key, instance.getCaseDefinitionKey());
+    assertThat(instance.getCaseDefinitionKey()).isNotNull();
+    assertThat(instance.getCaseDefinitionKey()).isEqualTo(key);
 
-    assertNotNull(instance.getCaseDefinitionId());
-    assertEquals(caseInstance.getCaseDefinitionId(), instance.getCaseDefinitionId());
+    assertThat(instance.getCaseDefinitionId()).isNotNull();
+    assertThat(instance.getCaseDefinitionId()).isEqualTo(caseInstance.getCaseDefinitionId());
 
-    assertNull(instance.getProcessDefinitionKey());
-    assertNull(instance.getProcessDefinitionId());
+    assertThat(instance.getProcessDefinitionKey()).isNull();
+    assertThat(instance.getProcessDefinitionId()).isNull();
 
     // when (2)
     instance = (HistoricVariableUpdate) historyService
@@ -1668,14 +1685,14 @@ public class FullHistoryTest {
         .singleResult();
 
     // then (2)
-    assertNotNull(instance.getCaseDefinitionKey());
-    assertEquals(key, instance.getCaseDefinitionKey());
+    assertThat(instance.getCaseDefinitionKey()).isNotNull();
+    assertThat(instance.getCaseDefinitionKey()).isEqualTo(key);
 
-    assertNotNull(instance.getCaseDefinitionId());
-    assertEquals(caseInstance.getCaseDefinitionId(), instance.getCaseDefinitionId());
+    assertThat(instance.getCaseDefinitionId()).isNotNull();
+    assertThat(instance.getCaseDefinitionId()).isEqualTo(caseInstance.getCaseDefinitionId());
 
-    assertNull(instance.getProcessDefinitionKey());
-    assertNull(instance.getProcessDefinitionId());
+    assertThat(instance.getProcessDefinitionKey()).isNull();
+    assertThat(instance.getProcessDefinitionId()).isNull();
   }
 
   @Test
@@ -1701,10 +1718,10 @@ public class FullHistoryTest {
         .singleResult();
 
     // then
-    assertNull(instance.getProcessDefinitionKey());
-    assertNull(instance.getProcessDefinitionId());
-    assertNull(instance.getCaseDefinitionKey());
-    assertNull(instance.getCaseDefinitionId());
+    assertThat(instance.getProcessDefinitionKey()).isNull();
+    assertThat(instance.getProcessDefinitionId()).isNull();
+    assertThat(instance.getCaseDefinitionKey()).isNull();
+    assertThat(instance.getCaseDefinitionId()).isNull();
 
     taskService.deleteTask(taskId, true);
   }
@@ -1727,14 +1744,14 @@ public class FullHistoryTest {
         .singleResult();
 
     // then
-    assertNotNull(instance.getProcessDefinitionKey());
-    assertEquals(key, instance.getProcessDefinitionKey());
+    assertThat(instance.getProcessDefinitionKey()).isNotNull();
+    assertThat(instance.getProcessDefinitionKey()).isEqualTo(key);
 
-    assertNotNull(instance.getProcessDefinitionId());
-    assertEquals(processInstance.getProcessDefinitionId(), instance.getProcessDefinitionId());
+    assertThat(instance.getProcessDefinitionId()).isNotNull();
+    assertThat(instance.getProcessDefinitionId()).isEqualTo(processInstance.getProcessDefinitionId());
 
-    assertNull(instance.getCaseDefinitionKey());
-    assertNull(instance.getCaseDefinitionId());
+    assertThat(instance.getCaseDefinitionKey()).isNull();
+    assertThat(instance.getCaseDefinitionId()).isNull();
   }
 
   @Test
@@ -1751,10 +1768,10 @@ public class FullHistoryTest {
         .createHistoricProcessInstanceQuery()
         .processInstanceId(processInstanceId)
         .singleResult();
-    assertNotNull(instance);
+    assertThat(instance).isNotNull();
 
-    assertEquals(processInstanceId, instance.getId());
-    assertNotNull(instance.getEndTime());
+    assertThat(instance.getId()).isEqualTo(processInstanceId);
+    assertThat(instance.getEndTime()).isNotNull();
   }
 
 }

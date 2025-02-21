@@ -69,11 +69,9 @@ public class SentryHandler extends CmmnElementHandler<Sentry, CmmnSentryDeclarat
         boolean atLeastOneOnPartsValid = false;
 
         for (OnPart onPart : onParts) {
-          if (onPart instanceof PlanItemOnPart planItemOnPart) {
-            if (planItemOnPart.getSource() != null && planItemOnPart.getStandardEvent() != null) {
-              atLeastOneOnPartsValid = true;
-              break;
-            }
+          if (onPart instanceof PlanItemOnPart planItemOnPart && planItemOnPart.getSource() != null && planItemOnPart.getStandardEvent() != null) {
+            atLeastOneOnPartsValid = true;
+            break;
           }
         }
 
@@ -91,7 +89,7 @@ public class SentryHandler extends CmmnElementHandler<Sentry, CmmnSentryDeclarat
 
     // the variableOnParts will be initialized immediately as it does not have any dependency
     initializeVariableOnParts(element, sentryDeclaration, context, variableOnParts);
-    
+
     // ...whereas the onParts will be initialized later because the
     // the reference to the plan items (sourceRef) and the reference
     // to the sentry (sentryRef) cannot be set in this step. To set
@@ -183,7 +181,7 @@ public class SentryHandler extends CmmnElementHandler<Sentry, CmmnSentryDeclarat
     sentryDeclaration.setIfPart(ifPartDeclaration);
   }
 
-  protected void initializeVariableOnParts(CmmnElement element, CmmnSentryDeclaration sentryDeclaration, 
+  protected void initializeVariableOnParts(CmmnElement element, CmmnSentryDeclaration sentryDeclaration,
     CmmnHandlerContext context, List<OperatonVariableOnPart> variableOnParts) {
     for(OperatonVariableOnPart variableOnPart: variableOnParts) {
       initializeVariableOnPart(variableOnPart, sentryDeclaration, context);
@@ -208,7 +206,7 @@ public class SentryHandler extends CmmnElementHandler<Sentry, CmmnSentryDeclarat
         variableOnPartDeclaration.setVariableEvent(variableEventName);
         variableOnPartDeclaration.setVariableName(variableName);
         sentryDeclaration.addVariableOnParts(variableOnPartDeclaration);
-      } 
+      }
     } else {
       throw LOG.emptyVariableName(sentryDeclaration.getId());
     }

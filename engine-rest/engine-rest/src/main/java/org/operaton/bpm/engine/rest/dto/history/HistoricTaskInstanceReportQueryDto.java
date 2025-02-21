@@ -84,10 +84,8 @@ public class HistoricTaskInstanceReportQueryDto extends AbstractReportDto<Histor
       reportQuery.completedAfter(completedAfter);
     }
 
-    if(REPORT_TYPE_DURATION.equals(reportType)) {
-      if(periodUnit == null) {
-        throw new InvalidRequestException(Response.Status.BAD_REQUEST, "periodUnit is null");
-      }
+    if(REPORT_TYPE_DURATION.equals(reportType) && periodUnit == null) {
+      throw new InvalidRequestException(Response.Status.BAD_REQUEST, "periodUnit is null");
     }
 
   }

@@ -77,12 +77,9 @@ public class SetupResource {
       throw LOGGER.invalidRequestEngineNotFoundForName(processEngineName);
     }
 
-    SecurityActions.runWithoutAuthentication(new SecurityAction<Void>() {
-      @Override
-      public Void execute() {
-        createInitialUserInternal(processEngineName, user, processEngine);
-        return null;
-      }
+    SecurityActions.runWithoutAuthentication((SecurityAction<Void>) () -> {
+      createInitialUserInternal(processEngineName, user, processEngine);
+      return null;
     }, processEngine);
 
   }

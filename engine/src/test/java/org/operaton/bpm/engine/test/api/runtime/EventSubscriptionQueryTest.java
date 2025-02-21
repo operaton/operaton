@@ -16,11 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -36,7 +33,6 @@ import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -51,21 +47,23 @@ public class EventSubscriptionQueryTest extends PluggableProcessEngineTest {
     List<EventSubscription> list = runtimeService.createEventSubscriptionQuery()
         .eventName("messageName2")
         .list();
-    assertEquals(1, list.size());
+    assertThat(list).hasSize(1);
 
     EventSubscription eventSubscription = list.get(0);
 
     EventSubscriptionQuery query = runtimeService.createEventSubscriptionQuery()
         .eventSubscriptionId(eventSubscription.getId());
 
-    assertEquals(1, query.count());
-    assertEquals(1, query.list().size());
-    assertNotNull(query.singleResult());
+    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.list()).hasSize(1);
+    assertThat(query.singleResult()).isNotNull();
+    var eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery();
 
     try {
-      runtimeService.createEventSubscriptionQuery().eventSubscriptionId(null).list();
+      eventSubscriptionQuery.eventSubscriptionId(null);
       fail("Expected ProcessEngineException");
     } catch (ProcessEngineException e) {
+      assertThat(e.getMessage()).isEqualTo("event subscription id is null");
     }
 
     cleanDb();
@@ -79,17 +77,19 @@ public class EventSubscriptionQueryTest extends PluggableProcessEngineTest {
     List<EventSubscription> list = runtimeService.createEventSubscriptionQuery()
       .eventName("messageName")
       .list();
-    assertEquals(2, list.size());
+    assertThat(list).hasSize(2);
 
     list = runtimeService.createEventSubscriptionQuery()
       .eventName("messageName2")
       .list();
-    assertEquals(1, list.size());
+    assertThat(list).hasSize(1);
+    var eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery();
 
     try {
-      runtimeService.createEventSubscriptionQuery().eventName(null).list();
+      eventSubscriptionQuery.eventName(null);
       fail("Expected ProcessEngineException");
     } catch (ProcessEngineException e) {
+      assertThat(e.getMessage()).isEqualTo("event name is null");
     }
 
     cleanDb();
@@ -104,17 +104,19 @@ public class EventSubscriptionQueryTest extends PluggableProcessEngineTest {
     List<EventSubscription> list = runtimeService.createEventSubscriptionQuery()
       .eventType("signal")
       .list();
-    assertEquals(1, list.size());
+    assertThat(list).hasSize(1);
 
     list = runtimeService.createEventSubscriptionQuery()
       .eventType("message")
       .list();
-    assertEquals(2, list.size());
+    assertThat(list).hasSize(2);
+    var eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery();
 
     try {
-      runtimeService.createEventSubscriptionQuery().eventType(null).list();
+      eventSubscriptionQuery.eventType(null);
       fail("Expected ProcessEngineException");
     } catch (ProcessEngineException e) {
+      assertThat(e.getMessage()).isEqualTo("event type is null");
     }
 
     cleanDb();
@@ -129,18 +131,20 @@ public class EventSubscriptionQueryTest extends PluggableProcessEngineTest {
     List<EventSubscription> list = runtimeService.createEventSubscriptionQuery()
       .activityId("someOtherActivity")
       .list();
-    assertEquals(1, list.size());
+    assertThat(list).hasSize(1);
 
     list = runtimeService.createEventSubscriptionQuery()
       .activityId("someActivity")
       .eventType("message")
       .list();
-    assertEquals(2, list.size());
+    assertThat(list).hasSize(2);
+    var eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery();
 
     try {
-      runtimeService.createEventSubscriptionQuery().activityId(null).list();
+      eventSubscriptionQuery.activityId(null);
       fail("Expected ProcessEngineException");
     } catch (ProcessEngineException e) {
+      assertThat(e.getMessage()).isEqualTo("activity id is null");
     }
 
     cleanDb();
@@ -159,7 +163,7 @@ public class EventSubscriptionQueryTest extends PluggableProcessEngineTest {
     EventSubscription subscription = runtimeService.createEventSubscriptionQuery()
       .processInstanceId(processInstance.getId())
       .singleResult();
-    assertNotNull(subscription);
+    assertThat(subscription).isNotNull();
 
     Execution executionWaitingForSignal = runtimeService.createExecutionQuery()
       .activityId("signalEvent")
@@ -170,14 +174,16 @@ public class EventSubscriptionQueryTest extends PluggableProcessEngineTest {
     EventSubscription signalSubscription = runtimeService.createEventSubscriptionQuery()
       .executionId(executionWaitingForSignal.getId())
       .singleResult();
-    assertNotNull(signalSubscription);
+    assertThat(signalSubscription).isNotNull();
 
-    assertEquals(signalSubscription, subscription);
+    assertThat(subscription).isEqualTo(signalSubscription);
+    var eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery();
 
     try {
-      runtimeService.createEventSubscriptionQuery().executionId(null).list();
+      eventSubscriptionQuery.executionId(null);
       fail("Expected ProcessEngineException");
     } catch (ProcessEngineException e) {
+      assertThat(e.getMessage()).isEqualTo("execution id is null");
     }
 
     cleanDb();
@@ -188,10 +194,10 @@ public class EventSubscriptionQueryTest extends PluggableProcessEngineTest {
   public void testQuerySorting() {
     createExampleEventSubscriptions();
     List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().orderByCreated().asc().list();
-    Assert.assertEquals(3, eventSubscriptions.size());
+    assertThat(eventSubscriptions).hasSize(3);
 
-    Assert.assertTrue(eventSubscriptions.get(0).getCreated().compareTo(eventSubscriptions.get(1).getCreated()) < 0);
-    Assert.assertTrue(eventSubscriptions.get(1).getCreated().compareTo(eventSubscriptions.get(2).getCreated()) < 0);
+    assertThat(eventSubscriptions.get(0).getCreated()).isBefore(eventSubscriptions.get(1).getCreated());
+    assertThat(eventSubscriptions.get(1).getCreated()).isBefore(eventSubscriptions.get(2).getCreated());
 
     cleanDb();
   }
@@ -203,16 +209,16 @@ public class EventSubscriptionQueryTest extends PluggableProcessEngineTest {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
 
-    assertTrue(areJobsAvailable());
+    assertThat(areJobsAvailable()).isTrue();
 
     long eventSubscriptionCount = runtimeService.createEventSubscriptionQuery().count();
-    assertEquals(2, eventSubscriptionCount);
+    assertThat(eventSubscriptionCount).isEqualTo(2);
 
     EventSubscription messageEvent = runtimeService.createEventSubscriptionQuery().eventType("message").singleResult();
-    assertEquals(message, messageEvent.getEventName());
+    assertThat(messageEvent.getEventName()).isEqualTo(message);
 
     EventSubscription compensationEvent = runtimeService.createEventSubscriptionQuery().eventType("compensate").singleResult();
-    assertNull(compensationEvent.getEventName());
+    assertThat(compensationEvent.getEventName()).isNull();
 
     runtimeService.createMessageCorrelation(message).processInstanceId(processInstance.getId()).correlate();
 

@@ -23,7 +23,6 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtim
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.assertions.helpers.Failure;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -62,12 +61,7 @@ public class JobAssertHasActivityIdTest extends ProcessAssertTestCase {
     // Then
     assertThat(job()).isNotNull();
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(job()).hasActivityId("otherDeploymentId");
-      }
-    });
+    expect(() -> assertThat(job()).hasActivityId("otherDeploymentId"));
   }
 
   @Test
@@ -83,12 +77,7 @@ public class JobAssertHasActivityIdTest extends ProcessAssertTestCase {
     // Then
     assertThat(job()).isNotNull();
     // And
-    expect(new Failure() {
-      @Override
-      public void when() {
-        BpmnAwareTests.assertThat(job()).hasActivityId(null);
-      }
-    });
+    expect(() -> BpmnAwareTests.assertThat(job()).hasActivityId(null));
   }
 
 }

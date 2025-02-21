@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.Calendar;
 import java.util.List;
@@ -93,7 +91,7 @@ public class HistoricTaskDurationReportTest {
     List<DurationReportResult> taskReportResults = historyService.createHistoricTaskInstanceReport().duration(PeriodUnit.MONTH);
 
     // then
-    assertEquals(3, taskReportResults.size());
+    assertThat(taskReportResults).hasSize(3);
   }
 
   @Test
@@ -113,7 +111,7 @@ public class HistoricTaskDurationReportTest {
       .duration(PeriodUnit.MONTH);
 
     // then
-    assertEquals(1, taskReportResults.size());
+    assertThat(taskReportResults).hasSize(1);
   }
 
   @Test
@@ -133,7 +131,7 @@ public class HistoricTaskDurationReportTest {
       .duration(PeriodUnit.MONTH);
 
     // then
-    assertEquals(2, taskReportResults.size());
+    assertThat(taskReportResults).hasSize(2);
   }
 
   @Test
@@ -164,37 +162,33 @@ public class HistoricTaskDurationReportTest {
 
     long avg = sum / historicTaskInstances.size();
 
-    assertEquals("maximum", max, taskReportResult.getMaximum());
-    assertEquals("minimum", min, taskReportResult.getMinimum());
-    assertEquals("average", avg, taskReportResult.getAverage(), 0);
+    assertThat(taskReportResult.getMaximum()).as("maximum").isEqualTo(max);
+    assertThat(taskReportResult.getMinimum()).as("minimum").isEqualTo(min);
+    assertThat(taskReportResult.getAverage()).as("average").isCloseTo(avg, within(0L));
 
   }
 
   @Test
   public void testCompletedAfterWithNullValue() {
+    var historicTaskInstanceReport = historyService.createHistoricTaskInstanceReport();
     try {
-      historyService
-        .createHistoricTaskInstanceReport()
-        .completedAfter(null)
-        .duration(PeriodUnit.MONTH);
+      historicTaskInstanceReport.completedAfter(null);
 
       fail("Expected NotValidException");
     } catch( NotValidException nve) {
-      assertTrue(nve.getMessage().contains("completedAfter"));
+      assertThat(nve.getMessage()).contains("completedAfter");
     }
   }
 
   @Test
   public void testCompletedBeforeWithNullValue() {
+    var historicTaskInstanceReport = historyService.createHistoricTaskInstanceReport();
     try {
-      historyService
-        .createHistoricTaskInstanceReport()
-        .completedBefore(null)
-        .duration(PeriodUnit.MONTH);
+      historicTaskInstanceReport.completedBefore(null);
 
       fail("Expected NotValidException");
     } catch( NotValidException nve) {
-      assertTrue(nve.getMessage().contains("completedBefore"));
+      assertThat(nve.getMessage()).contains("completedBefore");
     }
   }
 

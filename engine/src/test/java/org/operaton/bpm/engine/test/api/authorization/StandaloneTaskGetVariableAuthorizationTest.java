@@ -20,9 +20,7 @@ import static org.operaton.bpm.engine.authorization.Resources.TASK;
 import static org.operaton.bpm.engine.authorization.TaskPermissions.READ_VARIABLE;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -71,7 +69,7 @@ public class StandaloneTaskGetVariableAuthorizationTest {
   protected TaskService taskService;
   protected RuntimeService runtimeService;
 
-  protected static final String userId = "userId";
+  protected static final String USER_ID = "userId";
   protected String taskId = "myTask";
   protected static final String VARIABLE_NAME = "aVariableName";
   protected static final String VARIABLE_VALUE = "aVariableValue";
@@ -84,13 +82,13 @@ public class StandaloneTaskGetVariableAuthorizationTest {
       scenario()
         .withoutAuthorizations()
         .failsDueToRequired(
-          grant(TASK, "taskId", userId, READ_VARIABLE)),
+          grant(TASK, "taskId", USER_ID, READ_VARIABLE)),
       scenario()
         .withAuthorizations(
-          grant(TASK, "taskId", userId, READ_VARIABLE)),
+          grant(TASK, "taskId", USER_ID, READ_VARIABLE)),
       scenario()
         .withAuthorizations(
-          grant(TASK, "*", userId, READ_VARIABLE))
+          grant(TASK, "*", USER_ID, READ_VARIABLE))
         .succeeds()
       );
   }
@@ -132,7 +130,7 @@ public class StandaloneTaskGetVariableAuthorizationTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      assertEquals(VARIABLE_VALUE, variable);
+      assertThat(variable).isEqualTo(VARIABLE_VALUE);
       deleteAuthorizations();
     }
   }
@@ -155,7 +153,7 @@ public class StandaloneTaskGetVariableAuthorizationTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      assertEquals(VARIABLE_VALUE, variable);
+      assertThat(variable).isEqualTo(VARIABLE_VALUE);
       deleteAuthorizations();
     }
   }
@@ -178,8 +176,8 @@ public class StandaloneTaskGetVariableAuthorizationTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      assertNotNull(typedValue);
-      assertEquals(VARIABLE_VALUE, typedValue.getValue());
+      assertThat(typedValue).isNotNull();
+      assertThat(typedValue.getValue()).isEqualTo(VARIABLE_VALUE);
       deleteAuthorizations();
     }
   }
@@ -202,8 +200,8 @@ public class StandaloneTaskGetVariableAuthorizationTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      assertNotNull(typedValue);
-      assertEquals(VARIABLE_VALUE, typedValue.getValue());
+      assertThat(typedValue).isNotNull();
+      assertThat(typedValue.getValue()).isEqualTo(VARIABLE_VALUE);
       deleteAuthorizations();
     }
   }
@@ -413,10 +411,12 @@ public class StandaloneTaskGetVariableAuthorizationTest {
   }
 
   protected void verifyGetVariables(Map<String, Object> variables) {
-    assertNotNull(variables);
-    assertFalse(variables.isEmpty());
-    assertEquals(1, variables.size());
-    assertEquals(VARIABLE_VALUE, variables.get(VARIABLE_NAME));
+    assertThat(variables)
+            .isNotNull()
+            .isNotEmpty();
+    assertThat(variables)
+            .hasSize(1)
+            .containsEntry(VARIABLE_NAME, VARIABLE_VALUE);
   }
 
 }

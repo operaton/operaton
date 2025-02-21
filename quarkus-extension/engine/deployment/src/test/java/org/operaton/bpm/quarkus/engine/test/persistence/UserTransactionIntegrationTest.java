@@ -34,10 +34,7 @@ import jakarta.inject.Named;
 import jakarta.transaction.Status;
 import jakarta.transaction.UserTransaction;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 class UserTransactionIntegrationTest {
 
@@ -68,7 +65,7 @@ class UserTransactionIntegrationTest {
           .processInstanceId(id)
           .singleResult();
 
-      assertNotNull(processInstance);
+      assertThat(processInstance).isNotNull();
 
       userTransactionManager.commit();
 
@@ -77,7 +74,7 @@ class UserTransactionIntegrationTest {
       // the process instance is visible in a new tx:
       processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(id).singleResult();
 
-      assertNotNull(processInstance);
+      assertThat(processInstance).isNotNull();
 
       userTransactionManager.commit();
     } catch (Exception e) {
@@ -146,7 +143,7 @@ class UserTransactionIntegrationTest {
           .processInstanceId(id)
           .singleResult();
 
-      assertNull(processInstance);
+      assertThat(processInstance).isNull();
 
       userTransactionManager.commit();
     } catch (Exception e) {

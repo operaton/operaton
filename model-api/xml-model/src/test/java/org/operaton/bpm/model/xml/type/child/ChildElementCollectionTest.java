@@ -33,7 +33,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.model.xml.test.assertions.ModelAssertions.assertThat;
 
 /**

@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.integrationtest.deployment.war;
 
+import static org.assertj.core.api.Assertions.fail;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.fail;
 
 import java.util.List;
 import java.util.Set;

@@ -22,7 +22,10 @@ import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
 import org.operaton.bpm.integrationtest.deployment.ear.beans.NamedCdiBean;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
+
 import org.jboss.arquillian.container.test.api.Deployment;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
@@ -75,7 +78,7 @@ public class TestPaAsEjbJar extends AbstractFoxPlatformIntegrationTest {
   @Test
   public void testPaAsEjbModule() {
     ProcessEngine processEngine = ProgrammaticBeanLookup.lookup(ProcessEngine.class);
-    Assert.assertNotNull(processEngine);
+    assertThat(processEngine).isNotNull();
 
     runtimeService.startProcessInstanceByKey("paAsEjbJar-process");
     Assert.assertEquals(1, runtimeService.createProcessInstanceQuery().count());

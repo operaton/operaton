@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.rest.history;
 import static io.restassured.RestAssured.expect;
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Mockito.anyString;
@@ -145,7 +146,7 @@ public class CleanableHistoricProcessInstanceReportServiceTest extends AbstractR
     String content = response.asString();
     List<String> reportResults = from(content).getList("");
     Assert.assertEquals("There should be two report results returned.", 2, reportResults.size());
-    Assert.assertNotNull(reportResults.get(0));
+    assertThat(reportResults.get(0)).isNotNull();
 
     String returnedDefinitionId = from(content).getString("[0].processDefinitionId");
     String returnedDefinitionKey = from(content).getString("[0].processDefinitionKey");

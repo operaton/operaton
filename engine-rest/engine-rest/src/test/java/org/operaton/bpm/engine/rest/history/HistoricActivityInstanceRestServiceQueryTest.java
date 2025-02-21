@@ -392,7 +392,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
     String content = response.asString();
     List<String> instances = from(content).getList("");
     Assert.assertEquals("There should be one activity instance returned.", 1, instances.size());
-    Assert.assertNotNull("The returned activity instance should not be null.", instances.get(0));
+    assertThat(instances.get(0)).as("The returned activity instance should not be null.").isNotNull();
 
     String returnedId = from(content).getString("[0].id");
     String returnedParentActivityInstanceId = from(content).getString("[0].parentActivityInstanceId");
@@ -570,7 +570,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
     String content = response.asString();
     List<String> instances = from(content).getList("");
     Assert.assertEquals("There should be one activity instance returned.", 1, instances.size());
-    Assert.assertNotNull("The returned activity instance should not be null.", instances.get(0));
+    assertThat(instances.get(0)).as("The returned activity instance should not be null.").isNotNull();
 
     String returnedProcessInstanceId = from(content).getString("[0].processInstanceId");
     String returnedProcessDefinitionId = from(content).getString("[0].processDefinitionId");
@@ -602,7 +602,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
     String content = response.asString();
     List<String> instances = from(content).getList("");
     Assert.assertEquals("There should be one activity instance returned.", 1, instances.size());
-    Assert.assertNotNull("The returned activity instance should not be null.", instances.get(0));
+    assertThat(instances.get(0)).as("The returned activity instance should not be null.").isNotNull();
 
     String returnedProcessInstanceId = from(content).getString("[0].processInstanceId");
     String returnedProcessDefinitionId = from(content).getString("[0].processDefinitionId");
@@ -635,13 +635,13 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
     String content = response.asString();
     List<String> instances = from(content).getList("");
     Assert.assertEquals("There should be one activity instance returned.", 1, instances.size());
-    Assert.assertNotNull("The returned activity instance should not be null.", instances.get(0));
+    assertThat(instances.get(0)).as("The returned activity instance should not be null.").isNotNull();
 
     String returnedProcessDefinitionId = from(content).getString("[0].processDefinitionId");
     String returnedActivityEndTime = from(content).getString("[0].endTime");
 
     Assert.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, returnedProcessDefinitionId);
-    Assert.assertNull(returnedActivityEndTime);
+    assertThat(returnedActivityEndTime).isNull();
   }
 
   @Test
@@ -670,13 +670,13 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
     String content = response.asString();
     List<String> instances = from(content).getList("");
     Assert.assertEquals("There should be one activity instance returned.", 1, instances.size());
-    Assert.assertNotNull("The returned activity instance should not be null.", instances.get(0));
+    assertThat(instances.get(0)).as("The returned activity instance should not be null.").isNotNull();
 
     String returnedProcessDefinitionId = from(content).getString("[0].processDefinitionId");
     String returnedActivityEndTime = from(content).getString("[0].endTime");
 
     Assert.assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, returnedProcessDefinitionId);
-    Assert.assertNull(returnedActivityEndTime);
+    assertThat(returnedActivityEndTime).isNull();
   }
 
   @Test

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.integrationtest.service;
 
+import static org.assertj.core.api.Assertions.fail;
+
 import javax.naming.InitialContext;
 
 import org.operaton.bpm.engine.ProcessEngine;
@@ -46,10 +48,10 @@ public class TestProcessEngineJndiBinding_JBOSS extends AbstractFoxPlatformInteg
     
     try {
       ProcessEngine processEngine = InitialContext.doLookup("java:global/operaton-bpm-platform/process-engine/default");
-      Assert.assertNotNull("Process engine must not be null", processEngine);
+      assertThat(processEngine).as("Process engine must not be null").isNotNull();
       
     } catch(Exception e) {
-      Assert.fail("Process Engine not bound in JNDI.");
+      fail("Process Engine not bound in JNDI.");
       
     }
         

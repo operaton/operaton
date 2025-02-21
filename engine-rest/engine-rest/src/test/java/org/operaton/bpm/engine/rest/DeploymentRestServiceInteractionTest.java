@@ -38,18 +38,17 @@ import java.util.*;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTest {
@@ -115,7 +114,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   private InputStream createMockDeploymentResourceBpmnData() {
     // do not close the input stream, will be done in implementation
     InputStream bpmn20XmlIn = ReflectUtil.getResourceAsStream("processes/fox-invoice_en_long_id.bpmn");
-    assertNotNull(bpmn20XmlIn);
+    assertThat(bpmn20XmlIn).isNotNull();
     return bpmn20XmlIn;
   }
 
@@ -128,7 +127,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   private InputStream createMockDeploymentResourceSvgData() {
     // do not close the input stream, will be done in implementation
     InputStream image = ReflectUtil.getResourceAsStream("processes/diagram.svg");
-    assertNotNull(image);
+    assertThat(image).isNotNull();
     return image;
   }
 
@@ -273,7 +272,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
       .when().get(SINGLE_RESOURCE_DATA_URL);
 
     String responseContent = response.asString();
-    assertTrue(responseContent.contains("<?xml"));
+    assertThat(responseContent).contains("<?xml");
 
   }
 
@@ -300,7 +299,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
       .when().get(SINGLE_RESOURCE_DATA_URL);
 
     String responseContent = response.asString();
-    assertTrue(responseContent.contains("<?xml"));
+    assertThat(responseContent).contains("<?xml");
   }
 
   @Test
@@ -328,7 +327,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
       .when().get(SINGLE_RESOURCE_DATA_URL);
 
     String responseContent = response.asString();
-    assertNotNull(responseContent);
+    assertThat(responseContent).isNotNull();
   }
 
   @Test
@@ -356,7 +355,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
       .when().get(SINGLE_RESOURCE_DATA_URL);
 
     String responseContent = response.asString();
-    assertNotNull(responseContent);
+    assertThat(responseContent).isNotNull();
   }
 
   @Test
@@ -384,7 +383,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
       .when().get(SINGLE_RESOURCE_DATA_URL);
 
     String responseContent = response.asString();
-    assertNotNull(responseContent);
+    assertThat(responseContent).isNotNull();
   }
 
   @Test
@@ -412,7 +411,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
       .when().get(SINGLE_RESOURCE_DATA_URL);
 
     String responseContent = response.asString();
-    assertNotNull(responseContent);
+    assertThat(responseContent).isNotNull();
   }
 
   @Test
@@ -440,7 +439,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
       .when().get(SINGLE_RESOURCE_DATA_URL);
 
     String responseContent = response.asString();
-    assertNotNull(responseContent);
+    assertThat(responseContent).isNotNull();
   }
 
   @Test
@@ -468,7 +467,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
       .when().get(SINGLE_RESOURCE_DATA_URL);
 
     String responseContent = response.asString();
-    assertNotNull(responseContent);
+    assertThat(responseContent).isNotNull();
   }
 
   @Test
@@ -496,7 +495,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
       .when().get(SINGLE_RESOURCE_DATA_URL);
 
     String responseContent = response.asString();
-    assertNotNull(responseContent);
+    assertThat(responseContent).isNotNull();
   }
 
   @Test
@@ -522,7 +521,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
       .when().get(SINGLE_RESOURCE_DATA_URL);
 
     String responseContent = response.asString();
-    assertNotNull(responseContent);
+    assertThat(responseContent).isNotNull();
   }
 
   @Test
@@ -548,7 +547,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
       .when().get(SINGLE_RESOURCE_DATA_URL);
 
     String responseContent = response.asString();
-    assertNotNull(responseContent);
+    assertThat(responseContent).isNotNull();
   }
 
   @Test
@@ -576,7 +575,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
       .when().get(SINGLE_RESOURCE_DATA_URL);
 
     String responseContent = response.asString();
-    assertNotNull(responseContent);
+    assertThat(responseContent).isNotNull();
   }
 
   @Test
@@ -604,7 +603,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
       .when().get(SINGLE_RESOURCE_DATA_URL);
 
     String responseContent = response.asString();
-    assertNotNull(responseContent);
+    assertThat(responseContent).isNotNull();
   }
 
   @Test
@@ -632,7 +631,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
       .when().get(SINGLE_RESOURCE_DATA_URL);
 
     String responseContent = response.asString();
-    assertNotNull(responseContent);
+    assertThat(responseContent).isNotNull();
   }
 
   @Test
@@ -660,7 +659,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
       .when().get(SINGLE_RESOURCE_DATA_URL);
 
     String responseContent = response.asString();
-    assertNotNull(responseContent);
+    assertThat(responseContent).isNotNull();
   }
 
   @Test
@@ -688,7 +687,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
       .when().get(SINGLE_RESOURCE_DATA_URL);
 
     String responseContent = response.asString();
-    assertNotNull(responseContent);
+    assertThat(responseContent).isNotNull();
   }
 
   @Test
@@ -716,7 +715,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
       .when().get(SINGLE_RESOURCE_DATA_URL);
 
     String responseContent = response.asString();
-    assertNotNull(responseContent);
+    assertThat(responseContent).isNotNull();
   }
 
   @Test
@@ -744,7 +743,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
       .when().get(SINGLE_RESOURCE_DATA_URL);
 
     String responseContent = response.asString();
-    assertNotNull(responseContent);
+    assertThat(responseContent).isNotNull();
   }
 
   @Test
@@ -772,7 +771,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
       .when().get(SINGLE_RESOURCE_DATA_URL);
 
     String responseContent = response.asString();
-    assertNotNull(responseContent);
+    assertThat(responseContent).isNotNull();
   }
 
   @Test
@@ -800,7 +799,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
       .when().get(SINGLE_RESOURCE_DATA_URL);
 
     String responseContent = response.asString();
-    assertNotNull(responseContent);
+    assertThat(responseContent).isNotNull();
   }
 
   @Test
@@ -828,7 +827,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
       .when().get(SINGLE_RESOURCE_DATA_URL);
 
     String responseContent = response.asString();
-    assertNotNull(responseContent);
+    assertThat(responseContent).isNotNull();
   }
 
   @Test
@@ -856,7 +855,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
       .when().get(SINGLE_RESOURCE_DATA_URL);
 
     String responseContent = response.asString();
-    assertNotNull(responseContent);
+    assertThat(responseContent).isNotNull();
   }
 
   @Test
@@ -884,7 +883,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
       .when().get(SINGLE_RESOURCE_DATA_URL);
 
     String responseContent = response.asString();
-    assertNotNull(responseContent);
+    assertThat(responseContent).isNotNull();
   }
 
   @Test
@@ -912,7 +911,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
       .when().get(SINGLE_RESOURCE_DATA_URL);
 
     String responseContent = response.asString();
-    assertNotNull(responseContent);
+    assertThat(responseContent).isNotNull();
   }
 
   @Test
@@ -940,7 +939,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
       .when().get(SINGLE_RESOURCE_DATA_URL);
 
     String responseContent = response.asString();
-    assertNotNull(responseContent);
+    assertThat(responseContent).isNotNull();
   }
 
   @Test
@@ -968,7 +967,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
         .when().get(SINGLE_RESOURCE_DATA_URL);
 
     String responseContent = response.asString();
-    assertNotNull(responseContent);
+    assertThat(responseContent).isNotNull();
   }
 
   @Test
@@ -996,7 +995,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
       .when().get(SINGLE_RESOURCE_DATA_URL);
 
     String responseContent = response.asString();
-    assertNotNull(responseContent);
+    assertThat(responseContent).isNotNull();
   }
 
   @Test
@@ -1024,7 +1023,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
       .when().get(SINGLE_RESOURCE_DATA_URL);
 
     String responseContent = response.asString();
-    assertNotNull(responseContent);
+    assertThat(responseContent).isNotNull();
   }
 
   @Test
@@ -1953,13 +1952,13 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
     Map<String, HashMap<String, Object>>  deployedDecisionRequirementsDefinitions = path.getMap(PROPERTY_DEPLOYED_DECISION_REQUIREMENTS_DEFINITIONS);
 
     assertEquals(1, deployedProcessDefinitions.size());
-    assertNotNull(deployedProcessDefinitions.get(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID));
+    assertThat(deployedProcessDefinitions.get(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)).isNotNull();
     assertEquals(1, deployedCaseDefinitions.size());
-    assertNotNull(deployedCaseDefinitions.get(EXAMPLE_CASE_DEFINITION_ID));
+    assertThat(deployedCaseDefinitions.get(EXAMPLE_CASE_DEFINITION_ID)).isNotNull();
     assertEquals(1, deployedDecisionDefinitions.size());
-    assertNotNull(deployedDecisionDefinitions.get(EXAMPLE_DECISION_DEFINITION_ID));
+    assertThat(deployedDecisionDefinitions.get(EXAMPLE_DECISION_DEFINITION_ID)).isNotNull();
     assertEquals(1, deployedDecisionRequirementsDefinitions.size());
-    assertNotNull(deployedDecisionRequirementsDefinitions.get(EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_ID));
+    assertThat(deployedDecisionRequirementsDefinitions.get(EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_ID)).isNotNull();
   }
 
   private void verifyBpmnDeploymentValues(Deployment mockDeployment, String responseContent) {
@@ -1970,12 +1969,12 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     assertEquals(1, deployedProcessDefinitionDtos.size());
     HashMap processDefinitionDto = deployedProcessDefinitionDtos.get(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
-    assertNotNull(processDefinitionDto);
+    assertThat(processDefinitionDto).isNotNull();
     verifyBpmnDeployment(processDefinitionDto);
 
-    assertNull(path.get(PROPERTY_DEPLOYED_CASE_DEFINITIONS));
-    assertNull(path.get(PROPERTY_DEPLOYED_DECISION_DEFINITIONS));
-    assertNull(path.get(PROPERTY_DEPLOYED_DECISION_REQUIREMENTS_DEFINITIONS));
+    assertThat(path.get(PROPERTY_DEPLOYED_CASE_DEFINITIONS)).isNull();
+    assertThat(path.get(PROPERTY_DEPLOYED_DECISION_DEFINITIONS)).isNull();
+    assertThat(path.get(PROPERTY_DEPLOYED_DECISION_REQUIREMENTS_DEFINITIONS)).isNull();
   }
 
   private void verifyCmmnDeploymentValues(Deployment mockDeployment, String responseContent) {
@@ -1986,12 +1985,12 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     assertEquals(1, deployedCaseDefinitions.size());
     HashMap caseDefinitionDto = deployedCaseDefinitions.get(EXAMPLE_CASE_DEFINITION_ID);
-    assertNotNull(caseDefinitionDto);
+    assertThat(caseDefinitionDto).isNotNull();
     verifyCmnDeployment(caseDefinitionDto);
 
-    assertNull(path.get(PROPERTY_DEPLOYED_PROCESS_DEFINITIONS));
-    assertNull(path.get(PROPERTY_DEPLOYED_DECISION_DEFINITIONS));
-    assertNull(path.get(PROPERTY_DEPLOYED_DECISION_REQUIREMENTS_DEFINITIONS));
+    assertThat(path.get(PROPERTY_DEPLOYED_PROCESS_DEFINITIONS)).isNull();
+    assertThat(path.get(PROPERTY_DEPLOYED_DECISION_DEFINITIONS)).isNull();
+    assertThat(path.get(PROPERTY_DEPLOYED_DECISION_REQUIREMENTS_DEFINITIONS)).isNull();
   }
 
   private void verifyDmnDeploymentValues(Deployment mockDeployment, String responseContent) {
@@ -2002,12 +2001,12 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     assertEquals(1, deployedDecisionDefinitions.size());
     HashMap decisionDefinitionDto = deployedDecisionDefinitions.get(EXAMPLE_DECISION_DEFINITION_ID);
-    assertNotNull(decisionDefinitionDto);
+    assertThat(decisionDefinitionDto).isNotNull();
     verifyDmnDeployment(decisionDefinitionDto);
 
-    assertNull(path.get(PROPERTY_DEPLOYED_DECISION_REQUIREMENTS_DEFINITIONS));
-    assertNull(path.get(PROPERTY_DEPLOYED_PROCESS_DEFINITIONS));
-    assertNull(path.get(PROPERTY_DEPLOYED_CASE_DEFINITIONS));
+    assertThat(path.get(PROPERTY_DEPLOYED_DECISION_REQUIREMENTS_DEFINITIONS)).isNull();
+    assertThat(path.get(PROPERTY_DEPLOYED_PROCESS_DEFINITIONS)).isNull();
+    assertThat(path.get(PROPERTY_DEPLOYED_CASE_DEFINITIONS)).isNull();
   }
 
   private void verifyDrdDeploymentValues(Deployment mockDeployment, String responseContent) {
@@ -2021,16 +2020,16 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     assertEquals(1, deployedDecisionDefinitions.size());
     HashMap decisionDefinitionDto = deployedDecisionDefinitions.get(EXAMPLE_DECISION_DEFINITION_ID);
-    assertNotNull(decisionDefinitionDto);
+    assertThat(decisionDefinitionDto).isNotNull();
     verifyDmnDeployment(decisionDefinitionDto);
 
     assertEquals(1, deployedDecisionRequirementsDefinitions.size());
     HashMap decisionRequirementsDefinitionDto = deployedDecisionRequirementsDefinitions.get(EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_ID);
-    assertNotNull(decisionRequirementsDefinitionDto);
+    assertThat(decisionRequirementsDefinitionDto).isNotNull();
     verifyDrdDeployment(decisionRequirementsDefinitionDto);
 
-    assertNull(path.get(PROPERTY_DEPLOYED_PROCESS_DEFINITIONS));
-    assertNull(path.get(PROPERTY_DEPLOYED_CASE_DEFINITIONS));
+    assertThat(path.get(PROPERTY_DEPLOYED_PROCESS_DEFINITIONS)).isNull();
+    assertThat(path.get(PROPERTY_DEPLOYED_CASE_DEFINITIONS)).isNull();
   }
 
   private void verifyBpmnDeployment(HashMap<String, Object> dto) {
@@ -2081,10 +2080,10 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
     JsonPath path = from(responseContent);
     verifyStandardDeploymentValues(mockDeployment, path);
 
-    assertNull(path.get(PROPERTY_DEPLOYED_PROCESS_DEFINITIONS));
-    assertNull(path.get(PROPERTY_DEPLOYED_CASE_DEFINITIONS));
-    assertNull(path.get(PROPERTY_DEPLOYED_DECISION_DEFINITIONS));
-    assertNull(path.get(PROPERTY_DEPLOYED_DECISION_REQUIREMENTS_DEFINITIONS));
+    assertThat(path.get(PROPERTY_DEPLOYED_PROCESS_DEFINITIONS)).isNull();
+    assertThat(path.get(PROPERTY_DEPLOYED_CASE_DEFINITIONS)).isNull();
+    assertThat(path.get(PROPERTY_DEPLOYED_DECISION_DEFINITIONS)).isNull();
+    assertThat(path.get(PROPERTY_DEPLOYED_DECISION_REQUIREMENTS_DEFINITIONS)).isNull();
   }
 
   private void verifyStandardDeploymentValues(Deployment mockDeployment, JsonPath path) {
@@ -2103,7 +2102,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     Map<String, String> returnedLink = returnedLinks.get(0);
     assertEquals(HttpMethod.GET, returnedLink.get("method"));
-    assertTrue(returnedLink.get("href").endsWith(RESOURCE_URL + "/" + mockDeployment.getId()));
+    assertThat(returnedLink.get("href")).endsWith(RESOURCE_URL + "/" + mockDeployment.getId());
     assertEquals("self", returnedLink.get("rel"));
   }
 

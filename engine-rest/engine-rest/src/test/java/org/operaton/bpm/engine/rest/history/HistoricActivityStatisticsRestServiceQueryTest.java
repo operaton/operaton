@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.rest.history;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.rest.util.DateTimeUtils.DATE_FORMAT_WITH_TIMEZONE;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItems;
@@ -320,8 +321,8 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
     List<String> result = from(content).getList("");
     Assert.assertEquals(2, result.size());
 
-    Assert.assertNotNull(result.get(0));
-    Assert.assertNotNull(result.get(1));
+    assertThat(result.get(0)).isNotNull();
+    assertThat(result.get(1)).isNotNull();
 
     String id = from(content).getString("[0].id");
     long instances = from(content).getLong("[0].instances");

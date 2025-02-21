@@ -33,7 +33,6 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.Asset;
 import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -41,6 +40,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.Collections;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.fail;
 
 @RunWith(Arquillian.class)
@@ -126,7 +126,7 @@ public class SetVariablesMigrationContextSwitchTest extends AbstractFoxPlatformI
     }
 
     // then
-    Assert.assertNotNull(runtimeService.getVariableTyped(pi, "foo", false));
+    assertThat(runtimeService.getVariableTyped(pi, "foo", false)).isNotNull();
   }
 
   @Test
@@ -161,7 +161,7 @@ public class SetVariablesMigrationContextSwitchTest extends AbstractFoxPlatformI
         .execute();
 
     // then
-    Assert.assertNotNull(runtimeService.getVariableTyped(pi, "foo", false));
+    assertThat(runtimeService.getVariableTyped(pi, "foo", false)).isNotNull();
   }
 
   protected static Asset modelAsAsset(BpmnModelInstance modelInstance) {

@@ -30,8 +30,8 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 /**
  * @author Sebastian Menski
@@ -55,7 +55,7 @@ public class TestAdditionalResourceSuffixes extends AbstractFoxPlatformIntegrati
 
   @Test
   public void testDeployProcessArchive() {
-    assertNotNull(processEngine);
+    assertThat(processEngine).isNotNull();
     RepositoryService repositoryService = processEngine.getRepositoryService();
 
     ProcessDefinitionQuery processDefinitionQuery = repositoryService.createProcessDefinitionQuery()

@@ -27,8 +27,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Daniel Meyer
@@ -48,12 +47,12 @@ public class TestJobExecutorActivateFalse_JBOSS extends AbstractFoxPlatformInteg
     ProcessEngine processEngine = processEngineService.getProcessEngine("jobExecutorActivate-FALSE-engine");
     ProcessEngineConfiguration configuration = processEngine.getProcessEngineConfiguration();
     JobExecutor jobExecutor = ((ProcessEngineConfigurationImpl)configuration).getJobExecutor();
-    assertFalse(jobExecutor.isActive());
+    assertThat(jobExecutor.isActive()).isFalse();
 
     processEngine = processEngineService.getProcessEngine("jobExecutorActivate-UNDEFINED-engine");
     configuration = processEngine.getProcessEngineConfiguration();
     jobExecutor = ((ProcessEngineConfigurationImpl)configuration).getJobExecutor();
-    assertTrue(jobExecutor.isActive());
+    assertThat(jobExecutor.isActive()).isTrue();
 
   }
 }

@@ -32,7 +32,6 @@ import org.springframework.test.context.ContextConfiguration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 /**
@@ -115,7 +114,7 @@ class SpringTransactionIntegrationTest extends SpringProcessEngineTestCase {
 
     String stacktrace = managementService.getJobExceptionStacktrace(job.getId());
     assertThat(stacktrace).isNotNull();
-    assertTrue(stacktrace.contains("Transaction rolled back because it has been marked as rollback-only"), "unexpected stacktrace, was <" + stacktrace + ">");
+    assertThat(stacktrace.contains("Transaction rolled back because it has been marked as rollback-only")).as("unexpected stacktrace, was <" + stacktrace + ">").isTrue();
   }
 
   @Deployment
@@ -133,7 +132,7 @@ class SpringTransactionIntegrationTest extends SpringProcessEngineTestCase {
 
     String stacktrace = managementService.getJobExceptionStacktrace(job.getId());
     assertThat(stacktrace).isNotNull();
-    assertTrue(stacktrace.contains("Transaction rolled back because it has been marked as rollback-only"), "unexpected stacktrace, was <" + stacktrace + ">");
+    assertThat(stacktrace.contains("Transaction rolled back because it has been marked as rollback-only")).as("unexpected stacktrace, was <" + stacktrace + ">").isTrue();
   }
 
   @Deployment
@@ -151,7 +150,7 @@ class SpringTransactionIntegrationTest extends SpringProcessEngineTestCase {
 
     String stacktrace = managementService.getJobExceptionStacktrace(job.getId());
     assertThat(stacktrace).isNotNull();
-    assertTrue(stacktrace.contains("java.lang.RuntimeException: exception in transaction listener"), "unexpected stacktrace, was <" + stacktrace + ">");
+    assertThat(stacktrace.contains("java.lang.RuntimeException: exception in transaction listener")).as("unexpected stacktrace, was <" + stacktrace + ">").isTrue();
   }
 
 }

@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.rest;
 import static io.restassured.RestAssured.expect;
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
@@ -243,7 +244,7 @@ public class UserRestServiceQueryTest extends AbstractRestServiceTest {
     String content = response.asString();
     List<String> instances = from(content).getList("");
     Assert.assertEquals("There should be one user returned.", 1, instances.size());
-    Assert.assertNotNull("The returned user should not be null.", instances.get(0));
+    assertThat(instances.get(0)).as("The returned user should not be null.").isNotNull();
 
     String returendLastName = from(content).getString("[0].lastName");
     String returnedFirstName = from(content).getString("[0].firstName");

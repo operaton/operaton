@@ -17,10 +17,10 @@
 package org.operaton.bpm.engine.rest;
 
 import static io.restassured.RestAssured.given;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -1805,7 +1805,7 @@ public class JobRestServiceInteractionTest extends AbstractRestServiceTest {
 
   protected void verifyBatchJson(String batchJson) {
     BatchDto batch = JsonPathUtil.from(batchJson).getObject("", BatchDto.class);
-    assertNotNull("The returned batch should not be null.", batch);
+    assertThat(batch).as("The returned batch should not be null.").isNotNull();
     assertEquals(MockProvider.EXAMPLE_BATCH_ID, batch.getId());
     assertEquals(MockProvider.EXAMPLE_BATCH_TYPE, batch.getType());
     assertEquals(MockProvider.EXAMPLE_BATCH_TOTAL_JOBS, batch.getTotalJobs());

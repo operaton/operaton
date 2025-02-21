@@ -332,7 +332,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
     String content = response.asString();
     List<String> instances = from(content).getList("");
     Assert.assertEquals(1, instances.size());
-    Assert.assertNotNull(instances.get(0));
+    assertThat(instances.get(0)).isNotNull();
 
     String returnedCaseInstanceId = from(content).getString("[0].id");
     String returnedCaseInstanceBusinessKey = from(content).getString("[0].businessKey");
@@ -633,7 +633,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
     String content = response.asString();
     List<String> instances = from(content).getList("");
     Assert.assertEquals(1, instances.size());
-    Assert.assertNotNull(instances.get(0));
+    assertThat(instances.get(0)).isNotNull();
 
     String returnedCaseInstanceId = from(content).getString("[0].id");
     String returnedCloseTime = from(content).getString("[0].closeTime");
@@ -667,7 +667,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
     String content = response.asString();
     List<String> instances = from(content).getList("");
     Assert.assertEquals(1, instances.size());
-    Assert.assertNotNull(instances.get(0));
+    assertThat(instances.get(0)).isNotNull();
 
     String returnedCaseInstanceId = from(content).getString("[0].id");
     String returnedCloseTime = from(content).getString("[0].closeTime");

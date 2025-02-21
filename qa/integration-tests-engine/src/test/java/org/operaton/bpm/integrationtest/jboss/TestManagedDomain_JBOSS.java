@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.integrationtest.jboss;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
@@ -24,7 +27,6 @@ import org.jboss.arquillian.container.test.api.TargetsContainer;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -46,14 +48,14 @@ public class TestManagedDomain_JBOSS {
   @Test
   public void shouldBeAbleToLookupDefaultProcessEngine() {
     try {
-      Assert.assertNotNull(InitialContext.doLookup("java:global/operaton-bpm-platform/process-engine/default"));
+      assertThat(InitialContext.doLookup("java:global/operaton-bpm-platform/process-engine/default")).isNotNull();
     } catch (NamingException e) {
-      Assert.fail("Could not lookup default process engine");
+      fail("Could not lookup default process engine");
     }
 
     try {
-      Assert.assertNotNull(InitialContext.doLookup("java:global/operaton-bpm-platform/process-engine/someNonExistingEngine"));
-      Assert.fail("Should not be able to lookup someNonExistingEngine process engine");
+      assertThat(InitialContext.doLookup("java:global/operaton-bpm-platform/process-engine/someNonExistingEngine")).isNotNull();
+      fail("Should not be able to lookup someNonExistingEngine process engine");
     } catch (NamingException e) {
       // expected
     }

@@ -15,6 +15,9 @@
  * limitations under the License.
  */
 package org.operaton.bpm.integrationtest.deployment.war;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
 import java.util.List;
 import java.util.Set;
 
@@ -56,7 +59,7 @@ public class TestWarDeploymentIsDeployChangedOnly extends AbstractFoxPlatformInt
   @Test
   @OperateOnDeployment(value=PA2)
   public void testDeployProcessArchive() {
-    Assert.assertNotNull(processEngine);
+    assertThat(processEngine).isNotNull();
     RepositoryService repositoryService = processEngine.getRepositoryService();
     long count = repositoryService.createProcessDefinitionQuery()
       .processDefinitionKey("testDeployProcessArchive")
@@ -73,12 +76,12 @@ public class TestWarDeploymentIsDeployChangedOnly extends AbstractFoxPlatformInt
       List<ProcessApplicationDeploymentInfo> deploymentInfo = processApplicationInfo.getDeploymentInfo();
       if(deploymentInfo.size() == 2) {
         if(resumedRegistrationFound) {
-          Assert.fail("Cannot have two registrations");
+          fail("Cannot have two registrations");
         }
         resumedRegistrationFound = true;
       }
     }
-    Assert.assertTrue("Previous version of the deployment was not resumed", resumedRegistrationFound);
+    assertThat(resumedRegistrationFound).as("Previous version of the deployment was not resumed").isTrue();
 
   }
 

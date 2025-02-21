@@ -21,7 +21,10 @@ import org.operaton.bpm.integrationtest.functional.scriptengine.engine.AbstractS
 import org.operaton.bpm.integrationtest.functional.scriptengine.engine.AlwaysTrueScriptEngineFactory;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.TestContainer;
+
 import org.jboss.arquillian.container.test.api.Deployment;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -77,7 +80,7 @@ public class PaLocalScriptEngineCallActivityConditionTest extends AbstractFoxPla
 
     // then the conditional flow leaving the call activity has been taken
     Task afterCallActivityTask = taskService.createTaskQuery().singleResult();
-    Assert.assertNotNull(afterCallActivityTask);
+    assertThat(afterCallActivityTask).isNotNull();
     Assert.assertEquals("afterCallActivityTask", afterCallActivityTask.getTaskDefinitionKey());
   }
 

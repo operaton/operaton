@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.integrationtest.jobexecutor;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.List;
 
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -50,11 +52,11 @@ public class TimeoutTaskListenerExecutionTest extends AbstractFoxPlatformIntegra
     Assert.assertEquals(1, finallyRunningInstances.size());
 
     Task task = taskService.createTaskQuery().processInstanceId(instance.getId()).singleResult();
-    Assert.assertNotNull(task);
+    assertThat(task).isNotNull();
 
     Object variable = taskService.getVariable(task.getId(), "called");
-    Assert.assertNotNull(variable);
+    assertThat(variable).isNotNull();
 
-    Assert.assertTrue((boolean) variable);
+    assertThat((boolean) variable).isTrue();
   }
 }

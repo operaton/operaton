@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.integrationtest.functional.transactions;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 import jakarta.inject.Inject;
 
@@ -73,10 +73,10 @@ public class AsyncJobExecutionWithRollbackTest extends AbstractFoxPlatformIntegr
     // the job exists with no retries, and an incident is raised
     Job job = managementService.createJobQuery().processDefinitionKey("txRollbackServiceTask").singleResult();
 
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     assertEquals(0, job.getRetries());
-    assertNotNull(job.getExceptionMessage());
-    assertNotNull(managementService.getJobExceptionStacktrace(job.getId()));
+    assertThat(job.getExceptionMessage()).isNotNull();
+    assertThat(managementService.getJobExceptionStacktrace(job.getId())).isNotNull();
   }
 
   @Test
@@ -91,10 +91,10 @@ public class AsyncJobExecutionWithRollbackTest extends AbstractFoxPlatformIntegr
     // the job exists with no retries, and an incident is raised
     Job job = managementService.createJobQuery().processDefinitionKey("txRollbackServiceTaskWithCustomRetryCycle").singleResult();
 
-    assertNotNull(job);
+    assertThat(job).isNotNull();
     assertEquals(0, job.getRetries());
-    assertNotNull(job.getExceptionMessage());
-    assertNotNull(managementService.getJobExceptionStacktrace(job.getId()));
+    assertThat(job.getExceptionMessage()).isNotNull();
+    assertThat(managementService.getJobExceptionStacktrace(job.getId())).isNotNull();
   }
 
 }

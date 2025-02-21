@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.integrationtest.functional.el;
 
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.task.Task;
@@ -48,11 +48,11 @@ public class ResolveBeanFromDmnTest extends AbstractFoxPlatformIntegrationTest {
     runtimeService.startProcessInstanceByKey("testProcess");
 
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     VariableInstance decisionResult = runtimeService.createVariableInstanceQuery().variableName("result").singleResult();
-    assertNotNull("The variable 'result' should exist", decisionResult);
-    assertNotNull("The value of the variable 'result' should not be null", decisionResult.getValue());
+    assertThat(decisionResult).as("The variable 'result' should exist").isNotNull();
+    assertThat(decisionResult.getValue()).as("The value of the variable 'result' should not be null").isNotNull();
   }
 
 }

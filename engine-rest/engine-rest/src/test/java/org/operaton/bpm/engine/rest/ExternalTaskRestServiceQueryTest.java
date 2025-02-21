@@ -126,7 +126,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
     String content = response.asString();
     List<String> instances = from(content).getList("");
     Assert.assertEquals("There should be one external task returned.", 1, instances.size());
-    Assert.assertNotNull("The returned external task should not be null.", instances.get(0));
+    assertThat(instances.get(0)).as("The returned external task should not be null.").isNotNull();
 
     String activityId = from(content).getString("[0].activityId");
     String activityInstanceId = from(content).getString("[0].activityInstanceId");

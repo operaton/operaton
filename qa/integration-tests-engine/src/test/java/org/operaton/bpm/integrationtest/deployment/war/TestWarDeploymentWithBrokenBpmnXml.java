@@ -17,13 +17,15 @@
 package org.operaton.bpm.integrationtest.deployment.war;
 
 import org.operaton.bpm.integrationtest.util.TestContainer;
+
 import org.jboss.arquillian.container.test.api.Deployer;
+
+import static org.assertj.core.api.Assertions.fail;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -60,7 +62,7 @@ public class TestWarDeploymentWithBrokenBpmnXml {
   public void testXmlInvalid() {
     try {
       deployer.deploy(DEPLOYMENT);
-      Assert.fail("exception expected");
+      fail("exception expected");
     }catch (Exception e) {
       // expected
     } 

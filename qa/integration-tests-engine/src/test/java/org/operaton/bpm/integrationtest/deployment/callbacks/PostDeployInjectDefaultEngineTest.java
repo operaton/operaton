@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.integrationtest.deployment.callbacks;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.List;
 
 import org.junit.Assert;
@@ -46,11 +48,11 @@ public class PostDeployInjectDefaultEngineTest {
   
   @Test
   public void test() {
-    Assert.assertNotNull("processEngine must be injected", PostDeployInjectApp.processEngine);
-    Assert.assertNotNull("processApplicationInfo must be injected", PostDeployInjectApp.processApplicationInfo);
+    assertThat(PostDeployInjectApp.processEngine).as("processEngine must be injected").isNotNull();
+    assertThat(PostDeployInjectApp.processApplicationInfo).as("processApplicationInfo must be injected").isNotNull();
     
     List<ProcessEngine> processEngines = PostDeployInjectApp.processEngines;
-    Assert.assertNotNull("processEngines must be injected", processEngines);
+    assertThat(processEngines).as("processEngines must be injected").isNotNull();
     
     // the app did no do a deployment so no engines are in the list
     Assert.assertEquals(0, processEngines.size());

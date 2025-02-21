@@ -27,8 +27,7 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * See CAM-10258
@@ -80,11 +79,11 @@ public class ClassloadingDuringJobExecutionTest extends AbstractFoxPlatformInteg
 
     // then
     List<Job> failedJobs = managementService.createJobQuery().noRetriesLeft().list();
-    assertTrue(!failedJobs.isEmpty());
+    assertThat(!failedJobs.isEmpty()).isTrue();
     for (Job job : failedJobs) {
       String jobExceptionStacktrace = managementService.getJobExceptionStacktrace(job.getId());
-      assertFalse(jobExceptionStacktrace.contains("ClassNotFoundException"));
-      assertTrue(jobExceptionStacktrace.contains("Test error thrown"));
+      assertThat(jobExceptionStacktrace).doesNotContain("ClassNotFoundException");
+      assertThat(jobExceptionStacktrace).contains("Test error thrown");
     }
     // clean up
     repositoryService.deleteDeployment(deploymentId, true);

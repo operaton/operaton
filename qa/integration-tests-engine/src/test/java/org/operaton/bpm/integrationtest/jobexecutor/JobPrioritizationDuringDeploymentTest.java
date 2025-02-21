@@ -19,7 +19,11 @@ package org.operaton.bpm.integrationtest.jobexecutor;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.integrationtest.jobexecutor.beans.PriorityBean;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+
 import org.jboss.arquillian.container.test.api.Deployer;
+
+import static org.assertj.core.api.Assertions.fail;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -66,7 +70,7 @@ public class JobPrioritizationDuringDeploymentTest extends AbstractFoxPlatformIn
 
     } catch (Exception e) {
       e.printStackTrace();
-      Assert.fail("deployment should be successful, i.e. bean for timer start event should get resolved");
+      fail("deployment should be successful, i.e. bean for timer start event should get resolved");
     }
   }
 
@@ -78,7 +82,7 @@ public class JobPrioritizationDuringDeploymentTest extends AbstractFoxPlatformIn
     // then the timer start event job has the priority resolved from the bean
     Job job = managementService.createJobQuery().activityId("timerStart").singleResult();
 
-    Assert.assertNotNull(job);
+    assertThat(job).isNotNull();
     Assert.assertEquals(PriorityBean.PRIORITY, job.getPriority());
   }
 }

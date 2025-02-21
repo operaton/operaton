@@ -16,10 +16,11 @@
  */
 package org.operaton.bpm.integrationtest.deployment.callbacks;
 
-import org.junit.Assert;
-
 import org.operaton.bpm.integrationtest.deployment.callbacks.apps.PostDeployFailureApp;
+
 import org.jboss.arquillian.container.test.api.Deployer;
+
+import static org.assertj.core.api.Assertions.fail;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
@@ -55,7 +56,7 @@ public class TestPostDeployFailure_JBOSS {
     
     try {
       deployer.deploy(DEPLOYMENT);
-      Assert.fail("failure expected");
+      fail("failure expected");
     } catch (Exception e) {
       // expected
     }

@@ -30,7 +30,7 @@ import org.operaton.bpm.model.xml.validation.ValidationResultType;
 import org.operaton.bpm.model.xml.validation.ValidationResults;
 import org.operaton.bpm.model.bpmn.instance.Process;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Daniel Meyer

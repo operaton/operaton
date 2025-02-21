@@ -18,9 +18,10 @@ package org.operaton.bpm.integrationtest.functional.jpa;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
-import org.junit.Assert;
 
 import jakarta.enterprise.context.ApplicationScoped;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -41,7 +42,7 @@ public class AsyncPersistenceDelegateBean implements JavaDelegate {
     // this means that we obtain a seperate entity manager since
     // we are invoked in a new transaction
 
-    Assert.assertFalse(em.contains(entity));
+    assertThat(em.contains(entity)).isFalse();
 
   }
 

@@ -25,8 +25,8 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 /**
  * @author Sebastian Menski
@@ -65,8 +65,8 @@ public abstract class AbstractScriptEngineSupportTest extends AbstractFoxPlatfor
   public void variableFooShouldBeBar() {
     Object foo = runtimeService.getVariable(processInstanceId, "foo");
     Object bar = runtimeService.getVariable(processInstanceId, "bar");
-    assertNotNull(foo);
-    assertNotNull(bar);
+    assertThat(foo).isNotNull();
+    assertThat(bar).isNotNull();
     assertEquals("bar", foo);
     assertEquals("baz", bar);
   }

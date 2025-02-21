@@ -62,9 +62,6 @@ import static org.mockito.Mockito.when;
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
@@ -207,9 +204,9 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
     .when().post(MESSAGE_URL);
 
     //then
-    assertNotNull(response);
+    assertThat(response).isNotNull();
     String content = response.asString();
-    assertTrue(!content.isEmpty());
+    assertThat(!content.isEmpty()).isTrue();
     checkExecutionResult(content, 0);
 
     verify(runtimeServiceMock).createMessageCorrelation(messageName);
@@ -223,7 +220,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
     //execution should be filled and process instance should be null
     assertEquals(MockProvider.EXAMPLE_EXECUTION_ID, from(content).get("[" + idx + "].execution.id"));
     assertEquals(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, from(content).get("[" + idx + "].execution.processInstanceId"));
-    assertNull(from(content).get("[" + idx + "].processInstance"));
+    assertThat(from(content).get("[" + idx + "].processInstance")).isNull();
   }
 
   @Test
@@ -245,9 +242,9 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
     .when().post(MESSAGE_URL);
 
     //then
-    assertNotNull(response);
+    assertThat(response).isNotNull();
     String content = response.asString();
-    assertTrue(!content.isEmpty());
+    assertThat(!content.isEmpty()).isTrue();
     checkProcessInstanceResult(content, 0);
 
     verify(runtimeServiceMock).createMessageCorrelation(messageName);
@@ -355,9 +352,9 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
     .when().post(MESSAGE_URL);
 
     //then
-    assertNotNull(response);
+    assertThat(response).isNotNull();
     String content = response.asString();
-    assertTrue(!content.isEmpty());
+    assertThat(!content.isEmpty()).isTrue();
 
     List<HashMap> results = from(content).getList("");
     assertEquals(2, results.size());
@@ -388,10 +385,10 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
            .statusCode(Status.OK.getStatusCode())
     .when().post(MESSAGE_URL);
 
-    //then
-    assertNotNull(response);
+   //then
+   assertThat(response).isNotNull();
     String content = response.asString();
-    assertTrue(!content.isEmpty());
+   assertThat(!content.isEmpty()).isTrue();
 
     List<HashMap> results = from(content).getList("");
     assertEquals(2, results.size());
@@ -423,15 +420,15 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
     .when().post(MESSAGE_URL);
 
     //then
-    assertNotNull(response);
+    assertThat(response).isNotNull();
     String content = response.asString();
-    assertTrue(!content.isEmpty());
+    assertThat(!content.isEmpty()).isTrue();
 
     List<HashMap> results = from(content).getList("");
     assertEquals(4, results.size());
     for (int i = 0; i < 2; i++) {
       String resultType = from(content).get("[" + i + "].resultType");
-      assertNotNull(resultType);
+      assertThat(resultType).isNotNull();
       if (resultType.equals(MessageCorrelationResultType.Execution.name())) {
         checkExecutionResult(content, i);
       } else {
@@ -462,9 +459,9 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
     .when().post(MESSAGE_URL);
 
     //then
-    assertNotNull(response);
+    assertThat(response).isNotNull();
     String content = response.asString();
-    assertTrue(content.isEmpty());
+    assertThat(content).isEmpty();
 
     verify(runtimeServiceMock).createMessageCorrelation(messageName);
     verify(messageCorrelationBuilderMock).correlateAllWithResult();
@@ -1256,9 +1253,9 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
     .when().post(MESSAGE_URL);
 
     // then
-    assertNotNull(response);
+    assertThat(response).isNotNull();
     String content = response.asString();
-    assertTrue(!content.isEmpty());
+    assertThat(!content.isEmpty()).isTrue();
     checkVariablesInResult(content, 0);
     checkExecutionResult(content, 0);
 
@@ -1287,9 +1284,9 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
     .when().post(MESSAGE_URL);
 
     // then
-    assertNotNull(response);
+    assertThat(response).isNotNull();
     String content = response.asString();
-    assertTrue(!content.isEmpty());
+    assertThat(!content.isEmpty()).isTrue();
 
     List<HashMap<Object, Object>> results = from(content).getList("");
     assertEquals(1, results.size());

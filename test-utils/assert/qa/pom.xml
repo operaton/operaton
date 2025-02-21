@@ -39,14 +39,13 @@
     </dependency>
     <dependency>
       <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-bpm-junit5</artifactId>
-      <version>${project.version}</version>
+      <artifactId>operaton-engine</artifactId>
       <scope>test</scope>
+      <classifier>junit5</classifier>
     </dependency>
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-bpm-assert</artifactId>
-      <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>

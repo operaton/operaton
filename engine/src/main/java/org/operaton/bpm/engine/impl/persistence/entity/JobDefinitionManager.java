@@ -48,7 +48,7 @@ public class JobDefinitionManager extends AbstractManager {
   }
 
   @SuppressWarnings("unchecked")
-  public List<JobDefinition> findJobDefnitionByQueryCriteria(JobDefinitionQueryImpl jobDefinitionQuery, Page page) {
+  public List<JobDefinition> findJobDefinitionByQueryCriteria(JobDefinitionQueryImpl jobDefinitionQuery, Page page) {
     configureQuery(jobDefinitionQuery);
     return getDbEntityManager().selectList("selectJobDefinitionByQueryCriteria", jobDefinitionQuery, page);
   }

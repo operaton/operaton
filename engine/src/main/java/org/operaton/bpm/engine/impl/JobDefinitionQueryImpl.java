@@ -187,7 +187,7 @@ public class JobDefinitionQueryImpl extends AbstractQuery<JobDefinitionQuery, Jo
     checkQueryOk();
     return commandContext
       .getJobDefinitionManager()
-      .findJobDefnitionByQueryCriteria(this, page);
+      .findJobDefinitionByQueryCriteria(this, page);
   }
 
   // getters /////////////////////////////////////////////

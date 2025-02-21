@@ -92,7 +92,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
   protected static final String UPDATE_HISTORY_TIME_TO_LIVE_URL = SINGLE_CASE_DEFINITION_URL + "/history-time-to-live";
 
   @ClassRule
-  public static TestContainerRule rule = new TestContainerRule();
+  public static final TestContainerRule rule = new TestContainerRule();
 
   private RepositoryService repositoryServiceMock;
   private CaseService caseServiceMock;
@@ -528,7 +528,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
         .statusCode(Status.INTERNAL_SERVER_ERROR.getStatusCode())
         .contentType(ContentType.JSON)
         .body("type", equalTo(RestException.class.getSimpleName()))
-        .body("message", containsString("Cannot instantiate case definition aCaseDefnitionId: expected exception"))
+        .body("message", containsString("Cannot instantiate case definition aCaseDefinitionId: expected exception"))
     .when()
       .post(CREATE_INSTANCE_URL);
   }
@@ -547,7 +547,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
         .statusCode(Status.INTERNAL_SERVER_ERROR.getStatusCode())
         .contentType(ContentType.JSON)
         .body("type", equalTo(RestException.class.getSimpleName()))
-        .body("message", containsString("Cannot instantiate case definition aCaseDefnitionId: expected exception"))
+        .body("message", containsString("Cannot instantiate case definition aCaseDefinitionId: expected exception"))
     .when()
       .post(CREATE_INSTANCE_BY_KEY_URL);
   }

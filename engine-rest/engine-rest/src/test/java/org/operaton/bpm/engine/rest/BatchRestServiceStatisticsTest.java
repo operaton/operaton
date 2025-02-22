@@ -17,11 +17,10 @@
 package org.operaton.bpm.engine.rest;
 
 import static io.restassured.RestAssured.given;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.rest.util.JsonPathUtil.from;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
@@ -315,7 +314,7 @@ public class BatchRestServiceStatisticsTest extends AbstractRestServiceTest {
     BatchStatisticsDto batchStatistics = from(batchStatisticsListJson).getObject("[0]", BatchStatisticsDto.class);
     String returnedStartTime = from(batchStatisticsListJson).getString("[0].startTime");
 
-    assertNotNull("The returned batch statistics should not be null.", batchStatistics);
+    assertThat(batchStatistics).as("The returned batch statistics should not be null.").isNotNull();
     assertEquals(MockProvider.EXAMPLE_BATCH_ID, batchStatistics.getId());
     assertEquals(MockProvider.EXAMPLE_BATCH_TYPE, batchStatistics.getType());
     assertEquals(MockProvider.EXAMPLE_BATCH_TOTAL_JOBS, batchStatistics.getTotalJobs());
@@ -331,7 +330,7 @@ public class BatchRestServiceStatisticsTest extends AbstractRestServiceTest {
     assertEquals(MockProvider.EXAMPLE_BATCH_REMAINING_JOBS, batchStatistics.getRemainingJobs());
     assertEquals(MockProvider.EXAMPLE_BATCH_COMPLETED_JOBS, batchStatistics.getCompletedJobs());
     assertEquals(MockProvider.EXAMPLE_BATCH_FAILED_JOBS, batchStatistics.getFailedJobs());
-    assertTrue(batchStatistics.isSuspended());
+    assertThat(batchStatistics.isSuspended()).isTrue();
   }
 
 }

@@ -148,7 +148,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
     String content = response.asString();
     List<String> instances = from(content).getList("");
     Assert.assertEquals("There should be one job returned.", 1, instances.size());
-    Assert.assertNotNull("The returned job should not be null.", instances.get(0));
+    assertThat(instances.get(0)).as("The returned job should not be null.").isNotNull();
 
     String returnedJobId = from(content).getString("[0].id");
     String returnedProcessInstanceId = from(content).getString("[0].processInstanceId");

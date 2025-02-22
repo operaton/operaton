@@ -24,7 +24,10 @@ import org.operaton.bpm.integrationtest.functional.event.beans.ExecutionListener
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
+
 import org.jboss.arquillian.container.test.api.Deployment;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
@@ -61,7 +64,7 @@ public class CdiProcessApplicationEventSupportTest extends AbstractFoxPlatformIn
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
 
     Integer listenerInvocationCount = (Integer) runtimeService.getVariable(processInstance.getId(), ExecutionListenerProcessApplication.LISTENER_INVOCATION_COUNT);
-    Assert.assertNotNull(listenerInvocationCount);
+    assertThat(listenerInvocationCount).isNotNull();
     Assert.assertEquals(6, listenerInvocationCount.intValue());
 
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();

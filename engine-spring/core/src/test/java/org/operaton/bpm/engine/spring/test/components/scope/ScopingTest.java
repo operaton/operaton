@@ -40,7 +40,6 @@ import org.springframework.util.StringUtils;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * tests the scoped beans
@@ -103,7 +102,7 @@ public class ScopingTest {
 		ProcessInstance processInstance = processEngine.getRuntimeService().startProcessInstanceByKey("component-waiter", vars);
 		StatefulObject scopedObject = (StatefulObject) processEngine.getRuntimeService().getVariable(processInstance.getId(), "scopedTarget.c1");
     assertThat(scopedObject).as("the scopedObject can't be null").isNotNull();
-		assertTrue(StringUtils.hasText(scopedObject.getName()), "the 'name' property can't be null.");
+    assertThat(StringUtils.hasText(scopedObject.getName())).as("the 'name' property can't be null.").isTrue();
     assertThat(scopedObject.getVisitedCount()).isEqualTo(2);
 
 		// the process has paused

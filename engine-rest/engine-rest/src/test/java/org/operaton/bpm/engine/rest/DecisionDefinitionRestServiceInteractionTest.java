@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.rest;
 
 
 import static io.restassured.RestAssured.given;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -93,7 +94,6 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
 
   private RepositoryService repositoryServiceMock;
   private DecisionDefinitionQuery decisionDefinitionQueryMock;
-  private DecisionService decisionServiceMock;
   private DecisionsEvaluationBuilder decisionEvaluationBuilderMock;
 
   @Before
@@ -124,7 +124,7 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
   private InputStream createMockDecisionDefinitionDmnXml() {
     // do not close the input stream, will be done in implementation
     InputStream dmnXmlInputStream = ReflectUtil.getResourceAsStream("decisions/decision-model.dmn");
-    Assert.assertNotNull(dmnXmlInputStream);
+    assertThat(dmnXmlInputStream).isNotNull();
     return dmnXmlInputStream;
   }
 
@@ -132,7 +132,7 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
     decisionEvaluationBuilderMock = mock(DecisionsEvaluationBuilder.class);
     when(decisionEvaluationBuilderMock.variables(anyMap())).thenReturn(decisionEvaluationBuilderMock);
 
-    decisionServiceMock = mock(DecisionService.class);
+    DecisionService decisionServiceMock = mock(DecisionService.class);
     when(decisionServiceMock.evaluateDecisionById(MockProvider.EXAMPLE_DECISION_DEFINITION_ID)).thenReturn(decisionEvaluationBuilderMock);
     when(decisionServiceMock.evaluateDecisionByKey(MockProvider.EXAMPLE_DECISION_DEFINITION_KEY)).thenReturn(decisionEvaluationBuilderMock);
 
@@ -150,8 +150,9 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
         .get(XML_DEFINITION_URL);
 
     String responseContent = response.asString();
-    Assert.assertTrue(responseContent.contains(MockProvider.EXAMPLE_DECISION_DEFINITION_ID));
-    Assert.assertTrue(responseContent.contains("<?xml"));
+    assertThat(responseContent)
+      .contains("<?xml")
+      .contains(MockProvider.EXAMPLE_DECISION_DEFINITION_ID);
   }
 
   @Test
@@ -188,8 +189,9 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
         .get(XML_DEFINITION_BY_KEY_URL);
 
     String responseContent = response.asString();
-    Assert.assertTrue(responseContent.contains(MockProvider.EXAMPLE_DECISION_DEFINITION_ID));
-    Assert.assertTrue(responseContent.contains("<?xml"));
+    assertThat(responseContent)
+      .contains("<?xml")
+      .contains(MockProvider.EXAMPLE_DECISION_DEFINITION_ID);
   }
 
   @Test
@@ -223,7 +225,7 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
     when(repositoryServiceMock.createDecisionDefinitionQuery().decisionDefinitionKey(nonExistingKey)).thenReturn(decisionDefinitionQueryMock);
     when(decisionDefinitionQueryMock.latestVersion()).thenReturn(decisionDefinitionQueryMock);
     when(decisionDefinitionQueryMock.singleResult()).thenReturn(null);
-    when(decisionDefinitionQueryMock.list()).thenReturn(Collections.<DecisionDefinition> emptyList());
+    when(decisionDefinitionQueryMock.list()).thenReturn(Collections.emptyList());
 
     given()
       .pathParam("key", nonExistingKey)
@@ -338,7 +340,7 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
 
     // compare input stream with response body bytes
     byte[] expected = IoUtil.readInputStream(new FileInputStream(file), "decision diagram");
-    Assert.assertArrayEquals(expected, actual);
+    assertThat(actual).containsExactly(expected);
   }
 
   @Test
@@ -365,7 +367,7 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
 
     // compare input stream with response body bytes
     byte[] expected = IoUtil.readInputStream(new FileInputStream(file), "decision diagram");
-    Assert.assertArrayEquals(expected, actual);
+    assertThat(actual).containsExactly(expected);
   }
 
   @Test

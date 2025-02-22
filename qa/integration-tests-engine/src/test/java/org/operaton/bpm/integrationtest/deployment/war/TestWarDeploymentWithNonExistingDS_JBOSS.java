@@ -20,21 +20,23 @@ package org.operaton.bpm.integrationtest.deployment.war;
 import org.operaton.bpm.integrationtest.deployment.war.apps.CustomServletPA;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
+
 import org.jboss.arquillian.container.test.api.Deployer;
+
+import static org.assertj.core.api.Assertions.fail;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 
 /**
  * <p>This test makes sure that if we deploy a process application which contains a persistence.xml 
- * file which references a non existing datasource, the MSC does not run into a deadlock.</p>
+ * file which references a non-existing datasource, the MSC does not run into a deadlock.</p>
  * 
  * @author Daniel Meyer
  *
@@ -78,14 +80,14 @@ public class TestWarDeploymentWithNonExistingDS_JBOSS {
 
     try {
       deployer.deploy(DEPLOYMENT_WITH_EJB_PA);
-      Assert.fail("Deployment exception expected");
+      fail("Deployment exception expected");
     } catch(Exception e) {
       // expected
     }
     
     try {
       deployer.deploy(DEPLOYMENT_WITH_SERVLET_PA);
-      Assert.fail("Deployment exception expected");
+      fail("Deployment exception expected");
     } catch(Exception e) {
       // expected
     }

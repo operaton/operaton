@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.integrationtest.functional.condition;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
@@ -57,7 +57,7 @@ public class ConditionalStartEventTest extends AbstractFoxPlatformIntegrationTes
 
     assertEquals(1, instances.size());
 
-    assertNotNull(runtimeService.createProcessInstanceQuery().processDefinitionKey("conditionalEventProcess").singleResult());
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("conditionalEventProcess").singleResult()).isNotNull();
 
     VariableInstance vars = runtimeService.createVariableInstanceQuery().singleResult();
     assertEquals(vars.getProcessInstanceId(), instances.get(0).getId());

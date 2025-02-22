@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.integrationtest.deployment.callbacks.apps;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import jakarta.ejb.ConcurrencyManagement;
 import jakarta.ejb.ConcurrencyManagementType;
 import jakarta.ejb.Local;
@@ -29,7 +31,6 @@ import org.operaton.bpm.application.PreUndeploy;
 import org.operaton.bpm.application.ProcessApplication;
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.engine.ProcessEngine;
-import org.junit.Assert;
 
 /**
  * Custom {@link org.operaton.bpm.application.impl.JakartaEjbProcessApplication} with PA lifecycle callbacks
@@ -48,12 +49,12 @@ public class CustomEjbProcessApplication extends org.operaton.bpm.application.im
 
   @PostDeploy
   public void postDeploy(ProcessEngine processEngine) {
-    Assert.assertNotNull(processEngine);
+    assertThat(processEngine).isNotNull();
   }
 
   @PreUndeploy
   public void preUnDeploy(ProcessEngine processEngine) {
-    Assert.assertNotNull(processEngine);
+    assertThat(processEngine).isNotNull();
   }
 
 }

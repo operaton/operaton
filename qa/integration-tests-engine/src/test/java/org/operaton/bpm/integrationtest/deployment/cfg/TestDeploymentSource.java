@@ -19,7 +19,10 @@ package org.operaton.bpm.integrationtest.deployment.cfg;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.repository.ProcessApplicationDeployment;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+
 import org.jboss.arquillian.container.test.api.Deployment;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Assert;
@@ -41,12 +44,12 @@ public class TestDeploymentSource extends AbstractFoxPlatformIntegrationTest {
 
   @Test
   public void testDeployProcessArchive() {
-    Assert.assertNotNull(processEngine);
+    assertThat(processEngine).isNotNull();
     RepositoryService repositoryService = processEngine.getRepositoryService();
 
     org.operaton.bpm.engine.repository.Deployment deployment = repositoryService.createDeploymentQuery().singleResult();
 
-    Assert.assertNotNull(deployment);
+    assertThat(deployment).isNotNull();
     Assert.assertEquals(ProcessApplicationDeployment.PROCESS_APPLICATION_DEPLOYMENT_SOURCE, deployment.getSource());
   }
 

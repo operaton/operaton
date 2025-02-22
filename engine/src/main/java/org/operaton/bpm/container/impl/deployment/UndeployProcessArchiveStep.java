@@ -51,7 +51,7 @@ public class UndeployProcessArchiveStep extends DeploymentOperationStep {
 
   @Override
   public String getName() {
-    return "Undeploying process archvie "+processArchvieName;
+    return "Undeploying process archive "+processArchvieName;
   }
 
   @Override

@@ -18,14 +18,16 @@ package org.operaton.bpm.integrationtest.deployment.war;
 
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+
 import org.jboss.arquillian.container.test.api.Deployment;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 
 
 @RunWith(Arquillian.class)
@@ -52,7 +54,7 @@ public class TestWarDeploymentDeployAllOnSingleChange extends AbstractFoxPlatfor
   @Test
   @OperateOnDeployment(value=PA2)
   public void testDeployProcessArchive() {
-    Assert.assertNotNull(processEngine);
+    assertThat(processEngine).isNotNull();
     RepositoryService repositoryService = processEngine.getRepositoryService();
     long count = repositoryService.createProcessDefinitionQuery()
       .processDefinitionKey("testDeployProcessArchive")

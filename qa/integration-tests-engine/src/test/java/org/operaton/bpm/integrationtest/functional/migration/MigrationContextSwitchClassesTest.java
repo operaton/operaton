@@ -32,11 +32,12 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.Asset;
 import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.ByteArrayOutputStream;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Arrays;
 
 /**
@@ -135,7 +136,7 @@ public class MigrationContextSwitchClassesTest extends AbstractFoxPlatformIntegr
       .execute();
 
     // then
-    Assert.assertTrue((Boolean)runtimeService.getVariable(pi, InstantiationListener.VARIABLE_NAME));
+    assertThat((Boolean) runtimeService.getVariable(pi, InstantiationListener.VARIABLE_NAME)).isTrue();
   }
 
 
@@ -169,7 +170,7 @@ public class MigrationContextSwitchClassesTest extends AbstractFoxPlatformIntegr
       .execute();
 
     // then
-    Assert.assertTrue((Boolean)runtimeService.getVariable(pi, RemovalListener.VARIABLE_NAME));
+    assertThat((Boolean) runtimeService.getVariable(pi, RemovalListener.VARIABLE_NAME)).isTrue();
   }
 
   protected static Asset modelAsAsset(BpmnModelInstance modelInstance) {

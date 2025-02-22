@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.integrationtest.functional.migration;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 
@@ -34,7 +36,6 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.Asset;
 import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -114,8 +115,8 @@ public class MigrationContextSwitchBeansTest extends AbstractFoxPlatformIntegrat
 
     // then
     Job timerJob = managementService.createJobQuery().processDefinitionKey("boundaryProcess").singleResult();
-    Assert.assertNotNull(timerJob);
-    Assert.assertNotNull(timerJob.getDuedate());
+    assertThat(timerJob).isNotNull();
+    assertThat(timerJob.getDuedate()).isNotNull();
   }
 
   protected static Asset modelAsAsset(BpmnModelInstance modelInstance) {

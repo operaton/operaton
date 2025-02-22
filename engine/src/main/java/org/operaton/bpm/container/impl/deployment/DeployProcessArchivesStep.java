@@ -41,7 +41,7 @@ public class DeployProcessArchivesStep extends DeploymentOperationStep {
 
   @Override
   public String getName() {
-    return "Deploy process archvies";
+    return "Deploy process archives";
   }
 
   @Override

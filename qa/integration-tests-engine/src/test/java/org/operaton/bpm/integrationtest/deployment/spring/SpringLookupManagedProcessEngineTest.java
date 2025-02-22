@@ -18,16 +18,18 @@ package org.operaton.bpm.integrationtest.deployment.spring;
 
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
+
 import org.jboss.arquillian.container.test.api.Deployment;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * <p>Integration test making sure that we can lookup a managed process engine 
+ * <p>Integration test making sure that we can look up a managed process engine
  * and expose it as a Spring Bean inside a Spring Application</p>
  * 
  * @author Daniel Meyer
@@ -49,7 +51,7 @@ public class SpringLookupManagedProcessEngineTest extends AbstractFoxPlatformInt
     
   @Test
   public void testDeployProcessArchive() {
-    Assert.assertNotNull(processEngine);   
+    assertThat(processEngine).isNotNull();   
   }
   
 }

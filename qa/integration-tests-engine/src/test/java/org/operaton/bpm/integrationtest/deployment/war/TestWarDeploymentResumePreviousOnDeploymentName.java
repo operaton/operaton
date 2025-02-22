@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.integrationtest.deployment.war;
 
+import static org.assertj.core.api.Assertions.fail;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.fail;
 
 import java.util.List;
 import java.util.Set;
@@ -60,7 +60,7 @@ public class TestWarDeploymentResumePreviousOnDeploymentName extends AbstractFox
   public void testDeployProcessArchive() {
     assertThat(processEngine, is(notNullValue()));
     RepositoryService repositoryService = processEngine.getRepositoryService();
-    //since we have two processes deployed for PA2 we gotta check that both are present
+    //since we have two processes deployed for PA2 we got to check that both are present
     long count = repositoryService.createProcessDefinitionQuery().processDefinitionKey("testDeployProcessArchive").count();
 
     assertThat(count, is(1L));

@@ -330,7 +330,7 @@ public class HistoricCaseActivityInstanceRestServiceQueryTest extends AbstractRe
     String content = response.asString();
     List<String> instances = from(content).getList("");
     Assert.assertEquals(1, instances.size());
-    Assert.assertNotNull(instances.get(0));
+    assertThat(instances.get(0)).isNotNull();
 
     String returnedId = from(content).getString("[0].id");
     String returnedParentCaseActivityInstanceId = from(content).getString("[0].parentCaseActivityInstanceId");
@@ -510,7 +510,7 @@ public class HistoricCaseActivityInstanceRestServiceQueryTest extends AbstractRe
     String content = response.asString();
     List<String> instances = from(content).getList("");
     Assert.assertEquals(1, instances.size());
-    Assert.assertNotNull(instances.get(0));
+    assertThat(instances.get(0)).isNotNull();
 
     String returnedCaseDefinitionId = from(content).getString("[0].caseDefinitionId");
     String returnedActivityEndTime = from(content).getString("[0].endTime");
@@ -540,13 +540,13 @@ public class HistoricCaseActivityInstanceRestServiceQueryTest extends AbstractRe
     String content = response.asString();
     List<String> instances = from(content).getList("");
     Assert.assertEquals(1, instances.size());
-    Assert.assertNotNull(instances.get(0));
+    assertThat(instances.get(0)).isNotNull();
 
     String returnedCaseDefinitionId = from(content).getString("[0].caseDefinitionId");
     String returnedActivityEndTime = from(content).getString("[0].endTime");
 
     Assert.assertEquals(MockProvider.EXAMPLE_CASE_DEFINITION_ID, returnedCaseDefinitionId);
-    Assert.assertNull(returnedActivityEndTime);
+    assertThat(returnedActivityEndTime).isNull();
   }
 
   @Test

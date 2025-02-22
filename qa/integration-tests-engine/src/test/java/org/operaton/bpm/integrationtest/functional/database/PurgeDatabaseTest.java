@@ -27,16 +27,19 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Christopher Zell <christopher.zell@camunda.com>
@@ -57,7 +60,7 @@ public class PurgeDatabaseTest extends AbstractFoxPlatformIntegrationTest {
 
   @Test
   public void testPurgeDatabase() {
-    Assert.assertNotNull(processEngine);
+    assertThat(processEngine).isNotNull();
     VariableMap variableMap = Variables.putValue("var", "value");
     runtimeService.startProcessInstanceByKey("testDeployProcessArchive", variableMap);
     runtimeService.startProcessInstanceByKey("testDeployProcessArchive", variableMap);
@@ -112,7 +115,7 @@ public class PurgeDatabaseTest extends AbstractFoxPlatformIntegrationTest {
             }
           });
       }
-      Assert.fail(outputMessage.toString());
+      fail(outputMessage.toString());
     }
   }
 

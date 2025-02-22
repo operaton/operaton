@@ -19,7 +19,8 @@ package org.operaton.bpm.integrationtest.deployment.spring;
 import org.operaton.bpm.application.PostDeploy;
 import org.operaton.bpm.application.PreUndeploy;
 import org.operaton.bpm.engine.spring.application.SpringServletProcessApplication;
-import org.junit.Assert;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Daniel Meyer
@@ -31,27 +32,29 @@ public class CustomSpringServletProcessApplication extends SpringServletProcessA
   private boolean isPreUndeployInvoked = false;
 
   @PostDeploy
+  @SuppressWarnings("unused")
   public void postDeploy() {
     isPostDeployInvoked = true;
   }
 
   @PreUndeploy
+  @SuppressWarnings("unused")
   public void preUndeploy() {
     isPreUndeployInvoked = true;
   }
 
   @Override
   public void start() {
-    Assert.assertFalse(isPostDeployInvoked);
+    assertThat(isPostDeployInvoked).isFalse();
     super.start();
-    Assert.assertTrue("@PostDeploy Method not invoked", isPostDeployInvoked);
+    assertThat(isPostDeployInvoked).as("@PostDeploy Method not invoked").isTrue();
   }
 
   @Override
   public void stop() {
-    Assert.assertFalse(isPreUndeployInvoked);
+    assertThat(isPreUndeployInvoked).isFalse();
     super.stop();
-    Assert.assertTrue("@PreUndeploy Method not invoked", isPreUndeployInvoked);
+    assertThat(isPreUndeployInvoked).as("@PreUndeploy Method not invoked").isTrue();
   }
 
 }

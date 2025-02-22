@@ -16,12 +16,14 @@
  */
 package org.operaton.bpm.integrationtest.functional.connect;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.connect.Connectors;
+import org.operaton.connect.spi.Connector;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
@@ -29,7 +31,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * <p>Smoketest Make sure operaton connect can be used in a process application </p>
+ * <p>Smoke-test Make sure operaton connect can be used in a process application </p>
  *
  * @author Daniel Meyer
  */
@@ -48,12 +50,12 @@ public class PaConnectSupportTest extends AbstractFoxPlatformIntegrationTest {
 
   @Test
   public void httpConnectorShouldBeAvailable() {
-    assertNotNull(Connectors.http());
+    assertThat(Connectors.<Connector<?>>http()).isNotNull();
   }
 
   @Test
   public void soapConnectorShouldBeAvailable() {
-    assertNotNull(Connectors.soap());
+    assertThat(Connectors.<Connector<?>>soap()).isNotNull();
   }
 
   @Test
@@ -63,7 +65,7 @@ public class PaConnectSupportTest extends AbstractFoxPlatformIntegrationTest {
 
     runtimeService.startProcessInstanceByKey("testProcess");
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     String payload = (String) taskService.getVariable(task.getId(), "payload");
     assertEquals("Hello world!", payload);
 

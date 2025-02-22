@@ -26,18 +26,19 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
 
 /**
  * Assert that we can deploy a WAR with a process engine plugin
  * which ships and requires groovy as a dependency for scripting purposes.
- *
- * Does not work on JBoss, see https://app.camunda.com/jira/browse/CAM-1778
+ * <p>
+ * Does not work on JBoss, see <a href="https://app.camunda.com/jira/browse/CAM-1778">CAM-1778</a>
+ * </p>
  */
 @RunWith(Arquillian.class)
 public class TestWarDeploymentWithProcessEnginePlugin extends AbstractFoxPlatformIntegrationTest {
@@ -59,7 +60,7 @@ public class TestWarDeploymentWithProcessEnginePlugin extends AbstractFoxPlatfor
   @Test
   public void testPAGroovyProcessEnginePlugin() {
     ProcessEngine groovyEngine = processEngineService.getProcessEngine("groovy");
-    Assert.assertNotNull(groovyEngine);
+    assertThat(groovyEngine).isNotNull();
 
     ProcessInstance pi = groovyEngine.getRuntimeService().startProcessInstanceByKey("groovy");
     HistoricProcessInstance hpi = groovyEngine.getHistoryService()
@@ -70,7 +71,7 @@ public class TestWarDeploymentWithProcessEnginePlugin extends AbstractFoxPlatfor
   @Test
   public void testPAGroovyAsyncProcessEnginePlugin() {
     ProcessEngine groovyEngine = processEngineService.getProcessEngine("groovy");
-    Assert.assertNotNull(groovyEngine);
+    assertThat(groovyEngine).isNotNull();
 
     ProcessInstance pi = groovyEngine.getRuntimeService().startProcessInstanceByKey("groovyAsync");
 

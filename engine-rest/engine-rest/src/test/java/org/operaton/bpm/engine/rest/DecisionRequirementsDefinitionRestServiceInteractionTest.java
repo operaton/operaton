@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.rest;
 
 
 import static io.restassured.RestAssured.given;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -45,13 +46,13 @@ import org.operaton.bpm.engine.repository.DecisionRequirementsDefinitionQuery;
 import org.operaton.bpm.engine.rest.exception.RestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+
 /**
  *
  * @author Deivarayan Azhagappan
@@ -224,8 +225,9 @@ public class DecisionRequirementsDefinitionRestServiceInteractionTest extends Ab
         .get(XML_DEFINITION_URL);
 
     String responseContent = response.asString();
-    Assert.assertTrue(responseContent.contains(MockProvider.EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_ID));
-    Assert.assertTrue(responseContent.contains("<?xml"));
+    assertThat(responseContent)
+      .contains(MockProvider.EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_ID)
+      .contains("<?xml");
   }
 
   // DRD retrieval
@@ -245,7 +247,7 @@ public class DecisionRequirementsDefinitionRestServiceInteractionTest extends Ab
     verify(repositoryServiceMock).getDecisionRequirementsDiagram(MockProvider.EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_ID);
 
     byte[] expected = IoUtil.readInputStream(new FileInputStream(getFile()), "decision requirements diagram");
-    Assert.assertArrayEquals(expected, actual);
+    assertThat(actual).containsExactly(expected);
   }
 
   protected void setUpRuntimeData(DecisionRequirementsDefinition mockDecisionRequirementsDefinition) throws FileNotFoundException, URISyntaxException {
@@ -269,7 +271,7 @@ public class DecisionRequirementsDefinitionRestServiceInteractionTest extends Ab
   protected InputStream createMockDecisionRequirementsDefinitionDmnXml() {
     // do not close the input stream, will be done in implementation
     InputStream dmnXmlInputStream = ReflectUtil.getResourceAsStream("decisions/decision-requirements-model.dmn");
-    Assert.assertNotNull(dmnXmlInputStream);
+    assertThat(dmnXmlInputStream).isNotNull();
     return dmnXmlInputStream;
   }
 

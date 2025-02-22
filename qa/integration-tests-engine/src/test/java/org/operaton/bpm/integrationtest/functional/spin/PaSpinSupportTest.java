@@ -19,6 +19,7 @@ package org.operaton.bpm.integrationtest.functional.spin;
 import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
 import static org.operaton.spin.Spin.JSON;
 import static org.operaton.spin.Spin.XML;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
 import java.io.InputStream;
@@ -40,7 +41,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * <p>Smoketest Make sure operaton spin can be used in a process application </p>
+ * <p>Smoke-test Make sure operaton spin can be used in a process application </p>
  *
  * @author Daniel Meyer
  */
@@ -86,7 +87,7 @@ public class PaSpinSupportTest extends AbstractFoxPlatformIntegrationTest {
       }
     }
 
-    Assert.assertTrue(spinPluginFound);
+    assertThat(spinPluginFound).isTrue();
   }
 
   @Test

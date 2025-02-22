@@ -28,8 +28,7 @@ import org.slf4j.ILoggerFactory;
 import org.slf4j.LoggerFactory;
 import org.slf4j.helpers.NOPLoggerFactory;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(Arquillian.class)
 public class Slf4jClassloadingTest extends AbstractFoxPlatformIntegrationTest {
@@ -55,12 +54,11 @@ public class Slf4jClassloadingTest extends AbstractFoxPlatformIntegrationTest {
     ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
 
     // verify that a SLF4J backend is used which is not the NOP logger
-    assertFalse("Should not use NOPLoggerFactory", loggerFactory instanceof NOPLoggerFactory);
+    assertThat(loggerFactory).as("Should not use NOPLoggerFactory").isNotInstanceOf(NOPLoggerFactory.class);
 
     // should either use slf4j-jdk14 or slf4j-jboss-logmanager
     String loggerFactoryClassName = loggerFactory.getClass().getCanonicalName();
-    assertTrue("Should use slf4j-jdk14 or slf4j-jboss-logmanager",
-        JDK14_LOGGER_FACTORY.equals(loggerFactoryClassName) || JBOSS_SLF4J_LOGGER_FACTORY.equals(loggerFactoryClassName));
+    assertThat(JDK14_LOGGER_FACTORY.equals(loggerFactoryClassName) || JBOSS_SLF4J_LOGGER_FACTORY.equals(loggerFactoryClassName)).as("Should use slf4j-jdk14 or slf4j-jboss-logmanager").isTrue();
   }
 
   @Test

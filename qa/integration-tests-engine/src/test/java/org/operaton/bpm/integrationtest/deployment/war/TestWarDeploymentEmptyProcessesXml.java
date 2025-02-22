@@ -29,7 +29,7 @@ import org.junit.runner.RunWith;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
@@ -48,7 +48,7 @@ public class TestWarDeploymentEmptyProcessesXml extends AbstractFoxPlatformInteg
 
   @Test
   public void testDeployProcessArchive() {
-    Assert.assertNotNull(processEngine);
+    assertThat(processEngine).isNotNull();
     RepositoryService repositoryService = processEngine.getRepositoryService();
 
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery()
@@ -70,7 +70,7 @@ public class TestWarDeploymentEmptyProcessesXml extends AbstractFoxPlatformInteg
         containsProcessApplication = true;
       }
     }
-    assertTrue(containsProcessApplication);
+    assertThat(containsProcessApplication).isTrue();
 
 
     // manually delete process definition here (to clean up)

@@ -19,13 +19,14 @@ package org.operaton.bpm.integrationtest.functional.spin;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+
 import org.jboss.arquillian.container.test.api.Deployment;
+
+import static org.assertj.core.api.Assertions.fail;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static org.junit.Assert.fail;
 
 @RunWith(Arquillian.class)
 public class SpinJsonPathTest extends AbstractFoxPlatformIntegrationTest {

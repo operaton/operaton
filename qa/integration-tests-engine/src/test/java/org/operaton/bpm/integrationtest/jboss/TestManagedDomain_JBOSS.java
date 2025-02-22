@@ -24,9 +24,11 @@ import org.jboss.arquillian.container.test.api.TargetsContainer;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * <p>Ensures subsystem boots in domain mode</p>
@@ -45,18 +47,14 @@ public class TestManagedDomain_JBOSS {
 
   @Test
   public void shouldBeAbleToLookupDefaultProcessEngine() {
-    try {
-      Assert.assertNotNull(InitialContext.doLookup("java:global/operaton-bpm-platform/process-engine/default"));
-    } catch (NamingException e) {
-      Assert.fail("Could not lookup default process engine");
-    }
 
-    try {
-      Assert.assertNotNull(InitialContext.doLookup("java:global/operaton-bpm-platform/process-engine/someNonExistingEngine"));
-      Assert.fail("Should not be able to lookup someNonExistingEngine process engine");
-    } catch (NamingException e) {
-      // expected
-    }
+    assertThatCode(() -> InitialContext.doLookup("java:global/operaton-bpm-platform/process-engine/default"))
+      .as("Expected to lookup default process engine")
+      .doesNotThrowAnyException();
+
+    assertThatThrownBy(() -> InitialContext.doLookup("java:global/operaton-bpm-platform/process-engine/someNonExistingEngine"))
+      .as("Expected exception when looking up someNonExistingEngine")
+      .isInstanceOf(NamingException.class);
   }
 
 }

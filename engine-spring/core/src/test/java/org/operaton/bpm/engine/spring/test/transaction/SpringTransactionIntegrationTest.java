@@ -32,7 +32,6 @@ import org.springframework.test.context.ContextConfiguration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 /**
@@ -114,8 +113,7 @@ class SpringTransactionIntegrationTest extends SpringProcessEngineTestCase {
     assertThat(job.getExceptionMessage()).isEqualTo("Transaction rolled back because it has been marked as rollback-only");
 
     String stacktrace = managementService.getJobExceptionStacktrace(job.getId());
-    assertThat(stacktrace).isNotNull();
-    assertTrue(stacktrace.contains("Transaction rolled back because it has been marked as rollback-only"), "unexpected stacktrace, was <" + stacktrace + ">");
+    assertThat(stacktrace).isNotNull().contains("Transaction rolled back because it has been marked as rollback-only");
   }
 
   @Deployment
@@ -132,8 +130,7 @@ class SpringTransactionIntegrationTest extends SpringProcessEngineTestCase {
     assertThat(job.getExceptionMessage()).isEqualTo("Transaction rolled back because it has been marked as rollback-only");
 
     String stacktrace = managementService.getJobExceptionStacktrace(job.getId());
-    assertThat(stacktrace).isNotNull();
-    assertTrue(stacktrace.contains("Transaction rolled back because it has been marked as rollback-only"), "unexpected stacktrace, was <" + stacktrace + ">");
+    assertThat(stacktrace).isNotNull().contains("Transaction rolled back because it has been marked as rollback-only");
   }
 
   @Deployment
@@ -150,8 +147,7 @@ class SpringTransactionIntegrationTest extends SpringProcessEngineTestCase {
     assertThat(job.getExceptionMessage()).isEqualTo("exception in transaction listener");
 
     String stacktrace = managementService.getJobExceptionStacktrace(job.getId());
-    assertThat(stacktrace).isNotNull();
-    assertTrue(stacktrace.contains("java.lang.RuntimeException: exception in transaction listener"), "unexpected stacktrace, was <" + stacktrace + ">");
+    assertThat(stacktrace).isNotNull().contains("java.lang.RuntimeException: exception in transaction listener");
   }
 
 }

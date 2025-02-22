@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.integrationtest.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.Arrays;
 import java.util.Set;
 
@@ -66,9 +68,9 @@ public class ProcessApplicationServiceTest extends AbstractFoxPlatformIntegratio
 
     for (String appName : processApplicationNames) {
       ProcessApplicationInfo processApplicationInfo = processApplicationService.getProcessApplicationInfo(appName);
-      
-      Assert.assertNotNull(processApplicationInfo);
-      Assert.assertNotNull(processApplicationInfo.getName());
+
+      assertThat(processApplicationInfo).isNotNull();
+      assertThat(processApplicationInfo.getName()).isNotNull();
       Assert.assertEquals(1, processApplicationInfo.getDeploymentInfo().size());      
     }
     

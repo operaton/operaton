@@ -18,9 +18,8 @@ package org.operaton.bpm.engine.rest;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.doThrow;
@@ -98,9 +97,9 @@ public class ConditionRestServiceTest extends AbstractRestServiceTest {
     .when()
       .post(CONDITION_URL);
 
-    assertNotNull(response);
+    assertThat(response).isNotNull();
     String content = response.asString();
-    assertTrue(!content.isEmpty());
+    assertThat(!content.isEmpty()).isTrue();
     checkResult(content);
 
     verify(runtimeServiceMock).createConditionEvaluation();

@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.integrationtest.functional.spin;
 
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.application.PostDeploy;
 import org.operaton.bpm.application.ProcessApplication;
@@ -36,7 +36,7 @@ public class PaDataformatAndPostDeployApp extends org.operaton.bpm.application.i
   @PostDeploy
   public void onPaDeployed(ProcessEngine e) {
 
-    assertNotNull(getVariableSerializers());
+    assertThat(getVariableSerializers()).isNotNull();
 
   }
 

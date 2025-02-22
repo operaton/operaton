@@ -21,11 +21,17 @@ import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.variable.Variables;
+import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.integrationtest.functional.context.classes.MyPojo;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import java.io.ByteArrayOutputStream;
+import java.util.Collections;
+import java.util.List;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -33,15 +39,11 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.Asset;
 import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.io.ByteArrayOutputStream;
-import java.util.Collections;
-import java.util.List;
-
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 @RunWith(Arquillian.class)
 public class SetVariablesMigrationContextSwitchTest extends AbstractFoxPlatformIntegrationTest {
@@ -126,7 +128,7 @@ public class SetVariablesMigrationContextSwitchTest extends AbstractFoxPlatformI
     }
 
     // then
-    Assert.assertNotNull(runtimeService.getVariableTyped(pi, "foo", false));
+    assertThat(runtimeService.<ObjectValue>getVariableTyped(pi, "foo", false)).isNotNull();
   }
 
   @Test
@@ -161,7 +163,7 @@ public class SetVariablesMigrationContextSwitchTest extends AbstractFoxPlatformI
         .execute();
 
     // then
-    Assert.assertNotNull(runtimeService.getVariableTyped(pi, "foo", false));
+    assertThat(runtimeService.<ObjectValue>getVariableTyped(pi, "foo", false)).isNotNull();
   }
 
   protected static Asset modelAsAsset(BpmnModelInstance modelInstance) {

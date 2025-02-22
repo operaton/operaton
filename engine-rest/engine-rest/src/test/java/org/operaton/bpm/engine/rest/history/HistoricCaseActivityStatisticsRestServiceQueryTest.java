@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.rest.history;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
@@ -85,8 +86,8 @@ public class HistoricCaseActivityStatisticsRestServiceQueryTest extends Abstract
     List<String> result = from(content).getList("");
     Assert.assertEquals(2, result.size());
 
-    Assert.assertNotNull(result.get(0));
-    Assert.assertNotNull(result.get(1));
+    assertThat(result.get(0)).isNotNull();
+    assertThat(result.get(1)).isNotNull();
 
     String id = from(content).getString("[0].id");
     long available = from(content).getLong("[0].available");

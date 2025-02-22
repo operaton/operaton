@@ -44,6 +44,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Set;
 
 @RunWith(Arquillian.class)
@@ -91,13 +93,13 @@ public class IndependentJobExecutionTest extends AbstractFoxPlatformIntegrationT
     List<ProcessApplicationDeploymentInfo> pa1DeploymentInfo = pa1Info.getDeploymentInfo();
 
     Assert.assertEquals(1, pa1DeploymentInfo.size());
-    Assert.assertTrue(registeredDeploymentsForEngine1.contains(pa1DeploymentInfo.get(0).getDeploymentId()));
+    assertThat(registeredDeploymentsForEngine1).contains(pa1DeploymentInfo.get(0).getDeploymentId());
 
     ProcessApplicationInfo pa2Info = getProcessApplicationDeploymentInfo("pa2");
 
     List<ProcessApplicationDeploymentInfo> pa2DeploymentInfo = pa2Info.getDeploymentInfo();
     Assert.assertEquals(1, pa2DeploymentInfo.size());
-    Assert.assertTrue(registeredDeploymentsForDefaultEngine.contains(pa2DeploymentInfo.get(0).getDeploymentId()));
+    assertThat(registeredDeploymentsForDefaultEngine).contains(pa2DeploymentInfo.get(0).getDeploymentId());
   }
 
   private ProcessApplicationInfo getProcessApplicationDeploymentInfo(String applicationName) {
@@ -126,8 +128,8 @@ public class IndependentJobExecutionTest extends AbstractFoxPlatformIntegrationT
     AcquiredJobs acquiredJobs = commandExecutor.execute(new AcquireJobsCmd(jobExecutor1));
 
     Assert.assertEquals(1, acquiredJobs.size());
-    Assert.assertTrue(acquiredJobs.contains(job1.getId()));
-    Assert.assertFalse(acquiredJobs.contains(job2.getId()));
+    assertThat(acquiredJobs.contains(job1.getId())).isTrue();
+    assertThat(acquiredJobs.contains(job2.getId())).isFalse();
   }
 
   @OperateOnDeployment("pa1")
@@ -148,8 +150,8 @@ public class IndependentJobExecutionTest extends AbstractFoxPlatformIntegrationT
       AcquiredJobs acquiredJobs = commandExecutor.execute(new AcquireJobsCmd(defaultJobExecutor));
 
       Assert.assertEquals(2, acquiredJobs.size());
-      Assert.assertTrue(acquiredJobs.contains(job1.getId()));
-      Assert.assertTrue(acquiredJobs.contains(job2.getId()));
+      assertThat(acquiredJobs.contains(job1.getId())).isTrue();
+      assertThat(acquiredJobs.contains(job2.getId())).isTrue();
     } finally {
       processEngineConfiguration.setJobExecutorDeploymentAware(true);
     }

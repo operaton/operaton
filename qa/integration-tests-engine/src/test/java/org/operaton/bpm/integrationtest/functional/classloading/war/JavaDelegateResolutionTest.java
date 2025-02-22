@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.integrationtest.functional.classloading.war;
 
+import static org.assertj.core.api.Assertions.fail;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -33,7 +35,7 @@ import org.operaton.bpm.integrationtest.util.TestContainer;
  * <p>Deploys two different WAR applications, a process archive and a client application.</p>
  *
  * <p>This test ensures that when the process is started from the client,
- * it is able to make the context switch to the process archvie and resolve classes from the
+ * it is able to make the context switch to the process archive and resolve classes from the
  * process archive.</p>
  *
  *
@@ -67,7 +69,7 @@ public class JavaDelegateResolutionTest extends AbstractFoxPlatformIntegrationTe
     // assert that we cannot load the delegate here:
     try {
       Class.forName("org.operaton.bpm.integrationtest.functional.classloading.ExampleDelegate");
-      Assert.fail("CNFE expected");
+      fail("CNFE expected");
     }catch (ClassNotFoundException e) {
       // expected
     }

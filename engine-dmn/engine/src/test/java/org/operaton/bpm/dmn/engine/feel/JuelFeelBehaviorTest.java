@@ -26,7 +26,7 @@ import java.util.Date;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 class JuelFeelBehaviorTest extends FeelBehavior {
 
@@ -54,7 +54,7 @@ class JuelFeelBehaviorTest extends FeelBehavior {
     getVariables().putValue("myDate", new Date());
 
     // when
-    assertThrows(FeelException.class, this::evaluateDecision);
+    assertThatExceptionOfType(FeelException.class).isThrownBy(this::evaluateDecision);
   }
 
 }

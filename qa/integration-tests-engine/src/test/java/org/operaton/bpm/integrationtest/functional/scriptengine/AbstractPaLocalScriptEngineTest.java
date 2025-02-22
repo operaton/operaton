@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.functional.scriptengine;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
-
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.application.ProcessApplicationUnavailableException;
@@ -29,9 +26,13 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.junit.runner.RunWith;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Roman Smirnov
@@ -73,7 +74,7 @@ public abstract class AbstractPaLocalScriptEngineTest extends AbstractFoxPlatfor
       }
     });
 
-    assertNotNull(reference);
+    assertThat(reference).isNotNull();
 
     ProcessApplicationInterface processApplication = null;
     try {

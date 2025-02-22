@@ -22,7 +22,10 @@ import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
 import org.operaton.bpm.integrationtest.deployment.ear.beans.EeComponent;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
+
 import org.jboss.arquillian.container.test.api.Deployment;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
@@ -46,7 +49,7 @@ public class TestFoxPlatformClientAsEjbModule_pasAsEjbModule extends AbstractFox
 
   /**
    * This only works if EAR classloader isolation is turned OFF (which is the default in WildFly)
-   *
+   * <pre>
    * test-application.ear
    *    |-- pa.jar
    *        |-- META-INF/processes.xml
@@ -59,10 +62,10 @@ public class TestFoxPlatformClientAsEjbModule_pasAsEjbModule extends AbstractFox
    *        |-- META-INF/MANIFEST.MF
    *        |-- WEB-INF/beans.xml
    *        |-- + test classes
-   *
+   * </pre>
    */
   @Deployment
-  public static EnterpriseArchive paAsEjbModule() throws Exception {
+  public static EnterpriseArchive paAsEjbModule() {
 
     JavaArchive processArchive1Jar = ShrinkWrap.create(JavaArchive.class, "pa.jar")
       .addClass(EeComponent.class) // need to add at least one EE component, otherwise the jar is not detected as an EJB module by Jboss AS
@@ -86,7 +89,7 @@ public class TestFoxPlatformClientAsEjbModule_pasAsEjbModule extends AbstractFox
   @Test
   public void testPaAsEjbModule() {
     ProcessEngine processEngine = ProgrammaticBeanLookup.lookup(ProcessEngine.class);
-    Assert.assertNotNull(processEngine);
+    assertThat(processEngine).isNotNull();
     RepositoryService repositoryService = processEngine.getRepositoryService();
     long count = repositoryService.createProcessDefinitionQuery()
       .processDefinitionKey("paAsEjbModule-process")

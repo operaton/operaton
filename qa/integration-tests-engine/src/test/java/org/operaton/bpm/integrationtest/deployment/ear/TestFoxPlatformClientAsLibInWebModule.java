@@ -20,7 +20,10 @@ import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+
 import org.jboss.arquillian.container.test.api.Deployment;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
@@ -43,7 +46,7 @@ public class TestFoxPlatformClientAsLibInWebModule extends AbstractFoxPlatformIn
 
   /**
    * Deployment layout
-   *
+   * <pre>
    * test-application.ear
    *    |-- test.war
    *        |-- lib /
@@ -51,7 +54,7 @@ public class TestFoxPlatformClientAsLibInWebModule extends AbstractFoxPlatformIn
    *        |-- WEB-INF/classes
    *            |-- META-INF/processes.xml
    *        |-- org/operaton/bpm/integrationtest/testDeployProcessArchive.bpmn20.xml
-   *
+   * </pre>
    */
   @Deployment
   public static EnterpriseArchive deployment() {
@@ -70,7 +73,7 @@ public class TestFoxPlatformClientAsLibInWebModule extends AbstractFoxPlatformIn
   @Test
   public void testDeployProcessArchive() {
     ProcessEngine processEngine = ProgrammaticBeanLookup.lookup(ProcessEngine.class);
-    Assert.assertNotNull(processEngine);
+    assertThat(processEngine).isNotNull();
     RepositoryService repositoryService = processEngine.getRepositoryService();
     long count = repositoryService.createProcessDefinitionQuery()
       .processDefinitionKey("testDeployProcessArchive")

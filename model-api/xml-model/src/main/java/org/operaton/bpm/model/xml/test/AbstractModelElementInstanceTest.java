@@ -30,7 +30,7 @@ import org.w3c.dom.DOMException;
 
 import java.util.Collection;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.model.xml.test.assertions.ModelAssertions.assertThat;
 
 // TODO Move class to test sources

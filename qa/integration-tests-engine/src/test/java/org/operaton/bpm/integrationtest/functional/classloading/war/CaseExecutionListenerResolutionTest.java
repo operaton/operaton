@@ -20,7 +20,12 @@ import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
 import org.operaton.bpm.integrationtest.functional.classloading.beans.ExampleCaseExecutionListener;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.TestContainer;
+
 import org.jboss.arquillian.container.test.api.Deployment;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -60,7 +65,7 @@ public class CaseExecutionListenerResolutionTest extends AbstractFoxPlatformInte
     // assert that we cannot load the delegate here:
     try {
       Class.forName("org.operaton.bpm.integrationtest.functional.classloading.beans.ExampleCaseExecutionListener");
-      Assert.fail("CNFE expected");
+      fail("CNFE expected");
     }catch (ClassNotFoundException e) {
       // expected
     }
@@ -81,7 +86,7 @@ public class CaseExecutionListenerResolutionTest extends AbstractFoxPlatformInte
         .variableName("listener")
         .caseInstanceIdIn(caseInstanceId);
 
-    Assert.assertNotNull(query.singleResult());
+    assertThat(query.singleResult()).isNotNull();
     Assert.assertEquals("listener-notified", query.singleResult().getValue());
 
     caseService
@@ -96,7 +101,7 @@ public class CaseExecutionListenerResolutionTest extends AbstractFoxPlatformInte
       .withCaseExecution(humanTaskId)
       .complete();
 
-    Assert.assertNotNull(query.singleResult());
+    assertThat(query.singleResult()).isNotNull();
     Assert.assertEquals("listener-notified", query.singleResult().getValue());
 
   }

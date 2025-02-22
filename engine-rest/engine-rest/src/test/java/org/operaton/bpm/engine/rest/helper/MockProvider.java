@@ -771,8 +771,8 @@ public abstract class MockProvider {
   public static final String EXAMPLE_HIST_IDENTITY_LINK_ROOT_PROC_INST_ID = "aRootProcInstId";
 
   // case definition
-  public static final String EXAMPLE_CASE_DEFINITION_ID = "aCaseDefnitionId";
-  public static final String ANOTHER_EXAMPLE_CASE_DEFINITION_ID = "anotherCaseDefnitionId";
+  public static final String EXAMPLE_CASE_DEFINITION_ID = "aCaseDefinitionId";
+  public static final String ANOTHER_EXAMPLE_CASE_DEFINITION_ID = "anotherCaseDefinitionId";
   public static final String EXAMPLE_CASE_DEFINITION_ID_LIST = EXAMPLE_CASE_DEFINITION_ID + "," + ANOTHER_EXAMPLE_CASE_DEFINITION_ID;
   public static final String EXAMPLE_CASE_DEFINITION_KEY = "aCaseDefinitionKey";
   public static final int EXAMPLE_CASE_DEFINITION_VERSION = 1;

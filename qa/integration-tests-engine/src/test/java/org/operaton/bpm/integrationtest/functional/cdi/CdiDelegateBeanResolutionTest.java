@@ -21,7 +21,11 @@ import org.operaton.bpm.integrationtest.functional.cdi.beans.ExampleDelegateBean
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
+
 import org.jboss.arquillian.container.test.api.Deployment;
+
+import static org.assertj.core.api.Assertions.assertThatCode;
+
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -31,10 +35,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * <p>Deploys two different applications, a process archive and a cleint application.</p>
+ * <p>Deploys two different applications, a process archive and a client application.</p>
  *
  * <p>This test ensures that when the process is started from the client,
- * it is able to make the context switch to the process archvie and resolve cdi beans
+ * it is able to make the context switch to the process archive and resolve cdi beans
  * from the process archive.</p>
  *
  *
@@ -68,13 +72,9 @@ public class CdiDelegateBeanResolutionTest extends AbstractFoxPlatformIntegratio
   @Test
   @OperateOnDeployment("clientDeployment")
   public void testResolveBean() {
-    try {
-      // assert that we cannot resolve the bean here:
-      ProgrammaticBeanLookup.lookup("exampleDelegateBean");
-      Assert.fail("exception expected");
-    }catch (Throwable e) {
-      // expected
-    }
+    assertThatCode(() -> ProgrammaticBeanLookup.lookup("exampleDelegateBean"))
+      .as("Expected to lookup bean")
+      .doesNotThrowAnyException();
 
     Assert.assertEquals(0, runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBean").count());
     // but the process engine can:

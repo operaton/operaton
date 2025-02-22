@@ -20,7 +20,10 @@ import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
 import org.operaton.bpm.integrationtest.functional.classloading.beans.ExampleCaseExecutionListener;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.TestContainer;
+
 import org.jboss.arquillian.container.test.api.Deployment;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -84,7 +87,7 @@ public class RedeployCaseClassloadingTest extends AbstractFoxPlatformIntegration
         .variableName("listener")
         .caseInstanceIdIn(caseInstanceId);
 
-    Assert.assertNotNull(query.singleResult());
+    assertThat(query.singleResult()).isNotNull();
     Assert.assertEquals("listener-notified", query.singleResult().getValue());
 
     caseService
@@ -100,7 +103,7 @@ public class RedeployCaseClassloadingTest extends AbstractFoxPlatformIntegration
       .complete();
 
     // then (2)
-    Assert.assertNotNull(query.singleResult());
+    assertThat(query.singleResult()).isNotNull();
     Assert.assertEquals("listener-notified", query.singleResult().getValue());
 
     repositoryService.deleteDeployment(deployment2.getId(), true, true);

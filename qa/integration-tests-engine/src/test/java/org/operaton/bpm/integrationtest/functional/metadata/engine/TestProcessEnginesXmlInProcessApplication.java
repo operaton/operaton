@@ -19,11 +19,13 @@ package org.operaton.bpm.integrationtest.functional.metadata.engine;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
+
 import org.jboss.arquillian.container.test.api.Deployment;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -52,7 +54,7 @@ public class TestProcessEnginesXmlInProcessApplication extends AbstractFoxPlatfo
   
   @Test
   public void testDeployProcessArchive() {
-   Assert.assertNotNull(processEngineService.getProcessEngine("engine1"));
+    assertThat(processEngineService.getProcessEngine("engine1")).isNotNull();
   }
 
 }

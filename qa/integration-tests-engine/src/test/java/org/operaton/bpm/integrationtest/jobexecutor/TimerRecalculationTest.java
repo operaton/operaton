@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.integrationtest.jobexecutor;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -73,7 +73,7 @@ public class TimerRecalculationTest extends AbstractFoxPlatformIntegrationTest {
     // then
     assertEquals(1, jobQuery.count());
     Job jobRecalculated = jobQuery.singleResult();
-    assertNotEquals(oldDueDate, jobRecalculated.getDuedate());
+    assertThat(jobRecalculated.getDuedate()).isNotEqualTo(oldDueDate);
     
     Calendar calendar = Calendar.getInstance();
     calendar.setTime(jobRecalculated.getCreateTime());

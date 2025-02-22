@@ -22,12 +22,14 @@ import org.operaton.bpm.integrationtest.functional.cdi.beans.ExampleSignallableA
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
+
 import org.jboss.arquillian.container.test.api.Deployment;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -41,7 +43,7 @@ import org.junit.runner.RunWith;
 public class CdiBeanSignallableActivityBehaviorResolutionTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment
-  public static WebArchive createProcessArchiveDeplyoment() {
+  public static WebArchive createProcessArchiveDeployment() {
     return initWebArchiveDeployment()
             .addClass(ExampleSignallableActivityBehaviorBean.class)
             .addAsResource("org/operaton/bpm/integrationtest/functional/cdi/CdiBeanSignallableActivityBehaviorResolutionTest.testResolveBean.bpmn20.xml");
@@ -63,7 +65,7 @@ public class CdiBeanSignallableActivityBehaviorResolutionTest extends AbstractFo
   @OperateOnDeployment("clientDeployment")
   public void testResolveClass() {
     // assert that we cannot resolve the bean here:
-    Assert.assertNull(ProgrammaticBeanLookup.lookup("exampleSignallableActivityBehaviorBean"));
+    assertThat(ProgrammaticBeanLookup.lookup("exampleSignallableActivityBehaviorBean")).isNull();
 
     // but the process can since it performs context switch to the process archive for execution
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testResolveBean");

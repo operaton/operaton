@@ -37,7 +37,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Fail.fail;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -499,6 +498,7 @@ public class ProcessBuilderTest {
   }
 
   @Test
+  @SuppressWarnings("deprecation")
   void testProcessOperatonExtensions() {
     modelInstance = Bpmn.createProcess(PROCESS_ID)
       .operatonJobPriority("${somePriority}")
@@ -1012,17 +1012,8 @@ public class ProcessBuilderTest {
 
   @Test
   void testSubProcessBuilderWrongScope() {
-    try {
-      modelInstance = Bpmn.createProcess()
-        .startEvent()
-        .subProcessDone()
-        .endEvent()
-        .done();
-      fail("Exception expected");
-    }
-    catch (Exception e) {
-      assertThat(e).isInstanceOf(BpmnModelException.class);
-    }
+    var endEventBuilder = Bpmn.createProcess().startEvent();
+    assertThatThrownBy(endEventBuilder::subProcessDone).isInstanceOf(BpmnModelException.class);
   }
 
   @Test

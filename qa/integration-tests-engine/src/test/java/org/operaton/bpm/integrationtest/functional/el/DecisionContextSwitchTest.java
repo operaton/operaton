@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.integrationtest.functional.el;
 
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.assertEquals;
 
 import java.util.List;
@@ -33,7 +34,6 @@ import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -108,7 +108,7 @@ public class DecisionContextSwitchTest extends AbstractFoxPlatformIntegrationTes
     }
 
     if(dmnDeployment == null) {
-      Assert.fail("Expected to find DMN deployment");
+      fail("Expected to find DMN deployment");
     }
 
     org.operaton.bpm.engine.repository.Deployment deployment2 = repositoryService
@@ -146,7 +146,7 @@ public class DecisionContextSwitchTest extends AbstractFoxPlatformIntegrationTes
     }
 
     if(dmnDeployment == null) {
-      Assert.fail("Expected to find DMN deployment");
+      fail("Expected to find DMN deployment");
     }
 
     org.operaton.bpm.engine.repository.Deployment deployment2 = repositoryService

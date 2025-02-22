@@ -30,7 +30,6 @@ import static org.operaton.bpm.engine.rest.util.DateTimeUtils.withTimezone;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyList;
@@ -61,7 +60,6 @@ import java.util.List;
 import java.util.Map;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
-import org.assertj.core.api.Assertions;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -4414,7 +4412,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
         captor.capture()
     );
 
-    Assertions.assertThat(captor.getValue()).containsEntry("foo", "bar");
+    assertThat(captor.getValue()).containsEntry("foo", "bar");
 
     verifyBatchJson(response.asString());
   }
@@ -4857,7 +4855,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
 
   protected void verifyBatchJson(String batchJson) {
     BatchDto batch = JsonPathUtil.from(batchJson).getObject("", BatchDto.class);
-    assertNotNull("The returned batch should not be null.", batch);
+    assertThat(batch).as("The returned batch should not be null.").isNotNull();
     assertEquals(MockProvider.EXAMPLE_BATCH_ID, batch.getId());
     assertEquals(MockProvider.EXAMPLE_BATCH_TYPE, batch.getType());
     assertEquals(MockProvider.EXAMPLE_BATCH_TOTAL_JOBS, batch.getTotalJobs());

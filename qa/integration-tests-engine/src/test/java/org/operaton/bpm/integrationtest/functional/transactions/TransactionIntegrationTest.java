@@ -27,6 +27,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import jakarta.inject.Inject;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
 import jakarta.transaction.Status;
 import jakarta.transaction.UserTransaction;
 
@@ -68,13 +72,13 @@ public class TransactionIntegrationTest extends AbstractFoxPlatformIntegrationTe
                         
       try {
         runtimeService.startProcessInstanceByKey("testProcessFailure");
-        Assert.fail("Exception expected");
+        fail("Exception expected");
       }catch (Exception ex) {
         if(!(ex instanceof RuntimeException)) {
-          Assert.fail("Wrong exception of type "+ex+" RuntimeException expected!");
+          fail("Wrong exception of type " + ex + " RuntimeException expected!");
         }    
         if(!ex.getMessage().contains("I'm a complete failure!")) {
-          Assert.fail("Different message expected");
+          fail("Different message expected");
         }
       }
       
@@ -112,8 +116,8 @@ public class TransactionIntegrationTest extends AbstractFoxPlatformIntegrationTe
       ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
         .processInstanceId(id)
         .singleResult();
-      
-      Assert.assertNull(processInstance);
+
+      assertThat(processInstance).isNull();
       
       utx.commit();
     }catch (Exception e) {
@@ -138,8 +142,8 @@ public class TransactionIntegrationTest extends AbstractFoxPlatformIntegrationTe
       ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
         .processInstanceId(id)
         .singleResult();
-      
-      Assert.assertNotNull(processInstance);
+
+      assertThat(processInstance).isNotNull();
      
       utx.commit();
       
@@ -149,8 +153,8 @@ public class TransactionIntegrationTest extends AbstractFoxPlatformIntegrationTe
       processInstance = runtimeService.createProcessInstanceQuery()
         .processInstanceId(id)
         .singleResult();
-      
-      Assert.assertNotNull(processInstance);
+
+      assertThat(processInstance).isNotNull();
       
       utx.commit();
     }catch (Exception e) {

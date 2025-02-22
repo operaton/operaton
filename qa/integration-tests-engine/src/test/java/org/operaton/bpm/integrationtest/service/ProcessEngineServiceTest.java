@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.integrationtest.service;
 
-import org.junit.Assert;
-
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.ProcessEngineService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+
 import org.jboss.arquillian.container.test.api.Deployment;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
@@ -46,6 +47,6 @@ public class ProcessEngineServiceTest extends AbstractFoxPlatformIntegrationTest
     
     ProcessEngineService engineService = BpmPlatform.getProcessEngineService();
     ProcessEngine engine = engineService.getProcessEngine("aNonExistingEngineName");
-    Assert.assertNull(engine);
+    assertThat(engine).isNull();
   }
 }

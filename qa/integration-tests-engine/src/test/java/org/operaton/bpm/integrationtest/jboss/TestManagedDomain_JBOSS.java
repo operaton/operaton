@@ -16,15 +16,9 @@
  */
 package org.operaton.bpm.integrationtest.jboss;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
-
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import org.assertj.core.api.Assertions;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.TargetsContainer;
 import org.jboss.arquillian.junit.Arquillian;
@@ -32,6 +26,9 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * <p>Ensures subsystem boots in domain mode</p>
@@ -51,7 +48,7 @@ public class TestManagedDomain_JBOSS {
   @Test
   public void shouldBeAbleToLookupDefaultProcessEngine() {
 
-    assertThatCode(() -> InitialContext.<Object>doLookup("java:global/operaton-bpm-platform/process-engine/default"))
+    assertThatCode(() -> InitialContext.doLookup("java:global/operaton-bpm-platform/process-engine/default"))
       .as("Expected to lookup default process engine")
       .doesNotThrowAnyException();
 

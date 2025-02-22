@@ -23,7 +23,6 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.connect.Connectors;
 import org.operaton.connect.spi.Connector;
-import org.operaton.connect.spi.ConnectorRequest;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -32,7 +31,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * <p>Smoketest Make sure operaton connect can be used in a process application </p>
+ * <p>Smoke-test Make sure operaton connect can be used in a process application </p>
  *
  * @author Daniel Meyer
  */

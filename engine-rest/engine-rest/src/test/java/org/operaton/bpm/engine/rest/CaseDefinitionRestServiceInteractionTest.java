@@ -153,8 +153,9 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
         .get(XML_DEFINITION_URL);
 
     String responseContent = response.asString();
-    assertThat(responseContent).contains(MockProvider.EXAMPLE_CASE_DEFINITION_ID);
-    assertThat(responseContent).contains("<?xml");
+    assertThat(responseContent)
+      .contains("<?xml")
+      .contains(MockProvider.EXAMPLE_CASE_DEFINITION_ID);
   }
 
   @Test
@@ -223,7 +224,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
     when(repositoryServiceMock.createCaseDefinitionQuery().caseDefinitionKey(nonExistingKey)).thenReturn(caseDefinitionQueryMock);
     when(caseDefinitionQueryMock.latestVersion()).thenReturn(caseDefinitionQueryMock);
     when(caseDefinitionQueryMock.singleResult()).thenReturn(null);
-    when(caseDefinitionQueryMock.list()).thenReturn(Collections.<CaseDefinition> emptyList());
+    when(caseDefinitionQueryMock.list()).thenReturn(Collections.emptyList());
 
     given()
       .pathParam("key", nonExistingKey)

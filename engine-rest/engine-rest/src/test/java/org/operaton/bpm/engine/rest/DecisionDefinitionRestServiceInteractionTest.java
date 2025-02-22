@@ -94,7 +94,6 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
 
   private RepositoryService repositoryServiceMock;
   private DecisionDefinitionQuery decisionDefinitionQueryMock;
-  private DecisionService decisionServiceMock;
   private DecisionsEvaluationBuilder decisionEvaluationBuilderMock;
 
   @Before
@@ -133,7 +132,7 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
     decisionEvaluationBuilderMock = mock(DecisionsEvaluationBuilder.class);
     when(decisionEvaluationBuilderMock.variables(anyMap())).thenReturn(decisionEvaluationBuilderMock);
 
-    decisionServiceMock = mock(DecisionService.class);
+    DecisionService decisionServiceMock = mock(DecisionService.class);
     when(decisionServiceMock.evaluateDecisionById(MockProvider.EXAMPLE_DECISION_DEFINITION_ID)).thenReturn(decisionEvaluationBuilderMock);
     when(decisionServiceMock.evaluateDecisionByKey(MockProvider.EXAMPLE_DECISION_DEFINITION_KEY)).thenReturn(decisionEvaluationBuilderMock);
 
@@ -151,8 +150,9 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
         .get(XML_DEFINITION_URL);
 
     String responseContent = response.asString();
-    assertThat(responseContent).contains(MockProvider.EXAMPLE_DECISION_DEFINITION_ID);
-    assertThat(responseContent).contains("<?xml");
+    assertThat(responseContent)
+      .contains("<?xml")
+      .contains(MockProvider.EXAMPLE_DECISION_DEFINITION_ID);
   }
 
   @Test
@@ -189,8 +189,9 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
         .get(XML_DEFINITION_BY_KEY_URL);
 
     String responseContent = response.asString();
-    assertThat(responseContent).contains(MockProvider.EXAMPLE_DECISION_DEFINITION_ID);
-    assertThat(responseContent).contains("<?xml");
+    assertThat(responseContent)
+      .contains("<?xml")
+      .contains(MockProvider.EXAMPLE_DECISION_DEFINITION_ID);
   }
 
   @Test
@@ -224,7 +225,7 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
     when(repositoryServiceMock.createDecisionDefinitionQuery().decisionDefinitionKey(nonExistingKey)).thenReturn(decisionDefinitionQueryMock);
     when(decisionDefinitionQueryMock.latestVersion()).thenReturn(decisionDefinitionQueryMock);
     when(decisionDefinitionQueryMock.singleResult()).thenReturn(null);
-    when(decisionDefinitionQueryMock.list()).thenReturn(Collections.<DecisionDefinition> emptyList());
+    when(decisionDefinitionQueryMock.list()).thenReturn(Collections.emptyList());
 
     given()
       .pathParam("key", nonExistingKey)

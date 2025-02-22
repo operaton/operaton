@@ -35,7 +35,7 @@ import org.operaton.bpm.integrationtest.util.TestContainer;
  * <p>Deploys two different WAR applications, a process archive and a client application.</p>
  *
  * <p>This test ensures that when the process is started from the client,
- * it is able to make the context switch to the process archvie and resolve classes from the
+ * it is able to make the context switch to the process archive and resolve classes from the
  * process archive.</p>
  *
  *

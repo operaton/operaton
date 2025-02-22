@@ -410,7 +410,10 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
     String content = response.asString();
     List<String> instances = from(content).getList("");
     Assert.assertEquals("There should be one process instance returned.", 1, instances.size());
-    assertThat(instances.get(0)).as("The returned process instance should not be null.").isNotNull();
+    assertThat(instances)
+      .first()
+      .as("The returned process instance should not be null.")
+      .isNotNull();
 
     String returnedProcessInstanceId = from(content).getString("[0].id");
     String returnedProcessInstanceBusinessKey = from(content).getString("[0].businessKey");
@@ -749,7 +752,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
     String content = response.asString();
     List<String> instances = from(content).getList("");
     Assert.assertEquals("There should be one process instance returned.", 1, instances.size());
-    assertThat(instances.get(0)).as("The returned process instance should not be null.").isNotNull();
+    assertThat(instances).first().as("The returned process instance should not be null.").isNotNull();
 
     String returnedProcessInstanceId = from(content).getString("[0].id");
     String returnedEndTime = from(content).getString("[0].endTime");
@@ -784,7 +787,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
     String content = response.asString();
     List<String> instances = from(content).getList("");
     Assert.assertEquals("There should be one process instance returned.", 1, instances.size());
-    assertThat(instances.get(0)).as("The returned process instance should not be null.").isNotNull();
+    assertThat(instances).first().as("The returned process instance should not be null.").isNotNull();
 
     String returnedProcessInstanceId = from(content).getString("[0].id");
     String returnedEndTime = from(content).getString("[0].endTime");

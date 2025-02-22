@@ -225,8 +225,9 @@ public class DecisionRequirementsDefinitionRestServiceInteractionTest extends Ab
         .get(XML_DEFINITION_URL);
 
     String responseContent = response.asString();
-    assertThat(responseContent).contains(MockProvider.EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_ID);
-    assertThat(responseContent).contains("<?xml");
+    assertThat(responseContent)
+      .contains(MockProvider.EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_ID)
+      .contains("<?xml");
   }
 
   // DRD retrieval

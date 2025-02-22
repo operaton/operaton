@@ -41,7 +41,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * <p>Smoketest Make sure operaton spin can be used in a process application </p>
+ * <p>Smoke-test Make sure operaton spin can be used in a process application </p>
  *
  * @author Daniel Meyer
  */

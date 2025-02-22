@@ -73,7 +73,7 @@ public class PaDataFormatProviderTest extends AbstractFoxPlatformIntegrationTest
               .serializationDataFormat(FooDataFormat.NAME)
               .objectTypeName(Foo.class.getName())));
 
-    ObjectValue objectValue = null;
+    ObjectValue objectValue;
     try {
       ProcessApplicationContext.setCurrentProcessApplication(ReferenceStoringProcessApplication.INSTANCE);
       objectValue = runtimeService.getVariableTyped(pi.getId(), "serializedObject", true);
@@ -82,8 +82,7 @@ public class PaDataFormatProviderTest extends AbstractFoxPlatformIntegrationTest
     }
 
     Object value = objectValue.getValue();
-    assertThat(value).isNotNull();
-    assertThat(value instanceof Foo).isTrue();
+    assertThat(value).isInstanceOf(Foo.class);
   }
 
 }

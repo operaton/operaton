@@ -117,9 +117,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
   private RuntimeService runtimeServiceMock;
   private RepositoryService repositoryServiceMock;
   private FormService formServiceMock;
-  private ManagementService managementServiceMock;
   private ProcessDefinitionQuery processDefinitionQueryMock;
-  private ProcessInstanceWithVariables mockInstance;
   private ProcessInstantiationBuilder mockInstantiationBuilder;
 
   @Before
@@ -127,7 +125,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
     ProcessDefinition mockDefinition = MockProvider.createMockDefinition();
     setUpRuntimeDataForDefinition(mockDefinition);
 
-    managementServiceMock = mock(ManagementService.class);
+    var managementServiceMock = mock(ManagementService.class);
     when(processEngine.getManagementService()).thenReturn(managementServiceMock);
     when(managementServiceMock.getProcessApplicationForDeployment(MockProvider.EXAMPLE_DEPLOYMENT_ID)).thenReturn(MockProvider.EXAMPLE_PROCESS_APPLICATION_NAME);
 
@@ -143,7 +141,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
   }
 
   private void setUpRuntimeDataForDefinition(ProcessDefinition mockDefinition) {
-    mockInstance = MockProvider.createMockInstanceWithVariables();
+    var mockInstance = MockProvider.createMockInstanceWithVariables();
 
     // we replace this mock with every test in order to have a clean one (in terms of invocations) for verification
     runtimeServiceMock = mock(RuntimeService.class);
@@ -182,8 +180,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
 
   private InputStream createMockProcessDefinitionBpmn20Xml() {
     // do not close the input stream, will be done in implementation
-    InputStream bpmn20XmlIn = null;
-    bpmn20XmlIn = ReflectUtil.getResourceAsStream("processes/fox-invoice_en_long_id.bpmn");
+    InputStream bpmn20XmlIn = ReflectUtil.getResourceAsStream("processes/fox-invoice_en_long_id.bpmn");
     assertThat(bpmn20XmlIn).isNotNull();
     return bpmn20XmlIn;
   }
@@ -239,8 +236,9 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
     .when().get(XML_DEFINITION_URL);
 
     String responseContent = response.asString();
-    assertThat(responseContent).contains(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
-    assertThat(responseContent).contains("<?xml");
+    assertThat(responseContent)
+      .contains("<?xml")
+      .contains(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
   }
 
   @Test
@@ -2760,8 +2758,9 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
     .when().get(XML_DEFINITION_BY_KEY_URL);
 
     String responseContent = response.asString();
-    assertThat(responseContent).contains(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
-    assertThat(responseContent).contains("<?xml");
+    assertThat(responseContent)
+      .contains("<?xml")
+      .contains(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
   }
 
   @Test

@@ -37,7 +37,7 @@ import org.junit.runner.RunWith;
  * <p>Deploys an EAR application which contains a WAR process archive, and a client application deployed as a war</p>
  *
  * <p>This test ensures that when the process is started from the client,
- * it is able to make the context switch to the process archvie and resolve classes from the
+ * it is able to make the context switch to the process archive and resolve classes from the
  * process archive.</p>
  *
  *

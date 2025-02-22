@@ -91,7 +91,7 @@ public class HalResourceCacheTest extends AbstractRestServiceTest {
     for (int i = 0; i < 2 * cache.getCapacity(); i++) {
       cache.put("id" + i, i);
     }
-    assertThat(cache.size() <= cache.getCapacity()).isTrue();
+    assertThat(cache.size()).isLessThanOrEqualTo(cache.getCapacity());
 
     // old entries should be removed
     assertThat(cache.get("a")).isNull();
@@ -157,7 +157,7 @@ public class HalResourceCacheTest extends AbstractRestServiceTest {
   public void testCacheInvalidParameterName() {
     HalRelationCacheConfiguration configuration = new HalRelationCacheConfiguration();
     configuration.setCacheImplementationClass(DefaultHalResourceCache.class);
-    configuration.addCacheConfiguration(HalUser.class, Collections.<String, Object>singletonMap("unknown", "property"));
+    configuration.addCacheConfiguration(HalUser.class, Collections.singletonMap("unknown", "property"));
 
     assertThatThrownBy(() -> contextListener.configureCaches(configuration))
       .isInstanceOf(HalRelationCacheConfigurationException.class)
@@ -173,7 +173,7 @@ public class HalResourceCacheTest extends AbstractRestServiceTest {
     when(user.getFirstName()).thenReturn("kermit");
     UserQuery userQuery = mock(UserQuery.class);
     when(userQuery.userIdIn(Mockito.any())).thenReturn(userQuery);
-    when(userQuery.listPage(anyInt(), anyInt())).thenReturn(Arrays.asList(user));
+    when(userQuery.listPage(anyInt(), anyInt())).thenReturn(List.of(user));
     when(processEngine.getIdentityService().createUserQuery()).thenReturn(userQuery);
 
     // configure cache

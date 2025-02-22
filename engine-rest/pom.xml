@@ -25,9 +25,9 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>org.operaton.bpm</groupId>
-        <artifactId>operaton-core-internal-dependencies</artifactId>
-        <version>${project.version}</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${version.spring-boot}</version>
         <scope>import</scope>
         <type>pom</type>
       </dependency>
@@ -41,9 +41,11 @@
         <type>pom</type>
       </dependency>
       <dependency>
-        <groupId>io.rest-assured</groupId>
-        <artifactId>rest-assured</artifactId>
-        <version>${version.rest-assured}</version>
+        <groupId>jakarta.platform</groupId>
+        <artifactId>jakarta.jakartaee-bom</artifactId>
+        <version>${version.jakarta-ee-spec}</version>
+        <type>pom</type>
+        <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>com.fasterxml.jackson</groupId>
@@ -53,14 +55,11 @@
         <type>pom</type>
       </dependency>
       <dependency>
-        <groupId>org.apache.httpcomponents</groupId>
-        <artifactId>httpcore</artifactId>
-        <version>${version.apache.httpcore}</version>
-      </dependency>
-      <dependency>
-        <groupId>commons-codec</groupId>
-        <artifactId>commons-codec</artifactId>
-        <version>${version.commons-codec}</version>
+        <groupId>org.jboss.resteasy</groupId>
+        <artifactId>resteasy-bom</artifactId>
+        <version>${version.resteasy}</version>
+        <scope>import</scope>
+        <type>pom</type>
       </dependency>
     </dependencies>
   </dependencyManagement>

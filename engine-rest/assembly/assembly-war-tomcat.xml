@@ -50,7 +50,7 @@
     <dependencySet>
       <outputDirectory>/</outputDirectory>
       <includes>
-        <include>org.operaton.bpm:operaton-engine-rest:war:*</include>
+        <include>org.operaton.bpm:operaton-engine-rest-jakarta:war:*</include>
       </includes>
       <unpack>true</unpack>
       <unpackOptions>

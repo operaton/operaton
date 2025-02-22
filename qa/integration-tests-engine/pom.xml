@@ -12,7 +12,6 @@
 
   <properties>
     <!-- Needs to be updated after a new WildFly release -->
-    <wildfly.container.adapter.groupId>org.wildfly.arquillian</wildfly.container.adapter.groupId>
     <wildfly.container.adapter.version>5.0.1.Final</wildfly.container.adapter.version>
 
     <version.arquillian>1.9.3.Final</version.arquillian>
@@ -295,18 +294,6 @@
                 <exclude>org/operaton/bpm/integrationtest/util/TestProcessApplication*</exclude>
               </excludes>
             </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>initialize</phase>
-            <goals>
-              <goal>properties</goal>
-            </goals>
           </execution>
         </executions>
       </plugin>
@@ -755,6 +742,12 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-dependency-plugin</artifactId>
             <executions>
+              <execution>
+                <phase>initialize</phase>
+                <goals>
+                  <goal>properties</goal>
+                </goals>
+              </execution>
               <execution>
                 <id>unpack-sql-scripts</id>
                 <phase>generate-test-sources</phase>

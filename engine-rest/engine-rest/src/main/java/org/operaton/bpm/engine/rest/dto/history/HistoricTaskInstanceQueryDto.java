@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.rest.dto.history;
 
+import static java.lang.Boolean.TRUE;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.history.HistoricTaskInstanceQuery;
 import org.operaton.bpm.engine.impl.HistoricTaskInstanceQueryImpl;

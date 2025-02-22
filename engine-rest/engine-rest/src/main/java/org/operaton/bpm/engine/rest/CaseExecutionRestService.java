@@ -36,7 +36,7 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public interface CaseExecutionRestService {
 
-  public static final String PATH = "/case-execution";
+  String PATH = "/case-execution";
 
   @Path("/{id}")
   CaseExecutionResource getCaseExecution(@PathParam("id") String caseExecutionId);

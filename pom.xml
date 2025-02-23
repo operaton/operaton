@@ -369,7 +369,7 @@
         <module>distro/tomcat</module>
         <module>distro/sql-script</module>
         <module>clients/java</module>
-        <module>internal-dependencies</module>
+        <module>bom/internal-dependencies</module>
         <module>database</module>
         <module>parent</module>
         <module>bom</module>
@@ -394,7 +394,7 @@
         <module>examples</module>
         <module>engine-plugins</module>
         <module>distro/sql-script</module>
-        <module>internal-dependencies</module>
+        <module>bom/internal-dependencies</module>
         <module>database</module>
         <module>parent</module>
         <module>bom</module>
@@ -464,7 +464,7 @@
         <module>engine-spring</module>
         <module>engine-rest</module>
 
-        <module>internal-dependencies</module>
+        <module>bom/internal-dependencies</module>
         <module>database</module>
         <module>parent</module>
         <module>bom</module>
@@ -475,7 +475,7 @@
       <!-- profile for running webapp unit tests in QA -->
       <id>check-webapps</id>
       <modules>
-        <module>internal-dependencies</module>
+        <module>bom/internal-dependencies</module>
         <module>parent</module>
         <module>bom</module>
       </modules>
@@ -512,7 +512,7 @@
         <module>test-utils/archunit</module>
         <module>test-utils/assert</module>
         <module>test-utils/testcontainers</module>
-        <module>internal-dependencies</module>
+        <module>bom/internal-dependencies</module>
         <module>database</module>
         <module>parent</module>
         <module>bom</module>

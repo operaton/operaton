@@ -63,7 +63,7 @@
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-core-internal-dependencies</artifactId>
       <version>${project.version}</version>
-      <scope>import</scope>
+      <scope>compile</scope>
       <type>pom</type>
     </dependency>
 

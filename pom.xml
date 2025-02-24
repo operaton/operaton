@@ -354,7 +354,6 @@
         <module>freemarker-template-engine</module>
         <module>test-utils/testcontainers</module>
         <module>test-utils/junit5-extension</module>
-        <module>test-utils/junit5-extension-dmn</module>
         <module>test-utils/assert</module>
         <module>test-utils/archunit</module>
         <module>engine</module>

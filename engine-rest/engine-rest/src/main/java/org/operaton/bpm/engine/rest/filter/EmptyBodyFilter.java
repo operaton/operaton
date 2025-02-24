@@ -35,10 +35,11 @@ public class EmptyBodyFilter extends AbstractEmptyBodyFilter {
     return new HttpServletRequestWrapper(req) {
 
       @Override
-      public ServletInputStream getInputStream() throws IOException {
+      public ServletInputStream getInputStream() {
 
         return new ServletInputStream() {
 
+          final InputStream inputStream = getRequestBody(isBodyEmpty, requestBody);
           boolean finished = false;
 
           @Override
@@ -55,8 +56,6 @@ public class EmptyBodyFilter extends AbstractEmptyBodyFilter {
           public void setReadListener(ReadListener readListener) {
             throw new UnsupportedOperationException();
           }
-
-          final InputStream inputStream = getRequestBody(isBodyEmpty, requestBody);
 
           @Override
           public int read() throws IOException {

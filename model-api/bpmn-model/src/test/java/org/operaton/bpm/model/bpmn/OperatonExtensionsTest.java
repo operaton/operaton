@@ -67,10 +67,10 @@ public class OperatonExtensionsTest {
 
   public void initOperatonExtensionsTest(String namespace, BpmnModelInstance modelInstance) {
     this.originalModelInstance = modelInstance;
-    setUp();
+    initModelElements();
   }
 
-  public void setUp() {
+  private void initModelElements() {
     modelInstance = originalModelInstance.clone();
     process = modelInstance.getModelElementById(PROCESS_ID);
     startEvent = modelInstance.getModelElementById(START_EVENT_ID);

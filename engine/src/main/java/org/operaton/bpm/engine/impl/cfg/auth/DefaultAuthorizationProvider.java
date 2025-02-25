@@ -528,10 +528,6 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
   }
 
   protected boolean areIdsEqual(String firstId, String secondId) {
-    if (firstId == null || secondId == null) {
-      return Objects.equals(firstId, secondId);
-    }else {
-      return firstId.equals(secondId);
-    }
+    return Objects.equals(firstId, secondId);
   }
 }

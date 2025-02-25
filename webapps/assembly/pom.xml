@@ -59,15 +59,6 @@
       </exclusions>
     </dependency>
 
-    <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-core-internal-dependencies</artifactId>
-      <version>${project.version}</version>
-      <scope>compile</scope>
-      <type>pom</type>
-    </dependency>
-
-
     <!-- rest api -->
     <dependency>
       <groupId>org.operaton.bpm</groupId>

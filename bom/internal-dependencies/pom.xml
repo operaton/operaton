@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-parent</artifactId>
-    <relativePath>../parent</relativePath>
+    <relativePath>../../parent/pom.xml</relativePath>
     <version>1.0.0-beta-4-SNAPSHOT</version>
   </parent>
 
@@ -332,13 +332,6 @@
       </dependency>
 
       <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-test</artifactId>
-        <version>5.3.39</version>
-        <scope>test</scope>
-      </dependency>
-
-      <dependency>
         <groupId>jakarta.ws.rs</groupId>
         <artifactId>jakarta.ws.rs-api</artifactId>
         <version>4.0.0</version>
@@ -363,12 +356,6 @@
         <version>6.2.1</version>
         <scope>test</scope>
       </dependency>-->
-
-      <dependency>
-        <groupId>jakarta.servlet</groupId>
-        <artifactId>jakarta.servlet-api</artifactId>
-        <version>6.1.0</version>
-      </dependency>
 
       <dependency>
         <groupId>jakarta.xml.bind</groupId>

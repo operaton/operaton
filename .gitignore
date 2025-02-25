@@ -29,4 +29,7 @@ operaton-h2-dbs
 pom.xml.versionsBackup
 out/jreleaser
 .env
+.mvn/*
+!.mvn/wrapper/*
+*.log
 

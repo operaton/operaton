@@ -51,15 +51,6 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>org.operaton.bpm.dmn</groupId>
-      <artifactId>operaton-engine-dmn</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.operaton.bpm.dmn</groupId>
-      <artifactId>operaton-dmn-junit5</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
       <scope>test</scope>

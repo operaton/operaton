@@ -503,7 +503,6 @@
         <module>distro/sql-script</module>
         <module>clients/java</module>
         <module>test-utils/junit5-extension</module>
-        <module>test-utils/junit5-extension-dmn</module>
         <module>test-utils/archunit</module>
         <module>test-utils/assert</module>
         <module>test-utils/testcontainers</module>

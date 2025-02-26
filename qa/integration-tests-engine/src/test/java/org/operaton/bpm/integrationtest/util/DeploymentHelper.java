@@ -21,8 +21,8 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 
 public class DeploymentHelper extends AbstractDeploymentHelper {
 
-  protected static final String CAMUNDA_EJB_CLIENT = "org.operaton.bpm.javaee:operaton-ejb-client-jakarta";
-  protected static final String CAMUNDA_ENGINE_CDI = "org.operaton.bpm:operaton-engine-cdi-jakarta";
+  protected static final String CAMUNDA_EJB_CLIENT = "org.operaton.bpm.jakartaee:operaton-ejb-client";
+  protected static final String CAMUNDA_ENGINE_CDI = "org.operaton.bpm:operaton-engine-cdi";
   protected static final String CAMUNDA_ENGINE_SPRING = "org.operaton.bpm:operaton-engine-spring-6";
 
   public static JavaArchive getEjbClient() {

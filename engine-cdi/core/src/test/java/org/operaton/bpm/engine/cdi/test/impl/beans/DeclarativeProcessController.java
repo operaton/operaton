@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.cdi.test.impl.beans;
 
-import javax.enterprise.context.Dependent;
+import jakarta.enterprise.context.Dependent;
 import javax.inject.Inject;
 
 import org.operaton.bpm.engine.cdi.annotation.CompleteTask;

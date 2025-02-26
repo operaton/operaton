@@ -18,7 +18,7 @@ package org.operaton.bpm.engine.cdi.test.impl.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import javax.enterprise.inject.Alternative;
+import jakarta.enterprise.inject.Alternative;
 import javax.inject.Named;
 import org.jboss.arquillian.container.test.api.Deployer;
 import org.jboss.arquillian.container.test.api.Deployment;

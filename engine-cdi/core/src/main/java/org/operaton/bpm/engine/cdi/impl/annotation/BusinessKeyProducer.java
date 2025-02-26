@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.cdi.impl.annotation;
 
-import javax.enterprise.inject.Produces;
+import jakarta.enterprise.inject.Produces;
 import javax.inject.Named;
 
 import org.operaton.bpm.engine.cdi.annotation.BusinessKey;

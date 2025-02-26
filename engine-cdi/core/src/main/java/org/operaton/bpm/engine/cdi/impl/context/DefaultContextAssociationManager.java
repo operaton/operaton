@@ -23,8 +23,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.enterprise.context.ContextNotActiveException;
-import javax.enterprise.inject.spi.BeanManager;
+import jakarta.enterprise.context.ContextNotActiveException;
+import jakarta.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
 import javax.inject.Scope;
 

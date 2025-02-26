@@ -16,7 +16,7 @@
  */
 package org.operaton.spin.plugin.variables;
 
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class FailingXmlDeserializationBean extends JsonSerializable {

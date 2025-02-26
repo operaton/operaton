@@ -21,7 +21,7 @@ import org.operaton.bpm.engine.cdi.impl.util.BeanManagerLookup;
 import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
 import jakarta.el.ELResolver;
 
-import javax.enterprise.inject.spi.BeanManager;
+import jakarta.enterprise.inject.spi.BeanManager;
 import java.beans.FeatureDescriptor;
 import java.util.Iterator;
 
@@ -38,7 +38,7 @@ public class CdiResolver extends ELResolver {
     return BeanManagerLookup.getBeanManager();
   }
 
-  protected javax.el.ELResolver getWrappedResolver() {
+  protected ELResolver getWrappedResolver() {
     BeanManager beanManager = getBeanManager();
     return beanManager.getELResolver();
   }
@@ -87,7 +87,7 @@ public class CdiResolver extends ELResolver {
     return getWrappedResolver().invoke(wrapContext(context), base, method, paramTypes, params);
   }
 
-  protected javax.el.ELContext wrapContext(ELContext context) {
+  protected ELContext wrapContext(ELContext context) {
     return new ElContextDelegate(context, getWrappedResolver());
   }
 

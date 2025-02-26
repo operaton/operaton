@@ -20,7 +20,7 @@
     <!-- These properties are used in both the BOM as well as operaton-parent and subprojects -->
     <version.mybatis>3.5.15</version.mybatis>
     <version.joda-time>2.12.5</version.joda-time>
-    <version.jetty>11.0.24</version.jetty>
+    <version.jetty>12.0.16</version.jetty>
     <version.uuid-generator>4.3.0</version.uuid-generator>
     <version.feel-scala>1.18.1</version.feel-scala>
     <version.quarkus>3.15.0</version.quarkus>
@@ -293,7 +293,7 @@
         <plugin>
           <groupId>org.eclipse.jetty</groupId>
           <artifactId>jetty-maven-plugin</artifactId>
-          <version>11.0.24</version>
+          <version>${version.jetty}</version>
         </plugin>
         <plugin>
           <groupId>org.eclipse.transformer</groupId>
@@ -340,11 +340,10 @@
         <module>spring-boot-starter</module>
         <module>quarkus-extension</module>
         <module>qa</module>
-        <module>javaee/ejb-service</module>
-        <module>javaee/ejb-client</module>
-        <module>javaee/ejb-client-jakarta</module>
-        <module>javaee/jobexecutor-ra</module>
-        <module>javaee/jobexecutor-rar</module>
+        <module>jakarta-ee/ejb-service</module>
+        <module>jakarta-ee/ejb-client</module>
+        <module>jakarta-ee/jobexecutor-ra</module>
+        <module>jakarta-ee/jobexecutor-rar</module>
         <module>model-api</module>
         <module>engine-dmn</module>
         <module>connect</module>
@@ -368,7 +367,6 @@
         <module>distro/tomcat</module>
         <module>distro/sql-script</module>
         <module>clients/java</module>
-        <module>bom/internal-dependencies</module>
         <module>database</module>
         <module>parent</module>
         <module>bom</module>
@@ -393,7 +391,6 @@
         <module>examples</module>
         <module>engine-plugins</module>
         <module>distro/sql-script</module>
-        <module>bom/internal-dependencies</module>
         <module>database</module>
         <module>parent</module>
         <module>bom</module>
@@ -417,8 +414,7 @@
         <activeByDefault>false</activeByDefault>
       </activation>
       <modules>
-        <module>javaee/ejb-client</module>
-        <module>javaee/ejb-client-jakarta</module>
+        <module>jakarta-ee/ejb-client</module>
         <module>distro/license-book</module>
         <module>distro/wildfly</module>
       </modules>
@@ -463,7 +459,6 @@
         <module>engine-spring</module>
         <module>engine-rest</module>
 
-        <module>bom/internal-dependencies</module>
         <module>database</module>
         <module>parent</module>
         <module>bom</module>
@@ -474,7 +469,6 @@
       <!-- profile for running webapp unit tests in QA -->
       <id>check-webapps</id>
       <modules>
-        <module>bom/internal-dependencies</module>
         <module>parent</module>
         <module>bom</module>
       </modules>
@@ -499,19 +493,16 @@
         <module>spin</module>
         <module>commons</module>
         <module>freemarker-template-engine</module>
-        <module>javaee/ejb-client</module>
-        <module>javaee/ejb-client-jakarta</module>
+        <module>jakarta-ee/ejb-client</module>
         <module>webapps</module>
         <module>engine-plugins</module>
         <module>distro/webjar</module>
         <module>distro/sql-script</module>
         <module>clients/java</module>
         <module>test-utils/junit5-extension</module>
-        <module>test-utils/junit5-extension-dmn</module>
         <module>test-utils/archunit</module>
         <module>test-utils/assert</module>
         <module>test-utils/testcontainers</module>
-        <module>bom/internal-dependencies</module>
         <module>database</module>
         <module>parent</module>
         <module>bom</module>

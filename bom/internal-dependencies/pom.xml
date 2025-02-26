@@ -187,7 +187,7 @@
       <dependency>
         <groupId>org.apache.ant</groupId>
         <artifactId>ant</artifactId>
-        <version>1.9.16</version>
+        <version>1.10.15</version>
         <scope>provided</scope>
       </dependency>
 
@@ -214,6 +214,18 @@
         <groupId>org.apache.openjpa</groupId>
         <artifactId>openjpa</artifactId>
         <version>${version.openjpa}</version>
+      </dependency>
+
+      <!-- Jetty -->
+      <dependency>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-server</artifactId>
+        <version>${version.jetty}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-webapp</artifactId>
+        <version>11.0.24</version>
       </dependency>
 
       <!-- groovy script engine dependencies -->
@@ -326,36 +338,17 @@
       </dependency>
 
       <dependency>
-        <groupId>jakarta.servlet</groupId>
-        <artifactId>jakarta.servlet-api</artifactId>
-        <version>6.1.0</version>
-      </dependency>
-
-      <dependency>
         <groupId>jakarta.ws.rs</groupId>
         <artifactId>jakarta.ws.rs-api</artifactId>
         <version>4.0.0</version>
         <scope>provided</scope>
       </dependency>
 
-      <!--<dependency>
+      <dependency>
         <groupId>jakarta.servlet</groupId>
         <artifactId>jakarta.servlet-api</artifactId>
         <version>6.1.0</version>
-      </dependency>-->
-
-      <!--<dependency>
-        <groupId>jakarta.xml.bind</groupId>
-        <artifactId>jakarta.xml.bind-api</artifactId>
-        <version>4.0.2</version>
-      </dependency>-->
-
-      <!--<dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-test</artifactId>
-        <version>6.2.1</version>
-        <scope>test</scope>
-      </dependency>-->
+      </dependency>
 
       <dependency>
         <groupId>jakarta.xml.bind</groupId>
@@ -505,6 +498,11 @@
         <groupId>org.testcontainers</groupId>
         <artifactId>mssqlserver</artifactId>
         <version>${version.testcontainers}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.angus</groupId>
+        <artifactId>jakarta.mail</artifactId>
+        <version>2.0.3</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

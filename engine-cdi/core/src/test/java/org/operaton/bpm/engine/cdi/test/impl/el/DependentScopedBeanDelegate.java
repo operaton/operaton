@@ -20,7 +20,7 @@ import org.operaton.bpm.engine.cdi.test.impl.el.beans.DependentScopedBean;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
 
-import javax.enterprise.context.Dependent;
+import jakarta.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.inject.Named;
 

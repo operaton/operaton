@@ -15,6 +15,7 @@
   <modules>
     <module>operaton-only-bom</module>
     <module>operaton-bom</module>
+    <module>internal-dependencies</module>
   </modules>
 
   <description>${project.name}</description>

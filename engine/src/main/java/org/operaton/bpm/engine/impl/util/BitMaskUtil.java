@@ -98,8 +98,8 @@ public class BitMaskUtil {
     return MASKS[bitNumber - 1];
   }
 
-  private static void ensureBitRange(final int bitNumber) {
-    if(bitNumber <= 0 && bitNumber > 8) {
+  static void ensureBitRange(final int bitNumber) {
+    if(bitNumber <= 0 || bitNumber > 8) {
       throw LOG.invalidBitNumber(bitNumber);
     }
   }

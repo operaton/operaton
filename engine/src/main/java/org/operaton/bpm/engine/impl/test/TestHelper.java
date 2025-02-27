@@ -511,16 +511,30 @@ public abstract class TestHelper {
   }
 
   public static ProcessEngine getProcessEngine(String configurationResource) {
-    return processEngines.computeIfAbsent(configurationResource, resource -> {
-      LOG.debug("==== BUILDING PROCESS ENGINE ========================================================================");
-      ProcessEngine newProcessEngine = ProcessEngineConfiguration
-        .createProcessEngineConfigurationFromResource(resource)
-        .buildProcessEngine();
-      LOG.debug("==== PROCESS ENGINE CREATED =========================================================================");
-      return newProcessEngine;
-    });
+    return getProcessEngine(configurationResource, null, true);
+  }
+  
+  public static ProcessEngine getProcessEngine(String configurationResource,
+        Consumer<ProcessEngineConfiguration> processEngineConfigurator, boolean cacheForConfigurationResource) {
+    if (cacheForConfigurationResource) {
+      return processEngines.computeIfAbsent(configurationResource, resource -> 
+        createProcessEngine(resource, processEngineConfigurator));
+    }
+    return createProcessEngine(configurationResource, processEngineConfigurator);
   }
 
+  private static ProcessEngine createProcessEngine(String resource,
+	    Consumer<ProcessEngineConfiguration> processEngineConfigurator) {
+    LOG.debug("==== BUILDING PROCESS ENGINE ========================================================================");
+    ProcessEngineConfiguration configuration = ProcessEngineConfiguration
+          .createProcessEngineConfigurationFromResource(resource);
+    if (processEngineConfigurator != null)
+        processEngineConfigurator.accept(configuration);
+    ProcessEngine newProcessEngine = configuration.buildProcessEngine();
+    LOG.debug("==== PROCESS ENGINE CREATED =========================================================================");
+    return newProcessEngine;
+  }
+  
   public static void closeProcessEngines() {
     for (ProcessEngine processEngine: processEngines.values()) {
       processEngine.close();

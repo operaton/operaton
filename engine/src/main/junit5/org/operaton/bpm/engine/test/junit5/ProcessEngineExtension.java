@@ -160,7 +160,7 @@ public class ProcessEngineExtension implements TestWatcher,
   protected boolean ensureCleanAfterTest = false;
   protected List<String> additionalDeployments = new ArrayList<>();
 
-  protected Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator;
+  protected Consumer<ProcessEngineConfiguration> processEngineConfigurator;
 
   private boolean cacheForConfigurationResource = true;
 
@@ -367,7 +367,7 @@ public class ProcessEngineExtension implements TestWatcher,
     return this;
   }
 
-  public ProcessEngineExtension configurator (Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator) {
+  public ProcessEngineExtension configurator (Consumer<ProcessEngineConfiguration> processEngineConfigurator) {
     this.processEngineConfigurator = processEngineConfigurator;
     return this;
   }

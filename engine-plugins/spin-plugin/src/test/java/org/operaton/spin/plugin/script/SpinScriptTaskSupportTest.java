@@ -18,8 +18,8 @@ package org.operaton.spin.plugin.script;
 
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.junit5.DeploymentExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.deployment.DeploymentExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 

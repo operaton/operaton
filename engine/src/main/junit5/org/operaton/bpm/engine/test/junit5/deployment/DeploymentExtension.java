@@ -1,4 +1,4 @@
-package org.operaton.bpm.engine.test.junit5;
+package org.operaton.bpm.engine.test.junit5.deployment;
 
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;

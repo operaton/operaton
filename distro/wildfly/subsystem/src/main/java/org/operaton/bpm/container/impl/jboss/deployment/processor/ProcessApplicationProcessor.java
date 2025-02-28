@@ -229,7 +229,7 @@ public class ProcessApplicationProcessor implements DeploymentUnitProcessor {
           ClassInfo classInfo = getClassInfo(annotation);
           return classInfo == null || !unsupportedClasses.contains(classInfo);
         })
-        .collect(Collectors.toList());
+        .toList();
   }
 
   protected ClassInfo getClassInfo(AnnotationInstance annotation) {

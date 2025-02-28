@@ -206,7 +206,7 @@ public class ExclusiveOverProcessHierarchiesTest {
 
         return jobs.stream()
                 .map(Job::getId)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     protected int getAllJobsSize() {

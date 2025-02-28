@@ -424,25 +424,6 @@
 
     <profile>
       <id>testcontainers</id>
-      <dependencyManagement>
-        <dependencies>
-          <dependency>
-            <groupId>com.fasterxml.jackson</groupId>
-            <artifactId>jackson-bom</artifactId>
-            <version>${version.jackson}</version>
-            <scope>import</scope>
-            <type>pom</type>
-          </dependency>
-        </dependencies>
-      </dependencyManagement>
-      <dependencies>
-        <!-- Testcontainers depends on docker-java which depends on jackson-annotations -->
-        <dependency>
-          <artifactId>jackson-annotations</artifactId>
-          <groupId>com.fasterxml.jackson.core</groupId>
-          <scope>test</scope>
-        </dependency>
-      </dependencies>
       <properties>
         <database.url>jdbc:tc:${database.tc.url}://localhost:${database.port}${database.tc.params}</database.url>
       </properties>

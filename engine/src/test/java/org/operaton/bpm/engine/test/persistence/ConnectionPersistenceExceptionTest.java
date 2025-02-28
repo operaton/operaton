@@ -21,7 +21,6 @@ import static org.assertj.core.api.ThrowableAssert.catchThrowable;
 import static org.operaton.bpm.engine.impl.util.ExceptionUtil.PERSISTENCE_CONNECTION_ERROR_CLASS;
 
 import java.sql.SQLException;
-import java.util.Properties;
 import org.apache.ibatis.datasource.pooled.PooledDataSource;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.operaton.bpm.engine.IdentityService;

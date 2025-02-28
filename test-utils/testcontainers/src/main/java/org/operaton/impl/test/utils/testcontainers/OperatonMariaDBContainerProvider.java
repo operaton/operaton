@@ -21,8 +21,6 @@ import org.testcontainers.containers.MariaDBContainer;
 import org.testcontainers.containers.MariaDBContainerProvider;
 import org.testcontainers.utility.DockerImageName;
 
-import java.io.IOException;
-
 public class OperatonMariaDBContainerProvider extends MariaDBContainerProvider {
 
   private static final String NAME = "cammariadb";

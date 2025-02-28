@@ -260,9 +260,6 @@ public class ProcessEngineExtension implements TestWatcher,
    if (ensureCleanAfterTest) {
      TestHelper.assertAndEnsureCleanDbAndCache(processEngine);
    }
-
-   //processEngine.getRuntimeService().createProcessInstanceQuery().
-   //processEngine.getTaskService().deleteTasks(processEngine.getTaskService().createTaskQuery().list().stream().map(Task::getId).toList(), "Test cleanup");
   }
 
   @Override

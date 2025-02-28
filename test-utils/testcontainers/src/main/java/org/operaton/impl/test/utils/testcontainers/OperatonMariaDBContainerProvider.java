@@ -23,7 +23,7 @@ import org.testcontainers.utility.DockerImageName;
 
 public class OperatonMariaDBContainerProvider extends MariaDBContainerProvider {
 
-  private static final String NAME = "cammariadb";
+  private static final String NAME = "operatonmariadb";
 
   @Override
   public boolean supports(String databaseType) {
@@ -31,9 +31,9 @@ public class OperatonMariaDBContainerProvider extends MariaDBContainerProvider {
   }
 
   @Override
-  public JdbcDatabaseContainer newInstance(String tag) {
+  public JdbcDatabaseContainer<?> newInstance(String tag) {
     DockerImageName dockerImageName = TestcontainersHelper
       .resolveDockerImageName("mariadb", tag, "mariadb");
-    return (JdbcDatabaseContainer) new MariaDBContainer(dockerImageName).withCommand("mariadbd --transaction-isolation=READ-COMMITTED");
+    return new MariaDBContainer<>(dockerImageName).withCommand("mariadbd --transaction-isolation=READ-COMMITTED");
   }
 }

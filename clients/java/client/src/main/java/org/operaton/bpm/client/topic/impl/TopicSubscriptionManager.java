@@ -232,7 +232,10 @@ public class TopicSubscriptionManager implements Runnable {
       ACQUISITION_MONITOR.lock();
       try {
         if (isRunning.get()) {
-          IS_WAITING.await(waitTime, TimeUnit.MILLISECONDS);
+          boolean wasSignaled = IS_WAITING.await(waitTime, TimeUnit.MILLISECONDS);
+          if (!wasSignaled) {
+              LOG.timeout(waitTime);
+          }
         }
       } catch (InterruptedException e) {
         LOG.exceptionWhileExecutingBackoffStrategyMethod(e);

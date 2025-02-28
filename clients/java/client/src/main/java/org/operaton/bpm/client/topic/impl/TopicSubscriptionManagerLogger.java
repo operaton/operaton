@@ -72,4 +72,10 @@ public class TopicSubscriptionManagerLogger extends ExternalTaskClientLogger {
       String.format("Fetch and lock new external tasks for %d topics", subscriptions.size()));
   }
 
+  protected void timeout(long waitTime) {
+    logDebug(
+      "009",
+      String.format("Timed out after %d ms without a signal.", waitTime));
+  }
+
 }

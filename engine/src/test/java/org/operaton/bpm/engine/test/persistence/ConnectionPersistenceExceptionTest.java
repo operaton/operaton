@@ -30,7 +30,6 @@ import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
 import org.operaton.bpm.engine.impl.test.RequiredDatabase;
-import org.operaton.bpm.engine.impl.util.PropertiesUtil;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.junit.After;
@@ -82,11 +81,8 @@ public class ConnectionPersistenceExceptionTest {
   // helper ////////////////////////////////////////////////////////////////////////////////////////
 
   protected SQLException provokePersistenceConnectionError() {
-    Properties properties = PropertiesUtil.getProperties("/database.properties");
-    String host = (String) properties.get("database.host");
-    String port = (String) properties.get("database.port");
 
-    String jdbcUrl = resetUrl.replace(host + ":" + port, "not-existing-server:123");
+    String jdbcUrl = resetUrl.replace(":tc", "");
     ((PooledDataSource) engineConfig.getDataSource()).setUrl(jdbcUrl);
 
     Throwable result = catchThrowable(() -> identityService.deleteUser("foo"));

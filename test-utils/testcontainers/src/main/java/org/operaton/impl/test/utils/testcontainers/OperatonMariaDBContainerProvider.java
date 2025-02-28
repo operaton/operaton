@@ -21,6 +21,8 @@ import org.testcontainers.containers.MariaDBContainer;
 import org.testcontainers.containers.MariaDBContainerProvider;
 import org.testcontainers.utility.DockerImageName;
 
+import java.io.IOException;
+
 public class OperatonMariaDBContainerProvider extends MariaDBContainerProvider {
 
   private static final String NAME = "cammariadb";
@@ -34,6 +36,6 @@ public class OperatonMariaDBContainerProvider extends MariaDBContainerProvider {
   public JdbcDatabaseContainer newInstance(String tag) {
     DockerImageName dockerImageName = TestcontainersHelper
       .resolveDockerImageName("mariadb", tag, "mariadb");
-    return new MariaDBContainer(dockerImageName);
+    return (JdbcDatabaseContainer) new MariaDBContainer(dockerImageName).withCommand("mariadbd --transaction-isolation=READ-COMMITTED");
   }
 }

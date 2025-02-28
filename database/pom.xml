@@ -34,7 +34,7 @@
     <operaton.version.old>7.22.0</operaton.version.old>
 
     <!-- Testcontainers JDBC URL parameters. By default, an empty string -->
-    <database.tc.params />
+    <database.tc.params>TC_DAEMON=true</database.tc.params>
   </properties>
 
   <dependencyManagement>
@@ -443,6 +443,9 @@
           <scope>test</scope>
         </dependency>
       </dependencies>
+      <properties>
+        <database.url>jdbc:tc:${database.tc.url}://localhost:${database.port}${database.tc.params}</database.url>
+      </properties>
     </profile>
 
   </profiles>

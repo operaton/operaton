@@ -226,18 +226,33 @@ public class TopicSubscriptionManager implements Runnable {
       LOG.exceptionWhileExecutingBackoffStrategyMethod(e);
     }
   }
-
+  
   protected void suspend(long waitTime) {
     if (waitTime > 0 && isRunning.get()) {
       ACQUISITION_MONITOR.lock();
       try {
         if (isRunning.get()) {
-          IS_WAITING.await(waitTime, TimeUnit.MILLISECONDS);
+          long endTime = System.currentTimeMillis() + waitTime;
+          long remainingTime = waitTime;
+          // Loop until either the wait times out or a resume signal is received
+          while (remainingTime > 0 && isRunning.get()) {
+            boolean wasSignaled = IS_WAITING.await(remainingTime, TimeUnit.MILLISECONDS);
+            // If the await was signaled, exit immediately.
+            if (wasSignaled) {
+              break;
+            }
+            // Recalculate the remaining time for the wait.
+            remainingTime = endTime - System.currentTimeMillis();
+          }
+          // Log timeout only if no signal was received and the thread is still running
+          if (remainingTime <= 0 && isRunning.get()) {
+            LOG.timeout(waitTime);
+          }
         }
       } catch (InterruptedException e) {
+        // we ignore and just continue to execute tasks
         LOG.exceptionWhileExecutingBackoffStrategyMethod(e);
-      }
-      finally {
+      } finally {
         ACQUISITION_MONITOR.unlock();
       }
     }

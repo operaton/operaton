@@ -18,7 +18,7 @@ package org.operaton.spin.plugin.impl.feel.integration;
 
 import org.operaton.bpm.dmn.feel.impl.scala.ScalaFeelLogger;
 import org.operaton.bpm.dmn.feel.impl.scala.spin.SpinValueMapperFactory;
-import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
+import org.operaton.bpm.engine.test.junit5.LogCaptureExtension;
 import org.operaton.bpm.engine.test.junit5.WatchLogger;
 import org.operaton.spin.Spin;
 import org.operaton.spin.json.SpinJsonNode;
@@ -45,7 +45,7 @@ public class SpinValueMapperTest {
   protected static ValueMapper valueMapper;
 
   @RegisterExtension
-  ProcessEngineLoggingExtension loggingExtension = new ProcessEngineLoggingExtension();
+  LogCaptureExtension loggingExtension = new LogCaptureExtension();
 
   @BeforeAll
   static void setUp() {

@@ -45,6 +45,7 @@ public abstract class AbstractJobExecutorAcquireJobsTest {
 
   private boolean jobExecutorAcquireByDueDate;
   private boolean jobExecutorAcquireByPriority;
+  private boolean jobExecutorAcquireWithSkipLocked;
   private boolean jobExecutorPreferTimerJobs;
   private boolean jobEnsureDueDateSet;
   private Long jobExecutorPriorityRangeMin;
@@ -61,6 +62,7 @@ public abstract class AbstractJobExecutorAcquireJobsTest {
     configuration = (ProcessEngineConfigurationImpl) rule.getProcessEngine().getProcessEngineConfiguration();
     jobExecutorAcquireByDueDate = configuration.isJobExecutorAcquireByDueDate();
     jobExecutorAcquireByPriority = configuration.isJobExecutorAcquireByPriority();
+    jobExecutorAcquireWithSkipLocked = configuration.isJobExecutorAcquireWithSkipLocked();
     jobExecutorPreferTimerJobs = configuration.isJobExecutorPreferTimerJobs();
     jobEnsureDueDateSet = configuration.isEnsureJobDueDateNotNull();
     jobExecutorPriorityRangeMin = configuration.getJobExecutorPriorityRangeMin();
@@ -76,6 +78,7 @@ public abstract class AbstractJobExecutorAcquireJobsTest {
   public void restoreProcessEngineConfiguration() {
     configuration.setJobExecutorAcquireByDueDate(jobExecutorAcquireByDueDate);
     configuration.setJobExecutorAcquireByPriority(jobExecutorAcquireByPriority);
+    configuration.setJobExecutorAcquireWithSkipLocked(jobExecutorAcquireWithSkipLocked);
     configuration.setJobExecutorPreferTimerJobs(jobExecutorPreferTimerJobs);
     configuration.setEnsureJobDueDateNotNull(jobEnsureDueDateSet);
     configuration.setJobExecutorPriorityRangeMin(jobExecutorPriorityRangeMin);
@@ -88,9 +91,10 @@ public abstract class AbstractJobExecutorAcquireJobsTest {
   }
 
   protected List<AcquirableJobEntity> findAcquirableJobs() {
-    return configuration.getCommandExecutorTxRequired().execute(commandContext -> commandContext
-        .getJobManager()
-        .findNextJobsToExecute(new Page(0, 100)));
+    return configuration.getCommandExecutorTxRequired()
+            .execute(commandContext -> commandContext
+            .getJobManager()
+            .findNextJobsToExecute(new Page(0, 100)));
   }
 
   protected String startProcess(String processDefinitionKey, String activity) {

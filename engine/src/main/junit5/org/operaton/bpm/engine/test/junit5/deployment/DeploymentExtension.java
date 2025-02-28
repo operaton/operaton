@@ -1,8 +1,5 @@
-package org.operaton.bpm.engine.test.junit5;
+package org.operaton.bpm.engine.test.junit5.deployment;
 
-import org.junit.jupiter.api.extension.AfterEachCallback;
-import org.junit.jupiter.api.extension.BeforeEachCallback;
-import org.junit.jupiter.api.extension.ExtensionContext;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
@@ -12,6 +9,10 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import org.junit.jupiter.api.extension.AfterEachCallback;
+import org.junit.jupiter.api.extension.BeforeEachCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
+
 import static java.util.Objects.requireNonNull;
 
 public class DeploymentExtension implements AfterEachCallback, BeforeEachCallback {
@@ -19,7 +20,7 @@ public class DeploymentExtension implements AfterEachCallback, BeforeEachCallbac
     protected String deploymentId;
     protected Set<String> deploymentIds = new HashSet<>();
 
-    public DeploymentExtension () {}
+    public DeploymentExtension() {}
     public DeploymentExtension(RepositoryService repositoryService) {
         requireNonNull(repositoryService);
         this.repositoryService = repositoryService;

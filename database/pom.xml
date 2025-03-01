@@ -346,7 +346,7 @@
         <was.liberty.datasource.filename>postgresql-config.xml</was.liberty.datasource.filename>
         <hibernate.dialect>org.hibernate.dialect.PostgreSQLDialect</hibernate.dialect>
         <database.tc.url>operatonpostgresql:13.2</database.tc.url>
-        <database.url>jdbc:tc:${database.tc.url}://localhost:${database.port}${database.tc.params}</database.url>
+        <database.url>jdbc:tc:${database.tc.url}:///${database.name}/${database.tc.params}</database.url>
       </properties>
 
       <dependencies>

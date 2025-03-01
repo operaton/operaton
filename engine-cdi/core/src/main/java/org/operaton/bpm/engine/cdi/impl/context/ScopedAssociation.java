@@ -25,7 +25,7 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 public class ScopedAssociation {
 

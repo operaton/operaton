@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.application.impl;
 
-import javax.ejb.SessionContext;
+import jakarta.ejb.SessionContext;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import org.operaton.bpm.application.ProcessApplicationInterface;

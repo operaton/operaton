@@ -16,12 +16,17 @@
  */
 package org.operaton.bpm;
 
-import com.sun.jersey.api.client.ClientResponse;
+import org.glassfish.jersey.client.ClientResponse;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.MultivaluedMap;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -36,32 +41,19 @@ public class SessionCookieSameSiteIT extends AbstractWebIntegrationTest {
   }
 
   @Test(timeout=10000)
-  public void shouldCheckPresenceOfSameSiteProperties() {
+  public void shouldCheckPresenceOfSameSiteProperties() throws Exception {
     // given
 
     // when
-    ClientResponse response = client.resource(appBasePath + TASKLIST_PATH)
-        .get(ClientResponse.class);
+    HttpResponse<String> response = HttpClient.newHttpClient()
+      .send(HttpRequest.newBuilder()
+        .uri(URI.create(appBasePath + TASKLIST_PATH))
+        .GET()
+        .build(), HttpResponse.BodyHandlers.ofString());
 
     // then
-    assertEquals(200, response.getStatus());
+    assertEquals(200, response.statusCode());
     assertTrue(isCookieHeaderValuePresent("SameSite=Lax", response));
-
-    // cleanup
-    response.close();
-  }
-
-  protected boolean isCookieHeaderValuePresent(String expectedHeaderValue, ClientResponse response) {
-    MultivaluedMap<String, String> headers = response.getHeaders();
-
-    List<String> values = headers.get("Set-Cookie");
-    for (String value : values) {
-      if (value.startsWith("JSESSIONID=")) {
-        return value.contains(expectedHeaderValue);
-      }
-    }
-
-    return false;
   }
 
 }

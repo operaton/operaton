@@ -18,13 +18,17 @@ package org.operaton.bpm.run.qa.webapps;
 
 import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.Arrays;
 import java.util.Collection;
 
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response.Status;
 
-import com.sun.jersey.api.client.ClientResponse;
+import org.glassfish.jersey.client.ClientResponse;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -89,28 +93,37 @@ class PluginsRootResourceIT extends AbstractWebIT {
     startContainer();
     initPluginsRootResourceIT(assetName, assetAllowed);
     // when
-    ClientResponse response = getAsset("api/admin/plugin/adminPlugins/static/" + assetName);
+    var response = getAsset("api/admin/plugin/adminPlugins/static/" + assetName);
 
     // then
     assertResponse(assetName, response);
-
-    // cleanup
-    response.close();
   }
 
-  protected ClientResponse getAsset(String path) {
-    return client.resource(APP_BASE_PATH + path).get(ClientResponse.class);
+  protected HttpResponse<String> getAsset(String path) {
+    HttpRequest request = HttpRequest.newBuilder()
+      .uri(URI.create(appBasePath + path))
+      .GET()
+      .build();
+    try {
+      return client.send(request, HttpResponse.BodyHandlers.ofString());
+    } catch (IOException e) {
+      throw new IllegalStateException(e);
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new IllegalStateException(e);
+    }
   }
 
-  protected void assertResponse(String asset, ClientResponse response) {
+  protected <T> void assertResponse(String asset, HttpResponse<T> response) {
     if (assetAllowed) {
-      assertThat(response.getStatus()).isEqualTo(Status.OK.getStatusCode());
+      assertThat(response.statusCode()).isEqualTo(Status.OK.getStatusCode());
     } else {
-      assertThat(response.getStatus()).isEqualTo(Status.FORBIDDEN.getStatusCode());
-      assertThat(response.getType().toString()).startsWith(MediaType.APPLICATION_JSON);
-      String responseEntity = response.getEntity(String.class);
-      assertThat(responseEntity).contains("\"type\":\"RestException\"");
-      assertThat(responseEntity).contains("\"message\":\"Not allowed to load the following file '" + asset + "'.\"");
+      assertThat(response.statusCode()).isEqualTo(Status.FORBIDDEN.getStatusCode());
+      assertThat(response.headers().firstValue("Content-Type").orElseThrow()).startsWith(MediaType.APPLICATION_JSON);
+      String responseEntity = response.body().toString();
+      assertThat(responseEntity)
+        .contains("\"type\":\"RestException\"")
+        .contains("\"message\":\"Not allowed to load the following file '" + asset + "'.\"");
     }
   }
 

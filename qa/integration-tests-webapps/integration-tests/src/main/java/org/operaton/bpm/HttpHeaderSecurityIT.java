@@ -16,12 +16,17 @@
  */
 package org.operaton.bpm;
 
-import com.sun.jersey.api.client.ClientResponse;
+import org.glassfish.jersey.client.ClientResponse;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.MultivaluedMap;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -42,47 +47,37 @@ public class HttpHeaderSecurityIT extends AbstractWebIntegrationTest {
     // given
 
     // when
-    ClientResponse response = client.resource(appBasePath + TASKLIST_PATH)
-        .get(ClientResponse.class);
+    var response = getTasklistResponse();
 
     // then
-    assertEquals(200, response.getStatus());
+    assertEquals(200, response.statusCode());
     assertHeaderPresent("X-XSS-Protection", "1; mode=block", response);
-
-    // cleanup
-    response.close();
   }
 
   @Test(timeout=10000)
-  public void shouldCheckPresenceOfContentSecurityPolicyHeader() {
+  public void shouldCheckPresenceOfContentSecurityPolicyHeader() throws Exception {
     // given
 
     // when
-    ClientResponse response = client.resource(appBasePath + TASKLIST_PATH)
-        .get(ClientResponse.class);
+    HttpResponse<String> response = getTasklistResponse();
 
     // then
-    assertEquals(200, response.getStatus());
+    assertEquals(200, response.statusCode());
     assertHeaderPresent("Content-Security-Policy", CSP_VALUE, response);
-
-    // cleanup
-    response.close();
   }
 
   @Test(timeout=10000)
-  public void shouldCheckPresenceOfContentTypeOptions() {
+  public void shouldCheckPresenceOfContentTypeOptions() throws Exception {
     // given
 
     // when
-    ClientResponse response = client.resource(appBasePath + TASKLIST_PATH)
-        .get(ClientResponse.class);
+    HttpResponse<String> response = getTasklistResponse();
 
     // then
-    assertEquals(200, response.getStatus());
+    assertEquals(200, response.statusCode());
     assertHeaderPresent("X-Content-Type-Options", "nosniff", response);
 
     // cleanup
-    response.close();
   }
 
   @Test(timeout=10000)
@@ -90,23 +85,18 @@ public class HttpHeaderSecurityIT extends AbstractWebIntegrationTest {
     // given
 
     // when
-    ClientResponse response = client.resource(appBasePath + TASKLIST_PATH)
-        .get(ClientResponse.class);
+    HttpResponse<String> response = getTasklistResponse();
 
     // then
-    assertEquals(200, response.getStatus());
-    MultivaluedMap<String, String> headers = response.getHeaders();
-    List<String> values = headers.get("Strict-Transport-Security");
+    assertEquals(200, response.statusCode());
+    List<String> values = response.headers().allValues("Strict-Transport-Security");
     assertNull(values);
-
-    // cleanup
-    response.close();
   }
 
-  protected void assertHeaderPresent(String expectedName, String expectedValue, ClientResponse response) {
-    MultivaluedMap<String, String> headers = response.getHeaders();
+  protected <T> void assertHeaderPresent(String expectedName, String expectedValue, HttpResponse<T> response) {
+    var headers = response.headers();
 
-    List<String> values = headers.get(expectedName);
+    List<String> values = headers.allValues(expectedName);
     for (String value : values) {
       if (value.matches(expectedValue)) {
         return;

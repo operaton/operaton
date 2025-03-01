@@ -10,9 +10,9 @@
 	</interceptors>	
   
     <weld:scan>
-      <!-- remove CdiJtaProcessEngineConfiguration if javax.transaction API is not available -->
+      <!-- remove CdiJtaProcessEngineConfiguration if jakarta.transaction API is not available -->
       <weld:exclude name="org.operaton.bpm.engine.cdi.CdiJtaProcessEngineConfiguration">
-          <weld:if-class-available name="!javax.transaction.TransactionManager"/>
+          <weld:if-class-available name="!jakarta.transaction.TransactionManager"/>
       </weld:exclude>
     
     </weld:scan>

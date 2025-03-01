@@ -113,13 +113,6 @@
     </dependency>
 
     <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-webapp</artifactId>
-      <version>${version.jetty}</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
       <groupId>org.glassfish.jersey.core</groupId>
       <artifactId>jersey-common</artifactId>
       <version>${version.jersey3}</version>
@@ -293,7 +286,6 @@
 
   <modules>
     <module>assembly</module>
-    <module>assembly-jakarta</module>
   </modules>
 
   <profiles>

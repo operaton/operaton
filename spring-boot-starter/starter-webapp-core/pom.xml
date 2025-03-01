@@ -19,7 +19,7 @@
 
     <dependency>
       <groupId>org.operaton.bpm.webapp</groupId>
-      <artifactId>operaton-webapp-jakarta</artifactId>
+      <artifactId>operaton-webapp</artifactId>
       <type>jar</type>
       <classifier>classes</classifier>
     </dependency>

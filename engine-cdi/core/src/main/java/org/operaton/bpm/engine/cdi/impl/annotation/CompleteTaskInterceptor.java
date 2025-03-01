@@ -19,10 +19,10 @@ package org.operaton.bpm.engine.cdi.impl.annotation;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 
-import javax.inject.Inject;
-import javax.interceptor.AroundInvoke;
-import javax.interceptor.Interceptor;
-import javax.interceptor.InvocationContext;
+import jakarta.inject.Inject;
+import jakarta.interceptor.AroundInvoke;
+import jakarta.interceptor.Interceptor;
+import jakarta.interceptor.InvocationContext;
 
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.ProcessEngineCdiException;

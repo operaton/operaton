@@ -16,21 +16,22 @@
  */
 package org.operaton.bpm.util;
 
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
 import org.operaton.bpm.TestProperties;
 import org.operaton.bpm.engine.rest.dto.identity.UserCredentialsDto;
 import org.operaton.bpm.engine.rest.dto.identity.UserDto;
 import org.operaton.bpm.engine.rest.dto.identity.UserProfileDto;
 
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.json.JSONConfiguration;
-import com.sun.jersey.client.apache4.ApacheHttpClient4;
-import com.sun.jersey.client.apache4.config.DefaultApacheHttpClient4Config;
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+
+import kong.unirest.json.JSONObject;
 
 /**
  *
@@ -38,27 +39,15 @@ import com.sun.jersey.client.apache4.config.DefaultApacheHttpClient4Config;
  */
 public class TestUtil {
 
-  private final ApacheHttpClient4 client;
-
+  private final HttpClient client;
   private final TestProperties testProperties;
 
   public TestUtil(TestProperties testProperties) {
-
     this.testProperties = testProperties;
-
-    // create admin user:
-    ClientConfig clientConfig = new DefaultApacheHttpClient4Config();
-    clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
-    client = ApacheHttpClient4.create(clientConfig);
-
+    this.client = HttpClient.newBuilder().build();
   }
 
-  public void destroy() {
-    client.destroy();
-  }
-
-  public void createInitialUser(String id, String password, String firstName, String lastName) {
-
+  public void createInitialUser(String id, String password, String firstName, String lastName) throws IOException, InterruptedException {
     UserDto user = new UserDto();
     UserCredentialsDto credentials = new UserCredentialsDto();
     credentials.setPassword(password);
@@ -69,20 +58,30 @@ public class TestUtil {
     profile.setLastName(lastName);
     user.setProfile(profile);
 
-    WebResource webResource = client.resource(testProperties.getApplicationPath("/operaton/api/admin/setup/default/user/create"));
-    ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).post(ClientResponse.class, user);
-    try {
-      if (clientResponse.getStatus() != Response.Status.NO_CONTENT.getStatusCode()) {
-        throw new WebApplicationException(clientResponse.getStatus());
-      }
-    } finally {
-      clientResponse.close();
+    String jsonPayload = new JSONObject(user).toString();
+    HttpRequest request = HttpRequest.newBuilder()
+      .uri(URI.create(testProperties.getApplicationPath("/operaton/api/admin/setup/default/user/create")))
+      .header("Content-Type", MediaType.APPLICATION_JSON)
+      .POST(HttpRequest.BodyPublishers.ofString(jsonPayload))
+      .build();
+
+    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+    if (response.statusCode() != Response.Status.NO_CONTENT.getStatusCode()) {
+      throw new WebApplicationException(response.statusCode());
     }
   }
-  
-  public void deleteUser(String id) {
-    // delete admin user
-    WebResource webResource = client.resource(testProperties.getApplicationPath("/engine-rest/user/admin"));
-    webResource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).delete();
+
+  public void deleteUser(String id) throws IOException, InterruptedException {
+    HttpRequest request = HttpRequest.newBuilder()
+      .uri(URI.create(testProperties.getApplicationPath("/engine-rest/user/admin")))
+      .header("Content-Type", MediaType.APPLICATION_JSON)
+      .DELETE()
+      .build();
+
+    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+    if (response.statusCode() != Response.Status.NO_CONTENT.getStatusCode()) {
+      throw new WebApplicationException(response.statusCode());
+    }
   }
 }

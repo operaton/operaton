@@ -11,7 +11,7 @@
   <name>Operaton - Quarkus Extension - Engine - CDI QA</name>
 
   <properties>
-    <arquillian.version>1.7.0.Final</arquillian.version>
+    <arquillian.version>1.9.3.Final</arquillian.version>
     <deploy.skip>true</deploy.skip>
     <install.skip>true</install.skip>
   </properties>

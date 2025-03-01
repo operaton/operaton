@@ -54,11 +54,6 @@
       </dependency>
       <dependency>
         <groupId>org.operaton.bpm</groupId>
-        <artifactId>operaton-engine-cdi-jakarta</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-engine-spring</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -70,11 +65,6 @@
       <dependency>
         <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-engine-rest-core</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.operaton.bpm</groupId>
-        <artifactId>operaton-engine-rest-core-jakarta</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -93,13 +83,8 @@
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.operaton.bpm.javaee</groupId>
+        <groupId>org.operaton.bpm.jakartaee</groupId>
         <artifactId>operaton-ejb-client</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.operaton.bpm.javaee</groupId>
-        <artifactId>operaton-ejb-client-jakarta</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -134,12 +119,6 @@
         <classifier>classes</classifier>
       </dependency>
       <dependency>
-        <groupId>org.operaton.bpm</groupId>
-        <artifactId>operaton-engine-rest-jakarta</artifactId>
-        <version>${project.version}</version>
-        <classifier>classes</classifier>
-      </dependency>
-      <dependency>
         <groupId>org.operaton.bpm.webapp</groupId>
         <artifactId>operaton-webapp-webjar</artifactId>
         <version>${project.version}</version>
@@ -152,20 +131,7 @@
       </dependency>
       <dependency>
         <groupId>org.operaton.bpm.webapp</groupId>
-        <artifactId>operaton-webapp-jakarta</artifactId>
-        <version>${project.version}</version>
-        <type>war</type>
-      </dependency>
-      <dependency>
-        <groupId>org.operaton.bpm.webapp</groupId>
         <artifactId>operaton-webapp</artifactId>
-        <version>${project.version}</version>
-        <type>jar</type>
-        <classifier>classes</classifier>
-      </dependency>
-      <dependency>
-        <groupId>org.operaton.bpm.webapp</groupId>
-        <artifactId>operaton-webapp-jakarta</artifactId>
         <version>${project.version}</version>
         <type>jar</type>
         <classifier>classes</classifier>

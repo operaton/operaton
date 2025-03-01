@@ -11,10 +11,7 @@
   </parent>
 
   <properties>
-    <!-- pin tomcat version for engine-rest -->
-    <version.tomcat>10.1.34</version.tomcat>
     <rest.http.port>38080</rest.http.port>
-    <javax.activation.version>1.1.1</javax.activation.version>
     <surefire.memArgs>-Xmx2g</surefire.memArgs>
   </properties>
 
@@ -36,9 +33,19 @@
     </dependency>
 
     <dependency>
+      <groupId>jakarta.activation</groupId>
+      <artifactId>jakarta.activation-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>jakarta.xml.bind</groupId>
+      <artifactId>jakarta.xml.bind-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
       <groupId>com.fasterxml.jackson.jakarta.rs</groupId>
       <artifactId>jackson-jakarta-rs-json-provider</artifactId>
-      <version>2.18.2</version>
     </dependency>
 
     <dependency>
@@ -55,7 +62,12 @@
     <dependency>
       <groupId>jakarta.servlet</groupId>
       <artifactId>jakarta.servlet-api</artifactId>
-      <version>${version.jakarta.servlet-api}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>jakarta.ws.rs</groupId>
+      <artifactId>jakarta.ws.rs-api</artifactId>
       <scope>provided</scope>
     </dependency>
 
@@ -75,19 +87,6 @@
       <groupId>org.operaton.commons</groupId>
       <artifactId>operaton-commons-logging</artifactId>
       <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>javax.activation</groupId>
-      <artifactId>activation</artifactId>
-      <version>${javax.activation.version}</version>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>com.sun.xml.bind</groupId>
-      <artifactId>jaxb-impl</artifactId>
-      <scope>test</scope>
     </dependency>
 
     <!--
@@ -184,7 +183,6 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
-      <version>${version.spring.framework6}</version>
       <scope>test</scope>
       <exclusions>
         <exclusion>
@@ -223,13 +221,6 @@
       <groupId>org.apache.tomcat.embed</groupId>
       <artifactId>tomcat-embed-core</artifactId>
       <version>${version.tomcat}</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.tomcat.embed</groupId>
-      <artifactId>tomcat-embed-logging-juli</artifactId>
-      <version>7.0.50</version>
       <scope>test</scope>
     </dependency>
 
@@ -314,11 +305,6 @@
       <id>distro</id>
       <dependencies>
         <dependency>
-          <groupId>org.jboss.spec.javax.ws.rs</groupId>
-          <artifactId>jboss-jaxrs-api_2.1_spec</artifactId>
-          <scope>provided</scope>
-        </dependency>
-        <dependency>
           <groupId>jakarta.ws.rs</groupId>
           <artifactId>jakarta.ws.rs-api</artifactId>
         </dependency>
@@ -347,11 +333,6 @@
         <version.netty>4.1.42.Final</version.netty>
       </properties>
       <dependencies>
-        <dependency>
-          <groupId>org.jboss.spec.javax.ws.rs</groupId>
-          <artifactId>jboss-jaxrs-api_2.1_spec</artifactId>
-          <scope>provided</scope>
-        </dependency>
         <dependency>
           <groupId>org.jboss.resteasy</groupId>
           <artifactId>resteasy-jaxrs</artifactId>
@@ -552,11 +533,6 @@
       </properties>
 
       <dependencies>
-        <dependency>
-          <groupId>org.jboss.spec.javax.ws.rs</groupId>
-          <artifactId>jboss-jaxrs-api_2.1_spec</artifactId>
-          <scope>provided</scope>
-        </dependency>
 
         <dependency>
           <groupId>org.jboss.resteasy</groupId>

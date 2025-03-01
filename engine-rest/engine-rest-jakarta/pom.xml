@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>operaton-engine-rest-core-jakarta</artifactId>
+  <artifactId>operaton-engine-rest-core</artifactId>
   <name>Operaton - Engine - REST - Jakarta</name>
   <packaging>jar</packaging>
 
@@ -13,8 +13,6 @@
 
   <properties>
     <rest.http.port>38081</rest.http.port>
-    <version.resteasy>6.2.3.Final</version.resteasy>
-    <version.spring.framework>${version.spring.framework6}</version.spring.framework>
     <skipTests>true</skipTests>
   </properties>
 

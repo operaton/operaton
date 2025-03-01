@@ -16,20 +16,14 @@
  */
 package org.operaton.bpm.run.qa.webapps;
 
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.json.JSONConfiguration;
-import com.sun.jersey.client.apache4.ApacheHttpClient4;
-import com.sun.jersey.client.apache4.config.DefaultApacheHttpClient4Config;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
-import org.junit.jupiter.api.AfterEach;
 import org.operaton.bpm.TestProperties;
 import org.operaton.bpm.util.TestUtil;
+
+import java.net.http.HttpClient;
+import java.util.logging.Logger;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.chrome.ChromeDriverService;
-
-import java.util.logging.Logger;
 
 /**
  * NOTE: copied from
@@ -42,7 +36,7 @@ public abstract class AbstractWebIT {
 
   protected String TASKLIST_PATH = "app/tasklist/default/";
   public static final String HOST_NAME = "localhost";
-  public String APP_BASE_PATH;
+  public String appBasePath;
 
   protected String appUrl;
   protected TestUtil testUtil;
@@ -50,9 +44,8 @@ public abstract class AbstractWebIT {
 
   protected static ChromeDriverService service;
 
-  public ApacheHttpClient4 client;
-  public DefaultHttpClient defaultHttpClient;
-  public String httpPort;
+  protected HttpClient client;
+  protected String httpPort;
 
   @BeforeEach
   public void before() throws Exception {
@@ -60,25 +53,13 @@ public abstract class AbstractWebIT {
     testUtil = new TestUtil(testProperties);
   }
 
-  @AfterEach
-  public void destroyClient() {
-    client.destroy();
-  }
-
   public void createClient(String ctxPath) throws Exception {
     testProperties = new TestProperties();
 
-    APP_BASE_PATH = testProperties.getApplicationPath("/" + ctxPath);
-    LOGGER.info("Connecting to application "+APP_BASE_PATH);
+    appBasePath = testProperties.getApplicationPath("/" + ctxPath);
+    LOGGER.info("Connecting to application "+ appBasePath);
 
-    ClientConfig clientConfig = new DefaultApacheHttpClient4Config();
-    clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
-    client = ApacheHttpClient4.create(clientConfig);
-
-    defaultHttpClient = (DefaultHttpClient) client.getClientHandler().getHttpClient();
-    HttpParams params = defaultHttpClient.getParams();
-    HttpConnectionParams.setConnectionTimeout(params, 3 * 60 * 1000);
-    HttpConnectionParams.setSoTimeout(params, 10 * 60 * 1000);
+    client = HttpClient.newBuilder().build();
   }
 
   public void preventRaceConditions() throws InterruptedException {
@@ -87,6 +68,6 @@ public abstract class AbstractWebIT {
   }
 
   protected String getWebappCtxPath() {
-    return testProperties.getStringProperty("http.ctx-path.webapp", null);
+    return testProperties.getStringProperty("http.ctx-path.webapp", "operaton/");
   }
 }

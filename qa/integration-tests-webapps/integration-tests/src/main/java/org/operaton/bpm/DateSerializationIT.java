@@ -16,22 +16,23 @@
  */
 package org.operaton.bpm;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import org.operaton.bpm.engine.rest.mapper.JacksonConfigurator;
 
+import java.net.URI;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.MediaType;
 
-import org.operaton.bpm.engine.rest.mapper.JacksonConfigurator;
 import org.codehaus.jettison.json.JSONArray;
-import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.sun.jersey.api.client.ClientResponse;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class DateSerializationIT extends AbstractWebIntegrationTest {
   
@@ -45,18 +46,20 @@ public class DateSerializationIT extends AbstractWebIntegrationTest {
   }
 
   @Test
-  public void shouldSerializeDateWithDefinedFormat() throws JSONException {
+  public void shouldSerializeDateWithDefinedFormat() throws Exception {
     // when
-    ClientResponse response = client
-      .resource(appBasePath + SCHEMA_LOG_PATH)
-      .accept(MediaType.APPLICATION_JSON)
+    HttpRequest request = HttpRequest.newBuilder()
+      .uri(URI.create(appBasePath + SCHEMA_LOG_PATH))
+      .header("Accept", MediaType.APPLICATION_JSON)
       .header(X_XSRF_TOKEN_HEADER, csrfToken)
       .header(COOKIE_HEADER, createCookieHeader())
-      .get(ClientResponse.class);
+      .GET()
+      .build();
+
+    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
     // then
-    assertEquals(200, response.getStatus());
-    JSONObject logElement = response.getEntity(JSONArray.class).getJSONObject(0);
-    response.close();
+    assertEquals(200, response.statusCode());
+    JSONObject logElement = new JSONArray(response.body()).getJSONObject(0);
     String timestamp = logElement.getString("timestamp");
     try {
       new SimpleDateFormat(JacksonConfigurator.DEFAULT_DATE_FORMAT).parse(timestamp);

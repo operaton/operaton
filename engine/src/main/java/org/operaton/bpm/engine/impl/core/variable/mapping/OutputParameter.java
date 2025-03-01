@@ -48,7 +48,7 @@ public class OutputParameter extends IoParameter {
     // get value from inner scope
     Object value = valueProvider.getValue(innerScope);
 
-    LOG.debugMappingValuefromInnerScopeToOuterScope(value, innerScope, name, outerScope);
+    LOG.debugMappingValueFromInnerScopeToOuterScope(value, innerScope, name, outerScope);
 
     // set variable in outer scope
     outerScope.setVariable(name, value);

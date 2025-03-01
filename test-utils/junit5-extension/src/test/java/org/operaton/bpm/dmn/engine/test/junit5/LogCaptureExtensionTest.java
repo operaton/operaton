@@ -1,4 +1,8 @@
-package org.operaton.bpm.engine.test.junit5;
+package org.operaton.bpm.dmn.engine.test.junit5;
+
+import org.operaton.bpm.engine.test.junit5.LogCaptureExtension;
+
+import java.util.List;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
@@ -8,21 +12,18 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class ProcessEngineLoggingExtensionTest {
+class LogCaptureExtensionTest {
 
-    private static final Logger logger = LoggerFactory.getLogger(ProcessEngineLoggingExtensionTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(LogCaptureExtensionTest.class);
 
     @RegisterExtension
-    private ProcessEngineLoggingExtension loggingExtension = new ProcessEngineLoggingExtension();
+    private final LogCaptureExtension loggingExtension = new LogCaptureExtension();
 
     @BeforeEach
     void setUp() {
-        this.loggingExtension = loggingExtension;
         // Configure the extension to watch a specific logger at the DEBUG level.
         loggingExtension.watch(getClass().getName(), Level.DEBUG);
     }
@@ -61,6 +62,6 @@ class ProcessEngineLoggingExtensionTest {
         // Attempt to retrieve logs for a non-watched logger to trigger an error
         assertThatThrownBy(() -> loggingExtension.getLog("NonExistentLogger"))
                 .isInstanceOf(RuntimeException.class)
-                .hasMessageContaining(ProcessEngineLoggingExtension.NOT_WATCHING_ERROR);
+                .hasMessageContaining(LogCaptureExtension.NOT_WATCHING_ERROR);
     }
 }

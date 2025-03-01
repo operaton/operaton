@@ -24,7 +24,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
-import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
+import org.operaton.bpm.engine.test.junit5.LogCaptureExtension;
 import org.operaton.bpm.spring.boot.starter.security.oauth2.AbstractSpringSecurityIT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -41,7 +41,7 @@ class OAuth2GrantedAuthoritiesMapperIT extends AbstractSpringSecurityIT {
   private OAuth2GrantedAuthoritiesMapper authoritiesMapper;
 
   @RegisterExtension
-  ProcessEngineLoggingExtension logger = new ProcessEngineLoggingExtension()
+  LogCaptureExtension logger = new LogCaptureExtension()
       .watch(OAuth2GrantedAuthoritiesMapper.class.getCanonicalName());
 
   @Test

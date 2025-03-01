@@ -19,8 +19,8 @@ package org.operaton.bpm.spring.boot.starter.configuration.impl.custom;
 import org.operaton.bpm.engine.FilterService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.filter.FilterQuery;
+import org.operaton.bpm.engine.test.junit5.LogCaptureExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
-import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 import org.operaton.bpm.spring.boot.starter.test.helper.StandaloneInMemoryTestConfiguration;
 import org.operaton.bpm.spring.boot.starter.util.SpringBootProcessEngineLogger;
@@ -53,7 +53,7 @@ class CreateFilterConfigurationTest {
   final ProcessEngineExtension processEngineExtension = new StandaloneInMemoryTestConfiguration(configuration).extension();
 
   @RegisterExtension
-  ProcessEngineLoggingExtension loggingExtension = new ProcessEngineLoggingExtension()
+  LogCaptureExtension loggingExtension = new LogCaptureExtension()
       .watch(SpringBootProcessEngineLogger.PACKAGE);
 
   @Test

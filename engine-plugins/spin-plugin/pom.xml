@@ -44,6 +44,12 @@
     </dependency>
 
     <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-bpm-junit5</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
       <scope>test</scope>
@@ -84,6 +90,11 @@
       <artifactId>js-scriptengine</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest-junit</artifactId>
+      <scope>test</scope>
+    </dependency>
 
     <dependency>
       <groupId>org.operaton.bpm.model</groupId>
@@ -108,6 +119,11 @@
       <artifactId>jruby-complete</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
 
     <dependency>
       <groupId>org.mockito</groupId>
@@ -119,12 +135,6 @@
           <artifactId>hamcrest-core</artifactId>
         </exclusion>
       </exclusions>
-    </dependency>
-
-    <dependency>
-      <groupId>org.operaton.commons</groupId>
-      <artifactId>operaton-commons-testing</artifactId>
-      <scope>test</scope>
     </dependency>
 
     <dependency>

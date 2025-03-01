@@ -16,17 +16,18 @@
  */
 package org.operaton.spin.plugin.variables;
 
+import org.operaton.bpm.engine.runtime.DeserializationTypeValidator;
+
+import org.junit.jupiter.api.BeforeEach;
+
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import org.operaton.bpm.engine.runtime.DeserializationTypeValidator;
-import org.junit.Before;
+class HistoricVariableJsonSerializationWithValidationTest extends HistoricVariableJsonSerializationTest {
 
-public class HistoricVariableJsonSerializationWithValidationTest extends HistoricVariableJsonSerializationTest {
-
-  @Before
-  public void setUpValidator() {
+  @BeforeEach
+  void setUpValidator() {
     DeserializationTypeValidator validatorMock = mock(DeserializationTypeValidator.class);
     when(validatorMock.validate(anyString())).thenReturn(true);
     processEngineConfiguration.setDeserializationTypeValidationEnabled(true);

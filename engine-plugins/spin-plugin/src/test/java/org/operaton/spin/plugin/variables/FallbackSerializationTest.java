@@ -17,22 +17,31 @@
 package org.operaton.spin.plugin.variables;
 
 import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.impl.test.PluggableProcessEngineTestCase;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class FallbackSerializationTest extends PluggableProcessEngineTestCase {
-
+@ExtendWith(ProcessEngineExtension.class)
+class FallbackSerializationTest {
+  RuntimeService runtimeService;
   protected static final String ONE_TASK_PROCESS = "org/operaton/spin/plugin/oneTaskProcess.bpmn20.xml";
 
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testSerializationOfUnknownFormat() {
+  @Test
+  void serializationOfUnknownFormat() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
@@ -45,12 +54,9 @@ public class FallbackSerializationTest extends PluggableProcessEngineTestCase {
     runtimeService.setVariable(instance.getId(), "var", objectValue);
 
     // then
-    try {
-      runtimeService.getVariable(instance.getId(), "var");
-      fail();
-    } catch (ProcessEngineException e) {
-      assertTextPresent("Fallback serializer cannot handle deserialized objects", e.getMessage());
-    }
+    assertThatThrownBy(() -> runtimeService.getVariable(instance.getId(), "var"))
+            .isInstanceOf(ProcessEngineException.class)
+            .hasMessageContaining("Fallback serializer cannot handle deserialized objects");
 
     ObjectValue returnedValue = runtimeService.getVariableTyped(instance.getId(), "var", false);
     assertFalse(returnedValue.isDeserialized());

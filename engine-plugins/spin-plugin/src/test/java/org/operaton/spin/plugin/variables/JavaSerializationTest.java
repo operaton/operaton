@@ -17,28 +17,38 @@
 package org.operaton.spin.plugin.variables;
 
 import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.impl.test.PluggableProcessEngineTestCase;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
-
 import static org.operaton.bpm.engine.variable.Variables.objectValue;
 import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
+
+import org.json.JSONException;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Here we test how the engine behaves, when more than one object serializers are available.
  *
  * @author Svetlana Dorokhova
  */
-public class JavaSerializationTest extends PluggableProcessEngineTestCase {
-
+@ExtendWith(ProcessEngineExtension.class)
+class JavaSerializationTest {
+  RuntimeService runtimeService;
+  TaskService taskService;
   protected static final String ONE_TASK_PROCESS = "org/operaton/spin/plugin/oneTaskProcess.bpmn20.xml";
 
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testSerializationAsJava() {
+  @Test
+  void serializationAsJava() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     JavaSerializable bean = new JavaSerializable("a String", 42, true);
@@ -64,7 +74,8 @@ public class JavaSerializationTest extends PluggableProcessEngineTestCase {
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testJavaSerializedValuesAreProhibited() {
+  @Test
+  void javaSerializedValuesAreProhibited() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     try {
@@ -79,7 +90,8 @@ public class JavaSerializationTest extends PluggableProcessEngineTestCase {
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testJavaSerializedValuesAreProhibitedForTransient() {
+  @Test
+  void javaSerializedValuesAreProhibitedForTransient() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     try {
@@ -93,7 +105,8 @@ public class JavaSerializationTest extends PluggableProcessEngineTestCase {
 
   }
 
-  public void testStandaloneTaskVariable() {
+  @Test
+  void standaloneTaskVariable() {
     Task task = taskService.newTask();
     task.setName("gonzoTask");
     taskService.saveTask(task);
@@ -112,7 +125,8 @@ public class JavaSerializationTest extends PluggableProcessEngineTestCase {
 
   }
 
-  public void testStandaloneTaskTransientVariable() {
+  @Test
+  void standaloneTaskTransientVariable() {
     Task task = taskService.newTask();
     task.setName("gonzoTask");
     taskService.saveTask(task);

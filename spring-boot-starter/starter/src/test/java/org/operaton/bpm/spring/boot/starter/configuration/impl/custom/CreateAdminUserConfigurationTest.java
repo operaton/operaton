@@ -19,7 +19,7 @@ package org.operaton.bpm.spring.boot.starter.configuration.impl.custom;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
-import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
+import org.operaton.bpm.engine.test.junit5.LogCaptureExtension;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 import org.operaton.bpm.spring.boot.starter.test.helper.StandaloneInMemoryTestConfiguration;
 import org.operaton.bpm.spring.boot.starter.util.SpringBootProcessEngineLogger;
@@ -51,10 +51,10 @@ class CreateAdminUserConfigurationTest {
   private final ProcessEngineConfigurationImpl processEngineConfiguration = new StandaloneInMemoryTestConfiguration(createAdminUserConfiguration);
 
   @RegisterExtension
-  final ProcessEngineExtension processEngineExtension = new StandaloneInMemoryTestConfiguration(createAdminUserConfiguration).extension();
+  static final ProcessEngineExtension processEngineExtension = new StandaloneInMemoryTestConfiguration(createAdminUserConfiguration).extension();
 
   @RegisterExtension
-  public ProcessEngineLoggingExtension loggingExtension = new ProcessEngineLoggingExtension()
+  public LogCaptureExtension loggingExtension = new LogCaptureExtension()
       .watch(SpringBootProcessEngineLogger.PACKAGE);
 
   @Test

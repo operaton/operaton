@@ -41,6 +41,31 @@
     </dependency>
 
     <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>testcontainers</artifactId>
+      <version>1.20.3</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>jdbc</artifactId>
+      <version>1.19.7</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>1.20.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-test-utils-testcontainers</artifactId>
+      <version>1.0.0-beta-4-SNAPSHOT</version>
+    </dependency>
+
+
+    <dependency>
       <groupId>org.python</groupId>
       <artifactId>jython</artifactId>
       <scope>runtime</scope>
@@ -162,6 +187,19 @@
                       <groupId>org.ow2.asm</groupId>
                       <artifactId>asm-util</artifactId>
                       <version>${version.asm}</version>
+                      <outputDirectory>target/server/apache-tomcat-${version.tomcat}/lib</outputDirectory>
+                    </artifactItem>
+                    <artifactItem>
+                      <groupId>org.testcontainers</groupId>
+                      <artifactId>testcontainers</artifactId>
+                      <version>1.20.3</version>
+                      <outputDirectory>target/server/apache-tomcat-${version.tomcat}/lib</outputDirectory>
+                    </artifactItem>
+
+                    <artifactItem>
+                      <groupId>org.testcontainers</groupId>
+                      <artifactId>jdbc</artifactId>
+                      <version>1.19.7</version>
                       <outputDirectory>target/server/apache-tomcat-${version.tomcat}/lib</outputDirectory>
                     </artifactItem>
                   </artifactItems>

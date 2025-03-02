@@ -41,27 +41,48 @@
     </dependency>
 
     <dependency>
+      <groupId>org.mariadb.jdbc</groupId>
+      <artifactId>mariadb-java-client</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+    <!--
+    Testcontainers are needed in the Tomcat container for Arquillian tests, so the instance is able to
+    spin up containers via the jdbc:tc:.. JDBC connection.
+    -->
+    <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>testcontainers</artifactId>
       <version>1.20.3</version>
+      <scope>runtime</scope>
     </dependency>
 
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>jdbc</artifactId>
       <version>1.19.7</version>
+      <scope>runtime</scope>
     </dependency>
 
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>postgresql</artifactId>
       <version>1.20.0</version>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>mariadb</artifactId>
+      <version>1.20.2</version>
+      <scope>runtime</scope>
     </dependency>
 
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-test-utils-testcontainers</artifactId>
       <version>1.0.0-beta-4-SNAPSHOT</version>
+      <scope>runtime</scope>
     </dependency>
 
 

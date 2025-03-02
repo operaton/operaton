@@ -39,6 +39,7 @@ on:
         options:
           - '["h2"]'
           - '["postgresql"]'
+          - '["mariadb"]'
           - '["h2", "postgresql"]'
 
 permissions:

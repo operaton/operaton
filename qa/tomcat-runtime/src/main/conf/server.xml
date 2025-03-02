@@ -59,7 +59,6 @@
               type="javax.sql.DataSource" 
               factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
               uniqueResourceName="process-engine"
-              driverClassName="${database.driver}" 
               url="${database.url}"
               username="${database.username}"
               password="${database.password}"

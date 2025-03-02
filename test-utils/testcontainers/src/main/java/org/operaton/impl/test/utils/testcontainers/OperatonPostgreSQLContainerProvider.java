@@ -23,7 +23,7 @@ import org.testcontainers.utility.DockerImageName;
 
 public class OperatonPostgreSQLContainerProvider extends PostgreSQLContainerProvider {
 
-  protected static final String NAME = "campostgresql";
+  protected static final String NAME = "operatonpostgresql";
 
   @Override
   public boolean supports(String databaseType) {

@@ -153,9 +153,7 @@ class SpinScriptTaskSupportWithAutoStoreScriptVariablesTest {
   }
 
   protected void checkVariablesValues(String[] expectedVariables, Map<String, Object> actualVariables) {
-    assertThat(actualVariables).doesNotContainKey("S");
-    assertThat(actualVariables).doesNotContainKey("XML");
-    assertThat(actualVariables).doesNotContainKey("JSON");
+    assertThat(actualVariables).doesNotContainKeys("S", "XML", "JSON");
 
     for (String expectedVariable : expectedVariables) {
       assertThat(actualVariables).containsKey(expectedVariable);

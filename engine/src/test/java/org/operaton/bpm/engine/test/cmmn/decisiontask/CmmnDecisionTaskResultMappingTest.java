@@ -183,7 +183,7 @@ public class CmmnDecisionTaskResultMappingTest extends CmmnTest {
       fail("expect exception");
 
     } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("transient variable with name decisionResult to non-transient", e.getMessage());
+      testRule.assertTextPresent("transient variable with name 'decisionResult' to non-transient", e.getMessage());
     }
   }
 

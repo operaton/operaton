@@ -16,12 +16,7 @@
  */
 package org.operaton.bpm.qa.largedata.util;
 
-import com.google.common.collect.Lists;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
 import org.operaton.bpm.engine.DecisionService;
@@ -34,6 +29,7 @@ import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.interceptor.Command;
+import org.operaton.bpm.engine.impl.util.CollectionUtil;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.model.bpmn.Bpmn;
@@ -219,7 +215,7 @@ public class EngineDataGenerator {
 
 
   protected <T> void generateInBatches(List<T> allEntries, Consumer<T> generateData) {
-    final List<List<T>> partition = Lists.partition(allEntries, BATCH_SIZE);
+    final List<List<T>> partition = CollectionUtil.partition(allEntries, BATCH_SIZE);
     partition.forEach(batch -> {
       ProcessEngineConfigurationImpl configuration =
         (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();

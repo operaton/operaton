@@ -1,0 +1,29 @@
+name: Maintenance
+
+on:
+  workflow_dispatch:
+    inputs:
+      slack_url:
+        description: 'Update Slack Invitation URL'
+        type: string
+
+permissions:
+  contents: read
+  checks: write
+  id-token: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+    update-slack-invitation-url:
+        name: Update Slack Invitation URL
+        runs-on: ubuntu-latest
+        if: ${{ github.event.inputs.slack_url}}
+        steps:
+        - name: Update Slack Invitation URL
+          run: |
+            .devenv/scripts/maintenance/update-slack-link.sh ${{ github.event.inputs.slack_url}}
+            .github/scripts/git-commit.sh "chore: Update Slack Invitation URL"
+          shell: bash

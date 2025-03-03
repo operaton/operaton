@@ -8,9 +8,7 @@ on:
         type: string
 
 permissions:
-  contents: read
-  checks: write
-  id-token: write
+  contents: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -28,5 +26,8 @@ jobs:
       - name: Update Slack Invitation URL
         run: |
           .devenv/scripts/maintenance/update-slack-link.sh ${{ github.event.inputs.slack_url}}
-          .github/scripts/git-commit.sh "chore: Update Slack Invitation URL"
         shell: bash
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: Update Slack Invitation URL"

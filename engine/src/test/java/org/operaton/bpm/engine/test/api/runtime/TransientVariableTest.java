@@ -558,7 +558,7 @@ public class TransientVariableTest {
     // when/then
     assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("Process", variables))
       .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContaining("Cannot set transient variable with name variable to non-transient variable and vice versa.");
+      .hasMessageContaining("Cannot set transient variable with name 'variable' to non-transient variable and vice versa.");
 
   }
 

@@ -8,22 +8,26 @@ on:
         type: string
 
 permissions:
-  contents: read
-  checks: write
-  id-token: write
+  contents: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-    update-slack-invitation-url:
-        name: Update Slack Invitation URL
-        runs-on: ubuntu-latest
-        if: ${{ github.event.inputs.slack_url}}
-        steps:
-        - name: Update Slack Invitation URL
-          run: |
-            .devenv/scripts/maintenance/update-slack-link.sh ${{ github.event.inputs.slack_url}}
-            .github/scripts/git-commit.sh "chore: Update Slack Invitation URL"
-          shell: bash
+  update-slack-invitation-url:
+    if: ${{ github.event.inputs.slack_url}}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Update Slack Invitation URL
+        run: |
+          .devenv/scripts/maintenance/update-slack-link.sh ${{ github.event.inputs.slack_url}}
+        shell: bash
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: Update Slack Invitation URL"

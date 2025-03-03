@@ -16,17 +16,15 @@
  */
 package org.operaton.bpm;
 
-import com.sun.jersey.api.client.ClientResponse;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.ws.rs.core.MultivaluedMap;
-
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class SessionCookieSecurityIT extends AbstractWebIntegrationTest {
 
@@ -37,33 +35,19 @@ public class SessionCookieSecurityIT extends AbstractWebIntegrationTest {
   }
 
   @Test(timeout=10000)
-  public void shouldCheckPresenceOfProperties() {
+  public void shouldCheckPresenceOfProperties() throws Exception {
     // given
 
     // when
-    ClientResponse response = client.resource(appBasePath + TASKLIST_PATH)
-        .get(ClientResponse.class);
+    HttpResponse<String> response = HttpClient.newHttpClient()
+        .send(HttpRequest.newBuilder()
+            .uri(URI.create(appBasePath + TASKLIST_PATH))
+            .GET()
+            .build(), HttpResponse.BodyHandlers.ofString());
 
     // then
-    assertEquals(200, response.getStatus());
+    assertEquals(200, response.statusCode());
     assertTrue(isCookieHeaderValuePresent("HttpOnly", response));
     assertFalse(isCookieHeaderValuePresent("Secure", response));
-
-    // cleanup
-    response.close();
   }
-
-  protected boolean isCookieHeaderValuePresent(String expectedHeaderValue, ClientResponse response) {
-    MultivaluedMap<String, String> headers = response.getHeaders();
-
-    List<String> values = headers.get("Set-Cookie");
-    for (String value : values) {
-      if (value.startsWith("JSESSIONID=")) {
-        return value.contains(expectedHeaderValue);
-      }
-    }
-
-    return false;
-  }
-
 }

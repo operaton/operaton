@@ -16,13 +16,17 @@
  */
 package org.operaton.bpm;
 
-import static org.junit.Assert.assertEquals;
+import java.net.URI;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
-import javax.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response;
 
-import com.sun.jersey.api.client.ClientResponse;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 
 public class ExceptionLoggerIT extends AbstractWebIntegrationTest {
 
@@ -32,15 +36,16 @@ public class ExceptionLoggerIT extends AbstractWebIntegrationTest {
   }
 
   @Test
-  public void shouldNotFailForUndefinedUser() {
+  public void shouldNotFailForUndefinedUser() throws Exception {
     // when
-    ClientResponse response = client.resource(appBasePath + "app/admin/default/#/users/undefined?tab=profile")
-                                    .get(ClientResponse.class);
+    HttpRequest request = HttpRequest.newBuilder()
+      .uri(URI.create(appBasePath + "app/admin/default/#/users/undefined?tab=profile"))
+      .GET()
+      .build();
+
+    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
     // then
-    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
-
-    // cleanup
-    response.close();
+    assertThat(response.statusCode()).isEqualTo(Response.Status.OK.getStatusCode());
   }
 }

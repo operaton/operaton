@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm;
 
-import com.sun.jersey.api.client.ClientResponse;
+import org.glassfish.jersey.client.ClientResponse;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,9 +24,13 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response.Status;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -61,26 +65,19 @@ public class PluginsRootResourceIT extends AbstractWebIntegrationTest {
   @Test
   public void shouldGetAssetIfAllowed() {
     // when
-    ClientResponse response = getAsset("api/admin/plugin/adminPlugins/static/" + assetName);
+    var response = getAsset("api/admin/plugin/adminPlugins/static/" + assetName);
 
     // then
     assertResponse(assetName, response);
-
-    // cleanup
-    response.close();
   }
 
-  protected ClientResponse getAsset(String path) {
-    return client.resource(appBasePath + path).get(ClientResponse.class);
-  }
-
-  protected void assertResponse(String asset, ClientResponse response) {
+  protected <T> void assertResponse(String asset, HttpResponse<T> response) {
     if (assetAllowed) {
-      assertEquals(Status.OK.getStatusCode(), response.getStatus());
+      assertEquals(Status.OK.getStatusCode(), response.statusCode());
     } else {
-      assertEquals(Status.FORBIDDEN.getStatusCode(), response.getStatus());
-      assertTrue(response.getType().toString().startsWith(MediaType.APPLICATION_JSON));
-      String responseEntity = response.getEntity(String.class);
+      assertEquals(Status.FORBIDDEN.getStatusCode(), response.statusCode());
+      assertTrue(response.headers().firstValue("Content-Type").orElse("").startsWith(MediaType.APPLICATION_JSON));
+      String responseEntity = response.body().toString();
       assertTrue(responseEntity.contains("\"type\":\"RestException\""));
       assertTrue(responseEntity.contains("\"message\":\"Not allowed to load the following file '" + asset + "'.\""));
     }

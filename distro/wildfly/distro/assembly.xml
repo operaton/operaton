@@ -37,7 +37,7 @@
     <dependencySet>
         <outputFileNameMapping>${artifact.artifactId}-${artifact.version}.${artifact.extension}</outputFileNameMapping>
         <includes>
-            <include>org.operaton.bpm:operaton-engine-rest-jakarta:war:*</include>
+            <include>org.operaton.bpm:operaton-engine-rest:war:*</include>
         </includes>
         <outputDirectory>server/wildfly-${version.wildfly}/standalone/deployments</outputDirectory>
     </dependencySet>
@@ -51,7 +51,7 @@
 
     <dependencySet>
         <includes>
-          <include>org.operaton.bpm.example:operaton-example-invoice-jakarta:war:*</include>
+          <include>org.operaton.bpm.example:operaton-example-invoice:war:*</include>
         </includes>
         <outputDirectory>server/wildfly-${version.wildfly}/standalone/deployments</outputDirectory>
     </dependencySet>

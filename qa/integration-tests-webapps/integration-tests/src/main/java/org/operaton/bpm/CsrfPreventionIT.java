@@ -16,16 +16,17 @@
  */
 package org.operaton.bpm;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import java.net.URI;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.MediaType;
 
+import org.glassfish.jersey.client.ClientResponse;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.sun.jersey.api.client.ClientResponse;
+import static org.junit.Assert.*;
 
 public class CsrfPreventionIT extends AbstractWebIntegrationTest {
 
@@ -35,39 +36,42 @@ public class CsrfPreventionIT extends AbstractWebIntegrationTest {
     createClient(getWebappCtxPath());
   }
 
-  @Test(timeout=10000)
-  public void shouldCheckPresenceOfCsrfPreventionCookie() {
+  @Test(timeout = 10000)
+  public void shouldCheckPresenceOfCsrfPreventionCookie() throws Exception {
     // given
 
     // when
-    ClientResponse response = client.resource(appBasePath + TASKLIST_PATH)
-        .get(ClientResponse.class);
+    HttpRequest request = HttpRequest.newBuilder().uri(URI.create(appBasePath + TASKLIST_PATH)).GET().build();
+    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
     // then
-    assertEquals(200, response.getStatus());
+    assertEquals(200, response.statusCode());
     String xsrfTokenHeader = getXsrfTokenHeader(response);
     String xsrfCookieValue = getXsrfCookieValue(response);
-    response.close();
-    
+
     assertNotNull(xsrfTokenHeader);
     assertEquals(32, xsrfTokenHeader.length());
     assertNotNull(xsrfCookieValue);
     assertTrue(xsrfCookieValue.contains(";SameSite=Lax"));
   }
 
-  @Test(timeout=10000)
-  public void shouldRejectModifyingRequest() {
+  @Test(timeout = 10000)
+  public void shouldRejectModifyingRequest() throws Exception {
     // given
     String baseUrl = testProperties.getApplicationPath("/" + getWebappCtxPath());
     String modifyingRequestPath = "api/admin/auth/user/default/login/welcome";
 
     // when
-    ClientResponse response = client.resource(baseUrl + modifyingRequestPath)
-        .header("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_TYPE)
-        .post(ClientResponse.class);
+    HttpRequest request = HttpRequest.newBuilder()
+      .uri(URI.create(baseUrl + modifyingRequestPath))
+      .header("Content-Type", MediaType.APPLICATION_FORM_URLENCODED)
+      .POST(HttpRequest.BodyPublishers.noBody())
+      .build();
+
+    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
     // then
-    assertEquals(403, response.getStatus());
+    assertEquals(403, response.statusCode());
     assertTrue(getXsrfTokenHeader(response).equals("Required"));
   }
 

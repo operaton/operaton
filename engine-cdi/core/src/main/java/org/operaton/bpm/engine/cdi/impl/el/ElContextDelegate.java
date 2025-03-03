@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.engine.cdi.impl.el;
 
-import javax.el.ELContext;
-import javax.el.ELResolver;
-import javax.el.FunctionMapper;
-import javax.el.VariableMapper;
+import jakarta.el.ELContext;
+import jakarta.el.ELResolver;
+import jakarta.el.FunctionMapper;
+import jakarta.el.VariableMapper;
 import java.util.Locale;
 
 /**
@@ -32,7 +32,7 @@ public class ElContextDelegate extends ELContext {
 
   protected final ELResolver elResolver;
 
-  public ElContextDelegate(jakarta.el.ELContext delegateContext, ELResolver elResolver) {
+  public ElContextDelegate(ELContext delegateContext, ELResolver elResolver) {
     this.delegateContext = delegateContext;
     this.elResolver = elResolver;
   }

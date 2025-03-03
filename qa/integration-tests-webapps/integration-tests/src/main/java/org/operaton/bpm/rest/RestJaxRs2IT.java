@@ -16,23 +16,20 @@
  */
 package org.operaton.bpm.rest;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.operaton.bpm.AbstractWebIntegrationTest;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.HttpHeaders;
+import jakarta.ws.rs.core.MediaType;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -43,13 +40,13 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
-import org.operaton.bpm.AbstractWebIntegrationTest;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.sun.jersey.api.client.ClientResponse;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class RestJaxRs2IT extends AbstractWebIntegrationTest {
 
@@ -63,19 +60,24 @@ public class RestJaxRs2IT extends AbstractWebIntegrationTest {
   }
 
   @Test(timeout=10000)
-  public void shouldUseJaxRs2Artifact() throws JSONException {
+  public void shouldUseJaxRs2Artifact() throws JSONException, IOException, InterruptedException {
     Map<String, Object> payload = new HashMap<>();
     payload.put("workerId", "aWorkerId");
     payload.put("asyncResponseTimeout", 1000 * 60 * 30 + 1);
 
-    ClientResponse response = client.resource(appBasePath + FETCH_AND_LOCK_PATH).accept(MediaType.APPLICATION_JSON)
-      .entity(payload, MediaType.APPLICATION_JSON_TYPE)
-      .post(ClientResponse.class);
+    String jsonPayload = new JSONObject(payload).toString();
 
-    assertEquals(400, response.getStatus());
-    String responseMessage = response.getEntity(JSONObject.class).get("message").toString();
+    HttpRequest request = HttpRequest.newBuilder()
+      .uri(URI.create(appBasePath + FETCH_AND_LOCK_PATH))
+      .header("Content-Type", MediaType.APPLICATION_JSON)
+      .POST(HttpRequest.BodyPublishers.ofString(jsonPayload))
+      .build();
+
+    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+    assertEquals(400, response.statusCode());
+    String responseMessage = new JSONObject(response.body()).get("message").toString();
     assertTrue(responseMessage.equals("The asynchronous response timeout cannot be set to a value greater than 1800000 milliseconds"));
-    response.close();
   }
 
   @Test

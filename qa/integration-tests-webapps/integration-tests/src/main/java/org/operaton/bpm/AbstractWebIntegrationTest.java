@@ -16,21 +16,21 @@
  */
 package org.operaton.bpm;
 
+import org.operaton.bpm.util.TestUtil;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.logging.Logger;
 
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.MediaType;
 
-import org.operaton.bpm.util.TestUtil;
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.chrome.ChromeDriverService;
-
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.json.JSONConfiguration;
-import com.sun.jersey.client.apache4.ApacheHttpClient4;
-import com.sun.jersey.client.apache4.config.DefaultApacheHttpClient4Config;
 
 /**
  *
@@ -59,7 +59,7 @@ public abstract class AbstractWebIntegrationTest {
 
   protected static ChromeDriverService service;
 
-  protected ApacheHttpClient4 client;
+  protected HttpClient client;
   protected String httpPort;
   
   protected String csrfToken;
@@ -71,105 +71,125 @@ public abstract class AbstractWebIntegrationTest {
     testUtil = new TestUtil(testProperties);
   }
 
-  @After
-  public void destroyClient() {
-    client.destroy();
-  }
-
   public void createClient(String ctxPath) throws Exception {
     testProperties = new TestProperties();
 
     appBasePath = testProperties.getApplicationPath("/" + ctxPath);
     LOGGER.info("Connecting to application " + appBasePath);
 
-    ClientConfig clientConfig = new DefaultApacheHttpClient4Config();
-    clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
-    client = ApacheHttpClient4.create(clientConfig);
+    client = HttpClient.newBuilder().build();
   }
 
-  protected void getTokens() {
-    // first request, first set of cookies
-    ClientResponse clientResponse = client.resource(appBasePath + TASKLIST_PATH).get(ClientResponse.class);
-    List<String> cookieValues = getCookieHeaders(clientResponse);
-    clientResponse.close();
+  protected void getTokens() throws IOException, InterruptedException {
+    // First request to retrieve initial cookies
+    HttpRequest initialRequest = HttpRequest.newBuilder()
+      .uri(URI.create(appBasePath + TASKLIST_PATH))
+      .GET()
+      .build();
+    HttpResponse<String> initialResponse = client.send(initialRequest, HttpResponse.BodyHandlers.ofString());
+    List<String> cookieValues = getCookieHeaders(initialResponse);
 
     String startCsrfCookie = getCookie(cookieValues, XSRF_TOKEN_IDENTIFIER);
     String startSessionCookie = getCookie(cookieValues, JSESSIONID_IDENTIFIER);
-    
-    // login with user, update session cookie
-    clientResponse = client.resource(appBasePath + "api/admin/auth/user/default/login/cockpit")
-        .entity("username=demo&password=demo", MediaType.APPLICATION_FORM_URLENCODED_TYPE)
-        .header(COOKIE_HEADER, createCookieHeader(startCsrfCookie, startSessionCookie))
-        .header(X_XSRF_TOKEN_HEADER, startCsrfCookie)
-        .accept(MediaType.APPLICATION_JSON)
-        .post(ClientResponse.class);
-    cookieValues = clientResponse.getHeaders().get("Set-Cookie");
-    clientResponse.close();
-    
+
+    // Login request
+    HttpRequest loginRequest = HttpRequest.newBuilder()
+      .uri(URI.create(appBasePath + "api/admin/auth/user/default/login/cockpit"))
+      .header(COOKIE_HEADER, createCookieHeader(startCsrfCookie, startSessionCookie))
+      .header(X_XSRF_TOKEN_HEADER, startCsrfCookie)
+      .header("Content-Type", MediaType.APPLICATION_FORM_URLENCODED)
+      .POST(HttpRequest.BodyPublishers.ofString("username=demo&password=demo"))
+      .build();
+    HttpResponse<String> loginResponse = client.send(loginRequest, HttpResponse.BodyHandlers.ofString());
+    cookieValues = getCookieHeaders(loginResponse);
+
     sessionId = getCookie(cookieValues, JSESSIONID_IDENTIFIER);
-    
-    // update CSRF cookie
-    clientResponse = client.resource(appBasePath + "api/engine/engine")
-        .header(COOKIE_HEADER, createCookieHeader(startCsrfCookie, sessionId))
-        .header(X_XSRF_TOKEN_HEADER, startCsrfCookie)
-        .get(ClientResponse.class);
-    
-    cookieValues = getCookieHeaders(clientResponse);
-    clientResponse.close();
-    
+
+    // Update CSRF cookie
+    HttpRequest csrfRequest = HttpRequest.newBuilder()
+      .uri(URI.create(appBasePath + "api/engine/engine"))
+      .header(COOKIE_HEADER, createCookieHeader(startCsrfCookie, sessionId))
+      .header(X_XSRF_TOKEN_HEADER, startCsrfCookie)
+      .GET()
+      .build();
+    HttpResponse<String> csrfResponse = client.send(csrfRequest, HttpResponse.BodyHandlers.ofString());
+    cookieValues = getCookieHeaders(csrfResponse);
+
     csrfToken = getCookie(cookieValues, XSRF_TOKEN_IDENTIFIER);
   }
 
-  protected List<String> getCookieHeaders(ClientResponse response) {
-    return response.getHeaders().get("Set-Cookie");
+  protected List<String> getCookieHeaders(HttpResponse<String> response) {
+    return response.headers().allValues("Set-Cookie");
   }
-  
+
   protected String getCookie(List<String> cookieValues, String cookieName) {
-    String cookieValue = getCookieValue(cookieValues, cookieName);
-    int valueEnd = cookieValue.contains(";") ? cookieValue.indexOf(';') : cookieValue.length() - 1;
-    return cookieValue.substring(cookieName.length(), valueEnd);
+    return cookieValues.stream()
+      .filter(cookie -> cookie.startsWith(cookieName))
+      .findFirst()
+      .map(cookie -> cookie.substring(cookieName.length()))
+      .orElse("");
   }
-  
+
+  protected String getXsrfTokenHeader(HttpResponse<?> response) {
+    return response.headers().firstValue(X_XSRF_TOKEN_HEADER).orElseThrow();
+  }
+
+  protected String getXsrfCookieValue(HttpResponse<?> response) {
+    return response.headers().firstValue(XSRF_TOKEN_IDENTIFIER).orElseThrow();
+  }
+
+
   protected String createCookieHeader() {
     return createCookieHeader(csrfToken, sessionId);
   }
-  
+
   protected String createCookieHeader(String csrf, String session) {
     return XSRF_TOKEN_IDENTIFIER + csrf + "; " + JSESSIONID_IDENTIFIER + session;
   }
 
-  protected String getXsrfTokenHeader(ClientResponse response) {
-    return response.getHeaders().getFirst(X_XSRF_TOKEN_HEADER);
-  }
-
-  protected String getXsrfCookieValue(ClientResponse response) {
-    return getCookieValue(response, XSRF_TOKEN_IDENTIFIER);
-  }
-  
-  protected String getCookieValue(ClientResponse response, String cookieName) {
-    return getCookieValue(getCookieHeaders(response), cookieName);
-  }
-
-  protected String getCookieValue(List<String> cookies, String cookieName) {
-    for (String cookie : cookies) {
-      if (cookie.startsWith(cookieName)) {
-        return cookie;
-      }
-    }
-
-    return "";
-  }
-
   protected void preventRaceConditions() throws InterruptedException {
-    // just wait some seconds before starting because of Wildfly / Cargo race conditions
+    // Just wait some seconds before starting because of Wildfly / Cargo race conditions
     Thread.sleep(5 * 1000L);
   }
 
   protected String getWebappCtxPath() {
-    return testProperties.getStringProperty("http.ctx-path.webapp", null);
+    return testProperties.getStringProperty("http.ctx-path.webapp", "operaton/");
   }
 
   protected String getRestCtxPath() {
-    return testProperties.getStringProperty("http.ctx-path.rest", null);
+    return testProperties.getStringProperty("http.ctx-path.rest", "engine-rest/");
+  }
+
+  protected boolean isCookieHeaderValuePresent(String expectedHeaderValue, HttpResponse<?> response) {
+    var headers = response.headers();
+
+    List<String> values = headers.allValues("Set-Cookie");
+    for (String value : values) {
+      if (value.startsWith("JSESSIONID=")) {
+        return value.contains(expectedHeaderValue);
+      }
+    }
+
+    return false;
+  }
+
+  protected HttpResponse<String> getAsset(String path) {
+    HttpRequest request = HttpRequest.newBuilder()
+      .uri(URI.create(appBasePath + path))
+      .GET()
+      .build();
+    try {
+      return client.send(request, HttpResponse.BodyHandlers.ofString());
+    } catch (IOException e) {
+      throw new IllegalStateException(e);
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new IllegalStateException(e);
+    }
+  }
+
+
+  protected HttpResponse<String> getTasklistResponse() {
+    return getAsset(TASKLIST_PATH);
   }
 }

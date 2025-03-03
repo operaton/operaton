@@ -15,21 +15,13 @@
 
     <dependency>
       <groupId>org.operaton.bpm.webapp</groupId>
-      <artifactId>operaton-webapp-jakarta</artifactId>
+      <artifactId>operaton-webapp</artifactId>
       <classifier>classes</classifier>
     </dependency>
 
     <dependency>
       <groupId>org.glassfish.jersey.core</groupId>
       <artifactId>jersey-client</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>jakarta.platform</groupId>
-      <artifactId>jakarta.jakartaee-web-api</artifactId>
-      <type>pom</type>
-      <scope>provided</scope>
-      <version>10.0.0</version>
     </dependency>
 
   </dependencies>

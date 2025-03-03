@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.cdi;
 
-import org.operaton.bpm.engine.impl.cfg.JtaProcessEngineConfiguration;
+import org.operaton.bpm.engine.impl.cfg.JakartaTransactionProcessEngineConfiguration;
 
 /**
  * @author Daniel Meyer
  */
-public class CdiJtaProcessEngineConfiguration extends JtaProcessEngineConfiguration {
+public class CdiJtaProcessEngineConfiguration extends JakartaTransactionProcessEngineConfiguration {
 
   @Override
   protected void initExpressionManager() {

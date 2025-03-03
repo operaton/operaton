@@ -34,8 +34,8 @@ import org.operaton.bpm.engine.variable.value.builder.ObjectValueBuilder;
 import org.operaton.bpm.engine.variable.value.builder.SerializedObjectValueBuilder;
 import org.operaton.bpm.engine.variable.value.builder.TypedValueBuilder;
 
-import javax.activation.FileTypeMap;
-import javax.activation.MimetypesFileTypeMap;
+import jakarta.activation.FileTypeMap;
+import jakarta.activation.MimetypesFileTypeMap;
 import java.io.File;
 import java.io.Serializable;
 import java.util.Date;

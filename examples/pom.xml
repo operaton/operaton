@@ -96,7 +96,6 @@
 
   <modules>
     <module>invoice</module>
-    <module>invoice-jakarta</module>
   </modules>
 
   <description>${project.name}</description>

@@ -17,9 +17,8 @@
 package org.operaton.bpm.spring.boot.starter.configuration.impl.custom;
 
 import org.operaton.bpm.engine.identity.User;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.LogCaptureExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 import org.operaton.bpm.spring.boot.starter.test.helper.StandaloneInMemoryTestConfiguration;
 import org.operaton.bpm.spring.boot.starter.util.SpringBootProcessEngineLogger;
@@ -35,27 +34,24 @@ import org.springframework.test.util.ReflectionTestUtils;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class CreateAdminUserConfigurationTest {
-
-  private final OperatonBpmProperties operatonBpmProperties = new OperatonBpmProperties();
-  {
-    operatonBpmProperties.getAdminUser().setId("admin");
-    operatonBpmProperties.getAdminUser().setPassword("password");
-  }
-
-  private static final CreateAdminUserConfiguration createAdminUserConfiguration = new CreateAdminUserConfiguration();
-  {
-    ReflectionTestUtils.setField(createAdminUserConfiguration, "operatonBpmProperties", operatonBpmProperties);
-    createAdminUserConfiguration.init();
-  }
-
-  private final ProcessEngineConfigurationImpl processEngineConfiguration = new StandaloneInMemoryTestConfiguration(createAdminUserConfiguration);
+  @RegisterExtension
+  static final public LogCaptureExtension loggingExtension = new LogCaptureExtension()
+    .watch(SpringBootProcessEngineLogger.PACKAGE, Level.DEBUG);
 
   @RegisterExtension
-  static final ProcessEngineExtension processEngineExtension = new StandaloneInMemoryTestConfiguration(createAdminUserConfiguration).extension();
+  static final ProcessEngineExtension processEngineExtension = new StandaloneInMemoryTestConfiguration().extension();
 
-  @RegisterExtension
-  public LogCaptureExtension loggingExtension = new LogCaptureExtension()
-      .watch(SpringBootProcessEngineLogger.PACKAGE);
+  static CreateAdminUserConfiguration createAdminUserConfiguration() {
+    OperatonBpmProperties properties = new OperatonBpmProperties();
+    properties.getAdminUser().setId("admin");
+    properties.getAdminUser().setPassword("password");
+
+    var adminUserConfiguration = new CreateAdminUserConfiguration();
+    ReflectionTestUtils.setField(adminUserConfiguration, "operatonBpmProperties", properties);
+    adminUserConfiguration.init();
+    return adminUserConfiguration;
+  }
+
 
   @Test
   void createAdminUser() {
@@ -66,6 +62,7 @@ class CreateAdminUserConfigurationTest {
 
   @Test
   void shouldLogInitialAdminUserCreationOnDebug() {
+    var processEngineConfiguration = new StandaloneInMemoryTestConfiguration(createAdminUserConfiguration());
     processEngineConfiguration.buildProcessEngine();
     verifyLogs(Level.DEBUG, "STARTER-SB010 Creating initial Admin User: AdminUserProperty[id=admin, firstName=Admin, lastName=Admin, email=admin@localhost, password=******]");
   }

@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 if [ -z "$1" ]; then
   echo "⚠️ SLACK_INVITATION_URL is not set. Exiting..."
   exit 1
@@ -20,7 +20,7 @@ sed_inplace() {
     fi
 }
 
-pushd $(pwd)
+pushd $(pwd) > /dev/null
 cd $(git rev-parse --show-toplevel) || exit 1
 
 AFFECTED_FILES=(README.md CONTRIBUTING.md)
@@ -32,4 +32,4 @@ done
 
 echo "✅  Done!"
 
-popd
+popd > /dev/null

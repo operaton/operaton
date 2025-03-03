@@ -19,10 +19,7 @@ package org.operaton.bpm.engine.test.api.runtime;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.HistoryService;
@@ -43,7 +40,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
-import com.google.common.collect.Sets;
 
 public class UpdateProcessInstancesSuspendStateAsyncTest {
 
@@ -260,7 +256,7 @@ public class UpdateProcessInstancesSuspendStateAsyncTest {
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
 
     // when
-    Batch suspendprocess = runtimeService.updateProcessInstanceSuspensionState().byHistoricProcessInstanceQuery(historyService.createHistoricProcessInstanceQuery().processInstanceIds(Sets.newHashSet(processInstance1.getId(), processInstance2.getId()))).suspendAsync();
+    Batch suspendprocess = runtimeService.updateProcessInstanceSuspensionState().byHistoricProcessInstanceQuery(historyService.createHistoricProcessInstanceQuery().processInstanceIds(Set.of(processInstance1.getId(), processInstance2.getId()))).suspendAsync();
     helper.completeSeedJobs(suspendprocess);
     helper.executeJobs(suspendprocess);
 
@@ -284,10 +280,10 @@ public class UpdateProcessInstancesSuspendStateAsyncTest {
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
 
     // when
-    Batch suspendprocess = runtimeService.updateProcessInstanceSuspensionState().byHistoricProcessInstanceQuery(historyService.createHistoricProcessInstanceQuery().processInstanceIds(Sets.newHashSet(processInstance1.getId(), processInstance2.getId()))).suspendAsync();
+    Batch suspendprocess = runtimeService.updateProcessInstanceSuspensionState().byHistoricProcessInstanceQuery(historyService.createHistoricProcessInstanceQuery().processInstanceIds(Set.of(processInstance1.getId(), processInstance2.getId()))).suspendAsync();
     helper.completeSeedJobs(suspendprocess);
     helper.executeJobs(suspendprocess);
-    Batch activateprocess = runtimeService.updateProcessInstanceSuspensionState().byHistoricProcessInstanceQuery(historyService.createHistoricProcessInstanceQuery().processInstanceIds(Sets.newHashSet(processInstance1.getId(), processInstance2.getId()))).activateAsync();
+    Batch activateprocess = runtimeService.updateProcessInstanceSuspensionState().byHistoricProcessInstanceQuery(historyService.createHistoricProcessInstanceQuery().processInstanceIds(Set.of(processInstance1.getId(), processInstance2.getId()))).activateAsync();
     helper.completeSeedJobs(activateprocess);
     helper.executeJobs(activateprocess);
 

@@ -33,7 +33,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SpinJRubyScriptTaskTest {
+class SpinJRubyScriptTaskTest {
 
   @Rule
   public ProcessEngineRule engineRule = new ProcessEngineRule();

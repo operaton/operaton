@@ -55,7 +55,7 @@ public class SpinScriptTaskSupportTest {
 
   @MethodSource("data")
   @ParameterizedTest(name = "{index}: {0}")
-  public void spinAvailable(String language, String variablePrefix) {
+  void spinAvailable(String language, String variablePrefix) {
     initSpinScriptTaskSupportTest(language, variablePrefix);
     deployProcess(language, setVariableScript("name", "S('<test />').name()"));
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
@@ -66,7 +66,7 @@ public class SpinScriptTaskSupportTest {
 
   @MethodSource("data")
   @ParameterizedTest(name = "{index}: {0}")
-  public void twoScriptTasks(String language, String variablePrefix) {
+  void twoScriptTasks(String language, String variablePrefix) {
     initSpinScriptTaskSupportTest(language, variablePrefix);
     // given
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("testProcess")

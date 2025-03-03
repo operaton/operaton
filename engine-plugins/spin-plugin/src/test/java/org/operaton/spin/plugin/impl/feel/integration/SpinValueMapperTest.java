@@ -40,7 +40,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 import static camundajar.impl.scala.jdk.CollectionConverters.ListHasAsScala;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SpinValueMapperTest {
+class SpinValueMapperTest {
 
   protected static ValueMapper valueMapper;
 

@@ -29,7 +29,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SpinProcessEnginePluginConfigurationTest {
+class SpinProcessEnginePluginConfigurationTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineExtension = ProcessEngineExtension.builder().configurationResource("custom.operaton.cfg.xml").build();

@@ -20,7 +20,6 @@ import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
@@ -43,12 +42,12 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  */
 @ExtendWith(ProcessEngineExtension.class)
-public class SpinScriptTaskSupportWithAutoStoreScriptVariablesTest {
+class SpinScriptTaskSupportWithAutoStoreScriptVariablesTest {
   private ProcessEngineConfigurationImpl processEngineConfiguration;
   private RepositoryService repositoryService;
   private RuntimeService runtimeService;
 
-  protected static String TEST_SCRIPT = """
+  protected static final String TEST_SCRIPT = """
                                         var_s = S('{}')
                                         var_xml = XML('<root/>')
                                         var_json = JSON('{}')
@@ -165,7 +164,7 @@ public class SpinScriptTaskSupportWithAutoStoreScriptVariablesTest {
 
   protected void deployProcess(String scriptFormat, String scriptText) {
     BpmnModelInstance process = createProcess(scriptFormat, scriptText);
-    Deployment deployment = repositoryService.createDeployment()
+    repositoryService.createDeployment()
       .addModelInstance("testProcess.bpmn", process)
       .addString("testScript.txt", scriptText)
       .deploy();

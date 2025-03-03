@@ -56,7 +56,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(ProcessEngineExtension.class)
-public class JsonSerializationTest {
+class JsonSerializationTest {
 
   protected static final String ONE_TASK_PROCESS = "org/operaton/spin/plugin/oneTaskProcess.bpmn20.xml";
   protected static final String SERVICE_TASK_PROCESS = "org/operaton/spin/plugin/serviceTaskProcess.bpmn20.xml";

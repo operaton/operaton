@@ -166,7 +166,7 @@ class JsonValueTest {
     assertEquals(brokenJsonString, jsonValue.getValueSerialized());
 
     // but not the deserialized properties
-    assertThatThrownBy(() -> jsonValue.getValue())
+    assertThatThrownBy(jsonValue::getValue)
             .isInstanceOf(SpinRuntimeException.class);
   }
 

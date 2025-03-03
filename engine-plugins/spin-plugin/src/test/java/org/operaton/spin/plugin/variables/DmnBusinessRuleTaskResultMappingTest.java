@@ -36,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author Svetlana Dorokhova
  */
-public class DmnBusinessRuleTaskResultMappingTest {
+class DmnBusinessRuleTaskResultMappingTest {
 
   protected static final String TEST_DECISION = "org/operaton/spin/plugin/DmnBusinessRuleTaskResultMappingTest.dmn11.xml";
   protected static final String CUSTOM_MAPPING_BPMN = "org/operaton/spin/plugin/DmnBusinessRuleTaskResultMappingTest.testCustomOutputMapping.bpmn20.xml";

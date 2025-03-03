@@ -42,7 +42,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(ProcessEngineExtension.class)
-public class HistoricVariableJsonSerializationTest {
+class HistoricVariableJsonSerializationTest {
 
   protected static final String ONE_TASK_PROCESS = "org/operaton/spin/plugin/oneTaskProcess.bpmn20.xml";
 

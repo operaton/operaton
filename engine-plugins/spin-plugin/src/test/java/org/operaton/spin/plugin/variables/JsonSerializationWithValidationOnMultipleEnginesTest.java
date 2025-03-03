@@ -42,7 +42,7 @@ import static org.mockito.Mockito.when;
  * (data formats are overridden for example because they are held once in the
  * DataFormats class)
  */
-public class JsonSerializationWithValidationOnMultipleEnginesTest {
+class JsonSerializationWithValidationOnMultipleEnginesTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRulePositive = ProcessEngineExtension.builder()

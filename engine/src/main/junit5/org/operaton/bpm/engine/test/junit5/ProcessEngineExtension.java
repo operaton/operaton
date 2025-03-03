@@ -167,7 +167,7 @@ public class ProcessEngineExtension implements TestWatcher,
   // SETUP
 
   protected void initializeProcessEngine() {
-    processEngine = TestHelper.getProcessEngine(configurationResource, processEngineConfigurator, cacheForConfigurationResource);
+    processEngine = TestHelper.getProcessEngine(configurationResource, processEngineConfigurator);
     processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
   }
 

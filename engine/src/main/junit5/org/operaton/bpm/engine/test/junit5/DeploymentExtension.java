@@ -1,4 +1,4 @@
-package org.operaton.bpm.engine.test.junit5.deployment;
+package org.operaton.bpm.engine.test.junit5;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RepositoryService;

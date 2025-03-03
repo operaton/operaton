@@ -511,11 +511,17 @@ public abstract class TestHelper {
   }
 
   public static ProcessEngine getProcessEngine(String configurationResource) {
+    return getProcessEngine(configurationResource, null);
+  }
+
+  public static ProcessEngine getProcessEngine(String configurationResource, Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator) {
     return processEngines.computeIfAbsent(configurationResource, resource -> {
       LOG.debug("==== BUILDING PROCESS ENGINE ========================================================================");
-      ProcessEngine newProcessEngine = ProcessEngineConfiguration
-        .createProcessEngineConfigurationFromResource(resource)
-        .buildProcessEngine();
+      ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration.createProcessEngineConfigurationFromResource(resource);
+      if (processEngineConfigurator != null) {
+        processEngineConfigurator.accept(processEngineConfiguration);
+      }
+      ProcessEngine newProcessEngine = processEngineConfiguration.buildProcessEngine();
       LOG.debug("==== PROCESS ENGINE CREATED =========================================================================");
       return newProcessEngine;
     });

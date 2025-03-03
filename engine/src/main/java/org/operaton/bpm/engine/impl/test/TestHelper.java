@@ -511,20 +511,26 @@ public abstract class TestHelper {
   }
 
   public static ProcessEngine getProcessEngine(String configurationResource) {
-    return getProcessEngine(configurationResource, null);
+    return getProcessEngine(configurationResource, null, true);
   }
 
-  public static ProcessEngine getProcessEngine(String configurationResource, Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator) {
-    return processEngines.computeIfAbsent(configurationResource, resource -> {
-      LOG.debug("==== BUILDING PROCESS ENGINE ========================================================================");
-      ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration.createProcessEngineConfigurationFromResource(resource);
-      if (processEngineConfigurator != null) {
-        processEngineConfigurator.accept(processEngineConfiguration);
-      }
-      ProcessEngine newProcessEngine = processEngineConfiguration.buildProcessEngine();
-      LOG.debug("==== PROCESS ENGINE CREATED =========================================================================");
-      return newProcessEngine;
-    });
+  public static ProcessEngine getProcessEngine(String configurationResource, Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator, boolean cacheForConfigurationResource) {
+    if (cacheForConfigurationResource) {
+      return processEngines.computeIfAbsent(configurationResource, key -> getProcessEngine(processEngineConfigurator, configurationResource));
+    } else {
+      return getProcessEngine(processEngineConfigurator, configurationResource);
+    }
+  }
+
+  private static ProcessEngine getProcessEngine(Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator, String resource) {
+    LOG.debug("==== BUILDING PROCESS ENGINE ========================================================================");
+    ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration.createProcessEngineConfigurationFromResource(resource);
+    if (processEngineConfigurator != null) {
+      processEngineConfigurator.accept(processEngineConfiguration);
+    }
+    ProcessEngine newProcessEngine = processEngineConfiguration.buildProcessEngine();
+    LOG.debug("==== PROCESS ENGINE CREATED =========================================================================");
+    return newProcessEngine;
   }
 
   public static void closeProcessEngines() {

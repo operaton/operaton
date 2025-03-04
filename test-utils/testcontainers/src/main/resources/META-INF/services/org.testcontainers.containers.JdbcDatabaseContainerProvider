@@ -2,3 +2,4 @@ org.operaton.impl.test.utils.testcontainers.OperatonPostgreSQLContainerProvider
 org.operaton.impl.test.utils.testcontainers.OperatonMariaDBContainerProvider
 org.operaton.impl.test.utils.testcontainers.OperatonMySqlContainerProvider
 org.operaton.impl.test.utils.testcontainers.OperatonMSSQLContainerProvider
+org.operaton.impl.test.utils.testcontainers.OperatonOracleContainerProvider

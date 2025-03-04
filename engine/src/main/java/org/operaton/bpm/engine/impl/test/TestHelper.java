@@ -16,17 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.test;
 
-import java.io.InputStream;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -59,6 +48,13 @@ import org.operaton.bpm.engine.impl.util.ReflectUtil;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
+
+import java.io.InputStream;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.util.*;
+import java.util.function.Consumer;
+
 import org.slf4j.Logger;
 
 
@@ -515,14 +511,26 @@ public abstract class TestHelper {
   }
 
   public static ProcessEngine getProcessEngine(String configurationResource) {
-    return processEngines.computeIfAbsent(configurationResource, resource -> {
-      LOG.debug("==== BUILDING PROCESS ENGINE ========================================================================");
-      ProcessEngine newProcessEngine = ProcessEngineConfiguration
-        .createProcessEngineConfigurationFromResource(resource)
-        .buildProcessEngine();
-      LOG.debug("==== PROCESS ENGINE CREATED =========================================================================");
-      return newProcessEngine;
-    });
+    return getProcessEngine(configurationResource, null, true);
+  }
+
+  public static ProcessEngine getProcessEngine(String configurationResource, Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator, boolean cacheForConfigurationResource) {
+    if (cacheForConfigurationResource) {
+      return processEngines.computeIfAbsent(configurationResource, key -> getProcessEngine(processEngineConfigurator, configurationResource));
+    } else {
+      return getProcessEngine(processEngineConfigurator, configurationResource);
+    }
+  }
+
+  private static ProcessEngine getProcessEngine(Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator, String resource) {
+    LOG.debug("==== BUILDING PROCESS ENGINE ========================================================================");
+    ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration.createProcessEngineConfigurationFromResource(resource);
+    if (processEngineConfigurator != null) {
+      processEngineConfigurator.accept(processEngineConfiguration);
+    }
+    ProcessEngine newProcessEngine = processEngineConfiguration.buildProcessEngine();
+    LOG.debug("==== PROCESS ENGINE CREATED =========================================================================");
+    return newProcessEngine;
   }
 
   public static void closeProcessEngines() {

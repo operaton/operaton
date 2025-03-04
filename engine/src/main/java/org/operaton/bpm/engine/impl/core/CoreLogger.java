@@ -22,10 +22,9 @@ import org.operaton.bpm.engine.impl.core.instance.CoreExecution;
 import org.operaton.bpm.engine.impl.core.operation.CoreAtomicOperation;
 import org.operaton.bpm.engine.impl.core.variable.CoreVariableInstance;
 import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
+import static org.operaton.bpm.engine.impl.core.variable.VariableUtil.ERROR_MSG;
 
 import java.text.MessageFormat;
-
-import static org.operaton.bpm.engine.impl.core.variable.VariableUtil.ERROR_MSG;
 
 /**
  * @author Daniel Meyer
@@ -40,7 +39,15 @@ public class CoreLogger extends ProcessEngineLogger {
         value, outerScope, name, innerScope);
   }
 
+  /**
+   * @deprecated use {@link #debugMappingValueFromInnerScopeToOuterScope(Object, AbstractVariableScope, String, AbstractVariableScope)} instead
+   */
+  @Deprecated(forRemoval = true, since = "1.0.0-beta-4")
   public void debugMappingValuefromInnerScopeToOuterScope(Object value, AbstractVariableScope innerScope, String name, AbstractVariableScope outerScope) {
+    debugMappingValueFromInnerScopeToOuterScope(value, innerScope, name, outerScope);
+  }
+
+  public void debugMappingValueFromInnerScopeToOuterScope(Object value, AbstractVariableScope innerScope, String name, AbstractVariableScope outerScope) {
     logDebug(
         "002",
         "Mapping value '{}' from inner scope '{}' to variable '{}' in outer scope '{}'.",
@@ -50,13 +57,13 @@ public class CoreLogger extends ProcessEngineLogger {
   public void debugPerformingAtomicOperation(CoreAtomicOperation<?> atomicOperation, CoreExecution e) {
     logDebug(
         "003",
-        "Performing atomic operation {} on {}", atomicOperation, e);
+        "Performing atomic operation '{}' on '{}'", atomicOperation, e);
   }
 
   public ProcessEngineException duplicateVariableInstanceException(CoreVariableInstance variableInstance) {
     return new ProcessEngineException(exceptionMessage(
         "004",
-        "Cannot add variable instance with name {}. Variable already exists",
+        "Cannot add variable instance with name '{}'. Variable already exists.",
         variableInstance.getName()
       ));
   }
@@ -67,7 +74,7 @@ public class CoreLogger extends ProcessEngineLogger {
   public ProcessEngineException transientVariableException(String variableName) {
     return new ProcessEngineException(exceptionMessage(
         "006",
-        "Cannot set transient variable with name {} to non-transient variable and vice versa.",
+        "Cannot set transient variable with name '{}' to non-transient variable and vice versa.",
         variableName
       ));
   }

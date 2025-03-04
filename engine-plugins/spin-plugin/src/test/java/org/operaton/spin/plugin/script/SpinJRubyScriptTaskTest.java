@@ -16,8 +16,6 @@
  */
 package org.operaton.spin.plugin.script;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.repository.Deployment;
@@ -27,12 +25,15 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
 
-public class SpinJRubyScriptTaskTest {
+import org.junit.Rule;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+class SpinJRubyScriptTaskTest {
 
   @Rule
   public ProcessEngineRule engineRule = new ProcessEngineRule();
@@ -40,15 +41,15 @@ public class SpinJRubyScriptTaskTest {
   private RuntimeService runtimeService;
   private RepositoryService repositoryService;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     this.runtimeService = engineRule.getRuntimeService();
     this.repositoryService = engineRule.getRepositoryService();
   }
 
   @Test
-  @Ignore("CAM-11114")
-  public void shouldNotLeakVariables() {
+  @Disabled("CAM-11114")
+  void shouldNotLeakVariables() {
     // given
     String varName = "var";
     String varValue = "val";

@@ -16,11 +16,6 @@
  */
 package org.operaton.spin.plugin.variables;
 
-import static org.operaton.bpm.engine.variable.Variables.objectValue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.RuntimeService;
@@ -30,39 +25,44 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.spin.DataFormats;
+import static org.operaton.bpm.engine.variable.Variables.objectValue;
+
+import java.util.List;
+
 import org.json.JSONException;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.skyscreamer.jsonassert.JSONAssert;
 
-public class HistoricVariableJsonSerializationTest {
+import static org.junit.jupiter.api.Assertions.*;
+
+@ExtendWith(ProcessEngineExtension.class)
+class HistoricVariableJsonSerializationTest {
 
   protected static final String ONE_TASK_PROCESS = "org/operaton/spin/plugin/oneTaskProcess.bpmn20.xml";
 
   protected static final String JSON_FORMAT_NAME = DataFormats.json().getName();
 
-  @Rule
-  public ProcessEngineRule engineRule = new ProcessEngineRule(true);
+  HistoryService historyService;
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
 
-  protected HistoryService historyService;
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
-  protected RuntimeService runtimeService;
-
-  @Before
-  public void setUp() {
-    historyService = engineRule.getHistoryService();
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-    runtimeService = engineRule.getRuntimeService();
+  @BeforeEach
+  void setUp () {
+    List<String> processInstanceIds = historyService.createHistoricVariableInstanceQuery().list().stream().map(HistoricVariableInstance::getProcessInstanceId).toList();
+    if (!processInstanceIds.isEmpty()) {
+      historyService.deleteHistoricProcessInstances(processInstanceIds);
+    }
   }
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testSelectHistoricVariableInstances() {
+  void selectHistoricVariableInstances() {
     if (processEngineConfiguration.getHistoryLevel().getId() >=
         HistoryLevel.HISTORY_LEVEL_AUDIT.getId()) {
       ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
@@ -86,7 +86,7 @@ public class HistoricVariableJsonSerializationTest {
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testSelectHistoricSerializedValues() throws JSONException {
+  void selectHistoricSerializedValues() throws JSONException {
     if (processEngineConfiguration.getHistoryLevel().getId() >=
         HistoryLevel.HISTORY_LEVEL_AUDIT.getId()) {
 
@@ -109,7 +109,7 @@ public class HistoricVariableJsonSerializationTest {
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testSelectHistoricSerializedValuesUpdate() throws JSONException {
+  void selectHistoricSerializedValuesUpdate() throws JSONException {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     JsonSerializable bean = new JsonSerializable("a String", 42, false);

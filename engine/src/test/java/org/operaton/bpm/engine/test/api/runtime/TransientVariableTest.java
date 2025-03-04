@@ -317,7 +317,7 @@ public class TransientVariableTest {
     try {
       runtimeService.setVariable(execution.getId(), "foo", Variables.stringValue("xyz", true));
     } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("Cannot set transient variable with name foo");
+      assertThat(e.getMessage()).contains("Cannot set transient variable with name 'foo'");
     }
   }
 
@@ -330,7 +330,7 @@ public class TransientVariableTest {
     try {
       runtimeService.setVariable(execution.getId(), "foo", Variables.stringValue("xyz", true));
     } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("Cannot set transient variable with name foo");
+      assertThat(e.getMessage()).contains("Cannot set transient variable with name 'foo'");
     }
   }
 
@@ -558,7 +558,7 @@ public class TransientVariableTest {
     // when/then
     assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("Process", variables))
       .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContaining("Cannot set transient variable with name variable to non-transient variable and vice versa.");
+      .hasMessageContaining("Cannot set transient variable with name 'variable' to non-transient variable and vice versa.");
 
   }
 
@@ -582,7 +582,7 @@ public class TransientVariableTest {
     // when/then
     assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("Process", variables))
       .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContaining("Cannot set transient variable with name variable to non-transient variable and vice versa.");
+      .hasMessageContaining("Cannot set transient variable with name 'variable' to non-transient variable and vice versa.");
   }
 
 
@@ -605,7 +605,7 @@ public class TransientVariableTest {
     // when/then
     assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("Process", variables))
       .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContaining("Cannot set transient variable with name var to non-transient variable and vice versa.");
+      .hasMessageContaining("Cannot set transient variable with name 'var' to non-transient variable and vice versa.");
   }
 
   /**
@@ -716,7 +716,7 @@ public class TransientVariableTest {
     // when/then
     assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("process", variables))
       .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContaining("Cannot set transient variable with name variable to non-transient variable and vice versa.");
+      .hasMessageContaining("Cannot set transient variable with name 'variable' to non-transient variable and vice versa.");
   }
 
   @Test
@@ -736,7 +736,7 @@ public class TransientVariableTest {
     // when/then
     assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("process", variables))
       .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContaining("Cannot set transient variable with name variable to non-transient variable and vice versa.");
+      .hasMessageContaining("Cannot set transient variable with name 'variable' to non-transient variable and vice versa.");
   }
 
   public static class ReadTypedTransientVariableDelegate implements JavaDelegate {

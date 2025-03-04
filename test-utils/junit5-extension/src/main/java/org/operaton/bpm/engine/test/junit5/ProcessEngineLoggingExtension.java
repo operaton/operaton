@@ -1,5 +1,8 @@
 package org.operaton.bpm.engine.test.junit5;
 
+import java.util.*;
+import java.util.Map.Entry;
+
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.spi.ILoggingEvent;
@@ -8,9 +11,6 @@ import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
 import org.junit.jupiter.api.extension.BeforeTestExecutionCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.slf4j.LoggerFactory;
-
-import java.util.*;
-import java.util.Map.Entry;
 
 /**
  * JUnit 5 Extension to monitor and capture log events for specified loggers during test execution.
@@ -118,7 +118,7 @@ public class ProcessEngineLoggingExtension implements BeforeTestExecutionCallbac
     for (String loggerName : allWatched.keySet()) {
       allLogs.addAll(getLog(loggerName));
     }
-    Collections.sort(allLogs, (event1, event2) -> Long.valueOf(event1.getTimeStamp() - event2.getTimeStamp()).intValue());
+    allLogs.sort((event1, event2) -> Long.valueOf(event1.getTimeStamp() - event2.getTimeStamp()).intValue());
     return allLogs;
   }
 
@@ -135,7 +135,18 @@ public class ProcessEngineLoggingExtension implements BeforeTestExecutionCallbac
   @Override
   public void beforeTestExecution(ExtensionContext context) {
     Map<String, Logger> toWatch = new HashMap<>(globallyWatched);
-    // Assuming a WatchLogger annotation processing setup if required, which would involve reflection if handled in JUnit 5.
+    WatchLogger watchLoggerAnnotation = context.getRequiredTestMethod().getAnnotation(WatchLogger.class);
+    if (watchLoggerAnnotation != null) {
+      Level level = Level.toLevel(watchLoggerAnnotation.level());
+      if (level == null) {
+        level = globalLevel;
+      }
+      for (String loggerName : watchLoggerAnnotation.loggerNames()) {
+        Logger logger = getLogger(loggerName);
+        logger.setLevel(level);
+        toWatch.put(loggerName, logger);
+      }
+    }
     watchLoggers(toWatch);
   }
 

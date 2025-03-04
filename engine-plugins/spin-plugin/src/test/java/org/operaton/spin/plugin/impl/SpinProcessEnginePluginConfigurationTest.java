@@ -16,31 +16,32 @@
  */
 package org.operaton.spin.plugin.impl;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 import java.util.List;
 
-import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
-public class SpinProcessEnginePluginConfigurationTest {
+import static org.assertj.core.api.Assertions.assertThat;
 
-  @Rule
-  public ProcessEngineBootstrapRule bootstrapRule
-      = new ProcessEngineBootstrapRule("custom.operaton.cfg.xml");
+class SpinProcessEnginePluginConfigurationTest {
 
-  @Rule
-  public ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
+  @RegisterExtension
+  static ProcessEngineExtension engineExtension = ProcessEngineExtension.builder().configurationResource("custom.operaton.cfg.xml").build();
+
+  ProcessEngine engine;
+  ProcessEngineConfiguration engineConfiguration;
 
   @Test
-  public void shouldSetCustomSpinPluginProperties() {
+  void shouldSetCustomSpinPluginProperties() {
 
     // when
-    List<ProcessEnginePlugin> pluginList =
-        engineRule.getProcessEngineConfiguration().getProcessEnginePlugins();
+    List<ProcessEnginePlugin> pluginList = ((ProcessEngineConfigurationImpl)engineConfiguration).getProcessEnginePlugins();
 
     // then
     assertThat(pluginList).hasOnlyElementsOfType(SpinProcessEnginePlugin.class).hasSize(1);

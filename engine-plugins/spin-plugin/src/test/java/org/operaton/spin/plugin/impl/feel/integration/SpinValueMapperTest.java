@@ -16,19 +16,16 @@
  */
 package org.operaton.spin.plugin.impl.feel.integration;
 
-import static camundajar.impl.scala.jdk.CollectionConverters.ListHasAsScala;
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.operaton.bpm.dmn.feel.impl.scala.ScalaFeelLogger;
 import org.operaton.bpm.dmn.feel.impl.scala.spin.SpinValueMapperFactory;
-import org.operaton.commons.testing.ProcessEngineLoggingRule;
-import org.operaton.commons.testing.WatchLogger;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
+import org.operaton.bpm.engine.test.junit5.WatchLogger;
+import org.operaton.spin.Spin;
+import org.operaton.spin.json.SpinJsonNode;
+import org.operaton.spin.xml.SpinXmlElement;
+
+import java.util.*;
+
 import org.camunda.feel.impl.DefaultValueMapper;
 import org.camunda.feel.syntaxtree.Val;
 import org.camunda.feel.syntaxtree.ValContext;
@@ -36,22 +33,22 @@ import org.camunda.feel.syntaxtree.ValList;
 import org.camunda.feel.syntaxtree.ValString;
 import org.camunda.feel.valuemapper.CustomValueMapper;
 import org.camunda.feel.valuemapper.ValueMapper;
-import org.operaton.spin.Spin;
-import org.operaton.spin.json.SpinJsonNode;
-import org.operaton.spin.xml.SpinXmlElement;
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
-public class SpinValueMapperTest {
+import static camundajar.impl.scala.jdk.CollectionConverters.ListHasAsScala;
+import static org.assertj.core.api.Assertions.assertThat;
+
+class SpinValueMapperTest {
 
   protected static ValueMapper valueMapper;
 
-  @Rule
-  public ProcessEngineLoggingRule loggingRule = new ProcessEngineLoggingRule();
+  @RegisterExtension
+  ProcessEngineLoggingExtension loggingExtension = new ProcessEngineLoggingExtension();
 
-  @BeforeClass
-  public static void setUp() {
+  @BeforeAll
+  static void setUp() {
     DefaultValueMapper defaultValueMapper = DefaultValueMapper.instance();
     SpinValueMapper spinValueMapper = new SpinValueMapper();
     List<CustomValueMapper> mapperList = Arrays.asList(defaultValueMapper, spinValueMapper);
@@ -60,7 +57,7 @@ public class SpinValueMapperTest {
   }
 
   @Test
-  public void shouldMapOperatonSpinJSONObjectAsContext() {
+  void shouldMapOperatonSpinJSONObjectAsContext() {
     // given
     Map<String, Val> map = new HashMap<>();
     map.put("customer", new ValString("Kermit"));
@@ -76,7 +73,7 @@ public class SpinValueMapperTest {
   }
 
   @Test
-  public void shouldMapOperatonSpinJSONarrayAsList() {
+  void shouldMapOperatonSpinJSONarrayAsList() {
     // given
     List<Val> list = Arrays.asList(new ValString("Kermit"), new ValString("Waldo"));
     ValList feelList = (ValList) valueMapper.toVal(list);
@@ -91,7 +88,7 @@ public class SpinValueMapperTest {
   }
 
   @Test
-  public void shouldMapNestedOperatonSpinJSONObjectAsContext() {
+  void shouldMapNestedOperatonSpinJSONObjectAsContext() {
 
     // given
     Map<String, Val> nestedMap = new HashMap<>();
@@ -117,12 +114,12 @@ public class SpinValueMapperTest {
   }
 
   @Test
-  public void shouldMapOperatonSpinXMLObjectWithAttributes() {
+  void shouldMapOperatonSpinXMLObjectWithAttributes() {
     // given
-    Map<String, Val> xmlInnerMap = new HashMap();
+    Map<String, Val> xmlInnerMap = new HashMap<>();
     xmlInnerMap.put("@name", new ValString("Kermit"));
     xmlInnerMap.put("@language", new ValString("en"));
-    Map<String, Val> xmlContextMap = new HashMap();
+    Map<String, Val> xmlContextMap = new HashMap<>();
     xmlContextMap.put("customer", valueMapper.toVal(xmlInnerMap));
 
     ValContext context = (ValContext) valueMapper.toVal(xmlContextMap);
@@ -136,14 +133,14 @@ public class SpinValueMapperTest {
   }
 
   @Test
-  public void shouldMapOperatonSpinXMLObjectWithChildObject() {
+  void shouldMapOperatonSpinXMLObjectWithChildObject() {
     // given
-    Map<String, Val> xmlAttrMap = new HashMap();
+    Map<String, Val> xmlAttrMap = new HashMap<>();
     xmlAttrMap.put("@city", new ValString("Berlin"));
     xmlAttrMap.put("@zipCode", new ValString("10961"));
-    Map<String, Val> xmlInnerMap = new HashMap();
+    Map<String, Val> xmlInnerMap = new HashMap<>();
     xmlInnerMap.put("address", valueMapper.toVal(xmlAttrMap));
-    Map<String, Val> xmlContextMap = new HashMap();
+    Map<String, Val> xmlContextMap = new HashMap<>();
     xmlContextMap.put("customer", valueMapper.toVal(xmlInnerMap));
 
     ValContext context = (ValContext) valueMapper.toVal(xmlContextMap);
@@ -159,7 +156,7 @@ public class SpinValueMapperTest {
   }
 
   @Test
-  public void shouldMapOperatonSpinXMLObjectWithListOfChildObjects() {
+  void shouldMapOperatonSpinXMLObjectWithListOfChildObjects() {
     // given
     SpinXmlElement xml = Spin.XML("<data>" +
                                           "<customer name=\"Kermit\" language=\"en\" />" +
@@ -170,20 +167,20 @@ public class SpinValueMapperTest {
     Map<String, Val> xmlProviderAttrMap = new HashMap();
     xmlProviderAttrMap.put("@name", new ValString("Foobar"));
 
-    Map<String, Val> xmlCustomerAttrMap1 = new HashMap();
+    Map<String, Val> xmlCustomerAttrMap1 = new HashMap<>();
     xmlCustomerAttrMap1.put("@name", new ValString("Kermit"));
     xmlCustomerAttrMap1.put("@language", new ValString("en"));
 
-    Map<String, Val> xmlCustomerAttrMap2 = new HashMap();
+    Map<String, Val> xmlCustomerAttrMap2 = new HashMap<>();
     xmlCustomerAttrMap2.put("@name", new ValString("John"));
     xmlCustomerAttrMap2.put("@language", new ValString("de"));
 
-    Map<String, Val> xmlInnerMap = new HashMap();
+    Map<String, Val> xmlInnerMap = new HashMap<>();
     xmlInnerMap.put("provider", valueMapper.toVal(xmlProviderAttrMap));
     xmlInnerMap.put("customer",
                     valueMapper.toVal(Arrays.asList(xmlCustomerAttrMap1, xmlCustomerAttrMap2)));
 
-    Map<String, Val> xmlContextMap = new HashMap();
+    Map<String, Val> xmlContextMap = new HashMap<>();
     xmlContextMap.put("data", valueMapper.toVal(xmlInnerMap));
 
     ValContext context = (ValContext) valueMapper.toVal(xmlContextMap);
@@ -196,14 +193,14 @@ public class SpinValueMapperTest {
   }
 
   @Test
-  public void shouldMapOperatonSpinXMLObjectWithContent() {
+  void shouldMapOperatonSpinXMLObjectWithContent() {
     // given
     SpinXmlElement xml = Spin.XML("<customer>Kermit</customer>");
 
-    Map<String, Val> xmlInnerMap = new HashMap();
+    Map<String, Val> xmlInnerMap = new HashMap<>();
     xmlInnerMap.put("$content", new ValString("Kermit"));
 
-    Map<String, Val> xmlContextMap = new HashMap();
+    Map<String, Val> xmlContextMap = new HashMap<>();
     xmlContextMap.put("customer", valueMapper.toVal(xmlInnerMap));
 
     ValContext context = (ValContext) valueMapper.toVal(xmlContextMap);
@@ -216,7 +213,7 @@ public class SpinValueMapperTest {
   }
 
   @Test
-  public void shouldMapOperatonSpinXMLObjectWithoutContent() {
+  void shouldMapOperatonSpinXMLObjectWithoutContent() {
     // given
     SpinXmlElement xml = Spin.XML("<customer />");
     ValContext context = (ValContext) valueMapper
@@ -230,21 +227,21 @@ public class SpinValueMapperTest {
   }
 
   @Test
-  public void shouldMapOperatonSpinXMLObjectWithPrefix() {
+  void shouldMapOperatonSpinXMLObjectWithPrefix() {
     // given
     SpinXmlElement xml = Spin.XML("<data xmlns:p=\"http://www.example.org\">" +
                                           "<p:customer p:name=\"Kermit\" language=\"en\" />" +
                                         "</data>");
 
-    Map<String, Val> xmlAttrMap = new HashMap();
+    Map<String, Val> xmlAttrMap = new HashMap<>();
     xmlAttrMap.put("@p$name", new ValString("Kermit"));
     xmlAttrMap.put("@language", new ValString("en"));
 
-    Map<String, Val> xmlInnerMap = new HashMap();
+    Map<String, Val> xmlInnerMap = new HashMap<>();
     xmlInnerMap.put("p$customer", valueMapper.toVal(xmlAttrMap));
     xmlInnerMap.put("@xmlns$p", new ValString("http://www.example.org"));
 
-    Map<String, Val> xmlContextMap = new HashMap();
+    Map<String, Val> xmlContextMap = new HashMap<>();
     xmlContextMap.put("data", valueMapper.toVal(xmlInnerMap));
 
     ValContext context = (ValContext) valueMapper.toVal(xmlContextMap);
@@ -257,14 +254,14 @@ public class SpinValueMapperTest {
   }
 
   @Test
-  public void shouldEqualClassNameForSpinValueMapper() {
+  void shouldEqualClassNameForSpinValueMapper() {
     assertThat(SpinValueMapper.class.getName())
         .isEqualTo(SpinValueMapperFactory.SPIN_VALUE_MAPPER_CLASS_NAME);
   }
 
   @Test
   @WatchLogger(loggerNames = {ScalaFeelLogger.PROJECT_LOGGER}, level = "INFO")
-  public void shouldLogValueMapperDetection() {
+  void shouldLogValueMapperDetection() {
     // given
     SpinValueMapperFactory mapperFactory = new SpinValueMapperFactory();
 
@@ -272,7 +269,7 @@ public class SpinValueMapperTest {
     mapperFactory.createInstance();
 
     // then
-    assertThat(loggingRule.getFilteredLog("Spin value mapper detected").size()).isOne();
+    assertThat(loggingExtension.getFilteredLog("Spin value mapper detected").size()).isOne();
   }
 
 }

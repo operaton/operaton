@@ -16,13 +16,6 @@
  */
 package org.operaton.spin.plugin.impl;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.util.IoUtil;
@@ -34,6 +27,10 @@ import org.operaton.spin.spi.DataFormat;
 import org.operaton.spin.spi.DataFormatMapper;
 import org.operaton.spin.spi.DataFormatReader;
 import org.operaton.spin.spi.DataFormatWriter;
+
+import java.io.*;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Implementation of a {@link TypedValueSerializer} for {@link ObjectValue ObjectValues} using a
@@ -68,11 +65,14 @@ public class SpinObjectValueSerializer extends AbstractObjectValueSerializer {
   }
 
   protected byte[] serializeToByteArray(Object deserializedObject) {
+    ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
+    requireNonNull(processEngineConfiguration);
+
     DataFormatMapper mapper = dataFormat.getMapper();
     DataFormatWriter writer = dataFormat.getWriter();
 
     ByteArrayOutputStream out = new ByteArrayOutputStream();
-    OutputStreamWriter outWriter = new OutputStreamWriter(out, Context.getProcessEngineConfiguration().getDefaultCharset());
+    OutputStreamWriter outWriter = new OutputStreamWriter(out, processEngineConfiguration.getDefaultCharset());
     BufferedWriter bufferedWriter = new BufferedWriter(outWriter);
 
     try {
@@ -89,6 +89,8 @@ public class SpinObjectValueSerializer extends AbstractObjectValueSerializer {
 
   protected Object deserializeFromByteArray(byte[] bytes, String objectTypeName) {
     ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
+    requireNonNull(processEngineConfiguration);
+
     DataFormatMapper mapper = dataFormat.getMapper();
     DataFormatReader reader = dataFormat.getReader();
 

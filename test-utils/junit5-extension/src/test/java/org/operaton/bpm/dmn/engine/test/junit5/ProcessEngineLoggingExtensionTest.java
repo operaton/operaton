@@ -1,4 +1,8 @@
-package org.operaton.bpm.engine.test.junit5;
+package org.operaton.bpm.dmn.engine.test.junit5;
+
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
+
+import java.util.List;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
@@ -8,8 +12,6 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -18,11 +20,10 @@ class ProcessEngineLoggingExtensionTest {
     private static final Logger logger = LoggerFactory.getLogger(ProcessEngineLoggingExtensionTest.class);
 
     @RegisterExtension
-    private ProcessEngineLoggingExtension loggingExtension = new ProcessEngineLoggingExtension();
+    private final ProcessEngineLoggingExtension loggingExtension = new ProcessEngineLoggingExtension();
 
     @BeforeEach
     void setUp() {
-        this.loggingExtension = loggingExtension;
         // Configure the extension to watch a specific logger at the DEBUG level.
         loggingExtension.watch(getClass().getName(), Level.DEBUG);
     }

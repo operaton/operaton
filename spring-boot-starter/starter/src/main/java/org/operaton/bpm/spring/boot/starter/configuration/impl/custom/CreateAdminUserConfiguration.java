@@ -53,7 +53,7 @@ public class CreateAdminUserConfiguration extends AbstractOperatonConfiguration 
 
   @Override
   public void postProcessEngineBuild(final ProcessEngine processEngine) {
-    requireNonNull(adminUser);
+    requireNonNull(adminUser, "adminUser not configured!");
 
     final IdentityService identityService = processEngine.getIdentityService();
     final AuthorizationService authorizationService = processEngine.getAuthorizationService();

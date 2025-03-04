@@ -16,34 +16,27 @@
  */
 package org.operaton.spin.plugin.script;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.DeploymentExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
+
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Daniel Meyer
  *
  */
-@RunWith(Parameterized.class)
+@ExtendWith(ProcessEngineExtension.class)
 public class SpinScriptTaskSupportTest {
 
-  @Rule
-  public ProcessEngineRule engineRule = new ProcessEngineRule();
-
-  @Parameters(name = "{index}: {0}")
   public static Object[] data() {
       return new Object[][] {
                { "groovy", "" },
@@ -52,25 +45,18 @@ public class SpinScriptTaskSupportTest {
                { "ruby", "$" }
          };
   }
-
-  @Parameter(0)
   public String language;
-
-  @Parameter(1)
   public String variablePrefix;
 
-  private RuntimeService runtimeService;
-  private RepositoryService repositoryService;
+  RuntimeService runtimeService;
 
+  @RegisterExtension
+  static DeploymentExtension deploymentExtension = new DeploymentExtension();
 
-  @Before
-  public void setUp() {
-    this.runtimeService = engineRule.getRuntimeService();
-    this.repositoryService = engineRule.getRepositoryService();
-  }
-
-  @Test
-  public void testSpinAvailable() {
+  @MethodSource("data")
+  @ParameterizedTest(name = "{index}: {0}")
+  void spinAvailable(String language, String variablePrefix) {
+    initSpinScriptTaskSupportTest(language, variablePrefix);
     deployProcess(language, setVariableScript("name", "S('<test />').name()"));
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
 
@@ -78,8 +64,10 @@ public class SpinScriptTaskSupportTest {
     assertThat(variable).isEqualTo("test");
   }
 
-  @Test
-  public void testTwoScriptTasks() {
+  @MethodSource("data")
+  @ParameterizedTest(name = "{index}: {0}")
+  void twoScriptTasks(String language, String variablePrefix) {
+    initSpinScriptTaskSupportTest(language, variablePrefix);
     // given
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("testProcess")
       .startEvent()
@@ -93,8 +81,7 @@ public class SpinScriptTaskSupportTest {
       .endEvent()
     .done();
 
-    Deployment deployment = repositoryService.createDeployment().addModelInstance("process.bpmn", modelInstance).deploy();
-    engineRule.manageDeployment(deployment);
+    deploymentExtension.deploy(modelInstance);
 
     // when
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
@@ -117,11 +104,8 @@ public class SpinScriptTaskSupportTest {
 
   protected void deployProcess(String scriptFormat, String scriptText) {
     BpmnModelInstance process = createProcess(scriptFormat, scriptText);
-    Deployment deployment = repositoryService.createDeployment()
-      .addModelInstance("testProcess.bpmn", process)
-      .deploy();
 
-    engineRule.manageDeployment(deployment);
+    deploymentExtension.deploy(process);
   }
 
   protected BpmnModelInstance createProcess(String scriptFormat, String scriptText) {
@@ -135,5 +119,10 @@ public class SpinScriptTaskSupportTest {
       .endEvent()
     .done();
 
+  }
+
+  public void initSpinScriptTaskSupportTest(String language, String variablePrefix) {
+    this.language = language;
+    this.variablePrefix = variablePrefix;
   }
 }

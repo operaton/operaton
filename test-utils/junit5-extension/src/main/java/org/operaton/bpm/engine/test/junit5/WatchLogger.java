@@ -14,21 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.spin.plugin.variables;
+package org.operaton.bpm.engine.test.junit5;
 
-import org.operaton.bpm.engine.runtime.DeserializationTypeValidator;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.mockito.Mockito;
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface WatchLogger {
 
-class JsonSerializationWithValidationTest extends JsonSerializationTest {
-
-  @BeforeEach
-  void setUpValidator() {
-    DeserializationTypeValidator validatorMock = Mockito.mock(DeserializationTypeValidator.class);
-    Mockito.when(validatorMock.validate(Mockito.anyString())).thenReturn(true);
-    processEngineConfiguration.setDeserializationTypeValidator(validatorMock);
-    processEngineConfiguration.setDeserializationTypeValidationEnabled(true);
-  }
-
+  String[] loggerNames() default {};
+  
+  String level();
 }

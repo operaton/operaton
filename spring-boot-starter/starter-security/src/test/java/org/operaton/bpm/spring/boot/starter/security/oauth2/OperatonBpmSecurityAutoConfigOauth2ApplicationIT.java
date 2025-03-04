@@ -30,7 +30,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.rest.security.auth.AuthenticationResult;
-import org.operaton.bpm.engine.test.junit5.LogCaptureExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
 import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.AuthorizeTokenFilter;
 import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.OAuth2AuthenticationProvider;
 import org.operaton.bpm.webapp.impl.security.auth.ContainerBasedAuthenticationFilter;
@@ -71,7 +71,7 @@ class OperatonBpmSecurityAutoConfigOauth2ApplicationIT extends AbstractSpringSec
   private OAuth2AuthorizedClientService authorizedClientService;
 
   @RegisterExtension
-  LogCaptureExtension logger = new LogCaptureExtension()
+  ProcessEngineLoggingExtension logger = new ProcessEngineLoggingExtension()
       .watch(AuthorizeTokenFilter.class.getCanonicalName());
 
   private OAuth2AuthenticationProvider spiedAuthenticationProvider;

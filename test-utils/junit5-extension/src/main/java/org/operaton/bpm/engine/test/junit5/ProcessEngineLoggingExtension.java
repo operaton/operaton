@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * <h3>Usage:</h3>
  * <pre>
  * <code>@RegisterExtension</code>
- * LogCaptureExtension loggingExtension = new LogCaptureExtension()
+ * ProcessEngineLoggingExtension loggingExtension = new ProcessEngineLoggingExtension()
  *    .watch("org.operaton.bpm.engine")
  *    .level(Level.INFO);
  * </pre>
@@ -62,7 +62,7 @@ import org.slf4j.LoggerFactory;
  * such as verifying that certain events are logged at specific levels.
  * </p>
  */
-public class LogCaptureExtension implements BeforeTestExecutionCallback, AfterTestExecutionCallback {
+public class ProcessEngineLoggingExtension implements BeforeTestExecutionCallback, AfterTestExecutionCallback {
 
   public static final String LOGGER_NOT_FOUND_ERROR = "no logger found with name ";
   public static final String NOT_WATCHING_ERROR = "not watching any logger with name: ";
@@ -73,21 +73,21 @@ public class LogCaptureExtension implements BeforeTestExecutionCallback, AfterTe
 
   private final Map<String, Logger> allWatched = new HashMap<>();
 
-  public LogCaptureExtension watch(String... loggerName) {
+  public ProcessEngineLoggingExtension watch(String... loggerName) {
     for (String logger : loggerName) {
       watch(logger, null);
     }
     return this;
   }
 
-  public LogCaptureExtension watch(String loggerName, Level level) {
+  public ProcessEngineLoggingExtension watch(String loggerName, Level level) {
     Logger logger = getLogger(loggerName);
     logger.setLevel(level);
     globallyWatched.put(logger.getName(), logger);
     return this;
   }
 
-  public LogCaptureExtension level(Level level) {
+  public ProcessEngineLoggingExtension level(Level level) {
     globalLevel = level;
     return this;
   }

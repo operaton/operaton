@@ -1,6 +1,6 @@
 package org.operaton.bpm.dmn.engine.test.junit5;
 
-import org.operaton.bpm.engine.test.junit5.LogCaptureExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
 
 import java.util.List;
 
@@ -15,12 +15,12 @@ import org.slf4j.LoggerFactory;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class LogCaptureExtensionTest {
+class ProcessEngineLoggingExtensionTest {
 
-    private static final Logger logger = LoggerFactory.getLogger(LogCaptureExtensionTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProcessEngineLoggingExtensionTest.class);
 
     @RegisterExtension
-    private final LogCaptureExtension loggingExtension = new LogCaptureExtension();
+    private final ProcessEngineLoggingExtension loggingExtension = new ProcessEngineLoggingExtension();
 
     @BeforeEach
     void setUp() {
@@ -62,6 +62,6 @@ class LogCaptureExtensionTest {
         // Attempt to retrieve logs for a non-watched logger to trigger an error
         assertThatThrownBy(() -> loggingExtension.getLog("NonExistentLogger"))
                 .isInstanceOf(RuntimeException.class)
-                .hasMessageContaining(LogCaptureExtension.NOT_WATCHING_ERROR);
+                .hasMessageContaining(ProcessEngineLoggingExtension.NOT_WATCHING_ERROR);
     }
 }

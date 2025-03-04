@@ -59,7 +59,7 @@ run_build () {
     PROFILES+=(tomcat distro-tomcat)
   fi
   if [[ "$CONTAINER" == "wildfly" ]]; then
-    PROFILES+=(tomcat distro-tomcat)
+    PROFILES+=(wildfly distro-wildfly)
   fi
 
   echo "ℹ️ Building $TEST_SUITE integration tests for container $CONTAINER with $DATABASE database using profiles: [${PROFILES[*]}]"
@@ -84,7 +84,7 @@ run_tests () {
       PROFILES+=(tomcat)
       ;;
     wildfly)
-      PROFILES+=(tomcat)
+      PROFILES+=(wildfly)
       ;;
   esac
 

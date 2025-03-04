@@ -131,7 +131,8 @@ jobs:
           key: ${{ github.run_id }}-build-artifacts
 
   integration-tests:
-    name: integration-tests
+    name: Integration Tests
+    id: integration-tests
     runs-on: ubuntu-24.04
     if: ${{ github.event_name == 'schedule' || github.event.inputs.integration_tests == 'true' }}
     needs:
@@ -190,6 +191,7 @@ jobs:
     name: Release
     needs:
       - build
+      - integration-tests
     runs-on: ubuntu-24.04
     steps:
       - name: Check out the code

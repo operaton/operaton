@@ -64,6 +64,10 @@ run_build () {
 
   echo "ℹ️ Building $TEST_SUITE integration tests for container $CONTAINER with $DATABASE database using profiles: [${PROFILES[*]}]"
   ./mvnw -DskipTests -P$(IFS=,; echo "${PROFILES[*]}") clean install
+  if [[ $? -ne 0 ]]; then
+    echo "❌ Error: Build failed"
+    exit 1
+  fi
 }
 
 ##########################################################################
@@ -99,6 +103,10 @@ run_tests () {
 
   echo "ℹ️ Running $TEST_SUITE integration tests for container $CONTAINER with $DATABASE database using profiles: [${PROFILES[*]}]"
   ./mvnw -P$(IFS=,; echo "${PROFILES[*]}") clean verify -f qa
+  if [[ $? -ne 0 ]]; then
+    echo "❌ Error: Build failed"
+    exit 1
+  fi
 }
 
 ##########################################################################

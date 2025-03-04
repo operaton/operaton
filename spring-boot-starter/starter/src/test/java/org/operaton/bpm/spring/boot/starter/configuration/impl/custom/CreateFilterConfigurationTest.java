@@ -19,8 +19,8 @@ package org.operaton.bpm.spring.boot.starter.configuration.impl.custom;
 import org.operaton.bpm.engine.FilterService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.filter.FilterQuery;
-import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 import org.operaton.bpm.spring.boot.starter.test.helper.StandaloneInMemoryTestConfiguration;
 import org.operaton.bpm.spring.boot.starter.util.SpringBootProcessEngineLogger;
@@ -33,7 +33,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
+import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 class CreateFilterConfigurationTest {

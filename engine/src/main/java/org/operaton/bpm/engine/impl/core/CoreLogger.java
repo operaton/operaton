@@ -39,6 +39,9 @@ public class CoreLogger extends ProcessEngineLogger {
         value, outerScope, name, innerScope);
   }
 
+  /**
+   * @deprecated use {@link #debugMappingValueFromInnerScopeToOuterScope(Object, AbstractVariableScope, String, AbstractVariableScope)} instead
+   */
   @Deprecated(forRemoval = true, since = "1.0.0-beta-4")
   public void debugMappingValuefromInnerScopeToOuterScope(Object value, AbstractVariableScope innerScope, String name, AbstractVariableScope outerScope) {
     debugMappingValueFromInnerScopeToOuterScope(value, innerScope, name, outerScope);

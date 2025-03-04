@@ -35,7 +35,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class CreateAdminUserConfigurationTest {
   @RegisterExtension
-  static final public ProcessEngineLoggingExtension loggingExtension = new ProcessEngineLoggingExtension()
+  static final ProcessEngineLoggingExtension loggingExtension = new ProcessEngineLoggingExtension()
     .watch(SpringBootProcessEngineLogger.PACKAGE, Level.DEBUG);
 
   @RegisterExtension

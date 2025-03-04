@@ -14,6 +14,11 @@ on:
           - '["17"]'
           - '["21"]'
           - '["17", "21"]'
+      skip_build:
+        description: 'Skip the normal build, e.g. when running integration tests only'
+        type: boolean
+        required: true
+        default: false
       dry_run:
         description: 'Dry-Run: Skips remote operations when true'
         type: boolean
@@ -69,6 +74,7 @@ jobs:
       matrix:
         java: ${{ fromJson(github.event.inputs.java_version || '["17", "21"]') }}
     runs-on: ubuntu-24.04
+    if: ${{ github.event_name == 'schedule' || github.event.inputs.skip_build == 'false' }}
     outputs:
       version: ${{steps.maven-build.outputs.version}}
       project_version: ${{steps.maven-build.outputs.project_version}}
@@ -163,12 +169,12 @@ jobs:
         id: maven-build
         shell: bash
         run: |
-          ./build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --container=${{ matrix.container }} --db=${{ matrix.database }} --no-test
+          .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --container=${{ matrix.container }} --db=${{ matrix.database }} --no-test
       - name: Execute Integration Tests
         id: maven-integration-tests
         shell: bash
         run: |
-          ./build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --container=${{ matrix.container }} --db=${{ matrix.database }} --no-build
+          .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --container=${{ matrix.container }} --db=${{ matrix.database }} --no-build
       - name: Publish Test Report
         if: always()
         uses: mikepenz/action-junit-report@v4
@@ -192,6 +198,7 @@ jobs:
       - build
       - integration-tests
     runs-on: ubuntu-24.04
+    if: ${{ github.event_name == 'schedule' || github.event.inputs.skip_build == 'false' }}
     steps:
       - name: Check out the code
         uses: actions/checkout@v4

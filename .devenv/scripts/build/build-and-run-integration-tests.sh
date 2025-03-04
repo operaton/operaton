@@ -68,7 +68,7 @@ run_build () {
 
 ##########################################################################
 run_tests () {
-  PROFILES=(distro distro-webjar)
+  PROFILES=()
 
   case "$TEST_SUITE" in
     engine)
@@ -81,10 +81,10 @@ run_tests () {
 
   case "$CONTAINER" in
     tomcat)
-      PROFILES+=(tomcat)
+      PROFILES+=(tomcat distro-tomcat)
       ;;
     wildfly)
-      PROFILES+=(wildfly)
+      PROFILES+=(wildfly distro-wildfly)
       ;;
   esac
 

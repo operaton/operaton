@@ -45,37 +45,51 @@ import org.junit.jupiter.api.extension.TestTemplateInvocationContext;
 import org.junit.jupiter.api.extension.TestTemplateInvocationContextProvider;
 
 /**
- * This JUnit 5 extension is intended to make the conversion from JUnit 4 Tests like ContainerAuthenticationFilterTest
- * as easy as possible. The issue is, that these tests are run with @RunWith(org.junit.runners.Parameterized.class)
- * and use a static method annotated with @org.junit.runners.Parameterized.Parameters to inject parameters into
- * the constructor of the test class. This extension implements the same mechanism for JUnit 5.
+ * This JUnit 5 extension is intended to make the conversion from JUnit 4 Tests
+ * like ContainerAuthenticationFilterTest as easy as possible. The issue is,
+ * that these tests are run with @RunWith(org.junit.runners.Parameterized.class)
+ * and use a static method annotated
+ * with @org.junit.runners.Parameterized.Parameters to inject parameters into
+ * the constructor of the test class or by using field injection
+ * with @Paramater(0), @Parameter(1). This extension implements the same
+ * mechanism for JUnit 5.
  * 
  * To migrate the tests you can follow the following recipe:
  * 
- * 1. Remove the junit 4 imports
+ * <ol>
+ * <li>Remove the junit 4 imports
  * 
- *    import org.junit.After;
- *    import org.junit.Assert;
- *    import org.junit.Before;
- *    import org.junit.Test;
- *    import org.junit.runner.RunWith;
- *    import org.junit.runners.Parameterized;
- *    import org.junit.runners.Parameterized.Parameters;
- *    
- * 2. Add the imports for junit 5 and this class
+ * <pre>
+ * import org.junit.After;
+ * import org.junit.Assert;
+ * import org.junit.Before;
+ * import org.junit.Test;
+ * import org.junit.runner.RunWith;
+ * import org.junit.runners.Parameterized;
+ * import org.junit.runners.Parameterized.Parameters;
+ * </pre>
  * 
- *    import org.junit.jupiter.api.*;
- *    import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
- *    import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
- *    import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
- *    
- * 3. Replace the class @RunWith(Parameterized.class) annotation with @Parameterized
+ * </li>
  * 
- * 4. Replace @Before with @BeforeEach and @After with @AfterEach
+ * <li>Add the imports for junit 5 and this class
  * 
- * 5. Replace each @Test with @TestTemplate
+ * <pre>
+ * import org.junit.jupiter.api.*;
+ * import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+ * import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+ * import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+ * </pre>
  * 
- * 6. Use assertion methods from Assertions instead from Assert
+ * </li>
+ * <li>Replace the class @RunWith(Parameterized.class) annotation
+ * with @Parameterized</li>
+ * 
+ * <li>Replace @Before with @BeforeEach and @After with @AfterEach</li>
+ * 
+ * <li>Replace each @Test with @TestTemplate</li>
+ * 
+ * <li>Use assertion methods from Assertions instead from Assert</li>
+ * </ol>
  * 
  */
 public class ParameterizedTestExtension implements TestTemplateInvocationContextProvider {

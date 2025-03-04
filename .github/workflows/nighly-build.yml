@@ -132,7 +132,6 @@ jobs:
 
   integration-tests:
     name: Integration Tests
-    id: integration-tests
     runs-on: ubuntu-24.04
     if: ${{ github.event_name == 'schedule' || github.event.inputs.integration_tests == 'true' }}
     needs:

@@ -32,7 +32,7 @@ public class OperatonOracleContainerProvider extends OracleContainerProvider {
 
   @Override
   public JdbcDatabaseContainer<?> newInstance(String tag) {
-    if("aarch64".equals(System.getProperty("os.arch"))) {
+    if("aaarch64".equals(System.getProperty("os.arch"))) {
       throw new IllegalStateException("The Oracle Testcontainers tests cannot be executed on ARM architecture, as Oracle Database does not support it.");
     }
     DockerImageName dockerImageName = TestcontainersHelper

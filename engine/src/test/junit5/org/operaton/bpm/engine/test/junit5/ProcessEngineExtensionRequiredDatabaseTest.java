@@ -41,6 +41,6 @@ class ProcessEngineExtensionRequiredDatabaseTest {
   void shouldRequireAnyDbButH2() {
 
     assertThat(engine.getProcessEngineConfiguration().getDatabaseType()).isNotEqualTo(DbSqlSessionFactory.H2);
-    assertThat(engine.getProcessEngineConfiguration().getDatabaseType()).isIn((Object) DbSqlSessionFactory.SUPPORTED_DATABASES);
+    assertThat(engine.getProcessEngineConfiguration().getDatabaseType()).isIn((Object[]) DbSqlSessionFactory.SUPPORTED_DATABASES);
   }
 }

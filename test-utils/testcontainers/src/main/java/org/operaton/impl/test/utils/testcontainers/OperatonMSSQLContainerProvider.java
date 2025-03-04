@@ -23,7 +23,7 @@ import org.testcontainers.utility.DockerImageName;
 
 public class OperatonMSSQLContainerProvider extends MSSQLServerContainerProvider {
 
-  private static final String NAME = "camsqlserver";
+  private static final String NAME = "operatonsqlserver";
 
   @Override
   public boolean supports(String databaseType) {

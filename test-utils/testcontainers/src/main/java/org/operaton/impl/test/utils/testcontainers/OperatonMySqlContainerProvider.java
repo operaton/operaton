@@ -23,7 +23,7 @@ import org.testcontainers.utility.DockerImageName;
 
 public class OperatonMySqlContainerProvider extends MySQLContainerProvider {
 
-  private static final String NAME = "cammysql";
+  private static final String NAME = "operatonmysql";
 
   @Override
   public boolean supports(String databaseType) {
@@ -31,9 +31,9 @@ public class OperatonMySqlContainerProvider extends MySQLContainerProvider {
   }
 
   @Override
-  public JdbcDatabaseContainer newInstance(String tag) {
+  public JdbcDatabaseContainer<?> newInstance(String tag) {
     DockerImageName dockerImageName = TestcontainersHelper
       .resolveDockerImageName("mysql", tag, "mysql");
-    return new MySQLContainer(dockerImageName);
+    return new MySQLContainer<>(dockerImageName).withCommand("mysqld --transaction-isolation=READ-COMMITTED");
   }
 }

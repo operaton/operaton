@@ -16,6 +16,17 @@
     <version.asm>7.3.1</version.asm>
   </properties>
 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.testcontainers</groupId>
+        <artifactId>testcontainers-bom</artifactId>
+        <version>${version.testcontainers}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <dependencies>
     <dependency>
@@ -39,6 +50,48 @@
       <artifactId>postgresql</artifactId>
       <scope>runtime</scope>
     </dependency>
+
+    <dependency>
+      <groupId>org.mariadb.jdbc</groupId>
+      <artifactId>mariadb-java-client</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+    <!--
+    Testcontainers are needed in the Tomcat container for Arquillian tests, so the instance is able to
+    spin up containers via the jdbc:tc:.. JDBC connection.
+    -->
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>testcontainers</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>jdbc</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>postgresql</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>mariadb</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-test-utils-testcontainers</artifactId>
+      <version>1.0.0-beta-4-SNAPSHOT</version>
+      <scope>runtime</scope>
+    </dependency>
+
 
     <dependency>
       <groupId>org.python</groupId>
@@ -162,6 +215,19 @@
                       <groupId>org.ow2.asm</groupId>
                       <artifactId>asm-util</artifactId>
                       <version>${version.asm}</version>
+                      <outputDirectory>target/server/apache-tomcat-${version.tomcat}/lib</outputDirectory>
+                    </artifactItem>
+                    <artifactItem>
+                      <groupId>org.testcontainers</groupId>
+                      <artifactId>testcontainers</artifactId>
+                      <version>${version.testcontainers}</version>
+                      <outputDirectory>target/server/apache-tomcat-${version.tomcat}/lib</outputDirectory>
+                    </artifactItem>
+
+                    <artifactItem>
+                      <groupId>org.testcontainers</groupId>
+                      <artifactId>jdbc</artifactId>
+                      <version>${version.testcontainers}</version>
                       <outputDirectory>target/server/apache-tomcat-${version.tomcat}/lib</outputDirectory>
                     </artifactItem>
                   </artifactItems>

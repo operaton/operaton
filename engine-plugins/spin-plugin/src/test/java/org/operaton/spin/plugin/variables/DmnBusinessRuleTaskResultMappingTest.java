@@ -25,7 +25,6 @@ import org.operaton.bpm.engine.variable.Variables;
 
 import java.util.Collections;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -47,14 +46,8 @@ class DmnBusinessRuleTaskResultMappingTest {
   @RegisterExtension
   static ProcessEngineExtension engineExtension = ProcessEngineExtension.builder()
           .configurationResource("org/operaton/spin/plugin/json.operaton.cfg.xml").build();
-  private RuntimeService runtimeService;
-  private HistoryService historyService;
-
-  @BeforeEach
-  void setUp () {
-    runtimeService = engineExtension.getRuntimeService();
-    historyService = engineExtension.getHistoryService();
-  }
+  RuntimeService runtimeService;
+  HistoryService historyService;
 
   @Deployment(resources = {STORE_DECISION_RESULT_BPMN, TEST_DECISION})
   @Test

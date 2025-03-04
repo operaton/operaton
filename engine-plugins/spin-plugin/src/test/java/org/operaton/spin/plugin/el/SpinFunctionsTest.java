@@ -50,19 +50,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class SpinFunctionsTest {
   @RegisterExtension
   static ProcessEngineExtension engineExtension = ProcessEngineExtension.builder().build();
-  private ProcessEngineConfigurationImpl processEngineConfiguration;
-  private RepositoryService repositoryService;
-  private RuntimeService runtimeService;
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RepositoryService repositoryService;
+  RuntimeService runtimeService;
 
   String xmlString = "<elementName attrName=\"attrValue\" />";
   String jsonString = "{\"foo\": \"bar\"}";
-
-  @BeforeEach
-  void setUp() {
-    processEngineConfiguration = engineExtension.getProcessEngineConfiguration();
-    runtimeService = engineExtension.getRuntimeService();
-    repositoryService = engineExtension.getRepositoryService();
-  }
 
   @SuppressWarnings("unchecked")
   protected <T> T executeExpression(String expression) {

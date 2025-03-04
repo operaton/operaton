@@ -63,23 +63,14 @@ class XmlSerializationTest {
 
   protected static final String XML_FORMAT_NAME = DataFormats.XML_DATAFORMAT_NAME;
 
-  protected String originalSerializationFormat;
-
   @RegisterExtension
   static ProcessEngineExtension processEngineExtension = ProcessEngineExtension.builder().build();
 
   @RegisterExtension
   DeploymentExtension deploymentExtension = new DeploymentExtension(processEngineExtension.getRepositoryService());
-  private RuntimeService runtimeService;
-  private ProcessEngineConfigurationImpl processEngineConfiguration;
-  private TaskService taskService;
-
-  @BeforeEach
-  void setUp () {
-    runtimeService = processEngineExtension.getRuntimeService();
-    processEngineConfiguration = processEngineExtension.getProcessEngineConfiguration();
-    taskService = processEngineExtension.getTaskService();
-  }
+  RuntimeService runtimeService;
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  TaskService taskService;
 
   @Deployment(resources = ONE_TASK_PROCESS)
   @Test

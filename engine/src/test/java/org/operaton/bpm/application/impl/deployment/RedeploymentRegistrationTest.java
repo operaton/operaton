@@ -21,8 +21,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.application.impl.EmbeddedProcessApplication;
+import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.impl.application.ProcessApplicationManager;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -34,20 +39,13 @@ import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.persistence.deploy.cache.DeploymentCache;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.repository.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
-@RunWith(Parameterized.class)
+@Parameterized
+@ExtendWith(ProcessEngineExtension.class)
 public class RedeploymentRegistrationTest {
 
   protected static final String DEPLOYMENT_NAME = "my-deployment";
@@ -66,13 +64,8 @@ public class RedeploymentRegistrationTest {
 
   protected EmbeddedProcessApplication processApplication;
 
-  protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
-
   protected RepositoryService repositoryService;
+  protected ManagementService managementService;
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
 
   @Parameter(0)
@@ -90,7 +83,7 @@ public class RedeploymentRegistrationTest {
   @Parameter(4)
   public TestProvider testProvider;
 
-  @Parameters(name = "scenario {index}")
+  @Parameters
   public static Collection<Object[]> scenarios() {
     return Arrays.asList(new Object[][] {
       { BPMN_RESOURCE_1, BPMN_RESOURCE_2, "processOne", "processTwo", processDefinitionTestProvider() },
@@ -100,15 +93,12 @@ public class RedeploymentRegistrationTest {
     });
   }
 
-  @Before
+  @BeforeEach
   public void init() {
-    repositoryService = engineRule.getRepositoryService();
-    processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-
     processApplication = new EmbeddedProcessApplication();
   }
 
-  @Test
+  @TestTemplate
 	public void registrationNotFoundByDeploymentId() {
     // given
     ProcessApplicationReference reference = processApplication.getReference();
@@ -132,7 +122,7 @@ public class RedeploymentRegistrationTest {
     assertThat(getProcessApplicationForDeployment(deployment2.getId())).isNull();
   }
 
-  @Test
+  @TestTemplate
 	public void registrationNotFoundByDefinition() {
     // given
 
@@ -163,7 +153,7 @@ public class RedeploymentRegistrationTest {
     assertThat(getProcessApplicationForDefinition(definitionId)).isNull();
   }
 
-  @Test
+  @TestTemplate
 	public void registrationFoundByDeploymentId() {
     // given
     ProcessApplicationReference reference1 = processApplication.getReference();
@@ -189,7 +179,7 @@ public class RedeploymentRegistrationTest {
     assertThat(getProcessApplicationForDeployment(deployment2.getId())).isEqualTo(reference2);
   }
 
-  @Test
+  @TestTemplate
 	public void registrationFoundFromPreviousDefinition() {
     // given
     ProcessApplicationReference reference = processApplication.getReference();
@@ -215,7 +205,7 @@ public class RedeploymentRegistrationTest {
     assertThat(getProcessApplicationForDeployment(deployment2.getId())).isNull();
   }
 
-  @Test
+  @TestTemplate
 	public void registrationFoundFromLatestDeployment() {
     // given
     ProcessApplicationReference reference1 = processApplication.getReference();
@@ -240,7 +230,7 @@ public class RedeploymentRegistrationTest {
     assertThat(getProcessApplicationForDeployment(deployment2.getId())).isEqualTo(reference2);
   }
 
-  @Test
+  @TestTemplate
 	public void registrationFoundOnlyForOneProcessDefinition() {
     // given
 
@@ -275,7 +265,7 @@ public class RedeploymentRegistrationTest {
     assertThat(getProcessApplicationForDefinition(secondDefinitionId)).isNull();
   }
 
-  @Test
+  @TestTemplate
 	public void registrationFoundFromDifferentDeployment() {
     // given
 
@@ -311,7 +301,7 @@ public class RedeploymentRegistrationTest {
     assertThat(getProcessApplicationForDefinition(secondDefinitionId)).isEqualTo(reference1);
   }
 
-  @Test
+  @TestTemplate
 	public void registrationFoundFromSameDeployment() {
     // given
 
@@ -352,7 +342,7 @@ public class RedeploymentRegistrationTest {
     assertThat(getProcessApplicationForDefinition(secondDefinitionId)).isEqualTo(reference1);
   }
 
-  @Test
+  @TestTemplate
 	public void registrationFoundFromDifferentDeployments() {
     // given
 
@@ -387,7 +377,7 @@ public class RedeploymentRegistrationTest {
     assertThat(getProcessApplicationForDefinition(secondDefinitionId)).isEqualTo(reference2);
   }
 
-  @Test
+  @TestTemplate
 	public void registrationNotFoundWhenDeletingDeployment() {
     // given
 
@@ -426,7 +416,7 @@ public class RedeploymentRegistrationTest {
     assertThat(getProcessApplicationForDefinition(firstDefinitionId)).isNull();
   }
 
-  @Test
+  @TestTemplate
 	public void registrationFoundAfterDiscardingDeploymentCache() {
     // given
 
@@ -467,7 +457,7 @@ public class RedeploymentRegistrationTest {
 
   // helper ///////////////////////////////////////////
 
-  @After
+  @AfterEach
   public void cleanUp() {
     for (Deployment deployment : repositoryService.createDeploymentQuery().list()) {
       deleteDeployment(deployment);
@@ -476,7 +466,7 @@ public class RedeploymentRegistrationTest {
 
   protected void deleteDeployment(Deployment deployment) {
     repositoryService.deleteDeployment(deployment.getId(), true);
-    engineRule.getManagementService().unregisterProcessApplication(deployment.getId(), false);
+    managementService.unregisterProcessApplication(deployment.getId(), false);
   }
 
   protected ProcessApplicationReference getProcessApplicationForDeployment(String deploymentId) {

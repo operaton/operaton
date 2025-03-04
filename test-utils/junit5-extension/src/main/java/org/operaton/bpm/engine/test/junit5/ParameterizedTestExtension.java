@@ -22,6 +22,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
@@ -38,6 +39,7 @@ import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
 import org.junit.jupiter.api.extension.TestInstanceFactory;
 import org.junit.jupiter.api.extension.TestInstanceFactoryContext;
+import org.junit.jupiter.api.extension.TestInstancePostProcessor;
 import org.junit.jupiter.api.extension.TestInstantiationException;
 import org.junit.jupiter.api.extension.TestTemplateInvocationContext;
 import org.junit.jupiter.api.extension.TestTemplateInvocationContextProvider;
@@ -65,6 +67,7 @@ import org.junit.jupiter.api.extension.TestTemplateInvocationContextProvider;
  *    import org.junit.jupiter.api.*;
  *    import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
  *    import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+ *    import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
  *    
  * 3. Replace the class @RunWith(Parameterized.class) annotation with @Parameterized
  * 
@@ -76,6 +79,12 @@ import org.junit.jupiter.api.extension.TestTemplateInvocationContextProvider;
  * 
  */
 public class ParameterizedTestExtension implements TestTemplateInvocationContextProvider {
+
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target(ElementType.FIELD)
+	public @interface Parameter {
+		int value();
+	}
 
 	@Retention(RetentionPolicy.RUNTIME)
 	@Target(ElementType.METHOD)
@@ -97,8 +106,7 @@ public class ParameterizedTestExtension implements TestTemplateInvocationContext
 	@Override
 	public Stream<TestTemplateInvocationContext> provideTestTemplateInvocationContexts(ExtensionContext context) {
 		Class<?> testClass = context.getRequiredTestClass();
-		// Look for a static method annotated with
-		// @org.junit.runners.Parameterized.Parameters
+		// Look for a static method annotated with @Parameters
 		Method parametersMethod = Arrays.stream(testClass.getDeclaredMethods())
 				.filter(m -> m.isAnnotationPresent(Parameters.class) && Modifier.isStatic(m.getModifiers())).findFirst()
 				.orElseThrow(() -> new ExtensionConfigurationException(
@@ -137,7 +145,7 @@ public class ParameterizedTestExtension implements TestTemplateInvocationContext
 		@Override
 		public List<Extension> getAdditionalExtensions() {
 			return asList(
-					// A ParameterResolver that will resolve constructor (or method) parameters.
+					// ParameterResolver for method/constructor parameters
 					new ParameterResolver() {
 						@Override
 						public boolean supportsParameter(ParameterContext parameterContext,
@@ -158,20 +166,40 @@ public class ParameterizedTestExtension implements TestTemplateInvocationContext
 							return parameters[index];
 						}
 					},
-					// A TestInstanceFactory that uses our parameters to create a new instance.
+					// TestInstanceFactory to create a new test instance using the parameters
 					new TestInstanceFactory() {
 						@Override
 						public Object createTestInstance(TestInstanceFactoryContext factoryContext,
 								ExtensionContext extensionContext) throws TestInstantiationException {
 							try {
 								Class<?> testClass = extensionContext.getRequiredTestClass();
-								// we assume the test class has a single constructor.
+								// assume the test class has a single constructor.
 								Constructor<?> constructor = testClass.getDeclaredConstructors()[0];
 								constructor.setAccessible(true);
-								// Use the parameters provided by our invocation context.
 								return constructor.newInstance(parameters);
 							} catch (Exception e) {
 								throw new TestInstantiationException("Could not create test instance", e);
+							}
+						}
+					},
+					// TestInstancePostProcessor for field injection using @Parameter(X)
+					new TestInstancePostProcessor() {
+						@Override
+						public void postProcessTestInstance(Object testInstance, ExtensionContext context)
+								throws Exception {
+							// Iterate over declared fields and inject values for those annotated with
+							// @Parameter
+							for (Field field : testInstance.getClass().getDeclaredFields()) {
+								Parameter parameterAnnotation = field.getAnnotation(Parameter.class);
+								if (parameterAnnotation != null) {
+									int index = parameterAnnotation.value();
+									if (index < 0 || index >= parameters.length) {
+										throw new ExtensionConfigurationException("Index " + index
+												+ " is out of bounds for the provided parameters array.");
+									}
+									field.setAccessible(true);
+									field.set(testInstance, parameters[index]);
+								}
 							}
 						}
 					});

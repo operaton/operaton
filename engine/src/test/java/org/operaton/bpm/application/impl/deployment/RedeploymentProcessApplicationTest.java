@@ -24,6 +24,11 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Callable;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.application.ProcessApplicationExecutionException;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.application.impl.EmbeddedProcessApplication;
@@ -33,24 +38,20 @@ import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.repository.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
+import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
 
 /**
  * @author Roman Smirnov
  *
  */
-@RunWith(Parameterized.class)
+@Parameterized
+@ExtendWith(ProcessEngineExtension.class)
 public class RedeploymentProcessApplicationTest {
 
   protected static final String DEPLOYMENT_NAME = "my-deployment";
@@ -67,9 +68,7 @@ public class RedeploymentProcessApplicationTest {
   protected static final String DRD_RESOURCE_1 = "org/operaton/bpm/engine/test/dmn/deployment/drdScore.dmn11.xml";
   protected static final String DRD_RESOURCE_2 = "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml";
 
-  @Rule
-  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
-
+  protected static ProcessEngineConfigurationImpl processEngineConfiguration;
   protected static RepositoryService repositoryService;
   protected static RuntimeService runtimeService;
   protected static CaseService caseService;
@@ -95,7 +94,7 @@ public class RedeploymentProcessApplicationTest {
 
   public final List<Deployment> deploymentsToCleanup = new ArrayList<>();
 
-  @Parameters(name = "scenario {index}")
+  @Parameters
   public static Collection<Object[]> scenarios() {
     return Arrays.asList(new Object[][] {
       { BPMN_RESOURCE_1, BPMN_RESOURCE_2, "processOne", "processTwo", processDefinitionTestProvider() },
@@ -105,27 +104,21 @@ public class RedeploymentProcessApplicationTest {
     });
   }
 
-  @Before
+  @BeforeEach
   public void init() {
-    repositoryService = engineRule.getRepositoryService();
-    runtimeService = engineRule.getRuntimeService();
-    caseService = engineRule.getCaseService();
-    decisionService = engineRule.getDecisionService();
-    managementService = engineRule.getManagementService();
-
-    enforceHistoryTimeToLive = engineRule.getProcessEngineConfiguration().isEnforceHistoryTimeToLive();
+    enforceHistoryTimeToLive = processEngineConfiguration.isEnforceHistoryTimeToLive();
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
-    engineRule.getProcessEngineConfiguration().setEnforceHistoryTimeToLive(enforceHistoryTimeToLive);
+    processEngineConfiguration.setEnforceHistoryTimeToLive(enforceHistoryTimeToLive);
 
     if (!deploymentsToCleanup.isEmpty()) {
       deleteDeployments(deploymentsToCleanup);
     }
   }
 
-  @Test
+  @TestTemplate
   public void definitionOnePreviousDeploymentWithPA() {
     // given
 
@@ -156,7 +149,7 @@ public class RedeploymentProcessApplicationTest {
     deploymentsToCleanup.addAll(Arrays.asList(deployment1, deployment2));
   }
 
-  @Test
+  @TestTemplate
   public void redeploymentShouldFailOnNullHTTLAndEnforceHistoryTimeToLiveTrue() {
     // given
     Deployment deployment1;
@@ -164,7 +157,7 @@ public class RedeploymentProcessApplicationTest {
     // given
     MyEmbeddedProcessApplication application = new MyEmbeddedProcessApplication();
     // given
-    engineRule.getProcessEngineConfiguration().setEnforceHistoryTimeToLive(false);
+    processEngineConfiguration.setEnforceHistoryTimeToLive(false);
     // given
     deployment1 = repositoryService
           .createDeployment(application.getReference())
@@ -172,7 +165,7 @@ public class RedeploymentProcessApplicationTest {
           .addClasspathResource(resource1)
           .deploy();
     // given
-    engineRule.getProcessEngineConfiguration().setEnforceHistoryTimeToLive(true);
+    processEngineConfiguration.setEnforceHistoryTimeToLive(true);
     try {
 
       // when - second deployment
@@ -201,7 +194,7 @@ public class RedeploymentProcessApplicationTest {
     }
   }
 
-  @Test
+  @TestTemplate
   public void definitionTwoPreviousDeploymentWithPA() {
     // given
 
@@ -240,7 +233,7 @@ public class RedeploymentProcessApplicationTest {
     deploymentsToCleanup.addAll(Arrays.asList(deployment1, deployment2, deployment3));
   }
 
-  @Test
+  @TestTemplate
   public void definitionTwoPreviousDeploymentFirstDeploymentWithPA() {
     // given
 
@@ -277,7 +270,7 @@ public class RedeploymentProcessApplicationTest {
     deploymentsToCleanup.addAll(Arrays.asList(deployment1, deployment2, deployment3));
   }
 
-  @Test
+  @TestTemplate
   public void definitionTwoPreviousDeploymentDeleteSecondDeployment() {
     // given
 
@@ -317,7 +310,7 @@ public class RedeploymentProcessApplicationTest {
     deploymentsToCleanup.addAll(Arrays.asList(deployment1, deployment3));
   }
 
-  @Test
+  @TestTemplate
   public void definitionTwoPreviousDeploymentUnregisterSecondPA() {
     // given
 
@@ -357,7 +350,7 @@ public class RedeploymentProcessApplicationTest {
     deploymentsToCleanup.addAll(Arrays.asList(deployment1, deployment2, deployment3));
   }
 
-  @Test
+  @TestTemplate
   public void definitionTwoDifferentPreviousDeploymentsWithDifferentPA() {
     // given
 
@@ -408,7 +401,7 @@ public class RedeploymentProcessApplicationTest {
     deploymentsToCleanup.addAll(Arrays.asList(deployment1, deployment2, deployment3));
   }
 
-  @Test
+  @TestTemplate
   public void definitionTwoPreviousDeploymentsWithDifferentPA() {
     // given
 

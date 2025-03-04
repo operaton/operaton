@@ -16,49 +16,52 @@
  */
 package org.operaton.bpm.application.impl.context;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.eq;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.operaton.bpm.application.ProcessApplicationContext.withProcessApplicationContext;
 
 import java.util.concurrent.Callable;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.application.InvocationContext;
 import org.operaton.bpm.application.ProcessApplicationContext;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.application.ProcessApplicationUnavailableException;
 import org.operaton.bpm.application.impl.embedded.TestApplicationWithoutEngine;
+import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import static org.operaton.bpm.application.ProcessApplicationContext.withProcessApplicationContext;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class ProcessApplicationContextTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+public class ProcessApplicationContextTest {
 
+  protected ProcessEngine processEngine;
   protected TestApplicationWithoutEngine pa;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     pa = new TestApplicationWithoutEngine();
     pa.deploy();
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     pa.undeploy();
   }
@@ -153,7 +156,7 @@ public class ProcessApplicationContextTest extends PluggableProcessEngineTest {
         fail("should not succeed");
 
       } catch (ProcessEngineException e) {
-        testRule.assertTextPresent("A process application with name '" + nonExistingName + "' is not registered", e.getMessage());
+        assertThat(e.getMessage()).contains("A process application with name '" + nonExistingName + "' is not registered");
       }
 
     } finally {

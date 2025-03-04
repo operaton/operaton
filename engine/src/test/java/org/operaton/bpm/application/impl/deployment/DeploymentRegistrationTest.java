@@ -16,26 +16,36 @@
  */
 package org.operaton.bpm.application.impl.deployment;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-
-import org.junit.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class DeploymentRegistrationTest extends PluggableProcessEngineTest {
+@ExtendWith(ProcessEngineExtension.class)
+public class DeploymentRegistrationTest {
 
   protected static final String DEPLOYMENT_NAME = "my-deployment";
 
   protected static final String PROCESS_KEY = "process-1";
   protected static final String BPMN_RESOURCE = "path/to/my/process1.bpmn";
+
+  protected ProcessEngineConfigurationImpl processEngineConfiguration;
+  protected RuntimeService runtimeService;
+  protected RepositoryService repositoryService;
+  protected ManagementService managementService;
 
   @Test
   public void testNoRegistrationCheckIfNoProcessApplicationIsDeployed() {

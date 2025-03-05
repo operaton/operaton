@@ -309,6 +309,8 @@
         <database.type>oracle</database.type>
         <database.driver>oracle.jdbc.OracleDriver</database.driver>
         <database.datasource.class>oracle.jdbc.pool.OracleDataSource</database.datasource.class>
+        <database.tc.url>operatonoracle:21-faststart</database.tc.url>
+        <database.url>jdbc:tc:${database.tc.url}://localhost:${database.port}${database.tc.params}</database.url>
       </properties>
       <dependencies>
         <dependency>

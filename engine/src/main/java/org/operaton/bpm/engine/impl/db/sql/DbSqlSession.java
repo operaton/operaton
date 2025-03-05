@@ -657,17 +657,18 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
     String databaseTablePrefix = getDbSqlSessionFactory().getDatabaseTablePrefix();
 
     try(Connection connection = Context.getProcessEngineConfiguration().getDataSource().getConnection();
-        PreparedStatement prepStat = connection.prepareStatement(selectTableNamesFromOracle);
-        ResultSet tablesRs = prepStat.executeQuery()) {
+        PreparedStatement prepStat = connection.prepareStatement(selectTableNamesFromOracle)) {
 
       prepStat.setString(1, databaseTablePrefix + "ACT-_%");
 
-      while (tablesRs.next()) {
-        String tableName = tablesRs.getString("TABLE_NAME");
-        tableName = tableName.toUpperCase();
-        tableNames.add(tableName);
+      try(ResultSet tablesRs = prepStat.executeQuery()) {
+        while (tablesRs.next()) {
+          String tableName = tablesRs.getString("TABLE_NAME");
+          tableName = tableName.toUpperCase();
+          tableNames.add(tableName);
+        }
+        LOG.fetchDatabaseTables("oracle all_tables", tableNames);
       }
-      LOG.fetchDatabaseTables("oracle all_tables", tableNames);
     }
 
     return tableNames;

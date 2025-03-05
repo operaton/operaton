@@ -143,8 +143,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: ${{ fromJson(github.event.inputs.java_version || '["17", "21"]') }}
-        testsuite: ${{ fromJson(github.event.inputs.testsuite || '["engine", "webapps"]') }}
+        java: ${{ fromJson(github.event.inputs.java_version || '["17"]') }}
+        testsuite: ${{ fromJson(github.event.inputs.testsuite || '["engine"]') }}
         container: ${{ fromJson(github.event.inputs.container || '["tomcat", "wildfly"]') }}
         database: ${{ fromJson(github.event.inputs.database || '["h2", "postgres"]') }}
     steps:

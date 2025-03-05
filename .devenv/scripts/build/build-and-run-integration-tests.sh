@@ -85,10 +85,10 @@ run_tests () {
 
   case "$CONTAINER" in
     tomcat)
-      PROFILES+=(tomcat distro-tomcat)
+      PROFILES+=(tomcat)
       ;;
     wildfly)
-      PROFILES+=(wildfly distro-wildfly)
+      PROFILES+=(wildfly)
       ;;
   esac
 
